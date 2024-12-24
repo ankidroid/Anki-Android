@@ -153,8 +153,6 @@
     <string name="notification_minimum_cards_due">У чарзе наступная колькасць картак: %d</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Вібрацыя</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Мігаценне святлодыёда</string>
-    <string name="timeout_answer_text" maxLength="41">Аўтаматычна паказваць адказ</string>
-    <string name="timeout_answer_summ2">Паказваць адказ аўтаматычна без удзелу карыстальніка. Наладжваецца з параметраў калоды.</string>
     <string name="select_locale_title">Выберыце мову</string>
     <string name="software_render" maxLength="41">Адключыць апаратны апрацоўшчык картак</string>
     <string name="software_render_summ">Апаратны апрацоўшчык працуе хутчэй, але можа выклікаць праблемы (асабліва ў АС Android 8/8.1). Паспрабуйце гэтыя налады, калі ў вас праблемы з адлюстраваннем картак у рэжыме паўтарэння.</string>
@@ -242,7 +240,7 @@
     <string name="deck_conf_cram_filter" maxLength="41">Фільтр</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Пошук</string>
     <string name="deck_conf_cram_limit" maxLength="41">Абмежаваць да</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
+    <string name="deck_conf_cram_order" maxLength="41">Карткі выбраныя па</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Перапланаваць</string>
     <string name="deck_conf_cram_reschedule_summ">Перапланаваць карткі на падставе маіх адказаў у гэтай калодзе</string>
     <string name="deck_conf_cram_filter_2_check">Уключыць другі фільтр</string>
@@ -275,21 +273,21 @@
     <string name="axis_picker_move_joystick">Перамясціць джойсцік/кантролер руху</string>
     <string name="user_actions" maxLength="41">Дзеянні карыстальніка</string>
     <string name="user_actions_summary" maxLength="41">Запусціць JavaScript з экрана паўтораў</string>
-    <string name="user_action_1" maxLength="41">Дзеянне карыстальніка 1</string>
-    <string name="user_action_2" maxLength="41">Дзеянне карыстальніка 2</string>
-    <string name="user_action_3" maxLength="41">Дзеянне карыстальніка 3</string>
-    <string name="user_action_4" maxLength="41">Дзеянне карыстальніка 4</string>
-    <string name="user_action_5" maxLength="41">Дзеянне карыстальніка 5</string>
-    <string name="user_action_6" maxLength="41">Дзеянне карыстальніка 6</string>
-    <string name="user_action_7" maxLength="41">Дзеянне карыстальніка 7</string>
-    <string name="user_action_8" maxLength="41">Дзеянне карыстальніка 8</string>
-    <string name="user_action_9" maxLength="41">Дзеянне карыстальніка 9</string>
-    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
+    <string name="user_action_1" maxLength="28">Дзеянне карыстальніка 1</string>
+    <string name="user_action_2" maxLength="28">Дзеянне карыстальніка 2</string>
+    <string name="user_action_3" maxLength="28">Дзеянне карыстальніка 3</string>
+    <string name="user_action_4" maxLength="28">Дзеянне карыстальніка 4</string>
+    <string name="user_action_5" maxLength="28">Дзеянне карыстальніка 5</string>
+    <string name="user_action_6" maxLength="28">Дзеянне карыстальніка 6</string>
+    <string name="user_action_7" maxLength="28">Дзеянне карыстальніка 7</string>
+    <string name="user_action_8" maxLength="28">Дзеянне карыстальніка 8</string>
+    <string name="user_action_9" maxLength="28">Дзеянне карыстальніка 9</string>
+    <string name="toggle_auto_advance" maxLength="41">Уключыць/выключыць аўтапераход</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Выберыце бок карткі</string>
     <string name="card_side_question">Пытанне</string>
     <string name="card_side_answer">Адказ</string>
-    <string name="card_side_both">Пытанне і адказ</string>
+    <string name="card_side_both" maxLength="28">Пытанне і адказ</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">П: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">А: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -374,9 +372,9 @@
     <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Радок стану</string>
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Панэль навігацыі</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Усе</string>
-    <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
+    <string name="ignore_display_cutout" maxLength="41">Ігнараваць выраз экрана</string>
     <string name="hide_answer_buttons" maxLength="41">Схаваць кнопкі адказу</string>
-    <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
+    <string name="hide_hard_and_easy" maxLength="41">Схаваць кнопкі ‘Цяжкі’ і ‘Лёгкі’</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Адкрыць налады</string>
 </resources>

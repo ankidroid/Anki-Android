@@ -55,12 +55,14 @@ class PermissionsActivity : AnkiActivity() {
             finish()
         }
 
-        val permissionSet = requireNotNull(IntentCompat.getParcelableExtra(intent, PERMISSIONS_SET_EXTRA, PermissionSet::class.java)) {
-            "PERMISSIONS_SET_EXTRA not set"
-        }
-        val permissionsFragment = requireNotNull(permissionSet.permissionsFragment?.getDeclaredConstructor()?.newInstance()) {
-            "invalid permissionsFragment"
-        }
+        val permissionSet =
+            requireNotNull(IntentCompat.getParcelableExtra(intent, PERMISSIONS_SET_EXTRA, PermissionSet::class.java)) {
+                "PERMISSIONS_SET_EXTRA not set"
+            }
+        val permissionsFragment =
+            requireNotNull(permissionSet.permissionsFragment?.getDeclaredConstructor()?.newInstance()) {
+                "invalid permissionsFragment"
+            }
 
         supportFragmentManager.commit {
             replace(R.id.fragment_container, permissionsFragment)
@@ -76,10 +78,12 @@ class PermissionsActivity : AnkiActivity() {
     companion object {
         const val PERMISSIONS_SET_EXTRA = "permissionsSet"
 
-        fun getIntent(context: Context, permissionsSet: PermissionSet): Intent {
-            return Intent(context, PermissionsActivity::class.java).apply {
+        fun getIntent(
+            context: Context,
+            permissionsSet: PermissionSet,
+        ): Intent =
+            Intent(context, PermissionsActivity::class.java).apply {
                 putExtra(PERMISSIONS_SET_EXTRA, permissionsSet as Parcelable)
             }
-        }
     }
 }

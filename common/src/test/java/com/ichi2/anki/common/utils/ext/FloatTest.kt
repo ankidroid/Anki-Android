@@ -25,7 +25,6 @@ import org.junit.Test
  * Tests for methods in [Float][clamp]
  */
 class FloatTest {
-
     @Test
     fun clampOneZero() {
         fun Float.clampOneZero() = this.clamp(0f, 1f)

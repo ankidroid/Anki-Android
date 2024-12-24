@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">सामने</string>
-    <string name="back_field_name">पिछला</string>
+    <string name="front_field_name" maxLength="28">सामने</string>
+    <string name="back_field_name" maxLength="28">पिछला</string>
 </resources>

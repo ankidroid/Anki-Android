@@ -62,13 +62,14 @@ class DecksTest : JvmTest() {
         assertTrue(names.contains("foo::bar"))
         assertFalse(names.contains("hello::world"))
         // create another col
-        /* TODO: do we want to follow upstream here ?
+
+        /* TODO: do we want to follow upstream here ?
          // automatically adjusted if a duplicate name
          decks.rename(decks.get(id), "FOO");
          names =  decks.allSortedNames();
          assertThat(names, containsString("FOO+"));
+         */
 
-          */
         // when renaming, the children should be renamed too
         addDeck("one::two::three")
         id = addDeck("one")
@@ -85,13 +86,13 @@ class DecksTest : JvmTest() {
         assertThrows(BackendDeckIsFilteredException::class.java) {
             col.decks.rename(
                 child,
-                "filtered::child"
+                "filtered::child",
             )
         }
         assertThrows(BackendDeckIsFilteredException::class.java) {
             col.decks.rename(
                 child,
-                "FILTERED::child"
+                "FILTERED::child",
             )
         }
     }
@@ -152,7 +153,7 @@ class DecksTest : JvmTest() {
         addDeck("test", setAsSelected = true)
         assertDoesNotThrow("curDeck should be saved as a long. A deck id.") {
             col.config.get<DeckId>(
-                CURRENT_DECK
+                CURRENT_DECK,
             )
         }
     }
@@ -176,10 +177,11 @@ class DecksTest : JvmTest() {
         var addedNoteCount = 0
 
         fun addNote(did: DeckId): NoteId {
-            val note = col.newNote().apply {
-                setItem("Front", (++addedNoteCount).toString())
-                notetype.put("did", did)
-            }
+            val note =
+                col.newNote().apply {
+                    setItem("Front", (++addedNoteCount).toString())
+                    notetype.put("did", did)
+                }
             col.addNote(note)
             return note.id
         }
@@ -188,11 +190,12 @@ class DecksTest : JvmTest() {
         val childDid = addDeck("Deck::Subdeck").also { did -> addNote(did) }
 
         val noteToMakeDynamic: NoteId
-        val deckWithNoChildren = addDeck("DeckWithTwo").also { did ->
-            addNote(did)
-            addNote(did)
-            noteToMakeDynamic = addNote(did)
-        }
+        val deckWithNoChildren =
+            addDeck("DeckWithTwo").also { did ->
+                addNote(did)
+                addNote(did)
+                noteToMakeDynamic = addNote(did)
+            }
         val filteredDeck = addDynamicDeck("filtered", search = "nid:$noteToMakeDynamic")
 
         assertThat("all decks", decks.cardCount(parentDid, childDid, deckWithNoChildren, includeSubdecks = false), equalTo(5))
@@ -210,17 +213,5 @@ class DecksTest : JvmTest() {
         assertThat("filtered deck", decks.cardCount(filteredDeck, includeSubdecks = false), equalTo(1))
 
         assertThat("filtered and home deck", decks.cardCount(deckWithNoChildren, filteredDeck, includeSubdecks = false), equalTo(3))
-    }
-
-    companion object {
-        // Used in other class to populate decks.
-        @Suppress("SpellCheckingInspection")
-        val TEST_DECKS = arrayOf(
-            "scxipjiyozczaaczoawo",
-            "cmxieunwoogyxsctnjmv::abcdefgh::ZYXW",
-            "cmxieunwoogyxsctnjmv::INSBGDS",
-            "::foobar", // Addition test for issue #11026
-            "A::"
-        )
     }
 }

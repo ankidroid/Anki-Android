@@ -23,13 +23,17 @@ import java.util.ArrayList
 
 typealias ButtonText = String
 
-class CustomToolbarButton(var index: Int, var buttonText: ButtonText, val prefix: String, val suffix: String) {
-    fun toFormatter(): Toolbar.TextFormatter {
-        return TextWrapper(prefix, suffix)
-    }
+class CustomToolbarButton(
+    var index: Int,
+    var buttonText: ButtonText,
+    val prefix: String,
+    val suffix: String,
+) {
+    fun toFormatter(): Toolbar.TextFormatter = TextWrapper(prefix, suffix)
 
     companion object {
         const val KEEP_EMPTY_ENTRIES = -1
+
         fun fromString(s: String?): CustomToolbarButton? {
             if (s.isNullOrEmpty()) {
                 return null
@@ -38,12 +42,13 @@ class CustomToolbarButton(var index: Int, var buttonText: ButtonText, val prefix
             if (fields.size != 4) {
                 return null
             }
-            val index: Int = try {
-                fields[0].toInt()
-            } catch (e: Exception) {
-                Timber.w(e)
-                return null
-            }
+            val index: Int =
+                try {
+                    fields[0].toInt()
+                } catch (e: Exception) {
+                    Timber.w(e)
+                    return null
+                }
             return CustomToolbarButton(index, fields[1], fields[2], fields[3])
         }
 

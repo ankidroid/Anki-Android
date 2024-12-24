@@ -17,24 +17,25 @@
 package com.ichi2.anki
 
 import com.ichi2.anki.notifications.NotificationId
+import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsRecyclerItem
 import com.ichi2.anki.worker.UniqueWorkNames
 import org.junit.Test
 import kotlin.reflect.KClass
 import kotlin.reflect.KVisibility
 import kotlin.reflect.full.declaredMemberProperties
+import kotlin.reflect.jvm.javaField
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 
 class ConstantUniquenessTest {
-
     @Test
     fun testConstantUniqueness() {
         assertConstantUniqueness(NotificationId::class)
         assertConstantUniqueness(UniqueWorkNames::class)
+        assertConstantUniqueness(ReviewerMenuSettingsRecyclerItem.Companion::class)
     }
 
     companion object {
-
         /**
          * To check whether all PUBLIC CONST values in an object are unique.
          */
@@ -45,8 +46,7 @@ class ConstantUniquenessTest {
                 if (!prop.isConst || prop.visibility != KVisibility.PUBLIC) {
                     continue
                 }
-                // use .call() since clazz represents an object
-                val value = prop.call()
+                val value = prop.javaField?.get(null)
                 assertFalse(valueSet.contains(value), "Duplicate value ('$value') for constant in ${clazz.qualifiedName}")
                 valueSet.add(value)
             }

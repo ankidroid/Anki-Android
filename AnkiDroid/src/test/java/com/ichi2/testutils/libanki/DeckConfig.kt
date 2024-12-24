@@ -21,4 +21,6 @@ import com.ichi2.libanki.DeckConfig
 /** Burying - Bury New siblings */
 var DeckConfig.buryNewSiblings: Boolean
     get() = getJSONObject("new").getBoolean("bury")
-    set(value) { getJSONObject("new").put("bury", value) }
+    set(value) {
+        getJSONObject("new").put("bury", value)
+    }

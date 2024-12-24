@@ -41,7 +41,10 @@ object MultimediaUtils {
      * @throws IOException If an error occurs while creating the file.
      */
     @Throws(IOException::class)
-    fun createNewCacheImageFile(extension: String = "jpg", directory: String?): File {
+    fun createNewCacheImageFile(
+        extension: String = "jpg",
+        directory: String?,
+    ): File {
         val storageDir = File(directory!!)
         return File.createTempFile("img", ".$extension", storageDir)
     }
@@ -68,70 +71,84 @@ object MultimediaUtils {
      *
      * @return Display name of file identified by uri (null if does not exist)
      */
-    fun getImageNameFromUri(context: Context, uri: Uri): String? = try {
-        Timber.d("getImageNameFromUri() URI: %s", uri)
-        var imageName: String? = null
-        if (DocumentsContract.isDocumentUri(context, uri)) {
-            val docId = DocumentsContract.getDocumentId(uri)
-            if ("com.android.providers.media.documents" == uri.authority) {
-                val id = docId.split(":").toTypedArray()[1]
-                val selection = MediaStore.Images.Media._ID + "=" + id
-                imageName = getImageNameFromContentResolver(
-                    context,
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    selection
-                )
-            } else if ("com.android.providers.downloads.documents" == uri.authority) {
-                imageName = when {
-                    // `msf:1000034860` can be handled by using the URI
-                    docId.startsWith(MEDIASTORE_DOWNLOAD_FILE_PREFIX) -> {
-                        getImageNameFromContentResolver(context, uri, null)
-                    }
-
-                    // raw:/storage/emulated/0/Download/pexels-pixabay-36717.jpg
-                    docId.startsWith(RAW_DOCUMENTS_FILE_PREFIX) -> {
-                        docId.substring(RAW_DOCUMENTS_FILE_PREFIX.length).split("/")
-                            .toTypedArray().last()
-                    }
-
-                    docId.toLongOrNull() != null -> {
-                        val contentUri = ContentUris.withAppendedId(
-                            Uri.parse("content://downloads/public_downloads"),
-                            docId.toLong()
+    fun getImageNameFromUri(
+        context: Context,
+        uri: Uri,
+    ): String? =
+        try {
+            Timber.d("getImageNameFromUri() URI: %s", uri)
+            var imageName: String? = null
+            if (DocumentsContract.isDocumentUri(context, uri)) {
+                val docId = DocumentsContract.getDocumentId(uri)
+                if ("com.android.providers.media.documents" == uri.authority) {
+                    val id = docId.split(":").toTypedArray()[1]
+                    val selection = MediaStore.Images.Media._ID + "=" + id
+                    imageName =
+                        getImageNameFromContentResolver(
+                            context,
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                            selection,
                         )
-                        getImageNameFromContentResolver(context, contentUri, null)
-                    }
+                } else if ("com.android.providers.downloads.documents" == uri.authority) {
+                    imageName =
+                        when {
+                            // `msf:1000034860` can be handled by using the URI
+                            docId.startsWith(MEDIASTORE_DOWNLOAD_FILE_PREFIX) -> {
+                                getImageNameFromContentResolver(context, uri, null)
+                            }
 
-                    else -> {
-                        CrashReportService.sendExceptionReport(
-                            message = "Failed to get fileName from providers.downloads.documents",
-                            origin = "getImageNameFromUri"
-                        )
-                        null
-                    }
+                            // raw:/storage/emulated/0/Download/pexels-pixabay-36717.jpg
+                            docId.startsWith(RAW_DOCUMENTS_FILE_PREFIX) -> {
+                                docId
+                                    .substring(RAW_DOCUMENTS_FILE_PREFIX.length)
+                                    .split("/")
+                                    .toTypedArray()
+                                    .last()
+                            }
+
+                            docId.toLongOrNull() != null -> {
+                                val contentUri =
+                                    ContentUris.withAppendedId(
+                                        Uri.parse("content://downloads/public_downloads"),
+                                        docId.toLong(),
+                                    )
+                                getImageNameFromContentResolver(context, contentUri, null)
+                            }
+
+                            else -> {
+                                CrashReportService.sendExceptionReport(
+                                    message = "Failed to get fileName from providers.downloads.documents",
+                                    origin = "getImageNameFromUri",
+                                )
+                                null
+                            }
+                        }
+                }
+            } else if ("content".equals(uri.scheme, ignoreCase = true)) {
+                imageName = getImageNameFromContentResolver(context, uri, null)
+            } else if ("file".equals(uri.scheme, ignoreCase = true)) {
+                if (uri.path != null) {
+                    imageName = uri.path!!.split("/").last()
                 }
             }
-        } else if ("content".equals(uri.scheme, ignoreCase = true)) {
-            imageName = getImageNameFromContentResolver(context, uri, null)
-        } else if ("file".equals(uri.scheme, ignoreCase = true)) {
-            if (uri.path != null) {
-                imageName = uri.path!!.split("/").last()
-            }
+            Timber.d("getImageNameFromUri() returning name %s", imageName)
+            imageName
+        } catch (e: Exception) {
+            Timber.w(e)
+            CrashReportService.sendExceptionReport(e, "getImageNameFromUri")
+            null
         }
-        Timber.d("getImageNameFromUri() returning name %s", imageName)
-        imageName
-    } catch (e: Exception) {
-        Timber.w(e)
-        CrashReportService.sendExceptionReport(e, "getImageNameFromUri")
-        null
-    }
 
     /**
      * Get image name based on uri and selection args
      *
      * @return Display name of file identified by uri (null if does not exist)
      */
-    private fun getImageNameFromContentResolver(context: Context, uri: Uri, selection: String?): String? {
+    private fun getImageNameFromContentResolver(
+        context: Context,
+        uri: Uri,
+        selection: String?,
+    ): String? {
         Timber.d("getImageNameFromContentResolver() %s", uri)
         val filePathColumns = arrayOf(MediaStore.MediaColumns.DISPLAY_NAME)
         val signal: CancellationSignal? = null // needed to fix the type to non-deprecated android.os.CancellationSignal for use below
@@ -170,7 +187,7 @@ object MultimediaUtils {
         return File.createTempFile(
             "ANKIDROID_$currentDateTime",
             ".jpg",
-            storageDir
+            storageDir,
         )
     }
 
@@ -186,7 +203,10 @@ object MultimediaUtils {
      * @throws IOException If an error occurs while creating the file.
      */
     @Throws(IOException::class)
-    fun createCachedFile(filename: String, directory: String?) = File(directory, filename).apply {
+    fun createCachedFile(
+        filename: String,
+        directory: String?,
+    ) = File(directory, filename).apply {
         deleteOnExit()
     }
 }

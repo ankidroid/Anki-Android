@@ -59,7 +59,6 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">出错了</string>
-    <string name="multimedia_editor_svg_preview">SVG 不可预览</string>
     <string name="multimedia_editor_png_paste_error">将剪贴板图像转换为 png 时出错：%s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">将多媒体内容添加到 %1$s 字段</string>
     <!-- Audio view -->
@@ -69,10 +68,10 @@
     <string name="multimedia_editor_audio_view_create_failed">无法创建录音工具栏</string>
     <!-- Crop function-->
     <string name="crop_image">您想裁剪此图像吗？</string>
-    <string name="crop_button">裁剪图像</string>
+    <string name="crop_button" maxLength="28">裁剪图像</string>
     <string name="save_dialog_content">当前图像大小是 %sMB。默认图像大小限制是 1MB。您想压缩它吗？</string>
     <string name="select_image_failed">"选择图像失败，请重试"</string>
     <string name="activity_result_unexpected">应用返回了意外的值。您可能需要使用另一个应用程序</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">字段目录</string>
-    <string name="reselect">重新选择</string>
+    <string name="reselect" maxLength="28">重新选择</string>
 </resources>

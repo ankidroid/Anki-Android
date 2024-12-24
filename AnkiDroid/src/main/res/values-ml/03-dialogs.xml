@@ -46,7 +46,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">ഡാറ്റാബേസ് പരിശോധിക്കുക?</string>
     <string name="check_db_warning">ഇതിന് വളരെയധികം സമയമെടുത്തേക്കാം</string>
-    <string name="contextmenu_deckpicker_delete_deck">ഡെക്ക് ഇല്ലാതാക്കുക</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">ഡെക്ക് ഇല്ലാതാക്കുക</string>
     <string name="delete_deck_title">ഡെക്ക് ഇല്ലാതാക്കുക?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">%1$s-ലെ എല്ലാ കാർഡുകളും ഇല്ലാതാക്കണോ? ഇതിൽ %2$d കാർഡ് അടങ്ങിയിരിക്കുന്നു</item>
@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">ഡാറ്റാബേസ് നന്നാക്കാൻ നിങ്ങൾ ശരിക്കും ആഗ്രഹിക്കുന്നുണ്ടോ? \n\n ശ്രമം ആരംഭിക്കുന്നതിന് മുമ്പ്, “%s” എന്ന സബ്ഫോൾഡറിൽ ഒരു പകർപ്പ് സൃഷ്ടിക്കപ്പെടും.</string>
     <string name="intent_aedict_empty">വിഭാഗം “സ്ഥിരസ്ഥിതി” ശൂന്യമാണ്</string>
     <string name="intent_aedict_category">AnkiDroid- ലേക്ക് കാർഡുകൾ ചേർക്കുന്നതിന് എല്ലാ നോട്ട്പാഡ് വിഭാഗങ്ങളും നീക്കംചെയ്യുക അല്ലെങ്കിൽ “സ്ഥിരസ്ഥിതി” എന്ന് പേരുള്ള ഒന്ന് ചേർക്കുക</string>
-    <string name="custom_study_new_total_new">ഡെക്കിലെ പുതിയ കാർഡുകൾ:%d</string>
-    <string name="custom_study_rev_total_rev">ഡെക്കിലുള്ള അവലോകനങ്ങൾ:%d</string>
     <string name="custom_study_new_extend">ഇന്നത്തെ പുതിയ കാർഡ് പരിധി വർദ്ധിപ്പിക്കുക / കുറയ്ക്കുക (“-3”)</string>
     <string name="custom_study_rev_extend">ഇന്നത്തെ അവലോകന പരിധി വർദ്ധിപ്പിക്കുക / കുറയ്ക്കുക (“-3”)</string>
     <string name="custom_study_forgotten">കഴിഞ്ഞ x ദിവസങ്ങളിൽ മറന്ന അവലോകന കാർഡുകൾ:</string>
     <string name="custom_study_ahead">X ദിവസത്തിനകം അവലോകനം ചെയ്യുക:</string>
-    <string name="custom_study_random">ഡെക്കിൽ നിന്ന് ക്രമരഹിതമായി x കാർഡുകൾ തിരഞ്ഞെടുക്കുക:</string>
     <string name="custom_study_preview">അവസാന x ദിവസങ്ങളിൽ ചേർത്ത പുതിയ കാർഡുകൾ പ്രിവ്യൂ ചെയ്യുക:</string>
-    <string name="custom_study_rebuild_deck_corrupt">ഇഷ്‌ടാനുസൃത പഠന ഡെക്ക് പുനർനിർമ്മിക്കാൻ കഴിഞ്ഞില്ല</string>
     <string name="storage_full_title">സംഭരണം നിറഞ്ഞു</string>
     <string name="storage_almost_full_title">സംഭരണം ഏതാണ്ട് നിറഞ്ഞു</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ഇടമില്ല</string>
@@ -101,7 +97,7 @@
     <string name="dialog_continue">തുടരുക</string>
     <string name="dialog_processing">പ്രോസസ്സ് ചെയ്യുന്നു&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">സൃഷ്ടിച്ചു</string>
-    <string name="dialog_positive_delete">ഇല്ലാതാക്കുക</string>
+    <string name="dialog_positive_delete" maxLength="28">ഇല്ലാതാക്കുക</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">പ്രവര്‍ത്തന രഹിതമാക്കുക</string>
     <string name="dialog_positive_overwrite">തിരുത്തിയെഴുതുക</string>
@@ -165,7 +161,7 @@
     <string name="failed_to_apply_background_image">പശ്ചാത്തല ചിത്രം %s പ്രയോഗിക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>
     <string name="background_image_too_large">ഡെക്ക് പിക്കർ പശ്ചാത്തലം വളരെ വലുതാണ്</string>
     <string name="image_max_size_allowed">പരമാവധി ഇമേജ് വലുപ്പം %d MB അനുവദനീയമാണ്</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_dimensions_too_large">ചിത്രത്തിൻ്റെ അളവുകൾ വളരെ വലുതാണ് (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">ആവശ്യമായ സംഭരണ ​​അനുമതി നഷ്‌ടമായി. സംഭരണ ​​അനുമതി നൽകി നിങ്ങളുടെ പ്രവർത്തനം വീണ്ടും ശ്രമിക്കുക.</string>
@@ -186,7 +182,7 @@
     <string name="help_item_mailing_list">അയക്കേണ്ട പട്ടിക</string>
     <string name="help_item_reddit">റെഡ്ഡിറ്റ്</string>
     <string name="help_item_report_bug">ഒരു ബഗ് റിപ്പോർട്ടുചെയ്യുക</string>
-    <string name="help_title_support_ankidroid">AnkiDroid- നെ പിന്തുണയ്ക്കുക</string>
+    <string name="help_title_support_ankidroid" maxLength="28">AnkiDroid- നെ പിന്തുണയ്ക്കുക</string>
     <string name="help_item_support_opencollective_donate">സംഭാവനചെയ്യുക</string>
     <string name="help_item_support_develop_ankidroid">വികസിപ്പിക്കുക</string>
     <string name="help_item_support_rate_ankidroid">നിരക്ക്</string>
@@ -200,16 +196,16 @@
     <string name="help_title_privacy">സ്വകാര്യത</string>
     <string name="help_item_ankidroid_privacy_policy">AnkiDroid സ്വകാര്യതാ നയം</string>
     <string name="help_item_ankiweb_privacy_policy">AnkiWeb സ്വകാര്യതാ നയം</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb നിബന്ധനകളും വ്യവസ്ഥകളും</string>
     <string name="help_title_send_exception">പ്രശ്‌നപരിഹാര റിപ്പോർട്ട് അയയ്‌ക്കുക</string>
     <string name="help_dialog_exception_report_debounce">റിപ്പോർട്ട് ഇതിനകം സമർപ്പിച്ചു</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">റിപ്പോർട്ട് അയച്ചു!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">%d സെക്കൻഡിൽ ഒരു യാന്ത്രിക സമന്വയം പ്രവർത്തനക്ഷമമാക്കാം</item>
         <item quantity="other">%d സെക്കൻഡിനുള്ളിൽ ഒരു യാന്ത്രിക സമന്വയം പ്രവർത്തനക്ഷമമാക്കാം</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
+    <string name="metered_sync_data_warning">നിങ്ങളുടെ ഇൻ്റർനെറ്റ് ദാതാവ് ഡാറ്റ ഉപയോഗത്തിന് നിങ്ങളിൽ നിന്ന് നിരക്ക് ഈടാക്കിയേക്കാം</string>
     <string name="deck_picker_new">ഈ ഡെക്കിൽ ഇന്ന് കാണാനുള്ള പുതിയ കാർഡുകളുടെ എണ്ണം.</string>
     <string name="deck_picker_rev">ഈ ഡെക്കിൽ ഇന്ന് കാണാനുള്ള പുതിയ കാർഡുകളുടെ എണ്ണം.</string>
     <string name="deck_picker_lrn">ഈ ഡെക്കിൽ ഇന്ന് കാണാനുള്ള പുതിയ കാർഡുകളുടെ എണ്ണം.</string>
@@ -217,43 +213,43 @@
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">ഇന്ന് കാണുന്നതിന് കാർഡുകളുടെ എണ്ണം അടങ്ങിയ ഡെക്ക് അവലോകന പേജ് തുറക്കുക.</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_deck_package">ഡെക്ക് പാക്കേജ് (.apkg)</string>
+    <string name="import_collection_package">ശേഖരണ പാക്കേജ് (.colpkg)</string>
+    <string name="import_csv">ടെക്സ്റ്റ് ഫയൽ (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">ഓരോ ഡെക്കിനും നിങ്ങൾക്ക് ഒരു സബ്ഡെക്ക് സൃഷ്ടിക്കാൻ കഴിയില്ല</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
+    <string name="backup_your_collection">നിങ്ങളുടെ ശേഖരം ബാക്കപ്പ് ചെയ്യുക</string>
+    <string name="backup_collection_message">കുറച്ച് കാലമായി നിങ്ങളുടെ ശേഖരം ബാക്കപ്പ് ചെയ്തിട്ടില്ല. ഡാറ്റ നഷ്‌ടപ്പെടുന്നത് തടയാൻ നിങ്ങൾ ഇപ്പോൾ ഇത് ചെയ്യണം</string>
+    <string name="button_backup" maxLength="41">ബാക്കപ്പ്</string>
+    <string name="button_disable_reminder">ഓർമ്മപ്പെടുത്തൽ പ്രവർത്തനരഹിതമാക്കുക</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">പിന്നീട്</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">വീണ്ടും കാണിക്കരുത്</string>
+    <string name="dismiss_backup_warning_title">ഡാറ്റ നഷ്ടം മുന്നറിയിപ്പ്</string>
     <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
     </string>
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
     </string>
-    <string name="deck_already_exists">Deck already exists</string>
-    <string name="empty_deck_name">Deck name cannot be empty</string>
-    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <string name="deck_already_exists">ഡെക്ക് ഇതിനകം നിലവിലുണ്ട്</string>
+    <string name="empty_deck_name">ഡെക്കിൻ്റെ പേര് ശൂന്യമാക്കാൻ കഴിയില്ല</string>
+    <string name="create_deck_numeric_hint">നിങ്ങൾക്ക് ഡെക്ക് ഓർഡർ ചെയ്യുന്നതിൽ പ്രശ്‌നങ്ങളുണ്ടെങ്കിൽ (ഉദാ. \'10\' \'2\' ന് മുമ്പ് ദൃശ്യമാകുന്നു), \'2\' മാറ്റി \'02\'</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">ഇടവേള അതേ മൂല്യത്തിലേക്ക് സജ്ജമാക്കുക</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in</item>
-        <item quantity="other">Show cards in</item>
+        <item quantity="one">കാർഡ് കാണിക്കുക</item>
+        <item quantity="other">കാർഡുകൾ കാണിക്കുക</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in range</item>
-        <item quantity="other">Show cards in range</item>
+        <item quantity="one">പരിധിയിൽ കാർഡ് കാണിക്കുക</item>
+        <item quantity="other">കാർഡുകൾ ക്രമത്തിൽ കാണിക്കുക</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="one">day</item>
-        <item quantity="other">days</item>
+        <item quantity="one">ദിവസം</item>
+        <item quantity="other">ദിവസങ്ങൾ</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
-    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">നിന്ന്</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">വരെ</string>
     <!-- Instant Note Editor -->
     <string name="cloze_note_required">Cloze Type Note Required</string>
     <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>

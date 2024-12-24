@@ -35,7 +35,6 @@ import kotlin.test.assertNull
 @RunWith(AndroidJUnit4::class)
 @InternalForInheritanceCoroutinesApi
 class VideoPlayerTest : RobolectricTest() {
-
     @Test
     fun `stops audio playback when paused`() {
         val v = VideoPlayer { JavascriptEvaluator { } }
@@ -103,29 +102,35 @@ class VideoPlayerTest : RobolectricTest() {
         override fun <R : Unit> tryResume(
             value: R,
             idempotent: Any?,
-            onCancellation: ((cause: Throwable, value: R, context: CoroutineContext) -> Unit)?
+            onCancellation: ((cause: Throwable, value: R, context: CoroutineContext) -> Unit)?,
         ): Any? {
             TODO("Not yet implemented")
         }
 
         @InternalCoroutinesApi
-        override fun tryResume(value: Unit, idempotent: Any?): Any? {
+        override fun tryResume(
+            value: Unit,
+            idempotent: Any?,
+        ): Any? {
             TODO("Not yet implemented")
         }
 
         @Deprecated(
             "Use the overload that also accepts the `value` and the coroutine context in lambda",
             replaceWith = ReplaceWith("resume(value) { cause, _, _ -> onCancellation(cause) }"),
-            level = DeprecationLevel.WARNING
+            level = DeprecationLevel.WARNING,
         )
         @ExperimentalCoroutinesApi
-        override fun resume(value: Unit, onCancellation: ((cause: Throwable) -> Unit)?) {
+        override fun resume(
+            value: Unit,
+            onCancellation: ((cause: Throwable) -> Unit)?,
+        ) {
             TODO("Not yet implemented")
         }
 
         override fun <R : Unit> resume(
             value: R,
-            onCancellation: ((cause: Throwable, value: R, context: CoroutineContext) -> Unit)?
+            onCancellation: ((cause: Throwable, value: R, context: CoroutineContext) -> Unit)?,
         ) {
             TODO("Not yet implemented")
         }

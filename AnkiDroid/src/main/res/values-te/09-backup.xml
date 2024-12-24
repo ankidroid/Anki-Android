@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">బ్యాకప్ సేవ్ చేయబడలేదు. మీ నిల్వలో మీకు తగినంత స్థలం లేదు. బ్యాకప్ డెప్త్‌ని తగ్గించండి లేదా కొన్ని ఇతర ఫైల్‌లను తీసివేయండి.</string>
     <string name="storage_warning">మీ నిల్వలో %d MB కంటే తక్కువ స్థలం మిగిలి ఉంది.\nడేటా నష్టాన్ని నివారించడానికి కొంత స్థలాన్ని ఖాళీ చేయండి.</string>
-    <string name="backup_restore">బ్యాకప్ నుండి పునరుద్ధరించండి</string>
+    <string name="backup_restore" maxLength="28">బ్యాకప్ నుండి పునరుద్ధరించండి</string>
     <string name="backup_new_collection">సరికొత్త సేకరణ</string>
     <string name="backup_del_collection">సేకరణను తీసివేసి, క్రొత్తదాన్ని సృష్టించండి</string>
     <string name="backup_del_collection_question">సేకరణను తొలగించి, క్రొత్తదాన్ని సృష్టించాలా? ఇది అన్ని మీ అభ్యాస పురోగతిని వదలండి మరియు అన్ని కార్డులను తొలగించండి.</string>

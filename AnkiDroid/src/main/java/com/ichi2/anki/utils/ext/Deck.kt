@@ -22,9 +22,14 @@ import com.ichi2.libanki.Decks
 
 var Deck.description: String
     get() = optString("desc", "")
-    set(value) { put("desc", value) }
+    set(value) {
+        put("desc", value)
+    }
 
-fun Decks.update(did: DeckId, block: Deck.() -> Unit) {
+fun Decks.update(
+    did: DeckId,
+    block: Deck.() -> Unit,
+) {
     val deck = get(did)!!
     block(deck)
     this.save(deck)

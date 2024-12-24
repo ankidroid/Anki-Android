@@ -54,31 +54,36 @@ object HttpFetcher {
             clientBuilder.addNetworkInterceptor(
                 Interceptor { chain: Interceptor.Chain ->
                     chain.proceed(
-                        chain.request()
+                        chain
+                            .request()
                             .newBuilder()
                             .header("Referer", "com.ichi2.anki")
                             .header("User-Agent", "Mozilla/5.0 ( compatible ) ")
                             .header("Accept", "*/*")
-                            .build()
+                            .build(),
                     )
-                }
+                },
             )
         } else {
             clientBuilder.addNetworkInterceptor(
                 Interceptor { chain: Interceptor.Chain ->
                     chain.proceed(
-                        chain.request()
+                        chain
+                            .request()
                             .newBuilder()
                             .header("User-Agent", "AnkiDroid-$pkgVersionName")
-                            .build()
+                            .build(),
                     )
-                }
+                },
             )
         }
         return clientBuilder
     }
 
-    fun fetchThroughHttp(address: String?, encoding: String? = "utf-8"): String {
+    fun fetchThroughHttp(
+        address: String?,
+        encoding: String? = "utf-8",
+    ): String {
         Timber.d("fetching %s", address)
         return try {
             val requestBuilder = Request.Builder()
@@ -90,12 +95,13 @@ object HttpFetcher {
                     Timber.d("Response code was %s, returning failure", response.code)
                     return "FAILED"
                 }
-                val reader = BufferedReader(
-                    InputStreamReader(
-                        response.body!!.byteStream(),
-                        Charset.forName(encoding)
+                val reader =
+                    BufferedReader(
+                        InputStreamReader(
+                            response.body!!.byteStream(),
+                            Charset.forName(encoding),
+                        ),
                     )
-                )
 
                 val stringBuilder = StringBuilder()
                 var line: String?

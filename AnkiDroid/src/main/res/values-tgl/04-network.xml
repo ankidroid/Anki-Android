@@ -75,7 +75,7 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Lokal</string>
     <string name="sync_sanity_remote">Malayo</string>
-    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_title" maxLength="41">One-way sync</string>
     <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">Ang ninanais na pagbabago ay mangangailangan ng isang buong pag-upload ng talahanayan ng datos sa susunod na pagsisingkronisa ng iyong koleksyon. Kung mayroon kang mga balik-aral o iba pang mga pagbabago na naghihintay sa iba pang mga aparato na hindi pa naka-singkronisa dito, mawawala ang mga ito. Magpatuloy?</string>
     <string name="full_sync_confirmation_upgrade">Dahil sa isang bug sa naunang naka-install na bersyon ng AnkiDroid, iminumungkahi ang isang buong pag-sisingkronisa.</string>

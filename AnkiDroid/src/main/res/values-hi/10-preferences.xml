@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">कारण %d से अधिक कार्ड</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">वाइब्रेट</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">पलक लाइट</string>
-    <string name="timeout_answer_text" maxLength="41">स्वचालित उत्तर प्रदर्शन</string>
-    <string name="timeout_answer_summ2">उपयोगकर्ता इनपुट के बिना स्वचालित रूप से उत्तर दिखाएं। डेक विकल्पों से कॉन्फ़िगर करें.</string>
     <string name="select_locale_title">भाषा चुनें</string>
     <string name="software_render" maxLength="41">कार्ड हार्डवेयर रेंडर अक्षम करें</string>
     <string name="software_render_summ">हार्डवेयर रेंडर तेज़ है लेकिन इसमें समस्याएँ हो सकती हैं, विशेष रूप से Android 8/8.1 पर।  यदि आप कार्ड समीक्षा उपयोगकर्ता इंटरफ़ेस के कुछ हिस्सों को नहीं देख पा रहे हैं, तो इस सेटिंग को आज़माएँ।</string>
@@ -267,21 +265,21 @@
     <string name="axis_picker_move_joystick">जॉयस्टिक/मोशन कंट्रोलर को स्थानांतरित करें</string>
     <string name="user_actions" maxLength="41">उपयोगकर्ता क्रियाएं</string>
     <string name="user_actions_summary" maxLength="41">समीक्षा स्क्रीन से जावास्क्रिप्ट ट्रिगर करें</string>
-    <string name="user_action_1" maxLength="41">उपयोगकर्ता क्रिया 1</string>
-    <string name="user_action_2" maxLength="41">उपयोगकर्ता क्रिया 2</string>
-    <string name="user_action_3" maxLength="41">उपयोगकर्ता क्रिया 3</string>
-    <string name="user_action_4" maxLength="41">उपयोगकर्ता क्रिया 4</string>
-    <string name="user_action_5" maxLength="41">उपयोगकर्ता क्रिया 5</string>
-    <string name="user_action_6" maxLength="41">उपयोगकर्ता क्रिया 6</string>
-    <string name="user_action_7" maxLength="41">उपयोगकर्ता क्रिया 7</string>
-    <string name="user_action_8" maxLength="41">उपयोगकर्ता क्रिया 8</string>
-    <string name="user_action_9" maxLength="41">उपयोगकर्ता क्रिया 9</string>
+    <string name="user_action_1" maxLength="28">उपयोगकर्ता क्रिया 1</string>
+    <string name="user_action_2" maxLength="28">उपयोगकर्ता क्रिया 2</string>
+    <string name="user_action_3" maxLength="28">उपयोगकर्ता क्रिया 3</string>
+    <string name="user_action_4" maxLength="28">उपयोगकर्ता क्रिया 4</string>
+    <string name="user_action_5" maxLength="28">उपयोगकर्ता क्रिया 5</string>
+    <string name="user_action_6" maxLength="28">उपयोगकर्ता क्रिया 6</string>
+    <string name="user_action_7" maxLength="28">उपयोगकर्ता क्रिया 7</string>
+    <string name="user_action_8" maxLength="28">उपयोगकर्ता क्रिया 8</string>
+    <string name="user_action_9" maxLength="28">उपयोगकर्ता क्रिया 9</string>
     <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">कार्ड साइड चुनें</string>
     <string name="card_side_question">प्रश्न</string>
     <string name="card_side_answer">उत्तर</string>
-    <string name="card_side_both">प्रश्न और उत्तर</string>
+    <string name="card_side_both" maxLength="28">प्रश्न और उत्तर</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">प्र: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">उ: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>

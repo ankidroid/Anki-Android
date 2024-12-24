@@ -31,7 +31,9 @@ import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
-class ModelFieldEditorTest(private val forbiddenCharacter: String) : RobolectricTest() {
+class ModelFieldEditorTest(
+    private val forbiddenCharacter: String,
+) : RobolectricTest() {
     /**
      * Tests if field names with illegal characters get removed from beginning of field names when adding field
      */
@@ -69,7 +71,10 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
      * @param fieldOperationType    Field Operation Type to do (ADD_FIELD or EDIT_FIELD)
      * @return The forbidden field name created
      */
-    private fun setupInvalidFieldName(forbidden: String, fieldOperationType: FieldOperationType): String {
+    private fun setupInvalidFieldName(
+        forbidden: String,
+        fieldOperationType: FieldOperationType,
+    ): String {
         val fieldNameInput = EditText(targetContext)
         val fieldName = forbidden + "field"
 
@@ -92,8 +97,11 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
      * @return The dialog
      */
     @Throws(RuntimeException::class)
-    private fun buildAddEditFieldDialog(fieldNameInput: EditText, fieldOperationType: FieldOperationType): AlertDialog {
-        return AlertDialog.Builder(ContextThemeWrapper(targetContext, R.style.Theme_Light)).show {
+    private fun buildAddEditFieldDialog(
+        fieldNameInput: EditText,
+        fieldOperationType: FieldOperationType,
+    ): AlertDialog =
+        AlertDialog.Builder(ContextThemeWrapper(targetContext, R.style.Theme_Light)).show {
             positiveButton(text = "") {
                 try {
                     val modelName = "Basic"
@@ -102,23 +110,24 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
                     val intent = Intent()
                     intent.putExtra("title", modelName)
                     intent.putExtra("noteTypeID", col.notetypes.idForName(modelName)!!)
-                    val modelFieldEditor = startActivityNormallyOpenCollectionWithIntent(
-                        this@ModelFieldEditorTest,
-                        ModelFieldEditor::class.java,
-                        intent
-                    )
+                    val modelFieldEditor =
+                        startActivityNormallyOpenCollectionWithIntent(
+                            this@ModelFieldEditorTest,
+                            ModelFieldEditor::class.java,
+                            intent,
+                        )
                     when (fieldOperationType) {
                         FieldOperationType.ADD_FIELD -> modelFieldEditor.addField(fieldNameInput)
-                        FieldOperationType.RENAME_FIELD -> modelFieldEditor.renameField(
-                            fieldNameInput
-                        )
+                        FieldOperationType.RENAME_FIELD ->
+                            modelFieldEditor.renameField(
+                                fieldNameInput,
+                            )
                     }
                 } catch (exception: ConfirmModSchemaException) {
                     throw RuntimeException(exception)
                 }
             }
         }
-    }
 
     companion object {
         private val sForbiddenCharacters = arrayOf("#", "^", "/", " ", "\t")
@@ -126,12 +135,11 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
         @ParameterizedRobolectricTestRunner.Parameters(name = "\"{0}\"")
         @Suppress("unused")
         @JvmStatic // required: Parameters
-        fun forbiddenCharacters(): Collection<*> {
-            return listOf(*sForbiddenCharacters)
-        }
+        fun forbiddenCharacters(): Collection<*> = listOf(*sForbiddenCharacters)
     }
 }
 
 internal enum class FieldOperationType {
-    ADD_FIELD, RENAME_FIELD
+    ADD_FIELD,
+    RENAME_FIELD,
 }

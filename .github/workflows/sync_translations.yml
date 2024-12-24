@@ -1,4 +1,4 @@
-name: Sync Translations
+name: 🌐 Sync Translations
 
 on:
   workflow_dispatch:
@@ -102,7 +102,7 @@ jobs:
                 title: "Updated strings from Crowdin " + formattedDate,
                 head: "i18n_sync",
                 base: "main",
-                body: "Contains the newest strings changes from Crowdin.\n\nhttps://crowdin.com/project/ankidroid/activity-stream",
+                body: "Contains the newest strings changes from Crowdin.\n\nhttps://crowdin.com/project/ankidroid/activity-stream\n\n[Re-sync translations](https://github.com/ankidroid/Anki-Android/actions/workflows/sync_translations.yml)",
                 maintainer_can_modify: true
               });
             } catch(err) {

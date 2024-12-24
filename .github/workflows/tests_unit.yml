@@ -1,4 +1,4 @@
-name: Unit Tests
+name: 🛠️ Unit Tests
 
 on:
   workflow_dispatch:
@@ -177,6 +177,7 @@ jobs:
         if: contains(matrix.os, 'windows')
         run: ./gradlew --stop
 
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v5
         with:
           verbose: true
+          fail_ci_if_error: ${{ github.repository == 'ankidroid/Anki-Android' }} # optional (default = false)

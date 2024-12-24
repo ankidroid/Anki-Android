@@ -37,7 +37,10 @@ import timber.log.Timber
  * by including a toolbar and a TabLayout for changing the current template.
  */
 class TemplatePreviewerPage : Fragment(R.layout.template_previewer_container) {
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         view.findViewById<MaterialToolbar>(R.id.toolbar).setNavigationOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
@@ -56,30 +59,34 @@ class TemplatePreviewerPage : Fragment(R.layout.template_previewer_container) {
                 tabLayout.addTab(tabLayout.newTab().setText(templateName))
             }
             tabLayout.selectTab(tabLayout.getTabAt(viewModel.getCurrentTabIndex()))
-            tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
-                override fun onTabSelected(tab: TabLayout.Tab) {
-                    Timber.v("Selected tab %d", tab.position)
-                    viewModel.onTabSelected(tab.position)
-                }
+            tabLayout.addOnTabSelectedListener(
+                object : OnTabSelectedListener {
+                    override fun onTabSelected(tab: TabLayout.Tab) {
+                        Timber.v("Selected tab %d", tab.position)
+                        viewModel.onTabSelected(tab.position)
+                    }
 
-                override fun onTabUnselected(tab: TabLayout.Tab) {
-                    // do nothing
-                }
+                    override fun onTabUnselected(tab: TabLayout.Tab) {
+                        // do nothing
+                    }
 
-                override fun onTabReselected(tab: TabLayout.Tab) {
-                    // do nothing
-                }
-            })
+                    override fun onTabReselected(tab: TabLayout.Tab) {
+                        // do nothing
+                    }
+                },
+            )
         }
     }
 
     companion object {
-        fun getIntent(context: Context, arguments: TemplatePreviewerArguments): Intent {
-            return CardViewerActivity.getIntent(
+        fun getIntent(
+            context: Context,
+            arguments: TemplatePreviewerArguments,
+        ): Intent =
+            CardViewerActivity.getIntent(
                 context,
                 TemplatePreviewerPage::class,
-                bundleOf(ARGS_KEY to arguments)
+                bundleOf(ARGS_KEY to arguments),
             )
-        }
     }
 }

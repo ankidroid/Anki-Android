@@ -18,7 +18,6 @@ package com.ichi2.anki.dialogs
 import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.launchFragment
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
@@ -36,39 +35,14 @@ class ModelEditorContextMenuTest : InstrumentedTest() {
 
     @Test
     @Ignore("flaky")
-    fun showsAllOptionsIfAboveN() {
+    fun showsAllOptions() {
         launchFragment(
             fragmentArgs = bundleOf(ModelEditorContextMenu.KEY_LABEL to testDialogTitle),
-            themeResId = R.style.Theme_Light
-        ) { MockModelEditorContextMenu(isAtLeastAtN = true) }
+            themeResId = R.style.Theme_Light,
+        ) { ModelEditorContextMenu() }
         onView(withText(testDialogTitle)).check(matches(isDisplayed()))
         ModelEditorContextMenuAction.entries.forEach {
             onView(withText(it.actionTextId)).check(matches(isDisplayed()))
         }
-    }
-
-    @Test
-    @Ignore("flaky")
-    fun doesNotShowLanguageHintOptionIfBelowN() {
-        launchFragment(
-            fragmentArgs = bundleOf(ModelEditorContextMenu.KEY_LABEL to testDialogTitle),
-            themeResId = R.style.Theme_Light
-        ) { MockModelEditorContextMenu(isAtLeastAtN = false) }
-        onView(withText(testDialogTitle)).check(matches(isDisplayed()))
-        // ModelEditorContextMenuAction.AddLanguageHint shouldn't be available
-        onView(withText(ModelEditorContextMenuAction.AddLanguageHint.actionTextId)).check(
-            doesNotExist()
-        )
-        // make sure we aren't losing other items besides ModelEditorContextMenuAction.AddLanguageHint
-        ModelEditorContextMenuAction.entries
-            .filterNot { it == ModelEditorContextMenuAction.AddLanguageHint }.forEach {
-                onView(withText(it.actionTextId)).check(matches(isDisplayed()))
-            }
-    }
-
-    class MockModelEditorContextMenu(
-        private val isAtLeastAtN: Boolean
-    ) : ModelEditorContextMenu() {
-        override fun isAtLeastAtN(): Boolean = isAtLeastAtN
     }
 }

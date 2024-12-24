@@ -71,7 +71,7 @@
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
     <string name="select_decks_title" comment="Title for Deck Selection Dialog">Виберіть колоди</string>
     <string name="select_deck_title" comment="Title for Deck Selection Dialog">Вибрати колоду</string>
-    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Виберіть колоди для зображення у віджеті. Виберіть колоди за допомогою піктограми +.</string>
+    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Виберіть колоди для відображення у віджеті. Виберіть колоди за допомогою піктограми +.</string>
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Колоду видалено</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">Ця колода вже вибрана</string>
     <plurals name="deck_limit_reached">
@@ -80,6 +80,6 @@
         <item quantity="many">Ви можете вибрати до %d колод.</item>
         <item quantity="other">Ви можете вибрати до %d колод.</item>
     </plurals>
-    <string name="empty_widget_state" comment="To denote the widget is empty">Missing deck. Tap to reconfigure.</string>
-    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Collection is empty, use app to add decks then reconfigure</string>
+    <string name="empty_widget_state" comment="To denote the widget is empty">Відсутня колода. Натисніть, щоб переналаштувати.</string>
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Колекція порожня, скористайтеся застосунком, щоб додати колоди, а потім переналаштуйте</string>
 </resources>

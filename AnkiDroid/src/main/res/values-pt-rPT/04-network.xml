@@ -70,12 +70,12 @@
     <string name="sync_title">Sincronização</string>
     <string name="sync_log_uploading_message">Sincronização completa a partir dos dados locais</string>
     <string name="sync_database_acknowledge">Coleção sincronizada</string>
-    <string name="col_synced_media_in_background">Coleção sincronizada. As mídias estão sendo sincronizadas em segundo plano.</string>
+    <string name="col_synced_media_in_background">Coleção sincronizada. Os ficheiros de multimédia estão a ser sincronizados em segundo plano.</string>
     <string name="sync_corrupt_database">A sua base de dados está corrompida. Por favor corrija-a antes de tentar novamente uma sincronização.\n\nVeja %s para obter informações sobre como reparar a base de dados.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Local</string>
     <string name="sync_sanity_remote">Remota</string>
-    <string name="one_way_sync_title">Sincronização unidirecional</string>
+    <string name="one_way_sync_title" maxLength="41">Sincronização unidirecional</string>
     <string name="one_way_sync_confirmation">Sincronização unidirecional solicitada</string>
     <string name="full_sync_confirmation">A alteração solicitada requer um upload completo da base de dados na próxima vez que sincronizar a coleção. Se tiver revisões ou outras alterações pendentes noutro dispositivo que ainda não tenham sido sincronizadas, elas serão perdidas. Deseja continuar?</string>
     <string name="full_sync_confirmation_upgrade">Devido a um erro na versão anterior do AnkiDroid, é recomendado fazer uma sincronização integral.</string>

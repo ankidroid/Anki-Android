@@ -41,7 +41,7 @@ import com.ichi2.anki.StudyOptionsActivity
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity
 import com.ichi2.anki.multimedia.MultimediaActivity
 import com.ichi2.anki.notetype.ManageNotetypes
-import com.ichi2.anki.preferences.Preferences
+import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.services.ReminderService.Companion.getReviewDeckIntent
 import com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity
@@ -57,14 +57,14 @@ object ActivityList {
     // TODO: This needs a test to ensure that all activities are valid with the given intents
     // Otherwise, ActivityStartupUnderBackup and other classes could be flaky
     @CheckResult
-    fun allActivitiesAndIntents(): List<ActivityLaunchParam> {
-        return listOf(
+    fun allActivitiesAndIntents(): List<ActivityLaunchParam> =
+        listOf(
             get(DeckPicker::class.java),
             // IntentHandler has unhandled intents
             get(IntentHandler::class.java) { ctx: Context ->
                 getReviewDeckIntent(
                     ctx,
-                    1L
+                    1L,
                 )
             },
             get(IntentHandler2::class.java),
@@ -74,7 +74,7 @@ object ActivityList {
             // Likely has unhandled intents
             get(Reviewer::class.java),
             get(MyAccount::class.java),
-            get(Preferences::class.java),
+            get(PreferencesActivity::class.java),
             get(FilteredDeckOptions::class.java),
             get(DrawingActivity::class.java),
             // Info has unhandled intents
@@ -92,9 +92,8 @@ object ActivityList {
             get(InstantNoteEditorActivity::class.java),
             get(MultimediaActivity::class.java),
             get(DeckPickerWidgetConfig::class.java),
-            get(CardAnalysisWidgetConfig::class.java)
+            get(CardAnalysisWidgetConfig::class.java),
         )
-    }
 
     private fun intentForCardTemplateBrowserAppearanceEditor(): Intent {
         // bundle != null
@@ -104,25 +103,24 @@ object ActivityList {
         }
     }
 
-    private fun intentForCardTemplateEditor(): Intent {
-        return Intent().apply { putExtra("modelId", 1L) }
-    }
+    private fun intentForCardTemplateEditor(): Intent = Intent().apply { putExtra("modelId", 1L) }
 
     class ActivityLaunchParam(
         var activity: Class<out Activity>,
-        private var intentBuilder: Function<Context, Intent>
+        private var intentBuilder: Function<Context, Intent>,
     ) {
         val simpleName: String = activity.simpleName
 
-        fun build(context: Context): ActivityController<out Activity> = Robolectric
-            .buildActivity(activity, intentBuilder.apply(context))
+        fun build(context: Context): ActivityController<out Activity> =
+            Robolectric
+                .buildActivity(activity, intentBuilder.apply(context))
 
         val className: String = activity.name
 
         companion object {
             operator fun get(
                 clazz: Class<out Activity>,
-                i: Function<Context, Intent> = Function { Intent() }
+                i: Function<Context, Intent> = Function { Intent() },
             ): ActivityLaunchParam = ActivityLaunchParam(clazz, i)
         }
     }

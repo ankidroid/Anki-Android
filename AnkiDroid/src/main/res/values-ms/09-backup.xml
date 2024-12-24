@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">Sandaran tidak disimpan. kehabisan ruang pada storan anda. Kurangkan kedalaman sandaran atau buang beberapa fail lain.</string>
     <string name="storage_warning">Tinggal kurang dari %d MB ruang pada storan anda.\nKosongkan sedikit ruang untuk mengelakkan kehilangan data.</string>
-    <string name="backup_restore">Pulih dari sandaran</string>
+    <string name="backup_restore" maxLength="28">Pulih dari sandaran</string>
     <string name="backup_new_collection">Koleksi baru</string>
     <string name="backup_del_collection">Buang koleksi dan cipta yang baharu</string>
     <string name="backup_del_collection_question">Buang koleksi dan cipta yang baharu? Ini akan lepaskan semua kemajuan pembelajaran anda dan memadam semua kad.</string>

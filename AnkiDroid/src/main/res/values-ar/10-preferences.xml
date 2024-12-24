@@ -154,8 +154,6 @@
     <string name="notification_minimum_cards_due">أكثر من %d بطاقة مستحقة</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">اهتزاز</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">وميض الضوء</string>
-    <string name="timeout_answer_text" maxLength="41">عرض الجواب تلقائيًا</string>
-    <string name="timeout_answer_summ2">إظهار الجواب تلقائيًا بدون تدخل المستخدم. اضبط من خيارات الرزمة.</string>
     <string name="select_locale_title">حدد اللغة</string>
     <string name="software_render" maxLength="41">تعطيل عارض العتاد للبطاقات</string>
     <string name="software_render_summ">عرض العتاد أسرع لكنه قد يسبب مشاكل، خصوصًا على أندرويد 8/8.1. إذا لم تكن قادرًا على رؤية أقسام من واجهة مراجعة البطاقة، جرب هذا الخيار.</string>
@@ -278,21 +276,21 @@
     <string name="axis_picker_move_joystick">نقل وحدة عصا التحكم أو جهاز التحرك/حركة</string>
     <string name="user_actions" maxLength="41">إجراءات المستخدم</string>
     <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="41">إجراء رقم 1</string>
-    <string name="user_action_2" maxLength="41">إجراء رقم 2</string>
-    <string name="user_action_3" maxLength="41">إجراء رقم 3</string>
-    <string name="user_action_4" maxLength="41">إجراء رقم 4</string>
-    <string name="user_action_5" maxLength="41">إجراء رقم 5</string>
-    <string name="user_action_6" maxLength="41">إجراء رقم 6</string>
-    <string name="user_action_7" maxLength="41">إجراء رقم 7</string>
-    <string name="user_action_8" maxLength="41">إجراء رقم 8</string>
-    <string name="user_action_9" maxLength="41">إجراء رقم 9</string>
+    <string name="user_action_1" maxLength="28">إجراء رقم 1</string>
+    <string name="user_action_2" maxLength="28">إجراء رقم 2</string>
+    <string name="user_action_3" maxLength="28">إجراء رقم 3</string>
+    <string name="user_action_4" maxLength="28">إجراء رقم 4</string>
+    <string name="user_action_5" maxLength="28">إجراء رقم 5</string>
+    <string name="user_action_6" maxLength="28">إجراء رقم 6</string>
+    <string name="user_action_7" maxLength="28">إجراء رقم 7</string>
+    <string name="user_action_8" maxLength="28">إجراء رقم 8</string>
+    <string name="user_action_9" maxLength="28">إجراء رقم 9</string>
     <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">حدد جانب بطاقة</string>
     <string name="card_side_question">سؤال</string>
     <string name="card_side_answer">جواب</string>
-    <string name="card_side_both">سؤال &amp; جواب</string>
+    <string name="card_side_both" maxLength="28">سؤال &amp; جواب</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">س: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">ج: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -322,7 +320,7 @@
     <string name="pref__manage_space__screen_title">إدارة التخزين</string>
     <!-- TextWidgetPreference widget text -->
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">خطأ</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">حساب...</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">حساب&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
         <item quantity="zero">%1$d ملف\n%2$s</item>
         <item quantity="one">%1$d ملف\n%2$s</item>
@@ -361,8 +359,8 @@
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">لا مجموعة</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">خطأ</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">تحميل...</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">معالجة...</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">تحميل&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">معالجة&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">لا يوجد مجموعة</string>
     <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
     <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">None</string>

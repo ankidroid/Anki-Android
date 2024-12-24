@@ -71,7 +71,12 @@ class ProductionCrashReportingTree : Timber.Tree() {
         }
 
     // ----  END copied from Timber.DebugTree because DebugTree.getTag() is package private ----
-    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+    override fun log(
+        priority: Int,
+        tag: String?,
+        message: String,
+        t: Throwable?,
+    ) {
         when (priority) {
             Log.VERBOSE, Log.DEBUG -> {}
             Log.INFO -> Log.i(AnkiDroidApp.TAG, message, t)

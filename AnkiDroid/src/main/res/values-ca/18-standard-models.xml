@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Davant</string>
-    <string name="back_field_name">Darrere</string>
+    <string name="front_field_name" maxLength="28">Davant</string>
+    <string name="back_field_name" maxLength="28">Darrere</string>
 </resources>

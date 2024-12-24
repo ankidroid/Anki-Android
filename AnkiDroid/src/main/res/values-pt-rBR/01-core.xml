@@ -45,11 +45,11 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks">Baralhos</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Navegador de cartões</string>
-    <string name="statistics">Estatísticas</string>
-    <string name="settings">Configurações</string>
-    <string name="help">Ajuda</string>
+    <string name="decks" maxLength="28">Baralhos</string>
+    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">Navegador de cartões</string>
+    <string name="statistics" maxLength="28">Estatísticas</string>
+    <string name="settings" maxLength="28">Configurações</string>
+    <string name="help" maxLength="28">Ajuda</string>
     <string name="drawing">Desenho</string>
     <string name="send_feedback">Enviar comentários</string>
     <string name="studyoptions_start">Estudar</string>
@@ -65,50 +65,50 @@
         <item quantity="other">%1$d horas %2$d restantes</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">%1$d dia %2$dh restante</item>
+        <item quantity="other">%1$d dias %2$dh restantes</item>
     </plurals>
     <string name="no_cards_placeholder_title">Coleção está vazia</string>
     <string name="no_cards_placeholder_description">Comece adicionando cartões\ntocando no ícone +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Digite a resposta</string>
-    <string name="show_answer">Mostrar resposta</string>
+    <string name="show_answer" maxLength="41">Mostrar resposta</string>
     <string name="hide_answer">Ocultar resposta</string>
-    <string name="ease_button_again">Novamente</string>
-    <string name="ease_button_hard">Difícil</string>
-    <string name="ease_button_good">Bom</string>
+    <string name="ease_button_again" maxLength="41">Novamente</string>
+    <string name="ease_button_hard" maxLength="41">Difícil</string>
+    <string name="ease_button_good" maxLength="41">Bom</string>
     <string name="ease_button_easy">Fácil</string>
-    <string name="menu_import">Importar</string>
-    <string name="undo" maxLength="29" comment="When tapping on this text, the last action is undone.">Desfazer</string>
-    <string name="redo">Refazer</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Desfazer traço</string>
+    <string name="menu_import" maxLength="28">Importar</string>
+    <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Desfazer</string>
+    <string name="redo" maxLength="28">Refazer</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Desfazer traço</string>
     <string name="move_all_to_deck">Mover todos para o baralho</string>
-    <string name="unbury">Desenterrar</string>
-    <string name="rename_deck">Renomear baralho</string>
+    <string name="unbury" maxLength="28">Desenterrar</string>
+    <string name="rename_deck" maxLength="28">Renomear baralho</string>
     <string name="create_shortcut">Criar atalho</string>
     <string name="browse_cards">Navegar pelos cartões</string>
     <string name="edit_deck_description" comment="edit the deck description">Editar descrição</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="29">Adicionar</string>
-    <string name="menu_add_note">Adicionar nota</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">Adicionar</string>
+    <string name="menu_add_note" maxLength="28">Adicionar nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sincronizar conta</string>
-    <string name="menu_dismiss_note">Ocultar / excluir</string>
-    <string name="menu_bury_card">Enterrar cartão</string>
-    <string name="menu_bury_note">Enterrar nota</string>
-    <string name="menu_suspend_card">Suspender cartão</string>
-    <string name="menu_suspend_note">Suspender nota</string>
-    <string name="menu_bury">Enterrar</string>
-    <string name="menu_suspend">Suspender</string>
-    <string name="menu_delete_note">Excluir nota</string>
-    <string name="menu_flag">Sinalização</string>
+    <string name="menu_dismiss_note" maxLength="41">Ocultar / excluir</string>
+    <string name="menu_bury_card" maxLength="28">Enterrar cartão</string>
+    <string name="menu_bury_note" maxLength="28">Enterrar nota</string>
+    <string name="menu_suspend_card" maxLength="28">Suspender cartão</string>
+    <string name="menu_suspend_note" maxLength="28">Suspender nota</string>
+    <string name="menu_bury" maxLength="28">Enterrar</string>
+    <string name="menu_suspend" maxLength="28">Suspender</string>
+    <string name="menu_delete_note" maxLength="28">Excluir nota</string>
+    <string name="menu_flag" maxLength="41">Sinalização</string>
     <string name="rename_flag">Renomear bandeiras</string>
-    <string name="menu_flag_card">Sinalizar cartão</string>
-    <string name="menu_edit_tags">Editar etiquetas</string>
+    <string name="menu_flag_card" maxLength="28">Sinalizar cartão</string>
+    <string name="menu_edit_tags" maxLength="28">Editar etiquetas</string>
     <string name="delete_note_message">Deseja realmente excluir esta nota e todos seus cartões?\n%s</string>
-    <string name="menu_search">Pesquisar em %1$s</string>
-    <string name="menu_mark_note">Marcar nota</string>
+    <string name="menu_search" maxLength="28">Pesquisar em %1$s</string>
+    <string name="menu_mark_note" maxLength="28">Marcar nota</string>
     <string name="menu_unmark_note">Desmarcar nota</string>
-    <string name="menu_enable_voice_playback">Ativar reprodução de voz</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Ativar reprodução de voz</string>
     <string name="menu_disable_voice_playback">Desativar reprodução de voz</string>
     <string name="new_deck">Criar baralho</string>
     <string name="new_dynamic_deck">Criar baralho com filtros</string>
@@ -119,37 +119,37 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Por favor, conceda ao AnkiDroid a permissão de \'Armazenamento\' para continuar</string>
     <string name="rebuild_filtered_deck">Recriando baralho filtrado&#8230;</string>
-    <string name="rebuild_cram_label">Reconstruir</string>
-    <string name="empty_cram_label">Esvaziar</string>
+    <string name="rebuild_cram_label" maxLength="28">Reconstruir</string>
+    <string name="empty_cram_label" maxLength="28">Esvaziar</string>
     <string name="create_subdeck">Criar sub-baralho</string>
     <string name="empty_filtered_deck">Esvaziando baralho filtrado&#8230;</string>
     <string name="custom_study_deck_name">Sessão de estudo personalizado</string>
     <string name="custom_study_deck_exists">Renomeie o baralho de estudo personalizado existente primeiro</string>
     <string name="search_deck" comment="Deck search for selecting it">Pesquisar baralho</string>
     <string name="empty_deck">Este baralho está vazio</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Pesquisar baralho</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Pesquisar baralho</string>
     <string name="invalid_deck_name">Nome do baralho inválido</string>
     <string name="studyoptions_congrats_finished">Parabéns! Você concluiu por enquanto.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Baralho finalizado por enquanto! %s</string>
     <string name="studyoptions_no_cards_due">Sem cartões pendentes por enquanto.</string>
     <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>
-    <string name="button_sync" comment="Text of the sync button">Sincronizar</string>
+    <string name="button_sync" comment="Text of the sync button" maxLength="28">Sincronizar</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Você quer cancelar a sincronização?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Continuar a sincronização</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sincronização cancelada</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelando&#8230;\nPode levar algum tempo.</string>
     <string name="syncing_media">Sincronizando mídia</string>
-    <string name="export_deck">Exportar baralho</string>
+    <string name="export_deck" maxLength="28">Exportar baralho</string>
     <string name="export_collection">Exportar coleção</string>
     <string name="nothing">Nada</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Tipos de cartões</string>
     <string name="card_template_editor_front">Modelo da frente</string>
     <string name="card_template_editor_back">Modelo de trás</string>
-    <string name="card_template_editor_styling">Estilo</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Aparência do navegador de cartões</string>
-    <string name="card_template_editor_deck_override">Substituição de baralho</string>
-    <string name="card_template_editor_insert_field">Inserir campo </string>
+    <string name="card_template_editor_styling" maxLength="28">Estilo</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Aparência do navegador de cartões</string>
+    <string name="card_template_editor_deck_override" maxLength="28">Substituição de baralho</string>
+    <string name="card_template_editor_insert_field" maxLength="28">Inserir campo </string>
     <string name="card_template_editor_select_field">Selecionar campo</string>
     <string name="card_template_editor_cant_delete">Ao menos um tipo de cartão é necessário.</string>
     <plurals name="card_template_editor_confirm_add">
@@ -165,7 +165,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aparência do navegador</string>
     <!-- card Info -->
-    <string name="card_info_title">Informação do cartão</string>
+    <string name="card_info_title" maxLength="28">Informação do cartão</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Ler e escrever para o banco de dados do AnkiDroid</string>
     <string name="read_write_permission_description">acessar notas, cartões, tipos de notas e baralhos existentes, bem como criar novos</string>

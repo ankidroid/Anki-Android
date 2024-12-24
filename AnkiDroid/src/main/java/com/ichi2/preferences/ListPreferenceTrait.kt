@@ -50,13 +50,14 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceDialogFragmentCompat
 import androidx.preference.R
 
+// This exists as we want a dialog to show either a List or an EditText, and both the framework
+// classes require inheritance
+
 /**
  * A [Preference] may inherit from [ListPreferenceTrait] if it wishes to
  * optionally display a List-based dialog.
  * To do so, return a [ListPreferenceDialogFragment] via [DialogFragmentProvider.makeDialogFragment]
  */
-// This exists as we want a dialog to show either a List or an EditText, and both the framework
-// classes require inheritance
 interface ListPreferenceTrait : DialogFragmentProvider {
     var listEntries: List<Entry>
     val entryKeys get() = listEntries.map { it.key }
@@ -66,7 +67,10 @@ interface ListPreferenceTrait : DialogFragmentProvider {
 
     var listValue: String
 
-    data class Entry(val key: String, val value: String)
+    data class Entry(
+        val key: String,
+        val value: String,
+    )
 
     companion object {
         /** to be passed into defStyleAttr in the [Preference] constructor */
@@ -81,8 +85,7 @@ interface ListPreferenceTrait : DialogFragmentProvider {
  * @see ListPreferenceDialogFragmentCompat
  */
 class ListPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
-
-    /* synthetic access */
+    // synthetic access
     private var clickedDialogEntryIndex = 0
     private lateinit var entries: Array<CharSequence>
     private lateinit var entryValues: Array<CharSequence>
@@ -114,7 +117,7 @@ class ListPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
         super.onPrepareDialogBuilder(builder)
         builder.setSingleChoiceItems(
             entries,
-            clickedDialogEntryIndex
+            clickedDialogEntryIndex,
         ) { dialog, which ->
             clickedDialogEntryIndex = which
 
@@ -122,7 +125,7 @@ class ListPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
             // the dialog.
             this.onClick(
                 dialog,
-                DialogInterface.BUTTON_POSITIVE
+                DialogInterface.BUTTON_POSITIVE,
             )
             dialog.dismiss()
         }

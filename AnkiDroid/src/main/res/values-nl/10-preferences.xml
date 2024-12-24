@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">Meer dan %d kaarten te doen</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Trillen</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Licht knipperen</string>
-    <string name="timeout_answer_text" maxLength="41">Automatisch het antwoord tonen</string>
-    <string name="timeout_answer_summ2">Toon het antwoord automatisch zonder input van de gebruiker. Configureer vanaf setopties.</string>
     <string name="select_locale_title">Taal selecteren</string>
     <string name="software_render" maxLength="41">Hardware render kaart uitschakelen</string>
     <string name="software_render_summ">Hardware render is sneller maar kan problemen hebben, met name op Android 8/8.1. Als u delen van de gebruikersinterface voor de beoordeling van de kaart niet kunt zien, probeer dan deze instelling.</string>
@@ -270,21 +268,21 @@
     <string name="axis_picker_move_joystick">Joystick/bewegingscontroller bewegen</string>
     <string name="user_actions" maxLength="41">Gebruikersacties</string>
     <string name="user_actions_summary" maxLength="41">Activeer JavaScript vanuit het beoordelingsscherm</string>
-    <string name="user_action_1" maxLength="41">Gebruikersactie 1</string>
-    <string name="user_action_2" maxLength="41">Gebruikersactie 2</string>
-    <string name="user_action_3" maxLength="41">Gebruikersactie 3</string>
-    <string name="user_action_4" maxLength="41">Gebruikersactie 4</string>
-    <string name="user_action_5" maxLength="41">Gebruikersactie 5</string>
-    <string name="user_action_6" maxLength="41">Gebruikersactie 6</string>
-    <string name="user_action_7" maxLength="41">Gebruikersactie 7</string>
-    <string name="user_action_8" maxLength="41">Gebruikersactie 8</string>
-    <string name="user_action_9" maxLength="41">Gebruikersactie 9</string>
+    <string name="user_action_1" maxLength="28">Gebruikersactie 1</string>
+    <string name="user_action_2" maxLength="28">Gebruikersactie 2</string>
+    <string name="user_action_3" maxLength="28">Gebruikersactie 3</string>
+    <string name="user_action_4" maxLength="28">Gebruikersactie 4</string>
+    <string name="user_action_5" maxLength="28">Gebruikersactie 5</string>
+    <string name="user_action_6" maxLength="28">Gebruikersactie 6</string>
+    <string name="user_action_7" maxLength="28">Gebruikersactie 7</string>
+    <string name="user_action_8" maxLength="28">Gebruikersactie 8</string>
+    <string name="user_action_9" maxLength="28">Gebruikersactie 9</string>
     <string name="toggle_auto_advance" maxLength="41">Automatische vooruitgang in-/uitschakelen</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecteer kaart zijde</string>
     <string name="card_side_question">Vraag</string>
     <string name="card_side_answer">Antwoord</string>
-    <string name="card_side_both">Vraag &amp; antwoord</string>
+    <string name="card_side_both" maxLength="28">Vraag &amp; antwoord</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">V: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>

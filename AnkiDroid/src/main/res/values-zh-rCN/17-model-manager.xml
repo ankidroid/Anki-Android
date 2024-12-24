@@ -26,7 +26,7 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">笔记类型</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">笔记类型</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">管理字段</string>
     <!--Toasts-->
     <string name="toast_last_model">无法删除最后一个卡牌记录类型</string>
@@ -51,7 +51,7 @@
     <string name="model_field_editor_language_hint_dialog_success_result">设置语言提示为 %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">编辑字段</string>
-    <string name="model_field_editor_add">添加字段</string>
+    <string name="model_field_editor_add" maxLength="28">添加字段</string>
     <string name="model_field_editor_delete">删除字段</string>
     <string name="model_field_editor_rename">重命名字段</string>
     <string name="model_field_editor_language_hint">设置键盘语言提示</string>
@@ -79,5 +79,5 @@
     <string name="model_manager_deck_override_added_message">将“%1$s”的默认牌组设置为“%2$s”</string>
     <string name="model_manager_deck_override_removed_message">已移除“%s”的默认牌组</string>
     <string name="deck_override_explanation">选择将新的“%s”卡片放入其中的牌组</string>
-    <string name="deck_picker_dialog_filter_decks">筛选牌组</string>
+    <string name="deck_picker_dialog_filter_decks" maxLength="28">筛选牌组</string>
 </resources>

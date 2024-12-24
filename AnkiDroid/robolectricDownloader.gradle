@@ -12,6 +12,7 @@ import java.nio.file.Files
 
 // List from: https://github.com/robolectric/robolectric/blob/master/robolectric/src/main/java/org/robolectric/plugins/DefaultSdkProvider.java
 // This list will need to be updated for new Android SDK versions that come out.
+// Note: the PREINSTRUMENTED_VERSION constant is what you put on the end of the artifact
 
 // Only the versions currently used in AnkiDroid Robolectric tests are active, the rest are commented out
 // To update these versions, open a terminal in the Anki-Android directory and perform the following steps:
@@ -32,6 +33,7 @@ def robolectricAndroidSdkVersions = [
 //        [androidVersion: "12.1", frameworkSdkBuildVersion:  "8229987"],
 //        [androidVersion: "13", frameworkSdkBuildVersion:  "9030017"],
         [androidVersion: "14", frameworkSdkBuildVersion: "10818077"],
+        [androidVersion: "15", frameworkSdkBuildVersion: "12650502"],
 ]
 
 // Base, public task - will be displayed in ./gradlew robolectricDownloader:tasks
@@ -42,7 +44,8 @@ tasks.register('robolectricSdkDownload') {
 
 // Generate the configuration and actual copy tasks.
 robolectricAndroidSdkVersions.forEach { robolectricSdkVersion ->
-    def version = "${robolectricSdkVersion['androidVersion']}-robolectric-${robolectricSdkVersion['frameworkSdkBuildVersion']}-i6"
+    // the final part of this `-i<number>` comes from PREINSTRUMENTED_VERSION in upstream DefaultSdkProvider
+    def version = "${robolectricSdkVersion['androidVersion']}-robolectric-${robolectricSdkVersion['frameworkSdkBuildVersion']}-i7"
 
     // Creating a configuration with a dependency allows Gradle to manage the actual resolution of
     // the jar file

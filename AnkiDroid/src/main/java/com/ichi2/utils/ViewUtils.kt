@@ -16,9 +16,12 @@
 
 package com.ichi2.utils
 
+import android.app.Activity
 import android.graphics.Rect
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.view.OnReceiveContentListener
+import androidx.draganddrop.DropHelper
 
 /** @see View.performClick */
 fun View.performClickIfEnabled() {
@@ -41,4 +44,25 @@ fun View.rawHitTest(event: MotionEvent): Boolean {
     rect.bottom += location[1]
 
     return rect.contains(event.rawX.toInt(), event.rawY.toInt())
+}
+
+/**
+ * If possible, configures a [View] for drag and drop operations, including highlighting that
+ * indicates the view is a drop target. Sets a listener that enables the view to handle dropped data.
+ *
+ * @see DropHelper.configureView
+ */
+fun View.configureView(
+    activity: Activity,
+    mimeTypes: Array<String>,
+    options: DropHelper.Options,
+    onReceiveContentListener: OnReceiveContentListener,
+) {
+    DropHelper.configureView(
+        activity,
+        this,
+        mimeTypes,
+        options,
+        onReceiveContentListener,
+    )
 }

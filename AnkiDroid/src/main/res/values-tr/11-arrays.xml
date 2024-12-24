@@ -50,14 +50,14 @@
     <!-- 01-core:menu_suspend_card -->
     <!-- new_order_labels -->
     <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Önce en eski görüntülenir</string>
+    <string name="cram_deck_conf_order_oldest_seen_first">Önce en eski görülenler</string>
     <string name="cram_deck_conf_order_random">Rastgele</string>
     <string name="cram_deck_conf_order_increasing_intervals">Artan aralıkta</string>
     <string name="cram_deck_conf_order_decreasing_intervals">Azalan aralıkta</string>
     <string name="cram_deck_conf_order_most_lapsed">En çok hata</string>
     <string name="cram_deck_conf_order_order_added">Ekleniş sırası</string>
     <string name="cram_deck_conf_order_order_due">Çıkma sırası</string>
-    <string name="cram_deck_conf_order_latest_added_first">En son eklenenler ilk</string>
+    <string name="cram_deck_conf_order_latest_added_first">Önce en son eklenenler</string>
     <string name="cram_deck_conf_order_relative_overdueness">Görece vadesi geçmişlik</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Geçerli desteyi kullan</string>
@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">çok büyük</string>
     <string name="html_size_code_xx_large">çok çok büyük</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Tekrar cevapla</string>
-    <string name="answer_hard">Zor cevapla</string>
-    <string name="answer_good">İyi cevapla</string>
-    <string name="answer_easy">Kolay cevapla</string>
-    <string name="gesture_play">Medyayı oynat</string>
-    <string name="gesture_abort_learning">Close reviewer</string>
-    <string name="gesture_flag_red">Kırmızı Bayrağı Aç/Kapat</string>
-    <string name="gesture_flag_orange">Turuncu Bayrağı Aç/Kapat</string>
-    <string name="gesture_flag_green">Yeşil Bayrağı Aç/Kapat</string>
-    <string name="gesture_flag_blue">Mavi Bayrağı Aç/Kapat</string>
-    <string name="gesture_flag_pink">Pembe Bayrağı Aç/Kapat</string>
-    <string name="gesture_flag_turquoise">Turkuaz Bayrağı Aç/Kapat</string>
-    <string name="gesture_flag_purple">Mor Bayrağı Aç/Kapat</string>
-    <string name="gesture_flag_remove">Bayrağı Kaldır</string>
-    <string name="gesture_page_up">Yukarı</string>
-    <string name="gesture_page_down">Aşağı</string>
-    <string name="gesture_abort_sync">Close reviewer and Sync</string>
-    <string name="gesture_toggle_whiteboard">Yazı Tahtasını Aç/Kapat</string>
-    <string name="gesture_show_hint">İpucu Göster</string>
-    <string name="gesture_show_all_hints">Tüm İpuçlarını Göster</string>
-    <string name="record_voice">Ses kaydet</string>
-    <string name="replay_voice">Sesi tekrar oynat</string>
-    <string name="save_voice">Kaydı Kaydet</string>
+    <string name="answer_again" maxLength="41">Tekrar cevapla</string>
+    <string name="answer_hard" maxLength="41">Zor cevapla</string>
+    <string name="answer_good" maxLength="41">İyi cevapla</string>
+    <string name="answer_easy" maxLength="41">Kolay cevapla</string>
+    <string name="gesture_play" maxLength="41">Medyayı oynat</string>
+    <string name="gesture_abort_learning" maxLength="41">Çalışmayı kapat</string>
+    <string name="gesture_flag_red" maxLength="41">Kırmızı Bayrağı Aç/Kapat</string>
+    <string name="gesture_flag_orange" maxLength="41">Turuncu Bayrağı Aç/Kapat</string>
+    <string name="gesture_flag_green" maxLength="41">Yeşil Bayrağı Aç/Kapat</string>
+    <string name="gesture_flag_blue" maxLength="41">Mavi Bayrağı Aç/Kapat</string>
+    <string name="gesture_flag_pink" maxLength="41">Pembe Bayrağı Aç/Kapat</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Turkuaz Bayrağı Aç/Kapat</string>
+    <string name="gesture_flag_purple" maxLength="41">Mor Bayrağı Aç/Kapat</string>
+    <string name="gesture_flag_remove" maxLength="41">Bayrağı Kaldır</string>
+    <string name="gesture_page_up" maxLength="41">Yukarı</string>
+    <string name="gesture_page_down" maxLength="41">Aşağı</string>
+    <string name="gesture_abort_sync" maxLength="41">Çalışmayı kapatıp senkronize et</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Yazı Tahtasını Aç/Kapat</string>
+    <string name="gesture_show_hint" maxLength="41">İpucu Göster</string>
+    <string name="gesture_show_all_hints" maxLength="41">Tüm İpuçlarını Göster</string>
+    <string name="record_voice" maxLength="41">Ses kaydet</string>
+    <string name="replay_voice" maxLength="41">Sesi tekrar oynat</string>
+    <string name="save_voice" maxLength="41">Kaydı Kaydet</string>
 </resources>

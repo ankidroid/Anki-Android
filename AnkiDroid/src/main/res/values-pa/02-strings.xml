@@ -55,21 +55,21 @@
     <string name="edit_occlusions">ਮੌਕਿਆਂ ਦਾ ਸੰਪਾਦਨ ਕਰੋ</string>
     <string name="tag_name">ਟੈਗ ਨਾਮ</string>
     <string name="add_new_filter_tags">ਟੈਗ ਜੋੜੋ/ਫਿਲਟਰ ਕਰੋ</string>
-    <string name="add_tag">ਟੈਗ ਸ਼ਾਮਲ ਕਰੋ</string>
-    <string name="check_all_tags">ਸਾਰੇ ਟੈਗਾਂ ਨੂੰ ਚੈੱਕ/ਅਨਚੈਕ ਕਰੋ</string>
-    <string name="filter_tags">ਫਿਲਟਰ ਟੈਗ</string>
+    <string name="add_tag" maxLength="28">ਟੈਗ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="check_all_tags" maxLength="28">ਸਾਰੇ ਟੈਗਾਂ ਨੂੰ ਚੈੱਕ/ਅਨਚੈਕ ਕਰੋ</string>
+    <string name="filter_tags" maxLength="28">ਫਿਲਟਰ ਟੈਗ</string>
     <string name="no_tags">ਤੁਸੀਂ ਅਜੇ ਤੱਕ ਕੋਈ ਵੀ ਟੈਗ ਸ਼ਾਮਲ ਨਹੀਂ ਕੀਤੇ ਹਨ</string>
     <string name="updated_version">ਸੰਸਕਰਣ %s ਵਿੱਚ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰੋ</string>
-    <string name="enable_stylus">ਸਟਾਈਲਸ ਲਿਖਣ ਨੂੰ ਸਮਰੱਥ ਬਣਾਓ</string>
+    <string name="save_whiteboard" maxLength="28">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰੋ</string>
+    <string name="enable_stylus" maxLength="28">ਸਟਾਈਲਸ ਲਿਖਣ ਨੂੰ ਸਮਰੱਥ ਬਣਾਓ</string>
     <string name="disable_stylus">Disable stylus writing</string>
-    <string name="enable_whiteboard">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਸਮਰੱਥ ਬਣਾਓ</string>
+    <string name="enable_whiteboard" maxLength="28">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਸਮਰੱਥ ਬਣਾਓ</string>
     <string name="disable_whiteboard">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਅਯੋਗ ਕਰੋ</string>
     <string name="show_whiteboard">ਵ੍ਹਾਈਟਬੋਰਡ ਦਿਖਾਓ</string>
-    <string name="hide_whiteboard">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਲੁਕਾਓ</string>
-    <string name="clear_whiteboard">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਸਾਫ਼ ਕਰੋ</string>
-    <string name="replay_audio">ਆਡੀਓ ਨੂੰ ਦੁਬਾਰਾ ਚਲਾਓ</string>
+    <string name="hide_whiteboard" maxLength="28">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਲੁਕਾਓ</string>
+    <string name="clear_whiteboard" maxLength="28">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਸਾਫ਼ ਕਰੋ</string>
+    <string name="replay_audio" maxLength="28">ਆਡੀਓ ਨੂੰ ਦੁਬਾਰਾ ਚਲਾਓ</string>
     <string name="leech_suspend_notification">ਕਾਰਡ ਨੂੰ ਲੀਚ ਕੀਤੇ ਅਤੇ ਮੁਅੱਤਲ ਵਜੋਂ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਗਿਆ ਸੀ</string>
     <string name="leech_notification">ਲੀਚ ਵਜੋਂ ਚਿੰਨ੍ਹਿਤ ਕਾਰਡ</string>
     <string name="webview_crash_unknown">Unknown error</string>
@@ -80,28 +80,24 @@
     <string name="webview_crash_fatal">ਘਾਤਕ ਗੜਬੜ: WebView ਰੈਂਡਰਰ ਕ੍ਰੈਸ਼ ਹੋ ਗਿਆ। ਕਾਰਨ: %s</string>
     <string name="webview_crash_loop_dialog_title">ਸਿਸਟਮ WebView ਰੈਂਡਰਿੰਗ ਅਸਫਲਤਾ</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="filter_by_flags" maxLength="41">Flags</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
-    <string name="custom_study_review_forgotten">ਭੁੱਲੇ ਹੋਏ ਕਾਰਡਾਂ ਦੀ ਸਮੀਖਿਆ ਕਰੋ</string>
-    <string name="custom_study_review_ahead">Review ahead</string>
-    <string name="custom_study_random_selection">Study a random selection of cards</string>
-    <string name="custom_study_preview_new">ਨਵੇਂ ਕਾਰਡਾਂ ਦਾ ਪੂਰਵਦਰਸ਼ਨ ਕਰੋ</string>
     <string name="custom_study_limit_tags">Limit to particular tags</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">ਨੋਟਸ ਦਾ ਸੰਪਾਦਨ ਕਰੋ</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">ਨੋਟਸ ਦਾ ਸੰਪਾਦਨ ਕਰੋ</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">ਕੋਈ ਕਾਰਡ ਨਹੀਂ ਬਣਾਏ ਗਏ ਹਨ। ਕਿਰਪਾ ਕਰਕੇ ਹੋਰ ਖੇਤਰ ਭਰੋ</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">ਨੋਟ ਸੰਭਾਲ ਰਿਹਾ ਹੈ</string>
     <string name="saving_model">ਨੋਟ ਦੀ ਕਿਸਮ ਸੁਰੱਖਿਅਤ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ</string>
-    <string name="save">ਬਚਾਓ</string>
+    <string name="save" maxLength="28">ਬਚਾਓ</string>
     <string name="close">ਬੰਦ ਕਰ ਦਿਓ</string>
     <string name="select">ਚੁਣੋ</string>
     <string name="field_remapping">%1$s (“%2$s” ਤੋਂ)</string>
@@ -119,19 +115,18 @@
         <item quantity="other">%1$d ਮਿੰਟ</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid ਕਾਰਡ</string>
-    <string name="note_editor_copy_note">ਨੋਟ ਕਾਪੀ ਕਰੋ</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Reposition</string>
-    <string name="card_editor_reset_card">ਪ੍ਰਗਤੀ ਨੂੰ ਰੀਸੈਟ ਕਰੋ</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">ਮੁੜ ਤਹਿ ਕਰੋ</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">Preview</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">ਮਾਰਕਡਾਊਨ ਵਜੋਂ ਕਾਪੀ ਕਰੋ</string>
+    <string name="note_editor_copy_note" maxLength="28">ਨੋਟ ਕਾਪੀ ਕਰੋ</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Reposition</string>
+    <string name="card_editor_reset_card" maxLength="28">ਪ੍ਰਗਤੀ ਨੂੰ ਰੀਸੈਟ ਕਰੋ</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">ਮੁੜ ਤਹਿ ਕਰੋ</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Preview</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">ਮਾਰਕਡਾਊਨ ਵਜੋਂ ਕਾਪੀ ਕਰੋ</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d ਵਿੱਚੋਂ %1$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">ਨਾਮ ਬਦਲੋ</string>
-    <string name="checks_action">ਚੈਕ</string>
-    <string name="check_db">ਡਾਟਾਬੇਸ ਦੀ ਜਾਂਚ ਕਰੋ</string>
-    <string name="check_media">ਮੀਡੀਆ ਦੀ ਜਾਂਚ ਕਰੋ</string>
-    <string name="empty_cards">ਖਾਲੀ ਕਾਰਡ</string>
-    <string name="empty_card_warning">ਇਹ ਕਾਰਡ ਖਾਲੀ ਹੈ। ਡੈੱਕ ਸੂਚੀ ਸਕ੍ਰੀਨ \'ਤੇ ਮੀਨੂ ਤੋਂ \"ਖਾਲੀ ਕਾਰਡ\" ਵਿਕਲਪ ਦੀ ਵਰਤੋਂ ਕਰੋ।</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">ਨਾਮ ਬਦਲੋ</string>
+    <string name="checks_action" maxLength="28">ਚੈਕ</string>
+    <string name="check_db" maxLength="28">ਡਾਟਾਬੇਸ ਦੀ ਜਾਂਚ ਕਰੋ</string>
+    <string name="check_media" maxLength="28">ਮੀਡੀਆ ਦੀ ਜਾਂਚ ਕਰੋ</string>
+    <string name="empty_cards" maxLength="28">ਖਾਲੀ ਕਾਰਡ</string>
     <string name="unknown_type_field_warning">ਜਵਾਬ ਟਾਈਪ ਕਰੋ: ਅਗਿਆਤ ਖੇਤਰ %s</string>
     <string name="delete_deck">ਡੈੱਕ ਨੂੰ ਮਿਟਾਇਆ ਜਾ ਰਿਹਾ ਹੈ&#8230;</string>
     <string name="info_rate">AnkiDroid ਨੂੰ ਰੇਟ ਕਰੋ</string>
@@ -165,12 +160,11 @@
     <string name="export_choice_share">ਇਹ ਸਾਂਝਾ ਕਰੀਏ</string>
     <string name="export_choice_save_to">ਵਿੱਚ ਸੁਰੱਖਿਅਤ ਕਰੋ</string>
     <string name="export_saving_exported_collection">ਨਿਰਯਾਤ ਕੀਤੀ ਫਾਈਲ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">ਵਿਕਲਪ</string>
-    <string name="menu__deck_options">ਡੈੱਕ ਵਿਕਲਪ</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">ਵਿਕਲਪ</string>
+    <string name="menu__deck_options" maxLength="28">ਡੈੱਕ ਵਿਕਲਪ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ਅਧਿਐਨ ਦੇ ਵਿਕਲਪ</string>
-    <string name="select_tts">TTS ਭਾਸ਼ਾ ਸੈੱਟ ਕਰੋ</string>
-    <string name="custom_study">ਕਸਟਮ ਅਧਿਐਨ</string>
-    <string name="more_options">ਹੋਰ</string>
+    <string name="select_tts" maxLength="28">TTS ਭਾਸ਼ਾ ਸੈੱਟ ਕਰੋ</string>
+    <string name="custom_study" maxLength="28">ਕਸਟਮ ਅਧਿਐਨ</string>
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
     <string name="steps_error">ਕਦਮਾਂ ਦੀ ਗਿਣਤੀ 0 ਤੋਂ ਵੱਧ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ</string>
     <string name="steps_min_error">ਘੱਟੋ-ਘੱਟ ਇੱਕ ਕਦਮ ਦੀ ਲੋੜ ਹੈ</string>
@@ -191,17 +185,17 @@
     <string name="web_page_error">ਪੰਨਾ ਲੋਡ ਕਰਨ ਵਿੱਚ ਤਰੁੱਟੀ: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">ਪਿਛੋਕੜ</string>
-    <string name="choose_an_image">ਚਿੱਤਰ ਨੂੰ ਚੁਣੋ</string>
+    <string name="background_image_title" maxLength="41">ਪਿਛੋਕੜ</string>
+    <string name="choose_an_image" maxLength="41">ਚਿੱਤਰ ਨੂੰ ਚੁਣੋ</string>
     <string name="remove_background_image">ਕੀ ਪਿਛੋਕੜ ਨੂੰ ਹਟਾਉਣਾ ਹੈ?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">ਡਿਫੌਲਟ ਰੀਸਟੋਰ ਕਰੋ</string>
+    <string name="restore_default" maxLength="28">ਡਿਫੌਲਟ ਰੀਸਟੋਰ ਕਰੋ</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ਖਾਲੀ</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">ਵ੍ਹਾਈਟਬੋਰਡ ਚਿੱਤਰ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰਨ ਵਿੱਚ ਅਸਫਲ। %s</string>
     <string name="white_board_image_saved">ਵ੍ਹਾਈਟਬੋਰਡ ਚਿੱਤਰ %s ਵਿੱਚ ਸੁਰੱਖਿਅਤ ਕੀਤਾ ਗਿਆ</string>
-    <string name="title_whiteboard_pen_color">ਵ੍ਹਾਈਟਬੋਰਡ ਪੈੱਨ ਦਾ ਰੰਗ</string>
-    <string name="title_whiteboard_editor">ਵ੍ਹਾਈਟਬੋਰਡ ਸੰਪਾਦਕ</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">ਵ੍ਹਾਈਟਬੋਰਡ ਪੈੱਨ ਦਾ ਰੰਗ</string>
+    <string name="title_whiteboard_editor" maxLength="28">ਵ੍ਹਾਈਟਬੋਰਡ ਸੰਪਾਦਕ</string>
     <string name="user_is_a_robot">ਖੋਜਿਆ ਆਟੋਮੈਟਿਕ ਟੈਸਟ. ਜੇਕਰ ਤੁਸੀਂ ਮਨੁੱਖ ਹੋ, ਤਾਂ AnkiDroid ਸਹਾਇਤਾ ਨਾਲ ਸੰਪਰਕ ਕਰੋ</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
@@ -216,12 +210,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ਕਾਰਡ ਸਮੱਗਰੀ ਅਸ਼ੁੱਧੀ: \'%s\' ਲੋਡ ਕਰਨ ਵਿੱਚ ਅਸਫਲ</string>
     <!-- Deck Picker -->
-    <string name="search_decks">ਖੋਜ ਡੈੱਕ</string>
+    <string name="search_decks" maxLength="28">ਖੋਜ ਡੈੱਕ</string>
     <string name="ankidroid_init_failed_webview_title">ਘਾਤਕ ਗਲਤੀ</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid ਸਿਸਟਮ WebView \'ਤੇ ਨਿਰਭਰ ਕਰਦਾ ਹੈ ਜੋ ਕਿ ਉਪਲਬਧ ਨਹੀਂ ਹੈ। ਇਹ ਉਦੋਂ ਹੋ ਸਕਦਾ ਹੈ ਜੇਕਰ ਸਿਸਟਮ ਅੱਪਡੇਟ ਸਥਾਪਤ ਕਰ ਰਿਹਾ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਕੁਝ ਮਿੰਟਾਂ ਵਿੱਚ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">ਫੌਂਟ ਦਾ ਆਕਾਰ</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">ਟੂਲਬਾਰ ਦਿਖਾਓ</string>
+    <string name="menu_font_size" maxLength="28">ਫੌਂਟ ਦਾ ਆਕਾਰ</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ਟੂਲਬਾਰ ਦਿਖਾਓ</string>
     <string name="format_insert_bold">ਬੋਲਡ ਵਜੋਂ ਫਾਰਮੈਟ ਕਰੋ</string>
     <string name="format_insert_italic">ਇਟਾਲਿਕ ਵਜੋਂ ਫਾਰਮੈਟ ਕਰੋ</string>
     <string name="format_insert_underline">ਅੰਡਰਲਾਈਨ ਵਜੋਂ ਫਾਰਮੈਟ ਕਰੋ</string>
@@ -243,8 +237,8 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">ਤੁਹਾਨੂੰ AnkiDroid ਨੂੰ ਸ਼ਾਰਟਕੱਟ ਜੋੜਨ ਦੀ ਇਜਾਜ਼ਤ ਦੇਣ ਲਈ iManager ਦੀ ਵਰਤੋਂ ਕਰਨ ਦੀ ਲੋੜ ਹੋ ਸਕਦੀ ਹੈ</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">ਤੁਹਾਡੀ ਹੋਮ ਸਕ੍ਰੀਨ AnkiDroid ਨੂੰ ਸ਼ਾਰਟਕੱਟ ਜੋੜਨ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਦਿੰਦੀ</string>
     <string name="create_shortcut_error">ਸ਼ਾਰਟਕੱਟ ਜੋੜਨ ਵਿੱਚ ਤਰੁੱਟੀ: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">ਵਾਕਾਂ ਨੂੰ ਵੱਡਾ ਕਰੋ</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">ਸਕ੍ਰੋਲ ਟੂਲਬਾਰ</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">ਵਾਕਾਂ ਨੂੰ ਵੱਡਾ ਕਰੋ</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">ਸਕ੍ਰੋਲ ਟੂਲਬਾਰ</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -267,7 +261,7 @@
     <string name="check_network">ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ ਨੈੱਟਵਰਕ ਕਨੈਕਸ਼ਨ ਦੀ ਜਾਂਚ ਕਰੋ</string>
     <string name="search_using_deck_name">ਡੇਕ ਨਾਮ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਖੋਜ ਕਰੋ</string>
     <string name="external_storage_unavailable">ਡਾਊਨਲੋਡ ਅਧੂਰਾ ਛੱਡਿਆ ਗਿਆ, ਕੋਈ ਬਾਹਰੀ ਸਟੋਰੇਜ ਉਪਲਬਧ ਨਹੀਂ ਹੈ</string>
-    <string name="home">ਘਰ</string>
+    <string name="home" maxLength="28">ਘਰ</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">ਕਾਰਡ ਦੱਬਿਆ ਗਿਆ।</string>
@@ -329,7 +323,7 @@
         <item quantity="one">%d card unburied</item>
         <item quantity="other">%d cards unburied</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Reposition</string>
     <string name="start_recording">ਰਿਕਾਰਡ</string>
     <string name="stop_recording">ਪਕੜਨਾ</string>
     <string name="play_recording">ਖੇਡੋ</string>
@@ -353,4 +347,6 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
     <string name="show_shortcuts_message">Press Alt+K to show keyboard shortcuts</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
+    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
 </resources>

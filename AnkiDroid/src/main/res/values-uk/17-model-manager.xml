@@ -26,7 +26,7 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Керування типами записів</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">Керування типами записів</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Керувати полями</string>
     <!--Toasts-->
     <string name="toast_last_model">Ви не можете видалити останній тип примітки</string>
@@ -57,7 +57,7 @@
     <string name="model_field_editor_language_hint_dialog_success_result">Встановити %s як мову підказок </string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Редагувати поля</string>
-    <string name="model_field_editor_add">Додати поле</string>
+    <string name="model_field_editor_add" maxLength="28">Додати поле</string>
     <string name="model_field_editor_delete">Видалити поле</string>
     <string name="model_field_editor_rename">Перейменувати поле</string>
     <string name="model_field_editor_language_hint">Встановлення мови підказок клавіатури</string>
@@ -85,5 +85,5 @@
     <string name="model_manager_deck_override_added_message">«%2$s» встановлена як колода за замовчуванням для «%1$s»</string>
     <string name="model_manager_deck_override_removed_message">Видалено колоду за замовчуванням для «%s»</string>
     <string name="deck_override_explanation">Оберіть колоду для розміщення нових «%s» карток</string>
-    <string name="deck_picker_dialog_filter_decks">Фільтрувати колоди</string>
+    <string name="deck_picker_dialog_filter_decks" maxLength="28">Фільтрувати колоди</string>
 </resources>

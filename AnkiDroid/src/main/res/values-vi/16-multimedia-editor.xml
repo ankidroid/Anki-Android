@@ -59,7 +59,6 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Đã xảy ra lỗi</string>
-    <string name="multimedia_editor_svg_preview">SVGs không có sẵn để xem trước</string>
     <string name="multimedia_editor_png_paste_error">Lỗi chuyển đổi hình ảnh trong clipboard sang png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Đính kèm nội dung đa phương tiện vào trường %1$s</string>
     <!-- Audio view -->
@@ -69,10 +68,10 @@
     <string name="multimedia_editor_audio_view_create_failed">Không thể tạo thanh công cụ ghi</string>
     <!-- Crop function-->
     <string name="crop_image">Bạn có muốn cắt hình ảnh này không?</string>
-    <string name="crop_button">Cắt hình ảnh</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
+    <string name="crop_button" maxLength="28">Cắt hình ảnh</string>
+    <string name="save_dialog_content">Kích thước hình ảnh hiện tại là %sMB. Giới hạn kích thước hình ảnh mặc định là 1MB. Bạn có muốn nén nó?</string>
     <string name="select_image_failed">"Chọn hình ảnh không thành công, Vui lòng thử lại"</string>
     <string name="activity_result_unexpected">Ứng dụng trả về một giá trị không mong muốn. Bạn có thể cần sử dụng một ứng dụng khác</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Nội dung đoạn</string>
-    <string name="reselect">Chọn lại</string>
+    <string name="reselect" maxLength="28">Chọn lại</string>
 </resources>

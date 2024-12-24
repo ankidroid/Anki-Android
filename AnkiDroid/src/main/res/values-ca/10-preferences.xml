@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">Més de %d cartes per fer</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibra</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Parpellejar el llum</string>
-    <string name="timeout_answer_text" maxLength="41">Visualització automàtica de la resposta</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Seleccioneu l\'idioma</string>
     <string name="software_render" maxLength="41">Desactiva hardware de mostrar carta</string>
     <string name="software_render_summ">La mostra per hardware és més ràpida, però pot tenir problemes, concretament a Android 8 / 8.1. Si no podeu veure parts de la carta, proveu aquesta configuració.</string>
@@ -270,21 +268,21 @@
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <string name="user_actions" maxLength="41">User actions</string>
     <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="41">User action 1</string>
-    <string name="user_action_2" maxLength="41">User action 2</string>
-    <string name="user_action_3" maxLength="41">User action 3</string>
-    <string name="user_action_4" maxLength="41">User action 4</string>
-    <string name="user_action_5" maxLength="41">User action 5</string>
-    <string name="user_action_6" maxLength="41">User action 6</string>
-    <string name="user_action_7" maxLength="41">User action 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="user_action_1" maxLength="28">User action 1</string>
+    <string name="user_action_2" maxLength="28">User action 2</string>
+    <string name="user_action_3" maxLength="28">User action 3</string>
+    <string name="user_action_4" maxLength="28">User action 4</string>
+    <string name="user_action_5" maxLength="28">User action 5</string>
+    <string name="user_action_6" maxLength="28">User action 6</string>
+    <string name="user_action_7" maxLength="28">User action 7</string>
+    <string name="user_action_8" maxLength="28">User action 8</string>
+    <string name="user_action_9" maxLength="28">User action 9</string>
     <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecciona cara de la carta</string>
     <string name="card_side_question">Pregunta</string>
     <string name="card_side_answer">Resposta</string>
-    <string name="card_side_both">Pregunta &amp; Resposta</string>
+    <string name="card_side_both" maxLength="28">Pregunta &amp; Resposta</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">P: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">R: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>

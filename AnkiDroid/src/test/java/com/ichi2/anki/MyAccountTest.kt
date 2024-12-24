@@ -29,13 +29,13 @@ import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class MyAccountTest : RobolectricTest() {
-
     @Test
     fun testLoginEmailPasswordProvided() {
-        val myAccount = super.startActivityNormallyOpenCollectionWithIntent(
-            MyAccount::class.java,
-            Intent()
-        )
+        val myAccount =
+            super.startActivityNormallyOpenCollectionWithIntent(
+                MyAccount::class.java,
+                Intent(),
+            )
 
         val testPassword = "randomStrongPassword"
         val testEmail = "random.email@example.com"
@@ -48,10 +48,11 @@ class MyAccountTest : RobolectricTest() {
 
     @Test
     fun testLoginFailsNoEmailProvided() {
-        val myAccount = super.startActivityNormallyOpenCollectionWithIntent(
-            MyAccount::class.java,
-            Intent()
-        )
+        val myAccount =
+            super.startActivityNormallyOpenCollectionWithIntent(
+                MyAccount::class.java,
+                Intent(),
+            )
 
         val testPassword = "randomStrongPassword"
 
@@ -62,10 +63,11 @@ class MyAccountTest : RobolectricTest() {
 
     @Test
     fun testLoginFailsNoPasswordProvided() {
-        val myAccount = super.startActivityNormallyOpenCollectionWithIntent(
-            MyAccount::class.java,
-            Intent()
-        )
+        val myAccount =
+            super.startActivityNormallyOpenCollectionWithIntent(
+                MyAccount::class.java,
+                Intent(),
+            )
 
         val testEmail = "random.email@example.com"
 

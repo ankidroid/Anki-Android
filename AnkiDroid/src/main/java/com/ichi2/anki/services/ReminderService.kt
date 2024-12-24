@@ -34,26 +34,33 @@ import timber.log.Timber
 
 class ReminderService : BroadcastReceiver() {
     /** Cancelling all deck reminder. We used to use them, now we have deck option reminders.  */
-    private fun cancelDeckReminder(context: Context, intent: Intent) {
+    private fun cancelDeckReminder(
+        context: Context,
+        intent: Intent,
+    ) {
         // 0 Is not a valid deck id.
         val deckId = intent.getLongExtra(EXTRA_DECK_ID, 0)
         if (deckId == 0L) {
             return
         }
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val reminderIntent = PendingIntentCompat.getBroadcast(
-            context,
-            deckId.toInt(),
-            Intent(context, ReminderService::class.java).putExtra(EXTRA_DECK_OPTION_ID, deckId),
-            0,
-            false
-        )
+        val reminderIntent =
+            PendingIntentCompat.getBroadcast(
+                context,
+                deckId.toInt(),
+                Intent(context, ReminderService::class.java).putExtra(EXTRA_DECK_OPTION_ID, deckId),
+                0,
+                false,
+            )
         if (reminderIntent != null) {
             alarmManager.cancel(reminderIntent)
         }
     }
 
-    override fun onReceive(context: Context, intent: Intent) {
+    override fun onReceive(
+        context: Context,
+        intent: Intent,
+    ) {
         cancelDeckReminder(context, intent)
 
         // 0 is not a valid dconf id.
@@ -62,12 +69,13 @@ class ReminderService : BroadcastReceiver() {
             Timber.w("onReceive - dConfId 0, returning")
             return
         }
-        val col: Collection = try {
-            CollectionManager.getColUnsafe()
-        } catch (t: Throwable) {
-            Timber.w(t, "onReceive - unexpectedly unable to get collection. Returning.")
-            return
-        }
+        val col: Collection =
+            try {
+                CollectionManager.getColUnsafe()
+            } catch (t: Throwable) {
+                Timber.w(t, "onReceive - unexpectedly unable to get collection. Returning.")
+                return
+            }
         if (!CollectionManager.isOpenUnsafe()) {
             Timber.w("onReceive - null or closed collection, unable to process reminders")
             return
@@ -90,40 +98,43 @@ class ReminderService : BroadcastReceiver() {
                 continue
             }
             Timber.v("onReceive - deck '%s' due count %d", deckDue.fullDeckName, total)
-            val notification = NotificationCompat.Builder(
-                context,
-                Channel.DECK_REMINDERS.id
-            )
-                .setCategory(NotificationCompat.CATEGORY_REMINDER)
-                .setContentTitle(context.getString(R.string.reminder_title))
-                .setContentText(
-                    context.resources.getQuantityString(
-                        R.plurals.reminder_text,
-                        total,
-                        deckDue.fullDeckName,
-                        total
-                    )
-                )
-                .setSmallIcon(R.drawable.ic_star_notify)
-                .setColor(context.getColor(R.color.material_light_blue_700))
-                .setContentIntent(
-                    PendingIntentCompat.getActivity(
+            val notification =
+                NotificationCompat
+                    .Builder(
                         context,
-                        deckId.toInt(),
-                        getReviewDeckIntent(context, deckId),
-                        PendingIntent.FLAG_UPDATE_CURRENT,
-                        false
-                    )
-                )
-                .setAutoCancel(true)
-                .build()
+                        Channel.DECK_REMINDERS.id,
+                    ).setCategory(NotificationCompat.CATEGORY_REMINDER)
+                    .setContentTitle(context.getString(R.string.reminder_title))
+                    .setContentText(
+                        context.resources.getQuantityString(
+                            R.plurals.reminder_text,
+                            total,
+                            deckDue.fullDeckName,
+                            total,
+                        ),
+                    ).setSmallIcon(R.drawable.ic_star_notify)
+                    .setColor(context.getColor(R.color.material_light_blue_700))
+                    .setContentIntent(
+                        PendingIntentCompat.getActivity(
+                            context,
+                            deckId.toInt(),
+                            getReviewDeckIntent(context, deckId),
+                            PendingIntent.FLAG_UPDATE_CURRENT,
+                            false,
+                        ),
+                    ).setAutoCancel(true)
+                    .build()
             notificationManager.notify(deckId.toInt(), notification)
             Timber.v("onReceive - notification state: %s", notification)
         }
     }
 
     // getDeckOptionDue information, will recur one time to workaround collection close if recur is true
-    private fun getDeckOptionDue(col: Collection, dConfId: Long, recur: Boolean): List<DeckNode>? {
+    private fun getDeckOptionDue(
+        col: Collection,
+        dConfId: Long,
+        recur: Boolean,
+    ): List<DeckNode>? {
         // Avoid crashes if the deck option group is deleted while we
         // are working
         if (col.dbClosed) {
@@ -163,8 +174,9 @@ class ReminderService : BroadcastReceiver() {
         const val EXTRA_DECK_OPTION_ID = "EXTRA_DECK_OPTION_ID"
         const val EXTRA_DECK_ID = "EXTRA_DECK_ID"
 
-        fun getReviewDeckIntent(context: Context, deckId: DeckId): Intent {
-            return Intent(context, IntentHandler::class.java).putExtra(EXTRA_DECK_ID, deckId)
-        }
+        fun getReviewDeckIntent(
+            context: Context,
+            deckId: DeckId,
+        ): Intent = Intent(context, IntentHandler::class.java).putExtra(EXTRA_DECK_ID, deckId)
     }
 }

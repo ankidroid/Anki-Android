@@ -18,34 +18,24 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
-import androidx.recyclerview.widget.RecyclerView
-import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.Espresso.pressBack
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions
-import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
-import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.ichi2.anki.TestUtils.activityInstance
-import com.ichi2.anki.TestUtils.clickChildViewWithId
 import com.ichi2.anki.TestUtils.isTablet
-import com.ichi2.anki.TestUtils.wasBuiltOnCI
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
-import com.ichi2.anki.testutil.ThreadUtils.sleep
+import com.ichi2.anki.testutil.disableIntroductionSlide
+import com.ichi2.anki.testutil.discardPreliminaryViews
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
+import com.ichi2.anki.testutil.tapOnCountLayouts
 import org.hamcrest.Matchers.instanceOf
-import org.junit.Assume.assumeFalse
 import org.junit.Assume.assumeTrue
-import org.junit.Ignore
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -57,34 +47,28 @@ class DeckPickerTest : InstrumentedTest() {
     @get:Rule
     val runtimePermissionRule = grantPermissions(storagePermission, notificationPermission)
 
-    @Ignore("This test appears to be flaky everywhere")
+    @Before
+    fun before() {
+        addNoteUsingBasicModel()
+        disableIntroductionSlide()
+        discardPreliminaryViews()
+    }
+
     @Test
     fun checkIfClickOnCountsLayoutOpensStudyOptionsOnMobile() {
         // Run the test only on emulator.
         assumeTrue(isEmulator())
-        assumeFalse("Test flaky in CI - #9282, skipping", wasBuiltOnCI())
 
         // For mobile. If it is not a mobile, then test will be ignored.
         assumeTrue(!isTablet)
-        val testString = System.currentTimeMillis().toString() + ""
-        createDeckWithCard(testString)
 
         // Go to RecyclerView item having "Test Deck" and click on the counts layout
-        onView(withId(R.id.files)).perform(
-            RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
-                hasDescendant(withText("TestDeck$testString")),
-                clickChildViewWithId(R.id.counts_layout)
-            )
-        )
-
-        // without this sleep, the study options fragment sometimes loses the "load and become active" race vs the assertion below.
-        // It actually won the race sometimes so sleeping a full second is generous. This should be quite stable
-        sleep(1000)
+        tapOnCountLayouts("Default")
 
         // Check if currently open Activity is StudyOptionsActivity
         assertThat(
             activityInstance,
-            instanceOf(StudyOptionsActivity::class.java)
+            instanceOf(StudyOptionsActivity::class.java),
         )
     }
 
@@ -92,51 +76,12 @@ class DeckPickerTest : InstrumentedTest() {
     fun checkIfStudyOptionsIsDisplayedOnTablet() {
         // Run the test only on emulator.
         assumeTrue(isEmulator())
-        assumeFalse("Test flaky in CI - #9282, skipping", wasBuiltOnCI())
 
         // For tablet. If it is not a tablet, then test will be ignored.
         assumeTrue(isTablet)
-        closeGetStartedScreenIfExists()
-        closeBackupCollectionDialogIfExists()
-        val testString = System.currentTimeMillis().toString() + ""
-        createDeckWithCard(testString)
 
         // Check if currently open Fragment is StudyOptionsFragment
         onView(withId(R.id.studyoptions_fragment))
             .check(ViewAssertions.matches(isDisplayed()))
-    }
-
-    private fun createDeckWithCard(testString: String) {
-        // Create a new deck
-        onView(withId(R.id.fab_main)).perform(click())
-        onView(withId(R.id.add_deck_action)).perform(click())
-        onView(withId(R.id.dialog_text_input)).perform(typeText("TestDeck$testString"))
-        onView(withText(R.string.dialog_ok)).perform(click())
-
-        // The deck is currently empty, so if we tap on it, it becomes the selected deck but doesn't enter
-        onView(withId(R.id.files)).perform(
-            RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
-                hasDescendant(withText("TestDeck$testString")),
-                clickChildViewWithId(R.id.counts_layout)
-            )
-        )
-
-        // Create a card belonging to the new deck, using Basic type (guaranteed to exist)
-        onView(withId(R.id.fab_main)).perform(click())
-        onView(withId(R.id.fab_main)).perform(click())
-
-        // Close the keyboard, it auto-focuses and obscures enough of the screen
-        // on some devices that espresso complains about global visibility being <90%
-        closeSoftKeyboard()
-        onView(withId(R.id.note_type_spinner)).perform(click())
-        onView(withText("Basic")).perform(click())
-        onView(withContentDescription("Front"))
-            .perform(typeText("SampleText$testString"))
-        onView(withId(R.id.action_save)).perform(click())
-        closeSoftKeyboard()
-
-        // Go back to Deck Picker
-        pressBack()
-        pressBack()
     }
 }

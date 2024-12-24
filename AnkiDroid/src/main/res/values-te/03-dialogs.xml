@@ -46,7 +46,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">డేటాబేస్ తనిఖీ చేయాలా?</string>
     <string name="check_db_warning">దీనికి కొంత సమయం పడుతుంది, దయచేసి వేచి వుండండి</string>
-    <string name="contextmenu_deckpicker_delete_deck">డెక్ను త్వలిగించు</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">డెక్ను త్వలిగించు</string>
     <string name="delete_deck_title">డెక్ను త్వలిగించాల?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">%1$sలో అన్ని కార్డ్‌లను తొలగించాలా? ఇది %2$d కార్డ్‌ని కలిగి ఉంది</item>
@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">మీరు నిజంగా డాటాబేస్ రిపేరు చేయాలనుకుంటున్నారా? \n\n ప్రయత్నం ప్రారంభించటానికి ముందు, \"కాపీ\" ఫోల్డర్ \"%s\" లో సృష్టించబడుతుంది.</string>
     <string name="intent_aedict_empty">\"default\" వర్గం ఖాళీగా ఉంది</string>
     <string name="intent_aedict_category">AnkiDroid కు కార్డులు జోడించడానికి అన్ని నోట్ప్యాడ్లో కేతగిరీలు తొలగించండి లేదా \"default\" కు ఒక పేరును జోడించండి</string>
-    <string name="custom_study_new_total_new">డెక్‌లో కొత్త కార్డ్‌లు: %d</string>
-    <string name="custom_study_rev_total_rev">డెక్‌పై రివ్యూలు రావాల్సి ఉంది: %d</string>
     <string name="custom_study_new_extend">నేటి కొత్త కార్డ్ పరిమితిని పెంచండి/తగ్గించండి (\"-3\").</string>
     <string name="custom_study_rev_extend">నేటి సమీక్ష పరిమితిని పెంచడం/తగ్గించడం (\"-3\").</string>
     <string name="custom_study_forgotten">గత x రోజుల్లో రిజిస్టర్డ్ కార్డులను మర్చిపోయారు:</string>
     <string name="custom_study_ahead">X రోజుల ముందుగా సమీక్షించండి:</string>
-    <string name="custom_study_random">డెక్ నుండి యాదృచ్ఛికంగా x కార్డులను ఎంచుకోండి:</string>
     <string name="custom_study_preview">గత x రోజులలో జోడించిన కొత్త కార్డులను ప్రివ్యూ చేయండి:</string>
-    <string name="custom_study_rebuild_deck_corrupt">అనుకూల స్టడీ డెక్‌ని పునర్నిర్మించడం సాధ్యపడలేదు</string>
     <string name="storage_full_title">నిల్వ నిండింది</string>
     <string name="storage_almost_full_title">నిల్వ దాదాపు నిండింది</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ఖాళీ లేదు</string>
@@ -101,7 +97,7 @@
     <string name="dialog_continue">కొనసాగండి</string>
     <string name="dialog_processing">ప్రాసెస్ చేస్తోంది&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">సృష్టించు</string>
-    <string name="dialog_positive_delete">తొలగించు</string>
+    <string name="dialog_positive_delete" maxLength="28">తొలగించు</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">అచేతనం</string>
     <string name="dialog_positive_overwrite">తిరిగి వ్రాయండి</string>
@@ -186,7 +182,7 @@
     <string name="help_item_mailing_list">మెయిలింగ్ జాబితా</string>
     <string name="help_item_reddit">రెడ్డిట్</string>
     <string name="help_item_report_bug">బగ్‌ని నివేదించండి</string>
-    <string name="help_title_support_ankidroid">AnkiDroidకి మద్దతు ఇవ్వండి</string>
+    <string name="help_title_support_ankidroid" maxLength="28">AnkiDroidకి మద్దతు ఇవ్వండి</string>
     <string name="help_item_support_opencollective_donate">దానం చేయండి</string>
     <string name="help_item_support_develop_ankidroid">అభివృద్ధి చేయండి</string>
     <string name="help_item_support_rate_ankidroid">రేట్ చేయండి</string>
@@ -225,7 +221,7 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">మీ సేకరణను బ్యాకప్ చేయండి</string>
     <string name="backup_collection_message">మీరు కొంతకాలంగా మీ సేకరణను బ్యాకప్ చేయలేదు. డేటా నష్టాన్ని నివారించడానికి మీరు ఇప్పుడే దీన్ని చేయాలి</string>
-    <string name="button_backup">బ్యాకప్</string>
+    <string name="button_backup" maxLength="41">బ్యాకప్</string>
     <string name="button_disable_reminder">రిమైండర్‌ను నిలిపివేయండి</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">తర్వాత</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">దాన్ని మళ్లీ చూపించవద్దు</string>
@@ -233,7 +229,7 @@
     <string name="dismiss_backup_warning_new_user">Android గోప్యతా మార్పుల కారణంగా, యాప్‌ను అన్‌ఇన్‌స్టాల్ చేయడం వలన మీ ఫోన్ నుండి మీ డేటా మరియు ఆటోమేటెడ్ బ్యాకప్ తొలగించబడుతుంది</string>
     <string name="dismiss_backup_warning_upgrade">Android గోప్యతా మార్పుల కారణంగా, యాప్ అన్‌ఇన్‌స్టాల్ చేయబడితే మీ డేటా మరియు ఆటోమేటెడ్ బ్యాకప్‌లు యాక్సెస్ చేయబడవు</string>
     <string name="deck_already_exists">డెక్ ఇప్పటికే ఉంది</string>
-    <string name="empty_deck_name">Deck name cannot be empty</string>
+    <string name="empty_deck_name">డెక్ పేరు ఖాళీగా ఉండకూడదు</string>
     <string name="create_deck_numeric_hint">మీకు డెక్ ఆర్డరింగ్ సమస్యలు ఉంటే (ఉదా. \'2\'కి ముందు \'10\' కనిపిస్తుంది), \'2\'ని \'02\'తో భర్తీ చేయండి</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">విరామాన్ని అదే విలువకు సెట్ చేయండి</string>
@@ -263,7 +259,7 @@
     <string name="change_cloze_mode">క్లోజ్ మోడ్‌ని మార్చండి</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">సిస్టమ్ WebView పాతది. కొన్ని ఫీచర్‌లు సరిగ్గా పని చేయవు. దయచేసి దీన్ని అప్‌డేట్ చేయండి.\n\nఇన్‌స్టాల్ చేసిన వెర్షన్: %1$d\nకనీసం అవసరమైన వెర్షన్: %2$d</string>
-    <string name="compress">Compress</string>
+    <string name="compress">కుదించుము</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">భాషకు మద్దతు లేదు</string>
     <string name="tts_error_dialog_reason_text">టెక్స్ట్ టు స్పీచ్ ఇంజిన్ <b>%1$s</b> కింది భాషకు మద్దతు ఇవ్వదు: <b>%2$s</b></string>

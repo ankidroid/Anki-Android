@@ -28,12 +28,6 @@
     <issue id="StringFormatMatches" severity="fatal" />
     <issue id="StringFormatInvalid" severity="fatal" />
     <issue id="UnusedResources" severity="fatal">
-        <!-- Ignore as they'll be used for #7526 -->
-        <ignore regexp="content_picture\.png|device_access_mic\.png" />
-        <!-- Remove once #6772 is complete -->
-        <ignore regexp="edit_text_color_enabled_selector\.xml" />
-        <ignore regexp="multiline_spinner_item\.xml" />
-        <!-- end: Remove once #6772 is complete -->
         <ignore path="res/values/12-dont-translate.xml" />
         <!-- Ignore all translations except values - CrowdIn will handle deletions -->
         <!-- We only need to handle -af and all others are implicitly ignored -->
@@ -163,6 +157,39 @@
 
     <issue id="MonochromeLauncherIcon" severity="fatal" />
 
+    <issue id="ExpiredTargetSdkVersion" severity="fatal" />
+    <issue id="ObsoleteLintCustomCheck" severity="fatal" />
+    <!--          Revert lint rule changes [UnusedQuantity, MissingQuantity] from fatal to ignore             -->
+    <issue id="UnusedQuantity" severity="ignore" />
+    <issue id="MissingQuantity" severity="ignore" />
+    <issue id="ExportedPreferenceActivity" severity="fatal" />
+    <issue id="PrivateApi" severity="fatal" />
+    <issue id="ProguardSplit" severity="fatal" />
+    <issue id="Proguard" severity="fatal" />
+    <issue id="UsingHttp" severity="fatal" />
+    <issue id="AaptCrash" severity="fatal" />
+    <issue id="SdCardPath" severity="fatal" />
+    <issue id="SecureRandom" severity="fatal" />
+    <issue id="TrulyRandom" severity="fatal" />
+    <issue id="ExportedService" severity="fatal" />
+    <issue id="SetWorldReadable" severity="fatal" />
+    <issue id="SetWorldWritable" severity="fatal" />
+    <issue id="GrantAllUris" severity="fatal" />
+    <issue id="WorldReadableFiles" severity="fatal" />
+    <issue id="WorldWriteableFiles" severity="fatal" />
+    <issue id="WifiManagerLeak" severity="fatal" />
+    <issue id="WifiManagerPotentialLeak" severity="fatal" />
+    <issue id="SignatureOrSystemPermissions" severity="fatal" />
+    <issue id="SQLiteString" severity="fatal" />
+    <issue id="SSLCertificateSocketFactoryCreateSocket" severity="fatal" />
+    <issue id="SSLCertificateSocketFactoryGetInsecure" severity="fatal" />
+    <issue id="StateListReachable" severity="fatal" />
+    <issue id="AuthLeak" severity="fatal" />
+    <issue id="UseCheckPermission" severity="fatal" />
+    <issue id="UnprotectedSMSBroadcastReceiver" severity="fatal" />
+    <issue id="WrongFolder" severity="fatal" />
+    <issue id="CustomX509TrustManager" severity="fatal" />
+
     <!-- this is temporary - needed to work with android gradle plugin 8.1 -->
     <!-- ideally commits to fix this are completed, such as in https://github.com/ankidroid/Anki-Android/pull/14158 -->
     <issue id="UnspecifiedRegisterReceiverFlag" severity="ignore" />
@@ -170,20 +197,11 @@
     <!-- this is new with AGP7.1+, does not appear to create value -->
     <issue id="IntentFilterUniqueDataAttributes" severity="ignore" />
 
-    <!-- We cannot move to targetSdk 30+ yet: https://github.com/ankidroid/Anki-Android/issues/7348 -->
-    <issue id="ExpiredTargetSdkVersion" severity="ignore" />
-
     <!-- cannot enable play store language downloads until ABB used vs APK: https://github.com/ankidroid/Anki-Android/issues/9259 -->
     <issue id="AppBundleLocaleChanges" severity="ignore" />
 
     <!-- RtlSymmetry is disabled because we already have RtlHardcoded rule enabled -->
     <issue id="RtlSymmetry" severity="ignore" />
-
-    <!-- Allows Timber issues defined for AnkiDroid without an api dependency on Timber -->
-    <issue id="UnknownIssueId" severity="ignore" />
-
-    <!-- Temporarily allows obsolete lint until https://issuetracker.google.com/issues/206855622 is resolved upstream -->
-    <issue id="ObsoleteLintCustomCheck" severity="ignore" />
 
     <issue id="UseCompatTextViewDrawableXml" severity="ignore" />
     <issue id="AcceptsUserCertificates" severity="ignore" />
@@ -379,17 +397,11 @@
     <issue id="DalvikOverride" severity="ignore" />
     <issue id="OverrideAbstract" severity="ignore" />
     <issue id="ParcelCreator" severity="ignore" />
-    <issue id="UnusedQuantity" severity="ignore" />
-    <issue id="MissingQuantity" severity="ignore" />
+    <!-- ImpliedQuantity: 03-dialogs should be tools:ignore, 07-dialogs has actual problems -->
     <issue id="ImpliedQuantity" severity="ignore" />
-    <issue id="ExportedPreferenceActivity" severity="ignore" />
-    <issue id="PrivateApi" severity="ignore" />
     <issue id="PackagedPrivateKey" severity="ignore" />
     <issue id="PrivateResource" severity="ignore" />
-    <issue id="ProguardSplit" severity="ignore" />
-    <issue id="Proguard" severity="ignore" />
     <issue id="PropertyEscape" severity="ignore" />
-    <issue id="UsingHttp" severity="ignore" />
     <issue id="SpUsage" severity="ignore" />
     <issue id="InOrMmUsage" severity="ignore" />
     <issue id="PxUsage" severity="ignore" />
@@ -400,34 +412,13 @@
     <issue id="Registered" severity="ignore" />
     <issue id="RelativeOverlap" severity="ignore" />
     <issue id="RequiredSize" severity="ignore" />
-    <issue id="AaptCrash" severity="ignore" />
     <issue id="ResourceCycle" severity="ignore" />
     <issue id="ResourceName" severity="ignore" />
     <issue id="ValidRestrictions" severity="ignore" />
     <issue id="ScrollViewSize" severity="ignore" />
-    <issue id="SdCardPath" severity="ignore" />
-    <issue id="SecureRandom" severity="ignore" />
-    <issue id="TrulyRandom" severity="ignore" />
-    <issue id="ExportedContentProvider" severity="ignore" />
-    <issue id="ExportedReceiver" severity="ignore" />
-    <issue id="ExportedService" severity="ignore" />
-    <issue id="SetWorldReadable" severity="ignore" />
-    <issue id="SetWorldWritable" severity="ignore" />
-    <issue id="GrantAllUris" severity="ignore" />
-    <issue id="WorldReadableFiles" severity="ignore" />
-    <issue id="WorldWriteableFiles" severity="ignore" />
     <issue id="ServiceCast" severity="ignore" />
-    <issue id="WifiManagerLeak" severity="ignore" />
-    <issue id="WifiManagerPotentialLeak" severity="ignore" />
     <issue id="SetJavaScriptEnabled" severity="ignore" />
-    <issue id="SignatureOrSystemPermissions" severity="ignore" />
-    <issue id="SQLiteString" severity="ignore" />
-    <issue id="SSLCertificateSocketFactoryCreateSocket" severity="ignore" />
-    <issue id="SSLCertificateSocketFactoryGetInsecure" severity="ignore" />
-    <issue id="StateListReachable" severity="ignore" />
-    <issue id="AuthLeak" severity="ignore" />
     <issue id="PluralsCandidate" severity="ignore" />
-    <issue id="UseCheckPermission" severity="ignore" />
     <issue id="ResourceAsColor" severity="ignore" />
     <issue id="MissingPermission" severity="ignore" />
     <issue id="Range" severity="ignore" />
@@ -446,12 +437,9 @@
     <issue id="MissingTranslation" severity="ignore" />
     <issue id="Typos" severity="ignore" />
     <issue id="TypographyDashes" severity="ignore" />
-    <issue id="TypographyEllipsis" severity="ignore" />
     <issue id="TypographyFractions" severity="ignore" />
     <issue id="TypographyOther" severity="ignore" />
     <issue id="TypographyQuotes" severity="ignore" />
-    <issue id="UnsafeProtectedBroadcastReceiver" severity="ignore" />
-    <issue id="UnprotectedSMSBroadcastReceiver" severity="ignore" />
     <issue id="UnusedIds" severity="ignore" />
     <issue id="UseCompoundDrawables" severity="ignore" />
     <issue id="UselessLeaf" severity="ignore" />
@@ -471,12 +459,8 @@
     <issue id="InvalidId" severity="ignore" />
     <issue id="NotSibling" severity="ignore" />
     <issue id="UnknownIdInLayout" severity="ignore" />
-    <issue id="SuspiciousImport" severity="ignore" />
-    <issue id="WrongFolder" severity="ignore" />
     <issue id="WrongThreadInterprocedural" severity="ignore" />
 
-
-    <issue id="CustomX509TrustManager" severity="ignore" />
     <!-- PERF: Could improve by not using notifyDataSetChanged() -->
     <issue id="NotifyDataSetChanged" severity="ignore" />
 </lint>

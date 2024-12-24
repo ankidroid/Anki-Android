@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">x-بڑا</string>
     <string name="html_size_code_xx_large">xx-بڑا</string>
     <!-- gestures_labels -->
-    <string name="answer_again">دوبارہ جواب دیں</string>
-    <string name="answer_hard">سخت جواب دیں</string>
-    <string name="answer_good">اچھا جواب دیں</string>
-    <string name="answer_easy">آسان جواب دیں</string>
-    <string name="gesture_play">میڈیا چلائیں۔</string>
-    <string name="gesture_abort_learning">Close reviewer</string>
-    <string name="gesture_flag_red">سرخ پرچم ٹوگل کریں۔</string>
-    <string name="gesture_flag_orange">اورنج فلیگ ٹوگل کریں</string>
-    <string name="gesture_flag_green">سبز پرچم ٹوگل کریں</string>
-    <string name="gesture_flag_blue">بلیو فلیگ ٹوگل کریں</string>
-    <string name="gesture_flag_pink">گلابی پرچم ٹوگل کریں</string>
-    <string name="gesture_flag_turquoise">فیروزی پرچم ٹوگل کریں</string>
-    <string name="gesture_flag_purple">جامنی پرچم کو ٹوگل کریں</string>
-    <string name="gesture_flag_remove">جھنڈا ہٹا دیں</string>
-    <string name="gesture_page_up">صفحہ اوپر</string>
-    <string name="gesture_page_down">نیچے صفحہ</string>
-    <string name="gesture_abort_sync">Close reviewer and Sync</string>
-    <string name="gesture_toggle_whiteboard">وائٹ بورڈ کو ٹوگل کریں۔</string>
-    <string name="gesture_show_hint">اشارہ دکھائیں</string>
-    <string name="gesture_show_all_hints">تمام اشارے دکھائیں</string>
-    <string name="record_voice">آواز ریکارڈ کریں</string>
-    <string name="replay_voice">آواز کو دوبارہ چلائیں</string>
-    <string name="save_voice">ریکارڈنگ کو محفوظ کریں</string>
+    <string name="answer_again" maxLength="41">دوبارہ جواب دیں</string>
+    <string name="answer_hard" maxLength="41">سخت جواب دیں</string>
+    <string name="answer_good" maxLength="41">اچھا جواب دیں</string>
+    <string name="answer_easy" maxLength="41">آسان جواب دیں</string>
+    <string name="gesture_play" maxLength="41">میڈیا چلائیں۔</string>
+    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_flag_red" maxLength="41">سرخ پرچم ٹوگل کریں۔</string>
+    <string name="gesture_flag_orange" maxLength="41">اورنج فلیگ ٹوگل کریں</string>
+    <string name="gesture_flag_green" maxLength="41">سبز پرچم ٹوگل کریں</string>
+    <string name="gesture_flag_blue" maxLength="41">بلیو فلیگ ٹوگل کریں</string>
+    <string name="gesture_flag_pink" maxLength="41">گلابی پرچم ٹوگل کریں</string>
+    <string name="gesture_flag_turquoise" maxLength="41">فیروزی پرچم ٹوگل کریں</string>
+    <string name="gesture_flag_purple" maxLength="41">جامنی پرچم کو ٹوگل کریں</string>
+    <string name="gesture_flag_remove" maxLength="41">جھنڈا ہٹا دیں</string>
+    <string name="gesture_page_up" maxLength="41">صفحہ اوپر</string>
+    <string name="gesture_page_down" maxLength="41">نیچے صفحہ</string>
+    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">وائٹ بورڈ کو ٹوگل کریں۔</string>
+    <string name="gesture_show_hint" maxLength="41">اشارہ دکھائیں</string>
+    <string name="gesture_show_all_hints" maxLength="41">تمام اشارے دکھائیں</string>
+    <string name="record_voice" maxLength="41">آواز ریکارڈ کریں</string>
+    <string name="replay_voice" maxLength="41">آواز کو دوبارہ چلائیں</string>
+    <string name="save_voice" maxLength="41">ریکارڈنگ کو محفوظ کریں</string>
 </resources>

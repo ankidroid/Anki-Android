@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/actionBarSize"
+    tools:context=".preferences.reviewer.ReviewerMenuView"
+    >
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/overflow_menu_view"
+        android:scrollbars="none"
+        android:layout_weight="1"
+        >
+        <androidx.appcompat.widget.ActionMenuView
+            android:id="@+id/front_menu_view"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            />
+    </HorizontalScrollView>
+
+    <androidx.appcompat.widget.ActionMenuView
+        android:id="@+id/overflow_menu_view"
+        android:layout_width="wrap_content"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_width="64dp"
+        />
+</LinearLayout>

@@ -21,6 +21,7 @@ import android.text.format.DateFormat
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import anki.config.Preferences.BackupLimits
+import anki.config.PreferencesKt.backupLimits
 import anki.config.copy
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.CompatHelper
@@ -64,7 +65,10 @@ open class BackupManager {
      * @return Whether a thread was started to create a backup
      */
     @Suppress("PMD.NPathComplexity")
-    fun performBackupInBackground(colPath: String, time: Time): Boolean {
+    fun performBackupInBackground(
+        colPath: String,
+        time: Time,
+    ): Boolean {
         val prefs = AnkiDroidApp.instance.baseContext.sharedPrefs()
         if (hasDisabledBackups(prefs)) {
             Timber.w("backups are disabled")
@@ -81,7 +85,10 @@ open class BackupManager {
         // Abort backup if one was already made less than the allowed frequency
         val lastBackupDate = getLastBackupDate(colBackups)
         if (lastBackupDate != null && lastBackupDate.time + frequency * 60_000L > time.intTimeMS()) {
-            Timber.d("performBackup: No backup created. Last backup younger than the frequency allowed from preferences(currently set to $frequency minutes)")
+            Timber.d(
+                "performBackup: No backup created. Last backup younger than the frequency " +
+                    "allowed from preferences (currently set to $frequency minutes)",
+            )
             return false
         }
         val backupFilename = getNameForNewBackup(time) ?: return false
@@ -116,7 +123,10 @@ open class BackupManager {
         return true
     }
 
-    fun isBackupUnnecessary(colFile: File, colBackups: Array<File>): Boolean {
+    fun isBackupUnnecessary(
+        colFile: File,
+        colBackups: Array<File>,
+    ): Boolean {
         val len = colBackups.size
 
         // If have no backups, then a backup is necessary
@@ -133,27 +143,34 @@ open class BackupManager {
      * @return last date in parsable file names or null if all names can't be parsed
      * Expects a sorted array of backups, as returned by getBackups()
      */
-    fun getLastBackupDate(files: Array<File>): Date? {
-        return files.lastOrNull()?.let {
+    fun getLastBackupDate(files: Array<File>): Date? =
+        files.lastOrNull()?.let {
             getBackupDate(it.name)
         }
-    }
 
-    fun getBackupFile(colFile: File, backupFilename: String): File {
-        return File(getBackupDirectory(colFile.parentFile!!), backupFilename)
-    }
+    fun getBackupFile(
+        colFile: File,
+        backupFilename: String,
+    ): File = File(getBackupDirectory(colFile.parentFile!!), backupFilename)
 
-    fun performBackupInNewThread(colFile: File, backupFile: File) {
+    fun performBackupInNewThread(
+        colFile: File,
+        backupFile: File,
+    ) {
         Timber.i("Launching new thread to backup %s to %s", colFile.absolutePath, backupFile.path)
-        val thread: Thread = object : Thread() {
-            override fun run() {
-                performBackup(colFile, backupFile)
+        val thread: Thread =
+            object : Thread() {
+                override fun run() {
+                    performBackup(colFile, backupFile)
+                }
             }
-        }
         thread.start()
     }
 
-    private fun performBackup(colFile: File, backupFile: File): Boolean {
+    private fun performBackup(
+        colFile: File,
+        backupFile: File,
+    ): Boolean {
         val colPath = colFile.absolutePath
         // Save collection file as zip archive
         return try {
@@ -164,17 +181,18 @@ open class BackupManager {
             }
             // Delete old backup files if needed
             val prefs = AnkiDroidApp.instance.baseContext.sharedPrefs()
-            val backupLimits = BackupLimits.newBuilder()
-                .setDaily(prefs.getInt("daily_backups_to_keep", 8))
-                .setWeekly(prefs.getInt("weekly_backups_to_keep", 8))
-                .setMonthly(prefs.getInt("monthly_backups_to_keep", 8))
-                .build()
+            val backupLimits =
+                backupLimits {
+                    daily = prefs.getInt("daily_backups_to_keep", 8)
+                    weekly = prefs.getInt("weekly_backups_to_keep", 8)
+                    monthly = prefs.getInt("monthly_backups_to_keep", 8)
+                }
             deleteColBackups(colPath, backupLimits)
             // set timestamp of file in order to avoid creating a new backup unless its changed
             if (!backupFile.setLastModified(colFile.lastModified())) {
                 Timber.w(
                     "performBackupInBackground() setLastModified() failed on file %s",
-                    backupFile.name
+                    backupFile.name,
                 )
                 return false
             }
@@ -186,21 +204,16 @@ open class BackupManager {
         }
     }
 
-    fun collectionIsTooSmallToBeValid(colFile: File): Boolean {
-        return (
+    fun collectionIsTooSmallToBeValid(colFile: File): Boolean =
+        (
             colFile.length()
                 < MIN_BACKUP_COL_SIZE
-            )
-    }
+        )
 
-    fun hasFreeDiscSpace(colFile: File): Boolean {
-        return getFreeDiscSpace(colFile) >= getRequiredFreeSpace(colFile)
-    }
+    fun hasFreeDiscSpace(colFile: File): Boolean = getFreeDiscSpace(colFile) >= getRequiredFreeSpace(colFile)
 
     @VisibleForTesting
-    fun hasDisabledBackups(prefs: SharedPreferences): Boolean {
-        return prefs.getInt("backupMax", 8) == 0
-    }
+    fun hasDisabledBackups(prefs: SharedPreferences): Boolean = prefs.getInt("backupMax", 8) == 0
 
     companion object {
         /**
@@ -225,9 +238,7 @@ open class BackupManager {
             return directory
         }
 
-        fun getBackupDirectoryFromCollection(colPath: String): String {
-            return getBackupDirectory(File(colPath).parentFile!!).absolutePath
-        }
+        fun getBackupDirectoryFromCollection(colPath: String): String = getBackupDirectory(File(colPath).parentFile!!).absolutePath
 
         private fun getBrokenDirectory(ankidroidDir: File): File {
             val directory = File(ankidroidDir, BROKEN_COLLECTIONS_SUFFIX)
@@ -246,20 +257,14 @@ open class BackupManager {
             return colFile.length() + MIN_FREE_SPACE * 1024 * 1024
         }
 
-        fun enoughDiscSpace(path: String?): Boolean {
-            return getFreeDiscSpace(path) >= MIN_FREE_SPACE * 1024 * 1024
-        }
+        fun enoughDiscSpace(path: String?): Boolean = getFreeDiscSpace(path) >= MIN_FREE_SPACE * 1024 * 1024
 
         /**
          * Get free disc space in bytes from path to Collection
          */
-        fun getFreeDiscSpace(path: String?): Long {
-            return getFreeDiscSpace(File(path!!))
-        }
+        fun getFreeDiscSpace(path: String?): Long = getFreeDiscSpace(File(path!!))
 
-        private fun getFreeDiscSpace(file: File): Long {
-            return getFreeDiskSpace(file, (MIN_FREE_SPACE * 1024 * 1024).toLong())
-        }
+        private fun getFreeDiscSpace(file: File): Long = getFreeDiskSpace(file, (MIN_FREE_SPACE * 1024 * 1024).toLong())
 
         /**
          * Run the sqlite3 command-line-tool (if it exists) on the collection to dump to a text file
@@ -300,27 +305,33 @@ open class BackupManager {
             return false
         }
 
-        fun moveDatabaseToBrokenDirectory(colPath: String, moveConnectedFilesToo: Boolean, time: Time): Boolean {
+        fun moveDatabaseToBrokenDirectory(
+            colPath: String,
+            moveConnectedFilesToo: Boolean,
+            time: Time,
+        ): Boolean {
             val colFile = File(colPath)
 
             // move file
             val value: Date = time.genToday(utcOffset())
-            var movedFilename = String.format(
-                Utils.ENGLISH_LOCALE,
-                colFile.name.replace(".anki2", "") +
-                    "-corrupt-%tF.anki2",
-                value
-            )
+            var movedFilename =
+                String.format(
+                    Utils.ENGLISH_LOCALE,
+                    colFile.name.replace(".anki2", "") +
+                        "-corrupt-%tF.anki2",
+                    value,
+                )
             var movedFile = File(getBrokenDirectory(colFile.parentFile!!), movedFilename)
             var i = 1
             while (movedFile.exists()) {
-                movedFile = File(
-                    getBrokenDirectory(colFile.parentFile!!),
-                    movedFilename.replace(
-                        ".anki2",
-                        "-$i.anki2"
+                movedFile =
+                    File(
+                        getBrokenDirectory(colFile.parentFile!!),
+                        movedFilename.replace(
+                            ".anki2",
+                            "-$i.anki2",
+                        ),
                     )
-                )
                 i++
             }
             movedFilename = movedFile.name
@@ -347,15 +358,13 @@ open class BackupManager {
          * @param fileName String with pattern "collection-yyyy-MM-dd-HH-mm.colpkg"
          * @return Its dateformat parsable string or null if it doesn't match naming pattern
          */
-        fun getBackupTimeString(fileName: String): String? {
-            return backupNameRegex.matchEntire(fileName)?.groupValues?.get(1)
-        }
+        fun getBackupTimeString(fileName: String): String? = backupNameRegex.matchEntire(fileName)?.groupValues?.get(1)
 
         /**
          * @return date in string if it matches backup naming pattern or null if not
          */
-        fun parseBackupTimeString(timeString: String): Date? {
-            return try {
+        fun parseBackupTimeString(timeString: String): Date? =
+            try {
                 legacyDateFormat.parse(timeString)
             } catch (e: ParseException) {
                 try {
@@ -364,14 +373,11 @@ open class BackupManager {
                     null
                 }
             }
-        }
 
         /**
          * @return date in fileName if it matches backup naming pattern or null if not
          */
-        fun getBackupDate(fileName: String): Date? {
-            return getBackupTimeString(fileName)?.let { parseBackupTimeString(it) }
-        }
+        fun getBackupDate(fileName: String): Date? = getBackupTimeString(fileName)?.let { parseBackupTimeString(it) }
 
         /**
          * @return filename with pattern collection-yyyy-MM-dd-HH-mm based on given time parameter
@@ -380,12 +386,13 @@ open class BackupManager {
             /** Changes in the file name pattern should be updated as well in
              * [getBackupTimeString] and [com.ichi2.anki.dialogs.DatabaseErrorDialog.onCreateDialog] */
             val cal: Calendar = time.gregorianCalendar()
-            val backupFilename: String = try {
-                String.format(Utils.ENGLISH_LOCALE, "collection-%s.colpkg", legacyDateFormat.format(cal.time))
-            } catch (e: UnknownFormatConversionException) {
-                Timber.w(e, "performBackup: error on creating backup filename")
-                return null
-            }
+            val backupFilename: String =
+                try {
+                    String.format(Utils.ENGLISH_LOCALE, "collection-%s.colpkg", legacyDateFormat.format(cal.time))
+                } catch (e: UnknownFormatConversionException) {
+                    Timber.w(e, "performBackup: error on creating backup filename")
+                    return null
+                }
             return backupFilename
         }
 
@@ -395,14 +402,14 @@ open class BackupManager {
          */
         fun getBackups(colFile: File): Array<File> {
             val files = getBackupDirectory(colFile.parentFile!!).listFiles() ?: arrayOf()
-            val backups = files
-                .mapNotNull { file ->
-                    getBackupTimeString(file.name)?.let { time ->
-                        Pair(time, file)
-                    }
-                }
-                .sortedBy { it.first }
-                .map { it.second }
+            val backups =
+                files
+                    .mapNotNull { file ->
+                        getBackupTimeString(file.name)?.let { time ->
+                            Pair(time, file)
+                        }
+                    }.sortedBy { it.first }
+                    .map { it.second }
             return backups.toTypedArray()
         }
 
@@ -424,25 +431,24 @@ open class BackupManager {
         fun deleteColBackups(
             colPath: String,
             backupLimits: BackupLimits,
-            today: LocalDate = LocalDate.now()
-        ): Boolean {
-            return deleteColBackups(getBackups(File(colPath)), backupLimits, today)
-        }
+            today: LocalDate = LocalDate.now(),
+        ): Boolean = deleteColBackups(getBackups(File(colPath)), backupLimits, today)
 
         private fun deleteColBackups(
             backups: Array<File>,
             backupLimits: BackupLimits,
-            today: LocalDate
+            today: LocalDate,
         ): Boolean {
-            val unpackedBackups = backups.map {
-                // based on the format used, 0 is for "collection|backup" prefix and 1,2,3 are for
-                // year(4 digits), month(with 0 prefix, 1 is January) and day(with 0 prefix, starting from 1)
-                val nameSplits = it.nameWithoutExtension.split("-")
-                UnpackedBackup(
-                    file = it,
-                    date = LocalDate.of(nameSplits[1].toInt(), nameSplits[2].toInt(), nameSplits[3].toInt())
-                )
-            }
+            val unpackedBackups =
+                backups.map {
+                    // based on the format used, 0 is for "collection|backup" prefix and 1,2,3 are for
+                    // year(4 digits), month(with 0 prefix, 1 is January) and day(with 0 prefix, starting from 1)
+                    val nameSplits = it.nameWithoutExtension.split("-")
+                    UnpackedBackup(
+                        file = it,
+                        date = LocalDate.of(nameSplits[1].toInt(), nameSplits[2].toInt(), nameSplits[3].toInt()),
+                    )
+                }
             BackupFilter(today, backupLimits).getObsoleteBackups(unpackedBackups).forEach { backup ->
                 if (!backup.file.delete()) {
                     Timber.e("deleteColBackups() failed to delete %s", backup.file.absolutePath)
@@ -460,7 +466,10 @@ open class BackupManager {
          * @return Whether all specified backups were successfully deleted.
          */
         @Throws(IllegalArgumentException::class)
-        fun deleteBackups(collection: Collection, backupsToDelete: List<File>): Boolean {
+        fun deleteBackups(
+            collection: Collection,
+            backupsToDelete: List<File>,
+        ): Boolean {
             val allBackups = getBackups(File(collection.path))
             val invalidBackupsToDelete = backupsToDelete.toSet() - allBackups.toSet()
 
@@ -482,9 +491,7 @@ open class BackupManager {
         }
 
         @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-        fun createInstance(): BackupManager {
-            return BackupManager()
-        }
+        fun createInstance(): BackupManager = BackupManager()
     }
 }
 
@@ -494,9 +501,10 @@ open class BackupManager {
  * in format such as "02 Nov 2022" instead of "11/2/22" or "2/11/22", which can be confusing.
  */
 class LocalizedUnambiguousBackupTimeFormatter {
-    private val formatter = SimpleDateFormat(
-        DateFormat.getBestDateTimePattern(Locale.getDefault(), "dd MMM yyyy HH:mm")
-    )
+    private val formatter =
+        SimpleDateFormat(
+            DateFormat.getBestDateTimePattern(Locale.getDefault(), "dd MMM yyyy HH:mm"),
+        )
 
     fun getTimeOfBackupAsText(file: File): String {
         val backupDate = BackupManager.getBackupDate(file.name) ?: return file.name
@@ -506,9 +514,10 @@ class LocalizedUnambiguousBackupTimeFormatter {
 
 private data class UnpackedBackup(
     val file: File,
-    val date: LocalDate
+    val date: LocalDate,
 ) : Comparable<UnpackedBackup> {
     override fun compareTo(other: UnpackedBackup): Int = date.compareTo(other.date)
+
     private val epoch = LocalDate.ofEpochDay(0)
 
     fun day(): Long = ChronoUnit.DAYS.between(epoch, date)
@@ -519,11 +528,16 @@ private data class UnpackedBackup(
 }
 
 enum class BackupStage {
-    Daily, Weekly, Monthly,
+    Daily,
+    Weekly,
+    Monthly,
 }
 
 // see https://github.com/ankitects/anki/blob/f3bb845961973bcfab34acfdc4d314294285ee74/rslib/src/collection/backup.rs#L186
-private class BackupFilter(private val today: LocalDate, private var limits: BackupLimits) {
+private class BackupFilter(
+    private val today: LocalDate,
+    private var limits: BackupLimits,
+) {
     private val epoch = LocalDate.ofEpochDay(0)
     private var lastKeptDay: Long = ChronoUnit.DAYS.between(epoch, today)
     private var lastKeptWeek: Long = ChronoUnit.WEEKS.between(epoch, today)
@@ -549,18 +563,23 @@ private class BackupFilter(private val today: LocalDate, private var limits: Bac
 
     private fun isRecent(backup: UnpackedBackup): Boolean = backup.date == today
 
-    fun remaining(stage: BackupStage): Boolean = when (stage) {
-        BackupStage.Daily -> limits.daily > 0
-        BackupStage.Weekly -> limits.weekly > 0
-        BackupStage.Monthly -> limits.monthly > 0
-    }
-
-    fun markFreshOrObsolete(stage: BackupStage, backup: UnpackedBackup) {
-        val keep = when (stage) {
-            BackupStage.Daily -> backup.day() < lastKeptDay
-            BackupStage.Weekly -> backup.week() < lastKeptWeek
-            BackupStage.Monthly -> backup.month() < lastKeptMonth
+    fun remaining(stage: BackupStage): Boolean =
+        when (stage) {
+            BackupStage.Daily -> limits.daily > 0
+            BackupStage.Weekly -> limits.weekly > 0
+            BackupStage.Monthly -> limits.monthly > 0
         }
+
+    fun markFreshOrObsolete(
+        stage: BackupStage,
+        backup: UnpackedBackup,
+    ) {
+        val keep =
+            when (stage) {
+                BackupStage.Daily -> backup.day() < lastKeptDay
+                BackupStage.Weekly -> backup.week() < lastKeptWeek
+                BackupStage.Monthly -> backup.month() < lastKeptMonth
+            }
         if (keep) {
             markFresh(stage, backup)
         } else {
@@ -569,7 +588,10 @@ private class BackupFilter(private val today: LocalDate, private var limits: Bac
     }
 
     // Adjusts limits as per the stage of the kept backup, and last kept times.
-    fun markFresh(stage: BackupStage?, backup: UnpackedBackup) {
+    fun markFresh(
+        stage: BackupStage?,
+        backup: UnpackedBackup,
+    ) {
         lastKeptDay = backup.day()
         lastKeptWeek = backup.week()
         lastKeptMonth = backup.month()

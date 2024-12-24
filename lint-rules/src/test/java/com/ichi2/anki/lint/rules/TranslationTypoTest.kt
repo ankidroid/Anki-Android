@@ -24,7 +24,6 @@ import org.junit.Test
  * Test of [TranslationTypo]
  */
 class TranslationTypoTest {
-
     @Test
     fun `JavaScript is valid casing`() {
         val validCasing = """<resources>
@@ -89,7 +88,7 @@ class TranslationTypoTest {
             xmlWithIssue,
             expectedError = "https://crowdin.com/editor/ankidroid/7290/en-af#q=create_subdeck",
             fileName = "01-core",
-            androidLanguageFolder = "af"
+            androidLanguageFolder = "af",
         )
 
         // 02-strings -> 7291
@@ -97,7 +96,7 @@ class TranslationTypoTest {
             xmlWithIssue,
             expectedError = "https://crowdin.com/editor/ankidroid/7291/en-af#q=create_subdeck",
             fileName = "02-strings",
-            androidLanguageFolder = "af"
+            androidLanguageFolder = "af",
         )
 
         // custom mapping: yue -> yu
@@ -105,7 +104,7 @@ class TranslationTypoTest {
             xmlWithIssue,
             expectedError = "https://crowdin.com/editor/ankidroid/7290/en-yu#q=create_subdeck",
             fileName = "01-core",
-            androidLanguageFolder = "yue"
+            androidLanguageFolder = "yue",
         )
 
         // Used region specifier: Chinese
@@ -113,7 +112,7 @@ class TranslationTypoTest {
             xmlWithIssue,
             expectedError = "https://crowdin.com/editor/ankidroid/7290/en-zhcn#q=create_subdeck",
             fileName = "01-core",
-            androidLanguageFolder = "zh-rCN"
+            androidLanguageFolder = "zh-rCN",
         )
 
         // no -> nnno
@@ -121,7 +120,7 @@ class TranslationTypoTest {
             xmlWithIssue,
             expectedError = "https://crowdin.com/editor/ankidroid/7290/en-nnno#q=create_subdeck",
             fileName = "01-core",
-            androidLanguageFolder = "nn"
+            androidLanguageFolder = "nn",
         )
 
         // ur -> urpa
@@ -129,7 +128,7 @@ class TranslationTypoTest {
             xmlWithIssue,
             expectedError = "https://crowdin.com/editor/ankidroid/7290/en-urpk#q=create_subdeck",
             fileName = "01-core",
-            androidLanguageFolder = "ur"
+            androidLanguageFolder = "ur",
         )
     }
 }

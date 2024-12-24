@@ -153,8 +153,6 @@
     <string name="notification_minimum_cards_due">תאריך היעד של יותר מ-%d כרטיסים עבר</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">רטט</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">אור מהבהב</string>
-    <string name="timeout_answer_text" maxLength="41">הצגת התשובה באופן אוטומטי</string>
-    <string name="timeout_answer_summ2">הצג תשובה אוטומטית ללא קלט משתמש.  הגדר מתוך אפשרויות החפיסה.</string>
     <string name="select_locale_title">בחר שפה</string>
     <string name="software_render" maxLength="41">השבת את עיבוד החומרה של הכרטיס</string>
     <string name="software_render_summ">עיבוד החומרה מהיר יותר אך עשוי ליצור בעיות, במיוחד באנדרואיד 8/8.1. אם אינך יכול לראות חלקים מממשק המשתמש של סקירת הכרטיסים, נסה את ההגדרה הזו.</string>
@@ -174,7 +172,7 @@
     <string name="show_large_answer_buttons" maxLength="41">לחצני תשובה גדולים</string>
     <string name="show_large_answer_buttons_summ">הצג כפתורי תשובה בשתי שורות</string>
     <string name="show_top_bar" maxLength="41">הצג סרגל עליון</string>
-    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
+    <string name="show_top_bar_summary">הצג ספירת כרטיסים, טיימר תשובה, דגל וסימון בסרגל העליון</string>
     <string name="show_progress" maxLength="41">הצג נותרים</string>
     <string name="show_progress_summ">הצג את מספר הכרטיסים שנותרו</string>
     <string name="show_eta" maxLength="41">הצג הערכת זמן לסיום</string>
@@ -223,7 +221,7 @@
          אם לא מוגדר, שרת ברירת המחדל של AnkiWeb ישמש במקום זאת.
          <a href="%s">למידע נוסף</a>]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">כתובת אתר הסנכרון</string>
-    <string name="custom_sync_certificate_title" maxLength="41">Custom root certificate (PEM)</string>
+    <string name="custom_sync_certificate_title" maxLength="41">אישור שורש מותאם אישית (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">מקלדת</string>
     <string name="bluetooth">בלוטות\'</string>
@@ -241,7 +239,7 @@
     <string name="deck_conf_cram_filter" maxLength="41">מסנן</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">חיפוש</string>
     <string name="deck_conf_cram_limit" maxLength="41">הגבלה לכדי</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
+    <string name="deck_conf_cram_order" maxLength="41">כרטיסים שנבחרו לפי</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">תזמון מחדש</string>
     <string name="deck_conf_cram_reschedule_summ">לתזמן את הקלפים מחדש בהתאם לתשובות שלי בחפיסה הזאת</string>
     <string name="deck_conf_cram_filter_2_check">אפשר סינון משני</string>
@@ -274,21 +272,21 @@
     <string name="axis_picker_move_joystick">הזז ג\'ויסטיק/בקר תנועה</string>
     <string name="user_actions" maxLength="41">פעולות משתמש</string>
     <string name="user_actions_summary" maxLength="41">הפעל JavaScript ממסך הסקירה</string>
-    <string name="user_action_1" maxLength="41">פעולת משתמש 1</string>
-    <string name="user_action_2" maxLength="41">פעולת משתמש 2</string>
-    <string name="user_action_3" maxLength="41">פעולת משתמש 3</string>
-    <string name="user_action_4" maxLength="41">פעולת משתמש 4</string>
-    <string name="user_action_5" maxLength="41">פעולת משתמש 5</string>
-    <string name="user_action_6" maxLength="41">פעולת משתמש 6</string>
-    <string name="user_action_7" maxLength="41">פעולת משתמש 7</string>
-    <string name="user_action_8" maxLength="41">פעולת משתמש 8</string>
-    <string name="user_action_9" maxLength="41">פעולת משתמש 9</string>
-    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
+    <string name="user_action_1" maxLength="28">פעולת משתמש 1</string>
+    <string name="user_action_2" maxLength="28">פעולת משתמש 2</string>
+    <string name="user_action_3" maxLength="28">פעולת משתמש 3</string>
+    <string name="user_action_4" maxLength="28">פעולת משתמש 4</string>
+    <string name="user_action_5" maxLength="28">פעולת משתמש 5</string>
+    <string name="user_action_6" maxLength="28">פעולת משתמש 6</string>
+    <string name="user_action_7" maxLength="28">פעולת משתמש 7</string>
+    <string name="user_action_8" maxLength="28">פעולת משתמש 8</string>
+    <string name="user_action_9" maxLength="28">פעולת משתמש 9</string>
+    <string name="toggle_auto_advance" maxLength="41">החלף מצב התקדמות אוטומטית</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">בחר צד כרטיס</string>
     <string name="card_side_question">שאלה</string>
     <string name="card_side_answer">תשובה</string>
-    <string name="card_side_both">שאלה &amp; תשובה</string>
+    <string name="card_side_both" maxLength="28">שאלה &amp; תשובה</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">ש: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">ת: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -364,17 +362,17 @@
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">אין אוספים</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">שגיאה</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">מייבא...</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">מייבא&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">מחשב&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">האוסף אינו קיים.</string>
-    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">הסתרת שורות המערכת</string>
     <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">ללא</string>
     <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">שורת מצב</string>
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">סרגל ניווט</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">הכל</string>
-    <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
+    <string name="ignore_display_cutout" maxLength="41">התעלם מגזרת התצוגה</string>
     <string name="hide_answer_buttons" maxLength="41">הסתר כפתורי תשובה</string>
-    <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
+    <string name="hide_hard_and_easy" maxLength="41">הסתר את הלחצנים \'קשה\' ו\'קל\'</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">פתח הגדרות</string>
 </resources>

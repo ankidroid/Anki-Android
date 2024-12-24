@@ -27,7 +27,9 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.ichi2.compat.setTooltipTextCompat
 import com.ichi2.ui.RtlCompliantActionProvider.Companion.unwrapContext
 
-class SyncActionProvider(context: Context) : ActionProviderCompat(context) {
+class SyncActionProvider(
+    context: Context,
+) : ActionProviderCompat(context) {
     val activity: Activity = unwrapContext(context)
 
     private var progressIndicator: LinearProgressIndicator? = null
@@ -47,14 +49,15 @@ class SyncActionProvider(context: Context) : ActionProviderCompat(context) {
         val view = inflater.inflate(R.layout.sync_progress_layout, null)
 
         progressIndicator = view.findViewById(R.id.progress_indicator)
-        syncButton = view.findViewById<AppCompatImageButton?>(R.id.button).apply {
-            setOnClickListener {
-                if (!forItem.isEnabled) {
-                    return@setOnClickListener
+        syncButton =
+            view.findViewById<AppCompatImageButton?>(R.id.button).apply {
+                setOnClickListener {
+                    if (!forItem.isEnabled) {
+                        return@setOnClickListener
+                    }
+                    activity.onOptionsItemSelected(forItem)
                 }
-                activity.onOptionsItemSelected(forItem)
             }
-        }
 
         return view
     }

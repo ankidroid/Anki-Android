@@ -70,7 +70,8 @@ public class SnackbarsKt {
 
     @Test
     fun showsErrorsForInvalidUsage() {
-        TestLintTask.lint()
+        TestLintTask
+            .lint()
             .allowMissingSdk()
             .allowCompilationErrors()
             .files(JavaTestFile.create(stubSnackbar), JavaTestFile.create(javaFileToBeTested))
@@ -85,7 +86,8 @@ public class SnackbarsKt {
 
     @Test
     fun allowsUsageForSnackbarsKt() {
-        TestLintTask.lint()
+        TestLintTask
+            .lint()
             .allowMissingSdk()
             .allowCompilationErrors()
             .files(JavaTestFile.create(stubSnackbar), JavaTestFile.create(javaFileWithSnackbarsKt))

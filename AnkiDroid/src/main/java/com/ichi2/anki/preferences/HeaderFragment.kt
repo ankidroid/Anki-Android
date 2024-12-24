@@ -18,27 +18,36 @@ package com.ichi2.anki.preferences
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.bytehamster.lib.preferencesearch.SearchConfiguration
 import com.bytehamster.lib.preferencesearch.SearchPreference
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.compat.CompatHelper
 import com.ichi2.preferences.HeaderPreference
 import com.ichi2.utils.AdaptionUtil
 
-class HeaderFragment : PreferenceFragmentCompat() {
-    private var selectedHeaderPreference: HeaderPreference? = null
-    private var selectedHeaderPreferenceKey: String = DEFAULT_SELECTED_HEADER
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+class HeaderFragment :
+    PreferenceFragmentCompat(),
+    TitleProvider {
+    override val title: CharSequence
+        get() = getString(R.string.settings)
+
+    private var highlightedPreferenceKey: String = ""
+
+    override fun onCreatePreferences(
+        savedInstanceState: Bundle?,
+        rootKey: String?,
+    ) {
         setPreferencesFromResource(R.xml.preference_headers, rootKey)
-
-        selectedHeaderPreferenceKey = savedInstanceState?.getString(KEY_SELECTED_HEADER_PREF) ?: DEFAULT_SELECTED_HEADER
-
-        highlightHeaderPreference(requirePreference<HeaderPreference>(selectedHeaderPreferenceKey))
 
         requirePreference<HeaderPreference>(R.string.pref_backup_limits_screen_key)
             .title = CollectionManager.TR.preferencesBackups()
@@ -49,49 +58,45 @@ class HeaderFragment : PreferenceFragmentCompat() {
             }
         }
 
-        if (DevOptionsFragment.isEnabled(requireContext())) {
-            setDevOptionsVisibility(true)
-        }
+        requirePreference<Preference>(R.string.pref_dev_options_screen_key)
+            .isVisible = DevOptionsFragment.isEnabled(requireContext())
 
         configureSearchBar(
             requireActivity() as AppCompatActivity,
-            requirePreference<SearchPreference>(R.string.search_preference_key).searchConfiguration
+            requirePreference<SearchPreference>(R.string.search_preference_key).searchConfiguration,
         )
-    }
 
-    private fun highlightHeaderPreference(headerPreference: HeaderPreference) {
-        if (!(activity as Preferences).hasLateralNavigation()) {
-            return
+        if (!resources.isWindowCompact()) {
+            parentFragmentManager.findFragmentById(R.id.settings_container)?.let {
+                val key = getHeaderKeyForFragment(it) ?: return@let
+                highlightPreference(key)
+            }
+
+            parentFragmentManager.addOnBackStackChangedListener {
+                if (!isAdded) return@addOnBackStackChangedListener
+                val fragment =
+                    parentFragmentManager.findFragmentById(R.id.settings_container)
+                        ?: return@addOnBackStackChangedListener
+
+                val key = getHeaderKeyForFragment(fragment) ?: return@addOnBackStackChangedListener
+                highlightPreference(key)
+            }
         }
-        selectedHeaderPreference?.setHighlighted(false)
-        // highlight the newly selected header
-        selectedHeaderPreference = headerPreference.apply {
-            setHighlighted(true)
-            selectedHeaderPreferenceKey = this.key
-        }
     }
 
-    override fun onPreferenceTreeClick(preference: Preference): Boolean {
-        highlightHeaderPreference(preference as HeaderPreference)
-        return super.onPreferenceTreeClick(preference)
+    private fun highlightPreference(
+        @StringRes keyRes: Int,
+    ) {
+        val key = getString(keyRes)
+        findPreference<HeaderPreference>(highlightedPreferenceKey)?.setHighlighted(false)
+        findPreference<HeaderPreference>(key)?.setHighlighted(true)
+        highlightedPreferenceKey = key
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(KEY_SELECTED_HEADER_PREF, selectedHeaderPreferenceKey)
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        highlightHeaderPreference(requirePreference<HeaderPreference>(selectedHeaderPreferenceKey))
-    }
-
-    override fun onStart() {
-        super.onStart()
-        requireActivity().setTitle(R.string.settings)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         // use the same fragment container to search in case there is a navigation container
         requirePreference<SearchPreference>(R.string.search_preference_key)
@@ -99,15 +104,12 @@ class HeaderFragment : PreferenceFragmentCompat() {
             .setFragmentContainerViewId((view.parent as? ViewGroup)?.id ?: R.id.settings_container)
     }
 
-    fun setDevOptionsVisibility(isVisible: Boolean) {
-        requirePreference<Preference>(R.string.pref_dev_options_screen_key).isVisible = isVisible
-    }
-
     companion object {
-        private const val KEY_SELECTED_HEADER_PREF = "selected_header_pref"
-        private const val DEFAULT_SELECTED_HEADER = "generalScreen"
-
-        fun configureSearchBar(activity: AppCompatActivity, searchConfiguration: SearchConfiguration) {
+        fun configureSearchBar(
+            activity: AppCompatActivity,
+            searchConfiguration: SearchConfiguration,
+        ) {
+            val setDuePreferenceTitle = TR.actionsSetDueDate().toSentenceCase(activity, R.string.sentence_set_due_date)
             with(searchConfiguration) {
                 setActivity(activity)
                 setBreadcrumbsEnabled(true)
@@ -127,6 +129,12 @@ class HeaderFragment : PreferenceFragmentCompat() {
                 index(R.xml.preferences_accessibility)
                 index(R.xml.preferences_backup_limits)
                 ignorePreference(activity.getString(R.string.pref_backups_help_key))
+                indexItem()
+                    .withKey(activity.getString(R.string.reschedule_command_key))
+                    .withTitle(setDuePreferenceTitle)
+                    .withResId(R.xml.preferences_controls)
+                    .addBreadcrumb(activity.getString(R.string.pref_cat_controls))
+                    .addBreadcrumb(setDuePreferenceTitle)
             }
 
             // Some preferences and categories are only shown conditionally,
@@ -159,5 +167,28 @@ class HeaderFragment : PreferenceFragmentCompat() {
 
             searchConfiguration.ignorePreference(activity.getString(R.string.user_actions_controls_category_key))
         }
+
+        /**
+         * @return the key for the [HeaderPreference] that corresponds to the given [fragment]
+         * in the Preference tree.
+         *
+         * e.g. Sync > Custom sync server settings -> returns the key for the Sync header
+         */
+        @StringRes
+        fun getHeaderKeyForFragment(fragment: Fragment): Int? =
+            when (fragment) {
+                is GeneralSettingsFragment -> R.string.pref_general_screen_key
+                is ReviewingSettingsFragment -> R.string.pref_reviewing_screen_key
+                is SyncSettingsFragment, is CustomSyncServerSettingsFragment -> R.string.pref_sync_screen_key
+                is NotificationsSettingsFragment -> R.string.pref_notifications_screen_key
+                is AppearanceSettingsFragment, is CustomButtonsSettingsFragment -> R.string.pref_appearance_screen_key
+                is ControlsSettingsFragment -> R.string.pref_controls_screen_key
+                is AccessibilitySettingsFragment -> R.string.pref_accessibility_screen_key
+                is BackupLimitsSettingsFragment -> R.string.pref_backup_limits_screen_key
+                is AdvancedSettingsFragment -> R.string.pref_advanced_screen_key
+                is DevOptionsFragment, is ReviewerOptionsFragment -> R.string.pref_dev_options_screen_key
+                is AboutFragment -> R.string.about_screen_key
+                else -> null
+            }
     }
 }

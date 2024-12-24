@@ -39,9 +39,9 @@ class NoteEditorTabOrderTest : NoteEditorTest() {
     @Ignore(
         """flaky on API 21 as well: com.ichi2.anki.NoteEditorTabOrderTest > testTabOrder[test(AVD) - 5.1.1] FAILED 
 
-	java.lang.AssertionError:
+        java.lang.AssertionError:
 
-	Expected: is "a""""
+        Expected: is "a"""",
     )
     @Throws(Throwable::class)
     fun testTabOrder() {
@@ -63,7 +63,10 @@ class NoteEditorTabOrderTest : NoteEditorTest() {
         }
     }
 
-    private fun sendKeyDownUp(editor: NoteEditor, keyCode: Int) {
+    private fun sendKeyDownUp(
+        editor: NoteEditor,
+        keyCode: Int,
+    ) {
         val focusedView = editor.requireActivity().currentFocus ?: return
         val inputConnection = BaseInputConnection(focusedView, true)
         inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, keyCode))

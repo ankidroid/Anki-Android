@@ -75,7 +75,7 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Локально</string>
     <string name="sync_sanity_remote">Віддалено</string>
-    <string name="one_way_sync_title">Одностороння синхронізація</string>
+    <string name="one_way_sync_title" maxLength="41">Одностороння синхронізація</string>
     <string name="one_way_sync_confirmation">Обрано односторонню синхронізацію</string>
     <string name="full_sync_confirmation">Обрана зміна вимагає повного перезавантаження бази даних під час наступної синхронізації ваших колекцій. Якщо ви мали несинхронізовані зміни на інших пристроях, їх буде втрачено. Продовжити?</string>
     <string name="full_sync_confirmation_upgrade">Через помилку у попередній версії, AnkiDroid рекомендовано примусово синхронізувати.</string>

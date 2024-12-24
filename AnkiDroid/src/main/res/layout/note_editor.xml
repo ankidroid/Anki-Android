@@ -148,6 +148,4 @@
         android:id="@+id/editor_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
-    <include layout="@layout/anki_progress"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

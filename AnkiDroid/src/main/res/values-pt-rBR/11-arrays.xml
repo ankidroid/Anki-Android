@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">x-grande</string>
     <string name="html_size_code_xx_large">xx-grande</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Responder novamente</string>
-    <string name="answer_hard">Responder difícil</string>
-    <string name="answer_good">Responder bom</string>
-    <string name="answer_easy">Responder fácil</string>
-    <string name="gesture_play">Reproduzir mídia</string>
-    <string name="gesture_abort_learning">Close reviewer</string>
-    <string name="gesture_flag_red">Alternar bandeira vermelha</string>
-    <string name="gesture_flag_orange">Alternar bandeira laranja</string>
-    <string name="gesture_flag_green">Alternar bandeira verde</string>
-    <string name="gesture_flag_blue">Alternar bandeira azul</string>
-    <string name="gesture_flag_pink">Alternar bandeira rosa</string>
-    <string name="gesture_flag_turquoise">Alternar bandeira turquesa</string>
-    <string name="gesture_flag_purple">Alternar bandeira roxa</string>
-    <string name="gesture_flag_remove">Remover bandeira</string>
-    <string name="gesture_page_up">Subir página</string>
-    <string name="gesture_page_down">Descer página</string>
-    <string name="gesture_abort_sync">Close reviewer and Sync</string>
-    <string name="gesture_toggle_whiteboard">Alternar quadro branco</string>
-    <string name="gesture_show_hint">Exibir dica</string>
-    <string name="gesture_show_all_hints">Exibir todas as dicas</string>
-    <string name="record_voice">Gravar voz</string>
-    <string name="replay_voice">Reproduzir voz</string>
-    <string name="save_voice">Salvar gravação</string>
+    <string name="answer_again" maxLength="41">Responder novamente</string>
+    <string name="answer_hard" maxLength="41">Responder difícil</string>
+    <string name="answer_good" maxLength="41">Responder bom</string>
+    <string name="answer_easy" maxLength="41">Responder fácil</string>
+    <string name="gesture_play" maxLength="41">Reproduzir mídia</string>
+    <string name="gesture_abort_learning" maxLength="41">Fechar revisor</string>
+    <string name="gesture_flag_red" maxLength="41">Alternar bandeira vermelha</string>
+    <string name="gesture_flag_orange" maxLength="41">Alternar bandeira laranja</string>
+    <string name="gesture_flag_green" maxLength="41">Alternar bandeira verde</string>
+    <string name="gesture_flag_blue" maxLength="41">Alternar bandeira azul</string>
+    <string name="gesture_flag_pink" maxLength="41">Alternar bandeira rosa</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Alternar bandeira turquesa</string>
+    <string name="gesture_flag_purple" maxLength="41">Alternar bandeira roxa</string>
+    <string name="gesture_flag_remove" maxLength="41">Remover bandeira</string>
+    <string name="gesture_page_up" maxLength="41">Subir página</string>
+    <string name="gesture_page_down" maxLength="41">Descer página</string>
+    <string name="gesture_abort_sync" maxLength="41">Fechar revisor e sincronizar</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Alternar quadro branco</string>
+    <string name="gesture_show_hint" maxLength="41">Exibir dica</string>
+    <string name="gesture_show_all_hints" maxLength="41">Exibir todas as dicas</string>
+    <string name="record_voice" maxLength="41">Gravar voz</string>
+    <string name="replay_voice" maxLength="41">Reproduzir voz</string>
+    <string name="save_voice" maxLength="41">Salvar gravação</string>
 </resources>

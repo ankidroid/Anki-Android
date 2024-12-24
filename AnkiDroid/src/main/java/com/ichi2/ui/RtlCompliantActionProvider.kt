@@ -25,7 +25,9 @@ import com.ichi2.compat.setTooltipTextCompat
 /**
  * An Rtl version of a normal action view, where the drawable is mirrored
  */
-class RtlCompliantActionProvider(context: Context) : ActionProviderCompat(context) {
+class RtlCompliantActionProvider(
+    context: Context,
+) : ActionProviderCompat(context) {
     @VisibleForTesting
     val activity: Activity
 

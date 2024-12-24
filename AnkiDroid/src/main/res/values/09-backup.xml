@@ -21,7 +21,7 @@
 
     <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
     <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
-    <string name="backup_restore">Restore from backup</string>
+    <string name="backup_restore" maxLength="28">Restore from backup</string>
     <string name="backup_new_collection">New collection</string>
     <string name="backup_del_collection">Delete collection and create new one</string>
     <string name="backup_del_collection_question">Delete the collection and create a new one? This will drop all your learning progress and delete all cards.</string>

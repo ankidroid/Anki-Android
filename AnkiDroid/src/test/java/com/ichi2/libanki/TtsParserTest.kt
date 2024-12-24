@@ -63,6 +63,5 @@ class TtsParserTest {
     }
 
     @CheckResult
-    private fun getTtsTagFrom(content: String): TTSTag =
-        getTextsToRead(content, "blank").single()
+    private fun getTtsTagFrom(content: String): TTSTag = getTextsToRead(content, "blank").single()
 }

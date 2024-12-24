@@ -118,17 +118,24 @@ class ImportUtilsTest : RobolectricTest() {
         return ClipData(description, item)
     }
 
-    class TestFileImporter(private val fileName: String?) : FileImporter() {
+    class TestFileImporter(
+        private val fileName: String?,
+    ) : FileImporter() {
         lateinit var cacheFileName: String
             private set
 
-        override fun copyFileToCache(context: Context, data: Uri?, tempPath: String): Boolean {
+        override fun copyFileToCache(
+            context: Context,
+            data: Uri?,
+            tempPath: String,
+        ): Pair<Boolean, String?> {
             cacheFileName = tempPath
-            return true
+            return Pair(true, null)
         }
 
-        override fun getFileNameFromContentProvider(context: Context, data: Uri): String? {
-            return fileName
-        }
+        override fun getFileNameFromContentProvider(
+            context: Context,
+            data: Uri,
+        ): String? = fileName
     }
 }

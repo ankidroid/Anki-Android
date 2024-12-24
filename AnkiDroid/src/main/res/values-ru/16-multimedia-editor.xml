@@ -59,7 +59,6 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Что-то пошло не так</string>
-    <string name="multimedia_editor_svg_preview">Предпросмотр SVG не поддерживается</string>
     <string name="multimedia_editor_png_paste_error">Ошибка преобразования изображения в PNG: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Прикрепить медиафайл к полю %1$s</string>
     <!-- Audio view -->
@@ -69,10 +68,10 @@
     <string name="multimedia_editor_audio_view_create_failed">Не удаётся создать панель диктофона</string>
     <!-- Crop function-->
     <string name="crop_image">Обрезать это изображение?</string>
-    <string name="crop_button">Обрезать изображение</string>
+    <string name="crop_button" maxLength="28">Обрезать изображение</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"Не удалось выбрать изображение. Попробуйте снова"</string>
     <string name="activity_result_unexpected">Приложение вернуло неожиданный результат. Попробуйте использовать другое приложение</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Содержимое поля</string>
-    <string name="reselect">Выбрать заново</string>
+    <string name="reselect" maxLength="28">Выбрать заново</string>
 </resources>

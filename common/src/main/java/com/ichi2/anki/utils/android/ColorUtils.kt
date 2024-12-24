@@ -28,7 +28,10 @@ import com.ichi2.anki.common.utils.ext.clamp
  * @return The darkened color in ARGB
  */
 @ColorInt
-fun darkenColor(@ColorInt argb: Int, factor: Float): Int {
+fun darkenColor(
+    @ColorInt argb: Int,
+    factor: Float,
+): Int {
     val hsv = argb.toHSV()
     // https://en.wikipedia.org/wiki/HSL_and_HSV
     // The third component is the 'value', or 'lightness/darkness'
@@ -43,6 +46,7 @@ fun darkenColor(@ColorInt argb: Int, factor: Float): Int {
  * [1] is Saturation: `[0...1]`
  * [2] is Value: `[0...1]`
  */
-private fun Int.toHSV(): FloatArray = FloatArray(3).also { arr ->
-    Color.colorToHSV(this, arr)
-}
+private fun Int.toHSV(): FloatArray =
+    FloatArray(3).also { arr ->
+        Color.colorToHSV(this, arr)
+    }

@@ -52,7 +52,7 @@ class InitialActivityWithConflictTest : RobolectricTest() {
 
             val f = getStartupFailureType(targetContext)
 
-            assertThat("A conflict should be returned", f, equalTo(StartupFailure.DATABASE_LOCKED))
+            assertThat("A conflict should be returned", f, equalTo(StartupFailure.DatabaseLocked))
         } finally {
             setupForDefault()
         }

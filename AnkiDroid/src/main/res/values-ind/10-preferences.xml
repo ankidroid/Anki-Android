@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">Lebih dari %d kartu jatuh tempo</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Getar</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Berkedip</string>
-    <string name="timeout_answer_text" maxLength="41">Otomatis tampilkan jawaban</string>
-    <string name="timeout_answer_summ2">Tampilkan jawaban secara otomatis tanpa masukan pengguna. Atur dari opsi dek.</string>
     <string name="select_locale_title">Pilih bahasa</string>
     <string name="software_render" maxLength="41">Matikan perangkat keras pe-render kartu</string>
     <string name="software_render_summ">Render menggunakan perangkat keras lebih cepat namun dapat mengakibatkan masalah, terutama pada Android 8/8.1. Jika Anda tidak dapat melihat bagian peninjauan kartu dari antarmuka pengguna, coba pengaturan berikut ini.</string>
@@ -269,21 +267,21 @@
     <string name="axis_picker_move_joystick">Gerakkan pengendali joystick/gerakan</string>
     <string name="user_actions" maxLength="41">Tindakan pengguna</string>
     <string name="user_actions_summary" maxLength="41">Picu JavaScript dari layar peninjauan</string>
-    <string name="user_action_1" maxLength="41">Tindakan pengguna 1</string>
-    <string name="user_action_2" maxLength="41">Tindakan pengguna 2</string>
-    <string name="user_action_3" maxLength="41">Tindakan pengguna 3</string>
-    <string name="user_action_4" maxLength="41">Tindakan pengguna 4</string>
-    <string name="user_action_5" maxLength="41">Tindakan pengguna 5</string>
-    <string name="user_action_6" maxLength="41">Tindakan pengguna 6</string>
-    <string name="user_action_7" maxLength="41">Tindakan pengguna 7</string>
-    <string name="user_action_8" maxLength="41">Tindakan pengguna 8</string>
-    <string name="user_action_9" maxLength="41">Tindakan pengguna 9</string>
+    <string name="user_action_1" maxLength="28">Tindakan pengguna 1</string>
+    <string name="user_action_2" maxLength="28">Tindakan pengguna 2</string>
+    <string name="user_action_3" maxLength="28">Tindakan pengguna 3</string>
+    <string name="user_action_4" maxLength="28">Tindakan pengguna 4</string>
+    <string name="user_action_5" maxLength="28">Tindakan pengguna 5</string>
+    <string name="user_action_6" maxLength="28">Tindakan pengguna 6</string>
+    <string name="user_action_7" maxLength="28">Tindakan pengguna 7</string>
+    <string name="user_action_8" maxLength="28">Tindakan pengguna 8</string>
+    <string name="user_action_9" maxLength="28">Tindakan pengguna 9</string>
     <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Pilih sisi kartu</string>
     <string name="card_side_question">Pertanyaan</string>
     <string name="card_side_answer">Jawaban</string>
-    <string name="card_side_both">Pertanyaan &amp; Jawaban</string>
+    <string name="card_side_both" maxLength="28">Pertanyaan &amp; Jawaban</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">T: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">J: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>

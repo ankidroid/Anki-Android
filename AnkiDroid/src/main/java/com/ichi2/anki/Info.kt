@@ -27,11 +27,11 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.widget.ThemeUtils
 import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
+import com.ichi2.themes.Themes
 import com.ichi2.utils.IntentUtil.canOpenIntent
 import com.ichi2.utils.IntentUtil.tryOpenIntent
 import com.ichi2.utils.VersionUtils.appName
@@ -45,7 +45,9 @@ private const val CHANGE_LOG_URL = "https://docs.ankidroid.org/changelog.html"
 /**
  * Shows an about box, which is a small HTML page.
  */
-class Info : AnkiActivity(), BaseSnackbarBuilderProvider {
+class Info :
+    AnkiActivity(),
+    BaseSnackbarBuilderProvider {
     private lateinit var webView: WebView
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
@@ -68,41 +70,48 @@ class Info : AnkiActivity(), BaseSnackbarBuilderProvider {
         setContentView(R.layout.info)
         val mainView = findViewById<View>(android.R.id.content)
         enableToolbar(mainView)
-        findViewById<MaterialButton>(R.id.info_donate).setOnClickListener { openUrl(Uri.parse(getString(R.string.link_opencollective_donate))) }
+        findViewById<MaterialButton>(
+            R.id.info_donate,
+        ).setOnClickListener { openUrl(Uri.parse(getString(R.string.link_opencollective_donate))) }
         title = "$appName v$pkgVersionName"
         webView = findViewById(R.id.info)
-        webView.webChromeClient = object : WebChromeClient() {
-            override fun onProgressChanged(view: WebView, progress: Int) {
-                // Hide the progress indicator when the page has finished loaded
-                if (progress == 100) {
-                    mainView.findViewById<View>(R.id.progress_bar).visibility = View.GONE
+        webView.webChromeClient =
+            object : WebChromeClient() {
+                override fun onProgressChanged(
+                    view: WebView,
+                    progress: Int,
+                ) {
+                    // Hide the progress indicator when the page has finished loaded
+                    if (progress == 100) {
+                        mainView.findViewById<View>(R.id.progress_bar).visibility = View.GONE
+                    }
                 }
             }
-        }
         findViewById<MaterialButton>(R.id.left_button).run {
             if (canOpenMarketUri()) {
                 setText(R.string.info_rate)
                 setOnClickListener {
                     tryOpenIntent(
                         this@Info,
-                        AnkiDroidApp.getMarketIntent(this@Info)
+                        AnkiDroidApp.getMarketIntent(this@Info),
                     )
                 }
             } else {
                 visibility = View.GONE
             }
         }
-        val onBackPressedCallback = object : OnBackPressedCallback(false) {
-            override fun handleOnBackPressed() {
-                if (webView.canGoBack()) webView.goBack()
+        val onBackPressedCallback =
+            object : OnBackPressedCallback(false) {
+                override fun handleOnBackPressed() {
+                    if (webView.canGoBack()) webView.goBack()
+                }
             }
-        }
         // Apply Theme colors
         val typedArray = theme.obtainStyledAttributes(intArrayOf(android.R.attr.colorBackground, android.R.attr.textColor))
         val backgroundColor = typedArray.getColor(0, -1)
         val textColor = typedArray.getColor(1, -1).toRGBHex()
 
-        val anchorTextThemeColor = ThemeUtils.getThemeAttrColor(this, android.R.attr.colorAccent)
+        val anchorTextThemeColor = Themes.getColorFromAttr(this, android.R.attr.colorAccent)
         val anchorTextColor = anchorTextThemeColor.toRGBHex()
 
         webView.setBackgroundColor(backgroundColor)
@@ -118,43 +127,54 @@ class Info : AnkiActivity(), BaseSnackbarBuilderProvider {
                 val background = backgroundColor.toRGBHex()
                 webView.loadUrl("/android_asset/changelog.html")
                 webView.settings.javaScriptEnabled = true
-                webView.webViewClient = object : WebViewClient() {
-                    override fun onPageFinished(view: WebView, url: String) {
+                webView.webViewClient =
+                    object : WebViewClient() {
+                        override fun onPageFinished(
+                            view: WebView,
+                            url: String,
+                        ) {
                         /* The order of below javascript code must not change (this order works both in debug and release mode)
-                                 *  or else it will break in any one mode.
-                                 */
-                        webView.loadUrl(
-                            "javascript:document.body.style.setProperty(\"color\", \"" + textColor + "\");" +
-                                "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"" + anchorTextColor + "\";}" +
-                                "document.getElementsByTagName(\"h1\")[0].style.color=\"" + textColor + "\";" +
-                                "x=document.getElementsByTagName(\"h2\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
-                                "document.body.style.setProperty(\"background\", \"" + background + "\");"
-                        )
-                    }
-
-                    override fun shouldOverrideUrlLoading(
-                        view: WebView?,
-                        request: WebResourceRequest?
-                    ): Boolean {
-                        // Excludes the url that are opened inside the changelog.html
-                        // and redirect the user to the browser
-                        val url = request?.url?.toString() ?: return false
-                        if (url == CHANGE_LOG_URL) {
-                            return false
+                         *  or else it will break in any one mode.
+                         */
+                            @Suppress("ktlint:standard:max-line-length")
+                            webView.loadUrl(
+                                """javascript:document.body.style.setProperty("color", "$textColor");
+                                    x=document.getElementsByTagName("a");
+                                    for(i=0; i<x.length; i++){
+                                      x[i].style.color="$anchorTextColor";
+                                    }
+                                    document.getElementsByTagName("h1")[0].style.color="$textColor";
+                                    x=document.getElementsByTagName("h2");
+                                    for(i=0; i<x.length; i++){
+                                      x[i].style.color="#E37068";
+                                    }
+                                    document.body.style.setProperty("background", "$background");""",
+                            )
                         }
-                        this@Info.openUrl(url)
-                        return true
-                    }
 
-                    override fun doUpdateVisitedHistory(
-                        view: WebView?,
-                        url: String?,
-                        isReload: Boolean
-                    ) {
-                        super.doUpdateVisitedHistory(view, url, isReload)
-                        onBackPressedCallback.isEnabled = view != null && view.canGoBack()
+                        override fun shouldOverrideUrlLoading(
+                            view: WebView?,
+                            request: WebResourceRequest?,
+                        ): Boolean {
+                            // Excludes the url that are opened inside the changelog.html
+                            // and redirect the user to the browser
+                            val url = request?.url?.toString() ?: return false
+                            if (url == CHANGE_LOG_URL) {
+                                return false
+                            }
+                            this@Info.openUrl(url)
+                            return true
+                        }
+
+                        override fun doUpdateVisitedHistory(
+                            view: WebView?,
+                            url: String?,
+                            isReload: Boolean,
+                        ) {
+                            super.doUpdateVisitedHistory(view, url, isReload)
+                            onBackPressedCallback.isEnabled = view != null && view.canGoBack()
+                        }
                     }
-                }
             }
             else -> finish()
         }
@@ -166,14 +186,13 @@ class Info : AnkiActivity(), BaseSnackbarBuilderProvider {
         finishWithAnimation()
     }
 
-    private fun canOpenMarketUri(): Boolean {
-        return try {
+    private fun canOpenMarketUri(): Boolean =
+        try {
             canOpenIntent(this, AnkiDroidApp.getMarketIntent(this))
         } catch (e: Exception) {
             Timber.w(e)
             false
         }
-    }
 
     private fun finishWithAnimation() {
         finish()

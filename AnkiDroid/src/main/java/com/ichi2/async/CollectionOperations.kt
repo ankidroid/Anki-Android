@@ -31,7 +31,10 @@ import timber.log.Timber
  * Takes a list of media file names and removes them from the [Collection]
  * @param unused List of media names to be deleted
  */
-fun deleteMedia(col: Collection, unused: List<String>): Int {
+fun deleteMedia(
+    col: Collection,
+    unused: List<String>,
+): Int {
     // FIXME: this provides progress info that is not currently used
     col.media.removeFiles(unused)
     return unused.size
@@ -43,50 +46,52 @@ suspend fun renderBrowserQA(
     n: Int,
     column1: CardBrowserColumn,
     column2: CardBrowserColumn,
-    onProgressUpdate: (Int) -> Unit
-): Pair<List<CardBrowser.CardCache>, MutableList<Long>> = withContext(Dispatchers.IO) {
-    Timber.d("doInBackgroundRenderBrowserQA")
-    val invalidCardIds: MutableList<Long> = ArrayList()
-    // for each specified card in the browser list
-    for (i in startPos until startPos + n) {
-        // Stop if cancelled, throw cancellationException
-        ensureActive()
+    onProgressUpdate: (Int) -> Unit,
+): Pair<List<CardBrowser.CardCache>, MutableList<Long>> =
+    withContext(Dispatchers.IO) {
+        Timber.d("doInBackgroundRenderBrowserQA")
+        val invalidCardIds: MutableList<Long> = ArrayList()
+        // for each specified card in the browser list
+        for (i in startPos until startPos + n) {
+            // Stop if cancelled, throw cancellationException
+            ensureActive()
 
-        if (i < 0 || i >= cards.size) {
-            continue
+            if (i < 0 || i >= cards.size) {
+                continue
+            }
+            val card: CardBrowser.CardCache =
+                try {
+                    cards[i]
+                } catch (e: IndexOutOfBoundsException) {
+                    // even though we test against card.size() above, there's still a race condition
+                    // We might be able to optimise this to return here. Logically if we're past the end of the collection,
+                    // we won't reach any more cards.
+                    continue
+                }
+            if (card.isLoaded) {
+                // We've already rendered the answer, we don't need to do it again.
+                continue
+            }
+            // Extract card item
+            try {
+                // Ensure that card still exists.
+                card.card
+            } catch (e: BackendNotFoundException) {
+                // #5891 - card can be inconsistent between the deck browser screen and the collection.
+                // Realistically, we can skip any exception as it's a rendering task which should not kill the
+                // process
+                val cardId = card.id
+                Timber.e(e, "Could not process card '%d' - skipping and removing from sight", cardId)
+                invalidCardIds.add(cardId)
+                continue
+            }
+            // Update item
+            card.load(false, column1, column2)
+            val progress = i.toFloat() / n * 100
+            withContext(Dispatchers.Main) { onProgressUpdate(progress.toInt()) }
         }
-        val card: CardBrowser.CardCache = try {
-            cards[i]
-        } catch (e: IndexOutOfBoundsException) {
-            // even though we test against card.size() above, there's still a race condition
-            // We might be able to optimise this to return here. Logically if we're past the end of the collection,
-            // we won't reach any more cards.
-            continue
-        }
-        if (card.isLoaded) {
-            // We've already rendered the answer, we don't need to do it again.
-            continue
-        }
-        // Extract card item
-        try {
-            // Ensure that card still exists.
-            card.card
-        } catch (e: BackendNotFoundException) {
-            // #5891 - card can be inconsistent between the deck browser screen and the collection.
-            // Realistically, we can skip any exception as it's a rendering task which should not kill the
-            // process
-            val cardId = card.id
-            Timber.e(e, "Could not process card '%d' - skipping and removing from sight", cardId)
-            invalidCardIds.add(cardId)
-            continue
-        }
-        // Update item
-        card.load(false, column1, column2)
-        val progress = i.toFloat() / n * 100
-        withContext(Dispatchers.Main) { onProgressUpdate(progress.toInt()) }
+        Pair(cards, invalidCardIds)
     }
-    Pair(cards, invalidCardIds)
-}
 
 /**
  * Handles everything for a model change at once - template add / deletes as well as content updates
@@ -95,7 +100,7 @@ suspend fun renderBrowserQA(
 fun saveModel(
     col: Collection,
     notetype: NotetypeJson,
-    templateChanges: ArrayList<Array<Any>>
+    templateChanges: ArrayList<Array<Any>>,
 ) {
     Timber.d("doInBackgroundSaveModel")
     val oldModel = col.notetypes.get(notetype.getLong("id"))

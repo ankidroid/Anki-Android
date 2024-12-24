@@ -26,7 +26,6 @@ import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
 class StorageRustTest : JvmTest() {
-
     @Test
     @Config(qualifiers = "en")
     fun testModelCount() {
@@ -39,8 +38,8 @@ class StorageRustTest : JvmTest() {
                 "Cloze",
                 "Basic (type in the answer)",
                 "Basic (optional reversed card)",
-                "Image Occlusion"
-            )
+                "Image Occlusion",
+            ),
         )
     }
 }

@@ -46,7 +46,7 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">Рэжым справаздачы пра памылку</string>
+    <string name="error_reporting_choice" maxLength="41">Рэжым справаздачы пра памылку</string>
     <string name="feedback_disclaimer">Адмова ад адказнасці: мы ніколі не збіраем ніякіх персанальных даных, такія як адрасы электроннай пошты, нумар або IMEI тэлефона. Да нас трапляе некаторая інфармацыя, якая датычыцца вытворцы вашай прылады, мадэлі і версіі Android, а таксама апісанне справаздач пра памылкі і крокі з-за якіх дадзеная памылка адбылася.</string>
     <string name="feedback_title">Водгук на AnkiDroid</string>
     <string name="feedback_default_text">Калі ласка, увядзіце ваш водгук або інфармацыю пра характар памылкі.</string>

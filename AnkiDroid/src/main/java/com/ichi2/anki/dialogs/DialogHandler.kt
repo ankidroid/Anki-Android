@@ -35,15 +35,17 @@ import java.lang.ref.WeakReference
  * and it's unsafe to commit them from an AsyncTask onComplete event, so we work
  * around this by using a message handler.
  */
-class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
+class DialogHandler(
+    activity: AnkiActivity,
+) : Handler(getDefaultLooper()) {
     // Use weak reference to main activity to prevent leaking the activity when it's closed
     private val activity: WeakReference<AnkiActivity> = WeakReference(activity)
+
     override fun handleMessage(message: Message) {
         val msg = DialogHandlerMessage.fromMessage(message)
         UsageAnalytics.sendAnalyticsScreenView(msg.analyticName)
         Timber.i("Handling Message: %s", msg.analyticName)
-        val deckPicker = activity.get() as DeckPicker
-        msg.handleAsyncMessage(deckPicker)
+        msg.handleAsyncMessage(activity.get() as AnkiActivity)
     }
 
     /**
@@ -71,7 +73,6 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
     }
 
     companion object {
-
         private var sStoredMessage: Message? = null
 
         /**
@@ -98,9 +99,13 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
  * It is assumed that the [DeckPicker] will be the inheritor of AnkiActivity at this time.
  * As this is provided as the intent from [AnkiActivity.showSimpleNotification]
  */
-abstract class DialogHandlerMessage protected constructor(val which: WhichDialogHandler, val analyticName: String) {
+abstract class DialogHandlerMessage protected constructor(
+    val which: WhichDialogHandler,
+    val analyticName: String,
+) {
     val what = which.what
-    abstract fun handleAsyncMessage(deckPicker: DeckPicker)
+
+    abstract fun handleAsyncMessage(activity: AnkiActivity)
 
     protected fun emptyMessage(what: Int): Message = Message.obtain().apply { this.what = what }
 
@@ -108,8 +113,8 @@ abstract class DialogHandlerMessage protected constructor(val which: WhichDialog
     abstract fun toMessage(): Message
 
     companion object {
-        fun fromMessage(message: Message): DialogHandlerMessage {
-            return when (WhichDialogHandler.fromInt(message.what)) {
+        fun fromMessage(message: Message): DialogHandlerMessage =
+            when (WhichDialogHandler.fromInt(message.what)) {
                 WhichDialogHandler.MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG -> CollectionLoadingErrorDialog()
                 WhichDialogHandler.MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG -> ImportUtils.CollectionImportReplace.fromMessage(message)
                 WhichDialogHandler.MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG -> ImportUtils.CollectionImportAdd.fromMessage(message)
@@ -120,12 +125,13 @@ abstract class DialogHandlerMessage protected constructor(val which: WhichDialog
                 WhichDialogHandler.MSG_DO_SYNC -> IntentHandler.Companion.DoSync()
                 WhichDialogHandler.MSG_EXPORT_READY -> ExportReadyDialog.ExportReadyDialogMessage.fromMessage(message)
             }
-        }
     }
 
     /** A list of unique values to be used in [DialogHandler]
      * @param what Ensures that a [Message] is provided with a unique value */
-    enum class WhichDialogHandler(val what: Int) {
+    enum class WhichDialogHandler(
+        val what: Int,
+    ) {
         MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG(0),
         MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG(1),
         MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG(2),
@@ -134,8 +140,9 @@ abstract class DialogHandlerMessage protected constructor(val which: WhichDialog
         MSG_SHOW_DATABASE_ERROR_DIALOG(6),
         MSG_SHOW_ONE_WAY_SYNC_DIALOG(7),
         MSG_DO_SYNC(8),
-        MSG_EXPORT_READY(10)
+        MSG_EXPORT_READY(10),
         ;
+
         companion object {
             fun fromInt(value: Int) = entries.first { it.what == value }
         }

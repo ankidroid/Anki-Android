@@ -25,14 +25,18 @@ import java.io.IOException
  * Full HTML to be displayed in a WebView
  */
 @JvmInline
-value class RenderedCard(val html: String)
+value class RenderedCard(
+    val html: String,
+)
 
 /**
  * The static, global AnkiDroid template for rendering a card: [TEMPLATE_FILE]
  *
  * Handles loading the file from disk and replacements of sections of dynamic content
  */
-class CardTemplate(template: String) {
+class CardTemplate(
+    template: String,
+) {
     private var preStyle: String? = null
     private var preScript: String? = null
     private var preClass: String? = null
@@ -40,7 +44,12 @@ class CardTemplate(template: String) {
     private var postContent: String? = null
 
     @CheckResult
-    fun render(content: String, style: String, script: String, cardClass: String): RenderedCard {
+    fun render(
+        content: String,
+        style: String,
+        script: String,
+        cardClass: String,
+    ): RenderedCard {
         val html = preStyle + style + preScript + script + preClass + cardClass + preContent + content + postContent
         return RenderedCard(html)
     }
@@ -75,8 +84,9 @@ class CardTemplate(template: String) {
          *
          * @throws IOException failure to read [TEMPLATE_FILE]
          */
-        fun load(context: Context) = CardTemplate(
-            template = context.assets.open(TEMPLATE_FILE).convertToString()
-        )
+        fun load(context: Context) =
+            CardTemplate(
+                template = context.assets.open(TEMPLATE_FILE).convertToString(),
+            )
     }
 }

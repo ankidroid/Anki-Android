@@ -46,7 +46,7 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">Modo de informe de erros</string>
+    <string name="error_reporting_choice" maxLength="41">Modo de informe de erros</string>
     <string name="feedback_disclaimer">Aviso: Non recollemos información persoal como o enderezo de correo electrónico, teléfono, ou o IMEI do teléfono. Recollemos algunha información sobre o teu dispositivo como o fabricante, modelo e versión do Android, alén doutras informacións relacionadas coa natureza dos erros e dos pasos que levaron a eles.</string>
     <string name="feedback_title">AnkiDroid Feedback</string>
     <string name="feedback_default_text">Por favor, introduza os seus comentarios ou información sobre a natureza de calquera erro que esteas reportando.</string>

@@ -15,5 +15,4 @@
  */
 package com.ichi2.anki.utils.ext
 
-fun String?.ifNullOrEmpty(defaultValue: () -> String): String =
-    if (isNullOrEmpty()) defaultValue() else this
+fun String?.ifNullOrEmpty(defaultValue: () -> String): String = if (isNullOrEmpty()) defaultValue() else this

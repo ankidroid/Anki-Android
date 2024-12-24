@@ -42,8 +42,14 @@ import java.util.TreeSet
 /**
  * @param tags A reference to the [TagsList]
  */
-class TagsArrayAdapter(private val tags: TagsList, private val resources: Resources) : RecyclerView.Adapter<TagsArrayAdapter.ViewHolder>(), Filterable {
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class TagsArrayAdapter(
+    private val tags: TagsList,
+    private val resources: Resources,
+) : RecyclerView.Adapter<TagsArrayAdapter.ViewHolder>(),
+    Filterable {
+    class ViewHolder(
+        itemView: View,
+    ) : RecyclerView.ViewHolder(itemView) {
         internal lateinit var node: TagTreeNode
         internal val expandButton: ImageButton = itemView.findViewById(R.id.id_expand_button)
         internal val checkBoxView: CheckBoxTriStates = itemView.findViewById(R.id.tags_dialog_tag_item_checkbox)
@@ -89,7 +95,7 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
         var subtreeSize: Int,
         var isExpanded: Boolean,
         var subtreeCheckedCnt: Int,
-        var vh: ViewHolder?
+        var vh: ViewHolder?,
     ) {
         /**
          * Get or set the checkbox state of the currently bound ViewHolder.
@@ -108,16 +114,12 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
          *
          * @return The number of visible nodes in the subtree.
          */
-        fun getContributeSize(): Int {
-            return if (isExpanded) subtreeSize else 1
-        }
+        fun getContributeSize(): Int = if (isExpanded) subtreeSize else 1
 
         /**
          * @return If the node has one or more children.
          */
-        fun isNotLeaf(): Boolean {
-            return children.isNotEmpty()
-        }
+        fun isNotLeaf(): Boolean = children.isNotEmpty()
 
         /**
          * Toggle the expand state of the node, then iterate up to the root to maintain the tree.
@@ -160,6 +162,7 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
          */
         fun onCheckStateChanged(tags: TagsList) {
             val delta = if (checkBoxState == CHECKED) 1 else -1
+
             fun update(node: TagTreeNode) {
                 node.subtreeCheckedCnt += delta
                 if (node.checkBoxState == UNCHECKED && node.subtreeCheckedCnt > 0) {
@@ -183,16 +186,17 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
         }
 
         companion object {
-            fun iterateAncestorsOf(start: TagTreeNode) = object : Iterator<TagTreeNode> {
-                var current = start
+            fun iterateAncestorsOf(start: TagTreeNode) =
+                object : Iterator<TagTreeNode> {
+                    var current = start
 
-                override fun hasNext(): Boolean = current.parent != null
+                    override fun hasNext(): Boolean = current.parent != null
 
-                override fun next(): TagTreeNode {
-                    current = current.parent!!
-                    return current
+                    override fun next(): TagTreeNode {
+                        current = current.parent!!
+                        return current
+                    }
                 }
-            }
         }
     }
 
@@ -235,9 +239,14 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
         tags.sort()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context)
-            .inflate(R.layout.tags_item_list_dialog, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ViewHolder {
+        val v =
+            LayoutInflater
+                .from(parent.context)
+                .inflate(R.layout.tags_item_list_dialog, parent, false)
         val vh = ViewHolder(v.findViewById(R.id.tags_dialog_tag_item))
         // clicking the checkbox toggles the tag's check state
         vh.checkBoxView.setOnClickListener {
@@ -273,7 +282,10 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
         return vh
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ViewHolder,
+        position: Int,
+    ) {
         holder.node = getVisibleTagTreeNode(position)!!
         holder.node.vh = holder
         holder.itemView.tag = holder.node.tag
@@ -332,9 +344,7 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
     /**
      * @return The number of visible tags.
      */
-    override fun getItemCount(): Int {
-        return treeRoot.subtreeSize
-    }
+    override fun getItemCount(): Int = treeRoot.subtreeSize
 
     /**
      * Build the tag tree. The tags have been sorted using the hierarchical comparator
@@ -362,6 +372,7 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
         treeRoot = TagTreeNode("", null, ArrayList(), -1, 0, true, 0, null)
         stack.add(treeRoot)
         tagToNode.clear()
+
         fun stackPopAndPushUp() {
             val popped = stack.pop()
             stack.peek().subtreeSize += popped.getContributeSize()
@@ -377,7 +388,8 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
                 }
             }
             val parent = stack.peek()
-            val node = TagTreeNode(tag, parent, ArrayList(), parent.level + 1, 1, tagToIsExpanded[tag]!!, if (tags.isChecked(tag)) 1 else 0, null)
+            val node =
+                TagTreeNode(tag, parent, ArrayList(), parent.level + 1, 1, tagToIsExpanded[tag]!!, if (tags.isChecked(tag)) 1 else 0, null)
             parent.children.add(node)
             tagToNode[tag] = node
             stack.add(node)
@@ -396,7 +408,10 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
      * @param button The [ImageButton] to update.
      * @param node The corresponding [TagTreeNode].
      */
-    private fun updateExpanderBackgroundImage(button: ImageButton, node: TagTreeNode) {
+    private fun updateExpanderBackgroundImage(
+        button: ImageButton,
+        node: TagTreeNode,
+    ) {
         // More custom display related to the node can be added here.
         // For example, display some icon if the node is a leaf? (assets required)
         when (node.isExpanded) {
@@ -405,11 +420,9 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
         }
     }
 
-    override fun getFilter(): TagsFilter {
-        return TagsFilter()
-    }
+    override fun getFilter(): TagsFilter = TagsFilter()
 
-    /* Custom Filter class - as seen in http://stackoverflow.com/a/29792313/1332026 */
+    // Custom Filter class - as seen in http://stackoverflow.com/a/29792313/1332026
     inner class TagsFilter : TypedFilter<String>({ tags.toList() }) {
         /**
          * A tag may be set so that the path to it is expanded immediately after the filter displays the result.
@@ -419,12 +432,16 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
          */
         private var expandTarget = String()
 
-        override fun filterResults(constraint: CharSequence, items: List<String>): List<String> {
+        override fun filterResults(
+            constraint: CharSequence,
+            items: List<String>,
+        ): List<String> {
             val shownTags = TreeSet<String>()
             val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
-            val crucialTags = items.filter {
-                it.lowercase(Locale.getDefault()).contains(filterPattern)
-            }
+            val crucialTags =
+                items.filter {
+                    it.lowercase(Locale.getDefault()).contains(filterPattern)
+                }
             shownTags.addAll(crucialTags)
             // the ancestors should be displayed as well
             for (tag in crucialTags) {
@@ -437,7 +454,10 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
             return res
         }
 
-        override fun publishResults(constraint: CharSequence?, results: List<String>) {
+        override fun publishResults(
+            constraint: CharSequence?,
+            results: List<String>,
+        ) {
             filteredList.clear()
             filteredList.addAll(results)
             sortData()

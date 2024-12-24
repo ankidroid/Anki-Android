@@ -55,21 +55,21 @@
     <string name="edit_occlusions">Upravit okluze</string>
     <string name="tag_name">Název štítku</string>
     <string name="add_new_filter_tags">Přidat/Filtrovat štítky</string>
-    <string name="add_tag">Přidat štítek</string>
-    <string name="check_all_tags">Označit/odznačit všechny štítky</string>
-    <string name="filter_tags">Filtrovat štítky</string>
+    <string name="add_tag" maxLength="28">Přidat štítek</string>
+    <string name="check_all_tags" maxLength="28">Označit/odznačit všechny štítky</string>
+    <string name="filter_tags" maxLength="28">Filtrovat štítky</string>
     <string name="no_tags">Ještě jste nepřidali žádné štítky</string>
     <string name="updated_version">Aktualizováno na verzi %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Uložit tabuli</string>
-    <string name="enable_stylus">Povolit stylus režim</string>
+    <string name="save_whiteboard" maxLength="28">Uložit tabuli</string>
+    <string name="enable_stylus" maxLength="28">Povolit stylus režim</string>
     <string name="disable_stylus">Zakázat stylus režim</string>
-    <string name="enable_whiteboard">Povolit tabuli</string>
+    <string name="enable_whiteboard" maxLength="28">Povolit tabuli</string>
     <string name="disable_whiteboard">Zakázat tabuli</string>
     <string name="show_whiteboard">Zobrazit tabuli</string>
-    <string name="hide_whiteboard">Skrýt tabuli</string>
-    <string name="clear_whiteboard">Smazat tabuli</string>
-    <string name="replay_audio">Přehrát zvuk</string>
+    <string name="hide_whiteboard" maxLength="28">Skrýt tabuli</string>
+    <string name="clear_whiteboard" maxLength="28">Smazat tabuli</string>
+    <string name="replay_audio" maxLength="28">Přehrát zvuk</string>
     <string name="leech_suspend_notification">Karta označena jako pijavice a vyřazena</string>
     <string name="leech_notification">Karta byla označena jako pijavice</string>
     <string name="webview_crash_unknown">Neznámá chyba</string>
@@ -80,14 +80,8 @@
     <string name="webview_crash_fatal">Kritická chyba: Vykreslování WebView selhalo. Příčina: %s</string>
     <string name="webview_crash_loop_dialog_title">Selhání vykreslování systémového webView</string>
     <string name="webview_crash_loop_dialog_content">Systémovému WebView se nepodařilo vykreslit kartu „%1$s“.\n %2$s</string>
-    <string name="filter_by_flags">Příznaky</string>
+    <string name="filter_by_flags" maxLength="41">Příznaky</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Upravit dnešní limit nových karet</string>
-    <string name="custom_study_increase_review_limit">Upravit dnešní limit opakování</string>
-    <string name="custom_study_review_forgotten">Opakovat zapomenuté karty</string>
-    <string name="custom_study_review_ahead">Opakovat dopředu</string>
-    <string name="custom_study_random_selection">Studovat náhodný výběr karet</string>
-    <string name="custom_study_preview_new">Náhled nových karet</string>
     <string name="custom_study_limit_tags">Omezit podle štítků</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d přeskočená</item>
@@ -95,15 +89,17 @@
         <item quantity="many">+%d přeskočené</item>
         <item quantity="other">+%d přeskočených</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Upravit poznámku</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">Upravit poznámku</string>
     <string name="discard">Zahodit</string>
     <string name="note_editor_no_cards_created">Nebyly vytvořeny žádné karty. Vyplňte prosím další pole</string>
     <string name="note_editor_no_cards_created_all_fields">Současný typ poznámky nevytvořil žádné karty.\nVyberte prosím jiný typ poznámky nebo klikněte na „Karty“ a přidejte zástupce pole</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Doplňovačky budou fungovat pouze na typu poznámky Doplňovačka</string>
     <string name="saving_facts">Ukládání poznámky</string>
     <string name="saving_model">Ukládání typu poznámky</string>
-    <string name="save">Uložit</string>
+    <string name="save" maxLength="28">Uložit</string>
     <string name="close">Zavřít</string>
     <string name="select">Vybrat</string>
     <string name="field_remapping">%1$s (z \'%2$s\')</string>
@@ -125,19 +121,18 @@
         <item quantity="other">%1$d minut</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid karta</string>
-    <string name="note_editor_copy_note">Kopírovat poznámku</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Změnit pořadí</string>
-    <string name="card_editor_reset_card">Obnovit proces učení</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Přeplánovat</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">Náhled</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Kopírovat jako Markdown</string>
+    <string name="note_editor_copy_note" maxLength="28">Kopírovat poznámku</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Změnit pořadí</string>
+    <string name="card_editor_reset_card" maxLength="28">Obnovit proces učení</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Přeplánovat</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Náhled</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Kopírovat jako Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d z %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Přejmenovat</string>
-    <string name="checks_action">Zkontrolovat</string>
-    <string name="check_db">Zkontrolovat databázi</string>
-    <string name="check_media">Zkontrolovat multimédia</string>
-    <string name="empty_cards">Prázdné karty</string>
-    <string name="empty_card_warning">Tato karta je prázdná. Použijte možnost \"Prázdné karty\" z menu na obrazovce seznamu balíčků.</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Přejmenovat</string>
+    <string name="checks_action" maxLength="28">Zkontrolovat</string>
+    <string name="check_db" maxLength="28">Zkontrolovat databázi</string>
+    <string name="check_media" maxLength="28">Zkontrolovat multimédia</string>
+    <string name="empty_cards" maxLength="28">Prázdné karty</string>
     <string name="unknown_type_field_warning">Zápis odpovědi: neznámé pole %s</string>
     <string name="delete_deck">Odstraňuje se balíček&#8230;</string>
     <string name="info_rate">Ohodnotit AnkiDroid</string>
@@ -171,12 +166,11 @@
     <string name="export_choice_share">Sdílet</string>
     <string name="export_choice_save_to">Uložit do</string>
     <string name="export_saving_exported_collection">Ukládá se exportovaný soubor&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">Možnosti</string>
-    <string name="menu__deck_options">Nastavení balíčku</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Možnosti</string>
+    <string name="menu__deck_options" maxLength="28">Nastavení balíčku</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Možnosti studia</string>
-    <string name="select_tts">Nastavit jazyk TTS</string>
-    <string name="custom_study">Vlastní studium</string>
-    <string name="more_options">Více</string>
+    <string name="select_tts" maxLength="28">Nastavit jazyk TTS</string>
+    <string name="custom_study" maxLength="28">Vlastní studium</string>
     <string name="dyn_deck_desc">Toto je speciální balíček pro studium mimo normální plán. Karty se po opakování automaticky vrátí do svých původních balíčků. Odstraněním tohoto balíčku ze seznamu se všechny zbývající karty vrátí do svých původních balíčků.</string>
     <string name="steps_error">Kroky musí být čísla větší než 0</string>
     <string name="steps_min_error">Je požadován alespoň jeden krok</string>
@@ -199,17 +193,17 @@
     <string name="web_page_error">Chyba při načítání stránky: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Pozadí</string>
-    <string name="choose_an_image">Vybrat obrázek</string>
+    <string name="background_image_title" maxLength="41">Pozadí</string>
+    <string name="choose_an_image" maxLength="41">Vybrat obrázek</string>
     <string name="remove_background_image">Odebrat pozadí?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Obnovit výchozí</string>
+    <string name="restore_default" maxLength="28">Obnovit výchozí</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Prázdné</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Nepodařilo se uložit obrázek tabule. %s</string>
     <string name="white_board_image_saved">Obrázek tabule uložen do %s</string>
-    <string name="title_whiteboard_pen_color">Barva pera tabule</string>
-    <string name="title_whiteboard_editor">Editor tabule</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">Barva pera tabule</string>
+    <string name="title_whiteboard_editor" maxLength="28">Editor tabule</string>
     <string name="user_is_a_robot">Zjištěn automatizovaný test. Pokud jste člověk, kontaktujte podporu AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Tato karta používá nepodporované funkce AnkiDroid. Kontaktujte vývojáře %1$s nebo si prohlédněte wiki. %2$s</string>
@@ -224,12 +218,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Chyba obsahu karty: Nepodařilo se načíst „%s“</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Hledat balíčky</string>
+    <string name="search_decks" maxLength="28">Hledat balíčky</string>
     <string name="ankidroid_init_failed_webview_title">Kritická chyba</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid spoléhá na systémový WebView, který je nedostupný. K tomu může dojít, jestliže systém instaluje aktualizace. Zkuste to prosím znovu za pár minut.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Velikost písma</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Zobrazit nástrojovou lištu</string>
+    <string name="menu_font_size" maxLength="28">Velikost písma</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Zobrazit nástrojovou lištu</string>
     <string name="format_insert_bold">Formátovat jako tučné</string>
     <string name="format_insert_italic">Formát jako kurzíva</string>
     <string name="format_insert_underline">Formát jako podtržené</string>
@@ -251,8 +245,8 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Prosím použijte iManager, abyste povolili přidávání zástupců AnkiDroid</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Vaše domovská obrazovka neumožňuje AnkiDroidu přidávat zástupce</string>
     <string name="create_shortcut_error">Chyba při přidávání zástupce: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Velká počáteční písmena</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Posouvat nástrojovou lištu</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Velká počáteční písmena</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Posouvat nástrojovou lištu</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -275,7 +269,7 @@
     <string name="check_network">Zkontrolujte prosím připojení k síti</string>
     <string name="search_using_deck_name">Hledat pomocí názvu balíčku</string>
     <string name="external_storage_unavailable">Stahování přerušeno, externí úložiště není k dispozici</string>
-    <string name="home">Domů</string>
+    <string name="home" maxLength="28">Domů</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Karta přeskočena.</string>
@@ -347,7 +341,7 @@
         <item quantity="many">Zrušeno přeskočení %d karty</item>
         <item quantity="other">Zrušeno přeskočení %d karet</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Přemístit</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Přemístit</string>
     <string name="start_recording">Nahrát</string>
     <string name="stop_recording">Zastavit</string>
     <string name="play_recording">Přehrát</string>
@@ -358,7 +352,7 @@
     <string name="voice_not_supported">Hlas není podporován. Zkuste jiný nebo nainstalujte hlasový modul.</string>
     <!--Keyboard shortcuts dialog-->
     <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Výběr balíčků</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
     <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
@@ -371,4 +365,6 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
     <string name="show_shortcuts_message">Press Alt+K to show keyboard shortcuts</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
+    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
 </resources>

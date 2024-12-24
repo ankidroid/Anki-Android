@@ -55,21 +55,21 @@
     <string name="edit_occlusions">அடைப்புகளைத் திருத்தவும்</string>
     <string name="tag_name">குறிச்சொல் பெயர்</string>
     <string name="add_new_filter_tags">குறிச்சொற்களைச் சேர்க்கவும்/வடிகட்டவும்</string>
-    <string name="add_tag">குறியைச் சேர்க்கவும்</string>
-    <string name="check_all_tags">அனைத்து குறிச்சொற்களையும் சரிபார்க்கவும் / தேர்வுநீக்கவும்</string>
-    <string name="filter_tags">குறிச்சொற்களை வடிகட்டி</string>
+    <string name="add_tag" maxLength="28">குறியைச் சேர்க்கவும்</string>
+    <string name="check_all_tags" maxLength="28">அனைத்து குறிச்சொற்களையும் சரிபார்க்கவும் / தேர்வுநீக்கவும்</string>
+    <string name="filter_tags" maxLength="28">குறிச்சொற்களை வடிகட்டி</string>
     <string name="no_tags">நீங்கள் இதுவரை எந்தக் குறிச்சொற்களையும் சேர்க்கவில்லை</string>
     <string name="updated_version">%s பதிப்பிற்கு புதுப்பிக்கப்பட்டது</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">ஒயிட்போர்டை சேமிக்கவும்</string>
-    <string name="enable_stylus">எழுத்தாணி எழுத்தை இயக்கு</string>
+    <string name="save_whiteboard" maxLength="28">ஒயிட்போர்டை சேமிக்கவும்</string>
+    <string name="enable_stylus" maxLength="28">எழுத்தாணி எழுத்தை இயக்கு</string>
     <string name="disable_stylus">எழுத்தாணி எழுத்தை முடக்கு</string>
-    <string name="enable_whiteboard">ஒயிட்போர்டை இயக்கு</string>
+    <string name="enable_whiteboard" maxLength="28">ஒயிட்போர்டை இயக்கு</string>
     <string name="disable_whiteboard">ஒயிட் போர்டை முடக்கு</string>
     <string name="show_whiteboard">ஒயிட் போர்டைக் காட்டு</string>
-    <string name="hide_whiteboard">வெள்ளை பலகையை மறை</string>
-    <string name="clear_whiteboard">வெள்ளை பலகையை அழிக்கவும்</string>
-    <string name="replay_audio">ஆடியோவை மீண்டும் இயக்கவும்</string>
+    <string name="hide_whiteboard" maxLength="28">வெள்ளை பலகையை மறை</string>
+    <string name="clear_whiteboard" maxLength="28">வெள்ளை பலகையை அழிக்கவும்</string>
+    <string name="replay_audio" maxLength="28">ஆடியோவை மீண்டும் இயக்கவும்</string>
     <string name="leech_suspend_notification">அட்டை லீச் எனக் குறிக்கப்பட்டு இடைநிறுத்தப்பட்டது</string>
     <string name="leech_notification">அட்டை லீச் எனக் குறிக்கப்பட்டது</string>
     <string name="webview_crash_unknown">அறியப்படாத பிழை</string>
@@ -80,28 +80,24 @@
     <string name="webview_crash_fatal">அபாயகரமான பிழை: WebView ரெண்டரர் செயலிழந்தது. காரணம்: %s</string>
     <string name="webview_crash_loop_dialog_title">கணினி WebView ரெண்டரிங் தோல்வி</string>
     <string name="webview_crash_loop_dialog_content">சிஸ்டம் வெப்வியூ கார்டை \'%1$s\' ரெண்டர் செய்வதில் தோல்வியடைந்தது.\n %2$s</string>
-    <string name="filter_by_flags">கொடிகள்</string>
+    <string name="filter_by_flags" maxLength="41">கொடிகள்</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">இன்றைய புதிய அட்டை வரம்பை மாற்றவும்</string>
-    <string name="custom_study_increase_review_limit">இன்றைய மதிப்பாய்வு அட்டை வரம்பை மாற்றவும்</string>
-    <string name="custom_study_review_forgotten">மறக்கப்பட்ட அட்டைகளை மதிப்பாய்வு செய்யவும்</string>
-    <string name="custom_study_review_ahead">மேலே மதிப்பாய்வு செய்யவும்</string>
-    <string name="custom_study_random_selection">சீரற்ற தேர்வு அட்டைகளைப் படிக்கவும்</string>
-    <string name="custom_study_preview_new">புதிய அட்டைகளை முன்னோட்டமிடுங்கள்</string>
     <string name="custom_study_limit_tags">குறிப்பிட்ட குறிச்சொற்களுக்கு வரம்பு</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d புதைக்கப்பட்டது</item>
         <item quantity="other">+%d புதைக்கப்பட்டது</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">குறிப்பைத் திருத்தவும்</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">குறிப்பைத் திருத்தவும்</string>
     <string name="discard">நிராகரி</string>
     <string name="note_editor_no_cards_created">அட்டைகள் எதுவும் உருவாக்கப்படவில்லை. மேலும் புலங்களை நிரப்பவும்</string>
     <string name="note_editor_no_cards_created_all_fields">தற்போதைய குறிப்பு வகை எந்த அட்டையையும் உருவாக்கவில்லை.\nவேறு குறிப்பு வகையைத் தேர்வுசெய்யவும் அல்லது ‘கார்டுகள்’ என்பதைக் கிளிக் செய்து புல மாற்றீட்டைச் சேர்க்கவும்</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze நீக்குதல்கள் Cloze குறிப்பு வகைகளில் மட்டுமே செயல்படும்</string>
     <string name="saving_facts">குறிப்பைச் சேமிக்கிறது</string>
     <string name="saving_model">குறிப்பு வகையைச் சேமிக்கிறது</string>
-    <string name="save">சேமிக்கவும்</string>
+    <string name="save" maxLength="28">சேமிக்கவும்</string>
     <string name="close">மூடு</string>
     <string name="select">தேர்ந்தெடு</string>
     <string name="field_remapping">%1$s (“%2$s” இலிருந்து)</string>
@@ -119,19 +115,18 @@
         <item quantity="other">%1$d நிமிடங்கள்</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid அட்டை</string>
-    <string name="note_editor_copy_note">குறிப்பு நகல்</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">இடமாற்றம்</string>
-    <string name="card_editor_reset_card">முன்னேற்றத்தை மீட்டமைக்கவும்</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">மீண்டும் திட்டமிட</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">முன்னோட்டம்</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">மார்க் டவுனாக நகலெடுக்கவும்</string>
+    <string name="note_editor_copy_note" maxLength="28">குறிப்பு நகல்</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">இடமாற்றம்</string>
+    <string name="card_editor_reset_card" maxLength="28">முன்னேற்றத்தை மீட்டமைக்கவும்</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">மீண்டும் திட்டமிட</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">முன்னோட்டம்</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">மார்க் டவுனாக நகலெடுக்கவும்</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d / %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">மறுபெயரிடு</string>
-    <string name="checks_action">சோதிக்கவும்</string>
-    <string name="check_db">தரவுத்தளத்தைச் சரிபார்க்கவும்</string>
-    <string name="check_media">மீடியாவைச் சரிபார்க்கவும்</string>
-    <string name="empty_cards">வெற்று அட்டைகள்</string>
-    <string name="empty_card_warning">இந்த அட்டை காலியாக உள்ளது. டெக் பட்டியல் திரையில் உள்ள மெனுவிலிருந்து \"காலி அட்டைகள்\" விருப்பத்தைப் பயன்படுத்தவும்.</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">மறுபெயரிடு</string>
+    <string name="checks_action" maxLength="28">சோதிக்கவும்</string>
+    <string name="check_db" maxLength="28">தரவுத்தளத்தைச் சரிபார்க்கவும்</string>
+    <string name="check_media" maxLength="28">மீடியாவைச் சரிபார்க்கவும்</string>
+    <string name="empty_cards" maxLength="28">வெற்று அட்டைகள்</string>
     <string name="unknown_type_field_warning">பதிலைத் தட்டச்சு செய்க: தெரியாத புலம் %s</string>
     <string name="delete_deck">தளத்தை நீக்குகிறது&#8230;</string>
     <string name="info_rate">AnkiDroid ஐ மதிப்பிடவும்</string>
@@ -165,12 +160,11 @@
     <string name="export_choice_share">பகிர்</string>
     <string name="export_choice_save_to">இதில் சேமி</string>
     <string name="export_saving_exported_collection">ஏற்றுமதி செய்யப்பட்ட கோப்பைச் சேமிக்கிறது&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">விருப்பங்கள்</string>
-    <string name="menu__deck_options">டெக் விருப்பங்கள்</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">விருப்பங்கள்</string>
+    <string name="menu__deck_options" maxLength="28">டெக் விருப்பங்கள்</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">படிப்பு விருப்பங்கள்</string>
-    <string name="select_tts">TTS மொழியை அமைக்கவும்</string>
-    <string name="custom_study">விருப்ப படிப்பு</string>
-    <string name="more_options">மேலும்</string>
+    <string name="select_tts" maxLength="28">TTS மொழியை அமைக்கவும்</string>
+    <string name="custom_study" maxLength="28">விருப்ப படிப்பு</string>
     <string name="dyn_deck_desc">இது வழக்கமான அட்டவணைக்கு வெளியே படிப்பதற்கான ஒரு சிறப்பு தளமாகும். நீங்கள் அவற்றை மதிப்பாய்வு செய்தபிறகு, கார்டுகள் தானாகவே அவற்றின் அசல் டெக்குகளுக்குத் திரும்பும். டெக் பட்டியலிலிருந்து இந்த டெக்கை நீக்கினால், மீதமுள்ள அனைத்து கார்டுகளும் அவற்றின் அசல் டெக்கிற்கு திரும்பும்.</string>
     <string name="steps_error">படிகள் 0 ஐ விட அதிகமாக இருக்க வேண்டும்</string>
     <string name="steps_min_error">குறைந்தபட்சம் ஒரு படி தேவை</string>
@@ -191,17 +185,17 @@
     <string name="web_page_error">பக்கத்தை ஏற்றுவதில் பிழை: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">பின்புலங்கள்</string>
-    <string name="choose_an_image">படம் தேர்ந்தெடு</string>
+    <string name="background_image_title" maxLength="41">பின்புலங்கள்</string>
+    <string name="choose_an_image" maxLength="41">படம் தேர்ந்தெடு</string>
     <string name="remove_background_image">பின்னணியை அகற்றவா?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">இயல்புநிலையை மீட்டமை</string>
+    <string name="restore_default" maxLength="28">இயல்புநிலையை மீட்டமை</string>
     <string name="reviewer_tts_cloze_spoken_replacement">வெற்று</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">ஒயிட்போர்டு படத்தைச் சேமிப்பதில் தோல்வி. %s</string>
     <string name="white_board_image_saved">ஒயிட்போர்டு படம் %s இல் சேமிக்கப்பட்டது</string>
-    <string name="title_whiteboard_pen_color">ஒயிட்போர்டு பேனா நிறம்</string>
-    <string name="title_whiteboard_editor">ஒயிட்போர்டு எடிட்டர்</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">ஒயிட்போர்டு பேனா நிறம்</string>
+    <string name="title_whiteboard_editor" maxLength="28">ஒயிட்போர்டு எடிட்டர்</string>
     <string name="user_is_a_robot">தானியங்கு சோதனை கண்டறியப்பட்டது. நீங்கள் ஒரு மனிதராக இருந்தால், AnkiDroid ஆதரவைத் தொடர்பு கொள்ளவும்</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">இந்தக் கார்டு ஆதரிக்கப்படாத AnkiDroid அம்சங்களைப் பயன்படுத்துகிறது. டெவலப்பர் %1$sஐத் தொடர்புகொள்ளவும் அல்லது விக்கியைப் பார்க்கவும். %2$s</string>
@@ -216,12 +210,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">அட்டை உள்ளடக்கப் பிழை: ‘%s’ ஐ ஏற்றுவதில் தோல்வி</string>
     <!-- Deck Picker -->
-    <string name="search_decks">தேடல் தளங்கள்</string>
+    <string name="search_decks" maxLength="28">தேடல் தளங்கள்</string>
     <string name="ankidroid_init_failed_webview_title">அபாயகரமான பிழை</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid கணினி WebView ஐ நம்பியுள்ளது, இது கிடைக்கவில்லை. கணினி புதுப்பிப்புகளை நிறுவினால் இது நிகழலாம். சில நிமிடங்களில் மீண்டும் முயற்சிக்கவும்.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">எழுத்துரு அளவு</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">கருவிப்பட்டியைக் காட்டு</string>
+    <string name="menu_font_size" maxLength="28">எழுத்துரு அளவு</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">கருவிப்பட்டியைக் காட்டு</string>
     <string name="format_insert_bold">தடிமனாக வடிவமைக்கவும்</string>
     <string name="format_insert_italic">சாய்வாக வடிவமைக்கவும்</string>
     <string name="format_insert_underline">அண்டர்லைன் ஆக வடிவமைக்கவும்</string>
@@ -243,8 +237,8 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">குறுக்குவழிகளைச் சேர்க்க AnkiDroid ஐ அனுமதிக்க நீங்கள் iManager ஐப் பயன்படுத்த வேண்டியிருக்கலாம்</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">உங்கள் முகப்புத் திரை AnkiDroid குறுக்குவழிகளைச் சேர்க்க அனுமதிக்காது</string>
     <string name="create_shortcut_error">குறுக்குவழியைச் சேர்ப்பதில் பிழை: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">வாக்கியங்களை பெரியதாக்கு</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">ஸ்க்ரோல் கருவிப்பட்டி</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">வாக்கியங்களை பெரியதாக்கு</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">ஸ்க்ரோல் கருவிப்பட்டி</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -267,7 +261,7 @@
     <string name="check_network">உங்கள் பிணைய இணைப்பைச் சரிபார்க்கவும்</string>
     <string name="search_using_deck_name">டெக் பெயரைப் பயன்படுத்தி தேடவும்</string>
     <string name="external_storage_unavailable">பதிவிறக்கம் நிறுத்தப்பட்டது, வெளிப்புற சேமிப்பிடம் கிடைக்கவில்லை</string>
-    <string name="home">வீடு</string>
+    <string name="home" maxLength="28">வீடு</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">அட்டை புதைக்கப்பட்டது.</string>
@@ -335,7 +329,7 @@
         <item quantity="one">%d அட்டை புதைக்கப்படவில்லை</item>
         <item quantity="other">%d கார்டுகள் புதைக்கப்படவில்லை</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">இடமாற்றம்</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">இடமாற்றம்</string>
     <string name="start_recording">பதிவு</string>
     <string name="stop_recording">நிறுத்து</string>
     <string name="play_recording">ஓட்டுக</string>
@@ -345,18 +339,20 @@
     <string name="orphan_note_message">இந்தக் கார்டு வகையை நீக்கினால் சில குறிப்புகள் கார்டு இல்லாமல் இருக்கும்.</string>
     <string name="voice_not_supported">குரல் ஆதரிக்கப்படவில்லை. வேறொன்றை முயற்சிக்கவும் அல்லது குரல் இயந்திரத்தை நிறுவவும்.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
-    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
-    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
-    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
-    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
-    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
-    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
-    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
-    <string name="show_shortcuts_message">Press Alt+K to show keyboard shortcuts</string>
+    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">விசைப்பலகை குறுக்குவழிகள் உரையாடலைக் காட்டு</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">டெக் பிக்கர்</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">உறுதிப்படுத்தல் இல்லாமல் டெக்கை நீக்கு</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">குறிப்பு எடிட்டர்</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">தளத்தைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">குறிப்பு வகையைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">குறி தொகுப்பான்</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">அட்டை டெம்ப்ளேட் எடிட்டர்</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">முன் டெம்ப்ளேட்டைத் திருத்தவும்</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">மீண்டும் டெம்ப்ளேட்டைத் திருத்தவும்</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">ஸ்டைலிங் திருத்தவும்</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">டெம்ப்ளேட்டை மார்க் டவுனாக நகலெடுக்கவும்</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">உலாவியின் தோற்றத்தைத் திருத்தவும்</string>
+    <string name="show_shortcuts_message">விசைப்பலகை குறுக்குவழிகளைக் காட்ட Alt+K ஐ அழுத்தவும்</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">இந்த நோட்டிப்பில் பயனர் செயல் %s அமைக்கப்படவில்லை. தயவுசெய்து அதை உள்ளமைக்கவும்</string>
+    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
 </resources>

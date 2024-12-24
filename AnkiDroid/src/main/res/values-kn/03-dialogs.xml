@@ -46,7 +46,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">ಡೇಟಾಬೇಸ್ ಪರಿಶೀಲಿಸುವುದೇ?</string>
     <string name="check_db_warning">ಇದು ಬಹಳ ಸಮಯ ತೆಗೆದುಕೊಳ್ಳಬಹುದು</string>
-    <string name="contextmenu_deckpicker_delete_deck">ಸ್ಪಷ್ಟ ಡೆಕ್</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">ಸ್ಪಷ್ಟ ಡೆಕ್</string>
     <string name="delete_deck_title">ಸ್ಪಷ್ಟ ಡೆಕ್?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">%1$s ನಲ್ಲಿ ಎಲ್ಲಾ ಕಾರ್ಡ್‌ಗಳನ್ನು ಅಳಿಸುವುದೇ? ಇದು %2$d ಕಾರ್ಡ್ ಅನ್ನು ಒಳಗೊಂಡಿದೆ</item>
@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">ಡೇಟಾಬೇಸ್ ಅನ್ನು ಸರಿಪಡಿಸಲು ನೀವು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?\n\nಪ್ರಯತ್ನವನ್ನು ಪ್ರಾರಂಭಿಸುವ ಮೊದಲು, \"%s\" ಉಪಫೋಲ್ಡರ್‌ನಲ್ಲಿ ನಕಲನ್ನು ರಚಿಸಲಾಗುತ್ತದೆ.</string>
     <string name="intent_aedict_empty">\"ಡೀಫಾಲ್ಟ್\" ವರ್ಗ ಖಾಲಿಯಾಗಿದೆ</string>
     <string name="intent_aedict_category">ಎಲ್ಲಾ ನೋಟ್‌ಪ್ಯಾಡ್ ವಿಭಾಗಗಳನ್ನು ತೆಗೆದುಹಾಕಿ ಅಥವಾ AnkiDroid ಗೆ ಕಾರ್ಡ್‌ಗಳನ್ನು ಸೇರಿಸಲು \"ಡೀಫಾಲ್ಟ್\" ಹೆಸರಿನ ಒಂದನ್ನು ಸೇರಿಸಿ</string>
-    <string name="custom_study_new_total_new">ಡೆಕ್‌ನಲ್ಲಿ ಹೊಸ ಕಾರ್ಡ್‌ಗಳು: %d</string>
-    <string name="custom_study_rev_total_rev">ಡೆಕ್‌ನಲ್ಲಿ ಬಾಕಿ ಉಳಿದಿರುವ ವಿಮರ್ಶೆಗಳು: %d</string>
     <string name="custom_study_new_extend">ಇಂದಿನ ಹೊಸ ಕಾರ್ಡ್ ಮಿತಿಯನ್ನು ಹೆಚ್ಚಿಸಿ/ಕಡಿಮೆ ಮಾಡಿ (\"-3\").</string>
     <string name="custom_study_rev_extend">ಇಂದಿನ ಚೆಕ್ ಮಿತಿಯನ್ನು ಹೆಚ್ಚಿಸಿ/ಕಡಿಮೆ ಮಾಡಿ (\"-3\").</string>
     <string name="custom_study_forgotten">ಕಳೆದ x ದಿನಗಳಲ್ಲಿ ಮರೆತಿರುವ ರಿವ್ಯೂ ಕಾರ್ಡ್‌ಗಳು:</string>
     <string name="custom_study_ahead">x ದಿನಗಳ ಮೊದಲು ಪರಿಶೀಲಿಸಿ:</string>
-    <string name="custom_study_random">ಡೆಕ್‌ನಿಂದ ಯಾದೃಚ್ಛಿಕವಾಗಿ x ಕಾರ್ಡ್‌ಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ:</string>
     <string name="custom_study_preview">ಕಳೆದ x ದಿನಗಳಲ್ಲಿ ಸೇರಿಸಲಾದ ಹೊಸ ಕಾರ್ಡ್‌ಗಳ ಪೂರ್ವವೀಕ್ಷಣೆ:</string>
-    <string name="custom_study_rebuild_deck_corrupt">ಕಸ್ಟಮ್ ಸ್ಟಡಿ ಡೆಕ್ ಅನ್ನು ಮರುನಿರ್ಮಾಣ ಮಾಡಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ</string>
     <string name="storage_full_title">ಸಂಗ್ರಹಣೆ ತುಂಬಿದೆ</string>
     <string name="storage_almost_full_title">ಸಂಗ್ರಹಣೆಯು ಬಹುತೇಕ ಪೂರ್ಣವಾಗಿದೆ</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ಜಾಗ ಇಲ್ಲ</string>
@@ -101,7 +97,7 @@
     <string name="dialog_continue">ಮುಂದುವರಿಸಿ</string>
     <string name="dialog_processing">ಪ್ರಕ್ರಿಯೆಗೊಳಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ರಚಿಸಿ</string>
-    <string name="dialog_positive_delete">ಅಳಿಸಿ</string>
+    <string name="dialog_positive_delete" maxLength="28">ಅಳಿಸಿ</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="dialog_positive_overwrite">ತಿದ್ದಿ ಬರೆಯಿರಿ</string>
@@ -186,7 +182,7 @@
     <string name="help_item_mailing_list">ಮೇಲಿಂಗ್ ಪಟ್ಟಿ</string>
     <string name="help_item_reddit">ರೆಡ್ಡಿಟ್</string>
     <string name="help_item_report_bug">ದೋಷವನ್ನು ವರದಿ ಮಾಡಿ</string>
-    <string name="help_title_support_ankidroid">AnkiDroid ಅನ್ನು ಬೆಂಬಲಿಸಿ</string>
+    <string name="help_title_support_ankidroid" maxLength="28">AnkiDroid ಅನ್ನು ಬೆಂಬಲಿಸಿ</string>
     <string name="help_item_support_opencollective_donate">ದಾನ ಮಾಡಿ</string>
     <string name="help_item_support_develop_ankidroid">ಅಭಿವೃದ್ಧಿ</string>
     <string name="help_item_support_rate_ankidroid">ದರ</string>
@@ -225,7 +221,7 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯನ್ನು ಬ್ಯಾಕಪ್ ಮಾಡಿ</string>
     <string name="backup_collection_message">ನೀವು ಸ್ವಲ್ಪ ಸಮಯದಿಂದ ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯನ್ನು ಬ್ಯಾಕಪ್ ಮಾಡಿಲ್ಲ. ಡೇಟಾ ನಷ್ಟವನ್ನು ತಡೆಯಲು ನೀವು ಈಗ ಇದನ್ನು ಮಾಡಬೇಕು</string>
-    <string name="button_backup">ಬ್ಯಾಕಪ್</string>
+    <string name="button_backup" maxLength="41">ಬ್ಯಾಕಪ್</string>
     <string name="button_disable_reminder">ಜ್ಞಾಪನೆಯನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">ನಂತರ</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">ಅದನ್ನು ಮತ್ತೆ ತೋರಿಸಬೇಡ</string>

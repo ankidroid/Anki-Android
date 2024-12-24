@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">x-ਵੱਡਾ</string>
     <string name="html_size_code_xx_large">xx-ਵੱਡਾ</string>
     <!-- gestures_labels -->
-    <string name="answer_again">ਦੁਬਾਰਾ ਜਵਾਬ ਦਿਓ</string>
-    <string name="answer_hard">ਔਖਾ ਜਵਾਬ ਦਿਓ</string>
-    <string name="answer_good">ਵਧੀਆ ਜਵਾਬ ਦਿਓ</string>
-    <string name="answer_easy">ਆਸਾਨ ਜਵਾਬ</string>
-    <string name="gesture_play">ਮੀਡੀਆ ਚਲਾਓ</string>
-    <string name="gesture_abort_learning">Close reviewer</string>
-    <string name="gesture_flag_red">ਲਾਲ ਝੰਡੇ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
-    <string name="gesture_flag_orange">ਸੰਤਰੀ ਝੰਡੇ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
-    <string name="gesture_flag_green">ਹਰੀ ਝੰਡੀ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
-    <string name="gesture_flag_blue">ਨੀਲੇ ਝੰਡੇ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
-    <string name="gesture_flag_pink">ਗੁਲਾਬੀ ਝੰਡੇ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
-    <string name="gesture_flag_turquoise">ਫਿਰੋਜ਼ੀ ਫਲੈਗ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
-    <string name="gesture_flag_purple">ਜਾਮਨੀ ਝੰਡੇ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
-    <string name="gesture_flag_remove">ਝੰਡਾ ਹਟਾਓ</string>
-    <string name="gesture_page_up">ਪੰਨਾ ਅੱਪ</string>
-    <string name="gesture_page_down">ਪੰਨਾ ਹੇਠਾਂ</string>
-    <string name="gesture_abort_sync">Close reviewer and Sync</string>
-    <string name="gesture_toggle_whiteboard">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
-    <string name="gesture_show_hint">ਸੰਕੇਤ ਦਿਖਾਓ</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
-    <string name="record_voice">ਆਵਾਜ਼ ਨੂੰ ਰਿਕਾਰਡ ਕਰੋ</string>
-    <string name="replay_voice">ਆਵਾਜ਼ ਨੂੰ ਮੁੜ ਚਲਾਓ</string>
-    <string name="save_voice">ਰਿਕਾਰਡਿੰਗ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰੋ</string>
+    <string name="answer_again" maxLength="41">ਦੁਬਾਰਾ ਜਵਾਬ ਦਿਓ</string>
+    <string name="answer_hard" maxLength="41">ਔਖਾ ਜਵਾਬ ਦਿਓ</string>
+    <string name="answer_good" maxLength="41">ਵਧੀਆ ਜਵਾਬ ਦਿਓ</string>
+    <string name="answer_easy" maxLength="41">ਆਸਾਨ ਜਵਾਬ</string>
+    <string name="gesture_play" maxLength="41">ਮੀਡੀਆ ਚਲਾਓ</string>
+    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_flag_red" maxLength="41">ਲਾਲ ਝੰਡੇ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
+    <string name="gesture_flag_orange" maxLength="41">ਸੰਤਰੀ ਝੰਡੇ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
+    <string name="gesture_flag_green" maxLength="41">ਹਰੀ ਝੰਡੀ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
+    <string name="gesture_flag_blue" maxLength="41">ਨੀਲੇ ਝੰਡੇ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
+    <string name="gesture_flag_pink" maxLength="41">ਗੁਲਾਬੀ ਝੰਡੇ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
+    <string name="gesture_flag_turquoise" maxLength="41">ਫਿਰੋਜ਼ੀ ਫਲੈਗ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
+    <string name="gesture_flag_purple" maxLength="41">ਜਾਮਨੀ ਝੰਡੇ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
+    <string name="gesture_flag_remove" maxLength="41">ਝੰਡਾ ਹਟਾਓ</string>
+    <string name="gesture_page_up" maxLength="41">ਪੰਨਾ ਅੱਪ</string>
+    <string name="gesture_page_down" maxLength="41">ਪੰਨਾ ਹੇਠਾਂ</string>
+    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
+    <string name="gesture_show_hint" maxLength="41">ਸੰਕੇਤ ਦਿਖਾਓ</string>
+    <string name="gesture_show_all_hints" maxLength="41">Show All Hints</string>
+    <string name="record_voice" maxLength="41">ਆਵਾਜ਼ ਨੂੰ ਰਿਕਾਰਡ ਕਰੋ</string>
+    <string name="replay_voice" maxLength="41">ਆਵਾਜ਼ ਨੂੰ ਮੁੜ ਚਲਾਓ</string>
+    <string name="save_voice" maxLength="41">ਰਿਕਾਰਡਿੰਗ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰੋ</string>
 </resources>

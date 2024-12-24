@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.reviewer
 
-import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.CollectionManager.TR
@@ -68,9 +67,8 @@ import timber.log.Timber
  */
 class AutomaticAnswer(
     target: AutomaticallyAnswered,
-    @VisibleForTesting val settings: AutomaticAnswerSettings
+    @VisibleForTesting val settings: AutomaticAnswerSettings,
 ) {
-
     /** Whether any tasks should be executed/scheduled.
      *
      * Ensures that auto answer does not occur if the reviewer is minimised
@@ -85,20 +83,22 @@ class AutomaticAnswer(
      */
     private var hasPlayedSounds: Boolean = false
 
-    private val showAnswerTask = Runnable {
-        if (isDisabled) {
-            Timber.d("showAnswer: disabled")
-            return@Runnable
+    private val showAnswerTask =
+        Runnable {
+            if (isDisabled) {
+                Timber.d("showAnswer: disabled")
+                return@Runnable
+            }
+            target.automaticShowAnswer()
         }
-        target.automaticShowAnswer()
-    }
-    private val showQuestionTask = Runnable {
-        if (isDisabled) {
-            Timber.d("showQuestion: disabled")
-            return@Runnable
+    private val showQuestionTask =
+        Runnable {
+            if (isDisabled) {
+                Timber.d("showQuestion: disabled")
+                return@Runnable
+            }
+            target.automaticShowQuestion(settings.answerAction)
         }
-        target.automaticShowQuestion(settings.answerAction)
-    }
 
     /**
      * Handler for the delay in auto showing question and/or answer
@@ -149,7 +149,6 @@ class AutomaticAnswer(
 
     /** Stop any "Automatic show answer" tasks in order to avoid race conditions */
     fun onDisplayQuestion() {
-        if (!settings.useTimer) return
         if (!settings.autoAdvanceIfShowingQuestion) return
         hasPlayedSounds = false
 
@@ -158,7 +157,6 @@ class AutomaticAnswer(
 
     /** Stop any "Automatic show question" tasks in order to avoid race conditions */
     fun onDisplayAnswer() {
-        if (!settings.useTimer) return
         if (!settings.autoAdvanceIfShowingAnswer) return
         hasPlayedSounds = false
 
@@ -187,7 +185,6 @@ class AutomaticAnswer(
      * after a user-specified duration, plus an additional delay for media
      */
     fun scheduleAutomaticDisplayAnswer(additionalDelay: Long = 0) {
-        if (!settings.useTimer) return
         if (!settings.autoAdvanceIfShowingQuestion) return
         if (hasPlayedSounds) return
         hasPlayedSounds = true
@@ -199,16 +196,13 @@ class AutomaticAnswer(
      * after a user-specified duration, plus an additional delay for media
      */
     fun scheduleAutomaticDisplayQuestion(additionalMediaDelay: Long = 0) {
-        if (!settings.useTimer) return
         if (!settings.autoAdvanceIfShowingAnswer) return
         if (hasPlayedSounds) return
         hasPlayedSounds = true
         delayedShowQuestion(settings.millisecondsToShowAnswerFor + additionalMediaDelay)
     }
 
-    fun isEnabled(): Boolean {
-        return !isDisabled
-    }
+    fun isEnabled(): Boolean = !isDisabled
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     internal fun simulateCardFlip() {
@@ -218,18 +212,20 @@ class AutomaticAnswer(
 
     interface AutomaticallyAnswered {
         fun automaticShowAnswer()
+
         fun automaticShowQuestion(action: AutomaticAnswerAction)
     }
 
     companion object {
         @CheckResult
-        fun defaultInstance(target: AutomaticallyAnswered): AutomaticAnswer {
-            return AutomaticAnswer(target, AutomaticAnswerSettings())
-        }
+        fun defaultInstance(target: AutomaticallyAnswered): AutomaticAnswer = AutomaticAnswer(target, AutomaticAnswerSettings())
 
         @CheckResult
-        fun createInstance(target: AutomaticallyAnswered, preferences: SharedPreferences, col: Collection): AutomaticAnswer {
-            val settings = AutomaticAnswerSettings.createInstance(preferences, col)
+        fun createInstance(
+            target: AutomaticallyAnswered,
+            col: Collection,
+        ): AutomaticAnswer {
+            val settings = AutomaticAnswerSettings.createInstance(col)
             return AutomaticAnswer(target, settings)
         }
     }
@@ -253,17 +249,17 @@ class AutomaticAnswer(
  */
 class AutomaticAnswerSettings(
     val answerAction: AutomaticAnswerAction = AutomaticAnswerAction.BURY_CARD,
-    @get:JvmName("useTimer") val useTimer: Boolean = false,
     private val secondsToShowQuestionFor: Double = 60.0,
-    private val secondsToShowAnswerFor: Double = 20.0
+    private val secondsToShowAnswerFor: Double = 20.0,
 ) {
-
     val millisecondsToShowQuestionFor = (secondsToShowQuestionFor * 1000L).toLong()
     val millisecondsToShowAnswerFor = (secondsToShowAnswerFor * 1000L).toLong()
 
     // a wait of zero means auto-advance is disabled
-    val autoAdvanceIfShowingAnswer; get() = secondsToShowAnswerFor > 0
-    val autoAdvanceIfShowingQuestion; get() = secondsToShowQuestionFor > 0
+    val autoAdvanceIfShowingAnswer
+        get() = secondsToShowAnswerFor > 0
+    val autoAdvanceIfShowingQuestion
+        get() = secondsToShowQuestionFor > 0
 
     companion object {
         /**
@@ -271,34 +267,28 @@ class AutomaticAnswerSettings(
          */
         @NeedsTest("ensure question setting maps to question parameter")
         fun queryOptions(
-            preferences: SharedPreferences,
             col: Collection,
-            selectedDid: DeckId
+            selectedDid: DeckId,
         ): AutomaticAnswerSettings {
             val conf = col.decks.configDictForDeckId(selectedDid)
             val action = getAction(conf)
-            val useTimer = preferences.getBoolean("timeoutAnswer", false)
 
             return AutomaticAnswerSettings(
                 answerAction = action,
-                useTimer = useTimer,
                 secondsToShowQuestionFor = conf.secondsToShowQuestion,
-                secondsToShowAnswerFor = conf.secondsToShowAnswer
+                secondsToShowAnswerFor = conf.secondsToShowAnswer,
             )
         }
 
-        fun createInstance(preferences: SharedPreferences, col: Collection): AutomaticAnswerSettings {
-            return queryOptions(preferences, col, col.decks.selected())
-        }
+        fun createInstance(col: Collection): AutomaticAnswerSettings = queryOptions(col, col.decks.selected())
 
-        private fun getAction(conf: DeckConfig): AutomaticAnswerAction {
-            return try {
+        private fun getAction(conf: DeckConfig): AutomaticAnswerAction =
+            try {
                 val value: Int = conf.optInt(AutomaticAnswerAction.CONFIG_KEY)
                 AutomaticAnswerAction.fromConfigValue(value)
             } catch (e: Exception) {
                 AutomaticAnswerAction.BURY_CARD
             }
-        }
     }
 }
 
@@ -306,13 +296,16 @@ class AutomaticAnswerSettings(
  * Represents a value from [anki.deck_config.DeckConfig.Config.AnswerAction]
  * Executed when answering a card (showing the question).
  */
-enum class AutomaticAnswerAction(private val configValue: Int) {
+enum class AutomaticAnswerAction(
+    private val configValue: Int,
+) {
     /** Default: least invasive action */
     BURY_CARD(0),
     ANSWER_AGAIN(1),
     ANSWER_GOOD(2),
     ANSWER_HARD(3),
-    SHOW_REMINDER(4);
+    SHOW_REMINDER(4),
+    ;
 
     fun execute(reviewer: Reviewer) {
         val action = this.toCommand()
@@ -325,15 +318,14 @@ enum class AutomaticAnswerAction(private val configValue: Int) {
     }
 
     /** Convert to a [ViewerCommand] */
-    private fun toCommand(): ViewerCommand? {
-        return when (this) {
+    private fun toCommand(): ViewerCommand? =
+        when (this) {
             BURY_CARD -> ViewerCommand.BURY_CARD
             ANSWER_AGAIN -> AGAIN.toViewerCommand()
             ANSWER_HARD -> HARD.toViewerCommand()
             ANSWER_GOOD -> GOOD.toViewerCommand()
-            else -> null
+            SHOW_REMINDER -> null
         }
-    }
 
     companion object {
         /**
@@ -344,8 +336,6 @@ enum class AutomaticAnswerAction(private val configValue: Int) {
         const val CONFIG_KEY = "answerAction"
 
         /** convert from [anki.deck_config.DeckConfig.Config.AnswerAction] to the enum */
-        fun fromConfigValue(i: Int): AutomaticAnswerAction {
-            return entries.firstOrNull { it.configValue == i } ?: BURY_CARD
-        }
+        fun fromConfigValue(i: Int): AutomaticAnswerAction = entries.firstOrNull { it.configValue == i } ?: BURY_CARD
     }
 }

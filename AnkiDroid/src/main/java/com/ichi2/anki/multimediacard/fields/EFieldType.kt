@@ -26,5 +26,5 @@ enum class EFieldType {
     TEXT, // Just text
     IMAGE, // Just image
     AUDIO_RECORDING, // Just audio
-    MEDIA_CLIP // Just media (audio/video) clip
+    MEDIA_CLIP, // Just media (audio/video) clip
 }

@@ -31,7 +31,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class AnalyticalWidgetProviderTest : RobolectricTest() {
-
     @Before
     override fun setUp() {
         super.setUp()
@@ -59,7 +58,7 @@ class AnalyticalWidgetProviderTest : RobolectricTest() {
             context: android.content.Context,
             appWidgetManager: AppWidgetManager,
             appWidgetIds: IntArray,
-            usageAnalytics: UsageAnalytics
+            usageAnalytics: UsageAnalytics,
         ) {
             // Do nothing
         }

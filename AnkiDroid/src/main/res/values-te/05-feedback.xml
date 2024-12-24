@@ -46,7 +46,7 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">లోపం రిపోర్ట్ మోడ్</string>
+    <string name="error_reporting_choice" maxLength="41">లోపం రిపోర్ట్ మోడ్</string>
     <string name="feedback_disclaimer">తనది కాదను వ్యక్తి: మీ ఇమెయిల్ చిరునామా, ఫోన్ నంబర్ లేదా మీ ఫోన్ IMEI వంటి వ్యక్తిగత సమాచారాన్ని మేము సేకరించము. మీ పరికరాన్ని గురించి తయారీదారు, మోడల్ మరియు Android యొక్క సంస్కరణ, అలాగే నివేదించిన లోపాల స్వభావం మరియు దారితీసిన దశలు వంటి మీ సమాచారాన్ని మేము సేకరించాము.</string>
     <string name="feedback_title">AnkiDroid అభిప్రాయం</string>
     <string name="feedback_default_text">మీరు రిపోర్ట్ చేస్తున్న ఏదైనా లోపాల స్వభావం గురించి మీ అభిప్రాయాన్ని లేదా సమాచారాన్ని నమోదు చేయండి.</string>

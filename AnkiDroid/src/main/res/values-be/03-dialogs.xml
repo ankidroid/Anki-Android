@@ -46,7 +46,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Праверыць базу даных?</string>
     <string name="check_db_warning">Гэта можа заняць шмат часу</string>
-    <string name="contextmenu_deckpicker_delete_deck">Выдаліць калоду</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Выдаліць калоду</string>
     <string name="delete_deck_title">Выдаліць калоду?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Выдаліць усе карткі ў %1$s? Папка змяшчае %2$d картку</item>
@@ -81,15 +81,11 @@
     <string name="repair_deck_dialog">Вы сапраўды хочаце аднавіць базу даных?\n\nПерад спробай па яе аднаўленні, будзе створана копія ў  падпапцы \'%s\'.</string>
     <string name="intent_aedict_empty">Катэгорыя “default” нічога не змяшчае</string>
     <string name="intent_aedict_category">Для таго, каб дадаць карткі ў AnkiDroid, выдаліце ўсе катэгорыі Notepad або дадайце катэгорыю з назвай \"default\"</string>
-    <string name="custom_study_new_total_new">Новых картак у калодзе: %d</string>
-    <string name="custom_study_rev_total_rev">Картак для паўтарэння: %d</string>
     <string name="custom_study_new_extend">Павялічыць/паменшыць (“-3”) абмежаванні новых картак на сёння </string>
     <string name="custom_study_rev_extend">Павялічыць/паменшыць (“-3”) абмежаванні паўтарэння новых картак на сёння </string>
     <string name="custom_study_forgotten">Паўтарыць забытыя карткі за апошнія некалькі дзён:</string>
     <string name="custom_study_ahead">Вывучыць на некалькі дзён наперад:</string>
-    <string name="custom_study_random">Выбраць некалькі выпадковых картак з калоды:</string>
     <string name="custom_study_preview">Прагледзець новыя карткі, якія дадзены за апошнія некалькі дзён:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Не атрымалася перабудаваць калоду індывідуальнага навучання</string>
     <string name="storage_full_title">Сховішча запоўнена</string>
     <string name="storage_almost_full_title">Сховішча амаль запоўнена</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Памяць запоўненая</string>
@@ -107,7 +103,7 @@
     <string name="dialog_continue">Працягнуць</string>
     <string name="dialog_processing">Апрацоўка&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Стварыць</string>
-    <string name="dialog_positive_delete">Выдаліць</string>
+    <string name="dialog_positive_delete" maxLength="28">Выдаліць</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Адключыць</string>
     <string name="dialog_positive_overwrite">Перазапісаць</string>
@@ -194,7 +190,7 @@
     <string name="help_item_mailing_list">Спіс рассылкі</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Паведаміць пра памылку</string>
-    <string name="help_title_support_ankidroid">Падтрымка AnkiDroid</string>
+    <string name="help_title_support_ankidroid" maxLength="28">Падтрымка AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Ахвяраваць</string>
     <string name="help_item_support_develop_ankidroid">Распрацоўка</string>
     <string name="help_item_support_rate_ankidroid">Ацаніць</string>
@@ -235,7 +231,7 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">Рэзервовае капіяванне калекцыі</string>
     <string name="backup_collection_message">Вы даўно не рабілі рэзервовую копію сваёй калекцыі. Зрабіце гэта зараз, каб прадухіліць страту даных</string>
-    <string name="button_backup">Рэзерваваць</string>
+    <string name="button_backup" maxLength="41">Рэзерваваць</string>
     <string name="button_disable_reminder">Адключыць напамін</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Пазней</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Больш не паказваць</string>
@@ -247,7 +243,7 @@
     
     </string>
     <string name="deck_already_exists">Калода ўжо існуе</string>
-    <string name="empty_deck_name">Deck name cannot be empty</string>
+    <string name="empty_deck_name">Калода не можа быць пустой</string>
     <string name="create_deck_numeric_hint">Калі ў вас ёсць праблемы з парадкам калод (напрыклад, ‘10’  калода стаіць перад ‘2’), замяніце ‘2’ на ‘02’ </string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Задаць інтэрвал на тое ж самае значэнне</string>
@@ -283,10 +279,10 @@
     <string name="change_cloze_mode">Змяніць рэжым Cloze</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">Сістэма WebView састарэла. Некаторыя функцыі будуць працаваць некарэктна. Неабходна абнаўленне.\n\nБягучая версія: %1$d\nМінімальна неабходная версія: %2$d</string>
-    <string name="compress">Compress</string>
+    <string name="compress">Сціснуць</string>
     <!-- Tts playback error dialog -->
-    <string name="tts_error_dialog_title">Language not supported</string>
-    <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
-    <string name="tts_error_dialog_change_button_text">Change engine</string>
-    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
+    <string name="tts_error_dialog_title">Мова не падтрымліваецца</string>
+    <string name="tts_error_dialog_reason_text">Рухавік пераўтварэння тэксту ў голас <b>%1$s</b> не падтрымлівае наступную мову: <b>%2$s</b></string>
+    <string name="tts_error_dialog_change_button_text">Змяніць рухавік</string>
+    <string name="tts_error_dialog_supported_voices_button_text">Параметры голасу</string>
 </resources>

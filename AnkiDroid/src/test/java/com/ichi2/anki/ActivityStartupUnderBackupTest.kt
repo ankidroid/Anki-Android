@@ -18,7 +18,7 @@ package com.ichi2.anki
 import android.app.Activity
 import android.os.Looper.getMainLooper
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity
-import com.ichi2.anki.preferences.Preferences
+import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.testutils.ActivityList
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam
 import com.ichi2.testutils.EmptyApplication
@@ -51,9 +51,18 @@ class ActivityStartupUnderBackupTest : RobolectricTest() {
     fun before() {
         notYetHandled(IntentHandler::class.java.simpleName, "Not working (or implemented) - inherits from Activity")
         notYetHandled(IntentHandler2::class.java.simpleName, "Not working (or implemented) - inherits from Activity")
-        notYetHandled(Preferences::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
-        notYetHandled(FilteredDeckOptions::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
-        notYetHandled(SingleFragmentActivity::class.java.simpleName, "Implemented, but the test fails because the activity throws if a specific intent extra isn't set")
+        notYetHandled(
+            PreferencesActivity::class.java.simpleName,
+            "Not working (or implemented) - inherits from AppCompatPreferenceActivity",
+        )
+        notYetHandled(
+            FilteredDeckOptions::class.java.simpleName,
+            "Not working (or implemented) - inherits from AppCompatPreferenceActivity",
+        )
+        notYetHandled(
+            SingleFragmentActivity::class.java.simpleName,
+            "Implemented, but the test fails because the activity throws if a specific intent extra isn't set",
+        )
         notYetHandled(InstantNoteEditorActivity::class.java.simpleName, "Single instance activity so should be used")
     }
 
@@ -72,20 +81,21 @@ class ActivityStartupUnderBackupTest : RobolectricTest() {
     @Test
     fun activityHandlesRestoreBackup() {
         AnkiDroidApp.simulateRestoreFromBackup()
-        val controller: ActivityController<out Activity?> = try {
-            launcher!!.build(targetContext).create()
-        } catch (npe: Exception) {
-            val stackTrace = getFullStackTrace(npe)
-            Assert.fail(
-                """If you ran this test and it failed, please check to make sure that any new onCreate methods
+        val controller: ActivityController<out Activity?> =
+            try {
+                launcher!!.build(targetContext).create()
+            } catch (npe: Exception) {
+                val stackTrace = getFullStackTrace(npe)
+                Assert.fail(
+                    """If you ran this test and it failed, please check to make sure that any new onCreate methods
 have the following code snippet at the start:
 if (showedActivityFailedScreen(savedInstanceState)) {
   return;
 }
-$stackTrace"""
-            )
-            throw npe
-        }
+$stackTrace""",
+                )
+                throw npe
+            }
         shadowOf(getMainLooper()).idle()
 
         // Note: Robolectric differs from actual Android (process is not killed).
@@ -93,10 +103,17 @@ $stackTrace"""
         // and onDestroy() is also called in the real implementation on my phone.
         assertThat("If a backup was taking place, the activity should be finishing", controller.get()!!.isFinishing, equalTo(true))
         controller.destroy()
-        assertThat("If a backup was taking place, the activity should be destroyed successfully", controller.get()!!.isDestroyed, equalTo(true))
+        assertThat(
+            "If a backup was taking place, the activity should be destroyed successfully",
+            controller.get()!!.isDestroyed,
+            equalTo(true),
+        )
     }
 
-    private fun notYetHandled(activityName: String, reason: String) {
+    private fun notYetHandled(
+        activityName: String,
+        reason: String,
+    ) {
         if (launcher!!.simpleName == activityName) {
             assumeThat("$activityName $reason", true, equalTo(false))
         }
@@ -105,8 +122,12 @@ $stackTrace"""
     companion object {
         @ParameterizedRobolectricTestRunner.Parameters(name = "{1}")
         @JvmStatic // required for initParameters
-        fun initParameters(): Collection<Array<Any>> {
-            return ActivityList.allActivitiesAndIntents().stream().map { x: ActivityLaunchParam -> arrayOf(x, x.simpleName) }.collect(Collectors.toList())
-        }
+        fun initParameters(): Collection<Array<Any>> =
+            ActivityList
+                .allActivitiesAndIntents()
+                .stream()
+                .map { x: ActivityLaunchParam ->
+                    arrayOf(x, x.simpleName)
+                }.collect(Collectors.toList())
     }
 }

@@ -84,7 +84,10 @@ public class TestJavaClass {
 
     @Test
     fun showsErrorsForInvalidUsage() {
-        TestLintTask.lint().allowMissingSdk().allowCompilationErrors()
+        TestLintTask
+            .lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
             .files(JavaTestFile.create(stubDate), JavaTestFile.create(javaFileToBeTested))
             .issues(DirectDateInstantiation.ISSUE)
             .run()
@@ -97,7 +100,10 @@ public class TestJavaClass {
 
     @Test
     fun allowsUsageInTimeClass() {
-        TestLintTask.lint().allowMissingSdk().allowCompilationErrors()
+        TestLintTask
+            .lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
             .files(JavaTestFile.create(stubDate), JavaTestFile.create(javaFileWithTime))
             .issues(DirectDateInstantiation.ISSUE)
             .run()
@@ -106,7 +112,10 @@ public class TestJavaClass {
 
     @Test
     fun allowsUsageWithLongValue() {
-        TestLintTask.lint().allowMissingSdk().allowCompilationErrors()
+        TestLintTask
+            .lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
             .files(JavaTestFile.create(stubDate), JavaTestFile.create(javaFileUsingDateWithLong))
             .issues(DirectDateInstantiation.ISSUE)
             .run()

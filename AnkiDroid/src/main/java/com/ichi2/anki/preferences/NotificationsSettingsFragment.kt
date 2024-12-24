@@ -39,7 +39,7 @@ class NotificationsSettingsFragment : SettingsFragment() {
     override fun initSubscreen() {
         if (AdaptionUtil.isXiaomiRestrictedLearningDevice) {
             /** These preferences should be searchable or not based
-             * on this same condition at [Preferences.configureSearchBar] */
+             * on this same condition at [HeaderFragment.configureSearchBar] */
             preferenceScreen.removePreference(requirePreference<SwitchPreferenceCompat>(R.string.pref_notifications_vibrate_key))
             preferenceScreen.removePreference(requirePreference<SwitchPreferenceCompat>(R.string.pref_notifications_blink_key))
         }
@@ -49,16 +49,17 @@ class NotificationsSettingsFragment : SettingsFragment() {
             updateNotificationPreference(this)
             setOnPreferenceChangeListener { preference, newValue ->
                 updateNotificationPreference(preference as ListPreference)
-                if ((newValue as String).toInt() < Preferences.PENDING_NOTIFICATIONS_ONLY) {
+                if ((newValue as String).toInt() < PENDING_NOTIFICATIONS_ONLY) {
                     scheduleNotification(TimeManager.time, requireContext())
                 } else {
-                    val intent = PendingIntentCompat.getBroadcast(
-                        requireContext(),
-                        0,
-                        Intent(requireContext(), NotificationService::class.java),
-                        0,
-                        false
-                    )
+                    val intent =
+                        PendingIntentCompat.getBroadcast(
+                            requireContext(),
+                            0,
+                            Intent(requireContext(), NotificationService::class.java),
+                            0,
+                            false,
+                        )
                     val alarmManager = requireActivity().getSystemService(ALARM_SERVICE) as AlarmManager
                     if (intent != null) {
                         alarmManager.cancel(intent)

@@ -27,6 +27,8 @@ import com.ichi2.anki.dialogs.ImportFileSelectionFragment
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
 import com.ichi2.anki.pages.CsvImporter
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.ImportUtils
 import timber.log.Timber
@@ -36,8 +38,8 @@ import timber.log.Timber
 // onSelectedPackageToImport/onSelectedCsvForImport
 // importUtils - copying selected file into local cache
 // ImportDialog - confirmation screen after file copied to cache
-//    * ImportDialogListener - DeckPicker implementation of handler for the confirmation screen
-//    * DeckPicker.importAdd/importReplace - called from confirmation screen
+//    * ImportDialogListener - AnkiActivity implementation of handler for the confirmation screen
+//    * AnkiActivity.importAdd/importReplace - called from confirmation screen
 // BackendBackups/BackendImporting - new backend for importing
 // importReplaceListener - old backend listener for importing
 
@@ -46,7 +48,7 @@ fun interface ImportColpkgListener {
 }
 
 @NeedsTest("successful import from the app menu")
-fun DeckPicker.onSelectedPackageToImport(data: Intent) {
+fun AnkiActivity.onSelectedPackageToImport(data: Intent) {
     val importResult = ImportUtils.handleFileImport(this, data)
     if (!importResult.isSuccess) {
         runOnUiThread {
@@ -71,33 +73,40 @@ fun Activity.onSelectedCsvForImport(data: Intent) {
     stackBuilder.startActivities()
 }
 
-fun DeckPicker.showImportDialog(id: Int, importPath: String) {
+fun AnkiActivity.showImportDialog(
+    id: Int,
+    importPath: String,
+) {
     Timber.d("showImportDialog() delegating to ImportDialog")
     val newFragment: AsyncDialogFragment = ImportDialog.newInstance(id, importPath)
     showAsyncDialogFragment(newFragment)
 }
-fun DeckPicker.showImportDialog() {
+
+fun AnkiActivity.showImportDialog() {
     showImportDialog(
         ImportOptions(
             importApkg = true,
             importColpkg = true,
-            importTextFile = true
-        )
+            importTextFile = true,
+        ),
     )
 }
 
-fun DeckPicker.showImportDialog(options: ImportOptions) {
+fun AnkiActivity.showImportDialog(options: ImportOptions) {
     showDialogFragment(ImportFileSelectionFragment.newInstance(options))
 }
 
-class DatabaseRestorationListener(val deckPicker: DeckPicker, val newAnkiDroidDirectory: String) : ImportColpkgListener {
+class DatabaseRestorationListener(
+    val activity: AnkiActivity,
+    val newAnkiDroidDirectory: String,
+) : ImportColpkgListener {
     override fun onImportColpkg(colpkgPath: String?) {
         Timber.i("Database restoration correct")
-        deckPicker.sharedPrefs().edit {
+        activity.sharedPrefs().edit {
             putString("deckPath", newAnkiDroidDirectory)
         }
-        deckPicker.dismissAllDialogFragments()
-        deckPicker.importColpkgListener = null
+        activity.dismissAllDialogFragments()
+        activity.importColpkgListener = null
         CollectionHelper.ankiDroidDirectoryOverride = null
     }
 }

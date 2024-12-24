@@ -21,7 +21,6 @@ import android.os.Bundle
 import android.view.View
 import android.webkit.JavascriptInterface
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
@@ -60,14 +59,16 @@ class CongratsPage :
     PageFragment(),
     CustomStudyDialog.CustomStudyListener,
     ChangeManager.Subscriber {
-
     private val viewModel by viewModels<CongratsViewModel>()
 
     init {
         ChangeManager.subscribe(this)
     }
 
-    override fun opExecuted(changes: OpChanges, handler: Any?) {
+    override fun opExecuted(
+        changes: OpChanges,
+        handler: Any?,
+    ) {
         // typically due to 'day rollover'
         if (changes.studyQueues) {
             Timber.i("refreshing: study queues updated")
@@ -75,28 +76,31 @@ class CongratsPage :
         }
     }
 
-    override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
-        return super.onCreateWebViewClient(savedInstanceState).also { client ->
-            client.onPageFinishedCallback = OnPageFinishedCallback { webView ->
-                webView.evaluateJavascript(
-                    "bridgeCommand = function(request){ ankidroid.bridgeCommand(request); };"
-                ) {}
-            }
+    override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient =
+        super.onCreateWebViewClient(savedInstanceState).also { client ->
+            client.onPageFinishedCallback =
+                OnPageFinishedCallback { webView ->
+                    webView.evaluateJavascript(
+                        "bridgeCommand = function(request){ ankidroid.bridgeCommand(request); };",
+                    ) {}
+                }
         }
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.onError
             .flowWithLifecycle(lifecycle)
             .onEach { errorMessage ->
-                AlertDialog.Builder(requireContext())
+                AlertDialog
+                    .Builder(requireContext())
                     .setTitle(R.string.vague_error)
                     .setMessage(errorMessage)
                     .show()
-            }
-            .launchIn(lifecycleScope)
+            }.launchIn(lifecycleScope)
 
         viewModel.openStudyOptions
             .onEach { openStudyOptionsAndFinish() }
@@ -107,8 +111,7 @@ class CongratsPage :
             .onEach { destination ->
                 val intent = destination.getIntent(requireContext())
                 startActivity(intent, null)
-            }
-            .launchIn(lifecycleScope)
+            }.launchIn(lifecycleScope)
 
         webView.addJavascriptInterface(BridgeCommand(), "ankidroid")
 
@@ -134,19 +137,20 @@ class CongratsPage :
     }
 
     private fun openStudyOptionsAndFinish() {
-        val intent = Intent(requireContext(), StudyOptionsActivity::class.java).apply {
-            putExtra("withDeckOptions", false)
-        }
+        val intent =
+            Intent(requireContext(), StudyOptionsActivity::class.java).apply {
+                putExtra("withDeckOptions", false)
+            }
         startActivity(intent, null)
         requireActivity().finish()
     }
 
     private fun onStudyMore() {
         val col = CollectionManager.getColUnsafe()
-        val dialogFragment = CustomStudyDialog(CollectionManager.getColUnsafe(), this).withArguments(
-            CustomStudyDialog.ContextMenuConfiguration.STANDARD,
-            col.decks.selected()
-        )
+        val dialogFragment =
+            CustomStudyDialog(CollectionManager.getColUnsafe(), this).withArguments(
+                col.decks.selected(),
+            )
         dialogFragment.show(childFragmentManager, null)
     }
 
@@ -156,35 +160,15 @@ class CongratsPage :
         openStudyOptionsAndFinish()
     }
 
-    override fun showDialogFragment(newFragment: DialogFragment) {
-        Timber.v("CustomStudyListener::showDialogFragment()")
-        newFragment.show(childFragmentManager, null)
-    }
-
     override fun onCreateCustomStudySession() {
         Timber.v("CustomStudyListener::onCreateCustomStudySession()")
         openStudyOptionsAndFinish()
     }
 
-    override fun showProgressBar() {
-        Timber.v("CustomStudyListener::showProgressBar() - not handled")
-    }
-
-    override fun dismissAllDialogFragments() {
-        Timber.v("CustomStudyListener::dismissAllDialogFragments() - not handled")
-    }
-
-    override fun hideProgressBar() {
-        Timber.v("CustomStudyListener::hideProgressBar() - not handled")
-    }
-
     companion object {
-        fun getIntent(context: Context): Intent {
-            return getIntent(context, path = "congrats", clazz = CongratsPage::class)
-        }
+        fun getIntent(context: Context): Intent = getIntent(context, path = "congrats", clazz = CongratsPage::class)
 
-        private fun displayNewCongratsScreen(context: Context): Boolean =
-            context.sharedPrefs().getBoolean("new_congrats_screen", false)
+        private fun displayNewCongratsScreen(context: Context): Boolean = context.sharedPrefs().getBoolean("new_congrats_screen", false)
 
         fun display(activity: FragmentActivity) {
             if (displayNewCongratsScreen(activity)) {
@@ -197,7 +181,10 @@ class CongratsPage :
             }
         }
 
-        fun onReviewsCompleted(activity: FragmentActivity, cardsInDeck: Boolean) {
+        fun onReviewsCompleted(
+            activity: FragmentActivity,
+            cardsInDeck: Boolean,
+        ) {
             if (displayNewCongratsScreen(activity)) {
                 activity.startActivity(getIntent(activity))
                 return
@@ -222,13 +209,14 @@ class CongratsPage :
                 return activity.getString(R.string.studyoptions_congrats_finished)
             }
             // https://github.com/ankitects/anki/blob/9b4dd54312de8798a3f2bee07892bb3a488d1f9b/ts/lib/tslib/time.ts#L22
-            val (unit, amount) = if (secsUntilNextLearn < TIME_MINUTE) {
-                "seconds" to secsUntilNextLearn.toDouble()
-            } else if (secsUntilNextLearn < TIME_HOUR) {
-                "minutes" to secsUntilNextLearn / TIME_MINUTE
-            } else {
-                "hours" to secsUntilNextLearn / TIME_HOUR
-            }
+            val (unit, amount) =
+                if (secsUntilNextLearn < TIME_MINUTE) {
+                    "seconds" to secsUntilNextLearn.toDouble()
+                } else if (secsUntilNextLearn < TIME_HOUR) {
+                    "minutes" to secsUntilNextLearn / TIME_MINUTE
+                } else {
+                    "hours" to secsUntilNextLearn / TIME_HOUR
+                }
 
             val nextLearnDue = TR.schedulingNextLearnDue(unit, round(amount).toInt())
             return activity.getString(R.string.studyoptions_congrats_next_due_in, nextLearnDue)
@@ -240,7 +228,9 @@ class CongratsPage :
     }
 }
 
-class CongratsViewModel : ViewModel(), OnErrorListener {
+class CongratsViewModel :
+    ViewModel(),
+    OnErrorListener {
     override val onError = MutableSharedFlow<String>()
     val openStudyOptions = MutableSharedFlow<Boolean>()
     val deckOptionsDestination = MutableSharedFlow<DeckOptionsDestination>()
@@ -263,12 +253,14 @@ class CongratsViewModel : ViewModel(), OnErrorListener {
     }
 }
 
-class DeckOptionsDestination(private val deckId: DeckId, private val isFiltered: Boolean) {
-    fun getIntent(context: Context): Intent {
-        return if (isFiltered) {
+class DeckOptionsDestination(
+    private val deckId: DeckId,
+    private val isFiltered: Boolean,
+) {
+    fun getIntent(context: Context): Intent =
+        if (isFiltered) {
             Intent(context, FilteredDeckOptions::class.java)
         } else {
             DeckOptions.getIntent(context, deckId)
         }
-    }
 }

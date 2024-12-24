@@ -24,7 +24,6 @@ import java.io.File
 
 /** Handles logic for displaying help for missing media files  */
 class MediaErrorHandler {
-
     companion object {
         /** Specify a maximum number of times to display, as it's somewhat annoying  */
         const val MAX_DISPLAY_TIMES = 2
@@ -34,7 +33,11 @@ class MediaErrorHandler {
     private var hasExecuted = false
 
     private var automaticTtsFailureCount = 0
-    fun processFailure(request: WebResourceRequest, onFailure: (String) -> Unit) {
+
+    fun processFailure(
+        request: WebResourceRequest,
+        onFailure: (String) -> Unit,
+    ) {
         // We do not want this to trigger more than once on the same side of the card as the UI will flicker.
         if (hasExecuted) return
 
@@ -58,7 +61,10 @@ class MediaErrorHandler {
         }
     }
 
-    fun processMissingSound(file: File, onFailure: (String) -> Unit) {
+    fun processMissingSound(
+        file: File,
+        onFailure: (String) -> Unit,
+    ) {
         // We want this to trigger more than once on the same side - as the user is in control of pressing "play"
         // and we want to provide feedback
         // The UX of the snackbar is annoying, as it obscures the content. Assume that if a user ignores it twice, they don't care.
@@ -81,7 +87,11 @@ class MediaErrorHandler {
         hasExecuted = false
     }
 
-    fun processTtsFailure(error: TtsPlayer.TtsError, playingAutomatically: Boolean, errorHandler: (TtsPlayer.TtsError) -> Unit) {
+    fun processTtsFailure(
+        error: TtsPlayer.TtsError,
+        playingAutomatically: Boolean,
+        errorHandler: (TtsPlayer.TtsError) -> Unit,
+    ) {
         // if the user is playing a single sound explicitly, we want to provide feedback
         if (playingAutomatically && automaticTtsFailureCount++ >= 3) {
             Timber.v("Ignoring TTS Error: %s. failure limit exceeded", error)

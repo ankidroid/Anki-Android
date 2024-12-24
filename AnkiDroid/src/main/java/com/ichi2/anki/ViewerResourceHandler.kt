@@ -25,10 +25,16 @@ import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.FileInputStream
+import java.nio.file.Paths
+import kotlin.io.path.pathString
 
 private const val RANGE_HEADER = "Range"
+private const val MATHJAX_PATH_PREFIX = "/_anki/js/vendor/mathjax"
 
-class ViewerResourceHandler(context: Context) {
+class ViewerResourceHandler(
+    context: Context,
+) {
+    private val assetManager = context.assets
     private val mediaDir = CollectionHelper.getMediaDirectory(context)
 
     fun shouldInterceptRequest(request: WebResourceRequest): WebResourceResponse? {
@@ -43,6 +49,17 @@ class ViewerResourceHandler(context: Context) {
         }
 
         try {
+            if (path.startsWith(MATHJAX_PATH_PREFIX)) {
+                val mathjaxAssetPath =
+                    Paths
+                        .get(
+                            "backend/js/vendor/mathjax",
+                            path.removePrefix(MATHJAX_PATH_PREFIX),
+                        ).pathString
+                val inputStream = assetManager.open(mathjaxAssetPath)
+                return WebResourceResponse(guessMimeType(path), null, inputStream)
+            }
+
             val file = File(mediaDir, path)
             if (!file.exists()) {
                 return null
@@ -60,15 +77,19 @@ class ViewerResourceHandler(context: Context) {
     }
 
     @NeedsTest("seeking audio - 16513")
-    private fun handlePartialContent(file: File, range: String): WebResourceResponse {
+    private fun handlePartialContent(
+        file: File,
+        range: String,
+    ): WebResourceResponse {
         val rangeHeader = RangeHeader.from(range, defaultEnd = file.length() - 1)
 
         val mimeType = guessMimeType(file.path)
         val (start, end) = rangeHeader
-        val responseHeaders = mapOf(
-            "Content-Range" to "bytes $start-$end/${file.length()}",
-            "Accept-Ranges" to "bytes"
-        )
+        val responseHeaders =
+            mapOf(
+                "Content-Range" to "bytes $start-$end/${file.length()}",
+                "Accept-Ranges" to "bytes",
+            )
         // WARN: WebResourceResponse appears to handle truncating the stream internally
         // This is NOT the same as NanoHTTPD
 
@@ -88,7 +109,7 @@ class ViewerResourceHandler(context: Context) {
             206,
             "Partial Content",
             responseHeaders,
-            fileStream
+            fileStream,
         )
     }
 }
@@ -96,14 +117,20 @@ class ViewerResourceHandler(context: Context) {
 /**
  * Handles the "range" header in a HTTP Request
  */
-data class RangeHeader(val start: Long, val end: Long) {
+data class RangeHeader(
+    val start: Long,
+    val end: Long,
+) {
     companion object {
-        fun from(range: String, defaultEnd: Long): RangeHeader {
+        fun from(
+            range: String,
+            defaultEnd: Long,
+        ): RangeHeader {
             val numbers = range.substring("bytes=".length).split('-')
             val unspecifiedEnd = numbers.getOrNull(1).isNullOrEmpty()
             return RangeHeader(
                 start = numbers[0].toLong(),
-                end = if (unspecifiedEnd) defaultEnd else numbers[1].toLong()
+                end = if (unspecifiedEnd) defaultEnd else numbers[1].toLong(),
             )
         }
     }

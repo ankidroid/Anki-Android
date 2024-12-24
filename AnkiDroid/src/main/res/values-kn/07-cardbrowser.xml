@@ -58,23 +58,23 @@
         <item quantity="one">ಟಿಪ್ಪಣಿ ಅಳಿಸಿ</item>
         <item quantity="other">ಟಿಪ್ಪಣಿಗಳನ್ನು ಅಳಿಸಿ</item>
     </plurals>
-    <string name="card_browser_change_deck">ಡೆಕ್ ಅನ್ನು ಬದಲಾಯಿಸಿ</string>
+    <string name="card_browser_change_deck" maxLength="28">ಡೆಕ್ ಅನ್ನು ಬದಲಾಯಿಸಿ</string>
     <string name="delete_card_title">ಟಿಪ್ಪಣಿ ಅಳಿಸುವುದೇ?</string>
-    <string name="card_browser_show_marked" maxLength="29">ಫಿಲ್ಟರ್ ಅನ್ನು ಗುರುತಿಸಲಾಗಿದೆ</string>
-    <string name="card_browser_show_suspended" maxLength="29">ಫಿಲ್ಟರ್ ಅನ್ನು ಅಮಾನತುಗೊಳಿಸಲಾಗಿದೆ</string>
-    <string name="card_browser_search_by_tag" maxLength="29">ಟ್ಯಾಗ್ ಮೂಲಕ ಫಿಲ್ಟರ್ ಮಾಡಿ</string>
-    <string name="card_browser_search_by_flag" maxLength="29">ಫ್ಲ್ಯಾಗ್ ಮೂಲಕ ಫಿಲ್ಟರ್ ಮಾಡಿ</string>
-    <string name="card_browser_list_my_searches" maxLength="29">ನನ್ನ ಹುಡುಕಾಟಗಳು</string>
-    <string name="card_browser_list_my_searches_save" maxLength="29">ಹುಡುಕಾಟವನ್ನು ಉಳಿಸಿ</string>
+    <string name="card_browser_show_marked" maxLength="28">ಫಿಲ್ಟರ್ ಅನ್ನು ಗುರುತಿಸಲಾಗಿದೆ</string>
+    <string name="card_browser_show_suspended" maxLength="28">ಫಿಲ್ಟರ್ ಅನ್ನು ಅಮಾನತುಗೊಳಿಸಲಾಗಿದೆ</string>
+    <string name="card_browser_search_by_tag" maxLength="28">ಟ್ಯಾಗ್ ಮೂಲಕ ಫಿಲ್ಟರ್ ಮಾಡಿ</string>
+    <string name="card_browser_search_by_flag" maxLength="28">ಫ್ಲ್ಯಾಗ್ ಮೂಲಕ ಫಿಲ್ಟರ್ ಮಾಡಿ</string>
+    <string name="card_browser_list_my_searches" maxLength="28">ನನ್ನ ಹುಡುಕಾಟಗಳು</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">ಹುಡುಕಾಟವನ್ನು ಉಳಿಸಿ</string>
     <string name="card_browser_list_my_searches_title">ಉಳಿಸಿದ ಹುಡುಕಾಟವನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="card_browser_list_my_searches_new_name">ಪ್ರಸ್ತುತ ಹುಡುಕಾಟದ ಹೆಸರು</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">ಹೆಸರಿಲ್ಲದೆ ನೀವು ಹುಡುಕಾಟವನ್ನು ಉಳಿಸಲಾಗುವುದಿಲ್ಲ</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">ಹೆಸರು ಅಸ್ತಿತ್ವದಲ್ಲಿದೆ</string>
     <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">\"%1$s\" ಅಳಿಸುವುದೇ?</string>
-    <string name="card_browser_change_display_order" maxLength="29">ಪ್ರದರ್ಶನ ಕ್ರಮವನ್ನು ಬದಲಾಯಿಸಿ</string>
+    <string name="card_browser_change_display_order" maxLength="28">ಪ್ರದರ್ಶನ ಕ್ರಮವನ್ನು ಬದಲಾಯಿಸಿ</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">ಪ್ರದರ್ಶನ ಮೋಡ್ ಅನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="card_details_tags">ಟ್ಯಾಗ್ಗಳು</string>
     <string-array name="card_browser_order_labels">
@@ -89,8 +89,8 @@
         <item>ವಿಮರ್ಶೆಗಳ ಮೂಲಕ</item>
         <item>ಲೋಪಗಳಿಂದ</item>
     </string-array>
-    <string name="card_browser_select_all" maxLength="29">ಎಲ್ಲವನ್ನು ಆರಿಸು</string>
-    <string name="card_browser_select_none">ಯಾವುದನ್ನೂ ಆಯ್ಕೆ ಮಾಡಬೇಡಿ</string>
+    <string name="card_browser_select_all" maxLength="28">ಎಲ್ಲವನ್ನು ಆರಿಸು</string>
+    <string name="card_browser_select_none" maxLength="28">ಯಾವುದನ್ನೂ ಆಯ್ಕೆ ಮಾಡಬೇಡಿ</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(ಹೊಸ)</string>
     <string name="card_browser_due_filtered_card">(ಫಿಲ್ಟರ್ ಮಾಡಲಾಗಿದೆ)</string>
     <string name="card_browser_interval_learning_card">(ಕಲಿಕೆ)</string>

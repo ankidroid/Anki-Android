@@ -45,11 +45,11 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks">To\'plamlar</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Karta qidiruvchi</string>
-    <string name="statistics">Statistika</string>
-    <string name="settings">Sozlamalar</string>
-    <string name="help">Yordam</string>
+    <string name="decks" maxLength="28">To\'plamlar</string>
+    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">Karta qidiruvchi</string>
+    <string name="statistics" maxLength="28">Statistika</string>
+    <string name="settings" maxLength="28">Sozlamalar</string>
+    <string name="help" maxLength="28">Yordam</string>
     <string name="drawing">Rasm chizish</string>
     <string name="send_feedback">Fikr-mulohazalarni jo\'natish</string>
     <string name="studyoptions_start">O\'rganish</string>
@@ -57,7 +57,7 @@
     <string name="expand">Kengaytirish</string>
     <string name="collapse">Toraytirish</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
+        <item quantity="one">%d minut qoldi</item>
         <item quantity="other">%d minut qoldi</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
@@ -73,42 +73,42 @@
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Javobingizni yozish</string>
-    <string name="show_answer">Javobni ko\'rsatish</string>
+    <string name="show_answer" maxLength="41">Javobni ko\'rsatish</string>
     <string name="hide_answer">Javobni yashirish</string>
-    <string name="ease_button_again">Yana</string>
-    <string name="ease_button_hard">Qiyin</string>
-    <string name="ease_button_good">Yaxshi</string>
+    <string name="ease_button_again" maxLength="41">Yana</string>
+    <string name="ease_button_hard" maxLength="41">Qiyin</string>
+    <string name="ease_button_good" maxLength="41">Yaxshi</string>
     <string name="ease_button_easy">Oson</string>
-    <string name="menu_import">Import qilish</string>
-    <string name="undo" maxLength="29" comment="When tapping on this text, the last action is undone.">Bekor qilish</string>
-    <string name="redo">Redo</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Qatlamni bekor qilish</string>
+    <string name="menu_import" maxLength="28">Import qilish</string>
+    <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Bekor qilish</string>
+    <string name="redo" maxLength="28">Redo</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Qatlamni bekor qilish</string>
     <string name="move_all_to_deck">Hammasini to\'plamga ko\'chirish</string>
-    <string name="unbury">Tiklash</string>
-    <string name="rename_deck">To\'plamni qayta nomlash</string>
+    <string name="unbury" maxLength="28">Tiklash</string>
+    <string name="rename_deck" maxLength="28">To\'plamni qayta nomlash</string>
     <string name="create_shortcut">Yorliq yaratish</string>
     <string name="browse_cards">Kartalarni ko\'rib chiqish</string>
     <string name="edit_deck_description" comment="edit the deck description">Tavsifini tahrirlash</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="29">Qo\'shish</string>
-    <string name="menu_add_note">Qayd qo\'shish</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">Qo\'shish</string>
+    <string name="menu_add_note" maxLength="28">Qayd qo\'shish</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Akkauntni sinxronlashtirish</string>
-    <string name="menu_dismiss_note">Yashirish / O\'chirish</string>
-    <string name="menu_bury_card">Kartani ko\'mish</string>
-    <string name="menu_bury_note">Qaydni ko\'mish</string>
-    <string name="menu_suspend_card">Kartani to\'xtatib turish</string>
-    <string name="menu_suspend_note">Qaydni to\'xtatib turish</string>
-    <string name="menu_bury">Ko\'mish</string>
-    <string name="menu_suspend">To\'xtatib turish</string>
-    <string name="menu_delete_note">Qaydni o\'chirish</string>
-    <string name="menu_flag">Bayroq</string>
+    <string name="menu_dismiss_note" maxLength="41">Yashirish / O\'chirish</string>
+    <string name="menu_bury_card" maxLength="28">Kartani ko\'mish</string>
+    <string name="menu_bury_note" maxLength="28">Qaydni ko\'mish</string>
+    <string name="menu_suspend_card" maxLength="28">Kartani to\'xtatib turish</string>
+    <string name="menu_suspend_note" maxLength="28">Qaydni to\'xtatib turish</string>
+    <string name="menu_bury" maxLength="28">Ko\'mish</string>
+    <string name="menu_suspend" maxLength="28">To\'xtatib turish</string>
+    <string name="menu_delete_note" maxLength="28">Qaydni o\'chirish</string>
+    <string name="menu_flag" maxLength="41">Bayroq</string>
     <string name="rename_flag">Rename flags</string>
-    <string name="menu_flag_card">Kartaga bayroq qo\'yish</string>
-    <string name="menu_edit_tags">Teglarni tahrirlash</string>
+    <string name="menu_flag_card" maxLength="28">Kartaga bayroq qo\'yish</string>
+    <string name="menu_edit_tags" maxLength="28">Teglarni tahrirlash</string>
     <string name="delete_note_message">Rostdan ham bu qayd va uning barcha kartalarini o\'chirish?\n%s</string>
-    <string name="menu_search">%1$s dan izlab ko\'rish</string>
-    <string name="menu_mark_note">Qaydni belgilash</string>
+    <string name="menu_search" maxLength="28">%1$s dan izlab ko\'rish</string>
+    <string name="menu_mark_note" maxLength="28">Qaydni belgilash</string>
     <string name="menu_unmark_note">Qayddan belgini olib tashlash</string>
-    <string name="menu_enable_voice_playback">Ovozli o\'qishni yoqish</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Ovozli o\'qishni yoqish</string>
     <string name="menu_disable_voice_playback">Ovozli o\'qishni o\'chirish</string>
     <string name="new_deck">Paluba yaratish</string>
     <string name="new_dynamic_deck">Siljiydigan paluba yaratish</string>
@@ -119,37 +119,37 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Iltimos davom etish uchun AnkiDroid ga \'Saqlash\' ruxsatini bering</string>
     <string name="rebuild_filtered_deck">Siljiydigan palubani qayta qurish</string>
-    <string name="rebuild_cram_label">Qayta qurish</string>
-    <string name="empty_cram_label">Bo\'sh</string>
+    <string name="rebuild_cram_label" maxLength="28">Qayta qurish</string>
+    <string name="empty_cram_label" maxLength="28">Bo\'sh</string>
     <string name="create_subdeck">Palubani o‘rnini bosuvchi narsa yaratish</string>
     <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Qo\'shimcha shug\'ullanish</string>
     <string name="custom_study_deck_exists">Avval qo\'shimcha shug\'ullanish to\'plamini qayta nomlang</string>
     <string name="search_deck" comment="Deck search for selecting it">To\'plam qidirish</string>
     <string name="empty_deck">Bu to\'plam bo\'sh</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">To\'plam qidirish</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">To\'plam qidirish</string>
     <string name="invalid_deck_name">To\'plamning nomi yaroqsiz</string>
     <string name="studyoptions_congrats_finished">Tabriklamiz! Hammasini tugatdingiz.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Tugashi lozim kartalar halicha yo\'q</string>
     <string name="sd_card_not_mounted">Qurilma xotirasi o\'rnatilmagan</string>
-    <string name="button_sync" comment="Text of the sync button">Sinxronlash</string>
+    <string name="button_sync" comment="Text of the sync button" maxLength="28">Sinxronlash</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Sinxronlashni bekor qilishni istaysizmi?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Sinxronlashni davom ettirish</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sinxronlash bekor qilindi</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Bekor qilinyapti&#8230;\n Bu biroz vaqt olishi mumkin</string>
     <string name="syncing_media">Mediani sinxronlash</string>
-    <string name="export_deck">To\'plamni eksport qilish</string>
+    <string name="export_deck" maxLength="28">To\'plamni eksport qilish</string>
     <string name="export_collection">Export collection</string>
     <string name="nothing">Hechnima</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Karta turlari</string>
     <string name="card_template_editor_front">Old shablon</string>
     <string name="card_template_editor_back">Ort shablon</string>
-    <string name="card_template_editor_styling">Ko\'rinish</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Karta Qidiruvchisi Ko\'rinishi</string>
-    <string name="card_template_editor_deck_override">Hilol Nashr</string>
-    <string name="card_template_editor_insert_field">Kiritish maydoni</string>
+    <string name="card_template_editor_styling" maxLength="28">Ko\'rinish</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Karta Qidiruvchisi Ko\'rinishi</string>
+    <string name="card_template_editor_deck_override" maxLength="28">Hilol Nashr</string>
+    <string name="card_template_editor_insert_field" maxLength="28">Kiritish maydoni</string>
     <string name="card_template_editor_select_field">Maydonni tanlash</string>
     <string name="card_template_editor_cant_delete">Kamida bir turdagi karta turi kerak</string>
     <plurals name="card_template_editor_confirm_add">
@@ -165,7 +165,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title" maxLength="28">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid ma\'lumotlar bazasiga yozish va o\'qish</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>

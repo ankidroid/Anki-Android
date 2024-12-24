@@ -226,7 +226,7 @@ public object FlashCardsContract {
          * used for accessing the data of a note using the URI
          * "content://com.ichi2.anki.flashcards/notes/<ID>/data
          */
-        @Suppress("ObjectPropertyName")
+        @Suppress("ConstPropertyName", "ktlint:standard:backing-property-naming")
         public const val _ID: String = "_id"
 
         // field is part of the default projection available to the clients
@@ -252,19 +252,20 @@ public object FlashCardsContract {
         public const val DATA: String = "data"
 
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> = arrayOf(
-            _ID,
-            GUID,
-            MID,
-            MOD,
-            USN,
-            TAGS,
-            FLDS,
-            SFLD,
-            CSUM,
-            FLAGS,
-            DATA
-        )
+        public val DEFAULT_PROJECTION: Array<String> =
+            arrayOf(
+                _ID,
+                GUID,
+                MID,
+                MOD,
+                USN,
+                TAGS,
+                FLDS,
+                SFLD,
+                CSUM,
+                FLAGS,
+                DATA,
+            )
 
         /**
          * MIME type used for a note.
@@ -361,7 +362,7 @@ public object FlashCardsContract {
          * used for accessing the data of the model using the URI
          * `content://com.ichi2.anki.flashcards/models/<ID>`
          */
-        @Suppress("ObjectPropertyName")
+        @Suppress("ConstPropertyName", "ktlint:standard:backing-property-naming")
         public const val _ID: String = "_id"
         public const val NAME: String = "name"
         public const val FIELD_NAME: String = "field_name"
@@ -381,18 +382,19 @@ public object FlashCardsContract {
         public const val DECK_ID: String = "deck_id"
 
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> = arrayOf(
-            _ID,
-            NAME,
-            FIELD_NAMES,
-            NUM_CARDS,
-            CSS,
-            DECK_ID,
-            SORT_FIELD_INDEX,
-            TYPE,
-            LATEX_POST,
-            LATEX_PRE
-        )
+        public val DEFAULT_PROJECTION: Array<String> =
+            arrayOf(
+                _ID,
+                NAME,
+                FIELD_NAMES,
+                NUM_CARDS,
+                CSS,
+                DECK_ID,
+                SORT_FIELD_INDEX,
+                TYPE,
+                LATEX_POST,
+                LATEX_PRE,
+            )
 
         /**
          * MIME type used for a model.
@@ -426,7 +428,7 @@ public object FlashCardsContract {
          * reliably over subsequent queries. Especially if the number of cards or fields changes,
          * the _ID will change too.
          */
-        @Suppress("ObjectPropertyName")
+        @Suppress("ConstPropertyName", "ktlint:standard:backing-property-naming")
         public const val _ID: String = "_id"
 
         /**
@@ -469,14 +471,15 @@ public object FlashCardsContract {
          * Default columns that are returned when querying the ...models/#/templates URI.
          */
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> = arrayOf(
-            _ID,
-            MODEL_ID,
-            ORD,
-            NAME,
-            QUESTION_FORMAT,
-            ANSWER_FORMAT
-        )
+        public val DEFAULT_PROJECTION: Array<String> =
+            arrayOf(
+                _ID,
+                MODEL_ID,
+                ORD,
+                NAME,
+                QUESTION_FORMAT,
+                ANSWER_FORMAT,
+            )
     }
 
     /**
@@ -616,14 +619,15 @@ public object FlashCardsContract {
         public const val ANSWER_PURE: String = "answer_pure"
 
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> = arrayOf(
-            NOTE_ID,
-            CARD_ORD,
-            CARD_NAME,
-            DECK_ID,
-            QUESTION,
-            ANSWER
-        )
+        public val DEFAULT_PROJECTION: Array<String> =
+            arrayOf(
+                NOTE_ID,
+                CARD_ORD,
+                CARD_NAME,
+                DECK_ID,
+                QUESTION,
+                ANSWER,
+            )
 
         /**
          * MIME type used for a card.
@@ -795,13 +799,14 @@ public object FlashCardsContract {
         public const val SUSPEND: String = "suspended"
 
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> = arrayOf(
-            NOTE_ID,
-            CARD_ORD,
-            BUTTON_COUNT,
-            NEXT_REVIEW_TIMES,
-            MEDIA_FILES
-        )
+        public val DEFAULT_PROJECTION: Array<String> =
+            arrayOf(
+                NOTE_ID,
+                CARD_ORD,
+                BUTTON_COUNT,
+                NEXT_REVIEW_TIMES,
+                MEDIA_FILES,
+            )
 
         /**
          * MIME type used for ReviewInfo.
@@ -939,14 +944,15 @@ public object FlashCardsContract {
         public const val DECK_DESC: String = "deck_desc"
 
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> = arrayOf(
-            DECK_NAME,
-            DECK_ID,
-            DECK_COUNTS,
-            OPTIONS,
-            DECK_DYN,
-            DECK_DESC
-        )
+        public val DEFAULT_PROJECTION: Array<String> =
+            arrayOf(
+                DECK_NAME,
+                DECK_ID,
+                DECK_COUNTS,
+                OPTIONS,
+                DECK_DYN,
+                DECK_DESC,
+            )
 
         /**
          * MIME type used for Deck.

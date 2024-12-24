@@ -30,8 +30,17 @@ object Consts {
     const val QUEUE_TYPE_PREVIEW = 4
 
     @Retention(AnnotationRetention.SOURCE)
-    @IntDef(QUEUE_TYPE_MANUALLY_BURIED, QUEUE_TYPE_SIBLING_BURIED, QUEUE_TYPE_SUSPENDED, QUEUE_TYPE_NEW, QUEUE_TYPE_LRN, QUEUE_TYPE_REV, QUEUE_TYPE_DAY_LEARN_RELEARN, QUEUE_TYPE_PREVIEW)
-    annotation class CARD_QUEUE
+    @IntDef(
+        QUEUE_TYPE_MANUALLY_BURIED,
+        QUEUE_TYPE_SIBLING_BURIED,
+        QUEUE_TYPE_SUSPENDED,
+        QUEUE_TYPE_NEW,
+        QUEUE_TYPE_LRN,
+        QUEUE_TYPE_REV,
+        QUEUE_TYPE_DAY_LEARN_RELEARN,
+        QUEUE_TYPE_PREVIEW,
+    )
+    annotation class CardQueue
 
     // Card types
     const val CARD_TYPE_NEW = 0
@@ -41,7 +50,7 @@ object Consts {
 
     @Retention(AnnotationRetention.SOURCE)
     @IntDef(CARD_TYPE_NEW, CARD_TYPE_LRN, CARD_TYPE_REV, CARD_TYPE_RELEARNING)
-    annotation class CARD_TYPE
+    annotation class CardType
 
     // dynamic deck order
     const val DYN_OLDEST = 0
@@ -57,7 +66,7 @@ object Consts {
 
     @Retention(AnnotationRetention.SOURCE)
     @IntDef(DYN_OLDEST, DYN_RANDOM, DYN_SMALLINT, DYN_BIGINT, DYN_LAPSES, DYN_ADDED, DYN_DUE, DYN_REVADDED, DYN_DUEPRIORITY)
-    annotation class DYN_PRIORITY
+    annotation class DynPriority
 
     // model types
     const val MODEL_STD = 0
@@ -65,7 +74,7 @@ object Consts {
 
     @Retention(AnnotationRetention.SOURCE)
     @IntDef(MODEL_STD, MODEL_CLOZE)
-    annotation class MODEL_TYPE
+    annotation class ModelType
 
     const val STARTING_FACTOR = 2500
 
@@ -76,16 +85,6 @@ object Consts {
 
     // Leech actions
     const val LEECH_SUSPEND = 0
-
-    // Buttons
-    const val BUTTON_ONE = 1
-    const val BUTTON_TWO = 2
-    const val BUTTON_THREE = 3
-    const val BUTTON_FOUR = 4
-
-    @Retention(AnnotationRetention.SOURCE)
-    @IntDef(BUTTON_ONE, BUTTON_TWO, BUTTON_THREE, BUTTON_FOUR)
-    annotation class BUTTON_TYPE
 
     // The labels defined in consts.py are in AnkiDroid's resources files.
     const val DEFAULT_DECK_ID: Long = 1

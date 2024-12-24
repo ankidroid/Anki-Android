@@ -36,6 +36,8 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.ichi2.anki.R
+import com.ichi2.anki.Reviewer
+import com.ichi2.anki.multimedia.AudioVideoFragment
 import com.ichi2.anki.multimedia.MultimediaViewModel
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.RecordingState.AppendToRecording
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.RecordingState.ImmediatePlayback
@@ -60,13 +62,16 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
 // TODO : stop audio time view flickering
+
+/**
+ * This may be hosted in the [Reviewer], or in a [AudioVideoFragment]
+ */
 class AudioRecordingController(
     val context: Context,
     val linearLayout: LinearLayout? = null,
     val viewModel: MultimediaViewModel? = null,
-    val note: IMultimediaEditableNote? = null
-) :
-    AudioTimer.OnTimerTickListener,
+    val note: IMultimediaEditableNote? = null,
+) : AudioTimer.OnTimerTickListener,
     AudioTimer.OnAudioTickListener {
     private lateinit var audioRecorder: AudioRecorder
     private var state: RecordingState = AppendToRecording.CLEARED
@@ -115,7 +120,7 @@ class AudioRecordingController(
         context: Context,
         layout: LinearLayout,
         initialState: RecordingState,
-        @LayoutRes controllerLayout: Int
+        @LayoutRes controllerLayout: Int,
     ) {
         this.state = initialState
         audioRecorder = AudioRecorder()
@@ -184,15 +189,16 @@ class AudioRecordingController(
         discardRecordingButton = layout.findViewById(R.id.action_discard_recording)
         cancelAudioRecordingButton.isEnabled = false
 
-        saveButton = layout.findViewById<MaterialButton?>(R.id.action_save_recording)?.apply {
-            isEnabled = false
-            setIconResource(R.drawable.ic_save_white)
-            setOnClickListener {
-                Timber.i("'save' button clicked")
-                isAudioRecordingSaved = false
-                toggleSave()
+        saveButton =
+            layout.findViewById<MaterialButton?>(R.id.action_save_recording)?.apply {
+                isEnabled = false
+                setIconResource(R.drawable.ic_save_white)
+                setOnClickListener {
+                    Timber.i("'save' button clicked")
+                    isAudioRecordingSaved = false
+                    toggleSave()
+                }
             }
-        }
 
         setUpMediaPlayer()
 
@@ -202,23 +208,25 @@ class AudioRecordingController(
         // holding the 'record' button should start a recording
         // releasing the 'record' button should complete the recording
         // TODO: remove haptics from the long press - the 'buzz' can be heard on the recording
-        recordButton.setOnHoldListener(object : OnHoldListener {
-            override fun onTouchStart() {
-                Timber.d("pressed 'record' button'")
-                controlAudioRecorder()
-            }
-
-            override fun onHoldEnd() {
-                Timber.d("finished holding 'record' button'")
-                if (state is ImmediatePlayback) {
+        recordButton.setOnHoldListener(
+            object : OnHoldListener {
+                override fun onTouchStart() {
+                    Timber.d("pressed 'record' button'")
                     controlAudioRecorder()
-                } else {
-                    // if we're recording audio to add permanently,
-                    // releasing the button after a long press should be 'save', not 'pause'
-                    saveButton?.performClick()
                 }
-            }
-        })
+
+                override fun onHoldEnd() {
+                    Timber.d("finished holding 'record' button'")
+                    if (state is ImmediatePlayback) {
+                        controlAudioRecorder()
+                    } else {
+                        // if we're recording audio to add permanently,
+                        // releasing the button after a long press should be 'save', not 'pause'
+                        saveButton?.performClick()
+                    }
+                }
+            },
+        )
 
         playAudioButton.setOnClickListener {
             Timber.i("play/pause clicked")
@@ -236,21 +244,22 @@ class AudioRecordingController(
             Timber.i("'discard recording' clicked")
             discardAudio()
         }
-        orientationEventListener = object : OrientationEventListener(context) {
-            override fun onOrientationChanged(orientation: Int) {
-                // BUG: Executes on trivial orientation changes, not just portrait <-> landscape
-                when (context.resources.configuration.orientation) {
-                    Configuration.ORIENTATION_LANDSCAPE -> {
-                        audioFileView.visibility = View.GONE
-                        audioWaveform.visibility = View.GONE
-                    }
-                    Configuration.ORIENTATION_PORTRAIT -> {
-                        audioFileView.visibility = View.VISIBLE
-                        audioWaveform.visibility = View.VISIBLE
+        orientationEventListener =
+            object : OrientationEventListener(context) {
+                override fun onOrientationChanged(orientation: Int) {
+                    // BUG: Executes on trivial orientation changes, not just portrait <-> landscape
+                    when (context.resources.configuration.orientation) {
+                        Configuration.ORIENTATION_LANDSCAPE -> {
+                            audioFileView.visibility = View.GONE
+                            audioWaveform.visibility = View.GONE
+                        }
+                        Configuration.ORIENTATION_PORTRAIT -> {
+                            audioFileView.visibility = View.VISIBLE
+                            audioWaveform.visibility = View.VISIBLE
+                        }
                     }
                 }
             }
-        }
 
         // only hide the views if in the 'append' layout
         if (state is AppendToRecording) {
@@ -258,37 +267,45 @@ class AudioRecordingController(
         }
 
         (context as? Activity)?.let { activity ->
-            activity.application.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
-                override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-                    // Not needed
-                }
-
-                override fun onActivityStarted(activity: Activity) {
-                    // Not needed
-                }
-
-                override fun onActivityResumed(activity: Activity) {
-                    // not needed
-                }
-
-                override fun onActivityPaused(activity: Activity) {
-                    if (activity == context) {
-                        onViewFocusChanged()
+            activity.application.registerActivityLifecycleCallbacks(
+                object : Application.ActivityLifecycleCallbacks {
+                    override fun onActivityCreated(
+                        activity: Activity,
+                        savedInstanceState: Bundle?,
+                    ) {
+                        // Not needed
                     }
-                }
 
-                override fun onActivityStopped(activity: Activity) {
-                    // Not needed
-                }
+                    override fun onActivityStarted(activity: Activity) {
+                        // Not needed
+                    }
 
-                override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-                    // Not needed
-                }
+                    override fun onActivityResumed(activity: Activity) {
+                        // not needed
+                    }
 
-                override fun onActivityDestroyed(activity: Activity) {
-                    // not needed
-                }
-            })
+                    override fun onActivityPaused(activity: Activity) {
+                        if (activity == context) {
+                            onViewFocusChanged()
+                        }
+                    }
+
+                    override fun onActivityStopped(activity: Activity) {
+                        // Not needed
+                    }
+
+                    override fun onActivitySaveInstanceState(
+                        activity: Activity,
+                        outState: Bundle,
+                    ) {
+                        // Not needed
+                    }
+
+                    override fun onActivityDestroyed(activity: Activity) {
+                        // not needed
+                    }
+                },
+            )
         }
     }
 
@@ -499,7 +516,7 @@ class AudioRecordingController(
             showThemedToast(
                 context,
                 context.resources.getString(R.string.multimedia_editor_audio_permission_denied),
-                true
+                true,
             )
             return
         }
@@ -587,7 +604,10 @@ class AudioRecordingController(
         }
     }
 
-    private fun startRecording(context: Context, audioPath: String) {
+    private fun startRecording(
+        context: Context,
+        audioPath: String,
+    ) {
         Timber.i("starting recording")
         try {
             audioRecorder.startRecording(context, audioPath)
@@ -715,14 +735,16 @@ class AudioRecordingController(
         private var inEditField: Boolean = true
         const val DEFAULT_TIME = "00:00.00"
         const val JUMP_VALUE = 500
+
         fun generateTempAudioFile(context: Context): String? {
-            val tempAudioPath: String? = try {
-                val storingDirectory = context.cacheDir
-                File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory).absolutePath
-            } catch (e: IOException) {
-                Timber.w(e, "Could not create temporary audio file.")
-                null
-            }
+            val tempAudioPath: String? =
+                try {
+                    val storingDirectory = context.cacheDir
+                    File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory).absolutePath
+                } catch (e: IOException) {
+                    Timber.w(e, "Could not create temporary audio file.")
+                    null
+                }
             return tempAudioPath
         }
 
@@ -735,16 +757,15 @@ class AudioRecordingController(
     }
 
     sealed interface RecordingState {
-        fun clear(): RecordingState =
-            if (this is AppendToRecording) AppendToRecording.CLEARED else ImmediatePlayback.CLEARED
+        fun clear(): RecordingState = if (this is AppendToRecording) AppendToRecording.CLEARED else ImmediatePlayback.CLEARED
 
         fun recording(): RecordingState =
             if (this is AppendToRecording) AppendToRecording.RECORDING_IN_PROGRESS else ImmediatePlayback.RECORDING_IN_PROGRESS
 
-        fun ended(): RecordingState =
-            if (this is AppendToRecording) AppendToRecording.PLAYBACK_ENDED else ImmediatePlayback.PLAYBACK_ENDED
+        fun ended(): RecordingState = if (this is AppendToRecording) AppendToRecording.PLAYBACK_ENDED else ImmediatePlayback.PLAYBACK_ENDED
 
         fun afterSave() = ended()
+
         fun play(): RecordingState =
             if (this is AppendToRecording) AppendToRecording.PLAYBACK_PLAYING else ImmediatePlayback.PLAYBACK_PLAYING
 
@@ -774,7 +795,7 @@ class AudioRecordingController(
             PLAYBACK_PLAYING,
 
             /** A recording has been completed, and can be listened to */
-            PLAYBACK_ENDED;
+            PLAYBACK_ENDED,
         }
 
         /**
@@ -794,7 +815,7 @@ class AudioRecordingController(
             PLAYBACK_ENDED,
 
             /** A completed recording is being listened to */
-            PLAYBACK_PLAYING
+            PLAYBACK_PLAYING,
         }
     }
 }

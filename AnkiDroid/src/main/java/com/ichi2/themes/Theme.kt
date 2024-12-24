@@ -18,20 +18,23 @@ package com.ichi2.themes
 import androidx.annotation.StyleRes
 import com.ichi2.anki.R
 
-enum class Theme(val id: String, @StyleRes val resId: Int, val isNightMode: Boolean) {
+enum class Theme(
+    val id: String,
+    @StyleRes val resId: Int,
+    val isNightMode: Boolean,
+) {
     // IDs must correspond to the ones at @array/app_theme_values on res/values/constants.xml
     // Follow system is "0", so it starts at "1"
     LIGHT("1", R.style.Theme_Light, false),
     PLAIN("2", R.style.Theme_Light_Plain, false),
     BLACK("3", R.style.Theme_Dark_Black, true),
-    DARK("4", R.style.Theme_Dark, true);
+    DARK("4", R.style.Theme_Dark, true),
+    ;
 
     companion object {
         val fallback: Theme
             get() = LIGHT
 
-        fun ofId(id: String): Theme {
-            return entries.find { it.id == id } ?: fallback
-        }
+        fun ofId(id: String): Theme = entries.find { it.id == id } ?: fallback
     }
 }

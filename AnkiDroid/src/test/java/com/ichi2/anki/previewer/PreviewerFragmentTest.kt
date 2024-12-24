@@ -29,16 +29,16 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class PreviewerFragmentTest : RobolectricTest() {
-
     @Test
     fun `previewer - back button`() {
         val note = addNoteUsingBasicAndReversedModel()
 
-        val intent = PreviewerFragment.getIntent(
-            targetContext,
-            previewerIdsFile = PreviewerIdsFile(createTransientDirectory(), note.cardIds(col)),
-            currentIndex = 0
-        )
+        val intent =
+            PreviewerFragment.getIntent(
+                targetContext,
+                previewerIdsFile = PreviewerIdsFile(createTransientDirectory(), note.cardIds(col)),
+                currentIndex = 0,
+            )
 
         ActivityScenario.launch<CardViewerActivity>(intent).use { scenario ->
             scenario.moveToState(Lifecycle.State.RESUMED)

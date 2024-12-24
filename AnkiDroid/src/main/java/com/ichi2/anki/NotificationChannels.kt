@@ -28,7 +28,6 @@ import androidx.core.app.NotificationCompat
 import timber.log.Timber
 
 object NotificationChannels {
-
     /**
      * Create or update all the notification channels for the app
      *
@@ -58,10 +57,15 @@ object NotificationChannels {
     }
 }
 
-enum class Channel(val id: String, @StringRes val nameId: Int) {
+enum class Channel(
+    val id: String,
+    @StringRes val nameId: Int,
+) {
     GENERAL("General Notifications", R.string.app_name),
     SYNC("Synchronization", R.string.sync_title),
     GLOBAL_REMINDERS("Global Reminders", R.string.widget_minimum_cards_due_notification_ticker_title),
-    DECK_REMINDERS("Deck Reminders", R.string.deck_conf_reminders);
+    DECK_REMINDERS("Deck Reminders", R.string.deck_conf_reminders),
+    ;
+
     fun getName(res: Resources) = res.getString(nameId)
 }

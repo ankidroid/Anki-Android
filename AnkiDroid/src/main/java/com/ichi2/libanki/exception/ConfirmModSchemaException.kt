@@ -31,6 +31,6 @@ class ConfirmModSchemaException : Exception() {
         /**
          *
          */
-        private const val serialVersionUID = -9215098969154590797L
+        private const val SERIAL_VERSION_UID = -9215098969154590797L
     }
 }

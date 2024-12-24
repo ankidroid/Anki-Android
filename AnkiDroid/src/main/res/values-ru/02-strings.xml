@@ -55,21 +55,21 @@
     <string name="edit_occlusions"> Править скрытие</string>
     <string name="tag_name">Название метки</string>
     <string name="add_new_filter_tags">Добавить/отфильтровать метки</string>
-    <string name="add_tag">Добавить метку</string>
-    <string name="check_all_tags">Выбрать/снять все метки</string>
-    <string name="filter_tags">Отобрать по меткам</string>
+    <string name="add_tag" maxLength="28">Добавить метку</string>
+    <string name="check_all_tags" maxLength="28">Выбрать/снять все метки</string>
+    <string name="filter_tags" maxLength="28">Отобрать по меткам</string>
     <string name="no_tags">Пока меток нет</string>
     <string name="updated_version">Обновлено до версии %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Сохранить написанное</string>
-    <string name="enable_stylus">Включить режим стилуса</string>
+    <string name="save_whiteboard" maxLength="28">Сохранить написанное</string>
+    <string name="enable_stylus" maxLength="28">Включить режим стилуса</string>
     <string name="disable_stylus">Выключить режим стилуса</string>
-    <string name="enable_whiteboard">Включить доску</string>
+    <string name="enable_whiteboard" maxLength="28">Включить доску</string>
     <string name="disable_whiteboard">Отключить доску</string>
     <string name="show_whiteboard">Показать доску</string>
-    <string name="hide_whiteboard">Скрыть доску</string>
-    <string name="clear_whiteboard">Стереть с доски</string>
-    <string name="replay_audio">Проиграть звук</string>
+    <string name="hide_whiteboard" maxLength="28">Скрыть доску</string>
+    <string name="clear_whiteboard" maxLength="28">Стереть с доски</string>
+    <string name="replay_audio" maxLength="28">Проиграть звук</string>
     <string name="leech_suspend_notification">Карточка помечена как приставучая и исключена</string>
     <string name="leech_notification">Карточка помечена как приставучая</string>
     <string name="webview_crash_unknown">Неизвестная ошибка</string>
@@ -80,14 +80,8 @@
     <string name="webview_crash_fatal">Критическая ошибка: WebView завершился. Причина: %s</string>
     <string name="webview_crash_loop_dialog_title">Сбой системного WebView</string>
     <string name="webview_crash_loop_dialog_content">Системному WebView не удалось отрисовать карточку «%1$s».\n %2$s</string>
-    <string name="filter_by_flags">Флажки</string>
+    <string name="filter_by_flags" maxLength="41">Флажки</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Увеличить лимит новых</string>
-    <string name="custom_study_increase_review_limit">Увеличить лимит повторяемых</string>
-    <string name="custom_study_review_forgotten">Повторить забытые</string>
-    <string name="custom_study_review_ahead">Повторить с опережением</string>
-    <string name="custom_study_random_selection">Учить случайный набор карточек</string>
-    <string name="custom_study_preview_new">Просмотреть новые</string>
     <string name="custom_study_limit_tags">Отфильтровать по меткам</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d отложен</item>
@@ -95,15 +89,17 @@
         <item quantity="many">+%d отложено</item>
         <item quantity="other">+%d отложено</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Править запись</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">Править запись</string>
     <string name="discard">Отменить</string>
     <string name="note_editor_no_cards_created">Карточки не созданы. Заполните больше полей</string>
     <string name="note_editor_no_cards_created_all_fields">Текущий тип записи не производит никаких карточек.\nВыберите другой тип записи или нажмите «Карты» и добавьте подстановку поля</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Задание с пропусками работают только в типе записи с пропусками</string>
     <string name="saving_facts">Запись сохраняется</string>
     <string name="saving_model">Тип записи сохраняется</string>
-    <string name="save">Сохранить</string>
+    <string name="save" maxLength="28">Сохранить</string>
     <string name="close">Закрыть</string>
     <string name="select">Выбрать</string>
     <string name="field_remapping">%1$s (из «%2$s»)</string>
@@ -125,19 +121,18 @@
         <item quantity="other">%1$d минут</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Карточка AnkiDroid</string>
-    <string name="note_editor_copy_note">Копировать запись</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Переместить</string>
-    <string name="card_editor_reset_card">Сбросить прогресс</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Перепланировать</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">Предпросмотр</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Скопировать как Markdown</string>
+    <string name="note_editor_copy_note" maxLength="28">Копировать запись</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Переместить</string>
+    <string name="card_editor_reset_card" maxLength="28">Сбросить прогресс</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Перепланировать</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Предпросмотр</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Скопировать как Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d из %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Переименовать</string>
-    <string name="checks_action">Проверить</string>
-    <string name="check_db">Проверить базу данных</string>
-    <string name="check_media">Проверить медиафайлы</string>
-    <string name="empty_cards">Пустые карточки</string>
-    <string name="empty_card_warning">Эта карточка пуста. Используйте опцию «Пустые карточки» из меню списка колод.</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Переименовать</string>
+    <string name="checks_action" maxLength="28">Проверить</string>
+    <string name="check_db" maxLength="28">Проверить базу данных</string>
+    <string name="check_media" maxLength="28">Проверить медиафайлы</string>
+    <string name="empty_cards" maxLength="28">Пустые карточки</string>
     <string name="unknown_type_field_warning">Неизвестный тип поля: %s</string>
     <string name="delete_deck">Колода удаляется&#8230;</string>
     <string name="info_rate">Оценить AnkiDroid</string>
@@ -171,12 +166,11 @@
     <string name="export_choice_share">Поделиться</string>
     <string name="export_choice_save_to">Сохранить в</string>
     <string name="export_saving_exported_collection">Экспортированный файл сохраняется&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">Параметры</string>
-    <string name="menu__deck_options">Параметры колоды</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Параметры</string>
+    <string name="menu__deck_options" maxLength="28">Параметры колоды</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Параметры учёбы</string>
-    <string name="select_tts">Язык синтеза речи</string>
-    <string name="custom_study">Учить ещё</string>
-    <string name="more_options">Ещё</string>
+    <string name="select_tts" maxLength="28">Язык синтеза речи</string>
+    <string name="custom_study" maxLength="28">Учить ещё</string>
     <string name="dyn_deck_desc">Это специальная колода для зубрёжки не по расписанию. После просмотра карточки вернутся в свою колоду. Удаление этой колоды вернёт все оставшиеся карточки в их колоду.</string>
     <string name="steps_error">Шаги должны быть больше 0</string>
     <string name="steps_min_error">Требуется хотя бы один шаг</string>
@@ -199,17 +193,17 @@
     <string name="web_page_error">Ошибка загрузки страницы: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Фон</string>
-    <string name="choose_an_image">Выбрать изображение</string>
+    <string name="background_image_title" maxLength="41">Фон</string>
+    <string name="choose_an_image" maxLength="41">Выбрать изображение</string>
     <string name="remove_background_image">Удалить фон?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Сбросить настройки</string>
+    <string name="restore_default" maxLength="28">Сбросить настройки</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Пусто</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Не удалось сохранить изображение доски. %s</string>
     <string name="white_board_image_saved">Изображение доски сохранено в %s</string>
-    <string name="title_whiteboard_pen_color">Цвет маркера</string>
-    <string name="title_whiteboard_editor">Редактор доски</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">Цвет маркера</string>
+    <string name="title_whiteboard_editor" maxLength="28">Редактор доски</string>
     <string name="user_is_a_robot">Обнаружен автоматический тест. Если вы человек, обратитесь в службу поддержки AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Эта карточка использует неподдерживаемые в AnkiDroid функции. Свяжитесь с разработчиками %1$s или обратитесь к вики-справке. %2$s</string>
@@ -224,12 +218,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Не удалось загрузить «%s»</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Найти колоду</string>
+    <string name="search_decks" maxLength="28">Найти колоду</string>
     <string name="ankidroid_init_failed_webview_title">Критическая ошибка</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid использует системный WebView, который сейчас не доступен. Это может произойти, если система устанавливает обновления. Повторите попытку через несколько минут.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Размер шрифта</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Показать панель инструментов</string>
+    <string name="menu_font_size" maxLength="28">Размер шрифта</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Показать панель инструментов</string>
     <string name="format_insert_bold">Жирным</string>
     <string name="format_insert_italic">Курсивом</string>
     <string name="format_insert_underline">Подчеркнуть</string>
@@ -251,8 +245,8 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Возможно, вам потребуется iManager, чтобы AnkiDroid мог добавлять ярлыки</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Ваш домашний экран не позволяет AnkiDroid добавлять ярлыки</string>
     <string name="create_shortcut_error">Ошибка при добавлении ярлыка: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Предложение с заглавной буквы</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Прокрутка панели</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Предложение с заглавной буквы</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Прокрутка панели</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -275,7 +269,7 @@
     <string name="check_network">Проверьте подключение к Интернету</string>
     <string name="search_using_deck_name">Искать по названию колоды</string>
     <string name="external_storage_unavailable">Загрузка прервана, внешняя память недоступна</string>
-    <string name="home">Главная</string>
+    <string name="home" maxLength="28">Главная</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Карточка отложена.</string>
@@ -342,7 +336,7 @@
         <item quantity="many">%d карточек возвращены</item>
         <item quantity="other">%d карточек возвращено</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Переместить</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Переместить</string>
     <string name="start_recording">Записать</string>
     <string name="stop_recording">Стоп</string>
     <string name="play_recording">Играть</string>
@@ -355,15 +349,17 @@
     <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Редактор заметок</string>
     <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Изменить шаблон лицевой стороны</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
-    <string name="show_shortcuts_message">Press Alt+K to show keyboard shortcuts</string>
+    <string name="show_shortcuts_message">Нажмите Alt+K, чтобы показать сочетания клавиш</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
+    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
 </resources>

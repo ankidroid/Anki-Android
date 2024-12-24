@@ -26,30 +26,32 @@ import java.util.Locale
  * 8236 -> `20-search-preference.xml` in the URL https://crowdin.com/editor/ankidroid/8236/en-yu
  */
 @JvmInline
-value class CrowdinFileIdentifier(private val value: Long) {
+value class CrowdinFileIdentifier(
+    private val value: Long,
+) {
     override fun toString(): String = value.toString()
 
     companion object {
-        private val fileNameToIdentifier = mapOf(
-            "01-core" to 7290,
-            "02-strings" to 7291,
-            "03-dialogs" to 7303,
-            "04-network" to 8167,
-            "05-feedback" to 8168,
-            "06-statistics" to 8169,
-            "07-cardbrowser" to 8170,
-            "08-widget" to 8171,
-            "09-backup" to 8172,
-            "10-preferences" to 8173,
-            "11-arrays" to 8174,
-            "16-multimedia-editor" to 8229,
-            "17-model-manager" to 8230,
-            "19-standard-models" to 8232,
-            "20-search-preference" to 8236
-        ).mapValues { CrowdinFileIdentifier(it.value.toLong()) }
+        private val fileNameToIdentifier =
+            mapOf(
+                "01-core" to 7290,
+                "02-strings" to 7291,
+                "03-dialogs" to 7303,
+                "04-network" to 8167,
+                "05-feedback" to 8168,
+                "06-statistics" to 8169,
+                "07-cardbrowser" to 8170,
+                "08-widget" to 8171,
+                "09-backup" to 8172,
+                "10-preferences" to 8173,
+                "11-arrays" to 8174,
+                "16-multimedia-editor" to 8229,
+                "17-model-manager" to 8230,
+                "19-standard-models" to 8232,
+                "20-search-preference" to 8236,
+            ).mapValues { CrowdinFileIdentifier(it.value.toLong()) }
 
-        fun fromFile(file: File): CrowdinFileIdentifier? =
-            fileNameToIdentifier[file.nameWithoutExtension]
+        fun fromFile(file: File): CrowdinFileIdentifier? = fileNameToIdentifier[file.nameWithoutExtension]
     }
 }
 
@@ -57,44 +59,44 @@ value class CrowdinFileIdentifier(private val value: Long) {
  * The language key which Crowdin uses to represent the language: `yu`, NOT `yue`
  */
 @JvmInline
-value class CrowdinLanguageTag(private val tag: String) {
+value class CrowdinLanguageTag(
+    private val tag: String,
+) {
     override fun toString() = tag
 
     companion object {
-        private val customMappings = mapOf(
-            /* from tools/localization/src/update.ts */
-            "yue" to "yu",
-            "heb" to "he",
-            "iw" to "he",
-            "ind" to "id",
-            "tgl" to "tl",
-
-            /* Other weirdness */
-
-            /* Malayalam */
-            "ml" to "mlin",
-            /* Punjabi */
-            "pa" to "pain",
-            // Norwegian Nynorsk
-            "nn" to "nnno",
-
-            /* Tatar (Russia) */
-            "tt" to "ttru",
-
-            /* Urdu (Pakistan) */
-            "ur" to "urpk",
-
-            // Crowdin does not handle 'Spanish (Spain)' as 'eses', it needs 'es'
-            "eses" to "es",
-            "ptpt" to "pt"
-        )
+        private val customMappings =
+            mapOf(
+                // ** from tools/localization/src/update.ts **
+                "yue" to "yu",
+                "heb" to "he",
+                "iw" to "he",
+                "ind" to "id",
+                "tgl" to "tl",
+                // ** Other weirdness **
+                // Malayalam
+                "ml" to "mlin",
+                // Punjabi
+                "pa" to "pain",
+                // Norwegian Nynorsk
+                "nn" to "nnno",
+                // Tatar (Russia)
+                "tt" to "ttru",
+                // Urdu (Pakistan)
+                "ur" to "urpk",
+                // ** Crowdin does not handle 'Spanish (Spain)' as 'eses', it needs 'es' **
+                "eses" to "es",
+                "ptpt" to "pt",
+            )
 
         fun fromFolderName(folderName: String): CrowdinLanguageTag? {
             if (!folderName.startsWith("values-")) return null
 
-            val language = folderName.substring("values-".length)
-                .replace("-r", "") // es-rAR -> esAR
-                .lowercase(Locale.ROOT) // esAR -> esar
+            val language =
+                folderName
+                    .substring("values-".length)
+                    .replace("-r", "") // es-rAR -> esAR
+                    .lowercase(Locale.ROOT) // esAR -> esar
 
             val crowdinLanguage = customMappings[language] ?: language
 
@@ -110,9 +112,11 @@ value class CrowdinLanguageTag(private val tag: String) {
  * @param languageTag How 'values-zh-rCN' is represented. See [CrowdinLanguageTag]
  * @param fileIdentifier How `01-core` is represented. See [CrowdinFileIdentifier]
  */
-data class CrowdinContext(val languageTag: CrowdinLanguageTag, val fileIdentifier: CrowdinFileIdentifier) {
-    private fun getStringName(element: Element): String? =
-        if (element.hasAttribute("name")) element.getAttribute("name") else null
+data class CrowdinContext(
+    val languageTag: CrowdinLanguageTag,
+    val fileIdentifier: CrowdinFileIdentifier,
+) {
+    private fun getStringName(element: Element): String? = if (element.hasAttribute("name")) element.getAttribute("name") else null
 
     fun getEditUrl(element: Element): String? {
         val stringName = getStringName(element) ?: return null
@@ -120,14 +124,13 @@ data class CrowdinContext(val languageTag: CrowdinLanguageTag, val fileIdentifie
     }
 
     /** Example: [https://crowdin.com/editor/ankidroid/7290/en-af#q=create_subdeck](https://crowdin.com/editor/ankidroid/7290/en-af#q=create_subdeck) */
-    fun getEditUrl(string: String): String =
-        "https://crowdin.com/editor/ankidroid/$fileIdentifier/en-$languageTag#q=$string"
+    fun getEditUrl(string: String): String = "https://crowdin.com/editor/ankidroid/$fileIdentifier/en-$languageTag#q=$string"
 
     companion object {
         fun ResourceContext.toCrowdinContext(): CrowdinContext? {
             return CrowdinContext(
                 languageTag = CrowdinLanguageTag.fromFolder(file.parentFile) ?: return null,
-                fileIdentifier = CrowdinFileIdentifier.fromFile(file) ?: return null
+                fileIdentifier = CrowdinFileIdentifier.fromFile(file) ?: return null,
             )
         }
     }

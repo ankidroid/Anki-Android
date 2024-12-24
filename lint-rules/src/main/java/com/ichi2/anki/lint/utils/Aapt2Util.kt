@@ -49,7 +49,6 @@ import com.ichi2.anki.lint.utils.Aapt2Util.FormatData.StringFormatData
  * 2022-04-24: Introduced [FormatData] as return type from [verifyJavaStringFormat]
  */
 object Aapt2Util {
-
     /**
      * Format string data.
      * @see [verifyJavaStringFormat]
@@ -64,7 +63,11 @@ object Aapt2Util {
          * @param hasNonPositionalArguments Whether the string contains any non-positional arguments: %1$s
          * @param string The format string, for debugging
          */
-        data class StringFormatData(val argCount: Int, val hasNonPositionalArguments: Boolean, val string: String) : FormatData() {
+        data class StringFormatData(
+            val argCount: Int,
+            val hasNonPositionalArguments: Boolean,
+            val string: String,
+        ) : FormatData() {
             /**
              * Multiple arguments were specified, but some or all were non positional.
              * Translated strings may rearrange the order of the arguments,
@@ -79,6 +82,7 @@ object Aapt2Util {
         var nonpositional = false
 
         var index = 0
+
         fun c() = str[index]
 
         while (index < str.length) {
@@ -115,9 +119,15 @@ object Aapt2Util {
                 }
 
                 // Ignore size, width, flags, etc.
-                while (index < str.length && (
-                    c() == '-' || c() == '#' || c() == '+' || c() == ' ' ||
-                        c() == ',' || c() == '(' || (c() in '0'..'9')
+                while (index < str.length &&
+                    (
+                        c() == '-' ||
+                            c() == '#' ||
+                            c() == '+' ||
+                            c() == ' ' ||
+                            c() == ',' ||
+                            c() == '(' ||
+                            (c() in '0'..'9')
                     )
                 ) {
                     index++
@@ -160,7 +170,7 @@ object Aapt2Util {
         return StringFormatData(
             argCount = argCount,
             hasNonPositionalArguments = nonpositional,
-            string = str
+            string = str,
         )
     }
 
@@ -170,7 +180,10 @@ object Aapt2Util {
      * @param index The index to start searching for digits at
      * @return Number of consecutive digits in [s], starting at position [index]
      */
-    private fun consumeDigits(s: String, index: Int): Int {
+    private fun consumeDigits(
+        s: String,
+        index: Int,
+    ): Int {
         var digits = 0
         @Suppress("UseWithIndex")
         for (i in index until s.length) {

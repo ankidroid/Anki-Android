@@ -45,11 +45,11 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks">Багцууд</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Карт хайгч</string>
-    <string name="statistics">Statistics</string>
-    <string name="settings">Тохиргоо</string>
-    <string name="help">Туслах хэсэг</string>
+    <string name="decks" maxLength="28">Багцууд</string>
+    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">Карт хайгч</string>
+    <string name="statistics" maxLength="28">Statistics</string>
+    <string name="settings" maxLength="28">Тохиргоо</string>
+    <string name="help" maxLength="28">Туслах хэсэг</string>
     <string name="drawing">Зураг нэмэх</string>
     <string name="send_feedback">Санал хүсэлт илгээх</string>
     <string name="studyoptions_start">Эхлэх</string>
@@ -73,42 +73,42 @@
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Хариултаа шивэх</string>
-    <string name="show_answer">Хариултыг харуулах</string>
+    <string name="show_answer" maxLength="41">Хариултыг харуулах</string>
     <string name="hide_answer">Хариултыг нуух</string>
-    <string name="ease_button_again">Дахиад</string>
-    <string name="ease_button_hard">Хэцүү</string>
-    <string name="ease_button_good">Гайгүй</string>
+    <string name="ease_button_again" maxLength="41">Дахиад</string>
+    <string name="ease_button_hard" maxLength="41">Хэцүү</string>
+    <string name="ease_button_good" maxLength="41">Гайгүй</string>
     <string name="ease_button_easy">Амархан</string>
-    <string name="menu_import">Оруулж ирэх</string>
-    <string name="undo" maxLength="29" comment="When tapping on this text, the last action is undone.">Буцаах</string>
-    <string name="redo">Redo</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Зургаа буцаах</string>
+    <string name="menu_import" maxLength="28">Оруулж ирэх</string>
+    <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Буцаах</string>
+    <string name="redo" maxLength="28">Redo</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Зургаа буцаах</string>
     <string name="move_all_to_deck">Бүгдийг цуглуулга руу зөөх</string>
-    <string name="unbury">Булснаа болих</string>
-    <string name="rename_deck">Багцын нэрийг өөрчлөх</string>
+    <string name="unbury" maxLength="28">Булснаа болих</string>
+    <string name="rename_deck" maxLength="28">Багцын нэрийг өөрчлөх</string>
     <string name="create_shortcut">Товчлол үүсгэх</string>
     <string name="browse_cards">Картуудаа ухах</string>
     <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="29">Нэмэх</string>
-    <string name="menu_add_note">Тэмдэг оруулах</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">Нэмэх</string>
+    <string name="menu_add_note" maxLength="28">Тэмдэг оруулах</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Бүртгэл(аккаунт)- ээ тааруулах</string>
-    <string name="menu_dismiss_note">нуух \ устгах</string>
-    <string name="menu_bury_card">Картыг дараа болох</string>
-    <string name="menu_bury_note">Картын хэсгийг дараа болох</string>
-    <string name="menu_suspend_card">Картыг хасах</string>
-    <string name="menu_suspend_note">Картын хэсгийг хасах</string>
-    <string name="menu_bury">Дараа болох</string>
-    <string name="menu_suspend">Хасах</string>
-    <string name="menu_delete_note">Картын хэсгийг устгах</string>
-    <string name="menu_flag">Дарцаг</string>
+    <string name="menu_dismiss_note" maxLength="41">нуух \ устгах</string>
+    <string name="menu_bury_card" maxLength="28">Картыг дараа болох</string>
+    <string name="menu_bury_note" maxLength="28">Картын хэсгийг дараа болох</string>
+    <string name="menu_suspend_card" maxLength="28">Картыг хасах</string>
+    <string name="menu_suspend_note" maxLength="28">Картын хэсгийг хасах</string>
+    <string name="menu_bury" maxLength="28">Дараа болох</string>
+    <string name="menu_suspend" maxLength="28">Хасах</string>
+    <string name="menu_delete_note" maxLength="28">Картын хэсгийг устгах</string>
+    <string name="menu_flag" maxLength="41">Дарцаг</string>
     <string name="rename_flag">Rename flags</string>
-    <string name="menu_flag_card">Картыг дарцаглах</string>
-    <string name="menu_edit_tags">Шошгийг солих</string>
+    <string name="menu_flag_card" maxLength="28">Картыг дарцаглах</string>
+    <string name="menu_edit_tags" maxLength="28">Шошгийг солих</string>
     <string name="delete_note_message">Та үнэхээр энэ картыг, хэсгүүдтэй нь цуг устгамаар байна уу?\n%s</string>
-    <string name="menu_search">%1$s ын дараа дахин харагдана</string>
-    <string name="menu_mark_note">Картын хэсэгт тэмдэглэл нэмэх</string>
+    <string name="menu_search" maxLength="28">%1$s ын дараа дахин харагдана</string>
+    <string name="menu_mark_note" maxLength="28">Картын хэсэгт тэмдэглэл нэмэх</string>
     <string name="menu_unmark_note">Картын хэсгийн тэмдэглэлийг хасах</string>
-    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Enable voice playback</string>
     <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Багц бүтээх</string>
     <string name="new_dynamic_deck">Ангилсан багц бүтээх</string>
@@ -119,37 +119,37 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Анкидройдод \"Storage\" ашиглах эрхийг өгч байж үргэлжлүүлэн ашиглаж болно.</string>
     <string name="rebuild_filtered_deck">Ангилсан багцыг дахин үүсгэж байна&#8230;</string>
-    <string name="rebuild_cram_label">Дахин угсрах</string>
-    <string name="empty_cram_label">Хоослох</string>
+    <string name="rebuild_cram_label" maxLength="28">Дахин угсрах</string>
+    <string name="empty_cram_label" maxLength="28">Хоослох</string>
     <string name="create_subdeck">Дэд багц үүсгэх</string>
     <string name="empty_filtered_deck">Хоосон багцыг ангилж байна&#8230;</string>
     <string name="custom_study_deck_name">Тусгай суралцах горим</string>
     <string name="custom_study_deck_exists">Аль хэдийн эхлүүлсэн \"Тусгай судлах хэсэг\"-ийнхээ нэрээ эхэлж өөрчилнө үү</string>
     <string name="search_deck" comment="Deck search for selecting it">Багц хайх</string>
     <string name="empty_deck">Энэ багц хоосон байна</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Интернетээс багц хайх</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Интернетээс багц хайх</string>
     <string name="invalid_deck_name">Ингэж нэрлэх боломжгүй байна</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Одоохондоо сурах, давтах карт алга байна</string>
     <string name="sd_card_not_mounted">Багтаамжийн  хэрэгсэл холбогдоогүй байна</string>
-    <string name="button_sync" comment="Text of the sync button">Зэрэгцүүлэх</string>
+    <string name="button_sync" comment="Text of the sync button" maxLength="28">Зэрэгцүүлэх</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Та зэрэгцүүлэлтийг цуцлахдаа итгэлтэй байна уу?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Зэрэгцүүлэлтийг үргэлжлүүлэх</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Зэрэгцүүлэлтийг зогсоолоо</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Цуцалж байна&#8230;\n Бага зэрэг удаж магадгүй</string>
     <string name="syncing_media">Syncing media</string>
-    <string name="export_deck">Багцыг экспортлох</string>
+    <string name="export_deck" maxLength="28">Багцыг экспортлох</string>
     <string name="export_collection">Export collection</string>
     <string name="nothing">Юу ч үгүй</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Картын төрлүүд</string>
     <string name="card_template_editor_front">Картын урд талын загвар</string>
     <string name="card_template_editor_back">Картын ард талын загвар</string>
-    <string name="card_template_editor_styling">Харагдах байдал</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Карт хайгчид харагдах байдал </string>
-    <string name="card_template_editor_deck_override">Багцыг шууд сонгох</string>
-    <string name="card_template_editor_insert_field">Талбар оруулах</string>
+    <string name="card_template_editor_styling" maxLength="28">Харагдах байдал</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Карт хайгчид харагдах байдал </string>
+    <string name="card_template_editor_deck_override" maxLength="28">Багцыг шууд сонгох</string>
+    <string name="card_template_editor_insert_field" maxLength="28">Талбар оруулах</string>
     <string name="card_template_editor_select_field">Талбараа сонгох</string>
     <string name="card_template_editor_cant_delete">дор хаяж нэг картны төрөл шаардлагатай</string>
     <plurals name="card_template_editor_confirm_add">
@@ -165,7 +165,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Карт хайгчийн харагдах байдал </string>
     <!-- card Info -->
-    <string name="card_info_title">Картын тухай мэдээлэл</string>
+    <string name="card_info_title" maxLength="28">Картын тухай мэдээлэл</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
     <string name="read_write_permission_description">оршин буй тэмдэглэлүүд, картууд, тэмдэглэлүүдийн загварууд, болон багцуудыг ашиглах мөн шинийг бүтээх</string>

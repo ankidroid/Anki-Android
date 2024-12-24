@@ -58,23 +58,23 @@
         <item quantity="one">Notitie verwijderen</item>
         <item quantity="other">Notities verwijderen</item>
     </plurals>
-    <string name="card_browser_change_deck">Wijzig leerset</string>
+    <string name="card_browser_change_deck" maxLength="28">Wijzig leerset</string>
     <string name="delete_card_title">Memo verwijderen</string>
-    <string name="card_browser_show_marked" maxLength="29">Filteren op gemarkeerd</string>
-    <string name="card_browser_show_suspended" maxLength="29">Filteren op verwijderd</string>
-    <string name="card_browser_search_by_tag" maxLength="29">Filteren op tag</string>
-    <string name="card_browser_search_by_flag" maxLength="29">Filteren op vlag</string>
-    <string name="card_browser_list_my_searches" maxLength="29">Mijn zoekopdrachten</string>
-    <string name="card_browser_list_my_searches_save" maxLength="29">Bewaar zoekopdracht</string>
+    <string name="card_browser_show_marked" maxLength="28">Filteren op gemarkeerd</string>
+    <string name="card_browser_show_suspended" maxLength="28">Filteren op verwijderd</string>
+    <string name="card_browser_search_by_tag" maxLength="28">Filteren op tag</string>
+    <string name="card_browser_search_by_flag" maxLength="28">Filteren op vlag</string>
+    <string name="card_browser_list_my_searches" maxLength="28">Mijn zoekopdrachten</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">Bewaar zoekopdracht</string>
     <string name="card_browser_list_my_searches_title">Kies een bewaarde zoekopdacht</string>
     <string name="card_browser_list_my_searches_new_name">Naam voor de huidige zoekopdracht</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">U kunt geen onbenoemde zoekopdracht opslaan</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Naam bestaat</string>
     <string name="no_note_to_edit">Geen notitie om te bewerken</string>
     <string name="card_browser_list_my_searches_remove_content">Verwijder “%1$s”?</string>
-    <string name="card_browser_change_display_order" maxLength="29">Weergavevolgorde wijzigen</string>
+    <string name="card_browser_change_display_order" maxLength="28">Weergavevolgorde wijzigen</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Zoeken</string>
-    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">Kies weergavevolgorde</string>
     <string name="card_details_tags">Labels</string>
     <string-array name="card_browser_order_labels">
@@ -89,8 +89,8 @@
         <item>Op overhoring</item>
         <item>Op missers</item>
     </string-array>
-    <string name="card_browser_select_all" maxLength="29">Alles selecteren</string>
-    <string name="card_browser_select_none">Niets selecteren</string>
+    <string name="card_browser_select_all" maxLength="28">Alles selecteren</string>
+    <string name="card_browser_select_none" maxLength="28">Niets selecteren</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nieuw)</string>
     <string name="card_browser_due_filtered_card">(gefilterd)</string>
     <string name="card_browser_interval_learning_card">(leren)</string>

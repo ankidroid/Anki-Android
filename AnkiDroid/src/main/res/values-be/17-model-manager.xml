@@ -26,7 +26,7 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Кіраванне тыпамі нататак</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">Кіраванне тыпамі нататак</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Кіраваць палямі</string>
     <!--Toasts-->
     <string name="toast_last_model">Вы не можаце выдаліць ваш апошні тып нататкі</string>
@@ -57,7 +57,7 @@
     <string name="model_field_editor_language_hint_dialog_success_result">Прызначыць %s у якасці мовы падказак</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Змяненне палёў</string>
-    <string name="model_field_editor_add">Дадаць поле</string>
+    <string name="model_field_editor_add" maxLength="28">Дадаць поле</string>
     <string name="model_field_editor_delete">Выдаліць поле</string>
     <string name="model_field_editor_rename">Перайменаваць поле</string>
     <string name="model_field_editor_language_hint">Прызначыць мову падказак клавіятуры</string>
@@ -85,5 +85,5 @@
     <string name="model_manager_deck_override_added_message">‘%2$s’ прызначана стандартнай калодай для ‘%1$s’</string>
     <string name="model_manager_deck_override_removed_message">Стандартная калода для ‘%s’ была выдалена</string>
     <string name="deck_override_explanation">Выберыце калоду для размяшчэння новых ‘%s’ картак</string>
-    <string name="deck_picker_dialog_filter_decks">Фільтраваць калоды</string>
+    <string name="deck_picker_dialog_filter_decks" maxLength="28">Фільтраваць калоды</string>
 </resources>

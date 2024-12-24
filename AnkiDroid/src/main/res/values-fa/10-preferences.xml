@@ -150,9 +150,6 @@
     <string name="notification_minimum_cards_due">موعد مرور بیش از %d کارت</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">لرزش</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">چشمک زدن نور</string>
-    <string name="timeout_answer_text" maxLength="41">نمایش پاسخ بصورت خودکار</string>
-    <string name="timeout_answer_summ2">جواب را به صورت خودکار بدون دریافت ورودی از کاربر نشان بده.
-از بخش تنظیمات دسته‌کارت‌ تغییر دهید.</string>
     <string name="select_locale_title">انتخاب زبان</string>
     <string name="software_render" maxLength="41">غیر فعال کردن رندر سخت‌افزار کارت</string>
     <string name="software_render_summ">رندر سخت افزاری سریع تر است ولی ممکن است مشکل داشته باشد، مخصوصا روی اندروید 8 یا 8.1. اگر بعضی از دکمه های مرور کارت ها را نمیبینید، این تنظیمات را امتحان کنید.</string>
@@ -198,7 +195,7 @@
     <string name="reset_settings_to_default">بازگشت تنظیمات به پیشفرض</string>
     <string name="reset">تنظیم مجدد</string>
     <string name="thirdparty_apps_title" maxLength="41">ای پی آی سایر نرم‌افزارها</string>
-    <string name="thirdparty_apps_summary">نمایش لیست کامل از همۀ نرم‌افزارهایی که از ای پی آی آنکی‌دروید استفاده می‌کنند. (برای مثال نرم‌افزارهای فرهنگ لغت و ...)</string>
+    <string name="thirdparty_apps_summary">لیستی از برنامه‌هایی که از API انکی‌دروید استفاده می‌کنند، مانند دیکشنری‌ها و ابزارها را ببینید.</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">مرور کننده</string>
     <string name="show_deck_title" maxLength="41">نمایش عنوان دسته کارت</string>
@@ -271,21 +268,21 @@
     <string name="axis_picker_move_joystick">یک اهرمک/تنظیم کننده حرکات را حرکت دهید</string>
     <string name="user_actions" maxLength="41">اقدامات کاربر</string>
     <string name="user_actions_summary" maxLength="41">اجرای جاوا اسکریپت از صفحه مرور</string>
-    <string name="user_action_1" maxLength="41">اقدام کاربر 1</string>
-    <string name="user_action_2" maxLength="41">اقدام کاربر 2</string>
-    <string name="user_action_3" maxLength="41">اقدام کاربر 3</string>
-    <string name="user_action_4" maxLength="41">اقدام کاربر 4</string>
-    <string name="user_action_5" maxLength="41">اقدام کاربر 5</string>
-    <string name="user_action_6" maxLength="41">اقدام کاربر 6</string>
-    <string name="user_action_7" maxLength="41">اقدام کاربر 7</string>
-    <string name="user_action_8" maxLength="41">اقدام کاربر 8</string>
-    <string name="user_action_9" maxLength="41">اقدام کاربر 9</string>
+    <string name="user_action_1" maxLength="28">اقدام کاربر 1</string>
+    <string name="user_action_2" maxLength="28">اقدام کاربر 2</string>
+    <string name="user_action_3" maxLength="28">اقدام کاربر 3</string>
+    <string name="user_action_4" maxLength="28">اقدام کاربر 4</string>
+    <string name="user_action_5" maxLength="28">اقدام کاربر 5</string>
+    <string name="user_action_6" maxLength="28">اقدام کاربر 6</string>
+    <string name="user_action_7" maxLength="28">اقدام کاربر 7</string>
+    <string name="user_action_8" maxLength="28">اقدام کاربر 8</string>
+    <string name="user_action_9" maxLength="28">اقدام کاربر 9</string>
     <string name="toggle_auto_advance" maxLength="41">تغییر وضعیت پیشروی خودکار</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">طرف کارت را انتخاب کنید</string>
     <string name="card_side_question">سوال</string>
     <string name="card_side_answer">پاسخ</string>
-    <string name="card_side_both">سوال و جواب</string>
+    <string name="card_side_both" maxLength="28">سوال و جواب</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">سؤال: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">جواب: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -359,7 +356,7 @@
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">بدون مجموعه</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">خطا</string>
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">دریافت کردن&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">محاسبه کردن...</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">در حال محاسبه کردن&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">مجموعه وجود ندارد</string>
     <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">مخفی کردن نوارهای سیستم</string>
     <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">هیچ کدام</string>
@@ -370,5 +367,5 @@
     <string name="hide_answer_buttons" maxLength="41">مخفی کردن دکمه‌های پاسخ</string>
     <string name="hide_hard_and_easy" maxLength="41">دکمه \"دشوار\" و \"آسان\" را پنهان کن</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">تنظیمات را باز کنید</string>
 </resources>

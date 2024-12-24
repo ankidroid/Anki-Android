@@ -26,6 +26,7 @@ class ActionButtons {
     // to this point
     val status: ActionButtonStatus = ActionButtonStatus()
     private var menu: Menu? = null
+
     fun setup(preferences: SharedPreferences) {
         status.setup(preferences)
     }
@@ -36,7 +37,9 @@ class ActionButtons {
         this.menu = menu
     }
 
-    fun findMenuItem(@IdRes resId: Int) = menu?.findItem(resId) as? MenuItemImpl
+    fun findMenuItem(
+        @IdRes resId: Int,
+    ) = menu?.findItem(resId) as? MenuItemImpl
 
     companion object {
         @IdRes

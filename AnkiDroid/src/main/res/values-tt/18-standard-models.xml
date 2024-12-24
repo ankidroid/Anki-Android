@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Алгы</string>
-    <string name="back_field_name">Баш тарту</string>
+    <string name="front_field_name" maxLength="28">Алгы</string>
+    <string name="back_field_name" maxLength="28">Баш тарту</string>
 </resources>

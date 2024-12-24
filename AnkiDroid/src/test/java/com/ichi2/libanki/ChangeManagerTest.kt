@@ -31,7 +31,6 @@ import kotlin.reflect.jvm.isAccessible
 
 @RunWith(Parameterized::class)
 class ChangeManagerTest : JvmTest() {
-
     @JvmField // required for Parameter
     @Parameterized.Parameter
     var property: KProperty1<OpChanges, *>? = null

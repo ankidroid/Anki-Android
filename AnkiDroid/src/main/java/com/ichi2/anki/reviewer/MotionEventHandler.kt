@@ -35,13 +35,17 @@ import timber.log.Timber
  */
 class MotionEventHandler(
     private val commandProcessor: ViewerCommand.CommandProcessor,
-    private val detectors: List<SingleAxisDetector>
+    private val detectors: List<SingleAxisDetector>,
 ) {
-    data class SingleAxisDetector(val axis: Axis, val command: ViewerCommand, val threshold: Float) {
+    data class SingleAxisDetector(
+        val axis: Axis,
+        val command: ViewerCommand,
+        val threshold: Float,
+    ) {
         constructor(command: ViewerCommand, binding: Binding.AxisButtonBinding) : this(
             command = command,
             axis = binding.axis,
-            threshold = binding.threshold
+            threshold = binding.threshold,
         )
 
         /** If the command has been executed and we have not returned lower than the threshold */
@@ -70,8 +74,12 @@ class MotionEventHandler(
             // TODO: We may need to handle historical events as well
             val value = ev.getAxisValue(axis.motionEventValue)
             when {
-                threshold > 0 -> { if (value >= threshold) return debouncedCommand }
-                threshold < 0 -> { if (value <= threshold) return debouncedCommand }
+                threshold > 0 -> {
+                    if (value >= threshold) return debouncedCommand
+                }
+                threshold < 0 -> {
+                    if (value <= threshold) return debouncedCommand
+                }
             }
             sentCommand = false
             return null
@@ -104,13 +112,14 @@ class MotionEventHandler(
             return MotionEventHandler(viewer, handlers)
         }
 
-        private fun getAxisButtonBindings(context: Context) = sequence {
-            for ((command, bindings) in MappableBinding.allMappings(context.sharedPrefs())) {
-                for (binding in bindings.map { it.binding }.filterIsInstance<Binding.AxisButtonBinding>()) {
-                    yield(SingleAxisDetector(command, binding))
+        private fun getAxisButtonBindings(context: Context) =
+            sequence {
+                for ((command, bindings) in MappableBinding.allMappings(context.sharedPrefs())) {
+                    for (binding in bindings.map { it.binding }.filterIsInstance<Binding.AxisButtonBinding>()) {
+                        yield(SingleAxisDetector(command, binding))
+                    }
                 }
             }
-        }
     }
 }
 
@@ -120,7 +129,9 @@ class MotionEventHandler(
  * Constants used in [MotionEvent.getAxisValue]. Axes can be in a bidirectional range [-1, 1]
  * @see MotionEvent
  */
-enum class Axis(val motionEventValue: Int) {
+enum class Axis(
+    val motionEventValue: Int,
+) {
     /** @see MotionEvent.AXIS_X */
     X(MotionEvent.AXIS_X),
 
@@ -221,10 +232,10 @@ enum class Axis(val motionEventValue: Int) {
     HAT_Y(MotionEvent.AXIS_HAT_Y),
 
     /** @see MotionEvent.AXIS_RELATIVE_X */
-    AXIS_RELATIVE_X(CompatHelper.compat.AXIS_RELATIVE_X),
+    AXIS_RELATIVE_X(MotionEvent.AXIS_RELATIVE_X),
 
     /** @see MotionEvent.AXIS_RELATIVE_Y */
-    AXIS_RELATIVE_Y(CompatHelper.compat.AXIS_RELATIVE_Y),
+    AXIS_RELATIVE_Y(MotionEvent.AXIS_RELATIVE_Y),
 
     /** @see MotionEvent.AXIS_GESTURE_X_OFFSET */
     AXIS_GESTURE_X_OFFSET(CompatHelper.compat.AXIS_GESTURE_X_OFFSET),
@@ -239,8 +250,7 @@ enum class Axis(val motionEventValue: Int) {
     AXIS_GESTURE_SCROLL_X_DISTANCE(CompatHelper.compat.AXIS_GESTURE_SCROLL_X_DISTANCE),
 
     /** @see MotionEvent.AXIS_GESTURE_SCROLL_Y_DISTANCE */
-    AXIS_GESTURE_SCROLL_Y_DISTANCE(CompatHelper.compat.AXIS_GESTURE_SCROLL_Y_DISTANCE)
-
+    AXIS_GESTURE_SCROLL_Y_DISTANCE(CompatHelper.compat.AXIS_GESTURE_SCROLL_Y_DISTANCE),
     ;
 
     /**

@@ -17,6 +17,7 @@ package com.ichi2.libanki
 
 import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.Ease
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.Matchers.equalTo
@@ -39,7 +40,7 @@ class CardTest : JvmTest() {
         note.setItem("Back", "2")
         col.addNote(note)
         val cid = note.cards()[0].id
-        col.sched.answerCard(col.sched.card!!, Consts.BUTTON_TWO)
+        col.sched.answerCard(col.sched.card!!, Ease.HARD)
         col.removeCardsAndOrphanedNotes(listOf(cid))
         assertEquals(0, col.cardCount())
         assertEquals(0, col.noteCount())
@@ -205,7 +206,10 @@ class CardTest : JvmTest() {
         assertNoteOrdinalAre(note, arrayOf(0, 1))
     }
 
-    private fun assertNoteOrdinalAre(note: Note, ords: Array<Int>) {
+    private fun assertNoteOrdinalAre(
+        note: Note,
+        ords: Array<Int>,
+    ) {
         val cards = note.cards()
         assumeThat(cards.size, equalTo(ords.size))
         for (card in cards) {

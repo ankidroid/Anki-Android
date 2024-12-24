@@ -26,7 +26,8 @@ import com.ichi2.libanki.Collection
  */
 enum class CardsOrNotes {
     CARDS,
-    NOTES;
+    NOTES,
+    ;
 
     fun saveToCollection(col: Collection) {
         col.config.setBool(ConfigKey.Bool.BROWSER_TABLE_SHOW_NOTES_MODE, this == NOTES)

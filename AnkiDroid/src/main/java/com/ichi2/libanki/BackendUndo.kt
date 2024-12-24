@@ -26,16 +26,15 @@ data class UndoStatus(
     val undo: String?,
     val redo: String?,
     // not currently used
-    val lastStep: Int
+    val lastStep: Int,
 ) {
     companion object {
-        fun from(proto: UndoStatusProto): UndoStatus {
-            return UndoStatus(
+        fun from(proto: UndoStatusProto): UndoStatus =
+            UndoStatus(
                 undo = proto.undo.ifEmpty { null },
                 redo = proto.redo.ifEmpty { null },
-                lastStep = proto.lastStep
+                lastStep = proto.lastStep,
             )
-        }
     }
 }
 
@@ -48,18 +47,12 @@ data class UndoStatus(
  * Will throw if no undo operation is possible (due to legacy code
  * directly mutating the database).
  */
-fun Collection.undo(): OpChangesAfterUndo {
-    return backend.undo()
-}
+fun Collection.undo(): OpChangesAfterUndo = backend.undo()
 
 /** Redoes the previously-undone operation. See the docs for
 [Collection.undoOperation]
  */
-fun Collection.redo(): OpChangesAfterUndo {
-    return backend.redo()
-}
+fun Collection.redo(): OpChangesAfterUndo = backend.redo()
 
 /** See [UndoStatus] */
-fun Collection.undoStatus(): UndoStatus {
-    return UndoStatus.from(backend.getUndoStatus())
-}
+fun Collection.undoStatus(): UndoStatus = UndoStatus.from(backend.getUndoStatus())

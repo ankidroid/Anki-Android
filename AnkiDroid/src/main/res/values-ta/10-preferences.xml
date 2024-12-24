@@ -150,9 +150,6 @@
     <string name="notification_minimum_cards_due">%d க்கும் மேற்பட்ட கார்டுகள் நிலுவையில் உள்ளன</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">அதிர்வு</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">ஒளிரும் ஒளி</string>
-    <string name="timeout_answer_text" maxLength="41">தானியங்கி காட்சி பதில்</string>
-    <string name="timeout_answer_summ2">கடைசி ஒத்திசைவு 10க்கு மேல் இருந்தால் ஆப்ஸ் தொடக்கம்/வெளியேறும் போது தானாகவே ஒத்திசைக்கப்படும்
-        நிமிடங்களுக்கு முன்பு.</string>
     <string name="select_locale_title">மொழியைத் தேர்ந்தெடுக்கவும்</string>
     <string name="software_render" maxLength="41">கார்டு வன்பொருள் ரெண்டரிங்கை முடக்கு</string>
     <string name="software_render_summ">ஹார்டுவேர் ரெண்டர் வேகமானது ஆனால் சிக்கல்கள் இருக்கலாம், குறிப்பாக Android 8/8.1 இல். கார்டு மதிப்பாய்வு பயனர் இடைமுகத்தின் பகுதிகளை உங்களால் பார்க்க முடியவில்லை என்றால், இந்த அமைப்பை முயற்சிக்கவும்.</string>
@@ -271,21 +268,21 @@
     <string name="axis_picker_move_joystick">கடைசி ஒத்திசைவு 10 க்கும் அதிகமாக இருந்தால், தொடக்க/வெளியேறும்போது பயன்பாடு தானாகவே ஒத்திசைக்கப்படும்</string>
     <string name="user_actions" maxLength="41">பயனர் நடவடிக்கைகள்</string>
     <string name="user_actions_summary" maxLength="41">மதிப்பாய்வுத் திரையில் இருந்து JavaScript ஐத் தூண்டவும்</string>
-    <string name="user_action_1" maxLength="41">பயனர் செயல் 1</string>
-    <string name="user_action_2" maxLength="41">பயனர் செயல் 2</string>
-    <string name="user_action_3" maxLength="41">பயனர் செயல் 3</string>
-    <string name="user_action_4" maxLength="41">பயனர் செயல் 4</string>
-    <string name="user_action_5" maxLength="41">பயனர் செயல் 5</string>
-    <string name="user_action_6" maxLength="41">பயனர் செயல் 6</string>
-    <string name="user_action_7" maxLength="41">பயனர் செயல் 7</string>
-    <string name="user_action_8" maxLength="41">பயனர் செயல் 8</string>
-    <string name="user_action_9" maxLength="41">பயனர் செயல் 9</string>
+    <string name="user_action_1" maxLength="28">பயனர் செயல் 1</string>
+    <string name="user_action_2" maxLength="28">பயனர் செயல் 2</string>
+    <string name="user_action_3" maxLength="28">பயனர் செயல் 3</string>
+    <string name="user_action_4" maxLength="28">பயனர் செயல் 4</string>
+    <string name="user_action_5" maxLength="28">பயனர் செயல் 5</string>
+    <string name="user_action_6" maxLength="28">பயனர் செயல் 6</string>
+    <string name="user_action_7" maxLength="28">பயனர் செயல் 7</string>
+    <string name="user_action_8" maxLength="28">பயனர் செயல் 8</string>
+    <string name="user_action_9" maxLength="28">பயனர் செயல் 9</string>
     <string name="toggle_auto_advance" maxLength="41">தானியங்கு-முன்னேற்றத்தை நிலைமாற்று</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">அட்டைப் பக்கத்தைத் தேர்ந்தெடுக்கவும்</string>
     <string name="card_side_question">கேள்வி</string>
     <string name="card_side_answer">பதில்</string>
-    <string name="card_side_both">கேள்வி &amp; பதில்</string>
+    <string name="card_side_both" maxLength="28">கேள்வி &amp; பதில்</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">கே: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">ப: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -371,5 +368,5 @@
     <string name="hide_answer_buttons" maxLength="41">பதில் பொத்தான்களை மறை</string>
     <string name="hide_hard_and_easy" maxLength="41">\'ஹார்ட்\' மற்றும் \'ஈஸி\' பொத்தான்களை மறைக்கவும்</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">அமைப்புகளைத் திறக்கவும்</string>
 </resources>

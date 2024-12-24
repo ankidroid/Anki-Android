@@ -45,11 +45,11 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks">Stapel</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kartenübersicht</string>
-    <string name="statistics">Statistik</string>
-    <string name="settings">Einstellungen</string>
-    <string name="help">Hilfe</string>
+    <string name="decks" maxLength="28">Stapel</string>
+    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">Kartenübersicht</string>
+    <string name="statistics" maxLength="28">Statistik</string>
+    <string name="settings" maxLength="28">Einstellungen</string>
+    <string name="help" maxLength="28">Hilfe</string>
     <string name="drawing">Zeichnung</string>
     <string name="send_feedback">Rückmeldung senden</string>
     <string name="studyoptions_start">Lernen</string>
@@ -65,50 +65,50 @@
         <item quantity="other">%1$d Stunden %2$d verbleibend</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">%1$d Tag %2$dStd. übrig</item>
+        <item quantity="other">%1$d Tage %2$dStd. übrig</item>
     </plurals>
     <string name="no_cards_placeholder_title">Sammlung ist leer</string>
     <string name="no_cards_placeholder_description">Fügen Sie Karten \nmit dem + -Symbol hinzu.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Antwort eingeben</string>
-    <string name="show_answer">Antwort anzeigen</string>
+    <string name="show_answer" maxLength="41">Antwort anzeigen</string>
     <string name="hide_answer">Antwort ausblenden</string>
-    <string name="ease_button_again">Nochmal</string>
-    <string name="ease_button_hard">Schwer</string>
-    <string name="ease_button_good">Gut</string>
+    <string name="ease_button_again" maxLength="41">Nochmal</string>
+    <string name="ease_button_hard" maxLength="41">Schwer</string>
+    <string name="ease_button_good" maxLength="41">Gut</string>
     <string name="ease_button_easy">Einfach</string>
-    <string name="menu_import">Importieren</string>
-    <string name="undo" maxLength="29" comment="When tapping on this text, the last action is undone.">Rückgängig</string>
-    <string name="redo">Wiederholen</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Strich rückgängig machen</string>
+    <string name="menu_import" maxLength="28">Importieren</string>
+    <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Rückgängig</string>
+    <string name="redo" maxLength="28">Wiederherstellen</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Strich rückgängig machen</string>
     <string name="move_all_to_deck">Alle diesem Stapel hinzufügen</string>
-    <string name="unbury">Nicht mehr aufschieben</string>
-    <string name="rename_deck">Stapel umbenennen</string>
+    <string name="unbury" maxLength="28">Nicht mehr aufschieben</string>
+    <string name="rename_deck" maxLength="28">Stapel umbenennen</string>
     <string name="create_shortcut">Verknüpfung erstellen</string>
     <string name="browse_cards">Karten durchsuchen</string>
     <string name="edit_deck_description" comment="edit the deck description">Beschreibung ändern</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="29">Hinzufügen</string>
-    <string name="menu_add_note">Notiz hinzufügen</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">Hinzufügen</string>
+    <string name="menu_add_note" maxLength="28">Notiz hinzufügen</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synchronisierungskonto</string>
-    <string name="menu_dismiss_note">Aussetzen / Löschen</string>
-    <string name="menu_bury_card">Karte aufschieben</string>
-    <string name="menu_bury_note">Notiz aufschieben</string>
-    <string name="menu_suspend_card">Karte ausschließen</string>
-    <string name="menu_suspend_note">Notiz ausschließen</string>
-    <string name="menu_bury">Aufschieben</string>
-    <string name="menu_suspend">Ausschließen</string>
-    <string name="menu_delete_note">Notiz löschen</string>
-    <string name="menu_flag">Flagge</string>
+    <string name="menu_dismiss_note" maxLength="41">Aussetzen / Löschen</string>
+    <string name="menu_bury_card" maxLength="28">Karte aufschieben</string>
+    <string name="menu_bury_note" maxLength="28">Notiz aufschieben</string>
+    <string name="menu_suspend_card" maxLength="28">Karte ausschließen</string>
+    <string name="menu_suspend_note" maxLength="28">Notiz ausschließen</string>
+    <string name="menu_bury" maxLength="28">Aufschieben</string>
+    <string name="menu_suspend" maxLength="28">Ausschließen</string>
+    <string name="menu_delete_note" maxLength="28">Notiz löschen</string>
+    <string name="menu_flag" maxLength="41">Flagge</string>
     <string name="rename_flag">Flaggen umbenennen</string>
-    <string name="menu_flag_card">Karte markieren</string>
-    <string name="menu_edit_tags">Schlagwörter bearbeiten</string>
+    <string name="menu_flag_card" maxLength="28">Karte markieren</string>
+    <string name="menu_edit_tags" maxLength="28">Schlagwörter bearbeiten</string>
     <string name="delete_note_message">Diese Notiz und alle ihre Karten tatsächlich löschen?\n%s</string>
-    <string name="menu_search">In %1$s nachschlagen</string>
-    <string name="menu_mark_note">Notiz markieren</string>
+    <string name="menu_search" maxLength="28">In %1$s nachschlagen</string>
+    <string name="menu_mark_note" maxLength="28">Notiz markieren</string>
     <string name="menu_unmark_note">Markierung entfernen</string>
-    <string name="menu_enable_voice_playback">Sprachausgabe aktivieren</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Sprachausgabe aktivieren</string>
     <string name="menu_disable_voice_playback">Sprachausgabe deaktivieren</string>
     <string name="new_deck">Stapel erstellen</string>
     <string name="new_dynamic_deck">Gefilterten Stapel erstellen</string>
@@ -119,37 +119,37 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Bitte erteilen Sie AnkiDroid die Berechtigung »Speicher«, um fortzufahren</string>
     <string name="rebuild_filtered_deck">Gefilterter Stapel wird wiederhergestellt &#8230;</string>
-    <string name="rebuild_cram_label">Neu aufbauen</string>
-    <string name="empty_cram_label">Leeren</string>
+    <string name="rebuild_cram_label" maxLength="28">Neu aufbauen</string>
+    <string name="empty_cram_label" maxLength="28">Leeren</string>
     <string name="create_subdeck">Unterstapel erstellen</string>
     <string name="empty_filtered_deck">Gefilterter Stapel wird geleert &#8230;</string>
     <string name="custom_study_deck_name">Benutzerdefinierte Sitzung</string>
     <string name="custom_study_deck_exists">Bitte benennen Sie zunächst den existierenden Stapel »Benutzerdefinierte Sitzung« um</string>
     <string name="search_deck" comment="Deck search for selecting it">Stapelsuche</string>
     <string name="empty_deck">Dieser Stapel ist leer</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Stapelsuche</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Stapelsuche</string>
     <string name="invalid_deck_name">Ungültiger Stapelname</string>
     <string name="studyoptions_congrats_finished">Glückwunsch! Das war alles für heute.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck vorerst fertig! %s</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Dieser Stapel ist vorerst geschafft! %s</string>
     <string name="studyoptions_no_cards_due">Es sind noch keine Karten fällig</string>
     <string name="sd_card_not_mounted">Gerätespeicher nicht eingebunden</string>
-    <string name="button_sync" comment="Text of the sync button">Synchronisieren</string>
+    <string name="button_sync" comment="Text of the sync button" maxLength="28">Synchronisieren</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Wollen Sie die Synchronisation abbrechen?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Synchronisierung fortsetzen</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synchronisation abgebrochen</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Breche ab&#8230;\nDies kann einige Zeit dauern.</string>
     <string name="syncing_media">Synchronisiere Medien</string>
-    <string name="export_deck">Stapel exportieren</string>
+    <string name="export_deck" maxLength="28">Stapel exportieren</string>
     <string name="export_collection">Sammlung exportieren</string>
     <string name="nothing">Nichts</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Kartentypen</string>
     <string name="card_template_editor_front">Vorlage für Vorderseite</string>
     <string name="card_template_editor_back">Vorlage für Rückseite</string>
-    <string name="card_template_editor_styling">Stil</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Aussehen der Kartenübersicht</string>
-    <string name="card_template_editor_deck_override">Stapel übergehen</string>
-    <string name="card_template_editor_insert_field">Feld einfügen</string>
+    <string name="card_template_editor_styling" maxLength="28">Stil</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Aussehen der Kartenübersicht</string>
+    <string name="card_template_editor_deck_override" maxLength="28">Stapel übergehen</string>
+    <string name="card_template_editor_insert_field" maxLength="28">Feld einfügen</string>
     <string name="card_template_editor_select_field">Feld auswählen</string>
     <string name="card_template_editor_cant_delete">Mindestens ein Kartentyp wird benötigt.</string>
     <plurals name="card_template_editor_confirm_add">
@@ -165,7 +165,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aussehen der Kartenübersicht</string>
     <!-- card Info -->
-    <string name="card_info_title">Karteninfos</string>
+    <string name="card_info_title" maxLength="28">Karteninfos</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid-Datenbank lesen und schreiben</string>
     <string name="read_write_permission_description">Zugriff auf bereits vorhandene Notizen, Karten, Notiztypen und Stapel, sowie deren Neuerstellung</string>
@@ -183,8 +183,8 @@
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Die Datei %s kann nicht erstellt oder überschrieben werden</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Unzugängliche Sammlung</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Wir können, aufgrund einer Änderung der Play Store-Richtlinie, nachdem AnkiDroid deinstalliert wurde, auf Ihre Sammlung nicht zugreifen.\n\nIhre Daten sind sicher und können wiederhergestellt werden. Es befindet sich unter\n%s\n\nWählen Sie eine Option unten, um sie wiederherzustellen:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android hat den Zugriff auf %1$s entfernt wegen App-Aktivität. \n\nDeine Daten sind sicher und können wiederhergestellt werden. Die befinden sich bei \n%2$s\n\nWähle eine Option unten, um sie wiederherzustellen. </string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Wir können, aufgrund einer Änderung der Play Store-Richtlinie, nachdem AnkiDroid deinstalliert wurde, auf Ihre Sammlung nicht zugreifen.\n\nIhre Daten sind sicher und können wiederhergestellt werden. Es befindet sich unter\n%s\n\nWählen Sie unten eine Wiederherstellungsmöglichkeit aus:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android hat den Zugriff auf %1$s entfernt wegen App-Aktivität. \n\nDeine Daten sind sicher und können wiederhergestellt werden. Die befinden sich bei \n%2$s\n\nWähle unten eine Möglichkeit aus, um sie wiederherzustellen. </string>
     <string name="restore_data_from_ankiweb">von AnkiWeb wiederherstellen (empfohlen)</string>
     <string name="install_non_play_store_ankidroid_recommended">Ordnerzugriff wiederherstellen (empfohlen)</string>
     <string name="install_non_play_store_ankidroid">Ordnerzugriff wiederherstellen (erfahren)</string>

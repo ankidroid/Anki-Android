@@ -36,7 +36,6 @@ import kotlinx.coroutines.flow.onEach
 class TemplatePreviewerFragment :
     CardViewerFragment(R.layout.template_previewer),
     BaseSnackbarBuilderProvider {
-
     override val viewModel: TemplatePreviewerViewModel by viewModels {
         val arguments = BundleCompat.getParcelable(requireArguments(), ARGS_KEY, TemplatePreviewerArguments::class.java)!!
         TemplatePreviewerViewModel.factory(arguments, CardMediaPlayer())
@@ -47,21 +46,25 @@ class TemplatePreviewerFragment :
     override val baseSnackbarBuilder: SnackbarBuilder
         get() = { anchorView = this@TemplatePreviewerFragment.view?.findViewById(R.id.show_answer) }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val showAnswerButton = view.findViewById<MaterialButton>(R.id.show_answer).apply {
-            setOnClickListener { viewModel.toggleShowAnswer() }
-        }
+        val showAnswerButton =
+            view.findViewById<MaterialButton>(R.id.show_answer).apply {
+                setOnClickListener { viewModel.toggleShowAnswer() }
+            }
         viewModel.showingAnswer
             .onEach { showingAnswer ->
-                showAnswerButton.text = if (showingAnswer) {
-                    getString(R.string.hide_answer)
-                } else {
-                    getString(R.string.show_answer)
-                }
-            }
-            .launchIn(lifecycleScope)
+                showAnswerButton.text =
+                    if (showingAnswer) {
+                        getString(R.string.hide_answer)
+                    } else {
+                        getString(R.string.show_answer)
+                    }
+            }.launchIn(lifecycleScope)
 
         if (sharedPrefs().getBoolean("safeDisplay", false)) {
             view.findViewById<MaterialCardView>(R.id.webview_container).elevation = 0F
@@ -82,13 +85,12 @@ class TemplatePreviewerFragment :
          */
         fun newInstance(
             arguments: TemplatePreviewerArguments,
-            backgroundOverrideColor: Int? = null
-        ): TemplatePreviewerFragment {
-            return TemplatePreviewerFragment().apply {
+            backgroundOverrideColor: Int? = null,
+        ): TemplatePreviewerFragment =
+            TemplatePreviewerFragment().apply {
                 val args = bundleOf(ARGS_KEY to arguments)
                 backgroundOverrideColor?.let { args.putInt(ARG_BACKGROUND_OVERRIDE_COLOR, backgroundOverrideColor) }
                 this.arguments = args
             }
-        }
     }
 }

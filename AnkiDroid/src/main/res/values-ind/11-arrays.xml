@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">x-besar</string>
     <string name="html_size_code_xx_large">xx-besar</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Jawab ulang</string>
-    <string name="answer_hard">Jawab susah</string>
-    <string name="answer_good">Jawab baik</string>
-    <string name="answer_easy">Jawab mudah</string>
-    <string name="gesture_play">Putar media</string>
-    <string name="gesture_abort_learning">Close reviewer</string>
-    <string name="gesture_flag_red">Setel Panji Merah</string>
-    <string name="gesture_flag_orange">Setel Panji Jingga</string>
-    <string name="gesture_flag_green">Setel Panji Hijau</string>
-    <string name="gesture_flag_blue">Setel Panji Biru</string>
-    <string name="gesture_flag_pink">Atur Bendera Merah</string>
-    <string name="gesture_flag_turquoise">Atur Bendera Pirus</string>
-    <string name="gesture_flag_purple">Atur Bendera Ungu</string>
-    <string name="gesture_flag_remove">Hapus Panji</string>
-    <string name="gesture_page_up">Halaman Atas</string>
-    <string name="gesture_page_down">Halaman Bawah</string>
-    <string name="gesture_abort_sync">Close reviewer and Sync</string>
-    <string name="gesture_toggle_whiteboard">Atur Whiteboard</string>
-    <string name="gesture_show_hint">Tampilkan Petunjuk</string>
-    <string name="gesture_show_all_hints">Tampilkan Semua Petunjuk</string>
-    <string name="record_voice">Rekam Suara</string>
-    <string name="replay_voice">Putar Ulang Suara</string>
-    <string name="save_voice">Simpan Rekaman</string>
+    <string name="answer_again" maxLength="41">Jawab ulang</string>
+    <string name="answer_hard" maxLength="41">Jawab susah</string>
+    <string name="answer_good" maxLength="41">Jawab baik</string>
+    <string name="answer_easy" maxLength="41">Jawab mudah</string>
+    <string name="gesture_play" maxLength="41">Putar media</string>
+    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_flag_red" maxLength="41">Setel Panji Merah</string>
+    <string name="gesture_flag_orange" maxLength="41">Setel Panji Jingga</string>
+    <string name="gesture_flag_green" maxLength="41">Setel Panji Hijau</string>
+    <string name="gesture_flag_blue" maxLength="41">Setel Panji Biru</string>
+    <string name="gesture_flag_pink" maxLength="41">Atur Bendera Merah</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Atur Bendera Pirus</string>
+    <string name="gesture_flag_purple" maxLength="41">Atur Bendera Ungu</string>
+    <string name="gesture_flag_remove" maxLength="41">Hapus Panji</string>
+    <string name="gesture_page_up" maxLength="41">Halaman Atas</string>
+    <string name="gesture_page_down" maxLength="41">Halaman Bawah</string>
+    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Atur Whiteboard</string>
+    <string name="gesture_show_hint" maxLength="41">Tampilkan Petunjuk</string>
+    <string name="gesture_show_all_hints" maxLength="41">Tampilkan Semua Petunjuk</string>
+    <string name="record_voice" maxLength="41">Rekam Suara</string>
+    <string name="replay_voice" maxLength="41">Putar Ulang Suara</string>
+    <string name="save_voice" maxLength="41">Simpan Rekaman</string>
 </resources>

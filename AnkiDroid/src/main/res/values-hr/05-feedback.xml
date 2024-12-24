@@ -46,7 +46,7 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">Izvještavanje o greškama</string>
+    <string name="error_reporting_choice" maxLength="41">Izvještavanje o greškama</string>
     <string name="feedback_disclaimer">Odricanje od odgovornosti: Ne prikupljamo ikakve osobne podatke, kao što su adrese e-pošte, brojevi telefona ili IMEI telefona. Prikupljamo neke informacije o uređaju, kao što su proizvođač, model i inačica Android, kao i prirodu grešaka koje prijavljujete i korake kako ih prouzročiti.</string>
     <string name="feedback_title">AnkiDroid Feedback</string>
     <string name="feedback_default_text">Unesite povratne informacije o prirodi greške koju prijavljujete.</string>

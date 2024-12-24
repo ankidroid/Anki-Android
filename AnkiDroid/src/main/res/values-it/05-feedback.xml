@@ -46,7 +46,7 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">Modalità di segnalazione degli errori</string>
+    <string name="error_reporting_choice" maxLength="41">Modalità di segnalazione degli errori</string>
     <string name="feedback_disclaimer">Avvertenza: Non raccogliamo informazioni personali come indirizzo di posta elettronica, numero di telefono o codice IMEI del telefono. Raccogliamo alcune informazioni sul vostro dispositivo come nome del produttore, modello e versione di Android, così come la natura degli errori segnalati, e i passi che li hanno prodotti.</string>
     <string name="feedback_title">Feedback AnkiDroid</string>
     <string name="feedback_default_text">Per favore inserisci i tuoi commenti o informazioni sulla natura di eventuali errori che stai riportando.</string>

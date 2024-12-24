@@ -46,7 +46,7 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">Mod laporan ralat</string>
+    <string name="error_reporting_choice" maxLength="41">Mod laporan ralat</string>
     <string name="feedback_disclaimer">Penafian: Kami tidak mengumpul apa-apa maklumat peribadi seperti alamat e-mail anda, nombor telefon, atau telefon IMEI anda. Kami mengumpul beberapa informasi tentang peranti anda seperti pengilang, model dan versi Android, serta sifat tersendiri ralat yang dilaporkan dan langkah menyebabkan mereka berlaku.</string>
     <string name="feedback_title">Maklum balas AnkiDroid</string>
     <string name="feedback_default_text">Masukkan maklum balas anda atau maklumat tentang sifat apa-apa ralat yang anda melaporkan.</string>

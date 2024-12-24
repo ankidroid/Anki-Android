@@ -30,23 +30,31 @@ import com.ichi2.utils.show
 import com.ichi2.utils.title
 import java.util.function.Consumer
 
-class WhiteBoardWidthDialog(private val context: Context, private var wbStrokeWidth: Int) {
+class WhiteBoardWidthDialog(
+    private val context: Context,
+    private var wbStrokeWidth: Int,
+) {
     private var strokeWidthText: FixedTextView? = null
     var onStrokeWidthChanged: Consumer<Int>? = null
-    private val seekBarChangeListener: OnSeekBarChangeListener = object : OnSeekBarChangeListener {
-        override fun onProgressChanged(seekBar: SeekBar, value: Int, b: Boolean) {
-            wbStrokeWidth = value
-            strokeWidthText!!.text = "" + value
-        }
+    private val seekBarChangeListener: OnSeekBarChangeListener =
+        object : OnSeekBarChangeListener {
+            override fun onProgressChanged(
+                seekBar: SeekBar,
+                value: Int,
+                b: Boolean,
+            ) {
+                wbStrokeWidth = value
+                strokeWidthText!!.text = "" + value
+            }
 
-        override fun onStartTrackingTouch(seekBar: SeekBar) {
-            // intentionally blank
-        }
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                // intentionally blank
+            }
 
-        override fun onStopTrackingTouch(seekBar: SeekBar) {
-            // intentionally blank
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                // intentionally blank
+            }
         }
-    }
 
     fun showStrokeWidthDialog() {
         val layout = LinearLayout(context)
@@ -65,8 +73,8 @@ class WhiteBoardWidthDialog(private val context: Context, private var wbStrokeWi
             seekBar,
             LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+            ),
         )
         AlertDialog.Builder(context).show {
             title(R.string.whiteboard_stroke_width)

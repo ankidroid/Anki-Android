@@ -9,51 +9,49 @@
         android:visible="false"
         ankidroid:actionViewClass="com.ichi2.ui.AccessibleSearchView"
         ankidroid:showAsAction="always|collapseActionView"/>
-    <group android:id="@+id/commonItems">
-        <item
-            android:id="@+id/action_sync"
-            android:icon="@drawable/ic_sync"
-            android:title="@string/button_sync"
-            ankidroid:actionProviderClass="com.ichi2.anki.SyncActionProvider"
-            ankidroid:showAsAction="always"/>
-        <item
-            android:id="@+id/action_undo"
-            ankidroid:showAsAction="never"
-            android:visible="false"
-            tools:title="Undo X"/>
-        <item
-            android:id="@+id/checks"
-            android:title="@string/checks_action"
-            ankidroid:showAsAction="never">
-            <menu>
-                <item
-                    android:id="@+id/action_check_database"
-                    android:menuCategory="secondary"
-                    android:title="@string/check_db"/>
-                <item
-                    android:id="@+id/action_check_media"
-                    android:menuCategory="secondary"
-                    android:title="@string/check_media"/>
-                <item
-                    android:id="@+id/action_empty_cards"
-                    android:menuCategory="secondary"
-                    android:title="@string/empty_cards"/>
-            </menu>
-        </item>
-        <item
-            android:id="@+id/action_restore_backup"
-            android:menuCategory="secondary"
-            android:title="@string/backup_restore"/>
-        <item
-            android:id="@+id/action_model_browser_open"
-            android:menuCategory="secondary"
-            android:title="@string/model_browser_label"/>
-        <item
-            android:id="@+id/action_import"
-            android:menuCategory="secondary"
-            android:title="@string/menu_import"/>
-        <item
-            android:id="@+id/action_export_collection"
-            android:menuCategory="secondary" />
-    </group>
+    <item
+        android:id="@+id/action_sync"
+        android:icon="@drawable/ic_sync"
+        android:title="@string/button_sync"
+        ankidroid:actionProviderClass="com.ichi2.anki.SyncActionProvider"
+        ankidroid:showAsAction="always"/>
+    <item
+        android:id="@+id/action_undo"
+        ankidroid:showAsAction="never"
+        android:visible="false"
+        tools:title="Undo X"/>
+    <item
+        android:id="@+id/checks"
+        android:title="@string/checks_action"
+        ankidroid:showAsAction="never">
+        <menu>
+            <item
+                android:id="@+id/action_check_database"
+                android:menuCategory="secondary"
+                android:title="@string/check_db"/>
+            <item
+                android:id="@+id/action_check_media"
+                android:menuCategory="secondary"
+                android:title="@string/check_media"/>
+            <item
+                android:id="@+id/action_empty_cards"
+                android:menuCategory="secondary"
+                android:title="@string/empty_cards"/>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/action_restore_backup"
+        android:menuCategory="secondary"
+        android:title="@string/backup_restore"/>
+    <item
+        android:id="@+id/action_model_browser_open"
+        android:menuCategory="secondary"
+        android:title="@string/model_browser_label"/>
+    <item
+        android:id="@+id/action_import"
+        android:menuCategory="secondary"
+        android:title="@string/menu_import"/>
+    <item
+        android:id="@+id/action_export_collection"
+        android:menuCategory="secondary" />
 </menu>

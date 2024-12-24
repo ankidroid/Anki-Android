@@ -45,11 +45,11 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks">Paquets</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Navegador de cartes</string>
-    <string name="statistics">Estadístiques</string>
-    <string name="settings">Preferències</string>
-    <string name="help">Ajuda</string>
+    <string name="decks" maxLength="28">Paquets</string>
+    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">Navegador de cartes</string>
+    <string name="statistics" maxLength="28">Estadístiques</string>
+    <string name="settings" maxLength="28">Preferències</string>
+    <string name="help" maxLength="28">Ajuda</string>
     <string name="drawing">Dibuix</string>
     <string name="send_feedback">Envia comentaris</string>
     <string name="studyoptions_start">Estudiar</string>
@@ -57,59 +57,59 @@
     <string name="expand">Desplega</string>
     <string name="collapse">Replega</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">Falta %d minut</item>
+        <item quantity="other">Queden %d minuts</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">Queda %1$d hora i %2$d minuts</item>
+        <item quantity="other">Queden %1$d hores i %2$d minuts</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">Queda %1$d dia i %2$d hores</item>
+        <item quantity="other">Queden %1$d dies i %2$d hores</item>
     </plurals>
     <string name="no_cards_placeholder_title">La col·lecció és buida</string>
     <string name="no_cards_placeholder_description">Comenceu a afegir cartes\n amb la icona +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Entreu la resposta</string>
-    <string name="show_answer">Mostra la resposta</string>
+    <string name="show_answer" maxLength="41">Mostra la resposta</string>
     <string name="hide_answer">Amaga la resposta</string>
-    <string name="ease_button_again">De nou</string>
-    <string name="ease_button_hard">Difícil</string>
-    <string name="ease_button_good">Correcte</string>
+    <string name="ease_button_again" maxLength="41">De nou</string>
+    <string name="ease_button_hard" maxLength="41">Difícil</string>
+    <string name="ease_button_good" maxLength="41">Correcte</string>
     <string name="ease_button_easy">Fàcil</string>
-    <string name="menu_import">Importa</string>
-    <string name="undo" maxLength="29" comment="When tapping on this text, the last action is undone.">Desfés</string>
-    <string name="redo">Refés</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Desfés el traç</string>
+    <string name="menu_import" maxLength="28">Importa</string>
+    <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Desfés</string>
+    <string name="redo" maxLength="28">Refés</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Desfés el traç</string>
     <string name="move_all_to_deck">Mou tot al paquet</string>
-    <string name="unbury">Desenterra</string>
-    <string name="rename_deck">Canvia el nom del paquet</string>
+    <string name="unbury" maxLength="28">Desenterra</string>
+    <string name="rename_deck" maxLength="28">Canvia el nom del paquet</string>
     <string name="create_shortcut">Crea una drecera</string>
     <string name="browse_cards">Fulleja les cartes</string>
     <string name="edit_deck_description" comment="edit the deck description">Modifica la descripció</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="29">Afegeix</string>
-    <string name="menu_add_note">Afegeix una nota</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">Afegeix</string>
+    <string name="menu_add_note" maxLength="28">Afegeix una nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Compte de sincronització</string>
-    <string name="menu_dismiss_note">Amaga / elimina</string>
-    <string name="menu_bury_card">Enterrar carta</string>
-    <string name="menu_bury_note">Enterra la nota</string>
-    <string name="menu_suspend_card">Suspèn la fitxa</string>
-    <string name="menu_suspend_note">Suspen la nota</string>
-    <string name="menu_bury">Enterrar</string>
-    <string name="menu_suspend">Suspendre</string>
-    <string name="menu_delete_note">Suprimeix la nota</string>
-    <string name="menu_flag">Bandera</string>
-    <string name="rename_flag">Rename flags</string>
-    <string name="menu_flag_card">Marcar tarjeta</string>
-    <string name="menu_edit_tags">Edita etiquetes</string>
+    <string name="menu_dismiss_note" maxLength="41">Amaga / elimina</string>
+    <string name="menu_bury_card" maxLength="28">Enterrar carta</string>
+    <string name="menu_bury_note" maxLength="28">Enterra la nota</string>
+    <string name="menu_suspend_card" maxLength="28">Suspèn la fitxa</string>
+    <string name="menu_suspend_note" maxLength="28">Suspen la nota</string>
+    <string name="menu_bury" maxLength="28">Enterrar</string>
+    <string name="menu_suspend" maxLength="28">Suspendre</string>
+    <string name="menu_delete_note" maxLength="28">Suprimeix la nota</string>
+    <string name="menu_flag" maxLength="41">Bandera</string>
+    <string name="rename_flag">Canvia el nom de les etiquetes</string>
+    <string name="menu_flag_card" maxLength="28">Marcar tarjeta</string>
+    <string name="menu_edit_tags" maxLength="28">Edita etiquetes</string>
     <string name="delete_note_message">Segur que voleu suprimir aquesta nota i totes les seves fitxes?\n%s</string>
-    <string name="menu_search">Cerca-ho a %1$s</string>
-    <string name="menu_mark_note">Marcar nota</string>
+    <string name="menu_search" maxLength="28">Cerca-ho a %1$s</string>
+    <string name="menu_mark_note" maxLength="28">Marcar nota</string>
     <string name="menu_unmark_note">Desmarcar</string>
-    <string name="menu_enable_voice_playback">Enable voice playback</string>
-    <string name="menu_disable_voice_playback">Disable voice playback</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Activa la veu</string>
+    <string name="menu_disable_voice_playback">Desactiva la veu</string>
     <string name="new_deck">Crea un paquet</string>
     <string name="new_dynamic_deck">Crear un paquet filtrat</string>
     <string name="directory_inaccessible">El directori d\'AnkiDroid és inaccessible</string>
@@ -119,37 +119,37 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Dóna-li a AnkiDroid el permís \'Storage\' per a continuar si us plau</string>
     <string name="rebuild_filtered_deck">Reconstruint paquet filtrat</string>
-    <string name="rebuild_cram_label">Reconstrueix</string>
-    <string name="empty_cram_label">Buit</string>
+    <string name="rebuild_cram_label" maxLength="28">Reconstrueix</string>
+    <string name="empty_cram_label" maxLength="28">Buit</string>
     <string name="create_subdeck">Crea un paquet</string>
     <string name="empty_filtered_deck">S\'està buidant el paquet filtrat</string>
     <string name="custom_study_deck_name">Sessió d\'estudi a mida</string>
     <string name="custom_study_deck_exists">Si us plau, primer canvieu de nom el paquet d\'estudi a mida</string>
     <string name="search_deck" comment="Deck search for selecting it">Cerca un paquet</string>
     <string name="empty_deck">Aquest paquet és buit</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Cerca un paquet</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Cerca un paquet</string>
     <string name="invalid_deck_name">El nom del paquet no és vàlid</string>
     <string name="studyoptions_congrats_finished">Enhorabona! Ja has acabat per ara.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Paquet acabat  pel moment! %s</string>
     <string name="studyoptions_no_cards_due">No hi ha cartes previstes.</string>
     <string name="sd_card_not_mounted">La tarjeta SD no funciona correctament</string>
-    <string name="button_sync" comment="Text of the sync button">Sincronització</string>
+    <string name="button_sync" comment="Text of the sync button" maxLength="28">Sincronització</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Voleu cancel·lar la sincronització?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Continua la sincronització</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">S\'ha cancel·lat la sincronització</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">S\'està cancel·lant&#8230;\nAixò pot trigar una estona.</string>
-    <string name="syncing_media">Syncing media</string>
-    <string name="export_deck">Exporta el paquet</string>
-    <string name="export_collection">Export collection</string>
+    <string name="syncing_media">S\'estan sincronitzant els mèdia</string>
+    <string name="export_deck" maxLength="28">Exporta el paquet</string>
+    <string name="export_collection">Exporta la col·lecció</string>
     <string name="nothing">Res</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Tipus de cartes</string>
     <string name="card_template_editor_front">Plantilla frontal</string>
     <string name="card_template_editor_back">Plantilla del darrere</string>
-    <string name="card_template_editor_styling">Estilitzat</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Aspecte del navegador de cartes</string>
-    <string name="card_template_editor_deck_override">Anul·la el paquet</string>
-    <string name="card_template_editor_insert_field">Inseriu un camp</string>
+    <string name="card_template_editor_styling" maxLength="28">Estilitzat</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Aspecte del navegador de cartes</string>
+    <string name="card_template_editor_deck_override" maxLength="28">Anul·la el paquet</string>
+    <string name="card_template_editor_insert_field" maxLength="28">Inseriu un camp</string>
     <string name="card_template_editor_select_field">Trieu un camp</string>
     <string name="card_template_editor_cant_delete">Cal com a mí­nim un tipus de carta</string>
     <plurals name="card_template_editor_confirm_add">
@@ -165,7 +165,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aspecte del navegador</string>
     <!-- card Info -->
-    <string name="card_info_title">Informació de la carta</string>
+    <string name="card_info_title" maxLength="28">Informació de la carta</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Llegir i escriure a la base de dades d\'AnkiDroid</string>
     <string name="read_write_permission_description">accés a notes, targetes, tipus de nota i malls existents, així com crear-ne de nous</string>
@@ -184,7 +184,7 @@
     <string name="error__etc__cannot_write_to_or_create_file">No es pot escriure el fitxer %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">No es pot accedir a la col·lecció</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">No ha estat accedir a la vostre col·lecció després de desinstal·lar AnkiDroid a causa d\'un canvi a la política de Play Store\n\nLes vostres dades estan segures i es poden restaurar. Es troben a\n%s\n\nSeleccioneu una opció per restaurar:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android ha suprimit el permís %1$s d\'AnkiDroid a causa de la inactivitat de l\'aplicació.\n\nLes vostres dades estan intactes i es poden restaurar. Es troben aquí:\n%2$s\n\nTrieu una opció per tal de restaurar-les :</string>
     <string name="restore_data_from_ankiweb">Restaura des d\'AnkiWeb (recomanat)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restaura l\'accés a la carpeta (recomanat)</string>
     <string name="install_non_play_store_ankidroid">Restaura l\'accés a la carpeta (avançat)</string>
@@ -193,11 +193,11 @@
     <string name="new_unsafe_collection">La nova col·lecció s\'eliminarà del vostre telèfon si desinstal·leu AnkiDroid</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid necessita alguns permisos per funcionar</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
-    <string name="image_occlusion">Image Occlusion</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="storage_access_title">Accés d\'emmagatzematge</string>
+    <string name="storage_access_summary">Desa la vostra col·lecció a un lloc segur que no se suprimirà quan es desinstal·li l\'aplicació</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Accés a tots els fitxers</string>
+    <string name="image_occlusion">Oclusió de la imatge</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Esborra el compte</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Carta instantània</string>
 </resources>

@@ -1,15 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:tools="http://schemas.android.com/tools">
-    <!--
-    Testlib's manifest should implicitly imports everything from `AnkiDroid/src/main/AndroidManifest.xml`,
-    except the imports done with `overrideLibrary` it seems. So we repeat the overridden imports below.
-    Otherwise, here is the error message we receive:
-
-    /Users/davidallison/StudioProjects/Anki-Android/testlib/build/intermediates/tmp/manifest/test/amazon/debug/tempFile1ProcessTestManifest12107165475509574808.xml:5:5-74 Error:
-        uses-sdk:minSdkVersion 23 cannot be smaller than version 24 declared in library [androidx.draganddrop:draganddrop:1.0.0] /Users/davidallison/.gradle/caches/8.9/transforms/20ebe1ae2c541e0d36502b025cdb232b/transformed/draganddrop-1.0.0/AndroidManifest.xml as the library might be using APIs not available in 23
-        Suggestion: use a compatible library with a minSdk of at most 23,
-            or increase this project's minSdk version to at least 24,
-            or use tools:overrideLibrary="androidx.draganddrop" to force usage (may lead to runtime failures)
-    -->
-    <uses-sdk tools:overrideLibrary="androidx.draganddrop"/>
-</manifest>
+<manifest />

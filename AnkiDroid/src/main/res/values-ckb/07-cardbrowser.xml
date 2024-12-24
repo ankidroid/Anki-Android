@@ -58,23 +58,23 @@
         <item quantity="one">Delete note</item>
         <item quantity="other">Delete notes</item>
     </plurals>
-    <string name="card_browser_change_deck">دەستە بگۆڕە</string>
+    <string name="card_browser_change_deck" maxLength="28">دەستە بگۆڕە</string>
     <string name="delete_card_title">یاداشت ڕەشبکرێتەوە؟</string>
-    <string name="card_browser_show_marked" maxLength="29">تاگکراوەکان بپاڵێوە</string>
-    <string name="card_browser_show_suspended" maxLength="29">ڕاگیراوەکان بپاڵێوە</string>
-    <string name="card_browser_search_by_tag" maxLength="29">بەپێی تاگ بپاڵێوە</string>
-    <string name="card_browser_search_by_flag" maxLength="29">بەپێی ئاڵا بپاڵێوە</string>
-    <string name="card_browser_list_my_searches" maxLength="29">گەڕانەکانم</string>
-    <string name="card_browser_list_my_searches_save" maxLength="29">گەڕان تۆماربکە</string>
+    <string name="card_browser_show_marked" maxLength="28">تاگکراوەکان بپاڵێوە</string>
+    <string name="card_browser_show_suspended" maxLength="28">ڕاگیراوەکان بپاڵێوە</string>
+    <string name="card_browser_search_by_tag" maxLength="28">بەپێی تاگ بپاڵێوە</string>
+    <string name="card_browser_search_by_flag" maxLength="28">بەپێی ئاڵا بپاڵێوە</string>
+    <string name="card_browser_list_my_searches" maxLength="28">گەڕانەکانم</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">گەڕان تۆماربکە</string>
     <string name="card_browser_list_my_searches_title">گەڕانێکی تۆمارکراو هەڵبژێرە</string>
     <string name="card_browser_list_my_searches_new_name">ناو بۆ گەڕانی ئێستا</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">ناتوانیت گەڕانێک بەبێ ناو تۆماربکەیت</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">ناوەکە پێشتر بوونی هەیە</string>
     <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">\"%1$s\" بسڕێتەوە؟</string>
-    <string name="card_browser_change_display_order" maxLength="29">ڕیزی نواندن بگۆڕە</string>
+    <string name="card_browser_change_display_order" maxLength="28">ڕیزی نواندن بگۆڕە</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">ڕیزی نواندن هەڵبژێرە</string>
     <string name="card_details_tags">تاگەکان</string>
     <string-array name="card_browser_order_labels">
@@ -89,8 +89,8 @@
         <item>بەپێی دووبارەکردن</item>
         <item>بەپێی هەڵەکان</item>
     </string-array>
-    <string name="card_browser_select_all" maxLength="29">گشت دیاریبکە</string>
-    <string name="card_browser_select_none">هیچ دیاریمەکە</string>
+    <string name="card_browser_select_all" maxLength="28">گشت دیاریبکە</string>
+    <string name="card_browser_select_none" maxLength="28">هیچ دیاریمەکە</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(نوێ)</string>
     <string name="card_browser_due_filtered_card">(پاڵێوراو)</string>
     <string name="card_browser_interval_learning_card">(لە باری فێربوون)</string>

@@ -128,8 +128,6 @@
     <string name="notification_minimum_cards_due">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrate</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blink light</string>
-    <string name="timeout_answer_text" maxLength="41">Automatic display answer</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Select language</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
@@ -222,7 +220,7 @@
     <string name="deck_conf_cram_search" maxLength="41" comment = "Label of a text field that contains a search query.">Search</string>
     <string name="deck_conf_cram_limit" maxLength="41">Limit to</string>
     <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
-    <string name="deck_conf_cram_reschedule"  maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reschedule</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reschedule</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
     <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Define custom steps</string>
@@ -260,22 +258,22 @@
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <string name="user_actions" maxLength="41">User actions</string>
     <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="41">User action 1</string>
-    <string name="user_action_2" maxLength="41">User action 2</string>
-    <string name="user_action_3" maxLength="41">User action 3</string>
-    <string name="user_action_4" maxLength="41">User action 4</string>
-    <string name="user_action_5" maxLength="41">User action 5</string>
-    <string name="user_action_6" maxLength="41">User action 6</string>
-    <string name="user_action_7" maxLength="41">User action 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="user_action_1" maxLength="28">User action 1</string>
+    <string name="user_action_2" maxLength="28">User action 2</string>
+    <string name="user_action_3" maxLength="28">User action 3</string>
+    <string name="user_action_4" maxLength="28">User action 4</string>
+    <string name="user_action_5" maxLength="28">User action 5</string>
+    <string name="user_action_6" maxLength="28">User action 6</string>
+    <string name="user_action_7" maxLength="28">User action 7</string>
+    <string name="user_action_8" maxLength="28">User action 8</string>
+    <string name="user_action_9" maxLength="28">User action 9</string>
     <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
 
     <!-- Select card side -->
     <string name="card_side_selection_title">Select card side</string>
     <string name="card_side_question">Question</string>
     <string name="card_side_answer">Answer</string>
-    <string name="card_side_both">Question &amp; Answer</string>
+    <string name="card_side_both" maxLength="28">Question &amp; Answer</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference
 this formatter is used if the bind only applies to the question">Q: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference
@@ -314,14 +312,10 @@ this formatter is used if the bind only applies to both the question and the ans
         <br><br>
         You can restore from a backup and export your collection in the deck list menu.
     ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41"
-        >Minutes between automatic backups</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41"
-        >Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41"
-        >Weekly backups to keep</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41"
-        >Monthly backups to keep</string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
 
     <!-- #######################################################################################
          ################################# Manage space activity ###############################

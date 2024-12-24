@@ -46,7 +46,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Kontroller database</string>
     <string name="check_db_warning">Dette kan ta et øyeblikk</string>
-    <string name="contextmenu_deckpicker_delete_deck">Slett kortstokk</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Slett kortstokk</string>
     <string name="delete_deck_title">Slett kortstokk</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">Vil du virkelig prøve å reparere databasen?\n\nEn kopi vil bli opprettet i undermappen \'%s\' før forsøket starter.</string>
     <string name="intent_aedict_empty">Kategorien \'standard\' er tom</string>
     <string name="intent_aedict_category">For å legge kort til AnkiDroid, fjern alle notisblokk-kategorier eller legg til en som heter \'default\'</string>
-    <string name="custom_study_new_total_new">Nye kort i stokken: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
     <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
     <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
     <string name="custom_study_ahead">Review ahead by x days:</string>
-    <string name="custom_study_random">Select x cards randomly from the deck:</string>
     <string name="custom_study_preview">Preview new cards added in the last x days:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
     <string name="storage_full_title">Lagring fullt</string>
     <string name="storage_almost_full_title">Lagring nesten full</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
@@ -101,7 +97,7 @@
     <string name="dialog_continue">Fortsett</string>
     <string name="dialog_processing">Processing&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Opprett</string>
-    <string name="dialog_positive_delete">Slett</string>
+    <string name="dialog_positive_delete" maxLength="28">Slett</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Slå av</string>
     <string name="dialog_positive_overwrite">Overwrite</string>
@@ -186,7 +182,7 @@
     <string name="help_item_mailing_list">Mailing List</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Rapporter feil</string>
-    <string name="help_title_support_ankidroid">Støtt AnkiDroid</string>
+    <string name="help_title_support_ankidroid" maxLength="28">Støtt AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Donér</string>
     <string name="help_item_support_develop_ankidroid">Utvikle</string>
     <string name="help_item_support_rate_ankidroid">Gi vurdering</string>
@@ -225,7 +221,7 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">Lag en sikkerhetskopi for din samling</string>
     <string name="backup_collection_message">Du har ikke laget sikkerhetskopi av samlingen din på en stund. Gjør dette nå for å unngå å miste dine data.</string>
-    <string name="button_backup">Lag sikkerhetskopi</string>
+    <string name="button_backup" maxLength="41">Lag sikkerhetskopi</string>
     <string name="button_disable_reminder">Slå av påminnelse</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Ikke nå</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Ikke vis dette igjen</string>

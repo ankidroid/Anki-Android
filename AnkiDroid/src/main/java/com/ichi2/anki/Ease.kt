@@ -17,10 +17,20 @@ package com.ichi2.anki
 
 /**
  * [value] should be kept in sync with the [com.ichi2.anki.api.Ease] enum.
+ *
+ * @param value The so called value of the button. For the sake of consistency with upstream and our API
+ * the buttons are numbered from 1 to 4.
  */
-enum class Ease(val value: Int) {
+enum class Ease(
+    val value: Int,
+) {
     AGAIN(1),
     HARD(2),
     GOOD(3),
-    EASY(4);
+    EASY(4),
+    ;
+
+    companion object {
+        fun fromValue(value: Int) = entries.first { value == it.value }
+    }
 }

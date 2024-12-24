@@ -26,7 +26,7 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">ਨੋਟ ਕਿਸਮਾਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰੋ</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">ਨੋਟ ਕਿਸਮਾਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰੋ</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">ਖੇਤਰਾਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰੋ</string>
     <!--Toasts-->
     <string name="toast_last_model">ਤੁਸੀਂ ਆਪਣੇ ਆਖਰੀ ਨੋਟ ਦੀ ਕਿਸਮ ਨੂੰ ਮਿਟਾ ਨਹੀਂ ਸਕਦੇ ਹੋ</string>
@@ -53,7 +53,7 @@
     <string name="model_field_editor_language_hint_dialog_success_result">ਭਾਸ਼ਾ ਸੰਕੇਤਕ ਨੂੰ %s \'ਤੇ ਸੈੱਟ ਕਰੋ</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">ਖੇਤਰਾਂ ਦਾ ਸੰਪਾਦਨ ਕਰੋ</string>
-    <string name="model_field_editor_add">ਖੇਤਰ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="model_field_editor_add" maxLength="28">ਖੇਤਰ ਸ਼ਾਮਲ ਕਰੋ</string>
     <string name="model_field_editor_delete">ਖੇਤਰ ਮਿਟਾਓ</string>
     <string name="model_field_editor_rename">ਖੇਤਰ ਦਾ ਨਾਮ ਬਦਲੋ</string>
     <string name="model_field_editor_language_hint">ਕੀਬੋਰਡ ਭਾਸ਼ਾ ਸੰਕੇਤ ਸੈੱਟ ਕਰੋ</string>
@@ -81,5 +81,5 @@
     <string name="model_manager_deck_override_added_message">\'%1$s\' ਡਿਫੌਲਟ ਡੈੱਕ ਨੂੰ \'%2$s\' \'ਤੇ ਸੈੱਟ ਕਰੋ</string>
     <string name="model_manager_deck_override_removed_message">\'%s\' ਲਈ ਡਿਫੌਲਟ ਡੈੱਕ ਹਟਾਇਆ ਗਿਆ</string>
     <string name="deck_override_explanation">ਨਵੇਂ \'%s\' ਕਾਰਡਾਂ ਨੂੰ ਰੱਖਣ ਲਈ ਡੈੱਕ ਦੀ ਚੋਣ ਕਰੋ</string>
-    <string name="deck_picker_dialog_filter_decks">ਫਿਲਟਰ ਡੈੱਕ</string>
+    <string name="deck_picker_dialog_filter_decks" maxLength="28">ਫਿਲਟਰ ਡੈੱਕ</string>
 </resources>

@@ -83,15 +83,21 @@ class Toolbar : FrameLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
+    constructor(
+        context: Context,
+        attrs: AttributeSet?,
+        defStyleAttr: Int,
+        defStyleRes: Int,
+    ) : super(context, attrs, defStyleAttr, defStyleRes)
 
     init {
         LayoutInflater.from(context).inflate(R.layout.note_editor_toolbar, this, true)
-        stringPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            textSize = convertDpToPixel(24F, context)
-            color = Color.BLACK
-            textAlign = Paint.Align.CENTER
-        }
+        stringPaint =
+            Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                textSize = convertDpToPixel(24F, context)
+                color = Color.BLACK
+                textAlign = Paint.Align.CENTER
+            }
         toolbar = findViewById(R.id.editor_toolbar_internal)
         toolbarLayout = findViewById(R.id.toolbar_layout)
         setupDefaultButtons()
@@ -100,8 +106,11 @@ class Toolbar : FrameLayout {
     /** Sets up the "standard" buttons to insert bold, italics etc... */
     private fun setupDefaultButtons() {
         // sets up a button click to wrap text with the prefix/suffix. So "aa" becomes "<b>aa</b>"
-        fun setupButtonWrappingText(@IdRes id: Int, prefix: String, suffix: String) =
-            findViewById<View>(id).setOnClickListener { onFormat(TextWrapper(prefix, suffix)) }
+        fun setupButtonWrappingText(
+            @IdRes id: Int,
+            prefix: String,
+            suffix: String,
+        ) = findViewById<View>(id).setOnClickListener { onFormat(TextWrapper(prefix, suffix)) }
 
         setupButtonWrappingText(R.id.note_editor_toolbar_button_bold, "<b>", "</b>")
         setupButtonWrappingText(R.id.note_editor_toolbar_button_italic, "<i>", "</i>")
@@ -121,18 +130,22 @@ class Toolbar : FrameLayout {
      * If a button is assigned a tag, Ctrl+Tag will invoke the button
      * Typically used for Ctrl + 1..9 with custom buttons
      */
-    override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
+    override fun onKeyUp(
+        keyCode: Int,
+        event: KeyEvent,
+    ): Boolean {
         // hack to see if only CTRL is pressed - might not be perfect.
         // I'll avoid checking "function" here as it may be required to press Ctrl
         if (!event.isCtrlPressed || event.isAltPressed || event.isShiftPressed || event.isMetaPressed) {
             return false
         }
-        val c: Char = try {
-            event.getUnicodeChar(0).toChar()
-        } catch (e: Exception) {
-            Timber.w(e)
-            return false
-        }
+        val c: Char =
+            try {
+                event.getUnicodeChar(0).toChar()
+            } catch (e: Exception) {
+                Timber.w(e)
+                return false
+            }
         if (c == '\u0000') {
             return false
         }
@@ -147,7 +160,11 @@ class Toolbar : FrameLayout {
         return super.onKeyUp(keyCode, event)
     }
 
-    fun insertItem(@IdRes id: Int, @DrawableRes drawable: Int, block: () -> Unit): AppCompatImageButton {
+    fun insertItem(
+        @IdRes id: Int,
+        @DrawableRes drawable: Int,
+        block: () -> Unit,
+    ): AppCompatImageButton {
         // we use the light theme here to ensure the tint is black on both
         // A null theme can be passed after colorControlNormal is defined (API 25)
         val themeContext: Context = ContextThemeWrapper(context, R.style.Theme_Light)
@@ -155,11 +172,17 @@ class Toolbar : FrameLayout {
         return insertItem(id, d, block)
     }
 
-    fun insertItem(id: Int, drawable: Drawable?, formatter: TextFormatter): View {
-        return insertItem(id, drawable) { onFormat(formatter) }
-    }
+    fun insertItem(
+        id: Int,
+        drawable: Drawable?,
+        formatter: TextFormatter,
+    ): View = insertItem(id, drawable) { onFormat(formatter) }
 
-    fun insertItem(@IdRes id: Int, drawable: Drawable?, block: () -> Unit): AppCompatImageButton {
+    fun insertItem(
+        @IdRes id: Int,
+        drawable: Drawable?,
+        block: () -> Unit,
+    ): AppCompatImageButton {
         val context = context
         val button = AppCompatImageButton(context)
         button.id = id
@@ -170,7 +193,7 @@ class Toolbar : FrameLayout {
             int buttonStyle = R.style.note_editor_toolbar_button;
             ContextThemeWrapper context = new ContextThemeWrapper(getContext(), buttonStyle);
             AppCompatImageButton button = new AppCompatImageButton(context, null, buttonStyle);
-        */
+         */
 
         // apply style
         val background = TypedValue()
@@ -184,8 +207,10 @@ class Toolbar : FrameLayout {
         val twoDp = ceil((2 / context.resources.displayMetrics.density).toDouble()).toInt()
         button.setPadding(twoDp, twoDp, twoDp, twoDp)
         // end apply style
-        val shouldScroll = AnkiDroidApp.instance.sharedPrefs()
-            .getBoolean(NoteEditor.PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
+        val shouldScroll =
+            AnkiDroidApp.instance
+                .sharedPrefs()
+                .getBoolean(NoteEditor.PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
         if (shouldScroll) {
             toolbar.addView(button, toolbar.childCount)
         } else {
@@ -209,7 +234,8 @@ class Toolbar : FrameLayout {
     private val screenWidth: Int
         get() {
             val displayMetrics = DisplayMetrics()
-            (context as Activity).windowManager
+            (context as Activity)
+                .windowManager
                 .defaultDisplay
                 .getMetrics(displayMetrics)
             return displayMetrics.widthPixels
@@ -235,10 +261,11 @@ class Toolbar : FrameLayout {
         // Might be better to add this as a fragment - let's see.
         AlertDialog.Builder(context).show {
             setItems(R.array.html_size_code_labels) { _, index ->
-                val formatter = TextWrapper(
-                    prefix = "<span style=\"font-size:${results[index]}\">",
-                    suffix = "</span>"
-                )
+                val formatter =
+                    TextWrapper(
+                        prefix = "<span style=\"font-size:${results[index]}\">",
+                        suffix = "</span>",
+                    )
                 onFormat(formatter)
             }
             title(R.string.menu_font_size)
@@ -272,8 +299,7 @@ class Toolbar : FrameLayout {
     }
 
     /** Returns the number of top-level children of [layout] that are visible */
-    private fun getVisibleItemCount(layout: LinearLayout): Int =
-        ViewGroupUtils.getAllChildren(layout).count { it.visibility == VISIBLE }
+    private fun getVisibleItemCount(layout: LinearLayout): Int = ViewGroupUtils.getAllChildren(layout).count { it.visibility == VISIBLE }
 
     private fun addViewToToolbar(button: AppCompatImageButton) {
         val expectedWidth = getVisibleItemCount(toolbar) * convertDpToPixel(48F, context)
@@ -313,8 +339,11 @@ class Toolbar : FrameLayout {
         formatListener?.performFormat(formatter)
     }
 
-    fun setIconColor(@ColorInt color: Int) {
-        ViewGroupUtils.getAllChildren(toolbar)
+    fun setIconColor(
+        @ColorInt color: Int,
+    ) {
+        ViewGroupUtils
+            .getAllChildren(toolbar)
             .forEach { (it as AppCompatImageButton).setColorFilter(color) }
         stringPaint!!.color = color
     }
@@ -348,9 +377,12 @@ class Toolbar : FrameLayout {
      * If there's no selected, the cursor is in the middle of the prefix and suffix
      * If there is text selected, the whole string is selected
      */
-    class TextWrapper(private val prefix: String, private val suffix: String) : TextFormatter {
-        override fun format(s: String): StringFormat {
-            return StringFormat(result = prefix + s + suffix).apply {
+    class TextWrapper(
+        private val prefix: String,
+        private val suffix: String,
+    ) : TextFormatter {
+        override fun format(s: String): StringFormat =
+            StringFormat(result = prefix + s + suffix).apply {
                 if (s.isEmpty()) {
                     // if there's no selection: place the cursor between the start and end tag
                     selectionStart = prefix.length
@@ -361,7 +393,6 @@ class Toolbar : FrameLayout {
                     selectionEnd = result.length
                 }
             }
-        }
     }
 
     /**
@@ -381,6 +412,6 @@ class Toolbar : FrameLayout {
     data class StringFormat(
         var result: String = "",
         var selectionStart: Int = 0,
-        var selectionEnd: Int = 0
+        var selectionEnd: Int = 0,
     )
 }

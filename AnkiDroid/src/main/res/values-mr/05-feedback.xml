@@ -46,7 +46,7 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">मोडचा अहवाल देताना त्रुटी</string>
+    <string name="error_reporting_choice" maxLength="41">मोडचा अहवाल देताना त्रुटी</string>
     <string name="feedback_disclaimer">अस्वीकरण: आम्ही आपला ईमेल पत्ता, फोन नंबर किंवा आपला फोन आयएमईआय यासारखी कोणतीही वैयक्तिक माहिती संकलित करत नाही. आम्ही आपल्या डिव्हाइसबद्दल काही माहिती संकलित करतो जसे की Android चे निर्माता, मॉडेल आणि आवृत्ती, तसेच स्वतःच नोंदवलेल्या त्रुटींचे स्वरूप आणि त्यांच्यामुळे उद्भवलेल्या चरणांबद्दल.</string>
     <string name="feedback_title">AnkiDroid अभिप्राय</string>
     <string name="feedback_default_text">आपण नोंदवित असलेल्या कोणत्याही त्रुटींच्या स्वरूपाबद्दल आपला अभिप्राय किंवा माहिती प्रविष्ट करा.</string>

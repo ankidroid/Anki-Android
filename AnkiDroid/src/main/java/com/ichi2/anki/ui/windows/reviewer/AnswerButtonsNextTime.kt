@@ -22,7 +22,7 @@ data class AnswerButtonsNextTime(
     val again: String,
     val hard: String,
     val good: String,
-    val easy: String
+    val easy: String,
 ) {
     companion object {
         suspend fun from(state: CurrentQueueState): AnswerButtonsNextTime {

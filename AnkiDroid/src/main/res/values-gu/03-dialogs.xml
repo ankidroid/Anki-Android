@@ -46,7 +46,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">ડેટાબેઝ તપાસો?</string>
     <string name="check_db_warning">આમાં ઘણો સમય લાગી શકે છે</string>
-    <string name="contextmenu_deckpicker_delete_deck">ડેક કાઢી નાખો</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">ડેક કાઢી નાખો</string>
     <string name="delete_deck_title">ડેક કાઢી નાખીએ?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">%1$s இல் உள்ள அனைத்து கார்டுகளையும் நீக்கவா? இதில் %2$d கார்டுகள் உள்ளன</item>
@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">શું તમે ખરેખર ડેટાબેઝને રિપેર કરવાનો પ્રયાસ કરવા માંગો છો?\n\nપ્રયાસ શરૂ કરતા પહેલા, સબફોલ્ડર “%s” માં એક નકલ બનાવવામાં આવશે.</string>
     <string name="intent_aedict_empty">કેટેગરી \"ડિફોલ્ટ\" ખાલી છે</string>
     <string name="intent_aedict_category">AnkiDroid માં કાર્ડ ઉમેરવા માટે નોટપેડની બધી કેટેગરી દૂર કરો અથવા \"ડિફોલ્ટ\" નામની એક ઉમેરો</string>
-    <string name="custom_study_new_total_new">ડેકમાં નવા કાર્ડ્સ: %d</string>
-    <string name="custom_study_rev_total_rev">ડેકમાં રિવ્યૂ બાકી છે: %d</string>
     <string name="custom_study_new_extend">આજની નવી કાર્ડ મર્યાદામાં વધારો/ઘટાડો (“-3”).</string>
     <string name="custom_study_rev_extend">આજની સમીક્ષા મર્યાદામાં વધારો/ઘટાડો (“-3”).</string>
     <string name="custom_study_forgotten">છેલ્લા x દિવસમાં ભૂલી ગયેલા કાર્ડની સમીક્ષા કરો:</string>
     <string name="custom_study_ahead">x દિવસ આગળ સમીક્ષા કરો:</string>
-    <string name="custom_study_random">ડેકમાંથી રેન્ડમલી x કાર્ડ્સ પસંદ કરો:</string>
     <string name="custom_study_preview">છેલ્લા x દિવસમાં ઉમેરાયેલા નવા કાર્ડ્સનું પૂર્વાવલોકન કરો:</string>
-    <string name="custom_study_rebuild_deck_corrupt">વૈવિધ્યપૂર્ણ અભ્યાસ ડેક ફરીથી બનાવી શકાયું નથી</string>
     <string name="storage_full_title">સ્ટોરેજ ભરાઈ ગયું</string>
     <string name="storage_almost_full_title">સ્ટોરેજ લગભગ ભરાઈ ગયું છે</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">જગ્યા નથી</string>
@@ -101,7 +97,7 @@
     <string name="dialog_continue">ચાલુ રાખો</string>
     <string name="dialog_processing">પ્રક્રિયા&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">બનાવો</string>
-    <string name="dialog_positive_delete">કાઢી નાખો</string>
+    <string name="dialog_positive_delete" maxLength="28">કાઢી નાખો</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">અક્ષમ કરો</string>
     <string name="dialog_positive_overwrite">ઓવરરાઇટ કરો</string>
@@ -186,7 +182,7 @@
     <string name="help_item_mailing_list">ટપાલ યાદી</string>
     <string name="help_item_reddit">રેડિટ</string>
     <string name="help_item_report_bug">બગની જાણ કરો</string>
-    <string name="help_title_support_ankidroid">AnkiDroid ને સપોર્ટ કરો</string>
+    <string name="help_title_support_ankidroid" maxLength="28">AnkiDroid ને સપોર્ટ કરો</string>
     <string name="help_item_support_opencollective_donate">દાન કરો</string>
     <string name="help_item_support_develop_ankidroid">વિકાસ</string>
     <string name="help_item_support_rate_ankidroid">દર</string>
@@ -225,7 +221,7 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">તમારા સંગ્રહનો બેકઅપ લો</string>
     <string name="backup_collection_message">તમે થોડા સમયથી તમારા સંગ્રહનું બેકઅપ લીધું નથી. ડેટા નુકશાન અટકાવવા માટે તમારે આ હવે કરવું જોઈએ</string>
-    <string name="button_backup">બેકઅપ</string>
+    <string name="button_backup" maxLength="41">બેકઅપ</string>
     <string name="button_disable_reminder">રીમાઇન્ડર્સ અક્ષમ કરો</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">પાછળથી</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">ફરી બતાવશો નહીં</string>

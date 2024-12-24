@@ -49,8 +49,16 @@ private typealias TemplateReplacementList = MutableList<Union<String?, TemplateM
  * the filter is skipped.
  */
 class TemplateManager {
-    data class TemplateReplacement(val fieldName: String, var currentText: String, val filters: List<String>)
-    data class PartiallyRenderedCard(val qnodes: TemplateReplacementList, val anodes: TemplateReplacementList) {
+    data class TemplateReplacement(
+        val fieldName: String,
+        var currentText: String,
+        val filters: List<String>,
+    )
+
+    data class PartiallyRenderedCard(
+        val qnodes: TemplateReplacementList,
+        val anodes: TemplateReplacementList,
+    ) {
         companion object {
             fun fromProto(out: anki.card_rendering.RenderCardResponse): PartiallyRenderedCard {
                 val qnodes = nodesFromProto(out.questionNodesList)
@@ -71,9 +79,9 @@ class TemplateManager {
                                 TemplateReplacement(
                                     fieldName = node.replacement.fieldName,
                                     currentText = node.replacement.currentText,
-                                    filters = node.replacement.filtersList
-                                )
-                            )
+                                    filters = node.replacement.filtersList,
+                                ),
+                            ),
                         )
                     }
                 }
@@ -94,14 +102,12 @@ class TemplateManager {
                         // The backend currently sends speed = 1, even when undefined.
                         // We agreed that '1' should be classed as 'use system' and ignored
                         // https://github.com/ankidroid/Anki-Android/issues/15598#issuecomment-1953653639
-                        speed = tag.tts.speed.let { if (it == 1f) null else it }
+                        speed = tag.tts.speed.let { if (it == 1f) null else it },
                     )
                 }
             }
 
-            fun avTagsToNative(tags: List<anki.card_rendering.AVTag>): List<AvTag> {
-                return tags.map { avTagToNative(it) }.toList()
-            }
+            fun avTagsToNative(tags: List<anki.card_rendering.AVTag>): List<AvTag> = tags.map { avTagToNative(it) }.toList()
         }
     }
 
@@ -110,41 +116,50 @@ class TemplateManager {
      * This may fetch information lazily in the future, so please avoid
      * using the _private fields directly.
      */
+    @Suppress("ktlint:standard:property-naming")
     class TemplateRenderContext(
         card: Card,
         note: Note,
         browser: Boolean = false,
         notetype: NotetypeJson? = null,
         template: JSONObject? = null,
-        private var fillEmpty: Boolean = false
+        private var fillEmpty: Boolean = false,
     ) {
+        @Suppress("ktlint:standard:backing-property-naming")
         private var _card: Card = card
+
+        @Suppress("ktlint:standard:backing-property-naming")
         private var _note: Note = note
+
+        @Suppress("ktlint:standard:backing-property-naming")
         private var _browser: Boolean = browser
+
+        @Suppress("ktlint:standard:backing-property-naming")
         private var _template: JSONObject? = template
 
         private var noteType: NotetypeJson = notetype ?: note.notetype
 
         companion object {
-            fun fromExistingCard(col: Collection, card: Card, browser: Boolean): TemplateRenderContext {
-                return TemplateRenderContext(card, card.note(col), browser)
-            }
+            fun fromExistingCard(
+                col: Collection,
+                card: Card,
+                browser: Boolean,
+            ): TemplateRenderContext = TemplateRenderContext(card, card.note(col), browser)
 
             fun fromCardLayout(
                 note: Note,
                 card: Card,
                 notetype: NotetypeJson,
                 template: JSONObject,
-                fillEmpty: Boolean
-            ): TemplateRenderContext {
-                return TemplateRenderContext(
+                fillEmpty: Boolean,
+            ): TemplateRenderContext =
+                TemplateRenderContext(
                     card,
                     note,
                     notetype = notetype,
                     template = template,
-                    fillEmpty = fillEmpty
+                    fillEmpty = fillEmpty,
                 )
-            }
         }
 
         /**
@@ -155,10 +170,11 @@ class TemplateManager {
         fun card() = _card
 
         fun note() = _note
+
         fun noteType() = noteType
 
         @NeedsTest(
-            "TTS tags `fieldText` is correctly extracted when sources are parsed to file scheme"
+            "TTS tags `fieldText` is correctly extracted when sources are parsed to file scheme",
         )
         fun render(col: Collection): TemplateRenderOutput {
             val partial: PartiallyRenderedCard
@@ -169,7 +185,7 @@ class TemplateManager {
                     questionText = e.localizedMessage ?: e.toString(),
                     answerText = e.localizedMessage ?: e.toString(),
                     questionAvTags = emptyList(),
-                    answerAvTags = emptyList()
+                    answerAvTags = emptyList(),
                 )
             }
 
@@ -192,26 +208,27 @@ class TemplateManager {
                 answerText = aoutText,
                 questionAvTags = avTagsToNative(qout.avTagsList),
                 answerAvTags = avTagsToNative(aout.avTagsList),
-                css = noteType().getString("css")
+                css = noteType().getString("css"),
             )
         }
 
         fun partiallyRender(col: Collection): PartiallyRenderedCard {
-            val proto = col.run {
-                if (_template != null) {
-                    // card layout screen
-                    backend.renderUncommittedCardLegacy(
-                        _note.toBackendNote(),
-                        _card.ord,
-                        BackendUtils.toJsonBytes(_template!!.deepClone()),
-                        fillEmpty,
-                        true
-                    )
-                } else {
-                    // existing card (eg study mode)
-                    backend.renderExistingCard(_card.id, _browser, true)
+            val proto =
+                col.run {
+                    if (_template != null) {
+                        // card layout screen
+                        backend.renderUncommittedCardLegacy(
+                            _note.toBackendNote(),
+                            _card.ord,
+                            BackendUtils.toJsonBytes(_template!!.deepClone()),
+                            fillEmpty,
+                            true,
+                        )
+                    } else {
+                        // existing card (eg study mode)
+                        backend.renderExistingCard(_card.id, _browser, true)
+                    }
                 }
-            }
             return PartiallyRenderedCard.fromProto(proto)
         }
 
@@ -221,10 +238,10 @@ class TemplateManager {
             var answerText: String,
             val questionAvTags: List<AvTag>,
             val answerAvTags: List<AvTag>,
-            val css: String = ""
+            val css: String = "",
         ) {
-
             fun questionAndStyle() = "<style>$css</style>$questionText"
+
             fun answerAndStyle() = "<style>$css</style>$answerText"
         }
 
@@ -232,7 +249,7 @@ class TemplateManager {
         fun applyCustomFilters(
             rendered: TemplateReplacementList,
             ctx: TemplateRenderContext,
-            frontSide: String?
+            frontSide: String?,
         ): String {
             // template already fully rendered?
             if (len(rendered) == 1 && rendered[0].first != null) {
@@ -275,9 +292,10 @@ class TemplateManager {
             fieldText: String,
             fieldName: String,
             filterName: String,
-            ctx: TemplateRenderContext
+            ctx: TemplateRenderContext,
         ): String
     }
+
     companion object {
         val fieldFilters: MutableMap<String, FieldFilter> = mutableMapOf()
     }

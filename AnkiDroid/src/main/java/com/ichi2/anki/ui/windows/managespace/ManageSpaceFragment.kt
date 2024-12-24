@@ -54,11 +54,19 @@ import kotlin.system.exitProcess
 
 sealed interface Size {
     data object Calculating : Size
-    class Bytes(val totalSize: Long) : Size
-    class FilesAndBytes(val files: Collection<File>, val totalSize: Long) : Size
+
+    class Bytes(
+        val totalSize: Long,
+    ) : Size
+
+    class FilesAndBytes(
+        val files: Collection<File>,
+        val totalSize: Long,
+    ) : Size
+
     class Error(
         val exception: Exception,
-        @StringRes val widgetTextId: Int = R.string.pref__widget_text__error
+        @StringRes val widgetTextId: Int = R.string.pref__widget_text__error,
     ) : Size
 }
 
@@ -66,7 +74,10 @@ sealed interface Size {
  ********************************************* Model **********************************************
  **************************************************************************************************/
 
-class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), CollectionDirectoryProvider {
+class ManageSpaceViewModel(
+    val app: Application,
+) : AndroidViewModel(app),
+    CollectionDirectoryProvider {
     override val collectionDirectory = CollectionManager.getCollectionDirectory()
 
     val flowOfDeleteUnusedMediaSize = MutableStateFlow<Size>(Size.Calculating)
@@ -83,15 +94,16 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
 
     /************************************* Unused media files *************************************/
 
-    private fun launchSearchForUnusedMedia() = viewModelScope.launch {
-        flowOfDeleteUnusedMediaSize.ifCollectionDirectoryExistsEmit {
-            withCol {
-                val unusedFiles = media.findUnusedMediaFiles()
-                val unusedFilesSize = unusedFiles.sumOf(::calculateSize)
-                Size.FilesAndBytes(unusedFiles, unusedFilesSize)
+    private fun launchSearchForUnusedMedia() =
+        viewModelScope.launch {
+            flowOfDeleteUnusedMediaSize.ifCollectionDirectoryExistsEmit {
+                withCol {
+                    val unusedFiles = media.findUnusedMediaFiles()
+                    val unusedFilesSize = unusedFiles.sumOf(::calculateSize)
+                    Size.FilesAndBytes(unusedFiles, unusedFilesSize)
+                }
             }
         }
-    }
 
     suspend fun deleteMediaFiles(filesNamesToDelete: List<String>) {
         try {
@@ -105,15 +117,16 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
 
     /***************************************** Backups ********************************************/
 
-    private fun launchCalculationOfBackupsSize() = viewModelScope.launch {
-        flowOfDeleteBackupsSize.ifCollectionDirectoryExistsEmit {
-            withCol {
-                val backupFiles = BackupManager.getBackups(File(this.path)).toList()
-                val backupFilesSize = backupFiles.sumOf(::calculateSize)
-                Size.FilesAndBytes(backupFiles, backupFilesSize)
+    private fun launchCalculationOfBackupsSize() =
+        viewModelScope.launch {
+            flowOfDeleteBackupsSize.ifCollectionDirectoryExistsEmit {
+                withCol {
+                    val backupFiles = BackupManager.getBackups(File(this.path)).toList()
+                    val backupFilesSize = backupFiles.sumOf(::calculateSize)
+                    Size.FilesAndBytes(backupFiles, backupFilesSize)
+                }
             }
         }
-    }
 
     suspend fun deleteBackups(backupsToDelete: List<File>) {
         try {
@@ -127,13 +140,14 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
 
     /*************************************** Collection *******************************************/
 
-    private fun launchCalculationOfCollectionSize() = viewModelScope.launch {
-        flowOfDeleteCollectionSize.ifCollectionDirectoryExistsEmit {
-            withContext(Dispatchers.IO) {
-                Size.Bytes(calculateSize(collectionDirectory))
+    private fun launchCalculationOfCollectionSize() =
+        viewModelScope.launch {
+            flowOfDeleteCollectionSize.ifCollectionDirectoryExistsEmit {
+                withContext(Dispatchers.IO) {
+                    Size.Bytes(calculateSize(collectionDirectory))
+                }
             }
         }
-    }
 
     suspend fun deleteCollection() {
         try {
@@ -148,14 +162,21 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
 
     /*************************************** Everything *******************************************/
 
-    private fun launchCalculationOfSizeOfEverything() = viewModelScope.launch {
-        flowOfDeleteEverythingSize.emit(Size.Calculating)
-        flowOfDeleteEverythingSize.emit(
-            withContext(Dispatchers.IO) {
-                Size.Bytes(app.getUserDataAndCacheSize())
-            }
-        )
-    }
+    private fun launchCalculationOfSizeOfEverything() =
+        viewModelScope.launch {
+            flowOfDeleteEverythingSize.emit(Size.Calculating)
+            flowOfDeleteEverythingSize.emit(
+                withContext(Dispatchers.IO) {
+                    try {
+                        Size.Bytes(app.getUserDataAndCacheSize())
+                    } catch (e: CancellationException) {
+                        throw e
+                    } catch (e: Exception) {
+                        Size.Error(e)
+                    }
+                },
+            )
+        }
 
     // This kills the process afterwards, so no need to recalculate sizes
     fun deleteEverything() {
@@ -208,7 +229,7 @@ class ManageSpaceFragment : SettingsFragment() {
             viewModel.flowOfDeleteUnusedMediaSize to deleteUnusedMediaPreference,
             viewModel.flowOfDeleteCollectionSize to deleteCollectionPreference,
             viewModel.flowOfDeleteEverythingSize to deleteEverythingPreference,
-            viewModel.flowOfDeleteBackupsSize to deleteBackupsPreference
+            viewModel.flowOfDeleteBackupsSize to deleteBackupsPreference,
         ).forEach { (flowOfSize, preference) ->
             lifecycleScope.launch { flowOfSize.collect { size -> preference.setWidgetTextBy(size) } }
         }
@@ -222,12 +243,13 @@ class ManageSpaceFragment : SettingsFragment() {
             val unusedFiles = size.files
             val unusedFileNames = unusedFiles.map { it.name }
 
-            val deleteFilesPromptResult = requireContext().awaitDialog {
-                setTitle(R.string.dialog__delete_unused_media_files__title)
-                setMultiChoiceItems(unusedFileNames, CheckedItems.All)
-                setPositiveButton(R.string.dialog_positive_delete)
-                setNegativeButton(R.string.dialog_cancel)
-            }
+            val deleteFilesPromptResult =
+                requireContext().awaitDialog {
+                    setTitle(R.string.dialog__delete_unused_media_files__title)
+                    setMultiChoiceItems(unusedFileNames, CheckedItems.All)
+                    setPositiveButton(R.string.dialog_positive_delete)
+                    setNegativeButton(R.string.dialog_cancel)
+                }
 
             if (deleteFilesPromptResult is DialogResult.Ok.MultipleChoice) {
                 val checkedItems = deleteFilesPromptResult.checkedItems
@@ -251,12 +273,13 @@ class ManageSpaceFragment : SettingsFragment() {
             val backupFiles = size.files
             val backupNames = backupFiles.map { formatter.getTimeOfBackupAsText(it) }
 
-            val chooseBackupsPromptResult = requireContext().awaitDialog {
-                setTitle(R.string.dialog__delete_backups__title)
-                setMultiChoiceItems(backupNames, CheckedItems.None)
-                setPositiveButton(R.string.dialog_positive_delete)
-                setNegativeButton(R.string.dialog_cancel)
-            }
+            val chooseBackupsPromptResult =
+                requireContext().awaitDialog {
+                    setTitle(R.string.dialog__delete_backups__title)
+                    setMultiChoiceItems(backupNames, CheckedItems.None)
+                    setPositiveButton(R.string.dialog_positive_delete)
+                    setNegativeButton(R.string.dialog_cancel)
+                }
 
             if (chooseBackupsPromptResult is DialogResult.Ok.MultipleChoice) {
                 val checkedItems = chooseBackupsPromptResult.checkedItems
@@ -283,12 +306,13 @@ class ManageSpaceFragment : SettingsFragment() {
     private suspend fun onDeleteCollectionClick() {
         val size = viewModel.flowOfDeleteCollectionSize.value
         if (size is Size.Bytes) {
-            val deleteCollectionPromptResult = requireContext().awaitDialog {
-                setTitle(R.string.dialog__delete_collection__title)
-                setMessage(R.string.dialog__delete_collection__message)
-                setPositiveButton(R.string.dialog_positive_delete)
-                setNegativeButton(R.string.dialog_cancel)
-            }
+            val deleteCollectionPromptResult =
+                requireContext().awaitDialog {
+                    setTitle(R.string.dialog__delete_collection__title)
+                    setMessage(R.string.dialog__delete_collection__message)
+                    setPositiveButton(R.string.dialog_positive_delete)
+                    setNegativeButton(R.string.dialog_cancel)
+                }
 
             if (deleteCollectionPromptResult is DialogResult.Ok) {
                 try {
@@ -325,12 +349,13 @@ class ManageSpaceFragment : SettingsFragment() {
     }
 
     private suspend fun onDeleteEverythingClick() {
-        val deleteEverythingPromptResult = requireContext().awaitDialog {
-            setTitle(deleteEverythingDialogTitle)
-            setMessage(deleteEverythingDialogMessage)
-            setPositiveButton(R.string.dialog_positive_delete)
-            setNegativeButton(R.string.dialog_cancel)
-        }
+        val deleteEverythingPromptResult =
+            requireContext().awaitDialog {
+                setTitle(deleteEverythingDialogTitle)
+                setMessage(deleteEverythingDialogMessage)
+                setPositiveButton(R.string.dialog_positive_delete)
+                setNegativeButton(R.string.dialog_cancel)
+            }
 
         if (deleteEverythingPromptResult is DialogResult.Ok) {
             viewModel.deleteEverything()
@@ -346,21 +371,26 @@ class ManageSpaceFragment : SettingsFragment() {
     private fun TextWidgetPreference.setWidgetTextBy(size: Size) {
         fun Long.toHumanReadableSize() = Formatter.formatShortFileSize(requireContext(), this)
 
-        widgetText = when (size) {
-            is Size.Calculating -> getString(R.string.pref__widget_text__calculating)
-            is Size.Error -> getString(size.widgetTextId)
-            is Size.Bytes -> size.totalSize.toHumanReadableSize()
-            is Size.FilesAndBytes -> resources.getQuantityString(
-                R.plurals.pref__widget_text__n_files_n_bytes,
-                size.files.size,
-                size.files.size,
-                size.totalSize.toHumanReadableSize()
-            )
-        }
+        widgetText =
+            when (size) {
+                is Size.Calculating -> getString(R.string.pref__widget_text__calculating)
+                is Size.Error -> getString(size.widgetTextId)
+                is Size.Bytes -> size.totalSize.toHumanReadableSize()
+                is Size.FilesAndBytes ->
+                    resources.getQuantityString(
+                        R.plurals.pref__widget_text__n_files_n_bytes,
+                        size.files.size,
+                        size.files.size,
+                        size.totalSize.toHumanReadableSize(),
+                    )
+            }
 
-        isEnabled = !(
-            size is Size.Bytes && size.totalSize == 0L ||
-                size is Size.FilesAndBytes && size.files.isEmpty()
+        isEnabled =
+            !(
+                size is Size.Bytes &&
+                    size.totalSize == 0L ||
+                    size is Size.FilesAndBytes &&
+                    size.files.isEmpty()
             )
     }
 

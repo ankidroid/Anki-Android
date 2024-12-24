@@ -55,7 +55,7 @@ class CreateDeckDialog(
     private val context: Context,
     private val title: Int,
     private val deckDialogType: DeckDialogType,
-    private val parentId: Long?
+    private val parentId: Long?,
 ) {
     private var previousDeckName: String? = null
     lateinit var onNewDeckCreated: ((DeckId) -> Unit)
@@ -63,7 +63,10 @@ class CreateDeckDialog(
     private var shownDialog: AlertDialog? = null
 
     enum class DeckDialogType {
-        FILTERED_DECK, DECK, SUB_DECK, RENAME_DECK
+        FILTERED_DECK,
+        DECK,
+        SUB_DECK,
+        RENAME_DECK,
     }
 
     private val getColUnsafe
@@ -71,9 +74,10 @@ class CreateDeckDialog(
 
     suspend fun showFilteredDeckDialog() {
         Timber.i("CreateDeckDialog::showFilteredDeckDialog")
-        initialDeckName = withCol {
-            getOrCreateFilteredDeck(did = 0).name
-        }
+        initialDeckName =
+            withCol {
+                getOrCreateFilteredDeck(did = 0).name
+            }
         showDialog()
     }
 
@@ -86,56 +90,66 @@ class CreateDeckDialog(
         }
 
     fun showDialog(): AlertDialog {
-        val dialog = AlertDialog.Builder(context).show {
-            title(title)
-            positiveButton(R.string.dialog_ok) { onPositiveButtonClicked() }
-            negativeButton(R.string.dialog_cancel)
-            setView(R.layout.dialog_generic_text_input)
-        }.input(prefill = initialDeckName, displayKeyboard = true, waitForPositiveButton = false) { dialog, text ->
+        val dialog =
+            AlertDialog
+                .Builder(context)
+                .show {
+                    title(title)
+                    positiveButton(R.string.dialog_ok) { onPositiveButtonClicked() }
+                    negativeButton(R.string.dialog_cancel)
+                    setView(R.layout.dialog_generic_text_input)
+                }.input(prefill = initialDeckName, displayKeyboard = true, waitForPositiveButton = false) { dialog, text ->
 
-            // defining the action of done button in ImeKeyBoard and enter button in physical keyBoard
-            val inputField = dialog.getInputField()
-            inputField.setOnEditorActionListener { _, actionId, event ->
-                if (actionId == EditorInfo.IME_ACTION_DONE || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
-                    when {
-                        dialog.positiveButton.isEnabled -> {
-                            onPositiveButtonClicked()
-                        }
-                        text.isBlank() -> {
-                            dialog.getInputTextLayout().showSnackbar(context.getString(R.string.empty_deck_name), Snackbar.LENGTH_SHORT)
-                        }
-                        else -> {
-                            dialog.getInputTextLayout().showSnackbar(context.getString(R.string.deck_already_exists), Snackbar.LENGTH_SHORT)
+                    // defining the action of done button in ImeKeyBoard and enter button in physical keyBoard
+                    val inputField = dialog.getInputField()
+                    inputField.setOnEditorActionListener { _, actionId, event ->
+                        if (actionId == EditorInfo.IME_ACTION_DONE || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
+                            when {
+                                dialog.positiveButton.isEnabled -> {
+                                    onPositiveButtonClicked()
+                                }
+                                text.isBlank() -> {
+                                    dialog.getInputTextLayout().showSnackbar(
+                                        context.getString(R.string.empty_deck_name),
+                                        Snackbar.LENGTH_SHORT,
+                                    )
+                                }
+                                else -> {
+                                    dialog.getInputTextLayout().showSnackbar(
+                                        context.getString(R.string.deck_already_exists),
+                                        Snackbar.LENGTH_SHORT,
+                                    )
+                                }
+                            }
+                            true
+                        } else {
+                            false
                         }
                     }
-                    true
-                } else {
-                    false
-                }
-            }
-            // we need the fully-qualified name for subdecks
-            val maybeDeckName = fullyQualifyDeckName(dialogText = text)
-            // if the name is empty, it seems distracting to show an error
-            if (maybeDeckName == null || !Decks.isValidDeckName(maybeDeckName)) {
-                dialog.positiveButton.isEnabled = false
-                return@input
-            }
-            if (maybeDeckName != initialDeckName && deckExists(getColUnsafe, maybeDeckName)) {
-                dialog.getInputTextLayout().error = context.getString(R.string.deck_already_exists)
-                dialog.positiveButton.isEnabled = false
-                return@input
-            }
-            dialog.getInputTextLayout().error = null
-            dialog.positiveButton.isEnabled = true
+                    // we need the fully-qualified name for subdecks
+                    val maybeDeckName = fullyQualifyDeckName(dialogText = text)
+                    // if the name is empty, it seems distracting to show an error
+                    if (maybeDeckName == null || !Decks.isValidDeckName(maybeDeckName)) {
+                        dialog.positiveButton.isEnabled = false
+                        return@input
+                    }
+                    if (maybeDeckName != initialDeckName && deckExists(getColUnsafe, maybeDeckName)) {
+                        dialog.getInputTextLayout().error = context.getString(R.string.deck_already_exists)
+                        dialog.positiveButton.isEnabled = false
+                        return@input
+                    }
+                    dialog.getInputTextLayout().error = null
+                    dialog.positiveButton.isEnabled = true
 
-            // Users expect the ordering [1, 2, 10], but get [1, 10, 2]
-            // To fix: they need [01, 02, 10]. Show a hint to help them
-            dialog.getInputTextLayout().helperText = if (text.containsNumberLargerThanNine()) {
-                context.getString(R.string.create_deck_numeric_hint)
-            } else {
-                null
-            }
-        }
+                    // Users expect the ordering [1, 2, 10], but get [1, 10, 2]
+                    // To fix: they need [01, 02, 10]. Show a hint to help them
+                    dialog.getInputTextLayout().helperText =
+                        if (text.containsNumberLargerThanNine()) {
+                            context.getString(R.string.create_deck_numeric_hint)
+                        } else {
+                            null
+                        }
+                }
         shownDialog = dialog
         return dialog
     }
@@ -143,7 +157,10 @@ class CreateDeckDialog(
     /**
      * @return true if the collection contains a deck with the given name
      */
-    private fun deckExists(col: Collection, name: String): Boolean = col.decks.byName(name) != null
+    private fun deckExists(
+        col: Collection,
+        name: String,
+    ): Boolean = col.decks.byName(name) != null
 
     /**
      * Returns the fully qualified deck name for the provided input
@@ -156,7 +173,10 @@ class CreateDeckDialog(
             DeckDialogType.SUB_DECK -> getColUnsafe.decks.getSubdeckName(parentId!!, dialogText.toString())
         }
 
-    fun createSubDeck(did: DeckId, deckName: String?) {
+    fun createSubDeck(
+        did: DeckId,
+        deckName: String?,
+    ) {
         val deckNameWithParentName = getColUnsafe.decks.getSubdeckName(did, deckName)
         createDeck(deckNameWithParentName!!)
     }
@@ -248,7 +268,10 @@ class CreateDeckDialog(
         shownDialog?.dismiss()
     }
 
-    private fun displayFeedback(message: String, duration: Int = Snackbar.LENGTH_SHORT) {
+    private fun displayFeedback(
+        message: String,
+        duration: Int = Snackbar.LENGTH_SHORT,
+    ) {
         if (context is Activity) {
             context.showSnackbar(message, duration)
         } else {

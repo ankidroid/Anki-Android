@@ -43,7 +43,9 @@ object VersionUtils {
                     Timber.w("Couldn't find package named %s", context.packageName)
                     return pkgName
                 }
-                pkgName = context.getString(pInfo.applicationInfo.labelRes)
+                pInfo.applicationInfo?.let {
+                    pkgName = context.getString(it.labelRes)
+                }
             } catch (e: PackageManager.NameNotFoundException) {
                 Timber.e(e, "Couldn't find package named %s", context.packageName)
             }
@@ -59,9 +61,9 @@ object VersionUtils {
             val context: Context = applicationInstance ?: return pkgVersion
             try {
                 val pInfo = context.getPackageInfoCompat(context.packageName, PackageInfoFlagsCompat.EMPTY) ?: return pkgVersion
-                pkgVersion = pInfo.versionName
+                return pInfo.versionName ?: pkgVersion
             } catch (e: PackageManager.NameNotFoundException) {
-                Timber.e(e, "Couldn't find package named %s", context.packageName)
+                Timber.w(e, "Couldn't find package named %s", context.packageName)
             }
             return pkgVersion
         }
@@ -96,12 +98,13 @@ object VersionUtils {
         }
 
     private val applicationInstance: Context?
-        get() = if (AnkiDroidApp.isInitialized) {
-            AnkiDroidApp.instance
-        } else {
-            Timber.w("AnkiDroid instance not set")
-            null
-        }
+        get() =
+            if (AnkiDroidApp.isInitialized) {
+                AnkiDroidApp.instance
+            } else {
+                Timber.w("AnkiDroid instance not set")
+                null
+            }
 
     /**
      * Return whether the package version code is set to that for release version

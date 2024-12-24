@@ -20,8 +20,10 @@ import android.speech.tts.UtteranceProgressListener
 import timber.log.Timber
 
 abstract class UtteranceProgressListenerCompat : UtteranceProgressListener() {
-
-    abstract override fun onError(utteranceId: String?, errorCode: Int)
+    abstract override fun onError(
+        utteranceId: String?,
+        errorCode: Int,
+    )
 
     @Suppress("DeprecatedCallableAddReplaceWith")
     @Deprecated("")

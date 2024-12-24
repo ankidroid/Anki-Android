@@ -47,7 +47,7 @@
     <!-- generic strings -->
     <string name="disabled">비활성화됨</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="other">%d mins</item>
+        <item quantity="other">%d분</item>
     </plurals>
     <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
@@ -114,7 +114,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">가운데 중앙 터치</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">왼쪽 하단 터치</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">오른쪽 하단 터치</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">기기 흔들기</string>
     <string name="card_browser_enable_external_context_menu">\"%s\" 메뉴</string>
     <string name="card_browser_enable_external_context_menu_summary">시스템 전역에서 글자를 길게 눌렀을 때 \'%s\' 컨텍스트 메뉴를 보입니다.</string>
     <string name="double_scrolling_gap" maxLength="41">이중 스크롤</string>
@@ -149,8 +149,6 @@
     <string name="notification_minimum_cards_due">%d 보다 많은 카드 남음</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">진동</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">LED 깜빡이기</string>
-    <string name="timeout_answer_text" maxLength="41">자동으로 정답 표시</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">언어 선택</string>
     <string name="software_render" maxLength="41">카드 하드웨어 랜더링 비활성화</string>
     <string name="software_render_summ">하드웨어 렌더링은 더 빠르지만 특히 Android 8/8.1에서 문제가 있을 수 있습니다.  카드 리뷰시 사용자 인터페이스의 일부가 표시되지 않으면 이 설정을 시도해 보십시오.</string>
@@ -268,21 +266,21 @@
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <string name="user_actions" maxLength="41">User actions</string>
     <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="41">User action 1</string>
-    <string name="user_action_2" maxLength="41">User action 2</string>
-    <string name="user_action_3" maxLength="41">User action 3</string>
-    <string name="user_action_4" maxLength="41">User action 4</string>
-    <string name="user_action_5" maxLength="41">User action 5</string>
-    <string name="user_action_6" maxLength="41">User action 6</string>
-    <string name="user_action_7" maxLength="41">User action 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="user_action_1" maxLength="28">User action 1</string>
+    <string name="user_action_2" maxLength="28">User action 2</string>
+    <string name="user_action_3" maxLength="28">User action 3</string>
+    <string name="user_action_4" maxLength="28">User action 4</string>
+    <string name="user_action_5" maxLength="28">User action 5</string>
+    <string name="user_action_6" maxLength="28">User action 6</string>
+    <string name="user_action_7" maxLength="28">User action 7</string>
+    <string name="user_action_8" maxLength="28">User action 8</string>
+    <string name="user_action_9" maxLength="28">User action 9</string>
     <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Select card side</string>
     <string name="card_side_question">Question</string>
     <string name="card_side_answer">Answer</string>
-    <string name="card_side_both">Question &amp; Answer</string>
+    <string name="card_side_both" maxLength="28">Question &amp; Answer</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -343,12 +341,12 @@
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>
     <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
     <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Delete everything</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">정말 모든 데이터를 삭제하시겠습니까? 여기에는 컬렉션, 미디어, 백업 및 환경 설정이 포함됩니다.\n\n참고: 이 작업을 수행하면 창이 닫힙니다.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Delete app data</string>
-    <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Delete app data</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">앱 데이터 삭제</string>
+    <string name="pref__delete_app_data__summary">설정 및 기타 앱 데이터 삭제</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">앱 데이터 삭제</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">정말 모든 데이터를 삭제하시겠습니까? 여기에는 환경 설정과 기타 앱 데이터가 포함됩니다.\n\n참고: 이 작업을 수행하면 창이 닫힙니다.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->

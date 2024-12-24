@@ -45,11 +45,11 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks">สำรับ</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">ตัวเลือกการ์ด</string>
-    <string name="statistics">สถิติ</string>
-    <string name="settings">การตั้งค่า</string>
-    <string name="help">วิธีใช้</string>
+    <string name="decks" maxLength="28">สำรับ</string>
+    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">ตัวเลือกการ์ด</string>
+    <string name="statistics" maxLength="28">สถิติ</string>
+    <string name="settings" maxLength="28">การตั้งค่า</string>
+    <string name="help" maxLength="28">วิธีใช้</string>
     <string name="drawing">วาด</string>
     <string name="send_feedback">ส่งคำติชม</string>
     <string name="studyoptions_start">เริ่มเรียน</string>
@@ -70,44 +70,44 @@
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">พิมพ์คำตอบ</string>
-    <string name="show_answer">แสดงคำตอบ</string>
+    <string name="show_answer" maxLength="41">แสดงคำตอบ</string>
     <string name="hide_answer">ซ่อนคำตอบ</string>
-    <string name="ease_button_again">อีกครั้ง</string>
-    <string name="ease_button_hard">ยาก</string>
-    <string name="ease_button_good">ดี</string>
+    <string name="ease_button_again" maxLength="41">อีกครั้ง</string>
+    <string name="ease_button_hard" maxLength="41">ยาก</string>
+    <string name="ease_button_good" maxLength="41">ดี</string>
     <string name="ease_button_easy">ง่าย</string>
-    <string name="menu_import">นําเข้า</string>
-    <string name="undo" maxLength="29" comment="When tapping on this text, the last action is undone.">เรียกคืน</string>
-    <string name="redo">ทำใหม่</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">ย้อนกลับการขีดเส้น</string>
+    <string name="menu_import" maxLength="28">นําเข้า</string>
+    <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">เรียกคืน</string>
+    <string name="redo" maxLength="28">ทำใหม่</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">ย้อนกลับการขีดเส้น</string>
     <string name="move_all_to_deck">ย้ายทั้งหมดไปที่สำรับ</string>
-    <string name="unbury">ยกเลิกการซ่อน</string>
-    <string name="rename_deck">เปลี่ยนชื่อสำรับ</string>
+    <string name="unbury" maxLength="28">ยกเลิกการซ่อน</string>
+    <string name="rename_deck" maxLength="28">เปลี่ยนชื่อสำรับ</string>
     <string name="create_shortcut">สร้างทางลัด</string>
     <string name="browse_cards">ค้นหาการ์ด</string>
     <string name="edit_deck_description" comment="edit the deck description">แก้ไขคำอธิบาย</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="29">เพิ่ม</string>
-    <string name="menu_add_note">เพิ่มโน้ต</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">เพิ่ม</string>
+    <string name="menu_add_note" maxLength="28">เพิ่มโน้ต</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">เชื่อมบัญชีผู้ใช้</string>
-    <string name="menu_dismiss_note">ซ่อน / ลบ</string>
-    <string name="menu_bury_card">ซ่อนการ์ด</string>
-    <string name="menu_bury_note">ซ่อนโน้ต</string>
-    <string name="menu_suspend_card">ระงับบัตร</string>
-    <string name="menu_suspend_note">ระงับโน้ต</string>
-    <string name="menu_bury">ซ่อน</string>
-    <string name="menu_suspend">ระงับ</string>
-    <string name="menu_delete_note">ลบโน้ต</string>
-    <string name="menu_flag">เครื่องหมาย</string>
-    <string name="rename_flag">Rename flags</string>
-    <string name="menu_flag_card">เครื่องหมายการ์ด</string>
-    <string name="menu_edit_tags">แก้ไขแท็ก</string>
+    <string name="menu_dismiss_note" maxLength="41">ซ่อน / ลบ</string>
+    <string name="menu_bury_card" maxLength="28">ซ่อนการ์ด</string>
+    <string name="menu_bury_note" maxLength="28">ซ่อนโน้ต</string>
+    <string name="menu_suspend_card" maxLength="28">ระงับบัตร</string>
+    <string name="menu_suspend_note" maxLength="28">ระงับโน้ต</string>
+    <string name="menu_bury" maxLength="28">ซ่อน</string>
+    <string name="menu_suspend" maxLength="28">ระงับ</string>
+    <string name="menu_delete_note" maxLength="28">ลบโน้ต</string>
+    <string name="menu_flag" maxLength="41">เครื่องหมาย</string>
+    <string name="rename_flag">ตั้งชื่อธง</string>
+    <string name="menu_flag_card" maxLength="28">เครื่องหมายการ์ด</string>
+    <string name="menu_edit_tags" maxLength="28">แก้ไขแท็ก</string>
     <string name="delete_note_message">คุณต้องการจะลบโน้ตนี้และการ์ดภายในทั้งหมดหรือไม่?\n%s</string>
-    <string name="menu_search">ค้นหาใน %1$s</string>
-    <string name="menu_mark_note">ทำเครื่องหมายโน้ต</string>
+    <string name="menu_search" maxLength="28">ค้นหาใน %1$s</string>
+    <string name="menu_mark_note" maxLength="28">ทำเครื่องหมายโน้ต</string>
     <string name="menu_unmark_note">ยกเลิกการทำเครื่องหมายโน้ต</string>
-    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Enable voice playback</string>
     <string name="menu_disable_voice_playback">Disable voice playback</string>
-    <string name="new_deck">สร้างกองใหม่</string>
+    <string name="new_deck">สร้างสำรับใหม่</string>
     <string name="new_dynamic_deck">สร้าง สำรับแบบกรอง</string>
     <string name="directory_inaccessible">เข้าถึงที่เก็บข้อมูล AnkiDroid ไม่ได้</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
@@ -116,41 +116,41 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">กรุณาอนุญาติ AnkiDroid ให้เข้าถึง \'พื้นที่เก็บข้อมูล\' เพื่อดำเนินการต่อ</string>
     <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
-    <string name="rebuild_cram_label">Rebuild</string>
-    <string name="empty_cram_label">ล้างสำรับ</string>
+    <string name="rebuild_cram_label" maxLength="28">Rebuild</string>
+    <string name="empty_cram_label" maxLength="28">ล้างสำรับ</string>
     <string name="create_subdeck">สร้างสำรับย่อย</string>
     <string name="empty_filtered_deck">กำลังทำให้สำรับแบบกรองว่าง&#8230;</string>
     <string name="custom_study_deck_name">Custom study session</string>
     <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
     <string name="search_deck" comment="Deck search for selecting it">ค้นหาสำรับ</string>
     <string name="empty_deck">สำรับนี้ว่างเปล่า</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">ค้นหาสำรับ</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">ค้นหาสำรับ</string>
     <string name="invalid_deck_name">ชื่อนี้ไม่สามารถตั้งให้สำรับได้</string>
     <string name="studyoptions_congrats_finished">ยินดีด้วย! คุณทบทวนเสร็จแล้วสำหรับตอนนี้</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">ไม่มีบัตรคำที่ต้องทบทวนในตอนนี้</string>
     <string name="sd_card_not_mounted">Device storage not mounted</string>
-    <string name="button_sync" comment="Text of the sync button">การซิงค์</string>
+    <string name="button_sync" comment="Text of the sync button" maxLength="28">การซิงค์</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Do you want to cancel the sync?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">ดำเนินการซิงค์ต่อไป</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">ยกเลิกการซิงค์เรียบร้อย</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">กำลังยกเลิกการซิงค์&amp;&#8230;\nอาจจะต้องใช้เวลาสักนิดหน่อย</string>
     <string name="syncing_media">กำลังซิงค์มีเดีย</string>
-    <string name="export_deck">ส่งออกสำรับ</string>
+    <string name="export_deck" maxLength="28">ส่งออกสำรับ</string>
     <string name="export_collection">Export collection</string>
     <string name="nothing">ไม่มี</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">ชนิดบัตรคำ</string>
     <string name="card_template_editor_front">แม่แบบด้านหน้า</string>
     <string name="card_template_editor_back">แม่แบบด้านหลัง</string>
-    <string name="card_template_editor_styling">การตกแต่ง</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
-    <string name="card_template_editor_deck_override">Deck override</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_styling" maxLength="28">การตกแต่ง</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Card Browser Appearance</string>
+    <string name="card_template_editor_deck_override" maxLength="28">Deck override</string>
+    <string name="card_template_editor_insert_field" maxLength="28">Insert field</string>
     <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">At least one card type is required</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="other">ดำเนินการสร้าง 24 การ์ดหรือไม่?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
@@ -160,7 +160,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title" maxLength="28">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>

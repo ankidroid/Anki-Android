@@ -44,8 +44,9 @@ import timber.log.Timber
  * TODO: Move this to a fragment
  */
 @NeedsTest("14650: collection permissions are required for this screen to be usable")
-class LoginActivity : MyAccount(), CollectionPermissionScreenLauncher {
-
+class LoginActivity :
+    MyAccount(),
+    CollectionPermissionScreenLauncher {
     override val permissionScreenLauncher = recreateActivityResultLauncher()
 
     override fun onCreate(savedInstanceState: Bundle?) {

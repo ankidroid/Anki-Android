@@ -47,17 +47,18 @@ class AudioRecordingControllerAndroidTest : RobolectricTest() {
 
     @Test
     @Ignore("does not fail when expected under Robolectric")
-    fun `Voice Playback handles onPause`() = withVoicePlayback {
-        Timber.v("start recording")
-        layout.findViewById<MaterialButton?>(R.id.action_start_recording)?.performClick()
-        Timber.v("stop recording")
-        layout.findViewById<MaterialButton?>(R.id.action_start_recording)?.performClick()
-        Timber.v(" playback recording")
-        layout.findViewById<MaterialButton?>(R.id.action_start_recording)?.performClick()
-        onViewFocusChanged()
-        Timber.v("playback recording again")
-        layout.findViewById<MaterialButton?>(R.id.action_start_recording)?.performClick()
-    }
+    fun `Voice Playback handles onPause`() =
+        withVoicePlayback {
+            Timber.v("start recording")
+            layout.findViewById<MaterialButton?>(R.id.action_start_recording)?.performClick()
+            Timber.v("stop recording")
+            layout.findViewById<MaterialButton?>(R.id.action_start_recording)?.performClick()
+            Timber.v(" playback recording")
+            layout.findViewById<MaterialButton?>(R.id.action_start_recording)?.performClick()
+            onViewFocusChanged()
+            Timber.v("playback recording again")
+            layout.findViewById<MaterialButton?>(R.id.action_start_recording)?.performClick()
+        }
 
     /** Applies [block] to a [AudioRecordingController] generated for the [Reviewer] */
     private fun withVoicePlayback(block: AudioRecordingController.() -> Unit) {
@@ -73,7 +74,7 @@ class AudioRecordingControllerAndroidTest : RobolectricTest() {
                 context = targetContext,
                 layout = layout,
                 initialState = RecordingState.ImmediatePlayback.CLEARED,
-                controllerLayout = R.layout.activity_audio_recording_reviewer
+                controllerLayout = R.layout.activity_audio_recording_reviewer,
             )
             block()
         }

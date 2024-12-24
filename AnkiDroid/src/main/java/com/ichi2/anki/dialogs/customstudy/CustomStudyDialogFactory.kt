@@ -21,8 +21,14 @@ import com.ichi2.libanki.Collection
 import com.ichi2.utils.ExtendedFragmentFactory
 import java.util.function.Supplier
 
-class CustomStudyDialogFactory(val collectionSupplier: Supplier<Collection>, private val customStudyListener: CustomStudyListener?) : ExtendedFragmentFactory() {
-    override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
+class CustomStudyDialogFactory(
+    val collectionSupplier: Supplier<Collection>,
+    private val customStudyListener: CustomStudyListener?,
+) : ExtendedFragmentFactory() {
+    override fun instantiate(
+        classLoader: ClassLoader,
+        className: String,
+    ): Fragment {
         val cls = loadFragmentClass(classLoader, className)
         return if (cls == CustomStudyDialog::class.java) {
             newCustomStudyDialog()
@@ -31,7 +37,5 @@ class CustomStudyDialogFactory(val collectionSupplier: Supplier<Collection>, pri
         }
     }
 
-    fun newCustomStudyDialog(): CustomStudyDialog {
-        return CustomStudyDialog(collectionSupplier.get(), customStudyListener)
-    }
+    fun newCustomStudyDialog(): CustomStudyDialog = CustomStudyDialog(collectionSupplier.get(), customStudyListener)
 }

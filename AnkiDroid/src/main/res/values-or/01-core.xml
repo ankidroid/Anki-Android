@@ -45,11 +45,11 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks">ତାସଖଣ୍ଡଗୁଡ଼ିକ</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">ପତ୍ର ବ୍ରାଉଜର୍</string>
-    <string name="statistics">ପରିସଂଖ୍ୟାନ</string>
-    <string name="settings">ସେଟିଂ</string>
-    <string name="help">ସହାୟତା</string>
+    <string name="decks" maxLength="28">ତାସଖଣ୍ଡଗୁଡ଼ିକ</string>
+    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">ପତ୍ର ବ୍ରାଉଜର୍</string>
+    <string name="statistics" maxLength="28">ପରିସଂଖ୍ୟାନ</string>
+    <string name="settings" maxLength="28">ସେଟିଂ</string>
+    <string name="help" maxLength="28">ସହାୟତା</string>
     <string name="drawing">ଚିତ୍ରାଙ୍କନ</string>
     <string name="send_feedback">ମତାମତ ପଠାନ୍ତୁ</string>
     <string name="studyoptions_start">ଅଧ୍ୟୟନ</string>
@@ -65,50 +65,50 @@
         <item quantity="other">%1$d ଘଣ୍ଟା %2$d ବାକି ଅଛି</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">%1$d ଦିନ %2$dଘ ବାକି ଅଛି</item>
+        <item quantity="other">%1$d ଦିନ %2$dଘ ବାକି ଅଛି</item>
     </plurals>
     <string name="no_cards_placeholder_title">ସଂଗ୍ରହ ଖାଲି ଅଛି</string>
     <string name="no_cards_placeholder_description">+ ଆଇକନ୍ ଵ୍ୟଵହାର କରି\nପତ୍ର ଯୋଡ଼ିବା ଆରମ୍ଭ କରନ୍ତୁ।</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">ଉତ୍ତର ଟାଇପ୍ କରନ୍ତୁ</string>
-    <string name="show_answer">ଉତ୍ତର ଦେଖାଅ</string>
+    <string name="show_answer" maxLength="41">ଉତ୍ତର ଦେଖାଅ</string>
     <string name="hide_answer">ଉତ୍ତର ଲୁଚାଅ</string>
-    <string name="ease_button_again">ପୁଣି</string>
-    <string name="ease_button_hard">କଠିନ</string>
-    <string name="ease_button_good">ଭଲ</string>
+    <string name="ease_button_again" maxLength="41">ପୁଣି</string>
+    <string name="ease_button_hard" maxLength="41">କଠିନ</string>
+    <string name="ease_button_good" maxLength="41">ଭଲ</string>
     <string name="ease_button_easy">ସହଜ</string>
-    <string name="menu_import">ଆମଦାନି କରିବା</string>
-    <string name="undo" maxLength="29" comment="When tapping on this text, the last action is undone.">ପୂର୍ଵଵତ୍</string>
-    <string name="redo">ପୁନଃକରଣ</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">ଗାର ଲିଭାଇବା</string>
+    <string name="menu_import" maxLength="28">ଆମଦାନି କରିବା</string>
+    <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">ପୂର୍ଵଵତ୍</string>
+    <string name="redo" maxLength="28">ପୁନଃକରଣ</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">ଗାର ଲିଭାଇବା</string>
     <string name="move_all_to_deck">ସବୁ ଏହି ତାସଖଣ୍ଡକୁ ନେଇ ଯାଆନ୍ତୁ</string>
-    <string name="unbury">ସ୍ଥଗିତରୁ ଫେରାଇ ଆଣ</string>
-    <string name="rename_deck">ତାସଖଣ୍ଡ ନାମ ବଦଳାନ୍ତୁ</string>
+    <string name="unbury" maxLength="28">ସ୍ଥଗିତରୁ ଫେରାଇ ଆଣ</string>
+    <string name="rename_deck" maxLength="28">ତାସଖଣ୍ଡ ନାମ ବଦଳାନ୍ତୁ</string>
     <string name="create_shortcut">ସର୍ଟ୍‌କଟ୍ ସୃଷ୍ଟି କରିବା</string>
     <string name="browse_cards">ପତ୍ରଗୁଡ଼ିକ ଖେଳାଇବା</string>
     <string name="edit_deck_description" comment="edit the deck description">ବର୍ଣ୍ଣନା ସମ୍ପାଦନା</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="29">ଯୋଡ଼ନ୍ତୁ</string>
-    <string name="menu_add_note">ନୋଟ୍ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="menu_add_note" maxLength="28">ନୋଟ୍ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ସୀଙ୍କ୍ ଖାତା</string>
-    <string name="menu_dismiss_note">ଲୁଚାଇବା / ଵିଲୋପ କରିବା</string>
-    <string name="menu_bury_card">ପତ୍ର ସ୍ଥଗିତ କରନ୍ତୁ</string>
-    <string name="menu_bury_note">ନୋଟ୍ ସ୍ଥଗିତ କରନ୍ତୁ</string>
-    <string name="menu_suspend_card">ପତ୍ର ନିଲମ୍ବିତ କରନ୍ତୁ</string>
-    <string name="menu_suspend_note">ନୋଟ୍ ନିଲମ୍ବିତ କରନ୍ତୁ</string>
-    <string name="menu_bury">ସ୍ଥଗିତ ରଖନ୍ତୁ</string>
-    <string name="menu_suspend">ନିଲମ୍ବନ କରନ୍ତୁ</string>
-    <string name="menu_delete_note">ନୋଟ୍ ଵିଲୋପ କରିବା</string>
-    <string name="menu_flag">ପତାକା</string>
+    <string name="menu_dismiss_note" maxLength="41">ଲୁଚାଇବା / ଵିଲୋପ କରିବା</string>
+    <string name="menu_bury_card" maxLength="28">ପତ୍ର ସ୍ଥଗିତ କରନ୍ତୁ</string>
+    <string name="menu_bury_note" maxLength="28">ନୋଟ୍ ସ୍ଥଗିତ କରନ୍ତୁ</string>
+    <string name="menu_suspend_card" maxLength="28">ପତ୍ର ନିଲମ୍ବିତ କରନ୍ତୁ</string>
+    <string name="menu_suspend_note" maxLength="28">ନୋଟ୍ ନିଲମ୍ବିତ କରନ୍ତୁ</string>
+    <string name="menu_bury" maxLength="28">ସ୍ଥଗିତ ରଖନ୍ତୁ</string>
+    <string name="menu_suspend" maxLength="28">ନିଲମ୍ବନ କରନ୍ତୁ</string>
+    <string name="menu_delete_note" maxLength="28">ନୋଟ୍ ଵିଲୋପ କରିବା</string>
+    <string name="menu_flag" maxLength="41">ପତାକା</string>
     <string name="rename_flag">Rename flags</string>
-    <string name="menu_flag_card">ପତ୍ରକୁ ଏକ ପତାକା ନ୍ୟସ୍ତ କରନ୍ତୁ</string>
-    <string name="menu_edit_tags">ଟ୍ୟାଗ୍ ସମ୍ପାଦନା</string>
+    <string name="menu_flag_card" maxLength="28">ପତ୍ରକୁ ଏକ ପତାକା ନ୍ୟସ୍ତ କରନ୍ତୁ</string>
+    <string name="menu_edit_tags" maxLength="28">ଟ୍ୟାଗ୍ ସମ୍ପାଦନା</string>
     <string name="delete_note_message">ଆପଣ ପ୍ରକୃତରେ ଏହି ନୋଟ୍ ଏଵଂ ଏହାର ସମସ୍ତ ପତ୍ର ଵିଲୋପ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?\n%s</string>
-    <string name="menu_search">%1$s ରେ ଦୃଷ୍ଟିପାତ</string>
-    <string name="menu_mark_note">ନୋଟ ଚିନ୍ହିତ କରନ୍ତୁ</string>
+    <string name="menu_search" maxLength="28">%1$s ରେ ଦୃଷ୍ଟିପାତ</string>
+    <string name="menu_mark_note" maxLength="28">ନୋଟ ଚିନ୍ହିତ କରନ୍ତୁ</string>
     <string name="menu_unmark_note">ନୋଟ ଅଣଚିନ୍ହିତ କରନ୍ତୁ</string>
-    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Enable voice playback</string>
     <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">ତାସଖଣ୍ଡ ସୃଷ୍ଟି କରିବା</string>
     <string name="new_dynamic_deck">ଶୋଧିତ ତାସଖଣ୍ଡ ସୃଷ୍ଟି କରିବା</string>
@@ -119,37 +119,37 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">ଜାରି ରଖିବାକୁ ଦୟାକରି AnkiDroid କୁ ‘ଷ୍ଟୋରେଜ୍’ ଅନୁମତି ଦିଅନ୍ତୁ</string>
     <string name="rebuild_filtered_deck">ଶୋଧିତ ତାସଖଣ୍ଡର ପୁନଃନିର୍ମାଣ&#8230;</string>
-    <string name="rebuild_cram_label">ପୁନଃନିର୍ମାଣ</string>
-    <string name="empty_cram_label">ଖାଲି</string>
+    <string name="rebuild_cram_label" maxLength="28">ପୁନଃନିର୍ମାଣ</string>
+    <string name="empty_cram_label" maxLength="28">ଖାଲି</string>
     <string name="create_subdeck">ଉପତାସଖଣ୍ଡ ସୃଷ୍ଟି କରିବା</string>
     <string name="empty_filtered_deck">ଶୋଧିତ ତାସଖଣ୍ଡ ଖାଲି ହଉଛି&#8230;</string>
     <string name="custom_study_deck_name">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ଅଧିବେଶନ</string>
     <string name="custom_study_deck_exists">ପ୍ରଥମେ ଵିଦ୍ୟମାନ କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ତାସଖଣ୍ଡ ର ନାମ ବଦଳାନ୍ତୁ</string>
     <string name="search_deck" comment="Deck search for selecting it">ତାସଖଣ୍ଡ ସନ୍ଧାନ</string>
     <string name="empty_deck">ତାସଖଣ୍ଡଟି ଖାଲି ଅଛି</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">ତାସଖଣ୍ଡ ସନ୍ଧାନ</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">ତାସଖଣ୍ଡ ସନ୍ଧାନ</string>
     <string name="invalid_deck_name">ଅବୈଧ ତାସଖଣ୍ଡ ନାମ</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">କୌଣସି ପତ୍ର ବାକି ନାହିଁ</string>
     <string name="sd_card_not_mounted">ଡିଵାଇସ୍ ଷ୍ଟୋରେଜ୍ ଭର୍ତ୍ତି କରାଯାଇ ନାହିଁ</string>
-    <string name="button_sync" comment="Text of the sync button">ସୀଙ୍କ୍</string>
+    <string name="button_sync" comment="Text of the sync button" maxLength="28">ସୀଙ୍କ୍</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">ଆପଣ ସୀଙ୍କ୍‌ଟିକୁ ବାତିଲ୍ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">ସୀଙ୍କ୍ ଜାରି ରଖନ୍ତୁ</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">ସୀଙ୍କ୍ ବାତିଲ୍ ହେଲା</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">ବାତିଲ ହେଉଛି&#8230;\nଏହା କିଛି ସମୟ ନେଇପାରେ।</string>
     <string name="syncing_media">ମିଡ଼ିଆ ସୀଙ୍କ୍ ଚାଲିଛି</string>
-    <string name="export_deck">ତାସଖଣ୍ଡ ରପ୍ତାନି କରନ୍ତୁ</string>
+    <string name="export_deck" maxLength="28">ତାସଖଣ୍ଡ ରପ୍ତାନି କରନ୍ତୁ</string>
     <string name="export_collection">Export collection</string>
     <string name="nothing">କିଛି ନାହିଁ</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">ପତ୍ର ପ୍ରକାର</string>
     <string name="card_template_editor_front">ସାମ୍ନା ଟେମ୍ପଲେଟ୍</string>
     <string name="card_template_editor_back">ପଛ ଟେମ୍ପଲେଟ୍</string>
-    <string name="card_template_editor_styling">ଶୈଳୀକରଣ</string>
-    <string name="card_template_editor_menu_card_browser_appearance">ପତ୍ର ବ୍ରାଉଜର୍‌ର ରୂପ</string>
-    <string name="card_template_editor_deck_override">ତାସଖଣ୍ଡର ନବଲିଖନ</string>
-    <string name="card_template_editor_insert_field">କ୍ଷେତ୍ର ସନ୍ନିବେଶ କରନ୍ତୁ</string>
+    <string name="card_template_editor_styling" maxLength="28">ଶୈଳୀକରଣ</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">ପତ୍ର ବ୍ରାଉଜର୍‌ର ରୂପ</string>
+    <string name="card_template_editor_deck_override" maxLength="28">ତାସଖଣ୍ଡର ନବଲିଖନ</string>
+    <string name="card_template_editor_insert_field" maxLength="28">କ୍ଷେତ୍ର ସନ୍ନିବେଶ କରନ୍ତୁ</string>
     <string name="card_template_editor_select_field">କ୍ଷେତ୍ର ଚୟନ କରନ୍ତୁ</string>
     <string name="card_template_editor_cant_delete">ଅତିକମରେ ଗୋଟିଏ ପତ୍ର ପ୍ରକାର ଆବଶ୍ୟକ</string>
     <plurals name="card_template_editor_confirm_add">
@@ -165,7 +165,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">ବ୍ରାଉଜର ରୂପ</string>
     <!-- card Info -->
-    <string name="card_info_title">ପତ୍ର ସୂଚନା</string>
+    <string name="card_info_title" maxLength="28">ପତ୍ର ସୂଚନା</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Ankidroid ଡାଟାବେସ୍ କୁ ପଢ଼ିବା ଓ ଲେଖିବା</string>
     <string name="read_write_permission_description">ଵିଦ୍ୟମାନ ନୋଟ୍, ପତ୍ର, ନୋଟ୍ ପ୍ରକାର ଓ ତାସଖଣ୍ଡ ଅଧ୍ୟୟନ କରିବା ଵ୍ୟତୀତ ନୂଆରେ ସୃଷ୍ଟି କରନ୍ତୁ</string>

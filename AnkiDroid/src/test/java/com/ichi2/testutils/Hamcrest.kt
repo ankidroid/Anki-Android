@@ -27,7 +27,10 @@ class DistinctMatcher<T> : BaseMatcher<T>() where T : Iterable<Any> {
         description.appendText("distinct values")
     }
 
-    override fun describeMismatch(item: Any?, description: Description) {
+    override fun describeMismatch(
+        item: Any?,
+        description: Description,
+    ) {
         if (invalid.size == 1) {
             description.appendText("found duplicate: ").appendValue(invalid.keys.joinToString(", "))
         } else {

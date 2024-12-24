@@ -39,7 +39,6 @@ import timber.log.Timber
  * - Override [onUpdate] if additional logic is required beyond [performUpdate].
  */
 abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
-
     /**
      * Called when the widget is enabled. Sends an analytics event.
      *
@@ -71,7 +70,11 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
      * @param appWidgetManager The AppWidgetManager instance to use for updating widgets.
      * @param appWidgetIds The app widget IDs to update.
      */
-    final override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+    final override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray,
+    ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         if (!IntentHandler.grantedStoragePermissions(context, showToast = false)) {
             Timber.w("Opening widget ${this.javaClass.name} without storage access")
@@ -95,5 +98,10 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
      * @param usageAnalytics The UsageAnalytics instance for logging analytics events.
      */
 
-    abstract fun performUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray, usageAnalytics: UsageAnalytics)
+    abstract fun performUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray,
+        usageAnalytics: UsageAnalytics,
+    )
 }

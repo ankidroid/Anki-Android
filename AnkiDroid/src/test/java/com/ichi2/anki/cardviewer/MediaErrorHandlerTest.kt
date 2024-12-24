@@ -46,12 +46,11 @@ class MediaErrorHandlerTest {
         sut = MediaErrorHandler()
     }
 
-    private fun defaultHandler(): (String) -> Unit {
-        return { f: String? ->
+    private fun defaultHandler(): (String) -> Unit =
+        { f: String? ->
             timesCalled++
             fileNames.add(f)
         }
-    }
 
     @Test
     fun firstTimeOnNewCardSends() {
@@ -95,11 +94,17 @@ class MediaErrorHandlerTest {
         assertThat(timesCalled, equalTo(0))
     }
 
-    private fun processFailure(invalidRequest: WebResourceRequest, consumer: (String) -> Unit = defaultHandler()) {
+    private fun processFailure(
+        invalidRequest: WebResourceRequest,
+        consumer: (String) -> Unit = defaultHandler(),
+    ) {
         sut.processFailure(invalidRequest, consumer)
     }
 
-    private fun processMissingSound(file: File, onFailure: (String) -> Unit) {
+    private fun processMissingSound(
+        file: File,
+        onFailure: (String) -> Unit,
+    ) {
         sut.processMissingSound(file, onFailure)
     }
 
@@ -139,31 +144,18 @@ class MediaErrorHandlerTest {
         return getWebResourceRequest(url)
     }
 
-    private fun getWebResourceRequest(url: String): WebResourceRequest {
-        return object : WebResourceRequest {
-            override fun getUrl(): Uri {
-                return Uri.parse(url)
-            }
+    private fun getWebResourceRequest(url: String): WebResourceRequest =
+        object : WebResourceRequest {
+            override fun getUrl(): Uri = Uri.parse(url)
 
-            override fun isForMainFrame(): Boolean {
-                return false
-            }
+            override fun isForMainFrame(): Boolean = false
 
-            override fun isRedirect(): Boolean {
-                return false
-            }
+            override fun isRedirect(): Boolean = false
 
-            override fun hasGesture(): Boolean {
-                return false
-            }
+            override fun hasGesture(): Boolean = false
 
-            override fun getMethod(): String? {
-                return null
-            }
+            override fun getMethod(): String? = null
 
-            override fun getRequestHeaders(): Map<String, String>? {
-                return null
-            }
+            override fun getRequestHeaders(): Map<String, String>? = null
         }
-    }
 }

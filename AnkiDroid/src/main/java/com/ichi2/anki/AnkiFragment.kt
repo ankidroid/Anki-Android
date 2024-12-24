@@ -24,13 +24,11 @@ import androidx.annotation.AttrRes
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
-import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import com.ichi2.async.CollectionLoader
-import com.ichi2.compat.CompatV24
+import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.libanki.Collection
+import com.ichi2.themes.Themes
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import com.ichi2.utils.tintOverflowMenuIcons
 import timber.log.Timber
@@ -46,10 +44,10 @@ import timber.log.Timber
  *
  * @param layout Resource ID of the layout to be used for this fragment.
  */
-// TODO: Consider refactoring to create AnkiInterface to consolidate common implementations between AnkiFragment and AnkiActivity.
-//  This could help reduce code repetition and improve maintainability.
-open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivityProvider {
-
+open class AnkiFragment(
+    @LayoutRes layout: Int,
+) : Fragment(layout),
+    AnkiActivityProvider {
     val getColUnsafe: Collection
         get() = CollectionManager.getColUnsafe()
 
@@ -61,15 +59,12 @@ open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivity
 
     // Open function: These can be overridden to react to specific parts of the lifecycle
 
-    /**
-     * Callback for [startLoadingCollection], executed once the collection is available.
-     */
-    protected open fun onCollectionLoaded(col: Collection) {
-        hideProgressBar()
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        requireActivity().window.statusBarColor = ThemeUtils.getThemeAttrColor(requireContext(), R.attr.appBarColor)
+    @Suppress("deprecation", "API35 properly handle edge-to-edge")
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        requireActivity().window.statusBarColor = Themes.getColorFromAttr(requireContext(), R.attr.appBarColor)
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -96,27 +91,21 @@ open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivity
      */
     protected suspend fun userAcceptsSchemaChange() = ankiActivity.userAcceptsSchemaChange()
 
-    fun setNavigationBarColor(@AttrRes attr: Int) {
-        requireActivity().window.navigationBarColor = ThemeUtils.getThemeAttrColor(requireContext(), attr)
+    @Suppress("deprecation", "API35 properly handle edge-to-edge")
+    fun setNavigationBarColor(
+        @AttrRes attr: Int,
+    ) {
+        requireActivity().window.navigationBarColor =
+            Themes.getColorFromAttr(requireContext(), attr)
     }
 
     /**
      * Finds a view in the fragment's layout by the specified ID.
      *
      */
-    fun <T : View> findViewById(@IdRes id: Int): T {
-        return requireView().findViewById(id)
-    }
-
-    /**
-     * Hides progress bar.
-     */
-    private fun hideProgressBar() = ankiActivity.hideProgressBar()
-
-    /**
-     * Shows progress bar.
-     */
-    private fun showProgressBar() = ankiActivity.showProgressBar()
+    fun <T : View> findViewById(
+        @IdRes id: Int,
+    ): T = requireView().findViewById(id)
 
     /**
      * Unregisters a previously registered broadcast receiver.
@@ -156,42 +145,11 @@ open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivity
      * Sets the title of the toolbar.
      *
      */
-    protected fun setTitle(@StringRes title: Int) {
+    protected fun setTitle(
+        @StringRes title: Int,
+    ) {
         mainToolbar.setTitle(title)
     }
-
-    /**
-     * Starts loading the Anki collection asynchronously if it hasn't been opened yet.
-     * If the collection is already open, calls `onCollectionLoaded` synchronously.
-     * Shows a progress bar during loading.
-     */
-    protected fun startLoadingCollection() {
-        Timber.d("AnkiFragment.startLoadingCollection()")
-        if (CollectionManager.isOpenUnsafe()) {
-            Timber.d("Synchronously calling onCollectionLoaded")
-            onCollectionLoaded(getColUnsafe)
-            return
-        }
-        // Open collection asynchronously if it hasn't already been opened
-        showProgressBar()
-        CollectionLoader.load(
-            this
-        ) { col: Collection? ->
-            if (col != null) {
-                Timber.d("Asynchronously calling onCollectionLoaded")
-                onCollectionLoaded(col)
-            } else {
-                ankiActivity.onCollectionLoadError()
-            }
-        }
-    }
-
-    /**
-     * Method to show dialog fragment including adding it to back stack
-     *
-     * @see AnkiActivity.showDialogFragment
-     */
-    protected open fun showDialogFragment(newFragment: DialogFragment) = ankiActivity.showDialogFragment(newFragment)
 
     /**
      * Run the provided operation, showing a progress window with the provided
@@ -199,9 +157,8 @@ open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivity
      */
     protected suspend fun <T> Fragment.withProgress(
         message: String = resources.getString(R.string.dialog_processing),
-        block: suspend () -> T
-    ): T =
-        requireActivity().withProgress(message, block)
+        block: suspend () -> T,
+    ): T = requireActivity().withProgress(message, block)
 
     /**
      * If storage permissions are not granted, shows a toast message and finishes the activity.
@@ -223,5 +180,5 @@ open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivity
     /**
      * Lists of shortcuts for this fragment, and the IdRes of the name of this shortcut group.
      */
-    open val shortcuts: CompatV24.ShortcutGroup? = null
+    open val shortcuts: ShortcutGroup? = null
 }

@@ -2,6 +2,13 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/toolbar" />
+
         <LinearLayout
             android:id="@+id/deckpicker_xl_view"
             android:layout_width="match_parent"
@@ -18,5 +25,6 @@
                 android:layout_width="1dip"
                 android:layout_height="match_parent"/>
         </LinearLayout>
+    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

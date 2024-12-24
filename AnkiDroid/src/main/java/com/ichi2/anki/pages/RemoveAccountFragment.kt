@@ -75,43 +75,51 @@ class RemoveAccountFragment : Fragment(R.layout.page_fragment) {
     }
 
     @CallSuper
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        webView = view.findViewById<WebView>(R.id.webview).apply {
-            isVisible = true
-            with(settings) {
-                javaScriptEnabled = true
-                displayZoomControls = false
-                builtInZoomControls = true
-                setSupportZoom(true)
-            }
-            webViewClient = object : WebViewClient() {
-                override fun shouldOverrideUrlLoading(
-                    view: WebView?,
-                    request: WebResourceRequest?
-                ): Boolean {
-                    @Suppress("DEPRECATION")
-                    return shouldOverrideUrlLoading(view, request?.url.toString())
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        webView =
+            view.findViewById<WebView>(R.id.webview).apply {
+                isVisible = true
+                with(settings) {
+                    javaScriptEnabled = true
+                    displayZoomControls = false
+                    builtInZoomControls = true
+                    setSupportZoom(true)
                 }
+                webViewClient =
+                    object : WebViewClient() {
+                        override fun shouldOverrideUrlLoading(
+                            view: WebView?,
+                            request: WebResourceRequest?,
+                        ): Boolean {
+                            @Suppress("DEPRECATION")
+                            return shouldOverrideUrlLoading(view, request?.url.toString())
+                        }
 
-                @Deprecated(
-                    "Deprecated in java, still needed for API 23",
-                    replaceWith = ReplaceWith("shouldOverrideUrlLoading")
-                )
-                override fun shouldOverrideUrlLoading(
-                    view: WebView?,
-                    url: String?
-                ): Boolean {
-                    if (url == null) return false
-                    return maybeRedirectToRemoveAccount(url)
-                }
+                        @Deprecated(
+                            "Deprecated in java, still needed for API 23",
+                            replaceWith = ReplaceWith("shouldOverrideUrlLoading"),
+                        )
+                        override fun shouldOverrideUrlLoading(
+                            view: WebView?,
+                            url: String?,
+                        ): Boolean {
+                            if (url == null) return false
+                            return maybeRedirectToRemoveAccount(url)
+                        }
 
-                override fun onPageFinished(view: WebView?, url: String?) {
-                    super.onPageFinished(view, url)
-                    if (url == null) return
-                    maybeRedirectToRemoveAccount(url)
-                }
+                        override fun onPageFinished(
+                            view: WebView?,
+                            url: String?,
+                        ) {
+                            super.onPageFinished(view, url)
+                            if (url == null) return
+                            maybeRedirectToRemoveAccount(url)
+                        }
+                    }
             }
-        }
 
         // BUG: custom sync server doesn't use this URL
         val url = getString(R.string.remove_account_url)

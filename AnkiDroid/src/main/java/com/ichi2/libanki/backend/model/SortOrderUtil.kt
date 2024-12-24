@@ -15,27 +15,29 @@
  */
 package com.ichi2.libanki.backend.model
 
+import anki.search.SortOrderKt.builtin
+import anki.search.sortOrder
 import com.ichi2.libanki.SortOrder
 
 // Conversion functions from SortOrder to anki.search.SortOrder
 
-fun SortOrder.toProtoBuf(): anki.search.SortOrder {
-    val builder = anki.search.SortOrder.newBuilder()
-    return when (this) {
-        is SortOrder.NoOrdering -> {
-            builder.setNone(anki.generic.Empty.getDefaultInstance())
-        }
-        is SortOrder.AfterSqlOrderBy ->
-            builder.setCustom(this.customOrdering)
-        is SortOrder.BuiltinSortKind ->
-            builder.setBuiltin(this.toProtoBuf())
-        else -> throw IllegalStateException(this.toString())
-    }.build()
-}
+fun SortOrder.toProtoBuf() =
+    sortOrder {
+        when (this@toProtoBuf) {
+            is SortOrder.NoOrdering -> {
+                none = anki.generic.Empty.getDefaultInstance()
+            }
 
-fun SortOrder.BuiltinSortKind.toProtoBuf(): anki.search.SortOrder.Builtin {
-    return anki.search.SortOrder.Builtin.newBuilder()
-        .setColumn(value)
-        .setReverse(reverse)
-        .build()
-}
+            is SortOrder.AfterSqlOrderBy ->
+                custom = customOrdering
+
+            is SortOrder.BuiltinSortKind ->
+                builtin =
+                    builtin {
+                        column = value
+                        reverse = this@toProtoBuf.reverse
+                    }
+
+            else -> throw IllegalStateException(this.toString())
+        }
+    }

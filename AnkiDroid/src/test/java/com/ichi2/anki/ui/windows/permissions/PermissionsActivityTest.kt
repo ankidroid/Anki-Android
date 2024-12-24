@@ -65,14 +65,17 @@ class PermissionsActivityTest : RobolectricTest() {
 
     private fun testActivity(
         permissionSet: PermissionSet,
-        action: ActivityAction<PermissionsActivity>
+        action: ActivityAction<PermissionsActivity>,
     ) {
-        val intent = PermissionsActivity.getIntent(
-            ApplicationProvider.getApplicationContext(),
-            permissionSet
-        )
-        ActivityScenario.launch<PermissionsActivity>(intent).onActivity { activity ->
-            action.perform(activity)
+        val intent =
+            PermissionsActivity.getIntent(
+                ApplicationProvider.getApplicationContext(),
+                permissionSet,
+            )
+        ActivityScenario.launch<PermissionsActivity>(intent).use { scenario ->
+            scenario.onActivity { activity ->
+                action.perform(activity)
+            }
         }
     }
 

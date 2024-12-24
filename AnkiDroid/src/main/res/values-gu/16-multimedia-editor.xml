@@ -59,7 +59,6 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">કંઈક ખોટું થયું</string>
-    <string name="multimedia_editor_svg_preview">SVG પૂર્વાવલોકન માટે ઉપલબ્ધ નથી</string>
     <string name="multimedia_editor_png_paste_error">ક્લિપબોર્ડ છબીને png માં રૂપાંતરિત કરવામાં ભૂલ: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s ફીલ્ડમાં મલ્ટીમીડિયા સામગ્રી ઉમેરો</string>
     <!-- Audio view -->
@@ -69,10 +68,10 @@
     <string name="multimedia_editor_audio_view_create_failed">રેકોર્ડર ટૂલ બાર બનાવવામાં અસમર્થ</string>
     <!-- Crop function-->
     <string name="crop_image">શું તમે આ છબી કાપવા માંગો છો?</string>
-    <string name="crop_button">છબીને કાપો</string>
+    <string name="crop_button" maxLength="28">છબીને કાપો</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"છબી પસંદ કરવામાં નિષ્ફળ, કૃપા કરીને ફરી પ્રયાસ કરો"</string>
     <string name="activity_result_unexpected">ஆப்ஸ் எதிர்பாராத மதிப்பை வழங்கியது. நீங்கள் வேறு ஆப்ஸைப் பயன்படுத்த வேண்டியிருக்கலாம்</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">புல உள்ளடக்கங்கள்</string>
-    <string name="reselect">மீண்டும் தேர்ந்தெடுக்கவும்</string>
+    <string name="reselect" maxLength="28">மீண்டும் தேர்ந்தெடுக்கவும்</string>
 </resources>

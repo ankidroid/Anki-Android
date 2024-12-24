@@ -19,4 +19,6 @@ package com.ichi2.anki.exception
 import java.lang.RuntimeException
 
 /** An exception for manual reporting to ACRA  */
-class ManuallyReportedException(message: String?) : RuntimeException(message)
+class ManuallyReportedException(
+    message: String?,
+) : RuntimeException(message)

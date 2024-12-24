@@ -28,7 +28,7 @@ data class AutoAdvanceSettings(
     val answerAction: AnswerAction,
     val durationToShowQuestionFor: Duration,
     val durationToShowAnswerFor: Duration,
-    val waitForAudio: Boolean
+    val waitForAudio: Boolean,
 ) {
     companion object {
         suspend fun createInstance(deckId: DeckId): AutoAdvanceSettings {
@@ -42,7 +42,7 @@ data class AutoAdvanceSettings(
                 answerAction = answerAction,
                 durationToShowQuestionFor = config.secondsToShowQuestion.toDuration(DurationUnit.SECONDS),
                 durationToShowAnswerFor = config.secondsToShowAnswer.toDuration(DurationUnit.SECONDS),
-                waitForAudio = waitForAudio
+                waitForAudio = waitForAudio,
             )
         }
     }

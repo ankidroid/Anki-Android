@@ -36,30 +36,34 @@ object Permissions {
     const val MANAGE_EXTERNAL_STORAGE = "android.permission.MANAGE_EXTERNAL_STORAGE"
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    val tiramisuPhotosAndVideosPermissions = listOf(
-        Manifest.permission.READ_MEDIA_IMAGES,
-        Manifest.permission.READ_MEDIA_VIDEO
-    )
+    val tiramisuPhotosAndVideosPermissions =
+        listOf(
+            Manifest.permission.READ_MEDIA_IMAGES,
+            Manifest.permission.READ_MEDIA_VIDEO,
+        )
 
-    val postNotification = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        Manifest.permission.POST_NOTIFICATIONS
-    } else {
-        null
-    }
+    val postNotification =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Manifest.permission.POST_NOTIFICATIONS
+        } else {
+            null
+        }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     val tiramisuAudioPermission = Manifest.permission.READ_MEDIA_AUDIO
 
-    val legacyStorageAccessPermissions = listOf(
-        Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
-    )
+    val legacyStorageAccessPermissions =
+        listOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        )
 
-    fun canRecordAudio(context: Context): Boolean {
-        return hasPermission(context, Manifest.permission.RECORD_AUDIO)
-    }
+    fun canRecordAudio(context: Context): Boolean = hasPermission(context, Manifest.permission.RECORD_AUDIO)
 
-    fun hasPermission(context: Context, permission: String): Boolean {
+    fun hasPermission(
+        context: Context,
+        permission: String,
+    ): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && permission == MANAGE_EXTERNAL_STORAGE) {
             // checkSelfPermission doesn't return PERMISSION_GRANTED, even if it's granted.
             return isExternalStorageManager()
@@ -68,9 +72,10 @@ object Permissions {
         return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
     }
 
-    fun hasAllPermissions(context: Context, permissions: Collection<String>): Boolean {
-        return permissions.all { hasPermission(context, it) }
-    }
+    fun hasAllPermissions(
+        context: Context,
+        permissions: Collection<String>,
+    ): Boolean = permissions.all { hasPermission(context, it) }
 
     @RequiresApi(Build.VERSION_CODES.R)
     fun isExternalStorageManager(): Boolean {
@@ -100,9 +105,9 @@ object Permissions {
      * @return
      */
     @JvmStatic // unit tests were flaky - maybe remove later
-    private fun hasStorageWriteAccessPermission(context: Context): Boolean {
-        return hasPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    }
+    private fun hasStorageWriteAccessPermission(
+        context: Context,
+    ): Boolean = hasPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
     /**
      * Check if we have read access permission to the external storage
@@ -110,9 +115,9 @@ object Permissions {
      * @return
      */
     @JvmStatic // unit tests were flaky - maybe remove later
-    private fun hasStorageReadAccessPermission(context: Context): Boolean {
-        return hasPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
-    }
+    private fun hasStorageReadAccessPermission(
+        context: Context,
+    ): Boolean = hasPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
 
     /**
      * Check if we have read and write access permission to the external storage
@@ -123,9 +128,8 @@ object Permissions {
      * @param context
      */
     @JvmStatic // unit tests were flaky - maybe remove later
-    fun hasLegacyStorageAccessPermission(context: Context): Boolean {
-        return hasStorageReadAccessPermission(context) && hasStorageWriteAccessPermission(context)
-    }
+    fun hasLegacyStorageAccessPermission(context: Context): Boolean =
+        hasStorageReadAccessPermission(context) && hasStorageWriteAccessPermission(context)
 
     /**
      * Detects if permissions are defined via <uses-permission> in the Manifest.
@@ -139,7 +143,10 @@ object Permissions {
      * @param permissions One or more permission strings, typically defined in [Manifest.permission]
      * @return `true` if all permissions were granted. `false` otherwise, or if an error occurs.
      */
-    fun Context.arePermissionsDefinedInManifest(packageName: String, vararg permissions: String): Boolean {
+    fun Context.arePermissionsDefinedInManifest(
+        packageName: String,
+        vararg permissions: String,
+    ): Boolean {
         try {
             val permissionsInManifest = getPermissionsDefinedInManifest(packageName) ?: return false
             return permissions.all { permissionsInManifest.contains(it) }
@@ -149,8 +156,8 @@ object Permissions {
         return false
     }
 
-    private fun Context.getPermissionsDefinedInManifest(packageName: String): Array<out String>? {
-        return try {
+    private fun Context.getPermissionsDefinedInManifest(packageName: String): Array<out String>? =
+        try {
             // requestedPermissions => <uses-permission> in manifest
             val flags = PackageInfoFlagsCompat.of(GET_PERMISSIONS.toLong())
             getPackageInfoCompat(packageName, flags)!!.requestedPermissions
@@ -158,7 +165,6 @@ object Permissions {
             Timber.w(e)
             null
         }
-    }
 
     /**
      * @see Context.arePermissionsDefinedInManifest

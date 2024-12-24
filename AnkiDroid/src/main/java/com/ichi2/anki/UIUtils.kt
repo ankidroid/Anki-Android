@@ -9,21 +9,34 @@ import androidx.annotation.StringRes
 import com.ichi2.libanki.utils.Time
 import java.util.Calendar
 
-fun showThemedToast(context: Context, text: String, shortLength: Boolean) {
+fun showThemedToast(
+    context: Context,
+    text: String,
+    shortLength: Boolean,
+) {
     Toast.makeText(context, text, if (shortLength) Toast.LENGTH_SHORT else Toast.LENGTH_LONG).show()
 }
 
-fun showThemedToast(context: Context, text: CharSequence, shortLength: Boolean) {
+fun showThemedToast(
+    context: Context,
+    text: CharSequence,
+    shortLength: Boolean,
+) {
     showThemedToast(context, text.toString(), shortLength)
 }
 
-fun showThemedToast(context: Context, @StringRes textResource: Int, shortLength: Boolean) {
+fun showThemedToast(
+    context: Context,
+    @StringRes textResource: Int,
+    shortLength: Boolean,
+) {
     Toast.makeText(context, textResource, if (shortLength) Toast.LENGTH_SHORT else Toast.LENGTH_LONG).show()
 }
 
-fun getDensityAdjustedValue(context: Context, value: Float): Float {
-    return context.resources.displayMetrics.density * value
-}
+fun getDensityAdjustedValue(
+    context: Context,
+    value: Float,
+): Float = context.resources.displayMetrics.density * value
 
 fun getDayStart(time: Time): Long {
     val cal = time.calendar()
@@ -44,6 +57,11 @@ fun getDayStart(time: Time): Long {
  * @param context Context to get resources and device specific display metrics.
  * @return A float value to represent px value which is equivalent to the passed dp value.
  */
-fun convertDpToPixel(dp: Float, context: Context): Float {
-    return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
-}
+fun convertDpToPixel(
+    dp: Float,
+    context: Context,
+): Float =
+    dp * (
+        context.resources.displayMetrics.densityDpi
+            .toFloat() / DisplayMetrics.DENSITY_DEFAULT
+    )

@@ -58,23 +58,23 @@
         <item quantity="one">గమనికను తొలగించండి</item>
         <item quantity="other">గమనికలను తొలగించండి</item>
     </plurals>
-    <string name="card_browser_change_deck">డెక్ మార్చండి</string>
+    <string name="card_browser_change_deck" maxLength="28">డెక్ మార్చండి</string>
     <string name="delete_card_title">గమనికను తొలగించాలా?</string>
-    <string name="card_browser_show_marked" maxLength="29">ఫిల్టర్ మార్క్ చేయబడింది</string>
-    <string name="card_browser_show_suspended" maxLength="29">ఫిల్టర్ సస్పెండ్ చేయబడింది</string>
-    <string name="card_browser_search_by_tag" maxLength="29">ట్యాగ్ ద్వారా ఫిల్టర్ చేయండి</string>
-    <string name="card_browser_search_by_flag" maxLength="29">ఫ్లాగ్ ద్వారా ఫిల్టర్ చేయండి</string>
-    <string name="card_browser_list_my_searches" maxLength="29">నా శోధనలు</string>
-    <string name="card_browser_list_my_searches_save" maxLength="29">శోధనను సేవ్ చేయండి</string>
+    <string name="card_browser_show_marked" maxLength="28">ఫిల్టర్ మార్క్ చేయబడింది</string>
+    <string name="card_browser_show_suspended" maxLength="28">ఫిల్టర్ సస్పెండ్ చేయబడింది</string>
+    <string name="card_browser_search_by_tag" maxLength="28">ట్యాగ్ ద్వారా ఫిల్టర్ చేయండి</string>
+    <string name="card_browser_search_by_flag" maxLength="28">ఫ్లాగ్ ద్వారా ఫిల్టర్ చేయండి</string>
+    <string name="card_browser_list_my_searches" maxLength="28">నా శోధనలు</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">శోధనను సేవ్ చేయండి</string>
     <string name="card_browser_list_my_searches_title">సేవ్ చేసిన శోధనను ఎంచుకోండి</string>
     <string name="card_browser_list_my_searches_new_name">ప్రస్తుత శోధన కోసం పేరు</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">మీరు పేరు లేకుండా శోధనను సేవ్ చేయలేరు</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">పేరు ఉంది</string>
     <string name="no_note_to_edit">సవరించడానికి గమనిక లేదు</string>
     <string name="card_browser_list_my_searches_remove_content">తొలగించు\"%1$s\"?</string>
-    <string name="card_browser_change_display_order" maxLength="29">ప్రదర్శన క్రమం మార్చండి</string>
+    <string name="card_browser_change_display_order" maxLength="28">ప్రదర్శన క్రమం మార్చండి</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">శోధించండి</string>
-    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">శోధించండి</string>
     <string name="card_browser_change_display_order_title">ప్రదర్శన క్రమాన్ని ఎంచుకోండి</string>
     <string name="card_details_tags">టాగ్లు</string>
     <string-array name="card_browser_order_labels">
@@ -89,8 +89,8 @@
         <item>సమీక్షల ద్వారా</item>
         <item>లోపాల ద్వారా</item>
     </string-array>
-    <string name="card_browser_select_all" maxLength="29">అన్ని ఎంచుకోండి</string>
-    <string name="card_browser_select_none">ఏది కాదు</string>
+    <string name="card_browser_select_all" maxLength="28">అన్ని ఎంచుకోండి</string>
+    <string name="card_browser_select_none" maxLength="28">ఏది కాదు</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(కొత్త)</string>
     <string name="card_browser_due_filtered_card">(ఫిల్టర్ చేయబడింది)</string>
     <string name="card_browser_interval_learning_card">(నేర్చుకోవడం)</string>
@@ -112,6 +112,6 @@
         <item quantity="other">%d కార్డ్‌లు తొలగించబడ్డాయి</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">ట్యాగ్‌ల డైలాగ్‌ని సవరించండి</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">ఆర్డర్ డైలాగ్‌ని చూపించు</string>
 </resources>

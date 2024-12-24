@@ -149,8 +149,6 @@
     <string name="notification_minimum_cards_due">超過 %d 張卡片到期</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">震動</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">提示燈</string>
-    <string name="timeout_answer_text" maxLength="41">自動顯示答案</string>
-    <string name="timeout_answer_summ2">在沒有用戶輸入的情況下自動顯示答案。從牌組選項進行配置。</string>
     <string name="select_locale_title">選擇語言</string>
     <string name="software_render" maxLength="41">禁用卡片硬體渲染</string>
     <string name="software_render_summ">硬體渲染速度較快，但可能存在問題，特別是位於 Android 8/8.1 中。如果您看不到部分卡片復習使用者頁面，請嘗試此設定。</string>
@@ -268,21 +266,21 @@
     <string name="axis_picker_move_joystick">移動搖桿/運動控制器</string>
     <string name="user_actions" maxLength="41">使用者操作</string>
     <string name="user_actions_summary" maxLength="41">從檢閱畫面觸發 JavaScript</string>
-    <string name="user_action_1" maxLength="41">用戶動作 1</string>
-    <string name="user_action_2" maxLength="41">用戶動作 2</string>
-    <string name="user_action_3" maxLength="41">用戶動作 3</string>
-    <string name="user_action_4" maxLength="41">用戶動作 4</string>
-    <string name="user_action_5" maxLength="41">用戶動作 5</string>
-    <string name="user_action_6" maxLength="41">用戶動作 6</string>
-    <string name="user_action_7" maxLength="41">用戶動作 7</string>
-    <string name="user_action_8" maxLength="41">用戶動作 8</string>
-    <string name="user_action_9" maxLength="41">用戶動作 9</string>
+    <string name="user_action_1" maxLength="28">用戶動作 1</string>
+    <string name="user_action_2" maxLength="28">用戶動作 2</string>
+    <string name="user_action_3" maxLength="28">用戶動作 3</string>
+    <string name="user_action_4" maxLength="28">用戶動作 4</string>
+    <string name="user_action_5" maxLength="28">用戶動作 5</string>
+    <string name="user_action_6" maxLength="28">用戶動作 6</string>
+    <string name="user_action_7" maxLength="28">用戶動作 7</string>
+    <string name="user_action_8" maxLength="28">用戶動作 8</string>
+    <string name="user_action_9" maxLength="28">用戶動作 9</string>
     <string name="toggle_auto_advance" maxLength="41">切換自動提前</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">選取卡面</string>
     <string name="card_side_question">問題</string>
     <string name="card_side_answer">答案</string>
-    <string name="card_side_both">問與答</string>
+    <string name="card_side_both" maxLength="28">問與答</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">問：%s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">答：%s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>

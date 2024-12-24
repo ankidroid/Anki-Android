@@ -64,23 +64,23 @@
         <item quantity="many">מחק הערות</item>
         <item quantity="other">מחק הערות</item>
     </plurals>
-    <string name="card_browser_change_deck">החלפת חפיסה</string>
+    <string name="card_browser_change_deck" maxLength="28">החלפת חפיסה</string>
     <string name="delete_card_title">למחוק את הרשומה?</string>
-    <string name="card_browser_show_marked" maxLength="29">סינון לפי סימון</string>
-    <string name="card_browser_show_suspended" maxLength="29">סינון לפי השהייה</string>
-    <string name="card_browser_search_by_tag" maxLength="29">סינון לפי תג</string>
-    <string name="card_browser_search_by_flag" maxLength="29">סינון לפי דגל</string>
-    <string name="card_browser_list_my_searches" maxLength="29">החיפושים שלי</string>
-    <string name="card_browser_list_my_searches_save" maxLength="29">שמירת חיפוש</string>
+    <string name="card_browser_show_marked" maxLength="28">סינון לפי סימון</string>
+    <string name="card_browser_show_suspended" maxLength="28">סינון לפי השהייה</string>
+    <string name="card_browser_search_by_tag" maxLength="28">סינון לפי תג</string>
+    <string name="card_browser_search_by_flag" maxLength="28">סינון לפי דגל</string>
+    <string name="card_browser_list_my_searches" maxLength="28">החיפושים שלי</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">שמירת חיפוש</string>
     <string name="card_browser_list_my_searches_title">בחירת חיפוש שמור</string>
     <string name="card_browser_list_my_searches_new_name">שם עבור החיפוש הנוכחי</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">לא ניתן לשמור חיפוש ללא שם</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">השם כבר קיים</string>
     <string name="no_note_to_edit">אין הערה לעריכה</string>
     <string name="card_browser_list_my_searches_remove_content">למחוק את ”%1$s”?</string>
-    <string name="card_browser_change_display_order" maxLength="29">שינוי סדר ההצגה</string>
-    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_change_display_order" maxLength="28">שינוי סדר ההצגה</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">חיפוש</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">חיפוש</string>
     <string name="card_browser_change_display_order_title">בחירת סדר ההצגה</string>
     <string name="card_details_tags">תגיות</string>
     <string-array name="card_browser_order_labels">
@@ -95,8 +95,8 @@
         <item>לפי מספר השינונים</item>
         <item>לפי חזרות</item>
     </string-array>
-    <string name="card_browser_select_all" maxLength="29">בחר הכל</string>
-    <string name="card_browser_select_none">ביטול בחירה</string>
+    <string name="card_browser_select_all" maxLength="28">בחר הכל</string>
+    <string name="card_browser_select_none" maxLength="28">ביטול בחירה</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(חדש)</string>
     <string name="card_browser_due_filtered_card">(מסונן)</string>
     <string name="card_browser_interval_learning_card">(נלמד)</string>
@@ -124,6 +124,6 @@
         <item quantity="other">%d כרטיסים נמחקו.</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">תיבת דו-שיח עריכת תגים</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">הצג תיבת הזמנה</string>
 </resources>

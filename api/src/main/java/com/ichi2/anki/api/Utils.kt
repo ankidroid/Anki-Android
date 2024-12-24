@@ -20,6 +20,7 @@ import android.text.Html
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.util.regex.Pattern
+
 /**
  * Utilities class for the API
  */
@@ -33,14 +34,13 @@ internal object Utils {
     private const val FIELD_SEPARATOR = '\u001f'.toString()
 
     // TODO: Add contract for null -> null and non-null to non-null when kotlin contracts become stable/out of experimental phase
-    fun joinFields(list: Array<String>?): String? {
-        return list?.joinToString(FIELD_SEPARATOR)
-    }
+    fun joinFields(list: Array<String>?): String? = list?.joinToString(FIELD_SEPARATOR)
 
-    fun splitFields(fields: String): Array<String> {
-        return fields.split(FIELD_SEPARATOR.toRegex()).dropLastWhile { it.isEmpty() }
+    fun splitFields(fields: String): Array<String> =
+        fields
+            .split(FIELD_SEPARATOR.toRegex())
+            .dropLastWhile { it.isEmpty() }
             .toTypedArray()
-    }
 
     fun joinTags(tags: Set<String?>?): String {
         if (tags.isNullOrEmpty()) {
@@ -52,9 +52,7 @@ internal object Utils {
         return tags.joinToString(" ")
     }
 
-    fun splitTags(tags: String): Array<String> {
-        return tags.trim { it <= ' ' }.split("\\s+".toRegex()).toTypedArray()
-    }
+    fun splitTags(tags: String): Array<String> = tags.trim { it <= ' ' }.split("\\s+".toRegex()).toTypedArray()
 
     fun fieldChecksum(data: String): Long {
         val strippedData = stripHTMLMedia(data)
@@ -74,7 +72,7 @@ internal object Utils {
             // This is guaranteed to never happen
             throw IllegalStateException(
                 "Error making field checksum with SHA1 algorithm and UTF-8 encoding",
-                e
+                e,
             )
         }
     }

@@ -39,15 +39,15 @@ def openReport(htmlOutDir) {
 
     def os = org.gradle.internal.os.OperatingSystem.current()
     if (os.isWindows()) {
-        exec { commandLine 'cmd', '/c', "start $reportPath" }
+        new ProcessBuilder('cmd', '/c', "start $reportPath")
     } else if (os.isMacOsX()) {
-        exec { commandLine 'open', "$reportPath" }
+        new ProcessBuilder('open', "$reportPath").start()
     } else if (os.isLinux()) {
         try {
-            exec { commandLine 'xdg-open', "$reportPath" }
+            new ProcessBuilder('xdg-open', "$reportPath" )
         } catch (Exception ignored) {
             if (localProperties.containsKey("linux-html-cmd")) {
-                exec { commandLine properties.get("linux-html-cmd"), "$reportPath" }
+                new ProcessBuilder(properties.get("linux-html-cmd"), "$reportPath")
             } else {
                 println "'linux-html-cmd' property could not be found in 'local.properties'"
             }
@@ -108,7 +108,7 @@ def testReport = tasks.register('jacocoTestReport', JacocoReport) {
 
     reports {
         xml.required = true
-        html.destination htmlOutDir
+        html.outputLocation = htmlOutDir
     }
 
     def kotlinClasses = fileTree(dir: project.layout.buildDirectory.dir(classDir), excludes: fileFilter)
@@ -136,7 +136,7 @@ def unitTestReport = tasks.register('jacocoUnitTestReport', JacocoReport) {
 
     reports {
         xml.required = true
-        html.destination htmlOutDir
+        html.outputLocation = htmlOutDir
     }
 
     def kotlinClasses = fileTree(dir: project.layout.buildDirectory.dir(classDir), excludes: fileFilter)
@@ -161,7 +161,7 @@ def androidTestReport = tasks.register('jacocoAndroidTestReport', JacocoReport) 
 
     reports {
         xml.required = true
-        html.destination htmlOutDir
+        html.outputLocation = htmlOutDir
     }
 
     def kotlinClasses = fileTree(dir: project.layout.buildDirectory.dir(classDir), excludes: fileFilter)
@@ -194,7 +194,7 @@ tasks.register('assertNonzeroAndroidTestCoverage') {
         // https://github.com/jacoco/jacoco/blob/5aabb2eb60bbcd05df968005f1746ba19dcd5361/org.jacoco.report/src/org/jacoco/report/internal/xml/ReportElement.java#L190
         for (Node child : reportRoot.children()) {
             if (child.name() != "counter")
-                continue;
+                continue
 
             if (child.attribute("covered") == "0") {
                 logger.warn("jacoco registered zero code coverage for counter type " + child.attribute("type"), null)
@@ -209,5 +209,4 @@ tasks.register('assertNonzeroAndroidTestCoverage') {
 }
 afterEvaluate {
     tasks.named('jacocoAndroidTestReport').configure { finalizedBy('assertNonzeroAndroidTestCoverage') }
-    tasks.named('jacocoTestReport').configure { finalizedBy('assertNonzeroAndroidTestCoverage') }
 }

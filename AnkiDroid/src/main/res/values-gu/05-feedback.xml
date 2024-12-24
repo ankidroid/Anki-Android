@@ -46,7 +46,7 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">ભૂલ રિપોર્ટિંગ મોડ</string>
+    <string name="error_reporting_choice" maxLength="41">ભૂલ રિપોર્ટિંગ મોડ</string>
     <string name="feedback_disclaimer">અસ્વીકરણ: અમે તમારું ઇમેઇલ સરનામું, ફોન નંબર અથવા તમારા ફોન IMEI જેવી કોઈપણ વ્યક્તિગત માહિતી એકત્રિત કરતા નથી. અમે તમારા ઉપકરણ વિશે કેટલીક માહિતી એકત્રિત કરીએ છીએ જેમ કે Android ના ઉત્પાદક, મોડલ અને સંસ્કરણ, તેમજ જાણ કરવામાં આવેલી ભૂલોની પ્રકૃતિ અને તે થવા તરફ દોરી જતા પગલાં.</string>
     <string name="feedback_title">AnkiDroid પ્રતિસાદ</string>
     <string name="feedback_default_text">તમે જાણ કરી રહ્યાં છો તે કોઈપણ ભૂલોની પ્રકૃતિ વિશે તમારો પ્રતિસાદ અથવા માહિતી દાખલ કરો.</string>

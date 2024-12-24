@@ -55,21 +55,21 @@
     <string name="edit_occlusions">Occlusies bewerken</string>
     <string name="tag_name">Labelnaam</string>
     <string name="add_new_filter_tags">Labels toevoegen/filteren</string>
-    <string name="add_tag">Label toevoegen</string>
-    <string name="check_all_tags">Alle labels selecteren/deselecteren</string>
-    <string name="filter_tags">Op labels filteren</string>
+    <string name="add_tag" maxLength="28">Label toevoegen</string>
+    <string name="check_all_tags" maxLength="28">Alle labels selecteren/deselecteren</string>
+    <string name="filter_tags" maxLength="28">Op labels filteren</string>
     <string name="no_tags">Je hebt nog geen labels toegevoegd.</string>
     <string name="updated_version">Geüpdatet naar versie %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Schrijfbord opslaan</string>
-    <string name="enable_stylus">Stylus schrijven inschakelen</string>
+    <string name="save_whiteboard" maxLength="28">Schrijfbord opslaan</string>
+    <string name="enable_stylus" maxLength="28">Stylus schrijven inschakelen</string>
     <string name="disable_stylus">Stylus schrijven uitschakelen</string>
-    <string name="enable_whiteboard">Whiteboard inschakelen</string>
+    <string name="enable_whiteboard" maxLength="28">Whiteboard inschakelen</string>
     <string name="disable_whiteboard">Whiteboard uitschakelen</string>
     <string name="show_whiteboard">Toon het schrijfbord</string>
-    <string name="hide_whiteboard">Verberg het schrijfbord</string>
-    <string name="clear_whiteboard">Schrijfbord schoonvegen</string>
-    <string name="replay_audio">Audio herhalen</string>
+    <string name="hide_whiteboard" maxLength="28">Verberg het schrijfbord</string>
+    <string name="clear_whiteboard" maxLength="28">Schrijfbord schoonvegen</string>
+    <string name="replay_audio" maxLength="28">Audio herhalen</string>
     <string name="leech_suspend_notification">Kaart gemarkeerd als moeilijk en uitgesteld</string>
     <string name="leech_notification">Kaart gemarkeerd als moeilijk</string>
     <string name="webview_crash_unknown">Onbekende fout</string>
@@ -80,28 +80,24 @@
     <string name="webview_crash_fatal">Fatale fout: WebView renderer is gecrasht. Oorzaak: %s</string>
     <string name="webview_crash_loop_dialog_title">Systeem WebView Rendering Mislukking.</string>
     <string name="webview_crash_loop_dialog_content">Systeem WebView kon de kaart \'%1$s\' niet renderen.\n%2$s</string>
-    <string name="filter_by_flags">Vlaggen </string>
+    <string name="filter_by_flags" maxLength="41">Vlaggen </string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Nieuwe kaartenlimiet voor vandaag wijzigen</string>
-    <string name="custom_study_increase_review_limit">Limiet te overhoren kaarten voor vandaag wijzigen</string>
-    <string name="custom_study_review_forgotten">Vergeten kaarten overhoren</string>
-    <string name="custom_study_review_ahead">Vooruit overhoren</string>
-    <string name="custom_study_random_selection">Een willekeurige selectie van kaarten studeren</string>
-    <string name="custom_study_preview_new">Geef voorbeeld van nieuwe kaarten</string>
     <string name="custom_study_limit_tags">Beperken tot bepaalde tags</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Kaart bewerken</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">Kaart bewerken</string>
     <string name="discard">Weggooien</string>
     <string name="note_editor_no_cards_created">Geen kaarten aangemaakt. Vul alstublieft meer velden in</string>
     <string name="note_editor_no_cards_created_all_fields">Het huidige type memo produceerde geen kaarten.\nKies alstublieft een ander type memo, of klik op \'Kaarten\' en voeg een veld substitutie toe.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Invuloefeningen werken slechts bij een memo van het type Cloze</string>
     <string name="saving_facts">Kaart opslaan</string>
     <string name="saving_model">Memotype opslaan</string>
-    <string name="save">Opslaan</string>
+    <string name="save" maxLength="28">Opslaan</string>
     <string name="close">Sluiten</string>
     <string name="select">Selecteren</string>
     <string name="field_remapping">%1$s (van “%2$s”)</string>
@@ -119,19 +115,18 @@
         <item quantity="other">%1$d minuten</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Ankidroid kaart</string>
-    <string name="note_editor_copy_note">Memo kopiëren</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Verplaatsen</string>
-    <string name="card_editor_reset_card">Vooruitgang resetten</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Opnieuw inplannen</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">Voorbeeld</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Kopiëren als Markdown</string>
+    <string name="note_editor_copy_note" maxLength="28">Memo kopiëren</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Verplaatsen</string>
+    <string name="card_editor_reset_card" maxLength="28">Vooruitgang resetten</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Opnieuw inplannen</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Voorbeeld</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Kopiëren als Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d van %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Naam wijzigen</string>
-    <string name="checks_action">Controleren</string>
-    <string name="check_db">Database controleren</string>
-    <string name="check_media">Media controleren</string>
-    <string name="empty_cards">Lege kaarten zoeken</string>
-    <string name="empty_card_warning">Deze kaart is leeg. Gebruik de optie \"Lege kaarten zoeken\" in het menu op het scherm van de lijst met leersets.</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Naam wijzigen</string>
+    <string name="checks_action" maxLength="28">Controleren</string>
+    <string name="check_db" maxLength="28">Database controleren</string>
+    <string name="check_media" maxLength="28">Media controleren</string>
+    <string name="empty_cards" maxLength="28">Lege kaarten zoeken</string>
     <string name="unknown_type_field_warning">Type antwoord: onbekend veld %s</string>
     <string name="delete_deck">Leerset verwijderen&#8230;\nEven wachten.</string>
     <string name="info_rate">Beoordeel AnkiDroid</string>
@@ -165,12 +160,11 @@
     <string name="export_choice_share">Delen</string>
     <string name="export_choice_save_to">Opslaan in</string>
     <string name="export_saving_exported_collection">Geëxporteerd bestand opslaan&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">Opties</string>
-    <string name="menu__deck_options">Setopties</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Opties</string>
+    <string name="menu__deck_options" maxLength="28">Setopties</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Studieopties</string>
-    <string name="select_tts">TTS-taal instellen</string>
-    <string name="custom_study">Aangepast studeren</string>
-    <string name="more_options">Meer</string>
+    <string name="select_tts" maxLength="28">TTS-taal instellen</string>
+    <string name="custom_study" maxLength="28">Aangepast studeren</string>
     <string name="dyn_deck_desc">Dit is een speciale set bedoeld om buiten het normale schema te studeren. Kaarten keren onmiddellijk terug naar hun oorspronkelijke set nadat u hen overhoord heeft. Als u deze set verwijdert, keren alle overgebleven kaarten onmiddellijk terug naar hun oorspronkelijke set.</string>
     <string name="steps_error">Aantal stappen moet hoger zijn dan 0</string>
     <string name="steps_min_error">Ten minste één stap is vereist</string>
@@ -191,17 +185,17 @@
     <string name="web_page_error">Fout bij het laden van de pagina: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Achtergrond</string>
-    <string name="choose_an_image">Kies een afbeelding</string>
+    <string name="background_image_title" maxLength="41">Achtergrond</string>
+    <string name="choose_an_image" maxLength="41">Kies een afbeelding</string>
     <string name="remove_background_image">Achtergrond verwijderen?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Herstel Standaardinstellingen</string>
+    <string name="restore_default" maxLength="28">Herstel Standaardinstellingen</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Leeg</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Opslaan van schrijfbordafbeelding is mislukt. %s</string>
     <string name="white_board_image_saved">schrijfbordafbeelding opgeslagen in %s</string>
-    <string name="title_whiteboard_pen_color">Penkleur schrijfbord</string>
-    <string name="title_whiteboard_editor">Whiteboard bewerker</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">Penkleur schrijfbord</string>
+    <string name="title_whiteboard_editor" maxLength="28">Whiteboard bewerker</string>
     <string name="user_is_a_robot">Geautomatiseerde test gedetecteerd. Als u een mens bent, neem dan contact op met de AnkiDroid-ondersteuning</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Deze kaart maakt gebruik van niet-ondersteunde AnkiDroid-functies. Neem contact op met de ontwikkelaar %1$s of raadpleeg de wiki. %2$s</string>
@@ -216,12 +210,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Fout met de kaartinhoud: Laden van ‘%s ’ is mislukt</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Sets doorzoeken</string>
+    <string name="search_decks" maxLength="28">Sets doorzoeken</string>
     <string name="ankidroid_init_failed_webview_title">Onherstelbare fout</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid berust op de System WebView die niet beschikbaar is. Dit kan gebeuren als het systeem bezig is met het installeren van updates. Probeer opnieuw na enkele minuten.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Lettergrootte</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Werkbalk weergeven</string>
+    <string name="menu_font_size" maxLength="28">Lettergrootte</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Werkbalk weergeven</string>
     <string name="format_insert_bold">Formatteren als vetgedrukt</string>
     <string name="format_insert_italic">Formatteren als cursief</string>
     <string name="format_insert_underline">Formatteren als onderstreept</string>
@@ -243,8 +237,8 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Mogelijk moet u iManager gebruiken om AnkiDroid snelkoppelingen te laten toevoegen</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Uw startscherm staat niet toe dat AnkiDroid snelkoppelingen toevoegt</string>
     <string name="create_shortcut_error">Fout bij het toevoegen van de snelkoppeling: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Zinnen in hoofdletters</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll werkbalk</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Zinnen in hoofdletters</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Scroll werkbalk</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -267,7 +261,7 @@
     <string name="check_network">Controleer alsrublief uw internetconnectie</string>
     <string name="search_using_deck_name">Zoek met setnaam</string>
     <string name="external_storage_unavailable">Download afgebroken, externe opslag is niet beschikbaar</string>
-    <string name="home">Startpagina</string>
+    <string name="home" maxLength="28">Startpagina</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Kaart begraven.</string>
@@ -335,7 +329,7 @@
         <item quantity="one">%d kaart onbegraven</item>
         <item quantity="other">%d kaarten onbegraven</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Verplaatsen</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Verplaatsen</string>
     <string name="start_recording">Opnemen</string>
     <string name="stop_recording">Stoppen</string>
     <string name="play_recording">Afspelen</string>
@@ -359,4 +353,6 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
     <string name="show_shortcuts_message">Press Alt+K to show keyboard shortcuts</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
+    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
 </resources>

@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">%d કરતાં વધુ કાર્ડ બાકી છે</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">વાઇબ્રેટ</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">ઝબકતો પ્રકાશ</string>
-    <string name="timeout_answer_text" maxLength="41">આપોઆપ પ્રદર્શન જવાબ</string>
-    <string name="timeout_answer_summ2">વપરાશકર્તા ઇનપુટ વિના આપમેળે જવાબ બતાવો. ડેક વિકલ્પોમાંથી ગોઠવો.</string>
     <string name="select_locale_title">ભાષા પસંદ કરો</string>
     <string name="software_render" maxLength="41">કાર્ડ હાર્ડવેર રેન્ડરને અક્ષમ કરો</string>
     <string name="software_render_summ">હાર્ડવેર રેન્ડર ઝડપી છે પરંતુ ખાસ કરીને Android 8/8.1 પર સમસ્યાઓ આવી શકે છે. જો તમે કાર્ડ રિવ્યુ યુઝર ઈન્ટરફેસના ભાગો જોઈ શકતા નથી, તો આ સેટિંગ અજમાવી જુઓ.</string>
@@ -270,21 +268,21 @@
     <string name="axis_picker_move_joystick">જોયસ્ટીક/મોશન કંટ્રોલર ખસેડો</string>
     <string name="user_actions" maxLength="41">વપરાશકર્તા ક્રિયાઓ</string>
     <string name="user_actions_summary" maxLength="41">સમીક્ષા સ્ક્રીનમાંથી JavaScript ટ્રિગર કરો</string>
-    <string name="user_action_1" maxLength="41">વપરાશકર્તા ક્રિયા 1</string>
-    <string name="user_action_2" maxLength="41">વપરાશકર્તા ક્રિયા 2</string>
-    <string name="user_action_3" maxLength="41">વપરાશકર્તા ક્રિયા 3</string>
-    <string name="user_action_4" maxLength="41">વપરાશકર્તા ક્રિયા 4</string>
-    <string name="user_action_5" maxLength="41">વપરાશકર્તા ક્રિયા 5</string>
-    <string name="user_action_6" maxLength="41">વપરાશકર્તા ક્રિયા 6</string>
-    <string name="user_action_7" maxLength="41">વપરાશકર્તા ક્રિયા 7</string>
-    <string name="user_action_8" maxLength="41">વપરાશકર્તા ક્રિયા 8</string>
-    <string name="user_action_9" maxLength="41">વપરાશકર્તા ક્રિયા 9</string>
+    <string name="user_action_1" maxLength="28">વપરાશકર્તા ક્રિયા 1</string>
+    <string name="user_action_2" maxLength="28">વપરાશકર્તા ક્રિયા 2</string>
+    <string name="user_action_3" maxLength="28">વપરાશકર્તા ક્રિયા 3</string>
+    <string name="user_action_4" maxLength="28">વપરાશકર્તા ક્રિયા 4</string>
+    <string name="user_action_5" maxLength="28">વપરાશકર્તા ક્રિયા 5</string>
+    <string name="user_action_6" maxLength="28">વપરાશકર્તા ક્રિયા 6</string>
+    <string name="user_action_7" maxLength="28">વપરાશકર્તા ક્રિયા 7</string>
+    <string name="user_action_8" maxLength="28">વપરાશકર્તા ક્રિયા 8</string>
+    <string name="user_action_9" maxLength="28">વપરાશકર્તા ક્રિયા 9</string>
     <string name="toggle_auto_advance" maxLength="41">ઑટો એડવાન્સ ટૉગલ કરો</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">કાર્ડ બાજુ પસંદ કરો</string>
     <string name="card_side_question">પ્રશ્ન</string>
     <string name="card_side_answer">જવાબ આપો</string>
-    <string name="card_side_both">Question &amp; Answer</string>
+    <string name="card_side_both" maxLength="28">Question &amp; Answer</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">પ્રશ્ન: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">આ: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>

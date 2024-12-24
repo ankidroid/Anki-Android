@@ -27,28 +27,27 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.utils.title
 
 class DeckPickerContextMenu : AnalyticsDialogFragment() {
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        assert(requireArguments().containsKey(ARG_DECK_ID))
-        assert(requireArguments().containsKey(ARG_DECK_NAME))
-        assert(requireArguments().containsKey(ARG_DECK_IS_DYN))
-        assert(requireArguments().containsKey(ARG_DECK_HAS_BURIED_IN_DECK))
+        require(requireArguments().containsKey(ARG_DECK_ID)) { "Missing argument deck id" }
+        require(requireArguments().containsKey(ARG_DECK_NAME)) { "Missing argument deck name" }
+        require(requireArguments().containsKey(ARG_DECK_IS_DYN)) { "Missing argument deck is dynamic" }
+        require(requireArguments().containsKey(ARG_DECK_HAS_BURIED_IN_DECK)) { "Missing argument deck has buried" }
         val options = createOptionsList()
-        return AlertDialog.Builder(requireActivity())
+        return AlertDialog
+            .Builder(requireActivity())
             .title(text = requireArguments().getString(ARG_DECK_NAME))
             .setItems(
-                options.map { resources.getString(it.optionName) }.toTypedArray()
+                options.map { resources.getString(it.optionName) }.toTypedArray(),
             ) { _, index: Int ->
                 parentFragmentManager.setFragmentResult(
                     REQUEST_KEY_CONTEXT_MENU,
                     bundleOf(
                         CONTEXT_MENU_DECK_ID to requireArguments().getLong(ARG_DECK_ID),
-                        CONTEXT_MENU_DECK_OPTION to options[index]
-                    )
+                        CONTEXT_MENU_DECK_OPTION to options[index],
+                    ),
                 )
-            }
-            .create()
+            }.create()
     }
 
     private fun createOptionsList(): List<DeckPickerContextMenuOption> =
@@ -79,7 +78,9 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
             add(DeckPickerContextMenuOption.DELETE_DECK)
         }
 
-    enum class DeckPickerContextMenuOption(@StringRes val optionName: Int) {
+    enum class DeckPickerContextMenuOption(
+        @StringRes val optionName: Int,
+    ) {
         RENAME_DECK(R.string.rename_deck),
         DECK_OPTIONS(R.string.menu__deck_options),
         CUSTOM_STUDY(R.string.custom_study),
@@ -92,7 +93,7 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
         CREATE_SHORTCUT(R.string.create_shortcut),
         BROWSE_CARDS(R.string.browse_cards),
         EDIT_DESCRIPTION(R.string.edit_deck_description),
-        ADD_CARD(R.string.menu_add);
+        ADD_CARD(R.string.menu_add),
     }
 
     companion object {
@@ -116,14 +117,16 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
             id: DeckId,
             name: String,
             isDynamic: Boolean,
-            hasBuriedInDeck: Boolean
-        ): DeckPickerContextMenu = DeckPickerContextMenu().apply {
-            arguments = bundleOf(
-                ARG_DECK_ID to id,
-                ARG_DECK_NAME to name,
-                ARG_DECK_IS_DYN to isDynamic,
-                ARG_DECK_HAS_BURIED_IN_DECK to hasBuriedInDeck
-            )
-        }
+            hasBuriedInDeck: Boolean,
+        ): DeckPickerContextMenu =
+            DeckPickerContextMenu().apply {
+                arguments =
+                    bundleOf(
+                        ARG_DECK_ID to id,
+                        ARG_DECK_NAME to name,
+                        ARG_DECK_IS_DYN to isDynamic,
+                        ARG_DECK_HAS_BURIED_IN_DECK to hasBuriedInDeck,
+                    )
+            }
     }
 }

@@ -22,6 +22,7 @@ import androidx.browser.customtabs.CustomTabsService
 import com.ichi2.compat.CompatHelper.Companion.queryIntentActivitiesCompat
 import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.compat.CompatHelper.Companion.resolveServiceCompat
+import com.ichi2.compat.GET_RESOLVED_FILTER
 import com.ichi2.compat.ResolveInfoFlagsCompat
 import timber.log.Timber
 
@@ -36,11 +37,15 @@ object CustomTabsHelper {
     private const val EXTRA_CUSTOM_TABS_KEEP_ALIVE = "android.support.customtabs.extra.KEEP_ALIVE"
     private var sPackageNameToUse: String? = null
 
-    fun addKeepAliveExtra(context: Context, intent: Intent) {
-        val keepAliveIntent = Intent().setClassName(
-            context.packageName,
-            KeepAliveService::class.java.canonicalName!!
-        )
+    fun addKeepAliveExtra(
+        context: Context,
+        intent: Intent,
+    ) {
+        val keepAliveIntent =
+            Intent().setClassName(
+                context.packageName,
+                KeepAliveService::class.java.canonicalName!!,
+            )
         intent.putExtra(EXTRA_CUSTOM_TABS_KEEP_ALIVE, keepAliveIntent)
     }
 
@@ -105,13 +110,17 @@ object CustomTabsHelper {
      * @param intent The intent to check with.
      * @return Whether there is a specialized handler for the given intent.
      */
-    private fun hasSpecializedHandlerIntents(context: Context, intent: Intent): Boolean {
+    private fun hasSpecializedHandlerIntents(
+        context: Context,
+        intent: Intent,
+    ): Boolean {
         try {
             val pm = context.packageManager
-            val handlers = pm.queryIntentActivitiesCompat(
-                intent,
-                ResolveInfoFlagsCompat.of(PackageManager.GET_RESOLVED_FILTER.toLong())
-            )
+            val handlers =
+                pm.queryIntentActivitiesCompat(
+                    intent,
+                    ResolveInfoFlagsCompat.of(GET_RESOLVED_FILTER.toLong()),
+                )
             if (handlers.isEmpty()) {
                 return false
             }

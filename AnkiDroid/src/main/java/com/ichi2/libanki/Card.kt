@@ -19,14 +19,16 @@ package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
 import anki.cards.FsrsMemoryState
+import anki.decks.deckId
+import com.ichi2.anki.Flag
 import com.ichi2.anki.utils.ext.ifZero
-import com.ichi2.libanki.Consts.CARD_QUEUE
-import com.ichi2.libanki.Consts.CARD_TYPE
+import com.ichi2.annotations.NeedsTest
+import com.ichi2.libanki.Consts.CardQueue
+import com.ichi2.libanki.Consts.CardType
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.Assert
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 
@@ -57,7 +59,6 @@ import org.json.JSONObject
  * - lrn queue: integer timestamp
  */
 open class Card : Cloneable {
-
     /**
      * Time in MS when timer was started
      */
@@ -75,12 +76,12 @@ open class Card : Cloneable {
     var mod: Long = 0
     private var usn = 0
 
-    @get:CARD_TYPE
-    @CARD_TYPE
+    @get:CardType
+    @CardType
     var type = 0
 
-    @get:CARD_QUEUE
-    @CARD_QUEUE
+    @get:CardQueue
+    @CardQueue
     var queue = 0
     var due: Int = 0
     var ivl = 0
@@ -92,8 +93,8 @@ open class Card : Cloneable {
     var left = 0
     var oDue: Int = 0
     var oDid: DeckId = 0
+    var originalPosition: Int? = null
     private var customData: String = ""
-    private var originalPosition: Int? = null
     private var flags = 0
     private var memoryState: FsrsMemoryState? = null
     private var desiredRetention: Float? = null
@@ -148,55 +149,54 @@ open class Card : Cloneable {
     }
 
     @LibAnkiAlias("_to_backend_card")
-    fun toBackendCard(): anki.cards.Card {
-        val builder = anki.cards.Card.newBuilder()
-            .setId(id)
-            .setNoteId(nid)
-            .setDeckId(did)
-            .setTemplateIdx(ord)
-            .setCtype(type)
-            .setQueue(queue)
-            .setDue(due)
-            .setInterval(ivl)
-            .setEaseFactor(factor)
-            .setReps(reps)
-            .setLapses(lapses)
-            .setRemainingSteps(left)
-            .setOriginalDue(oDue)
-            .setOriginalDeckId(oDid)
-            .setFlags(flags)
-            .setCustomData(customData)
-        originalPosition?.let { builder.setOriginalPosition(it) }
-        memoryState?.let { builder.setMemoryState(it) }
-        desiredRetention?.let { builder.setDesiredRetention(it) }
-        return builder.build()
-    }
+    fun toBackendCard() =
+        anki.cards.card {
+            id = this@Card.id
+            noteId = nid
+            deckId = did
+            templateIdx = ord
+            ctype = type
+            queue = this@Card.queue
+            due = this@Card.due
+            interval = ivl
+            easeFactor = factor
+            reps = this@Card.reps
+            lapses = this@Card.lapses
+            remainingSteps = left
+            originalDue = oDue
+            originalDeckId = oDid
+            flags = this@Card.flags
+            customData = this@Card.customData
+            this@Card.originalPosition?.let { originalPosition = it }
+            this@Card.memoryState?.let { memoryState = it }
+            this@Card.desiredRetention?.let { desiredRetention = it }
+        }
 
     @LibAnkiAlias("question")
-    fun question(col: Collection, reload: Boolean = false, browser: Boolean = false): String {
-        return renderOutput(col, reload, browser).questionAndStyle()
-    }
+    fun question(
+        col: Collection,
+        reload: Boolean = false,
+        browser: Boolean = false,
+    ): String = renderOutput(col, reload, browser).questionAndStyle()
 
     @LibAnkiAlias("answer")
-    fun answer(col: Collection): String {
-        return renderOutput(col).answerAndStyle()
-    }
+    fun answer(col: Collection): String = renderOutput(col).answerAndStyle()
 
     @LibAnkiAlias("question_av_tags")
-    fun questionAvTags(col: Collection): List<AvTag> {
-        return renderOutput(col).questionAvTags
-    }
+    fun questionAvTags(col: Collection): List<AvTag> = renderOutput(col).questionAvTags
 
     @LibAnkiAlias("answer_av_tags")
-    fun answerAvTags(col: Collection): List<AvTag> {
-        return renderOutput(col).answerAvTags
-    }
+    fun answerAvTags(col: Collection): List<AvTag> = renderOutput(col).answerAvTags
 
     /**
      * @throws net.ankiweb.rsdroid.exceptions.BackendInvalidInputException: If the card does not exist
      */
     @LibAnkiAlias("render_output")
-    open fun renderOutput(col: Collection, reload: Boolean = false, browser: Boolean = false): TemplateRenderOutput {
+    open fun renderOutput(
+        col: Collection,
+        reload: Boolean = false,
+        browser: Boolean = false,
+    ): TemplateRenderOutput {
         if (renderOutput == null || reload) {
             renderOutput = TemplateManager.TemplateRenderContext.fromExistingCard(col, this, browser).render(col)
         }
@@ -204,7 +204,10 @@ open class Card : Cloneable {
     }
 
     @LibAnkiAlias("note")
-    open fun note(col: Collection, reload: Boolean = false): Note {
+    open fun note(
+        col: Collection,
+        reload: Boolean = false,
+    ): Note {
         if (note == null || reload) {
             note = col.getNote(nid)
         }
@@ -212,9 +215,7 @@ open class Card : Cloneable {
     }
 
     @LibAnkiAlias("note_type")
-    open fun noteType(col: Collection): NotetypeJson {
-        return note(col).notetype
-    }
+    open fun noteType(col: Collection): NotetypeJson = note(col).notetype
 
     @LibAnkiAlias("template")
     fun template(col: Collection): JSONObject {
@@ -232,11 +233,8 @@ open class Card : Cloneable {
     }
 
     @LibAnkiAlias("current_deck_id")
-    fun currentDeckId(): anki.decks.DeckId {
-        return anki.decks.DeckId.newBuilder()
-            .setDid(oDid.ifZero { did })
-            .build()
-    }
+    @NeedsTest("Test functionality which calls this")
+    fun currentDeckId() = deckId { did = oDid.ifZero { this@Card.did } }
 
     /**
      * Time limit for answering in milliseconds.
@@ -294,18 +292,15 @@ open class Card : Cloneable {
     }
 
     @LibAnkiAlias("autoplay")
-    fun autoplay(col: Collection): Boolean {
-        return col.decks.configDictForDeckId(currentDeckId().did).getBoolean("autoplay")
-    }
+    fun autoplay(col: Collection): Boolean = col.decks.configDictForDeckId(currentDeckId().did).getBoolean("autoplay")
 
     @NotInLibAnki
-    public override fun clone(): Card {
-        return try {
+    public override fun clone(): Card =
+        try {
             super.clone() as Card
         } catch (e: CloneNotSupportedException) {
             throw RuntimeException(e)
         }
-    }
 
     override fun toString(): String {
         val declaredFields = this.javaClass.declaredFields
@@ -326,33 +321,42 @@ open class Card : Cloneable {
         return members.joinToString(",  ")
     }
 
-    override fun equals(other: Any?): Boolean {
-        return if (other is Card) {
+    override fun equals(other: Any?): Boolean =
+        if (other is Card) {
             this.id == other.id
         } else {
             super.equals(other)
         }
-    }
 
     override fun hashCode(): Int {
         // Map a long to an int. For API>=24 you would just do `Long.hashCode(this.getId())`
         return (this.id xor (this.id ushr 32)).toInt()
     }
 
+    // upstream's function returns an int between 0 and 7 (included).
+    // We return an enum entry for the sake of improving the typing.
     @LibAnkiAlias("user_flag")
-    fun userFlag(): Int {
-        return flags and 0b111
-    }
+    fun userFlag() = Flag.fromCode(flags and 0b111)
 
+    /**
+     * Set [flags] to [flag].
+     * Should only be used for testing.
+     * Use [setUserFlag] instead.
+     */
     @VisibleForTesting
     fun setFlag(flag: Int) {
         flags = flag
     }
 
+    /**
+     * Set the first three bits of [flags] to [flag]. Don't change the other ones.
+     */
+    // Upstream's function take an int and raise if it's not between 0 and 7 included.
+    // We take a flag for the sake of typing clarity.
     @RustCleanup("deprecated in Anki: use col.set_user_flag_for_cards() instead")
     @LibAnkiAlias("set_user_flag")
-    fun setUserFlag(flag: Int) {
-        flags = setFlagInInt(flags, flag)
+    fun setUserFlag(flag: Flag) {
+        flags = setFlagInInt(flags, flag.code)
     }
 
     @NotInLibAnki
@@ -424,38 +428,50 @@ open class Card : Cloneable {
             _card = null
         }
 
-        override fun hashCode(): Int {
-            return java.lang.Long.valueOf(this.id).hashCode()
-        }
+        override fun hashCode(): Int =
+            java.lang.Long
+                .valueOf(this.id)
+                .hashCode()
 
         /** The cloned version represents the same card but data are not loaded.  */
-        public override fun clone(): Cache {
-            return Cache(col, this.id)
-        }
+        public override fun clone(): Cache = Cache(col, this.id)
 
-        override fun equals(other: Any?): Boolean {
-            return if (other !is Cache) {
+        override fun equals(other: Any?): Boolean =
+            if (other !is Cache) {
                 false
             } else {
                 this.id == other.id
             }
-        }
     }
 
     companion object {
         const val TYPE_REV = 2
 
         // A list of class members to skip in the toString() representation
-        val SKIP_PRINT: Set<String> = HashSet(
-            listOf(
-                "SKIP_PRINT", "\$assertionsDisabled", "TYPE_LRN",
-                "TYPE_NEW", "TYPE_REV", "mNote", "mQA", "mCol", "mTimerStarted", "mTimerStopped"
+        val SKIP_PRINT: Set<String> =
+            HashSet(
+                listOf(
+                    "SKIP_PRINT",
+                    "\$assertionsDisabled",
+                    "TYPE_LRN",
+                    "TYPE_NEW",
+                    "TYPE_REV",
+                    "mNote",
+                    "mQA",
+                    "mCol",
+                    "mTimerStarted",
+                    "mTimerStopped",
+                ),
             )
-        )
 
-        fun setFlagInInt(flags: Int, flag: Int): Int {
-            Assert.that(0 <= flag, "flag to set is negative")
-            Assert.that(flag <= 7, "flag to set is greater than 7.")
+        /**
+         * Returns [flags] with the 3 first bits set as in [flag]
+         */
+        fun setFlagInInt(
+            flags: Int,
+            flag: Int,
+        ): Int {
+            require(flag in 0..7) { "flag outside of expected [0, 7] interval" }
             // Setting the 3 firsts bits to 0, keeping the remaining.
             val extraData = flags and 7.inv()
             // flag in 3 fist bits, same data as in mFlags everywhere else

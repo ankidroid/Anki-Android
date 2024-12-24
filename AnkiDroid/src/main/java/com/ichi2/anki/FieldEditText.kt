@@ -21,18 +21,17 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.Build
 import android.os.LocaleList
 import android.os.Parcelable
 import android.text.InputType
 import android.util.AttributeSet
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.ClipboardUtil.getDescription
 import com.ichi2.utils.ClipboardUtil.getPlainText
@@ -45,7 +44,9 @@ import java.util.Locale
 import kotlin.math.max
 import kotlin.math.min
 
-class FieldEditText : FixedEditText, NoteService.NoteField {
+class FieldEditText :
+    FixedEditText,
+    NoteService.NoteField {
     override var ord = 0
     private var origBackground: Drawable? = null
     private var selectionChangeListener: TextSelectionListener? = null
@@ -66,9 +67,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         }
     }
 
-    private fun shouldDisableExtendedTextUi(): Boolean {
-        return this.context.sharedPrefs().getBoolean("disableExtendedTextUi", false)
-    }
+    private fun shouldDisableExtendedTextUi(): Boolean = this.context.sharedPrefs().getBoolean("disableExtendedTextUi", false)
 
     @KotlinCleanup("Simplify")
     override val fieldText: String?
@@ -94,7 +93,10 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         this.pasteListener = pasteListener
     }
 
-    override fun onSelectionChanged(selStart: Int, selEnd: Int) {
+    override fun onSelectionChanged(
+        selStart: Int,
+        selEnd: Int,
+    ) {
         if (selectionChangeListener != null) {
             try {
                 selectionChangeListener!!.onSelectionChanged(selStart, selEnd)
@@ -105,7 +107,6 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         super.onSelectionChanged(selStart, selEnd)
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     fun setHintLocale(locale: Locale) {
         Timber.d("Setting hint locale to '%s'", locale)
         imeHintLocales = LocaleList(locale)
@@ -125,14 +126,18 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         background = origBackground
     }
 
-    fun setContent(content: String?, replaceNewLine: Boolean) {
-        val text = if (content == null) {
-            ""
-        } else if (replaceNewLine) {
-            content.replace("<br(\\s*/*)>".toRegex(), NEW_LINE)
-        } else {
-            content
-        }
+    fun setContent(
+        content: String?,
+        replaceNewLine: Boolean,
+    ) {
+        val text =
+            if (content == null) {
+                ""
+            } else if (replaceNewLine) {
+                content.replace("<br(\\s*/*)>".toRegex(), NEW_LINE)
+            } else {
+                content
+            }
         setText(text)
     }
 
@@ -159,7 +164,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
             val start = min(selectionStart, selectionEnd)
             val end = max(selectionStart, selectionEnd)
             setText(
-                text!!.substring(0, start) + pasted + text!!.substring(end)
+                text!!.substring(0, start) + pasted + text!!.substring(end),
             )
             setSelection(start + pasted.length)
             return true
@@ -167,13 +172,21 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         return false
     }
 
-    private fun onPaste(mediaUri: Uri?, description: ClipDescription?): Boolean {
-        return if (mediaUri == null) {
+    private fun onPaste(
+        mediaUri: Uri?,
+        description: ClipDescription?,
+    ): Boolean =
+        if (mediaUri == null) {
             false
         } else {
-            pasteListener!!.onPaste(this, mediaUri, description)
+            try {
+                pasteListener!!.onPaste(this, mediaUri, description)
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to paste media")
+                showSnackbar(context.getString(R.string.multimedia_editor_something_wrong))
+                false
+            }
         }
-    }
 
     override fun onRestoreInstanceState(state: Parcelable) {
         if (state !is SavedState) {
@@ -186,25 +199,36 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
 
     fun setCapitalize(value: Boolean) {
         val inputType = this.inputType
-        this.inputType = if (value) {
-            inputType or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
-        } else {
-            inputType and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES.inv()
-        }
+        this.inputType =
+            if (value) {
+                inputType or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+            } else {
+                inputType and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES.inv()
+            }
     }
 
     val isCapitalized: Boolean
         get() = this.inputType and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES == InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
 
     @Parcelize
-    internal class SavedState(val state: Parcelable?, val ord: Int) : BaseSavedState(state)
+    internal class SavedState(
+        val state: Parcelable?,
+        val ord: Int,
+    ) : BaseSavedState(state)
 
     interface TextSelectionListener {
-        fun onSelectionChanged(selStart: Int, selEnd: Int)
+        fun onSelectionChanged(
+            selStart: Int,
+            selEnd: Int,
+        )
     }
 
     fun interface PasteListener {
-        fun onPaste(editText: EditText, uri: Uri?, description: ClipDescription?): Boolean
+        fun onPaste(
+            editText: EditText,
+            uri: Uri?,
+            description: ClipDescription?,
+        ): Boolean
     }
 
     companion object {

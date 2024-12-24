@@ -23,7 +23,6 @@ import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class LanguageUtilRobolectricTest : RobolectricTest() {
-
     @Test
     @Config(qualifiers = "zn")
     fun `Language without region is set`() {

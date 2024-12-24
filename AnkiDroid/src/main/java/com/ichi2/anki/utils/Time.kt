@@ -50,41 +50,45 @@ private const val TIME_YEAR = 12.0 * TIME_MONTH
  * @param time_s The time to format, in seconds
  * @return The time quantity string. Something like "3 minutes left" or "2 hours left".
  */
-fun remainingTime(context: Context, time_s: Long): String {
-    val time_x: Int // Time in unit x
-    val remaining_seconds: Int // Time not counted in the number in unit x
+fun remainingTime(
+    context: Context,
+    time_s: Long,
+): String {
+    val timeX: Int // Time in unit x
+    val remainingSeconds: Int // Time not counted in the number in unit x
     val remaining: Int // Time in the unit smaller than x
     val res = context.resources
     return if (time_s < TIME_HOUR_LONG) {
         // get time remaining, but never less than 1
-        time_x = max(
-            (time_s / TIME_MINUTE).roundToInt(),
-            1
-        )
-        res.getQuantityString(R.plurals.reviewer_window_title, time_x, time_x)
+        timeX =
+            max(
+                (time_s / TIME_MINUTE).roundToInt(),
+                1,
+            )
+        res.getQuantityString(R.plurals.reviewer_window_title, timeX, timeX)
         // It used to be minutes only. So the word "minutes" is not
         // explicitly written in the ressource name.
     } else if (time_s < TIME_DAY_LONG) {
-        time_x = (time_s / TIME_HOUR_LONG).toInt()
-        remaining_seconds = (time_s % TIME_HOUR_LONG).toInt()
+        timeX = (time_s / TIME_HOUR_LONG).toInt()
+        remainingSeconds = (time_s % TIME_HOUR_LONG).toInt()
         remaining =
-            (remaining_seconds.toFloat() / TIME_MINUTE).roundToInt()
+            (remainingSeconds.toFloat() / TIME_MINUTE).roundToInt()
         res.getQuantityString(
             R.plurals.reviewer_window_title_hours_new,
-            time_x,
-            time_x,
-            remaining
+            timeX,
+            timeX,
+            remaining,
         )
     } else {
-        time_x = (time_s / TIME_DAY_LONG).toInt()
-        remaining_seconds = (time_s.toFloat() % TIME_DAY_LONG).toInt()
+        timeX = (time_s / TIME_DAY_LONG).toInt()
+        remainingSeconds = (time_s.toFloat() % TIME_DAY_LONG).toInt()
         remaining =
-            (remaining_seconds / TIME_HOUR).roundToInt()
+            (remainingSeconds / TIME_HOUR).roundToInt()
         res.getQuantityString(
             R.plurals.reviewer_window_title_days_new,
-            time_x,
-            time_x,
-            remaining
+            timeX,
+            timeX,
+            remaining,
         )
     }
 }
@@ -98,7 +102,10 @@ fun remainingTime(context: Context, time_s: Long): String {
  * @param time_s The time to format, in seconds
  * @return The formatted, localized time string. The time is always a float. E.g. "27.0 days"
  */
-fun roundedTimeSpanUnformatted(context: Context, time_s: Long): String {
+fun roundedTimeSpanUnformatted(
+    context: Context,
+    time_s: Long,
+): String {
     // As roundedTimeSpan, but without tags; for place where you don't use HTML
     return roundedTimeSpan(context, time_s).replace("<b>", "").replace("</b>", "")
 }
@@ -112,37 +119,39 @@ fun roundedTimeSpanUnformatted(context: Context, time_s: Long): String {
  * @param time_s The time to format, in seconds
  * @return The formatted, localized time string. The time is always a float. E.g. "**27.0** days"
  */
-fun roundedTimeSpan(context: Context, time_s: Long): String {
-    return if (abs(time_s) < TIME_DAY) {
+fun roundedTimeSpan(
+    context: Context,
+    time_s: Long,
+): String =
+    if (abs(time_s) < TIME_DAY) {
         context.resources.getString(
             R.string.stats_overview_hours,
-            time_s / TIME_HOUR
+            time_s / TIME_HOUR,
         )
     } else if (abs(time_s) < TIME_MONTH) {
         context.resources.getString(
             R.string.stats_overview_days,
-            time_s / TIME_DAY
+            time_s / TIME_DAY,
         )
     } else if (abs(time_s) < TIME_YEAR) {
         context.resources.getString(
             R.string.stats_overview_months,
-            time_s / TIME_MONTH
+            time_s / TIME_MONTH,
         )
     } else {
         context.resources.getString(
             R.string.stats_overview_years,
-            time_s / TIME_YEAR
+            time_s / TIME_YEAR,
         )
     }
-}
 
-fun getTimestamp(time: Time): String {
-    return SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(time.currentDate)
-}
+fun getTimestamp(time: Time): String = SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(time.currentDate)
 
 /** @see Handler.postDelayed */
-fun Handler.postDelayed(runnable: Runnable, delay: Duration) =
-    this.postDelayed(runnable, delay.inWholeMilliseconds)
+fun Handler.postDelayed(
+    runnable: Runnable,
+    delay: Duration,
+) = this.postDelayed(runnable, delay.inWholeMilliseconds)
 
 /** Gets the current playback position */
 val MediaPlayer.elapsed get() = this.currentPosition.milliseconds

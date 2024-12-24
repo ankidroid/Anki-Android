@@ -54,15 +54,21 @@ import android.content.pm.PackageManager as AndroidPackageManager
  * Flags class that wraps around the bitmask flags used in methods that retrieve package or
  * application info.
  */
-open class Flags protected constructor(val value: Long)
+open class Flags protected constructor(
+    val value: Long,
+)
 
 /**
  * Specific flags used for retrieving package info. Example:
  * `PackageManager.getPackageInfo(packageName, PackageInfoFlags.of(0)`
  */
-class PackageInfoFlagsCompat private constructor(@PackageInfoFlagsBits value: Long) : Flags(value) {
+class PackageInfoFlagsCompat private constructor(
+    @PackageInfoFlagsBits value: Long,
+) : Flags(value) {
     companion object {
-        fun of(@PackageInfoFlagsBits value: Long): PackageInfoFlagsCompat = PackageInfoFlagsCompat(value)
+        fun of(
+            @PackageInfoFlagsBits value: Long,
+        ): PackageInfoFlagsCompat = PackageInfoFlagsCompat(value)
 
         /** Helper property. Does not exist on Platform API */
         val EMPTY = PackageInfoFlagsCompat(0)
@@ -129,7 +135,6 @@ const val GET_ATTRIBUTIONS = -0x80000000 // API 31
 
 @LongDef(
     flag = true,
-    open = true, // HACK: AGP 8.6.1 broke .toLong(): https://issuetracker.google.com/issues/367752734
     // prefix = ["GET_", "MATCH_"],
     value = [
         AndroidPackageManager.GET_ACTIVITIES.toLong(),
@@ -149,7 +154,7 @@ const val GET_ATTRIBUTIONS = -0x80000000 // API 31
         MATCH_DISABLED_UNTIL_USED_COMPONENTS.toLong(),
         MATCH_SYSTEM_ONLY.toLong(),
         MATCH_APEX.toLong(),
-        GET_ATTRIBUTIONS.toLong()
+        GET_ATTRIBUTIONS.toLong(),
 
         // not handled: Deprecated & unused in our code
         // PackageManager.GET_INTENT_FILTERS.toLong(),
@@ -163,7 +168,7 @@ const val GET_ATTRIBUTIONS = -0x80000000 // API 31
         // PackageManager.MATCH_DEBUG_TRIAGED_MISSING,
         // PackageManager.MATCH_INSTANT,
         // PackageManager.MATCH_HIDDEN_UNTIL_INSTALLED_COMPONENTS,
-    ]
+    ],
 )
 @Retention(AnnotationRetention.SOURCE)
 annotation class PackageInfoFlagsBits

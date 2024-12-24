@@ -33,19 +33,26 @@ import kotlinx.coroutines.delay
  *
  * @see AutoAdvanceSettings
  */
-class AutoAdvance(val viewModel: ReviewerViewModel) {
+class AutoAdvance(
+    val viewModel: ReviewerViewModel,
+) {
     private var questionActionJob: Job? = null
     private var answerActionJob: Job? = null
 
-    private var settings = viewModel.asyncIO {
-        val card = viewModel.currentCard.await()
-        AutoAdvanceSettings.createInstance(card.currentDeckId().did)
-    }
+    private var settings =
+        viewModel.asyncIO {
+            val card = viewModel.currentCard.await()
+            AutoAdvanceSettings.createInstance(card.currentDeckId().did)
+        }
 
     private suspend fun durationToShowQuestionFor() = settings.await().durationToShowQuestionFor
+
     private suspend fun durationToShowAnswerFor() = settings.await().durationToShowAnswerFor
+
     private suspend fun questionAction() = settings.await().questionAction
+
     private suspend fun answerAction() = settings.await().answerAction
+
     suspend fun shouldWaitForAudio() = settings.await().waitForAudio
 
     fun cancelQuestionAndAnswerActionJobs() {
@@ -55,38 +62,41 @@ class AutoAdvance(val viewModel: ReviewerViewModel) {
 
     fun onCardChange(card: Card) {
         cancelQuestionAndAnswerActionJobs()
-        settings = viewModel.asyncIO {
-            AutoAdvanceSettings.createInstance(card.currentDeckId().did)
-        }
+        settings =
+            viewModel.asyncIO {
+                AutoAdvanceSettings.createInstance(card.currentDeckId().did)
+            }
     }
 
     suspend fun onShowQuestion() {
         answerActionJob?.cancel()
         if (!durationToShowQuestionFor().isPositive()) return
 
-        questionActionJob = viewModel.launchCatchingIO {
-            delay(durationToShowQuestionFor())
-            when (questionAction()) {
-                QuestionAction.SHOW_ANSWER -> viewModel.showAnswer()
-                QuestionAction.SHOW_REMINDER -> showReminder(TR.studyingQuestionTimeElapsed())
+        questionActionJob =
+            viewModel.launchCatchingIO {
+                delay(durationToShowQuestionFor())
+                when (questionAction()) {
+                    QuestionAction.SHOW_ANSWER -> viewModel.onShowAnswer()
+                    QuestionAction.SHOW_REMINDER -> showReminder(TR.studyingQuestionTimeElapsed())
+                }
             }
-        }
     }
 
     suspend fun onShowAnswer() {
         questionActionJob?.cancel()
         if (!durationToShowAnswerFor().isPositive()) return
 
-        answerActionJob = viewModel.launchCatchingIO {
-            delay(durationToShowAnswerFor())
-            when (answerAction()) {
-                AnswerAction.BURY_CARD -> viewModel.buryCard()
-                AnswerAction.ANSWER_AGAIN -> viewModel.answerAgain()
-                AnswerAction.ANSWER_HARD -> viewModel.answerHard()
-                AnswerAction.ANSWER_GOOD -> viewModel.answerGood()
-                AnswerAction.SHOW_REMINDER -> showReminder(TR.studyingAnswerTimeElapsed())
+        answerActionJob =
+            viewModel.launchCatchingIO {
+                delay(durationToShowAnswerFor())
+                when (answerAction()) {
+                    AnswerAction.BURY_CARD -> viewModel.buryCard()
+                    AnswerAction.ANSWER_AGAIN -> viewModel.answerAgain()
+                    AnswerAction.ANSWER_HARD -> viewModel.answerHard()
+                    AnswerAction.ANSWER_GOOD -> viewModel.answerGood()
+                    AnswerAction.SHOW_REMINDER -> showReminder(TR.studyingAnswerTimeElapsed())
+                }
             }
-        }
     }
 
     private fun showReminder(message: String) {

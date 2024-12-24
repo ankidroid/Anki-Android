@@ -17,6 +17,7 @@
 package com.ichi2.anki.dialogs
 
 import android.app.Dialog
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
@@ -29,6 +30,7 @@ import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.AssetHelper.TEXT_PLAIN
 import com.ichi2.utils.title
@@ -39,28 +41,27 @@ import timber.log.Timber
 @NeedsTest("Selecting COLPKG does not allow multiple files")
 @NeedsTest("Restore backup dialog does not allow multiple files")
 class ImportFileSelectionFragment : DialogFragment() {
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val entries = buildImportEntries()
-        return AlertDialog.Builder(requireActivity())
+        return AlertDialog
+            .Builder(requireActivity())
             .title(R.string.menu_import)
             .setItems(
-                entries.map { requireActivity().getString(it.titleRes) }.toTypedArray()
+                entries.map { requireActivity().getString(it.titleRes) }.toTypedArray(),
             ) { _, position ->
                 val entry = entries[position]
                 UsageAnalytics.sendAnalyticsEvent(
                     UsageAnalytics.Category.LINK_CLICKED,
-                    entry.analyticsId
+                    entry.analyticsId,
                 )
                 openImportFilePicker(
                     activity = requireActivity() as AnkiActivity,
                     fileType = entry.type,
                     multiple = entry.multiple,
                     mimeType = entry.mimeType,
-                    extraMimes = entry.extraMimes
+                    extraMimes = entry.extraMimes,
                 )
-            }
-            .create()
+            }.create()
     }
 
     private fun buildImportEntries(): List<ImportEntry> {
@@ -75,8 +76,8 @@ class ImportFileSelectionFragment : DialogFragment() {
                         ImportEntry(
                             R.string.import_deck_package,
                             UsageAnalytics.Actions.IMPORT_APKG_FILE,
-                            ImportFileType.APKG
-                        )
+                            ImportFileType.APKG,
+                        ),
                     )
                 }
                 if (options.importColpkg) {
@@ -84,8 +85,8 @@ class ImportFileSelectionFragment : DialogFragment() {
                         ImportEntry(
                             R.string.import_collection_package,
                             UsageAnalytics.Actions.IMPORT_COLPKG_FILE,
-                            ImportFileType.COLPKG
-                        )
+                            ImportFileType.COLPKG,
+                        ),
                     )
                 }
                 if (options.importTextFile) {
@@ -96,13 +97,14 @@ class ImportFileSelectionFragment : DialogFragment() {
                             ImportFileType.CSV,
                             multiple = false,
                             mimeType = "*/*",
-                            extraMimes = arrayOf(
-                                TEXT_PLAIN,
-                                "text/comma-separated-values",
-                                "text/csv",
-                                "text/tab-separated-values"
-                            )
-                        )
+                            extraMimes =
+                                arrayOf(
+                                    TEXT_PLAIN,
+                                    "text/comma-separated-values",
+                                    "text/csv",
+                                    "text/tab-separated-values",
+                                ),
+                        ),
                     )
                 }
             }
@@ -117,18 +119,20 @@ class ImportFileSelectionFragment : DialogFragment() {
         val type: ImportFileType,
         var multiple: Boolean = false,
         val mimeType: String = "*/*",
-        val extraMimes: Array<String>? = null
+        val extraMimes: Array<String>? = null,
     )
 
     @Parcelize
     data class ImportOptions(
         val importColpkg: Boolean,
         val importApkg: Boolean,
-        val importTextFile: Boolean
+        val importTextFile: Boolean,
     ) : Parcelable
 
     enum class ImportFileType {
-        APKG, COLPKG, CSV
+        APKG,
+        COLPKG,
+        CSV,
     }
 
     interface ApkgImportResultLauncherProvider {
@@ -142,9 +146,10 @@ class ImportFileSelectionFragment : DialogFragment() {
     companion object {
         private const val ARG_IMPORT_OPTIONS = "arg_import_options"
 
-        fun newInstance(options: ImportOptions) = ImportFileSelectionFragment().apply {
-            arguments = bundleOf(ARG_IMPORT_OPTIONS to options)
-        }
+        fun newInstance(options: ImportOptions) =
+            ImportFileSelectionFragment().apply {
+                arguments = bundleOf(ARG_IMPORT_OPTIONS to options)
+            }
 
         /**
          * Calls through the system with an [Intent] to pick a file to be imported.
@@ -154,7 +159,7 @@ class ImportFileSelectionFragment : DialogFragment() {
             fileType: ImportFileType,
             multiple: Boolean = false,
             mimeType: String = "*/*",
-            extraMimes: Array<String>? = null
+            extraMimes: Array<String>? = null,
         ) {
             Timber.d("openImportFilePicker() delegating to file picker intent")
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
@@ -166,12 +171,20 @@ class ImportFileSelectionFragment : DialogFragment() {
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiple)
             extraMimes?.let { intent.putExtra(Intent.EXTRA_MIME_TYPES, it) }
 
-            if ((fileType == ImportFileType.APKG || fileType == ImportFileType.COLPKG) && activity is ApkgImportResultLauncherProvider) {
-                activity.getApkgFileImportResultLauncher().launch(intent)
-            } else if (fileType == ImportFileType.CSV && activity is CsvImportResultLauncherProvider) {
-                activity.getCsvFileImportResultLauncher().launch(intent)
-            } else {
-                Timber.w("Activity($activity) can't handle requested import: $fileType")
+            try {
+                if (
+                    (fileType == ImportFileType.APKG || fileType == ImportFileType.COLPKG) &&
+                    activity is ApkgImportResultLauncherProvider
+                ) {
+                    activity.getApkgFileImportResultLauncher().launch(intent)
+                } else if (fileType == ImportFileType.CSV && activity is CsvImportResultLauncherProvider) {
+                    activity.getCsvFileImportResultLauncher().launch(intent)
+                } else {
+                    Timber.w("Activity($activity) can't handle requested import: $fileType")
+                }
+            } catch (ex: ActivityNotFoundException) {
+                Timber.w("No activity to handle openImportFilePicker request")
+                activity.showSnackbar(R.string.activity_start_failed)
             }
         }
     }

@@ -29,7 +29,6 @@ import kotlin.test.assertNotEquals
 
 @RunWith(AndroidJUnit4::class)
 class TemplatePreviewerViewModelTest : JvmTest() {
-
     @get:Rule
     val tempDirectory = TemporaryFolder()
 
@@ -58,14 +57,19 @@ class TemplatePreviewerViewModelTest : JvmTest() {
         }
     }
 
-    private fun runClozeTest(ord: Int = 0, fields: MutableList<String>? = null, block: suspend TemplatePreviewerViewModel.() -> Unit) = runTest {
+    private fun runClozeTest(
+        ord: Int = 0,
+        fields: MutableList<String>? = null,
+        block: suspend TemplatePreviewerViewModel.() -> Unit,
+    ) = runTest {
         val notetype = col.notetypes.byName("Cloze")!!
-        val arguments = TemplatePreviewerArguments(
-            notetypeFile = NotetypeFile(tempDirectory.root, notetype),
-            fields = fields ?: mutableListOf("{{c1::foo}} {{c2::bar}}", "anki"),
-            tags = mutableListOf(),
-            ord = ord
-        )
+        val arguments =
+            TemplatePreviewerArguments(
+                notetypeFile = NotetypeFile(tempDirectory.root, notetype),
+                fields = fields ?: mutableListOf("{{c1::foo}} {{c2::bar}}", "anki"),
+                tags = mutableListOf(),
+                ord = ord,
+            )
         val viewModel = TemplatePreviewerViewModel(arguments, mock())
         block(viewModel)
     }

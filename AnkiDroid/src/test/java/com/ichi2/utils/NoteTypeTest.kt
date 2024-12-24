@@ -30,9 +30,9 @@ import junit.framework.TestCase.assertEquals
 import kotlin.test.Test
 
 // link to a method in `NoteType.kt` for navigation as it contains no classes
+
 /** Test of [NoteType][templates] */
 class NoteTypeTest {
-
     private val noteType = """
         {
           "type":1,
@@ -103,9 +103,11 @@ const val BASIC_MODEL_NAME = "Basic"
  * @return the new model
  */
 fun Collection.createBasicModel(name: String = BASIC_MODEL_NAME): NotetypeJson {
-    val m = BackendUtils.fromJsonBytes(
-        getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC)
-    ).apply { set("name", name) }
+    val m =
+        BackendUtils
+            .fromJsonBytes(
+                getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC),
+            ).apply { set("name", name) }
     addNotetypeLegacy(BackendUtils.toJsonBytes(m))
     return notetypes.byName(name)!!
 }

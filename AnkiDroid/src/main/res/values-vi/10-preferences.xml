@@ -149,8 +149,6 @@
     <string name="notification_minimum_cards_due">Nhiều hơn %d thẻ cho phép</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Báo rung</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Nhấp nháy ánh sáng</string>
-    <string name="timeout_answer_text" maxLength="41">Tự động hiển thị trả lời</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Chọn ngôn ngữ</string>
     <string name="software_render" maxLength="41">Tắt kết xuất phần cứng thẻ</string>
     <string name="software_render_summ">Kết xuất phần cứng nhanh hơn nhưng có thể gặp sự cố, cụ thể là trên Android 8 / 8.1. Nếu bạn không thể thấy các phần của giao diện người dùng xem xét thẻ, hãy thử cài đặt này.</string>
@@ -163,14 +161,14 @@
     <string name="vertical_centering_summ">Thiết lập nội dung chính của thẻ theo chiều dọc</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
-    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Hiển thị thời gian nhấn và giữ câu trả lời</string>
     <string name="pref_show_answer_long_press_time_summary">Thời gian nhấn tối thiểu trước khi nút hiển thị câu trả lời đăng ký một thao tác chạm.</string>
     <string name="show_estimates" maxLength="41">Hiển thị nút thời gian</string>
     <string name="show_estimates_summ">Hiển thị thời gian đánh giá tiếp theo trên các nút trả lời</string>
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
     <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Hiển thị thanh trên cùng</string>
-    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
+    <string name="show_top_bar_summary">Hiển thị số lượng thẻ, đồng hồ đếm thời gian trả lời, cờ đánh dấu và dấu ở thanh trên cùng</string>
     <string name="show_progress" maxLength="41">Hiển thị còn lại</string>
     <string name="show_progress_summ">Hiển thị số thẻ còn lại</string>
     <string name="show_eta" maxLength="41">Hiển thị ETA</string>
@@ -216,7 +214,7 @@
          Nếu không được thiết lập, máy chủ AnkiWeb mặc định sẽ được sử dụng thay thế.
          <a href="%s">Tìm hiểu thêm</a>]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Đồng bộ hóa url</string>
-    <string name="custom_sync_certificate_title" maxLength="41">Custom root certificate (PEM)</string>
+    <string name="custom_sync_certificate_title" maxLength="41">Chứng chỉ gốc tùy chỉnh (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Bàn phím</string>
     <string name="bluetooth">Bluetooth</string>
@@ -234,12 +232,12 @@
     <string name="deck_conf_cram_filter" maxLength="41">Bộ lọc</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Tìm</string>
     <string name="deck_conf_cram_limit" maxLength="41">Giới hạn</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
+    <string name="deck_conf_cram_order" maxLength="41">Thẻ được lựa chọn bởi</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Lên lịch lại</string>
     <string name="deck_conf_cram_reschedule_summ">Lên lịch lại thẻ dựa trên câu trả lời của tôi trong chủ đề này</string>
     <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Xác định các bước tùy chỉnh</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Trì hoãn xem trước</string>
     <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Giúp cải thiện AnkiDroid!</string>
@@ -263,25 +261,25 @@
     <string name="binding_add_key">Add key</string>
     <string name="binding_replace_key">Thay thế khoá</string>
     <string name="key_picker_default_press_key">Press a key</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="binding_add_axis">Thêm cần điều khiển/bộ điều khiển chuyển động</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <string name="user_actions" maxLength="41">Thao tác người dùng</string>
     <string name="user_actions_summary" maxLength="41">Kích hoạt JavaScript từ màn hình đánh giá</string>
-    <string name="user_action_1" maxLength="41">Hành động người dùng 1</string>
-    <string name="user_action_2" maxLength="41">Thao tác người dùng 2</string>
-    <string name="user_action_3" maxLength="41">Thao tác người dùng 3</string>
-    <string name="user_action_4" maxLength="41">Thao tác người dùng 4</string>
-    <string name="user_action_5" maxLength="41">Thao tác người dùng 5</string>
-    <string name="user_action_6" maxLength="41">Thao tác người dùng 6</string>
-    <string name="user_action_7" maxLength="41">Thao tác người dùng 7</string>
-    <string name="user_action_8" maxLength="41">Thao tác người dùng 8</string>
-    <string name="user_action_9" maxLength="41">Thao tác người dùng 9</string>
-    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
+    <string name="user_action_1" maxLength="28">Hành động người dùng 1</string>
+    <string name="user_action_2" maxLength="28">Thao tác người dùng 2</string>
+    <string name="user_action_3" maxLength="28">Thao tác người dùng 3</string>
+    <string name="user_action_4" maxLength="28">Thao tác người dùng 4</string>
+    <string name="user_action_5" maxLength="28">Thao tác người dùng 5</string>
+    <string name="user_action_6" maxLength="28">Thao tác người dùng 6</string>
+    <string name="user_action_7" maxLength="28">Thao tác người dùng 7</string>
+    <string name="user_action_8" maxLength="28">Thao tác người dùng 8</string>
+    <string name="user_action_9" maxLength="28">Thao tác người dùng 9</string>
+    <string name="toggle_auto_advance" maxLength="41">Bật tự động chuyển tiếp</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Select card side</string>
     <string name="card_side_question">Question</string>
     <string name="card_side_answer">Answer</string>
-    <string name="card_side_both">Question &amp; Answer</string>
+    <string name="card_side_both" maxLength="28">Question &amp; Answer</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -357,14 +355,14 @@
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Đang tìm nạp&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Đang tính toán&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Bộ sưu tập không tồn tại</string>
-    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
-    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">None</string>
-    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Status bar</string>
-    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigation bar</string>
-    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Ẩn thanh hệ thống</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">Không</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Thanh trạng thái</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Thanh điều hướng</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Tất cả</string>
     <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
-    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
+    <string name="hide_answer_buttons" maxLength="41">Ẩn các nút trả lời</string>
     <string name="hide_hard_and_easy" maxLength="41">Ẩn các nút \"Khó\' và \'Dễ\'</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Mở cài đặt</string>
 </resources>

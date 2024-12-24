@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">XL nagy</string>
     <string name="html_size_code_xx_large">XXL nagy</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Válasz: ismét</string>
-    <string name="answer_hard">Válasz: nehéz</string>
-    <string name="answer_good">Válasz: jó</string>
-    <string name="answer_easy">Válasz: könnyű</string>
-    <string name="gesture_play">Média lejátszása</string>
-    <string name="gesture_abort_learning">Close reviewer</string>
-    <string name="gesture_flag_red">Piros jelölő bekapcsolása</string>
-    <string name="gesture_flag_orange">Narancs Jelölő Bekapcsolása</string>
-    <string name="gesture_flag_green">Zöld Jelölő Bekapcsolása</string>
-    <string name="gesture_flag_blue">Kék Jelölő Bekapcsolása</string>
-    <string name="gesture_flag_pink">Rózsaszín jelölő bekapcsolás</string>
-    <string name="gesture_flag_turquoise">Türkiz jelölő bekapcsolás</string>
-    <string name="gesture_flag_purple">Lila jelölő bekapcsolása</string>
-    <string name="gesture_flag_remove">Jelölő Törlése</string>
-    <string name="gesture_page_up">Felfele</string>
-    <string name="gesture_page_down">Lefele</string>
-    <string name="gesture_abort_sync">Close reviewer and Sync</string>
-    <string name="gesture_toggle_whiteboard">Tábla engedélyezése</string>
-    <string name="gesture_show_hint">Tipp mutatása</string>
-    <string name="gesture_show_all_hints">Tippek megjelenítése</string>
-    <string name="record_voice">Felvétel</string>
-    <string name="replay_voice">Visszajátszás</string>
-    <string name="save_voice">Save Recording</string>
+    <string name="answer_again" maxLength="41">Válasz: ismét</string>
+    <string name="answer_hard" maxLength="41">Válasz: nehéz</string>
+    <string name="answer_good" maxLength="41">Válasz: jó</string>
+    <string name="answer_easy" maxLength="41">Válasz: könnyű</string>
+    <string name="gesture_play" maxLength="41">Média lejátszása</string>
+    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_flag_red" maxLength="41">Piros jelölő bekapcsolása</string>
+    <string name="gesture_flag_orange" maxLength="41">Narancs Jelölő Bekapcsolása</string>
+    <string name="gesture_flag_green" maxLength="41">Zöld Jelölő Bekapcsolása</string>
+    <string name="gesture_flag_blue" maxLength="41">Kék Jelölő Bekapcsolása</string>
+    <string name="gesture_flag_pink" maxLength="41">Rózsaszín jelölő bekapcsolás</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Türkiz jelölő bekapcsolás</string>
+    <string name="gesture_flag_purple" maxLength="41">Lila jelölő bekapcsolása</string>
+    <string name="gesture_flag_remove" maxLength="41">Jelölő Törlése</string>
+    <string name="gesture_page_up" maxLength="41">Felfele</string>
+    <string name="gesture_page_down" maxLength="41">Lefele</string>
+    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Tábla engedélyezése</string>
+    <string name="gesture_show_hint" maxLength="41">Tipp mutatása</string>
+    <string name="gesture_show_all_hints" maxLength="41">Tippek megjelenítése</string>
+    <string name="record_voice" maxLength="41">Felvétel</string>
+    <string name="replay_voice" maxLength="41">Visszajátszás</string>
+    <string name="save_voice" maxLength="41">Save Recording</string>
 </resources>

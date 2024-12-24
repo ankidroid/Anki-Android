@@ -38,9 +38,7 @@ const val ACTION_UPDATE_WIDGET = "com.ichi2.widget.ACTION_UPDATE_WIDGET"
  * @param context the context of the application
  * @return the AlarmManager instance
  */
-private fun alarmManager(context: Context): AlarmManager {
-    return context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-}
+private fun alarmManager(context: Context): AlarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
 /**
  * Retrieves or creates a PendingIntent for the widget.
@@ -55,12 +53,13 @@ private fun getPendingIntent(
     context: Context,
     appWidgetId: AppWidgetId,
     widgetClass: Class<out AnalyticsWidgetProvider>,
-    create: Boolean
+    create: Boolean,
 ): PendingIntent? {
-    val intent = Intent(context, widgetClass).apply {
-        action = ACTION_UPDATE_WIDGET
-        putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-    }
+    val intent =
+        Intent(context, widgetClass).apply {
+            action = ACTION_UPDATE_WIDGET
+            putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+        }
     return PendingIntent.getBroadcast(
         context,
         appWidgetId,
@@ -69,7 +68,7 @@ private fun getPendingIntent(
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         } else {
             PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
-        }
+        },
     )
 }
 
@@ -87,7 +86,7 @@ private fun getPendingIntent(
 fun setRecurringAlarm(
     context: Context,
     appWidgetId: AppWidgetId,
-    widgetClass: Class<out AnalyticsWidgetProvider>
+    widgetClass: Class<out AnalyticsWidgetProvider>,
 ) {
     val pendingIntent = getPendingIntent(context, appWidgetId, widgetClass, create = false)
 
@@ -101,12 +100,11 @@ fun setRecurringAlarm(
     val alarmManager = alarmManager(context)
     val newPendingIntent = getPendingIntent(context, appWidgetId, widgetClass, create = true) ?: return
 
-    val ONE_MINUTE_MILLIS = 1.minutes.inWholeMilliseconds
     alarmManager.setRepeating(
         AlarmManager.ELAPSED_REALTIME,
-        SystemClock.elapsedRealtime() + ONE_MINUTE_MILLIS,
-        ONE_MINUTE_MILLIS,
-        newPendingIntent
+        SystemClock.elapsedRealtime() + 1.minutes.inWholeMilliseconds,
+        1.minutes.inWholeMilliseconds,
+        newPendingIntent,
     )
 }
 
@@ -120,7 +118,7 @@ fun setRecurringAlarm(
 fun cancelRecurringAlarm(
     context: Context,
     appWidgetId: AppWidgetId,
-    widgetClass: Class<out AnalyticsWidgetProvider>
+    widgetClass: Class<out AnalyticsWidgetProvider>,
 ) {
     val pendingIntent = getPendingIntent(context, appWidgetId, widgetClass, create = true)
     val alarmManager = alarmManager(context)

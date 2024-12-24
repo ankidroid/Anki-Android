@@ -26,7 +26,8 @@ object LintUtils {
      * @param allowedClasses  the list of classes where the checks should be ignored
      * @return true if this is a class where the checks should not be applied, false otherwise
      */
-    fun isAnAllowedClass(classes: List<UClass>, vararg allowedClasses: String): Boolean {
-        return classes.any { uClass -> uClass.name!! in allowedClasses }
-    }
+    fun isAnAllowedClass(
+        classes: List<UClass>,
+        vararg allowedClasses: String,
+    ): Boolean = classes.any { uClass -> uClass.name!! in allowedClasses }
 }

@@ -75,7 +75,7 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Loka</string>
     <string name="sync_sanity_remote">Fora</string>
-    <string name="one_way_sync_title">Unudirekta samtempigo</string>
+    <string name="one_way_sync_title" maxLength="41">Unudirekta samtempigo</string>
     <string name="one_way_sync_confirmation">Unudirekta samtempigo planita</string>
     <string name="full_sync_confirmation">La petita ŝanĝo postulos plenan alŝuton de la datumbazo dum la sekva samtempigado de via kolekto. Se vi havas ripetojn aŭ aliajn ŝanĝojn atendantajn ĉe alia aparato, kiuj jam ne estas samtempigitajn tie ĉi, ili perdiĝos. Ĉu pluigi?</string>
     <string name="full_sync_confirmation_upgrade">Pro la eraro en la antaŭe instalita versio de AnkiDroid, estas konsilinde devigi plenan samtempigadon.</string>

@@ -26,7 +26,7 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Gérer les types de note</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">Gérer les types de note</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Gérer les champs</string>
     <!--Toasts-->
     <string name="toast_last_model">Vous ne pouvez pas supprimer votre dernier type de note</string>
@@ -53,7 +53,7 @@
     <string name="model_field_editor_language_hint_dialog_success_result">Suggestion de langue définie sur %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Modifier les champs</string>
-    <string name="model_field_editor_add">Ajouter un champ</string>
+    <string name="model_field_editor_add" maxLength="28">Ajouter un champ</string>
     <string name="model_field_editor_delete">Supprimer le champ</string>
     <string name="model_field_editor_rename">Renommer le champ</string>
     <string name="model_field_editor_language_hint">Définir la suggestion de langue du clavier</string>
@@ -81,5 +81,5 @@
     <string name="model_manager_deck_override_added_message">Définir le paquet par défaut « %1$s » pour « %2$s »</string>
     <string name="model_manager_deck_override_removed_message">Paquet par défaut retiré pour « %s »</string>
     <string name="deck_override_explanation">Sélectionnez le paquet dans lequel placer les nouvelles cartes « %s »</string>
-    <string name="deck_picker_dialog_filter_decks">Filtrer les paquets</string>
+    <string name="deck_picker_dialog_filter_decks" maxLength="28">Filtrer les paquets</string>
 </resources>

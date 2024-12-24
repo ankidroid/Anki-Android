@@ -41,7 +41,8 @@ class CopyrightHeaderExistsTest {
  */"""
 
     @Language("JAVA")
-    private val mNoCopyrightHeader = """
+    private val mNoCopyrightHeader =
+        """
         
         package com.ichi2.upgrade;
         
@@ -54,7 +55,7 @@ class CopyrightHeaderExistsTest {
         
         public class Upgrade {
         }
-    """.trimIndent()
+        """.trimIndent()
 
     @Test
     fun fileWithCopyrightHeaderPasses() {

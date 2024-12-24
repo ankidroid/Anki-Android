@@ -26,7 +26,10 @@ object IntentAssert {
     /**
      * Check that bundle does noe have [extraKey]
      */
-    fun doesNotHaveExtra(arguments: Bundle?, extraKey: String?) {
+    fun doesNotHaveExtra(
+        arguments: Bundle?,
+        extraKey: String?,
+    ) {
         val keySet = assertNotNull(arguments).keySet()
         assertThat("Intent should not have extra '$extraKey'", keySet, not(hasItem(extraKey)))
     }
@@ -34,7 +37,11 @@ object IntentAssert {
     /**
      * Check that bundle has [extraKey]
      */
-    fun hasExtra(arguments: Bundle?, extraKey: String?, value: Long) {
+    fun hasExtra(
+        arguments: Bundle?,
+        extraKey: String?,
+        value: Long,
+    ) {
         val keySet = assertNotNull(arguments).keySet()
         assertThat("Intent should have extra '$extraKey'", keySet, hasItem(extraKey))
 

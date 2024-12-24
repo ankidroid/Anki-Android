@@ -47,12 +47,14 @@ class EditDeckDescriptionDialog : DialogFragment() {
 
     private var currentDescription
         get() = deckDescriptionInput.text.toString()
-        set(value) { deckDescriptionInput.setText(value) }
+        set(value) {
+            deckDescriptionInput.setText(value)
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         Themes.setTheme(requireContext())
         return inflater.inflate(R.layout.dialog_deck_description, null).apply {
@@ -60,22 +62,23 @@ class EditDeckDescriptionDialog : DialogFragment() {
             launchCatchingTask {
                 currentDescription = getDescription()
             }
-            findViewById<MaterialToolbar>(R.id.topAppBar).apply {
-                setNavigationOnClickListener {
-                    onBack()
-                }
-
-                setOnMenuItemClickListener { menuItem ->
-                    if (menuItem.itemId == R.id.action_save) {
-                        saveAndExit()
-                        true
-                    } else {
-                        false
+            findViewById<MaterialToolbar>(R.id.topAppBar)
+                .apply {
+                    setNavigationOnClickListener {
+                        onBack()
                     }
+
+                    setOnMenuItemClickListener { menuItem ->
+                        if (menuItem.itemId == R.id.action_save) {
+                            saveAndExit()
+                            true
+                        } else {
+                            false
+                        }
+                    }
+                }.also { toolbar ->
+                    launchCatchingTask { toolbar.title = withCol { decks.get(deckId)!!.name } }
                 }
-            }.also { toolbar ->
-                launchCatchingTask { toolbar.title = withCol { decks.get(deckId)!!.name } }
-            }
         }
     }
 
@@ -84,32 +87,34 @@ class EditDeckDescriptionDialog : DialogFragment() {
 
         dialog!!.window!!.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.WRAP_CONTENT,
         )
     }
 
-    private fun saveAndExit() = launchCatchingTask {
-        setDescription(currentDescription)
-        Timber.i("closing deck description dialog")
-        dismiss()
-    }
-
-    private fun onBack() = launchCatchingTask {
-        fun closeWithoutSaving() {
-            Timber.i("Closing dialog without saving")
+    private fun saveAndExit() =
+        launchCatchingTask {
+            setDescription(currentDescription)
+            Timber.i("closing deck description dialog")
             dismiss()
         }
 
-        if (getDescription() == currentDescription) {
-            closeWithoutSaving()
-            return@launchCatchingTask
-        }
+    private fun onBack() =
+        launchCatchingTask {
+            fun closeWithoutSaving() {
+                Timber.i("Closing dialog without saving")
+                dismiss()
+            }
 
-        Timber.i("asking if user should discard changes")
-        DiscardChangesDialog.showDialog(requireContext()) {
-            closeWithoutSaving()
+            if (getDescription() == currentDescription) {
+                closeWithoutSaving()
+                return@launchCatchingTask
+            }
+
+            Timber.i("asking if user should discard changes")
+            DiscardChangesDialog.showDialog(requireContext()) {
+                closeWithoutSaving()
+            }
         }
-    }
 
     private suspend fun getDescription() = withCol { decks.get(deckId)!!.description }
 
@@ -121,12 +126,12 @@ class EditDeckDescriptionDialog : DialogFragment() {
     companion object {
         private const val ARG_DECK_ID = "deckId"
 
-        fun newInstance(deckId: DeckId): EditDeckDescriptionDialog {
-            return EditDeckDescriptionDialog().apply {
-                arguments = bundleOf(
-                    ARG_DECK_ID to deckId
-                )
+        fun newInstance(deckId: DeckId): EditDeckDescriptionDialog =
+            EditDeckDescriptionDialog().apply {
+                arguments =
+                    bundleOf(
+                        ARG_DECK_ID to deckId,
+                    )
             }
-        }
     }
 }

@@ -10,7 +10,7 @@
         android:id="@+id/deckName"
         android:layout_width="0dp"
         android:layout_height="43dp"
-        android:layout_weight="3"
+        android:layout_weight="2.8"
         android:height="48dp"
         android:paddingBottom="2dp"
         android:paddingEnd="12dp"
@@ -32,6 +32,8 @@
         android:textColor="@color/flag_reviewer_blue"
         android:textSize="20sp"
         android:text=""
+        android:ellipsize="end"
+        android:maxLines="1"
         tools:text="50" />
 
     <TextView
@@ -43,6 +45,8 @@
         android:textColor="@color/material_red_A700"
         android:textSize="20sp"
         android:text=""
+        android:ellipsize="end"
+        android:maxLines="1"
         tools:text="50" />
 
     <TextView
@@ -54,6 +58,8 @@
         android:textColor="@color/flag_reviewer_green"
         android:textSize="20sp"
         android:text=""
+        android:ellipsize="end"
+        android:maxLines="1"
         tools:text="50" />
 
 </LinearLayout>

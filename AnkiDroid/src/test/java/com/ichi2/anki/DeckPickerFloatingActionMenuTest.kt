@@ -48,7 +48,6 @@ import kotlin.test.assertTrue
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
 class DeckPickerFloatingActionMenuTest {
-
     @Mock private val deckPicker: DeckPicker = mock()
 
     @Mock private lateinit var fabMain: FloatingActionButton
@@ -87,23 +86,24 @@ class DeckPickerFloatingActionMenuTest {
         fabMain = spy(FloatingActionButton(ankiActivity))
 
         // TODO: Figure out a nicer way of mocking
-        view = mock {
-            on { findViewById<FloatingActionButton>(R.id.fab_main) } doReturn fabMain
-            on { findViewById<LinearLayout>(R.id.add_shared_layout) } doReturn addSharedLayout
-            on { findViewById<LinearLayout>(R.id.add_deck_layout) } doReturn addDeckLayout
-            on { findViewById<LinearLayout>(R.id.add_filtered_deck_layout) } doReturn addFilteredDeckLayout
-            on { findViewById<View>(R.id.fabBGLayout) } doReturn fabBGLayout
-            on { findViewById<LinearLayout>(R.id.deckpicker_view) } doReturn linearLayout
-            on { findViewById<View>(R.id.studyoptions_fragment) } doReturn studyOptionsFrame
-            on { findViewById<TextView>(R.id.add_note_label) } doReturn addNoteLabel
+        view =
+            mock {
+                on { findViewById<FloatingActionButton>(R.id.fab_main) } doReturn fabMain
+                on { findViewById<LinearLayout>(R.id.add_shared_layout) } doReturn addSharedLayout
+                on { findViewById<LinearLayout>(R.id.add_deck_layout) } doReturn addDeckLayout
+                on { findViewById<LinearLayout>(R.id.add_filtered_deck_layout) } doReturn addFilteredDeckLayout
+                on { findViewById<View>(R.id.fabBGLayout) } doReturn fabBGLayout
+                on { findViewById<LinearLayout>(R.id.deckpicker_view) } doReturn linearLayout
+                on { findViewById<View>(R.id.studyoptions_fragment) } doReturn studyOptionsFrame
+                on { findViewById<TextView>(R.id.add_note_label) } doReturn addNoteLabel
 
-            on { findViewById<FloatingActionButton>(R.id.add_shared_action) } doReturn addSharedButton
-            on { findViewById<FloatingActionButton>(R.id.add_deck_action) } doReturn addDeckButton
-            on { findViewById<FloatingActionButton>(R.id.add_filtered_deck_action) } doReturn addDeckButton
-            on { findViewById<TextView>(R.id.add_shared_label) } doReturn addSharedLabel
-            on { findViewById<TextView>(R.id.add_deck_label) } doReturn addDeckLabel
-            on { findViewById<TextView>(R.id.add_filtered_deck_label) } doReturn addDeckLabel
-        }
+                on { findViewById<FloatingActionButton>(R.id.add_shared_action) } doReturn addSharedButton
+                on { findViewById<FloatingActionButton>(R.id.add_deck_action) } doReturn addDeckButton
+                on { findViewById<FloatingActionButton>(R.id.add_filtered_deck_action) } doReturn addDeckButton
+                on { findViewById<TextView>(R.id.add_shared_label) } doReturn addSharedLabel
+                on { findViewById<TextView>(R.id.add_deck_label) } doReturn addDeckLabel
+                on { findViewById<TextView>(R.id.add_filtered_deck_label) } doReturn addDeckLabel
+            }
         menu = DeckPickerFloatingActionMenu(ApplicationProvider.getApplicationContext(), view, deckPicker)
     }
 

@@ -64,23 +64,23 @@
         <item quantity="many">Usuń notatki</item>
         <item quantity="other">Usuń notatki</item>
     </plurals>
-    <string name="card_browser_change_deck">Zmień talie</string>
+    <string name="card_browser_change_deck" maxLength="28">Zmień talie</string>
     <string name="delete_card_title">Usuń notatkę</string>
-    <string name="card_browser_show_marked" maxLength="29">Odfiltruj zaznaczone</string>
-    <string name="card_browser_show_suspended" maxLength="29">Odfiltruj zawieszone</string>
-    <string name="card_browser_search_by_tag" maxLength="29">Filtruj po etykiecie</string>
-    <string name="card_browser_search_by_flag" maxLength="29">Filtruj po fladze</string>
-    <string name="card_browser_list_my_searches" maxLength="29">Moje wyszukiwania</string>
-    <string name="card_browser_list_my_searches_save" maxLength="29">Zapisz wyszukiwanie</string>
+    <string name="card_browser_show_marked" maxLength="28">Odfiltruj zaznaczone</string>
+    <string name="card_browser_show_suspended" maxLength="28">Odfiltruj zawieszone</string>
+    <string name="card_browser_search_by_tag" maxLength="28">Filtruj po etykiecie</string>
+    <string name="card_browser_search_by_flag" maxLength="28">Filtruj po fladze</string>
+    <string name="card_browser_list_my_searches" maxLength="28">Moje wyszukiwania</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">Zapisz wyszukiwanie</string>
     <string name="card_browser_list_my_searches_title">Wybierz zapisane wyszukiwanie</string>
     <string name="card_browser_list_my_searches_new_name">Nazwa bieżącego wyszukiwania</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Nie można zapisać wyszukiwania bez nazwy</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Nazwa już istnieje</string>
     <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Usunąć \"%1$s\"?</string>
-    <string name="card_browser_change_display_order" maxLength="29">Zmień kolejność wyświetlania</string>
-    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_change_display_order" maxLength="28">Zmień kolejność wyświetlania</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Szukaj</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Szukaj</string>
     <string name="card_browser_change_display_order_title">Wybierz kolejność wyświetlania</string>
     <string name="card_details_tags">Etykiety</string>
     <string-array name="card_browser_order_labels">
@@ -95,8 +95,8 @@
         <item>Wg powtórek</item>
         <item>Wg pomyłek</item>
     </string-array>
-    <string name="card_browser_select_all" maxLength="29">Zaznacz wszystko</string>
-    <string name="card_browser_select_none">Anuluj wybór</string>
+    <string name="card_browser_select_all" maxLength="28">Zaznacz wszystko</string>
+    <string name="card_browser_select_none" maxLength="28">Anuluj wybór</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nowa)</string>
     <string name="card_browser_due_filtered_card">(filtrowane)</string>
     <string name="card_browser_interval_learning_card">(uczona)</string>
@@ -124,6 +124,6 @@
         <item quantity="other">Usunięto %d kart</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Okno dialogowe edycji tagów</string>
     <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
 </resources>

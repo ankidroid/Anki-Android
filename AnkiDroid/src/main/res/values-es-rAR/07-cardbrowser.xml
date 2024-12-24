@@ -58,23 +58,23 @@
         <item quantity="one">Eliminar nota</item>
         <item quantity="other">Eliminar notas</item>
     </plurals>
-    <string name="card_browser_change_deck">Cambiar mazo</string>
+    <string name="card_browser_change_deck" maxLength="28">Cambiar mazo</string>
     <string name="delete_card_title">¿Eliminar nota?</string>
-    <string name="card_browser_show_marked" maxLength="29">Filtro marcado</string>
-    <string name="card_browser_show_suspended" maxLength="29">Filtro suspendido</string>
-    <string name="card_browser_search_by_tag" maxLength="29">Filtrar por etiqueta</string>
-    <string name="card_browser_search_by_flag" maxLength="29">Filtrar por bandera</string>
-    <string name="card_browser_list_my_searches" maxLength="29">Mis búsquedas</string>
-    <string name="card_browser_list_my_searches_save" maxLength="29">Guardar búsqueda</string>
+    <string name="card_browser_show_marked" maxLength="28">Filtro marcado</string>
+    <string name="card_browser_show_suspended" maxLength="28">Filtro suspendido</string>
+    <string name="card_browser_search_by_tag" maxLength="28">Filtrar por etiqueta</string>
+    <string name="card_browser_search_by_flag" maxLength="28">Filtrar por bandera</string>
+    <string name="card_browser_list_my_searches" maxLength="28">Mis búsquedas</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">Guardar búsqueda</string>
     <string name="card_browser_list_my_searches_title">Escoger una búsqueda guardada</string>
     <string name="card_browser_list_my_searches_new_name">Nombre para la búsqueda actual</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">No puedes guardar una búsqueda sin nombre.</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">¡El nombre ya existe!</string>
-    <string name="no_note_to_edit">No note to edit</string>
+    <string name="no_note_to_edit">No hay notas que editar</string>
     <string name="card_browser_list_my_searches_remove_content">¿Elimimar \'%1$s\'?</string>
-    <string name="card_browser_change_display_order" maxLength="29">Cambiar orden de presentación</string>
-    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_change_display_order" maxLength="28">Cambiar orden de presentación</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Buscar</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Buscar</string>
     <string name="card_browser_change_display_order_title">Elija el orden de presentación</string>
     <string name="card_details_tags">Etiquetas</string>
     <string-array name="card_browser_order_labels">
@@ -89,8 +89,8 @@
         <item>Por revisión</item>
         <item>Por lapso</item>
     </string-array>
-    <string name="card_browser_select_all" maxLength="29">Seleccionar todo</string>
-    <string name="card_browser_select_none">No seleccionar nada</string>
+    <string name="card_browser_select_all" maxLength="28">Seleccionar todo</string>
+    <string name="card_browser_select_none" maxLength="28">No seleccionar nada</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nuevo)</string>
     <string name="card_browser_due_filtered_card">(filtrado)</string>
     <string name="card_browser_interval_learning_card">(aprendiendo)</string>
@@ -112,6 +112,6 @@
         <item quantity="other">%d tarjetas eliminadas</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Editar diálogo de etiquetas</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Mostrar diálogo de orden</string>
 </resources>

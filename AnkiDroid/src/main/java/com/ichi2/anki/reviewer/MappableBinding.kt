@@ -30,14 +30,16 @@ import com.ichi2.anki.reviewer.Binding.UnicodeCharacter
 import com.ichi2.utils.hash
 import timber.log.Timber
 import java.util.Objects
-import kotlin.collections.ArrayList
 
 /**
  * Binding + additional contextual information
  * Also defines equality over bindings.
  * https://stackoverflow.com/questions/5453226/java-need-a-hash-map-where-one-supplies-a-function-to-do-the-hashing
  */
-class MappableBinding(val binding: Binding, val screen: Screen) {
+class MappableBinding(
+    val binding: Binding,
+    val screen: Screen,
+) {
     val isKey: Boolean get() = binding is KeyBinding
 
     override fun equals(other: Any?): Boolean {
@@ -45,13 +47,19 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
         if (other == null) return false
 
         val otherBinding = (other as MappableBinding).binding
-        val bindingEquals = when {
-            binding is KeyCode && otherBinding is KeyCode -> binding.keycode == otherBinding.keycode && modifierEquals(otherBinding)
-            binding is UnicodeCharacter && otherBinding is UnicodeCharacter -> binding.unicodeCharacter == otherBinding.unicodeCharacter && modifierEquals(otherBinding)
-            binding is GestureInput && otherBinding is GestureInput -> binding.gesture == otherBinding.gesture
-            binding is AxisButtonBinding && otherBinding is AxisButtonBinding -> binding.axis == otherBinding.axis && binding.threshold == otherBinding.threshold
-            else -> false
-        }
+        val bindingEquals =
+            when {
+                binding is KeyCode && otherBinding is KeyCode -> binding.keycode == otherBinding.keycode && modifierEquals(otherBinding)
+                binding is UnicodeCharacter && otherBinding is UnicodeCharacter -> {
+                    binding.unicodeCharacter == otherBinding.unicodeCharacter &&
+                        modifierEquals(otherBinding)
+                }
+                binding is GestureInput && otherBinding is GestureInput -> binding.gesture == otherBinding.gesture
+                binding is AxisButtonBinding && otherBinding is AxisButtonBinding -> {
+                    binding.axis == otherBinding.axis && binding.threshold == otherBinding.threshold
+                }
+                else -> false
+            }
         if (!bindingEquals) {
             return false
         }
@@ -61,13 +69,14 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
 
     override fun hashCode(): Int {
         // don't include the modifierKeys or mSide
-        val bindingHash = when (binding) {
-            is KeyCode -> binding.keycode
-            is UnicodeCharacter -> binding.unicodeCharacter
-            is GestureInput -> binding.gesture
-            is AxisButtonBinding -> hash(binding.axis.motionEventValue, binding.threshold.toInt())
-            else -> 0
-        }
+        val bindingHash =
+            when (binding) {
+                is KeyCode -> binding.keycode
+                is UnicodeCharacter -> binding.unicodeCharacter
+                is GestureInput -> binding.gesture
+                is AxisButtonBinding -> hash(binding.axis.motionEventValue, binding.threshold.toInt())
+                else -> 0
+            }
         return Objects.hash(bindingHash, screen.prefix)
     }
 
@@ -81,20 +90,25 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
         // allow subclasses to work - a subclass which overrides shiftMatches will return true on one of the tests
     }
 
-    fun toDisplayString(context: Context): String {
-        return screen.toDisplayString(context, binding)
-    }
+    fun toDisplayString(context: Context): String = screen.toDisplayString(context, binding)
 
-    fun toPreferenceString(): String? {
-        return screen.toPreferenceString(binding)
-    }
+    fun toPreferenceString(): String? = screen.toPreferenceString(binding)
 
-    abstract class Screen private constructor(val prefix: Char) {
+    abstract class Screen private constructor(
+        val prefix: Char,
+    ) {
         abstract fun toPreferenceString(binding: Binding): String?
-        abstract fun toDisplayString(context: Context, binding: Binding): String
+
+        abstract fun toDisplayString(
+            context: Context,
+            binding: Binding,
+        ): String
+
         abstract fun screenEquals(otherScreen: Screen): Boolean
 
-        class Reviewer(val side: CardSide) : Screen('r') {
+        class Reviewer(
+            val side: CardSide,
+        ) : Screen('r') {
             override fun toPreferenceString(binding: Binding): String? {
                 if (!binding.isValid) {
                     return null
@@ -114,12 +128,16 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
                 return s.toString()
             }
 
-            override fun toDisplayString(context: Context, binding: Binding): String {
-                val formatString = when (side) {
-                    CardSide.QUESTION -> context.getString(R.string.display_binding_card_side_question)
-                    CardSide.ANSWER -> context.getString(R.string.display_binding_card_side_answer)
-                    else -> context.getString(R.string.display_binding_card_side_both) // intentionally no prefix
-                }
+            override fun toDisplayString(
+                context: Context,
+                binding: Binding,
+            ): String {
+                val formatString =
+                    when (side) {
+                        CardSide.QUESTION -> context.getString(R.string.display_binding_card_side_question)
+                        CardSide.ANSWER -> context.getString(R.string.display_binding_card_side_answer)
+                        CardSide.BOTH -> context.getString(R.string.display_binding_card_side_both) // intentionally no prefix
+                    }
                 return String.format(formatString, binding.toDisplayString(context))
             }
 
@@ -135,11 +153,12 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
                 fun fromString(s: String): MappableBinding {
                     val binding = s.substring(0, s.length - 1)
                     val b = Binding.fromString(binding)
-                    val side = when (s[s.length - 1]) {
-                        '0' -> CardSide.QUESTION
-                        '1' -> CardSide.ANSWER
-                        else -> CardSide.BOTH
-                    }
+                    val side =
+                        when (s[s.length - 1]) {
+                            '0' -> CardSide.QUESTION
+                            '1' -> CardSide.ANSWER
+                            else -> CardSide.BOTH
+                        }
                     return MappableBinding(b, Reviewer(side))
                 }
             }
@@ -148,22 +167,30 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
 
     /** the serialisation version */
     enum class Version {
-        ONE
+        ONE,
     }
 
     companion object {
         const val PREF_SEPARATOR = '|'
 
         @CheckResult
-        fun fromGesture(gesture: Gesture, screen: (CardSide) -> Screen): MappableBinding = MappableBinding(GestureInput(gesture), screen(CardSide.BOTH))
+        fun fromGesture(
+            gesture: Gesture,
+            screen: (CardSide) -> Screen,
+        ): MappableBinding = MappableBinding(GestureInput(gesture), screen(CardSide.BOTH))
 
         @CheckResult
-        fun List<MappableBinding>.toPreferenceString(): String = this.mapNotNull { it.toPreferenceString() }
-            .joinToString(prefix = "1/", separator = PREF_SEPARATOR.toString())
+        fun List<MappableBinding>.toPreferenceString(): String =
+            this
+                .mapNotNull { it.toPreferenceString() }
+                .joinToString(prefix = "1/", separator = PREF_SEPARATOR.toString())
 
         @Suppress("UNUSED_PARAMETER")
         @CheckResult
-        fun fromString(s: String, v: Version = Version.ONE): MappableBinding? {
+        fun fromString(
+            s: String,
+            v: Version = Version.ONE,
+        ): MappableBinding? {
             if (s.isEmpty()) {
                 return null
             }
@@ -197,17 +224,20 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
         }
 
         @CheckResult
-        fun fromPreference(prefs: SharedPreferences, command: ViewerCommand): MutableList<MappableBinding> {
+        fun fromPreference(
+            prefs: SharedPreferences,
+            command: ViewerCommand,
+        ): MutableList<MappableBinding> {
             val value = prefs.getString(command.preferenceKey, null) ?: return command.defaultValue.toMutableList()
             return fromPreferenceString(value)
         }
 
         @CheckResult
-        fun allMappings(prefs: SharedPreferences): MutableList<Pair<ViewerCommand, MutableList<MappableBinding>>> {
-            return ViewerCommand.entries.map {
-                Pair(it, fromPreference(prefs, it))
-            }.toMutableList()
-        }
+        fun allMappings(prefs: SharedPreferences): MutableList<Pair<ViewerCommand, MutableList<MappableBinding>>> =
+            ViewerCommand.entries
+                .map {
+                    Pair(it, fromPreference(prefs, it))
+                }.toMutableList()
     }
 }
 

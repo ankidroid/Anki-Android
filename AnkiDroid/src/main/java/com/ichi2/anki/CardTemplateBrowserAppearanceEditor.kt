@@ -21,8 +21,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
+import androidx.core.widget.doAfterTextChanged
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
@@ -40,6 +43,15 @@ import timber.log.Timber
 class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
     private lateinit var questionEditText: EditText
     private lateinit var answerEditText: EditText
+
+    // start with the callback disabled as there aren't any changes yet
+    private val discardChangesCallback =
+        object : OnBackPressedCallback(false) {
+            override fun handleOnBackPressed() {
+                showDiscardChangesDialog()
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -52,6 +64,15 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
             return
         }
         initializeUiFromBundle(bundle)
+        // default result, only changed to RESULT_OK if actually saving changes
+        setResult(RESULT_CANCELED)
+        onBackPressedDispatcher.addCallback(discardChangesCallback)
+        questionEditText.doAfterTextChanged { _ ->
+            discardChangesCallback.isEnabled = hasChanges()
+        }
+        answerEditText.doAfterTextChanged { _ ->
+            discardChangesCallback.isEnabled = hasChanges()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -73,7 +94,11 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
             }
             android.R.id.home -> {
                 Timber.i("Back Pressed")
-                closeWithDiscardWarning()
+                if (hasChanges()) {
+                    showDiscardChangesDialog()
+                } else {
+                    finish() // the result was already set to RESULT_CANCELLED
+                }
                 return true
             }
             else -> {}
@@ -81,26 +106,10 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    @Suppress("DEPRECATION", "Deprecated in API34+dependencies for predictive back feature")
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        Timber.i("Back Button Pressed")
-        super.onBackPressed()
-        closeWithDiscardWarning()
-    }
-
-    private fun closeWithDiscardWarning() {
-        if (hasChanges()) {
-            Timber.i("Changes detected - displaying discard warning dialog")
-            showDiscardChangesDialog()
-        } else {
-            discardChangesAndClose()
-        }
-    }
-
     private fun showDiscardChangesDialog() {
         DiscardChangesDialog.showDialog(this) {
-            discardChangesAndClose()
+            Timber.i("Changes discarded, finishing...")
+            finish()
         }
     }
 
@@ -129,26 +138,22 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
         answerEditText = findViewById(R.id.answer_format)
         answerEditText.setText(bundle.getString(INTENT_ANSWER_FORMAT))
 
+        discardChangesCallback.isEnabled = hasChanges()
+
         enableToolbar()
         setTitle(R.string.card_template_browser_appearance_title)
     }
 
-    private fun answerHasChanged(intent: Intent): Boolean {
-        return intent.getStringExtra(INTENT_ANSWER_FORMAT) != answerFormat
-    }
+    private fun answerHasChanged(intent: Intent): Boolean = intent.getStringExtra(INTENT_ANSWER_FORMAT) != answerFormat
 
-    private fun questionHasChanged(intent: Intent): Boolean {
-        return intent.getStringExtra(INTENT_QUESTION_FORMAT) != questionFormat
-    }
+    private fun questionHasChanged(intent: Intent): Boolean = intent.getStringExtra(INTENT_QUESTION_FORMAT) != questionFormat
 
     private val questionFormat: String
         get() = getTextValue(questionEditText)
     private val answerFormat: String
         get() = getTextValue(answerEditText)
 
-    private fun getTextValue(editText: EditText): String {
-        return editText.text.toString()
-    }
+    private fun getTextValue(editText: EditText): String = editText.text.toString()
 
     private fun restoreDefaultAndClose() {
         Timber.i("Restoring Default and Closing")
@@ -157,32 +162,29 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
         saveAndExit()
     }
 
-    private fun discardChangesAndClose() {
-        Timber.i("Closing and discarding changes")
-        setResult(RESULT_CANCELED)
-        finish()
-    }
-
     private fun saveAndExit() {
         Timber.i("Save and Exit")
-        val data = Intent().apply {
-            putExtra(INTENT_QUESTION_FORMAT, questionFormat)
-            putExtra(INTENT_ANSWER_FORMAT, answerFormat)
-        }
+        val data =
+            Intent().apply {
+                putExtra(INTENT_QUESTION_FORMAT, questionFormat)
+                putExtra(INTENT_ANSWER_FORMAT, answerFormat)
+            }
         setResult(RESULT_OK, data)
         finish()
     }
 
-    private fun hasChanges(): Boolean {
-        return try {
+    private fun hasChanges(): Boolean =
+        try {
             questionHasChanged(intent) || answerHasChanged(intent)
         } catch (e: Exception) {
             Timber.w(e, "Failed to detect changes. Assuming true")
             true
         }
-    }
 
-    class Result private constructor(question: String?, answer: String?) {
+    class Result private constructor(
+        question: String?,
+        answer: String?,
+    ) {
         val question: String = question ?: VALUE_USE_DEFAULT
         val answer: String = answer ?: VALUE_USE_DEFAULT
 
@@ -193,8 +195,8 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
 
         companion object {
             @Contract("null -> null")
-            fun fromIntent(intent: Intent?): Result? {
-                return if (intent == null) {
+            fun fromIntent(intent: Intent?): Result? =
+                if (intent == null) {
                     null
                 } else {
                     try {
@@ -206,7 +208,6 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
                         null
                     }
                 }
-            }
         }
     }
 
@@ -218,18 +219,24 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
         const val VALUE_USE_DEFAULT = ""
 
         @CheckResult
-        fun getIntentFromTemplate(context: Context, template: JSONObject): Intent {
+        fun getIntentFromTemplate(
+            context: Context,
+            template: JSONObject,
+        ): Intent {
             val browserQuestionTemplate = template.getString("bqfmt")
             val browserAnswerTemplate = template.getString("bafmt")
             return getIntent(context, browserQuestionTemplate, browserAnswerTemplate)
         }
 
         @CheckResult
-        fun getIntent(context: Context, questionFormat: String, answerFormat: String): Intent {
-            return Intent(context, CardTemplateBrowserAppearanceEditor::class.java).apply {
+        fun getIntent(
+            context: Context,
+            questionFormat: String,
+            answerFormat: String,
+        ): Intent =
+            Intent(context, CardTemplateBrowserAppearanceEditor::class.java).apply {
                 putExtra(INTENT_QUESTION_FORMAT, questionFormat)
                 putExtra(INTENT_ANSWER_FORMAT, answerFormat)
             }
-        }
     }
 }

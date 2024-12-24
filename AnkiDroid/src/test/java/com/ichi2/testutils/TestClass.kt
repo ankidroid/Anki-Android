@@ -47,11 +47,15 @@ import kotlin.time.Duration.Companion.milliseconds
 interface TestClass {
     val col: Collection
 
-    fun addNoteUsingBasicModel(front: String = "Front", back: String = "Back"): Note {
-        return addNoteUsingModelName("Basic", front, back)
-    }
+    fun addNoteUsingBasicModel(
+        front: String = "Front",
+        back: String = "Back",
+    ): Note = addNoteUsingModelName("Basic", front, back)
 
-    fun addRevNoteUsingBasicModelDueToday(@Suppress("SameParameterValue") front: String, @Suppress("SameParameterValue") back: String): Note {
+    fun addRevNoteUsingBasicModelDueToday(
+        @Suppress("SameParameterValue") front: String,
+        @Suppress("SameParameterValue") back: String,
+    ): Note {
         val note = addNoteUsingBasicModel(front, back)
         val card = note.firstCard()
         card.queue = Consts.QUEUE_TYPE_REV
@@ -60,23 +64,32 @@ interface TestClass {
         return note
     }
 
-    fun addNoteUsingBasicAndReversedModel(front: String = "Front", back: String = "Back"): Note {
-        return addNoteUsingModelName("Basic (and reversed card)", front, back)
-    }
+    fun addNoteUsingBasicAndReversedModel(
+        front: String = "Front",
+        back: String = "Back",
+    ): Note = addNoteUsingModelName("Basic (and reversed card)", front, back)
 
-    fun addNoteUsingBasicTypedModel(@Suppress("SameParameterValue") front: String, @Suppress("SameParameterValue") back: String): Note {
-        return addNoteUsingModelName("Basic (type in the answer)", front, back)
-    }
+    fun addNoteUsingBasicTypedModel(
+        @Suppress("SameParameterValue") front: String,
+        @Suppress("SameParameterValue") back: String,
+    ): Note = addNoteUsingModelName("Basic (type in the answer)", front, back)
 
-    fun addCloseNote(text: String, extra: String = "Extra"): Note =
+    fun addCloseNote(
+        text: String,
+        extra: String = "Extra",
+    ): Note =
         col.newNote(col.notetypes.byName("Cloze")!!).apply {
             setItem("Text", text)
             col.addNote(this)
         }
 
-    fun addNoteUsingModelName(name: String?, vararg fields: String): Note {
-        val model = col.notetypes.byName((name)!!)
-            ?: throw IllegalArgumentException("Could not find model '$name'")
+    fun addNoteUsingModelName(
+        name: String?,
+        vararg fields: String,
+    ): Note {
+        val model =
+            col.notetypes.byName((name)!!)
+                ?: throw IllegalArgumentException("Could not find model '$name'")
         // PERF: if we modify newNote(), we can return the card and return a Pair<Note, Card> here.
         // Saves a database trip afterwards.
         val n = col.newNote(model)
@@ -87,7 +100,12 @@ interface TestClass {
         return n
     }
 
-    fun addNonClozeModel(name: String, fields: Array<String>, qfmt: String?, afmt: String?): String {
+    fun addNonClozeModel(
+        name: String,
+        fields: Array<String>,
+        qfmt: String?,
+        afmt: String?,
+    ): String {
         val model = col.notetypes.new(name)
         for (field in fields) {
             col.notetypes.addFieldInNewModel(model, col.notetypes.newField(field))
@@ -101,12 +119,18 @@ interface TestClass {
     }
 
     /** Adds a note with Text to Speech functionality */
-    fun addNoteUsingTextToSpeechNoteType(front: String, back: String) {
+    fun addNoteUsingTextToSpeechNoteType(
+        front: String,
+        back: String,
+    ) {
         addNonClozeModel("TTS", arrayOf("Front", "Back"), "{{Front}}{{tts en_GB:Front}}", "{{tts en_GB:Front}}<br>{{Back}}")
         addNoteUsingModelName("TTS", front, back)
     }
 
-    fun addField(notetype: NotetypeJson, name: String) {
+    fun addField(
+        notetype: NotetypeJson,
+        name: String,
+    ) {
         val models = col.notetypes
         try {
             models.addFieldLegacy(notetype, models.newField(name))
@@ -121,17 +145,22 @@ interface TestClass {
         col
     }
 
-    fun addDeck(deckName: String?, setAsSelected: Boolean = false): DeckId {
-        return try {
+    fun addDeck(
+        deckName: String?,
+        setAsSelected: Boolean = false,
+    ): DeckId =
+        try {
             col.decks.id(deckName!!).also { did ->
                 if (setAsSelected) col.decks.select(did)
             }
         } catch (filteredAncestor: BackendDeckIsFilteredException) {
             throw RuntimeException(filteredAncestor)
         }
-    }
 
-    fun addDynamicDeck(name: String, search: String? = null): DeckId {
+    fun addDynamicDeck(
+        name: String,
+        search: String? = null,
+    ): DeckId {
         return try {
             col.decks.newFiltered(name).also { did ->
                 if (search == null) return@also
@@ -157,19 +186,26 @@ interface TestClass {
     /** Adds [count] notes in the same deck with the same front & back */
     fun addNotes(count: Int): List<Note> = (0..count).map { addNoteUsingBasicModel() }
 
-    fun Note.moveToDeck(deckName: String, createDeckIfMissing: Boolean = true) {
-        val deckId: DeckId? = if (createDeckIfMissing) {
-            col.decks.id(deckName)
-        } else {
-            col.decks.idForName(deckName)
-        }
+    fun Note.moveToDeck(
+        deckName: String,
+        createDeckIfMissing: Boolean = true,
+    ) {
+        val deckId: DeckId? =
+            if (createDeckIfMissing) {
+                col.decks.id(deckName)
+            } else {
+                col.decks.idForName(deckName)
+            }
         check(deckId != null) { "$deckName not found" }
 
         updateCards { did = deckId }
     }
 
     /** helper method to update deck config */
-    fun updateDeckConfig(deckId: DeckId, function: DeckConfig.() -> Unit) {
+    fun updateDeckConfig(
+        deckId: DeckId,
+        function: DeckConfig.() -> Unit,
+    ) {
         val deckConfig = col.decks.configDictForDeckId(deckId)
         function(deckConfig)
         col.decks.save(deckConfig)
@@ -190,35 +226,51 @@ interface TestClass {
 
     fun NotetypeJson.createClone(): NotetypeJson {
         val targetNotetype = requireNotNull(col.notetypes.byName(name)) { "could not find note type '$name'" }
-        val newNotetype = targetNotetype.deepClone().apply {
-            id = 0
-            set("name", "$name+")
-        }
+        val newNotetype =
+            targetNotetype.deepClone().apply {
+                id = 0
+                set("name", "$name+")
+            }
         col.notetypes.add(newNotetype)
         return col.notetypes.byName("$name+")!!
     }
 
     /** Returns the note types matching [predicate] */
-    fun Notetypes.filter(predicate: (NotetypeJson) -> Boolean): List<NotetypeJson> =
-        all().filter { predicate(it) }
+    fun Notetypes.filter(predicate: (NotetypeJson) -> Boolean): List<NotetypeJson> = all().filter { predicate(it) }
 
     fun Card.note() = this.note(col)
+
     fun Card.note(reload: Boolean) = this.note(col, reload)
+
     fun Card.noteType() = this.noteType(col)
+
     fun Card.template() = this.template(col)
+
     fun Card.question() = this.question(col)
-    fun Card.question(reload: Boolean = false, browser: Boolean = false) = this.question(col, reload, browser)
+
+    fun Card.question(
+        reload: Boolean = false,
+        browser: Boolean = false,
+    ) = this.question(col, reload, browser)
+
     fun Card.answer() = this.answer(col)
+
     fun Card.load() = this.load(col)
 
     fun Note.load() = this.load(col)
+
     fun Note.cards() = this.cards(col)
+
     fun Note.firstCard() = this.firstCard(col)
+
     fun Note.cids() = this.cardIds(col)
+
     fun Note.numberOfCards() = this.numberOfCards(col)
 
     // TODO remove this. not in libanki
-    fun Note.flush() { col.updateNote(this) }
+    fun Note.flush() {
+        col.updateNote(this)
+    }
 
     /** * A wrapper around the standard [kotlinx.coroutines.test.runTest] that
      * takes care of updating the dispatcher used by CollectionManager as well.
@@ -240,7 +292,7 @@ interface TestClass {
         context: CoroutineContext = EmptyCoroutineContext,
         dispatchTimeoutMs: Long = 60_000L,
         times: Int = 1,
-        testBody: suspend TestScope.() -> Unit
+        testBody: suspend TestScope.() -> Unit,
     ) {
         val dispatcher = UnconfinedTestDispatcher()
         Dispatchers.setMain(dispatcher)

@@ -151,8 +151,6 @@
     <string name="notification_minimum_cards_due">%d سے زیادہ کارڈز باقی ہیں۔</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">کمپن</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">ٹمٹماتی روشنی</string>
-    <string name="timeout_answer_text" maxLength="41">خودکار ڈسپلے جواب</string>
-    <string name="timeout_answer_summ2">صارف کے ان پٹ کے بغیر خود بخود جواب دکھائیں۔ ڈیک کے اختیارات سے ترتیب دیں۔</string>
     <string name="select_locale_title">زبان منتخب کریں</string>
     <string name="software_render" maxLength="41">کارڈ ہارڈویئر رینڈر کو غیر فعال کریں</string>
     <string name="software_render_summ">ہارڈ ویئر رینڈر تیز تر ہے لیکن اس میں مسائل ہو سکتے ہیں، خاص طور پر Android 8/8.1 پر۔ اگر آپ کارڈ ریویو یوزر انٹرفیس کے حصے نہیں دیکھ سکتے ہیں تو اس ترتیب کو آزمائیں۔</string>
@@ -271,21 +269,21 @@
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <string name="user_actions" maxLength="41">User actions</string>
     <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="41">User action 1</string>
-    <string name="user_action_2" maxLength="41">User action 2</string>
-    <string name="user_action_3" maxLength="41">User action 3</string>
-    <string name="user_action_4" maxLength="41">User action 4</string>
-    <string name="user_action_5" maxLength="41">User action 5</string>
-    <string name="user_action_6" maxLength="41">User action 6</string>
-    <string name="user_action_7" maxLength="41">User action 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="user_action_1" maxLength="28">User action 1</string>
+    <string name="user_action_2" maxLength="28">User action 2</string>
+    <string name="user_action_3" maxLength="28">User action 3</string>
+    <string name="user_action_4" maxLength="28">User action 4</string>
+    <string name="user_action_5" maxLength="28">User action 5</string>
+    <string name="user_action_6" maxLength="28">User action 6</string>
+    <string name="user_action_7" maxLength="28">User action 7</string>
+    <string name="user_action_8" maxLength="28">User action 8</string>
+    <string name="user_action_9" maxLength="28">User action 9</string>
     <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Select card side</string>
     <string name="card_side_question">Question</string>
     <string name="card_side_answer">Answer</string>
-    <string name="card_side_both">Question &amp; Answer</string>
+    <string name="card_side_both" maxLength="28">Question &amp; Answer</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>

@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
     <string name="storage_warning">Ձեր մոտ կա %d ՄԲ-ից պակաս ազատ տարածք։\nԱզատեք տարածք` տվյալների կորստից խուսափելու համար։</string>
-    <string name="backup_restore">Վերականգնել արխիվից</string>
+    <string name="backup_restore" maxLength="28">Վերականգնել արխիվից</string>
     <string name="backup_new_collection">Նոր հավաքածու</string>
     <string name="backup_del_collection">Ջնջել հավաքածուն և ստեղծել նորը</string>
     <string name="backup_del_collection_question">Ջնջե՞լ հավաքածուն և սարքել նորը։ Սա կջնջի ձեր առաջընթացը և բոլոր քարտերը։</string>

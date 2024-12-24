@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">%d കാർഡുകളിൽ കൂടുതൽ</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">വൈബ്രേറ്റുചെയ്യുക</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">ബ്ലിങ്ക് ലൈറ്റ്</string>
-    <string name="timeout_answer_text" maxLength="41">യാന്ത്രിക പ്രദർശന ഉത്തരം</string>
-    <string name="timeout_answer_summ2">ഉപയോക്തൃ ഇൻപുട്ട് ഇല്ലാതെ ഉത്തരം സ്വയമേവ കാണിക്കുക. ഡെക്ക് ഓപ്ഷനുകളിൽ നിന്ന് കോൺഫിഗർ ചെയ്യുക.</string>
     <string name="select_locale_title">ഭാഷ തിരഞ്ഞെടുക്കുക</string>
     <string name="software_render" maxLength="41">കാർഡ് ഹാർഡ്‌വെയർ റെൻഡർ പ്രവർത്തനരഹിതമാക്കുക</string>
     <string name="software_render_summ">ഹാർഡ്‌വെയർ റെൻഡർ വേഗതയേറിയതാണെങ്കിലും പ്രശ്‌നങ്ങളുണ്ടാകാം, പ്രത്യേകിച്ചും Android 8 / 8.1. കാർഡ് അവലോകന ഉപയോക്തൃ ഇന്റർഫേസിന്റെ ഭാഗങ്ങൾ നിങ്ങൾക്ക് കാണാൻ കഴിയുന്നില്ലെങ്കിൽ, ഈ ക്രമീകരണം പരീക്ഷിക്കുക.</string>
@@ -178,7 +176,7 @@
     <string name="show_eta_summ">ശേഷിക്കുന്ന സമയം കാണിക്കുക</string>
     <string name="use_current" maxLength="41">പുതിയ കാർഡുകൾക്കുള്ള ഡെക്ക്</string>
     <string name="learn_cutoff" maxLength="41">സമയത്തിന് മുമ്പേ പഠിക്കുക</string>
-    <string name="time_limit" maxLength="41">Timebox time limit</string>
+    <string name="time_limit" maxLength="41">ടൈംബോക്സ് സമയ പരിധി</string>
     <string name="day_offset_with_description" maxLength="41">അടുത്ത ദിവസം തുടക്കം</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="one">അർദ്ധരാത്രിക്ക് ശേഷം %d മണിക്കൂർ</item>
@@ -206,7 +204,7 @@
     <string name="paste_as_png" maxLength="41">ക്ലിപ്പ്ബോർഡ് ചിത്രങ്ങൾ PNG ആയി ഒട്ടിക്കുക</string>
     <string name="paste_as_png_summary">ഡിഫോൾട്ടായി, ഡിസ്ക് സ്പേസ് ലാഭിക്കുന്നതിനായി Anki ചിത്രങ്ങൾ JPG ഫയലുകളായി ക്ലിപ്പ്ബോർഡിലേക്ക് ഒട്ടിക്കുന്നു. പകരം PNG ഇമേജുകളായി ഒട്ടിക്കാൻ നിങ്ങൾക്ക് ഈ ഓപ്ഷൻ ഉപയോഗിക്കാം.</string>
     <string name="exit_via_double_tap_back" maxLength="41">തിരികെ പോകാൻ / പുറത്തുകടക്കാൻ രണ്ട് തവണ പിന്നിലേക്ക് അമർത്തുക</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <string name="exit_via_double_tap_back_summ">റിവ്യൂവറിൽ നിന്നോ ആപ്പിൽ നിന്നോ ആകസ്മികമായി ഉപേക്ഷിക്കുന്നത് ഒഴിവാക്കാൻ</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">മീഡിയ ഇമ്പോർട്ടുകളിൽ എല്ലാ ഫയലുകളും അനുവദിക്കുക</string>
     <string name="media_import_allow_all_files_summ">ആൻഡ്രോയിഡ് ഒരു മീഡിയ ഫയൽ തിരിച്ചറിയുന്നില്ലെങ്കിൽ</string>
@@ -247,7 +245,7 @@
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid മികച്ചതാക്കാൻ സഹായിക്കൂ!</string>
     <string name="analytics_title" maxLength="41">സവിശേഷത ഉപയോഗം പങ്കിടുക</string>
-    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
+    <string name="analytics_summ">ആളുകൾ ഉപയോഗിക്കുന്ന ഫീച്ചറുകൾ ഏതൊക്കെയെന്ന് കാണാൻ ഡെവലപ്‌മെൻ്റ് ടീമിനെ സഹായിക്കുന്നതിലൂടെ നിങ്ങൾക്ക് AnkiDroid-ലേക്ക് സംഭാവന ചെയ്യാം</string>
     <string name="note_editor_replace_newlines" maxLength="41">HTML ഉപയോഗിച്ച് പുതിയ ലൈനുകൾ മാറ്റിസ്ഥാപിക്കുക</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">\'ഉത്തരം ടൈപ്പ് ചെയ്യുക\' എന്നതിൽ ശ്രദ്ധ കേന്ദ്രീകരിക്കുക</string>
@@ -259,7 +257,7 @@
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">ലൈസൻസ്</string>
     <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="donate_description"><![CDATA[<a href=\"%1$s\">സംഭാവന ചെയ്യുന്നതിലൂടെ</a> നിങ്ങൾക്ക് AnkiDroid വികസനത്തെ പിന്തുണയ്ക്കാം. ഏത് തുകയും ആഴത്തിൽ വിലമതിക്കുന്നു.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">ആംഗ്യം ചേർക്കുക</string>
     <string name="binding_replace_gesture">ആംഗ്യം മാറ്റിസ്ഥാപിക്കുക</string>
@@ -269,22 +267,22 @@
     <string name="binding_add_axis">ഒരു ജോയിസ്റ്റിക്ക്/മോഷൻ കൺട്രോളർ ചേർക്കുക</string>
     <string name="axis_picker_move_joystick">ഒരു ജോയിസ്റ്റിക്ക്/മോഷൻ കൺട്രോളർ നീക്കുക</string>
     <string name="user_actions" maxLength="41">ഉപയോക്തൃ പ്രവർത്തനങ്ങൾ</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="41">ഉപയോക്തൃ പ്രവർത്തനം 1</string>
-    <string name="user_action_2" maxLength="41">ഉപയോക്തൃ പ്രവർത്തനം 2</string>
-    <string name="user_action_3" maxLength="41">ഉപയോക്തൃ പ്രവർത്തനം 3</string>
-    <string name="user_action_4" maxLength="41">ഉപയോക്തൃ പ്രവർത്തനം 4</string>
-    <string name="user_action_5" maxLength="41">ഉപയോക്തൃ പ്രവർത്തനം 5</string>
-    <string name="user_action_6" maxLength="41">ഉപയോക്തൃ പ്രവർത്തനം 6</string>
-    <string name="user_action_7" maxLength="41">ഉപയോക്തൃ പ്രവർത്തനം 7</string>
-    <string name="user_action_8" maxLength="41">ഉപയോക്തൃ പ്രവർത്തനം 8</string>
-    <string name="user_action_9" maxLength="41">ഉപയോക്തൃ പ്രവർത്തനം 9</string>
+    <string name="user_actions_summary" maxLength="41">അവലോകന സ്ക്രീനിൽ നിന്ന് JavaScript ട്രിഗർ ചെയ്യുക</string>
+    <string name="user_action_1" maxLength="28">ഉപയോക്തൃ പ്രവർത്തനം 1</string>
+    <string name="user_action_2" maxLength="28">ഉപയോക്തൃ പ്രവർത്തനം 2</string>
+    <string name="user_action_3" maxLength="28">ഉപയോക്തൃ പ്രവർത്തനം 3</string>
+    <string name="user_action_4" maxLength="28">ഉപയോക്തൃ പ്രവർത്തനം 4</string>
+    <string name="user_action_5" maxLength="28">ഉപയോക്തൃ പ്രവർത്തനം 5</string>
+    <string name="user_action_6" maxLength="28">ഉപയോക്തൃ പ്രവർത്തനം 6</string>
+    <string name="user_action_7" maxLength="28">ഉപയോക്തൃ പ്രവർത്തനം 7</string>
+    <string name="user_action_8" maxLength="28">ഉപയോക്തൃ പ്രവർത്തനം 8</string>
+    <string name="user_action_9" maxLength="28">ഉപയോക്തൃ പ്രവർത്തനം 9</string>
     <string name="toggle_auto_advance" maxLength="41">ഓട്ടോ അഡ്വാൻസ് ടോഗിൾ ചെയ്യുക</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">കാർഡ് വശം തിരഞ്ഞെടുക്കുക</string>
     <string name="card_side_question">ചോദ്യം</string>
     <string name="card_side_answer">ഉത്തരം</string>
-    <string name="card_side_both">ചോദ്യം &amp; ഉത്തരം</string>
+    <string name="card_side_both" maxLength="28">ചോദ്യം &amp; ഉത്തരം</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">എ: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -292,7 +290,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">\'%s\' നീക്കം ചെയ്യുക</string>
     <string name="bindings_already_bound">Already bound to ‘%s’</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">പരീക്ഷണാത്മകം</string>
     <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">പുതിയ ടെക്‌സ്‌റ്റ് സ്‌പീച്ച് ഫോർമാറ്റിലേക്ക് അപ്‌ഗ്രേഡുചെയ്യുക</string>
     <!-- Developer options -->
@@ -330,7 +328,7 @@
     </plurals>
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">ഉപയോഗിക്കാത്ത മീഡിയ ഫയലുകൾ ഇല്ലാതാക്കുക</string>
-    <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
+    <string name="pref__delete_unused_media_files__summary">_ പ്രിഫിക്‌സ് ഇല്ലാത്തതും കുറിപ്പുകളൊന്നും പരാമർശിക്കാത്തതുമായ ചിത്രങ്ങളും മറ്റ് മീഡിയകളും ഇല്ലാതാക്കുക</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">ഉപയോഗിക്കാത്ത മീഡിയ ഫയലുകൾ ഇല്ലാതാക്കുക</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">ബാക്കപ്പുകൾ ഇല്ലാതാക്കുക</string>
@@ -351,7 +349,7 @@
     <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">ആപ്പ് ഡാറ്റ ഇല്ലാതാക്കുക</string>
     <string name="pref__delete_app_data__summary">ക്രമീകരണങ്ങളും മറ്റ് ആപ്പ് ഡാറ്റയും ഇല്ലാതാക്കുക</string>
     <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">ആപ്പ് ഡാറ്റ ഇല്ലാതാക്കുക</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">ആപ്പ് ഡാറ്റ ഇല്ലാതാക്കണമെന്ന് തീർച്ചയാണോ? ഇതിൽ ക്രമീകരണങ്ങളും മറ്റ് ആപ്പ് ഡാറ്റയും ഉൾപ്പെടുന്നു.\n\nശ്രദ്ധിക്കുക: ഈ പ്രവർത്തനം വിൻഡോ അടയ്ക്കും.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
@@ -367,8 +365,8 @@
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">നാവിഗേഷൻ ബാർ</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
     <string name="ignore_display_cutout" maxLength="41">ഡിസ്പ്ലേ കട്ട്ഔട്ട് അവഗണിക്കുക</string>
-    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
-    <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
+    <string name="hide_answer_buttons" maxLength="41">ഉത്തരം ബട്ടണുകൾ മറയ്ക്കുക</string>
+    <string name="hide_hard_and_easy" maxLength="41">\'ഹാർഡ്\', \'എസി\' ബട്ടണുകൾ മറയ്ക്കുക</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">ക്രമീകരണങ്ങൾ തുറക്കുക</string>
 </resources>

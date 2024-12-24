@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
     <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
-    <string name="backup_restore">Restore from backup</string>
+    <string name="backup_restore" maxLength="28">Restore from backup</string>
     <string name="backup_new_collection">Yeni kolleksiya</string>
     <string name="backup_del_collection">Toplama sil və yenisini yaradın</string>
     <string name="backup_del_collection_question">Kolleksiyanı silmək və yenisini yaratmaq?Bu, bütün öyrənmə tərzinizi düşəcək və bütün kartları siləcək.</string>

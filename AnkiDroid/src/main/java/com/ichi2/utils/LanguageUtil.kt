@@ -38,194 +38,339 @@ object LanguageUtil {
     /** A list of all languages supported by AnkiDroid
      * Please modify LanguageUtilsTest if changing
      * Please note 'yue' is special, it is 'yu' on CrowdIn, and mapped in import specially to 'yue' */
-    val APP_LANGUAGES = mapOf(
-        "Afrikaans" to "af", // Afrikaans
-        "አማርኛ" to "am", // Amharic
-        "العربية" to "ar", // Arabic
-        "Azərbaycan" to "az", // Azerbaijani
-        "Беларуская" to "be", // Belarusian
-        "Български" to "bg", // Bulgarian
-        "বাংলা" to "bn", // Bangla
-        "Català" to "ca", // Catalan
-        "کوردیی ناوەندی" to "ckb", // Central Kurdish
-        "Čeština" to "cs", // Czech
-        "Dansk" to "da", // Danish
-        "Deutsch" to "de", // German
-        "Ελληνικά" to "el", // Greek
-        "English" to "en", // English
-        "Esperanto" to "eo", // Esperanto
-        "Español (Argentina)" to "es-AR", // Spanish (Argentina)
-        "Español (España)" to "es-ES", // Spanish (Spain)
-        "Eesti" to "et", // Estonian
-        "Euskara" to "eu", // Basque
-        "فارسی" to "fa", // Persian
-        "Suomi" to "fi", // Finnish
-        "Filipino" to "fil", // Filipino
-        "Français" to "fr", // French
-        "Frysk (Nederlân)" to "fy-NL", // Western Frisian (Netherlands)
-        "Gaeilge (Éire)" to "ga-IE", // Irish (Ireland)
-        "Galego" to "gl", // Galician
-        "Gothic" to "got", // Gothic
-        "ગુજરાતી (ભારત)" to "gu-IN", // Gujarati (India)
-        "עברית" to "heb", // Hebrew
-        "हिन्दी" to "hi", // Hindi
-        "Hrvatski" to "hr", // Croatian
-        "Magyar" to "hu", // Hungarian
-        "Hայերեն (Հայաստան)" to "hy-AM", // Armenian (Armenia)
-        "Indonesia" to "ind", // Indonesian
-        "íslenska" to "is", // Icelandic
-        "Italiano" to "it", // Italian
-        "日本語" to "ja", // Japanese
-        "Jawa" to "jv", // Javanese
-        "ქართული" to "ka", // Georgian
-        "Қазақ тілі" to "kk", // Kazakh
-        "ខ្មែរ" to "km", // Khmer
-        "ಕನ್ನಡ" to "kn", // Kannada
-        "한국어" to "ko", // Korean
-        "Kurdî" to "ku", // Kurdish
-        "Кыргызча" to "ky", // Kyrgyz
-        "Lietuvių" to "lt", // Lithuanian
-        "Latviešu" to "lv", // Latvian
-        "Македонски" to "mk", // Macedonian
-        "മലയാളം (ഇന്ത്യ)" to "ml-IN", // Malayalam (India)
-        "Монгол" to "mn", // Mongolian
-        "मराठी" to "mr", // Marathi
-        "Melayu" to "ms", // Malay
-        "မြန်မာ" to "my", // Burmese
-        "Nederlands" to "nl", // Dutch
-        "Nynorsk (Noreg)" to "nn-NO", // Norwegian Nynorsk (Norway)
-        "Norsk" to "no", // Norwegian
-        "ଓଡ଼ିଆ" to "or", // Odia
-        "ਪੰਜਾਬੀ (ਭਾਰਤ)" to "pa-IN", // Punjabi (India)
-        "Polski" to "pl", // Polish
-        "Português (Brasil)" to "pt-BR", // Portuguese (Brazil)
-        "Português (Portugal)" to "pt-PT", // Portuguese (Portugal)
-        "Română" to "ro", // Romanian
-        "Русский" to "ru", // Russian
-        "ᱥᱟᱱᱛᱟᱲᱤ" to "sat", // Santali
-        "Sardu" to "sc", // Sardinian
-        "Slovenčina" to "sk", // Slovak
-        "Slovenščina" to "sl", // Slovenian
-        "Shqip" to "sq", // Albanian
-        "Српски" to "sr", // Serbian
-        "Swati" to "ss", // Swati
-        "Svenska (Sverige)" to "sv-SE", // Swedish (Sweden)
-        "Kiswahili" to "sw", // Swahili
-        "தமிழ்" to "ta", // Tamil
-        "తెలుగు" to "te", // Telugu
-        "Тоҷикӣ" to "tg", // Tajik
-        "Tagalog" to "tgl", // Tagalog
-        "ไทย" to "th", // Thai
-        "ትግርኛ" to "ti", // Tigrinya
-        "Tswana" to "tn", // Tswana
-        "Türkçe" to "tr", // Turkish
-        "Tsonga" to "ts", // Tsonga
-        "Татар (Россия)" to "tt-RU", // Tatar (Russia)
-        "Українська" to "uk", // Ukrainian
-        "اردو (پاکستان)" to "ur-PK", // Urdu (Pakistan)
-        "O‘zbek" to "uz", // Uzbek
-        "Venda" to "ve", // Venda
-        "Tiếng Việt" to "vi", // Vietnamese
-        "Wolof" to "wo", // Wolof
-        "isiXhosa" to "xh", // Xhosa
-        "粵語" to "yue", // Cantonese
-        "中文 (中国)" to "zh-CN", // Chinese (China)
-        "中文 (台灣)" to "zh-TW", // Chinese (Taiwan)
-        "isiZulu" to "zu" // Zulu
-    )
+    val APP_LANGUAGES =
+        mapOf(
+            // Afrikaans
+            "Afrikaans" to "af",
+            // Amharic
+            "አማርኛ" to "am",
+            // Arabic
+            "العربية" to "ar",
+            // Azerbaijani
+            "Azərbaycan" to "az",
+            // Belarusian
+            "Беларуская" to "be",
+            // Bulgarian
+            "Български" to "bg",
+            // Bangla
+            "বাংলা" to "bn",
+            // Catalan
+            "Català" to "ca",
+            // Central Kurdish
+            "کوردیی ناوەندی" to "ckb",
+            // Czech
+            "Čeština" to "cs",
+            // Danish
+            "Dansk" to "da",
+            // German
+            "Deutsch" to "de",
+            // Greek
+            "Ελληνικά" to "el",
+            // English
+            "English" to "en",
+            // Esperanto
+            "Esperanto" to "eo",
+            // Spanish (Argentina)
+            "Español (Argentina)" to "es-AR",
+            // Spanish (Spain)
+            "Español (España)" to "es-ES",
+            // Estonian
+            "Eesti" to "et",
+            // Basque
+            "Euskara" to "eu",
+            // Persian
+            "فارسی" to "fa",
+            // Finnish
+            "Suomi" to "fi",
+            // Filipino
+            "Filipino" to "fil",
+            // French
+            "Français" to "fr",
+            // Western Frisian (Netherlands)
+            "Frysk (Nederlân)" to "fy-NL",
+            // Irish (Ireland)
+            "Gaeilge (Éire)" to "ga-IE",
+            // Galician
+            "Galego" to "gl",
+            // Gothic
+            "Gothic" to "got",
+            // Gujarati (India)
+            "ગુજરાતી (ભારત)" to "gu-IN",
+            // Hebrew
+            "עברית" to "heb",
+            // Hindi
+            "हिन्दी" to "hi",
+            // Croatian
+            "Hrvatski" to "hr",
+            // Hungarian
+            "Magyar" to "hu",
+            // Armenian (Armenia)
+            "Hայերեն (Հայաստան)" to "hy-AM",
+            // Indonesian
+            "Indonesia" to "ind",
+            // Icelandic
+            "íslenska" to "is",
+            // Italian
+            "Italiano" to "it",
+            // Japanese
+            "日本語" to "ja",
+            // Javanese
+            "Jawa" to "jv",
+            // Georgian
+            "ქართული" to "ka",
+            // Kazakh
+            "Қазақ тілі" to "kk",
+            // Khmer
+            "ខ្មែរ" to "km",
+            // Kannada
+            "ಕನ್ನಡ" to "kn",
+            // Korean
+            "한국어" to "ko",
+            // Kurdish
+            "Kurdî" to "ku",
+            // Kyrgyz
+            "Кыргызча" to "ky",
+            // Lithuanian
+            "Lietuvių" to "lt",
+            // Latvian
+            "Latviešu" to "lv",
+            // Macedonian
+            "Македонски" to "mk",
+            // Malayalam (India)
+            "മലയാളം (ഇന്ത്യ)" to "ml-IN",
+            // Mongolian
+            "Монгол" to "mn",
+            // Marathi
+            "मराठी" to "mr",
+            // Malay
+            "Melayu" to "ms",
+            // Burmese
+            "မြန်မာ" to "my",
+            // Dutch
+            "Nederlands" to "nl",
+            // Norwegian Nynorsk (Norway)
+            "Nynorsk (Noreg)" to "nn-NO",
+            // Norwegian
+            "Norsk" to "no",
+            // Odia
+            "ଓଡ଼ିଆ" to "or",
+            // Punjabi (India)
+            "ਪੰਜਾਬੀ (ਭਾਰਤ)" to "pa-IN",
+            // Polish
+            "Polski" to "pl",
+            // Portuguese (Brazil)
+            "Português (Brasil)" to "pt-BR",
+            // Portuguese (Portugal)
+            "Português (Portugal)" to "pt-PT",
+            // Romanian
+            "Română" to "ro",
+            // Russian
+            "Русский" to "ru",
+            // Santali
+            "ᱥᱟᱱᱛᱟᱲᱤ" to "sat",
+            // Sardinian
+            "Sardu" to "sc",
+            // Slovak
+            "Slovenčina" to "sk",
+            // Slovenian
+            "Slovenščina" to "sl",
+            // Albanian
+            "Shqip" to "sq",
+            // Serbian
+            "Српски" to "sr",
+            // Swati
+            "Swati" to "ss",
+            // Swedish (Sweden)
+            "Svenska (Sverige)" to "sv-SE",
+            // Swahili
+            "Kiswahili" to "sw",
+            // Tamil
+            "தமிழ்" to "ta",
+            // Telugu
+            "తెలుగు" to "te",
+            // Tajik
+            "Тоҷикӣ" to "tg",
+            // Tagalog
+            "Tagalog" to "tgl",
+            // Thai
+            "ไทย" to "th",
+            // Tigrinya
+            "ትግርኛ" to "ti",
+            // Tswana
+            "Tswana" to "tn",
+            // Turkish
+            "Türkçe" to "tr",
+            // Tsonga
+            "Tsonga" to "ts",
+            // Tatar (Russia)
+            "Татар (Россия)" to "tt-RU",
+            // Ukrainian
+            "Українська" to "uk",
+            // Urdu (Pakistan)
+            "اردو (پاکستان)" to "ur-PK",
+            // Uzbek
+            "O‘zbek" to "uz",
+            // Venda
+            "Venda" to "ve",
+            // Vietnamese
+            "Tiếng Việt" to "vi",
+            // Wolof
+            "Wolof" to "wo",
+            // Xhosa
+            "isiXhosa" to "xh",
+            // Cantonese
+            "粵語" to "yue",
+            // Chinese (China)
+            "中文 (中国)" to "zh-CN",
+            // Chinese (Taiwan)
+            "中文 (台灣)" to "zh-TW",
+            // Zulu
+            "isiZulu" to "zu",
+        )
 
     /** Backend languages; may not include recently added ones.
      * Found at https://i18n.ankiweb.net/teams/ */
     @Suppress("unused")
-    val BACKEND_LANGS = listOf(
-        "af", // Afrikaans
-        "ar", // العربية
-        "be", // Беларуская мова
-        "bg", // Български
-        "ca", // Català
-        "cs", // Čeština
-        "da", // Dansk
-        "de", // Deutsch
-        "el", // Ελληνικά
-        "en", // English (United States)
-        "en-GB", // English (United Kingdom)
-        "eo", // Esperanto
-        "es", // Español
-        "et", // Eesti
-        "eu", // Euskara
-        "fa", // فارسی
-        "fi", // Suomi
-        "fr", // Français
-        "ga-IE", // Gaeilge
-        "gl", // Galego
-        "he", // עִבְרִית
-        "hi-IN", // Hindi
-        "hr", // Hrvatski
-        "hu", // Magyar
-        "hy-AM", // Հայերեն
-        "id", // Indonesia
-        "it", // Italiano
-        "ja", // 日本語
-        "jbo", // lo jbobau
-        "ko", // 한국어
-        "la", // Latin
-        "mn", // Монгол хэл
-        "ms", // Bahasa Melayu
-        "nb", // Norsk
-        "nb-NO", // norwegian
-        "nl", // Nederlands
-        "nn-NO", // norwegian
-        "oc", // Lenga d'òc
-        "or", // ଓଡ଼ିଆ
-        "pl", // Polski
-        "pt-BR", // Português Brasileiro
-        "pt-PT", // Português
-        "ro", // Română
-        "ru", // Pусский язык
-        "sk", // Slovenčina
-        "sl", // Slovenščina
-        "sr", // Српски
-        "sv-SE", // Svenska
-        "th", // ภาษาไทย
-        "tr", // Türkçe
-        "uk", // Yкраїнська мова
-        "vi", // Tiếng Việt
-        "zh-CN", // 简体中文
-        "zh-TW" // 繁體中文
-    )
+    val BACKEND_LANGS =
+        listOf(
+            // Afrikaans
+            "af",
+            // العربية
+            "ar",
+            // Беларуская мова
+            "be",
+            // Български
+            "bg",
+            // Català
+            "ca",
+            // Čeština
+            "cs",
+            // Dansk
+            "da",
+            // Deutsch
+            "de",
+            // Ελληνικά
+            "el",
+            // English (United States)
+            "en",
+            // English (United Kingdom)
+            "en-GB",
+            // Esperanto
+            "eo",
+            // Español
+            "es",
+            // Eesti
+            "et",
+            // Euskara
+            "eu",
+            // فارسی
+            "fa",
+            // Suomi
+            "fi",
+            // Français
+            "fr",
+            // Gaeilge
+            "ga-IE",
+            // Galego
+            "gl",
+            // עִבְרִית
+            "he",
+            // Hindi
+            "hi-IN",
+            // Hrvatski
+            "hr",
+            // Magyar
+            "hu",
+            // Հայերեն
+            "hy-AM",
+            // Indonesia
+            "id",
+            // Italiano
+            "it",
+            // 日本語
+            "ja",
+            // lo jbobau
+            "jbo",
+            // 한국어
+            "ko",
+            // Latin
+            "la",
+            // Монгол хэл
+            "mn",
+            // Bahasa Melayu
+            "ms",
+            // Norsk
+            "nb",
+            // norwegian
+            "nb-NO",
+            // Nederlands
+            "nl",
+            // norwegian
+            "nn-NO",
+            // Lenga d'òc
+            "oc",
+            // ଓଡ଼ିଆ
+            "or",
+            // Polski
+            "pl",
+            // Português Brasileiro
+            "pt-BR",
+            // Português
+            "pt-PT",
+            // Română
+            "ro",
+            // Pусский язык
+            "ru",
+            // Slovenčina
+            "sk",
+            // Slovenščina
+            "sl",
+            // Српски
+            "sr",
+            // Svenska
+            "sv-SE",
+            // ภาษาไทย
+            "th",
+            // Türkçe
+            "tr",
+            // Yкраїнська мова
+            "uk",
+            // Tiếng Việt
+            "vi",
+            // 简体中文
+            "zh-CN",
+            // 繁體中文
+            "zh-TW",
+        )
 
-    fun getShortDateFormatFromMs(ms: Long): String {
-        return DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault()).format(Date(ms))
-    }
+    fun getShortDateFormatFromMs(ms: Long): String = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault()).format(Date(ms))
 
-    fun getShortDateFormatFromS(s: Long): String {
-        return DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault()).format(Date(s * 1000L))
-    }
+    fun getShortDateFormatFromS(s: Long): String = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault()).format(Date(s * 1000L))
 
-    fun getShortDateFormatFromS(s: Int): String =
-        DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault()).format(Date(s * 1000L))
+    fun getShortDateFormatFromS(s: Int): String = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault()).format(Date(s * 1000L))
 
-    fun getLocaleCompat(resources: Resources): Locale? {
-        return ConfigurationCompat.getLocales(resources.configuration)[0]
-    }
+    fun getLocaleCompat(resources: Resources): Locale? = ConfigurationCompat.getLocales(resources.configuration)[0]
 
     fun getSystemLocale(): Locale = getLocaleCompat(Resources.getSystem())!!
 
     /** If locale is not provided, the current locale will be used. */
     fun setDefaultBackendLanguages(languageTag: String? = null) {
-        val langCode = languageTag ?: AnkiDroidApp.instance.sharedPrefs()
-            .getString("language", SYSTEM_LANGUAGE_TAG)!!
+        val langCode =
+            languageTag ?: AnkiDroidApp.instance
+                .sharedPrefs()
+                .getString("language", SYSTEM_LANGUAGE_TAG)!!
 
-        val localeLanguage = if (langCode == SYSTEM_LANGUAGE_TAG) {
-            getSystemLocale().toLanguageTag()
-        } else {
-            langCode
-        }
+        val localeLanguage =
+            if (langCode == SYSTEM_LANGUAGE_TAG) {
+                getSystemLocale().toLanguageTag()
+            } else {
+                langCode
+            }
         BackendFactory.defaultLanguages = listOf(languageTagToBackendCode(localeLanguage))
     }
 
-    private fun languageTagToBackendCode(languageTag: String): String {
-        return when (languageTag) {
+    private fun languageTagToBackendCode(languageTag: String): String =
+        when (languageTag) {
             "heb" -> "he"
             "ind" -> "id"
             "tgl" -> "tl"
@@ -233,25 +378,28 @@ object LanguageUtil {
             "yue" -> "zh-HK"
             else -> languageTag
         }
-    }
 
     /** @return string defined with [stringRes] on the specified [locale] */
-    fun Context.getStringByLocale(@StringRes stringRes: Int, locale: Locale, vararg formatArgs: Any): String {
+    fun Context.getStringByLocale(
+        @StringRes stringRes: Int,
+        locale: Locale,
+        vararg formatArgs: Any,
+    ): String {
         val configuration = Configuration(resources.configuration)
         configuration.setLocale(locale)
         return createConfigurationContext(configuration).resources.getString(stringRes, *formatArgs)
     }
 
     /** @return string defined with [stringRes] on the specified [locale] */
-    fun Fragment.getStringByLocale(@StringRes stringRes: Int, locale: Locale, vararg formatArgs: Any): String {
-        return requireContext().getStringByLocale(stringRes, locale, *formatArgs)
-    }
+    fun Fragment.getStringByLocale(
+        @StringRes stringRes: Int,
+        locale: Locale,
+        vararg formatArgs: Any,
+    ): String = requireContext().getStringByLocale(stringRes, locale, *formatArgs)
 
     /**
      * This should always be called after Activity.onCreate()
      * @return locale language tag of the app configured language
      */
-    fun getCurrentLocaleTag(): String {
-        return AppCompatDelegate.getApplicationLocales().toLanguageTags()
-    }
+    fun getCurrentLocaleTag(): String = AppCompatDelegate.getApplicationLocales().toLanguageTags()
 }

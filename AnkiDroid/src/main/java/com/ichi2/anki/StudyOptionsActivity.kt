@@ -15,17 +15,31 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
+import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.commit
+import androidx.lifecycle.lifecycleScope
+import anki.collection.OpChanges
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
+import com.ichi2.libanki.ChangeManager
+import com.ichi2.ui.RtlCompliantActionProvider
 import com.ichi2.utils.ExtendedFragmentFactory
 import com.ichi2.widget.WidgetStatus
-import timber.log.Timber
+import kotlinx.coroutines.launch
 
-class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, CustomStudyListener {
+class StudyOptionsActivity :
+    AnkiActivity(),
+    StudyOptionsListener,
+    CustomStudyListener,
+    ChangeManager.Subscriber {
+    private var undoState = UndoState()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -34,11 +48,11 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
         customStudyDialogFactory.attachToActivity<ExtendedFragmentFactory>(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.studyoptions)
-        // create inherited navigation drawer layout here so that it can be used by parent class
-        initNavigationDrawer(findViewById(android.R.id.content))
+        enableToolbar().apply { title = "" }
         if (savedInstanceState == null) {
             loadStudyOptionsFragment()
         }
+        setResult(RESULT_OK)
     }
 
     private fun loadStudyOptionsFragment() {
@@ -55,32 +69,41 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
     private val currentFragment: StudyOptionsFragment?
         get() = supportFragmentManager.findFragmentById(R.id.studyoptions_frame) as StudyOptionsFragment?
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.activity_study_options, menu)
+        val undoMenuItem = menu.findItem(R.id.action_undo)
+        val undoActionProvider = MenuItemCompat.getActionProvider(undoMenuItem) as? RtlCompliantActionProvider
+        // Set the proper click target for the undo button's ActionProvider
+        undoActionProvider?.clickHandler = { _, menuItem -> onOptionsItemSelected(menuItem) }
+        undoMenuItem.isVisible = undoState.hasAction
+        undoMenuItem.title = undoState.label
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (drawerToggle.onOptionsItemSelected(item)) {
-            return true
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressedDispatcher.onBackPressed()
+                true
+            }
+            R.id.action_undo -> {
+                launchCatchingTask {
+                    undoAndShowSnackbar()
+                    // TODO why are we going to the Reviewer from here? Desktop doesn't do this
+                    Intent(this@StudyOptionsActivity, Reviewer::class.java)
+                        .apply { flags = Intent.FLAG_ACTIVITY_FORWARD_RESULT }
+                        .also { startActivity(it) }
+                    finish()
+                }
+                true
+            }
+            else -> return super.onOptionsItemSelected(item)
         }
-        if (item.itemId == android.R.id.home) {
-            closeStudyOptions()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
     }
 
-    private fun closeStudyOptions(result: Int = RESULT_OK) {
-        // mCompat.invalidateOptionsMenu(this);
-        setResult(result)
-        finish()
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (isDrawerOpen) {
-            @Suppress("DEPRECATION")
-            super.onBackPressed()
-        } else {
-            Timber.i("Back key pressed")
-            closeStudyOptions()
-        }
+    override fun onResume() {
+        super.onResume()
+        refreshUndoState()
     }
 
     public override fun onStop() {
@@ -88,11 +111,6 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
         if (colIsOpenUnsafe()) {
             WidgetStatus.updateInBackground(this)
         }
-    }
-
-    public override fun onResume() {
-        super.onResume()
-        selectNavigationItem(-1)
     }
 
     override fun onRequireDeckListUpdate() {
@@ -111,4 +129,32 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
         // Sched needs to be reset so provide true argument
         currentFragment!!.refreshInterface()
     }
+
+    override fun opExecuted(
+        changes: OpChanges,
+        handler: Any?,
+    ) {
+        refreshUndoState()
+    }
+
+    private fun refreshUndoState() {
+        lifecycleScope.launch {
+            val newUndoState =
+                withCol {
+                    UndoState(
+                        hasAction = undoAvailable(),
+                        label = undoLabel(),
+                    )
+                }
+            if (undoState != newUndoState) {
+                undoState = newUndoState
+                invalidateOptionsMenu()
+            }
+        }
+    }
+
+    private data class UndoState(
+        val hasAction: Boolean = false,
+        val label: String? = null,
+    )
 }

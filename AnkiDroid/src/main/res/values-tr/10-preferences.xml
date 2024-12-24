@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">En az %d kartın sırası geldiğinde</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Titreş</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Işığı yanıp söndür</string>
-    <string name="timeout_answer_text" maxLength="41">Cevabı otomatik göster</string>
-    <string name="timeout_answer_summ2">Cevabı kullanıcı adı olmadan otomatik olarak göster. Deste seçeneklerinden yapılandırın.</string>
     <string name="select_locale_title">Dil Seç</string>
     <string name="software_render" maxLength="41">Kart donanım renderını devredışı bırak</string>
     <string name="software_render_summ">Donanım renderı daha hızlıdır ama sorunları olabilir, özellikle de Android 8/8.1\'de. Kart çalışma kullanıcı arayüzünün bazı kısımlarını göremiyorsanız, bunu ayarı deneyin.</string>
@@ -237,7 +235,7 @@
     <string name="deck_conf_cram_filter" maxLength="41">Filtre</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Arama</string>
     <string name="deck_conf_cram_limit" maxLength="41">Sınırla</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
+    <string name="deck_conf_cram_order" maxLength="41">Kart seçim sırası</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Yeniden planlama</string>
     <string name="deck_conf_cram_reschedule_summ">Bu destedeki cevaplarıma göre kartları yeniden planlama</string>
     <string name="deck_conf_cram_filter_2_check">İkinci filtreyi etkinleştir</string>
@@ -270,21 +268,21 @@
     <string name="axis_picker_move_joystick">Bir joystick/hareket kumandasını hareket ettir</string>
     <string name="user_actions" maxLength="41">Kullanıcı eylemleri</string>
     <string name="user_actions_summary" maxLength="41">JavaScript\'i gözden geçirme ekranından tetikle</string>
-    <string name="user_action_1" maxLength="41">Kullanıcı eylemi 1</string>
-    <string name="user_action_2" maxLength="41">Kullanıcı eylemi 2</string>
-    <string name="user_action_3" maxLength="41">Kullanıcı eylemi 3</string>
-    <string name="user_action_4" maxLength="41">Kullanıcı eylemi 4</string>
-    <string name="user_action_5" maxLength="41">Kullanıcı eylemi 5</string>
-    <string name="user_action_6" maxLength="41">Kullanıcı eylemi 6</string>
-    <string name="user_action_7" maxLength="41">Kullanıcı eylemi 7</string>
-    <string name="user_action_8" maxLength="41">Kullanıcı eylemi 8</string>
-    <string name="user_action_9" maxLength="41">Kullanıcı eylemi 9</string>
+    <string name="user_action_1" maxLength="28">Kullanıcı eylemi 1</string>
+    <string name="user_action_2" maxLength="28">Kullanıcı eylemi 2</string>
+    <string name="user_action_3" maxLength="28">Kullanıcı eylemi 3</string>
+    <string name="user_action_4" maxLength="28">Kullanıcı eylemi 4</string>
+    <string name="user_action_5" maxLength="28">Kullanıcı eylemi 5</string>
+    <string name="user_action_6" maxLength="28">Kullanıcı eylemi 6</string>
+    <string name="user_action_7" maxLength="28">Kullanıcı eylemi 7</string>
+    <string name="user_action_8" maxLength="28">Kullanıcı eylemi 8</string>
+    <string name="user_action_9" maxLength="28">Kullanıcı eylemi 9</string>
     <string name="toggle_auto_advance" maxLength="41">Otomatik ilerlemeyi aç/kapat</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Kartın tarafını seç</string>
     <string name="card_side_question">Soru</string>
     <string name="card_side_answer">Cevap</string>
-    <string name="card_side_both">Soru &amp; Cevap</string>
+    <string name="card_side_both" maxLength="28">Soru &amp; Cevap</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">S: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">C: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -369,5 +367,5 @@
     <string name="hide_answer_buttons" maxLength="41">Cevap düğmelerini gizle</string>
     <string name="hide_hard_and_easy" maxLength="41">\"Zor\" ve \"Kolay\" düğmelerini gizle</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Ayarları aç</string>
 </resources>

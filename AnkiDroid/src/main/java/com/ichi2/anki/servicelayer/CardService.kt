@@ -26,9 +26,12 @@ object CardService {
      * @param selectedCardIds list of card ids
      * can do better with performance here
      */
-    fun selectedNoteIds(col: Collection, selectedCardIds: List<CardId>) =
-        CardUtils.getNotes(
+    fun selectedNoteIds(
+        col: Collection,
+        selectedCardIds: List<CardId>,
+    ) = CardUtils
+        .getNotes(
             col,
-            selectedCardIds.map { col.getCard(it) }
+            selectedCardIds.map { col.getCard(it) },
         ).map { it.id }
 }

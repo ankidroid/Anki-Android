@@ -91,16 +91,17 @@ class FieldEditLine : FrameLayout {
     }
 
     private fun toggleExpansionState() {
-        expansionState = when (expansionState) {
-            ExpansionState.EXPANDED -> {
-                collapseView(editText, enableAnimation)
-                ExpansionState.COLLAPSED
+        expansionState =
+            when (expansionState) {
+                ExpansionState.EXPANDED -> {
+                    collapseView(editText, enableAnimation)
+                    ExpansionState.COLLAPSED
+                }
+                ExpansionState.COLLAPSED -> {
+                    expandView(editText, enableAnimation)
+                    ExpansionState.EXPANDED
+                }
             }
-            ExpansionState.COLLAPSED -> {
-                expandView(editText, enableAnimation)
-                ExpansionState.EXPANDED
-            }
-        }
         setExpanderBackgroundImage()
     }
 
@@ -111,9 +112,9 @@ class FieldEditLine : FrameLayout {
         }
     }
 
-    private fun getBackgroundImage(@DrawableRes idRes: Int): Drawable? {
-        return VectorDrawableCompat.create(this.resources, idRes, context.theme)
-    }
+    private fun getBackgroundImage(
+        @DrawableRes idRes: Int,
+    ): Drawable? = VectorDrawableCompat.create(this.resources, idRes, context.theme)
 
     fun setActionModeCallbacks(callback: ActionMode.Callback?) {
         editText.customSelectionActionModeCallback = callback
@@ -127,12 +128,15 @@ class FieldEditLine : FrameLayout {
     }
 
     fun setHintLocale(hintLocale: Locale?) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && hintLocale != null) {
+        if (hintLocale != null) {
             editText.setHintLocale(hintLocale)
         }
     }
 
-    fun setContent(content: String?, replaceNewline: Boolean) {
+    fun setContent(
+        content: String?,
+        replaceNewline: Boolean,
+    ) {
         editText.setContent(content, replaceNewline)
     }
 
@@ -222,7 +226,10 @@ class FieldEditLine : FrameLayout {
 
         constructor(superState: Parcelable?) : super(superState)
 
-        override fun writeToParcel(out: Parcel, flags: Int) {
+        override fun writeToParcel(
+            out: Parcel,
+            flags: Int,
+        ) {
             super.writeToParcel(out, flags)
             out.writeSparseArray(childrenStates)
             out.writeInt(editTextId)
@@ -238,33 +245,33 @@ class FieldEditLine : FrameLayout {
             toggleStickyId = source.readInt()
             mediaButtonId = source.readInt()
             expandButtonId = source.readInt()
-            expansionState = ParcelCompat.readSerializable(
-                source,
-                ExpansionState::class.java.classLoader,
-                ExpansionState::class.java
-            )
+            expansionState =
+                ParcelCompat.readSerializable(
+                    source,
+                    ExpansionState::class.java.classLoader,
+                    ExpansionState::class.java,
+                )
         }
 
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
             @Suppress("unused")
-            val CREATOR: Parcelable.Creator<SavedState> = object : ClassLoaderCreator<SavedState> {
-                override fun createFromParcel(source: Parcel, loader: ClassLoader): SavedState {
-                    return SavedState(source, loader)
-                }
+            val CREATOR: Parcelable.Creator<SavedState> =
+                object : ClassLoaderCreator<SavedState> {
+                    override fun createFromParcel(
+                        source: Parcel,
+                        loader: ClassLoader,
+                    ): SavedState = SavedState(source, loader)
 
-                override fun createFromParcel(source: Parcel): SavedState {
-                    throw IllegalStateException()
-                }
+                    override fun createFromParcel(source: Parcel): SavedState = throw IllegalStateException()
 
-                override fun newArray(size: Int): Array<SavedState?> {
-                    return arrayOfNulls(size)
+                    override fun newArray(size: Int): Array<SavedState?> = arrayOfNulls(size)
                 }
-            }
         }
     }
 
     enum class ExpansionState {
-        EXPANDED, COLLAPSED
+        EXPANDED,
+        COLLAPSED,
     }
 }

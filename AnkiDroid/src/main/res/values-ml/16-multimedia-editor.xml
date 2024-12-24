@@ -59,7 +59,6 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">എന്തോ കുഴപ്പം സംഭവിച്ചു</string>
-    <string name="multimedia_editor_svg_preview">പ്രിവ്യൂവിന് SVG-കൾ ലഭ്യമല്ല</string>
     <string name="multimedia_editor_png_paste_error">ക്ലിപ്പ്ബോർഡ് ചിത്രം png-ലേക്ക് പരിവർത്തനം ചെയ്യുന്നതിൽ പിശക്: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Attach multimedia content to the %1$s field</string>
     <!-- Audio view -->
@@ -69,11 +68,11 @@
     <string name="multimedia_editor_audio_view_create_failed">റെക്കോർഡർ ടൂൾബാർ സൃഷ്ടിക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>
     <!-- Crop function-->
     <string name="crop_image">നിങ്ങൾക്ക് ഈ ചിത്രം ക്രോപ്പ് ചെയ്യണോ?</string>
-    <string name="crop_button">ചിത്രം ക്രോപ്പ് ചെയ്യുക</string>
+    <string name="crop_button" maxLength="28">ചിത്രം ക്രോപ്പ് ചെയ്യുക</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"ചിത്രം തിരഞ്ഞെടുക്കുന്നതിൽ പരാജയപ്പെട്ടു, വീണ്ടും ശ്രമിക്കുക
 "</string>
     <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">ഫീൽഡ് ഉള്ളടക്കം</string>
-    <string name="reselect">വീണ്ടും തിരഞ്ഞെടുക്കുക</string>
+    <string name="reselect" maxLength="28">വീണ്ടും തിരഞ്ഞെടുക്കുക</string>
 </resources>

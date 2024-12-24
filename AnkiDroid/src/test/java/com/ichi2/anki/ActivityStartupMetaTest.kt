@@ -32,19 +32,23 @@ class ActivityStartupMetaTest : RobolectricTest() {
         // if this fails, you may need to add the missing activity to ActivityList.allActivitiesAndIntents()
 
         // we can't access this in a static context
-        val packageInfo = targetContext.getPackageInfoCompat(targetContext.packageName, PackageInfoFlagsCompat.of(PackageManager.GET_ACTIVITIES.toLong())) ?: throw IllegalStateException("getPackageInfo failed")
-        val manifestActivities = packageInfo.activities
+        val flags = PackageInfoFlagsCompat.of(PackageManager.GET_ACTIVITIES.toLong())
+        val packageInfo =
+            targetContext.getPackageInfoCompat(targetContext.packageName, flags)
+                ?: throw IllegalStateException("getPackageInfo failed")
+        val manifestActivities = packageInfo.activities ?: throw IllegalStateException("activity list")
         val testedActivityClassNames = ActivityList.allActivitiesAndIntents().map { it.className }.toSet()
-        val manifestActivityNames = manifestActivities
-            .map { it.name }
-            .filter { it != "com.ichi2.anki.TestCardTemplatePreviewer" }
-            .filter { it != "com.ichi2.anki.AnkiCardContextMenuAction" }
-            .filter { it != "com.ichi2.anki.analytics.AnkiDroidCrashReportDialog" }
-            .filter { !it.startsWith("androidx") }
-            .filter { !it.startsWith("org.acra") }
-            .filter { !it.startsWith("leakcanary.internal") }
-            .filter { it != "com.canhub.cropper.CropImageActivity" }
-            .toTypedArray()
+        val manifestActivityNames =
+            manifestActivities
+                .map { it.name }
+                .filter { it != "com.ichi2.anki.TestCardTemplatePreviewer" }
+                .filter { it != "com.ichi2.anki.AnkiCardContextMenuAction" }
+                .filter { it != "com.ichi2.anki.analytics.AnkiDroidCrashReportDialog" }
+                .filter { !it.startsWith("androidx") }
+                .filter { !it.startsWith("org.acra") }
+                .filter { !it.startsWith("leakcanary.internal") }
+                .filter { it != "com.canhub.cropper.CropImageActivity" }
+                .toTypedArray()
         MatcherAssert.assertThat(testedActivityClassNames, Matchers.containsInAnyOrder(*manifestActivityNames))
     }
 }

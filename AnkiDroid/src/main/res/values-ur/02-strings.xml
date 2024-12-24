@@ -55,21 +55,21 @@
     <string name="edit_occlusions">مواقع میں ترمیم کریں</string>
     <string name="tag_name">ٹیگ کا نام</string>
     <string name="add_new_filter_tags">شامل/فلٹر کریں ٹیگ</string>
-    <string name="add_tag">ٹیگ شامل کریں</string>
-    <string name="check_all_tags">نشان یا غیرنشان زد کریں تمام ٹیگ</string>
-    <string name="filter_tags">ٹیگز کو فلٹر کریں</string>
+    <string name="add_tag" maxLength="28">ٹیگ شامل کریں</string>
+    <string name="check_all_tags" maxLength="28">نشان یا غیرنشان زد کریں تمام ٹیگ</string>
+    <string name="filter_tags" maxLength="28">ٹیگز کو فلٹر کریں</string>
     <string name="no_tags">آپ نے ابھی تک کوئی ٹیگ شامل نہیں کیے</string>
     <string name="updated_version">اپڈیٹ کر دیا گیا ورژن %s پہ</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">وائٹ بورڈ کو محفوظ کریں</string>
-    <string name="enable_stylus">اسٹائلس تحریر کو فعال کریں۔</string>
+    <string name="save_whiteboard" maxLength="28">وائٹ بورڈ کو محفوظ کریں</string>
+    <string name="enable_stylus" maxLength="28">اسٹائلس تحریر کو فعال کریں۔</string>
     <string name="disable_stylus">اسٹائلس تحریر کو غیر فعال کریں</string>
-    <string name="enable_whiteboard">وائٹ بورڈ فعال کریں</string>
+    <string name="enable_whiteboard" maxLength="28">وائٹ بورڈ فعال کریں</string>
     <string name="disable_whiteboard">وائٹ بورڈ غیرفعال کریں</string>
     <string name="show_whiteboard">وائٹ بورڈ دکھائیں</string>
-    <string name="hide_whiteboard">وائٹ بورڈ چھپائیں</string>
-    <string name="clear_whiteboard">وائٹ بورڈ صاف کریں</string>
-    <string name="replay_audio">پھر چلائیں آڈیو</string>
+    <string name="hide_whiteboard" maxLength="28">وائٹ بورڈ چھپائیں</string>
+    <string name="clear_whiteboard" maxLength="28">وائٹ بورڈ صاف کریں</string>
+    <string name="replay_audio" maxLength="28">پھر چلائیں آڈیو</string>
     <string name="leech_suspend_notification">کارڈ کو جونک کے طور پر نشان زد اور معطل کر دیا گیا ہے۔</string>
     <string name="leech_notification">جونک کے بطور نشان زد کارڈ</string>
     <string name="webview_crash_unknown">نامعلوم خامی</string>
@@ -80,28 +80,24 @@
     <string name="webview_crash_fatal">مہلک خرابی: WebView پیش کنندہ کریش ہو گیا۔ وجہ: %s</string>
     <string name="webview_crash_loop_dialog_title">سسٹم ویب ویو رینڈرنگ میں ناکامی۔</string>
     <string name="webview_crash_loop_dialog_content">سسٹم WebView کارڈ \'%1$s\' رینڈر کرنے میں ناکام رہا۔\n %2$s</string>
-    <string name="filter_by_flags">جھنڈے</string>
+    <string name="filter_by_flags" maxLength="41">جھنڈے</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">آج کی نئی کارڈ کی حد میں ترمیم کریں۔</string>
-    <string name="custom_study_increase_review_limit">آج کی نظرثانی کارڈ کی حد میں ترمیم کریں۔</string>
-    <string name="custom_study_review_forgotten">بھولے ہوئے کارڈ دہرائیں</string>
-    <string name="custom_study_review_ahead">آگے کا جائزہ لیں</string>
-    <string name="custom_study_random_selection">کارڈز کے بے ترتیب انتخاب کا مطالعہ کریں۔</string>
-    <string name="custom_study_preview_new">نئے کارڈز کا مشاہدہ کریں</string>
     <string name="custom_study_limit_tags">مخصوص ٹیگز تک محدود</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="one">+%d دفن کر دیا گیا۔</item>
+        <item quantity="other">+%d دفن کر دیا گیا۔</item>
     </plurals>
+    <string name="studyoptions_total_new_label">کل نئے کارڈز</string>
+    <string name="studyoptions_total_label">کل کارڈز</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">نوٹ میں ترمیم کریں</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">نوٹ میں ترمیم کریں</string>
     <string name="discard">رد کر دیں</string>
     <string name="note_editor_no_cards_created">کوئی کارڈ نہیں بنایا۔ براہ کرم مزید فیلڈز پُر کریں۔</string>
     <string name="note_editor_no_cards_created_all_fields">موجودہ نوٹ کی قسم نے کوئی کارڈ تیار نہیں کیا۔\nبراہ کرم نوٹ کی کوئی اور قسم منتخب کریں، یا \'کارڈز\' پر کلک کریں اور ایک فیلڈ متبادل شامل کریں۔</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">کلوز کو حذف کرنا صرف کلوز نوٹ کی قسم پر کام کرے گا۔</string>
     <string name="saving_facts">نوٹ محفوظ کرنا</string>
     <string name="saving_model">نوٹ کی قسم کو محفوظ کرنا</string>
-    <string name="save">محفوظ کریں</string>
+    <string name="save" maxLength="28">محفوظ کریں</string>
     <string name="close">بند کریں</string>
     <string name="select">منتخب کریں</string>
     <string name="field_remapping">%1$s (\"%2$s\" سے)</string>
@@ -119,24 +115,23 @@
         <item quantity="other">%1$d منٹ</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid کارڈ</string>
-    <string name="note_editor_copy_note">کاپی نوٹ</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">ریپوزیشن</string>
-    <string name="card_editor_reset_card">پیشرفت کو دوبارہ ترتیب دیں۔</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">دوبارہ شیڈول</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">پیش نظارہ</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">مارک ڈاؤن کے بطور کاپی کریں</string>
+    <string name="note_editor_copy_note" maxLength="28">کاپی نوٹ</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">ریپوزیشن</string>
+    <string name="card_editor_reset_card" maxLength="28">پیشرفت کو دوبارہ ترتیب دیں۔</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">دوبارہ شیڈول</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">پیش نظارہ</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">مارک ڈاؤن کے بطور کاپی کریں</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d میں سے %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">نام تبدیل کریں</string>
-    <string name="checks_action">چیک کریں</string>
-    <string name="check_db">ڈیٹا بیس چیک کریں</string>
-    <string name="check_media">میڈیا چیک کریں</string>
-    <string name="empty_cards">خالی کارڈز</string>
-    <string name="empty_card_warning">یہ کارڈ خالی ہے۔ ڈیک لسٹ اسکرین پر مینو سے \"خالی کارڈز\" استعمال کریں۔</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">نام تبدیل کریں</string>
+    <string name="checks_action" maxLength="28">چیک کریں</string>
+    <string name="check_db" maxLength="28">ڈیٹا بیس چیک کریں</string>
+    <string name="check_media" maxLength="28">میڈیا چیک کریں</string>
+    <string name="empty_cards" maxLength="28">خالی کارڈز</string>
     <string name="unknown_type_field_warning">جواب ٹائپ کریں۔:نامعلوم جگہ %s</string>
     <string name="delete_deck">ڈیک کو حذف کیا جا رہا ہے&#8230;</string>
     <string name="info_rate">AnkiDroid کی درجہ بندی کریں</string>
     <string name="import_title">درآمد</string>
-    <string name="import_preparing_file">Preparing file for import&#8230;</string>
+    <string name="import_preparing_file">درآمد کے لیے فائل تیار ہو رہی ہے&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">شامل کریں</string>
     <string name="import_message_replace_confirm">یہ آپ کے موجودہ مجموعہ کو حذف کر دے گا اور اسے فائل کے ڈیٹا سے بدل دے گا %s</string>
     <string name="import_dialog_message_add">مجموعہ میں \"%s\" شامل کریں؟ اس میں کافی وقت لگ سکتا ہے۔</string>
@@ -164,13 +159,12 @@
         ]]></string>
     <string name="export_choice_share">بانٹیں</string>
     <string name="export_choice_save_to">محفوظ کریں</string>
-    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">اختیارات</string>
-    <string name="menu__deck_options">ڈیک کے اختیارات</string>
+    <string name="export_saving_exported_collection">برآمد شدہ فائل محفوظ ہو رہی ہے&#8230;</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">اختیارات</string>
+    <string name="menu__deck_options" maxLength="28">ڈیک کے اختیارات</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">مطالعہ کے اختیارات</string>
-    <string name="select_tts">TTS زبان سیٹ کریں۔</string>
-    <string name="custom_study">اپنی مرضی کے مطابق مطالعہ</string>
-    <string name="more_options">مزید</string>
+    <string name="select_tts" maxLength="28">TTS زبان سیٹ کریں۔</string>
+    <string name="custom_study" maxLength="28">اپنی مرضی کے مطابق مطالعہ</string>
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.
 یہ عام شیڈول سے ہٹ کر مطالعہ کرنے کے لیے ایک خاص ڈیک ہے۔آپ کے ان کا جائزہ لینے کے بعد کارڈز خود بخود ان کے اصل ڈیک پر واپس آ جائیں گے۔ڈیک کی فہرست سے اس ڈیک کو حذف کرنے سے باقی تمام کارڈز ان کے اصل ڈیک پر واپس آجائیں گے۔</string>
     <string name="steps_error">اقدامات کے نمبر 0 سے زیادہ ہونے چاہئیں</string>
@@ -192,17 +186,17 @@
     <string name="web_page_error">صفحہ لوڈ کرنے میں خرابی: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">پس منظر</string>
-    <string name="choose_an_image">تصویر منتخب کریں۔</string>
+    <string name="background_image_title" maxLength="41">پس منظر</string>
+    <string name="choose_an_image" maxLength="41">تصویر منتخب کریں۔</string>
     <string name="remove_background_image">پس منظر ہٹائیں؟</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">ڈیفالٹ بحال کریں۔</string>
+    <string name="restore_default" maxLength="28">ڈیفالٹ بحال کریں۔</string>
     <string name="reviewer_tts_cloze_spoken_replacement">خالی</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">وائٹ بورڈ امیج کو محفوظ کرنے میں ناکام۔ %s</string>
     <string name="white_board_image_saved">وائٹ بورڈ کی تصویر %s میں محفوظ ہو گئی۔</string>
-    <string name="title_whiteboard_pen_color">وائٹ بورڈ قلم کا رنگ</string>
-    <string name="title_whiteboard_editor">وائٹ بورڈ ایڈیٹر</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">وائٹ بورڈ قلم کا رنگ</string>
+    <string name="title_whiteboard_editor" maxLength="28">وائٹ بورڈ ایڈیٹر</string>
     <string name="user_is_a_robot">خودکار ٹیسٹ کا پتہ چلا۔ اگر آپ انسان ہیں تو AnkiDroid سپورٹ سے رابطہ کریں۔</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">یہ کارڈ غیر تعاون یافتہ AnkiDroid خصوصیات کا استعمال کرتا ہے۔ ڈویلپر %1$s سے رابطہ کریں، یا ویکی دیکھیں۔ %2$s</string>
@@ -217,12 +211,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">کارڈ کے مواد کی خرابی: \'%s\' لوڈ کرنے میں ناکام</string>
     <!-- Deck Picker -->
-    <string name="search_decks">ڈیکس تلاش کریں</string>
+    <string name="search_decks" maxLength="28">ڈیکس تلاش کریں</string>
     <string name="ankidroid_init_failed_webview_title">مہلک غلطی</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid سسٹم WebView پر انحصار کرتا ہے جو دستیاب نہیں ہے۔ اگر سسٹم اپ ڈیٹس انسٹال کر رہا ہو تو ایسا ہو سکتا ہے۔ براہ کرم چند منٹوں میں دوبارہ کوشش کریں۔\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">حرف کا سائز</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">ٹول بار دکھائیں</string>
+    <string name="menu_font_size" maxLength="28">حرف کا سائز</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ٹول بار دکھائیں</string>
     <string name="format_insert_bold">بولڈ کے طور پر فارمیٹ کریں۔</string>
     <string name="format_insert_italic">اٹالک کے طور پر فارمیٹ کریں۔</string>
     <string name="format_insert_underline">انڈر لائن کے بطور فارمیٹ کریں۔</string>
@@ -237,15 +231,15 @@
     <string name="edit_toolbar_item">ٹول بار آئٹم میں ترمیم کریں۔</string>
     <string name="toolbar_item_explain_edit_or_remove">منتخب کردہ متن سے پہلے اور بعد میں داخل کرنے کے لیے HTML درج کریں\n\nٹول بار آئٹم میں ترمیم کرنے یا اسے ہٹانے کے لیے دیر تک دبائیں</string>
     <string name="remove_toolbar_item">ٹول بار آئٹم کو ہٹائیں؟</string>
-    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
-    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
-    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
+    <string name="note_editor_image_too_large">تصویر بہت بڑی ہے، براہ کرم دستی طور پر تصویر داخل کریں۔</string>
+    <string name="note_editor_video_too_large">ویڈیو فائل بہت بڑی ہے، براہ کرم ویڈیو کو دستی طور پر داخل کریں۔</string>
+    <string name="note_editor_audio_too_large">آڈیو فائل بہت بڑی ہے، براہ کرم آڈیو کو دستی طور پر داخل کریں۔</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android بیک اپ جاری ہے۔ دوبارہ کوشش کریں</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid کو شارٹ کٹ شامل کرنے کی اجازت دینے کے لیے آپ کو iManager استعمال کرنے کی ضرورت پڑ سکتی ہے۔</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">آپ کی ہوم اسکرین AnkiDroid کو شارٹ کٹ شامل کرنے کی اجازت نہیں دیتی ہے۔</string>
     <string name="create_shortcut_error">شارٹ کٹ شامل کرنے میں خرابی: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">جملے کیپٹلائز کریں۔</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">اسکرول ٹول بار</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">جملے کیپٹلائز کریں۔</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">اسکرول ٹول بار</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -268,7 +262,7 @@
     <string name="check_network">براہ کرم اپنا نیٹ ورک کنکشن چیک کریں</string>
     <string name="search_using_deck_name">ڈیک کا نام استعمال کرکے تلاش کریں</string>
     <string name="external_storage_unavailable">ڈاؤن لوڈ منسوخ کر دیا گیا، بیرونی اسٹوریج دستیاب نہیں ہے</string>
-    <string name="home">گھر</string>
+    <string name="home" maxLength="28">گھر</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">کارڈ دفن کر دیا گیا</string>
@@ -336,22 +330,22 @@
         <item quantity="one">%d کارڈ کو دفن کیا گیا</item>
         <item quantity="other">%d کارڈز کو دفن کیا گیا</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">ریپوزیشن</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">ریپوزیشن</string>
     <string name="start_recording">ریکارڈ کریں</string>
     <string name="stop_recording">بند کریں</string>
     <string name="play_recording">چلائیں</string>
     <string name="next_recording">اگلے</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot Delete Card Type</string>
-    <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
-    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
+    <string name="orphan_note_title">کارڈ کی قسم کو حذف نہیں کیا جا سکتا</string>
+    <string name="orphan_note_message">اس کارڈ کی قسم کو حذف کرنے سے کچھ نوٹ بغیر کسی کارڈ کے رہ جائیں گے۔</string>
+    <string name="voice_not_supported">آواز تعاون یافتہ نہیں ہے۔ دوسرا آزمائیں یا صوتی انجن انسٹال کریں۔</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
-    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
-    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
+    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">کی بورڈ شارٹ کٹ ڈائیلاگ دکھائیں۔</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">ڈیک چننے والا</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">تصدیق کے بغیر ڈیک کو حذف کریں۔</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">نوٹ ایڈیٹر</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">ڈیک منتخب کریں۔</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">نوٹ کی قسم منتخب کریں۔</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
@@ -360,4 +354,6 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
     <string name="show_shortcuts_message">Press Alt+K to show keyboard shortcuts</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
+    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
 </resources>

@@ -60,10 +60,11 @@ class NoteServiceTest : RobolectricTest() {
         multiMediaNote!!.getField(0)!!.text = "foo"
         multiMediaNote.getField(1)!!.text = "bar"
 
-        val basicNote = Note.fromNotetypeId(col, testModel.id).apply {
-            setField(0, "this should be changed to foo")
-            setField(1, "this should be changed to bar")
-        }
+        val basicNote =
+            Note.fromNotetypeId(col, testModel.id).apply {
+                setField(0, "this should be changed to foo")
+                setField(1, "this should be changed to bar")
+            }
 
         NoteService.updateJsonNoteFromMultimediaNote(multiMediaNote, basicNote)
         assertEquals(basicNote.fields[0], multiMediaNote.getField(0)!!.text)
@@ -82,7 +83,10 @@ class NoteServiceTest : RobolectricTest() {
         testNotetype.id = 45
         col.notetypes.add(testNotetype)
         val noteWithID45 = Note.fromNotetypeId(col, testNotetype.id)
-        val expectedException: Throwable = assertThrows(RuntimeException::class.java) { NoteService.updateJsonNoteFromMultimediaNote(multiMediaNoteWithID42, noteWithID45) }
+        val expectedException: Throwable =
+            assertThrows(
+                RuntimeException::class.java,
+            ) { NoteService.updateJsonNoteFromMultimediaNote(multiMediaNoteWithID42, noteWithID45) }
         assertEquals(expectedException.message, "Source and Destination Note ID do not match.")
     }
 
@@ -101,7 +105,11 @@ class NoteServiceTest : RobolectricTest() {
 
         val outFile = File(col.media.dir, fileAudio.name)
 
-        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", outFile, aFileWithAbsolutePath(equalTo(audioField.mediaPath)))
+        assertThat(
+            "path should be equal to new file made in NoteService.importMediaToDirectory",
+            outFile,
+            aFileWithAbsolutePath(equalTo(audioField.mediaPath)),
+        )
     }
 
     // Similar test like above, but with an ImageField instead of a MediaClipField
@@ -120,7 +128,11 @@ class NoteServiceTest : RobolectricTest() {
 
         val outFile = File(col.media.dir, fileImage.name)
 
-        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", outFile, aFileWithAbsolutePath(equalTo(imgField.extraImagePathRef)))
+        assertThat(
+            "path should be equal to new file made in NoteService.importMediaToDirectory",
+            outFile,
+            aFileWithAbsolutePath(equalTo(imgField.extraImagePathRef)),
+        )
     }
 
     /**
@@ -163,9 +175,21 @@ class NoteServiceTest : RobolectricTest() {
         NoteService.importMediaToDirectory(col, fld3)
         // creating a third outfile isn't necessary because it should be equal to the first one
 
-        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", o1, aFileWithAbsolutePath(equalTo(fld1.mediaPath)))
-        assertThat("path should be different to new file made in NoteService.importMediaToDirectory", o2, aFileWithAbsolutePath(not(fld2.mediaPath)))
-        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", o1, aFileWithAbsolutePath(equalTo(fld3.mediaPath)))
+        assertThat(
+            "path should be equal to new file made in NoteService.importMediaToDirectory",
+            o1,
+            aFileWithAbsolutePath(equalTo(fld1.mediaPath)),
+        )
+        assertThat(
+            "path should be different to new file made in NoteService.importMediaToDirectory",
+            o2,
+            aFileWithAbsolutePath(not(fld2.mediaPath)),
+        )
+        assertThat(
+            "path should be equal to new file made in NoteService.importMediaToDirectory",
+            o1,
+            aFileWithAbsolutePath(equalTo(fld3.mediaPath)),
+        )
     }
 
     // Similar test like above, but with an ImageField instead of a MediaClipField
@@ -199,9 +223,21 @@ class NoteServiceTest : RobolectricTest() {
         NoteService.importMediaToDirectory(col, fld3)
         // creating a third outfile isn't necessary because it should be equal to the first one
 
-        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", o1, aFileWithAbsolutePath(equalTo(fld1.extraImagePathRef)))
-        assertThat("path should be different to new file made in NoteService.importMediaToDirectory", o2, aFileWithAbsolutePath(not(fld2.extraImagePathRef)))
-        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", o1, aFileWithAbsolutePath(equalTo(fld3.extraImagePathRef)))
+        assertThat(
+            "path should be equal to new file made in NoteService.importMediaToDirectory",
+            o1,
+            aFileWithAbsolutePath(equalTo(fld1.extraImagePathRef)),
+        )
+        assertThat(
+            "path should be different to new file made in NoteService.importMediaToDirectory",
+            o2,
+            aFileWithAbsolutePath(not(fld2.extraImagePathRef)),
+        )
+        assertThat(
+            "path should be equal to new file made in NoteService.importMediaToDirectory",
+            o1,
+            aFileWithAbsolutePath(equalTo(fld3.extraImagePathRef)),
+        )
     }
 
     /**
@@ -213,10 +249,11 @@ class NoteServiceTest : RobolectricTest() {
     fun tempAudioIsDeletedAfterImport() {
         val file = createTransientFile("foo")
 
-        val field = MediaClipField().apply {
-            mediaPath = file.absolutePath
-            hasTemporaryMedia = true
-        }
+        val field =
+            MediaClipField().apply {
+                mediaPath = file.absolutePath
+                hasTemporaryMedia = true
+            }
 
         NoteService.importMediaToDirectory(col, field)
 
@@ -228,10 +265,11 @@ class NoteServiceTest : RobolectricTest() {
     fun tempImageIsDeletedAfterImport() {
         val file = createTransientFile("foo")
 
-        val field = ImageField().apply {
-            extraImagePathRef = file.absolutePath
-            hasTemporaryMedia = true
-        }
+        val field =
+            ImageField().apply {
+                extraImagePathRef = file.absolutePath
+                hasTemporaryMedia = true
+            }
 
         NoteService.importMediaToDirectory(col, field)
 

@@ -47,14 +47,14 @@
     <!-- generic strings -->
     <string name="disabled">Выкл.</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="one">%d мин</item>
+        <item quantity="one">%d минута</item>
         <item quantity="few">%d мин</item>
         <item quantity="many">%d мин</item>
         <item quantity="other">%d мин</item>
     </plurals>
     <string name="pref_milliseconds">%s мс</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
-    <string name="pref_search_no_results">Не найдено</string>
+    <string name="pref_search_no_results">Ничего не найденo</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Общие</string>
     <string name="pref_cat_studying" maxLength="41">Поведение</string>
@@ -100,7 +100,7 @@
     <string name="gestures_corner_touch" maxLength="41">9 зон касания</string>
     <string name="gestures_corner_touch_summary">Разрешить сенсорные жесты в углах экрана</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Панель навигации при полном экране</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">Показывать панель навигации при смахивании в любом месте экрана</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Открывать панель навигации при смахивании вправо с любого места на экране</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">Нет</string>
     <string name="gestures_swipe_up" maxLength="41">Смахивание вверх</string>
     <string name="gestures_swipe_down" maxLength="41">Смахивание вниз</string>
@@ -152,8 +152,6 @@
     <string name="notification_minimum_cards_due">Когда >%d карточек</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Вибросигнал</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Мерцание светодиода</string>
-    <string name="timeout_answer_text" maxLength="41">Автоматически показывать ответ</string>
-    <string name="timeout_answer_summ2">Показывать ответ автоматически без пользовательского ввода. Настройте параметры колоды.</string>
     <string name="select_locale_title">Выберите язык</string>
     <string name="software_render" maxLength="41">Отключить аппаратную отрисовку</string>
     <string name="software_render_summ">Аппаратная отрисовка быстрее, но может вызывать проблемы (особенно на Android 8/8.1). Попробуйте отключить её если при повторении пропадают элементы интерфейса.</string>
@@ -273,21 +271,21 @@
     <string name="axis_picker_move_joystick">Переместить джойстик/контроллер движения</string>
     <string name="user_actions" maxLength="41">Пользовательские действия</string>
     <string name="user_actions_summary" maxLength="41">Запустить JavaScript на экране проверки</string>
-    <string name="user_action_1" maxLength="41">Пользовательское действие 1</string>
-    <string name="user_action_2" maxLength="41">Пользовательское действие 2</string>
-    <string name="user_action_3" maxLength="41">Пользовательское действие 3</string>
-    <string name="user_action_4" maxLength="41">Пользовательское действие 4</string>
-    <string name="user_action_5" maxLength="41">Пользовательское действие 5</string>
-    <string name="user_action_6" maxLength="41">Пользовательское действие 6</string>
-    <string name="user_action_7" maxLength="41">Пользовательское действие 7</string>
-    <string name="user_action_8" maxLength="41">Пользовательское действие 8</string>
-    <string name="user_action_9" maxLength="41">Пользовательское действие 9</string>
+    <string name="user_action_1" maxLength="28">Пользовательское действие 1</string>
+    <string name="user_action_2" maxLength="28">Пользовательское действие 2</string>
+    <string name="user_action_3" maxLength="28">Пользовательское действие 3</string>
+    <string name="user_action_4" maxLength="28">Пользовательское действие 4</string>
+    <string name="user_action_5" maxLength="28">Пользовательское действие 5</string>
+    <string name="user_action_6" maxLength="28">Пользовательское действие 6</string>
+    <string name="user_action_7" maxLength="28">Пользовательское действие 7</string>
+    <string name="user_action_8" maxLength="28">Пользовательское действие 8</string>
+    <string name="user_action_9" maxLength="28">Пользовательское действие 9</string>
     <string name="toggle_auto_advance" maxLength="41">Включить/выключить авто переход</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Выберите сторону карточки</string>
     <string name="card_side_question">Вопрос</string>
     <string name="card_side_answer">Ответ</string>
-    <string name="card_side_both">Вопрос и ответ</string>
+    <string name="card_side_both" maxLength="28">Вопрос и ответ</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">В: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">О: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -374,5 +372,5 @@
     <string name="hide_answer_buttons" maxLength="41">Скрывать кнопки ответа</string>
     <string name="hide_hard_and_easy" maxLength="41">Скрывать кнопки «Трудно» и «Легко»</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Открыть настройки</string>
 </resources>

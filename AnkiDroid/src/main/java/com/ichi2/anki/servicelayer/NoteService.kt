@@ -63,10 +63,11 @@ object NoteService {
 
             for (i in 0 until numOfFields) {
                 val fieldObject = fieldsArray.getJSONObject(i)
-                val uiTextField = TextField().apply {
-                    name = fieldObject.getString("name")
-                    text = fieldObject.getString("name")
-                }
+                val uiTextField =
+                    TextField().apply {
+                        name = fieldObject.getString("name")
+                        text = fieldObject.getString("name")
+                    }
                 note.setField(i, uiTextField)
             }
             note.modelId = model.getLong("id")
@@ -81,19 +82,20 @@ object NoteService {
         col: Collection,
         fields: Array<String>,
         modelId: NoteTypeId,
-        mmNote: MultimediaEditableNote
+        mmNote: MultimediaEditableNote,
     ) {
         for (i in fields.indices) {
             val value = fields[i]
-            val field: IField = if (value.startsWith("<img")) {
-                ImageField()
-            } else if (value.startsWith("[sound:") && value.contains("rec")) {
-                AudioRecordingField()
-            } else if (value.startsWith("[sound:")) {
-                MediaClipField()
-            } else {
-                TextField()
-            }
+            val field: IField =
+                if (value.startsWith("<img")) {
+                    ImageField()
+                } else if (value.startsWith("[sound:") && value.contains("rec")) {
+                    AudioRecordingField()
+                } else if (value.startsWith("[sound:")) {
+                    MediaClipField()
+                } else {
+                    TextField()
+                }
             field.setFormattedString(col, value)
             mmNote.setField(i, field)
         }
@@ -109,7 +111,10 @@ object NoteService {
      * @param noteSrc
      * @param editorNoteDst
      */
-    fun updateJsonNoteFromMultimediaNote(noteSrc: IMultimediaEditableNote?, editorNoteDst: Note) {
+    fun updateJsonNoteFromMultimediaNote(
+        noteSrc: IMultimediaEditableNote?,
+        editorNoteDst: Note,
+    ) {
         if (noteSrc is MultimediaEditableNote) {
             if (noteSrc.modelId != editorNoteDst.mid) {
                 throw RuntimeException("Source and Destination Note ID do not match.")
@@ -126,7 +131,10 @@ object NoteService {
      *
      * @param field
      */
-    fun importMediaToDirectory(col: Collection, field: IField?) {
+    fun importMediaToDirectory(
+        col: Collection,
+        field: IField?,
+    ) {
         var tmpMediaPath: String? = null
         when (field!!.type) {
             EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP, EFieldType.IMAGE -> tmpMediaPath = field.mediaPath
@@ -146,8 +154,7 @@ object NoteService {
                     }
                     when (field.type) {
                         EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP, EFieldType.IMAGE -> field.mediaPath = outFile.absolutePath
-                        else -> {
-                        }
+                        EFieldType.TEXT -> {}
                     }
                 }
             } catch (e: IOException) {
@@ -165,7 +172,10 @@ object NoteService {
      */
     @VisibleForTesting
     @CheckResult
-    fun getFieldsAsBundleForPreview(editFields: List<NoteField?>?, replaceNewlines: Boolean): Bundle {
+    fun getFieldsAsBundleForPreview(
+        editFields: List<NoteField?>?,
+        replaceNewlines: Boolean,
+    ): Bundle {
         val fields = Bundle()
         // Save the content of all the note fields. We use the field's ord as the key to
         // easily map the fields correctly later.
@@ -182,15 +192,20 @@ object NoteService {
         return fields
     }
 
-    fun convertToHtmlNewline(fieldData: String, replaceNewlines: Boolean): String {
-        return if (!replaceNewlines) {
+    fun convertToHtmlNewline(
+        fieldData: String,
+        replaceNewlines: Boolean,
+    ): String =
+        if (!replaceNewlines) {
             fieldData
         } else {
             fieldData.replace(FieldEditText.NEW_LINE, "<br>")
         }
-    }
 
-    suspend fun toggleMark(note: Note, handler: Any? = null) {
+    suspend fun toggleMark(
+        note: Note,
+        handler: Any? = null,
+    ) {
         if (isMarked(note)) {
             note.removeTag("marked")
         } else {
@@ -204,31 +219,45 @@ object NoteService {
 
     suspend fun isMarked(note: Note): Boolean = withCol { isMarked(this, note) }
 
-    fun isMarked(col: Collection, note: Note): Boolean {
-        return note.hasTag(col, tag = "marked")
-    }
+    fun isMarked(
+        col: Collection,
+        note: Note,
+    ): Boolean = note.hasTag(col, tag = "marked")
 
     //  TODO: should make a direct SQL query to do this
+
     /**
      * returns the average ease of all the non-new cards in the note,
      * or if all the cards in the note are new, returns null
      */
-    fun avgEase(col: Collection, note: Note): Int? {
+    fun avgEase(
+        col: Collection,
+        note: Note,
+    ): Int? {
         val nonNewCards = note.cards(col).filter { it.type != Consts.CARD_TYPE_NEW }
 
         return nonNewCards.average { it.factor }?.let { it / 10 }?.toInt()
     }
 
     //  TODO: should make a direct SQL query to do this
-    fun totalLapses(col: Collection, note: Note) = note.cards(col).sumOf { it.lapses }
+    fun totalLapses(
+        col: Collection,
+        note: Note,
+    ) = note.cards(col).sumOf { it.lapses }
 
-    fun totalReviews(col: Collection, note: Note) = note.cards(col).sumOf { it.reps }
+    fun totalReviews(
+        col: Collection,
+        note: Note,
+    ) = note.cards(col).sumOf { it.reps }
 
     /**
      * Returns the average interval of all the non-new and non-learning cards in the note,
      * or if all the cards in the note are new or learning, returns null
      */
-    fun avgInterval(col: Collection, note: Note): Int? {
+    fun avgInterval(
+        col: Collection,
+        note: Note,
+    ): Int? {
         val nonNewOrLearningCards = note.cards(col).filter { it.type != Consts.CARD_TYPE_NEW && it.type != Consts.CARD_TYPE_LRN }
 
         return nonNewOrLearningCards.average { it.ivl }?.toInt()
@@ -250,22 +279,20 @@ fun Card.totalReviewsForNote(col: Collection) = NoteService.totalReviews(col, no
 
 fun Card.avgIntervalOfNote(col: Collection) = NoteService.avgInterval(col, note(col))
 
-suspend fun isBuryNoteAvailable(card: Card): Boolean {
-    return withCol {
+suspend fun isBuryNoteAvailable(card: Card): Boolean =
+    withCol {
         db.queryScalar(
             "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
             card.nid,
-            card.id
+            card.id,
         ) == 1
     }
-}
 
-suspend fun isSuspendNoteAvailable(card: Card): Boolean {
-    return withCol {
+suspend fun isSuspendNoteAvailable(card: Card): Boolean =
+    withCol {
         db.queryScalar(
             "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
             card.nid,
-            card.id
+            card.id,
         ) == 1
     }
-}

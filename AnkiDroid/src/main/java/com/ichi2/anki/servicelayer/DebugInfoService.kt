@@ -18,12 +18,11 @@ package com.ichi2.anki.servicelayer
 
 import android.content.Context
 import android.os.Build
-import android.webkit.WebView
-import androidx.annotation.MainThread
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService
 import com.ichi2.utils.VersionUtils.pkgVersionName
+import com.ichi2.utils.getWebviewUserAgent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.acra.util.Installation
@@ -31,7 +30,6 @@ import timber.log.Timber
 import net.ankiweb.rsdroid.BuildConfig as BackendBuildConfig
 
 object DebugInfoService {
-
     /**
      * Retrieves the debug info based in different parameters of the app.
      *
@@ -42,48 +40,38 @@ object DebugInfoService {
         // isFSRSEnabled is null on startup
         val isFSRSEnabled = getFSRSStatus()
         return """
-               AnkiDroid Version = $pkgVersionName (${BuildConfig.GIT_COMMIT_HASH})
-               
-               Backend Version = ${BuildConfig.BACKEND_VERSION} (${BackendBuildConfig.ANKI_DESKTOP_VERSION} ${BackendBuildConfig.ANKI_COMMIT_HASH})
-              
-               Android Version = ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT})
-               
-               ProductFlavor = ${BuildConfig.FLAVOR}
-               
-               Manufacturer = ${Build.MANUFACTURER}
-               
-               Model = ${Build.MODEL}
-               
-               Hardware = ${Build.HARDWARE}
-               
-               Webview User Agent = $webviewUserAgent
-               
-               ACRA UUID = ${Installation.id(info)}
-               
-               FSRS Enabled = $isFSRSEnabled
-               
-               Crash Reports Enabled = ${isSendingCrashReports(info)}
-        """.trimIndent()
+            AnkiDroid Version = $pkgVersionName (${BuildConfig.GIT_COMMIT_HASH})
+            
+            Backend Version = ${BuildConfig.BACKEND_VERSION} (${BackendBuildConfig.ANKI_DESKTOP_VERSION} ${BackendBuildConfig.ANKI_COMMIT_HASH})
+            
+            Android Version = ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT})
+            
+            ProductFlavor = ${BuildConfig.FLAVOR}
+            
+            Manufacturer = ${Build.MANUFACTURER}
+            
+            Model = ${Build.MODEL}
+            
+            Hardware = ${Build.HARDWARE}
+            
+            Webview User Agent = $webviewUserAgent
+            
+            ACRA UUID = ${Installation.id(info)}
+            
+            FSRS = ${BackendBuildConfig.FSRS_VERSION} (Enabled: $isFSRSEnabled)
+            
+            Crash Reports Enabled = ${isSendingCrashReports(info)}
+            """.trimIndent()
     }
 
-    @MainThread
-    private fun getWebviewUserAgent(context: Context): String? {
+    private fun isSendingCrashReports(context: Context): Boolean = CrashReportService.isAcraEnabled(context, false)
+
+    private suspend fun getFSRSStatus(): Boolean? =
         try {
-            return WebView(context).settings.userAgentString
+            CollectionManager.withOpenColOrNull { config.get<Boolean>("fsrs", false) }
         } catch (e: Throwable) {
-            CrashReportService.sendExceptionReport(e, "Info::copyDebugInfo()", "some issue occurred while extracting webview user agent")
+            // Error and Exception paths are the same, so catch Throwable
+            Timber.w(e)
+            null
         }
-        return null
-    }
-
-    private fun isSendingCrashReports(context: Context): Boolean {
-        return CrashReportService.isAcraEnabled(context, false)
-    }
-
-    private suspend fun getFSRSStatus(): Boolean? = try {
-        CollectionManager.withOpenColOrNull { config.get<Boolean>("fsrs", false) }
-    } catch (e: Error) {
-        Timber.w(e)
-        null
-    }
 }

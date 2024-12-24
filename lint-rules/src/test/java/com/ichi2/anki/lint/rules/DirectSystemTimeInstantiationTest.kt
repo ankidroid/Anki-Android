@@ -93,9 +93,8 @@ public class CollectionHelper {
             .files(
                 create(stubTime),
                 create(stubSystemTime),
-                create(javaFileToBeTested)
-            )
-            .issues(DirectSystemTimeInstantiation.ISSUE)
+                create(javaFileToBeTested),
+            ).issues(DirectSystemTimeInstantiation.ISSUE)
             .run()
             .expectErrorCount(1)
             .check({ output: String ->
@@ -112,9 +111,8 @@ public class CollectionHelper {
             .files(
                 create(stubTime),
                 create(stubSystemTime),
-                create(javaFileWithStorage)
-            )
-            .issues(DirectSystemTimeInstantiation.ISSUE)
+                create(javaFileWithStorage),
+            ).issues(DirectSystemTimeInstantiation.ISSUE)
             .run()
             .expectClean()
     }
@@ -127,9 +125,8 @@ public class CollectionHelper {
             .files(
                 create(stubTime),
                 create(stubSystemTime),
-                create(javaFileWithCollectionHelper)
-            )
-            .issues(DirectSystemTimeInstantiation.ISSUE)
+                create(javaFileWithCollectionHelper),
+            ).issues(DirectSystemTimeInstantiation.ISSUE)
             .run()
             .expectClean()
     }

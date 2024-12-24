@@ -46,7 +46,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">檢查資料庫？</string>
     <string name="check_db_warning">這可能會花上好一段時間</string>
-    <string name="contextmenu_deckpicker_delete_deck">刪除牌組</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">刪除牌組</string>
     <string name="delete_deck_title">刪除牌組？</string>
     <plurals name="delete_deck_message">
         <item quantity="other">刪除%1$s的所有卡片嗎？它包含%2$d張卡片。</item>
@@ -72,15 +72,11 @@
     <string name="repair_deck_dialog">你真的想要修復資料庫嗎？\n\n在開始修復之前，會先複製一份備份檔案放置於資料夾\'%s\'中。</string>
     <string name="intent_aedict_empty">\'default\'類別是空的</string>
     <string name="intent_aedict_category">若要增加新卡片至 AnkiDroid，刪除所有的記事本類別或新增一個 \'default\' 牌組</string>
-    <string name="custom_study_new_total_new">牌組的新卡片：%d</string>
-    <string name="custom_study_rev_total_rev">牌組中複習到期的卡片：%d</string>
     <string name="custom_study_new_extend">將今天的新卡片上限新增/減少(“-3”)</string>
     <string name="custom_study_rev_extend">將今天的複習卡片上限新增/減少(“-3”)</string>
     <string name="custom_study_forgotten">過去 x 天內忘記的複習卡:</string>
     <string name="custom_study_ahead">提早複習 x 天:</string>
-    <string name="custom_study_random">隨機選擇 x 張卡片，從牌組:</string>
     <string name="custom_study_preview">預覽過去 x 天新增的卡片:</string>
-    <string name="custom_study_rebuild_deck_corrupt">無法重構自訂學習牌組</string>
     <string name="storage_full_title">存儲已滿</string>
     <string name="storage_almost_full_title">存儲空間幾乎滿了</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">沒有空間</string>
@@ -98,7 +94,7 @@
     <string name="dialog_continue">繼續</string>
     <string name="dialog_processing">處理中&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">新增</string>
-    <string name="dialog_positive_delete">刪除</string>
+    <string name="dialog_positive_delete" maxLength="28">刪除</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">關閉</string>
     <string name="dialog_positive_overwrite">覆蓋</string>
@@ -182,7 +178,7 @@
     <string name="help_item_mailing_list">郵件清單</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">回報錯誤</string>
-    <string name="help_title_support_ankidroid">支援 AnkiDroid</string>
+    <string name="help_title_support_ankidroid" maxLength="28">支援 AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">捐贈</string>
     <string name="help_item_support_develop_ankidroid">開發</string>
     <string name="help_item_support_rate_ankidroid">評分</string>
@@ -220,7 +216,7 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">備份你的集合</string>
     <string name="backup_collection_message">你已經很久沒有備份你的集合了。你應該現在進行此操作以避免資料丟失</string>
-    <string name="button_backup">備份</string>
+    <string name="button_backup" maxLength="41">備份</string>
     <string name="button_disable_reminder">停用提醒</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">稍後</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">不再顯示</string>

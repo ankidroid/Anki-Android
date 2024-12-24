@@ -16,7 +16,6 @@
 
 package com.ichi2.utils
 
-import android.R
 import android.app.Activity
 import android.view.View
 import android.view.ViewGroup
@@ -62,14 +61,15 @@ object ViewGroupUtils {
      * @param activity Activity containing the View hierarchy to alter
      */
     private fun setContentViewLayerTypeSoftware(activity: Activity) {
-        val rootViewGroup = (activity.findViewById<View>(R.id.content) as ViewGroup)
-            .getChildAt(0) as ViewGroup
+        val rootViewGroup =
+            (activity.findViewById<View>(android.R.id.content) as ViewGroup)
+                .getChildAt(0) as ViewGroup
         val allViews = getAllChildrenRecursive(rootViewGroup)
         allViews.add(rootViewGroup)
         for (v in allViews) {
             Timber.d(
                 "ViewGroupUtils::setContentViewLayerTypeSoftware for view %s",
-                v.id
+                v.id,
             )
             v.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         }

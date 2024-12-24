@@ -55,23 +55,23 @@
     <plurals name="card_browser_delete_notes">
         <item quantity="other">ノートを削除</item>
     </plurals>
-    <string name="card_browser_change_deck">デッキを変更</string>
+    <string name="card_browser_change_deck" maxLength="28">デッキを変更</string>
     <string name="delete_card_title">ノートの削除</string>
-    <string name="card_browser_show_marked" maxLength="29">マーク付きカードを抽出</string>
-    <string name="card_browser_show_suspended" maxLength="29">休止中カードを抽出</string>
-    <string name="card_browser_search_by_tag" maxLength="29">タグやカードの状態による抽出</string>
-    <string name="card_browser_search_by_flag" maxLength="29">フラグで抽出</string>
-    <string name="card_browser_list_my_searches" maxLength="29">マイ検索条件</string>
-    <string name="card_browser_list_my_searches_save" maxLength="29">現在の検索条件を保存</string>
+    <string name="card_browser_show_marked" maxLength="28">マーク付きカードを抽出</string>
+    <string name="card_browser_show_suspended" maxLength="28">休止中カードを抽出</string>
+    <string name="card_browser_search_by_tag" maxLength="28">タグやカードの状態による抽出</string>
+    <string name="card_browser_search_by_flag" maxLength="28">フラグで抽出</string>
+    <string name="card_browser_list_my_searches" maxLength="28">マイ検索条件</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">現在の検索条件を保存</string>
     <string name="card_browser_list_my_searches_title">保存済み検索条件を選択</string>
     <string name="card_browser_list_my_searches_new_name">現在の検索条件に付ける名前</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">名前なしで検索条件を保存することはできません</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">同じ名前がすでに存在します</string>
     <string name="no_note_to_edit">編集するノートがありません</string>
     <string name="card_browser_list_my_searches_remove_content">「%1$s」を削除しますか？</string>
-    <string name="card_browser_change_display_order" maxLength="29">表示順を変更</string>
-    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_change_display_order" maxLength="28">表示順を変更</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">検索</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">検索</string>
     <string name="card_browser_change_display_order_title">表示順の選択</string>
     <string name="card_details_tags">タグ</string>
     <string-array name="card_browser_order_labels">
@@ -86,8 +86,8 @@
         <item>学習回数順</item>
         <item>復習での忘却回数順</item>
     </string-array>
-    <string name="card_browser_select_all" maxLength="29">すべて選択</string>
-    <string name="card_browser_select_none">選択をすべて解除</string>
+    <string name="card_browser_select_all" maxLength="28">すべて選択</string>
+    <string name="card_browser_select_none" maxLength="28">選択をすべて解除</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(新規)</string>
     <string name="card_browser_due_filtered_card">(フィルター)</string>
     <string name="card_browser_interval_learning_card">(習得中)</string>
@@ -106,6 +106,6 @@
         <item quantity="other">%d枚のカードを削除しました</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">タグダイアログを編集</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">表示順ダイアログを表示</string>
 </resources>

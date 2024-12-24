@@ -30,7 +30,9 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 
-class SimpleBinder<S : Service>(val service: S) : Binder()
+class SimpleBinder<S : Service>(
+    val service: S,
+) : Binder()
 
 interface ServiceWithASimpleBinder<S : Service> {
     fun onBind(intent: Intent): SimpleBinder<S>
@@ -66,14 +68,18 @@ suspend inline fun <reified S> Context.withBoundTo(block: (S) -> Unit)
         where S : Service, S : ServiceWithASimpleBinder<S> {
     lateinit var continuation: Continuation<S>
 
-    val connection = object : ServiceConnection {
-        override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
-            @Suppress("UNCHECKED_CAST")
-            continuation.resume((binder as SimpleBinder<S>).service)
-        }
+    val connection =
+        object : ServiceConnection {
+            override fun onServiceConnected(
+                name: ComponentName?,
+                binder: IBinder?,
+            ) {
+                @Suppress("UNCHECKED_CAST")
+                continuation.resume((binder as SimpleBinder<S>).service)
+            }
 
-        override fun onServiceDisconnected(name: ComponentName?) {}
-    }
+            override fun onServiceDisconnected(name: ComponentName?) {}
+        }
 
     bindService(Intent(this, S::class.java), connection, Context.BIND_AUTO_CREATE)
 

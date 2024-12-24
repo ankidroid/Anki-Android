@@ -70,12 +70,12 @@
     <string name="sync_title">Đồng bộ</string>
     <string name="sync_log_uploading_message">Đồng bộ hoàn toàn từ thiết bị</string>
     <string name="sync_database_acknowledge">Bộ sưu tập đã được đồng bộ</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
+    <string name="col_synced_media_in_background">Đã đồng bộ hóa bộ sưu tập. Đa phương tiện đang được đồng bộ hóa trong nền.</string>
     <string name="sync_corrupt_database">CSDL của bạn đã hỏng. Xin sửa nó trước khi thử đồng bộ lại.\n\nXem %s để biết thông tin về sửa chữa CSDL.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Trên thiết bị</string>
     <string name="sync_sanity_remote">Từ xa</string>
-    <string name="one_way_sync_title">Đồng bộ một chiều</string>
+    <string name="one_way_sync_title" maxLength="41">Đồng bộ một chiều</string>
     <string name="one_way_sync_confirmation">Đã yêu cầu đồng bộ một chiều</string>
     <string name="full_sync_confirmation">Thay đổi theo yêu cầu đòi hỏi tải lên đầy đủ CSDL trong lần đồng bộ bộ sưu tập tiếp theo. Nếu có thẻ ôn tập hoặc các thay đổi đang chờ trên thiết bị khác mà chưa được đồng bộ ở đây, chúng sẽ bị mất. Vẫn tiếp tục chứ?</string>
     <string name="full_sync_confirmation_upgrade">Do lỗi của phiên bản AnkiDroid đã cài đặt trước đó, đề nghị thực hiện đồng bộ hoàn toàn.</string>

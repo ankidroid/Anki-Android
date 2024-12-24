@@ -59,7 +59,6 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Quelque chose s’est mal passé</string>
-    <string name="multimedia_editor_svg_preview">Les SVG ne sont pas disponibles pour l\'aperçu</string>
     <string name="multimedia_editor_png_paste_error">Erreur lors de la convertion de l\'image du presse-papier au format PNG: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Joindre le contenu multimédia au %1$s champ</string>
     <!-- Audio view -->
@@ -69,10 +68,10 @@
     <string name="multimedia_editor_audio_view_create_failed">Impossible de créer la barre d\'outils de l\'enregistreur</string>
     <!-- Crop function-->
     <string name="crop_image">Voulez-vous rogner cette image ?</string>
-    <string name="crop_button">Rogner l\'image</string>
+    <string name="crop_button" maxLength="28">Rogner l\'image</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"La sélection de l\'image a échoué, veuillez réessayer"</string>
     <string name="activity_result_unexpected">L\'application a renvoyé une valeur inattendue. Vous devriez peut-être utiliser une autre application</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Contenus du champ</string>
-    <string name="reselect">Reselect</string>
+    <string name="reselect" maxLength="28">Reselect</string>
 </resources>

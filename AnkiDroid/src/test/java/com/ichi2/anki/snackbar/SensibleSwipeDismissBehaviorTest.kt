@@ -24,13 +24,15 @@ import org.mockito.kotlin.whenever
 
 @RunWith(AndroidJUnit4::class)
 internal class SensibleSwipeDismissBehaviorTest {
-    private val behavior = SensibleSwipeDismissBehavior().ViewDragHelperCallback().apply {
-        initialChildLeft = 0
-    }
+    private val behavior =
+        SensibleSwipeDismissBehavior().ViewDragHelperCallback().apply {
+            initialChildLeft = 0
+        }
 
-    private val snackbar = mock(View::class.java).apply {
-        whenever(width).thenReturn(100)
-    }
+    private val snackbar =
+        mock(View::class.java).apply {
+            whenever(width).thenReturn(100)
+        }
 
     private fun positionSnackbarAtX(x: Int) {
         whenever(snackbar.left).thenReturn(x)

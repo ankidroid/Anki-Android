@@ -21,7 +21,6 @@ import org.hamcrest.collection.IsIterableContainingInAnyOrder
 
 object HamcrestUtils {
     /** containsInAnyOrder over a collection, rather than an array */
-    inline fun <reified T> containsInAnyOrder(items: Collection<T>): Matcher<Iterable<T>?>? {
-        return IsIterableContainingInAnyOrder.containsInAnyOrder(*items.toTypedArray())
-    }
+    inline fun <reified T> containsInAnyOrder(items: Collection<T>): Matcher<Iterable<T>?>? =
+        IsIterableContainingInAnyOrder.containsInAnyOrder(*items.toTypedArray())
 }

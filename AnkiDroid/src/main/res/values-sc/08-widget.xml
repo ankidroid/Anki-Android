@@ -60,18 +60,18 @@
         <item quantity="other">bi sunt galu %d minutos</item>
     </plurals>
     <string name="widget_add_note_button">Annanghe una nota de AnkiDroid noa</string>
-    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">Deck Picker</string>
-    <string name="card_analysis_extra_widget_description">Card Analysis</string>
+    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">Seletzionadore de matzos</string>
+    <string name="card_analysis_extra_widget_description">Anàlisi de sa carta</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
-    <string name="select_decks_title" comment="Title for Deck Selection Dialog">Select decks</string>
-    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Select a deck</string>
-    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Select decks to display in the widget. Select decks with the + icon.</string>
-    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Deck removed</string>
-    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">This deck is already selected</string>
+    <string name="select_decks_title" comment="Title for Deck Selection Dialog">Seletziona matzos</string>
+    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Seletziona unu matzu</string>
+    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Seletziona sos matzos de mustrare in su widget. Seletziona sos matzos cun s\'icona +.</string>
+    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Matzu bogadu</string>
+    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">Custu matzu est giai seletzionadu</string>
     <plurals name="deck_limit_reached">
-        <item quantity="one">You can select up to %d deck.</item>
-        <item quantity="other">You can select up to %d decks.</item>
+        <item quantity="one">Podes seletzionare finas a %d matzu.</item>
+        <item quantity="other">Podes seletzionare finas a %d matzos.</item>
     </plurals>
-    <string name="empty_widget_state" comment="To denote the widget is empty">Missing deck. Tap to reconfigure.</string>
-    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Collection is empty, use app to add decks then reconfigure</string>
+    <string name="empty_widget_state" comment="To denote the widget is empty">Matzu chi mancat. Toca pro torrare a cunfigurare.</string>
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Sa colletzione est bòida, imprea s\'aplicatzione pro annànghere matzos e a pustis torra a cunfigurare</string>
 </resources>

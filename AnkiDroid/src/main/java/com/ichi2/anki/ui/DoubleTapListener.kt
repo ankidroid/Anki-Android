@@ -39,7 +39,9 @@ import android.view.View
  *
  * Source: modified from https://stackoverflow.com/a/19629851
  */
-abstract class DoubleTapListener(context: Context) : View.OnTouchListener {
+abstract class DoubleTapListener(
+    context: Context,
+) : View.OnTouchListener {
     /**
      * When a single-tap occurs. this is not certain to be a double-tap.
      *
@@ -74,30 +76,34 @@ abstract class DoubleTapListener(context: Context) : View.OnTouchListener {
      */
     abstract fun onDoubleTap(e: MotionEvent?)
 
-    private val detector = object : GestureDetector(
-        context,
-        object : SimpleOnGestureListener() {
-            override fun onDoubleTap(e: MotionEvent): Boolean {
-                this@DoubleTapListener.onDoubleTap(e)
-                return super.onDoubleTap(e)
-            }
+    private val detector =
+        object : GestureDetector(
+            context,
+            object : SimpleOnGestureListener() {
+                override fun onDoubleTap(e: MotionEvent): Boolean {
+                    this@DoubleTapListener.onDoubleTap(e)
+                    return super.onDoubleTap(e)
+                }
 
-            override fun onSingleTapUp(e: MotionEvent): Boolean {
-                this@DoubleTapListener.onUnconfirmedSingleTap(e)
-                return super.onSingleTapUp(e)
-            }
+                override fun onSingleTapUp(e: MotionEvent): Boolean {
+                    this@DoubleTapListener.onUnconfirmedSingleTap(e)
+                    return super.onSingleTapUp(e)
+                }
 
-            override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
-                this@DoubleTapListener.onConfirmedSingleTap(e)
-                return super.onSingleTapConfirmed(e)
-            }
+                override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+                    this@DoubleTapListener.onConfirmedSingleTap(e)
+                    return super.onSingleTapConfirmed(e)
+                }
 
-            override fun onDown(e: MotionEvent): Boolean {
-                super.onDown(e)
-                return true
-            }
-        }
-    ) {}
+                override fun onDown(e: MotionEvent): Boolean {
+                    super.onDown(e)
+                    return true
+                }
+            },
+        ) {}
 
-    override fun onTouch(v: View?, event: MotionEvent): Boolean = detector.onTouchEvent(event)
+    override fun onTouch(
+        v: View?,
+        event: MotionEvent,
+    ): Boolean = detector.onTouchEvent(event)
 }

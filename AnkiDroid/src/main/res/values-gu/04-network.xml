@@ -75,7 +75,7 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">સ્થાનિક</string>
     <string name="sync_sanity_remote">દૂરસ્થ</string>
-    <string name="one_way_sync_title">વન-વે સિંક</string>
+    <string name="one_way_sync_title" maxLength="41">વન-વે સિંક</string>
     <string name="one_way_sync_confirmation">વન-વે સિંકની વિનંતી કરી</string>
     <string name="full_sync_confirmation">જ્યારે તમે તમારા સંગ્રહને આગળ સિંક્રનાઇઝ કરશો ત્યારે વિનંતી કરેલ ફેરફારને ડેટાબેઝના સંપૂર્ણ અપલોડની જરૂર પડશે. જો તમારી પાસે અન્ય ઉપકરણ પર સમીક્ષાઓ અથવા અન્ય ફેરફારો રાહ જોઈ રહ્યાં છે જે હજી સુધી અહીં સમન્વયિત થયા નથી, તો તે ખોવાઈ જશે. ચાલુ રાખીએ?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid ના અગાઉ ઇન્સ્ટોલ કરેલ સંસ્કરણમાં બગને લીધે, સંપૂર્ણ સમન્વયન માટે દબાણ કરવાની ભલામણ કરવામાં આવે છે.</string>

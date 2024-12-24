@@ -42,18 +42,25 @@ import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.packageManager
+import com.ichi2.anki.utils.openUrl
 import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.themes.Themes
+import com.ichi2.utils.show
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 
-abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
+abstract class CardViewerFragment(
+    @LayoutRes layout: Int,
+) : Fragment(layout) {
     abstract val viewModel: CardViewerViewModel
     protected abstract val webView: WebView
 
     @CallSuper
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         setupWebView(savedInstanceState)
         setupErrorListeners()
     }
@@ -92,27 +99,26 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
                 stdHtml(requireContext(), Themes.currentTheme.isNightMode),
                 "text/html",
                 null,
-                null
+                null,
             )
         }
         viewModel.eval
             .flowWithLifecycle(lifecycle)
             .onEach { eval ->
                 webView.evaluateJavascript(eval, null)
-            }
-            .launchIn(lifecycleScope)
+            }.launchIn(lifecycleScope)
     }
 
     private fun setupErrorListeners() {
         viewModel.onError
             .flowWithLifecycle(lifecycle)
             .onEach { errorMessage ->
-                AlertDialog.Builder(requireContext())
+                AlertDialog
+                    .Builder(requireContext())
                     .setTitle(R.string.vague_error)
                     .setMessage(errorMessage)
                     .show()
-            }
-            .launchIn(lifecycleScope)
+            }.launchIn(lifecycleScope)
 
         viewModel.onMediaError
             .onEach { showMediaErrorSnackbar(it) }
@@ -128,18 +134,20 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
         return object : WebViewClient() {
             override fun shouldInterceptRequest(
                 view: WebView?,
-                request: WebResourceRequest
-            ): WebResourceResponse? {
-                return resourceHandler.shouldInterceptRequest(request)
-            }
+                request: WebResourceRequest,
+            ): WebResourceResponse? = resourceHandler.shouldInterceptRequest(request)
 
-            override fun onPageFinished(view: WebView?, url: String?) {
+            override fun onPageFinished(
+                view: WebView?,
+                url: String?,
+            ) {
                 viewModel.onPageFinished(isAfterRecreation = savedInstanceState != null)
             }
 
-            override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
-                return handleUrl(request.url)
-            }
+            override fun shouldOverrideUrlLoading(
+                view: WebView,
+                request: WebResourceRequest,
+            ): Boolean = handleUrl(request.url)
 
             @Suppress("DEPRECATION") // necessary in API 23
             @Deprecated("Deprecated in Java")
@@ -156,6 +164,17 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
                     "tts-voices" -> TtsVoicesDialogFragment().show(childFragmentManager, null)
                     "android-app" -> handleIntentUrl(url, Intent.URI_ANDROID_APP_SCHEME)
                     "intent" -> handleIntentUrl(url, Intent.URI_INTENT_SCHEME)
+                    "missing-user-action" -> {
+                        val actionNumber = url.toString().substringAfter(":")
+                        val message = getString(R.string.missing_user_action_dialog_message, actionNumber)
+                        AlertDialog.Builder(requireContext()).show {
+                            setMessage(message)
+                            setPositiveButton(R.string.dialog_ok) { _, _ -> }
+                            setNeutralButton(R.string.help) { _, _ ->
+                                openUrl(R.string.link_user_actions_help)
+                            }
+                        }
+                    }
                     else -> {
                         try {
                             openUrl(url)
@@ -168,7 +187,10 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
                 return true
             }
 
-            private fun handleIntentUrl(url: Uri, flags: Int) {
+            private fun handleIntentUrl(
+                url: Uri,
+                flags: Int,
+            ) {
                 try {
                     val intent = Intent.parseUri(url.toString(), flags)
                     if (packageManager.resolveActivityCompat(intent) != null) {
@@ -190,7 +212,7 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
             override fun onReceivedError(
                 view: WebView,
                 request: WebResourceRequest,
-                error: WebResourceError
+                error: WebResourceError,
             ) {
                 viewModel.mediaErrorHandler.processFailure(request) { filename: String ->
                     showMediaErrorSnackbar(filename)
@@ -199,8 +221,8 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
         }
     }
 
-    private fun onCreateWebChromeClient(): WebChromeClient {
-        return object : WebChromeClient() {
+    private fun onCreateWebChromeClient(): WebChromeClient =
+        object : WebChromeClient() {
             private lateinit var customView: View
 
             // used for displaying `<video>` in fullscreen.
@@ -208,7 +230,7 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
             // to avoid destroying the View if the device is rotated
             override fun onShowCustomView(
                 paramView: View,
-                paramCustomViewCallback: CustomViewCallback?
+                paramCustomViewCallback: CustomViewCallback?,
             ) {
                 customView = paramView
                 val window = requireActivity().window
@@ -216,8 +238,8 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
                     customView,
                     FrameLayout.LayoutParams(
                         FrameLayout.LayoutParams.MATCH_PARENT,
-                        FrameLayout.LayoutParams.MATCH_PARENT
-                    )
+                        FrameLayout.LayoutParams.MATCH_PARENT,
+                    ),
                 )
                 // hide system bars
                 with(WindowInsetsControllerCompat(window, window.decorView)) {
@@ -236,7 +258,6 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
                 }
             }
         }
-    }
 
     private fun showMediaErrorSnackbar(filename: String) {
         showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename)) {

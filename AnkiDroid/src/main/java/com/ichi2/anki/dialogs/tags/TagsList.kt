@@ -37,7 +37,7 @@ import java.util.TreeSet
 class TagsList(
     allTags: List<String>,
     checkedTags: List<String>,
-    uncheckedTags: List<String>? = null
+    uncheckedTags: List<String>? = null,
 ) : Iterable<String> {
     /**
      * A Set containing the currently selected tags
@@ -80,9 +80,7 @@ class TagsList(
      * @throws IndexOutOfBoundsException if the index is out of range
      * (`index < 0 || index >= size()`)
      */
-    fun isChecked(index: Int): Boolean {
-        return isChecked(allTags[index])
-    }
+    fun isChecked(index: Int): Boolean = isChecked(allTags[index])
 
     /**
      * Return true if a tag is checked
@@ -90,9 +88,7 @@ class TagsList(
      * @param tag the tag to check (case-insensitive)
      * @return whether the tag is checked or not
      */
-    fun isChecked(tag: String): Boolean {
-        return checkedTags.contains(tag)
-    }
+    fun isChecked(tag: String): Boolean = checkedTags.contains(tag)
 
     /**
      * Return true if a tag is indeterminate given its index in the list
@@ -102,9 +98,7 @@ class TagsList(
      * @throws IndexOutOfBoundsException if the index is out of range
      * (`index < 0 || index >= size()`)
      */
-    fun isIndeterminate(index: Int): Boolean {
-        return isIndeterminate(allTags[index])
-    }
+    fun isIndeterminate(index: Int): Boolean = isIndeterminate(allTags[index])
 
     /**
      * Return true if a tag is indeterminate
@@ -112,9 +106,7 @@ class TagsList(
      * @param tag the tag to check (case-insensitive)
      * @return whether the tag is indeterminate or not
      */
-    fun isIndeterminate(tag: String): Boolean {
-        return indeterminateTags.contains(tag)
-    }
+    fun isIndeterminate(tag: String): Boolean = indeterminateTags.contains(tag)
 
     /**
      * Adds a tag to the list if it is not already present.
@@ -140,7 +132,10 @@ class TagsList(
      * @return true if the tag changed its check status
      * false if the tag was already checked or not in the list
      */
-    fun check(tag: String, processAncestors: Boolean = true): Boolean {
+    fun check(
+        tag: String,
+        processAncestors: Boolean = true,
+    ): Boolean {
         if (!allTags.contains(tag)) {
             return false
         }
@@ -161,9 +156,7 @@ class TagsList(
      * @return true if the tag changed its check status
      * false if the tag was already unchecked or not in the list
      */
-    fun uncheck(tag: String): Boolean {
-        return indeterminateTags.remove(tag) || checkedTags.remove(tag)
-    }
+    fun uncheck(tag: String): Boolean = indeterminateTags.remove(tag) || checkedTags.remove(tag)
 
     /**
      * Mark a tag as indeterminate tag
@@ -199,9 +192,7 @@ class TagsList(
     /**
      * @return Number of tags in the list
      */
-    fun size(): Int {
-        return allTags.size
-    }
+    fun size(): Int = allTags.size
 
     /**
      * Returns the tag at the specified position in this list.
@@ -211,9 +202,7 @@ class TagsList(
      * @throws IndexOutOfBoundsException if the index is out of range
      * (`index < 0 || index >= size()`)
      */
-    operator fun get(index: Int): String {
-        return allTags[index]
-    }
+    operator fun get(index: Int): String = allTags[index]
 
     /**
      * @return true if there is no tags in the list
@@ -224,23 +213,17 @@ class TagsList(
     /**
      * @return return a copy of checked tags
      */
-    fun copyOfCheckedTagList(): List<String> {
-        return ArrayList(checkedTags)
-    }
+    fun copyOfCheckedTagList(): List<String> = ArrayList(checkedTags)
 
     /**
      * @return return a copy of checked tags
      */
-    fun copyOfIndeterminateTagList(): List<String> {
-        return ArrayList(indeterminateTags)
-    }
+    fun copyOfIndeterminateTagList(): List<String> = ArrayList(indeterminateTags)
 
     /**
      * @return return a copy of all tags list
      */
-    fun copyOfAllTagList(): List<String> {
-        return ArrayList(allTags)
-    }
+    fun copyOfAllTagList(): List<String> = ArrayList(allTags)
 
     /**
      * Initialize the tag hierarchy.
@@ -283,17 +266,18 @@ class TagsList(
      * A tag priors to another one if its root tag is checked or indeterminate while the other one's is not
      */
     fun sort() {
-        val sortedList = allTags.toList().sortedWith { lhs: String?, rhs: String? ->
-            val lhsRoot = getTagRoot(lhs!!)
-            val rhsRoot = getTagRoot(rhs!!)
-            val lhsChecked = isChecked(lhsRoot) || isIndeterminate(lhsRoot)
-            val rhsChecked = isChecked(rhsRoot) || isIndeterminate(rhsRoot)
-            if (lhsChecked != rhsChecked) {
-                if (lhsChecked) -1 else 1
-            } else {
-                compareTag(lhs, rhs)
+        val sortedList =
+            allTags.toList().sortedWith { lhs: String?, rhs: String? ->
+                val lhsRoot = getTagRoot(lhs!!)
+                val rhsRoot = getTagRoot(rhs!!)
+                val lhsChecked = isChecked(lhsRoot) || isIndeterminate(lhsRoot)
+                val rhsChecked = isChecked(rhsRoot) || isIndeterminate(rhsRoot)
+                if (lhsChecked != rhsChecked) {
+                    if (lhsChecked) -1 else 1
+                } else {
+                    compareTag(lhs, rhs)
+                }
             }
-        }
         allTags.clear()
         allTags.addAll(sortedList)
     }
@@ -301,7 +285,5 @@ class TagsList(
     /**
      * @return Iterator over all tags
      */
-    override fun iterator(): MutableIterator<String> {
-        return allTags.iterator()
-    }
+    override fun iterator(): MutableIterator<String> = allTags.iterator()
 }

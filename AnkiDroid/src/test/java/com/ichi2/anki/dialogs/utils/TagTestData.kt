@@ -21,8 +21,10 @@ import java.io.File
 
 // this has to be a file, as it can't be a Kotlin list
 // Method too large: com/ichi2/anki/dialogs/utils/TagDataKt.<clinit> ()V
+
 /** 16971 tags */
-val AnKingTags = lazy {
-    val fileName = getFileResource("anking_v11_tags.txt")
-    return@lazy File(fileName).readLines()
-}
+val AnKingTags =
+    lazy {
+        val fileName = getFileResource("anking_v11_tags.txt")
+        return@lazy File(fileName).readLines()
+    }

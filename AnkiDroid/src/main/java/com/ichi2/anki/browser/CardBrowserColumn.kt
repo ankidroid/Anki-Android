@@ -29,7 +29,9 @@ import net.ankiweb.rsdroid.Backend
  *
  * @param ankiColumnKey The key used in [Backend.setActiveBrowserColumns]
  */
-enum class CardBrowserColumn(val ankiColumnKey: String) {
+enum class CardBrowserColumn(
+    val ankiColumnKey: String,
+) {
     /** Rendered front side of the first card of the note */
     QUESTION("question"),
 
@@ -108,15 +110,37 @@ enum class CardBrowserColumn(val ankiColumnKey: String) {
      * 100% to 90%.
      * Used in FSRS, blank if using SM-2
      */
-    FSRS_STABILITY("stability");
+    FSRS_STABILITY("stability"),
+
+    /**
+     * The position of the card, independent of any resets by the user.
+     */
+    ORIGINAL_POSITION("originalPosition"),
+    ;
 
     companion object {
-
         val COLUMN1_KEYS = arrayOf(QUESTION, SFLD)
 
         // list of available keys in mCards corresponding to the column names in R.array.browser_column2_headings.
         // Note: the last 6 are currently hidden
-        val COLUMN2_KEYS = arrayOf(ANSWER, CARD, DECK, NOTE_TYPE, QUESTION, TAGS, LAPSES, REVIEWS, INTERVAL, EASE, DUE, CHANGED, CREATED, EDITED)
+        val COLUMN2_KEYS =
+            arrayOf(
+                ANSWER,
+                CARD,
+                DECK,
+                NOTE_TYPE,
+                QUESTION,
+                TAGS,
+                LAPSES,
+                REVIEWS,
+                INTERVAL,
+                EASE,
+                DUE,
+                CHANGED,
+                CREATED,
+                EDITED,
+                ORIGINAL_POSITION,
+            )
 
         fun fromColumnKey(key: String): CardBrowserColumn =
             entries.firstOrNull { it.ankiColumnKey == key }

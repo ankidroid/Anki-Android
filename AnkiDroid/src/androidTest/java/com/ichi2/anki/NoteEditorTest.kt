@@ -35,9 +35,10 @@ abstract class NoteEditorTest protected constructor() {
     var runtimePermissionRule: TestRule? = GrantStoragePermission.instance
 
     @get:Rule
-    var activityRule: ActivityScenarioRule<SingleFragmentActivity>? = ActivityScenarioRule(
-        noteEditorIntent
-    )
+    var activityRule: ActivityScenarioRule<SingleFragmentActivity>? =
+        ActivityScenarioRule(
+            noteEditorIntent,
+        )
 
     private val noteEditorIntent: Intent
         get() {
@@ -51,20 +52,18 @@ abstract class NoteEditorTest protected constructor() {
                 "Test fails on Travis API $invalid",
                 Build.VERSION.SDK_INT,
                 not(
-                    equalTo(invalid)
-                )
+                    equalTo(invalid),
+                ),
             )
         }
     }
 
     private val invalidSdksImpl: List<Int>
         get() {
-            // TODO: Look into these assumptions and see if they can be diagnosed - both work on my emulators.
-            // If we fix them, we might be able to use instrumentation.sendKeyDownUpSync
             /*
              java.lang.AssertionError: Activity never becomes requested state "[DESTROYED]" (last lifecycle transition = "PAUSED")
              at androidx.test.core.app.ActivityScenario.waitForActivityToBecomeAnyOf(ActivityScenario.java:301)
-              */
+             */
             val invalid = Build.VERSION_CODES.N_MR1
             val integers = ArrayList(listOf(invalid))
             integers.addAll(invalidSdks!!)

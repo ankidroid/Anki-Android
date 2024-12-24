@@ -59,7 +59,6 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Er is iets fout gegaan</string>
-    <string name="multimedia_editor_svg_preview">SVG\'s zijn niet beschikbaar voor voorbeeldweergave</string>
     <string name="multimedia_editor_png_paste_error">Fout bij het converteren van klembord naar png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Multimedia-inhoud toevoegen aan het %1$s-veld</string>
     <!-- Audio view -->
@@ -69,10 +68,10 @@
     <string name="multimedia_editor_audio_view_create_failed">Kan geen opnamewerkbalk aanmaken</string>
     <!-- Crop function-->
     <string name="crop_image">Wilt u deze afbeelding bijsnijden?</string>
-    <string name="crop_button">Afbeelding bijsnijden</string>
+    <string name="crop_button" maxLength="28">Afbeelding bijsnijden</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"Selectie van afbeelding is mislukt, probeer opnieuw"</string>
     <string name="activity_result_unexpected">App leverde een onverwachte waarde op. U moet mogelijk een andere app gebruiken</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Veld inhoud</string>
-    <string name="reselect">Opnieuw selecteren</string>
+    <string name="reselect" maxLength="28">Opnieuw selecteren</string>
 </resources>

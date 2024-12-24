@@ -28,8 +28,10 @@ import com.ichi2.anki.IntentHandler
  * triggering an update for widgets using the AddNoteWidget class.
  */
 class WidgetPermissionReceiver : BroadcastReceiver() {
-
-    override fun onReceive(context: Context, intent: Intent) {
+    override fun onReceive(
+        context: Context,
+        intent: Intent,
+    ) {
         if (IntentHandler.grantedStoragePermissions(context, showToast = false)) {
             val appWidgetManager = getAppWidgetManager(context) ?: return
             val widgetIds = appWidgetManager.getAppWidgetIds(ComponentName(context, AddNoteWidget::class.java))

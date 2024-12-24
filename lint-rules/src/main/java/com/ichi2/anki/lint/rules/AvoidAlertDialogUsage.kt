@@ -34,34 +34,35 @@ import org.jetbrains.uast.UImportStatement
 /**
  * This custom Lint rule raises a warning if a developer uses the `android.app.AlertDialog` class.
  */
-class AvoidAlertDialogUsage : Detector(), SourceCodeScanner {
-
+class AvoidAlertDialogUsage :
+    Detector(),
+    SourceCodeScanner {
     companion object {
         @VisibleForTesting
         const val ID = "AvoidAlertDialogUsage"
 
         @VisibleForTesting
         const val DESCRIPTION = "Use androidx.appcompat.app.AlertDialog instead of android.app.AlertDialog"
-        private const val EXPLANATION = "Using `android.app.AlertDialog` is discouraged. " +
-            "Please use `androidx.appcompat.app.AlertDialog` instead for better compatibility and features."
+        private const val EXPLANATION =
+            "Using `android.app.AlertDialog` is discouraged. " +
+                "Please use `androidx.appcompat.app.AlertDialog` instead for better compatibility and features."
         private val implementation = Implementation(AvoidAlertDialogUsage::class.java, Scope.JAVA_FILE_SCOPE)
-        val ISSUE: Issue = Issue.create(
-            ID,
-            DESCRIPTION,
-            EXPLANATION,
-            Constants.ANKI_TIME_CATEGORY,
-            Constants.ANKI_TIME_PRIORITY,
-            Constants.ANKI_TIME_SEVERITY,
-            implementation
-        )
+        val ISSUE: Issue =
+            Issue.create(
+                ID,
+                DESCRIPTION,
+                EXPLANATION,
+                Constants.ANKI_TIME_CATEGORY,
+                Constants.ANKI_TIME_PRIORITY,
+                Constants.ANKI_TIME_SEVERITY,
+                implementation,
+            )
     }
 
-    override fun getApplicableUastTypes(): List<Class<out UElement>> {
-        return listOf(UImportStatement::class.java)
-    }
+    override fun getApplicableUastTypes(): List<Class<out UElement>> = listOf(UImportStatement::class.java)
 
-    override fun createUastHandler(context: JavaContext): UElementHandler {
-        return object : UElementHandler() {
+    override fun createUastHandler(context: JavaContext): UElementHandler =
+        object : UElementHandler() {
             override fun visitImportStatement(node: UImportStatement) {
                 val importReference = node.asSourceString()
                 if (importReference.contains("android.app.AlertDialog") &&
@@ -72,19 +73,17 @@ class AvoidAlertDialogUsage : Detector(), SourceCodeScanner {
                         node,
                         context.getLocation(node),
                         DESCRIPTION,
-                        createFix()
+                        createFix(),
                     )
                 }
             }
         }
-    }
 
-    private fun createFix(): LintFix {
-        return fix()
+    private fun createFix(): LintFix =
+        fix()
             .name("Replace with androidx.appcompat.app.AlertDialog")
             .replace()
             .text("android.app.AlertDialog")
             .with("androidx.appcompat.app.AlertDialog")
             .build()
-    }
 }

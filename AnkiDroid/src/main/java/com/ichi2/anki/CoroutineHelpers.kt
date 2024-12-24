@@ -32,6 +32,7 @@ import androidx.lifecycle.viewModelScope
 import anki.collection.Progress
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Collection
 import com.ichi2.utils.message
@@ -82,9 +83,9 @@ var throwOnShowError = false
 fun CoroutineScope.launchCatching(
     context: CoroutineContext = EmptyCoroutineContext,
     errorMessageHandler: suspend (String) -> Unit,
-    block: suspend CoroutineScope.() -> Unit
-): Job {
-    return launch(context) {
+    block: suspend CoroutineScope.() -> Unit,
+): Job =
+    launch(context) {
         try {
             block()
         } catch (cancellationException: CancellationException) {
@@ -99,37 +100,30 @@ fun CoroutineScope.launchCatching(
             errorMessageHandler.invoke(exception.toString())
         }
     }
-}
 
 interface OnErrorListener {
     val onError: MutableSharedFlow<String>
 }
 
-fun <T> T.launchCatchingIO(block: suspend T.() -> Unit): Job where T : ViewModel, T : OnErrorListener {
-    return viewModelScope.launchCatching(
+fun <T> T.launchCatchingIO(block: suspend T.() -> Unit): Job where T : ViewModel, T : OnErrorListener =
+    viewModelScope.launchCatching(
         ioDispatcher,
         { onError.emit(it) },
-        { block() }
+        { block() },
     )
-}
 
 fun <T> T.launchCatchingIO(
     errorMessageHandler: suspend (String) -> Unit,
-    block: suspend CoroutineScope.() -> Unit
-): Job where T : ViewModel {
-    return viewModelScope.launchCatching(
+    block: suspend CoroutineScope.() -> Unit,
+): Job where T : ViewModel =
+    viewModelScope.launchCatching(
         ioDispatcher,
-        errorMessageHandler
+        errorMessageHandler,
     ) { block() }
-}
 
-fun <T> CoroutineScope.asyncIO(block: suspend CoroutineScope.() -> T): Deferred<T> {
-    return async(ioDispatcher, block = block)
-}
+fun <T> CoroutineScope.asyncIO(block: suspend CoroutineScope.() -> T): Deferred<T> = async(ioDispatcher, block = block)
 
-fun <T> ViewModel.asyncIO(block: suspend CoroutineScope.() -> T): Deferred<T> {
-    return viewModelScope.asyncIO(block)
-}
+fun <T> ViewModel.asyncIO(block: suspend CoroutineScope.() -> T): Deferred<T> = viewModelScope.asyncIO(block)
 
 /**
  * Runs a suspend function that catches any uncaught errors and reports them to the user.
@@ -143,20 +137,23 @@ fun <T> ViewModel.asyncIO(block: suspend CoroutineScope.() -> T): Deferred<T> {
  */
 suspend fun <T> FragmentActivity.runCatching(
     errorMessage: String? = null,
-    block: suspend () -> T?
+    block: suspend () -> T?,
 ): T? {
     // appends the pre-coroutine stack to the error message. Example:
     // at com.ichi2.anki.CoroutineHelpersKt.launchCatchingTask(CoroutineHelpers.kt:188)
     // at com.ichi2.anki.CoroutineHelpersKt.launchCatchingTask$default(CoroutineHelpers.kt:184)
     // at com.ichi2.anki.BackendBackupsKt.performBackupInBackground(BackendBackups.kt:26)
     //  This is only performed in DEBUG mode to reduce performance impact
-    val callerTrace = if (BuildConfig.DEBUG) {
-        Thread.currentThread().stackTrace
-            .drop(14)
-            .joinToString(prefix = "\tat ", separator = "\n\tat ")
-    } else {
-        null
-    }
+    val callerTrace =
+        if (BuildConfig.DEBUG) {
+            Thread
+                .currentThread()
+                .stackTrace
+                .drop(14)
+                .joinToString(prefix = "\tat ", separator = "\n\tat ")
+        } else {
+            null
+        }
 
     try {
         return block()
@@ -169,8 +166,9 @@ suspend fun <T> FragmentActivity.runCatching(
                 Timber.w(exc, errorMessage)
                 exc.localizedMessage?.let { showSnackbar(it) }
             }
-            is BackendNetworkException, is BackendSyncException -> {
+            is BackendNetworkException, is BackendSyncException, is StorageAccessException -> {
                 // these exceptions do not generate worthwhile crash reports
+                Timber.i("Showing error dialog but not sending a crash report.")
                 showError(this, exc.localizedMessage!!, exc, false)
             }
             is BackendException -> {
@@ -199,24 +197,26 @@ suspend fun <T> FragmentActivity.runCatching(
  * @return [CoroutineExceptionHandler]
  * @see [FragmentActivity.launchCatchingTask]
  */
-fun getCoroutineExceptionHandler(activity: Activity, errorMessage: String? = null) =
-    CoroutineExceptionHandler { _, throwable ->
-        // No need to check for cancellation-exception, it does not gets caught by CoroutineExceptionHandler
-        when (throwable) {
-            is BackendInterruptedException -> {
-                Timber.e(throwable, errorMessage)
-                throwable.localizedMessage?.let { activity.showSnackbar(it) }
-            }
-            is BackendException -> {
-                Timber.e(throwable, errorMessage)
-                showError(activity, throwable.localizedMessage!!, throwable)
-            }
-            else -> {
-                Timber.e(throwable, errorMessage)
-                showError(activity, throwable.toString(), throwable)
-            }
+fun getCoroutineExceptionHandler(
+    activity: Activity,
+    errorMessage: String? = null,
+) = CoroutineExceptionHandler { _, throwable ->
+    // No need to check for cancellation-exception, it does not gets caught by CoroutineExceptionHandler
+    when (throwable) {
+        is BackendInterruptedException -> {
+            Timber.e(throwable, errorMessage)
+            throwable.localizedMessage?.let { activity.showSnackbar(it) }
+        }
+        is BackendException -> {
+            Timber.e(throwable, errorMessage)
+            showError(activity, throwable.localizedMessage!!, throwable)
+        }
+        else -> {
+            Timber.e(throwable, errorMessage)
+            showError(activity, throwable.toString(), throwable)
         }
     }
+}
 
 /**
  * Launch a job that catches any uncaught errors and reports them to the user.
@@ -225,25 +225,27 @@ fun getCoroutineExceptionHandler(activity: Activity, errorMessage: String? = nul
  */
 fun FragmentActivity.launchCatchingTask(
     errorMessage: String? = null,
-    block: suspend CoroutineScope.() -> Unit
-): Job {
-    return lifecycle.coroutineScope.launch {
+    block: suspend CoroutineScope.() -> Unit,
+): Job =
+    lifecycle.coroutineScope.launch {
         runCatching(errorMessage) { block() }
     }
-}
 
 /** See [FragmentActivity.launchCatchingTask] */
 fun Fragment.launchCatchingTask(
     errorMessage: String? = null,
-    block: suspend CoroutineScope.() -> Unit
-): Job {
-    return lifecycle.coroutineScope.launch {
+    block: suspend CoroutineScope.() -> Unit,
+): Job =
+    lifecycle.coroutineScope.launch {
         requireActivity().runCatching(errorMessage) { block() }
     }
-}
 
-fun showError(context: Context, msg: String) {
+fun showError(
+    context: Context,
+    msg: String,
+) {
     if (throwOnShowError) throw IllegalStateException("throwOnShowError: $msg")
+    Timber.i("Error dialog displayed")
     try {
         AlertDialog.Builder(context).show {
             title(R.string.vague_error)
@@ -256,8 +258,14 @@ fun showError(context: Context, msg: String) {
     }
 }
 
-fun showError(context: Context, msg: String, exception: Throwable, crashReport: Boolean = true) {
+fun showError(
+    context: Context,
+    msg: String,
+    exception: Throwable,
+    crashReport: Boolean = true,
+) {
     if (throwOnShowError) throw IllegalStateException("throwOnShowError: $msg", exception)
+    Timber.i("Error dialog displayed")
     try {
         AlertDialog.Builder(context).show {
             title(R.string.vague_error)
@@ -267,7 +275,7 @@ fun showError(context: Context, msg: String, exception: Throwable, crashReport: 
                 setOnDismissListener {
                     CrashReportService.sendExceptionReport(
                         exception,
-                        origin = context::class.java.simpleName
+                        origin = context::class.java.simpleName,
                     )
                 }
             }
@@ -275,6 +283,12 @@ fun showError(context: Context, msg: String, exception: Throwable, crashReport: 
     } catch (ex: BadTokenException) {
         // issue 12718: activity provided by `context` was not running
         Timber.w(ex, "unable to display error dialog")
+        if (crashReport) {
+            CrashReportService.sendExceptionReport(
+                exception,
+                origin = context::class.java.simpleName,
+            )
+        }
     }
 }
 
@@ -285,19 +299,19 @@ fun showError(context: Context, msg: String, exception: Throwable, crashReport: 
 suspend fun <T> Backend.withProgress(
     extractProgress: ProgressContext.() -> Unit,
     updateUi: ProgressContext.() -> Unit,
-    block: suspend CoroutineScope.() -> T
-): T {
-    return coroutineScope {
-        val monitor = launch {
-            monitorProgress(this@withProgress, extractProgress, updateUi)
-        }
+    block: suspend CoroutineScope.() -> T,
+): T =
+    coroutineScope {
+        val monitor =
+            launch {
+                monitorProgress(this@withProgress, extractProgress, updateUi)
+            }
         try {
             block()
         } finally {
             monitor.cancel()
         }
     }
-}
 
 /**
  * Run the provided operation, showing a progress window until it completes.
@@ -310,21 +324,24 @@ suspend fun <T> FragmentActivity.withProgress(
     extractProgress: ProgressContext.() -> Unit,
     onCancel: ((Backend) -> Unit)? = { it.setWantsAbort() },
     @StringRes manualCancelButton: Int? = null,
-    op: suspend () -> T
+    op: suspend () -> T,
 ): T {
     val backend = CollectionManager.getBackend()
     return withProgressDialog(
         context = this@withProgress,
-        onCancel = if (onCancel != null) {
-            fun() { onCancel(backend) }
-        } else {
-            null
-        },
-        manualCancelButton = manualCancelButton
+        onCancel =
+            if (onCancel != null) {
+                fun() {
+                    onCancel(backend)
+                }
+            } else {
+                null
+            },
+        manualCancelButton = manualCancelButton,
     ) { dialog ->
         backend.withProgress(
             extractProgress = extractProgress,
-            updateUi = { updateDialog(dialog) }
+            updateUi = { updateDialog(dialog) },
         ) {
             op()
         }
@@ -340,27 +357,34 @@ suspend fun <T> FragmentActivity.withProgress(
  */
 suspend fun <T> Activity.withProgress(
     message: String = resources.getString(R.string.dialog_processing),
-    op: suspend () -> T
-): T = withProgressDialog(
-    context = this@withProgress,
-    onCancel = null
-) { dialog ->
-    @Suppress("Deprecation") // ProgressDialog deprecation
-    dialog.setMessage(message)
-    op()
-}
+    op: suspend () -> T,
+): T =
+    withProgressDialog(
+        context = this@withProgress,
+        onCancel = null,
+    ) { dialog ->
+        @Suppress("Deprecation") // ProgressDialog deprecation
+        dialog.setMessage(message)
+        op()
+    }
 
 /** @see withProgress(String, ...) */
-suspend fun <T> Fragment.withProgress(message: String, block: suspend () -> T): T =
-    requireActivity().withProgress(message, block)
+suspend fun <T> Fragment.withProgress(
+    message: String = getString(R.string.dialog_processing),
+    block: suspend () -> T,
+): T = requireActivity().withProgress(message, block)
 
 /** @see withProgress(String, ...) */
-suspend fun <T> Activity.withProgress(@StringRes messageId: Int, block: suspend () -> T): T =
-    withProgress(resources.getString(messageId), block)
+suspend fun <T> Activity.withProgress(
+    @StringRes messageId: Int,
+    block: suspend () -> T,
+): T = withProgress(resources.getString(messageId), block)
 
 /** @see withProgress(String, ...) */
-suspend fun <T> Fragment.withProgress(@StringRes messageId: Int, block: suspend () -> T): T =
-    requireActivity().withProgress(messageId, block)
+suspend fun <T> Fragment.withProgress(
+    @StringRes messageId: Int,
+    block: suspend () -> T,
+): T = requireActivity().withProgress(messageId, block)
 
 @Suppress("Deprecation") // ProgressDialog deprecation
 suspend fun <T> withProgressDialog(
@@ -368,44 +392,66 @@ suspend fun <T> withProgressDialog(
     onCancel: (() -> Unit)?,
     delayMillis: Long = 600,
     @StringRes manualCancelButton: Int? = null,
-    op: suspend (android.app.ProgressDialog) -> T
-): T = coroutineScope {
-    val dialog = android.app.ProgressDialog(context, R.style.AppCompatProgressDialogStyle).apply {
-        setCancelable(onCancel != null)
-        if (manualCancelButton != null) {
-            setCancelable(false)
-            setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(manualCancelButton)) { _, _ ->
-                onCancel?.let { it() }
+    op: suspend (android.app.ProgressDialog) -> T,
+): T =
+    coroutineScope {
+        val dialog =
+            android.app.ProgressDialog(context, R.style.AppCompatProgressDialogStyle).apply {
+                setCancelable(onCancel != null)
+                if (manualCancelButton != null) {
+                    setCancelable(false)
+                    setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(manualCancelButton)) { _, _ ->
+                        Timber.i("Progress dialog cancelled via cancel button")
+                        onCancel?.let { it() }
+                    }
+                } else {
+                    onCancel?.let {
+                        setOnCancelListener {
+                            Timber.i("Progress dialog cancelled via cancel listener")
+                            it()
+                        }
+                    }
+                }
             }
-        } else {
-            onCancel?.let {
-                setOnCancelListener { it() }
+        // disable taps immediately
+        context.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        // reveal the dialog after 600ms
+        var dialogIsOurs = false
+        val dialogJob =
+            launch {
+                delay(delayMillis)
+                if (!AnkiDroidApp.instance.progressDialogShown) {
+                    Timber.i(
+                        """Displaying progress dialog: ${delayMillis}ms elapsed; 
+                |cancellable: ${onCancel != null}; 
+                |manualCancel: ${manualCancelButton != null}
+                |
+                        """.trimMargin(),
+                    )
+                    dialog.show()
+                    AnkiDroidApp.instance.progressDialogShown = true
+                    dialogIsOurs = true
+                } else {
+                    Timber.w(
+                        """A progress dialog is already displayed, not displaying progress dialog: 
+                |cancellable: ${onCancel != null}; 
+                |manualCancel: ${manualCancelButton != null}
+                |
+                        """.trimMargin(),
+                    )
+                }
+            }
+        try {
+            op(dialog)
+        } finally {
+            dialogJob.cancel()
+            dismissDialogIfShowing(dialog)
+            context.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            if (dialogIsOurs) {
+                AnkiDroidApp.instance.progressDialogShown = false
             }
         }
     }
-    // disable taps immediately
-    context.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-    // reveal the dialog after 600ms
-    var dialogIsOurs = false
-    val dialogJob = launch {
-        delay(delayMillis)
-        if (!AnkiDroidApp.instance.progressDialogShown) {
-            dialog.show()
-            AnkiDroidApp.instance.progressDialogShown = true
-            dialogIsOurs = true
-        }
-    }
-    try {
-        op(dialog)
-    } finally {
-        dialogJob.cancel()
-        dismissDialogIfShowing(dialog)
-        context.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-        if (dialogIsOurs) {
-            AnkiDroidApp.instance.progressDialogShown = false
-        }
-    }
-}
 
 private fun dismissDialogIfShowing(dialog: Dialog) {
     try {
@@ -426,13 +472,14 @@ private fun dismissDialogIfShowing(dialog: Dialog) {
 private suspend fun monitorProgress(
     backend: Backend,
     extractProgress: ProgressContext.() -> Unit,
-    updateUi: ProgressContext.() -> Unit
+    updateUi: ProgressContext.() -> Unit,
 ) {
     val state = ProgressContext(Progress.getDefaultInstance())
     while (true) {
-        state.progress = withContext(Dispatchers.IO) {
-            backend.latestProgress()
-        }
+        state.progress =
+            withContext(Dispatchers.IO) {
+                backend.latestProgress()
+            }
         state.extractProgress()
         // on main thread, so op can update UI
         withContext(Dispatchers.Main) {
@@ -449,7 +496,7 @@ data class ProgressContext(
     var progress: Progress,
     var text: String = "",
     /** If set, shows progress bar with a of b complete. */
-    var amount: Pair<Int, Int>? = null
+    var amount: Pair<Int, Int>? = null,
 )
 
 @Suppress("Deprecation") // ProgressDialog deprecation
@@ -458,9 +505,10 @@ private fun ProgressContext.updateDialog(dialog: android.app.ProgressDialog) {
     // setting progress after starting with indeterminate progress, so we just use
     // this for now
     // this code has since been updated to ProgressDialog, and the above not rechecked
-    val progressText = amount?.let {
-        " ${it.first}/${it.second}"
-    } ?: ""
+    val progressText =
+        amount?.let {
+            " ${it.first}/${it.second}"
+        } ?: ""
     @Suppress("Deprecation") // ProgressDialog deprecation
     dialog.setMessage(text + progressText)
 }
@@ -497,14 +545,15 @@ suspend fun AnkiActivity.userAcceptsSchemaChange(): Boolean {
     if (withCol { schemaChanged() }) {
         return true
     }
-    val hasAcceptedSchemaChange = suspendCoroutine { coroutine ->
-        AlertDialog.Builder(this).show {
-            message(text = TR.deckConfigWillRequireFullSync().replace("\\s+".toRegex(), " "))
-            positiveButton(R.string.dialog_ok) { coroutine.resume(true) }
-            negativeButton(R.string.dialog_cancel) { coroutine.resume(false) }
-            setOnCancelListener { coroutine.resume(false) }
+    val hasAcceptedSchemaChange =
+        suspendCoroutine { coroutine ->
+            AlertDialog.Builder(this).show {
+                message(text = TR.deckConfigWillRequireFullSync().replace("\\s+".toRegex(), " "))
+                positiveButton(R.string.dialog_ok) { coroutine.resume(true) }
+                negativeButton(R.string.dialog_cancel) { coroutine.resume(false) }
+                setOnCancelListener { coroutine.resume(false) }
+            }
         }
-    }
     if (hasAcceptedSchemaChange) {
         withCol { modSchemaNoCheck() }
     }
