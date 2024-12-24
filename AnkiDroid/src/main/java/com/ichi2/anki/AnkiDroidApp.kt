@@ -67,7 +67,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import org.json.JSONArray
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 import java.util.Locale
@@ -123,8 +122,6 @@ open class AnkiDroidApp :
         }
         instance = this
 
-        // Initialize safe display mode for E-ink devices
-        initializeSafeDisplayMode()
         // Get preferences
         val preferences = this.sharedPrefs()
 
@@ -147,6 +144,8 @@ open class AnkiDroidApp :
         Timber.d("Startup - Application Start")
         Timber.i("Timber config: $logType")
 
+        // Initialize safe display mode for E-ink devices
+        initializeSafeDisplayMode()
         // analytics after ACRA, they both install UncaughtExceptionHandlers but Analytics chains while ACRA does not
         UsageAnalytics.initialize(this)
         if (BuildConfig.DEBUG) {
@@ -270,26 +269,119 @@ open class AnkiDroidApp :
         TtsVoicesFieldFilter.ensureApplied()
     }
 
-    /**
-     * Initialize Timber with the specified tag and log type.
-     *
-     * @param tag The tag to use for logging.
-     */
-    private fun initializeTimber(tag: String) {
-        if (Timber.forest().isNotEmpty()) {
-            Timber.tag(tag).d("Timber is already initialized with ${Timber.forest().size} trees")
-            return
-        }
+    data class DeviceInfo(
+        val manufacturer: String,
+        val model: String,
+    )
 
-        val logType = LogType.value
-        when (logType) {
-            LogType.DEBUG -> Timber.plant(DebugTree())
-            LogType.ROBOLECTRIC -> Timber.plant(RobolectricDebugTree())
-            LogType.PRODUCTION -> Timber.plant(ProductionCrashReportingTree())
-        }
-        Timber.tag(tag)
-        Timber.d("Timber initialized with config: $logType")
-    }
+    private val knownEInkDevices =
+        setOf(
+            DeviceInfo("Onyx", "NoteAir4C"),
+            DeviceInfo("Onyx", "NoteAir3C"),
+            DeviceInfo("Onyx", "TabUltraCPro"),
+            DeviceInfo("Onyx", "NovaAir2"),
+            DeviceInfo("Onyx", "MaxLumi2"),
+            DeviceInfo("Onyx", "Go103"),
+            DeviceInfo("Onyx", "Go06"),
+            DeviceInfo("Onyx", "GoColor7"),
+            DeviceInfo("Onyx", "KANT"),
+            DeviceInfo("Onyx", "MC_GULLIVER"),
+            DeviceInfo("Onyx", "Leaf"),
+            DeviceInfo("Onyx", "Leaf2"),
+            DeviceInfo("Onyx", "Leaf3"),
+            DeviceInfo("Onyx", "Leaf3C"),
+            DeviceInfo("Onyx", "LIVINGSTONE"),
+            DeviceInfo("Onyx", "Lomonosov"),
+            DeviceInfo("Onyx", "Max2"),
+            DeviceInfo("Onyx", "Max2Pro"),
+            DeviceInfo("Onyx", "Max3"),
+            DeviceInfo("Onyx", "NoteAir2P"),
+            DeviceInfo("Onyx", "NotePro"),
+            DeviceInfo("Onyx", "NoteS"),
+            DeviceInfo("Onyx", "NoteX"),
+            DeviceInfo("Onyx", "NoteX2"),
+            DeviceInfo("Onyx", "NoteX3"),
+            DeviceInfo("Onyx", "Note_YDT"),
+            DeviceInfo("Onyx", "Nova"),
+            DeviceInfo("Onyx", "Nova2"),
+            DeviceInfo("Onyx", "Nova3"),
+            DeviceInfo("Onyx", "Nova3Color"),
+            DeviceInfo("Onyx", "Nova5"),
+            DeviceInfo("Onyx", "NovaAir"),
+            DeviceInfo("Onyx", "NovaAirC"),
+            DeviceInfo("Onyx", "NovaPro"),
+            DeviceInfo("Onyx", "Tab10CPro"),
+            DeviceInfo("Onyx", "TabMiniC"),
+            DeviceInfo("Onyx", "TabUltra"),
+            DeviceInfo("Onyx", "TabUltraC"),
+            DeviceInfo("Onyx", "TabX"),
+            DeviceInfo("Onyx", "Poke2"),
+            DeviceInfo("Onyx", "Poke3"),
+            DeviceInfo("Onyx", "Poke4"),
+            DeviceInfo("Onyx", "Poke4Lite"),
+            DeviceInfo("Onyx", "Poke5"),
+            DeviceInfo("Onyx", "Poke5P"),
+            DeviceInfo("Onyx", "Page"),
+            DeviceInfo("Onyx", "Palma"),
+            DeviceInfo("Onyx", "SP_NoteSL"),
+            DeviceInfo("Onyx", "SP_PokeL"),
+            DeviceInfo("Onyx", "jdread"),
+            DeviceInfo("boeye", "c64p"),
+            DeviceInfo("boyue", "ares"),
+            DeviceInfo("boyue", "alita"),
+            DeviceInfo("boyue", "p6"),
+            DeviceInfo("boyue", "p61-k12-l"),
+            DeviceInfo("boyue", "p78"),
+            DeviceInfo("boyue", "p101"),
+            DeviceInfo("boyue", "s62"),
+            DeviceInfo("boyue", "t61"),
+            DeviceInfo("boyue", "t62"),
+            DeviceInfo("boyue", "t65s"),
+            DeviceInfo("boyue", "muses"),
+            DeviceInfo("boyue", "mars"),
+            DeviceInfo("boyue", "t80s"),
+            DeviceInfo("boyue", "mimas"),
+            DeviceInfo("crema", "note"),
+            DeviceInfo("crema", "keplerb"),
+            DeviceInfo("crema", "crema-0710c"),
+            DeviceInfo("crema", "crema-0670c"),
+            DeviceInfo("energysistem", "ereader"),
+            DeviceInfo("fidibo", "fidibook"),
+            DeviceInfo("freescale", "evk_6sl_eink"),
+            DeviceInfo("hyread", "k06nu"),
+            DeviceInfo("artatech", "prime"),
+            DeviceInfo("rockchip", "inkpalmplus"),
+            DeviceInfo("rockchip", "moaanmix7"),
+            DeviceInfo("rockchip", "pubook"),
+            DeviceInfo("onyx", "rk30sdk"),
+            DeviceInfo("onyx", "nabukreg_hd"),
+            DeviceInfo("linfiny", "ent-13t1"),
+            DeviceInfo("haoqing", "m6"),
+            DeviceInfo("haoqing", "m7"),
+            DeviceInfo("haoqing", "p6"),
+            DeviceInfo("rockchip", "moaanmix7"),
+            DeviceInfo("allwinner", "mooink plus 2c"),
+            DeviceInfo("barnesandnoble", "bnrv1000"),
+            DeviceInfo("barnesandnoble", "bnrv1100"),
+            DeviceInfo("barnesandnoble", "bnrv1300"),
+            DeviceInfo("barnesandnoble", "bnrv510"),
+            DeviceInfo("barnesandnoble", "bnrv520"),
+            DeviceInfo("barnesandnoble", "bnrv700"),
+            DeviceInfo("onyx", "c67"),
+            DeviceInfo("onyx", "darwin7"),
+            DeviceInfo("onyx", "darwin9"),
+            DeviceInfo("onyx", "edison"),
+            DeviceInfo("onyx", "faust3"),
+            DeviceInfo("onyx", "kon_tiki2"),
+            DeviceInfo("onyx", "poke_pro"),
+            DeviceInfo("onyx", "tabultra"),
+            DeviceInfo("rockchip", "pubook"),
+            DeviceInfo("ridi", "ridipaper"),
+            DeviceInfo("sony", "dpt-cp1"),
+            DeviceInfo("sony", "dpt-rp1"),
+            DeviceInfo("onyx", "tagus_pokep"),
+            DeviceInfo("xiaomi", "xiaomi_reader"),
+        )
 
     /**
      * Initializes the safe display mode for e-ink devices.
@@ -298,19 +390,14 @@ open class AnkiDroidApp :
      * If the key is not set and the device has an e-ink display, it sets the `safe_display` key to `true`.
      */
     private fun initializeSafeDisplayMode() {
-        initializeTimber("SafeDisplayMode")
         val preferences = this.sharedPrefs()
         val isSafeDisplaySet = preferences.contains("safeDisplay")
-        Timber.tag("SafeDisplayMode").d("isSafeDisplaySet: $isSafeDisplaySet")
+        Timber.d("isSafeDisplaySet: $isSafeDisplaySet")
         if (!isSafeDisplaySet && hasEInkDisplay()) {
-            Timber
-                .tag("SafeDisplayMode")
-                .d("E-Ink display detected and safeDisplay is not set. Setting it now.")
+            Timber.d("E-Ink display detected and safeDisplay is not set. Setting it now.")
             preferences.edit().putBoolean("safeDisplay", true).apply()
         } else {
-            Timber
-                .tag("SafeDisplayMode")
-                .d("No changes made. Either safeDisplay is already set or no E-Ink display detected.")
+            Timber.d("No changes made. Either safeDisplay is already set or no confirmed E-Ink display detected.")
         }
     }
 
@@ -319,47 +406,52 @@ open class AnkiDroidApp :
      * Returns true if a match is found, false otherwise.
      */
     fun hasEInkDisplay(): Boolean {
-        initializeTimber("SafeDisplayMode")
-        return try {
-            // Load JSON from assets
-            val jsonFileName = "eink_devices.json"
-            val jsonText = assets.open(jsonFileName).bufferedReader().use { it.readText() }
+        val currentDevice =
+            DeviceInfo(
+                manufacturer = Build.MANUFACTURER.lowercase().trim(),
+                model = Build.MODEL.lowercase().trim(),
+            )
+        Timber.d("Checking device: $currentDevice")
 
-            // Parse JSON into a JSONArray
-            val jsonArray = JSONArray(jsonText)
-
-            // Get device manufacturer and model, normalize to lowercase with spaces trimmed
-            val deviceManufacturer = Build.MANUFACTURER.lowercase().trim()
-            val deviceModel = Build.MODEL.lowercase().trim()
-
-            Timber.tag("SafeDisplayMode").d("Checking device: manufacturer=$deviceManufacturer, model=$deviceModel")
-
-            // Check against JSON data
-            for (i in 0 until jsonArray.length()) {
-                val deviceInfo = jsonArray.getJSONObject(i)
-                val manufacturer = deviceInfo.getString("manufacturer").lowercase().trim()
-                val models = deviceInfo.getJSONArray("models")
-
-                // If manufacturer matches, check models
-                if (deviceManufacturer.contains(manufacturer) || manufacturer.contains(deviceManufacturer)) {
-                    for (j in 0 until models.length()) {
-                        val model = models.getString(j).lowercase().trim()
-                        if (deviceModel.contains(model) || model.contains(deviceModel)) {
-                            Timber.tag("SafeDisplayMode").d("E-Ink display detected: Manufacturer=$manufacturer, Model=$model")
-                            return true
-                        }
-                    }
-                }
+        // Exact manufacturer and model match
+        val exactMatch =
+            knownEInkDevices.any { device ->
+                currentDevice.manufacturer == device.manufacturer.lowercase().trim() &&
+                    currentDevice.model == device.model.lowercase().trim()
             }
 
-            // Log if no match found
-            Timber.tag("SafeDisplayMode").d("No E-Ink display detected")
-            false
-        } catch (e: Exception) {
-            // Log error and return false
-            Timber.tag("SafeDisplayMode").e("Error detecting E-Ink display: ${e.message}")
-            false
+        if (exactMatch) {
+            showThemedToast(this, "E-ink device detected", false)
+            Timber.d("Confirmed E-ink device: $currentDevice")
+            return true
         }
+
+        // Partial match - model is substring of known Build.MODEL or Build.Model is substring of known model
+        val partialMatch =
+            knownEInkDevices.any { device ->
+                (
+                    currentDevice.manufacturer.contains(device.manufacturer.lowercase().trim()) ||
+                        device.manufacturer
+                            .lowercase()
+                            .trim()
+                            .contains(currentDevice.manufacturer)
+                ) &&
+                    (
+                        device.manufacturer
+                            .lowercase()
+                            .trim()
+                            .contains(currentDevice.manufacturer) ||
+                            currentDevice.model.contains(device.model.lowercase().trim())
+                    )
+            }
+
+        if (partialMatch) {
+            // Log potential E-ink device for investigation
+            Timber.w("Potential E-ink device: $currentDevice")
+        } else {
+            Timber.d("Not an E-ink device: $currentDevice")
+        }
+        return false
     }
 
     /**
