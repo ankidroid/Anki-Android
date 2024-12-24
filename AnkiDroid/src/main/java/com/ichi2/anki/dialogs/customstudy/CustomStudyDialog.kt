@@ -242,7 +242,7 @@ class CustomStudyDialog(
         val dialog =
             AlertDialog
                 .Builder(requireActivity())
-                .customView(view = v, paddingLeft = 64, paddingRight = 64, paddingTop = 32, paddingBottom = 32)
+                .customView(view = v, paddingStart = 64, paddingEnd = 64, paddingTop = 32, paddingBottom = 32)
                 .positiveButton(R.string.dialog_ok) {
                     // Get the value selected by user
                     val n =
