@@ -150,8 +150,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                     } else {
                         updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE)
                         if (Build.VERSION.SDK_INT >= 31) {
-                            // TODO: add a clock icon
-                            updateViews.setTextViewText(R.id.widget_eta, "⌛ $eta")
+                            updateViews.setTextViewText(R.id.widget_eta, "⏱ $eta")
                         } else {
                             updateViews.setTextViewText(R.id.widget_eta, "$eta")
                         }
