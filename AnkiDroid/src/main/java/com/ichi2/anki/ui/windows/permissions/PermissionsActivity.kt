@@ -22,10 +22,12 @@ import android.os.Parcelable
 import androidx.activity.addCallback
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.IntentCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.commit
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.UninstallListItem.Companion.displayResetToNewDirectoryDialog
 import com.ichi2.themes.Themes
 import com.ichi2.themes.setTransparentStatusBar
 
@@ -55,6 +57,10 @@ class PermissionsActivity : AnkiActivity() {
             finish()
         }
 
+        findViewById<AppCompatButton>(R.id.skip_button).setOnClickListener {
+            displayResetToNewDirectoryDialog(ankiActivity, true)
+        }
+
         val permissionSet =
             requireNotNull(IntentCompat.getParcelableExtra(intent, PERMISSIONS_SET_EXTRA, PermissionSet::class.java)) {
                 "PERMISSIONS_SET_EXTRA not set"
@@ -73,6 +79,10 @@ class PermissionsActivity : AnkiActivity() {
 
     fun setContinueButtonEnabled(isEnabled: Boolean) {
         findViewById<AppCompatButton>(R.id.continue_button).isEnabled = isEnabled
+    }
+
+    fun setSkipButtonVisible(isVisible: Boolean) {
+        findViewById<AppCompatButton>(R.id.skip_button).isVisible = isVisible
     }
 
     companion object {

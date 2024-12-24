@@ -40,6 +40,18 @@
         </ScrollView>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/skip_button"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:paddingVertical="12dp"
+            android:text="@string/dialog_skip"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/permissions_scroll_area"
+            />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/continue_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

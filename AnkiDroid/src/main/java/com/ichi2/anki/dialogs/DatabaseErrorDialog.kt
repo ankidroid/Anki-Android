@@ -32,6 +32,7 @@ import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.AnkiDroidApp.Companion.sharedPrefs
 import com.ichi2.anki.BackupManager
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
@@ -496,7 +497,10 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
 
         companion object {
             /** A dialog which creates a new collection in an unsafe location */
-            fun displayResetToNewDirectoryDialog(context: AnkiActivity) {
+            fun displayResetToNewDirectoryDialog(
+                context: AnkiActivity,
+                skipButton: Boolean = false,
+            ) {
                 AlertDialog.Builder(context).show {
                     title(R.string.backup_new_collection)
                     setIcon(R.drawable.ic_warning)
@@ -507,6 +511,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                             "closeCollection: %s",
                             "DatabaseErrorDialog: Before Create New Collection",
                         )
+                        if (skipButton) {
+                            val sharedPrefsEdit = sharedPrefs().edit()
+                            sharedPrefsEdit.putBoolean("skipStoragePermission", true)
+                            sharedPrefsEdit.apply()
+                        }
                         CollectionManager.closeCollectionBlocking()
                         CollectionHelper.resetAnkiDroidDirectory(context)
                         context.closeCollectionAndFinish()

@@ -51,5 +51,6 @@ class Full30and31PermissionsFragment : PermissionsFragment(R.layout.permissions_
         view.findViewById<PermissionItem>(R.id.all_files_permission).setOnSwitchClickListener {
             accessAllFilesLauncher.showManageAllFilesScreen()
         }
+        (activity as? PermissionsActivity)?.setSkipButtonVisible(true)
     }
 }
