@@ -610,9 +610,6 @@ class NoteEditor :
         savedInstanceState.putStringArrayList("tags", selectedTags?.let { ArrayList(it) })
     }
 
-    private val fieldsAsBundleForPreview: Bundle
-        get() = NoteService.getFieldsAsBundleForPreview(editFields, shouldReplaceNewlines())
-
     // Finish initializing the fragment after the collection has been correctly loaded
     private fun setupEditor(col: Collection) {
         val intent = requireActivity().intent

@@ -76,7 +76,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
     fun isColInitialized() = ::col.isInitialized
 
     protected var prefChanged = false
-    lateinit var unmountReceiver: BroadcastReceiver
+    private lateinit var unmountReceiver: BroadcastReceiver
     protected lateinit var col: Collection
         private set
     protected lateinit var pref: PreferenceHack

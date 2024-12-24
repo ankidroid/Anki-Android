@@ -47,7 +47,6 @@ class CardTemplateNotetype(
     }
 
     private var _templateChanges = ArrayList<Array<Any>>()
-    var editedModelFileName: String? = null
 
     fun toBundle(): Bundle =
         bundleOf(
