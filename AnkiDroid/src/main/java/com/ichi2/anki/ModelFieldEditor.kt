@@ -176,7 +176,7 @@ class ModelFieldEditor :
         fieldNameInput?.let { fieldNameInput ->
             fieldNameInput.isSingleLine = true
             AlertDialog.Builder(this).show {
-                customView(view = fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
+                customView(view = fieldNameInput, paddingStart = 64, paddingEnd = 64, paddingTop = 32)
                 title(R.string.model_field_editor_add)
                 positiveButton(R.string.dialog_ok) {
                     // Name is valid, now field is added
@@ -303,7 +303,7 @@ class ModelFieldEditor :
             fieldNameInput.setText(fieldsLabels[currentPos])
             fieldNameInput.setSelection(fieldNameInput.text!!.length)
             AlertDialog.Builder(this).show {
-                customView(view = fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
+                customView(view = fieldNameInput, paddingStart = 64, paddingEnd = 64, paddingTop = 32)
                 title(R.string.model_field_editor_rename)
                 positiveButton(R.string.rename) {
                     if (uniqueName(fieldNameInput) == null) {
@@ -347,7 +347,7 @@ class ModelFieldEditor :
         fieldNameInput?.let { fieldNameInput ->
             fieldNameInput.setRawInputType(InputType.TYPE_CLASS_NUMBER)
             AlertDialog.Builder(this).show {
-                customView(view = fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
+                customView(view = fieldNameInput, paddingStart = 64, paddingEnd = 64, paddingTop = 32)
                 title(text = String.format(resources.getString(R.string.model_field_editor_reposition), 1, fieldsLabels.size))
                 positiveButton(R.string.dialog_ok) {
                     val newPosition = fieldNameInput.text.toString()

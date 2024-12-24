@@ -198,12 +198,24 @@ fun AlertDialog.getCheckBoxPrompt(): CheckBox =
         "CheckBox prompt is not available. Forgot to call AlertDialog.Builder.checkBoxPrompt()?"
     }
 
+/**
+ * Sets a custom view for the dialog.
+ *
+ * @param view the view to display in the dialog
+ * @param paddingStart the start padding in pixels
+ * @param paddingTop the top padding in pixels
+ * @param paddingEnd the end padding in pixels
+ * @param paddingBottom the bottom padding in pixels
+ *
+ * @see [AlertDialog.Builder.setView]
+ * @see [View.setPaddingRelative]
+ */
 fun AlertDialog.Builder.customView(
     view: View,
     paddingTop: Int = 0,
     paddingBottom: Int = 0,
-    paddingLeft: Int = 0,
-    paddingRight: Int = 0,
+    paddingStart: Int = 0,
+    paddingEnd: Int = 0,
 ): AlertDialog.Builder {
     val container = FrameLayout(context)
 
@@ -213,7 +225,7 @@ fun AlertDialog.Builder.customView(
             FrameLayout.LayoutParams.WRAP_CONTENT,
         )
 
-    container.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom)
+    container.setPaddingRelative(paddingStart, paddingTop, paddingEnd, paddingBottom)
     container.addView(view, containerParams)
     setView(container)
 
