@@ -32,7 +32,6 @@ import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.AnkiDroidApp.Companion.sharedPrefs
 import com.ichi2.anki.BackupManager
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
@@ -57,6 +56,7 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.INCOMP
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
 import com.ichi2.anki.isLoggedIn
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog
@@ -512,7 +512,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                             "DatabaseErrorDialog: Before Create New Collection",
                         )
                         if (skipButton) {
-                            val sharedPrefsEdit = sharedPrefs().edit()
+                            val sharedPrefsEdit = context.sharedPrefs().edit()
                             sharedPrefsEdit.putBoolean("skipStoragePermission", true)
                             sharedPrefsEdit.apply()
                         }
