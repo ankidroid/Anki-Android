@@ -91,7 +91,7 @@ class IntentHandler : AbstractIntentHandler() {
                     finish()
                 }
             LaunchType.SYNC -> runIfStoragePermissions { handleSyncIntent(reloadIntent, action) }
-            LaunchType.REVIEW -> runIfStoragePermissions { handleReviewIntent(intent) }
+            LaunchType.REVIEW -> runIfStoragePermissions { handleReviewIntent(reloadIntent, intent) }
             LaunchType.DEFAULT_START_APP_IF_NEW -> {
                 Timber.d("onCreate() performing default action")
                 launchDeckPickerIfNoOtherTasks(reloadIntent)
@@ -144,17 +144,29 @@ class IntentHandler : AbstractIntentHandler() {
         }
     }
 
-    private fun handleReviewIntent(intent: Intent) {
+    private fun handleReviewIntent(
+        reloadIntent: Intent,
+        reviewerIntent: Intent,
+    ) {
         val deckId = intent.getLongExtra(ReminderService.EXTRA_DECK_ID, 0)
         Timber.i("Handling intent to review deck '%d'", deckId)
+
         val reviewIntent =
             if (sharedPrefs().getBoolean("newReviewer", false)) {
                 ReviewerFragment.getIntent(this)
             } else {
-                Intent(this, Reviewer::class.java)
+                Intent(this, Reviewer::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                }
             }
         CollectionManager.getColUnsafe().decks.select(deckId)
-        startActivity(reviewIntent)
+        // Clean the stack out under the reviewer to avoid any incorrect activities / dialogs /
+        // data state from prior app usage showing after reviewer exits if going to reviewer directly
+        TaskStackBuilder
+            .create(applicationContext)
+            .addNextIntent(reloadIntent)
+            .addNextIntent(reviewIntent)
+            .startActivities()
         finish()
     }
 
@@ -439,7 +451,6 @@ class IntentHandler : AbstractIntentHandler() {
         ) = Intent(context, IntentHandler::class.java).apply {
             setAction(Intent.ACTION_VIEW)
             putExtra(ReminderService.EXTRA_DECK_ID, deckId)
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
     }
 }
