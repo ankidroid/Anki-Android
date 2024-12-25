@@ -62,7 +62,7 @@ import com.ichi2.anki.preferences.reviewer.ViewerAction.BURY_NOTE
 import com.ichi2.anki.preferences.reviewer.ViewerAction.CARD_INFO
 import com.ichi2.anki.preferences.reviewer.ViewerAction.DECK_OPTIONS
 import com.ichi2.anki.preferences.reviewer.ViewerAction.DELETE
-import com.ichi2.anki.preferences.reviewer.ViewerAction.EDIT_NOTE
+import com.ichi2.anki.preferences.reviewer.ViewerAction.EDIT
 import com.ichi2.anki.preferences.reviewer.ViewerAction.FLAG_BLUE
 import com.ichi2.anki.preferences.reviewer.ViewerAction.FLAG_GREEN
 import com.ichi2.anki.preferences.reviewer.ViewerAction.FLAG_MENU
@@ -175,7 +175,7 @@ class ReviewerFragment :
             ADD_NOTE -> launchAddNote()
             CARD_INFO -> launchCardInfo()
             DECK_OPTIONS -> launchDeckOptions()
-            EDIT_NOTE -> launchEditNote()
+            EDIT -> launchEditNote()
             DELETE -> viewModel.deleteNote()
             MARK -> viewModel.toggleMark()
             REDO -> viewModel.redo()
