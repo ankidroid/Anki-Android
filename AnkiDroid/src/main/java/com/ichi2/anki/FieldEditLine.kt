@@ -87,7 +87,7 @@ class FieldEditLine : FrameLayout {
         setExpanderBackgroundImage()
         expandButton.setOnClickListener { toggleExpansionState() }
         editText.init()
-        label.setPadding(getDensityAdjustedValue(context, 3.4f).toInt(), 0, 0, 0)
+        label.setPaddingRelative(getDensityAdjustedValue(context, 3.4f).toInt(), 0, 0, 0)
     }
 
     private fun toggleExpansionState() {

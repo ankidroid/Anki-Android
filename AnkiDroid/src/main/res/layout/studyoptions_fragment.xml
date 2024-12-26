@@ -37,8 +37,8 @@
             app:layout_constraintStart_toEndOf="@id/studyoptions_gradient"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/studyoptions_start"
-            android:paddingLeft="@dimen/study_options_padding"
-            android:paddingRight="@dimen/study_options_padding"
+            android:paddingStart="@dimen/study_options_padding"
+            android:paddingEnd="@dimen/study_options_padding"
             android:paddingBottom="16dp"
             android:fadeScrollbars="false" >
             <LinearLayout

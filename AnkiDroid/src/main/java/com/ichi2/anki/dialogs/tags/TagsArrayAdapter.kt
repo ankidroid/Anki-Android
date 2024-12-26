@@ -295,7 +295,7 @@ class TagsArrayAdapter(
             updateExpanderBackgroundImage(holder.expandButton, holder.node)
             // shift according to the level
             val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-            lp.setMargins(HIERARCHY_SHIFT_BASE * holder.node.level, 0, 0, 0)
+            lp.setMarginStart(HIERARCHY_SHIFT_BASE * holder.node.level)
             holder.expandButton.layoutParams = lp
         } else {
             // do not add padding if there is no visible nested tag
