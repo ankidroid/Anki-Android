@@ -205,7 +205,7 @@ class Toolbar : FrameLayout {
         params.gravity = Gravity.CENTER
         button.layoutParams = params
         val twoDp = ceil((2 / context.resources.displayMetrics.density).toDouble()).toInt()
-        button.setPadding(twoDp, twoDp, twoDp, twoDp)
+        button.setPaddingRelative(twoDp, twoDp, twoDp, twoDp)
         // end apply style
         val shouldScroll =
             AnkiDroidApp.instance
