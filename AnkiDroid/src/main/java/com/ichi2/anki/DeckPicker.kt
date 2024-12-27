@@ -417,18 +417,10 @@ open class DeckPicker :
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
-    private val deckExpanderClickListener =
-        View.OnClickListener { view: View ->
-            launchCatchingTask { toggleDeckExpand(view.tag as Long) }
-        }
-    private val deckClickListener = View.OnClickListener { v: View -> onDeckClick(v, DeckSelectionType.DEFAULT) }
-    private val countsClickListener = View.OnClickListener { v: View -> onDeckClick(v, DeckSelectionType.SHOW_STUDY_OPTIONS) }
-
     private fun onDeckClick(
-        v: View,
+        deckId: DeckId,
         selectionType: DeckSelectionType,
     ) {
-        val deckId = v.tag as Long
         Timber.i("DeckPicker:: Selected deck with id %d", deckId)
         launchCatchingTask {
             handleDeckSelection(deckId, selectionType)
@@ -440,14 +432,6 @@ open class DeckPicker :
             }
         }
     }
-
-    private val deckContextAndLongClickListener =
-        OnContextAndLongClickListener { v ->
-            val deckId = v.tag as DeckId
-            showDeckPickerContextMenu(deckId)
-            Timber.v("Long press on deck %d", deckId)
-            true
-        }
 
     private fun showDeckPickerContextMenu(deckId: DeckId) {
         launchCatchingTask {
@@ -562,15 +546,15 @@ open class DeckPicker :
         }
         exportingDelegate.onRestoreInstanceState(savedInstanceState)
 
-        // create and set an adapter for the RecyclerView
         deckListAdapter =
-            DeckAdapter(layoutInflater, this).apply {
-                setDeckClickListener(deckClickListener)
-                setCountsClickListener(countsClickListener)
-                setDeckExpanderClickListener(deckExpanderClickListener)
-                setDeckContextAndLongClickListener(deckContextAndLongClickListener)
-                enablePartialTransparencyForBackground(hasDeckPickerBackground)
-            }
+            DeckAdapter(
+                this,
+                activityHasBackground = hasDeckPickerBackground,
+                onDeckSelected = { onDeckClick(it, DeckSelectionType.DEFAULT) },
+                onDeckCountsSelected = { onDeckClick(it, DeckSelectionType.SHOW_STUDY_OPTIONS) },
+                onDeckChildrenToggled = { launchCatchingTask { toggleDeckExpand(it) } },
+                onDeckContextRequested = ::showDeckPickerContextMenu,
+            )
         recyclerView.adapter = deckListAdapter
 
         pullToSyncWrapper =
