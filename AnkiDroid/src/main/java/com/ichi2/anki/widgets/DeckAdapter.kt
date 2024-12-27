@@ -87,12 +87,6 @@ class DeckAdapter(
     private val nestedIndent = context.resources.getDimension(R.dimen.keyline_1).toInt()
     private var currentDeckId: DeckId = 0
 
-    // Totals accumulated as each deck is processed
-    private var new = 0
-    private var lrn = 0
-    private var rev = 0
-    private var numbersComputed = false
-
     // Flags
     private var hasSubdecks = false
 
@@ -126,10 +120,6 @@ class DeckAdapter(
             deckTree = node
             hasSubdecks = node.children.any { it.children.any() }
             currentDeckId = withCol { decks.current().optLong("id") }
-            rev = node.revCount
-            lrn = node.lrnCount
-            new = node.newCount
-            numbersComputed = true
             // Filtering performs notifyDataSetChanged after the async work is complete
             getFilter()?.filter(filter)
         }
@@ -246,13 +236,6 @@ class DeckAdapter(
         return findDeckPosition(parent.did)
     }
 
-    val due: Int?
-        get() =
-            if (numbersComputed) {
-                new + lrn + rev
-            } else {
-                null
-            }
     private val deckList: List<DeckNode>
         get() = filteredDeckList
 
