@@ -32,7 +32,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.res.getDrawableOrThrow
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.OnContextAndLongClickListener
 import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.R
 import com.ichi2.anki.utils.ext.findViewById
@@ -44,13 +43,30 @@ import kotlinx.coroutines.sync.withLock
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 
+/**
+ * A [RecyclerView.Adapter] used to show the list of decks inside [com.ichi2.anki.DeckPicker].
+ *
+ * @param activityHasBackground true if [com.ichi2.anki.DeckPicker] has a background set, false
+ * otherwise. If true the adapter will make the rows transparent so the background can be seen.
+ * @param onDeckSelected callback triggered when the user selects a deck
+ * @param onDeckCountsSelected callback triggered when the user selects the counts of a deck
+ * @param onDeckChildrenToggled callback triggered when the user toggles the visibility of its
+ * children to show/hide the children. Only for decks that have children.
+ * @param onDeckContextRequested callback triggered when the user requested to see extra actions for
+ * a deck. This consists in a context menu brought in by either a long touch or a right click.
+ */
 @RustCleanup("Lots of bad code: should not be using suspend functions inside an adapter")
 @RustCleanup("Differs from legacy backend: Create deck 'One', create deck 'One::two'. 'One::two' was not expanded")
 class DeckAdapter(
-    private val layoutInflater: LayoutInflater,
     context: Context,
+    private val activityHasBackground: Boolean,
+    private val onDeckSelected: (DeckId) -> Unit,
+    private val onDeckCountsSelected: (DeckId) -> Unit,
+    private val onDeckChildrenToggled: (DeckId) -> Unit,
+    private val onDeckContextRequested: (DeckId) -> Unit,
 ) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(),
     Filterable {
+    private val layoutInflater = LayoutInflater.from(context)
     private var deckTree: DeckNode? = null
 
     /** The non-collapsed subset of the deck tree that matches the current search. */
@@ -71,12 +87,6 @@ class DeckAdapter(
     private val nestedIndent = context.resources.getDimension(R.dimen.keyline_1).toInt()
     private var currentDeckId: DeckId = 0
 
-    // Listeners
-    private var deckClickListener: View.OnClickListener? = null
-    private var deckExpanderClickListener: View.OnClickListener? = null
-    private var deckContextAndLongClickListener: OnContextAndLongClickListener? = null
-    private var countsClickListener: View.OnClickListener? = null
-
     // Totals accumulated as each deck is processed
     private var new = 0
     private var lrn = 0
@@ -85,9 +95,6 @@ class DeckAdapter(
 
     // Flags
     private var hasSubdecks = false
-
-    // Whether we have a background (so some items should be partially transparent).
-    private var partiallyTransparentForBackground = false
 
     class ViewHolder(
         v: View,
@@ -100,27 +107,6 @@ class DeckAdapter(
         val deckNew: TextView = findViewById(R.id.deckpicker_new)
         val deckLearn: TextView = findViewById(R.id.deckpicker_lrn)
         val deckRev: TextView = findViewById(R.id.deckpicker_rev)
-    }
-
-    fun setDeckClickListener(listener: View.OnClickListener?) {
-        deckClickListener = listener
-    }
-
-    fun setCountsClickListener(listener: View.OnClickListener?) {
-        countsClickListener = listener
-    }
-
-    fun setDeckExpanderClickListener(listener: View.OnClickListener?) {
-        deckExpanderClickListener = listener
-    }
-
-    fun setDeckContextAndLongClickListener(listener: OnContextAndLongClickListener?) {
-        deckContextAndLongClickListener = listener
-    }
-
-    /** Sets whether the control should have partial transparency to allow a background to be seen  */
-    fun enablePartialTransparencyForBackground(isTransparent: Boolean) {
-        partiallyTransparentForBackground = isTransparent
     }
 
     private val mutex = Mutex()
@@ -178,8 +164,7 @@ class DeckAdapter(
             deckLayout.setPaddingRelative(startPadding, 0, endPadding, 0)
         }
         if (node.children.isNotEmpty()) {
-            holder.deckExpander.tag = node.did
-            holder.deckExpander.setOnClickListener(deckExpanderClickListener)
+            holder.deckExpander.setOnClickListener { onDeckChildrenToggled(node.did) }
         } else {
             holder.deckExpander.isClickable = false
             holder.deckExpander.setOnClickListener(null)
@@ -188,7 +173,7 @@ class DeckAdapter(
         // set a different background color for the current selected deck
         if (node.did == currentDeckId) {
             holder.deckLayout.setBackgroundResource(rowCurrentDrawable)
-            if (partiallyTransparentForBackground) {
+            if (activityHasBackground) {
                 val background = holder.deckLayout.background.mutate()
                 background.alpha = (255 * SELECTED_DECK_ALPHA_AGAINST_BACKGROUND).toInt()
                 holder.deckLayout.background = background
@@ -208,14 +193,12 @@ class DeckAdapter(
         holder.deckRev.text = node.revCount.toString()
         holder.deckRev.setTextColor(if (node.revCount == 0) zeroCountColor else reviewCountColor)
 
-        // Store deck ID in layout's tag for easy retrieval in our click listeners
-        holder.deckLayout.tag = node.did
-        holder.countsLayout.tag = node.did
-
-        // Set click listeners
-        holder.deckLayout.setOnClickListener(deckClickListener)
-        holder.deckLayout.setOnContextAndLongClickListener(deckContextAndLongClickListener)
-        holder.countsLayout.setOnClickListener(countsClickListener)
+        holder.deckLayout.setOnClickListener { onDeckSelected(node.did) }
+        holder.deckLayout.setOnContextAndLongClickListener {
+            onDeckContextRequested(node.did)
+            true
+        }
+        holder.countsLayout.setOnClickListener { onDeckCountsSelected(node.did) }
     }
 
     override fun getItemCount(): Int = filteredDeckList.size
