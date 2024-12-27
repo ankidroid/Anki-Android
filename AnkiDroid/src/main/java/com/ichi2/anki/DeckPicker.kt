@@ -205,6 +205,7 @@ import net.ankiweb.rsdroid.Translations
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File
+import kotlin.runCatching as runCatchingKotlin
 
 /**
  * The current entry point for AnkiDroid. Displays decks, allowing users to study. Many other functions.
@@ -2297,24 +2298,15 @@ open class DeckPicker :
         deckListAdapter.buildDeckList(tree, currentFilter)
 
         // Set the "x due" subtitle
-        try {
-            val due = deckListAdapter.due
-            val res = resources
-
-            if (due != null && supportActionBar != null) {
-                val subTitle =
-                    if (due == 0) {
-                        null
-                    } else {
-                        res.getQuantityString(R.plurals.widget_cards_due, due, due)
-                    }
-                supportActionBar!!.subtitle = subTitle
-
+        runCatchingKotlin {
+            val dueCount = tree.newCount + tree.revCount + tree.lrnCount
+            supportActionBar?.apply {
+                subtitle = if (dueCount == 0) null else resources.getQuantityString(R.plurals.widget_cards_due, dueCount, dueCount)
                 val toolbar = findViewById<Toolbar>(R.id.toolbar)
                 TooltipCompat.setTooltipText(toolbar, toolbar.subtitle)
             }
-        } catch (e: RuntimeException) {
-            Timber.e(e, "RuntimeException setting time remaining")
+        }.onFailure {
+            Timber.w(it, "Failed to set the due count as the subtitle in the toolbar")
         }
         val current = withCol { decks.current().optLong("id") }
         if (viewModel.focusedDeck != current) {
