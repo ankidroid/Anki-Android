@@ -114,7 +114,7 @@ class TypeAnswer(
                     correct = contentForCloze(correct!!, clozeIdx)
                 }
                 font = fld.font
-                size = fld.fontSize.toInt()
+                size = fld.fontSize
                 languageHint = fld.languageHint
                 break
             }

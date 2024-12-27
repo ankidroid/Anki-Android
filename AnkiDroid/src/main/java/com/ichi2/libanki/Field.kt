@@ -96,9 +96,8 @@ value class Field(
      *
      * ⚠️: AnkiDroid also uses this for 'type the answer'
      */
-    @RustCleanup("should be an int, sometimes used as such")
-    var fontSize: String
-        get() = jsonObject.getString("size")
+    var fontSize: Int
+        get() = jsonObject.getInt("size")
         set(value) {
             jsonObject.put("size", value)
         }
