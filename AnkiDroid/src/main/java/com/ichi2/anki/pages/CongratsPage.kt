@@ -112,6 +112,12 @@ class CongratsPage :
         }
     }
 
+    override val bridgeCommands =
+        mapOf(
+            "unbury" to { viewModel.onUnbury() },
+            "customStudy" to { onStudyMore() },
+        )
+
     private fun openStudyOptionsAndFinish() {
         val intent =
             Intent(requireContext(), StudyOptionsActivity::class.java).apply {
