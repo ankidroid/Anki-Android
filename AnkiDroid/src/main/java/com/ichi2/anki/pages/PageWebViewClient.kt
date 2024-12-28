@@ -37,7 +37,7 @@ open class PageWebViewClient : WebViewClient() {
     /** Wait for the provided promise to complete before showing the WebView */
     open val promiseToWaitFor: String? = null
 
-    var onPageFinishedCallback: OnPageFinishedCallback? = null
+    val onPageFinishedCallbacks: MutableList<OnPageFinishedCallback> = mutableListOf()
 
     override fun shouldInterceptRequest(
         view: WebView,
@@ -93,7 +93,7 @@ open class PageWebViewClient : WebViewClient() {
     ) {
         super.onPageFinished(view, url)
         if (view == null) return
-        onPageFinishedCallback?.onPageFinished(view)
+        onPageFinishedCallbacks.map { callback -> callback.onPageFinished(view) }
         if (promiseToWaitFor == null) {
             /** [PageFragment.webView] is invisible by default to avoid flashes while
              * the page is loaded, and can be made visible again after it finishes loading */

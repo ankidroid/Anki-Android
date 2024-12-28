@@ -26,7 +26,6 @@ import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService
-import com.ichi2.anki.OnPageFinishedCallback
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.utils.openUrl
@@ -138,15 +137,14 @@ class DeckOptions : PageFragment() {
                 }
             }
         }.apply {
-            onPageFinishedCallback =
-                OnPageFinishedCallback { view ->
-                    Timber.v("canGoBack: %b", view.canGoBack())
-                    onBackCallback.isEnabled = view.canGoBack()
-                    // reset the modal state on page load
-                    // clicking a link to the online manual closes the modal and reloads the page
-                    onCloseBootstrapModalCallback.isEnabled = false
-                    listenToModalShowHideEvents()
-                }
+            onPageFinishedCallbacks.add { view ->
+                Timber.v("canGoBack: %b", view.canGoBack())
+                onBackCallback.isEnabled = view.canGoBack()
+                // reset the modal state on page load
+                // clicking a link to the online manual closes the modal and reloads the page
+                onCloseBootstrapModalCallback.isEnabled = false
+                listenToModalShowHideEvents()
+            }
         }
     }
 
