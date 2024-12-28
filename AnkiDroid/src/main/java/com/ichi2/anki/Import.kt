@@ -74,7 +74,7 @@ fun Activity.onSelectedCsvForImport(data: Intent) {
 }
 
 fun AnkiActivity.showImportDialog(
-    id: Int,
+    id: ImportDialog.Type,
     importPath: String,
 ) {
     Timber.d("showImportDialog() delegating to ImportDialog")
