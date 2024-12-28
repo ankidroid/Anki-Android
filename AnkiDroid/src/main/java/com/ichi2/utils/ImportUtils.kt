@@ -439,7 +439,7 @@ object ImportUtils {
         ) {
         override fun handleAsyncMessage(activity: AnkiActivity) {
             // Handle import of collection package APKG
-            activity.showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, importPath)
+            activity.showImportDialog(ImportDialog.Type.DIALOG_IMPORT_REPLACE_CONFIRM, importPath)
         }
 
         override fun toMessage(): Message =
@@ -462,7 +462,7 @@ object ImportUtils {
         ) {
         override fun handleAsyncMessage(activity: AnkiActivity) {
             // Handle import of deck package APKG
-            activity.showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, importPath)
+            activity.showImportDialog(ImportDialog.Type.DIALOG_IMPORT_ADD_CONFIRM, importPath)
         }
 
         override fun toMessage(): Message =
