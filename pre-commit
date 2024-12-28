@@ -85,11 +85,11 @@ runKtlint
 ktlint_exit_code=$?
 if [ $ktlint_exit_code -ne 0 ]; then
     echo "ktlint failed"
-    exit ktlint_exit_code
+    exit $ktlint_exit_code
 fi
 runPrettier || :; # || to avoid cancelling the commit if there is an error with Prettier
 prettier_exit_code=$?
 if [ $prettier_exit_code -ne 0 ]; then
-    exit prettier_exit_code
+    exit $prettier_exit_code
 fi;
 echo "Completed the pre-commit hook."
