@@ -12,6 +12,7 @@
         android:id="@+id/answer_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:hint="@string/type_answer_hint"
         android:imeOptions="actionDone"
         android:inputType="text|textNoSuggestions" />
