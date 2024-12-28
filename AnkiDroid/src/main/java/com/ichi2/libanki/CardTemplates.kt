@@ -16,14 +16,20 @@
 
 package com.ichi2.libanki
 
+import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.utils.JSONContainer
 import org.json.JSONArray
 import org.json.JSONObject
 
-/** A collection of [Field] */
+/**
+ * A collection of [CardTemplate]
+ *
+ * @see NotetypeJson.tmpls
+ */
 @JvmInline
-value class Fields(
+@NotInLibAnki
+value class CardTemplates(
     override val jsonArray: JSONArray,
-) : JSONContainer<Field> {
-    override fun constructor(obj: JSONObject) = Field(obj)
+) : JSONContainer<CardTemplate> {
+    override fun constructor(obj: JSONObject) = CardTemplate(obj)
 }

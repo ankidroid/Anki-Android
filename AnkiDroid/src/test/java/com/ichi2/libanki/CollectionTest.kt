@@ -113,8 +113,8 @@ class CollectionTest : JvmTest() {
         val noteType = col.notetypes.current()
         val noteTypes = col.notetypes
         val t = Notetypes.newTemplate("Reverse")
-        t.put("qfmt", "{{Back}}")
-        t.put("afmt", "{{Front}}")
+        t.qfmt = "{{Back}}"
+        t.afmt = "{{Front}}"
         noteTypes.addTemplateModChanged(noteType, t)
         noteTypes.save(noteType)
         assertEquals(2, col.cardCount())
@@ -194,7 +194,7 @@ class CollectionTest : JvmTest() {
         val noteTypes = col.notetypes
         val noteType = noteTypes.current()
         // filter should work
-        noteType.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{kana:Front}}")
+        noteType.tmpls[0].qfmt = "{{kana:Front}}"
         noteTypes.save(noteType)
         val n = col.newNote()
         n.setItem("Front", "foo[abc]")
@@ -207,7 +207,7 @@ class CollectionTest : JvmTest() {
         val question = c.question(true)
         assertThat("Question «$question» does not contains «anki:play».", question, Matchers.containsString("anki:play"))
         // it shouldn't throw an error while people are editing
-        noteType.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{kana:}}")
+        noteType.tmpls[0].qfmt = "{{kana:}}"
         noteTypes.save(noteType)
         c.question(true)
     }

@@ -104,7 +104,7 @@ class Note : Cloneable {
         col: Collection,
         ord: Int = 0,
         customNoteType: NotetypeJson? = null,
-        customTemplate: Template? = null,
+        customTemplate: CardTemplate? = null,
         fillEmpty: Boolean = false,
     ): Card {
         val card = Card(col, id = null)
@@ -117,10 +117,10 @@ class Note : Cloneable {
                 customTemplate.deepClone()
             } else {
                 val index = if (model.type == MODEL_STD) ord else 0
-                model.tmpls.getJSONObject(index)
+                model.tmpls[index]
             }
         // may differ in cloze case
-        template["ord"] = card.ord
+        template.setOrd(card.ord)
 
         val output =
             TemplateManager.TemplateRenderContext

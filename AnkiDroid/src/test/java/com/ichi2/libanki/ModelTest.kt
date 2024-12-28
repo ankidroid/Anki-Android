@@ -40,7 +40,7 @@ class NotetypeTest : JvmTest() {
     fun test_frontSide_field() {
         // #8951 - Anki Special-cases {{FrontSide}} on the front to return empty string
         val noteType = col.notetypes.current()
-        noteType.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{Front}}{{FrontSide}}")
+        noteType.tmpls[0].qfmt = "{{Front}}{{FrontSide}}"
         col.notetypes.save(noteType)
         val note = col.newNote()
         note.setItem("Front", "helloworld")
@@ -67,7 +67,7 @@ class NotetypeTest : JvmTest() {
         // Add a field called FrontSide and FrontSide2 (to ensure that fields are added correctly)
         col.notetypes.addFieldModChanged(noteType, col.notetypes.newField("FrontSide"))
         col.notetypes.addFieldModChanged(noteType, col.notetypes.newField("FrontSide2"))
-        noteType.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{Front}}{{FrontSide}}{{FrontSide2}}")
+        noteType.tmpls[0].qfmt = "{{Front}}{{FrontSide}}{{FrontSide2}}"
         col.notetypes.save(noteType)
 
         val note = col.newNote()
@@ -108,8 +108,8 @@ class NotetypeTest : JvmTest() {
         assertEquals(2, noteType2.flds.length())
         assertEquals(2, noteType.flds.length())
         assertEquals(noteType.flds.length(), noteType2.flds.length())
-        assertEquals(1, noteType.getJSONArray("tmpls").length())
-        assertEquals(1, noteType2.getJSONArray("tmpls").length())
+        assertEquals(1, noteType.tmpls.length())
+        assertEquals(1, noteType2.tmpls.length())
         assertEquals(col.notetypes.scmhash(noteType), col.notetypes.scmhash(noteType2))
     }
 
@@ -123,10 +123,7 @@ class NotetypeTest : JvmTest() {
         val noteType = col.notetypes.current()
         // make sure renaming a field updates the templates
         col.notetypes.renameFieldLegacy(noteType, noteType.flds[0], "NewFront")
-        assertThat(
-            noteType.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"),
-            containsString("{{NewFront}}"),
-        )
+        assertThat(noteType.tmpls[0].qfmt, containsString("{{NewFront}}"))
         val h = col.notetypes.scmhash(noteType)
         // add a field
         var field: Field? = col.notetypes.newField("foo")
@@ -233,9 +230,11 @@ class NotetypeTest : JvmTest() {
     fun test_templates() {
         val noteType = col.notetypes.current()
         val noteTypes = col.notetypes
-        var t = Notetypes.newTemplate("Reverse")
-        t.put("qfmt", "{{Back}}")
-        t.put("afmt", "{{Front}}")
+        var t =
+            Notetypes.newTemplate("Reverse").apply {
+                qfmt = "{{Back}}"
+                afmt = "{{Front}}"
+            }
         noteTypes.addTemplateModChanged(noteType, t)
         noteTypes.save(noteType)
         val note = col.newNote()
@@ -257,17 +256,19 @@ class NotetypeTest : JvmTest() {
         assertEquals(1, c.ord)
         assertEquals(0, c2.ord)
         // removing a template should delete its cards
-        col.notetypes.remTemplate(noteType, noteType.getJSONArray("tmpls").getJSONObject(0))
+        col.notetypes.remTemplate(noteType, noteType.tmpls[0])
         assertEquals(1, col.cardCount())
         // and should have updated the other cards' ordinals
         c = note.cards()[0]
         assertEquals(0, c.ord)
         assertEquals("1", stripHTML(c.question()))
         // it shouldn't be possible to orphan notes by removing templates
-        t = Notetypes.newTemplate("template name")
-        t.put("qfmt", "{{Front}}1")
+        t =
+            Notetypes.newTemplate("template name").apply {
+                qfmt = "{{Front}}1"
+            }
         noteTypes.addTemplateModChanged(noteType, t)
-        col.notetypes.remTemplate(noteType, noteType.getJSONArray("tmpls").getJSONObject(0))
+        col.notetypes.remTemplate(noteType, noteType.tmpls[0])
         assertEquals(
             0,
             col.db.queryLongScalar(
@@ -284,12 +285,14 @@ class NotetypeTest : JvmTest() {
         val noteTypes = col.notetypes
 
         // We replace the default Cloze template
-        val t = Notetypes.newTemplate("ChainedCloze")
-        t.put("qfmt", "{{text:cloze:Text}}")
-        t.put("afmt", "{{text:cloze:Text}}")
+        val t =
+            Notetypes.newTemplate("ChainedCloze").apply {
+                qfmt = "{{text:cloze:Text}}"
+                afmt = "{{text:cloze:Text}}"
+            }
         noteTypes.addTemplateModChanged(noteType, t)
         noteTypes.save(noteType)
-        col.notetypes.remTemplate(noteType, noteType.getJSONArray("tmpls").getJSONObject(0))
+        col.notetypes.remTemplate(noteType, noteType.tmpls[0])
 
         val note = col.newNote()
         note.setItem("Text", "{{c1::firstQ::firstA}}{{c2::secondQ::secondA}}")
@@ -306,8 +309,10 @@ class NotetypeTest : JvmTest() {
 
     @Test
     fun test_text() {
-        val noteType = col.notetypes.current()
-        noteType.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{text:Front}}")
+        val noteType =
+            col.notetypes.current().apply {
+                tmpls[0].qfmt = "{{text:Front}}"
+            }
         col.notetypes.save(noteType)
         val note = col.newNote()
         note.setItem("Front", "hello<b>world")
@@ -370,7 +375,7 @@ class NotetypeTest : JvmTest() {
     fun test_type_and_cloze() {
         val noteType = col.notetypes.byName("Cloze")
         col.notetypes.setCurrent(noteType!!)
-        noteType.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{cloze:Text}}{{type:cloze:Text}}")
+        noteType.tmpls[0].qfmt = "{{cloze:Text}}{{type:cloze:Text}}"
         col.notetypes.save(noteType)
         val note = col.newNote()
         note.setItem("Text", "hello {{c1::world}}")
@@ -390,12 +395,14 @@ class NotetypeTest : JvmTest() {
         val noteTypes = col.notetypes
 
         // We replace the default Cloze template
-        val t = Notetypes.newTemplate("ChainedCloze")
-        t.put("qfmt", "{{cloze:text:Text}}")
-        t.put("afmt", "{{cloze:text:Text}}")
+        val t =
+            Notetypes.newTemplate("ChainedCloze").apply {
+                qfmt = "{{cloze:text:Text}}"
+                afmt = "{{cloze:text:Text}}"
+            }
         noteTypes.addTemplateModChanged(noteType, t)
         noteTypes.save(noteType)
-        col.notetypes.remTemplate(noteType, noteType.getJSONArray("tmpls").getJSONObject(0))
+        col.notetypes.remTemplate(noteType, noteType.tmpls[0])
         val note = col.newNote()
         val q1 = "<span style=\"color:red\">phrase</span>"
         val a1 = "<b>sentence</b>"
@@ -420,9 +427,11 @@ class NotetypeTest : JvmTest() {
         // enable second template and add a note
         val basic = col.notetypes.current()
         val noteTypes = col.notetypes
-        val t = Notetypes.newTemplate("Reverse")
-        t.put("qfmt", "{{Back}}")
-        t.put("afmt", "{{Front}}")
+        val t =
+            Notetypes.newTemplate("Reverse").apply {
+                qfmt = "{{Back}}"
+                afmt = "{{Front}}"
+            }
         noteTypes.addTemplateModChanged(basic, t)
         noteTypes.save(basic)
         var note = col.newNote()
@@ -490,7 +499,7 @@ class NotetypeTest : JvmTest() {
         assertEquals("f2", note.getItem("Text"))
         assertEquals(2, note.numberOfCards())
         // back the other way, with deletion of second ord
-        col.notetypes.remTemplate(basic, basic.getJSONArray("tmpls").getJSONObject(1))
+        col.notetypes.remTemplate(basic, basic.tmpls[1])
         assertEquals(
             2,
             col.db.queryScalar("select count() from cards where nid = ?", note.id),

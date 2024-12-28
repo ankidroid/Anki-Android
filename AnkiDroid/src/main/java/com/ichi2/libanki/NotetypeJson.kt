@@ -104,10 +104,10 @@ class NotetypeJson : JSONObject {
             put("flds", value.jsonArray)
         }
 
-    var tmpls: JSONArray
-        get() = getJSONArray("tmpls")
+    var tmpls: CardTemplates
+        get() = CardTemplates(getJSONArray("tmpls"))
         set(value) {
-            put("tmpls", value)
+            put("tmpls", value.jsonArray)
         }
 
     var id: NoteTypeId

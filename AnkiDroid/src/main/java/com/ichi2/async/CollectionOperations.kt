@@ -21,6 +21,7 @@ import com.ichi2.anki.CardTemplateNotetype
 import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.NotetypeJson
+import com.ichi2.utils.KotlinCleanup
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
@@ -95,8 +96,8 @@ suspend fun renderBrowserQA(
 
 /**
  * Handles everything for a model change at once - template add / deletes as well as content updates
- * @return Pair<Boolean, String> : (true, null) when success, (false, exceptionMessage) when failure
  */
+@KotlinCleanup("strongly type templateChanges")
 fun saveModel(
     col: Collection,
     notetype: NotetypeJson,
@@ -106,17 +107,17 @@ fun saveModel(
     val oldModel = col.notetypes.get(notetype.getLong("id"))
 
     // TODO: make undoable
-    val newTemplates = notetype.getJSONArray("tmpls")
+    val newTemplates = notetype.tmpls
     for (change in templateChanges) {
-        val oldTemplates = oldModel!!.getJSONArray("tmpls")
+        val oldTemplates = oldModel!!.tmpls
         when (change[1] as CardTemplateNotetype.ChangeType) {
             CardTemplateNotetype.ChangeType.ADD -> {
                 Timber.d("doInBackgroundSaveModel() adding template %s", change[0])
-                col.notetypes.addTemplate(oldModel, newTemplates.getJSONObject(change[0] as Int))
+                col.notetypes.addTemplate(oldModel, newTemplates[change[0] as Int])
             }
             CardTemplateNotetype.ChangeType.DELETE -> {
                 Timber.d("doInBackgroundSaveModel() deleting template currently at ordinal %s", change[0])
-                col.notetypes.remTemplate(oldModel, oldTemplates.getJSONObject(change[0] as Int))
+                col.notetypes.remTemplate(oldModel, oldTemplates[change[0] as Int])
             }
         }
     }

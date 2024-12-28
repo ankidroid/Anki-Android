@@ -47,6 +47,7 @@ import com.ichi2.libanki.getStockNotetypeLegacy
 import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.libanki.utils.set
 import com.ichi2.testutils.common.assertThrows
+import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.emptyStringArray
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import org.hamcrest.MatcherAssert.assertThat
@@ -242,9 +243,9 @@ class ContentProviderTest : InstrumentedTest() {
             TEST_NOTE_FIELDS.toMutableList(),
         )
         assertEquals("Check that tag was set correctly", TEST_TAG, addedNote.tags[0])
-        val noteType: JSONObject? = col.notetypes.get(noteTypeId)
+        val noteType: NotetypeJson? = col.notetypes.get(noteTypeId)
         assertNotNull("Check note type", noteType)
-        val expectedNumCards = noteType!!.getJSONArray("tmpls").length()
+        val expectedNumCards = noteType!!.tmpls.length()
         assertEquals("Check that correct number of cards generated", expectedNumCards, addedNote.numberOfCards(col))
         // Now delete the note
         cr.delete(newNoteUri, null, null)
@@ -287,7 +288,7 @@ class ContentProviderTest : InstrumentedTest() {
         val noteTypeUri = ContentUris.withAppendedId(FlashCardsContract.Model.CONTENT_URI, noteTypeId)
         val testIndex =
             TEST_NOTE_TYPE_CARDS.size - 1 // choose the last one because not the same as the basic note type template
-        val expectedOrd = noteType.getJSONArray("tmpls").length()
+        val expectedOrd = noteType.tmpls.length()
         val cv =
             ContentValues().apply {
                 put(FlashCardsContract.CardTemplate.NAME, TEST_NOTE_TYPE_CARDS[testIndex])
@@ -309,21 +310,21 @@ class ContentProviderTest : InstrumentedTest() {
         )
         noteType = col.notetypes.get(noteTypeId)
         assertNotNull("Check note type", noteType)
-        val template = noteType!!.getJSONArray("tmpls").getJSONObject(expectedOrd)
+        val template = noteType!!.tmpls[expectedOrd]
         assertEquals(
             "Check template JSONObject ord",
             expectedOrd,
-            template.getInt("ord"),
+            template.ord,
         )
         assertEquals(
             "Check template name",
             TEST_NOTE_TYPE_CARDS[testIndex],
-            template.getString("name"),
+            template.name,
         )
-        assertEquals("Check qfmt", TEST_NOTE_TYPE_QFMT[testIndex], template.getString("qfmt"))
-        assertEquals("Check afmt", TEST_NOTE_TYPE_AFMT[testIndex], template.getString("afmt"))
-        assertEquals("Check bqfmt", TEST_NOTE_TYPE_QFMT[testIndex], template.getString("bqfmt"))
-        assertEquals("Check bafmt", TEST_NOTE_TYPE_AFMT[testIndex], template.getString("bafmt"))
+        assertEquals("Check qfmt", TEST_NOTE_TYPE_QFMT[testIndex], template.qfmt)
+        assertEquals("Check afmt", TEST_NOTE_TYPE_AFMT[testIndex], template.afmt)
+        assertEquals("Check bqfmt", TEST_NOTE_TYPE_QFMT[testIndex], template.bqfmt)
+        assertEquals("Check bafmt", TEST_NOTE_TYPE_AFMT[testIndex], template.bafmt)
         col.notetypes.rem(noteType)
     }
 
@@ -577,7 +578,7 @@ class ContentProviderTest : InstrumentedTest() {
             assertEquals(
                 "Check templates length",
                 TEST_NOTE_TYPE_CARDS.size,
-                noteType.getJSONArray("tmpls").length(),
+                noteType.tmpls.length(),
             )
             assertEquals(
                 "Check field length",
@@ -626,16 +627,16 @@ class ContentProviderTest : InstrumentedTest() {
                 col = reopenCol()
                 noteType = col.notetypes.get(mid)
                 assertNotNull("Check note type", noteType)
-                val template = noteType!!.getJSONArray("tmpls").getJSONObject(i)
+                val template = noteType!!.tmpls[i]
                 assertEquals(
                     "Check template name",
                     TEST_NOTE_TYPE_CARDS[i],
-                    template.getString("name"),
+                    template.name,
                 )
-                assertEquals("Check qfmt", TEST_NOTE_TYPE_QFMT[i], template.getString("qfmt"))
-                assertEquals("Check afmt", TEST_NOTE_TYPE_AFMT[i], template.getString("afmt"))
-                assertEquals("Check bqfmt", TEST_NOTE_TYPE_QFMT[i], template.getString("bqfmt"))
-                assertEquals("Check bafmt", TEST_NOTE_TYPE_AFMT[i], template.getString("bafmt"))
+                assertEquals("Check qfmt", TEST_NOTE_TYPE_QFMT[i], template.qfmt)
+                assertEquals("Check afmt", TEST_NOTE_TYPE_AFMT[i], template.afmt)
+                assertEquals("Check bqfmt", TEST_NOTE_TYPE_QFMT[i], template.bqfmt)
+                assertEquals("Check bafmt", TEST_NOTE_TYPE_AFMT[i], template.bafmt)
             }
         } finally {
             // Delete the note type (this will force a full-sync)
@@ -1404,19 +1405,22 @@ class ContentProviderTest : InstrumentedTest() {
         }
     }
 
+    @KotlinCleanup("duplicate of TestClass method")
     fun addNonClozeNoteType(
         name: String,
         fields: Array<String>,
-        qfmt: String?,
-        afmt: String?,
+        qfmt: String,
+        afmt: String,
     ): String {
         val noteType = col.notetypes.new(name)
         for (field in fields) {
             col.notetypes.addFieldInNewModel(noteType, col.notetypes.newField(field))
         }
-        val t = Notetypes.newTemplate("Card 1")
-        t.put("qfmt", qfmt)
-        t.put("afmt", afmt)
+        val t =
+            Notetypes.newTemplate("Card 1").also { t ->
+                t.qfmt = qfmt
+                t.afmt = afmt
+            }
         col.notetypes.addTemplateInNewModel(noteType, t)
         col.notetypes.add(noteType)
         return name

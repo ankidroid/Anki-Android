@@ -53,12 +53,7 @@ import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.libanki.utils.append
-import com.ichi2.libanki.utils.index
-import com.ichi2.libanki.utils.insert
-import com.ichi2.libanki.utils.len
-import com.ichi2.libanki.utils.remove
-import com.ichi2.libanki.utils.set
-import com.ichi2.utils.jsonObjectIterable
+import com.ichi2.utils.len
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import org.intellij.lang.annotations.Language
@@ -72,9 +67,6 @@ class NoteTypeNameID(
 )
 
 private typealias int = Long
-
-// # types
-typealias Template = JSONObject // Dict<str, Union3<str, int, Unit>>
 
 class Notetypes(
     val col: Collection,
@@ -221,7 +213,7 @@ class Notetypes(
         // caller should call save() after modifying
         val nt = newBasicNotetype()
         nt.flds = Fields(JSONArray())
-        nt.tmpls = JSONArray()
+        nt.tmpls = CardTemplates(JSONArray())
         nt.name = name
         return nt
     }
@@ -458,7 +450,7 @@ class Notetypes(
 
     fun addTemplateInNewModel(
         notetype: NotetypeJson,
-        template: JSONObject,
+        template: CardTemplate,
     ) {
         // similar to addTemplate, but doesn't throw exception;
         // asserting the model is new.
@@ -486,7 +478,7 @@ class Notetypes(
 
     fun addTemplateModChanged(
         notetype: NotetypeJson,
-        template: JSONObject,
+        template: CardTemplate,
     ) {
         // similar to addTemplate, but doesn't throw exception;
         // asserting the model is new.
@@ -501,13 +493,13 @@ class Notetypes(
 
     @RustCleanup("Check JSONObject.NULL")
     @LibAnkiAlias("new_template")
-    fun newTemplate(name: String): Template {
+    fun newTemplate(name: String): CardTemplate {
         val nt = newBasicNotetype()
-        val template = nt.tmpls.getJSONObject(0)
-        template["name"] = name
-        template["qfmt"] = ""
-        template["afmt"] = ""
-        template.put("ord", JSONObject.NULL)
+        val template = nt.tmpls[0]
+        template.name = name
+        template.qfmt = ""
+        template.afmt = ""
+        template.setOrd(null)
         return template
     }
 
@@ -515,7 +507,7 @@ class Notetypes(
     @LibAnkiAlias("add_template")
     fun add_template(
         notetype: NotetypeJson,
-        template: Template,
+        template: CardTemplate,
     ) {
         notetype.tmpls.append(template)
     }
@@ -524,7 +516,7 @@ class Notetypes(
     @LibAnkiAlias("remove_template")
     fun removeTemplate(
         notetype: NotetypeJson,
-        template: Template,
+        template: CardTemplate,
     ) {
         check(len(notetype.tmpls) > 1) { "Attempting to remove the last template" }
         notetype.tmpls.remove(template)
@@ -534,7 +526,7 @@ class Notetypes(
     @LibAnkiAlias("reposition_template")
     fun repositionTemplate(
         notetype: NotetypeJson,
-        template: Template,
+        template: CardTemplate,
         idx: Int,
     ) {
         val oldidx = notetype.tmpls.index(template).get()
@@ -550,7 +542,7 @@ class Notetypes(
 
     fun addTemplate(
         notetype: NotetypeJson,
-        template: Template,
+        template: CardTemplate,
     ) {
         add_template(notetype, template)
         if (notetype.id != 0L) {
@@ -560,7 +552,7 @@ class Notetypes(
 
     fun remTemplate(
         notetype: NotetypeJson,
-        template: Template,
+        template: CardTemplate,
     ) {
         removeTemplate(notetype, template)
         save(notetype)
@@ -568,7 +560,7 @@ class Notetypes(
 
     fun moveTemplate(
         notetype: NotetypeJson,
-        template: Template,
+        template: CardTemplate,
         idx: Int,
     ) {
         repositionTemplate(notetype, template, idx)
@@ -650,8 +642,8 @@ class Notetypes(
         for (f in notetype.flds) {
             s += f.name
         }
-        for (t in notetype.tmpls.jsonObjectIterable()) {
-            s += t["name"]
+        for (t in notetype.tmpls) {
+            s += t.name
         }
         return checksum(s)
     }
@@ -705,9 +697,9 @@ class Notetypes(
     companion object {
         const val NOT_FOUND_NOTE_TYPE = -1L
 
-        fun newTemplate(name: String): JSONObject =
-            JSONObject(DEFAULT_TEMPLATE).also {
-                it.put("name", name)
+        fun newTemplate(name: String): CardTemplate =
+            CardTemplate(JSONObject(DEFAULT_TEMPLATE)).also {
+                it.name = name
             }
 
         @Language("JSON")
@@ -722,10 +714,8 @@ class Notetypes(
         fun isModelNew(notetype: NotetypeJson): Boolean = notetype.getLong("id") == 0L
 
         fun _updateTemplOrds(notetype: NotetypeJson) {
-            val tmpls = notetype.getJSONArray("tmpls")
-            for (i in 0 until tmpls.length()) {
-                val f = tmpls.getJSONObject(i)
-                f.put("ord", i)
+            for ((i, template) in notetype.tmpls.withIndex()) {
+                template.setOrd(i)
             }
         }
     }

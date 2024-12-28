@@ -742,7 +742,7 @@ class NoteEditor :
         // Deck Selector
         val deckTextView = findViewById<TextView>(R.id.CardEditorDeckText)
         // If edit mode and more than one card template distinguish between "Deck" and "Card deck"
-        if (!addNote && editorNote!!.notetype.getJSONArray("tmpls").length() > 1) {
+        if (!addNote && editorNote!!.notetype.tmpls.length() > 1) {
             deckTextView.setText(R.string.CardEditorCardDeck)
         }
         deckSpinnerSelection =
@@ -2527,20 +2527,21 @@ class NoteEditor :
     }
 
     /** Update the list of card templates for current note type  */
-    private fun updateCards(model: JSONObject?) {
+    @KotlinCleanup("make non-null")
+    private fun updateCards(model: NotetypeJson?) {
         Timber.d("updateCards()")
-        val tmpls = model!!.getJSONArray("tmpls")
+        val tmpls = model!!.tmpls
         var cardsList = StringBuilder()
         // Build comma separated list of card names
         Timber.d("updateCards() template count is %s", tmpls.length())
-        for (i in 0 until tmpls.length()) {
-            var name = tmpls.getJSONObject(i).optString("name")
+        for ((i, tmpl) in tmpls.withIndex()) {
+            var name = tmpl.jsonObject.optString("name")
             // If more than one card, and we have an existing card, underline existing card
             if (!addNote &&
                 tmpls.length() > 1 &&
                 model === editorNote!!.notetype &&
                 currentEditedCard != null &&
-                currentEditedCard!!.template(getColUnsafe).optString("name") == name
+                currentEditedCard!!.template(getColUnsafe).jsonObject.optString("name") == name
             ) {
                 name = "<u>$name</u>"
             }
@@ -2550,7 +2551,7 @@ class NoteEditor :
             }
         }
         // Make cards list red if the number of cards is being reduced
-        if (!addNote && tmpls.length() < editorNote!!.notetype.getJSONArray("tmpls").length()) {
+        if (!addNote && tmpls.length() < editorNote!!.notetype.tmpls.length()) {
             cardsList = StringBuilder("<font color='red'>$cardsList</font>")
         }
         cardsButton!!.text =
@@ -2695,7 +2696,7 @@ class NoteEditor :
                 @KotlinCleanup("Check if this ever happens")
                 val tmpls =
                     try {
-                        newModel.getJSONArray("tmpls")
+                        newModel.tmpls
                     } catch (e: Exception) {
                         Timber.w("error in obtaining templates from model %s", allModelIds!![pos])
                         return

@@ -899,13 +899,17 @@ open class SchedulerTest : JvmTest() {
         // add two more templates and set second active
         val noteType = col.notetypes.current()
         val noteTypes = col.notetypes
-        var t = Notetypes.newTemplate("Reverse")
-        t.put("qfmt", "{{Back}}")
-        t.put("afmt", "{{Front}}")
+        var t =
+            Notetypes.newTemplate("Reverse").apply {
+                qfmt = "{{Back}}"
+                afmt = "{{Front}}"
+            }
         noteTypes.addTemplateModChanged(noteType, t)
-        t = Notetypes.newTemplate("f2")
-        t.put("qfmt", "{{Front}}1")
-        t.put("afmt", "{{Back}}")
+        t =
+            Notetypes.newTemplate("f2").apply {
+                qfmt = "{{Front}}1"
+                afmt = "{{Back}}"
+            }
         noteTypes.addTemplateModChanged(noteType, t)
         noteTypes.save(noteType)
         // create a new note; it should have 3 cards
