@@ -32,7 +32,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityCompat
-import androidx.core.app.TaskStackBuilder
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
@@ -51,10 +50,8 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.CardId
 import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.IntentUtil
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 
-@KotlinCleanup("IDE-lint")
 abstract class NavigationDrawerActivity :
     AnkiActivity(),
     NavigationView.OnNavigationItemSelectedListener {
@@ -388,19 +385,8 @@ abstract class NavigationDrawerActivity :
     open val isDrawerOpen: Boolean
         get() = drawerLayout.isDrawerOpen(GravityCompat.START)
 
-    /**
-     * Restart the activity and discard old backstack, creating it new from the hierarchy in the manifest
-     */
-    protected fun restartActivityInvalidateBackstack(activity: AnkiActivity) {
-        Timber.i("AnkiActivity -- restartActivityInvalidateBackstack()")
-        val intent = Intent()
-        intent.setClass(activity, activity.javaClass)
-        val stackBuilder = TaskStackBuilder.create(activity)
-        stackBuilder.addNextIntentWithParentStack(intent)
-        stackBuilder.startActivities(Bundle())
-        activity.finish()
-    }
-
+    /** Opens the drawer if closed, closes it if open */
+    @Suppress("unused")
     fun toggleDrawer() {
         if (!isDrawerOpen) {
             openDrawer()
@@ -415,12 +401,6 @@ abstract class NavigationDrawerActivity :
 
     private fun closeDrawer() {
         drawerLayout.closeDrawer(GravityCompat.START, animationEnabled())
-    }
-
-    fun focusNavigation() {
-        // mNavigationView.getMenu().getItem(0).setChecked(true);
-        selectNavigationItem(R.id.nav_decks)
-        navigationView!!.requestFocus()
     }
 
     override fun onKeyDown(

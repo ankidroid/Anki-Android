@@ -195,11 +195,10 @@ object UsageAnalytics {
      * Submit a screen for aggregation / analysis.
      * Intended for use to determine if / how features are being used
      *
-     * @param object the result of Object.getClass().getSimpleName() will be used as the screen tag
+     * @param screen the result of [Class.simpleName] will be used as the screen tag
      */
-    @KotlinCleanup("rename object")
-    fun sendAnalyticsScreenView(`object`: Any) {
-        sendAnalyticsScreenView(`object`.javaClass.simpleName)
+    fun sendAnalyticsScreenView(screen: Any) {
+        sendAnalyticsScreenView(screen.javaClass.simpleName)
     }
 
     /**

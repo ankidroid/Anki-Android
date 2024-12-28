@@ -47,7 +47,6 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.utils.Time
 import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.utils.DisplayUtils.getDisplayDimensions
-import com.ichi2.utils.KotlinCleanup
 import com.mrudultora.colorpicker.ColorPickerPopUp
 import timber.log.Timber
 import java.io.FileNotFoundException
@@ -88,7 +87,7 @@ class Whiteboard(
     @get:VisibleForTesting
     var foregroundColor = 0
     private val colorPalette: LinearLayout
-    private var onPaintColorChangeListener: OnPaintColorChangeListener? = null
+    var onPaintColorChangeListener: OnPaintColorChangeListener? = null
     private val currentStrokeWidth: Int
         get() = ankiActivity.sharedPrefs().getInt("whiteBoardStrokeWidth", 6)
 
@@ -434,14 +433,8 @@ class Whiteboard(
             Timber.d("Setting pen color to %d", color)
             paint.color = color
             colorPalette.visibility = GONE
-            if (onPaintColorChangeListener != null) {
-                onPaintColorChangeListener!!.onPaintColorChange(color)
-            }
+            onPaintColorChangeListener?.onPaintColorChange(color)
         }
-
-    fun setOnPaintColorChangeListener(onPaintColorChangeListener: OnPaintColorChangeListener?) {
-        this.onPaintColorChangeListener = onPaintColorChangeListener
-    }
 
     /**
      * Keep a list of all points and paths so that the last stroke can be undone
@@ -574,8 +567,7 @@ class Whiteboard(
         return CompatHelper.compat.saveImage(context, bitmap, baseFileName, "jpg", Bitmap.CompressFormat.JPEG, 95)
     }
 
-    @KotlinCleanup("fun interface & use SAM on callers")
-    interface OnPaintColorChangeListener {
+    fun interface OnPaintColorChangeListener {
         fun onPaintColorChange(color: Int?)
     }
 

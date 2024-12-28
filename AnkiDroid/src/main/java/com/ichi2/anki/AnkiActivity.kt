@@ -422,7 +422,6 @@ open class AnkiActivity :
      *
      * @param url The URI to be opened.
      */
-    @KotlinCleanup("toast -> snackbar")
     open fun openUrl(url: Uri) {
         if (!AdaptionUtil.hasWebBrowser(this)) {
             showSnackbar(getString(R.string.no_browser_msg, url.toString()))

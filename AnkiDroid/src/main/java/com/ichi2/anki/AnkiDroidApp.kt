@@ -74,7 +74,6 @@ import java.util.Locale
 /**
  * Application class.
  */
-@KotlinCleanup("lots to do")
 @KotlinCleanup("IDE Lint")
 open class AnkiDroidApp :
     Application(),
