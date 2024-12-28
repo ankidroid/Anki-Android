@@ -92,7 +92,7 @@ class FieldState private constructor(
         if (type.type == Type.REFRESH_WITH_MAP) {
             val items = editor.fieldsFromSelectedNote
             val fMapNew = Notetypes.fieldMap(type.newNotetype!!)
-            return fromFieldMap(editor.requireContext(), items, fMapNew, type.modelChangeFieldMap)
+            return fromFieldMap(editor.requireContext(), items, fMapNew, type.modelChangeFieldMap!!)
         }
         return editor.fieldsFromSelectedNote
     }
@@ -154,7 +154,7 @@ class FieldState private constructor(
             context: Context,
             oldFields: Array<Array<String>>,
             fMapNew: Map<String, Pair<Int, Field>>,
-            modelChangeFieldMap: Map<Int, Int>?,
+            modelChangeFieldMap: Map<Int, Int>,
         ): Array<Array<String>> {
             // Build array of label/values to provide to field EditText views
             val fields = Array(fMapNew.size) { arrayOfNulls<String>(2) }
@@ -163,7 +163,7 @@ class FieldState private constructor(
                 // Field index of new note type
                 val i = fieldPair.first
                 // Add values from old note type if they exist in map, otherwise make the new field empty
-                if (modelChangeFieldMap!!.containsValue(i)) {
+                if (modelChangeFieldMap.containsValue(i)) {
                     // Get index of field from old note type given the field index of new note type
                     val j = getKeyByValue(modelChangeFieldMap, i) ?: continue
                     // Set the new field label text

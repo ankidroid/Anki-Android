@@ -628,7 +628,7 @@ open class CardBrowser :
                 }
             }
         }
-        @KotlinCleanup("helper function for min/max range")
+
         cardsListView.setOnItemLongClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
             if (viewModel.isInMultiSelectMode) {
                 viewModel.selectRowsBetweenPositions(lastSelectedPosition, position)
@@ -2072,7 +2072,6 @@ open class CardBrowser :
             return v
         }
 
-        @KotlinCleanup("Unchecked cast")
         private fun bindView(
             position: Int,
             v: View,

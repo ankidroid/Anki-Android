@@ -45,7 +45,6 @@ import com.ichi2.libanki.getStockNotetypeLegacy
 import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.libanki.utils.set
 import com.ichi2.testutils.common.assertThrows
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.emptyStringArray
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import org.hamcrest.MatcherAssert.assertThat
@@ -809,7 +808,6 @@ class ContentProviderTest : InstrumentedTest() {
     /**
      * Check that an Exception is thrown when unsupported operations are performed
      */
-    @KotlinCleanup("use assertThrows")
     @Test
     fun testUnsupportedOperations() {
         val cr = contentResolver
@@ -830,9 +828,9 @@ class ContentProviderTest : InstrumentedTest() {
             try {
                 cr.update(uri, dummyValues, null, null)
                 fail("Update on $uri was supposed to throw exception")
-            } catch (e: UnsupportedOperationException) {
+            } catch (_: UnsupportedOperationException) {
                 // This was expected ...
-            } catch (e: IllegalArgumentException) {
+            } catch (_: IllegalArgumentException) {
                 // ... or this.
             }
         }
@@ -858,11 +856,8 @@ class ContentProviderTest : InstrumentedTest() {
                     .build(),
             )
         for (uri in deleteUris) {
-            try {
+            assertThrows<UnsupportedOperationException>("Delete on $uri was supposed to throw exception") {
                 cr.delete(uri, null, null)
-                fail("Delete on $uri was supposed to throw exception")
-            } catch (e: UnsupportedOperationException) {
-                // This was expected
             }
         }
         // Can't do an insert with specific ID on the following tables
@@ -892,9 +887,9 @@ class ContentProviderTest : InstrumentedTest() {
             try {
                 cr.insert(uri, dummyValues)
                 fail("Insert on $uri was supposed to throw exception")
-            } catch (e: UnsupportedOperationException) {
+            } catch (_: UnsupportedOperationException) {
                 // This was expected ...
-            } catch (e: IllegalArgumentException) {
+            } catch (_: IllegalArgumentException) {
                 // ... or this.
             }
         }

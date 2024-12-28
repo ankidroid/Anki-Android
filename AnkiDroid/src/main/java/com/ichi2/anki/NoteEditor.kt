@@ -479,7 +479,6 @@ class NoteEditor :
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
     // ----------------------------------------------------------------------------
-    @KotlinCleanup("fix suppress")
     override fun onCreate(savedInstanceState: Bundle?) {
         tagsDialogFactory = TagsDialogFactory(this).attachToFragmentManager<TagsDialogFactory>(parentFragmentManager)
         mediaRegistration = MediaRegistration(requireContext())
@@ -1750,7 +1749,7 @@ class NoteEditor :
                 }
             }
             previous = editLineView
-            editLineView.setEnableAnimation(animationEnabled())
+            editLineView.enableAnimation = animationEnabled()
 
             // Use custom implementation of ActionMode.Callback customize selection and insert menus
             editLineView.setActionModeCallbacks(getActionModeCallback(newEditText, View.generateViewId()))

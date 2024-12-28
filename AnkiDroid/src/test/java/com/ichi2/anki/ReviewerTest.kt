@@ -46,7 +46,6 @@ import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import com.ichi2.utils.BASIC_MODEL_NAME
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.deepClone
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
@@ -148,8 +147,9 @@ class ReviewerTest : RobolectricTest() {
 
     @Test
     fun noErrorShouldOccurIfSoundFileNotPresent() {
-        val firstNote = addNoteUsingBasicModel("[[sound:not_on_file_system.mp3]]", "World")
-        moveToReviewQueue(firstNote.firstCard())
+        addNoteUsingBasicModel("[[sound:not_on_file_system.mp3]]", "World")
+            .firstCard()
+            .moveToReviewQueue()
 
         val reviewer = startReviewer()
         reviewer.displayCardQuestion()
@@ -504,9 +504,8 @@ class ReviewerTest : RobolectricTest() {
         block(reviewer)
     }
 
-    @KotlinCleanup("use extension function")
-    private fun moveToReviewQueue(reviewCard: Card) {
-        reviewCard.update {
+    private fun Card.moveToReviewQueue() {
+        update {
             queue = Consts.QUEUE_TYPE_REV
             type = Consts.CARD_TYPE_REV
             due = 0

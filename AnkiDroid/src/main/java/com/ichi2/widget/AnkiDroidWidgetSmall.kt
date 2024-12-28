@@ -36,7 +36,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import kotlin.math.sqrt
 
@@ -84,24 +83,19 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
 
         fun doUpdate(context: Context) {
             val appWidgetManager = getAppWidgetManager(context) ?: return
-            appWidgetManager.updateAppWidget(ComponentName(context, AnkiDroidWidgetSmall::class.java), buildUpdate(context, true))
+            appWidgetManager.updateAppWidget(ComponentName(context, AnkiDroidWidgetSmall::class.java), buildUpdate(context))
         }
 
         @Deprecated("Implement onStartCommand(Intent, int, int) instead.") // TODO
         override fun onStart(intent: Intent, startId: Int) {
             Timber.i("SmallWidget: OnStart")
             val manager = getAppWidgetManager(this) ?: return
-            val updateViews = buildUpdate(this, true)
+            val updateViews = buildUpdate(this)
             val thisWidget = ComponentName(this, AnkiDroidWidgetSmall::class.java)
             manager.updateAppWidget(thisWidget, updateViews)
         }
 
-        @KotlinCleanup("Fix param updateDueDecksNow always true")
-        @Suppress("SameParameterValue")
-        private fun buildUpdate(
-            context: Context,
-            updateDueDecksNow: Boolean,
-        ): RemoteViews {
+        private fun buildUpdate(context: Context): RemoteViews {
             Timber.d("buildUpdate")
             val updateViews = RemoteViews(context.packageName, R.layout.widget_small)
             val mounted = AnkiDroidApp.isSdCardMounted
@@ -112,9 +106,8 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                 if (mountReceiver == null) {
                     mountReceiver =
                         object : BroadcastReceiver() {
-                            @KotlinCleanup("Change parameter context name below, should not be used")
                             override fun onReceive(
-                                context: Context,
+                                @Suppress("LocalVariableName") context_doNotUse: Context,
                                 intent: Intent,
                             ) {
                                 // baseContext() is null, applicationContext() throws a NPE,
@@ -140,39 +133,36 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                     AnkiDroidApp.instance.registerReceiverCompat(mountReceiver, iFilter, ContextCompat.RECEIVER_EXPORTED)
                 }
             } else {
-                // If we do not have a cached version, always update.
-                if (dueCardsCount == 0 || updateDueDecksNow) {
-                    // Compute the total number of cards due.
-                    val counts = WidgetStatus.fetchSmall(context)
-                    dueCardsCount = counts[0]
-                    // The cached estimated reviewing time.
-                    val eta = counts[1]
-                    if (dueCardsCount <= 0) {
-                        if (dueCardsCount == 0) {
-                            updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.VISIBLE)
-                        } else {
-                            updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE)
-                        }
-                        updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE)
+                // Compute the total number of cards due.
+                val counts = WidgetStatus.fetchSmall(context)
+                dueCardsCount = counts[0]
+                // The cached estimated reviewing time.
+                val eta = counts[1]
+                if (dueCardsCount <= 0) {
+                    if (dueCardsCount == 0) {
+                        updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.VISIBLE)
                     } else {
                         updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE)
-                        updateViews.setViewVisibility(R.id.widget_due, View.VISIBLE)
-                        updateViews.setTextViewText(R.id.widget_due, dueCardsCount.toString())
-                        updateViews.setContentDescription(
-                            R.id.widget_due,
-                            context.resources.getQuantityString(R.plurals.widget_cards_due, dueCardsCount, dueCardsCount),
-                        )
                     }
-                    if (eta <= 0 || dueCardsCount <= 0) {
-                        updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)
-                    } else {
-                        updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE)
-                        updateViews.setTextViewText(R.id.widget_eta, eta.toString())
-                        updateViews.setContentDescription(
-                            R.id.widget_eta,
-                            context.resources.getQuantityString(R.plurals.widget_eta, eta, eta),
-                        )
-                    }
+                    updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE)
+                } else {
+                    updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE)
+                    updateViews.setViewVisibility(R.id.widget_due, View.VISIBLE)
+                    updateViews.setTextViewText(R.id.widget_due, dueCardsCount.toString())
+                    updateViews.setContentDescription(
+                        R.id.widget_due,
+                        context.resources.getQuantityString(R.plurals.widget_cards_due, dueCardsCount, dueCardsCount),
+                    )
+                }
+                if (eta <= 0 || dueCardsCount <= 0) {
+                    updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)
+                } else {
+                    updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE)
+                    updateViews.setTextViewText(R.id.widget_eta, eta.toString())
+                    updateViews.setContentDescription(
+                        R.id.widget_eta,
+                        context.resources.getQuantityString(R.plurals.widget_eta, eta, eta),
+                    )
                 }
             }
 
