@@ -136,4 +136,44 @@ class NotetypeJson : JSONObject {
         set(value) {
             put("type", value)
         }
+
+    /**
+     * Defines the requirements for generating cards (for [standard note types][Consts.MODEL_STD])
+     *
+     * A requirement states that either one of, or all of a set of fields must be non-empty to
+     * generate a card using a template. Meaning for a standard note, each template has a
+     * requirement, which generates 0 or 1 cards
+     *
+     * **Example - Basic (optional reversed card):**
+     *
+     * * Fields: `["Front", "Back", "Add Reverse"]`
+     * * `req: [[0, 'any', [0]], [1, 'all', [1, 2]]]`
+     *
+     * meaning:
+     *
+     * * Card 1 needs "Front" to be non-empty
+     * * Card 2 needs both "Back" and "Add Reverse" to be non-empty
+     *
+     * The array is of the form `[T, string, list]`, where:
+     * - `T` is the ordinal of the template.
+     * - `string` is 'none', 'all' or 'any'.
+     * - `list` contains ordinals of fields, in increasing order.
+     *
+     * The output is defined based on the `string`:
+     * - if `"none"'`, no cards are generated for this template. `list` should be empty.
+     * - if `"all"'`, the card is generated if all fields in `list` are non-empty
+     * - if `"any"'`, the card is generated if any field in `list` is non-empty.
+     *
+     * See [The algorithm to decide how to compute req from the template]
+     * (https://github.com/Arthur-Milchior/anki/blob/commented/documentation//templates_generation_rules.md) is explained on:
+     */
+    @Deprecated(
+        "req is no longer used. Exists for backwards compatibility:" +
+            "https://forums.ankiweb.net/t/is-req-still-used-or-present/9977",
+    )
+    var req: JSONArray
+        get() = getJSONArray("req")
+        set(value) {
+            put("req", value)
+        }
 }
