@@ -119,9 +119,10 @@ fun Collection.createBasicModel(name: String = BASIC_MODEL_NAME): NotetypeJson {
  */
 fun Collection.createBasicTypingModel(name: String): NotetypeJson {
     val noteType = createBasicModel(name)
-    val t = noteType.getJSONArray("tmpls").getJSONObject(0)
-    t.put("qfmt", "{{Front}}\n\n{{type:Back}}")
-    t.put("afmt", "{{Front}}\n\n<hr id=answer>\n\n{{type:Back}}")
+    noteType.tmpls[0].apply {
+        qfmt = "{{Front}}\n\n{{type:Back}}"
+        afmt = "{{Front}}\n\n<hr id=answer>\n\n{{type:Back}}"
+    }
     notetypes.save(noteType)
     return noteType
 }

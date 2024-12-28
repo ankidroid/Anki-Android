@@ -57,7 +57,7 @@ class CardTest : JvmTest() {
         col.addNote(note)
         val c = note.cards()[0]
         col.notetypes.current().getLong("id")
-        assertEquals(0, c.template().getInt("ord"))
+        assertEquals(0, c.template().ord)
     }
 
     @Test
@@ -70,15 +70,19 @@ class CardTest : JvmTest() {
         val noteType = col.notetypes.current()
         val noteTypes = col.notetypes
         // adding a new template should automatically create cards
-        var t = Notetypes.newTemplate("rev")
-        t.put("qfmt", "{{Front}}1")
-        t.put("afmt", "")
+        var t =
+            Notetypes.newTemplate("rev").apply {
+                qfmt = "{{Front}}1"
+                afmt = ""
+            }
         noteTypes.addTemplateModChanged(noteType, t)
         noteTypes.save(noteType)
         assertEquals(2, note.numberOfCards())
         // if the template is changed to remove cards, they'll be removed
-        t = noteType.getJSONArray("tmpls").getJSONObject(1)
-        t.put("qfmt", "{{Back}}")
+        t =
+            noteType.tmpls[1].apply {
+                qfmt = "{{Back}}"
+            }
         noteTypes.save(noteType)
         val rep = col.emptyCids()
         col.removeCardsAndOrphanedNotes(rep)
@@ -124,12 +128,11 @@ class CardTest : JvmTest() {
         val fld2 = models.newField("C")
         fld2.setOrd(null)
         models.addFieldLegacy(model, fld2)
-        val tmpls = model.getJSONArray("tmpls")
-        tmpls.getJSONObject(0).put("qfmt", "{{A}}{{B}}{{C}}")
+        model.tmpls[0].qfmt = "{{A}}{{B}}{{C}}"
         // ensure first card is always generated,
         // because at last one card is generated
         val tmpl = Notetypes.newTemplate("AND_OR")
-        tmpl.put("qfmt", "        {{A}}    {{#B}}        {{#C}}            {{B}}        {{/C}}    {{/B}}")
+        tmpl.qfmt = "        {{A}}    {{#B}}        {{#C}}            {{B}}        {{/C}}    {{/B}}"
         models.addTemplate(model, tmpl)
         models.save(model)
         models.setCurrent(model)
@@ -168,7 +171,7 @@ class CardTest : JvmTest() {
         val models = col.notetypes
         val model = models.byName("Basic")
         assertNotNull(model)
-        val tmpls = model.getJSONArray("tmpls")
+        val tmpls = model.tmpls
         models.renameFieldLegacy(model, model.flds[0], "First")
         models.renameFieldLegacy(model, model.flds[1], "Front")
         val fld2 = models.newField("AddIfEmpty")
@@ -177,9 +180,9 @@ class CardTest : JvmTest() {
 
         // ensure first card is always generated,
         // because at last one card is generated
-        tmpls.getJSONObject(0).put("qfmt", "{{AddIfEmpty}}{{Front}}{{First}}")
+        tmpls[0].qfmt = "{{AddIfEmpty}}{{Front}}{{First}}"
         val tmpl = Notetypes.newTemplate("NOT")
-        tmpl.put("qfmt", "    {{^AddIfEmpty}}        {{Front}}    {{/AddIfEmpty}}    ")
+        tmpl.qfmt = "    {{^AddIfEmpty}}        {{Front}}    {{/AddIfEmpty}}    "
         models.addTemplate(model, tmpl)
         models.save(model)
         models.setCurrent(model)

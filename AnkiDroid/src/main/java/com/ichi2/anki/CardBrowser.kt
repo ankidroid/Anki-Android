@@ -2282,7 +2282,16 @@ open class CardBrowser :
                 CardBrowserColumn.SFLD -> card.note(col).sFld(col)
                 CardBrowserColumn.DECK -> col.decks.name(card.did)
                 CardBrowserColumn.TAGS -> card.note(col).stringTags(col)
-                CardBrowserColumn.CARD -> if (inCardMode) card.template(col).optString("name") else "${card.note(col).numberOfCards(col)}"
+                CardBrowserColumn.CARD ->
+                    if (inCardMode) {
+                        card
+                            .template(
+                                col,
+                            ).jsonObject
+                            .optString("name")
+                    } else {
+                        "${card.note(col).numberOfCards(col)}"
+                    }
                 CardBrowserColumn.DUE -> dueString(col, card)
                 CardBrowserColumn.EASE -> if (inCardMode) getEaseForCards() else getAvgEaseForNotes()
                 CardBrowserColumn.CHANGED -> LanguageUtil.getShortDateFormatFromS(if (inCardMode) card.mod else card.note(col).mod.toLong())

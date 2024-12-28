@@ -17,6 +17,7 @@
 package com.ichi2.libanki
 
 import com.ichi2.anki.utils.ext.getStringOrNull
+import com.ichi2.utils.JSONObjectHolder
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 
@@ -52,8 +53,8 @@ import org.json.JSONObject
  */
 @JvmInline
 value class Field(
-    val jsonObject: JSONObject,
-) {
+    override val jsonObject: JSONObject,
+) : JSONObjectHolder {
     /**
      * The user-facing name of the field.
      *

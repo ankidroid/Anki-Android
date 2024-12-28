@@ -103,16 +103,18 @@ interface TestClass {
     fun addNonClozeModel(
         name: String,
         fields: Array<String>,
-        qfmt: String?,
-        afmt: String?,
+        qfmt: String,
+        afmt: String,
     ): String {
         val model = col.notetypes.new(name)
         for (field in fields) {
             col.notetypes.addFieldInNewModel(model, col.notetypes.newField(field))
         }
-        val t = Notetypes.newTemplate("Card 1")
-        t.put("qfmt", qfmt)
-        t.put("afmt", afmt)
+        val t =
+            Notetypes.newTemplate("Card 1").also { tmpl ->
+                tmpl.qfmt = qfmt
+                tmpl.afmt = afmt
+            }
         col.notetypes.addTemplateInNewModel(model, t)
         col.notetypes.add(model)
         return name

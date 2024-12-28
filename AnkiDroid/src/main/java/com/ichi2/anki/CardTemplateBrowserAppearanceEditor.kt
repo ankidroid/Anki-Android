@@ -26,12 +26,12 @@ import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doAfterTextChanged
 import com.ichi2.anki.dialogs.DiscardChangesDialog
+import com.ichi2.libanki.CardTemplate
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import org.jetbrains.annotations.Contract
-import org.json.JSONObject
 import timber.log.Timber
 
 /** Allows specification of the Question and Answer format of a card template in the Card Browser
@@ -187,9 +187,9 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
         val question: String = question ?: VALUE_USE_DEFAULT
         val answer: String = answer ?: VALUE_USE_DEFAULT
 
-        fun applyTo(template: JSONObject) {
-            template.put("bqfmt", question)
-            template.put("bafmt", answer)
+        fun applyTo(template: CardTemplate) {
+            template.bqfmt = question
+            template.bafmt = answer
         }
 
         companion object {
@@ -220,12 +220,8 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
         @CheckResult
         fun getIntentFromTemplate(
             context: Context,
-            template: JSONObject,
-        ): Intent {
-            val browserQuestionTemplate = template.getString("bqfmt")
-            val browserAnswerTemplate = template.getString("bafmt")
-            return getIntent(context, browserQuestionTemplate, browserAnswerTemplate)
-        }
+            template: CardTemplate,
+        ): Intent = getIntent(context, template.bqfmt, template.bafmt)
 
         @CheckResult
         fun getIntent(

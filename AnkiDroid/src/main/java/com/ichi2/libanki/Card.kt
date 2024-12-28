@@ -30,7 +30,6 @@ import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.TimeManager
 import net.ankiweb.rsdroid.RustCleanup
-import org.json.JSONObject
 
 /**
  * A Card is the ultimate entity subject to review; it encapsulates the scheduling parameters (from which to derive
@@ -218,12 +217,12 @@ open class Card : Cloneable {
     open fun noteType(col: Collection): NotetypeJson = note(col).notetype
 
     @LibAnkiAlias("template")
-    fun template(col: Collection): JSONObject {
+    fun template(col: Collection): CardTemplate {
         val m = noteType(col)
         return if (m.isStd) {
-            m.getJSONArray("tmpls").getJSONObject(ord)
+            m.tmpls[ord]
         } else {
-            noteType(col).getJSONArray("tmpls").getJSONObject(0)
+            noteType(col).tmpls[0]
         }
     }
 

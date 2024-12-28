@@ -580,7 +580,7 @@ class CardTemplateEditorTest : RobolectricTest() {
                 },
                 getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' },
             )
-            assertEquals("Model should have 2 templates now", 2, getCurrentDatabaseModelCopy(modelName).getJSONArray("tmpls").length())
+            assertEquals("Model should have 2 templates now", 2, getCurrentDatabaseModelCopy(modelName).tmpls.length())
             assertEquals("should be two cards", 2, getModelCardCount(collectionBasicModelOriginal))
         }
 
@@ -696,13 +696,13 @@ class CardTemplateEditorTest : RobolectricTest() {
         intent.putExtra("modelId", model.id)
         val editor = super.startActivityNormallyOpenCollectionWithIntent(CardTemplateEditor::class.java, intent)
         val template = editor.tempModel?.getTemplate(0)
-        MatcherAssert.assertThat("Deck ID element should exist", template?.has("did"), Matchers.equalTo(true))
-        MatcherAssert.assertThat("Deck ID element should be null", template?.get("did"), Matchers.equalTo(JSONObject.NULL))
+        MatcherAssert.assertThat("Deck ID element should exist", template?.jsonObject?.has("did"), Matchers.equalTo(true))
+        MatcherAssert.assertThat("Deck ID element should be null", template?.jsonObject?.get("did"), Matchers.equalTo(JSONObject.NULL))
         editor.onDeckSelected(SelectableDeck(1, "hello"))
-        MatcherAssert.assertThat("Deck ID element should be changed", template?.get("did"), Matchers.equalTo(1L))
+        MatcherAssert.assertThat("Deck ID element should be changed", template?.jsonObject?.get("did"), Matchers.equalTo(1L))
         editor.onDeckSelected(null)
-        MatcherAssert.assertThat("Deck ID element should exist", template!!.has("did"), Matchers.equalTo(true))
-        MatcherAssert.assertThat("Deck ID element should be null", template["did"], Matchers.equalTo(JSONObject.NULL))
+        MatcherAssert.assertThat("Deck ID element should exist", template!!.jsonObject.has("did"), Matchers.equalTo(true))
+        MatcherAssert.assertThat("Deck ID element should be null", template.jsonObject["did"], Matchers.equalTo(JSONObject.NULL))
     }
 
     @Test
@@ -736,7 +736,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         // set Bottom Navigation View to Front
         cardTemplateFragment.setCurrentEditorView(
             R.id.front_edit,
-            tempModel.getTemplate(0).getString("qfmt"),
+            tempModel.getTemplate(0).qfmt,
             R.string.card_template_editor_front,
         )
 
@@ -769,7 +769,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         val tempModel = testEditor.tempModel
 
         // check if current view is front(default) view
-        assumeThat(templateEditText.text.toString(), Matchers.equalTo(tempModel!!.getTemplate(0).getString("qfmt")))
+        assumeThat(templateEditText.text.toString(), Matchers.equalTo(tempModel!!.getTemplate(0).qfmt))
         assumeThat(cardTemplateFragment!!.currentEditorViewId, Matchers.equalTo(R.id.front_edit))
 
         // set Bottom Navigation View to Style

@@ -36,6 +36,7 @@ import com.ichi2.anki.Ease
 import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.utils.ext.description
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.CardTemplate
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Deck
@@ -60,7 +61,6 @@ import com.ichi2.utils.Permissions.arePermissionsDefinedInManifest
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import org.json.JSONArray
 import org.json.JSONException
-import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -282,12 +282,8 @@ class CardContentProvider : ContentProvider() {
                 val columns = projection ?: FlashCardsContract.CardTemplate.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
                 try {
-                    val templates = currentNoteType!!.getJSONArray("tmpls")
-                    var idx = 0
-                    while (idx < templates.length()) {
-                        val template = templates.getJSONObject(idx)
+                    for ((idx, template) in currentNoteType!!.tmpls.withIndex()) {
                         addTemplateToCursor(template, currentNoteType, idx + 1, noteTypes, rv, columns)
-                        idx++
                     }
                 } catch (e: JSONException) {
                     throw IllegalArgumentException("Note type is malformed", e)
@@ -577,31 +573,31 @@ class CardContentProvider : ContentProvider() {
                 try {
                     val templateOrd = uri.lastPathSegment!!.toInt()
                     val existingNoteType = col.notetypes.get(getNoteTypeIdFromUri(uri, col))
-                    val templates = existingNoteType!!.getJSONArray("tmpls")
-                    val template = templates.getJSONObject(templateOrd)
+                    val templates = existingNoteType!!.tmpls
+                    val template = templates[templateOrd]
                     if (name != null) {
-                        template.put("name", name)
+                        template.name = name
                         updated++
                     }
                     if (qfmt != null) {
-                        template.put("qfmt", qfmt)
+                        template.qfmt = qfmt
                         updated++
                     }
                     if (afmt != null) {
-                        template.put("afmt", afmt)
+                        template.afmt = afmt
                         updated++
                     }
                     if (bqfmt != null) {
-                        template.put("bqfmt", bqfmt)
+                        template.bqfmt = bqfmt
                         updated++
                     }
                     if (bafmt != null) {
-                        template.put("bafmt", bafmt)
+                        template.bafmt = bafmt
                         updated++
                     }
-                    // Save the noteType
-                    templates.put(templateOrd, template)
-                    existingNoteType.put("tmpls", templates)
+                    // Save the note type
+                    templates[templateOrd] = template
+                    existingNoteType.tmpls = templates
                     col.notetypes.save(existingNoteType)
                 } catch (e: JSONException) {
                     throw IllegalArgumentException("Note type is malformed", e)
@@ -864,12 +860,12 @@ class CardContentProvider : ContentProvider() {
                     while (idx < numCards) {
                         val cardName = CollectionManager.TR.cardTemplatesCard(idx + 1)
                         val t = Notetypes.newTemplate(cardName)
-                        t.put("qfmt", "{{${allFields[0]}}}")
+                        t.qfmt = "{{${allFields[0]}}}"
                         var answerField: String? = allFields[0]
                         if (allFields.size > 1) {
                             answerField = allFields[1]
                         }
-                        t.put("afmt", "{{FrontSide}}\\n\\n<hr id=answer>\\n\\n{{$answerField}}")
+                        t.afmt = "{{FrontSide}}\\n\\n<hr id=answer>\\n\\n{{$answerField}}"
                         noteTypes.addTemplateInNewModel(newNoteType, t)
                         idx++
                     }
@@ -918,15 +914,17 @@ class CardContentProvider : ContentProvider() {
                     val bqfmt: String = values.getAsString(FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT)
                     val bafmt: String = values.getAsString(FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT)
                     try {
-                        var t: JSONObject = Notetypes.newTemplate(name)
-                        t.put("qfmt", qfmt)
-                        t.put("afmt", afmt)
-                        t.put("bqfmt", bqfmt)
-                        t.put("bafmt", bafmt)
+                        var t: CardTemplate =
+                            Notetypes.newTemplate(name).also { tmpl ->
+                                tmpl.qfmt = qfmt
+                                tmpl.afmt = afmt
+                                tmpl.bqfmt = bqfmt
+                                tmpl.bafmt = bafmt
+                            }
                         notetypes.addTemplate(existingNoteType, t)
                         notetypes.update(existingNoteType)
-                        t = existingNoteType.tmpls.get(existingNoteType.tmpls.length() - 1) as JSONObject
-                        return ContentUris.withAppendedId(uri, t.getInt("ord").toLong())
+                        t = existingNoteType.tmpls.last()
+                        return ContentUris.withAppendedId(uri, t.ord.toLong())
                     } catch (e: ConfirmModSchemaException) {
                         throw IllegalArgumentException("Unable to add template without user requesting/accepting full-sync", e)
                     } catch (e: JSONException) {
@@ -1076,7 +1074,7 @@ class CardContentProvider : ContentProvider() {
                         @KotlinCleanup("remove requireNoNulls")
                         rb.add(Utils.joinFields(allFlds.requireNoNulls()))
                     }
-                    FlashCardsContract.Model.NUM_CARDS -> rb.add(jsonObject!!.getJSONArray("tmpls").length())
+                    FlashCardsContract.Model.NUM_CARDS -> rb.add(jsonObject!!.tmpls.length())
                     FlashCardsContract.Model.CSS -> rb.add(jsonObject!!.getString("css"))
                     FlashCardsContract.Model.DECK_ID -> // #6378 - Anki Desktop changed schema temporarily to allow null
                         rb.add(jsonObject!!.optLong("did", Consts.DEFAULT_DECK_ID))
@@ -1102,7 +1100,7 @@ class CardContentProvider : ContentProvider() {
     ) {
         val cardName: String =
             try {
-                currentCard.template(col).getString("name")
+                currentCard.template(col).name
             } catch (je: JSONException) {
                 throw IllegalArgumentException("Card is using an invalid template", je)
             }
@@ -1190,7 +1188,7 @@ class CardContentProvider : ContentProvider() {
     }
 
     private fun addTemplateToCursor(
-        tmpl: JSONObject,
+        tmpl: CardTemplate,
         notetype: NotetypeJson?,
         id: Int,
         notetypes: Notetypes,
@@ -1203,13 +1201,13 @@ class CardContentProvider : ContentProvider() {
                 when (column) {
                     FlashCardsContract.CardTemplate._ID -> rb.add(id)
                     FlashCardsContract.CardTemplate.MODEL_ID -> rb.add(notetype!!.getLong("id"))
-                    FlashCardsContract.CardTemplate.ORD -> rb.add(tmpl.getInt("ord"))
-                    FlashCardsContract.CardTemplate.NAME -> rb.add(tmpl.getString("name"))
-                    FlashCardsContract.CardTemplate.QUESTION_FORMAT -> rb.add(tmpl.getString("qfmt"))
-                    FlashCardsContract.CardTemplate.ANSWER_FORMAT -> rb.add(tmpl.getString("afmt"))
-                    FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT -> rb.add(tmpl.getString("bqfmt"))
-                    FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT -> rb.add(tmpl.getString("bafmt"))
-                    FlashCardsContract.CardTemplate.CARD_COUNT -> rb.add(notetypes.tmplUseCount(notetype!!, tmpl.getInt("ord")))
+                    FlashCardsContract.CardTemplate.ORD -> rb.add(tmpl.ord)
+                    FlashCardsContract.CardTemplate.NAME -> rb.add(tmpl.name)
+                    FlashCardsContract.CardTemplate.QUESTION_FORMAT -> rb.add(tmpl.qfmt)
+                    FlashCardsContract.CardTemplate.ANSWER_FORMAT -> rb.add(tmpl.afmt)
+                    FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT -> rb.add(tmpl.bqfmt)
+                    FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT -> rb.add(tmpl.bafmt)
+                    FlashCardsContract.CardTemplate.CARD_COUNT -> rb.add(notetypes.tmplUseCount(notetype!!, tmpl.ord))
                     else -> throw UnsupportedOperationException(
                         "Support for column \"$column\" is not implemented",
                     )
@@ -1321,10 +1319,10 @@ class CardContentProvider : ContentProvider() {
     private fun getTemplateFromUri(
         uri: Uri,
         col: Collection,
-    ): JSONObject {
-        val noteType: JSONObject? = col.notetypes.get(getNoteTypeIdFromUri(uri, col))
+    ): CardTemplate {
+        val noteType: NotetypeJson? = col.notetypes.get(getNoteTypeIdFromUri(uri, col))
         val ord = uri.lastPathSegment!!.toInt()
-        return noteType!!.getJSONArray("tmpls").getJSONObject(ord)
+        return noteType!!.tmpls[ord]
     }
 
     private fun throwSecurityException(
