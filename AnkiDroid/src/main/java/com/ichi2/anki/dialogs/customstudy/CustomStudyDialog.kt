@@ -30,7 +30,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.core.widget.doAfterTextChanged
 import anki.scheduler.CustomStudyDefaultsResponse
-import anki.scheduler.CustomStudyRequestKt
 import anki.scheduler.customStudyRequest
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -270,33 +269,31 @@ class CustomStudyDialog(
     ) {
         Timber.i("Custom study: $contextMenuOption; input = $userEntry")
 
-        suspend fun customStudy(block: CustomStudyRequestKt.Dsl.() -> Unit) {
+        val request =
+            customStudyRequest {
+                deckId = dialogDeckId
+                when (contextMenuOption) {
+                    STUDY_NEW -> newLimitDelta = userEntry
+                    STUDY_REV -> reviewLimitDelta = userEntry
+                    STUDY_FORGOT -> forgotDays = userEntry
+                    STUDY_AHEAD -> reviewAheadDays = userEntry
+                    STUDY_PREVIEW -> previewDays = userEntry
+                    STUDY_TAGS -> TODO("This branch has not been covered before")
+                }
+            }
+
+        try {
             undoableOp {
-                collection.sched.customStudy(
-                    customStudyRequest {
-                        deckId = dialogDeckId
-                        block(this)
-                    },
-                )
+                collection.sched.customStudy(request)
             }
-        }
-
-        suspend fun extendLimits(block: CustomStudyRequestKt.Dsl.() -> Unit) {
-            try {
-                customStudy { block(this) }
-                customStudyListener?.onExtendStudyLimits()
-            } finally {
-                requireActivity().dismissAllDialogFragments()
+            when (contextMenuOption) {
+                STUDY_NEW, STUDY_REV ->
+                    customStudyListener?.onExtendStudyLimits()
+                STUDY_FORGOT, STUDY_AHEAD, STUDY_PREVIEW -> customStudyListener?.onCreateCustomStudySession()
+                STUDY_TAGS -> TODO("This branch has not been covered before")
             }
-        }
-
-        suspend fun createCustomStudy(block: CustomStudyRequestKt.Dsl.() -> Unit) {
-            try {
-                customStudy { block(this) }
-                customStudyListener?.onCreateCustomStudySession()
-            } finally {
-                requireActivity().dismissAllDialogFragments()
-            }
+        } finally {
+            requireActivity().dismissAllDialogFragments()
         }
 
         // save the default values (not in upstream)
@@ -304,15 +301,9 @@ class CustomStudyDialog(
             STUDY_FORGOT -> sharedPrefs().edit { putInt("forgottenDays", userEntry) }
             STUDY_AHEAD -> sharedPrefs().edit { putInt("aheadDays", userEntry) }
             STUDY_PREVIEW -> sharedPrefs().edit { putInt("previewDays", userEntry) }
-            else -> {}
-        }
-
-        when (contextMenuOption) {
-            STUDY_NEW -> extendLimits { newLimitDelta = userEntry }
-            STUDY_REV -> extendLimits { reviewLimitDelta = userEntry }
-            STUDY_FORGOT -> createCustomStudy { forgotDays = userEntry }
-            STUDY_AHEAD -> createCustomStudy { reviewAheadDays = userEntry }
-            STUDY_PREVIEW -> createCustomStudy { previewDays = userEntry }
+            STUDY_NEW, STUDY_REV -> {
+                // Nothing to do in ankidroid. The default value is provided by the backend.
+            }
             STUDY_TAGS -> TODO("This branch has not been covered before")
         }
     }
