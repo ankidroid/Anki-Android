@@ -19,7 +19,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.webkit.JavascriptInterface
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
@@ -34,7 +33,6 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.FilteredDeckOptions
 import com.ichi2.anki.OnErrorListener
-import com.ichi2.anki.OnPageFinishedCallback
 import com.ichi2.anki.R
 import com.ichi2.anki.StudyOptionsActivity
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
@@ -76,16 +74,6 @@ class CongratsPage :
         }
     }
 
-    override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient =
-        super.onCreateWebViewClient(savedInstanceState).also { client ->
-            client.onPageFinishedCallback =
-                OnPageFinishedCallback { webView ->
-                    webView.evaluateJavascript(
-                        "bridgeCommand = function(request){ ankidroid.bridgeCommand(request); };",
-                    ) {}
-                }
-        }
-
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
@@ -113,8 +101,6 @@ class CongratsPage :
                 startActivity(intent, null)
             }.launchIn(lifecycleScope)
 
-        webView.addJavascriptInterface(BridgeCommand(), "ankidroid")
-
         with(view.findViewById<MaterialToolbar>(R.id.toolbar)) {
             inflateMenu(R.menu.congrats)
             setOnMenuItemClickListener { item ->
@@ -122,16 +108,6 @@ class CongratsPage :
                     viewModel.onDeckOptions()
                 }
                 true
-            }
-        }
-    }
-
-    inner class BridgeCommand {
-        @JavascriptInterface
-        fun bridgeCommand(request: String) {
-            when (request) {
-                "unbury" -> viewModel.onUnbury()
-                "customStudy" -> onStudyMore()
             }
         }
     }
