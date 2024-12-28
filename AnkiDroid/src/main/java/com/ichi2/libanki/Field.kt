@@ -111,4 +111,6 @@ value class Field(
     /** @see ord */
     @RustCleanup("Check JSONObject.NULL")
     fun setOrd(value: Int?) = jsonObject.put("ord", if (value == null) JSONObject.NULL else value)
+
+    override fun toString() = jsonObject.toString()
 }
