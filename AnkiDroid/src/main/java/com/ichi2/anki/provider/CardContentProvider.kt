@@ -1311,7 +1311,7 @@ class CardContentProvider : ContentProvider() {
                 try {
                     uri.pathSegments[1].toLong()
                 } catch (e: NumberFormatException) {
-                    throw IllegalArgumentException("Note type ID must be either numeric or the String CURRENT_NOTE_TYPE_ID", e)
+                    throw IllegalArgumentException("Note type ID must be either numeric or the String CURRENT_MODEL_ID", e)
                 }
             }
         return id

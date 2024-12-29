@@ -55,7 +55,7 @@ import com.ichi2.anki.api.Ease
  * *   A row from the [Card] sub-provider gives access to notes cards. The
  * cards are accessed as described in the [Card] description.
  *
- * *   The format of notes and cards is described in models. The models are accessed as described
+ * *   The format of notes and cards is described in note types. The note types are accessed as described
  * in the [Model] description.
  *
  *
@@ -78,10 +78,10 @@ import com.ichi2.anki.api.Ease
  * notes/<note_id>/cards/<ord> | NoteCard `ord` (with ord = 0... num_cards-1) belonging to note `note_id` as high level data (Deck name, question, answer).
  *                             | Supports update(), query(). For code examples see class description of [Card].
  * --------------------------------------------------------------------------------------------------------------------
- * models                      | All models as JSONObjects.
+ * models                      | All note types as JSONObjects.
  *                             | Supports query(). For code examples see class description of [Model].
  * --------------------------------------------------------------------------------------------------------------------
- * model/<model_id>            | Direct access to model `model_id` as JSONObject.
+ * model/<model_id>            | Direct access to note type `model_id` as JSONObject.
  *                             | Supports query(). For code examples see class description of [Model].
  * --------------------------------------------------------------------------------------------------------------------
  * ```
@@ -103,7 +103,7 @@ public object FlashCardsContract {
      * all the notes that match the query as defined in `selection` argument in the
      * `query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)` call.
      * For queries, the `selectionArgs` parameter can contain an optional selection statement for the notes table
-     * in the sql database. E.g. "mid = 12345678" could be used to limit to a particular model ID.
+     * in the sql database. E.g. "mid = 12345678" could be used to limit to a particular note type ID.
      * The `selection` parameter is an optional search string for the Anki browser. The syntax is described
      * [in the search section of the Anki manual](https://docs.ankiweb.net/searching.html).
      *
@@ -134,11 +134,11 @@ public object FlashCardsContract {
      *
      *
      * In order to insert a new note (the cards for this note will be added to the default deck)
-     * the [.CONTENT_URI] must be used together with a model (see [Model])
+     * the [.CONTENT_URI] must be used together with a note type (see [Model])
      * ID, e.g.
      *
      * ```
-     *          Long mId = ... // Use the correct model ID
+     *          Long mId = ... // Use the correct note type ID
      *          ContentValues values = new ContentValues();
      *          values.put(FlashCardsContract.Note.MID, mId);
      *          Uri newNoteUri = cr.insert(FlashCardsContract.Note.CONTENT_URI, values);
@@ -168,8 +168,8 @@ public object FlashCardsContract {
      * --------------------------------------------------------------------------------------------------------------------
      * long   | GUID   | read-only  | See more at https://github.com/ankidroid/Anki-Android/wiki/Database-Structure
      * --------------------------------------------------------------------------------------------------------------------
-     * long   | MID    | read-only  | This is the ID of the model that is used for rendering the cards. This ID can be used for
-     *        |        |            | accessing the data of the model using the URI
+     * long   | MID    | read-only  | This is the ID of the note type that is used for rendering the cards. This ID can be used for
+     *        |        |            | accessing the data of the note type using the URI
      *        |        |            | "content://com.ichi2.anki.flashcards/model/<ID>
      * --------------------------------------------------------------------------------------------------------------------
      * long   | MOD    | read-only  | See more at https://github.com/ankidroid/Anki-Android/wiki/Database-Structure
@@ -232,6 +232,8 @@ public object FlashCardsContract {
         // field is part of the default projection available to the clients
         @Suppress("MemberVisibilityCanBePrivate")
         public const val GUID: String = "guid"
+
+        // "mid" used to mean "note type id". "note type" used to be the name "note type". It can't be changed for compatibility reason.
         public const val MID: String = "mid"
 
         @Suppress("unused")
@@ -284,15 +286,16 @@ public object FlashCardsContract {
     }
 
     /**
-     * A model describes what cards look like.
+     * "Model" was the previous named of "note type". It is used here for the sake of compatibility with the ecosystem.
+     * A note type describes what cards look like.
      *
      * ```
-     *              Card model description
+     *              Note Type description
      * Type    | Name             | Access    | Description
      * --------------------------------------------------------------------------------------------------------------------
-     * long    | _ID              | read-only | Model ID.
+     * long    | _ID              | read-only | Note type ID.
      * --------------------------------------------------------------------------------------------------------------------
-     * String  | NAME             |           | Name of the model.
+     * String  | NAME             |           | Name of the Note type.
      * --------------------------------------------------------------------------------------------------------------------
      * String  | CSS              |           | CSS styling code which is shared across all the templates
      * --------------------------------------------------------------------------------------------------------------------
@@ -304,7 +307,7 @@ public object FlashCardsContract {
      * --------------------------------------------------------------------------------------------------------------------
      * Integer | SORT_FIELD_INDEX | read-only | Which field is used as the main sort field
      * --------------------------------------------------------------------------------------------------------------------
-     * Integer | TYPE             | read-only | 0 for normal model, 1 for cloze model
+     * Integer | TYPE             | read-only | 0 for normal note type, 1 for cloze note type
      * --------------------------------------------------------------------------------------------------------------------
      * String  | LATEX_POST       | read-only | Code to go at the end of LaTeX renderings in Anki Desktop
      * --------------------------------------------------------------------------------------------------------------------
@@ -313,7 +316,7 @@ public object FlashCardsContract {
      * ```
      *
      *
-     * It's possible to query all models at once like this
+     * It's possible to query all note type at once like this
      *
      * ```
      *      Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
@@ -326,13 +329,13 @@ public object FlashCardsContract {
      * ```
      *
      *
-     * It's also possible to access a specific model like this:
+     * It's also possible to access a specific note type like this:
      *
      *
      * ```
-     *      long modelId = ...// Use the correct model ID
-     *      Uri modelUri = Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, Long.toString(modelId));
-     *      final Cursor cur = cr.query(modelUri,
+     *      long noteTypeId = ...// Use the correct note type ID
+     *      Uri noteTypeUri = Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, Long.toString(noteTypeId));
+     *      final Cursor cur = cr.query(noteTypeUri,
      *          null,  // projection
      *          null,  // selection is ignored for this URI
      *          null,  // selectionArgs is ignored for this URI
@@ -341,7 +344,7 @@ public object FlashCardsContract {
      * ```
      *
      *
-     * Instead of specifying the model ID, it's also possible to get the currently active model using the following URI:
+     * Instead of specifying the noteType ID, it's also possible to get the currently active noteType using the following URI:
      *
      *
      * ```
@@ -350,7 +353,7 @@ public object FlashCardsContract {
      */
     public object Model {
         /**
-         * The content:// style URI for model. If the it is appended by the model's ID, this
+         * The content:// style URI for note type. If the it is appended by the note type's ID, this
          * note can be directly accessed. See class description above for further details.
          */
         @JvmField // required for Java API
@@ -358,8 +361,8 @@ public object FlashCardsContract {
         public const val CURRENT_MODEL_ID: String = "current"
 
         /**
-         * This is the ID of the model. It is the same as the note ID in Anki. This ID can be
-         * used for accessing the data of the model using the URI
+         * This is the ID of the note type. It is the same as the note ID in Anki. This ID can be
+         * used for accessing the data of the note type using the URI
          * `content://com.ichi2.anki.flashcards/models/<ID>`
          */
         @Suppress("ConstPropertyName", "ktlint:standard:backing-property-naming")
@@ -376,7 +379,7 @@ public object FlashCardsContract {
         public const val NOTE_COUNT: String = "note_count"
 
         /**
-         * The deck ID that is selected by default when adding new notes with this model.
+         * The deck ID that is selected by default when adding new notes with this note type.
          * This is only used when the "Deck for new cards" preference is set to "Decide by note type"
          */
         public const val DECK_ID: String = "deck_id"
@@ -397,19 +400,19 @@ public object FlashCardsContract {
             )
 
         /**
-         * MIME type used for a model.
+         * MIME type used for a note type.
          */
         public const val CONTENT_ITEM_TYPE: String = "vnd.android.cursor.item/vnd.com.ichi2.anki.model"
 
         /**
-         * MIME type used for model.
+         * MIME type used for note type.
          */
         public const val CONTENT_TYPE: String = "vnd.android.cursor.dir/vnd.com.ichi2.anki.model"
     }
 
     /**
-     * Card template for a model. A template defines how to render the fields of a note into the actual HTML that
-     * makes up a flashcard. A model can define multiple card templates, for example a Forward and Reverse Card could
+     * Card template for a note type. A template defines how to render the fields of a note into the actual HTML that
+     * makes up a flashcard. A note type can define multiple card templates, for example a Forward and Reverse Card could
      * be defined with the forward card allowing to review a word from Japanese -> English (e.g. 犬 -> dog), and the
      * reverse card allowing review in the "reverse" direction (e.g dog -> 犬). When a Note is inserted, a Card will
      * be generated for each active CardTemplate which is defined.
@@ -432,7 +435,8 @@ public object FlashCardsContract {
         public const val _ID: String = "_id"
 
         /**
-         * This is the ID of the model that this row belongs to (i.e. [Model._ID]).
+         * This is the ID of the note type that this row belongs to (i.e. [Model._ID]).
+         * "Model" was the previous name of "note type". We keep this deprecated name for the sake of compatibility with the ecosystem.
          */
         public const val MODEL_ID: String = "model_id"
 
