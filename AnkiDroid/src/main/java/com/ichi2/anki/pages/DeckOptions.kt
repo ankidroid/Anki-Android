@@ -32,6 +32,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.updateDeckConfigsRaw
 import kotlinx.coroutines.Dispatchers
@@ -221,7 +222,7 @@ class DeckOptions : PageFragment() {
     companion object {
         fun getIntent(
             context: Context,
-            deckId: Long,
+            deckId: DeckId,
         ): Intent {
             val title = context.getString(R.string.menu__deck_options)
             return getIntent(context, "deck-options/$deckId", title, DeckOptions::class)

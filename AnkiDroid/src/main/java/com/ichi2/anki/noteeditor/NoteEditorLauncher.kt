@@ -170,7 +170,7 @@ sealed interface NoteEditorLauncher {
      * @property cardId The ID of the card associated with the note to edit.
      */
     data class EditNoteFromPreviewer(
-        val cardId: Long,
+        val cardId: CardId,
     ) : NoteEditorLauncher {
         override fun toBundle(): Bundle =
             bundleOf(

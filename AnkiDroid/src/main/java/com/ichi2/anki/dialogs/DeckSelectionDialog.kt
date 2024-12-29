@@ -317,7 +317,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
                 }
             }
 
-            private fun toggleExpansion(deckId: Long) {
+            private fun toggleExpansion(deckId: DeckId) {
                 decksRoot.find(deckId)?.apply {
                     collapsed = !collapsed
                     Timber.d("The deck with ID $id is currently expanded: ${!collapsed}.")
@@ -335,7 +335,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         private val allDecksList = ArrayList<DeckNode>()
         private val currentlyDisplayedDecks = ArrayList<DeckNode>()
 
-        protected fun selectDeckByIdAndClose(deckId: Long) {
+        protected fun selectDeckByIdAndClose(deckId: DeckId) {
             val deck = decksRoot.find(deckId)
             if (deck == null) {
                 displayErrorAndCancel()

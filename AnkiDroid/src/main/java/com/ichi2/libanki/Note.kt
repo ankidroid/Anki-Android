@@ -36,14 +36,14 @@ class Note : Cloneable {
     /**
      * Should only be mutated by addNote()
      */
-    var id: Long = 0
+    var id: NoteId = 0L
 
     @get:VisibleForTesting
     var guId: String? = null
         private set
     lateinit var notetype: NotetypeJson
 
-    var mid: Long = 0
+    var mid: NoteTypeId = 0L
         private set
     lateinit var tags: MutableList<String>
     lateinit var fields: MutableList<String>
@@ -53,7 +53,7 @@ class Note : Cloneable {
     var mod: Int = 0
         private set
 
-    constructor(col: Collection, id: Long) {
+    constructor(col: Collection, id: NoteId) {
         this.id = id
         load(col)
     }

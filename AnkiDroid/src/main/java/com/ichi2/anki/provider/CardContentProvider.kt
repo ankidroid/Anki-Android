@@ -610,14 +610,14 @@ class CardContentProvider : ContentProvider() {
             SCHEDULE -> {
                 val valueSet = values!!.valueSet()
                 var cardOrd = -1
-                var noteID: Long = -1
+                var noteId: NoteId = -1
                 var ease: Ease? = null
                 var timeTaken: Long = -1
                 var bury = -1
                 var suspend = -1
                 for ((key) in valueSet) {
                     when (key) {
-                        FlashCardsContract.ReviewInfo.NOTE_ID -> noteID = values.getAsLong(key)
+                        FlashCardsContract.ReviewInfo.NOTE_ID -> noteId = values.getAsLong(key)
                         FlashCardsContract.ReviewInfo.CARD_ORD -> cardOrd = values.getAsInteger(key)
                         FlashCardsContract.ReviewInfo.EASE ->
                             ease = Ease.fromValue(values.getAsInteger(key))
@@ -630,8 +630,8 @@ class CardContentProvider : ContentProvider() {
                         FlashCardsContract.ReviewInfo.SUSPEND -> suspend = values.getAsInteger(key)
                     }
                 }
-                if (cardOrd != -1 && noteID != -1L) {
-                    val cardToAnswer: Card = getCard(noteID, cardOrd, col)
+                if (cardOrd != -1 && noteId != -1L) {
+                    val cardToAnswer: Card = getCard(noteId, cardOrd, col)
                     @Suppress("SENSELESS_COMPARISON")
                     @KotlinCleanup("based on getCard() method, cardToAnswer does seem to be not null")
                     if (cardToAnswer != null) {
@@ -649,7 +649,7 @@ class CardContentProvider : ContentProvider() {
                         Timber.e(
                             "Requested card with noteId %d and cardOrd %d was not found. Either the provided " +
                                 "noteId/cardOrd were wrong or the card has been deleted in the meantime.",
-                            noteID,
+                            noteId,
                             cardOrd,
                         )
                     }
@@ -1222,7 +1222,7 @@ class CardContentProvider : ContentProvider() {
     }
 
     private fun addDeckToCursor(
-        id: Long,
+        id: DeckId,
         name: String,
         deckCounts: JSONArray,
         rv: MatrixCursor,
@@ -1302,20 +1302,16 @@ class CardContentProvider : ContentProvider() {
     private fun getNoteTypeIdFromUri(
         uri: Uri,
         col: Collection,
-    ): Long {
-        val noteTypeIdSegment = uri.pathSegments[1]
-        val id: Long =
-            if (noteTypeIdSegment == FlashCardsContract.Model.CURRENT_MODEL_ID) {
-                col.notetypes.current().optLong("id", -1)
-            } else {
-                try {
-                    uri.pathSegments[1].toLong()
-                } catch (e: NumberFormatException) {
-                    throw IllegalArgumentException("Note type ID must be either numeric or the String CURRENT_MODEL_ID", e)
-                }
+    ): NoteTypeId =
+        if (uri.pathSegments[1] == FlashCardsContract.Model.CURRENT_MODEL_ID) {
+            col.notetypes.current().optLong("id", -1)
+        } else {
+            try {
+                uri.pathSegments[1].toLong()
+            } catch (e: NumberFormatException) {
+                throw IllegalArgumentException("Note type ID must be either numeric or the String CURRENT_MODEL_ID", e)
             }
-        return id
-    }
+        }
 
     @Throws(JSONException::class)
     private fun getTemplateFromUri(

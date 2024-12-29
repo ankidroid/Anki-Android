@@ -2237,7 +2237,7 @@ open class CardBrowser :
         override var position: Int
 
         private val inCardMode: Boolean
-        constructor(id: Long, col: Collection, position: Int, cardsOrNotes: CardsOrNotes) : super(col, id) {
+        constructor(id: CardId, col: Collection, position: Int, cardsOrNotes: CardsOrNotes) : super(col, id) {
             this.position = position
             this.inCardMode = cardsOrNotes == CARDS
         }
