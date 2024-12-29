@@ -714,7 +714,7 @@ class Collection(
     ): String = backend.extractClozeForTyping(text = text, ordinal = ordinal)
 
     fun defaultsForAdding(currentReviewCard: Card? = null): anki.notes.DeckAndNotetype {
-        val homeDeck = currentReviewCard?.currentDeckId()?.did ?: 0L
+        val homeDeck = currentReviewCard?.currentDeckId() ?: 0L
         return backend.defaultsForAdding(homeDeckOfCurrentReviewCard = homeDeck)
     }
 
