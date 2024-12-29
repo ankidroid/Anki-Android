@@ -716,7 +716,7 @@ class DeckPickerTest : RobolectricTest() {
         assertThat("unbury is not visible: deck has no cards", !col.sched.haveBuried())
 
         deckPicker {
-            assertThat("deck focus is set", focusedDeck, equalTo(emptyDeck))
+            assertThat("deck focus is set", viewModel.focusedDeck, equalTo(emptyDeck))
 
             // ACT: open up the Deck Context Menu
             val deckToClick =
@@ -727,7 +727,7 @@ class DeckPickerTest : RobolectricTest() {
 
             // ASSERT
             assertThat("unbury is visible: one card is buried", col.sched.haveBuried())
-            assertThat("deck focus has changed", focusedDeck, equalTo(deckWithCards))
+            assertThat("deck focus has changed", viewModel.focusedDeck, equalTo(deckWithCards))
         }
     }
 
