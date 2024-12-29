@@ -66,7 +66,7 @@ class NotetypeJson : JSONObject {
     /**
      * @return model did or default deck id (1) if null
      */
-    val did: Long
+    val did: DeckId
         get() = if (isNull("did")) 1L else getLong("did")
     val templatesNames: List<String>
         get() = getJSONArray("tmpls").toStringList("name")
@@ -110,7 +110,7 @@ class NotetypeJson : JSONObject {
             put("tmpls", value)
         }
 
-    var id: Long
+    var id: NoteTypeId
         get() = getLong("id")
         set(value) {
             put("id", value)

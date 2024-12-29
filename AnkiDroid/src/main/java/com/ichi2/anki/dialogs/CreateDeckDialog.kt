@@ -55,7 +55,7 @@ class CreateDeckDialog(
     private val context: Context,
     private val title: Int,
     private val deckDialogType: DeckDialogType,
-    private val parentId: Long?,
+    private val parentId: DeckId?,
 ) {
     private var previousDeckName: String? = null
     lateinit var onNewDeckCreated: ((DeckId) -> Unit)

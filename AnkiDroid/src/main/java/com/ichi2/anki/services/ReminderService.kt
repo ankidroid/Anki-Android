@@ -27,6 +27,7 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckConfigId
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.DeckNode
 import org.json.JSONObject
@@ -132,7 +133,7 @@ class ReminderService : BroadcastReceiver() {
     // getDeckOptionDue information, will recur one time to workaround collection close if recur is true
     private fun getDeckOptionDue(
         col: Collection,
-        dConfId: Long,
+        dConfId: DeckConfigId,
         recur: Boolean,
     ): List<DeckNode>? {
         // Avoid crashes if the deck option group is deleted while we

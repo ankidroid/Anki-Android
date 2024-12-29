@@ -95,7 +95,7 @@ class FinderTest : JvmTest() {
 
     private fun buryManually(
         sched: Scheduler,
-        id: Long,
+        id: CardId,
     ): Card {
         sched.buryCards(listOf(id), true)
         val manuallyBuriedCard = Card(col, id)

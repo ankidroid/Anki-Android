@@ -19,6 +19,7 @@ package com.ichi2.anki
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.DeckId
 
 /**
  * Checks if a given deck, including its subdecks if specified, is empty.
@@ -28,7 +29,7 @@ import com.ichi2.libanki.Consts
  * @return `true` if the deck (and subdecks if specified) is empty, otherwise `false`.
  */
 private fun Collection.isDeckEmpty(
-    deckId: Long,
+    deckId: DeckId,
     includeSubdecks: Boolean = true,
 ): Boolean {
     val deckIds = decks.deckAndChildIds(deckId)

@@ -106,7 +106,7 @@ open class Card : Cloneable {
         loadFromBackendCard(card)
     }
 
-    constructor(col: Collection, id: Long? = null) {
+    constructor(col: Collection, id: CardId? = null) {
         if (id != null) {
             this.id = id
             load(col)

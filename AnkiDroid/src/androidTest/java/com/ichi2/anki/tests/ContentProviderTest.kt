@@ -33,8 +33,10 @@ import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.Note
+import com.ichi2.libanki.NoteTypeId
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.Utils
@@ -86,7 +88,7 @@ class ContentProviderTest : InstrumentedTest() {
      */
     private val testDeckIds: MutableList<Long> = ArrayList(TEST_DECKS.size + 1)
     private lateinit var createdNotes: ArrayList<Uri>
-    private var noteTypeId = 0L
+    private var noteTypeId: NoteTypeId = 0L
     private var dummyFields = emptyStringArray(1)
 
     /**
@@ -1376,12 +1378,12 @@ class ContentProviderTest : InstrumentedTest() {
         @Suppress("SameParameterValue")
         private fun setupNewNote(
             col: com.ichi2.libanki.Collection,
-            mid: Long,
-            did: Long,
+            noteTypeId: NoteTypeId,
+            did: DeckId,
             fields: Array<String>,
             tag: String,
         ): Uri {
-            val newNote = Note.fromNotetypeId(col, mid)
+            val newNote = Note.fromNotetypeId(col, noteTypeId)
             for (idx in fields.indices) {
                 newNote.setField(idx, fields[idx])
             }

@@ -17,6 +17,7 @@
 
 package com.ichi2.anki.utils
 
+import com.ichi2.libanki.DeckId
 import com.ichi2.utils.deepClonedInto
 import org.intellij.lang.annotations.Language
 import org.json.JSONObject
@@ -63,7 +64,7 @@ class CardTemplateJson : JSONObject {
     val bafmt: String
         get() = getString("bafmt")
 
-    val did: Long?
+    val did: DeckId?
         get() = if (isNull("did")) null else getLong("did")
 
     val bfont: String

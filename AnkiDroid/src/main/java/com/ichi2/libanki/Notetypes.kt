@@ -755,13 +755,13 @@ fun Collection.getFieldNamesRaw(input: ByteArray): ByteArray = backend.getFieldN
 
 fun Collection.updateNotetype(updatedNotetype: Notetype): OpChanges = backend.updateNotetype(input = updatedNotetype)
 
-fun Collection.removeNotetype(notetypeId: Long): OpChanges = backend.removeNotetype(ntid = notetypeId)
+fun Collection.removeNotetype(notetypeId: NoteTypeId): OpChanges = backend.removeNotetype(ntid = notetypeId)
 
 fun Collection.addNotetype(newNotetype: Notetype): OpChangesWithId = backend.addNotetype(input = newNotetype)
 
 fun Collection.getNotetypeNameIdUseCount(): List<NotetypeNameIdUseCount> = backend.getNotetypeNamesAndCounts()
 
-fun Collection.getNotetype(notetypeId: Long): Notetype = backend.getNotetype(ntid = notetypeId)
+fun Collection.getNotetype(notetypeId: NoteTypeId): Notetype = backend.getNotetype(ntid = notetypeId)
 
 fun Collection.getNotetypeNames(): List<NotetypeNameId> = backend.getNotetypeNames()
 

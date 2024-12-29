@@ -272,7 +272,7 @@ class Collection(
      * Object creation helpers **************************************************
      * *********************************************
      */
-    fun getCard(id: Long): Card = Card(this, id)
+    fun getCard(id: CardId): Card = Card(this, id)
 
     fun updateCards(
         cards: Iterable<Card>,
@@ -284,7 +284,7 @@ class Collection(
         skipUndoEntry: Boolean = false,
     ): OpChanges = updateCards(listOf(card), skipUndoEntry)
 
-    fun getNote(id: Long): Note = Note(this, id)
+    fun getNote(id: NoteId): Note = Note(this, id)
 
     /**
      * Notes ******************************************************************** ***************************
@@ -397,8 +397,8 @@ class Collection(
     }
 
     data class CardIdToNoteId(
-        val id: Long,
-        val nid: Long,
+        val id: CardId,
+        val nid: NoteId,
     )
 
     /** Return a list of card ids  */
