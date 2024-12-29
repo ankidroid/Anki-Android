@@ -42,7 +42,7 @@ class AutoAdvance(
     private var settings =
         viewModel.asyncIO {
             val card = viewModel.currentCard.await()
-            AutoAdvanceSettings.createInstance(card.currentDeckId().did)
+            AutoAdvanceSettings.createInstance(card.currentDeckId())
         }
 
     private suspend fun durationToShowQuestionFor() = settings.await().durationToShowQuestionFor
@@ -64,7 +64,7 @@ class AutoAdvance(
         cancelQuestionAndAnswerActionJobs()
         settings =
             viewModel.asyncIO {
-                AutoAdvanceSettings.createInstance(card.currentDeckId().did)
+                AutoAdvanceSettings.createInstance(card.currentDeckId())
             }
     }
 

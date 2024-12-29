@@ -1128,7 +1128,7 @@ class NoteEditor :
             }
         }
         // changed deck?
-        if (!addNote && currentEditedCard != null && currentEditedCard!!.currentDeckId().did != deckId) {
+        if (!addNote && currentEditedCard != null && currentEditedCard!!.currentDeckId() != deckId) {
             return true
         }
         // changed fields?
@@ -1260,7 +1260,7 @@ class NoteEditor :
             // Regular changes in note content
             var modified = false
             // changed did? this has to be done first as remFromDyn() involves a direct write to the database
-            if (currentEditedCard != null && currentEditedCard!!.currentDeckId().did != deckId) {
+            if (currentEditedCard != null && currentEditedCard!!.currentDeckId() != deckId) {
                 reloadRequired = true
                 undoableOp { setDeck(listOf(currentEditedCard!!.id), deckId) }
                 // refresh the card object to reflect the database changes from above
@@ -2235,7 +2235,7 @@ class NoteEditor :
         fun calculateDeckId(): DeckId {
             if (deckId != 0L) return deckId
             if (note != null && !addNote && currentEditedCard != null) {
-                return currentEditedCard!!.currentDeckId().did
+                return currentEditedCard!!.currentDeckId()
             }
 
             if (!getColUnsafe.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
