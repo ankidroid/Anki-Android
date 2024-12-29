@@ -48,12 +48,8 @@ object DebugInfoService {
             
             ProductFlavor = ${BuildConfig.FLAVOR}
             
-            Manufacturer = ${Build.MANUFACTURER}
-            
-            Model = ${Build.MODEL}
-            
-            Hardware = ${Build.HARDWARE}
-            
+            Device Info = ${Build.MANUFACTURER} | ${Build.BRAND} | ${Build.DEVICE} | ${Build.PRODUCT} | ${Build.MODEL} | ${Build.HARDWARE}
+
             Webview User Agent = $webviewUserAgent
             
             ACRA UUID = ${Installation.id(info)}
