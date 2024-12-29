@@ -141,7 +141,11 @@ class Decks(
         type: DeckConfigId = 0L,
     ): DeckId = id(name = name, create = true, type = type)!!
 
-    fun remove(deckIds: Iterable<Long>): OpChangesWithCount = col.backend.removeDecks(dids = deckIds)
+    /**
+     * Deletes one or more decks from the collection
+     * @return [OpChangesWithCount]: the number of cards deleted
+     */
+    fun remove(deckIds: Iterable<DeckId>): OpChangesWithCount = col.backend.removeDecks(dids = deckIds)
 
     /** A sorted sequence of deck names and IDs. */
     @LibAnkiAlias("all_names_and_ids")
