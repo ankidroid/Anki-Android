@@ -105,6 +105,7 @@ import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
 import com.ichi2.anki.deckpicker.BackgroundImage
+import com.ichi2.anki.deckpicker.DeckDeletionResult
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
@@ -168,7 +169,6 @@ import com.ichi2.libanki.Decks
 import com.ichi2.libanki.MediaCheckResult
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.sched.DeckNode
-import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.ui.BadgeDrawableBuilder
@@ -617,6 +617,18 @@ open class DeckPicker :
                 .build(),
             onReceiveContentListener,
         )
+
+        setupFlows()
+    }
+
+    private fun setupFlows() {
+        fun onDeckDeleted(result: DeckDeletionResult) {
+            showSnackbar(result.toHumanReadableString(), Snackbar.LENGTH_SHORT) {
+                setAction(R.string.undo) { undo() }
+            }
+        }
+
+        viewModel.deckDeletedNotification.launchCollectionInLifecycleScope(::onDeckDeleted)
     }
 
     private val onReceiveContentListener =
@@ -654,8 +666,10 @@ open class DeckPicker :
                 /* we can only disable the shortcut for now as it is restricted by Google https://issuetracker.google.com/issues/68949561?pli=1#comment4
                  * if fixed or given free hand to delete the shortcut with the help of API update this method and use the new one
                  */
+                // TODO: it feels buggy that this is not called on all deck deletion paths
                 disableDeckAndChildrenShortcuts(deckId)
-                confirmDeckDeletion(deckId)
+                dismissAllDialogFragments()
+                deleteDeck(deckId)
             }
             DeckPickerContextMenuOption.DECK_OPTIONS -> {
                 Timber.i("ContextMenu: Open deck options selected")
@@ -1150,8 +1164,9 @@ open class DeckPicker :
             }
             R.id.action_deck_delete -> {
                 launchCatchingTask {
-                    val targetDeckId = withCol { decks.selected() }
-                    confirmDeckDeletion(targetDeckId)
+                    withProgress(resources.getString(R.string.delete_deck)) {
+                        viewModel.deleteSelectedDeck().join()
+                    }
                 }
                 return true
             }
@@ -2398,31 +2413,14 @@ open class DeckPicker :
         createDeckDialog.showDialog()
     }
 
-    fun confirmDeckDeletion(did: DeckId): Job {
-        // No confirmation required, as undoable
-        dismissAllDialogFragments()
-        return deleteDeck(did)
-    }
-
     /**
-     * Deletes the provided deck, child decks. and all cards inside.
-     * Use [.confirmDeckDeletion] for a confirmation dialog
-     * @param did the deck to delete
+     * Deletes the provided deck, child decks, and all cards inside.
+     * @param did ID of the deck to delete
      */
-    fun deleteDeck(did: DeckId): Job =
+    fun deleteDeck(did: DeckId) =
         launchCatchingTask {
-            val deckName = withCol { decks.get(did)!!.name }
-            val changes =
-                withProgress(resources.getString(R.string.delete_deck)) {
-                    undoableOp {
-                        decks.remove(listOf(did))
-                    }
-                }
-            // After deletion: decks.current() reverts to Default, necessitating `focusedDeck`
-            // to match and avoid unnecessary scrolls in `renderPage()`.
-            viewModel.focusedDeck = Consts.DEFAULT_DECK_ID
-            showSnackbar(TR.browsingCardsDeletedWithDeckname(changes.count, deckName), Snackbar.LENGTH_SHORT) {
-                setAction(R.string.undo) { undo() }
+            withProgress(resources.getString(R.string.delete_deck)) {
+                viewModel.deleteDeck(did).join()
             }
         }
 

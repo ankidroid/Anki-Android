@@ -209,8 +209,7 @@ class DeckPickerTest : RobolectricTest() {
                     DeckPicker::class.java,
                     Intent(),
                 )
-            deckPicker.confirmDeckDeletion(did)
-            advanceRobolectricLooperWithSleep()
+            deckPicker.viewModel.deleteDeck(did).join()
             assertThat("deck was deleted", col.decks.count(), equalTo(1))
         }
 
