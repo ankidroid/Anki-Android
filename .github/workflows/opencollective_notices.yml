@@ -88,10 +88,10 @@ jobs:
                       })
 
                       // For each author in the map, post a comment on the associated PR
-                      // Incidentally you cannot use arry.forEach() with async functions; it does not await. for or for...in is required.
+                      // Incidentally you cannot use array.forEach() with async functions; it does not await. for or for...in is required.
                       for (const key of Object.keys(uniqueContributorsWithPR)) {
                         // skip some users, we don't allow bots to claim for their work, yet?
-                        if (key === 'github-actions' || key.includes('dependabot') || key.includes('[bot]' || key.includes('machineaccount')) {
+                        if (key === 'github-actions' || key.includes('dependabot') || key.includes('[bot]') || key.includes('machineaccount')) {
                           console.log(`ignoring pr with bot user ${key}`);
                           continue;
                         }
@@ -105,7 +105,7 @@ jobs:
                           //
                           // This is not ideal. However it should be rare, and adding state management (e.g, via labels) to a script
                           // that is working, and is not expected to fail frequently on this step, just to avoid
-                          // duplicate comments (which themselves are not that tramuatic) is in my opinion not worth it.
+                          // duplicate comments (which themselves are not that traumatic) is in my opinion not worth it.
                           // But it is worth noting that the problem had been considered.
                           console.log('failed to add comment to issue? ' + e);
                           throw e;
