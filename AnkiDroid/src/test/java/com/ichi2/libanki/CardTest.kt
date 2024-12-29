@@ -67,19 +67,19 @@ class CardTest : JvmTest() {
         note.setItem("Back", "")
         col.addNote(note)
         assertEquals(1, note.numberOfCards())
-        val m = col.notetypes.current()
-        val mm = col.notetypes
+        val noteType = col.notetypes.current()
+        val noteTypes = col.notetypes
         // adding a new template should automatically create cards
         var t = Notetypes.newTemplate("rev")
         t.put("qfmt", "{{Front}}1")
         t.put("afmt", "")
-        mm.addTemplateModChanged(m, t)
-        mm.save(m)
+        noteTypes.addTemplateModChanged(noteType, t)
+        noteTypes.save(noteType)
         assertEquals(2, note.numberOfCards())
         // if the template is changed to remove cards, they'll be removed
-        t = m.getJSONArray("tmpls").getJSONObject(1)
+        t = noteType.getJSONArray("tmpls").getJSONObject(1)
         t.put("qfmt", "{{Back}}")
-        mm.save(m)
+        noteTypes.save(noteType)
         val rep = col.emptyCids()
         col.removeCardsAndOrphanedNotes(rep)
         assertEquals(1, note.numberOfCards())

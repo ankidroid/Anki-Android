@@ -317,12 +317,12 @@ class Notetypes(
      * This code is currently only used by unit tests. If the  GUI starts to use it, the signature
      * should be updated so that a translated name is passed in. */
     fun copy(notetype: NotetypeJson): NotetypeJson {
-        val m2 = notetype.deepClone()
-        m2.name = "${m2.name} copy"
-        // m2.name = col.context.getString(R.string.copy_note_type_name, m2.name)
-        m2.id = 0
-        add(m2)
-        return m2
+        val noteType2 = notetype.deepClone()
+        noteType2.name = "${noteType2.name} copy"
+        // noteType2.name = col.context.getString(R.string.copy_note_type_name, noteType2.name)
+        noteType2.id = 0
+        add(noteType2)
+        return noteType2
     }
 
     /*

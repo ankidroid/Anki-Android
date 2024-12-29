@@ -128,12 +128,12 @@ class ContentProviderTest : InstrumentedTest() {
     }
 
     private fun createBasicNoteType(name: String = BASIC_NOTE_TYPE_NAME): NotetypeJson {
-        val noteTYpe =
+        val noteType =
             BackendUtils
                 .fromJsonBytes(
                     col.getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC),
                 ).apply { set("name", name) }
-        col.addNotetypeLegacy(BackendUtils.toJsonBytes(noteTYpe))
+        col.addNotetypeLegacy(BackendUtils.toJsonBytes(noteType))
         return col.notetypes.byName(name)!!
     }
 
