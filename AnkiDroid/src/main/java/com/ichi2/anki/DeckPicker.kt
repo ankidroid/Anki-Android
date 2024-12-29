@@ -52,6 +52,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
@@ -104,6 +105,7 @@ import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
 import com.ichi2.anki.deckpicker.BackgroundImage
+import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
 import com.ichi2.anki.dialogs.ConfirmationDialog
@@ -249,6 +251,8 @@ open class DeckPicker :
     CsvImportResultLauncherProvider,
     CollectionPermissionScreenLauncher,
     ExportDialogsFactoryProvider {
+    val viewModel: DeckPickerViewModel by viewModels()
+
     // Short animation duration from system
     private var shortAnimDuration = 0
     private var backButtonPressedToExit = false
@@ -319,14 +323,6 @@ open class DeckPicker :
      * work in onResume that might use the database and go straight to syncing.
      */
     private var syncOnResume = false
-
-    /**
-     * Keep track of which deck was last given focus in the deck list. If we find that this value
-     * has changed between deck list refreshes, we need to recenter the deck list to the new current
-     * deck.
-     */
-    @VisibleForTesting
-    internal var focusedDeck: DeckId = 0
 
     private var toolbarSearchItem: MenuItem? = null
     private var toolbarSearchView: AccessibleSearchView? = null
@@ -1449,7 +1445,7 @@ open class DeckPicker :
                     if (event.isShiftPressed) {
                         // Shortcut: Shift + DEL - Delete deck without confirmation dialog
                         Timber.i("Shift+DEL: Deck deck without confirmation")
-                        deleteDeck(focusedDeck)
+                        deleteDeck(viewModel.focusedDeck)
                     } else {
                         // Shortcut: DEL
                         Timber.i("Delete Deck from keypress")
@@ -1464,7 +1460,7 @@ open class DeckPicker :
                 // that is, when it appears in the trailing study option fragment
                 if (fragmented) {
                     Timber.i("Rename Deck from keypress")
-                    renameDeckDialog(focusedDeck)
+                    renameDeckDialog(viewModel.focusedDeck)
                     return true
                 }
             }
@@ -1515,15 +1511,15 @@ open class DeckPicker :
             val (deckName, totalCards, isFilteredDeck) =
                 withCol {
                     Triple(
-                        decks.name(focusedDeck),
-                        decks.cardCount(focusedDeck, includeSubdecks = true),
-                        decks.isFiltered(focusedDeck),
+                        decks.name(viewModel.focusedDeck),
+                        decks.cardCount(viewModel.focusedDeck, includeSubdecks = true),
+                        decks.isFiltered(viewModel.focusedDeck),
                     )
                 }
             val confirmDeleteDeckDialog =
                 DeckPickerConfirmDeleteDeckDialog.newInstance(
                     deckName = deckName,
-                    deckId = focusedDeck,
+                    deckId = viewModel.focusedDeck,
                     totalCards = totalCards,
                     isFilteredDeck = isFilteredDeck,
                 )
@@ -2130,7 +2126,7 @@ open class DeckPicker :
         withCol { decks.select(did) }
         // Also forget the last deck used by the Browser
         CardBrowser.clearLastDeckId()
-        focusedDeck = did
+        viewModel.focusedDeck = did
         val deck = deckListAdapter.getNodeByDid(did)
         if (deck.hasCardsReadyToStudy()) {
             openReviewerOrStudyOptions(selectionType)
@@ -2308,9 +2304,9 @@ open class DeckPicker :
             Timber.e(e, "RuntimeException setting time remaining")
         }
         val current = withCol { decks.current().optLong("id") }
-        if (focusedDeck != current) {
+        if (viewModel.focusedDeck != current) {
             scrollDecklistToDeck(current)
-            focusedDeck = current
+            viewModel.focusedDeck = current
         }
     }
 
@@ -2424,7 +2420,7 @@ open class DeckPicker :
                 }
             // After deletion: decks.current() reverts to Default, necessitating `focusedDeck`
             // to match and avoid unnecessary scrolls in `renderPage()`.
-            focusedDeck = Consts.DEFAULT_DECK_ID
+            viewModel.focusedDeck = Consts.DEFAULT_DECK_ID
             showSnackbar(TR.browsingCardsDeletedWithDeckname(changes.count, deckName), Snackbar.LENGTH_SHORT) {
                 setAction(R.string.undo) { undo() }
             }
