@@ -52,6 +52,7 @@ import com.ichi2.libanki.Consts.QUEUE_TYPE_SIBLING_BURIED
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.undoableOp
+import com.ichi2.utils.LanguageUtil
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
@@ -188,6 +189,8 @@ class CardBrowserViewModel(
         return withCol { notesOfCards(cids = cardIds) }
     }
 
+    val flowOfLanguageChanged = MutableStateFlow(LanguageUtil.getSystemLocale().language)
+
     @Suppress("RedundantSuspendModifier") // will be necessary
     @VisibleForTesting
     internal suspend fun queryAllCardIds(): List<CardId> = cards.map { it.id }
@@ -322,9 +325,7 @@ class CardBrowserViewModel(
             val cardsOrNotes = withCol { CardsOrNotes.fromCollection(this@withCol) }
             flowOfCardsOrNotes.update { cardsOrNotes }
 
-            val allColumns = withCol { allBrowserColumns() }.associateBy { it.key }
-            column1Candidates = CardBrowserColumn.COLUMN1_KEYS.map { allColumns[it.ankiColumnKey]!! }
-            column2Candidates = CardBrowserColumn.COLUMN2_KEYS.map { allColumns[it.ankiColumnKey]!! }
+            fetchColumn()
 
             setupColumns(cardsOrNotes)
 
@@ -338,6 +339,12 @@ class CardBrowserViewModel(
                 flowOfInitCompleted.update { true }
             }
         }
+    }
+
+    suspend fun fetchColumn() {
+        val allColumns = withCol { allBrowserColumns() }.associateBy { it.key }
+        column1Candidates = CardBrowserColumn.COLUMN1_KEYS.map { allColumns[it.ankiColumnKey]!! }
+        column2Candidates = CardBrowserColumn.COLUMN2_KEYS.map { allColumns[it.ankiColumnKey]!! }
     }
 
     private suspend fun setupColumns(cardsOrNotes: CardsOrNotes) {

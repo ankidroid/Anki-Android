@@ -144,6 +144,7 @@ import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -570,6 +571,11 @@ open class CardBrowser :
             }
         }
 
+        suspend fun updateColumnLanguageChange(value: String) {
+            viewModel.fetchColumn()
+            setupColumnSpinners()
+        }
+
         fun initCompletedChanged(completed: Boolean) {
             if (!completed) return
 
@@ -601,6 +607,7 @@ open class CardBrowser :
         viewModel.flowOfCanSearch.launchCollectionInLifecycleScope(::onCanSaveChanged)
         viewModel.flowOfIsInMultiSelectMode.launchCollectionInLifecycleScope(::isInMultiSelectModeChanged)
         viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
+        viewModel.flowOfLanguageChanged.launchCollectionInLifecycleScope(::updateColumnLanguageChange)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
         viewModel.flowOfInitCompleted.launchCollectionInLifecycleScope(::initCompletedChanged)
         viewModel.flowOfCardsOrNotes.launchCollectionInLifecycleScope(::cardsOrNotesChanged)
@@ -954,6 +961,12 @@ open class CardBrowser :
 
     override fun onResume() {
         super.onResume()
+
+        // only when viewModel is initiated and columns value has been assigned
+        if (viewModel.flowOfInitCompleted.value) {
+            viewModel.flowOfLanguageChanged.update { LanguageUtil.getSystemLocale().language }
+        }
+
         selectNavigationItem(R.id.nav_browser)
         updateNumCardsToRender()
     }

@@ -65,6 +65,7 @@ import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 import timber.log.Timber
 import java.io.File
 import kotlin.io.path.createTempDirectory
@@ -698,6 +699,19 @@ class CardBrowserViewModelTest : JvmTest() {
                 waitForSearchResults()
                 assertThat("one suspended cards of a note is found", rowCount, equalTo(1))
             }
+        }
+
+    @Test
+    @Config(qualifiers = "da")
+    fun `change language to dansk and check columnHeaders`() =
+        runViewModelTest {
+            setColumn1(QUESTION)
+            val column1Header = column1Candidates[0].notesModeLabel
+            assertThat("column1 headers is not question", column1Header, not(QUESTION))
+
+            setColumn2(ANSWER)
+            val column2Header = column2Candidates[0].notesModeLabel
+            assertThat("column2 headers is not question", column2Header, not(ANSWER))
         }
 
     @Test
