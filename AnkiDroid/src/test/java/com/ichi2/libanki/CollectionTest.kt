@@ -110,13 +110,13 @@ class CollectionTest : JvmTest() {
         var n = col.addNote(note)
         assertEquals(1, n)
         // test multiple cards - add another template
-        val m = col.notetypes.current()
-        val mm = col.notetypes
+        val noteType = col.notetypes.current()
+        val noteTypes = col.notetypes
         val t = Notetypes.newTemplate("Reverse")
         t.put("qfmt", "{{Back}}")
         t.put("afmt", "{{Front}}")
-        mm.addTemplateModChanged(m, t)
-        mm.save(m)
+        noteTypes.addTemplateModChanged(noteType, t)
+        noteTypes.save(noteType)
         assertEquals(2, col.cardCount())
         // creating new notes should use both cards
         note = col.newNote()
@@ -191,11 +191,11 @@ class CollectionTest : JvmTest() {
     @Test
     @Ignore("Pending port of media search from Rust code")
     fun test_furigana() {
-        val mm = col.notetypes
-        val m = mm.current()
+        val noteTypes = col.notetypes
+        val noteType = noteTypes.current()
         // filter should work
-        m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{kana:Front}}")
-        mm.save(m)
+        noteType.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{kana:Front}}")
+        noteTypes.save(noteType)
         val n = col.newNote()
         n.setItem("Front", "foo[abc]")
         col.addNote(n)
@@ -207,8 +207,8 @@ class CollectionTest : JvmTest() {
         val question = c.question(true)
         assertThat("Question «$question» does not contains «anki:play».", question, Matchers.containsString("anki:play"))
         // it shouldn't throw an error while people are editing
-        m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{kana:}}")
-        mm.save(m)
+        noteType.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{kana:}}")
+        noteTypes.save(noteType)
         c.question(true)
     }
 
