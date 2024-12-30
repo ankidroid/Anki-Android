@@ -3,14 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimaryInverse"
+    android:background="@drawable/widget_card_analysis_rounded_background"
     android:orientation="vertical"
     android:theme="@style/Theme.Material3.DynamicColors.DayNight">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimaryContainer"
+        android:background="@drawable/widget_card_analysis_rounded_inner_background"
         android:orientation="horizontal"
         android:padding="20dp">
 

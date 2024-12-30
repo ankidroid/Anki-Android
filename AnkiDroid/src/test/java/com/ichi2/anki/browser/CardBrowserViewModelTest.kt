@@ -372,6 +372,19 @@ class CardBrowserViewModelTest : JvmTest() {
         }
 
     @Test
+    @Config(qualifiers = "da")
+    fun `change language to dansk and check columnHeaders`() =
+        runViewModelTest {
+            setColumn1(QUESTION)
+            val column1Header = column1Candidates[0].notesModeLabel
+            assertThat("column1 headers is not question", column1Header, not(QUESTION))
+
+            setColumn2(ANSWER)
+            val column2Header = column2Candidates[0].notesModeLabel
+            assertThat("column2 headers is not question", column2Header, not(ANSWER))
+        }
+
+    @Test
     fun `notes - changing column index 1`() =
         runViewModelNotesTest {
             flowOfColumn1.test {

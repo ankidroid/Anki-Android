@@ -87,21 +87,21 @@ class ContentProviderTest : InstrumentedTest() {
      */
     private val testDeckIds: MutableList<Long> = ArrayList(TEST_DECKS.size + 1)
     private lateinit var createdNotes: ArrayList<Uri>
-    private var modelId: Long = 0
+    private var noteTypeId = 0L
     private var dummyFields = emptyStringArray(1)
 
     /**
-     * Initially create one note for each model.
+     * Initially create one note for each note type.
      */
     @Before
     fun setUp() {
         Timber.i("setUp()")
         createdNotes = ArrayList()
         tearDown = true
-        // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
-        val model = createBasicModel()
-        modelId = model.getLong("id")
-        val fields = model.fieldsNames
+        // Add a new basic note type that we use for testing purposes (existing note types could potentially be corrupted)
+        val noteType = createBasicNoteType()
+        noteTypeId = noteType.getLong("id")
+        val fields = noteType.fieldsNames
         // Use the names of the fields as test values for the notes which will be added
         dummyFields = fields.toTypedArray()
         // create test decks and add one note for every deck
@@ -120,21 +120,21 @@ class ContentProviderTest : InstrumentedTest() {
                  * set-down, */
                 val did = col.decks.byName(partialName!!)?.id ?: col.decks.id(partialName)
                 testDeckIds.add(did)
-                createdNotes.add(setupNewNote(col, modelId, did, dummyFields, TEST_TAG))
+                createdNotes.add(setupNewNote(col, noteTypeId, did, dummyFields, TEST_TAG))
                 partialName += "::"
             }
         }
         // Add a note to the default deck as well so that testQueryNextCard() works
-        createdNotes.add(setupNewNote(col, modelId, 1, dummyFields, TEST_TAG))
+        createdNotes.add(setupNewNote(col, noteTypeId, 1, dummyFields, TEST_TAG))
     }
 
-    private fun createBasicModel(name: String = BASIC_MODEL_NAME): NotetypeJson {
-        val m =
+    private fun createBasicNoteType(name: String = BASIC_NOTE_TYPE_NAME): NotetypeJson {
+        val noteTYpe =
             BackendUtils
                 .fromJsonBytes(
                     col.getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC),
                 ).apply { set("name", name) }
-        col.addNotetypeLegacy(BackendUtils.toJsonBytes(m))
+        col.addNotetypeLegacy(BackendUtils.toJsonBytes(noteTYpe))
         return col.notetypes.byName(name)!!
     }
 
@@ -166,21 +166,21 @@ class ContentProviderTest : InstrumentedTest() {
             numDecksBeforeTest,
             col.decks.count(),
         )
-        // Delete test model
+        // Delete test note type
         col.modSchemaNoCheck()
-        removeAllModelsByName(col, BASIC_MODEL_NAME)
-        removeAllModelsByName(col, TEST_MODEL_NAME)
+        removeAllNoteTypesByName(col, BASIC_NOTE_TYPE_NAME)
+        removeAllNoteTypesByName(col, TEST_NOTE_TYPE_NAME)
     }
 
     @Throws(Exception::class)
-    private fun removeAllModelsByName(
+    private fun removeAllNoteTypesByName(
         col: com.ichi2.libanki.Collection,
         name: String,
     ) {
-        var testModel = col.notetypes.byName(name)
-        while (testModel != null) {
-            col.notetypes.rem(testModel)
-            testModel = col.notetypes.byName(name)
+        var testNoteType = col.notetypes.byName(name)
+        while (testNoteType != null) {
+            col.notetypes.rem(testNoteType)
+            testNoteType = col.notetypes.byName(name)
         }
     }
 
@@ -224,7 +224,7 @@ class ContentProviderTest : InstrumentedTest() {
         // Add the note
         val values =
             ContentValues().apply {
-                put(FlashCardsContract.Note.MID, modelId)
+                put(FlashCardsContract.Note.MID, noteTypeId)
                 put(FlashCardsContract.Note.FLDS, Utils.joinFields(TEST_NOTE_FIELDS))
                 put(FlashCardsContract.Note.TAGS, TEST_TAG)
             }
@@ -241,9 +241,9 @@ class ContentProviderTest : InstrumentedTest() {
             TEST_NOTE_FIELDS.toMutableList(),
         )
         assertEquals("Check that tag was set correctly", TEST_TAG, addedNote.tags[0])
-        val model: JSONObject? = col.notetypes.get(modelId)
-        assertNotNull("Check model", model)
-        val expectedNumCards = model!!.getJSONArray("tmpls").length()
+        val noteType: JSONObject? = col.notetypes.get(noteTypeId)
+        assertNotNull("Check note type", noteType)
+        val expectedNumCards = noteType!!.getJSONArray("tmpls").length()
         assertEquals("Check that correct number of cards generated", expectedNumCards, addedNote.numberOfCards(col))
         // Now delete the note
         cr.delete(newNoteUri, null, null)
@@ -254,14 +254,14 @@ class ContentProviderTest : InstrumentedTest() {
     }
 
     /**
-     * Check that inserting a note with an invalid modelId returns a reasonable exception
+     * Check that inserting a note with an invalid noteTypeId returns a reasonable exception
      */
     @Test
-    fun testInsertNoteWithBadModelId() {
-        val invalidModelId = 12
+    fun testInsertNoteWithBadNoteTypeId() {
+        val invalidNoteTypeId = 12
         val values =
             ContentValues().apply {
-                put(FlashCardsContract.Note.MID, invalidModelId)
+                put(FlashCardsContract.Note.MID, invalidNoteTypeId)
                 put(FlashCardsContract.Note.FLDS, Utils.joinFields(TEST_NOTE_FIELDS))
                 put(FlashCardsContract.Note.TAGS, TEST_TAG)
             }
@@ -279,23 +279,23 @@ class ContentProviderTest : InstrumentedTest() {
         // Get required objects for test
         val cr = contentResolver
         var col = col
-        // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
-        var model: NotetypeJson? = createBasicModel()
-        val modelId = model!!.getLong("id")
+        // Add a new basic note type that we use for testing purposes (existing note types could potentially be corrupted)
+        var noteType: NotetypeJson? = createBasicNoteType()
+        val noteTypeId = noteType!!.getLong("id")
         // Add the note
-        val modelUri = ContentUris.withAppendedId(FlashCardsContract.Model.CONTENT_URI, modelId)
+        val noteTypeUri = ContentUris.withAppendedId(FlashCardsContract.Model.CONTENT_URI, noteTypeId)
         val testIndex =
-            TEST_MODEL_CARDS.size - 1 // choose the last one because not the same as the basic model template
-        val expectedOrd = model.getJSONArray("tmpls").length()
+            TEST_NOTE_TYPE_CARDS.size - 1 // choose the last one because not the same as the basic note type template
+        val expectedOrd = noteType.getJSONArray("tmpls").length()
         val cv =
             ContentValues().apply {
-                put(FlashCardsContract.CardTemplate.NAME, TEST_MODEL_CARDS[testIndex])
-                put(FlashCardsContract.CardTemplate.QUESTION_FORMAT, TEST_MODEL_QFMT[testIndex])
-                put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, TEST_MODEL_AFMT[testIndex])
-                put(FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT, TEST_MODEL_QFMT[testIndex])
-                put(FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT, TEST_MODEL_AFMT[testIndex])
+                put(FlashCardsContract.CardTemplate.NAME, TEST_NOTE_TYPE_CARDS[testIndex])
+                put(FlashCardsContract.CardTemplate.QUESTION_FORMAT, TEST_NOTE_TYPE_QFMT[testIndex])
+                put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, TEST_NOTE_TYPE_AFMT[testIndex])
+                put(FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT, TEST_NOTE_TYPE_QFMT[testIndex])
+                put(FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT, TEST_NOTE_TYPE_AFMT[testIndex])
             }
-        val templatesUri = Uri.withAppendedPath(modelUri, "templates")
+        val templatesUri = Uri.withAppendedPath(noteTypeUri, "templates")
         val templateUri = cr.insert(templatesUri, cv)
         col = reopenCol() // test that the changes are physically saved to the DB
         assertNotNull("Check template uri", templateUri)
@@ -306,9 +306,9 @@ class ContentProviderTest : InstrumentedTest() {
                 templateUri!!,
             ),
         )
-        model = col.notetypes.get(modelId)
-        assertNotNull("Check model", model)
-        val template = model!!.getJSONArray("tmpls").getJSONObject(expectedOrd)
+        noteType = col.notetypes.get(noteTypeId)
+        assertNotNull("Check note type", noteType)
+        val template = noteType!!.getJSONArray("tmpls").getJSONObject(expectedOrd)
         assertEquals(
             "Check template JSONObject ord",
             expectedOrd,
@@ -316,14 +316,14 @@ class ContentProviderTest : InstrumentedTest() {
         )
         assertEquals(
             "Check template name",
-            TEST_MODEL_CARDS[testIndex],
+            TEST_NOTE_TYPE_CARDS[testIndex],
             template.getString("name"),
         )
-        assertEquals("Check qfmt", TEST_MODEL_QFMT[testIndex], template.getString("qfmt"))
-        assertEquals("Check afmt", TEST_MODEL_AFMT[testIndex], template.getString("afmt"))
-        assertEquals("Check bqfmt", TEST_MODEL_QFMT[testIndex], template.getString("bqfmt"))
-        assertEquals("Check bafmt", TEST_MODEL_AFMT[testIndex], template.getString("bafmt"))
-        col.notetypes.rem(model)
+        assertEquals("Check qfmt", TEST_NOTE_TYPE_QFMT[testIndex], template.getString("qfmt"))
+        assertEquals("Check afmt", TEST_NOTE_TYPE_AFMT[testIndex], template.getString("afmt"))
+        assertEquals("Check bqfmt", TEST_NOTE_TYPE_QFMT[testIndex], template.getString("bqfmt"))
+        assertEquals("Check bafmt", TEST_NOTE_TYPE_AFMT[testIndex], template.getString("bafmt"))
+        col.notetypes.rem(noteType)
     }
 
     /**
@@ -335,23 +335,23 @@ class ContentProviderTest : InstrumentedTest() {
         // Get required objects for test
         val cr = contentResolver
         var col = col
-        var model: NotetypeJson? = createBasicModel()
-        val modelId = model!!.getLong("id")
-        val initialFieldsArr = model.flds
+        var noteType: NotetypeJson? = createBasicNoteType()
+        val noteTypeId = noteType!!.getLong("id")
+        val initialFieldsArr = noteType.flds
         val initialFieldCount = initialFieldsArr.length()
-        val noteTypeUri = ContentUris.withAppendedId(FlashCardsContract.Model.CONTENT_URI, modelId)
+        val noteTypeUri = ContentUris.withAppendedId(FlashCardsContract.Model.CONTENT_URI, noteTypeId)
         val insertFieldValues = ContentValues()
         insertFieldValues.put(FlashCardsContract.Model.FIELD_NAME, TEST_FIELD_NAME)
         val fieldUri = cr.insert(Uri.withAppendedPath(noteTypeUri, "fields"), insertFieldValues)
         assertNotNull("Check field uri", fieldUri)
         // Ensure that the changes are physically saved to the DB
         col = reopenCol()
-        model = col.notetypes.get(modelId)
+        noteType = col.notetypes.get(noteTypeId)
         // Test the field is as expected
         val fieldId = ContentUris.parseId(fieldUri!!)
         assertEquals("Check field id", initialFieldCount.toLong(), fieldId)
-        assertNotNull("Check model", model)
-        val fldsArr = model!!.flds
+        assertNotNull("Check note type", noteType)
+        val fldsArr = noteType!!.flds
         assertEquals(
             "Check fields length",
             (initialFieldCount + 1),
@@ -362,7 +362,7 @@ class ContentProviderTest : InstrumentedTest() {
             TEST_FIELD_NAME,
             fldsArr.last().name,
         )
-        col.notetypes.rem(model)
+        col.notetypes.rem(noteType)
     }
 
     /**
@@ -376,7 +376,7 @@ class ContentProviderTest : InstrumentedTest() {
             .query(
                 FlashCardsContract.Note.CONTENT_URI_V2,
                 null,
-                "mid=$modelId",
+                "mid=$noteTypeId",
                 null,
                 null,
             ).use { cursor ->
@@ -552,69 +552,69 @@ class ContentProviderTest : InstrumentedTest() {
     }
 
     /**
-     * Check that inserting a new model works as expected
+     * Check that inserting a new note type works as expected
      */
     @Test
-    fun testInsertAndUpdateModel() {
+    fun testInsertAndUpdateNoteType() {
         val cr = contentResolver
         var cv =
             ContentValues().apply {
-                // Insert a new model
-                put(FlashCardsContract.Model.NAME, TEST_MODEL_NAME)
-                put(FlashCardsContract.Model.FIELD_NAMES, Utils.joinFields(TEST_MODEL_FIELDS))
-                put(FlashCardsContract.Model.NUM_CARDS, TEST_MODEL_CARDS.size)
+                // Insert a new note type
+                put(FlashCardsContract.Model.NAME, TEST_NOTE_TYPE_NAME)
+                put(FlashCardsContract.Model.FIELD_NAMES, Utils.joinFields(TEST_NOTE_TYPE_FIELDS))
+                put(FlashCardsContract.Model.NUM_CARDS, TEST_NOTE_TYPE_CARDS.size)
             }
-        val modelUri = cr.insert(FlashCardsContract.Model.CONTENT_URI, cv)
-        assertNotNull("Check inserted model isn't null", modelUri)
-        assertNotNull("Check last path segment exists", modelUri!!.lastPathSegment)
-        val mid = modelUri.lastPathSegment!!.toLong()
+        val noteTypeUri = cr.insert(FlashCardsContract.Model.CONTENT_URI, cv)
+        assertNotNull("Check inserted note type isn't null", noteTypeUri)
+        assertNotNull("Check last path segment exists", noteTypeUri!!.lastPathSegment)
+        val mid = noteTypeUri.lastPathSegment!!.toLong()
         var col = reopenCol()
         try {
-            var model: NotetypeJson? = col.notetypes.get(mid)
-            assertNotNull("Check model", model)
-            assertEquals("Check model name", TEST_MODEL_NAME, model!!.getString("name"))
+            var noteType = col.notetypes.get(mid)
+            assertNotNull("Check note type", noteType)
+            assertEquals("Check note type name", TEST_NOTE_TYPE_NAME, noteType!!.getString("name"))
             assertEquals(
                 "Check templates length",
-                TEST_MODEL_CARDS.size,
-                model.getJSONArray("tmpls").length(),
+                TEST_NOTE_TYPE_CARDS.size,
+                noteType.getJSONArray("tmpls").length(),
             )
             assertEquals(
                 "Check field length",
-                TEST_MODEL_FIELDS.size,
-                model.flds.length(),
+                TEST_NOTE_TYPE_FIELDS.size,
+                noteType.getJSONArray("flds").length(),
             )
-            val fields = model.flds
+            val fields = noteType.flds
             for (i in 0 until fields.length()) {
                 assertEquals(
                     "Check name of fields",
-                    TEST_MODEL_FIELDS[i],
+                    TEST_NOTE_TYPE_FIELDS[i],
                     fields[i].name,
                 )
             }
-            // Test updating the model CSS (to test updating MODELS_ID Uri)
+            // Test updating the note type CSS (to test updating NOTE_TYPES_ID Uri)
             cv = ContentValues()
-            cv.put(FlashCardsContract.Model.CSS, TEST_MODEL_CSS)
+            cv.put(FlashCardsContract.Model.CSS, TEST_NOTE_TYPE_CSS)
             assertThat(
-                cr.update(modelUri, cv, null, null),
+                cr.update(noteTypeUri, cv, null, null),
                 greaterThan(0),
             )
             col = reopenCol()
-            model = col.notetypes.get(mid)
-            assertNotNull("Check model", model)
-            assertEquals("Check css", TEST_MODEL_CSS, model!!.getString("css"))
-            // Update each of the templates in model (to test updating MODELS_ID_TEMPLATES_ID Uri)
-            for (i in TEST_MODEL_CARDS.indices) {
+            noteType = col.notetypes.get(mid)
+            assertNotNull("Check note type", noteType)
+            assertEquals("Check css", TEST_NOTE_TYPE_CSS, noteType!!.getString("css"))
+            // Update each of the templates in note type (to test updating NOTE_TYPES_ID_TEMPLATES_ID Uri)
+            for (i in TEST_NOTE_TYPE_CARDS.indices) {
                 cv =
                     ContentValues().apply {
-                        put(FlashCardsContract.CardTemplate.NAME, TEST_MODEL_CARDS[i])
-                        put(FlashCardsContract.CardTemplate.QUESTION_FORMAT, TEST_MODEL_QFMT[i])
-                        put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, TEST_MODEL_AFMT[i])
-                        put(FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT, TEST_MODEL_QFMT[i])
-                        put(FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT, TEST_MODEL_AFMT[i])
+                        put(FlashCardsContract.CardTemplate.NAME, TEST_NOTE_TYPE_CARDS[i])
+                        put(FlashCardsContract.CardTemplate.QUESTION_FORMAT, TEST_NOTE_TYPE_QFMT[i])
+                        put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, TEST_NOTE_TYPE_AFMT[i])
+                        put(FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT, TEST_NOTE_TYPE_QFMT[i])
+                        put(FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT, TEST_NOTE_TYPE_AFMT[i])
                     }
                 val tmplUri =
                     Uri.withAppendedPath(
-                        Uri.withAppendedPath(modelUri, "templates"),
+                        Uri.withAppendedPath(noteTypeUri, "templates"),
                         i.toString(),
                     )
                 assertThat(
@@ -623,26 +623,26 @@ class ContentProviderTest : InstrumentedTest() {
                     greaterThan(0),
                 )
                 col = reopenCol()
-                model = col.notetypes.get(mid)
-                assertNotNull("Check model", model)
-                val template = model!!.getJSONArray("tmpls").getJSONObject(i)
+                noteType = col.notetypes.get(mid)
+                assertNotNull("Check note type", noteType)
+                val template = noteType!!.getJSONArray("tmpls").getJSONObject(i)
                 assertEquals(
                     "Check template name",
-                    TEST_MODEL_CARDS[i],
+                    TEST_NOTE_TYPE_CARDS[i],
                     template.getString("name"),
                 )
-                assertEquals("Check qfmt", TEST_MODEL_QFMT[i], template.getString("qfmt"))
-                assertEquals("Check afmt", TEST_MODEL_AFMT[i], template.getString("afmt"))
-                assertEquals("Check bqfmt", TEST_MODEL_QFMT[i], template.getString("bqfmt"))
-                assertEquals("Check bafmt", TEST_MODEL_AFMT[i], template.getString("bafmt"))
+                assertEquals("Check qfmt", TEST_NOTE_TYPE_QFMT[i], template.getString("qfmt"))
+                assertEquals("Check afmt", TEST_NOTE_TYPE_AFMT[i], template.getString("afmt"))
+                assertEquals("Check bqfmt", TEST_NOTE_TYPE_QFMT[i], template.getString("bqfmt"))
+                assertEquals("Check bafmt", TEST_NOTE_TYPE_AFMT[i], template.getString("bafmt"))
             }
         } finally {
-            // Delete the model (this will force a full-sync)
+            // Delete the note type (this will force a full-sync)
             col.modSchemaNoCheck()
             try {
-                val model = col.notetypes.get(mid)
-                assertNotNull("Check model", model)
-                col.notetypes.rem(model!!)
+                val noteType = col.notetypes.get(mid)
+                assertNotNull("Check note type", noteType)
+                col.notetypes.rem(noteType!!)
             } catch (e: ConfirmModSchemaException) {
                 // This will never happen
             }
@@ -653,52 +653,52 @@ class ContentProviderTest : InstrumentedTest() {
      * Query .../models URI
      */
     @Test
-    fun testQueryAllModels() {
+    fun testQueryAllNoteType() {
         val cr = contentResolver
-        // Query all available models
-        val allModels = cr.query(FlashCardsContract.Model.CONTENT_URI, null, null, null, null)
-        assertNotNull(allModels)
-        allModels.use {
+        // Query all available note types
+        val allNoteTypes = cr.query(FlashCardsContract.Model.CONTENT_URI, null, null, null, null)
+        assertNotNull(allNoteTypes)
+        allNoteTypes.use {
             assertThat(
                 "Check that there is at least one result",
-                allModels.count,
+                allNoteTypes.count,
                 greaterThan(0),
             )
-            while (allModels.moveToNext()) {
-                val modelId =
-                    allModels.getLong(allModels.getColumnIndex(FlashCardsContract.Model._ID))
-                val modelUri =
+            while (allNoteTypes.moveToNext()) {
+                val noteTypeId =
+                    allNoteTypes.getLong(allNoteTypes.getColumnIndex(FlashCardsContract.Model._ID))
+                val noteTypeUri =
                     Uri.withAppendedPath(
                         FlashCardsContract.Model.CONTENT_URI,
-                        modelId.toString(),
+                        noteTypeId.toString(),
                     )
-                val singleModel = cr.query(modelUri, null, null, null, null)
-                assertNotNull(singleModel)
-                singleModel.use {
+                val singleNoteType = cr.query(noteTypeUri, null, null, null, null)
+                assertNotNull(singleNoteType)
+                singleNoteType.use {
                     assertEquals(
                         "Check that there is exactly one result",
                         1,
                         it.count,
                     )
                     assertTrue("Move to beginning of cursor", it.moveToFirst())
-                    val nameFromModels =
-                        allModels.getString(allModels.getColumnIndex(FlashCardsContract.Model.NAME))
-                    val nameFromModel =
-                        it.getString(allModels.getColumnIndex(FlashCardsContract.Model.NAME))
+                    val nameFromNoteTypes =
+                        allNoteTypes.getString(allNoteTypes.getColumnIndex(FlashCardsContract.Model.NAME))
+                    val nameFromNoteType =
+                        it.getString(allNoteTypes.getColumnIndex(FlashCardsContract.Model.NAME))
                     assertEquals(
-                        "Check that model names are the same",
-                        nameFromModel,
-                        nameFromModels,
+                        "Check that note type names are the same",
+                        nameFromNoteType,
+                        nameFromNoteTypes,
                     )
                     val flds =
-                        allModels.getString(allModels.getColumnIndex(FlashCardsContract.Model.FIELD_NAMES))
+                        allNoteTypes.getString(allNoteTypes.getColumnIndex(FlashCardsContract.Model.FIELD_NAMES))
                     assertThat(
                         "Check that valid number of fields",
                         Utils.splitFields(flds).size,
                         greaterThanOrEqualTo(1),
                     )
                     val numCards =
-                        allModels.getInt(allModels.getColumnIndex(FlashCardsContract.Model.NUM_CARDS))
+                        allNoteTypes.getInt(allNoteTypes.getColumnIndex(FlashCardsContract.Model.NUM_CARDS))
                     assertThat(
                         "Check that valid number of cards",
                         numCards,
@@ -776,19 +776,19 @@ class ContentProviderTest : InstrumentedTest() {
     }
 
     /**
-     * Check that querying the current model gives a valid result
+     * Check that querying the current note type gives a valid result
      */
     @Test
-    fun testQueryCurrentModel() {
+    fun testQueryCurrentNoteType() {
         val cr = contentResolver
         val uri =
             Uri.withAppendedPath(
                 FlashCardsContract.Model.CONTENT_URI,
                 FlashCardsContract.Model.CURRENT_MODEL_ID,
             )
-        val modelCursor = cr.query(uri, null, null, null, null)
-        assertNotNull(modelCursor)
-        modelCursor.use {
+        val noteTypeCursor = cr.query(uri, null, null, null, null)
+        assertNotNull(noteTypeCursor)
+        noteTypeCursor.use {
             assertEquals(
                 "Check that there is exactly one result",
                 1,
@@ -1274,7 +1274,7 @@ class ContentProviderTest : InstrumentedTest() {
 
     /** Test that a null did will not crash the provider (#6378)  */
     @Test
-    fun testProviderProvidesDefaultForEmptyModelDeck() {
+    fun testProviderProvidesDefaultForEmptyNoteTypeDeck() {
         assumeTrue(
             "This causes mild data corruption - should not be run on a collection you care about",
             isEmulator(),
@@ -1282,16 +1282,16 @@ class ContentProviderTest : InstrumentedTest() {
         col.notetypes.all()[0].put("did", JSONObject.NULL)
 
         val cr = contentResolver
-        // Query all available models
-        val allModels = cr.query(FlashCardsContract.Model.CONTENT_URI, null, null, null, null)
-        assertNotNull(allModels)
+        // Query all available note types
+        val allNoteTypes = cr.query(FlashCardsContract.Model.CONTENT_URI, null, null, null, null)
+        assertNotNull(allNoteTypes)
     }
 
     @Test
     fun pureAnswerHandledQuotedHtmlElement() {
         // <hr id="answer"> is also used
-        val modelName = addNonClozeModel("Test", arrayOf("One", "Two"), "{{One}}", "{{One}}<hr id=\"answer\">{{Two}}")
-        val note = col.newNote(col.notetypes.byName(modelName)!!)
+        val noteTypeName = addNonClozeNoteType("Test", arrayOf("One", "Two"), "{{One}}", "{{One}}<hr id=\"answer\">{{Two}}")
+        val note = col.newNote(col.notetypes.byName(noteTypeName)!!)
         note.setItem("One", "1")
         note.setItem("Two", "2")
         col.addNote(note)
@@ -1355,7 +1355,7 @@ class ContentProviderTest : InstrumentedTest() {
         get() = testContext.contentResolver
 
     companion object {
-        private const val BASIC_MODEL_NAME = "com.ichi2.anki.provider.test.basic.x94oa3F"
+        private const val BASIC_NOTE_TYPE_NAME = "com.ichi2.anki.provider.test.basic.x94oa3F"
         private const val TEST_FIELD_NAME = "TestFieldName"
         private const val TEST_FIELD_VALUE = "test field value"
         private const val TEST_TAG = "aldskfhewjklhfczmxkjshf"
@@ -1370,13 +1370,13 @@ class ContentProviderTest : InstrumentedTest() {
                 "cmxieunwoogyxsctnjmv::abcdefgh::ZYXW",
                 "cmxieunwoogyxsctnjmv::INSBGDS",
             )
-        private const val TEST_MODEL_NAME = "com.ichi2.anki.provider.test.a1x6h9l"
-        private val TEST_MODEL_FIELDS = arrayOf("FRONTS", "BACK")
-        private val TEST_MODEL_CARDS = arrayOf("cArD1", "caRD2")
-        private val TEST_MODEL_QFMT = arrayOf("{{FRONTS}}", "{{BACK}}")
-        private val TEST_MODEL_AFMT = arrayOf("{{BACK}}", "{{FRONTS}}")
+        private const val TEST_NOTE_TYPE_NAME = "com.ichi2.anki.provider.test.a1x6h9l"
+        private val TEST_NOTE_TYPE_FIELDS = arrayOf("FRONTS", "BACK")
+        private val TEST_NOTE_TYPE_CARDS = arrayOf("cArD1", "caRD2")
+        private val TEST_NOTE_TYPE_QFMT = arrayOf("{{FRONTS}}", "{{BACK}}")
+        private val TEST_NOTE_TYPE_AFMT = arrayOf("{{BACK}}", "{{FRONTS}}")
         private val TEST_NOTE_FIELDS = arrayOf("dis is za Fr0nt", "Te\$t")
-        private const val TEST_MODEL_CSS = "styleeeee"
+        private const val TEST_NOTE_TYPE_CSS = "styleeeee"
 
         @Suppress("SameParameterValue")
         private fun setupNewNote(
@@ -1407,21 +1407,21 @@ class ContentProviderTest : InstrumentedTest() {
         }
     }
 
-    fun addNonClozeModel(
+    fun addNonClozeNoteType(
         name: String,
         fields: Array<String>,
         qfmt: String?,
         afmt: String?,
     ): String {
-        val model = col.notetypes.new(name)
+        val noteType = col.notetypes.new(name)
         for (field in fields) {
-            col.notetypes.addFieldInNewModel(model, col.notetypes.newField(field))
+            col.notetypes.addFieldInNewModel(noteType, col.notetypes.newField(field))
         }
         val t = Notetypes.newTemplate("Card 1")
         t.put("qfmt", qfmt)
         t.put("afmt", afmt)
-        col.notetypes.addTemplateInNewModel(model, t)
-        col.notetypes.add(model)
+        col.notetypes.addTemplateInNewModel(noteType, t)
+        col.notetypes.add(noteType)
         return name
     }
 }

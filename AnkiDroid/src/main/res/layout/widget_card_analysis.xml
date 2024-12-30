@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimaryInverse"
+    android:background="@drawable/widget_card_analysis_rounded_background"
     android:clickable="true"
     android:focusable="false"
     android:theme="@style/Theme.Material3.DynamicColors.DayNight">
@@ -25,7 +25,7 @@
         android:id="@+id/cardAnalysisDataHolder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimaryContainer"
+        android:background="@drawable/widget_card_analysis_rounded_inner_background"
         android:orientation="horizontal"
         android:padding="20dp">
 
