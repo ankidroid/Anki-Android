@@ -17,12 +17,10 @@
 
 package com.ichi2.anki
 
-import android.os.Build
 import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.annotation.RequiresApi
 
 /**
  * Custom ActionMode.Callback implementation for adding and handling cloze deletion action
@@ -32,21 +30,24 @@ class CustomActionModeCallback(
     private val isClozeType: Boolean,
     private val clozeMenuTitle: String,
     private val clozeMenuId: Int,
-    private val onActionItemSelected: (mode: ActionMode, item: MenuItem) -> Boolean
+    private val onActionItemSelected: (mode: ActionMode, item: MenuItem) -> Boolean,
 ) : ActionMode.Callback {
-    @RequiresApi(Build.VERSION_CODES.N)
     private val setLanguageId = View.generateViewId()
 
-    override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
-        return true
-    }
+    override fun onCreateActionMode(
+        mode: ActionMode,
+        menu: Menu,
+    ): Boolean = true
 
-    override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
+    override fun onPrepareActionMode(
+        mode: ActionMode,
+        menu: Menu,
+    ): Boolean {
         // Adding the cloze deletion floating context menu item, but only once.
         if (menu.findItem(clozeMenuId) != null) {
             return false
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && menu.findItem(setLanguageId) != null) {
+        if (menu.findItem(setLanguageId) != null) {
             return false
         }
 
@@ -62,15 +63,16 @@ class CustomActionModeCallback(
                 Menu.NONE,
                 clozeMenuId,
                 0,
-                clozeMenuTitle
+                clozeMenuTitle,
             )
         }
         return initialSize != menu.size()
     }
 
-    override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-        return onActionItemSelected(mode, item)
-    }
+    override fun onActionItemClicked(
+        mode: ActionMode,
+        item: MenuItem,
+    ): Boolean = onActionItemSelected(mode, item)
 
     override fun onDestroyActionMode(mode: ActionMode) {
         // Left empty on purpose

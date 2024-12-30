@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">Haluatko varmasti yrittää korjata tietokannan?\n\nEnnen yritystä kopio tietokannasta luodaan alihakemistoon ”%s”.</string>
     <string name="intent_aedict_empty">Oletus-luokka on tyhjä</string>
     <string name="intent_aedict_category">Lisätäksesi kortteja AnkiDroidiin poista kaikki Notepad-kategoriat tai lisää uusi nimellä ”default”</string>
-    <string name="custom_study_new_total_new">Uusia kortteja pakassa: %d</string>
-    <string name="custom_study_rev_total_rev">Opiskeltavia kortteja pakassa: %d</string>
     <string name="custom_study_new_extend">Korota/alenna (\"-3\") tämän päivän uusien kortien rajaa arvolla</string>
     <string name="custom_study_rev_extend">Korota/alenna (\"-3\") tämän päivän kerrattavien kortien rajaa arvolla</string>
     <string name="custom_study_forgotten">Kortteja unohdettu edellisenä x päivänä:</string>
     <string name="custom_study_ahead">Kertaa etukäteen x päivää:</string>
-    <string name="custom_study_random">Valitse x korttia satunnaisesti pakasta:</string>
     <string name="custom_study_preview">Esikatsele viimeisinä x päivänä lisättyjä kortteja:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Mukautettua pakkaa ei voitu rakentaa uudelleen</string>
     <string name="storage_full_title">Tallennustila on täynnä</string>
     <string name="storage_almost_full_title">Tallennustila on melkein täynnä</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Ei tilaa</string>

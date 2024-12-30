@@ -65,18 +65,25 @@ open class JvmTest : TestClass {
         println("""-- executing test "${testName.methodName}"""")
         TimeManager.resetWith(MockTime(2020, 7, 7, 7, 0, 0, 0, 10))
 
-        plant(object : Timber.DebugTree() {
-            @SuppressLint("PrintStackTraceUsage")
-            override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-                // This is noisy in test environments
-                if (tag == "Backend\$checkMainThreadOp") {
-                    return
+        plant(
+            object : Timber.DebugTree() {
+                @SuppressLint("PrintStackTraceUsage")
+                override fun log(
+                    priority: Int,
+                    tag: String?,
+                    message: String,
+                    t: Throwable?,
+                ) {
+                    // This is noisy in test environments
+                    if (tag == "Backend\$checkMainThreadOp") {
+                        return
+                    }
+                    // use println(): Timber may not work under the Jvm
+                    println("$tag: $message")
+                    t?.printStackTrace()
                 }
-                // use println(): Timber may not work under the Jvm
-                println("$tag: $message")
-                t?.printStackTrace()
-            }
-        })
+            },
+        )
 
         ChangeManager.clearSubscribers()
 
@@ -107,7 +114,10 @@ open class JvmTest : TestClass {
         println("""-- completed test "${testName.methodName}"""")
     }
 
-    fun <T> assumeThat(actual: T, matcher: Matcher<T>?) {
+    fun <T> assumeThat(
+        actual: T,
+        matcher: Matcher<T>?,
+    ) {
         Assume.assumeThat(actual, matcher)
     }
 }

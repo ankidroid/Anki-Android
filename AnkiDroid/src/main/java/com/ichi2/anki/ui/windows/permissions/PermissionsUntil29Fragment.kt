@@ -33,11 +33,15 @@ import com.ichi2.utils.hasAnyOfPermissionsBeenDenied
  *   which isn't deleted when the app is uninstalled
  */
 class PermissionsUntil29Fragment : PermissionsFragment(R.layout.permissions_until_29) {
-    private val storageLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) {}
+    private val storageLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions(),
+        ) {}
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         val storagePermission = view.findViewById<PermissionItem>(R.id.storage_permission)
         storagePermission.setOnSwitchClickListener {
             if (!userCanGrantWriteExternalStorage()) {

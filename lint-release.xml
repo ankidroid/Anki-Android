@@ -159,8 +159,9 @@
 
     <issue id="ExpiredTargetSdkVersion" severity="fatal" />
     <issue id="ObsoleteLintCustomCheck" severity="fatal" />
-    <issue id="UnusedQuantity" severity="fatal" />
-    <issue id="MissingQuantity" severity="fatal" />
+    <!--          Revert lint rule changes [UnusedQuantity, MissingQuantity] from fatal to ignore             -->
+    <issue id="UnusedQuantity" severity="ignore" />
+    <issue id="MissingQuantity" severity="ignore" />
     <issue id="ExportedPreferenceActivity" severity="fatal" />
     <issue id="PrivateApi" severity="fatal" />
     <issue id="ProguardSplit" severity="fatal" />

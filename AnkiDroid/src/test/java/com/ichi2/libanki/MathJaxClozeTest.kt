@@ -16,10 +16,10 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class MathJaxClozeTest : JvmTest() {
-
     @Test
     fun verifyMathJaxClozeCards() {
-        val note = addCloseNote("{{c1::ok}} \\(2^2\\) {{c2::not ok}} \\(2^{{c3::2}}\\) \\(x^3\\) {{c4::blah}} {{c5::text with \\(x^2\\) jax}}")
+        val note =
+            addCloseNote("{{c1::ok}} \\(2^2\\) {{c2::not ok}} \\(2^{{c3::2}}\\) \\(x^3\\) {{c4::blah}} {{c5::text with \\(x^2\\) jax}}")
         assertEquals(5, note.numberOfCards())
 
         val cards = note.cards()

@@ -37,7 +37,9 @@ sealed interface NoteFieldsCheckResult {
     data object Success : NoteFieldsCheckResult
 
     /** @property localizedMessage user-readable error message */
-    data class Failure(val localizedMessage: String?) : NoteFieldsCheckResult
+    data class Failure(
+        val localizedMessage: String?,
+    ) : NoteFieldsCheckResult
 }
 
 /**
@@ -51,14 +53,15 @@ suspend fun checkNoteFieldsResponse(note: Note): NoteFieldsCheckResult {
     val fieldsCheckState = withCol { note.fieldsCheck(this) }
 
     return when (fieldsCheckState) {
-        NoteFieldsCheckResponse.State.NORMAL, NoteFieldsCheckResponse.State.DUPLICATE
+        NoteFieldsCheckResponse.State.NORMAL, NoteFieldsCheckResponse.State.DUPLICATE,
         -> Success
 
-        NoteFieldsCheckResponse.State.EMPTY -> if (note.notetype.isImageOcclusion) {
-            Failure(TR.notetypesNoOcclusionCreated2())
-        } else {
-            Failure(TR.addingTheFirstFieldIsEmpty())
-        }
+        NoteFieldsCheckResponse.State.EMPTY ->
+            if (note.notetype.isImageOcclusion) {
+                Failure(TR.notetypesNoOcclusionCreated2())
+            } else {
+                Failure(TR.addingTheFirstFieldIsEmpty())
+            }
 
         NoteFieldsCheckResponse.State.MISSING_CLOZE ->
             Failure(TR.addingYouHaveAClozeDeletionNote())

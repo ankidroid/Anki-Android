@@ -25,24 +25,30 @@ import android.view.View
 import com.ichi2.anki.R
 
 // TODO : Middle blue line should move left->mid https://github.com/ankidroid/Anki-Android/pull/14591#issuecomment-1791037102
+
 /**This class represents a custom View used for creating audio waveforms when recording audio.
  * It loops over each spike and add it on the screen and the height of the spike is determined by the
  * amplitude that is returned by the audio recorder while recording audio. **/
-class AudioWaveform(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
+class AudioWaveform(
+    context: Context,
+    attrs: AttributeSet? = null,
+) : View(context, attrs) {
+    private var spikePaint =
+        Paint().apply {
+            color = Color.rgb(244, 81, 30)
+        }
 
-    private var spikePaint = Paint().apply {
-        color = Color.rgb(244, 81, 30)
-    }
+    private var verticalLinePaint =
+        Paint().apply {
+            color = Color.rgb(33, 150, 243)
+            style = Paint.Style.STROKE
+            strokeWidth = 5f
+        }
 
-    private var verticalLinePaint = Paint().apply {
-        color = Color.rgb(33, 150, 243)
-        style = Paint.Style.STROKE
-        strokeWidth = 5f
-    }
-
-    private var backgroundPaint = Paint().apply {
-        color = Color.argb(20, 229, 228, 226)
-    }
+    private var backgroundPaint =
+        Paint().apply {
+            color = Color.argb(20, 229, 228, 226)
+        }
 
     private var amplitudes = ArrayList<Float>()
     private var audioSpikes = ArrayList<RectF>()

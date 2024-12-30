@@ -36,13 +36,17 @@ import kotlin.jvm.Throws
  * all the required fields in package.json mapped to AddonModel in this class.
  * The most important fields in package.json are
  * ankiDroidJsApi, addonType and keywords, these fields distinguish other npm packages
+ *
+ * @param name name of npm package, it unique for each package listed on npm
+ * @param addonTitle  for showing in AnkiDroid
+ * @param icon only required for note editor (single character recommended)
  */
 
 @Serializable
 class AddonData(
-    val name: String? = null, // name of npm package, it unique for each package listed on npm
-    val addonTitle: String? = null, // for showing in AnkiDroid
-    val icon: String? = null, // only required for note editor (single character recommended)
+    val name: String? = null,
+    val addonTitle: String? = null,
+    val icon: String? = null,
     val version: String? = null,
     val description: String? = null,
     val main: String? = null,
@@ -52,11 +56,13 @@ class AddonData(
     val author: Map<String, String>? = null,
     val license: String? = null,
     val homepage: String? = null,
-    val dist: DistInfo? = null
+    val dist: DistInfo? = null,
 )
 
 @Serializable
-data class DistInfo(val tarball: String)
+data class DistInfo(
+    val tarball: String,
+)
 
 /**
  * Check if npm package is valid or not by fields ankidroidJsApi, keywords (ankidroid-js-addon) and
@@ -90,8 +96,12 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
     val errorList: MutableList<String> = ArrayList()
 
     // either fields not present in package.json or failed to parse the fields
-    if (addonData.name.isNullOrBlank() || addonData.addonTitle.isNullOrBlank() || addonData.main.isNullOrBlank() ||
-        addonData.ankidroidJsApi.isNullOrBlank() || addonData.addonType.isNullOrBlank() || addonData.homepage.isNullOrBlank() ||
+    if (addonData.name.isNullOrBlank() ||
+        addonData.addonTitle.isNullOrBlank() ||
+        addonData.main.isNullOrBlank() ||
+        addonData.ankidroidJsApi.isNullOrBlank() ||
+        addonData.addonType.isNullOrBlank() ||
+        addonData.homepage.isNullOrBlank() ||
         addonData.keywords.isNullOrEmpty()
     ) {
         errorStr = "Invalid addon package: fields in package.json are empty or null"
@@ -105,7 +115,8 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
     }
 
     if (addonData.addonType != REVIEWER_ADDON && addonData.addonType != NOTE_EDITOR_ADDON) {
-        errorStr = "Invalid addon package: ${addonData.addonType} is not valid addon type, package.json must have 'addonType' fields of 'reviewer' or 'note-editor'"
+        errorStr = "Invalid addon package: ${addonData.addonType} is not valid addon type, " +
+            "package.json must have 'addonType' fields of 'reviewer' or 'note-editor'"
         errorList.add(errorStr)
     }
 
@@ -124,7 +135,8 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
 
     // Check supplied api and current api
     if (addonData.ankidroidJsApi != CURRENT_JS_API_VERSION) {
-        errorStr = "Invalid addon package: supplied js api version ${addonData.ankidroidJsApi} must be equal to current js api version $CURRENT_JS_API_VERSION"
+        errorStr = "Invalid addon package: supplied js api version ${addonData.ankidroidJsApi} must " +
+            "be equal to current js api version $CURRENT_JS_API_VERSION"
         errorList.add(errorStr)
     }
 
@@ -138,21 +150,22 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
     val icon = if (addonData.addonType == NOTE_EDITOR_ADDON) addonData.icon!! else ""
 
     // return addon model, because it is validated
-    val addonModel = AddonModel(
-        name = addonData.name,
-        addonTitle = addonData.addonTitle!!,
-        icon = icon,
-        version = addonData.version!!,
-        description = addonData.description!!,
-        main = addonData.main!!,
-        ankidroidJsApi = addonData.ankidroidJsApi!!,
-        addonType = addonData.addonType!!,
-        keywords = addonData.keywords,
-        author = addonData.author!!,
-        license = addonData.license!!,
-        homepage = addonData.homepage!!,
-        dist = addonData.dist!!
-    )
+    val addonModel =
+        AddonModel(
+            name = addonData.name,
+            addonTitle = addonData.addonTitle!!,
+            icon = icon,
+            version = addonData.version!!,
+            description = addonData.description!!,
+            main = addonData.main!!,
+            ankidroidJsApi = addonData.ankidroidJsApi!!,
+            addonType = addonData.addonType!!,
+            keywords = addonData.keywords,
+            author = addonData.author!!,
+            license = addonData.license!!,
+            homepage = addonData.homepage!!,
+            dist = addonData.dist!!,
+        )
 
     return Pair(addonModel, immutableList)
 }
@@ -165,11 +178,12 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
  */
 @Throws(IOException::class)
 fun getAddonModelListFromJson(packageJsonUrl: URL): Pair<List<AddonModel>, List<String>> {
-    val urlData = if (packageJsonUrl.protocol == "file") {
-        File(packageJsonUrl.path).readBytes().decodeToString()
-    } else {
-        HttpFetcher.fetchThroughHttp(packageJsonUrl.toString())
-    }
+    val urlData =
+        if (packageJsonUrl.protocol == "file") {
+            File(packageJsonUrl.path).readBytes().decodeToString()
+        } else {
+            HttpFetcher.fetchThroughHttp(packageJsonUrl.toString())
+        }
     val errorList: MutableList<String> = ArrayList()
     val json = Json { ignoreUnknownKeys = true }
     val addonsData = json.decodeFromString<List<AddonData>>(urlData)

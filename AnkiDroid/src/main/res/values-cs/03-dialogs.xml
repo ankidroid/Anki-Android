@@ -81,15 +81,11 @@
     <string name="repair_deck_dialog">Opravdu se chcete pokusit opravit databázi?\n\nPřed obnovou bude vytvořena kopie v podadresáři „%s“.</string>
     <string name="intent_aedict_empty">Kategorie „výchozí“ je prázdná</string>
     <string name="intent_aedict_category">Chcete-li přidat karty do AnkiDroid, odstraňte všechny kategorie Poznámkového bloku nebo přidejte jednu s názvem „default“</string>
-    <string name="custom_study_new_total_new">Nové karty v balíčku: %d</string>
-    <string name="custom_study_rev_total_rev">K opakování v balíčku: %d</string>
     <string name="custom_study_new_extend">Zvýšit/snížit („-3“) dnešní limit nových karet o</string>
     <string name="custom_study_rev_extend">Zvýšit/snížit („-3“) dnešní limit opakování o</string>
     <string name="custom_study_forgotten">Opakovat zapomenuté karty z posledních x dnů:</string>
     <string name="custom_study_ahead">Opakovat dopředu o x dnů:</string>
-    <string name="custom_study_random">Vybrat náhodně x karet z balíčku:</string>
     <string name="custom_study_preview">Zkoušení nových karet přidaných v posledních x dnech:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Nelze znovu sestavit balíček vlastního studia</string>
     <string name="storage_full_title">Úložiště je plné</string>
     <string name="storage_almost_full_title">Úložiště téměř plné</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Není místo</string>

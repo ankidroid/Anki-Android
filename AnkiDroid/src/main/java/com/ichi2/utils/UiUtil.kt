@@ -37,10 +37,11 @@ object UiUtil {
             return
         }
     }
+
     fun Dialog.makeFullscreen() {
         window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
+            ViewGroup.LayoutParams.MATCH_PARENT,
         )
     }
 }

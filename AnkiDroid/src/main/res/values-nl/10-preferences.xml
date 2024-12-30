@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">Meer dan %d kaarten te doen</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Trillen</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Licht knipperen</string>
-    <string name="timeout_answer_text" maxLength="41">Automatisch het antwoord tonen</string>
-    <string name="timeout_answer_summ2">Toon het antwoord automatisch zonder input van de gebruiker. Configureer vanaf setopties.</string>
     <string name="select_locale_title">Taal selecteren</string>
     <string name="software_render" maxLength="41">Hardware render kaart uitschakelen</string>
     <string name="software_render_summ">Hardware render is sneller maar kan problemen hebben, met name op Android 8/8.1. Als u delen van de gebruikersinterface voor de beoordeling van de kaart niet kunt zien, probeer dan deze instelling.</string>

@@ -82,17 +82,13 @@
     <string name="webview_crash_loop_dialog_content">На системното WebView не се получи да покаже картата \'%1$s\'.\n%2$s</string>
     <string name="filter_by_flags" maxLength="41">Флагове</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Модифициране на днешното ограничение за нови карти</string>
-    <string name="custom_study_increase_review_limit">Модифициране на днешния лимит за преглед на карти</string>
-    <string name="custom_study_review_forgotten">Преглед забравени карти</string>
-    <string name="custom_study_review_ahead">Преглед напред</string>
-    <string name="custom_study_random_selection">Учи случаен подбор от карти</string>
-    <string name="custom_study_preview_new">Преглед на нови карти</string>
     <string name="custom_study_limit_tags">Ограничаване до определени тагове</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Промяна на бележка</string>
     <string name="discard">Discard</string>
@@ -169,7 +165,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Опции за учене</string>
     <string name="select_tts" maxLength="28">Задаване на TTS език</string>
     <string name="custom_study" maxLength="28">Допълнително учене</string>
-    <string name="more_options">Още</string>
     <string name="dyn_deck_desc">Това е специално тесте за учене извън нормалния график. Картите автоматично ще бъдат върнати в техните първоначални тестета след като бъдат разгледани. Изтриването на това тесте от списъка с тестета ще върне всички останали карти в тестетата, където са били първоначално.</string>
     <string name="steps_error">Стъпките трябва да са числа, по-големи от 0</string>
     <string name="steps_min_error">Изисква се една стъпка</string>

@@ -16,16 +16,14 @@
 package com.ichi2.anki
 
 class FlagToDisplay(
-    private val actualFlag: Int,
+    private val actualFlag: Flag,
     private val isOnAppBar: Boolean,
-    private val isFullscreen: Boolean
+    private val isFullscreen: Boolean,
 ) {
-
-    fun get(): Int {
-        return when {
+    fun get(): Flag =
+        when {
             !isOnAppBar -> actualFlag
             isFullscreen -> actualFlag
-            else -> Flag.NONE.code
+            else -> Flag.NONE
         }
-    }
 }

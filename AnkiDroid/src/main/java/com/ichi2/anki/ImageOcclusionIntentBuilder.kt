@@ -20,12 +20,12 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
+
 /**
  * Builder class for creating intents related to image occlusion in the [NoteEditor].
  */
-class ImageOcclusionIntentBuilder(private val context: Context) {
-
-    fun buildIntent(imageUri: Uri?): Intent {
-        return NoteEditorLauncher.ImageOcclusion(imageUri).getIntent(context)
-    }
+class ImageOcclusionIntentBuilder(
+    private val context: Context,
+) {
+    fun buildIntent(imageUri: Uri?): Intent = NoteEditorLauncher.ImageOcclusion(imageUri).getIntent(context)
 }

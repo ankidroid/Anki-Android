@@ -81,7 +81,7 @@
     <string name="ease_button_easy">Einfach</string>
     <string name="menu_import" maxLength="28">Importieren</string>
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Rückgängig</string>
-    <string name="redo" maxLength="28">Wiederholen</string>
+    <string name="redo" maxLength="28">Wiederherstellen</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Strich rückgängig machen</string>
     <string name="move_all_to_deck">Alle diesem Stapel hinzufügen</string>
     <string name="unbury" maxLength="28">Nicht mehr aufschieben</string>
@@ -130,7 +130,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Stapelsuche</string>
     <string name="invalid_deck_name">Ungültiger Stapelname</string>
     <string name="studyoptions_congrats_finished">Glückwunsch! Das war alles für heute.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck vorerst fertig! %s</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Dieser Stapel ist vorerst geschafft! %s</string>
     <string name="studyoptions_no_cards_due">Es sind noch keine Karten fällig</string>
     <string name="sd_card_not_mounted">Gerätespeicher nicht eingebunden</string>
     <string name="button_sync" comment="Text of the sync button" maxLength="28">Synchronisieren</string>
@@ -183,8 +183,8 @@
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Die Datei %s kann nicht erstellt oder überschrieben werden</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Unzugängliche Sammlung</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Wir können, aufgrund einer Änderung der Play Store-Richtlinie, nachdem AnkiDroid deinstalliert wurde, auf Ihre Sammlung nicht zugreifen.\n\nIhre Daten sind sicher und können wiederhergestellt werden. Es befindet sich unter\n%s\n\nWählen Sie eine Option unten, um sie wiederherzustellen:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android hat den Zugriff auf %1$s entfernt wegen App-Aktivität. \n\nDeine Daten sind sicher und können wiederhergestellt werden. Die befinden sich bei \n%2$s\n\nWähle eine Option unten, um sie wiederherzustellen. </string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Wir können, aufgrund einer Änderung der Play Store-Richtlinie, nachdem AnkiDroid deinstalliert wurde, auf Ihre Sammlung nicht zugreifen.\n\nIhre Daten sind sicher und können wiederhergestellt werden. Es befindet sich unter\n%s\n\nWählen Sie unten eine Wiederherstellungsmöglichkeit aus:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android hat den Zugriff auf %1$s entfernt wegen App-Aktivität. \n\nDeine Daten sind sicher und können wiederhergestellt werden. Die befinden sich bei \n%2$s\n\nWähle unten eine Möglichkeit aus, um sie wiederherzustellen. </string>
     <string name="restore_data_from_ankiweb">von AnkiWeb wiederherstellen (empfohlen)</string>
     <string name="install_non_play_store_ankidroid_recommended">Ordnerzugriff wiederherstellen (empfohlen)</string>
     <string name="install_non_play_store_ankidroid">Ordnerzugriff wiederherstellen (erfahren)</string>

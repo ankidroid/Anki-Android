@@ -35,12 +35,14 @@ import kotlin.coroutines.resumeWithException
  *
  * @see com.ichi2.libanki.Sound.expandSounds
  */
-class VideoPlayer(private val jsEval: () -> JavascriptEvaluator?) {
+class VideoPlayer(
+    private val jsEval: () -> JavascriptEvaluator?,
+) {
     private var continuation: CancellableContinuation<Unit>? = null
 
     fun playVideo(
         continuation: CancellableContinuation<Unit>,
-        tag: SoundOrVideoTag
+        tag: SoundOrVideoTag,
     ) {
         this.continuation = continuation
 
@@ -61,7 +63,7 @@ class VideoPlayer(private val jsEval: () -> JavascriptEvaluator?) {
                            break;
                        }
                     }
-                """
+                """,
         )
     }
 

@@ -23,9 +23,12 @@
 package com.ichi2.anki
 
 import android.content.Context
+import android.icu.util.ULocale
 import android.speech.tts.TextToSpeech
 import android.speech.tts.Voice
-import com.ichi2.compat.CompatHelper
+import androidx.annotation.CheckResult
+import com.ichi2.anki.AndroidTtsVoice.Companion.normalize
+import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.libanki.TemplateManager
 import com.ichi2.libanki.TtsVoice
 import kotlinx.coroutines.Dispatchers
@@ -46,9 +49,9 @@ import kotlin.coroutines.resume
  * In addition, the list of available TTS Voices shouldn't change during execution
  */
 object TtsVoices {
-
     // A new instance of this list is not required if the app language changes: .displayName returns
     // the new values
+
     /** An immutable list of locales available for TTS */
     private lateinit var availableLocaleData: List<Locale>
 
@@ -145,12 +148,13 @@ object TtsVoices {
         Timber.d("launching job")
         // This is intended to be a global singleton outside the lifecycle of a specific activity
         // Most of the time of execution is waiting for the TTS Engine to initialize
-        buildLocalesJob = AnkiDroidApp.applicationScope.launch(Dispatchers.IO) {
-            Timber.d("executing job")
-            loadTtsVoicesData()
-            buildLocalesJob = null
-            Timber.d("%d TTS Voices available", availableLocaleData.size)
-        }
+        buildLocalesJob =
+            AnkiDroidApp.applicationScope.launch(Dispatchers.IO) {
+                Timber.d("executing job")
+                loadTtsVoicesData()
+                buildLocalesJob = null
+                Timber.d("%d TTS Voices available", availableLocaleData.size)
+            }
     }
 
     /**
@@ -172,8 +176,8 @@ object TtsVoices {
             // TODO: Handle multiple engines
             val ttsEngine = tts.defaultEngine
             availableVoices = tts.voices.map { it.toTtsVoice(ttsEngine) }.toSet()
-            availableLocaleData = tts.availableLanguages.map { CompatHelper.compat.normalize(it) }
-        } catch (e: Exception) {
+            availableLocaleData = tts.availableLanguages.map { normalize(it) }
+        } catch (_: Exception) {
             availableVoices = emptySet()
             availableLocaleData = emptyList()
         } finally {
@@ -196,17 +200,18 @@ object TtsVoices {
                 textToSpeech?.shutdown()
             }
             Timber.v("begin TTS creation")
-            textToSpeech = TextToSpeech(context) { status ->
-                if (status == TextToSpeech.SUCCESS) {
-                    Timber.v("TTS creation success")
-                    ttsEngine = textToSpeech?.defaultEngine
-                    continuation.resume(textToSpeech)
-                } else {
-                    Timber.e("TTS creation failed. status: %d", status)
-                    textToSpeech?.shutdown()
-                    continuation.resume(null)
+            textToSpeech =
+                TextToSpeech(context) { status ->
+                    if (status == TextToSpeech.SUCCESS) {
+                        Timber.v("TTS creation success")
+                        ttsEngine = textToSpeech?.defaultEngine
+                        continuation.resume(textToSpeech)
+                    } else {
+                        Timber.e("TTS creation failed. status: %d", status)
+                        textToSpeech?.shutdown()
+                        continuation.resume(null)
+                    }
                 }
-            }
         }
 }
 
@@ -219,7 +224,7 @@ class TtsVoicesFieldFilter : TemplateManager.FieldFilter() {
         fieldText: String,
         fieldName: String,
         filterName: String,
-        ctx: TemplateManager.TemplateRenderContext
+        ctx: TemplateManager.TemplateRenderContext,
     ): String {
         if (filterName != "tts-voices") {
             return fieldText
@@ -243,17 +248,19 @@ class TtsVoicesFieldFilter : TemplateManager.FieldFilter() {
  */
 fun Voice.toTtsVoice(engine: String) = AndroidTtsVoice(this, engine)
 
-/**
- * An instance of [TtsVoice] which allows access to the underlying [Voice] object
- */
 // We include the engine name in the TTS 'name' to future-proof the feature of
 // allowing a user to switch between TTS providers on the same card
 // a name looks like: com.google.android.tts-cmn-cn-x-ccc-local
 // com.google.android.tts + cmn-cn-x-ccc-local
-class AndroidTtsVoice(val voice: Voice, val engine: String) : TtsVoice(name = "$engine-${voice.name}", lang = toAnkiTwoLetterCode(voice.locale)) {
-    override fun unavailable(): Boolean {
-        return voice.features.contains(TextToSpeech.Engine.KEY_FEATURE_NOT_INSTALLED)
-    }
+
+/**
+ * An instance of [TtsVoice] which allows access to the underlying [Voice] object
+ */
+class AndroidTtsVoice(
+    val voice: Voice,
+    val engine: String,
+) : TtsVoice(name = "$engine-${voice.name}", lang = toAnkiTwoLetterCode(voice.locale)) {
+    override fun unavailable(): Boolean = voice.features.contains(TextToSpeech.Engine.KEY_FEATURE_NOT_INSTALLED)
 
     /**
      * The locale of the voice normalized to a human readable language/country, missing the variant
@@ -263,7 +270,7 @@ class AndroidTtsVoice(val voice: Voice, val engine: String) : TtsVoice(name = "$
         // on Samsung phones, the variant (f001/DEFAULT) looks awful in the UI
         // normalise: "en-GBR" is "English (GBR)". "en-GB" is "English (United Kingdom)"
         // then remove the variant: We want English (United Kingdom), not (United Kingdom,DEFAULT)
-        get() = CompatHelper.compat.normalize(voice.locale).let { Locale(it.language, it.country) }
+        get() = normalize(voice.locale).let { Locale(it.language, it.country) }
 
     val isNetworkConnectionRequired
         get() = voice.isNetworkConnectionRequired
@@ -280,8 +287,61 @@ class AndroidTtsVoice(val voice: Voice, val engine: String) : TtsVoice(name = "$
          * * [Locale.variant][Locale.getVariant] is not output
          * * A "_" is used instead of a "-" to match Anki Desktop
          */
-        fun toAnkiTwoLetterCode(locale: Locale): String = CompatHelper.compat.normalize(locale).run {
-            return if (country.isBlank()) language else "${language}_$country"
+        fun toAnkiTwoLetterCode(locale: Locale): String =
+            normalize(locale).run {
+                return if (country.isBlank()) language else "${language}_$country"
+            }
+
+        // TODO: Move the following functions into a separate object
+        // All are coupled to `twoLetterSystemLocaleMapping`
+
+        /**
+         * Converts a locale to a 'two letter' code (ISO-639-1 + ISO 3166-1 alpha-2)
+         * Locale("spa", "MEX", "001") => Locale("es", "MX", "001")
+         */
+        @CheckResult
+        fun normalize(locale: Locale): Locale {
+            // ULocale isn't currently handled by Robolectric
+            if (isRobolectric) {
+                // normalises to "spa_MEX"
+                val iso3Code = getIso3Code(locale) ?: return locale
+                // convert back from this key to a two-letter mapping
+                return twoLetterSystemLocaleMapping[iso3Code] ?: locale
+            }
+            return try {
+                val uLocale = ULocale(locale.language, locale.country, locale.variant)
+                Locale(uLocale.language, uLocale.country, uLocale.variant)
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to normalize locale %s", locale)
+                locale
+            }
+        }
+
+        /**
+         * Maps from the ISO 3 code of a locale to the locale in
+         */
+        private val twoLetterSystemLocaleMapping: Map<String, Locale>
+
+        fun getIso3Code(locale: Locale): String? {
+            try {
+                if (locale.country.isBlank()) {
+                    return locale.isO3Language
+                }
+                return "${locale.isO3Language}_${locale.isO3Country}"
+            } catch (e: Exception) {
+                // MissingResourceException can be thrown, in which case return null
+                return null
+            }
+        }
+
+        init {
+            val locales = Locale.getAvailableLocales()
+            val validLocales = mutableMapOf<String, Locale>()
+            for (locale in locales) {
+                val code = getIso3Code(locale) ?: continue
+                validLocales.putIfAbsent(code, locale)
+            }
+            twoLetterSystemLocaleMapping = validLocales
         }
     }
 }

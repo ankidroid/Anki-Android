@@ -82,20 +82,16 @@
     <string name="webview_crash_loop_dialog_content">ସିଷ୍ଟମ୍ WebView \'%1$s\' ପତ୍ର କୁ ପ୍ରସ୍ତୁତ କଲାନାହିଁ।\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">ପତାକା</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">ଆଜିର ନୂଆ ପତ୍ରସଂଖ୍ୟା ସୀମା ସଂଶୋଧନ</string>
-    <string name="custom_study_increase_review_limit">ଆଜିର ସମୀକ୍ଷା ପତ୍ରସଂଖ୍ୟା ସୀମା ସଂଶୋଧନ</string>
-    <string name="custom_study_review_forgotten">ଭୁଲିଯାଇଥିବା ପତ୍ରର ସମୀକ୍ଷା</string>
-    <string name="custom_study_review_ahead">ଆଗୁଆ ସମୀକ୍ଷା</string>
-    <string name="custom_study_random_selection">ପତ୍ରଗୁଡ଼ିକର ଏକ ଅନିୟମିତ ଚୟନ ଅଧ୍ୟୟନ କରନ୍ତୁ</string>
-    <string name="custom_study_preview_new">ନୂଆ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ଵାଵଲୋକନ</string>
     <string name="custom_study_limit_tags">ନିର୍ଦ୍ଧିଷ୍ଟ ଟ୍ୟାଗରେ ସୀମିତ ରଖ</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="one">+%dଟିଏ ସ୍ଥଗିତ କରାଗଲା</item>
+        <item quantity="other">+%dଟି ସ୍ଥଗିତ କରାଗଲା</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">ନୋଟ୍ ସମ୍ପାଦନା</string>
-    <string name="discard">Discard</string>
+    <string name="discard">ପରିତ୍ୟାଗ କରିବା</string>
     <string name="note_editor_no_cards_created">କୌଣସି ପତ୍ର ସୃଷ୍ଟି ହୋଇନାହିଁ। ଦୟାକରି ଅଧିକ କ୍ଷେତ୍ର ପୂରଣ କରନ୍ତୁ</string>
     <string name="note_editor_no_cards_created_all_fields">ଚଳିତ ନୋଟ୍ ପ୍ରକାର କୌଣସି ପତ୍ର ଉତ୍ପାଦନ କଲା ନାହିଁ।\nଦୟାକରି ଅନ୍ୟ କୌଣସି ନୋଟ୍ ପ୍ରକାର ବାଛନ୍ତୁ କିମ୍ବା ‘ପତ୍ର’ କ୍ଲିକ୍ କରି ଗୋଟେ କ୍ଷେତ୍ର ପ୍ରତିସ୍ଥାପନ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">କ୍ଲୋଜ ବିଲୋପ କେବଳ କ୍ଲୋଜ ନୋଟ ପ୍ରକାରରେ ହିଁ କାମ କରେ</string>
@@ -142,7 +138,7 @@
     <string name="import_log_no_apkg">ଏହା ଏକ ବୈଧ Anki package ଫାଇଲ୍ ନୁହେଁ</string>
     <string name="import_title_error" comment="Title of error dialog">ତ୍ରୁଟି</string>
     <string name="import_error_handle_exception">ଫାଇଲ୍ ଆମଦାନି କରିବାରେ ବିଫଳ\n\n%s</string>
-    <string name="import_error_not_apkg_extension">ଫାଇଲ୍ ନାମ “%s” ପାଖରେ .apkg କିମ୍ବା .colpkg extension ନାହିଁ</string>
+    <string name="import_error_not_apkg_extension">ଫାଇଲ୍‌ନାମ “%s” ପାଖରେ .apkg କିମ୍ବା .colpkg extension ନାହିଁ</string>
     <string name="import_error_load_imported_database">Anki ଡାଟାବେସ୍ (.anki2) ପ୍ରତିସ୍ଥାପନ ଗୁଡ଼ିକ ଏପର୍ଯ୍ୟନ୍ତ ସମର୍ଥିତ ନୁହେଁ। ପ୍ରତିସ୍ଥାପନ ନିର୍ଦ୍ଦେଶାବଳୀ ପାଇଁ ଦୟାକରି ମାନୁଆଲ୍ ଦେଖନ୍ତୁ।</string>
     <string name="import_error_content_provider">ବଚ୍ଛିତ ଫାଇଲ୍‌ଟି AnkiDroid ଦ୍ୱାରା ସ୍ୱଚାଳିତ ଭାବେ ଆମଦାନୀ ହୋଇପାରିଲା ନାହିଁ। Anki ଫାଇଲଗୁଡ଼ିକୁ କିପରି ହସ୍ତକୃତ ଭାବେ ଆମଦାନୀ କରିବେ ଜାଣିବା ପାଇଁ ଦୟାକରି ଉପଭୋକ୍ତା ମାନୁଆଲ୍ ଦେଖନ୍ତୁ: \n%s</string>
     <string name="import_error_copy_to_cache">ଫାଇଲ୍ ଦ୍ରୁତିକା କରି ସାଇତିବାରେ ବିଫଳ (ସମ୍ଭବତଃ ଆଉ ଷ୍ଟୋରେଜ୍ ନାହିଁ)</string>
@@ -169,7 +165,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ଅଧ୍ୟୟନ ଵିକଳ୍ପ</string>
     <string name="select_tts" maxLength="28">TTS ଭାଷା ସେଟ୍ କରନ୍ତୁ</string>
     <string name="custom_study" maxLength="28">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ</string>
-    <string name="more_options">ଅଧିକ</string>
     <string name="dyn_deck_desc">ସାଧାରଣ କାର୍ଯ୍ୟସୂଚୀ ବାହାରେ ଅଧ୍ୟୟନ ପାଇଁ ଏହା ଏକ ସ୍ୱତନ୍ତ୍ର ତାସଖଣ୍ଡ। ଆପଣ ସମୀକ୍ଷା କରିବା ପରେ ପତ୍ରଗୁଡ଼ିକ ଆପେ ସେଗୁଡ଼ିକର ମୂଳ ତାସଖଣ୍ଡକୁ ଫେରି ଆସିବେ। ତାସଖଣ୍ଡ  ତାଲିକାରୁ ଏହି ତାସଖଣ୍ଡ ବିଲୋପ କରିବା ସମସ୍ତ ଅବଶିଷ୍ଟ ପତ୍ରଗୁଡ଼ିକୁ ସେମାନଙ୍କର ମୂଳ ତାସଖଣ୍ଡକୁ ଫେରାଇବ।</string>
     <string name="steps_error">ପାହୁଣ୍ଡଟି ୦ ଠାରୁ ବଡ଼ ସଂଖ୍ୟା ହେବା ଜରୁରୀ</string>
     <string name="steps_min_error">ଅତି କମରେ ୧ଟିଏ ପାହୁଣ୍ଡ ଆଵଶ୍ୟକ</string>
@@ -226,7 +221,7 @@
     <string name="format_insert_underline">ଲେଖା ତଳେ ଗାର ଦିଅନ୍ତୁ</string>
     <string name="insert_horizontal_line">ଭୂସମାନ୍ତର ଗାର ସନ୍ନିବେଶ କରନ୍ତୁ</string>
     <string name="insert_heading">ଶୀର୍ଷଲେଖ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
-    <string name="format_font_size">ଫଣ୍ଟ ଆକାର ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
+    <string name="format_font_size">ଫଣ୍ଟ ଆକାର ପରିବର୍ତ୍ତନ କରିବା</string>
     <string name="insert_mathjax">MathJax ସମୀକରଣ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
     <string name="note_editor_toolbar_icon">ବଟନ୍ ର ନା‍ଁ</string>
     <string name="before_text">ଚୟନ ପୂର୍ବର HTML</string>
@@ -236,8 +231,8 @@
     <string name="toolbar_item_explain_edit_or_remove">ମନୋନୀତ ପାଠ୍ୟ ପୂର୍ବରୁ ଏବଂ ପରେ ସନ୍ନିବେଶ କରିବା ଲାଗି HTML ପ୍ରବେଶ କରନ୍ତୁ\n\nଗୋଟିଏ ଉପକରଣ-ଦଣ୍ଡିକାର ଆଇଟମ୍ କୁ ସମ୍ପାଦନ ବା ହଟାଇବା ପାଇଁ ତା\' ଉପରେ ଲମ୍ବା ସ୍ପର୍ଶ କରନ୍ତୁ</string>
     <string name="remove_toolbar_item">ଉପକରଣ-ଦଣ୍ଡିକାର ଆଇଟମ୍ ହଟାଇବେ?</string>
     <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
-    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
-    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
+    <string name="note_editor_video_too_large">ଵିଡ଼ିଓ ଫାଇଲ୍‌ଟି ଅତ୍ୟଧିକ ବଡ଼ ଅଟେ, ଦୟାକରି ହସ୍ତକୃତ ଭାବେ ଵିଡ଼ିଓଟିକୁ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
+    <string name="note_editor_audio_too_large">ଅଡ଼ିଓ ଫାଇଲ୍‌ଟି ଅତ୍ୟଧିକ ବଡ଼ ଅଟେ, ଦୟାକରି ହସ୍ତକୃତ ଭାବେ ଅଡ଼ିଓଟିକୁ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        ଆଣ୍ଡ୍ରଏଡ୍ ବ୍ୟାକଅପ୍ ଚାଲିଛି। ଦୟାକରି ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid କୁ ସର୍ଟ୍‌କଟ୍ ଯୋଡ଼ିବା ଅନୁମତି ଦେବା ପାଇଁ ଆପଣଙ୍କୁ iManager ଵ୍ୟଵହାର କରିବାକୁ ପଡ଼ିପାରେ</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">ଆପଣଙ୍କ ଗୃହସ୍କ୍ରୀନ୍ AnkiDroidକୁ ସର୍ଟ୍‌କଟ୍ ଯୋଡ଼ିବାର ଅନୁମତି ଦିଏ ନାହିଁ</string>
@@ -316,7 +311,7 @@
     </string>
     <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">ବ୍ୟବହାର ପୂର୍ବରୁ ସ୍ୱର ଅଧିସ୍ଥାପିତ ହେବା ଉଚିତ୍
     </string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">ଯେକୌଣସି ମତେ ବ୍ୟବହାର କରନ୍ତୁ
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">ଯେକୌଣସି ମତେ ବ୍ୟବହାର କରିବା
     </string>
     <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">ପାଠ୍ୟ-ରୁ-କଥନ ତ୍ରୁଟି (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
@@ -337,7 +332,7 @@
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Reposition</string>
     <string name="start_recording">Record</string>
     <string name="stop_recording">Stop</string>
-    <string name="play_recording">Play</string>
+    <string name="play_recording">ଚାଳନ କରିବା</string>
     <string name="next_recording">Next</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Cannot Delete Card Type</string>

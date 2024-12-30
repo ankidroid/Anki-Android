@@ -34,10 +34,12 @@ import androidx.core.view.MenuProvider
 class MultimediaMenuProvider(
     private val menuResId: Int,
     private val onCreateMenuCondition: ((Menu) -> Unit)? = null,
-    private val onMenuItemClicked: (menuItem: MenuItem) -> Boolean
+    private val onMenuItemClicked: (menuItem: MenuItem) -> Boolean,
 ) : MenuProvider {
-
-    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+    override fun onCreateMenu(
+        menu: Menu,
+        menuInflater: MenuInflater,
+    ) {
         menu.clear()
         menuInflater.inflate(menuResId, menu)
 
@@ -45,7 +47,5 @@ class MultimediaMenuProvider(
         onCreateMenuCondition?.invoke(menu)
     }
 
-    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        return onMenuItemClicked(menuItem)
-    }
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean = onMenuItemClicked(menuItem)
 }

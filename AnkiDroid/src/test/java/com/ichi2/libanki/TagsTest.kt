@@ -26,7 +26,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class TagsTest : JvmTest() {
-
     @Test
     fun test_split() {
         val tags = Tags(col)

@@ -59,7 +59,6 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">ఎక్కడో పొరపాటయింది</string>
-    <string name="multimedia_editor_svg_preview">ప్రివ్యూ కోసం SVGలు అందుబాటులో లేవు</string>
     <string name="multimedia_editor_png_paste_error">క్లిప్‌బోర్డ్ చిత్రాన్ని pngకి మార్చడంలో లోపం: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s క్షేత్రానికి మల్టీమీడియా విషయాన్ని అటాచ్ చేయండి</string>
     <!-- Audio view -->

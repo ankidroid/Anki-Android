@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">%d કરતાં વધુ કાર્ડ બાકી છે</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">વાઇબ્રેટ</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">ઝબકતો પ્રકાશ</string>
-    <string name="timeout_answer_text" maxLength="41">આપોઆપ પ્રદર્શન જવાબ</string>
-    <string name="timeout_answer_summ2">વપરાશકર્તા ઇનપુટ વિના આપમેળે જવાબ બતાવો. ડેક વિકલ્પોમાંથી ગોઠવો.</string>
     <string name="select_locale_title">ભાષા પસંદ કરો</string>
     <string name="software_render" maxLength="41">કાર્ડ હાર્ડવેર રેન્ડરને અક્ષમ કરો</string>
     <string name="software_render_summ">હાર્ડવેર રેન્ડર ઝડપી છે પરંતુ ખાસ કરીને Android 8/8.1 પર સમસ્યાઓ આવી શકે છે. જો તમે કાર્ડ રિવ્યુ યુઝર ઈન્ટરફેસના ભાગો જોઈ શકતા નથી, તો આ સેટિંગ અજમાવી જુઓ.</string>

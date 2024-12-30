@@ -82,16 +82,12 @@
     <string name="webview_crash_loop_dialog_content">Sistem WebView gagal merender kartu \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Bendera</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Ubah batas kartu baru hari ini</string>
-    <string name="custom_study_increase_review_limit">Ubah batas ulasan kartu hari ini</string>
-    <string name="custom_study_review_forgotten">Ulas kartu yang terlupakan</string>
-    <string name="custom_study_review_ahead">Ulas lebih dulu</string>
-    <string name="custom_study_random_selection">Pelajari kartu yang dipilih secara acak</string>
-    <string name="custom_study_preview_new">Pratinjau kartu baru</string>
     <string name="custom_study_limit_tags">Batasi ke tag tertentu</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Edit catatan</string>
     <string name="discard">Buang</string>
@@ -166,7 +162,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Pilihan belajar</string>
     <string name="select_tts" maxLength="28">Tetapkan bahasa TTS</string>
     <string name="custom_study" maxLength="28">Belajar kustom</string>
-    <string name="more_options">Lainnya</string>
     <string name="dyn_deck_desc">Ini adalah dek khusus untuk belajar di luar jadwal normal. Kartu akan otomatis dikembalikan ke dek aslinya setelah Anda mengulasnya. Menghapus dek ini dari daftar dek akan mengembalikan semua kartu yang tersisa ke dek aslinya.</string>
     <string name="steps_error">Langkah-langkah harus lebih besar dari 0</string>
     <string name="steps_min_error">Setidaknya satu langkah diperlukan</string>

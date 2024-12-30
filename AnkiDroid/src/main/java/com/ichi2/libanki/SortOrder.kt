@@ -28,7 +28,12 @@ abstract class SortOrder {
     class UseCollectionOrdering : SortOrder()
 
     /** A custom SQL string placed after "order by" */
-    class AfterSqlOrderBy(val customOrdering: String) : SortOrder()
+    class AfterSqlOrderBy(
+        val customOrdering: String,
+    ) : SortOrder()
 
-    class BuiltinSortKind(val value: String, val reverse: Boolean) : SortOrder()
+    class BuiltinSortKind(
+        val value: String,
+        val reverse: Boolean,
+    ) : SortOrder()
 }

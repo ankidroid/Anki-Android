@@ -59,7 +59,6 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">May nagkamali</string>
-    <string name="multimedia_editor_svg_preview">Hindi magamit ang mga SVG sa pag-preview</string>
     <string name="multimedia_editor_png_paste_error">May mali sa pag-convert ng larawan sa clipboard at gawing png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Maglagay ng nilalaman ng multimedia sa field ng%1$s</string>
     <!-- Audio view -->

@@ -59,7 +59,6 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Algo salió mal</string>
-    <string name="multimedia_editor_svg_preview">Los archivos SVG no están disponibles para la previsualización</string>
     <string name="multimedia_editor_png_paste_error">Error al convertir la imagen del portapapeles a png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Agregar contenido multimedia al campo %1$s</string>
     <!-- Audio view -->
@@ -70,9 +69,9 @@
     <!-- Crop function-->
     <string name="crop_image">¿Quieres recortar esta imagen?</string>
     <string name="crop_button" maxLength="28">Recortar imagen</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
+    <string name="save_dialog_content">El tamaño actual de la imagen es %sMB. El límite de tamaño de imagen por defecto es 1MB. ¿Deseas comprimirla?</string>
     <string name="select_image_failed">"Error al seleccionar la imagen. Vuelve a intentarlo"</string>
     <string name="activity_result_unexpected">La aplicación devolvió un valor inesperado. Es posible que necesites usar una aplicación diferente</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Contenidos del campo</string>
-    <string name="reselect" maxLength="28">Reselect</string>
+    <string name="reselect" maxLength="28">Seleccionar de nuevo</string>
 </resources>

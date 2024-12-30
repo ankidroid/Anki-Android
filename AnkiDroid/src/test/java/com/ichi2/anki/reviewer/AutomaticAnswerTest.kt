@@ -31,7 +31,6 @@ import org.robolectric.shadows.ShadowLooper.runUiThreadTasksIncludingDelayedTask
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
 class AutomaticAnswerTest : JvmTest() {
-
     @Test
     fun disableWorks() {
         val answer = validAnswer(automaticallyAnsweredMock())
@@ -50,14 +49,15 @@ class AutomaticAnswerTest : JvmTest() {
 
     @Test
     fun noExecutionIfTimerIsZero_issue8923() {
-        val answer = AutomaticAnswer(
-            target = automaticallyAnsweredMock(),
-            settings = AutomaticAnswerSettings(
-                useTimer = true,
-                secondsToShowQuestionFor = 0.0,
-                secondsToShowAnswerFor = 0.0
+        val answer =
+            AutomaticAnswer(
+                target = automaticallyAnsweredMock(),
+                settings =
+                    AutomaticAnswerSettings(
+                        secondsToShowQuestionFor = 0.0,
+                        secondsToShowAnswerFor = 0.0,
+                    ),
             )
-        )
 
         answer.scheduleAutomaticDisplayQuestion(10)
 
@@ -122,30 +122,34 @@ class AutomaticAnswerTest : JvmTest() {
     private fun validAnswer(automaticallyAnswered: AutomaticallyAnswered? = null): AutomaticAnswer {
         var automaticAnswerHandle: AutomaticAnswer? = null
 
-        val automaticAnswerHandler = object : AutomaticallyAnswered {
-            override fun automaticShowAnswer() {
-                automaticAnswerHandle?.simulateCardFlip()
-                automaticallyAnswered?.automaticShowAnswer()
-            }
+        val automaticAnswerHandler =
+            object : AutomaticallyAnswered {
+                override fun automaticShowAnswer() {
+                    automaticAnswerHandle?.simulateCardFlip()
+                    automaticallyAnswered?.automaticShowAnswer()
+                }
 
-            override fun automaticShowQuestion(action: AutomaticAnswerAction) {
-                automaticAnswerHandle?.simulateCardFlip()
-                automaticallyAnswered?.automaticShowQuestion(action)
+                override fun automaticShowQuestion(action: AutomaticAnswerAction) {
+                    automaticAnswerHandle?.simulateCardFlip()
+                    automaticallyAnswered?.automaticShowQuestion(action)
+                }
             }
-        }
         return AutomaticAnswer(
             target = automaticAnswerHandler,
-            settings = AutomaticAnswerSettings(
-                useTimer = true,
-                secondsToShowQuestionFor = 10.0,
-                secondsToShowAnswerFor = 10.0
-            )
+            settings =
+                AutomaticAnswerSettings(
+                    secondsToShowQuestionFor = 10.0,
+                    secondsToShowAnswerFor = 10.0,
+                ),
         ).apply {
             automaticAnswerHandle = this
         }
     }
 
-    private class AutoAnswerMock(var answerShown: Boolean = false, var questionShown: Boolean = false) : AutomaticallyAnswered {
+    private class AutoAnswerMock(
+        var answerShown: Boolean = false,
+        var questionShown: Boolean = false,
+    ) : AutomaticallyAnswered {
         override fun automaticShowAnswer() {
             answerShown = true
         }

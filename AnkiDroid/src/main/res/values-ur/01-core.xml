@@ -65,8 +65,8 @@
         <item quantity="other">%1$d گھنٹے %2$d باقی</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">%1$d دن %2$dh باقی</item>
+        <item quantity="other">%1$d دن %2$dh باقی</item>
     </plurals>
     <string name="no_cards_placeholder_title">مجموعہ خالی ہے</string>
     <string name="no_cards_placeholder_description">+ آئیکن کو استعمال کرتے ہوئے کارڈز شامل کرنا شروع کریں۔</string>

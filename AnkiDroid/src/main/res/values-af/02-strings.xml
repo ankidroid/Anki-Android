@@ -82,17 +82,13 @@
     <string name="webview_crash_loop_dialog_content">Stelsel webaansig kon nie kaart verbeeld nie \'%1$s\'.\n%2$s</string>
     <string name="filter_by_flags" maxLength="41">Etikette</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Wysig vandag se nuwe kaartlimiet</string>
-    <string name="custom_study_increase_review_limit">Wysig vandag se hersieningskaartlimiet</string>
-    <string name="custom_study_review_forgotten">Hersien vergete kaarte</string>
-    <string name="custom_study_review_ahead">Hersiening vooruit</string>
-    <string name="custom_study_random_selection">Bestudeer \'n ewekansige seleksie van kaarte</string>
-    <string name="custom_study_preview_new">Voorskou nuwe kaarte</string>
     <string name="custom_study_limit_tags">Beperk tot spesifieke etikette</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d begrawe</item>
         <item quantity="other">+%d begrawe</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Wysig nota</string>
     <string name="discard">Weggooi</string>
@@ -169,7 +165,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Studeer Opsies</string>
     <string name="select_tts" maxLength="28">Stel TTS-taal</string>
     <string name="custom_study" maxLength="28">Gepasmaakte studie</string>
-    <string name="more_options">Meer</string>
     <string name="dyn_deck_desc">Dit is \'n spesiale dek vir studie buite die normale skedule. Kaartjies sal outomaties na hul oorspronklike dekke teruggestuur word nadat jy dit hersien het. Die verwydering van hierdie dek uit die deklys sal alle oorblywende kaartjies na hul oorspronklike dek terugstuur.</string>
     <string name="steps_error">Stappe moet getalle groter as 0 wees</string>
     <string name="steps_min_error">Ten minste een stap is nodig</string>

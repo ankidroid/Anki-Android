@@ -21,170 +21,112 @@ package com.ichi2.anki.preferences
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.MenuItem
-import androidx.annotation.VisibleForTesting
+import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.XmlRes
-import androidx.core.content.edit
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import anki.config.copy
+import com.bytehamster.lib.preferencesearch.SearchConfiguration
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResultListener
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.DeckPicker
+import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
-import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.services.BootService.Companion.scheduleNotification
-import com.ichi2.annotations.NeedsTest
-import com.ichi2.libanki.undoableOp
-import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.themes.setTransparentStatusBar
-import com.ichi2.utils.getInstanceFromClassName
+import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.utils.ext.sharedPrefs
+import com.ichi2.anki.utils.isWindowCompact
+import com.ichi2.utils.FragmentFactoryUtils
 import timber.log.Timber
+import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
 
-class Preferences :
-    AnkiActivity(),
+class PreferencesFragment :
+    Fragment(R.layout.preferences),
     PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
     SearchPreferenceResultListener {
-
-    fun hasLateralNavigation(): Boolean {
-        return findViewById<FragmentContainerView>(R.id.lateral_nav_container) != null
-    }
-
-    override fun onTitleChanged(title: CharSequence?, color: Int) {
-        super.onTitleChanged(title, color)
-        findViewById<CollapsingToolbarLayout>(R.id.collapsingToolbarLayout)?.title = title
-        supportActionBar?.title = title
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.preferences)
-        setTransparentStatusBar()
-
-        enableToolbar().setDisplayHomeAsUpEnabled(true)
-
-        // Load initial fragment if activity is being first created
-        if (savedInstanceState == null) {
-            loadInitialFragment()
+    private val onBackPressedCallback =
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (resources.isWindowCompact() && childFragmentManager.backStackEntryCount > 0) {
+                    childFragmentManager.popBackStack()
+                } else {
+                    requireActivity().finish()
+                }
+            }
         }
-        supportFragmentManager.addOnBackStackChangedListener {
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        view
+            .findViewById<MaterialToolbar>(R.id.toolbar)
+            .setNavigationOnClickListener { onBackPressedCallback.handleOnBackPressed() }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
+
+        // Load initial subscreen if activity is being first created
+        if (savedInstanceState == null) {
+            loadInitialSubscreen()
+        } else {
+            childFragmentManager.findFragmentById(R.id.settings_container)?.let {
+                setFragmentTitleOnToolbar(it)
+            }
+        }
+
+        childFragmentManager.addOnBackStackChangedListener {
+            val fragment =
+                childFragmentManager.findFragmentById(R.id.settings_container)
+                    ?: return@addOnBackStackChangedListener
+
+            setFragmentTitleOnToolbar(fragment)
+
             // Expand bar in new fragments if scrolled to top
-            val fragment = supportFragmentManager.findFragmentById(R.id.settings_container)
-                as? PreferenceFragmentCompat ?: return@addOnBackStackChangedListener
-            fragment.listView.post {
+            (fragment as? PreferenceFragmentCompat)?.listView?.post {
                 val viewHolder = fragment.listView?.findViewHolderForAdapterPosition(0)
                 val isAtTop = viewHolder != null && viewHolder.itemView.top >= 0
-                findViewById<AppBarLayout>(R.id.appbar).setExpanded(isAtTop, false)
-            }
-        }
-    }
-
-    /**
-     * Starts the first fragment for the [Preferences] activity,
-     * which by default is [HeaderFragment].
-     * The initial fragment may be overridden by putting the java class name
-     * of the fragment on an intent extra with the key [INITIAL_FRAGMENT_EXTRA]
-     */
-    private fun loadInitialFragment() {
-        val fragmentClassName = intent?.getStringExtra(INITIAL_FRAGMENT_EXTRA)
-        val initialFragment = if (fragmentClassName == null) {
-            if (hasLateralNavigation()) GeneralSettingsFragment() else HeaderFragment()
-        } else {
-            try {
-                getInstanceFromClassName<Fragment>(fragmentClassName)
-            } catch (e: Exception) {
-                throw RuntimeException("Failed to load $fragmentClassName", e)
-            }
-        }
-        supportFragmentManager.commit {
-            // In tablets, show the headers fragment at the lateral navigation container
-            if (hasLateralNavigation()) {
-                replace(R.id.lateral_nav_container, HeaderFragment())
-                replace(R.id.settings_container, initialFragment, initialFragment::class.java.name)
-            } else {
-                replace(R.id.settings_container, initialFragment, initialFragment::class.java.name)
+                view.findViewById<AppBarLayout>(R.id.appbar).setExpanded(isAtTop, false)
             }
         }
     }
 
     override fun onPreferenceStartFragment(
         caller: PreferenceFragmentCompat,
-        pref: Preference
+        pref: Preference,
     ): Boolean {
         // avoid reopening the same fragment if already active
-        val currentFragment = supportFragmentManager.findFragmentById(R.id.settings_container)
-            ?: return true
+        val currentFragment =
+            childFragmentManager.findFragmentById(R.id.settings_container)
+                ?: return true
         if (pref.fragment == currentFragment::class.jvmName) return true
 
-        val fragment = supportFragmentManager.fragmentFactory.instantiate(
-            classLoader,
-            pref.fragment ?: return true
-        )
+        val fragment =
+            childFragmentManager.fragmentFactory.instantiate(
+                requireActivity().classLoader,
+                pref.fragment ?: return true,
+            )
         fragment.arguments = pref.extras
-        supportFragmentManager.commit {
+        childFragmentManager.commit {
             replace(R.id.settings_container, fragment, fragment::class.jvmName)
+            setOpenTransition(this)
             addToBackStack(null)
         }
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            if (hasLateralNavigation()) {
-                finish()
-            } else {
-                onBackPressedDispatcher.onBackPressed()
-            }
-        }
-        return true
-    }
-
-    fun restartWithNewDeckPicker() {
-        launchCatchingTask {
-            CollectionManager.discardBackend()
-            val deckPicker = Intent(this@Preferences, DeckPicker::class.java)
-            deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(deckPicker)
-        }
-    }
-
-    // ----------------------------------------------------------------------------
-    // Class methods
-    // ----------------------------------------------------------------------------
-
-    /**
-     * Enables and sets the visibility of the "Developer options" header on [HeaderFragment]
-     */
-    fun setDevOptionsEnabled(isEnabled: Boolean) {
-        // Update the "devOptionsEnabledByUser" pref value
-        this.sharedPrefs().edit {
-            putBoolean(getString(R.string.dev_options_enabled_by_user_key), isEnabled)
-        }
-        // Show/hide the header
-        val headerFragment =
-            supportFragmentManager.findFragmentByTag(HeaderFragment::class.java.name)
-        if (headerFragment is HeaderFragment) {
-            headerFragment.setDevOptionsVisibility(isEnabled)
-        }
-    }
-
     override fun onSearchResultClicked(result: SearchPreferenceResult) {
         val fragment = getFragmentFromXmlRes(result.resourceFile) ?: return
 
-        supportFragmentManager.popBackStack() // clear the search fragment from the backstack
-        supportFragmentManager.commit {
+        parentFragmentManager.popBackStack() // clear the search fragment from the backstack
+        childFragmentManager.commit {
             replace(R.id.settings_container, fragment, fragment.javaClass.name)
+            setOpenTransition(this)
             addToBackStack(fragment.javaClass.name)
         }
 
@@ -192,60 +134,100 @@ class Preferences :
         result.highlight(fragment as PreferenceFragmentCompat)
     }
 
-    companion object {
+    private fun setFragmentTitleOnToolbar(fragment: Fragment) {
+        val title = if (fragment is TitleProvider) fragment.title else getString(R.string.settings)
 
-        /* Only enable AnkiDroid notifications unrelated to due reminders */
-        const val PENDING_NOTIFICATIONS_ONLY = 1000000
+        view?.findViewById<CollapsingToolbarLayout>(R.id.collapsingToolbarLayout)?.title = title
+        view?.findViewById<MaterialToolbar>(R.id.toolbar)?.title = title
+    }
 
-        /**
-         * The number of cards that should be due today in a deck to justify adding a notification.
-         */
-        const val MINIMUM_CARDS_DUE_FOR_NOTIFICATION = "minimumCardsDueForNotification"
-
-        const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
-
-        /**
-         * @return the [SettingsFragment] which uses the given [screen] resource.
-         * i.e. [SettingsFragment.preferenceResource] value is the same of [screen]
-         */
-        fun getFragmentFromXmlRes(@XmlRes screen: Int): SettingsFragment? {
-            return when (screen) {
-                R.xml.preferences_general -> GeneralSettingsFragment()
-                R.xml.preferences_reviewing -> ReviewingSettingsFragment()
-                R.xml.preferences_sync -> SyncSettingsFragment()
-                R.xml.preferences_backup_limits -> BackupLimitsSettingsFragment()
-                R.xml.preferences_custom_sync_server -> CustomSyncServerSettingsFragment()
-                R.xml.preferences_notifications -> NotificationsSettingsFragment()
-                R.xml.preferences_appearance -> AppearanceSettingsFragment()
-                R.xml.preferences_controls -> ControlsSettingsFragment()
-                R.xml.preferences_advanced -> AdvancedSettingsFragment()
-                R.xml.preferences_accessibility -> AccessibilitySettingsFragment()
-                R.xml.preferences_dev_options -> DevOptionsFragment()
-                R.xml.preferences_custom_buttons -> CustomButtonsSettingsFragment()
-                else -> null
-            }
+    private fun setOpenTransition(fragmentTransaction: FragmentTransaction) {
+        if (!sharedPrefs().getBoolean("safeDisplay", false)) {
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
         }
+    }
 
-        /** Whether the user is logged on to AnkiWeb  */
-        fun hasAnkiWebAccount(preferences: SharedPreferences): Boolean =
-            preferences.getString("username", "")!!.isNotEmpty()
-
-        /** Sets the hour that the collection rolls over to the next day  */
-        @VisibleForTesting
-        @NeedsTest("ensure Start of Next Day is handled by the scheduler")
-        suspend fun setDayOffset(context: Context, hours: Int) {
-            val prefs = withCol { getPreferences() }
-            val newPrefs = prefs.copy { scheduling = prefs.scheduling.copy { rollover = hours } }
-
-            undoableOp {
-                setPreferences(newPrefs)
+    /**
+     * Starts the first settings fragment, which by default is [HeaderFragment].
+     * The initial fragment may be overridden by putting the java class name
+     * of the fragment on an intent extra with the key [INITIAL_FRAGMENT_EXTRA]
+     */
+    private fun loadInitialSubscreen() {
+        val fragmentClassName = arguments?.getString(INITIAL_FRAGMENT_EXTRA)
+        val initialFragment =
+            if (fragmentClassName == null) {
+                if (resources.isWindowCompact()) HeaderFragment() else GeneralSettingsFragment()
+            } else {
+                FragmentFactoryUtils.instantiate<Fragment>(requireActivity(), fragmentClassName)
             }
-            scheduleNotification(TimeManager.time, context)
-            Timber.i("set day offset: '%d'", hours)
-        }
-
-        suspend fun getDayOffset(): Int {
-            return withCol { getPreferences().scheduling.rollover }
+        childFragmentManager.commit {
+            // In big screens, show the headers fragment at the lateral navigation container
+            if (!resources.isWindowCompact()) {
+                replace(R.id.lateral_nav_container, HeaderFragment())
+            }
+            replace(R.id.settings_container, initialFragment, initialFragment::class.java.name)
         }
     }
 }
+
+/**
+ * Host activity for [PreferencesFragment].
+ *
+ * Only necessary because [SearchConfiguration] demands an activity that implements
+ * [SearchPreferenceResultListener].
+ */
+class PreferencesActivity :
+    SingleFragmentActivity(),
+    SearchPreferenceResultListener {
+    override fun onSearchResultClicked(result: SearchPreferenceResult) {
+        val fragment = supportFragmentManager.findFragmentByTag(FRAGMENT_TAG)
+        if (fragment is SearchPreferenceResultListener) {
+            fragment.onSearchResultClicked(result)
+        }
+    }
+
+    companion object {
+        fun getIntent(
+            context: Context,
+            initialFragment: KClass<out SettingsFragment>? = null,
+        ): Intent {
+            val arguments = bundleOf(INITIAL_FRAGMENT_EXTRA to initialFragment?.jvmName)
+            return Intent(context, PreferencesActivity::class.java).apply {
+                putExtra(FRAGMENT_NAME_EXTRA, PreferencesFragment::class.jvmName)
+                putExtra(FRAGMENT_ARGS_EXTRA, arguments)
+            }
+        }
+    }
+}
+
+interface TitleProvider {
+    val title: CharSequence
+}
+
+// Only enable AnkiDroid notifications unrelated to due reminders
+const val PENDING_NOTIFICATIONS_ONLY = 1000000
+
+const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
+
+/**
+ * @return the [SettingsFragment] which uses the given [screen] resource.
+ * i.e. [SettingsFragment.preferenceResource] value is the same of [screen]
+ */
+fun getFragmentFromXmlRes(
+    @XmlRes screen: Int,
+): SettingsFragment? =
+    when (screen) {
+        R.xml.preferences_general -> GeneralSettingsFragment()
+        R.xml.preferences_reviewing -> ReviewingSettingsFragment()
+        R.xml.preferences_sync -> SyncSettingsFragment()
+        R.xml.preferences_backup_limits -> BackupLimitsSettingsFragment()
+        R.xml.preferences_custom_sync_server -> CustomSyncServerSettingsFragment()
+        R.xml.preferences_notifications -> NotificationsSettingsFragment()
+        R.xml.preferences_appearance -> AppearanceSettingsFragment()
+        R.xml.preferences_controls -> ControlsSettingsFragment()
+        R.xml.preferences_advanced -> AdvancedSettingsFragment()
+        R.xml.preferences_accessibility -> AccessibilitySettingsFragment()
+        R.xml.preferences_dev_options -> DevOptionsFragment()
+        R.xml.preferences_custom_buttons -> CustomButtonsSettingsFragment()
+        else -> null
+    }

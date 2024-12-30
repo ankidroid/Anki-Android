@@ -40,22 +40,23 @@ import com.ichi2.annotations.NeedsTest
  */
 @NeedsTest("Test to ensure correct option is selected")
 class MultimediaBottomSheet : BottomSheetDialogFragment() {
-
     private val viewModel: MultimediaViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.bottomsheet_multimedia, container, false)
 
         /** setup a click on the listener to emit [MultimediaViewModel.multimediaAction] */
-        fun setupListener(@IdRes id: Int, action: MultimediaAction) =
-            view.findViewById<LinearLayout>(id).setOnClickListener {
-                viewModel.setMultimediaAction(action)
-                dismiss()
-            }
+        fun setupListener(
+            @IdRes id: Int,
+            action: MultimediaAction,
+        ) = view.findViewById<LinearLayout>(id).setOnClickListener {
+            viewModel.setMultimediaAction(action)
+            dismiss()
+        }
 
         setupListener(R.id.multimedia_action_image, SELECT_IMAGE_FILE)
         setupListener(R.id.multimedia_action_audio, SELECT_AUDIO_FILE)
@@ -84,6 +85,6 @@ class MultimediaBottomSheet : BottomSheetDialogFragment() {
         OPEN_DRAWING,
         SELECT_AUDIO_RECORDING,
         SELECT_VIDEO_FILE,
-        OPEN_CAMERA
+        OPEN_CAMERA,
     }
 }

@@ -24,10 +24,8 @@ import android.content.SharedPreferences
 import android.os.Looper
 import android.widget.TextView
 import androidx.annotation.CallSuper
-import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
-import androidx.fragment.app.DialogFragment
 import androidx.sqlite.db.SupportSQLiteOpenHelper
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.core.app.ApplicationProvider
@@ -36,7 +34,6 @@ import androidx.work.testing.SynchronousExecutor
 import androidx.work.testing.WorkManagerTestInitHelper
 import com.ichi2.anki.CollectionManager.CollectionOpenFailure
 import com.ichi2.anki.dialogs.DialogHandler
-import com.ichi2.anki.dialogs.utils.FragmentTestActivity
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.libanki.Card
@@ -48,6 +45,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AndroidTest
 import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.TaskSchedulerRule
+import com.ichi2.testutils.TestClass
 import com.ichi2.testutils.common.FailOnUnhandledExceptionRule
 import com.ichi2.testutils.common.IgnoreFlakyTestsInCIRule
 import com.ichi2.testutils.filter
@@ -78,8 +76,9 @@ import org.robolectric.shadows.ShadowMediaPlayer
 import timber.log.Timber
 import kotlin.test.assertNotNull
 
-open class RobolectricTest : AndroidTest {
-
+open class RobolectricTest :
+    TestClass,
+    AndroidTest {
     @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
     private fun Any.wait(timeMs: Long) = (this as Object).wait(timeMs)
 
@@ -89,9 +88,7 @@ open class RobolectricTest : AndroidTest {
         controllersForCleanup.add(controller)
     }
 
-    protected open fun useInMemoryDatabase(): Boolean {
-        return true
-    }
+    protected open fun useInMemoryDatabase(): Boolean = true
 
     @get:Rule
     val taskScheduler = TaskSchedulerRule()
@@ -117,18 +114,22 @@ open class RobolectricTest : AndroidTest {
         throwOnShowError = true
 
         // See the Android logging (from Timber)
-        ShadowLog.stream = System.out
-            // Filters for non-Timber sources. Prefer filtering in RobolectricDebugTree if possible
-            // LifecycleMonitor: not needed as we already use registerActivityLifecycleCallbacks for logs
-            .filter("^(?!(W/ShadowLegacyPath|D/LifecycleMonitor)).*$") // W/ShadowLegacyPath: android.graphics.Path#op() not supported yet.
+        ShadowLog.stream =
+            System.out
+                // Filters for non-Timber sources. Prefer filtering in RobolectricDebugTree if possible
+                // LifecycleMonitor: not needed as we already use registerActivityLifecycleCallbacks for logs
+                // W/ShadowLegacyPath: android.graphics.Path#op() not supported yet.
+                .filter("^(?!(W/ShadowLegacyPath|D/LifecycleMonitor)).*$")
 
         ChangeManager.clearSubscribers()
 
         validateRunWithAnnotationPresent()
 
-        val config = Configuration.Builder()
-            .setExecutor(SynchronousExecutor())
-            .build()
+        val config =
+            Configuration
+                .Builder()
+                .setExecutor(SynchronousExecutor())
+                .build()
 
         WorkManagerTestInitHelper.initializeTestWorkManager(targetContext, config)
 
@@ -149,9 +150,7 @@ open class RobolectricTest : AndroidTest {
         MetaDB.closeDB()
     }
 
-    protected open fun useLegacyHelper(): Boolean {
-        return false
-    }
+    protected open fun useLegacyHelper(): Boolean = false
 
     protected fun getHelperFactory(): SupportSQLiteOpenHelper.Factory =
         if (useInMemoryDatabase()) {
@@ -209,7 +208,10 @@ open class RobolectricTest : AndroidTest {
     /**
      * Click on a dialog button for an AlertDialog dialog box. Replaces the above helper.
      */
-    protected fun clickAlertDialogButton(button: Int, @Suppress("SameParameterValue") checkDismissed: Boolean) {
+    protected fun clickAlertDialogButton(
+        button: Int,
+        @Suppress("SameParameterValue") checkDismissed: Boolean,
+    ) {
         val dialog = getLatestAlertDialog()
 
         dialog.getButton(button).performClick()
@@ -228,7 +230,9 @@ open class RobolectricTest : AndroidTest {
      * @param checkDismissed true if you want to check for dismissed, will return null even if dialog exists but has been dismissed
      * TODO: Rename to getDialogText when all MaterialDialogs are changed to AlertDialogs
      */
-    protected fun getAlertDialogText(@Suppress("SameParameterValue") checkDismissed: Boolean): String? {
+    protected fun getAlertDialogText(
+        @Suppress("SameParameterValue") checkDismissed: Boolean,
+    ): String? {
         val dialog = getLatestAlertDialog()
         if (checkDismissed && Shadows.shadowOf(dialog).hasBeenDismissed()) {
             Timber.e("The latest dialog has already been dismissed.")
@@ -291,7 +295,11 @@ open class RobolectricTest : AndroidTest {
         }
 
         @JvmStatic // Using protected members which are not @JvmStatic in the superclass companion is unsupported yet
-        protected fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(testClass: RobolectricTest, clazz: Class<T>?, i: Intent?): T {
+        protected fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(
+            testClass: RobolectricTest,
+            clazz: Class<T>?,
+            i: Intent?,
+        ): T {
             if (AbstractFlashcardViewer::class.java.isAssignableFrom(clazz!!)) {
                 // fixes 'Don't know what to do with dataSource...' inside Sounds.kt
                 // solution from https://github.com/robolectric/robolectric/issues/4673
@@ -299,8 +307,13 @@ open class RobolectricTest : AndroidTest {
                     ShadowMediaPlayer.MediaInfo(1, 0)
                 }
             }
-            val controller = Robolectric.buildActivity(clazz, i)
-                .create().start().resume().visible()
+            val controller =
+                Robolectric
+                    .buildActivity(clazz, i)
+                    .create()
+                    .start()
+                    .resume()
+                    .visible()
             advanceRobolectricLooperWithSleep()
             testClass.saveControllerForCleanup(controller)
             return controller.get()
@@ -314,27 +327,26 @@ open class RobolectricTest : AndroidTest {
      * Returns an instance of [SharedPreferences] using the test context
      * @see [editPreferences] for editing
      */
-    fun getPreferences(): SharedPreferences {
-        return targetContext.sharedPrefs()
-    }
+    fun getPreferences(): SharedPreferences = targetContext.sharedPrefs()
 
-    protected fun getResourceString(res: Int): String {
-        return targetContext.getString(res)
-    }
+    protected fun getResourceString(res: Int): String = targetContext.getString(res)
 
-    protected fun getQuantityString(res: Int, quantity: Int, vararg formatArgs: Any): String {
-        return targetContext.resources.getQuantityString(res, quantity, *formatArgs)
-    }
+    protected fun getQuantityString(
+        res: Int,
+        quantity: Int,
+        vararg formatArgs: Any,
+    ): String = targetContext.resources.getQuantityString(res, quantity, *formatArgs)
 
     /** A collection. Created one second ago, not near cutoff time.
      * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
      * we don't get two equal time. */
     override val col: Collection
-        get() = try {
-            CollectionManager.getColUnsafe()
-        } catch (e: UnsatisfiedLinkError) {
-            throw RuntimeException("Failed to load collection. Did you call super.setUp()?", e)
-        }
+        get() =
+            try {
+                CollectionManager.getColUnsafe()
+            } catch (e: UnsatisfiedLinkError) {
+                throw RuntimeException("Failed to load collection. Did you call super.setUp()?", e)
+            }
 
     protected val collectionTime: MockTime
         get() = TimeManager.time as MockTime
@@ -357,17 +369,15 @@ open class RobolectricTest : AndroidTest {
         return NotetypeJson(collectionModels.byName(modelName).toString().trim { it <= ' ' })
     }
 
-    internal fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(clazz: Class<T>?, i: Intent?): T {
-        return startActivityNormallyOpenCollectionWithIntent(this, clazz, i)
-    }
+    internal fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(
+        clazz: Class<T>?,
+        i: Intent?,
+    ): T = startActivityNormallyOpenCollectionWithIntent(this, clazz, i)
 
-    internal inline fun <reified T : AnkiActivity?> startRegularActivity(): T {
-        return startRegularActivity(null)
-    }
+    internal inline fun <reified T : AnkiActivity?> startRegularActivity(): T = startRegularActivity(null)
 
-    internal inline fun <reified T : AnkiActivity?> startRegularActivity(i: Intent? = null): T {
-        return startActivityNormallyOpenCollectionWithIntent(T::class.java, i)
-    }
+    internal inline fun <reified T : AnkiActivity?> startRegularActivity(i: Intent? = null): T =
+        startActivityNormallyOpenCollectionWithIntent(T::class.java, i)
 
     /**
      * Call to assume that <code>actual</code> satisfies the condition specified by <code>matcher</code>.
@@ -386,7 +396,10 @@ open class RobolectricTest : AndroidTest {
      * @see org.hamcrest.CoreMatchers
      * @see org.junit.matchers.JUnitMatchers
      */
-    fun <T> assumeThat(actual: T, matcher: Matcher<T>?) {
+    fun <T> assumeThat(
+        actual: T,
+        matcher: Matcher<T>?,
+    ) {
         Assume.assumeThat(actual, matcher)
     }
 
@@ -407,7 +420,11 @@ open class RobolectricTest : AndroidTest {
      * @see org.hamcrest.CoreMatchers
      * @see org.junit.matchers.JUnitMatchers
      */
-    fun <T> assumeThat(message: String?, actual: T, matcher: Matcher<T>?) {
+    fun <T> assumeThat(
+        message: String?,
+        actual: T,
+        matcher: Matcher<T>?,
+    ) {
         Assume.assumeThat(message, actual, matcher)
     }
 
@@ -418,20 +435,18 @@ open class RobolectricTest : AndroidTest {
      * throwing [AssumptionViolatedException]
      * @param message A message to pass to [AssumptionViolatedException]
      */
-    fun assumeTrue(message: String?, b: Boolean) {
+    fun assumeTrue(
+        message: String?,
+        b: Boolean,
+    ) {
         Assume.assumeTrue(message, b)
     }
 
-    fun equalFirstField(expected: Card, obtained: Card) {
+    fun equalFirstField(
+        expected: Card,
+        obtained: Card,
+    ) {
         MatcherAssert.assertThat(obtained.note().fields[0], Matchers.equalTo(expected.note().fields[0]))
-    }
-
-    @CheckResult
-    protected fun openDialogFragmentUsingActivity(menu: DialogFragment): FragmentTestActivity {
-        val startActivityIntent = Intent(targetContext, FragmentTestActivity::class.java)
-        val activity = startActivityNormallyOpenCollectionWithIntent(FragmentTestActivity::class.java, startActivityIntent)
-        activity.showDialogFragment(menu)
-        return activity
     }
 
     /**
@@ -442,8 +457,7 @@ open class RobolectricTest : AndroidTest {
      * ```
      */
     @Suppress("MemberVisibilityCanBePrivate")
-    fun editPreferences(action: SharedPreferences.Editor.() -> Unit) =
-        getPreferences().edit(action = action)
+    fun editPreferences(action: SharedPreferences.Editor.() -> Unit) = getPreferences().edit(action = action)
 
     protected fun grantRecordAudioPermission() {
         val application = ApplicationProvider.getApplicationContext<Application>()
@@ -486,7 +500,7 @@ open class RobolectricTest : AndroidTest {
 * Apple Menu - System Preferences - Security & Privacy - General (tab) - Unlock Settings - Select Allow Anyway". 
     Button is underneath the text: "librsdroid.dylib was blocked from use because it is not from an identified developer"
 * Press "OK" on the "Apple cannot check it for malicious software" prompt
-* Test should execute correctly"""
+* Test should execute correctly""",
                 )
             }
             throw e

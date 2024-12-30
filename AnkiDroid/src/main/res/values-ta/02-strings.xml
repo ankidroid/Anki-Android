@@ -82,17 +82,13 @@
     <string name="webview_crash_loop_dialog_content">சிஸ்டம் வெப்வியூ கார்டை \'%1$s\' ரெண்டர் செய்வதில் தோல்வியடைந்தது.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">கொடிகள்</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">இன்றைய புதிய அட்டை வரம்பை மாற்றவும்</string>
-    <string name="custom_study_increase_review_limit">இன்றைய மதிப்பாய்வு அட்டை வரம்பை மாற்றவும்</string>
-    <string name="custom_study_review_forgotten">மறக்கப்பட்ட அட்டைகளை மதிப்பாய்வு செய்யவும்</string>
-    <string name="custom_study_review_ahead">மேலே மதிப்பாய்வு செய்யவும்</string>
-    <string name="custom_study_random_selection">சீரற்ற தேர்வு அட்டைகளைப் படிக்கவும்</string>
-    <string name="custom_study_preview_new">புதிய அட்டைகளை முன்னோட்டமிடுங்கள்</string>
     <string name="custom_study_limit_tags">குறிப்பிட்ட குறிச்சொற்களுக்கு வரம்பு</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d புதைக்கப்பட்டது</item>
         <item quantity="other">+%d புதைக்கப்பட்டது</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">குறிப்பைத் திருத்தவும்</string>
     <string name="discard">நிராகரி</string>
@@ -169,7 +165,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">படிப்பு விருப்பங்கள்</string>
     <string name="select_tts" maxLength="28">TTS மொழியை அமைக்கவும்</string>
     <string name="custom_study" maxLength="28">விருப்ப படிப்பு</string>
-    <string name="more_options">மேலும்</string>
     <string name="dyn_deck_desc">இது வழக்கமான அட்டவணைக்கு வெளியே படிப்பதற்கான ஒரு சிறப்பு தளமாகும். நீங்கள் அவற்றை மதிப்பாய்வு செய்தபிறகு, கார்டுகள் தானாகவே அவற்றின் அசல் டெக்குகளுக்குத் திரும்பும். டெக் பட்டியலிலிருந்து இந்த டெக்கை நீக்கினால், மீதமுள்ள அனைத்து கார்டுகளும் அவற்றின் அசல் டெக்கிற்கு திரும்பும்.</string>
     <string name="steps_error">படிகள் 0 ஐ விட அதிகமாக இருக்க வேண்டும்</string>
     <string name="steps_min_error">குறைந்தபட்சம் ஒரு படி தேவை</string>

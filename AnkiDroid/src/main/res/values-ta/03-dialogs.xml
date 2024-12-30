@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">நீங்கள் உண்மையில் தரவுத்தளத்தைச் சரிசெய்ய முயற்சிக்க விரும்புகிறீர்களா?\n\nமுயற்சியைத் தொடங்கும் முன், \"%s\" என்ற துணைக் கோப்புறையில் ஒரு நகல் உருவாக்கப்படும்.</string>
     <string name="intent_aedict_empty">\"இயல்புநிலை\" வகை காலியாக உள்ளது</string>
     <string name="intent_aedict_category">AnkiDroid இல் கார்டுகளைச் சேர்க்க அனைத்து நோட்பேட் வகைகளையும் அகற்றவும் அல்லது \"இயல்புநிலை\" என்று பெயரிடப்பட்ட ஒன்றைச் சேர்க்கவும்</string>
-    <string name="custom_study_new_total_new">டெக்கில் புதிய கார்டுகள்: %d</string>
-    <string name="custom_study_rev_total_rev">டெக்கில் வரவேண்டிய மதிப்புரைகள்: %d</string>
     <string name="custom_study_new_extend">இன்றைய புதிய அட்டை வரம்பை அதிகரிக்க/குறைக்கவும் (\"-3\").</string>
     <string name="custom_study_rev_extend">இன்றைய மதிப்பாய்வு வரம்பை அதிகரிக்கவும்/குறைக்கவும் (\"-3\").</string>
     <string name="custom_study_forgotten">கடந்த x நாட்களில் மறக்கப்பட்ட மதிப்பாய்வு அட்டைகள்:</string>
     <string name="custom_study_ahead">x நாட்களுக்குள் மதிப்பாய்வு செய்யவும்:</string>
-    <string name="custom_study_random">டெக்கிலிருந்து தோராயமாக x கார்டுகளைத் தேர்ந்தெடுக்கவும்:</string>
     <string name="custom_study_preview">கடந்த x நாட்களில் சேர்க்கப்பட்ட புதிய கார்டுகளின் மாதிரிக்காட்சி:</string>
-    <string name="custom_study_rebuild_deck_corrupt">தனிப்பயன் ஆய்வுத் தளத்தை மீண்டும் உருவாக்க முடியவில்லை</string>
     <string name="storage_full_title">சேமிப்பு நிரம்பியது</string>
     <string name="storage_almost_full_title">சேமிப்பு கிட்டத்தட்ட நிரம்பிவிட்டது</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">இடமில்லை</string>

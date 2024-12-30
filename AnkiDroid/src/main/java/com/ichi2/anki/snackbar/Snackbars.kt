@@ -70,7 +70,7 @@ interface BaseSnackbarBuilderProvider {
 fun Activity.showSnackbar(
     @StringRes textResource: Int,
     duration: Int = Snackbar.LENGTH_LONG,
-    snackbarBuilder: SnackbarBuilder? = null
+    snackbarBuilder: SnackbarBuilder? = null,
 ) {
     val text = getText(textResource)
     showSnackbar(text, duration, snackbarBuilder)
@@ -104,7 +104,7 @@ fun Activity.showSnackbar(
 fun Activity.showSnackbar(
     text: CharSequence,
     duration: Int = Snackbar.LENGTH_LONG,
-    snackbarBuilder: SnackbarBuilder? = null
+    snackbarBuilder: SnackbarBuilder? = null,
 ) {
     val view: View? = findViewById(R.id.root_layout) as? CoordinatorLayout
 
@@ -116,8 +116,9 @@ fun Activity.showSnackbar(
             Timber.d("displayed snackbar: '%s'", text)
         }
     } else {
-        val errorMessage = "While trying to show a snackbar, " +
-            "could not find a view with id root_layout in $this"
+        val errorMessage =
+            "While trying to show a snackbar, " +
+                "could not find a view with id root_layout in $this"
 
         if (BuildConfig.DEBUG) {
             throw IllegalArgumentException(errorMessage)
@@ -157,7 +158,7 @@ fun Activity.showSnackbar(
 fun View.showSnackbar(
     @StringRes textResource: Int,
     duration: Int = Snackbar.LENGTH_LONG,
-    snackbarBuilder: SnackbarBuilder? = null
+    snackbarBuilder: SnackbarBuilder? = null,
 ) {
     val text = resources.getText(textResource)
     showSnackbar(text, duration, snackbarBuilder)
@@ -192,7 +193,7 @@ fun View.showSnackbar(
 fun View.showSnackbar(
     text: CharSequence,
     duration: Int = Snackbar.LENGTH_LONG,
-    snackbarBuilder: SnackbarBuilder? = null
+    snackbarBuilder: SnackbarBuilder? = null,
 ) {
     val snackbar = Snackbar.make(this, text, duration)
     snackbar.setMaxLines(4)
@@ -202,7 +203,9 @@ fun View.showSnackbar(
         snackbar.fixMarginsWhenInsetsChange()
     }
 
-    if (snackbarBuilder != null) { snackbar.snackbarBuilder() }
+    if (snackbarBuilder != null) {
+        snackbar.snackbarBuilder()
+    }
 
     snackbar.show()
 }
@@ -236,7 +239,7 @@ fun View.showSnackbar(
 fun Fragment.showSnackbar(
     text: CharSequence,
     duration: Int = Snackbar.LENGTH_LONG,
-    snackbarBuilder: SnackbarBuilder? = null
+    snackbarBuilder: SnackbarBuilder? = null,
 ) {
     val baseSnackbarBuilder = (this as? BaseSnackbarBuilderProvider)?.baseSnackbarBuilder
     requireActivity().showSnackbar(text, duration) {
@@ -275,13 +278,13 @@ fun Fragment.showSnackbar(
 fun Fragment.showSnackbar(
     @StringRes textResource: Int,
     duration: Int = Snackbar.LENGTH_LONG,
-    snackbarBuilder: SnackbarBuilder? = null
+    snackbarBuilder: SnackbarBuilder? = null,
 ) {
     val text = resources.getText(textResource)
     showSnackbar(text, duration, snackbarBuilder)
 }
 
-/* ********************************************************************************************** */
+// **********************************************************************************************
 
 fun Activity.canProperlyShowSnackbars() = findViewById<View>(R.id.root_layout) is CoordinatorLayout
 
@@ -314,9 +317,14 @@ private fun Snackbar.fixMarginsWhenInsetsChange() {
         }
     }
 
-    addCallback(object : Snackbar.Callback() {
-        override fun onDismissed(snackbar: Snackbar, event: Int) {
-            view.rootView.setOnApplyWindowInsetsListener(null)
-        }
-    })
+    addCallback(
+        object : Snackbar.Callback() {
+            override fun onDismissed(
+                snackbar: Snackbar,
+                event: Int,
+            ) {
+                view.rootView.setOnApplyWindowInsetsListener(null)
+            }
+        },
+    )
 }

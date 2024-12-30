@@ -18,5 +18,5 @@ package com.ichi2.anki.exception
 
 class StorageAccessException(
     msg: String? = null,
-    e: Throwable? = null
+    e: Throwable? = null,
 ) : Exception(msg, e)

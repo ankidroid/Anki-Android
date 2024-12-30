@@ -25,8 +25,9 @@ import org.mockito.kotlin.mock
 object MockCursor {
     // Use CursorWrapper as we couldn't just mock Cursor
     val empty: Cursor
-        get() = mock<CursorWrapper> {
-            on { moveToFirst() } doReturn false
-            on { getString(anyInt()) } doThrow IllegalStateException()
-        }
+        get() =
+            mock<CursorWrapper> {
+                on { moveToFirst() } doReturn false
+                on { getString(anyInt()) } doThrow IllegalStateException()
+            }
 }

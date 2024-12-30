@@ -82,12 +82,6 @@
     <string name="webview_crash_loop_dialog_content">Системному WebView не удалось отрисовать карточку «%1$s».\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Флажки</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Увеличить лимит новых</string>
-    <string name="custom_study_increase_review_limit">Увеличить лимит повторяемых</string>
-    <string name="custom_study_review_forgotten">Повторить забытые</string>
-    <string name="custom_study_review_ahead">Повторить с опережением</string>
-    <string name="custom_study_random_selection">Учить случайный набор карточек</string>
-    <string name="custom_study_preview_new">Просмотреть новые</string>
     <string name="custom_study_limit_tags">Отфильтровать по меткам</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d отложен</item>
@@ -95,6 +89,8 @@
         <item quantity="many">+%d отложено</item>
         <item quantity="other">+%d отложено</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Править запись</string>
     <string name="discard">Отменить</string>
@@ -175,7 +171,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Параметры учёбы</string>
     <string name="select_tts" maxLength="28">Язык синтеза речи</string>
     <string name="custom_study" maxLength="28">Учить ещё</string>
-    <string name="more_options">Ещё</string>
     <string name="dyn_deck_desc">Это специальная колода для зубрёжки не по расписанию. После просмотра карточки вернутся в свою колоду. Удаление этой колоды вернёт все оставшиеся карточки в их колоду.</string>
     <string name="steps_error">Шаги должны быть больше 0</string>
     <string name="steps_min_error">Требуется хотя бы один шаг</string>

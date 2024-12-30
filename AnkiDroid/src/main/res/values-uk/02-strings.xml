@@ -82,12 +82,6 @@
     <string name="webview_crash_loop_dialog_content">Системою WebView не вдалося відобразити картку \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Прапорці</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Змінити сьогоднішній ліміт нових карток</string>
-    <string name="custom_study_increase_review_limit">Змінити сьогоднішній ліміт на повторення карток</string>
-    <string name="custom_study_review_forgotten">Повторити забуті картки</string>
-    <string name="custom_study_review_ahead">Повторити наперед</string>
-    <string name="custom_study_random_selection">Вивчати випадковий набір карток</string>
-    <string name="custom_study_preview_new">Переглянути нові картки</string>
     <string name="custom_study_limit_tags">Обмежити конкретними тегами</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d відкладено</item>
@@ -95,6 +89,8 @@
         <item quantity="many">+%d відкладено</item>
         <item quantity="other">+%d відкладено</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Всього нових карток</string>
+    <string name="studyoptions_total_label">Всього карток</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Редагувати запис</string>
     <string name="discard">Відкинути</string>
@@ -175,7 +171,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Налаштування навчання</string>
     <string name="select_tts" maxLength="28">Обрати TTS мову</string>
     <string name="custom_study" maxLength="28">Додаткове навчання</string>
-    <string name="more_options">Ще</string>
     <string name="dyn_deck_desc">Це спеціальна колода для навчання поза межами нормального графіку. Картки будуть автоматично повернуті до своїх колод після повторення. Видалення цієї колоди поверне всі карточки до своїх колод.</string>
     <string name="steps_error">Кроки повинні бути числами, більшими ніж 0</string>
     <string name="steps_min_error">Принаймні один крок потрібний</string>
@@ -370,5 +365,5 @@
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Редагувати вигляд браузера</string>
     <string name="show_shortcuts_message">Натисніть Alt+K, щоб показати комбінації клавіш</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">Дію користувача %s не встановлено в цьому типі запису. Будь ласка, налаштуйте її</string>
-    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
+    <string name="directory_inaccessible_info">Дізнайтесь більше про те, як відновити доступ тут – %s, або перейдіть в налаштування, щоб оновити теку колекцій.</string>
 </resources>

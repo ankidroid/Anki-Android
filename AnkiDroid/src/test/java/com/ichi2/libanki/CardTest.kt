@@ -17,11 +17,11 @@ package com.ichi2.libanki
 
 import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.Ease
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasItemInArray
-import org.json.JSONObject
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -39,7 +39,7 @@ class CardTest : JvmTest() {
         note.setItem("Back", "2")
         col.addNote(note)
         val cid = note.cards()[0].id
-        col.sched.answerCard(col.sched.card!!, Consts.BUTTON_TWO)
+        col.sched.answerCard(col.sched.card!!, Ease.HARD)
         col.removeCardsAndOrphanedNotes(listOf(cid))
         assertEquals(0, col.cardCount())
         assertEquals(0, col.noteCount())
@@ -119,10 +119,10 @@ class CardTest : JvmTest() {
         val models = col.notetypes
         val model = models.byName("Basic")
         assertNotNull(model)
-        models.renameFieldLegacy(model, model.getJSONArray("flds").getJSONObject(0), "A")
-        models.renameFieldLegacy(model, model.getJSONArray("flds").getJSONObject(1), "B")
+        models.renameFieldLegacy(model, model.flds[0], "A")
+        models.renameFieldLegacy(model, model.flds[1], "B")
         val fld2 = models.newField("C")
-        fld2.put("ord", JSONObject.NULL)
+        fld2.setOrd(null)
         models.addFieldLegacy(model, fld2)
         val tmpls = model.getJSONArray("tmpls")
         tmpls.getJSONObject(0).put("qfmt", "{{A}}{{B}}{{C}}")
@@ -169,10 +169,10 @@ class CardTest : JvmTest() {
         val model = models.byName("Basic")
         assertNotNull(model)
         val tmpls = model.getJSONArray("tmpls")
-        models.renameFieldLegacy(model, model.getJSONArray("flds").getJSONObject(0), "First")
-        models.renameFieldLegacy(model, model.getJSONArray("flds").getJSONObject(1), "Front")
+        models.renameFieldLegacy(model, model.flds[0], "First")
+        models.renameFieldLegacy(model, model.flds[1], "Front")
         val fld2 = models.newField("AddIfEmpty")
-        fld2.put("name", "AddIfEmpty")
+        fld2.name = "AddIfEmpty"
         models.addFieldLegacy(model, fld2)
 
         // ensure first card is always generated,
@@ -205,7 +205,10 @@ class CardTest : JvmTest() {
         assertNoteOrdinalAre(note, arrayOf(0, 1))
     }
 
-    private fun assertNoteOrdinalAre(note: Note, ords: Array<Int>) {
+    private fun assertNoteOrdinalAre(
+        note: Note,
+        ords: Array<Int>,
+    ) {
         val cards = note.cards()
         assumeThat(cards.size, equalTo(ords.size))
         for (card in cards) {

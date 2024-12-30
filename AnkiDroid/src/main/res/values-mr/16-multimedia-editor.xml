@@ -59,7 +59,6 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">काहीतरी चूक झाली</string>
-    <string name="multimedia_editor_svg_preview">SVGs पूर्वावलोकनासाठी उपलब्ध नाहीत</string>
     <string name="multimedia_editor_png_paste_error">क्लिपबोर्ड प्रतिमा png मध्ये रूपांतरित करताना त्रुटी: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s फील्डमध्ये मल्टीमीडिया सामग्री जोडा</string>
     <!-- Audio view -->

@@ -39,6 +39,7 @@ import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.pages.RemoveAccountFragment
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.utils.ext.removeFragmentFromContainer
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.ui.TextInputEditField
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.KotlinCleanup
@@ -62,37 +63,44 @@ open class MyAccount : AnkiActivity() {
     private lateinit var loggedInLogo: ImageView
 
     // if the 'remove account' fragment is open, close it first
-    private val onRemoveAccountBackCallback = object : OnBackPressedCallback(false) {
-        override fun handleOnBackPressed() {
-            closeRemoveAccountScreen()
+    private val onRemoveAccountBackCallback =
+        object : OnBackPressedCallback(false) {
+            override fun handleOnBackPressed() {
+                closeRemoveAccountScreen()
+            }
         }
-    }
 
     open fun switchToState(newState: Int) {
         when (newState) {
             STATE_LOGGED_IN -> {
                 val username = baseContext.sharedPrefs().getString("username", "")
                 usernameLoggedIn.text = username
-                toolbar = loggedIntoMyAccountView.findViewById<Toolbar?>(R.id.toolbar)?.also { toolbar ->
-                    toolbar.title =
-                        getString(R.string.sync_account) // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
-                    setSupportActionBar(toolbar)
-                }
+                toolbar =
+                    loggedIntoMyAccountView.findViewById<Toolbar?>(R.id.toolbar)?.also { toolbar ->
+                        // This can be cleaned up if all three main layouts are guaranteed
+                        // to share the same toolbar object
+                        toolbar.title = getString(R.string.sync_account)
+                        setSupportActionBar(toolbar)
+                    }
                 setContentView(loggedIntoMyAccountView)
             }
             STATE_LOG_IN -> {
-                toolbar = loginToMyAccountView.findViewById<Toolbar?>(R.id.toolbar)?.also { toolbar ->
-                    toolbar.title = getString(R.string.sync_account) // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
-                    setSupportActionBar(toolbar)
-                }
+                toolbar =
+                    loginToMyAccountView.findViewById<Toolbar?>(R.id.toolbar)?.also { toolbar ->
+                        // This can be cleaned up if all three main layouts
+                        // are guaranteed to share the same toolbar object
+                        toolbar.title = getString(R.string.sync_account)
+                        setSupportActionBar(toolbar)
+                    }
                 setContentView(loginToMyAccountView)
             }
         }
     }
 
-    private val notificationPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-        Timber.i("notification permission: %b", it)
-    }
+    private val notificationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            Timber.i("notification permission: %b", it)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -222,25 +230,36 @@ open class MyAccount : AnkiActivity() {
                     }
                 }
                 false
-            }
+            },
         )
 
-        val textWatcher = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Not needed here
-            }
+        val textWatcher =
+            object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int,
+                ) {
+                    // Not needed here
+                }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val email = username.text.toString().trim()
-                val password = password.text.toString()
-                val isFilled = email.isNotEmpty() && password.isNotEmpty()
-                loginButton.isEnabled = isFilled
-            }
+                override fun onTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    before: Int,
+                    count: Int,
+                ) {
+                    val email = username.text.toString().trim()
+                    val password = password.text.toString()
+                    val isFilled = email.isNotEmpty() && password.isNotEmpty()
+                    loginButton.isEnabled = isFilled
+                }
 
-            override fun afterTextChanged(s: Editable?) {
-                // Not needed here
+                override fun afterTextChanged(s: Editable?) {
+                    // Not needed here
+                }
             }
-        }
         username.addTextChangedListener(textWatcher)
         password.addTextChangedListener(textWatcher)
         loginButton.setOnClickListener { login() }
@@ -254,19 +273,20 @@ open class MyAccount : AnkiActivity() {
         val lostEmail = loginToMyAccountView.findViewById<Button>(R.id.lost_mail_instructions)
         val lostMailUrl = Uri.parse(resources.getString(R.string.link_ankiweb_lost_email_instructions))
         lostEmail.setOnClickListener { openUrl(lostMailUrl) }
-        loggedIntoMyAccountView = layoutInflater.inflate(R.layout.my_account_logged_in, null).apply {
-            usernameLoggedIn = findViewById(R.id.username_logged_in)
-            findViewById<Button>(R.id.logout_button).apply {
-                setOnClickListener { logout() }
+        loggedIntoMyAccountView =
+            layoutInflater.inflate(R.layout.my_account_logged_in, null).apply {
+                usernameLoggedIn = findViewById(R.id.username_logged_in)
+                findViewById<Button>(R.id.logout_button).apply {
+                    setOnClickListener { logout() }
+                }
+                findViewById<Button>(R.id.remove_account_button).apply {
+                    setOnClickListener { openRemoveAccountScreen() }
+                }
+                findViewById<Button>(R.id.privacy_policy_button).apply {
+                    setOnClickListener { openAnkiDroidPrivacyPolicy() }
+                }
+                loggedInLogo = findViewById(R.id.login_logo)
             }
-            findViewById<Button>(R.id.remove_account_button).apply {
-                setOnClickListener { openRemoveAccountScreen() }
-            }
-            findViewById<Button>(R.id.privacy_policy_button).apply {
-                setOnClickListener { openAnkiDroidPrivacyPolicy() }
-            }
-            loggedInLogo = findViewById(R.id.login_logo)
-        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             password.setAutoFillListener {
@@ -283,9 +303,9 @@ open class MyAccount : AnkiActivity() {
             (
                 this.applicationContext.resources.configuration.screenLayout
                     and Configuration.SCREENLAYOUT_SIZE_MASK
-                )
-                < Configuration.SCREENLAYOUT_SIZE_LARGE
             )
+                < Configuration.SCREENLAYOUT_SIZE_LARGE
+        )
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
@@ -320,15 +340,16 @@ open class MyAccount : AnkiActivity() {
          */
         fun checkNotificationPermission(
             context: Context,
-            launcher: ActivityResultLauncher<String>
+            launcher: ActivityResultLauncher<String>,
         ) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
                 return
             }
             val permission = Permissions.postNotification
-            if (permission != null && ContextCompat.checkSelfPermission(
+            if (permission != null &&
+                ContextCompat.checkSelfPermission(
                     context,
-                    permission
+                    permission,
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 launcher.launch(permission)

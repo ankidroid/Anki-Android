@@ -15,41 +15,53 @@
  */
 package com.ichi2.anki.dialogs
 
+import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.testing.FragmentScenario
-import androidx.lifecycle.Lifecycle
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.RootMatchers.isDialog
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.scheduler.CustomStudyDefaultsResponse
+import anki.scheduler.customStudyDefaultsResponse
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.Companion.toDomainModel
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.anki.dialogs.utils.performPositiveClick
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Consts
 import com.ichi2.libanki.sched.Scheduler
+import com.ichi2.testutils.AnkiFragmentScenario
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.isJsonEqual
-import com.ichi2.utils.KotlinCleanup
-import org.hamcrest.CoreMatchers.notNullValue
-import org.hamcrest.MatcherAssert
-import org.hamcrest.core.IsNull
+import io.mockk.every
+import io.mockk.mockk
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.MatcherAssert.assertThat
+import org.intellij.lang.annotations.Language
 import org.json.JSONObject
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.kotlin.mock
-import org.mockito.kotlin.whenever
 import org.robolectric.annotation.Config
 import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class CustomStudyDialogTest : RobolectricTest() {
     private var mockListener: CustomStudyListener? = null
+
     override fun setUp() {
         super.setUp()
         mockListener = Mockito.mock(CustomStudyListener::class.java)
@@ -62,70 +74,212 @@ class CustomStudyDialogTest : RobolectricTest() {
     }
 
     @Test
-    fun learnAheadCardsRegressionTest() {
-        // #6289 - Regression Test
-        val args = CustomStudyDialog(mock(), ParametersUtils.whatever())
-            .withArguments(CustomStudyDialog.ContextMenuOption.STUDY_AHEAD, 1)
-            .arguments
-        val factory = CustomStudyDialogFactory({ this.col }, mockListener)
-        FragmentScenario.launch(CustomStudyDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory).use { scenario ->
-            scenario.moveToState(Lifecycle.State.RESUMED)
-            scenario.onFragment { f: CustomStudyDialog ->
-                val dialog = assertNotNull(f.dialog as AlertDialog?)
-                dialog.performPositiveClick()
+    fun `new custom study decks have expected structure - issue 6289`() =
+        runTest {
+            val studyType = ContextMenuOption.STUDY_PREVIEW
+            // we need a non-empty deck to custom study
+            addNoteUsingBasicModel()
+
+            withCustomStudyFragment(
+                args = argumentsDisplayingSubscreen(studyType),
+            ) { dialogFragment: CustomStudyDialog ->
+                dialogFragment.submitSubscreenData()
             }
+
             val customStudy = col.decks.current()
-            MatcherAssert.assertThat("Custom Study should be dynamic", customStudy.isFiltered)
-            MatcherAssert.assertThat("could not find deck: Custom study session", customStudy, notNullValue())
+            assertThat("Custom Study should be filtered", customStudy.isFiltered)
+
+            // remove timestamps to allow us to compare JSON
             customStudy.remove("id")
             customStudy.remove("mod")
             customStudy.remove("name")
-            val expected = "{" +
-                "\"browserCollapsed\":false," +
-                "\"collapsed\":false," +
-                "\"delays\":null," +
-                "\"desc\":\"\"," +
-                "\"dyn\":1," +
-                "\"lrnToday\":[0,0]," +
-                "\"newToday\":[0,0]," +
-                "\"previewDelay\":0," +
-                "\"previewAgainSecs\":60,\"previewHardSecs\":600,\"previewGoodSecs\":0," +
-                "\"resched\":true," +
-                "\"revToday\":[0,0]," +
-                "\"separate\":true," +
-                "\"terms\":[[\"deck:\\\"Default\\\" prop:due<=1\",99999,6]]," +
-                "\"timeToday\":[0,0]," +
-                "\"usn\":-1" +
-                "}"
-            MatcherAssert.assertThat(customStudy, isJsonEqual(JSONObject(expected)))
+
+            // compare JSON
+            @Language("json")
+            val expected =
+                """
+                {
+                    "browserCollapsed": false,
+                    "collapsed": false,
+                    "delays": null,
+                    "desc": "",
+                    "dyn": 1,
+                    "lrnToday": [0, 0],
+                    "newToday": [0, 0],
+                    "previewDelay": 0,
+                    "previewAgainSecs": 60,
+                    "previewHardSecs": 600,
+                    "previewGoodSecs": 0,
+                    "resched": true,
+                    "revToday": [0, 0],
+                    "separate": true,
+                    "terms": [
+                        ["deck:\"Default\" prop:due<=1", 99999, 6]
+                    ],
+                    "timeToday": [0, 0],
+                    "usn": -1
+                }
+                """.trimIndent()
+            assertThat(customStudy, isJsonEqual(JSONObject(expected)))
+        }
+
+    @Test
+    @NeedsTest("previous value for 'increase review card limit' is suggested")
+    fun `previous value for 'increase new card limit' is suggested`() {
+        // add cards to be sure we can extend successfully. Needs to be > 20
+        repeat(23) {
+            addNoteUsingBasicModel()
+        }
+        val newExtendByValue = 1
+
+        assertThat("'new' default value", defaultsOfDefaultDeck.extendNew.initialValue, equalTo(0))
+
+        // extend limits with a value of '1'
+        withCustomStudyFragment(
+            args = argumentsDisplayingSubscreen(ContextMenuOption.STUDY_NEW),
+        ) { dialogFragment: CustomStudyDialog ->
+
+            onSubscreenEditText()
+                .perform(replaceText(newExtendByValue.toString()))
+
+            dialogFragment.submitSubscreenData()
+        }
+
+        // ensure backend is updated
+        assertThat(
+            "'new' updated value",
+            defaultsOfDefaultDeck.extendNew.initialValue,
+            equalTo(newExtendByValue),
+        )
+
+        // ensure 'newExtendByValue' is used by our UI
+        withCustomStudyFragment(
+            args = argumentsDisplayingSubscreen(ContextMenuOption.STUDY_NEW),
+        ) { dialogFragment: CustomStudyDialog ->
+            onSubscreenEditText()
+                .check(matches(withText(newExtendByValue.toString())))
         }
     }
 
     @Test
     @Config(qualifiers = "en")
-    @KotlinCleanup("Use kotlin based Mockito extensions")
-    fun increaseNewCardLimitRegressionTest() {
-        // #8338 - Regression Test
-        val args = CustomStudyDialog(mock(), ParametersUtils.whatever())
-            .withArguments(CustomStudyDialog.ContextMenuConfiguration.STANDARD, 1)
-            .arguments
+    fun `'increase new limit' is shown when there are new cards`() {
+        val studyDefaults = customStudyDefaultsResponse { availableNew = 1 }
 
-        // we are using mock collection for the CustomStudyDialog but still other parts of the code
-        // access a real collection, so we must ensure that collection is loaded first
-        // so we don't get net/ankiweb/rsdroid/BackendException$BackendDbException$BackendDbLockedException
-        ensureCollectionLoadIsSynchronous()
-        val mockCollection = Mockito.mock(Collection::class.java, Mockito.RETURNS_DEEP_STUBS)
-        val mockSched = Mockito.mock(Scheduler::class.java)
-        whenever(mockCollection.sched).thenReturn(mockSched)
-        whenever(mockSched.newCount()).thenReturn(0)
-        val factory = CustomStudyDialogFactory({ mockCollection }, mockListener)
-        FragmentScenario.launch(CustomStudyDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory).use { scenario ->
-            scenario.moveToState(Lifecycle.State.STARTED)
-            scenario.onFragment { f: CustomStudyDialog ->
-                val dialog = f.dialog as AlertDialog?
-                MatcherAssert.assertThat(dialog, IsNull.notNullValue())
-                onView(withText(R.string.custom_study_increase_new_limit)).inRoot(isDialog()).check(doesNotExist())
+        withCustomStudyFragment(
+            args = argumentsDisplayingMainScreen(),
+            factory = dialogFactory(col = mockCollectionWithSchedulerReturning(studyDefaults)),
+        ) { dialogFragment: CustomStudyDialog ->
+            onView(withText(TR.customStudyIncreaseTodaysNewCardLimit()))
+                .inRoot(isDialog())
+                .check(matches(isDisplayed()))
+        }
+    }
+
+    @Test
+    @Config(qualifiers = "en")
+    fun `'increase new limit' is not shown when there are no new cards`() {
+        val studyDefaults = customStudyDefaultsResponse { availableNew = 0 }
+
+        withCustomStudyFragment(
+            args = argumentsDisplayingMainScreen(),
+            factory = dialogFactory(col = mockCollectionWithSchedulerReturning(studyDefaults)),
+        ) { dialogFragment: CustomStudyDialog ->
+            onView(withText(TR.customStudyIncreaseTodaysNewCardLimit()))
+                .inRoot(isDialog())
+                .check(doesNotExist())
+        }
+    }
+
+    @Test
+    @Config(qualifiers = "en")
+    fun `'increase review limit' is shown when there are new cards`() {
+        val studyDefaults = customStudyDefaultsResponse { availableReview = 1 }
+
+        withCustomStudyFragment(
+            args = argumentsDisplayingMainScreen(),
+            factory = dialogFactory(col = mockCollectionWithSchedulerReturning(studyDefaults)),
+        ) { dialogFragment: CustomStudyDialog ->
+            onView(withText(TR.customStudyIncreaseTodaysReviewCardLimit()))
+                .inRoot(isDialog())
+                .check(matches(isDisplayed()))
+        }
+    }
+
+    @Test
+    @Config(qualifiers = "en")
+    fun `'increase review limit' is not shown when there are no new cards`() {
+        val studyDefaults = customStudyDefaultsResponse { availableReview = 0 }
+
+        withCustomStudyFragment(
+            args = argumentsDisplayingMainScreen(),
+            factory = dialogFactory(col = mockCollectionWithSchedulerReturning(studyDefaults)),
+        ) { dialogFragment: CustomStudyDialog ->
+            onView(withText(TR.customStudyIncreaseTodaysReviewCardLimit()))
+                .inRoot(isDialog())
+                .check(doesNotExist())
+        }
+    }
+
+    /**
+     * Runs [block] on a [CustomStudyDialog]
+     */
+    private fun withCustomStudyFragment(
+        args: Bundle,
+        factory: CustomStudyDialogFactory = dialogFactory(),
+        block: (CustomStudyDialog) -> Unit,
+    ) {
+        AnkiFragmentScenario.launch(CustomStudyDialog::class.java, args, factory).use { scenario ->
+            scenario.onFragment { dialogFragment: CustomStudyDialog ->
+                block(dialogFragment)
             }
         }
     }
+
+    private fun mockCollectionWithSchedulerReturning(response: CustomStudyDefaultsResponse) =
+        mockk<Collection>(relaxed = true) {
+            every { sched } returns
+                mockk<Scheduler> {
+                    every { customStudyDefaults(Consts.DEFAULT_DECK_ID) } returns response
+                }
+        }
+
+    private fun dialogFactory(col: Collection? = null) = CustomStudyDialogFactory({ col ?: this.col }, mockListener)
+
+    private fun argumentsDisplayingMainScreen() =
+        CustomStudyDialog(mock(), ParametersUtils.whatever())
+            .displayingMainScreen()
+            .requireArguments()
+
+    @Suppress("SameParameterValue")
+    private fun argumentsDisplayingSubscreen(subscreen: ContextMenuOption) =
+        CustomStudyDialog(mock(), ParametersUtils.whatever())
+            .displayingSubscreen(subscreen)
+            .requireArguments()
+
+    private fun CustomStudyDialog.displayingSubscreen(subscreen: ContextMenuOption) =
+        withArguments(
+            did = Consts.DEFAULT_DECK_ID,
+            contextMenuAttribute = subscreen,
+        )
+
+    private fun CustomStudyDialog.displayingMainScreen() =
+        withArguments(
+            did = Consts.DEFAULT_DECK_ID,
+        )
+
+    private fun onSubscreenEditText() =
+        onView(withId(R.id.custom_study_details_edittext2))
+            .inRoot(isDialog())
+
+    private fun CustomStudyDialog.submitSubscreenData() =
+        assertNotNull(dialog as? AlertDialog?, "dialog").also { dialog ->
+            dialog.performPositiveClick()
+        }
+
+    /**
+     * The current backend value of [CustomStudyDialog.CustomStudyDefaults] for the default deck
+     * */
+    private val defaultsOfDefaultDeck
+        get() = col.sched.customStudyDefaults(Consts.DEFAULT_DECK_ID).toDomainModel()
 }

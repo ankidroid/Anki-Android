@@ -46,7 +46,10 @@ class CardBrowserSearchView : AccessibleSearchView {
         }
     }
 
-    override fun setQuery(query: CharSequence, submit: Boolean) {
+    override fun setQuery(
+        query: CharSequence,
+        submit: Boolean,
+    ) {
         if (ignoreValueChange) {
             return
         }

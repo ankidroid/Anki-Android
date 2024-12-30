@@ -43,14 +43,20 @@ import java.util.Locale
  * @param os The OS The test fails under (required)
  * @param message The message to display when the test is skipped
  */
-annotation class Flaky(val os: OS, val message: String = "")
+annotation class Flaky(
+    val os: OS,
+    val message: String = "",
+)
 
 /**
  * Ignores any matching test defined with `@Flaky` in CI
  * @see Flaky
  */
 class IgnoreFlakyTestsInCIRule : TestRule {
-    override fun apply(base: Statement, description: Description): Statement {
+    override fun apply(
+        base: Statement,
+        description: Description,
+    ): Statement {
         if (!isRunningUnderCI) return base
         val annotation = description.getFlakyAnnotation() ?: return base
         if (!annotation.os.isRunning()) return base
@@ -66,9 +72,8 @@ class IgnoreFlakyTestsInCIRule : TestRule {
      * Returns an instance of [Flaky] for the test if annotated,
      * preferring the method-level annotation over the class-level annotation
      */
-    private fun Description.getFlakyAnnotation(): Flaky? {
-        return getAnnotation(Flaky::class.java) ?: this.testClass.getAnnotation(Flaky::class.java)
-    }
+    private fun Description.getFlakyAnnotation(): Flaky? =
+        getAnnotation(Flaky::class.java) ?: this.testClass.getAnnotation(Flaky::class.java)
 
     companion object {
         val isRunningUnderCI: Boolean = BuildConfig.CI
@@ -76,7 +81,12 @@ class IgnoreFlakyTestsInCIRule : TestRule {
 }
 
 enum class OS {
-    WINDOWS, MACOS, LINUX, ALL;
+    WINDOWS,
+    MACOS,
+    LINUX,
+    ALL,
+    ;
+
     fun isRunning(): Boolean = this == ALL || this == currentOS
 
     companion object {

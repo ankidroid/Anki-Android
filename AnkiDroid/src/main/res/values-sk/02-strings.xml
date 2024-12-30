@@ -82,12 +82,6 @@
     <string name="webview_crash_loop_dialog_content">Zobrazenie kartičky systémom WebView zlyhalo \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Vlajky</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modifikovať dnešný limit nových kartičiek</string>
-    <string name="custom_study_increase_review_limit">Modifikovať dnešný limit kartičiek na zopakovanie</string>
-    <string name="custom_study_review_forgotten">Zopakovať zabudnuté kartičky</string>
-    <string name="custom_study_review_ahead">Uskutočniť opakovanie vopred</string>
-    <string name="custom_study_random_selection">Študovať náhodný výber kartičiek</string>
-    <string name="custom_study_preview_new">Náhľad nových kartičiek</string>
     <string name="custom_study_limit_tags">Obmedziť na určité štítky</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d buried</item>
@@ -95,6 +89,8 @@
         <item quantity="many">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Upraviť poznámku</string>
     <string name="discard">Zahodiť</string>
@@ -175,7 +171,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Možnosti štúdia</string>
     <string name="select_tts" maxLength="28">Nastaviť jazyk TTS (text na reč)</string>
     <string name="custom_study" maxLength="28">Vlastné štúdium</string>
-    <string name="more_options">Viac</string>
     <string name="dyn_deck_desc">Toto je špeciálny balíček na štúdium mimo bežného plánu. Kartičky sa automaticky vrátia do svojich pôvodných balíčkov po tom, čo si ich zopakujete. Odstránením tohto balíčku zo zoznamu balíčkov sa všetky zostávajúce kartičky vrátia do svojich pôvodných balíčkov.</string>
     <string name="steps_error">Kroky musia byť čísla väčšie ako 0</string>
     <string name="steps_min_error">Je nutné zadať aspoň jeden krok</string>

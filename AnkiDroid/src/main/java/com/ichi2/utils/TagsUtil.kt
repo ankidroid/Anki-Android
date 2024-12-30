@@ -22,7 +22,7 @@ object TagsUtil {
     fun getUpdatedTags(
         previous: List<String>,
         selected: List<String>,
-        indeterminate: List<String>
+        indeterminate: List<String>,
     ): List<String> {
         if (indeterminate.isEmpty()) {
             return selected
@@ -42,10 +42,11 @@ object TagsUtil {
      */
     fun getTagParts(tag: String): List<String> {
         val parts = tag.split("::").asSequence()
-        return parts.map {
-            // same as the way Anki Desktop deals with an empty tag subpart
-            it.ifEmpty { BLANK_SUBSTITUENT }
-        }.toList()
+        return parts
+            .map {
+                // same as the way Anki Desktop deals with an empty tag subpart
+                it.ifEmpty { BLANK_SUBSTITUENT }
+            }.toList()
     }
 
     /**
@@ -66,10 +67,12 @@ object TagsUtil {
      */
     fun getTagRoot(tag: String): String {
         val parts = tag.split("::").asSequence()
-        return parts.map {
-            // same as the way Anki Desktop deals with an empty tag subpart
-            it.ifEmpty { "blank" }
-        }.take(1).first()
+        return parts
+            .map {
+                // same as the way Anki Desktop deals with an empty tag subpart
+                it.ifEmpty { "blank" }
+            }.take(1)
+            .first()
     }
 
     /**
@@ -77,9 +80,11 @@ object TagsUtil {
      */
     fun getTagAncestors(tag: String): List<String> {
         val parts = getTagParts(tag)
-        return (0..parts.size - 2).asSequence().map {
-            parts.subList(0, it + 1).joinToString("::")
-        }.toList()
+        return (0..parts.size - 2)
+            .asSequence()
+            .map {
+                parts.subList(0, it + 1).joinToString("::")
+            }.toList()
     }
 
     /**
@@ -87,7 +92,10 @@ object TagsUtil {
      * Used to sort all tags firstly in DFN order, secondly in dictionary order
      * Both lhs and rhs must be uniformed.
      */
-    fun compareTag(lhs: String, rhs: String): Int {
+    fun compareTag(
+        lhs: String,
+        rhs: String,
+    ): Int {
         val lhsIt = lhs.split("::").asSequence().iterator()
         val rhsIt = rhs.split("::").asSequence().iterator()
         while (lhsIt.hasNext() && rhsIt.hasNext()) {

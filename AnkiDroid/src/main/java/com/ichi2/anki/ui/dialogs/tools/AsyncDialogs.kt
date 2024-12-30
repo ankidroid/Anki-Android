@@ -22,7 +22,9 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 
-open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builder) {
+open class AsyncDialogBuilder(
+    private val alertDialogBuilder: AlertDialog.Builder,
+) {
     lateinit var continuation: Continuation<DialogResult>
 
     var onShowListener: ((AlertDialog) -> Unit)? = null
@@ -41,34 +43,38 @@ open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builde
                 when {
                     ::checkedItems.isInitialized -> DialogResult.Ok.MultipleChoice(checkedItems)
                     else -> DialogResult.Ok.Simple
-                }
+                },
             )
         }
     }
 
     sealed interface CheckedItems {
         data object None : CheckedItems
+
         data object All : CheckedItems
-        class Some(val checkedItems: BooleanArray) : CheckedItems
+
+        class Some(
+            val checkedItems: BooleanArray,
+        ) : CheckedItems
     }
 
     fun setMultiChoiceItems(
         items: List<CharSequence>,
         checkedItems: CheckedItems,
-        disablePositiveButtonIfNoItemsChosen: Boolean = true
+        disablePositiveButtonIfNoItemsChosen: Boolean = true,
     ) {
-        this.checkedItems = when (checkedItems) {
-            is CheckedItems.All -> BooleanArray(items.size) { true }
-            is CheckedItems.None -> BooleanArray(items.size) { false }
-            is CheckedItems.Some -> checkedItems.checkedItems.clone()
-        }
+        this.checkedItems =
+            when (checkedItems) {
+                is CheckedItems.All -> BooleanArray(items.size) { true }
+                is CheckedItems.None -> BooleanArray(items.size) { false }
+                is CheckedItems.Some -> checkedItems.checkedItems.clone()
+            }
 
         fun enableDisablePositiveButton(dialog: AlertDialog) {
             dialog.getButton(BUTTON_POSITIVE).isEnabled = this.checkedItems.contains(true)
         }
 
-        alertDialogBuilder.setMultiChoiceItems(items.toTypedArray(), this.checkedItems) {
-                dialog, position, isChecked ->
+        alertDialogBuilder.setMultiChoiceItems(items.toTypedArray(), this.checkedItems) { dialog, position, isChecked ->
             this.checkedItems[position] = isChecked
             if (disablePositiveButtonIfNoItemsChosen) enableDisablePositiveButton(dialog as AlertDialog)
         }
@@ -89,15 +95,21 @@ open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builde
  *       ...
  *   }
  */
-class CompoundDialogBuilder(private val alertDialogBuilder: AlertDialog.Builder) : AsyncDialogBuilder(alertDialogBuilder) {
+class CompoundDialogBuilder(
+    private val alertDialogBuilder: AlertDialog.Builder,
+) : AsyncDialogBuilder(alertDialogBuilder) {
     /** @see AlertDialog.Builder.setTitle */
-    fun setTitle(@StringRes titleId: Int): AlertDialog.Builder = alertDialogBuilder.setTitle(titleId)
+    fun setTitle(
+        @StringRes titleId: Int,
+    ): AlertDialog.Builder = alertDialogBuilder.setTitle(titleId)
 
     /** @see AlertDialog.Builder.setTitle */
     fun setTitle(title: CharSequence): AlertDialog.Builder = alertDialogBuilder.setTitle(title)
 
     /** @see AlertDialog.Builder.setMessage */
-    fun setMessage(@StringRes messageId: Int): AlertDialog.Builder = alertDialogBuilder.setMessage(messageId)
+    fun setMessage(
+        @StringRes messageId: Int,
+    ): AlertDialog.Builder = alertDialogBuilder.setMessage(messageId)
 
     /** @see AlertDialog.Builder.setMessage */
     fun setMessage(message: CharSequence): AlertDialog.Builder = alertDialogBuilder.setMessage(message)
@@ -108,7 +120,10 @@ sealed interface DialogResult {
 
     interface Ok : DialogResult {
         object Simple : Ok
-        class MultipleChoice(val checkedItems: BooleanArray) : Ok
+
+        class MultipleChoice(
+            val checkedItems: BooleanArray,
+        ) : Ok
     }
 }
 

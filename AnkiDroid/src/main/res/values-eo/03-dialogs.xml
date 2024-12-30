@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">Ĉu vi certe volas ripari la datumbazon?\n\nAntaŭ ol komenci, kopio estos kreita en subdosierujo “%s”.</string>
     <string name="intent_aedict_empty">La ĉefa kategorio estas malplena</string>
     <string name="intent_aedict_category">Por aldoni kartojn al AnkiDroid, forigu ĉiujn kategoriojn de kajero kaj aldonu unu nomitan «default»</string>
-    <string name="custom_study_new_total_new">Novaj kartoj en kartaro: %d</string>
-    <string name="custom_study_rev_total_rev">Lernendaj ripetoj en kartaro: %d</string>
     <string name="custom_study_new_extend">(Mal)pliigi (“-3”) hodiaŭan limigon de novaj kartoj je</string>
     <string name="custom_study_rev_extend">(Mal)pliigi (“-3”) hodiaŭan limigon de kartoj por ripeti je</string>
     <string name="custom_study_forgotten">Ripeti kartojn forgesitajn dum tiom da antaŭaj tagoj:</string>
     <string name="custom_study_ahead">Anticipe ripeti kartojn je tiom da tagoj:</string>
-    <string name="custom_study_random">Elekti tiom da hazardaj kartoj el la kartaro:</string>
     <string name="custom_study_preview">Antaŭrigardi novajn kartojn aldonitajn dum tiom da antaŭaj tagoj:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Ne povis rekrei kartaron por propra lernado</string>
     <string name="storage_full_title">Konservejo plena</string>
     <string name="storage_almost_full_title">Konservejo preskaŭ plena</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Mankas spaco</string>

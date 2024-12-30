@@ -29,7 +29,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class ConfigTest : JvmTest() {
-
     @Test
     fun string_serialization() {
         assertThat(col.config.get<String>("sortType"), equalTo("noteFld"))
@@ -85,4 +84,7 @@ class ConfigTest : JvmTest() {
 }
 
 @Serializable
-data class Example(val hello: String, val world: Int)
+data class Example(
+    val hello: String,
+    val world: Int,
+)

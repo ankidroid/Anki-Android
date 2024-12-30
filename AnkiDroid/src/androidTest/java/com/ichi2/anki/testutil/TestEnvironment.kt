@@ -18,7 +18,5 @@ package com.ichi2.anki.testutil
 import java.util.Locale
 
 object TestEnvironment {
-    fun isDisplayingDefaultEnglishStrings(): Boolean {
-        return "en-US" == Locale.getDefault().toLanguageTag()
-    }
+    fun isDisplayingDefaultEnglishStrings(): Boolean = "en-US" == Locale.getDefault().toLanguageTag()
 }

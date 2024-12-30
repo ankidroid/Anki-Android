@@ -24,13 +24,16 @@ import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import com.ichi2.utils.Permissions.canRecordAudio
 
-class JavaScriptSTT(private val context: Context) {
+class JavaScriptSTT(
+    private val context: Context,
+) {
     private var speechRecognizer: SpeechRecognizer? = null
     private var recognitionCallback: SpeechRecognitionCallback? = null
     private var language: String? = null
 
     interface SpeechRecognitionCallback {
         fun onResult(results: List<String>)
+
         fun onError(errorMessage: String)
     }
 
@@ -75,8 +78,8 @@ class JavaScriptSTT(private val context: Context) {
         return true
     }
 
-    private fun createRecognitionListener(): RecognitionListener {
-        return object : RecognitionListener {
+    private fun createRecognitionListener(): RecognitionListener =
+        object : RecognitionListener {
             override fun onReadyForSpeech(params: Bundle?) {}
 
             override fun onBeginningOfSpeech() {}
@@ -88,18 +91,19 @@ class JavaScriptSTT(private val context: Context) {
             override fun onEndOfSpeech() {}
 
             override fun onError(error: Int) {
-                val errorMessage = when (error) {
-                    SpeechRecognizer.ERROR_AUDIO -> "Audio error"
-                    SpeechRecognizer.ERROR_CLIENT -> "Client error"
-                    SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> "Insufficient permissions"
-                    SpeechRecognizer.ERROR_NETWORK -> "Network error"
-                    SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> "Network timeout"
-                    SpeechRecognizer.ERROR_NO_MATCH -> "No match found"
-                    SpeechRecognizer.ERROR_RECOGNIZER_BUSY -> "Recognition service busy"
-                    SpeechRecognizer.ERROR_SERVER -> "Server error"
-                    SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> "Speech timeout"
-                    else -> "Unknown error"
-                }
+                val errorMessage =
+                    when (error) {
+                        SpeechRecognizer.ERROR_AUDIO -> "Audio error"
+                        SpeechRecognizer.ERROR_CLIENT -> "Client error"
+                        SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> "Insufficient permissions"
+                        SpeechRecognizer.ERROR_NETWORK -> "Network error"
+                        SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> "Network timeout"
+                        SpeechRecognizer.ERROR_NO_MATCH -> "No match found"
+                        SpeechRecognizer.ERROR_RECOGNIZER_BUSY -> "Recognition service busy"
+                        SpeechRecognizer.ERROR_SERVER -> "Server error"
+                        SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> "Speech timeout"
+                        else -> "Unknown error"
+                    }
                 recognitionCallback?.onError(errorMessage)
             }
 
@@ -114,7 +118,9 @@ class JavaScriptSTT(private val context: Context) {
 
             override fun onPartialResults(partialResults: Bundle?) {}
 
-            override fun onEvent(eventType: Int, params: Bundle?) {}
+            override fun onEvent(
+                eventType: Int,
+                params: Bundle?,
+            ) {}
         }
-    }
 }

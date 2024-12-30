@@ -151,8 +151,6 @@
     <string name="notification_minimum_cards_due">Mais do que %d fichas pendentes</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrar</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Luz intermitente</string>
-    <string name="timeout_answer_text" maxLength="41">Mostrar automaticamente a resposta</string>
-    <string name="timeout_answer_summ2">Mostrar a resposta automaticamente, sem intervenção do utilizador. Configurar a partir das opções de baralho.</string>
     <string name="select_locale_title">Selecionar Idioma</string>
     <string name="software_render" maxLength="41">Desactivar processamento de fichas por \"hardware\"</string>
     <string name="software_render_summ">O processamento por \"hardware\" é mais rápido, mas pode causar problemas, principalmente em Android 8/8.1. Se não conseguir ver partes da “interface” aquando da revisão de fichas, experimente esta opção.</string>
@@ -324,7 +322,7 @@
     <string name="pref__manage_space__screen_title">Gerir espaço</string>
     <!-- TextWidgetPreference widget text -->
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Erro</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlando&#8230;</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">A Calcu-\nlar&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
         <item quantity="one">%1$d ficheiro\n%2$s</item>
         <item quantity="other">%1$d ficheiros\n%2$s</item>

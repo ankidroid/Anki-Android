@@ -31,7 +31,6 @@ import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
 class BindingAndroidTest : RobolectricTest() {
-
     @Test
     fun testKeycodeToString() {
         // These use native functions. We may need KeyEvent.keyCodeToString
@@ -47,10 +46,22 @@ class BindingAndroidTest : RobolectricTest() {
         assertBindingEquals(Binding.unicode(ctrl(), 'Ä'), Binding.fromString(BindingTest.UNICODE_PREFIX + "Ctrl+Ä"))
         assertBindingEquals(Binding.unicode(shift(), 'Ä'), Binding.fromString(BindingTest.UNICODE_PREFIX + "Shift+Ä"))
         assertBindingEquals(Binding.unicode(alt(), 'Ä'), Binding.fromString(BindingTest.UNICODE_PREFIX + "Alt+Ä"))
-        assertBindingEquals(Binding.keyCode(KeyEvent.KEYCODE_MEDIA_NEXT), Binding.fromString(BindingTest.KEY_PREFIX + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_MEDIA_NEXT)))
-        assertBindingEquals(Binding.keyCode(ctrl(), KeyEvent.KEYCODE_MEDIA_PREVIOUS), Binding.fromString(BindingTest.KEY_PREFIX + "Ctrl+" + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_MEDIA_PREVIOUS)))
-        assertBindingEquals(Binding.keyCode(shift(), KeyEvent.KEYCODE_VOLUME_DOWN), Binding.fromString(BindingTest.KEY_PREFIX + "Shift+" + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_VOLUME_DOWN)))
-        assertBindingEquals(Binding.keyCode(alt(), KeyEvent.KEYCODE_VOLUME_UP), Binding.fromString(BindingTest.KEY_PREFIX + "Alt+" + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_VOLUME_UP)))
+        assertBindingEquals(
+            Binding.keyCode(KeyEvent.KEYCODE_MEDIA_NEXT),
+            Binding.fromString(BindingTest.KEY_PREFIX + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_MEDIA_NEXT)),
+        )
+        assertBindingEquals(
+            Binding.keyCode(ctrl(), KeyEvent.KEYCODE_MEDIA_PREVIOUS),
+            Binding.fromString(BindingTest.KEY_PREFIX + "Ctrl+" + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_MEDIA_PREVIOUS)),
+        )
+        assertBindingEquals(
+            Binding.keyCode(shift(), KeyEvent.KEYCODE_VOLUME_DOWN),
+            Binding.fromString(BindingTest.KEY_PREFIX + "Shift+" + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_VOLUME_DOWN)),
+        )
+        assertBindingEquals(
+            Binding.keyCode(alt(), KeyEvent.KEYCODE_VOLUME_UP),
+            Binding.fromString(BindingTest.KEY_PREFIX + "Alt+" + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_VOLUME_UP)),
+        )
         assertBindingEquals(Binding.gesture(Gesture.TAP_TOP), Binding.fromString(BindingTest.GESTURE_PREFIX + Gesture.TAP_TOP.name))
     }
 
@@ -66,18 +77,21 @@ class BindingAndroidTest : RobolectricTest() {
         assertEquals("${BindingTest.GESTURE_PREFIX} Touch top", Binding.gesture(Gesture.TAP_TOP).toDisplayString())
     }
 
-    private fun Binding.toDisplayString(): String {
-        return this.toDisplayString(targetContext)
-    }
+    private fun Binding.toDisplayString(): String = this.toDisplayString(targetContext)
 
-    private fun assertBindingEquals(fst: Binding, snd: Binding) {
+    private fun assertBindingEquals(
+        fst: Binding,
+        snd: Binding,
+    ) {
         val first = MappableBinding(fst, Reviewer(CardSide.BOTH))
         val second = MappableBinding(snd, Reviewer(CardSide.BOTH))
         assertEquals(first, second)
     }
 }
 
-private fun axis(axis: Axis, fl: Float) = Binding.AxisButtonBinding(axis, fl)
+private fun axis(
+    axis: Axis,
+    fl: Float,
+) = Binding.AxisButtonBinding(axis, fl)
 
-private fun axisBindingFromString(suffix: String) =
-    Binding.fromString(BindingTest.JOYSTICK_PREFIX + suffix)
+private fun axisBindingFromString(suffix: String) = Binding.fromString(BindingTest.JOYSTICK_PREFIX + suffix)

@@ -20,21 +20,19 @@
 package com.ichi2.anki.multimediacard.fields
 
 import com.ichi2.libanki.Collection
-import com.ichi2.utils.KotlinCleanup
 import java.io.File
 import java.util.regex.Pattern
 
 /**
  * Implementation of Audio field types
  */
-@KotlinCleanup("replace _audioPath with `field`")
-abstract class AudioField : FieldBase(), IField {
-    private var _audioPath: String? = null
-
-    override var mediaPath: String?
-        get() = _audioPath
+abstract class AudioField :
+    FieldBase(),
+    IField {
+    override var mediaPath: String? = null
+        get() = field
         set(value) {
-            _audioPath = value
+            field = value
             setThisModified()
         }
 
@@ -43,12 +41,16 @@ abstract class AudioField : FieldBase(), IField {
     override var hasTemporaryMedia: Boolean = false
 
     override val formattedValue: String
-        get() = mediaPath?.let { path ->
-            val file = File(path)
-            if (file.exists()) "[sound:${file.name}]" else ""
-        } ?: ""
+        get() =
+            mediaPath?.let { path ->
+                val file = File(path)
+                if (file.exists()) "[sound:${file.name}]" else ""
+            } ?: ""
 
-    override fun setFormattedString(col: Collection, value: String) {
+    override fun setFormattedString(
+        col: Collection,
+        value: String,
+    ) {
         val p = Pattern.compile(PATH_REGEX)
         val m = p.matcher(value)
         var res = ""

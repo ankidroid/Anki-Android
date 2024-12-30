@@ -54,7 +54,7 @@
         <item quantity="many">Видалити всі картки в %1$s? Вона містить %2$d карток</item>
         <item quantity="other">Видалити всі картки в %1$s? Вона містить %2$d карток</item>
     </plurals>
-    <string name="delete_cram_deck_message">Видалити фільтровану колоду %s і повернути всі карти до оригінальних колод?</string>
+    <string name="delete_cram_deck_message">Видалити фільтровану колоду %s і повернути всі картки до оригінальних колод?</string>
     <string name="no_tts_available_message">Відсутня мова для перетворення тексту в мовлення</string>
     <string name="tts_no_tts">Не говорити</string>
     <string name="unused_strings">\n\nНевикористані файли:\n</string>
@@ -81,15 +81,11 @@
     <string name="repair_deck_dialog">Ви дійсно бажаєте спробувати відновити базу даних?\n\nПеред початком спроби в підкаталозі \'%s\' буде створена копія.</string>
     <string name="intent_aedict_empty">Категорія  \"стандартна\"  порожня</string>
     <string name="intent_aedict_category">Щоб додати картки до AnkiDroid, видаліть всі категорії Notepad або додайте категорію \'default\'</string>
-    <string name="custom_study_new_total_new">Нові картки в колоді: %d</string>
-    <string name="custom_study_rev_total_rev">Карток до повторення: %d</string>
     <string name="custom_study_new_extend">Збільшення/зменшення («-3») сьогоднішньої межі на нові картки</string>
     <string name="custom_study_rev_extend">Збільшення/зменшення («-3») сьогоднішнього ліміту на повторення</string>
     <string name="custom_study_forgotten">Повторити картки забуті за останні x днів:</string>
     <string name="custom_study_ahead">Повторити наперед за х днів:</string>
-    <string name="custom_study_random">Вибрати х випадкових карт з колоди:</string>
     <string name="custom_study_preview">Переглянути нові картки додані за останні x днів:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Не вдалося перебудувати колоду додаткового навчання</string>
     <string name="storage_full_title">Сховище заповнено</string>
     <string name="storage_almost_full_title">Сховище майже заповнено</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Пам\'ять заповнена</string>

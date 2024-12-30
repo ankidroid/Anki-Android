@@ -19,7 +19,5 @@ object ParametersUtils {
     /**
      * Used to satisfy a parameter with a null in a declarative way
      */
-    fun <T> whatever(): T? {
-        return null
-    }
+    fun <T> whatever(): T? = null
 }

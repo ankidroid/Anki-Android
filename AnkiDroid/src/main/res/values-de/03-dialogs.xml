@@ -52,7 +52,7 @@
         <item quantity="one">Alle karten in %1$s löschen? Es enthält %2$d karte</item>
         <item quantity="other">Alle karten in %1$s löschen? Es enthält %2$d karten</item>
     </plurals>
-    <string name="delete_cram_deck_message">Gefiltertes stapel %s löschen und alle karten zurück in ihre ursprünglichen stapel senden?</string>
+    <string name="delete_cram_deck_message">Gefilterten Stapel „%s“ löschen und alle Karten zurück in ihre ursprünglichen Stapel senden?</string>
     <string name="no_tts_available_message">Keine Vorlesesprache verfügbar</string>
     <string name="tts_no_tts">Nicht vorlesen</string>
     <string name="unused_strings">\n\nUnbenutzte Dateien:\n</string>
@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">Möchten Sie wirklich versuchen, die Datenbank zu reparieren?\n\nBevor der Versuch startet, wird eine Kopie im Unterordner »%s« angelegt.</string>
     <string name="intent_aedict_empty">Kategorie »Standard« ist leer</string>
     <string name="intent_aedict_category">Entfernen Sie alle Notepad-Kategorien um Karten zu AnkiDroid hinzuzufügen oder fügen Sie die Kategorie »Standard« hinzu</string>
-    <string name="custom_study_new_total_new">Neue Karten im Stapel: %d</string>
-    <string name="custom_study_rev_total_rev">Fällige Wiederholungen im Stapel: %d</string>
-    <string name="custom_study_new_extend">Erweitern/Verringern (\"-3“) der heutigen neuen Kartengrenze um</string>
-    <string name="custom_study_rev_extend">Erweitern/Verringern (\"-3“) der heutigen neuen Kartengrenze um</string>
+    <string name="custom_study_new_extend">Heutigen Tageshöchstwerts für neue Karten erhöhen („3“) oder verringern („-3“) um</string>
+    <string name="custom_study_rev_extend">Heutigen Tageshöchstwerts für Wiederholungskarten erhöhen („3“) oder verringern („-3“) um</string>
     <string name="custom_study_forgotten">Karten wiederholen, die in den letzten x Tagen vergessen wurden:</string>
     <string name="custom_study_ahead">x Tage im Voraus lernen:</string>
-    <string name="custom_study_random">x Karten zufällig aus dem Stapel wählen:</string>
     <string name="custom_study_preview">Vorschau auf neue Karten, die in den letzten x Tagen hinzugefügt wurden:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Personalisierter Stapel konnte nicht neu aufgebaut werden</string>
     <string name="storage_full_title">Speicher voll</string>
     <string name="storage_almost_full_title">Speicher fast voll</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Kein Speicherplatz</string>
@@ -155,7 +151,7 @@
     <string name="database_locked_title">Datenbank gesperrt</string>
     <string name="database_locked_summary">Die AnkiDroid-Datenbank wird von einer anderen Anwendung verwendet. Bitte schließen Sie die andere Anwendung und öffnen Sie AnkiDroid erneut.</string>
     <string name="incompatible_database_version_title">Inkompatible Datenbankversion</string>
-    <string name="incompatible_database_version_summary">Die Datenbank ist eine fortgeschrittenere Version, als diese Version von AnkiDroid verwenden kann. Aktualisieren Sie AnkiDroid oder downgraden Sie die Datenbank um sie zu öffnen\n\nUnterstützte Version: %1$d\nDatenbankversion: %2$d\n\nDie folgenden Wiederherstellungsoptionen überschreiben Ihre aktuelle Sammlung, möglicherweise mit einer kompatiblen Datenbankversion:</string>
+    <string name="incompatible_database_version_summary">Die Datenbank ist eine fortgeschrittenere Version, als diese Version von AnkiDroid verwenden kann. Aktualisieren Sie AnkiDroid oder downgraden Sie die Datenbank um sie zu öffnen\n\nUnterstützte Version: %1$d\nDatenbankversion: %2$d\n\nDie folgenden Wiederherstellungsmöglichkeiten überschreiben Ihre aktuelle Sammlung, möglicherweise mit einer kompatiblen Datenbankversion:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Hintergrundbild übernommen</string>
     <string name="background_image_removed">Hintergrundbild entfernt</string>
@@ -221,7 +217,7 @@
     <string name="import_collection_package">Sammlungs-Paket (.colpkg)</string>
     <string name="import_csv">Textdatei (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">Sie können kein Unterdeck für alle Stapel erstellen</string>
+    <string name="cannot_create_subdeck_for_all_decks">Sie können keine Unterstapel für alle Stapel erstellen</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">Erstelle ein Backup deiner Sammlung</string>
     <string name="backup_collection_message">Du hast von deiner Sammlung in letzter Zeit kein Backup mehr erstellt. Du solltest dies tun, um den Verlust von Daten zu vermeiden</string>
@@ -234,7 +230,7 @@
     <string name="dismiss_backup_warning_upgrade">Aufgrund von Änderungen in den Privatsphäreeinstellungen von Android, werden deine Daten und automatische Backups nicht mehr zugreifbar sein, falls du die App deinstallierst.</string>
     <string name="deck_already_exists">Stapel bereits vorhanden</string>
     <string name="empty_deck_name">Stapelname darf nicht leer sein</string>
-    <string name="create_deck_numeric_hint">Wenn Sie Probleme mit der Reihenfolge des Decks haben (z.B. \'10\' erscheint vor \'2\'), ersetzen Sie \'2\' durch \'02\'</string>
+    <string name="create_deck_numeric_hint">Wenn Sie Probleme mit der Reihenfolge der Stapel haben (z.B. \'10\' erscheint vor \'2\'), ersetzen Sie \'2\' durch \'02\'</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Intervall auf denselben Wert setzen</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
@@ -268,5 +264,5 @@
     <string name="tts_error_dialog_title">Sprache nicht unterstützt</string>
     <string name="tts_error_dialog_reason_text">Die Text-Zu-Sprache-Engine <b>%1$s</b> unterstützt die folgende sprache nicht: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Engine ändern</string>
-    <string name="tts_error_dialog_supported_voices_button_text">Sprachoptionen</string>
+    <string name="tts_error_dialog_supported_voices_button_text">Spracheinstellungen</string>
 </resources>

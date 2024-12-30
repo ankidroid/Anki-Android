@@ -39,11 +39,16 @@ import com.ichi2.utils.copyToClipboard
  *
  * @see android.os.PowerManager.newWakeLock
  */
-inline fun <T> withWakeLock(levelAndFlags: Int, tag: String, block: () -> T): T {
+inline fun <T> withWakeLock(
+    levelAndFlags: Int,
+    tag: String,
+    block: () -> T,
+): T {
     val context = AnkiDroidApp.instance
-    val wakeLock = ContextCompat
-        .getSystemService(context, PowerManager::class.java)!!
-        .newWakeLock(levelAndFlags, context.packageName + ":" + tag)
+    val wakeLock =
+        ContextCompat
+            .getSystemService(context, PowerManager::class.java)!!
+            .newWakeLock(levelAndFlags, context.packageName + ":" + tag)
 
     wakeLock.acquire()
 
@@ -80,5 +85,6 @@ fun Fragment.openUrl(uri: Uri) {
     startActivity(Intent(Intent.ACTION_VIEW, uri))
 }
 
-fun Fragment.openUrl(@StringRes stringRes: Int) =
-    openUrl(Uri.parse(requireContext().getString(stringRes)))
+fun Fragment.openUrl(
+    @StringRes stringRes: Int,
+) = openUrl(Uri.parse(requireContext().getString(stringRes)))

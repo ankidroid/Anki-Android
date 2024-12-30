@@ -69,7 +69,8 @@ public abstract class Time {
 
     @Test
     fun showsErrorForInvalidUsage() {
-        TestLintTask.lint()
+        TestLintTask
+            .lint()
             .allowMissingSdk()
             .allowCompilationErrors()
             .files(JavaTestFile.create(stubCalendar), JavaTestFile.create(javaFileToBeTested))
@@ -84,7 +85,8 @@ public abstract class Time {
 
     @Test
     fun allowsUsageInTimeClass() {
-        TestLintTask.lint()
+        TestLintTask
+            .lint()
             .allowMissingSdk()
             .allowCompilationErrors()
             .files(JavaTestFile.create(stubCalendar), JavaTestFile.create(javaFileWithTime))

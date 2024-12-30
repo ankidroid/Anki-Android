@@ -70,14 +70,17 @@ import androidx.core.widget.NestedScrollView
  * 1. [WebView.setNestedScrollingEnabled] must be set to `true`.
  * 2. XML: `<com.ichi2.anki.workarounds.NestedScrollingWebView ... />`
  */
-class NestedScrollingWebView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = android.R.attr.webViewStyle
-) : WebView(context, attrs, defStyleAttr), NestedScrollingChild {
-    private val yAxis: Int = 1
+class NestedScrollingWebView
+    @JvmOverloads
+    constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = android.R.attr.webViewStyle,
+    ) : WebView(context, attrs, defStyleAttr),
+        NestedScrollingChild {
+        private val yAxis: Int = 1
 
-    private val deltaX: Int = 0
+        private val deltaX: Int = 0
 
     /*
      * https://developer.android.com/reference/androidx/core/view/NestedScrollingChild
@@ -85,99 +88,106 @@ class NestedScrollingWebView @JvmOverloads constructor(
      * a NestedScrollingChildHelper as a field and delegate any View methods to
      * the NestedScrollingChildHelper methods of the same signature.
      */
-    private val childHelper: NestedScrollingChildHelper = NestedScrollingChildHelper(this)
+        private val childHelper: NestedScrollingChildHelper = NestedScrollingChildHelper(this)
 
-    private val scrollOffset: IntArray = IntArray(2)
+        private val scrollOffset: IntArray = IntArray(2)
 
-    private val scrollConsumed: IntArray = IntArray(2)
+        private val scrollConsumed: IntArray = IntArray(2)
 
-    private var lastMotionY: Int = 0
+        private var lastMotionY: Int = 0
 
-    private var nestedYOffset: Int = 0
+        private var nestedYOffset: Int = 0
 
-    override fun onTouchEvent(motionEvent: MotionEvent): Boolean {
-        val actionMasked: Int = motionEvent.actionMasked
-        if (actionMasked == MotionEvent.ACTION_DOWN) {
-            nestedYOffset = 0
-        }
-
-        val velocityTrackerMotionEvent: MotionEvent = MotionEvent.obtain(motionEvent)
-        handleOffset(velocityTrackerMotionEvent, nestedYOffset)
-
-        val motionEventY: Int = motionEvent.y.toInt()
-        when (actionMasked) {
-            MotionEvent.ACTION_DOWN -> {
-                lastMotionY = motionEventY
-                startNestedScroll(ViewCompat.SCROLL_AXIS_VERTICAL)
+        override fun onTouchEvent(motionEvent: MotionEvent): Boolean {
+            val actionMasked: Int = motionEvent.actionMasked
+            if (actionMasked == MotionEvent.ACTION_DOWN) {
+                nestedYOffset = 0
             }
 
-            MotionEvent.ACTION_MOVE -> {
-                val scrollDistanceY: Int = lastMotionY - motionEventY
-                if (dispatchNestedPreScroll(
-                        deltaX,
-                        scrollDistanceY,
-                        scrollConsumed,
-                        scrollOffset
-                    )
-                ) {
-                    handleOffset(velocityTrackerMotionEvent, scrollOffset[yAxis])
-                    nestedYOffset += scrollOffset[yAxis]
+            val velocityTrackerMotionEvent: MotionEvent = MotionEvent.obtain(motionEvent)
+            handleOffset(velocityTrackerMotionEvent, nestedYOffset)
+
+            val motionEventY: Int = motionEvent.y.toInt()
+            when (actionMasked) {
+                MotionEvent.ACTION_DOWN -> {
+                    lastMotionY = motionEventY
+                    startNestedScroll(ViewCompat.SCROLL_AXIS_VERTICAL)
                 }
-                lastMotionY = motionEventY - scrollOffset[yAxis]
+
+                MotionEvent.ACTION_MOVE -> {
+                    val scrollDistanceY: Int = lastMotionY - motionEventY
+                    if (dispatchNestedPreScroll(
+                            deltaX,
+                            scrollDistanceY,
+                            scrollConsumed,
+                            scrollOffset,
+                        )
+                    ) {
+                        handleOffset(velocityTrackerMotionEvent, scrollOffset[yAxis])
+                        nestedYOffset += scrollOffset[yAxis]
+                    }
+                    lastMotionY = motionEventY - scrollOffset[yAxis]
+                }
+
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL,
+                MotionEvent.ACTION_POINTER_DOWN, MotionEvent.ACTION_POINTER_UP,
+                -> {
+                    stopNestedScroll()
+                }
             }
 
-            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL,
-            MotionEvent.ACTION_POINTER_DOWN, MotionEvent.ACTION_POINTER_UP -> {
-                stopNestedScroll()
-            }
+            velocityTrackerMotionEvent.recycle()
+            return super.onTouchEvent(velocityTrackerMotionEvent)
         }
 
-        velocityTrackerMotionEvent.recycle()
-        return super.onTouchEvent(velocityTrackerMotionEvent)
+        private fun handleOffset(
+            velocityTrackerMotionEvent: MotionEvent,
+            deltaY: Int,
+        ) {
+            velocityTrackerMotionEvent.offsetLocation(deltaX.toFloat(), deltaY.toFloat())
+        }
+
+        override fun setNestedScrollingEnabled(enabled: Boolean) = childHelper.setNestedScrollingEnabled(enabled)
+
+        override fun isNestedScrollingEnabled() = childHelper.isNestedScrollingEnabled
+
+        override fun startNestedScroll(
+            @ScrollAxis axes: Int,
+        ) = childHelper.startNestedScroll(axes)
+
+        override fun stopNestedScroll() = childHelper.stopNestedScroll()
+
+        override fun hasNestedScrollingParent() = childHelper.hasNestedScrollingParent()
+
+        override fun dispatchNestedScroll(
+            dxConsumed: Int,
+            dyConsumed: Int,
+            dxUnconsumed: Int,
+            dyUnconsumed: Int,
+            offsetInWindow: IntArray?,
+        ) = childHelper.dispatchNestedScroll(
+            dxConsumed,
+            dyConsumed,
+            dxUnconsumed,
+            dyUnconsumed,
+            offsetInWindow,
+        )
+
+        override fun dispatchNestedPreScroll(
+            dx: Int,
+            dy: Int,
+            consumed: IntArray?,
+            offsetInWindow: IntArray?,
+        ) = childHelper.dispatchNestedPreScroll(dx, dy, consumed, offsetInWindow)
+
+        override fun dispatchNestedFling(
+            velocityX: Float,
+            velocityY: Float,
+            consumed: Boolean,
+        ) = childHelper.dispatchNestedFling(velocityX, velocityY, consumed)
+
+        override fun dispatchNestedPreFling(
+            velocityX: Float,
+            velocityY: Float,
+        ) = childHelper.dispatchNestedPreFling(velocityX, velocityY)
     }
-
-    private fun handleOffset(velocityTrackerMotionEvent: MotionEvent, deltaY: Int) {
-        velocityTrackerMotionEvent.offsetLocation(deltaX.toFloat(), deltaY.toFloat())
-    }
-
-    override fun setNestedScrollingEnabled(enabled: Boolean) =
-        childHelper.setNestedScrollingEnabled(enabled)
-
-    override fun isNestedScrollingEnabled() = childHelper.isNestedScrollingEnabled
-
-    override fun startNestedScroll(@ScrollAxis axes: Int) = childHelper.startNestedScroll(axes)
-
-    override fun stopNestedScroll() = childHelper.stopNestedScroll()
-
-    override fun hasNestedScrollingParent() = childHelper.hasNestedScrollingParent()
-
-    override fun dispatchNestedScroll(
-        dxConsumed: Int,
-        dyConsumed: Int,
-        dxUnconsumed: Int,
-        dyUnconsumed: Int,
-        offsetInWindow: IntArray?
-    ) = childHelper.dispatchNestedScroll(
-        dxConsumed,
-        dyConsumed,
-        dxUnconsumed,
-        dyUnconsumed,
-        offsetInWindow
-    )
-
-    override fun dispatchNestedPreScroll(
-        dx: Int,
-        dy: Int,
-        consumed: IntArray?,
-        offsetInWindow: IntArray?
-    ) = childHelper.dispatchNestedPreScroll(dx, dy, consumed, offsetInWindow)
-
-    override fun dispatchNestedFling(
-        velocityX: Float,
-        velocityY: Float,
-        consumed: Boolean
-    ) = childHelper.dispatchNestedFling(velocityX, velocityY, consumed)
-
-    override fun dispatchNestedPreFling(velocityX: Float, velocityY: Float) =
-        childHelper.dispatchNestedPreFling(velocityX, velocityY)
-}

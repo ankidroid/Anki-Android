@@ -82,17 +82,13 @@
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Flags</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
-    <string name="custom_study_review_forgotten">ਭੁੱਲੇ ਹੋਏ ਕਾਰਡਾਂ ਦੀ ਸਮੀਖਿਆ ਕਰੋ</string>
-    <string name="custom_study_review_ahead">Review ahead</string>
-    <string name="custom_study_random_selection">Study a random selection of cards</string>
-    <string name="custom_study_preview_new">ਨਵੇਂ ਕਾਰਡਾਂ ਦਾ ਪੂਰਵਦਰਸ਼ਨ ਕਰੋ</string>
     <string name="custom_study_limit_tags">Limit to particular tags</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">ਨੋਟਸ ਦਾ ਸੰਪਾਦਨ ਕਰੋ</string>
     <string name="discard">Discard</string>
@@ -169,7 +165,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ਅਧਿਐਨ ਦੇ ਵਿਕਲਪ</string>
     <string name="select_tts" maxLength="28">TTS ਭਾਸ਼ਾ ਸੈੱਟ ਕਰੋ</string>
     <string name="custom_study" maxLength="28">ਕਸਟਮ ਅਧਿਐਨ</string>
-    <string name="more_options">ਹੋਰ</string>
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
     <string name="steps_error">ਕਦਮਾਂ ਦੀ ਗਿਣਤੀ 0 ਤੋਂ ਵੱਧ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ</string>
     <string name="steps_min_error">ਘੱਟੋ-ਘੱਟ ਇੱਕ ਕਦਮ ਦੀ ਲੋੜ ਹੈ</string>

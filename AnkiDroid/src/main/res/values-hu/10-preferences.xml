@@ -151,8 +151,6 @@
     <string name="notification_minimum_cards_due">Amikor több, mint %d kártya esedékes</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Rezgés</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Villogó fény</string>
-    <string name="timeout_answer_text" maxLength="41">Automatikusan mutassa a választ</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Nyelv kiválasztása</string>
     <string name="software_render" maxLength="41">Kártya hw megjelenítő (render) tiltása</string>
     <string name="software_render_summ">A hw renderelés gyorsabb, de okozhat problémát, különösen az Android 8/8.1-en. Ha nem látod a kártya ismétléskor a kezelőfelület egy részét, próbáld meg ezt a beállítást.</string>

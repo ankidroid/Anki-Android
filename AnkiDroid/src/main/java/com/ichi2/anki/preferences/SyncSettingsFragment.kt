@@ -24,6 +24,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.customSyncBase
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.utils.show
 
 /**
@@ -71,12 +72,14 @@ class SyncSettingsFragment : SettingsFragment() {
 
     private fun updateSyncAccountSummary() {
         requirePreference<Preference>(R.string.sync_account_key)
-            .summary = preferenceManager.sharedPreferences!!.getString("username", "")!!
-            .ifEmpty { getString(R.string.sync_account_summ_logged_out) }
+            .summary =
+            preferenceManager.sharedPreferences!!
+                .getString("username", "")!!
+                .ifEmpty { getString(R.string.sync_account_summ_logged_out) }
     }
 
     private fun updateOneWaySyncEnabledState() {
-        val isLoggedIn = Preferences.hasAnkiWebAccount(requireContext().sharedPrefs())
+        val isLoggedIn = sharedPrefs().getString("username", "")!!.isNotEmpty()
         requirePreference<Preference>(R.string.one_way_sync_key).isEnabled = isLoggedIn
     }
 

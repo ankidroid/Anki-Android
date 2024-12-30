@@ -82,17 +82,13 @@
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Flags</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
-    <string name="custom_study_review_forgotten">Прегледајте ги заборавените картички</string>
-    <string name="custom_study_review_ahead">Напред Преглед</string>
-    <string name="custom_study_random_selection">Проучете случајни селекции на картички</string>
-    <string name="custom_study_preview_new">Прегледај нови картички</string>
     <string name="custom_study_limit_tags">Ограничи на одредени тагови</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Уреди забелешка</string>
     <string name="discard">Discard</string>
@@ -170,7 +166,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts" maxLength="28">Поставете го јазикот на TTS</string>
     <string name="custom_study" maxLength="28">Прилагодено студија</string>
-    <string name="more_options">Повеќе</string>
     <string name="dyn_deck_desc">Ова е специјална палуба за студирање надвор од секојдневен распоред. Картичките автоматски ќе бидат вратени на нивните палуби откако ќе ги прегледате. Бришењето на овој пабула од листата на палуби ќе ги врати сите останати картички во нивната оригинална палуба.</string>
     <string name="steps_error">Чекорите мора да бидат броеви поголеми од 0</string>
     <string name="steps_min_error">Најмалку еден чекор е потребен</string>

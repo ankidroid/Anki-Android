@@ -31,16 +31,24 @@ import java.util.AbstractSet
  *
  */
 @WorkerThread
-class Tags(private val col: Collection) {
+class Tags(
+    private val col: Collection,
+) {
     /** all tags */
     fun all(): List<String> = col.backend.allTags()
 
-    fun byDeck(did: DeckId): List<String> {
-        return col.backend.customStudyDefaults(did).tagsList.map { it.name }
-    }
+    fun byDeck(did: DeckId): List<String> =
+        col.backend
+            .customStudyDefaults(did)
+            .tagsList
+            .map { it.name }
 
-    /* Legacy signature, used by unit tests. */
-    fun bulkAdd(ids: List<Long>, tags: String, add: Boolean) {
+    // Legacy signature, used by unit tests.
+    fun bulkAdd(
+        ids: List<Long>,
+        tags: String,
+        add: Boolean,
+    ) {
         if (add) {
             bulkAdd(ids, tags)
         } else {
@@ -49,20 +57,20 @@ class Tags(private val col: Collection) {
     }
 
     /** Add space-separate tags to provided notes. */
-    fun bulkAdd(noteIds: List<NoteId>, tags: String): OpChangesWithCount {
-        return col.backend.addNoteTags(noteIds = noteIds, tags = tags)
-    }
+    fun bulkAdd(
+        noteIds: List<NoteId>,
+        tags: String,
+    ): OpChangesWithCount = col.backend.addNoteTags(noteIds = noteIds, tags = tags)
 
-    /* Remove space-separated tags from provided notes. */
+    // Remove space-separated tags from provided notes.
     fun bulkRemove(
         noteIds: List<Long>,
-        tags: String
-    ): OpChangesWithCount {
-        return col.backend.removeNoteTags(
+        tags: String,
+    ): OpChangesWithCount =
+        col.backend.removeNoteTags(
             noteIds = noteIds,
-            tags = tags
+            tags = tags,
         )
-    }
 
     /*
      * String-based utilities
@@ -70,12 +78,12 @@ class Tags(private val col: Collection) {
      */
 
     /** Parse a string and return a list of tags. */
-    fun split(tags: String): MutableList<String> {
-        return tags.replace('\u3000', ' ')
+    fun split(tags: String): MutableList<String> =
+        tags
+            .replace('\u3000', ' ')
             .split("\\s".toRegex())
             .filter { it.isNotEmpty() }
             .toMutableList()
-    }
 
     /** Join tags into a single string, with leading and trailing spaces. */
     fun join(tags: kotlin.collections.Collection<String>): String {
@@ -89,20 +97,20 @@ class Tags(private val col: Collection) {
      * List-based utilities
      * ***********************************************************
      */
-    /** {@inheritDoc}  */
 
-    // this is now a no-op - the tags are canonified when the note is saved
+    /** {@inheritDoc}  */
     fun canonify(tagList: List<String>): AbstractSet<String> {
+        // this is now a no-op - the tags are canonified when the note is saved
+
         // libAnki difference: tagList was returned directly
         return HashSet(tagList)
     }
 
     /** True if TAG is in TAGS. Ignore case.*/
-    fun inList(tag: String, tags: Iterable<String>): Boolean {
-        return tags.map { it.lowercase() }.contains(tag.lowercase())
-    }
+    fun inList(
+        tag: String,
+        tags: Iterable<String>,
+    ): Boolean = tags.map { it.lowercase() }.contains(tag.lowercase())
 }
 
-fun Collection.completeTagRaw(input: ByteArray): ByteArray {
-    return backend.completeTagRaw(input)
-}
+fun Collection.completeTagRaw(input: ByteArray): ByteArray = backend.completeTagRaw(input)

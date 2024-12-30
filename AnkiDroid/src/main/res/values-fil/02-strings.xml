@@ -82,17 +82,13 @@
     <string name="webview_crash_loop_dialog_content">Bigo ang Pansistemang Webview sa pag-render sa card na \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Mga Watawat</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Baguhin ang limitasyon sa bagong card ngayong araw</string>
-    <string name="custom_study_increase_review_limit">Baguhin ang limiitasyon sa repaso na card ngayong araw</string>
-    <string name="custom_study_review_forgotten">Suriin ang mga nakalimutang kard</string>
-    <string name="custom_study_review_ahead">Siyasatin ng maaga</string>
-    <string name="custom_study_random_selection">Mag-aral ng random na seleksyon ng mga kard</string>
-    <string name="custom_study_preview_new">I-preview ang mga bagong kard</string>
     <string name="custom_study_limit_tags">Limitahan ang partikular na mga tag</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">I-edit ang tala</string>
     <string name="discard">Baliwalain</string>
@@ -169,7 +165,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Mga Opsiyon sa Pag-aaral</string>
     <string name="select_tts" maxLength="28">Itakda ang wika ng TTS</string>
     <string name="custom_study" maxLength="28">I - custom ang pag - aaral</string>
-    <string name="more_options">Iba pa</string>
     <string name="dyn_deck_desc">Ito ay isang espesyal na deck para sa pag-aaral sa labas ng normal na iskedyul. Ang mga kard ay awtomatikong ibabalik sa kanilang orihinal na mga deck matapos mong suriin ang mga ito. Ang pagtanggal sa kubyerta mula sa listahan ng deck ay babalik ang lahat ng natitirang mga card sa kanilang orihinal na deck.</string>
     <string name="steps_error">Ang mga hakbang ay dapat na mga numerong mas higit sa 0</string>
     <string name="steps_min_error">Hindi bababa sa isang hakbang ang kailangan</string>

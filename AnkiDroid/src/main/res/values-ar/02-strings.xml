@@ -82,12 +82,6 @@
     <string name="webview_crash_loop_dialog_content">فشل عارض ويب النظام في عرض البطاقة %1$s.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">أعلام</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">تعديل الحد اليومي للبطاقات الجديدة</string>
-    <string name="custom_study_increase_review_limit">تعديل الحد اليومي لبطاقات المراجعة</string>
-    <string name="custom_study_review_forgotten">مراجعة البطاقات المنسيّة</string>
-    <string name="custom_study_review_ahead">المراجعة مبكرًا</string>
-    <string name="custom_study_random_selection">ادرس مجموعة بطاقات عشوائية</string>
-    <string name="custom_study_preview_new">معاينة البطاقات الجديدة</string>
     <string name="custom_study_limit_tags">اقتصر على وسوم معينة</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="zero">+%d buried</item>
@@ -97,6 +91,8 @@
         <item quantity="many">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">تعديل الملحوظة</string>
     <string name="discard">تجاهل</string>
@@ -181,7 +177,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">خيارات الدراسة</string>
     <string name="select_tts" maxLength="28">تعيين لغة تحويل النص إلى كلام</string>
     <string name="custom_study" maxLength="28">دراسة مخصصة</string>
-    <string name="more_options">المزيد</string>
     <string name="dyn_deck_desc">هذه رزمة خاصة للدراسة خارج الجدول المعتاد. ستعود البطاقات إلى رزمها الأصلية تلقائيًا بعد مراجعتها. يؤدي حذف هذه الرزمة من قائمة الرزم إلى إعادة كل البطاقات المتبقية إلى رزمها الأصلية.</string>
     <string name="steps_error">يجب أن تكون الخطوات أعداد أكبر من 0</string>
     <string name="steps_min_error">يلزم خطوة واحدة على الأقل</string>

@@ -82,17 +82,13 @@
     <string name="webview_crash_loop_dialog_content">سیستم در تنظیم ظاهر کارت %1$s با خطا مواجه شد.\n%2$s</string>
     <string name="filter_by_flags" maxLength="41">پرچم ها</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">تعیین محدودیت برای کارت جدید امروز</string>
-    <string name="custom_study_increase_review_limit">تعیین محدودیت برای مرور کارت امروز</string>
-    <string name="custom_study_review_forgotten">مرور کارت های فراموش شده</string>
-    <string name="custom_study_review_ahead">مرور آنهایي که در شرف مطالعه اند</string>
-    <string name="custom_study_random_selection">مطالعه کارت ها به صورت تصادفی</string>
-    <string name="custom_study_preview_new">پیش نمایش کارت های جدید</string>
     <string name="custom_study_limit_tags">محدود کردن به برچسب هايی خاص</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d دفن شده</item>
         <item quantity="other">+%d دفن شده</item>
     </plurals>
+    <string name="studyoptions_total_new_label">کل کارت های جدید</string>
+    <string name="studyoptions_total_label">کل کارتها</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">ویرایش یادداشت</string>
     <string name="discard">صرف‌نظر کردن</string>
@@ -169,7 +165,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">گزینه‌های مطالعه</string>
     <string name="select_tts" maxLength="28">تنظیم زبان تبدیل متن به صدا TTS</string>
     <string name="custom_study" maxLength="28">مطالعه بر اساس تنظیمات دلخواه</string>
-    <string name="more_options">بیشتر</string>
     <string name="dyn_deck_desc">این یک دسته ویژه برای مطالعه در خارج از زمان‌بندی عادی می باشد.بعد از مرور کارتها آنها به‌طور خودکار به دسته های اصلی برگردانده خواهد شد.حذف کردن این دسته از لیست دسته ها سبب می شود که همه کارتهای باقیمانده نیز به دسته اصلی برگردانده شود.</string>
     <string name="steps_error">مراحل باید با اعداد بزرگتر از 0 شماره گذاری گردند</string>
     <string name="steps_min_error">حداقل یک مرحله لازم است</string>

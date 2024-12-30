@@ -82,17 +82,13 @@
     <string name="webview_crash_loop_dialog_content">La WebView sistema non è riuscita a rendere la carta «%1$s».\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Contrassegni</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modifica il limite odierno di nuove carte</string>
-    <string name="custom_study_increase_review_limit">Modifica il limite odierno di revisioni</string>
-    <string name="custom_study_review_forgotten">Ripeti carte dimenticate</string>
-    <string name="custom_study_review_ahead">Ripeti in anticipo</string>
-    <string name="custom_study_random_selection">Studia una selezione casuale di carte</string>
-    <string name="custom_study_preview_new">Anteprima carte nuove</string>
     <string name="custom_study_limit_tags">Limita ad etichette particolari</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+sepolto</item>
         <item quantity="other">+sepolto</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Modifica nota</string>
     <string name="discard">Scarta</string>
@@ -169,7 +165,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opzioni di studio</string>
     <string name="select_tts" maxLength="28">Imposta lingua TTS</string>
     <string name="custom_study" maxLength="28">Studio personalizzato</string>
-    <string name="more_options">Più</string>
     <string name="dyn_deck_desc">Questo è un mazzo speciale per studiare al di fuori della pianificazione normale. Le carte ritorneranno automaticamente nel mazzo originale dopo che le hai ripetute. L\'eliminazione di questo mazzo dall\'elenco dei mazzi riporterà tutte le carte rimanenti nel loro mazzo originale.</string>
     <string name="steps_error">I passi devono essere un numero maggiore di 0</string>
     <string name="steps_min_error">È necessaria la presenza di almeno un passo</string>

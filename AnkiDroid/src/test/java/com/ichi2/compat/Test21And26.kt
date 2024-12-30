@@ -37,7 +37,7 @@ import java.io.IOException
 import kotlin.test.assertFailsWith
 
 /**
- * Allows to test with CompatV23 and V26.
+ * Allows to test with CompatV24 (originally 21, thus the class name) and V26.
  * In particular it allows to test version of the code that uses [Files] and [Path] classes.
  * And versions that must restrict themselves to [File].
  */
@@ -46,10 +46,11 @@ abstract class Test21And26 {
     companion object {
         @JvmStatic // required for Parameters
         @Parameterized.Parameters(name = "{1}")
-        fun data(): Iterable<Array<Any>> = sequence {
-            yield(arrayOf(CompatV23(), "CompatV23"))
-            yield(arrayOf(CompatV26(), "CompatV26"))
-        }.asIterable()
+        fun data(): Iterable<Array<Any>> =
+            sequence {
+                yield(arrayOf(BaseCompat(), "BaseCompat"))
+                yield(arrayOf(CompatV26(), "CompatV26"))
+            }.asIterable()
 
         lateinit var staticCompat: Compat
 
@@ -75,8 +76,6 @@ abstract class Test21And26 {
     /** Used in the "Test Results" Window */
     lateinit var unitTestDescription: String
 
-    val isV23: Boolean
-        get() = compat is CompatV23
     val isV26: Boolean
         get() = compat is CompatV26
 
@@ -89,7 +88,10 @@ abstract class Test21And26 {
      * Represents structure and compat required to simulate https://github.com/ankidroid/Anki-Android/issues/10358
      * This is a bug that occurred in a smartphone, where listFiles returned `null` on an existing directory.
      */
-    inner class PermissionDenied(val directory: Directory, val compat: Compat) {
+    inner class PermissionDenied(
+        val directory: Directory,
+        val compat: Compat,
+    ) {
         /**
          * This run test, ensuring that [newDirectoryStream] throws on [directory].
          * This is useful in the case where we can't directly access the directory or compat
@@ -97,7 +99,10 @@ abstract class Test21And26 {
         fun <T> runWithPermissionDenied(test: () -> T): T = runUsingCompat(compat, test)
 
         /** Runs a provided action having [CompatHelper.compat] return the provided compat */
-        private fun <T> runUsingCompat(compatOverride: Compat, test: () -> T): T {
+        private fun <T> runUsingCompat(
+            compatOverride: Compat,
+            test: () -> T,
+        ): T {
             val originalValue = staticCompat
             staticCompat = compatOverride
             try {
@@ -112,8 +117,7 @@ abstract class Test21And26 {
          * We plan to use it to ensure that if we don't have permission to read the directory
          * the exception is not caught.
          */
-        fun assertThrowsWhenPermissionDenied(test: () -> Unit): IOException =
-            runWithPermissionDenied { assertFailsWith { test() } }
+        fun assertThrowsWhenPermissionDenied(test: () -> Unit): IOException = runWithPermissionDenied { assertFailsWith { test() } }
     }
 
     /**

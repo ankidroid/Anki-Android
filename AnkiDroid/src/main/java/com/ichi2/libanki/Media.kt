@@ -28,7 +28,9 @@ import java.io.File
  * maintains the media database, which is used to determine the state of files for syncing.
  */
 @WorkerThread
-open class Media(private val col: Collection) {
+open class Media(
+    private val col: Collection,
+) {
     val dir = getCollectionMediaPath(col.path)
 
     init {
@@ -41,7 +43,7 @@ open class Media(private val col: Collection) {
 
     /*
       Adding media
-      ***********************************************************
+     ***********************************************************
      */
 
     fun addFile(oFile: File?): String {
@@ -63,34 +65,36 @@ open class Media(private val col: Collection) {
      * @param string The string to scan for media filenames ([sound:...] or <img...>).
      * @return A list containing all the sound and image filenames found in the input string.
      */
-    fun filesInStr(string: String): List<String> {
-        return col.backend.extractAvTags(string, true).avTagsList.filter {
-            it.hasSoundOrVideo()
-        }.map {
-            it.soundOrVideo
-        }
-    }
+    fun filesInStr(string: String): List<String> =
+        col.backend
+            .extractAvTags(string, true)
+            .avTagsList
+            .filter {
+                it.hasSoundOrVideo()
+            }.map {
+                it.soundOrVideo
+            }
 
-    fun findUnusedMediaFiles(): List<File> {
-        return check().unusedFileNames.map { File(dir, it) }
-    }
+    fun findUnusedMediaFiles(): List<File> = check().unusedFileNames.map { File(dir, it) }
 
     /**
      * [IRI](https://en.wikipedia.org/wiki/Internationalized_Resource_Identifier) encodes media
      *
      * `foo bar` -> `foo%20bar`
      */
-    fun escapeMediaFilenames(string: String, unescape: Boolean = false): String {
-        return if (unescape) {
+    fun escapeMediaFilenames(
+        string: String,
+        unescape: Boolean = false,
+    ): String =
+        if (unescape) {
             col.backend.decodeIriPaths(string)
         } else {
             col.backend.encodeIriPaths(string)
         }
-    }
 
     /*
       Rebuilding DB
-      ***********************************************************
+     ***********************************************************
      */
 
     // FIXME: this also provides trash count, but UI can not handle it yet
@@ -134,12 +138,10 @@ open class Media(private val col: Collection) {
     }
 }
 
-fun getCollectionMediaPath(collectionPath: String): String {
-    return collectionPath.replaceFirst("\\.anki2$".toRegex(), ".media")
-}
+fun getCollectionMediaPath(collectionPath: String): String = collectionPath.replaceFirst("\\.anki2$".toRegex(), ".media")
 
 data class MediaCheckResult(
     val missingFileNames: List<String>,
     val unusedFileNames: List<String>,
-    val invalidFileNames: List<String>
+    val invalidFileNames: List<String>,
 )

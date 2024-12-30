@@ -46,7 +46,9 @@ import kotlin.math.max
  * This ViewModel provides methods for handling note editing operations and
  * managing the state related to instant note editing.
  */
-class InstantEditorViewModel : ViewModel(), OnErrorListener {
+class InstantEditorViewModel :
+    ViewModel(),
+    OnErrorListener {
     override val onError = MutableSharedFlow<String>()
 
     /** Errors or Warnings related to the edit fields that might occur when trying to save note */
@@ -137,9 +139,7 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
      * @param skipClozeCheck Indicates whether to skip the cloze field check.
      * @return A [SaveNoteResult] indicating the outcome of the operation.
      */
-    suspend fun checkAndSaveNote(
-        skipClozeCheck: Boolean = false
-    ): SaveNoteResult {
+    suspend fun checkAndSaveNote(skipClozeCheck: Boolean = false): SaveNoteResult {
         if (skipClozeCheck) {
             return saveNote()
         }
@@ -195,9 +195,7 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
      *
      * @return A list of strings representing the cloze text fields in the current editor note's note type.
      */
-    fun getClozeFields(): List<String> {
-        return editorNote.notetype.getAllClozeTextFields()
-    }
+    fun getClozeFields(): List<String> = editorNote.notetype.getAllClozeTextFields()
 
     /**
      * Set the warning message to be displayed in editor dialog
@@ -271,7 +269,11 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
      */
     fun getWordClozeNumber(word: String): Int? {
         val matcher = clozePattern.find(word)
-        return matcher?.groups?.get(2)?.value?.toIntOrNull()
+        return matcher
+            ?.groups
+            ?.get(2)
+            ?.value
+            ?.toIntOrNull()
     }
 
     fun getWordsFromFieldText(): List<String> {
@@ -316,14 +318,16 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
         return combinedWords
     }
 
-    fun updateClozeNumber(word: String, newClozeNumber: Int): String {
-        return clozePattern.replace(word) { matchResult ->
+    fun updateClozeNumber(
+        word: String,
+        newClozeNumber: Int,
+    ): String =
+        clozePattern.replace(word) { matchResult ->
             val punctutationAtStart = matchResult.groupValues[1]
             val content = matchResult.groupValues[3]
             val punctutationAtEnd = matchResult.groupValues[4]
             "$punctutationAtStart{{c$newClozeNumber::$content}}$punctutationAtEnd"
         }
-    }
 
     /**
      * Removes the cloze deletion marker and surrounding delimiters from a word.
@@ -360,7 +364,10 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
             return null
         }
 
-        matchResult.groups[2]?.value?.toInt()?.let { shouldResetClozeNumber(it) }
+        matchResult.groups[2]
+            ?.value
+            ?.toInt()
+            ?.let { shouldResetClozeNumber(it) }
 
         val punctuationAtStart: String? = matchResult?.groups?.get(1)?.value ?: ""
         val capturedWord: String? = matchResult?.groups?.get(3)?.value ?: ""
@@ -379,16 +386,17 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
     }
 
     fun toggleClozeMode() {
-        val newMode = when (_currentClozeMode.value) {
-            InstantNoteEditorActivity.ClozeMode.INCREMENT -> {
-                decrementClozeNumber()
-                InstantNoteEditorActivity.ClozeMode.NO_INCREMENT
+        val newMode =
+            when (_currentClozeMode.value) {
+                InstantNoteEditorActivity.ClozeMode.INCREMENT -> {
+                    decrementClozeNumber()
+                    InstantNoteEditorActivity.ClozeMode.NO_INCREMENT
+                }
+                InstantNoteEditorActivity.ClozeMode.NO_INCREMENT -> {
+                    incrementClozeNumber()
+                    InstantNoteEditorActivity.ClozeMode.INCREMENT
+                }
             }
-            InstantNoteEditorActivity.ClozeMode.NO_INCREMENT -> {
-                incrementClozeNumber()
-                InstantNoteEditorActivity.ClozeMode.INCREMENT
-            }
-        }
         _currentClozeMode.value = newMode
     }
 }
@@ -408,7 +416,9 @@ sealed class SaveNoteResult {
      *
      * @property message An optional message describing the reason for the failure.
      */
-    data class Failure(val message: String? = null) : SaveNoteResult()
+    data class Failure(
+        val message: String? = null,
+    ) : SaveNoteResult()
 
     /**
      * Indicates that the save note operation completed with a warning.
@@ -417,7 +427,9 @@ sealed class SaveNoteResult {
      *
      * @property message A message describing the warning.
      */
-    data class Warning(val message: String?) : SaveNoteResult()
+    data class Warning(
+        val message: String?,
+    ) : SaveNoteResult()
 }
 
 /**

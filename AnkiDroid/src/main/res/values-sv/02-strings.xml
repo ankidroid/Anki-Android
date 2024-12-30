@@ -82,17 +82,13 @@
     <string name="webview_crash_loop_dialog_content">WebViewern kunde inte hämta kortet \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Flaggor</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Ändra dagens gräns för nya kort</string>
-    <string name="custom_study_increase_review_limit">Ändra dagens gräns för kortgranskning</string>
-    <string name="custom_study_review_forgotten">Granska glömda kort</string>
-    <string name="custom_study_review_ahead">Granska i förväg</string>
-    <string name="custom_study_random_selection">Studera ett slumpmässigt urval av kort</string>
-    <string name="custom_study_preview_new">Förhandsgranska nya kort</string>
     <string name="custom_study_limit_tags">Begränsa till vissa etiketter</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Redigera not</string>
     <string name="discard">Kasta</string>
@@ -169,7 +165,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Studeringsalternativ</string>
     <string name="select_tts" maxLength="28">Ställ in TTS-språk</string>
     <string name="custom_study" maxLength="28">Anpassade studier</string>
-    <string name="more_options">Mer</string>
     <string name="dyn_deck_desc">Det här är en specialkortlek för studier utanför det normala schemat. Korten återförs automatiskt till sina ursprungliga kortlekar efter att du repeterat dem. Om du tar bort denna kortlek återförs alla återstående kort till sina ursprungliga kortlekar.</string>
     <string name="steps_error">Steg måste definieras som siffror högre än 0</string>
     <string name="steps_min_error">Du måste ha minst ett steg</string>

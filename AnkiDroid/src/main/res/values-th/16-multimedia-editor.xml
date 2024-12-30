@@ -40,26 +40,25 @@
 -->
 <resources>
     <!-- Main editor popup menu items -->
-    <string name="multimedia_editor_popup_image">Add image</string>
-    <string name="multimedia_editor_popup_audio_clip">Add audio clip</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
-    <string name="multimedia_editor_popup_audio">Record audio</string>
+    <string name="multimedia_editor_popup_image">เพิ่มรูปภาพ</string>
+    <string name="multimedia_editor_popup_audio_clip">เพิ่มเสียง</string>
+    <string name="multimedia_editor_popup_video_clip">เพิ่มคลิปวิดีโอ</string>
+    <string name="multimedia_editor_popup_audio">อัดเสียง</string>
     <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_audio">Audio recording</string>
-    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Done</string>
+    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">เสร็จเรียบร้อย</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
     <!-- Image editing -->
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Gallery</string>
-    <string name="multimedia_editor_image_field_editing_photo">Camera</string>
+    <string name="multimedia_editor_image_field_editing_photo">กล้อง</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Something went wrong</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
     <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Attach multimedia content to the %1$s field</string>
     <!-- Audio view -->

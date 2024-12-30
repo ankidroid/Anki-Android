@@ -82,18 +82,14 @@
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Flags</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
-    <string name="custom_study_review_forgotten">Прегледај заборављене картице</string>
-    <string name="custom_study_review_ahead">Прегледај унапред</string>
-    <string name="custom_study_random_selection">Учи случајну групу картица</string>
-    <string name="custom_study_preview_new">Преглед нових картица</string>
     <string name="custom_study_limit_tags">Постави ограничење по ознакама</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d buried</item>
         <item quantity="few">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Уреди белешку</string>
     <string name="discard">Discard</string>
@@ -172,7 +168,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts" maxLength="28">Set TTS language</string>
     <string name="custom_study" maxLength="28">Прилагођено учење</string>
-    <string name="more_options">Више</string>
     <string name="dyn_deck_desc">Ово су специјални шпилови за учење ван нормалног распореда. После прегледа, картице ће аутоматски бити враћене у њихов изворни шпил. Брисање овог шпила из списка шпилова, вратиће све остале карте у њихове изворне шпилове.</string>
     <string name="steps_error">Кораци треба да буду бројеви већи од 0</string>
     <string name="steps_min_error">Неопходан је бар један корак</string>

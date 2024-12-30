@@ -25,19 +25,14 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.endsWith
 import org.hamcrest.Matchers.not
-import org.json.JSONObject
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 
-fun clozeClass(): String {
-    return "class=\"cloze\""
-}
+fun clozeClass(): String = "class=\"cloze\""
 
-fun clozeData(data: String): String {
-    return " data-cloze=\"${data}\""
-}
+fun clozeData(data: String): String = " data-cloze=\"${data}\""
 
 @RunWith(AndroidJUnit4::class)
 @KotlinCleanup("improve kotlin code where possible")
@@ -56,12 +51,12 @@ class NotetypeTest : JvmTest() {
         assertThat(
             "field should be at the end of the template - empty string for front",
             q,
-            endsWith("helloworld")
+            endsWith("helloworld"),
         )
         assertThat(
             "field should not have a problem",
             q,
-            not(containsString("has a problem"))
+            not(containsString("has a problem")),
         )
     }
 
@@ -86,7 +81,7 @@ class NotetypeTest : JvmTest() {
         assertThat(
             "FrontSide should be an empty string, even though it was set",
             q,
-            endsWith("helloworld2")
+            endsWith("helloworld2"),
         )
     }
 
@@ -111,12 +106,9 @@ class NotetypeTest : JvmTest() {
         val m2 = col.notetypes.copy(m)
         assertEquals("Basic copy", m2.getString("name"))
         assertNotEquals(m2.getLong("id"), m.getLong("id"))
-        assertEquals(2, m2.getJSONArray("flds").length())
-        assertEquals(2, m.getJSONArray("flds").length())
-        assertEquals(
-            m.getJSONArray("flds").length(),
-            m2.getJSONArray("flds").length()
-        )
+        assertEquals(2, m2.flds.length())
+        assertEquals(2, m.flds.length())
+        assertEquals(m.flds.length(), m2.flds.length())
         assertEquals(1, m.getJSONArray("tmpls").length())
         assertEquals(1, m2.getJSONArray("tmpls").length())
         assertEquals(col.notetypes.scmhash(m), col.notetypes.scmhash(m2))
@@ -131,57 +123,61 @@ class NotetypeTest : JvmTest() {
         col.addNote(note)
         val m = col.notetypes.current()
         // make sure renaming a field updates the templates
-        col.notetypes.renameFieldLegacy(m, m.getJSONArray("flds").getJSONObject(0), "NewFront")
+        col.notetypes.renameFieldLegacy(m, m.flds[0], "NewFront")
         assertThat(
             m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"),
-            containsString("{{NewFront}}")
+            containsString("{{NewFront}}"),
         )
         val h = col.notetypes.scmhash(m)
         // add a field
-        var field: JSONObject? = col.notetypes.newField("foo")
+        var field: Field? = col.notetypes.newField("foo")
         col.notetypes.addFieldLegacy(m, field!!)
         assertEquals(
             listOf("1", "2", ""),
-            col.getNote(
-                col.notetypes.nids(
-                    m
-                )[0]
-            ).fields
+            col
+                .getNote(
+                    col.notetypes.nids(
+                        m,
+                    )[0],
+                ).fields,
         )
         assertNotEquals(h, col.notetypes.scmhash(m))
         // rename it
-        field = m.getJSONArray("flds").getJSONObject(2)
+        field = m.flds[2]
         col.notetypes.renameFieldLegacy(m, field, "bar")
         assertEquals("", col.getNote(col.notetypes.nids(m)[0]).getItem("bar"))
         // delete back
-        col.notetypes.remFieldLegacy(m, m.getJSONArray("flds").getJSONObject(1))
+        col.notetypes.remFieldLegacy(m, m.flds[1])
         assertEquals(
             listOf("1", ""),
-            col.getNote(
-                col.notetypes.nids(
-                    m
-                )[0]
-            ).fields
+            col
+                .getNote(
+                    col.notetypes.nids(
+                        m,
+                    )[0],
+                ).fields,
         )
         // move 0 -> 1
-        col.notetypes.moveFieldLegacy(m, m.getJSONArray("flds").getJSONObject(0), 1)
+        col.notetypes.moveFieldLegacy(m, m.flds[0], 1)
         assertEquals(
             listOf("", "1"),
-            col.getNote(
-                col.notetypes.nids(
-                    m
-                )[0]
-            ).fields
+            col
+                .getNote(
+                    col.notetypes.nids(
+                        m,
+                    )[0],
+                ).fields,
         )
         // move 1 -> 0
-        col.notetypes.moveFieldLegacy(m, m.getJSONArray("flds").getJSONObject(1), 0)
+        col.notetypes.moveFieldLegacy(m, m.flds[1], 0)
         assertEquals(
             listOf("1", ""),
-            col.getNote(
-                col.notetypes.nids(
-                    m
-                )[0]
-            ).fields
+            col
+                .getNote(
+                    col.notetypes.nids(
+                        m,
+                    )[0],
+                ).fields,
         )
         // add another and put in middle
         field = col.notetypes.newField("baz")
@@ -191,41 +187,45 @@ class NotetypeTest : JvmTest() {
         note.flush()
         assertEquals(
             listOf("1", "", "2"),
-            col.getNote(
-                col.notetypes.nids(
-                    m
-                )[0]
-            ).fields
+            col
+                .getNote(
+                    col.notetypes.nids(
+                        m,
+                    )[0],
+                ).fields,
         )
         // move 2 -> 1
-        col.notetypes.moveFieldLegacy(m, m.getJSONArray("flds").getJSONObject(2), 1)
+        col.notetypes.moveFieldLegacy(m, m.flds[2], 1)
         assertEquals(
             listOf("1", "2", ""),
-            col.getNote(
-                col.notetypes.nids(
-                    m
-                )[0]
-            ).fields
+            col
+                .getNote(
+                    col.notetypes.nids(
+                        m,
+                    )[0],
+                ).fields,
         )
         // move 0 -> 2
-        col.notetypes.moveFieldLegacy(m, m.getJSONArray("flds").getJSONObject(0), 2)
+        col.notetypes.moveFieldLegacy(m, m.flds[0], 2)
         assertEquals(
             listOf("2", "", "1"),
-            col.getNote(
-                col.notetypes.nids(
-                    m
-                )[0]
-            ).fields
+            col
+                .getNote(
+                    col.notetypes.nids(
+                        m,
+                    )[0],
+                ).fields,
         )
         // move 0 -> 1
-        col.notetypes.moveFieldLegacy(m, m.getJSONArray("flds").getJSONObject(0), 1)
+        col.notetypes.moveFieldLegacy(m, m.flds[0], 1)
         assertEquals(
             listOf("", "2", "1"),
-            col.getNote(
-                col.notetypes.nids(
-                    m
-                )[0]
-            ).fields
+            col
+                .getNote(
+                    col.notetypes.nids(
+                        m,
+                    )[0],
+                ).fields,
         )
     }
 
@@ -272,8 +272,8 @@ class NotetypeTest : JvmTest() {
         assertEquals(
             0,
             col.db.queryLongScalar(
-                "select count() from cards where nid not in (select id from notes)"
-            )
+                "select count() from cards where nid not in (select id from notes)",
+            ),
         )
     }
 
@@ -348,7 +348,7 @@ class NotetypeTest : JvmTest() {
         var note = col.newNote()
         note.setItem(
             "Text",
-            "{{c1::ok}} \\(2^2\\) {{c2::not ok}} \\(2^{{c3::2}}\\) \\(x^3\\) {{c4::blah}} {{c5::text with \\(x^2\\) jax}}"
+            "{{c1::ok}} \\(2^2\\) {{c2::not ok}} \\(2^{{c3::2}}\\) \\(x^3\\) {{c4::blah}} {{c5::text with \\(x^2\\) jax}}",
         )
         assertNotEquals(0, col.addNote(note))
         assertEquals(5, note.numberOfCards())
@@ -356,7 +356,7 @@ class NotetypeTest : JvmTest() {
         assertThat(note.cards()[1].question(), containsString(clozeClass()))
         assertThat(
             note.cards()[2].question(),
-            not(containsString(clozeClass()))
+            not(containsString(clozeClass())),
         )
         assertThat(note.cards()[3].question(), containsString(clozeClass()))
         assertThat(note.cards()[4].question(), containsString(clozeClass()))
@@ -378,7 +378,7 @@ class NotetypeTest : JvmTest() {
         col.addNote(note)
         assertThat(
             note.cards()[0].question(),
-            containsString("[[type:cloze:Text]]")
+            containsString("[[type:cloze:Text]]"),
         )
     }
 
@@ -494,14 +494,14 @@ class NotetypeTest : JvmTest() {
         col.notetypes.remTemplate(basic, basic.getJSONArray("tmpls").getJSONObject(1))
         assertEquals(
             2,
-            col.db.queryScalar("select count() from cards where nid = ?", note.id)
+            col.db.queryScalar("select count() from cards where nid = ?", note.id),
         )
         map = HashMap()
         map[0] = 0
         col.notetypes.change(cloze, note.id, basic, map, map)
         assertEquals(
             1,
-            col.db.queryScalar("select count() from cards where nid = ?", note.id)
+            col.db.queryScalar("select count() from cards where nid = ?", note.id),
         )
     }
 
@@ -511,7 +511,7 @@ class NotetypeTest : JvmTest() {
         }
         assertEquals(
             notetype.getJSONArray("req").length(),
-            notetype.getJSONArray("tmpls").length()
+            notetype.getJSONArray("tmpls").length(),
         )
     }
 
@@ -524,7 +524,7 @@ class NotetypeTest : JvmTest() {
         s.add("Front")
         assertEquals(
             s,
-            basic.nonEmptyFields(arrayOf("<br/>", "   \t "))
+            basic.nonEmptyFields(arrayOf("<br/>", "   \t ")),
         ) // Html is not stripped to check for card generation
         assertEquals(s, basic.nonEmptyFields(arrayOf("P", "")))
         s.add("Back")
@@ -551,7 +551,7 @@ class NotetypeTest : JvmTest() {
         assertEquals(
             "getDid() should return 1 (default deck id) if model did is null",
             expected2,
-            basic.did
+            basic.did,
         )
     }
 }

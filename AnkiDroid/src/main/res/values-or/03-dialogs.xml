@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">ଆପଣ ପ୍ରକୃତରେ ଡାଟାବେସ୍ ମରାମତି କରିବାକୁ ଚେଷ୍ଟା କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?\n\nପ୍ରୟାସ ଆରମ୍ଭ କରିବା ପୂର୍ବରୁ, “%s” ଉପଫୋଲ୍ଡର୍ ରେ ଏକ କପି ସୃଷ୍ଟି ହେବ।</string>
     <string name="intent_aedict_empty">ବର୍ଗ “ଡିଫଲ୍ଟ” ଖାଲି ଅଛି</string>
     <string name="intent_aedict_category">AnkiDroid ରେ ପତ୍ର ଯୋଡ଼ିବା ପାଇଁ ସମସ୍ତ Notepad ବର୍ଗଗୁଡ଼ିକୁ ଅପସାରଣ କରନ୍ତୁ କିମ୍ବା “ଡିଫଲ୍ଟ” ନାମକ ଏକ ବର୍ଗ ଯୋଡ଼ନ୍ତୁ</string>
-    <string name="custom_study_new_total_new">ତାସଖଣ୍ଡ ରେ ନୂଆ ପତ୍ରର ସଂଖ୍ୟା: %d</string>
-    <string name="custom_study_rev_total_rev">ତାସଖଣ୍ଡ ରେ ଧାର୍ଯ୍ୟ ସମୀକ୍ଷାଗୁଡ଼ିକ: %d</string>
     <string name="custom_study_new_extend">ଆଜିର ନୂତନ ପତ୍ର ସୀମା ରେ ବୃଦ୍ଧି/ହ୍ରାସ (“-3”) କରନ୍ତୁ</string>
     <string name="custom_study_rev_extend">ଆଜିର ସମୀକ୍ଷା ସୀମା ରେ ବୃଦ୍ଧି/ହ୍ରାସ (“-3”) କରନ୍ତୁ</string>
     <string name="custom_study_forgotten">ଗତ x ଦିନରେ ଭୁଲିଯାଇଥିବା ପତ୍ରର ସମୀକ୍ଷା କରନ୍ତୁ:</string>
     <string name="custom_study_ahead">x ଦିନ ପୂର୍ବରୁ ସମୀକ୍ଷା କରନ୍ତୁ:</string>
-    <string name="custom_study_random">ତାସଖଣ୍ଡରୁ ଅନିୟମିତ ଭାବରେ x ଟି ପତ୍ର ଚୟନ କରନ୍ତୁ:</string>
     <string name="custom_study_preview">ଗତ x ଦିନରେ ଯୋଡ଼ାଯାଇଥିବା ନୂଆ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ଵାଵଲୋକନ କରିବା:</string>
-    <string name="custom_study_rebuild_deck_corrupt">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ତାସଖଣ୍ଡ ପୁନଃନିର୍ମାଣ କରିହେଲା ନାହିଁ</string>
     <string name="storage_full_title">ଷ୍ଟୋରେଜ୍ ଭର୍ତ୍ତି ହେଲାଣି</string>
     <string name="storage_almost_full_title">ଷ୍ଟୋରେଜ୍ ପ୍ରାୟ ଭର୍ତ୍ତି ହେବାକୁ ବସିଲାଣି</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ଜାଗା ନାହିଁ</string>
@@ -91,7 +87,7 @@
     <string name="restore_backup_title">ବ୍ୟାକଅପ୍ ପୁନରୁଦ୍ଧାର କରିବେ?</string>
     <string name="restore_backup">ଆପଣଙ୍କ ସଂଗ୍ରହ ଏକ ପୁରାତନ କପି ସହ ବଦଳାଯିବ। ଯେକୌଣସି ଅସଞ୍ଚିତ ପ୍ରଗତି ହଜିଯିବ।</string>
     <string name="restore_backup_choose_another">ଅନ୍ୟ ଗୋଟେ ବାଛନ୍ତୁ</string>
-    <string name="dialog_cancel">ବାତିଲ୍ କର</string>
+    <string name="dialog_cancel">ବାତିଲ୍ କରିବା</string>
     <string name="dialog_ok">ଠିକ୍ ଅଛି</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">ନିଶ୍ଚିତ କରିବା</string>
     <string name="dialog_no">ନା</string>
@@ -235,7 +231,7 @@
     <string name="dismiss_backup_warning_upgrade">        ଆଣ୍ଡ୍ରଏଡ୍ ଗୋପନୀୟତା ପରିଵର୍ତ୍ତନ ହେତୁ, ଆପ୍ ଅନଇନଷ୍ଟଲ୍ ହେଲେ ଆପଣଙ୍କ ଡାଟା ଏଵଂ ସ୍ୱଚାଳିତ ବ୍ୟାକଅପ୍ ଅଗମ୍ୟ ପାଲଟିବ
     </string>
     <string name="deck_already_exists">Deck already exists</string>
-    <string name="empty_deck_name">Deck name cannot be empty</string>
+    <string name="empty_deck_name">ତାସଖଣ୍ଡ ନାମ ଖାଲି ଛଡ଼ାଯାଇପାରିବ ନାହିଁ</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>

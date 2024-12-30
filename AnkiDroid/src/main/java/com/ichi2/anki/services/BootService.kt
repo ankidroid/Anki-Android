@@ -9,7 +9,7 @@ import androidx.core.app.PendingIntentCompat
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.R
-import com.ichi2.anki.preferences.Preferences
+import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.annotations.NeedsTest
@@ -22,7 +22,11 @@ import java.util.Calendar
 @NeedsTest("Check on various Android versions that this can execute")
 class BootService : BroadcastReceiver() {
     private var failedToShowNotifications = false
-    override fun onReceive(context: Context, intent: Intent) {
+
+    override fun onReceive(
+        context: Context,
+        intent: Intent,
+    ) {
         if (!intent.action.equals("android.intent.action.BOOT_COMPLETED")) {
             Timber.w("BootService - unexpected action received, ignoring: %s", intent.action)
             return
@@ -47,7 +51,10 @@ class BootService : BroadcastReceiver() {
         sWasRun = true
     }
 
-    private fun catchAlarmManagerErrors(context: Context, runnable: Runnable) {
+    private fun catchAlarmManagerErrors(
+        context: Context,
+        runnable: Runnable,
+    ) {
         // #6332 - Too Many Alarms on Samsung Devices - this stops a fatal startup crash.
         // We warn the user if they breach this limit
         var error: Int? = null
@@ -73,7 +80,8 @@ class BootService : BroadcastReceiver() {
         // getInstance().getColSafe
         return try {
             CollectionManager.getColUnsafe()
-        } catch (e: Throwable) { // Error and Exception paths are the same, so catch Throwable
+        } catch (e: Throwable) {
+            // Error and Exception paths are the same, so catch Throwable
             // BackendException.BackendFatalError is a RuntimeException
             // java.lang.UnsatisfiedLinkError occurs in tests
             Timber.e(e, "Failed to get collection for boot service - possibly media ejecting")
@@ -88,14 +96,19 @@ class BootService : BroadcastReceiver() {
          */
         private var sWasRun = false
 
-        fun scheduleNotification(time: Time, context: Context) {
+        fun scheduleNotification(
+            time: Time,
+            context: Context,
+        ) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val sp = context.sharedPrefs()
             // Don't schedule a notification if the due reminders setting is not enabled
-            if (sp.getString(
-                    Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION,
-                    Preferences.PENDING_NOTIFICATIONS_ONLY.toString()
-                )!!.toInt() >= Preferences.PENDING_NOTIFICATIONS_ONLY
+            if (sp
+                    .getString(
+                        context.getString(R.string.pref_notifications_minimum_cards_due_key),
+                        PENDING_NOTIFICATIONS_ONLY.toString(),
+                    )!!
+                    .toInt() >= PENDING_NOTIFICATIONS_ONLY
             ) {
                 return
             }
@@ -105,19 +118,20 @@ class BootService : BroadcastReceiver() {
                 set(Calendar.MINUTE, 0)
                 set(Calendar.SECOND, 0)
             }
-            val notificationIntent = PendingIntentCompat.getBroadcast(
-                context,
-                0,
-                Intent(context, NotificationService::class.java),
-                0,
-                false
-            )
+            val notificationIntent =
+                PendingIntentCompat.getBroadcast(
+                    context,
+                    0,
+                    Intent(context, NotificationService::class.java),
+                    0,
+                    false,
+                )
             if (notificationIntent != null) {
                 alarmManager.setRepeating(
                     AlarmManager.RTC_WAKEUP,
                     calendar.timeInMillis,
                     AlarmManager.INTERVAL_DAY,
-                    notificationIntent
+                    notificationIntent,
                 )
             }
         }

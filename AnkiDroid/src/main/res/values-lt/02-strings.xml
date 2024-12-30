@@ -82,12 +82,6 @@
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Flags</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
-    <string name="custom_study_review_forgotten">Peržiūrėti pamirštas korteles</string>
-    <string name="custom_study_review_ahead">Peržiūrėti į priekį</string>
-    <string name="custom_study_random_selection">Studijuoti atsitiktine tvarka atrinktas korteles</string>
-    <string name="custom_study_preview_new">Peržiūrėti naujas korteles</string>
     <string name="custom_study_limit_tags">Apriboti iki tam tikrų žymių</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d buried</item>
@@ -95,6 +89,8 @@
         <item quantity="many">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Keisti užrašą</string>
     <string name="discard">Discard</string>
@@ -175,7 +171,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts" maxLength="28">Nustatyti skaitymo balsu kalbą</string>
     <string name="custom_study" maxLength="28">Individualus mokymasis</string>
-    <string name="more_options">Daugiau</string>
     <string name="dyn_deck_desc">Tai yra specialus rinkinys, skirtas mokytis papildomai. Peržiūrėjus korteles, jos bus automatiškai grąžintos į savo pagrindinius rinkinius. Ištrynus šį rinkinį iš sąrašo, visos kortelės bus grąžintos į savo pradinį rinkinį.</string>
     <string name="steps_error">Veiksmų skaičius privalo būti didesnis už 0</string>
     <string name="steps_min_error">Reikia nurodyti bent vieną veiksmą</string>

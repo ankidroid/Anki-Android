@@ -4,6 +4,9 @@ updates:
   directory: "/"
   schedule:
     interval: "daily"
+  target-branch: dependency-updates
+  labels:
+  - "dependencies"
 - package-ecosystem: gradle
   directory: "/"
   schedule:
@@ -19,7 +22,7 @@ updates:
 - package-ecosystem: npm
   directory: "/tools/localization"
   schedule:
-    interval: daily
+    interval: weekly
     time: "10:00"
   open-pull-requests-limit: 10
   target-branch: dependency-updates

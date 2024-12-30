@@ -72,7 +72,7 @@
     <string name="select_decks_title" comment="Title for Deck Selection Dialog">Выберите колоды</string>
     <string name="select_deck_title" comment="Title for Deck Selection Dialog">Выберите колоду</string>
     <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Выберите колоды для отображения в виджете. Выберите колоды с помощью кнопки +</string>
-    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Колода удаленна</string>
+    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Колода удалена</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">Эта колода уже выбрана</string>
     <plurals name="deck_limit_reached">
         <item quantity="one">Вы можете выбрать до %d колод</item>

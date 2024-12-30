@@ -17,11 +17,9 @@
 package com.ichi2.anki.reviewer
 
 import android.widget.TextView
-import com.ichi2.anki.AbstractFlashcardViewer
+import com.ichi2.anki.Ease
 import com.ichi2.anki.R
-import com.ichi2.anki.reviewer.PreviousAnswerIndicator.Companion.CHOSEN_ANSWER_DURATION_MS
 import com.ichi2.utils.HandlerUtils.newHandler
-import timber.log.Timber
 
 /**
  * A visual element in the top bar showing a number of colored dots based on the previous answer
@@ -30,8 +28,9 @@ import timber.log.Timber
  *
  * This is hidden after a timer ([CHOSEN_ANSWER_DURATION_MS])
  */
-class PreviousAnswerIndicator(private val chosenAnswerText: TextView) {
-
+class PreviousAnswerIndicator(
+    private val chosenAnswerText: TextView,
+) {
     /** After the indicator is displayed, it is hidden after a timeout */
     private val timerHandler = newHandler()
 
@@ -49,25 +48,24 @@ class PreviousAnswerIndicator(private val chosenAnswerText: TextView) {
      *
      * @param ease The ordinal of the button answered
      */
-    fun displayAnswerIndicator(ease: Int) {
+    fun displayAnswerIndicator(ease: Ease) {
         when (ease) {
-            AbstractFlashcardViewer.EASE_1 -> {
+            Ease.AGAIN -> {
                 chosenAnswerText.text = "\u2022"
                 chosenAnswerText.setTextColor(getColor(R.color.material_red_500))
             }
-            AbstractFlashcardViewer.EASE_2 -> {
+            Ease.HARD -> {
                 chosenAnswerText.text = "\u2022\u2022"
                 chosenAnswerText.setTextColor(getColor(R.color.material_blue_grey_600))
             }
-            AbstractFlashcardViewer.EASE_3 -> {
+            Ease.GOOD -> {
                 chosenAnswerText.text = "\u2022\u2022\u2022"
                 chosenAnswerText.setTextColor(getColor(R.color.material_green_500))
             }
-            AbstractFlashcardViewer.EASE_4 -> {
+            Ease.EASY -> {
                 chosenAnswerText.text = "\u2022\u2022\u2022\u2022"
                 chosenAnswerText.setTextColor(getColor(R.color.material_light_blue_500))
             }
-            else -> Timber.w("Unknown easy type %s", ease)
         }
 
         // remove chosen answer hint after a while

@@ -33,11 +33,15 @@ import com.ichi2.utils.title
 class ConfirmationDialog : DialogFragment() {
     private var confirm = Runnable {} // Do nothing by default
     private var cancel = Runnable {} // Do nothing by default
+
     fun setArgs(message: String?) {
         setArgs("", message)
     }
 
-    fun setArgs(title: String?, message: String?) {
+    fun setArgs(
+        title: String?,
+        message: String?,
+    ) {
         val args = Bundle()
         args.putString("message", message)
         args.putString("title", title)

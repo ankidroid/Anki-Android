@@ -44,9 +44,7 @@ class CollectionIntegrityStorageCheck {
         this.errorMessage = errorMessage
     }
 
-    fun shouldWarnOnIntegrityCheck(): Boolean {
-        return errorMessage != null || fileSystemDoesNotHaveSpaceForBackup()
-    }
+    fun shouldWarnOnIntegrityCheck(): Boolean = errorMessage != null || fileSystemDoesNotHaveSpaceForBackup()
 
     private fun fileSystemDoesNotHaveSpaceForBackup(): Boolean {
         // only to be called when mErrorMessage == null
@@ -67,29 +65,28 @@ class CollectionIntegrityStorageCheck {
             val defaultRequiredFreeSpace = defaultRequiredFreeSpace(context)
             return context.resources.getString(
                 R.string.integrity_check_insufficient_space,
-                defaultRequiredFreeSpace
+                defaultRequiredFreeSpace,
             )
         }
         val required = Formatter.formatShortFileSize(context, requiredSpace)
-        val insufficientSpace = context.resources.getString(
-            R.string.integrity_check_insufficient_space,
-            required
-        )
+        val insufficientSpace =
+            context.resources.getString(
+                R.string.integrity_check_insufficient_space,
+                required,
+            )
 
         // Also concat in the extra content showing the current free space.
         val currentFree = Formatter.formatShortFileSize(context, freeSpace)
-        val insufficientSpaceCurrentFree = context.resources.getString(
-            R.string.integrity_check_insufficient_space_extra_content,
-            currentFree
-        )
+        val insufficientSpaceCurrentFree =
+            context.resources.getString(
+                R.string.integrity_check_insufficient_space_extra_content,
+                currentFree,
+            )
         return insufficientSpace + insufficientSpaceCurrentFree
     }
 
     companion object {
-
-        private fun fromError(errorMessage: String): CollectionIntegrityStorageCheck {
-            return CollectionIntegrityStorageCheck(errorMessage)
-        }
+        private fun fromError(errorMessage: String): CollectionIntegrityStorageCheck = CollectionIntegrityStorageCheck(errorMessage)
 
         private fun defaultRequiredFreeSpace(context: Context): String {
             val oneHundredFiftyMB =
@@ -105,8 +102,8 @@ class CollectionIntegrityStorageCheck {
                 return fromError(
                     context.resources.getString(
                         R.string.integrity_check_insufficient_space,
-                        requiredFreeSpace
-                    )
+                        requiredFreeSpace,
+                    ),
                 )
             }
 
@@ -123,8 +120,8 @@ class CollectionIntegrityStorageCheck {
                 return fromError(
                     context.resources.getString(
                         R.string.integrity_check_insufficient_space,
-                        readableFileSize
-                    )
+                        readableFileSize,
+                    ),
                 )
             }
             return CollectionIntegrityStorageCheck(requiredSpaceInBytes, freeSpace)

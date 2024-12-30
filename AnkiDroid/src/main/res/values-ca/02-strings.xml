@@ -82,20 +82,16 @@
     <string name="webview_crash_loop_dialog_content">El sistema WebView ha fallat al renderitzar la carta \'%1$s.\n%2$s</string>
     <string name="filter_by_flags" maxLength="41">Bandera</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Canviar el límit de cartes noves d\'avui</string>
-    <string name="custom_study_increase_review_limit">Modificar el límit de revisions de carta d\'avui</string>
-    <string name="custom_study_review_forgotten">Revisa les fitxes oblidades</string>
-    <string name="custom_study_review_ahead">Revisa més endavant</string>
-    <string name="custom_study_random_selection">Estudia una selecció aleatòria de les fitxes</string>
-    <string name="custom_study_preview_new">Vista prèvia de les fitxes noves</string>
     <string name="custom_study_limit_tags">Limita a determinades etiquetes</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
+        <item quantity="one">+%d enterrada</item>
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Edita la nota</string>
-    <string name="discard">Discard</string>
+    <string name="discard">Descarta</string>
     <string name="note_editor_no_cards_created">No s\'ha creat cap carta. Omple més camps si us plau</string>
     <string name="note_editor_no_cards_created_all_fields">El tipus de nota actual no ha produït cap targeta.\nTrieu un altre tipus de nota o feu clic a \'Cartes\' i afegiu una substitució de camp si us plau</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Les supressions parcials només funcionen en una nota de tipus parcial</string>
@@ -124,10 +120,10 @@
     <string name="card_editor_reset_card" maxLength="28">Reinicia</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Torna a planificar</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Previsualització</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Copy as Markdown</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Copia com a Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">Targeta %1$d de %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Canvia el nom</string>
-    <string name="checks_action" maxLength="28">Check</string>
+    <string name="checks_action" maxLength="28">Comprova</string>
     <string name="check_db" maxLength="28">Comprova la base de dades</string>
     <string name="check_media" maxLength="28">Comprovar la multimèdia</string>
     <string name="empty_cards" maxLength="28">Targetes buides</string>
@@ -138,7 +134,7 @@
     <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Afegeix</string>
     <string name="import_message_replace_confirm">Això suprimirà la vostra col·lecció actual i la reemplaçarà amb les dades del fitxer %s. Esteu segur que ho voleu?</string>
-    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
+    <string name="import_dialog_message_add">Voleu afegir \"%s\" a la col·lecció? Això pot trigar força</string>
     <string name="import_log_no_apkg">Aquest no és un fitxer de paquet Anki vàlid</string>
     <string name="import_title_error" comment="Title of error dialog">S\'ha produït un error</string>
     <string name="import_error_handle_exception">No ha estat possible importar el paquet\n\n%s</string>
@@ -161,15 +157,14 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_choice_share">Share</string>
-    <string name="export_choice_save_to">Save to</string>
+    <string name="export_choice_share">Comparteix</string>
+    <string name="export_choice_save_to">Desa a</string>
     <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Opcions d\'estudi</string>
     <string name="menu__deck_options" maxLength="28">Opcions de paquet</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opcions d\'estudi</string>
     <string name="select_tts" maxLength="28">Selecciona idioma per TTS</string>
     <string name="custom_study" maxLength="28">Estudi a mida</string>
-    <string name="more_options"> Més</string>
     <string name="dyn_deck_desc">Es tracta d\'un paquet especial per a l\'estudi fora de la planificació normal. Després de revisar-les, les fitxes es tornaran automàticament al seus paquets originals. Si suprimiu aquest paquet de la llista de paquets, totes les fitxes tornaran al seu paquet inicial.</string>
     <string name="steps_error">Els passos han de ser números majors que 0</string>
     <string name="steps_min_error">Com a mínim un pas s\'exigeix</string>
@@ -192,7 +187,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Fons</string>
     <string name="choose_an_image" maxLength="41">Selecciona una imatge</string>
-    <string name="remove_background_image">Remove background?</string>
+    <string name="remove_background_image">Elimina el fons</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Restaura els valors per defecte</string>
     <string name="reviewer_tts_cloze_spoken_replacement">En blanc</string>
@@ -235,9 +230,9 @@
     <string name="edit_toolbar_item">Element de la barra d\'eines</string>
     <string name="toolbar_item_explain_edit_or_remove">Entreu el codi HTML que voleu inserir abans i després del text seleccionat\n\nFeu una pressió prolongada a un element de la barra d\'eines per editar-ho o eliminar-hp</string>
     <string name="remove_toolbar_item">Elimino l\'element de la barra d\'eines?</string>
-    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
-    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
-    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
+    <string name="note_editor_image_too_large">La imatge és massa gran per enganxar-la. Inseriu-la manualment si us plau</string>
+    <string name="note_editor_video_too_large">El vídeo és massa gran per enganxar-lo. Inseriu-lo manualment si us plau</string>
+    <string name="note_editor_audio_too_large">L\'àudio és massa gran per enganxar-lo. Inseriu-lo manualment si us plau</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        S\'està fent una còpia de seguretat d\'Android. Prova-ho un altre vegada si us plau</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Potser haureu de fer servir iManager per permetre a AnkiDroid afegir dreceres</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">La pantalla d\'inici no permet que AnkiDroid afegeixi dreceres</string>
@@ -272,14 +267,14 @@
     <string name="card_buried">S\'ha enterrat la targeta.</string>
     <plurals name="note_suspended">
         <item quantity="one">%d fitxa suspesa</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="other">%d fitxes suspeses</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Feu que el camp %s sigui enganxós</string>
     <string name="scoped_storage_learn_more">Vull saber-ne més</string>
     <string name="search_card_js_api_no_results">La cerca ha tornat cap resultat</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
+    <string name="not_valid_js_addon_package">%s no és un paquet de complements JavaScript vàlid</string>
     <string name="could_not_create_dir">No s\'ha pogut crear la carpeta %s</string>
     <string name="malicious_archive_entry_outside">Arxiu maliciós. Conté una entrada fora de la carpeta de destinació: %s</string>
     <string name="malicious_archive_exceeds_limit">Arxiu maliciós. La mida supera %1$s o conté més de %2$d fitxers</string>
@@ -310,7 +305,7 @@
     <string name="toggle_browser_mode_help">Alterna entre mostrar targetes i notes al navegador</string>
     <string name="truncate_content_help">Trunca l\'alçada de cada fila del navegador per mostrar només les 3 primeres línies de contingut</string>
     <string name="browser_options_dialog_heading">Opcions del navegador</string>
-    <string name="audio_saved">Recording saved</string>
+    <string name="audio_saved">S\'ha desat l\'enregistrament.</string>
     <string name="deleting_selected_notes">Deleting selected notes</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
     </string>
@@ -327,18 +322,18 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Failed to open text to speech settings
     </string>
     <string name="shared_decks_login_required">Please log in to download more decks</string>
-    <string name="deck_description_field_hint">Description</string>
-    <string name="failed_to_copy">Failed to copy</string>
+    <string name="deck_description_field_hint">Descripció</string>
+    <string name="failed_to_copy">No s\'ha pogut copiar!</string>
     <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d card unburied</item>
         <item quantity="other">%d cards unburied</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Reposition</string>
-    <string name="start_recording">Record</string>
-    <string name="stop_recording">Stop</string>
-    <string name="play_recording">Play</string>
-    <string name="next_recording">Next</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Reposició</string>
+    <string name="start_recording">Enregistra</string>
+    <string name="stop_recording">Atura</string>
+    <string name="play_recording">Reprodueix</string>
+    <string name="next_recording">Següent</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Cannot Delete Card Type</string>
     <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
@@ -347,7 +342,7 @@
     <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Editor de notes</string>
     <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>

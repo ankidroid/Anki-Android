@@ -33,8 +33,7 @@ sealed interface ImageCropperLauncher {
      * @param context The context from which the intent is launched.
      * @return Intent configured to launch the ImageCropper fragment.
      */
-    fun getIntent(context: Context) =
-        SingleFragmentActivity.getIntent(context, ImageCropper::class, toBundle())
+    fun getIntent(context: Context) = SingleFragmentActivity.getIntent(context, ImageCropper::class, toBundle())
 
     /**
      * Converts the configuration into a Bundle to pass arguments to the ImageCropper fragment.
@@ -47,9 +46,12 @@ sealed interface ImageCropperLauncher {
      * Represents opening the ImageCropper with an image URI.
      * @property imageUri The URI of the image to crop.
      */
-    data class ImageUri(val imageUri: Uri?) : ImageCropperLauncher {
-        override fun toBundle(): Bundle = bundleOf(
-            ImageCropper.CROP_IMAGE_URI to imageUri
-        )
+    data class ImageUri(
+        val imageUri: Uri?,
+    ) : ImageCropperLauncher {
+        override fun toBundle(): Bundle =
+            bundleOf(
+                ImageCropper.CROP_IMAGE_URI to imageUri,
+            )
     }
 }

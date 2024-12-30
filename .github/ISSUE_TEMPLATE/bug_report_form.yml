@@ -1,7 +1,7 @@
 name: 🐞 Bug
 description: File a bug
-title: "[BUG]: "
-labels:  [Bug, "Needs Triage"]
+type: "Bug"
+labels:  ["Needs Triage"]
 
 body:
 

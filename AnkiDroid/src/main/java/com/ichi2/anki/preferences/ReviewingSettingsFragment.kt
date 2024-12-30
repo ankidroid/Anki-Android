@@ -15,14 +15,16 @@
  */
 package com.ichi2.anki.preferences
 
+import android.content.Context
+import androidx.annotation.VisibleForTesting
 import anki.config.copy
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.preferences.Preferences.Companion.getDayOffset
-import com.ichi2.anki.preferences.Preferences.Companion.setDayOffset
+import com.ichi2.anki.services.BootService.Companion.scheduleNotification
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.undoableOp
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.preferences.NumberRangePreferenceCompat
 import com.ichi2.preferences.SliderPreference
 import timber.log.Timber
@@ -53,9 +55,9 @@ class ReviewingSettingsFragment : SettingsFragment() {
         // the duration of a review timebox in minute. Each TIME_LIMIT minutes, a message appear suggesting to halt and giving the number of card reviewed
         // Note that "timeLim" is in seconds while TIME_LIMIT is in minutes.
         requirePreference<NumberRangePreferenceCompat>(R.string.time_limit_preference).apply {
-            launchCatchingTask { setValue(withCol { sched.timeboxSecs() / 60 }) }
+            launchCatchingTask { setValue(getTimeboxTimeLimit().toInt(DurationUnit.MINUTES)) }
             setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { withCol { config.set("timeLim", (newValue as Int * 60)) } }
+                launchCatchingTask { setTimeboxTimeLimit((newValue as Int).toDuration(DurationUnit.MINUTES)) }
             }
         }
         // Start of next day
@@ -74,11 +76,45 @@ class ReviewingSettingsFragment : SettingsFragment() {
 
     private suspend fun setLearnAheadLimit(limit: Duration) {
         val prefs = withCol { getPreferences() }
-        val newPrefs = prefs.copy {
-            scheduling = prefs.scheduling.copy { learnAheadSecs = limit.toInt(DurationUnit.SECONDS) }
-        }
+        val newPrefs =
+            prefs.copy {
+                scheduling = prefs.scheduling.copy { learnAheadSecs = limit.toInt(DurationUnit.SECONDS) }
+            }
 
         undoableOp { setPreferences(newPrefs) }
         Timber.i("set learn ahead limit: '%d'", limit.toInt(DurationUnit.SECONDS))
     }
+
+    private suspend fun getTimeboxTimeLimit(): Duration =
+        withCol { getPreferences().reviewing.timeLimitSecs }.toDuration(DurationUnit.SECONDS)
+
+    private suspend fun setTimeboxTimeLimit(limit: Duration) {
+        val prefs = withCol { getPreferences() }
+        val newPrefs =
+            prefs.copy {
+                reviewing = prefs.reviewing.copy { timeLimitSecs = limit.toInt(DurationUnit.SECONDS) }
+            }
+        undoableOp { setPreferences(newPrefs) }
+        Timber.i("Set timeLimitSecs to %d", limit.toInt(DurationUnit.SECONDS))
+    }
 }
+
+/** Sets the hour that the collection rolls over to the next day  */
+@VisibleForTesting
+@NeedsTest("ensure Start of Next Day is handled by the scheduler")
+suspend fun setDayOffset(
+    context: Context,
+    hours: Int,
+) {
+    val prefs = withCol { getPreferences() }
+    val newPrefs = prefs.copy { scheduling = prefs.scheduling.copy { rollover = hours } }
+
+    undoableOp {
+        setPreferences(newPrefs)
+    }
+    scheduleNotification(TimeManager.time, context)
+    Timber.i("set day offset: '%d'", hours)
+}
+
+@VisibleForTesting
+suspend fun getDayOffset(): Int = withCol { getPreferences().scheduling.rollover }

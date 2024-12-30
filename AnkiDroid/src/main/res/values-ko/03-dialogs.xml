@@ -49,12 +49,12 @@
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">카드 묶음 삭제</string>
     <string name="delete_deck_title">카드 묶음을 삭제할까요?</string>
     <plurals name="delete_deck_message">
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="other">%1$s의 모든 카드를 삭제할까요? 이는 %2$d 카드를 포함하고 있습니다</item>
     </plurals>
-    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
+    <string name="delete_cram_deck_message">필터링된 덱 %s을(를) 삭제하고 모든 카드를 원래 덱으로 돌려보낼까요?</string>
     <string name="no_tts_available_message">문장 읽어주기 기능(TTS)을 사용할 수 없음</string>
     <string name="tts_no_tts">말하지 마십시오</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
+    <string name="unused_strings">\n\n사용되지 않은 파일:\n</string>
     <string name="reposition_card_dialog_title">새 카드 위치 변경</string>
     <string name="reposition_card_dialog_message">시작 위치:</string>
     <string name="reposition_card_not_new_error">새 카드만 순서를 조정할 수 있습니다.</string>
@@ -72,15 +72,11 @@
     <string name="repair_deck_dialog">데이터베이스를 복구하시겠습니까?\n\n 복구를 시작하기 전에 지정된 하위폴더에 복사본 파일이 저장됩니다\'%s\'.</string>
     <string name="intent_aedict_empty">\'기본값\' 카테고리가 비어 있습니다</string>
     <string name="intent_aedict_category">AnkiDroid에 카드를 추가하기 위해 모든 메모장 범주 삭제 또는 \'기본값\'으로 지정하기</string>
-    <string name="custom_study_new_total_new">카드 묶음의 새로운 카드: %d</string>
-    <string name="custom_study_rev_total_rev">카드 묶음의 예정된 복습: %d</string>
     <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
     <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">최근 x일 내에 잊혀진 카드:</string>
     <string name="custom_study_ahead">x일 만큼 미리 복습하기:</string>
-    <string name="custom_study_random">카드 묶음으로부터 x개의 카드를 무작위로 고르기:</string>
     <string name="custom_study_preview">최근 x일 내에 추가된 카드를 미리 학습하기:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
     <string name="storage_full_title">저장 공간이 가득 찼습니다.</string>
     <string name="storage_almost_full_title">저장공간이 거의 가득 찼습니다.</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">빈 공간 없음</string>
@@ -106,8 +102,8 @@
     <string name="dialog_positive_replace">대체</string>
     <string name="dialog_collection_path_not_dir">지정된 경로가 올바르지 않습니다.</string>
     <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
-    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
-    <string name="dialog_updated_custom_certificate">Certificate updated</string>
+    <string name="dialog_invalid_custom_certificate_title">인증서 인식 오류</string>
+    <string name="dialog_updated_custom_certificate">인증서 업데이트됨</string>
     <!-- Media checking -->
     <string name="check_media_title">미디어를 점검할까요?</string>
     <string name="check_media_warning">큰 미디어 컬렉션은 시간이 오래 걸릴 수 있습니다</string>
@@ -171,7 +167,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
+    <string name="locale_selection_dialog_title_new">언어 설정</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Using AnkiDroid</string>
@@ -212,40 +208,40 @@
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">오늘 공부할 카드의 개요 페이지를 엽니다.</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_deck_package">덱 패키지 (.apkg)</string>
+    <string name="import_collection_package">컬렉션 패키지 (.colpkg)</string>
+    <string name="import_csv">텍스트 파일 (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">모든 덱의 하위 덱을 만들 수 없습니다</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
+    <string name="backup_your_collection">컬렉션 백업하기</string>
     <string name="backup_collection_message">아직 컬렉션을 백업하지 않았습니다. 데이터 손실이 일어날 수 있으므로 지금 백업하세요.</string>
-    <string name="button_backup" maxLength="41">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
+    <string name="button_backup" maxLength="41">백업</string>
+    <string name="button_disable_reminder">리마인더 비활성화</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">나중에</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">다시 보지 않기</string>
     <string name="dismiss_backup_warning_title">데이터 손실 경고</string>
     <string name="dismiss_backup_warning_new_user">        안드로이드 개인정보 보호 정책 변경으로 인해 앱을 제거하면 기기에서 데이터와 자동 백업이 삭제됩니다.
     </string>
     <string name="dismiss_backup_warning_upgrade">        안드로이드 개인정보 보호 정책 변경으로 인해 앱을 제거하면 데이터 및 자동 백업에 액세스할 수 없게 됩니다.
     </string>
-    <string name="deck_already_exists">Deck already exists</string>
-    <string name="empty_deck_name">Deck name cannot be empty</string>
-    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <string name="deck_already_exists">덱이 이미 존재합니다</string>
+    <string name="empty_deck_name">덱 이름은 공백일 수 없습니다</string>
+    <string name="create_deck_numeric_hint">덱 정렬에 문제가 있다면 (\'10\'이 \'2\' 앞에 올 때) \'2\'를 \'02\'로 교체하세요</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">간격을 같은 값으로 설정</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="other">Show cards in</item>
+        <item quantity="other">다음 시간 후 다시 등장</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="other">Show cards in range</item>
+        <item quantity="other">다음 기간 내에 카드 등장</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="other">days</item>
+        <item quantity="other">일</item>
     </plurals>
-    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
-    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">-</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">부터</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">까지</string>
     <!-- Instant Note Editor -->
     <string name="cloze_note_required">Cloze Type Note Required</string>
     <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>

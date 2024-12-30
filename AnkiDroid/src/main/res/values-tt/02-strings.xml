@@ -82,16 +82,12 @@
     <string name="webview_crash_loop_dialog_content">Система WebViewы \'%1$s\' кәртен ача алмады.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Байраклар</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Бугенге кәрт лимитын үзгәртү</string>
-    <string name="custom_study_increase_review_limit">Бугенге кабатланган кәрт лимитын үзгәртү</string>
-    <string name="custom_study_review_forgotten">Онытылган кәртләрне кабатлау</string>
-    <string name="custom_study_review_ahead">Алдагын кабатлау</string>
-    <string name="custom_study_random_selection">Очраклы кәрт сайланышын өйрәнү</string>
-    <string name="custom_study_preview_new">Яңаларны карау</string>
     <string name="custom_study_limit_tags">Кайбер тамгаларны гына</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Язуны үзгәртү</string>
     <string name="discard">Discard</string>
@@ -167,7 +163,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts" maxLength="28">Текст телен көйләргә</string>
     <string name="custom_study" maxLength="28">Тагын өйрәнү</string>
-    <string name="more_options">Күбрәк</string>
     <string name="dyn_deck_desc">Бу - гадәттәгедән тыш күбрәк уку өчен колода. Кәртләрне карап чыккач, алар үзенең колодаларына кире кайтачаклар. Бу колоданы бетерү аның эчендәге кәртләрнең үзенең колодаларына кайтуына китерер. </string>
     <string name="steps_error">Адымнар 0дән күбрәк сан булырга тиеш</string>
     <string name="steps_min_error">Бер булса да адым кирәк</string>

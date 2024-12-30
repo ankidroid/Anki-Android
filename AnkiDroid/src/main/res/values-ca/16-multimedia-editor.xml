@@ -59,7 +59,6 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Alguna cosa ha anat malament</string>
-    <string name="multimedia_editor_svg_preview">No hi ha cap imatge SVG per a previsualitzar</string>
     <string name="multimedia_editor_png_paste_error">Error en convertir la imatge del porta-retalls a png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Adjuntar contingut multimèdia al camp %1$s</string>
     <!-- Audio view -->
@@ -70,9 +69,9 @@
     <!-- Crop function-->
     <string name="crop_image">Voleu retallar aquesta imatge?</string>
     <string name="crop_button" maxLength="28">Retalla la imatge</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
+    <string name="save_dialog_content">La mida actual de la imatge és de %sMB. El límit predeterminat de la mida és d\'1 MB. Ho voleu comprimir?</string>
     <string name="select_image_failed">"No s\'ha pogut seleccionar la imatge. Torneu-ho a provar si us plau"</string>
     <string name="activity_result_unexpected">L\'aplicació ha tornat un valor inesperat. Potser heu d\'usar una aplicació diferent.</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Contingut del camp</string>
-    <string name="reselect" maxLength="28">Reselect</string>
+    <string name="reselect" maxLength="28">Torna a seleccionar</string>
 </resources>

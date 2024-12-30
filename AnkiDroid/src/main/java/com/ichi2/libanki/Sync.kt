@@ -21,30 +21,38 @@ import anki.sync.SyncCollectionResponse
 import anki.sync.fullUploadOrDownloadRequest
 import anki.sync.syncLoginRequest
 
-fun Collection.syncLogin(username: String, password: String, endpoint: String?): SyncAuth {
-    val req = syncLoginRequest {
-        this.username = username
-        this.password = password
-        // default endpoint used here, if it is null
-        if (endpoint != null) {
-            this.endpoint = endpoint
+fun Collection.syncLogin(
+    username: String,
+    password: String,
+    endpoint: String?,
+): SyncAuth {
+    val req =
+        syncLoginRequest {
+            this.username = username
+            this.password = password
+            // default endpoint used here, if it is null
+            if (endpoint != null) {
+                this.endpoint = endpoint
+            }
         }
-    }
     return backend.syncLogin(req)
 }
 
-fun Collection.syncCollection(auth: SyncAuth, media: Boolean): SyncCollectionResponse {
-    return backend.syncCollection(auth = auth, syncMedia = media)
-}
+fun Collection.syncCollection(
+    auth: SyncAuth,
+    media: Boolean,
+): SyncCollectionResponse = backend.syncCollection(auth = auth, syncMedia = media)
 
-fun Collection.fullUploadOrDownload(auth: SyncAuth, upload: Boolean, serverUsn: Int?) {
-    return backend.fullUploadOrDownload(
-        fullUploadOrDownloadRequest {
-            this.auth = auth
-            if (serverUsn != null) {
-                this.serverUsn = serverUsn
-            }
-            this.upload = upload
+fun Collection.fullUploadOrDownload(
+    auth: SyncAuth,
+    upload: Boolean,
+    serverUsn: Int?,
+) = backend.fullUploadOrDownload(
+    fullUploadOrDownloadRequest {
+        this.auth = auth
+        if (serverUsn != null) {
+            this.serverUsn = serverUsn
         }
-    )
-}
+        this.upload = upload
+    },
+)

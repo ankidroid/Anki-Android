@@ -82,17 +82,13 @@
     <string name="webview_crash_loop_dialog_content">WebView del sistema no pudo procesar la tarjeta \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Banderas</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Cambiar el límite de tarjetas nuevas para hoy</string>
-    <string name="custom_study_increase_review_limit">Cambiar el límite de repasos para hoy</string>
-    <string name="custom_study_review_forgotten">Repasar tarjetas olvidadas</string>
-    <string name="custom_study_review_ahead">Repasar con antelación</string>
-    <string name="custom_study_random_selection">Estudiar una selección aleatoria de tarjetas</string>
-    <string name="custom_study_preview_new">Previsualizar tarjetas nuevas</string>
     <string name="custom_study_limit_tags">Limitar a etiquetas concretas</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="one">+%d enterrada</item>
+        <item quantity="other">+%d enterradas</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Editar nota</string>
     <string name="discard">Borrar </string>
@@ -135,7 +131,7 @@
     <string name="delete_deck">Eliminando mazo&#8230;</string>
     <string name="info_rate">Puntúa AnkiDroid</string>
     <string name="import_title">Importando</string>
-    <string name="import_preparing_file">Preparing file for import&#8230;</string>
+    <string name="import_preparing_file">Preparando el archivo para la importación&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Añadir</string>
     <string name="import_message_replace_confirm">Esto eliminará tu colección actual y la reemplazará con los datos del archivo %s</string>
     <string name="import_dialog_message_add">¿Añadir \"%s\" a la colección? Esto puede llevar mucho tiempo</string>
@@ -163,13 +159,12 @@
         ]]></string>
     <string name="export_choice_share">Compartir</string>
     <string name="export_choice_save_to">Guardar en</string>
-    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
+    <string name="export_saving_exported_collection">Guardando archivo exportado&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Opciones</string>
     <string name="menu__deck_options" maxLength="28">Opciones de mazo</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opciones de estudio</string>
     <string name="select_tts" maxLength="28">Establecer idioma TTS</string>
     <string name="custom_study" maxLength="28">Estudio personalizado</string>
-    <string name="more_options">Más</string>
     <string name="dyn_deck_desc">Esta es un mazo especial para estudiar aparte del programa habitual. Las cartas se devolverán automáticamente a sus mazos originales después de que las revises. Borrar este mazo de la lista de mazos devolverá todas las cartas restantes a su mazo original.</string>
     <string name="steps_error">Los pasos deben ser un número mayor que 0</string>
     <string name="steps_min_error">Se requiere al menos un paso</string>
@@ -235,9 +230,9 @@
     <string name="edit_toolbar_item">Crear Elemento de Barra de Herramientas</string>
     <string name="toolbar_item_explain_edit_or_remove">Introduce HTML para insertarse antes y después del texto seleccionado\n\nManten presionado un elemento de la barra de herramientas para eliminarlo</string>
     <string name="remove_toolbar_item">¿Eliminar elemento de la barra de herramientas?</string>
-    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
-    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
-    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
+    <string name="note_editor_image_too_large">La imagen es demasiado grande, por favor inserta la imagen manualmente</string>
+    <string name="note_editor_video_too_large">El archivo de vídeo es demasiado grande, por favor inserta el vídeo manualmente</string>
+    <string name="note_editor_audio_too_large">El archivo de audio es demasiado grande, por favor inserta el audio manualmente</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Copia de seguridad Android en progreso. Inténtalo de nuevo</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Puede que necesite usar iManager para permitir que AnkiDroid añada accesos directos</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Tu pantalla de inicio no permite que AnkiDroid añada accesos directos</string>
@@ -339,24 +334,24 @@
     <string name="play_recording">Reproducir</string>
     <string name="next_recording">Siguiente</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot Delete Card Type</string>
-    <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
+    <string name="orphan_note_title">No se puede eliminar el tipo de tarjeta</string>
+    <string name="orphan_note_message">Eliminar este tipo de tarjeta dejará algunas notas sin ninguna tarjeta.</string>
     <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
-    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
-    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
-    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
-    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
-    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
-    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
-    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
-    <string name="show_shortcuts_message">Press Alt+K to show keyboard shortcuts</string>
-    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
-    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
+    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Mostrar diálogo de atajos de teclado</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Selector de Mazos</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Eliminar mazo sin confirmación</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Editor de Notas</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Seleccionar mazo</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Seleccionar tipo de nota</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Editor de etiquetas</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Editor de Plantillas de Tarjeta</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Editar plantilla frontal</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Editar plantilla trasera</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Editar estilo</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copiar plantilla como markdown</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Editar apariencia del navegador</string>
+    <string name="show_shortcuts_message">Presiona Alt+K para mostrar los atajos del teclado</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">La acción del usuario %s no está establecida en este tipo de notas. Por favor, configúrala</string>
+    <string name="directory_inaccessible_info">Obtén más información sobre cómo restaurar el acceso aquí %s o ve a la configuración para actualizar la carpeta de colección.</string>
 </resources>

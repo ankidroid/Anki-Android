@@ -30,19 +30,21 @@ import java.util.stream.Stream
 class PreferencesSimpleTest {
     @ParameterizedTest
     @MethodSource("buildCategorySummary_LTR_Test_args")
-    fun buildCategorySummary_LTR_Test(entries: Array<String>, expectedSummary: String) {
+    fun buildCategorySummary_LTR_Test(
+        entries: Array<String>,
+        expectedSummary: String,
+    ) {
         assertThat(HeaderPreference.buildHeaderSummary(*entries), equalTo(expectedSummary))
     }
 
     companion object {
         @JvmStatic // required for @MethodSource
-        fun buildCategorySummary_LTR_Test_args(): Stream<Arguments> {
-            return Stream.of(
+        fun buildCategorySummary_LTR_Test_args(): Stream<Arguments> =
+            Stream.of(
                 Arguments.of(arrayOf(""), ""),
                 Arguments.of(arrayOf("foo"), "foo"),
                 Arguments.of(arrayOf("foo", "bar"), "foo • bar"),
-                Arguments.of(arrayOf("foo", "bar", "hi", "there"), "foo • bar • hi • there")
+                Arguments.of(arrayOf("foo", "bar", "hi", "there"), "foo • bar • hi • there"),
             )
-        }
     }
 }

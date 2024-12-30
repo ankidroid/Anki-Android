@@ -54,7 +54,7 @@
     <string name="cram_deck_conf_order_random">Zufällig</string>
     <string name="cram_deck_conf_order_increasing_intervals">Steigende Intervalle</string>
     <string name="cram_deck_conf_order_decreasing_intervals">abnehmenden Intervallen</string>
-    <string name="cram_deck_conf_order_most_lapsed">Häufigkeit des Vergessens</string>
+    <string name="cram_deck_conf_order_most_lapsed">Meiste Fehlversuche</string>
     <string name="cram_deck_conf_order_order_added">Reihenfolge des Hinzufügens</string>
     <string name="cram_deck_conf_order_order_due">Fälligkeit</string>
     <string name="cram_deck_conf_order_latest_added_first">Zuletzt hinzugefügte zuerst</string>
@@ -85,13 +85,13 @@
     <string name="answer_easy" maxLength="41">Antwort: einfach</string>
     <string name="gesture_play" maxLength="41">Medien abspielen</string>
     <string name="gesture_abort_learning" maxLength="41">Überprüfer schließen</string>
-    <string name="gesture_flag_red" maxLength="41">Rote Flagge umschalten</string>
-    <string name="gesture_flag_orange" maxLength="41">Orange Flagge umschalten</string>
-    <string name="gesture_flag_green" maxLength="41">Grüne Flagge umschalten</string>
-    <string name="gesture_flag_blue" maxLength="41">Blaue Flagge umschalten</string>
-    <string name="gesture_flag_pink" maxLength="41">Rosa Flagge umschalten</string>
-    <string name="gesture_flag_turquoise" maxLength="41">Türkise Flagge umschalten</string>
-    <string name="gesture_flag_purple" maxLength="41">Violette Flagge umschalten</string>
+    <string name="gesture_flag_red" maxLength="41">Rote Flagge setzen/entfernen</string>
+    <string name="gesture_flag_orange" maxLength="41">Orange Flagge setzen/entfernen</string>
+    <string name="gesture_flag_green" maxLength="41">Grüne Flagge setzen/entfernen</string>
+    <string name="gesture_flag_blue" maxLength="41">Blaue Flagge setzen/entfernen</string>
+    <string name="gesture_flag_pink" maxLength="41">Rosa Flagge setzen/entfernen</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Türkise Flagge setzen/entfernen</string>
+    <string name="gesture_flag_purple" maxLength="41">Violette Flagge setzen/entfernen</string>
     <string name="gesture_flag_remove" maxLength="41">Flagge entfernen</string>
     <string name="gesture_page_up" maxLength="41">Seite nach oben</string>
     <string name="gesture_page_down" maxLength="41">Seite nach unten</string>

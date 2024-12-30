@@ -51,7 +51,9 @@ class NotetypeJson : JSONObject {
     /**
      * Creates a model object from json string
      */
-    constructor(@Language("json") json: String) : super(json)
+    constructor(
+        @Language("json") json: String,
+    ) : super(json)
 
     @CheckResult
     fun deepClone(): NotetypeJson {
@@ -60,11 +62,9 @@ class NotetypeJson : JSONObject {
     }
 
     val fieldsNames: List<String>
-        get() = getJSONArray("flds").toStringList("name")
+        get() = flds.map { it.name }
 
-    fun getField(pos: Int): JSONObject {
-        return getJSONArray("flds").getJSONObject(pos)
-    }
+    fun getField(pos: Int): Field = flds[pos]
 
     /**
      * @return model did or default deck id (1) if null
@@ -83,7 +83,8 @@ class NotetypeJson : JSONObject {
      * @return The names of non-empty fields
      */
     fun nonEmptyFields(sfld: Array<String>): Set<String> =
-        sfld.zip(fieldsNames)
+        sfld
+            .zip(fieldsNames)
             // filter to the fields which are non-empty
             .filter { (sfld, _) -> sfld.trim { it <= ' ' }.isNotEmpty() }
             .mapTo(HashSet()) { (_, fieldName) -> fieldName }
@@ -99,10 +100,10 @@ class NotetypeJson : JSONObject {
         }
     }
 
-    var flds: JSONArray
-        get() = getJSONArray("flds")
+    var flds: Fields
+        get() = Fields(getJSONArray("flds"))
         set(value) {
-            put("flds", value)
+            put("flds", value.jsonArray)
         }
 
     var tmpls: JSONArray

@@ -82,16 +82,12 @@
     <string name="webview_crash_loop_dialog_content">AndroidシステムのWebViewがカード \'%1$s\' のレンダリングに失敗しました。\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">フラグ</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">今日の新規カード上限を変更</string>
-    <string name="custom_study_increase_review_limit">今日の復習カード上限を変更</string>
-    <string name="custom_study_review_forgotten">間違えたカードを再学習</string>
-    <string name="custom_study_review_ahead">復習カードを予習</string>
-    <string name="custom_study_random_selection">カードをランダムに選んで学習</string>
-    <string name="custom_study_preview_new">新規カードを予習</string>
     <string name="custom_study_limit_tags">タグで抽出して学習</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="other">+%d 今日は非表示</item>
     </plurals>
+    <string name="studyoptions_total_new_label">新規カード総数</string>
+    <string name="studyoptions_total_label">カード総数</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">ノートを編集</string>
     <string name="discard">破棄</string>
@@ -166,7 +162,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">学習オプション</string>
     <string name="select_tts" maxLength="28">読み上げ用の言語を選択</string>
     <string name="custom_study" maxLength="28">カスタム学習</string>
-    <string name="more_options">その他</string>
     <string name="dyn_deck_desc">これは標準のスケジュールから外れて学習する特別なデッキです。 復習が終わったカードは自動的に元のデッキに戻ります。 このデッキを削除すると、残りのカードもすべて元のデッキに戻ります。</string>
     <string name="steps_error">習得ステップには1以上の数字を入力してください</string>
     <string name="steps_min_error">少なくとも 1 つの習得ステップが必要です</string>
@@ -352,6 +347,6 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">テンプレートをMarkdowin形式でコピー</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">カードブラウザ用の表示設定を編集</string>
     <string name="show_shortcuts_message">キーボードショートカットを表示するには [Alt]+[K] を押してください</string>
-    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
-    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">ユーザーアクション %s はこのノートタイプに設定されていません。設定してください</string>
+    <string name="directory_inaccessible_info">アクセスを回復する方法の詳細を %s で確認するか、設定画面に移動してコレクションフォルダを更新してください。</string>
 </resources>

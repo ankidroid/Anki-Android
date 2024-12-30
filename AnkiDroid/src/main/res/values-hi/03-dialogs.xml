@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">क्या आप वास्तव में डेटाबेस को सुधारने का प्रयास करना चाहते हैं? \n\nBefore प्रयास प्रारंभ कर रहा है, एक प्रतिलिपि सबफ़ोल्डर \"%s\" में बनाया जाएगा ।</string>
     <string name="intent_aedict_empty">श्रेणी \"डिफ़ॉल्ट\" रिक्त है</string>
     <string name="intent_aedict_category">AnkiDroid में कार्ड जोड़ने के लिए सभी नोटपैड श्रेणियों को हटाएँ या एक \"डिफ़ॉल्ट\" नामक पत्ता जोड़ें</string>
-    <string name="custom_study_new_total_new">डेक में नए पत्ते: %d</string>
-    <string name="custom_study_rev_total_rev">डेक में समीक्षा के लिए बाकी: %d</string>
     <string name="custom_study_new_extend">आज की कार्ड सीमा को बढ़ाएँ / घटाएँ (\"-3\")</string>
     <string name="custom_study_rev_extend">आज की समीक्षा सीमा बढ़ाएँ / घटाएँ (\"-3\")</string>
     <string name="custom_study_forgotten">पिछले x दिनों में भूल गए कार्ड की समीक्षा करें:</string>
     <string name="custom_study_ahead">X दिनों से आगे की समीक्षा करें:</string>
-    <string name="custom_study_random">डेक से यादृच्छिक रूप से एक्स कार्ड का चयन करें:</string>
     <string name="custom_study_preview">पिछले x दिनों में जोड़े गए नए कार्ड का पूर्वावलोकन करें:</string>
-    <string name="custom_study_rebuild_deck_corrupt">कस्टम अध्ययन डेक का पुनर्निर्माण नहीं किया जा सका</string>
     <string name="storage_full_title">स्टोरेज भर गया</string>
     <string name="storage_almost_full_title">स्टोरेज लगभग पूर्ण</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">कोई जगह नहीं</string>

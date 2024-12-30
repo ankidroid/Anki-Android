@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">Vill du verkligen försöka reparera databasen?\n\nEn kopia kommer att skapas i mappen \'%s\' innan.</string>
     <string name="intent_aedict_empty">Kategori \'default\' är tom</string>
     <string name="intent_aedict_category">För att lägga till kort till AnkiDroid, ta bort alla Notepadkategorier eller lägg till en som heter \'default\'</string>
-    <string name="custom_study_new_total_new">Nya kort i kortlek: %d</string>
-    <string name="custom_study_rev_total_rev">Repetitioner i kö i kortlek: %d</string>
     <string name="custom_study_new_extend">Öka/minska (”-3”) dagens nya kortgräns med</string>
     <string name="custom_study_rev_extend">Öka/minska (“-3”) dagens repetitionsgräns med</string>
     <string name="custom_study_forgotten">Repetera kort som är glömda under de senaste x dagarna:</string>
     <string name="custom_study_ahead">Repetera i förväg för x dagar:</string>
-    <string name="custom_study_random">Välj x kort slumpmässigt från kortleken:</string>
     <string name="custom_study_preview">Förhandsgranska nya kort som lagts till de senaste x dagarna:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Kunde inte bygga om anpassad studiekortlek</string>
     <string name="storage_full_title">Lagring full</string>
     <string name="storage_almost_full_title">Lagring nästan full</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Inget utrymme</string>

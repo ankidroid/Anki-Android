@@ -82,16 +82,12 @@
     <string name="webview_crash_loop_dialog_content">系统 WebView 渲染卡片 “%1$s” 失败。\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">旗标</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">修改今天的新卡片数量限制</string>
-    <string name="custom_study_increase_review_limit">修改今天的复习卡片数量限制</string>
-    <string name="custom_study_review_forgotten">复习忘记的卡片</string>
-    <string name="custom_study_review_ahead">提前复习</string>
-    <string name="custom_study_random_selection">学习随机选择的卡片</string>
-    <string name="custom_study_preview_new">预览新卡片</string>
     <string name="custom_study_limit_tags">仅限于特定标签</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="other">+%d 被隐藏</item>
     </plurals>
+    <string name="studyoptions_total_new_label">新卡片总数：</string>
+    <string name="studyoptions_total_label">卡片总数</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">编辑笔记</string>
     <string name="discard">丢弃</string>
@@ -166,7 +162,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">学习选项</string>
     <string name="select_tts" maxLength="28">设置 TTS 语言</string>
     <string name="custom_study" maxLength="28">自定义学习</string>
-    <string name="more_options">更多</string>
     <string name="dyn_deck_desc">这是一个在计划外学习的特殊牌组，卡片在复习后会自动返回原来的牌组。\n在牌组列表中删除此牌组也将会把所有卡片都移回原来的牌组。</string>
     <string name="steps_error">间隔必须是大于 0 的数字</string>
     <string name="steps_min_error">至少需要一个间隔</string>

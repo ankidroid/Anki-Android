@@ -82,17 +82,13 @@
     <string name="webview_crash_loop_dialog_content">सिस्टम \'वेबव्यू\' \'%1$s\' कार्ड प्रस्तुत करण्यात अयशस्वी. \ N%2$s</string>
     <string name="filter_by_flags" maxLength="41">ध्वज</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">आजची नवीन कार्ड मर्यादा सुधारित करा</string>
-    <string name="custom_study_increase_review_limit">आजची पुनरावलोकन कार्ड मर्यादा सुधारित करा</string>
-    <string name="custom_study_review_forgotten">Visaralēlī kārḍē pahā</string>
-    <string name="custom_study_review_ahead">Puḍhē punarāvalōkana karā</string>
-    <string name="custom_study_random_selection">Kārḍān̄cī ēka yādr̥cchika nivaḍa abhyāsa</string>
-    <string name="custom_study_preview_new">Navīna kārḍsacē pūrvāvalōkana karā</string>
     <string name="custom_study_limit_tags">Viśiṣṭa ṭĕgasāṭhī maryādā</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Ṭīpa sampādita karā</string>
     <string name="discard">Discard</string>
@@ -169,7 +165,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">अभ्यासाचे पर्याय</string>
     <string name="select_tts" maxLength="28">TTS भाषा सेट करा</string>
     <string name="custom_study" maxLength="28">सानुकूल अभ्यास</string>
-    <string name="more_options">अधिक</string>
     <string name="dyn_deck_desc">सामान्य शेड्यूलच्या बाहेर अभ्यास करण्यासाठी हा एक विशेष डेक आहे. तुम्ही त्यांचे पुनरावलोकन केल्यानंतर कार्डे आपोआप त्यांच्या मूळ डेकवर परत येतील. डेक सूचीमधून हा डेक हटवल्याने उर्वरित सर्व कार्ड त्यांच्या मूळ डेकवर परत येतील.</string>
     <string name="steps_error">पायऱ्यांची संख्या 0 पेक्षा मोठी असणे आवश्यक आहे</string>
     <string name="steps_min_error">किमान एक पाऊल आवश्यक आहे</string>

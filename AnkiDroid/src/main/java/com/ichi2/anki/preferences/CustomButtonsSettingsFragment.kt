@@ -15,8 +15,6 @@
  */
 package com.ichi2.anki.preferences
 
-import android.content.Context
-import android.content.Intent
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
@@ -36,33 +34,28 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
     override fun initSubscreen() {
         // Reset toolbar button customizations
         val resetCustomButtons = requirePreference<Preference>("reset_custom_buttons")
-        resetCustomButtons.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            AlertDialog.Builder(requireContext()).show {
-                title(R.string.reset_settings_to_default)
-                positiveButton(R.string.reset) {
-                    // Reset the settings to default
-                    requireContext().sharedPrefs().edit {
-                        allKeys().forEach {
-                            remove(it)
+        resetCustomButtons.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                AlertDialog.Builder(requireContext()).show {
+                    title(R.string.reset_settings_to_default)
+                    positiveButton(R.string.reset) {
+                        // Reset the settings to default
+                        requireContext().sharedPrefs().edit {
+                            allKeys().forEach {
+                                remove(it)
+                            }
                         }
+                        // #9263: refresh the screen to display the changes
+                        preferenceScreen.removeAll()
+                        addPreferencesFromResource(preferenceResource)
+                        initSubscreen()
                     }
-                    // #9263: refresh the screen to display the changes
-                    refreshScreen()
+                    negativeButton(R.string.dialog_cancel)
                 }
-                negativeButton(R.string.dialog_cancel)
+                true
             }
-            true
-        }
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun allKeys(): HashSet<String> {
-        return allPreferences().mapTo(hashSetOf()) { it.key }
-    }
-
-    companion object {
-        fun getSubscreenIntent(context: Context): Intent {
-            return getSubscreenIntent(context, CustomButtonsSettingsFragment::class)
-        }
-    }
+    fun allKeys(): HashSet<String> = allPreferences().mapTo(hashSetOf()) { it.key }
 }

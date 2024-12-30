@@ -82,17 +82,13 @@
     <string name="webview_crash_loop_dialog_content">સિસ્ટમ WebView કાર્ડ \'%1$s\' રેન્ડર કરવામાં નિષ્ફળ થયું.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">ધ્વજ</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">આજની નવી કાર્ડ મર્યાદામાં ફેરફાર કરો</string>
-    <string name="custom_study_increase_review_limit">આજની સમીક્ષા કાર્ડ મર્યાદામાં ફેરફાર કરો</string>
-    <string name="custom_study_review_forgotten">ભૂલી ગયેલા કાર્ડ્સની સમીક્ષા કરો</string>
-    <string name="custom_study_review_ahead">આગળ સમીક્ષા કરો</string>
-    <string name="custom_study_random_selection">કાર્ડ્સની રેન્ડમ પસંદગીનો અભ્યાસ કરો</string>
-    <string name="custom_study_preview_new">નવા કાર્ડ્સનું પૂર્વાવલોકન કરો</string>
     <string name="custom_study_limit_tags">ચોક્કસ ટૅગ્સ સુધી મર્યાદિત કરો</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d புதைக்கப்பட்டது</item>
         <item quantity="other">+%d புதைக்கப்பட்டது</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">નોંધ સંપાદિત કરો</string>
     <string name="discard">રદ્દ કરો</string>
@@ -169,7 +165,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">અભ્યાસ વિકલ્પો</string>
     <string name="select_tts" maxLength="28">TTS ભાષા સેટ કરો</string>
     <string name="custom_study" maxLength="28">કસ્ટમ અભ્યાસ</string>
-    <string name="more_options">વધુ</string>
     <string name="dyn_deck_desc">સામાન્ય સમયપત્રકની બહાર અભ્યાસ કરવા માટે આ એક ખાસ ડેક છે. તમે તેમની સમીક્ષા કર્યા પછી કાર્ડ્સ આપમેળે તેમના મૂળ ડેક પર પાછા આવશે. ડેક સૂચિમાંથી આ ડેકને કાઢી નાખવાથી બાકીના તમામ કાર્ડ્સ તેમના મૂળ ડેક પર પાછા આવશે.</string>
     <string name="steps_error">પગલાંની સંખ્યા 0 કરતાં મોટી હોવી જોઈએ</string>
     <string name="steps_min_error">ઓછામાં ઓછું એક પગલું જરૂરી છે</string>

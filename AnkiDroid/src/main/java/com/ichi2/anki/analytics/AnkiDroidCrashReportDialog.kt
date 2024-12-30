@@ -37,7 +37,10 @@ import org.acra.dialog.CrashReportDialogHelper
  * See [AnkiDroid Wiki: Crash-Reports](https://github.com/ankidroid/Anki-Android/wiki/Crash-Reports)
  */
 @SuppressLint("Registered") // we are sufficiently registered in this special case
-class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickListener, DialogInterface.OnDismissListener {
+class AnkiDroidCrashReportDialog :
+    CrashReportDialog(),
+    DialogInterface.OnClickListener,
+    DialogInterface.OnDismissListener {
     private var alwaysReportCheckBox: CheckBox? = null
     private var userComment: EditText? = null
     private var helper: CrashReportDialogHelper? = null
@@ -80,7 +83,10 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
         return rootView
     }
 
-    override fun onClick(dialog: DialogInterface, which: Int) {
+    override fun onClick(
+        dialog: DialogInterface,
+        which: Int,
+    ) {
         if (which == DialogInterface.BUTTON_POSITIVE) {
             // Next time don't tick the auto-report checkbox by default
             val autoReport = alwaysReportCheckBox!!.isChecked
@@ -91,7 +97,7 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
                 preferences.edit {
                     putString(
                         CrashReportService.FEEDBACK_REPORT_KEY,
-                        CrashReportService.FEEDBACK_REPORT_ALWAYS
+                        CrashReportService.FEEDBACK_REPORT_ALWAYS,
                     )
                 }
                 CrashReportService.setAcraReportingMode(CrashReportService.FEEDBACK_REPORT_ALWAYS)

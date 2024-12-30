@@ -92,7 +92,9 @@ object CollectionManager {
      *
      *       context(Queue) suspend fun canOnlyBeRunInWithQueue()
      */
-    private suspend fun<T> withQueue(@WorkerThread block: CollectionManager.() -> T): T {
+    private suspend fun <T> withQueue(
+        @WorkerThread block: CollectionManager.() -> T,
+    ): T {
         if (isRobolectric) {
             // #16253 Robolectric Windows: `withContext(queue)` is insufficient for serial execution
             return testMutex.withLock {
@@ -113,12 +115,13 @@ object CollectionManager {
      * sure the collection won't be closed or modified by another thread. This guarantee
      * does not hold if legacy code calls [getColUnsafe].
      */
-    suspend fun <T> withCol(@WorkerThread block: Collection.() -> T): T {
-        return withQueue {
+    suspend fun <T> withCol(
+        @WorkerThread block: Collection.() -> T,
+    ): T =
+        withQueue {
             ensureOpenInner()
             block(collection!!)
         }
-    }
 
     /**
      * Execute the provided block if the collection is already open. See [withCol] for more.
@@ -127,15 +130,16 @@ object CollectionManager {
      * these two cases, it should wrap the return value of the block in a class (eg Optional),
      * instead of returning a nullable object.
      */
-    suspend fun<T> withOpenColOrNull(@WorkerThread block: Collection.() -> T): T? {
-        return withQueue {
+    suspend fun <T> withOpenColOrNull(
+        @WorkerThread block: Collection.() -> T,
+    ): T? =
+        withQueue {
             if (collection != null && !collection!!.dbClosed) {
                 block(collection!!)
             } else {
                 null
             }
         }
-    }
 
     /**
      * Return a handle to the backend, creating if necessary. This should only be used
@@ -161,7 +165,11 @@ object CollectionManager {
             return getBackend().tr
         }
 
-    fun compareAnswer(expected: String, given: String, combining: Boolean = true): String {
+    fun compareAnswer(
+        expected: String,
+        given: String,
+        combining: Boolean = true,
+    ): String {
         // bypass the lock, as the type answer code is heavily nested in non-suspend functions
         return getBackend().compareAnswer(expected, given, combining)
     }
@@ -271,8 +279,8 @@ object CollectionManager {
      * Note: [runBlocking] inside `RobolectricTest.runTest` will lead to deadlocks, so
      * under Robolectric, this uses a mutex
      */
-    private fun <T> blockForQueue(block: CollectionManager.() -> T): T {
-        return if (isRobolectric) {
+    private fun <T> blockForQueue(block: CollectionManager.() -> T): T =
+        if (isRobolectric) {
             testMutex.withLock {
                 block(this)
             }
@@ -281,7 +289,6 @@ object CollectionManager {
                 withQueue(block)
             }
         }
-    }
 
     fun closeCollectionBlocking() {
         runBlocking { ensureClosed() }
@@ -293,14 +300,13 @@ object CollectionManager {
      * the collection while the reference is held. [withCol]
      * is a better alternative.
      */
-    fun getColUnsafe(): Collection {
-        return logUIHangs {
+    fun getColUnsafe(): Collection =
+        logUIHangs {
             blockForQueue {
                 ensureOpenInner()
                 collection!!
             }
         }
-    }
 
     /**
      Execute [block]. If it takes more than 100ms of real time, Timber an error like:
@@ -317,22 +323,25 @@ object CollectionManager {
                 val stackTraceElements = Thread.currentThread().stackTrace
                 // locate the probable calling file/line in the stack trace, by filtering
                 // out our own code, and standard dalvik/java.lang stack frames
-                val caller = stackTraceElements.filter {
-                    val klass = it.className
-                    val toCheck = listOf(
-                        "CollectionManager",
-                        "dalvik",
-                        "java.lang",
-                        "CollectionHelper",
-                        "AnkiActivity"
-                    )
-                    for (text in toCheck) {
-                        if (text in klass) {
-                            return@filter false
-                        }
-                    }
-                    true
-                }.first()
+                val caller =
+                    stackTraceElements
+                        .filter {
+                            val klass = it.className
+                            val toCheck =
+                                listOf(
+                                    "CollectionManager",
+                                    "dalvik",
+                                    "java.lang",
+                                    "CollectionHelper",
+                                    "AnkiActivity",
+                                )
+                            for (text in toCheck) {
+                                if (text in klass) {
+                                    return@filter false
+                                }
+                            }
+                            true
+                        }.first()
                 Timber.w("blocked main thread for %dms:\n%s", elapsed, caller)
             }
         }
@@ -341,8 +350,8 @@ object CollectionManager {
     /**
      * True if the collection is open. Unsafe, as it has the potential to race.
      */
-    fun isOpenUnsafe(): Boolean {
-        return logUIHangs {
+    fun isOpenUnsafe(): Boolean =
+        logUIHangs {
             blockForQueue {
                 if (emulatedOpenFailure != null) {
                     false
@@ -351,7 +360,6 @@ object CollectionManager {
                 }
             }
         }
-    }
 
     /**
      Use [col] as collection in tests.
@@ -411,7 +419,8 @@ object CollectionManager {
         LOCKED,
 
         /** Raises [BackendException.BackendFatalError] */
-        FATAL_ERROR
+        FATAL_ERROR,
+
         ;
 
         fun triggerFailure() {

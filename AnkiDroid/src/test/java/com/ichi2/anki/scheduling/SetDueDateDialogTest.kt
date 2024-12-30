@@ -42,80 +42,88 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class SetDueDateDialogTest : RobolectricTest() {
     @Test
-    fun `switch tabs`() = testDialog {
-        selectTab(0)
-        assertThat(viewModel.currentTab, equalTo(Tab.SINGLE_DAY))
-        selectTab(1)
-        assertThat(viewModel.currentTab, equalTo(Tab.DATE_RANGE))
-    }
+    fun `switch tabs`() =
+        testDialog {
+            selectTab(0)
+            assertThat(viewModel.currentTab, equalTo(Tab.SINGLE_DAY))
+            selectTab(1)
+            assertThat(viewModel.currentTab, equalTo(Tab.DATE_RANGE))
+        }
 
     @Test
-    fun `initial suffix is set`() = testDialog {
-        selectTab(0)
-        assertThat(singleDayTextLayout.suffixText, equalTo("days"))
-        assertThat(dateRangeStartLayout.suffixText, equalTo("days"))
-        assertThat(dateRangeEndLayout.suffixText, equalTo("days"))
-    }
+    fun `initial suffix is set`() =
+        testDialog {
+            selectTab(0)
+            assertThat(singleDayTextLayout.suffixText, equalTo("days"))
+            assertThat(dateRangeStartLayout.suffixText, equalTo("days"))
+            assertThat(dateRangeEndLayout.suffixText, equalTo("days"))
+        }
 
     @Test
-    fun `set single day`() = testDialog {
-        selectTab(0)
-        assertThat(positiveButtonIsEnabled, equalTo(false))
-        singleDayText.setText("1")
-        assertThat(positiveButtonIsEnabled, equalTo(true))
-    }
+    fun `set single day`() =
+        testDialog {
+            selectTab(0)
+            assertThat(positiveButtonIsEnabled, equalTo(false))
+            singleDayText.setText("1")
+            assertThat(positiveButtonIsEnabled, equalTo(true))
+        }
 
     @Test
-    fun `set date range`() = testDialog {
-        selectTab(1)
-        assertThat(positiveButtonIsEnabled, equalTo(false))
-        dateRangeStart.setText("1")
-        dateRangeEnd.setText("5")
-        assertThat(positiveButtonIsEnabled, equalTo(true))
-    }
+    fun `set date range`() =
+        testDialog {
+            selectTab(1)
+            assertThat(positiveButtonIsEnabled, equalTo(false))
+            dateRangeStart.setText("1")
+            dateRangeEnd.setText("5")
+            assertThat(positiveButtonIsEnabled, equalTo(true))
+        }
 
     @Test
-    fun `set update interval`() = testDialog {
-        assertThat(viewModel.updateIntervalToMatchDueDate, equalTo(false))
-        changeInterval.isChecked = true
-        assertThat(viewModel.updateIntervalToMatchDueDate, equalTo(true))
-    }
+    fun `set update interval`() =
+        testDialog {
+            assertThat(viewModel.updateIntervalToMatchDueDate, equalTo(false))
+            changeInterval.isChecked = true
+            assertThat(viewModel.updateIntervalToMatchDueDate, equalTo(true))
+        }
 
     @Test
-    fun `singular text`() = testDialog(cards = listOf(1)) {
-        selectTab(0)
-        assertThat(singleDayTextLayout.hint, equalTo("Show card in"))
-        selectTab(1)
-        assertThat(dateRangeLabel.text, equalTo("Show card in range"))
-    }
+    fun `singular text`() =
+        testDialog(cards = listOf(1)) {
+            selectTab(0)
+            assertThat(singleDayTextLayout.hint, equalTo("Show card in"))
+            selectTab(1)
+            assertThat(dateRangeLabel.text, equalTo("Show card in range"))
+        }
 
     @Test
-    fun `plural text`() = testDialog(cards = listOf(1, 2)) {
-        selectTab(0)
-        assertThat(singleDayTextLayout.hint, equalTo("Show cards in"))
-        selectTab(1)
-        assertThat(dateRangeLabel.text, equalTo("Show cards in range"))
-    }
+    fun `plural text`() =
+        testDialog(cards = listOf(1, 2)) {
+            selectTab(0)
+            assertThat(singleDayTextLayout.hint, equalTo("Show cards in"))
+            selectTab(1)
+            assertThat(dateRangeLabel.text, equalTo("Show cards in range"))
+        }
 
     @Test
-    fun `integration test`() = testDialog {
-        assertThat(viewModel.updateIntervalToMatchDueDate, equalTo(false))
-        selectTab(1)
-        dateRangeStart.setText("1")
-        dateRangeEnd.setText("2")
-        changeInterval.isChecked = true
+    fun `integration test`() =
+        testDialog {
+            assertThat(viewModel.updateIntervalToMatchDueDate, equalTo(false))
+            selectTab(1)
+            dateRangeStart.setText("1")
+            dateRangeEnd.setText("2")
+            changeInterval.isChecked = true
 
-        assertThat(viewModel.calculateDaysParameter(), equalTo("1-2!"))
-    }
+            assertThat(viewModel.calculateDaysParameter(), equalTo("1-2!"))
+        }
 
     private fun testDialog(
         cards: List<CardId> = listOf(1),
-        action: SetDueDateDialog.() -> Unit
+        action: SetDueDateDialog.() -> Unit,
     ) = runTest {
         val dialog = SetDueDateDialog.newInstance(cards)
         launchFragment(
             themeResId = R.style.Base_Theme_Light,
-            fragmentArgs = dialog.arguments
+            fragmentArgs = dialog.arguments,
         ) {
             return@launchFragment dialog
         }.apply {

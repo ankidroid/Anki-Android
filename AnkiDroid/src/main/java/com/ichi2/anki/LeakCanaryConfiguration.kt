@@ -28,20 +28,24 @@ object LeakCanaryConfiguration {
      * Disable LeakCanary.
      */
     fun disable() {
-        config = config.copy(
-            dumpHeap = false,
-            retainedVisibleThreshold = 0,
-            referenceMatchers = AndroidReferenceMatchers.appDefaults,
-            computeRetainedHeapSize = false,
-            maxStoredHeapDumps = 0
-        )
+        config =
+            config.copy(
+                dumpHeap = false,
+                retainedVisibleThreshold = 0,
+                referenceMatchers = AndroidReferenceMatchers.appDefaults,
+                computeRetainedHeapSize = false,
+                maxStoredHeapDumps = 0,
+            )
     }
 
     /**
      * Sets the initial configuration for LeakCanary. This method can be used to match known library
      * leaks or leaks which have been already reported previously.
      */
-    fun setInitialConfigFor(application: Application, knownMemoryLeaks: List<ReferenceMatcher> = emptyList()) {
+    fun setInitialConfigFor(
+        application: Application,
+        knownMemoryLeaks: List<ReferenceMatcher> = emptyList(),
+    ) {
         config = config.copy(referenceMatchers = AndroidReferenceMatchers.appDefaults + knownMemoryLeaks)
         // AppWatcher manual install if not already installed
         if (!isInstalled) {

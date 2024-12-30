@@ -59,7 +59,6 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">ஏதாவது தவறு</string>
-    <string name="multimedia_editor_svg_preview">SVGகள் மாதிரிக்காட்சிக்கு கிடைக்கவில்லை</string>
     <string name="multimedia_editor_png_paste_error">கிளிப்போர்டு படத்தை png ஆக மாற்றுவதில் பிழை: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">மல்டிமீடியா உள்ளடக்கத்தை %1$s புலத்துடன் இணைக்கவும்</string>
     <!-- Audio view -->

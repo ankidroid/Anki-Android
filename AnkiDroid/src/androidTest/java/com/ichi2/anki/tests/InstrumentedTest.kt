@@ -35,6 +35,8 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.common.IgnoreFlakyTestsInCIRule
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.BackendException
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.lessThanOrEqualTo
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -75,9 +77,10 @@ abstract class InstrumentedTest {
          * https://github.com/react-native-community/react-native-device-info/blob/bb505716ff50e5900214fcbcc6e6434198010d95/android/src/main/java/com/learnium/RNDeviceInfo/RNDeviceModule.java#L185
          * @return boolean true if the execution environment is most likely an emulator
          */
-        fun isEmulator(): Boolean {
-            return (
-                Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic") ||
+        fun isEmulator(): Boolean =
+            (
+                Build.BRAND.startsWith("generic") &&
+                    Build.DEVICE.startsWith("generic") ||
                     Build.FINGERPRINT.startsWith("generic") ||
                     Build.FINGERPRINT.startsWith("unknown") ||
                     Build.HARDWARE.contains("goldfish") ||
@@ -93,8 +96,7 @@ abstract class InstrumentedTest {
                     Build.PRODUCT.contains("vbox86p") ||
                     Build.PRODUCT.contains("emulator") ||
                     Build.PRODUCT.contains("simulator")
-                )
-        }
+            )
     }
 
     @Before
@@ -154,14 +156,19 @@ abstract class InstrumentedTest {
     }
 
     @DuplicatedCode("This is copied from RobolectricTest. This will be refactored into a shared library later")
-    internal fun addNoteUsingBasicModel(front: String = "Front", back: String = "Back"): Note {
-        return addNoteUsingModelName("Basic", front, back)
-    }
+    internal fun addNoteUsingBasicModel(
+        front: String = "Front",
+        back: String = "Back",
+    ): Note = addNoteUsingModelName("Basic", front, back)
 
     @DuplicatedCode("This is copied from RobolectricTest. This will be refactored into a shared library later")
-    private fun addNoteUsingModelName(name: String, vararg fields: String): Note {
-        val model = col.notetypes.byName(name)
-            ?: throw IllegalArgumentException("Could not find model '$name'")
+    private fun addNoteUsingModelName(
+        name: String,
+        vararg fields: String,
+    ): Note {
+        val model =
+            col.notetypes.byName(name)
+                ?: throw IllegalArgumentException("Could not find model '$name'")
         // PERF: if we modify newNote(), we can return the card and return a Pair<Note, Card> here.
         // Saves a database trip afterwards.
         val n = col.newNote(model)
@@ -171,23 +178,35 @@ abstract class InstrumentedTest {
         check(col.addNote(n) != 0) { "Could not add note: {${fields.joinToString(separator = ", ")}}" }
         return n
     }
+}
 
-    protected fun ViewInteraction.checkWithTimeout(
-        viewAssertion: ViewAssertion,
-        retryWaitTimeInMilliseconds: Long = 100,
-        maxWaitTimeInMilliseconds: Long = TimeUnit.SECONDS.toMillis(10)
-    ) {
-        val startTime = TimeManager.time.intTimeMS()
+/**
+ * Execute [viewAssertion] every [retryWaitTimeInMilliseconds] ms (by default 100),
+ * last try being after [maxWaitTimeInMilliseconds] (by default 10 seconds).
+ */
+fun ViewInteraction.checkWithTimeout(
+    viewAssertion: ViewAssertion,
+    retryWaitTimeInMilliseconds: Long = 100,
+    maxWaitTimeInMilliseconds: Long = TimeUnit.SECONDS.toMillis(10),
+) {
+    assertThat(
+        "The retry time is greater than the max wait time. You probably gave the argument in the wrong order.",
+        retryWaitTimeInMilliseconds,
+        lessThanOrEqualTo(maxWaitTimeInMilliseconds),
+    )
+    val startTime = TimeManager.time.intTimeMS()
 
-        while (TimeManager.time.intTimeMS() - startTime < maxWaitTimeInMilliseconds) {
-            try {
-                check(viewAssertion)
-                return
-            } catch (e: Throwable) {
+    do {
+        val timedOut = TimeManager.time.intTimeMS() - startTime >= maxWaitTimeInMilliseconds
+        try {
+            check(viewAssertion)
+            return
+        } catch (e: Throwable) {
+            if (timedOut) {
+                fail("View assertion was not true within $maxWaitTimeInMilliseconds milliseconds")
+            } else {
                 Thread.sleep(retryWaitTimeInMilliseconds)
             }
         }
-
-        fail("View assertion was not true within $maxWaitTimeInMilliseconds milliseconds")
-    }
+    } while (true)
 }

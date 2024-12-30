@@ -82,17 +82,13 @@
     <string name="webview_crash_loop_dialog_content">Järjestelmän WebView ei pystynyt näyttämään korttia \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Liput</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Muuta tämän päivän uusien korttien määrän ylärajaa</string>
-    <string name="custom_study_increase_review_limit">Muuta tänään kerrattavien korttien määrän ylärajaa</string>
-    <string name="custom_study_review_forgotten">Kertaa unohdettuja kortteja</string>
-    <string name="custom_study_review_ahead">Kertaa etukäteen</string>
-    <string name="custom_study_random_selection">Opiskele satunnaisia kortteja</string>
-    <string name="custom_study_preview_new">Esikatsele uusia kortteja</string>
     <string name="custom_study_limit_tags">Rajoitu tiettyhin tunnisteisiin</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Muokkaa muistiinpanoa</string>
     <string name="discard">Discard</string>
@@ -169,7 +165,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opiskeluasetukset</string>
     <string name="select_tts" maxLength="28">Määritä teksti puheeksi -kieli</string>
     <string name="custom_study" maxLength="28">Mukautettu opiskelu</string>
-    <string name="more_options">Lisää</string>
     <string name="dyn_deck_desc">Tämä on erityispakka normaalin aikataulun ulkopuolella tapahtuvaan opiskeluun. Kortit palautetaan automaattisesti alkuperäisiin pakkoihinsa läpikäynnin jälkeen. Tämän pakan poistaminen palauttaa kaikki sen sisältämät kortit alkuperäisiin pakkoihin.</string>
     <string name="steps_error">Oppimisaskelien on oltava numeroita, jotka ovat suurempia kuin 0</string>
     <string name="steps_min_error">Vähintään yksi oppimisaskel on pakollinen</string>

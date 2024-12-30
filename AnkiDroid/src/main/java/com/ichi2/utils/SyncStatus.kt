@@ -31,11 +31,19 @@ import timber.log.Timber
 
 // TODO Remove BADGE_DISABLED from this enum, it doesn't belong here
 enum class SyncStatus {
-    NO_ACCOUNT, NO_CHANGES, HAS_CHANGES, ONE_WAY, BADGE_DISABLED, ERROR;
+    NO_ACCOUNT,
+    NO_CHANGES,
+    HAS_CHANGES,
+    ONE_WAY,
+    BADGE_DISABLED,
+    ERROR,
+    ;
 
     companion object {
-
-        suspend fun getSyncStatus(context: Context, auth: SyncAuth?): SyncStatus {
+        suspend fun getSyncStatus(
+            context: Context,
+            auth: SyncAuth?,
+        ): SyncStatus {
             if (isDisabled) {
                 return BADGE_DISABLED
             }
@@ -60,14 +68,13 @@ enum class SyncStatus {
             }
         }
 
-        private fun syncStatusFromRequired(required: SyncStatusResponse.Required?): SyncStatus {
-            return when (required) {
+        private fun syncStatusFromRequired(required: SyncStatusResponse.Required?): SyncStatus =
+            when (required) {
                 SyncStatusResponse.Required.NO_CHANGES -> NO_CHANGES
                 SyncStatusResponse.Required.NORMAL_SYNC -> HAS_CHANGES
                 SyncStatusResponse.Required.FULL_SYNC -> ONE_WAY
                 SyncStatusResponse.Required.UNRECOGNIZED, null -> TODO("unexpected required response")
             }
-        }
 
         private val isDisabled: Boolean
             get() {

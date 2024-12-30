@@ -82,17 +82,13 @@
     <string name="webview_crash_loop_dialog_content">O \"WebView\" de sistema falhou no processamento da ficha \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Bandeiras</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modificar o limite de novas fichas para hoje</string>
-    <string name="custom_study_increase_review_limit">Modificar o limite de revisões para hoje</string>
-    <string name="custom_study_review_forgotten">Rever fichas esquecidas</string>
-    <string name="custom_study_review_ahead">Rever antecipadamente</string>
-    <string name="custom_study_random_selection">Estudar uma seleção aleatória de fichas</string>
-    <string name="custom_study_preview_new">Pré-visualizar fichas novas</string>
     <string name="custom_study_limit_tags">Limitar a etiquetas específicas</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d adiada</item>
         <item quantity="other">+%d adiadas</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total de fichas novas</string>
+    <string name="studyoptions_total_label">Total de fichas</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Editar nota</string>
     <string name="discard">Descartar</string>
@@ -169,7 +165,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opções de estudo</string>
     <string name="select_tts" maxLength="28">Definir língua do sistema de Texto para Fala</string>
     <string name="custom_study" maxLength="28">Estudo personalizado</string>
-    <string name="more_options">Mais</string>
     <string name="dyn_deck_desc">Este é um baralho especial para estudar fora do horário normal. As fichas serão automaticamente devolvidas aos seus baralhos originais depois das rever. Ao eliminar este baralho da lista de baralhos irá devolver todas as fichas restantes ao seu baralho original.</string>
     <string name="steps_error">Número de passos deve ser maior que 0</string>
     <string name="steps_min_error">É necessário pelo menos um passo</string>

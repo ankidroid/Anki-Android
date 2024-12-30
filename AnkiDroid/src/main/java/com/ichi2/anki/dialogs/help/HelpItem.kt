@@ -46,7 +46,7 @@ data class HelpItem(
      * Reference to the action that needs to be done when the user selects this menu item. Can be
      * null, in which case this is a top level item(with or without children).
      */
-    val action: Action? = null
+    val action: Action? = null,
 ) : Parcelable {
     /**
      * Possible actions that could be done if the user selects one on the help/support menu items.
@@ -54,17 +54,20 @@ data class HelpItem(
      * @see [HelpDialog]
      */
     sealed class Action : Parcelable {
-
         /**
          * Action to open an url. Used to show the url for feedback or the manual.
          *
          * @see [com.ichi2.anki.AnkiDroidApp]
          */
         @Parcelize
-        data class OpenUrl(val url: String) : Action()
+        data class OpenUrl(
+            val url: String,
+        ) : Action()
 
         @Parcelize
-        data class OpenUrlResource(@StringRes val urlResourceId: Int) : Action()
+        data class OpenUrlResource(
+            @StringRes val urlResourceId: Int,
+        ) : Action()
 
         @Parcelize
         data object SendReport : Action()

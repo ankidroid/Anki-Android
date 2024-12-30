@@ -82,17 +82,13 @@
     <string name="webview_crash_loop_dialog_content">\'%1$s\' కార్డ్‌ని రెండర్ చేయడంలో సిస్టమ్ WebView విఫలమైంది.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">జెండాలు</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">నేటి కొత్త కార్డ్ పరిమితిని సవరించండి</string>
-    <string name="custom_study_increase_review_limit">నేటి సమీక్ష కార్డ్ పరిమితిని సవరించండి</string>
-    <string name="custom_study_review_forgotten">మర్చిపోయి కార్డులను సమీక్షించండి</string>
-    <string name="custom_study_review_ahead">Review ahead</string>
-    <string name="custom_study_random_selection">కార్డులు యాదృచ్ఛిక ఎంపిక అధ్యయనం</string>
-    <string name="custom_study_preview_new">క్రొత్త కార్డులను పరిదృశ్యం చేయండి</string>
     <string name="custom_study_limit_tags">నిర్దిష్ట ట్యాగ్లకు పరిమితం చేయండి</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d ఖననం చేయబడింది</item>
         <item quantity="other">+%d ఖననం చేయబడింది</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">గమనికను సవరించండి</string>
     <string name="discard">విస్మరించండి</string>
@@ -169,7 +165,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">అధ్యయన ఎంపికలు</string>
     <string name="select_tts" maxLength="28">TTS భాషను సెట్ చేయండి</string>
     <string name="custom_study" maxLength="28">అనుకూల అధ్యయనం</string>
-    <string name="more_options">ఎక్కువ</string>
     <string name="dyn_deck_desc">సాధారణ షెడ్యూల్ అధ్యయనం కోసం ఇది ప్రత్యేక డెక్. స్వయంచాలకంగా కార్డ్లను వాటిని సమీక్షించి, దాని అసలు డెక్స్కు వాటిని స్వయంచాలకంగా పునరుద్ధరించండి. డెక్ జాబితా నుండి ఈ డెక్ను తొలగిస్తే మిగిలిన అన్ని కార్డులను వారి అసలు డెక్కు తిరిగి పంపుతుంది.</string>
     <string name="steps_error">దశలు 0 కన్నా ఎక్కువ ఉండాలి</string>
     <string name="steps_min_error">కనీసం ఒక అడుగు అవసరం</string>

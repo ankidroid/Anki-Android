@@ -47,8 +47,6 @@ class WhiteboardDefaultForegroundColorTest : RobolectricTest() {
     companion object {
         @ParameterizedRobolectricTestRunner.Parameters
         @JvmStatic // required for initParameters
-        fun initParameters(): Collection<Array<Any>> {
-            return mutableListOf((arrayOf(true, Color.WHITE)), arrayOf(false, Color.BLACK))
-        }
+        fun initParameters(): Collection<Array<Any>> = mutableListOf((arrayOf(true, Color.WHITE)), arrayOf(false, Color.BLACK))
     }
 }

@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">آیا شما واقعا می خواهید پایگاه داده را تعمیر کنید؟\n\nقبل از شروع , یک کپی در پوشه فرعی \'%s\' به وجود خواهد آمد .</string>
     <string name="intent_aedict_empty">مجموعه \'پیش فرض\' خالی است</string>
     <string name="intent_aedict_category">اضافه کردن کارت به آنکی دروید سبب حذف همه یادداشت های مجموعه ها یا اضافه کردن یک نام پیش فرض به آنها می شود</string>
-    <string name="custom_study_new_total_new">کارت‌های جدید در دسته کارت: %d</string>
-    <string name="custom_study_rev_total_rev">موعد مرورهای دسته: %d</string>
     <string name="custom_study_new_extend">محدودیت تعداد کارت های امروز را کم/زیاد (\"-۳\") کن به این اندازه</string>
     <string name="custom_study_rev_extend">محدودیت تعداد مرور های امروز را کم/زیاد (\"-۳\") کن به این اندازه</string>
     <string name="custom_study_forgotten">مرور کارت های فراموش شده در x روز گذشته:</string>
     <string name="custom_study_ahead">مرور پیش از موعد تا x روز:</string>
-    <string name="custom_study_random">انتخاب x کارت تصادفی از دسته:</string>
     <string name="custom_study_preview">پیش نمایش کارت های جدید اضافه شده در  x روز گذشته:</string>
-    <string name="custom_study_rebuild_deck_corrupt">بازسازی دستۀ مطالعۀ سفارشی انجام نشد</string>
     <string name="storage_full_title">حافظه</string>
     <string name="storage_almost_full_title">اوکی</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">جای خالی وجود ندارد</string>

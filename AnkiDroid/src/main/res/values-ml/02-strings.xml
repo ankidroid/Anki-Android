@@ -82,17 +82,13 @@
     <string name="webview_crash_loop_dialog_content">\'%1$s\' കാർഡ് റെൻഡർ ചെയ്യുന്നതിൽ സിസ്റ്റം വെബ്‌വ്യൂ പരാജയപ്പെട്ടു. \n%2$s</string>
     <string name="filter_by_flags" maxLength="41">പതാകകൾ</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">ഇന്നത്തെ പുതിയ കാർഡ് പരിധി പരിഷ്‌ക്കരിക്കുക</string>
-    <string name="custom_study_increase_review_limit">ഇന്നത്തെ അവലോകന കാർഡ് പരിധി പരിഷ്‌ക്കരിക്കുക</string>
-    <string name="custom_study_review_forgotten">മറന്ന കാർഡുകൾ അവലോകനം ചെയ്യുക</string>
-    <string name="custom_study_review_ahead">മുന്നോട്ട് അവലോകനം ചെയ്യുക</string>
-    <string name="custom_study_random_selection">കാർഡുകളുടെ ക്രമരഹിതമായ തിരഞ്ഞെടുപ്പ് പഠിക്കുക</string>
-    <string name="custom_study_preview_new">പുതിയ കാർഡുകൾ പ്രിവ്യൂ ചെയ്യുക</string>
     <string name="custom_study_limit_tags">പ്രത്യേക ടാഗുകളിലേക്ക് പരിമിതപ്പെടുത്തുക</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d അടക്കം ചെയ്തു</item>
         <item quantity="other">+%d അടക്കം ചെയ്തു</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">കുറിപ്പ് എഡിറ്റുചെയ്യുക</string>
     <string name="discard">Discard</string>
@@ -169,7 +165,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">പഠന ഓപ്ഷനുകൾ</string>
     <string name="select_tts" maxLength="28">TTS ഭാഷ സജ്ജമാക്കുക</string>
     <string name="custom_study" maxLength="28">ഇഷ്‌ടാനുസൃത പഠനം</string>
-    <string name="more_options">കൂടുതൽ</string>
     <string name="dyn_deck_desc">സാധാരണ ഷെഡ്യൂളിന് പുറത്ത് പഠിക്കുന്നതിനുള്ള ഒരു പ്രത്യേക ഡെക്കാണിത്. കാർഡുകൾ നിങ്ങൾ അവലോകനം ചെയ്ത ശേഷം അവയുടെ യഥാർത്ഥ ഡെക്കുകളിലേക്ക് സ്വപ്രേരിതമായി മടങ്ങും. ഡെക്ക് ലിസ്റ്റിൽ നിന്ന് ഈ ഡെക്ക് ഇല്ലാതാക്കുന്നത് ശേഷിക്കുന്ന എല്ലാ കാർഡുകളും അവയുടെ യഥാർത്ഥ ഡെക്കിലേക്ക് തിരികെ നൽകും.</string>
     <string name="steps_error">ഘട്ടങ്ങൾ 0 ൽ കൂടുതലുള്ള അക്കങ്ങളായിരിക്കണം</string>
     <string name="steps_min_error">കുറഞ്ഞത് ഒരു ഘട്ടമെങ്കിലും ആവശ്യമാണ്</string>

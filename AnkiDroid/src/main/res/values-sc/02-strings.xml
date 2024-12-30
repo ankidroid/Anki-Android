@@ -83,17 +83,13 @@
    %2$s</string>
     <string name="filter_by_flags" maxLength="41">Banderas</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modìfica su lìmite de cartas noas de oe</string>
-    <string name="custom_study_increase_review_limit">Modìfica su lìmite de revisiones de oe</string>
-    <string name="custom_study_review_forgotten">Revisiona sas cartas ismentigadas</string>
-    <string name="custom_study_review_ahead">Revisiona in antìtzipu</string>
-    <string name="custom_study_random_selection">Istùdia una seletzione casuale de cartas</string>
-    <string name="custom_study_preview_new">Antiprima de sas cartas noas</string>
     <string name="custom_study_limit_tags">Lìmita a etichetas particulares</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d interrada</item>
         <item quantity="other">+%d interradas</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Modìfica sa nota</string>
     <string name="discard">Iscarta</string>
@@ -172,7 +168,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Optziones de istùdiu</string>
     <string name="select_tts" maxLength="28">Imposta sa limba de su sintetizadore de boghe</string>
     <string name="custom_study" maxLength="28">Istùdiu personalizadu</string>
-    <string name="more_options">Àteru</string>
     <string name="dyn_deck_desc">Custu est unu matzu ispetziale pro istudiare in foras de sa pranificatzione normale. Sas cartas ant a torrare in manera automàtica a sos matzos originales issoro a pustis chi las as a revisionare. Iscantzellende custu matzu dae sa lista de matzos at a fàghere torrare totu sas cartas chi abarrant a sos matzos originales issoro.</string>
     <string name="steps_error">Sos passos depent èssere in unu nùmeru prus mannu de 0</string>
     <string name="steps_min_error">B\'at bisòngiu de a su nessi unu passu</string>

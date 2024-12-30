@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">Lebih dari %d kartu jatuh tempo</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Getar</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Berkedip</string>
-    <string name="timeout_answer_text" maxLength="41">Otomatis tampilkan jawaban</string>
-    <string name="timeout_answer_summ2">Tampilkan jawaban secara otomatis tanpa masukan pengguna. Atur dari opsi dek.</string>
     <string name="select_locale_title">Pilih bahasa</string>
     <string name="software_render" maxLength="41">Matikan perangkat keras pe-render kartu</string>
     <string name="software_render_summ">Render menggunakan perangkat keras lebih cepat namun dapat mengakibatkan masalah, terutama pada Android 8/8.1. Jika Anda tidak dapat melihat bagian peninjauan kartu dari antarmuka pengguna, coba pengaturan berikut ini.</string>

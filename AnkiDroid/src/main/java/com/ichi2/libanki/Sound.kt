@@ -26,8 +26,8 @@
 package com.ichi2.libanki
 
 import android.text.TextUtils
-import anki.config.ConfigKey
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.preferences.getHidePlayAudioButtons
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.NotInLibAnki
@@ -52,14 +52,15 @@ data class TTSTag(
     val voices: List<String>,
     val speed: Float?,
     /** each arg should be in the form 'foo=bar' */
-    val otherArgs: List<String>
+    val otherArgs: List<String>,
 ) : AvTag()
 
 /**
  * Contains the filename inside a `[sound:...]` tag.
  */
-data class SoundOrVideoTag(val filename: String) : AvTag() {
-
+data class SoundOrVideoTag(
+    val filename: String,
+) : AvTag() {
     @NotInLibAnki
     fun getType(mediaDir: String): Type {
         val extension = filename.substringAfterLast(".", "")
@@ -80,19 +81,22 @@ data class SoundOrVideoTag(val filename: String) : AvTag() {
 
     enum class Type {
         AUDIO,
-        VIDEO
+        VIDEO,
     }
 }
-
-/** In python, this is a union of [TTSTag] and [SoundOrVideoTag] */
-open class AvTag
 
 /**
  * [Regex] used to identify the markers for sound files
  */
 val SOUND_RE = Pattern.compile("\\[sound:([^\\[\\]]*)]").toRegex()
 
-fun stripAvRefs(text: String, replacement: String = "") = AvRef.REGEX.replace(text, replacement)
+/** In python, this is a union of [TTSTag] and [SoundOrVideoTag] */
+sealed class AvTag
+
+fun stripAvRefs(
+    text: String,
+    replacement: String = "",
+) = AvRef.REGEX.replace(text, replacement)
 
 // not in libAnki
 object Sound {
@@ -116,7 +120,7 @@ object Sound {
         content: String,
         renderOutput: TemplateRenderOutput,
         showAudioPlayButtons: Boolean,
-        mediaDir: String
+        mediaDir: String,
     ) = replaceAvRefsWith(content, renderOutput) { tag, playTag ->
         fun asAudio(): String {
             if (!showAudioPlayButtons) return ""
@@ -131,6 +135,7 @@ object Sound {
                     </span></a>"""
             return result
         }
+
         fun asVideo(tag: SoundOrVideoTag): String {
             val path = Paths.get(mediaDir, tag.filename).toString()
             val uri = getFileUri(path)
@@ -166,7 +171,7 @@ object Sound {
         }
     }
 
-    /* Methods */
+    // Methods
     val AV_PLAYLINK_RE = Regex("playsound:(.):(\\d+)")
 
     /**
@@ -177,11 +182,10 @@ object Sound {
      */
     suspend fun addPlayButtons(
         text: String,
-        renderOutput: TemplateRenderOutput
+        renderOutput: TemplateRenderOutput,
     ): String {
         val mediaDir = CollectionManager.withCol { media.dir }
-        val hidePlayButtons =
-            CollectionManager.withCol { config.getBool(ConfigKey.Bool.HIDE_AUDIO_PLAY_BUTTONS) }
+        val hidePlayButtons = getHidePlayAudioButtons()
         return expandSounds(text, renderOutput, showAudioPlayButtons = !hidePlayButtons, mediaDir)
     }
 
@@ -190,20 +194,22 @@ object Sound {
      */
     fun replaceWithSoundTags(
         content: String,
-        renderOutput: TemplateRenderOutput
-    ): String = replaceAvRefsWith(content, renderOutput) { tag, _ ->
-        if (tag !is SoundOrVideoTag) null else "[sound:${tag.filename}]"
-    }
+        renderOutput: TemplateRenderOutput,
+    ): String =
+        replaceAvRefsWith(content, renderOutput) { tag, _ ->
+            if (tag !is SoundOrVideoTag) null else "[sound:${tag.filename}]"
+        }
 
     /**
      * Replaces `[anki:play:q:0]` with ` example.mp3 `
      */
     fun replaceWithFileNames(
         content: String,
-        renderOutput: TemplateRenderOutput
-    ): String = replaceAvRefsWith(content, renderOutput) { tag, _ ->
-        if (tag !is SoundOrVideoTag) null else " ${tag.filename} "
-    }
+        renderOutput: TemplateRenderOutput,
+    ): String =
+        replaceAvRefsWith(content, renderOutput) { tag, _ ->
+            if (tag !is SoundOrVideoTag) null else " ${tag.filename} "
+        }
 
     /**
      * Replaces [AvRef]s using the provided [processTag] function
@@ -215,58 +221,66 @@ object Sound {
     private fun replaceAvRefsWith(
         content: String,
         renderOutput: TemplateRenderOutput,
-        processTag: (AvTag, AvRef) -> String?
+        processTag: (AvTag, AvRef) -> String?,
     ): String {
         return AvRef.REGEX.replace(content) { match ->
             val avRef = AvRef.from(match) ?: return@replace match.value
 
-            val tag = when (avRef.side) {
-                "q" -> renderOutput.questionAvTags.getOrNull(avRef.index)
-                "a" -> renderOutput.answerAvTags.getOrNull(avRef.index)
-                else -> null
-            } ?: return@replace match.value
+            val tag =
+                when (avRef.side) {
+                    "q" -> renderOutput.questionAvTags.getOrNull(avRef.index)
+                    "a" -> renderOutput.answerAvTags.getOrNull(avRef.index)
+                    else -> null
+                } ?: return@replace match.value
 
             return@replace processTag(tag, avRef) ?: match.value
         }
     }
 
     /** Extract av tag from playsound:q:x link */
-    suspend fun getAvTag(card: Card, url: String): AvTag? {
-        return AV_PLAYLINK_RE.matchEntire(url)?.let {
+    suspend fun getAvTag(
+        card: Card,
+        url: String,
+    ): AvTag? =
+        AV_PLAYLINK_RE.matchEntire(url)?.let {
             val values = it.groupValues
             val questionSide = values[1] == "q"
             val index = values[2].toInt()
-            val tags = CollectionManager.withCol {
-                if (questionSide) {
-                    card.questionAvTags(this)
-                } else {
-                    card.answerAvTags(this)
+            val tags =
+                CollectionManager.withCol {
+                    if (questionSide) {
+                        card.questionAvTags(this)
+                    } else {
+                        card.answerAvTags(this)
+                    }
                 }
-            }
             if (index < tags.size) {
                 tags[index]
             } else {
                 null
             }
         }
-    }
 }
 
 /**
  * An [AvTag] partially rendered as `[anki:play:q:100]`
  */
-data class AvRef(val side: String, val index: Int) {
+data class AvRef(
+    val side: String,
+    val index: Int,
+) {
     companion object {
         fun from(match: MatchResult): AvRef? {
             val groups = match.groupValues
 
             val index = groups[3].toIntOrNull() ?: return null
 
-            val side = when (groups[2]) {
-                "q" -> "q"
-                "a" -> "a"
-                else -> return null
-            }
+            val side =
+                when (groups[2]) {
+                    "q" -> "q"
+                    "a" -> "a"
+                    else -> return null
+                }
             return AvRef(side, index)
         }
 

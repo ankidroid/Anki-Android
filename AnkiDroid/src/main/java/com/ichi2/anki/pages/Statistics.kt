@@ -43,18 +43,21 @@ import com.ichi2.utils.BundleUtils.getNullableLong
 class Statistics :
     PageFragment(R.layout.statistics),
     DeckSelectionDialog.DeckSelectionListener {
-
     private lateinit var deckSpinnerSelection: DeckSpinnerSelection
     private lateinit var spinner: Spinner
 
     @Suppress("deprecation", "API35 properly handle edge-to-edge")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         webView.isNestedScrollingEnabled = true
 
         requireActivity().setTransparentStatusBar()
         spinner = view.findViewById(R.id.deck_selector)
-        view.findViewById<AppBarLayout>(R.id.app_bar)
+        view
+            .findViewById<AppBarLayout>(R.id.app_bar)
             .addLiftOnScrollListener { _, backgroundColor ->
                 activity?.window?.statusBarColor = backgroundColor
             }
@@ -68,13 +71,14 @@ class Statistics :
                 true
             }
         }
-        deckSpinnerSelection = DeckSpinnerSelection(
-            requireAnkiActivity(),
-            spinner,
-            showAllDecks = false,
-            alwaysShowDefault = false,
-            showFilteredDecks = false
-        )
+        deckSpinnerSelection =
+            DeckSpinnerSelection(
+                requireAnkiActivity(),
+                spinner,
+                showAllDecks = false,
+                alwaysShowDefault = false,
+                showFilteredDecks = false,
+            )
         if (savedInstanceState == null) {
             requireActivity().launchCatchingTask {
                 deckSpinnerSelection.initializeStatsBarDeckSpinner()
@@ -104,7 +108,7 @@ class Statistics :
         printManager?.print(
             jobName,
             printAdapter,
-            PrintAttributes.Builder().build()
+            PrintAttributes.Builder().build(),
         )
     }
 
@@ -125,11 +129,12 @@ class Statistics :
     }
 
     private val decksAdapterSequence
-        get() = sequence {
-            for (i in 0 until spinner.adapter.count) {
-                yield(spinner.adapter.getItem(i) as DeckNameId)
+        get() =
+            sequence {
+                for (i in 0 until spinner.adapter.count) {
+                    yield(spinner.adapter.getItem(i) as DeckNameId)
+                }
             }
-        }
 
     /**
      * Given the [deckId] look in the decks adapter for its position and select it if found.
@@ -146,12 +151,13 @@ class Statistics :
      * See issue #3394 in the Anki repository
      **/
     private fun changeDeck(selectedDeckName: String) {
-        val javascriptCode = """
-        var textBox = [].slice.call(document.getElementsByTagName('input'), 0).filter(x => x.type == "text")[0];
-        textBox.value = "deck:\"$selectedDeckName\"";
-        textBox.dispatchEvent(new Event("input", { bubbles: true }));
-        textBox.dispatchEvent(new Event("change"));
-        """.trimIndent()
+        val javascriptCode =
+            """
+            var textBox = document.getElementById("statisticsSearchText");
+            textBox.value = "deck:\"$selectedDeckName\"";
+            textBox.dispatchEvent(new Event("input", { bubbles: true }));
+            textBox.dispatchEvent(new Event("change"));
+            """.trimIndent()
         webView.evaluateJavascript(javascriptCode, null)
     }
 
@@ -163,8 +169,6 @@ class Statistics :
          * Note: the title argument is set to null as the [Statistics] fragment is expected to
          * handle the toolbar content(shows a deck selection spinner).
          */
-        fun getIntent(context: Context): Intent {
-            return getIntent(context, "graphs", null, Statistics::class)
-        }
+        fun getIntent(context: Context): Intent = getIntent(context, "graphs", null, Statistics::class)
     }
 }

@@ -25,7 +25,10 @@ import android.widget.TextView
 import com.ichi2.anki.R
 import com.ichi2.libanki.DeckNameId
 
-class DeckDropDownAdapter(private val context: Context, decks: List<DeckNameId>) : BaseAdapter() {
+class DeckDropDownAdapter(
+    private val context: Context,
+    decks: List<DeckNameId>,
+) : BaseAdapter() {
     private val deckList = decks.toMutableList()
     val decks: List<DeckNameId>
         get() = deckList.toList()
@@ -44,23 +47,22 @@ class DeckDropDownAdapter(private val context: Context, decks: List<DeckNameId>)
         notifyDataSetChanged()
     }
 
-    override fun getCount(): Int {
-        return deckList.size + 1
-    }
+    override fun getCount(): Int = deckList.size + 1
 
-    override fun getItem(position: Int): Any? {
-        return if (position == 0) {
+    override fun getItem(position: Int): Any? =
+        if (position == 0) {
             null
         } else {
             deckList[position + 1]
         }
-    }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
+    override fun getItemId(position: Int): Long = position.toLong()
 
-    override fun getView(position: Int, view: View?, parent: ViewGroup): View? {
+    override fun getView(
+        position: Int,
+        view: View?,
+        parent: ViewGroup,
+    ): View? {
         var convertView = view
         val viewHolder: DeckDropDownViewHolder
         val deckNameView: TextView?
@@ -89,7 +91,11 @@ class DeckDropDownAdapter(private val context: Context, decks: List<DeckNameId>)
         return convertView
     }
 
-    override fun getDropDownView(position: Int, view: View?, parent: ViewGroup): View? {
+    override fun getDropDownView(
+        position: Int,
+        view: View?,
+        parent: ViewGroup,
+    ): View? {
         var convertView = view
         val deckNameView: TextView
         if (convertView == null) {

@@ -28,9 +28,13 @@ import com.ichi2.anki.reviewer.MappableBinding.Screen
 
 /** Accepts peripheral input, mapping via various keybinding strategies,
  * and converting them to commands for the Reviewer.  */
-class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.CommandProcessor) {
-    private val keyMap: KeyMap
+class PeripheralKeymap(
+    reviewerUi: ReviewerUi,
+    commandProcessor: ViewerCommand.CommandProcessor,
+) {
+    private val keyMap: KeyMap = KeyMap(commandProcessor, reviewerUi) { Screen.Reviewer(it) }
     private var hasSetup = false
+
     fun setup() {
         val preferences = AnkiDroidApp.instance.sharedPrefs()
         setup(preferences)
@@ -43,9 +47,13 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
         hasSetup = true
     }
 
-    private fun add(command: ViewerCommand, preferences: SharedPreferences) {
-        val bindings = fromPreference(preferences, command)
-            .filter { it.screen is Screen.Reviewer }
+    private fun add(
+        command: ViewerCommand,
+        preferences: SharedPreferences,
+    ) {
+        val bindings =
+            fromPreference(preferences, command)
+                .filter { it.screen is Screen.Reviewer }
         for (b in bindings) {
             if (!b.isKey) {
                 continue
@@ -54,28 +62,34 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
         }
     }
 
-    fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        return if (!hasSetup || event.repeatCount > 0) {
+    fun onKeyDown(
+        keyCode: Int,
+        event: KeyEvent,
+    ): Boolean =
+        if (!hasSetup || event.repeatCount > 0) {
             false
         } else {
             keyMap.onKeyDown(keyCode, event)
         }
-    }
 
     @Suppress("UNUSED_PARAMETER")
-    fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
-        return false
-    }
+    fun onKeyUp(
+        keyCode: Int,
+        event: KeyEvent?,
+    ): Boolean = false
 
     class KeyMap(
         private val processor: ViewerCommand.CommandProcessor,
         private val reviewerUI: ReviewerUi,
-        private val screenBuilder: (CardSide) -> Screen
+        private val screenBuilder: (CardSide) -> Screen,
     ) {
         val bindingMap = HashMap<MappableBinding, ViewerCommand>()
 
         @Suppress("UNUSED_PARAMETER")
-        fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        fun onKeyDown(
+            keyCode: Int,
+            event: KeyEvent?,
+        ): Boolean {
             var ret = false
             val bindings = possibleKeyBindings(event!!)
             val side = fromAnswer(reviewerUI.isDisplayingAnswer)
@@ -87,16 +101,13 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
             return ret
         }
 
-        operator fun set(key: MappableBinding, value: ViewerCommand) {
+        operator fun set(
+            key: MappableBinding,
+            value: ViewerCommand,
+        ) {
             bindingMap[key] = value
         }
 
-        operator fun get(key: MappableBinding): ViewerCommand? {
-            return bindingMap[key]
-        }
-    }
-
-    init {
-        keyMap = KeyMap(commandProcessor, reviewerUi) { Screen.Reviewer(it) }
+        operator fun get(key: MappableBinding): ViewerCommand? = bindingMap[key]
     }
 }

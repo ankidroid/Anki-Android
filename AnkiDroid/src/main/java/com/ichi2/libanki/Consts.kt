@@ -30,7 +30,16 @@ object Consts {
     const val QUEUE_TYPE_PREVIEW = 4
 
     @Retention(AnnotationRetention.SOURCE)
-    @IntDef(QUEUE_TYPE_MANUALLY_BURIED, QUEUE_TYPE_SIBLING_BURIED, QUEUE_TYPE_SUSPENDED, QUEUE_TYPE_NEW, QUEUE_TYPE_LRN, QUEUE_TYPE_REV, QUEUE_TYPE_DAY_LEARN_RELEARN, QUEUE_TYPE_PREVIEW)
+    @IntDef(
+        QUEUE_TYPE_MANUALLY_BURIED,
+        QUEUE_TYPE_SIBLING_BURIED,
+        QUEUE_TYPE_SUSPENDED,
+        QUEUE_TYPE_NEW,
+        QUEUE_TYPE_LRN,
+        QUEUE_TYPE_REV,
+        QUEUE_TYPE_DAY_LEARN_RELEARN,
+        QUEUE_TYPE_PREVIEW,
+    )
     annotation class CardQueue
 
     // Card types
@@ -76,16 +85,6 @@ object Consts {
 
     // Leech actions
     const val LEECH_SUSPEND = 0
-
-    // Buttons
-    const val BUTTON_ONE = 1
-    const val BUTTON_TWO = 2
-    const val BUTTON_THREE = 3
-    const val BUTTON_FOUR = 4
-
-    @Retention(AnnotationRetention.SOURCE)
-    @IntDef(BUTTON_ONE, BUTTON_TWO, BUTTON_THREE, BUTTON_FOUR)
-    annotation class ButtonType
 
     // The labels defined in consts.py are in AnkiDroid's resources files.
     const val DEFAULT_DECK_ID: Long = 1

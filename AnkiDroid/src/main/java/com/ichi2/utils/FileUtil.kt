@@ -26,34 +26,30 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
-import java.util.AbstractMap
 
 object FileUtil {
-
     /**
      * Determine available storage space
      *
      * @param path the filesystem path you need free space information on
      * @return long indicating the bytes available for that path
      */
-    fun determineBytesAvailable(path: String): Long {
-        return StatFs(path).availableBytes
-    }
+    fun determineBytesAvailable(path: String): Long = StatFs(path).availableBytes
 
     /** Gets the free disk space given a file  */
-    fun getFreeDiskSpace(file: File, defaultValue: Long): Long {
-        return try {
+    fun getFreeDiskSpace(
+        file: File,
+        defaultValue: Long,
+    ): Long =
+        try {
             StatFs(file.parentFile?.path).availableBytes
         } catch (e: IllegalArgumentException) {
             Timber.e(e, "Free space could not be retrieved")
             defaultValue
         }
-    }
 
     /** Returns the current download Directory */
-    fun getDownloadDirectory(): String {
-        return Environment.DIRECTORY_DOWNLOADS
-    }
+    fun getDownloadDirectory(): String = Environment.DIRECTORY_DOWNLOADS
 
     /**
      * Returns a string representing the path to a private cache directory,
@@ -63,7 +59,10 @@ object FileUtil {
      * @param subdirectoryName  if the caller wants a sub-directory instead of the main directory
      * @return String file path to cache directory or null if error
      */
-    fun getAnkiCacheDirectory(context: Context, subdirectoryName: String? = null): String? {
+    fun getAnkiCacheDirectory(
+        context: Context,
+        subdirectoryName: String? = null,
+    ): String? {
         val cacheDirRoot = context.cacheDir
         if (cacheDirRoot == null) {
             Timber.e("createUI() unable to get cache directory")
@@ -89,14 +88,19 @@ object FileUtil {
      * @throws IOException
      */
     @Throws(IOException::class)
-    fun internalizeUri(uri: Uri, internalFile: File, contentResolver: ContentResolver): File {
+    fun internalizeUri(
+        uri: Uri,
+        internalFile: File,
+        contentResolver: ContentResolver,
+    ): File {
         // If we got a real file name, do a copy from it
-        val inputStream: InputStream = try {
-            contentResolver.openInputStream(uri)!!
-        } catch (e: Exception) {
-            Timber.w(e, "internalizeUri() unable to open input stream from content resolver for Uri %s", uri)
-            throw e
-        }
+        val inputStream: InputStream =
+            try {
+                contentResolver.openInputStream(uri)!!
+            } catch (e: Exception) {
+                Timber.w(e, "internalizeUri() unable to open input stream from content resolver for Uri %s", uri)
+                throw e
+            }
         try {
             CompatHelper.compat.copyFile(inputStream, internalFile.absolutePath)
         } catch (e: Exception) {
@@ -104,21 +108,6 @@ object FileUtil {
             throw e
         }
         return internalFile
-    }
-
-    /**
-     * @return Key: Filename; Value: extension including dot
-     */
-    fun getFileNameAndExtension(fileName: String?): Map.Entry<String, String>? {
-        if (fileName == null) {
-            return null
-        }
-        val index = fileName.lastIndexOf(".")
-        return if (index < 1) {
-            null
-        } else {
-            AbstractMap.SimpleEntry(fileName.substring(0, index), fileName.substring(index))
-        }
     }
 
     /**
@@ -131,22 +120,70 @@ object FileUtil {
      * by dir
      */
     @Throws(IOException::class)
-    fun listFiles(dir: File): Array<File> {
-        return dir.listFiles()
+    fun listFiles(dir: File): Array<File> =
+        dir.listFiles()
             ?: throw IOException("Failed to list the contents of '$dir'")
-    }
 
     /**
      * Returns a sequence containing the provided file, and its parents
      * up to the root of the filesystem.
      */
-    fun File.getParentsAndSelfRecursive() = sequence {
-        var currentPath: File? = this@getParentsAndSelfRecursive.canonicalFile
-        while (currentPath != null) {
-            yield(currentPath)
-            currentPath = currentPath.parentFile?.canonicalFile
+    fun File.getParentsAndSelfRecursive() =
+        sequence {
+            var currentPath: File? = this@getParentsAndSelfRecursive.canonicalFile
+            while (currentPath != null) {
+                yield(currentPath)
+                currentPath = currentPath.parentFile?.canonicalFile
+            }
         }
-    }
 
     fun File.isDescendantOf(ancestor: File) = this.getParentsAndSelfRecursive().drop(1).contains(ancestor)
+}
+
+/**
+ * A filename without a path (e.g `collection.apkg`)
+ *
+ * @param fileName name of the file, before the '.'
+ * @param extensionWithDot extension of the file, with a '.'
+ */
+@ConsistentCopyVisibility
+data class FileNameAndExtension private constructor(
+    val fileName: String,
+    val extensionWithDot: String,
+) {
+    init {
+        require(extensionWithDot.startsWith('.')) { "extension must start with '.'" }
+    }
+
+    /**
+     * Ensures the filename is valid for [File.createTempFile], which requires `name.length() >= 3`
+     */
+    fun renameForCreateTempFile(): FileNameAndExtension = if (fileName.length >= 3) this else this.copy(fileName = "$fileName-name")
+
+    /**
+     * Returns a [FileNameAndExtension] with a custom extension
+     */
+    fun replaceExtension(extension: String): FileNameAndExtension {
+        val withDot = if (extension.startsWith(".")) extension else ".$extension"
+        return copy(extensionWithDot = withDot)
+    }
+
+    override fun toString() = "$fileName$extensionWithDot"
+
+    companion object {
+        /**
+         * @return a valid [FileNameAndExtension]. `null` if [fileName] does not contain '.'
+         */
+        fun fromString(fileName: String): FileNameAndExtension? {
+            val index = fileName.lastIndexOf(".")
+            return if (index < 1) {
+                null
+            } else {
+                FileNameAndExtension(
+                    fileName = fileName.substring(0, index),
+                    extensionWithDot = fileName.substring(index),
+                )
+            }
+        }
+    }
 }

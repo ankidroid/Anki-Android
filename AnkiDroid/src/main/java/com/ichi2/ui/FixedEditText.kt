@@ -69,7 +69,10 @@ open class FixedEditText : AppCompatEditText {
         }
     }
 
-    override fun setSelection(start: Int, stop: Int) {
+    override fun setSelection(
+        start: Int,
+        stop: Int,
+    ) {
         try {
             super.setSelection(start, stop)
         } catch (ex: Throwable) {
@@ -89,21 +92,20 @@ open class FixedEditText : AppCompatEditText {
                   at android.widget.Editor.onDraw(Editor.java:1672)
                   at android.widget.TextView.onDraw(TextView.java:6914)
                   at android.view.View.draw(View.java:19200)
-            */
+             */
         }
     }
 
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-        return try {
+    override fun onTouchEvent(event: MotionEvent): Boolean =
+        try {
             super.onTouchEvent(event)
         } catch (ex: Throwable) {
             Timber.w(ex)
             false
         }
-    }
 
-    override fun performLongClick(): Boolean {
-        return try {
+    override fun performLongClick(): Boolean =
+        try {
             super.performLongClick()
         } catch (ex: Throwable) {
         /*
@@ -114,11 +116,10 @@ open class FixedEditText : AppCompatEditText {
                     at android.widget.TextView.performLongClick(TextView.java:13544)
                     at android.view.View.performLongClick(View.java:7928)
                     at android.view.View$CheckForLongPress.run(View.java:29321)
-        */
+         */
             Timber.w(ex)
             false
         }
-    }
 
     /**
      * Focuses the edit text and opens the soft keyboard.

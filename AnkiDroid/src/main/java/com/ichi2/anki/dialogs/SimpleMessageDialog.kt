@@ -16,30 +16,38 @@
 
 package com.ichi2.anki.dialogs
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.FragmentActivity
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
+import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.utils.create
 
 class SimpleMessageDialog : AsyncDialogFragment() {
-    interface SimpleMessageDialogListener {
-        fun dismissSimpleMessageDialog(reload: Boolean)
-    }
-
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         super.onCreateDialog(savedInstanceState)
         return AlertDialog.Builder(requireContext()).create {
             setTitle(notificationTitle)
             setMessage(notificationMessage)
             setPositiveButton(R.string.dialog_ok) { _, _ ->
-                (activity as SimpleMessageDialogListener?)
-                    ?.dismissSimpleMessageDialog(
-                        requireArguments().getBoolean(
-                            ARGS_RELOAD
-                        )
-                    )
+                activity?.dismissSimpleMessageDialog(requireArguments().getBoolean(ARGS_RELOAD))
             }
+        }
+    }
+
+    /**
+     * Handle closing simple message dialog
+     * @param reload loads the [DeckPicker] after dismissing the dialogs
+     */
+    fun FragmentActivity.dismissSimpleMessageDialog(reload: Boolean) {
+        dismissAllDialogFragments()
+        if (reload) {
+            val deckPicker = Intent(this, DeckPicker::class.java)
+            deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(deckPicker)
         }
     }
 
@@ -67,11 +75,15 @@ class SimpleMessageDialog : AsyncDialogFragment() {
 
         /**
          * If the calling activity should be reloaded when 'OK' is pressed.
-         * @see SimpleMessageDialogListener.dismissSimpleMessageDialog
+         * @see dismissSimpleMessageDialog
          */
         private const val ARGS_RELOAD = "reload"
 
-        fun newInstance(title: String, message: String?, reload: Boolean): SimpleMessageDialog {
+        fun newInstance(
+            title: String,
+            message: String?,
+            reload: Boolean,
+        ): SimpleMessageDialog {
             val f = SimpleMessageDialog()
             val args = Bundle()
             args.putString(ARGS_TITLE, title)

@@ -44,6 +44,10 @@
         android:title="Lock Database"
         android:summary="Touch here to lock the database (all threads block in-process, exception if using second process)"
         android:key="@string/pref_lock_database_key"/>
+    <Preference
+        android:title="Set Database to pre-Scoped Storage default"
+        android:summary="Touch here to set the database path to /storage/emulated/0/AnkiDroid"
+        android:key="@string/pref_set_database_path_debug_key"/>
     <SwitchPreferenceCompat
         android:title="New congrats screen"
         android:key="@string/new_congrats_screen_pref_key"

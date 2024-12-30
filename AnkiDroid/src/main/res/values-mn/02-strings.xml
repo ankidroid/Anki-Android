@@ -82,17 +82,13 @@
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Дарцагнууд </string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Өнөөдрийн судлах картны тоог өөрчлөх</string>
-    <string name="custom_study_increase_review_limit">Өнөөдрийн үнэлэх картны тоог өөрчлөх</string>
-    <string name="custom_study_review_forgotten">Мартсан картуудаа үнэлэх</string>
-    <string name="custom_study_review_ahead">Цагаас нь эрт үнэлэх</string>
-    <string name="custom_study_random_selection">Ямар ч хамаагүй хэсэг картыг судлах</string>
-    <string name="custom_study_preview_new">Preview new cards</string>
     <string name="custom_study_limit_tags">Limit to particular tags</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Edit note</string>
     <string name="discard">Discard</string>
@@ -169,7 +165,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts" maxLength="28">Set TTS language</string>
     <string name="custom_study" maxLength="28">Custom study</string>
-    <string name="more_options">More</string>
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
     <string name="steps_error">Steps must be numbers greater than 0</string>
     <string name="steps_min_error">At least one step is required</string>

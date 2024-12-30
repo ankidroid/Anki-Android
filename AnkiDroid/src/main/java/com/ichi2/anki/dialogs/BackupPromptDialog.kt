@@ -54,8 +54,9 @@ import timber.log.Timber
  *
  * See [shouldShowDialog] for the criteria to display the dialog
  */
-class BackupPromptDialog private constructor(private val windowContext: Context) {
-
+class BackupPromptDialog private constructor(
+    private val windowContext: Context,
+) {
     private lateinit var alertDialog: AlertDialog
 
     /**
@@ -70,8 +71,10 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
 
     private var timesDialogDismissed: Int
         get() = windowContext.sharedPrefs().getInt("backupPromptDismissedCount", 0)
-        set(value) = windowContext.sharedPrefs()
-            .edit { putInt("backupPromptDismissedCount", value) }
+        set(value) =
+            windowContext
+                .sharedPrefs()
+                .edit { putInt("backupPromptDismissedCount", value) }
 
     private var dialogPermanentlyDismissed: Boolean
         get() = windowContext.sharedPrefs().getBoolean("backupPromptDisabled", false)
@@ -88,7 +91,8 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
     private var nextTimeToShowDialog: Long
         get() = windowContext.sharedPrefs().getLong("timeToShowBackupDialog", 0)
         set(value) {
-            windowContext.sharedPrefs()
+            windowContext
+                .sharedPrefs()
                 .edit { putLong("timeToShowBackupDialog", value) }
         }
 
@@ -101,7 +105,7 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
                     userCheckedDoNotShowAgain = false
                     onDismiss()
                 },
-                onDisableReminder = { dialogPermanentlyDismissed = true }
+                onDisableReminder = { dialogPermanentlyDismissed = true },
             )
         } else {
             timesDialogDismissed += 1
@@ -120,26 +124,30 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
         return now + (fixedDayCount + oneToFourDays) * ONE_DAY_IN_MS
     }
 
-    private fun build(isLoggedIn: Boolean, performBackup: () -> Unit) {
-        this.alertDialog = AlertDialog.Builder(windowContext).create {
-            setIcon(if (isLoggedIn) R.drawable.ic_baseline_backup_24 else R.drawable.ic_backup_restore)
-            title(R.string.backup_your_collection)
-            message(R.string.backup_collection_message)
-            positiveButton(if (isLoggedIn) R.string.button_sync else R.string.button_backup) {
-                Timber.i("User selected 'backup'")
-                onBackup()
-                performBackup()
-            }
-            if (allowUserToPermanentlyDismissDialog) {
-                checkBoxPrompt(R.string.button_do_not_show_again, isCheckedDefault = false) { checked ->
-                    Timber.d("Don't show again checked: %b", checked)
-                    userCheckedDoNotShowAgain = checked
-                    alertDialog.positiveButton.isEnabled = !checked
+    private fun build(
+        isLoggedIn: Boolean,
+        performBackup: () -> Unit,
+    ) {
+        this.alertDialog =
+            AlertDialog.Builder(windowContext).create {
+                setIcon(if (isLoggedIn) R.drawable.ic_baseline_backup_24 else R.drawable.ic_backup_restore)
+                title(R.string.backup_your_collection)
+                message(R.string.backup_collection_message)
+                positiveButton(if (isLoggedIn) R.string.button_sync else R.string.button_backup) {
+                    Timber.i("User selected 'backup'")
+                    onBackup()
+                    performBackup()
                 }
+                if (allowUserToPermanentlyDismissDialog) {
+                    checkBoxPrompt(R.string.button_do_not_show_again, isCheckedDefault = false) { checked ->
+                        Timber.d("Don't show again checked: %b", checked)
+                        userCheckedDoNotShowAgain = checked
+                        alertDialog.positiveButton.isEnabled = !checked
+                    }
+                }
+                negativeButton(R.string.button_backup_later) { onDismiss() }
+                cancelable(false)
             }
-            negativeButton(R.string.button_backup_later) { onDismiss() }
-            cancelable(false)
-        }
     }
 
     companion object {
@@ -196,7 +204,9 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
             // Given the assumptions above, this conditional should return true
             return if (collectionWillBeMadeInaccessibleAfterUninstall(context)) {
                 Timber.d("User will lose access to their collection")
-                R.string.dismiss_backup_warning_upgrade // message stating collection will be made inaccessible (existing user, not migrated)
+                // message stating collection will be made inaccessible
+                // (existing user, not migrated)
+                R.string.dismiss_backup_warning_upgrade
             } else {
                 // A user is on a Play Store Build. They are on a version of Android with storage restrictions
                 // Their collection is in a 'legacy' location but they are not going to lose access to their collection when they uninstall
@@ -209,7 +219,11 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
         }
 
         /** Explains to the user they should sync/backup as they risk to have data deleted or inaccessible (depending on whether legacy storage permission is kept) */
-        fun showPermanentlyDismissDialog(context: Context, onCancel: () -> Unit, onDisableReminder: () -> Unit) {
+        fun showPermanentlyDismissDialog(
+            context: Context,
+            onCancel: () -> Unit,
+            onDisableReminder: () -> Unit,
+        ) {
             val message = getPermanentlyDismissDialogMessageOrImmediatelyDismiss(context)
             if (message == null) {
                 Timber.i("permanently disabling 'Backup Prompt' reminder - no confirmation")
@@ -258,8 +272,7 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
         return collectionWillBeMadeInaccessibleAfterUninstall(windowContext)
     }
 
-    private fun timeToShowDialogAgain(): Boolean =
-        !dialogPermanentlyDismissed && nextTimeToShowDialog <= TimeManager.time.intTimeMS()
+    private fun timeToShowDialogAgain(): Boolean = !dialogPermanentlyDismissed && nextTimeToShowDialog <= TimeManager.time.intTimeMS()
 
     private suspend fun userIsNewToAnkiDroid(): Boolean {
         // A user is new if the app was installed > 7 days ago  OR if they have no cards
@@ -277,10 +290,11 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
     /** The time at which the app was first installed. Units are as per [System.currentTimeMillis()]. */
     private fun getFirstInstallTime(): Long? {
         return try {
-            return windowContext.packageManager.getPackageInfoCompat(
-                windowContext.packageName,
-                PackageInfoFlagsCompat.of(0)
-            )?.firstInstallTime
+            return windowContext.packageManager
+                .getPackageInfoCompat(
+                    windowContext.packageName,
+                    PackageInfoFlagsCompat.of(0),
+                )?.firstInstallTime
         } catch (exception: Exception) {
             Timber.w("failed to get first install time")
             null

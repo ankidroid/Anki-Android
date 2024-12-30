@@ -26,18 +26,18 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ichi2.anki.R
 
 class ImageOcclusionBottomSheetFragment : BottomSheetDialogFragment() {
-
     var listener: ImagePickerListener? = null
 
     interface ImagePickerListener {
         fun onCameraClicked()
+
         fun onGalleryClicked()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         val view = inflater.inflate(R.layout.image_occlusion_options_layout, container, false)
 

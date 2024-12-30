@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">%d पेक्षा जास्त कार्ड देय आहेत</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">कंपन होणे</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">ब्लिंक लाइट</string>
-    <string name="timeout_answer_text" maxLength="41">स्वयंचलित प्रदर्शन उत्तर</string>
-    <string name="timeout_answer_summ2">वापरकर्ता इनपुटशिवाय स्वयंचलितपणे उत्तर दर्शवा. डेक पर्यायांमधून कॉन्फिगर करा.</string>
     <string name="select_locale_title">भाषा निवडा</string>
     <string name="software_render" maxLength="41">कार्ड हार्डवेअर प्रस्तुत अक्षम करा</string>
     <string name="software_render_summ">हार्डवेअर प्रस्तुत करणे वेगवान आहे परंतु विशेषत: Android 8 / 8.1 वर समस्या असू शकतात. आपण कार्ड पुनरावलोकन वापरकर्ता इंटरफेसचे काही भाग पाहू शकत नसल्यास, हे सेटिंग वापरून पहा.</string>

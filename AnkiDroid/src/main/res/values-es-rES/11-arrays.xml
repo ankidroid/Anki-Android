@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">Respuesta buena</string>
     <string name="answer_easy" maxLength="41">Respuesta fácil</string>
     <string name="gesture_play" maxLength="41">Reproducir multimedia</string>
-    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_abort_learning" maxLength="41">Cerrar revisor</string>
     <string name="gesture_flag_red" maxLength="41">Cambiar Bandera Roja</string>
     <string name="gesture_flag_orange" maxLength="41">Cambiar Bandera Naranja</string>
     <string name="gesture_flag_green" maxLength="41">Cambiar Bandera verde</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">Eliminar Bandera</string>
     <string name="gesture_page_up" maxLength="41">Página Arriba</string>
     <string name="gesture_page_down" maxLength="41">Página Abajo</string>
-    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_abort_sync" maxLength="41">Cerrar revisor y sincronizar</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Alternar Pizarra</string>
     <string name="gesture_show_hint" maxLength="41">Mostrar Pista</string>
     <string name="gesture_show_all_hints" maxLength="41">Mostrar Todas Las Pistas</string>

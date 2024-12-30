@@ -28,7 +28,6 @@ import timber.log.Timber
 import java.io.File
 
 object ScopedStorageService {
-
     /**
      * Checks if current directory being used by AnkiDroid to store user data is a Legacy Storage Directory.
      * This directory is stored under [CollectionHelper.PREF_COLLECTION_PATH] in SharedPreferences
@@ -38,9 +37,7 @@ object ScopedStorageService {
      *
      * @return `true` if AnkiDroid is storing user data in a Legacy Storage Directory.
      */
-    fun isLegacyStorage(context: Context): Boolean {
-        return isLegacyStorage(File(CollectionHelper.getCurrentAnkiDroidDirectory(context)), context)
-    }
+    fun isLegacyStorage(context: Context): Boolean = isLegacyStorage(File(CollectionHelper.getCurrentAnkiDroidDirectory(context)), context)
 
     /**
      * Checks if current directory being used by AnkiDroid to store user data is a Legacy Storage Directory.
@@ -50,9 +47,14 @@ object ScopedStorageService {
      * @param setCollectionPath if `false`, null is returned. This stops an infinite loop
      * if `isLegacyStorage` is called when obtaining the collection path
      */
-    fun isLegacyStorage(context: Context, setCollectionPath: Boolean): Boolean? {
-        if (!setCollectionPath && !context.sharedPrefs()
-            .contains(CollectionHelper.PREF_COLLECTION_PATH)
+    fun isLegacyStorage(
+        context: Context,
+        setCollectionPath: Boolean,
+    ): Boolean? {
+        if (!setCollectionPath &&
+            !context
+                .sharedPrefs()
+                .contains(CollectionHelper.PREF_COLLECTION_PATH)
         ) {
             return null
         }
@@ -65,7 +67,10 @@ object ScopedStorageService {
      * DEPRECATED. Use [com.ichi2.anki.ui.windows.managespace.isInsideDirectoriesRemovedWithTheApp].
      *
      */
-    fun isLegacyStorage(currentDirPath: File, context: Context): Boolean {
+    fun isLegacyStorage(
+        currentDirPath: File,
+        context: Context,
+    ): Boolean {
         val internalScopedDirPath =
             CollectionHelper.getAppSpecificInternalAnkiDroidDirectory(context)
         val currentDir = currentDirPath.canonicalFile
@@ -76,7 +81,7 @@ object ScopedStorageService {
             "isLegacyStorage(): current dir: %s\nscoped external dirs: %s\nscoped internal dir: %s",
             currentDirPath,
             externalScopedDirs.joinToString(", "),
-            internalScopedDirPath
+            internalScopedDirPath,
         )
 
         // Loop to check if the current AnkiDroid directory or any of its parents are the same as the root directories
@@ -170,9 +175,8 @@ object ScopedStorageService {
         return Environment.isExternalStorageLegacy()
     }
 
-    fun userIsPromptedToDeleteCollectionOnUninstall(context: Context): Boolean {
-        return File(CollectionHelper.getCollectionPath(context)).isInsideDirectoriesRemovedWithTheApp(
-            context
+    fun userIsPromptedToDeleteCollectionOnUninstall(context: Context): Boolean =
+        File(CollectionHelper.getCollectionPath(context)).isInsideDirectoriesRemovedWithTheApp(
+            context,
         )
-    }
 }

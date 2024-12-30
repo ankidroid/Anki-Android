@@ -18,7 +18,6 @@ package com.ichi2.compat
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.Intent.CATEGORY_DEFAULT
 import android.content.IntentFilter
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
@@ -32,7 +31,6 @@ import android.view.KeyEvent.KEYCODE_PAGE_UP
 import android.view.View
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.content.ContextCompat
-import com.ichi2.compat.CompatHelper.Companion.compat
 import java.io.Serializable
 
 /**
@@ -45,17 +43,16 @@ import java.io.Serializable
  * ```
  */
 class CompatHelper private constructor() {
-
     // Note: Needs ": Compat" or the type system assumes `Compat21`
-    private val compatValue: Compat = when {
-        sdkVersion >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> CompatV34()
-        sdkVersion >= Build.VERSION_CODES.TIRAMISU -> CompatV33()
-        sdkVersion >= Build.VERSION_CODES.S -> CompatV31()
-        sdkVersion >= Build.VERSION_CODES.Q -> CompatV29()
-        sdkVersion >= Build.VERSION_CODES.O -> CompatV26()
-        sdkVersion >= Build.VERSION_CODES.N -> CompatV24()
-        else -> CompatV23()
-    }
+    private val compatValue: Compat =
+        when {
+            sdkVersion >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> CompatV34()
+            sdkVersion >= Build.VERSION_CODES.TIRAMISU -> CompatV33()
+            sdkVersion >= Build.VERSION_CODES.S -> CompatV31()
+            sdkVersion >= Build.VERSION_CODES.Q -> CompatV29()
+            sdkVersion >= Build.VERSION_CODES.O -> CompatV26()
+            else -> BaseCompat()
+        }
 
     companion object {
         /** Singleton instance of [CompatHelper] */
@@ -73,24 +70,21 @@ class CompatHelper private constructor() {
         @Suppress("unused")
         val isChromebook: Boolean
             get() = (
-                "chromium".equals(Build.BRAND, ignoreCase = true) || "chromium".equals(Build.MANUFACTURER, ignoreCase = true) ||
+                "chromium".equals(Build.BRAND, ignoreCase = true) ||
+                    "chromium".equals(Build.MANUFACTURER, ignoreCase = true) ||
                     "novato_cheets".equals(Build.DEVICE, ignoreCase = true)
-                )
+            )
         val isKindle: Boolean
             get() = "amazon".equals(Build.BRAND, ignoreCase = true) || "amazon".equals(Build.MANUFACTURER, ignoreCase = true)
 
-        fun hasScrollKeys(): Boolean {
-            return deviceHasKey(KEYCODE_PAGE_UP) || deviceHasKey(KEYCODE_PAGE_DOWN)
-        }
+        fun hasScrollKeys(): Boolean = deviceHasKey(KEYCODE_PAGE_UP) || deviceHasKey(KEYCODE_PAGE_DOWN)
 
-        inline fun <reified T : Serializable?> Bundle.getSerializableCompat(name: String): T? {
-            return compat.getSerializable(this, name, T::class.java)
-        }
+        inline fun <reified T : Serializable?> Bundle.getSerializableCompat(name: String): T? =
+            compat.getSerializable(this, name, T::class.java)
 
         @Suppress("unused")
-        inline fun <reified T : Serializable?> Intent.getSerializableExtraCompat(name: String): T? {
-            return compat.getSerializableExtra(this, name, T::class.java)
-        }
+        inline fun <reified T : Serializable?> Intent.getSerializableExtraCompat(name: String): T? =
+            compat.getSerializableExtra(this, name, T::class.java)
 
         /**
          * Retrieve overall information about an application package that is
@@ -100,8 +94,10 @@ class CompatHelper private constructor() {
          * @throws NameNotFoundException if no such package is available to the caller.
          */
         @Throws(NameNotFoundException::class)
-        fun Context.getPackageInfoCompat(packageName: String, flags: PackageInfoFlagsCompat): PackageInfo? =
-            this.packageManager.getPackageInfoCompat(packageName, flags)
+        fun Context.getPackageInfoCompat(
+            packageName: String,
+            flags: PackageInfoFlagsCompat,
+        ): PackageInfo? = this.packageManager.getPackageInfoCompat(packageName, flags)
 
         /**
          * Retrieve overall information about an application package that is
@@ -111,8 +107,10 @@ class CompatHelper private constructor() {
          * @throws NameNotFoundException if no such package is available to the caller.
          */
         @Throws(NameNotFoundException::class)
-        fun PackageManager.getPackageInfoCompat(packageName: String, flags: PackageInfoFlagsCompat): PackageInfo? =
-            compat.getPackageInfo(this, packageName, flags)
+        fun PackageManager.getPackageInfoCompat(
+            packageName: String,
+            flags: PackageInfoFlagsCompat,
+        ): PackageInfo? = compat.getPackageInfo(this, packageName, flags)
 
         /**
          * Determine the best service to handle for a given Intent.
@@ -124,9 +122,10 @@ class CompatHelper private constructor() {
          *         that was determined to be the best action. Returns null if no
          *         matching service was found.
          */
-        fun PackageManager.resolveServiceCompat(intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo? {
-            return compat.resolveService(this, intent, flags)
-        }
+        fun PackageManager.resolveServiceCompat(
+            intent: Intent,
+            flags: ResolveInfoFlagsCompat,
+        ): ResolveInfo? = compat.resolveService(this, intent, flags)
 
         /**
          * Retrieve all activities that can be performed for the given intent.
@@ -140,9 +139,10 @@ class CompatHelper private constructor() {
          *  is what would be returned by [resolveActivityCompat].
          *  If there are no matching activities, an empty list is returned.
          */
-        fun PackageManager.queryIntentActivitiesCompat(intent: Intent, flags: ResolveInfoFlagsCompat): List<ResolveInfo> {
-            return compat.queryIntentActivities(this, intent, flags)
-        }
+        fun PackageManager.queryIntentActivitiesCompat(
+            intent: Intent,
+            flags: ResolveInfoFlagsCompat,
+        ): List<ResolveInfo> = compat.queryIntentActivities(this, intent, flags)
 
         /**
          * Determine the best action to perform for a given Intent. This is how
@@ -167,9 +167,10 @@ class CompatHelper private constructor() {
          *  found and there is no default set, returns a [ResolveInfo] object
          *  containing something else, such as the activity resolver.
          */
-        fun PackageManager.resolveActivityCompat(intent: Intent, flags: ResolveInfoFlagsCompat = ResolveInfoFlagsCompat.EMPTY): ResolveInfo? {
-            return compat.resolveActivity(this, intent, flags)
-        }
+        fun PackageManager.resolveActivityCompat(
+            intent: Intent,
+            flags: ResolveInfoFlagsCompat = ResolveInfoFlagsCompat.EMPTY,
+        ): ResolveInfo? = compat.resolveActivity(this, intent, flags)
 
         /**
          * Register a broadcast receiver.
@@ -192,9 +193,8 @@ class CompatHelper private constructor() {
         fun Context.registerReceiverCompat(
             receiver: BroadcastReceiver?,
             filter: IntentFilter,
-            @ContextCompat.RegisterReceiverFlags flags: Int
-        ) =
-            ContextCompat.registerReceiver(this, receiver, filter, flags)
+            @ContextCompat.RegisterReceiverFlags flags: Int,
+        ) = ContextCompat.registerReceiver(this, receiver, filter, flags)
     }
 }
 
@@ -210,5 +210,4 @@ class CompatHelper private constructor() {
  * @receiver the view on which to set the tooltip text
  * @param tooltipText the tooltip text
  */
-fun View.setTooltipTextCompat(tooltipText: CharSequence?) =
-    TooltipCompat.setTooltipText(this, tooltipText)
+fun View.setTooltipTextCompat(tooltipText: CharSequence?) = TooltipCompat.setTooltipText(this, tooltipText)

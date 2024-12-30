@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">Veritabanını onarmayı gerçekten denemek istiyor musunuz?\n\nGirişime başlamadan önce, \"%s\" altklasöründe bir kopya oluşturulacak.</string>
     <string name="intent_aedict_empty">\"Varsayılan\" kategorisi boş</string>
     <string name="intent_aedict_category">AnkiDroid\'e kart eklemek için bütün Not Defteri kategorilerini kaldırın veya \"default\" isminde bir tane ekleyin</string>
-    <string name="custom_study_new_total_new">Destede yeni kart: %d</string>
-    <string name="custom_study_rev_total_rev">Destede çalışma sırası gelmiş kart: %d</string>
     <string name="custom_study_new_extend">Bugünün yeni kart sınırını şu kadar arttırın/azaltın (“-3”) </string>
     <string name="custom_study_rev_extend">Bugünün gözden geçirme sınırını şu kadar arttırın/azaltın (“-3”)</string>
     <string name="custom_study_forgotten">Son x gündeki unutulan kartları izle:</string>
     <string name="custom_study_ahead">X günleri önce izle:</string>
-    <string name="custom_study_random">X kartları rastgele desteden seç:</string>
     <string name="custom_study_preview">Son x günlerdeki eklenen yeni kartları önizle:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Özel çalışma destesi yeniden oluşturulamadı</string>
     <string name="storage_full_title">Depolama alanı dolu</string>
     <string name="storage_almost_full_title">Depolama alanı nerdeyse dolu</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Hiç alan yok</string>

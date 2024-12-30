@@ -55,8 +55,7 @@ object DayRolloverHandler : BroadcastReceiver() {
 
     /** Receive an event each minute AND for time/timezone changes */
     fun listenForRolloverEvents(context: Context) {
-        fun register(filter: IntentFilter) =
-            ContextCompat.registerReceiver(context, DayRolloverHandler, filter, RECEIVER_EXPORTED)
+        fun register(filter: IntentFilter) = ContextCompat.registerReceiver(context, DayRolloverHandler, filter, RECEIVER_EXPORTED)
 
         Timber.d("listening for rollover events")
         // ACTION_TIME_TICK occurs every time the displayed time changes (once per minute)
@@ -66,7 +65,10 @@ object DayRolloverHandler : BroadcastReceiver() {
         register(IntentFilter(ACTION_TIMEZONE_CHANGED))
     }
 
-    override fun onReceive(context: Context?, intent: Intent?) {
+    override fun onReceive(
+        context: Context?,
+        intent: Intent?,
+    ) {
         // potential race condition if a timezone/tick change occur simultaneously
         // the outcome would be two calls to notifySubscribers, which is acceptable
         Timber.v("received ${intent?.action}")

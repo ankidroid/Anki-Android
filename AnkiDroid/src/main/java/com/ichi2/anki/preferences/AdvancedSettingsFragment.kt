@@ -16,7 +16,6 @@
 package com.ichi2.anki.preferences
 
 import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AlertDialog
@@ -25,9 +24,12 @@ import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.MetaDB
 import com.ichi2.anki.R
 import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.provider.CardContentProvider
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper
@@ -49,7 +51,12 @@ class AdvancedSettingsFragment : SettingsFragment() {
                 val newPath = newValue as String
                 try {
                     CollectionHelper.initializeAnkiDroidDirectory(newPath)
-                    (requireActivity() as Preferences).restartWithNewDeckPicker()
+                    launchCatchingTask {
+                        CollectionManager.discardBackend()
+                        val deckPicker = Intent(requireContext(), DeckPicker::class.java)
+                        deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(deckPicker)
+                    }
                     true
                 } catch (e: StorageAccessException) {
                     // TODO: Request MANAGE_EXTERNAL_STORAGE
@@ -112,13 +119,14 @@ class AdvancedSettingsFragment : SettingsFragment() {
         // Enable API
         requirePreference<SwitchPreferenceCompat>(R.string.enable_api_key).setOnPreferenceChangeListener { newValue ->
             val providerName = ComponentName(requireContext(), CardContentProvider::class.java.name)
-            val state = if (newValue == true) {
-                Timber.i("AnkiDroid ContentProvider enabled by user")
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED
-            } else {
-                Timber.i("AnkiDroid ContentProvider disabled by user")
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED
-            }
+            val state =
+                if (newValue == true) {
+                    Timber.i("AnkiDroid ContentProvider enabled by user")
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+                } else {
+                    Timber.i("AnkiDroid ContentProvider disabled by user")
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+                }
             requireActivity().packageManager.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP)
         }
     }
@@ -132,12 +140,6 @@ class AdvancedSettingsFragment : SettingsFragment() {
             if (doubleScrolling != null) {
                 preferenceScreen.removePreference(doubleScrolling)
             }
-        }
-    }
-
-    companion object {
-        fun getSubscreenIntent(context: Context): Intent {
-            return getSubscreenIntent(context, AdvancedSettingsFragment::class)
         }
     }
 }

@@ -68,25 +68,27 @@ object Themes {
         // AppCompatPreferenceActivity's sharedPreferences is initialized
         // after the time when the theme should be set
         // TODO (#5019): always use the context as the parameter for getSharedPrefs
-        val prefs = if (context is AppCompatPreferenceActivity<*>) {
-            AnkiDroidApp.instance.sharedPrefs()
-        } else {
-            context.sharedPrefs()
-        }
-
-        currentTheme = if (themeFollowsSystem(prefs)) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-            if (systemIsInNightMode(context)) {
-                Theme.ofId(prefs.getString(NIGHT_THEME_KEY, Theme.BLACK.id)!!)
+        val prefs =
+            if (context is AppCompatPreferenceActivity<*>) {
+                AnkiDroidApp.instance.sharedPrefs()
             } else {
-                Theme.ofId(prefs.getString(DAY_THEME_KEY, Theme.LIGHT.id)!!)
+                context.sharedPrefs()
             }
-        } else {
-            Theme.ofId(prefs.getString(APP_THEME_KEY, Theme.fallback.id)!!).also {
-                val mode = if (it.isNightMode) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
-                AppCompatDelegate.setDefaultNightMode(mode)
+
+        currentTheme =
+            if (themeFollowsSystem(prefs)) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                if (systemIsInNightMode(context)) {
+                    Theme.ofId(prefs.getString(NIGHT_THEME_KEY, Theme.BLACK.id)!!)
+                } else {
+                    Theme.ofId(prefs.getString(DAY_THEME_KEY, Theme.LIGHT.id)!!)
+                }
+            } else {
+                Theme.ofId(prefs.getString(APP_THEME_KEY, Theme.fallback.id)!!).also {
+                    val mode = if (it.isNightMode) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+                    AppCompatDelegate.setDefaultNightMode(mode)
+                }
             }
-        }
     }
 
     /**
@@ -97,12 +99,18 @@ object Themes {
         context.setTheme(R.style.ThemeOverlay_Xiaomi)
     }
 
-    fun getResFromAttr(context: Context, resAttr: Int): Int {
+    fun getResFromAttr(
+        context: Context,
+        resAttr: Int,
+    ): Int {
         val attrs = intArrayOf(resAttr)
         return getResFromAttr(context, attrs)[0]
     }
 
-    fun getResFromAttr(context: Context, attrs: IntArray): IntArray {
+    fun getResFromAttr(
+        context: Context,
+        attrs: IntArray,
+    ): IntArray {
         val ta = context.obtainStyledAttributes(attrs)
         for (i in attrs.indices) {
             attrs[i] = ta.getResourceId(i, 0)
@@ -113,9 +121,7 @@ object Themes {
 
     @JvmStatic // tests failed when removing, maybe try later
     @ColorInt
-    fun getColorFromAttr(context: Context, attr: Int): Int {
-        return MaterialColors.getColor(context, attr, 0)
-    }
+    fun getColorFromAttr(context: Context, attr: Int): Int = MaterialColors.getColor(context, attr, 0)
 
     @JvmStatic // tests failed when removing, maybe try later
     @ColorInt
@@ -129,14 +135,12 @@ object Themes {
     /**
      * @return if current selected theme is `Follow system`
      */
-    private fun themeFollowsSystem(sharedPreferences: SharedPreferences): Boolean {
-        return sharedPreferences.getString(APP_THEME_KEY, FOLLOW_SYSTEM_MODE) == FOLLOW_SYSTEM_MODE
-    }
+    private fun themeFollowsSystem(sharedPreferences: SharedPreferences): Boolean =
+        sharedPreferences.getString(APP_THEME_KEY, FOLLOW_SYSTEM_MODE) == FOLLOW_SYSTEM_MODE
 
-    fun systemIsInNightMode(context: Context): Boolean {
-        return context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
+    fun systemIsInNightMode(context: Context): Boolean =
+        context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
             Configuration.UI_MODE_NIGHT_YES
-    }
 }
 
 @Suppress("deprecation", "API35 properly handle edge-to-edge")

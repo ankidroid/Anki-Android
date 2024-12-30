@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">Mehr als %d Karten fällig</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrieren</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blinken</string>
-    <string name="timeout_answer_text" maxLength="41">Antwort automatisch anzeigen</string>
-    <string name="timeout_answer_summ2">Lösung automatisch ohne Eingabe anzeigen. Konfiguriere in den Stapeleinstellungen.</string>
     <string name="select_locale_title">Sprache wählen</string>
     <string name="software_render" maxLength="41">Karten-Hardware-Rendering deaktivieren</string>
     <string name="software_render_summ">Hardware-Rendering ist schneller, kann aber Probleme haben, insbesondere auf Android 8/8.1. Wenn Sie Teile der Benutzeroberfläche der Karte nicht sehen können, versuchen Sie diese Einstellung.</string>
@@ -204,7 +202,7 @@
     <string name="accessibility" maxLength="41">Bedienungshilfen</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Zwischenablage-Bilder als PNG einfügen</string>
-    <string name="paste_as_png_summary">Standardmäßig fügt Anki Bilder in der Zwischenablage als JPG-Dateien ein, um Speicherplatz zu sparen. Sie können diese Option verwenden, um stattdessen PNG-Bilder einzufügen.</string>
+    <string name="paste_as_png_summary">Standardmäßig fügt Anki Bilder in der Zwischenablage als JPG-Dateien ein, um Speicherplatz zu sparen. Sie können diese Einstellung verwenden, um stattdessen PNG-Bilder einzufügen.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Zweimal Zurück drücken, um zurückzugehen</string>
     <string name="exit_via_double_tap_back_summ">Um zu vermeiden, dass Sie den Rezensenten oder die App versehentlich verlassen</string>
     <!-- Allow all files in media imports -->
@@ -296,21 +294,23 @@
     <string name="readtext_deprecation_warn">AnkiDroid hat einen besseren TTS-Mechanismus eingeführt, der mit anderen Anki-Clients kompatibel ist und mehr Stimmen und Verbesserungen bei der Sprachwiedergabe enthält!\n\nBitte aktualisieren Sie so bald wie möglich, da diese Einstellung bald entfernt wird</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Bitte upgraden Sie auf das neue Text-zu-Sprache-Format</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Entwickleroptionen</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Entwickleroptionen aktivieren</string>
+    <string name="pref_cat_dev_options" maxLength="41">Entwicklermodus</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Entwicklermodus aktivieren</string>
     <string name="disable_dev_options">Entwicklermodus deaktivieren</string>
-    <string name="dev_options_warning">Bevor Sie die Entwickleroptionen aktivieren, beachten Sie bitte, dass Sie damit die App oder Ihre Sammlung beschädigen können. /n/nBeachten Sie außerdem, dass diese Optionen für die meisten Benutzer nicht geeignet sind und deshalb nicht übersetzt werden und sind daher nur auf Englisch verfügbar sind.</string>
+    <string name="dev_options_warning">        Bevor Sie den Entwicklermodus aktivieren, beachten Sie bitte, dass Sie damit die App oder Ihre Sammlung beschädigen können.\n\nBeachten Sie außerdem, dass diese Einstellungen für die meisten Benutzer nicht geeignet sind und deshalb nicht übersetzt werden und daher nur auf Englisch verfügbar sind.
+    </string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[AnkiDroid erstellt regelmäßig Sicherungskopien deiner Sammlung.
-        Wenn die Backups mehr als zwei Tage alt sind,
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid erstellt regelmäßig Sicherungskopien deiner Sammlung.
+        Wenn die Sicherungskopien mehr als zwei Tage alt sind,
         fängt AnkiDroid an, einige von ihnen zu löschen, um Speicherplatz freizugeben.
         <br><br>
-        Beachten Sie, dass Mediendateien nicht gesichert werden.
+        Beachten Sie, dass von Mediendateien keine Sicherungskopien gemacht werden.
         Um sicher zu gehen, synchronisieren Sie bitte regelmäßig Ihre Sammlung oder sichern Sie Exporte davon.
         <br><br>
-        Sie können Ihre Sammlung im Decklistenmenü aus einem Backup wiederherstellen und exportieren]]></string>
+        Im Menü der Stapelliste können Sie Ihre Sammlung exportieren oder von einer Sicherungskopie aus wiederherstellen.
+    ]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Min. zwischen automatischen Sicherungen</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">Täglich Sicherungen aufbewahren</string>
     <string name="pref__weekly_backups_to_keep__title" maxLength="41">Wöchentliche Sicherungen aufbewahren</string>
@@ -327,9 +327,9 @@
         <item quantity="other">%1$d Dateien\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Löschen von nicht verwendeten Medien Dateien</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Löschen von nicht verwendeten Mediendateien</string>
     <string name="pref__delete_unused_media_files__summary">Löschen von Bildern und anderen Medien, die nicht mit _ vorangestellt sind und nicht bei Anmerkungen verwiesen sind</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Löschen von nicht verwendeten Medien Dateien</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Löschen von nicht verwendeten Mediendateien</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Sicherungen löschen</string>
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Sicherungen löschen</string>
@@ -368,5 +368,5 @@
     <string name="hide_answer_buttons" maxLength="41">Antwortschaltflächen ausblenden</string>
     <string name="hide_hard_and_easy" maxLength="41">‘Schwer’- und ‘Leicht’-Tasten ausblenden</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Einstellungen Öffnen</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Einstellungen öffnen</string>
 </resources>

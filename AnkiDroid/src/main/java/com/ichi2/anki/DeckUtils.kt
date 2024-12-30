@@ -27,7 +27,10 @@ import com.ichi2.libanki.Consts
  * @param includeSubdecks If true, includes subdecks in the check. Default is true.
  * @return `true` if the deck (and subdecks if specified) is empty, otherwise `false`.
  */
-private fun Collection.isDeckEmpty(deckId: Long, includeSubdecks: Boolean = true): Boolean {
+private fun Collection.isDeckEmpty(
+    deckId: Long,
+    includeSubdecks: Boolean = true,
+): Boolean {
     val deckIds = decks.deckAndChildIds(deckId)
     val totalCardCount = decks.cardCount(*deckIds.toLongArray(), includeSubdecks = includeSubdecks)
     return totalCardCount == 0

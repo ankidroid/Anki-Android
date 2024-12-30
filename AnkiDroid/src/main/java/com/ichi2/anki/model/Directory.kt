@@ -24,8 +24,9 @@ import java.nio.file.NotDirectoryException
 /**
  * A directory which is assumed to exist (existed when class was instantiated)
  */
-class Directory private constructor(val directory: File) {
-
+class Directory private constructor(
+    val directory: File,
+) {
     /** List of files in this directory. If this is not a directory or no longer exists, then an empty array. */
     fun listFiles(): Array<out File> = directory.listFiles() ?: emptyArray()
 
@@ -46,6 +47,7 @@ class Directory private constructor(val directory: File) {
 
     /** The [canonical path][java.io.File.getCanonicalPath] for the file */
     override fun toString(): String = directory.canonicalPath
+
     companion object {
         /**
          * Returns a [Directory] from [path] if `Directory` precondition holds; i.e. [path] is an existing directory.

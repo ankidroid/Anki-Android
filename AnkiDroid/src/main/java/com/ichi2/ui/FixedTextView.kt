@@ -48,12 +48,15 @@ import android.view.MotionEvent
 import androidx.appcompat.widget.AppCompatTextView
 import timber.log.Timber
 
-class FixedTextView : AppCompatTextView {
+open class FixedTextView : AppCompatTextView {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+    override fun onMeasure(
+        widthMeasureSpec: Int,
+        heightMeasureSpec: Int,
+    ) {
         try {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         } catch (ex: Throwable) {
@@ -67,13 +70,13 @@ class FixedTextView : AppCompatTextView {
                 at android.widget.TextView.onMeasure(TextView.java:8291)
                 at androidx.appcompat.widget.AppCompatTextView.onMeasure(SourceFile:554)
                 at android.view.View.measure(View.java:22360)
-            */
+             */
             setMeasuredDimension(0, 0)
         }
     }
 
-    override fun onPreDraw(): Boolean {
-        return try {
+    override fun onPreDraw(): Boolean =
+        try {
             super.onPreDraw()
         } catch (ex: Throwable) {
             Timber.w(ex)
@@ -88,10 +91,9 @@ class FixedTextView : AppCompatTextView {
                 at android.text.Layout.getPrimaryHorizontal(Layout.java:1115)
                 at android.widget.TextView.bringPointIntoView(TextView.java:8944)
                 at android.widget.TextView.onPreDraw(TextView.java:6475)
-            */
+             */
             true
         }
-    }
 
     override fun onDraw(canvas: Canvas) {
         try {
@@ -105,7 +107,7 @@ class FixedTextView : AppCompatTextView {
                 at android.text.Layout.draw(Layout.java:289)
                 at android.widget.TextView.onDraw(TextView.java:6972)
                 at android.view.View.draw(View.java:19380)
-            */
+             */
         }
     }
 
@@ -120,8 +122,8 @@ class FixedTextView : AppCompatTextView {
         return super.dispatchTouchEvent(event)
     }
 
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-        return try {
+    override fun onTouchEvent(event: MotionEvent): Boolean =
+        try {
             super.onTouchEvent(event)
         } catch (ex: Throwable) {
             Timber.w(ex)
@@ -137,11 +139,14 @@ class FixedTextView : AppCompatTextView {
                 at android.widget.Editor.updateFloatingToolbarVisibility(Editor.java:1397)
                 at android.widget.Editor.onTouchEvent(Editor.java:1367)
                 at android.widget.TextView.onTouchEvent(TextView.java:9701)
-            */
+             */
         }
-    }
 
-    override fun onFocusChanged(focused: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
+    override fun onFocusChanged(
+        focused: Boolean,
+        direction: Int,
+        previouslyFocusedRect: Rect?,
+    ) {
         try {
             super.onFocusChanged(focused, direction, previouslyFocusedRect)
         } catch (ex: Throwable) {
@@ -157,13 +162,13 @@ class FixedTextView : AppCompatTextView {
               at android.view.View.onTouchEvent(View.java:10359)
               at android.widget.TextView.onTouchEvent(TextView.java:9580)
               at android.view.View.dispatchTouchEvent(View.java:8981)
-            */
+             */
             Timber.w(ex)
         }
     }
 
-    override fun performLongClick(): Boolean {
-        return try {
+    override fun performLongClick(): Boolean =
+        try {
             super.performLongClick()
         } catch (ex: Throwable) {
             /*
@@ -174,20 +179,21 @@ class FixedTextView : AppCompatTextView {
                     at android.widget.TextView.performLongClick(TextView.java:13544)
                     at android.view.View.performLongClick(View.java:7928)
                     at android.view.View$CheckForLongPress.run(View.java:29321)
-            */
-            /*
+
                 java.lang.NullPointerException: Attempt to invoke virtual method 'int android.widget.Editor$SelectionModifierCursorController.getMinTouchOffset()' on a null object reference
                     at android.widget.Editor.touchPositionIsInSelection(Unknown:36)
                     at android.widget.Editor.performLongClick(Unknown:72)
                     at android.widget.TextView.performLongClick(Unknown:24)
-            */
+             */
             Timber.w(ex)
             false
         }
-    }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        return try {
+    override fun onKeyDown(
+        keyCode: Int,
+        event: KeyEvent,
+    ): Boolean =
+        try {
             super.onKeyDown(keyCode, event)
         } catch (ex: Throwable) {
             /*
@@ -216,9 +222,11 @@ class FixedTextView : AppCompatTextView {
             Timber.w(ex)
             false
         }
-    }
 
-    override fun setText(text: CharSequence?, type: BufferType) {
+    override fun setText(
+        text: CharSequence?,
+        type: BufferType,
+    ) {
         try {
             super.setText(text, type)
         } catch (ex: Throwable) {

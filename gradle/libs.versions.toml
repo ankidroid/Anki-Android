@@ -1,8 +1,9 @@
 [versions]
 compileSdk = "35"
-minSdk = "23"  # also in testlib/build.gradle.kts
+minSdk = "24"  # also in testlib/build.gradle.kts
 targetSdk = "34"  # also in  ../robolectricDownloader.gradle
 acra = '5.12.0'
+ktlint = '1.5.0'
 # AGP is included in Android Studio and changelogs are not well maintained/at a stable URL
 # Open https://developer.android.com/build/releases/gradle-plugin#patch-releases
 # Maybe select a "bug fixes" link ->
@@ -10,7 +11,7 @@ acra = '5.12.0'
 #
 # Old changelogs - See 'Table of Contents' in sidebar
 # https://developer.android.com/build/releases/past-releases
-androidGradlePlugin = "8.7.2"
+androidGradlePlugin = "8.7.3"
 # https://developer.android.com/jetpack/androidx/releases/activity
 androidxActivity = "1.9.3"
 # https://developer.android.com/jetpack/androidx/releases/annotation
@@ -32,7 +33,7 @@ androidxFragmentKtx = "1.8.5"
 # https://developer.android.com/jetpack/androidx/releases/media
 androidxMedia = "1.7.0"
 # https://developer.android.com/jetpack/androidx/releases/media3
-androidxMedia3 = "1.4.1"
+androidxMedia3 = "1.5.0"
 # https://developer.android.com/jetpack/androidx/releases/preference
 androidxPreferenceKtx = "1.2.1"
 # https://developer.android.com/jetpack/androidx/releases/recyclerview
@@ -51,7 +52,7 @@ androidxViewpager2 = "1.1.0"
 androidxWebkit = "1.12.1"
 # https://developer.android.com/jetpack/androidx/releases/work
 androidxWork = "2.10.0"
-ankiBackend = '0.1.43-anki24.10rc2'
+ankiBackend = '0.1.48-anki24.11'
 autoService = "1.1.1"
 autoServiceAnnotations = "1.1.1"
 colorpicker = "1.2.0"
@@ -62,9 +63,9 @@ commonsCompress = "1.27.1"
 # https://commons.apache.org/proper/commons-exec/changes-report.html
 commonsExec = "1.4.0"
 # https://commons.apache.org/proper/commons-io/changes-report.html
-commonsIo = "2.17.0"
+commonsIo = "2.18.0"
 coroutines = '1.9.0'
-desugar-jdk-libs-nio = "2.1.2"
+desugar-jdk-libs-nio = "2.1.3"
 drawer = "1.0.3"
 dokka = "1.9.20"
 espresso = '3.6.1'
@@ -74,15 +75,16 @@ imageCropper = "4.6.0"
 javaSemver = "0.10.2"
 jetbrainsAnnotations = "26.0.1"
 json = "20240303"
-jsoup = "1.18.1"
+jsoup = "1.18.3"
 androidTestJunit = "1.2.1"
-junitJupiter= "5.11.3"
+junitJupiter = "5.11.4"
+junitPlatformLauncher = "1.11.4"
 # https://github.com/JetBrains/kotlin/releases/
-kotlin = '2.0.21'
+kotlin = '2.1.0'
 kotlinxSerializationJson = "1.7.3"
-ktlint = "11.6.1"
+ktlintGradlePlugin = "12.1.2"
 leakcanaryAndroid = "2.14"
-lint = '31.7.2'
+lint = '31.7.3'
 material = "1.12.0"
 materialTapTargetPrompt = "3.3.2"
 mockitoInline = "5.2.0"
@@ -91,8 +93,9 @@ mockk = "1.13.13"
 nanohttpd = "2.3.1"
 okhttp = "4.12.0"
 # https://github.com/protocolbuffers/protobuf/releases
-protobufKotlinLite = "4.28.3"
-robolectric = "4.13"
+protobufKotlinLite = "4.29.1"
+# ../AnkiDroid/robolectricDownload.gradle may need changes - read instructions in that file
+robolectric = "4.14.1"
 searchpreference = "2.5.1"
 seismic = "1.0.3"
 sharedPreferencesMock = "1.2.4"
@@ -101,7 +104,7 @@ slf4jTimber = "3.1"
 timber = "5.0.1"
 # https://github.com/Triple-T/gradle-play-publisher/releases
 # In the past, releases have been published before the changelog
-triplet = "3.11.0"
+triplet = "3.12.1"
 turbine = "1.2.0"
 
 [libraries]
@@ -180,6 +183,7 @@ ivanshafran-shared-preferences-mock = { module = "io.github.ivanshafran:shared-p
 json = { module = "org.json:json", version.ref = "json" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junitJupiter" }
 junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junitJupiter" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junitPlatformLauncher" }
 junit-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine", version.ref = "junitJupiter" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -207,7 +211,7 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 
 
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+ktlint-gradle-plugin = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintGradlePlugin" }
 
 
 keeper = { id = "com.slack.keeper", version.ref = "slackKeeper" }

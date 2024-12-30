@@ -33,7 +33,9 @@ import java.io.File
  * Field with an image.
  */
 @KotlinCleanup("convert properties to single-line overrides")
-class ImageField : FieldBase(), IField {
+class ImageField :
+    FieldBase(),
+    IField {
     @get:JvmName("getImagePath_unused")
     var extraImagePathRef: String? = null
     private var _name: String? = null
@@ -66,7 +68,10 @@ class ImageField : FieldBase(), IField {
             return formatImageFileName(file)
         }
 
-    override fun setFormattedString(col: Collection, value: String) {
+    override fun setFormattedString(
+        col: Collection,
+        value: String,
+    ) {
         extraImagePathRef = getImageFullPath(col, value)
     }
 
@@ -75,17 +80,19 @@ class ImageField : FieldBase(), IField {
 
         @VisibleForTesting
         @NeedsTest("files with HTML illegal chars can be imported and rendered")
-        fun formatImageFileName(file: File): String {
-            return if (file.exists()) {
+        fun formatImageFileName(file: File): String =
+            if (file.exists()) {
                 val encodedName = Uri.encode(file.name)
                 """<img src="$encodedName">"""
             } else {
                 ""
             }
-        }
 
         @VisibleForTesting
-        fun getImageFullPath(col: Collection, value: String): String {
+        fun getImageFullPath(
+            col: Collection,
+            value: String,
+        ): String {
             val path = parseImageSrcFromHtml(value)
 
             return if (path.isNotEmpty()) {

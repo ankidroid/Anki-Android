@@ -82,16 +82,12 @@
     <string name="webview_crash_loop_dialog_content">WebView Sistem gagal memapar kad \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Tanda</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Ubah had kad baru hari ini</string>
-    <string name="custom_study_increase_review_limit">Ubah had kad semakan hari ini</string>
-    <string name="custom_study_review_forgotten">Semak kad terlupa</string>
-    <string name="custom_study_review_ahead">Semak awal</string>
-    <string name="custom_study_random_selection">Ulang kaji kad pilihan rawak</string>
-    <string name="custom_study_preview_new">Pratonton kad baru</string>
     <string name="custom_study_limit_tags">Had kepada tag tertentu</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Sunting nota</string>
     <string name="discard">Discard</string>
@@ -166,7 +162,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Tetapan ulang kaji</string>
     <string name="select_tts" maxLength="28">Tetapkan bahasa TTS</string>
     <string name="custom_study" maxLength="28">Ulang kaji tersuai</string>
-    <string name="more_options">Lagi</string>
     <string name="dyn_deck_desc">Ini merupakan dek khas untuk mengulang kaji diluar jadual biasa. Kad akan dikembalikan ke dek asal setelah disemak. Memadam dek ini daripada senarai dek akan mengembalikan baki kad ke dek asal.</string>
     <string name="steps_error">Setiap langkah hendaklah lebih besar daripada 0</string>
     <string name="steps_min_error">Sekurang-kurangnya satu langkah diperlukan</string>

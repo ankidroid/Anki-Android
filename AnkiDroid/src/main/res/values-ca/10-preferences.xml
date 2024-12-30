@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">Més de %d cartes per fer</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibra</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Parpellejar el llum</string>
-    <string name="timeout_answer_text" maxLength="41">Visualització automàtica de la resposta</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Seleccioneu l\'idioma</string>
     <string name="software_render" maxLength="41">Desactiva hardware de mostrar carta</string>
     <string name="software_render_summ">La mostra per hardware és més ràpida, però pot tenir problemes, concretament a Android 8 / 8.1. Si no podeu veure parts de la carta, proveu aquesta configuració.</string>

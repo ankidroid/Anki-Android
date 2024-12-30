@@ -82,17 +82,13 @@
     <string name="webview_crash_loop_dialog_content">\'%1$s\' ಕಾರ್ಡ್ ಅನ್ನು ನಿರೂಪಿಸಲು ಸಿಸ್ಟಮ್ ವೆಬ್‌ವೀಕ್ಷಣೆ ವಿಫಲವಾಗಿದೆ.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">ಧ್ವಜಗಳು</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">ಇಂದಿನ ಹೊಸ ಕಾರ್ಡ್ ಮಿತಿಯನ್ನು ಮಾರ್ಪಡಿಸಿ</string>
-    <string name="custom_study_increase_review_limit">ಇಂದಿನ ವಿಮರ್ಶೆ ಕಾರ್ಡ್ ಮಿತಿಯನ್ನು ಮಾರ್ಪಡಿಸಿ</string>
-    <string name="custom_study_review_forgotten">ಮರೆತುಹೋದ ಕಾರ್ಡ್‌ಗಳನ್ನು ಪರಿಶೀಲಿಸಿ</string>
-    <string name="custom_study_review_ahead">ಮುಂದೆ ಪರಿಶೀಲಿಸಿ</string>
-    <string name="custom_study_random_selection">ಕಾರ್ಡ್‌ಗಳ ಯಾದೃಚ್ selection ಿಕ ಆಯ್ಕೆಯನ್ನು ಅಧ್ಯಯನ ಮಾಡಿ</string>
-    <string name="custom_study_preview_new">ಹೊಸ ಕಾರ್ಡ್‌ಗಳನ್ನು ಪೂರ್ವವೀಕ್ಷಣೆ ಮಾಡಿ</string>
     <string name="custom_study_limit_tags">ನಿರ್ದಿಷ್ಟ ಟ್ಯಾಗ್‌ಗಳಿಗೆ ಮಿತಿಗೊಳಿಸಿ</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">ಟಿಪ್ಪಣಿಯನ್ನು ಮಾರ್ಪಡಿಸಿ</string>
     <string name="discard">ಧ್ವಜಗಳು</string>
@@ -169,7 +165,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ಅಧ್ಯಯನ ಆಯ್ಕೆಗಳು</string>
     <string name="select_tts" maxLength="28">TTS ಭಾಷೆಯನ್ನು ಹೊಂದಿಸಿ</string>
     <string name="custom_study" maxLength="28">ಕಸ್ಟಮ್ ಅಧ್ಯಯನ</string>
-    <string name="more_options">ಹೆಚ್ಚು</string>
     <string name="dyn_deck_desc">ಸಾಮಾನ್ಯ ವೇಳಾಪಟ್ಟಿಯ ಹೊರಗೆ ಅಧ್ಯಯನ ಮಾಡಲು ಇದು ವಿಶೇಷ ಡೆಕ್ ಆಗಿದೆ. ನೀವು ಅವುಗಳನ್ನು ಪರಿಶೀಲಿಸಿದ ನಂತರ ಕಾರ್ಡ್‌ಗಳನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಅವುಗಳ ಮೂಲ ಡೆಕ್‌ಗಳಿಗೆ ಹಿಂತಿರುಗಿಸಲಾಗುತ್ತದೆ. ಡೆಕ್ ಪಟ್ಟಿಯಿಂದ ಈ ಡೆಕ್ ಅನ್ನು ಅಳಿಸುವುದರಿಂದ ಉಳಿದ ಎಲ್ಲಾ ಕಾರ್ಡ್‌ಗಳನ್ನು ಅವುಗಳ ಮೂಲ ಡೆಕ್‌ಗೆ ಹಿಂತಿರುಗಿಸುತ್ತದೆ.</string>
     <string name="steps_error">ಹಂತಗಳು 0 ಕ್ಕಿಂತ ಹೆಚ್ಚಿನ ಸಂಖ್ಯೆಯಾಗಿರಬೇಕು</string>
     <string name="steps_min_error">ಕನಿಷ್ಠ ಒಂದು ಹೆಜ್ಜೆ ಅಗತ್ಯವಿದೆ</string>

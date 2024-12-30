@@ -27,7 +27,9 @@ import androidx.fragment.app.FragmentTransaction
  *
  * @throws IllegalArgumentException If a fragment is not attached to [containerViewId]
  */
-fun FragmentManager.removeFragmentFromContainer(@LayoutRes containerViewId: Int) {
+fun FragmentManager.removeFragmentFromContainer(
+    @LayoutRes containerViewId: Int,
+) {
     val toRemove = requireNotNull(findFragmentById(containerViewId)) { "could not find fragment" }
     beginTransaction()
         .remove(toRemove)

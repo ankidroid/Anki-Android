@@ -40,6 +40,7 @@ import anki.search.BrowserRow
 import anki.search.SearchNode
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
+import com.ichi2.anki.Flag
 import com.ichi2.libanki.Utils.ids2str
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.backend.model.toProtoBuf
@@ -74,7 +75,7 @@ class Collection(
      * Operations that work on a closed collection (eg importing), or do not require a collection
      * at all (eg translations) are the exception.
      */
-    val backend: Backend
+    val backend: Backend,
 ) {
     /** Access backend translations */
     val tr = backend.tr
@@ -132,9 +133,7 @@ class Collection(
     private val lastSync: Long
         get() = db.queryLongScalar("select ls from col")
 
-    fun usn(): Int {
-        return -1
-    }
+    fun usn(): Int = -1
 
     var ls: Long = 0
     // END: SQL table columns
@@ -182,9 +181,10 @@ class Collection(
             }
             sched = Scheduler(this)
             if (config.get<Int>("creationOffset") == null) {
-                val prefs = getPreferences().copy {
-                    scheduling = scheduling.copy { newTimezone = true }
-                }
+                val prefs =
+                    getPreferences().copy {
+                        scheduling = scheduling.copy { newTimezone = true }
+                    }
                 setPreferences(prefs)
             }
         }
@@ -196,7 +196,10 @@ class Collection(
      * AnkiDroid always saves as changes are made.
      */
     @Synchronized
-    fun close(downgrade: Boolean = false, forFullSync: Boolean = false) {
+    fun close(
+        downgrade: Boolean = false,
+        forFullSync: Boolean = false,
+    ) {
         if (!dbClosed) {
             if (!forFullSync) {
                 backend.closeCollection(downgrade)
@@ -239,7 +242,7 @@ class Collection(
         db.execute(
             "update col set scm=?, mod=?",
             TimeManager.time.intTimeMS(),
-            TimeManager.time.intTimeMS()
+            TimeManager.time.intTimeMS(),
         )
     }
 
@@ -263,36 +266,30 @@ class Collection(
     }
 
     /** True if schema changed since last sync.  */
-    fun schemaChanged(): Boolean {
-        return scm > lastSync
-    }
+    fun schemaChanged(): Boolean = scm > lastSync
 
     /**
      * Object creation helpers **************************************************
      * *********************************************
      */
-    fun getCard(id: Long): Card {
-        return Card(this, id)
-    }
+    fun getCard(id: Long): Card = Card(this, id)
 
-    fun updateCards(cards: Iterable<Card>, skipUndoEntry: Boolean = false): OpChanges {
-        return backend.updateCards(cards.map { it.toBackendCard() }, skipUndoEntry)
-    }
+    fun updateCards(
+        cards: Iterable<Card>,
+        skipUndoEntry: Boolean = false,
+    ): OpChanges = backend.updateCards(cards.map { it.toBackendCard() }, skipUndoEntry)
 
-    fun updateCard(card: Card, skipUndoEntry: Boolean = false): OpChanges {
-        return updateCards(listOf(card), skipUndoEntry)
-    }
+    fun updateCard(
+        card: Card,
+        skipUndoEntry: Boolean = false,
+    ): OpChanges = updateCards(listOf(card), skipUndoEntry)
 
-    fun getNote(id: Long): Note {
-        return Note(this, id)
-    }
+    fun getNote(id: Long): Note = Note(this, id)
 
     /**
      * Notes ******************************************************************** ***************************
      */
-    fun noteCount(): Int {
-        return db.queryScalar("SELECT count() FROM notes")
-    }
+    fun noteCount(): Int = db.queryScalar("SELECT count() FROM notes")
 
     /**
      * Return a new note with the model derived from the deck or the configuration
@@ -300,18 +297,14 @@ class Collection(
      * the configuration (curModel)
      * @return The new note
      */
-    fun newNote(forDeck: Boolean = true): Note {
-        return newNote(notetypes.current(forDeck))
-    }
+    fun newNote(forDeck: Boolean = true): Note = newNote(notetypes.current(forDeck))
 
     /**
      * Return a new note with a specific model
      * @param notetype The model to use for the new note
      * @return The new note
      */
-    fun newNote(notetype: NotetypeJson): Note {
-        return Note.fromNotetypeId(this, notetype.id)
-    }
+    fun newNote(notetype: NotetypeJson): Note = Note.fromNotetypeId(this, notetype.id)
 
     /**
      * Cards ******************************************************************** ***************************
@@ -324,9 +317,7 @@ class Collection(
     val isEmpty: Boolean
         get() = db.queryScalar("SELECT 1 FROM cards LIMIT 1") == 0
 
-    fun cardCount(): Int {
-        return db.queryScalar("SELECT count() FROM cards")
-    }
+    fun cardCount(): Int = db.queryScalar("SELECT count() FROM cards")
 
     /*
       Finding cards ************************************************************ ***********************************
@@ -334,32 +325,30 @@ class Collection(
 
     /**
      * Construct a search string from the provided search nodes. For example:
-     * */
-    /*
-            import anki.search.searchNode
-            import anki.search.SearchNode
-            import anki.search.SearchNodeKt.group
-
-            val node = searchNode {
-                group = SearchNodeKt.group {
-                    joiner = SearchNode.Group.Joiner.AND
-                    nodes += searchNode { deck = "a **test** deck" }
-                    nodes += searchNode {
-                        negated = searchNode {
-                            tag = "foo"
-                        }
-                    }
-                    nodes += searchNode { flag = SearchNode.Flag.FLAG_GREEN }
-                }
-            }
-            // yields "deck:a \*\*test\*\* deck" -tag:foo flag:3
-            val text = col.buildSearchString(node)
-        }
-    */
+     * ```kotlin
+     *       import anki.search.searchNode
+     *       import anki.search.SearchNode
+     *       import anki.search.SearchNodeKt.group
+     *
+     *       val node = searchNode {
+     *           group = SearchNodeKt.group {
+     *               joiner = SearchNode.Group.Joiner.AND
+     *               nodes += searchNode { deck = "a **test** deck" }
+     *               nodes += searchNode {
+     *                   negated = searchNode {
+     *                       tag = "foo"
+     *                   }
+     *               }
+     *               nodes += searchNode { flag = SearchNode.Flag.FLAG_GREEN }
+     *           }
+     *       }
+     *       // yields "deck:a \*\*test\*\* deck" -tag:foo flag:3
+     *       val text = col.buildSearchString(node)
+     *   }
+     * ```
+     */
     @Suppress("unused")
-    fun buildSearchString(node: SearchNode): String {
-        return backend.buildSearchString(node)
-    }
+    fun buildSearchString(node: SearchNode): String = backend.buildSearchString(node)
 
     /**
      * Return a list of card ids
@@ -367,16 +356,17 @@ class Collection(
      */
     fun findCards(
         search: String,
-        order: SortOrder = SortOrder.NoOrdering()
+        order: SortOrder = SortOrder.NoOrdering(),
     ): List<CardId> {
-        val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
-            SortOrder.BuiltinSortKind(
-                config.get("sortType") ?: "noteFld",
-                config.get("sortBackwards") ?: false
-            )
-        } else {
-            order
-        }
+        val adjustedOrder =
+            if (order is SortOrder.UseCollectionOrdering) {
+                SortOrder.BuiltinSortKind(
+                    config.get("sortType") ?: "noteFld",
+                    config.get("sortBackwards") ?: false,
+                )
+            } else {
+                order
+            }
         return try {
             backend.searchCards(search, adjustedOrder.toProtoBuf())
         } catch (e: BackendInvalidInputException) {
@@ -386,38 +376,47 @@ class Collection(
 
     fun findNotes(
         query: String,
-        order: SortOrder = SortOrder.NoOrdering()
+        order: SortOrder = SortOrder.NoOrdering(),
     ): List<Long> {
-        val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
-            SortOrder.BuiltinSortKind(
-                config.get("noteSortType") ?: "noteFld",
-                config.get("browserNoteSortBackwards") ?: false
-            )
-        } else {
-            order
-        }
-        val noteIDsList = try {
-            backend.searchNotes(query, adjustedOrder.toProtoBuf())
-        } catch (e: BackendInvalidInputException) {
-            throw InvalidSearchException(e)
-        }
+        val adjustedOrder =
+            if (order is SortOrder.UseCollectionOrdering) {
+                SortOrder.BuiltinSortKind(
+                    config.get("noteSortType") ?: "noteFld",
+                    config.get("browserNoteSortBackwards") ?: false,
+                )
+            } else {
+                order
+            }
+        val noteIDsList =
+            try {
+                backend.searchNotes(query, adjustedOrder.toProtoBuf())
+            } catch (e: BackendInvalidInputException) {
+                throw InvalidSearchException(e)
+            }
         return noteIDsList
     }
 
-    data class CardIdToNoteId(val id: Long, val nid: Long)
+    data class CardIdToNoteId(
+        val id: Long,
+        val nid: Long,
+    )
 
     /** Return a list of card ids  */
     @RustCleanup("Remove in V16.")
     @NotInLibAnki
-    fun findOneCardByNote(query: String, order: SortOrder): List<CardId> {
+    fun findOneCardByNote(
+        query: String,
+        order: SortOrder,
+    ): List<CardId> {
         // This function shouldn't exist and CardBrowser should be modified to use Notes,
         // so not much effort was expended here
 
         val noteIds = findNotes(query, order)
 
         // select the card with the lowest `ord` to show
-        val cursor = db.query(
-            """
+        val cursor =
+            db.query(
+                """
     SELECT c.id, card_with_min_ord.nid
     FROM (
       SELECT nid, MIN(ord) AS ord
@@ -426,8 +425,8 @@ class Collection(
       GROUP BY nid
     ) AS card_with_min_ord
     JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.ord
-            """.trimMargin()
-        )
+                """.trimMargin(),
+            )
         val resultList = mutableListOf<CardIdToNoteId>()
 
         cursor.use { cur ->
@@ -447,11 +446,16 @@ class Collection(
 
     @LibAnkiAlias("find_and_replace")
     @RustCleanup("Calling code should handle returned OpChanges")
-    fun findReplace(nids: List<Long>, src: String, dst: String, regex: Boolean = false, field: String? = null, fold: Boolean = true): Int {
-        return backend.findAndReplace(nids, src, dst, regex, !fold, field ?: "").count
-    }
+    fun findReplace(
+        nids: List<Long>,
+        src: String,
+        dst: String,
+        regex: Boolean = false,
+        field: String? = null,
+        fold: Boolean = true,
+    ): Int = backend.findAndReplace(nids, src, dst, regex, !fold, field ?: "").count
 
-    /* Browser Table */
+    // Browser Table
 
     @LibAnkiAlias("all_browser_columns")
     fun allBrowserColumns(): List<BrowserColumns.Column> = backend.allBrowserColumns()
@@ -488,10 +492,11 @@ class Collection(
     /** Return the stored note column names and ensure the backend columns are set and in sync. */
     @LibAnkiAlias("load_browser_note_columns")
     fun loadBrowserNoteColumns(): List<String> {
-        val columns = config.get<List<String>>(
-            BrowserConfig.ACTIVE_NOTE_COLUMNS_KEY,
-            BrowserDefaults.NOTE_COLUMNS
-        )!!
+        val columns =
+            config.get<List<String>>(
+                BrowserConfig.ACTIVE_NOTE_COLUMNS_KEY,
+                BrowserDefaults.NOTE_COLUMNS,
+            )!!
         backend.setActiveBrowserColumns(columns)
         return columns
     }
@@ -518,10 +523,13 @@ class Collection(
         startReps = sched.reps
     }
 
-    data class TimeboxReached(val secs: Int, val reps: Int)
+    data class TimeboxReached(
+        val secs: Int,
+        val reps: Int,
+    )
 
     /* Return (elapsedTime, reps) if timebox reached, or null.
-    * Automatically restarts timebox if expired. */
+     * Automatically restarts timebox if expired. */
     fun timeboxReached(): TimeboxReached? {
         if (sched.timeboxSecs() == 0) {
             // timeboxing disabled
@@ -532,7 +540,7 @@ class Collection(
         return if (elapsed > limit) {
             TimeboxReached(
                 limit,
-                sched.reps - startReps
+                sched.reps - startReps,
             ).also {
                 startTimebox()
             }
@@ -561,21 +569,24 @@ class Collection(
         return action?.let { tr.undoRedoAction(it) }
     }
 
-    fun redoAvailable(): Boolean {
-        return undoStatus().redo != null
-    }
+    fun redoAvailable(): Boolean = undoStatus().redo != null
 
-    fun removeNotes(nids: Iterable<NoteId> = listOf(), cids: Iterable<CardId> = listOf()): OpChangesWithCount {
-        return backend.removeNotes(noteIds = nids, cardIds = cids).also {
+    fun removeNotes(
+        nids: Iterable<NoteId> = listOf(),
+        cids: Iterable<CardId> = listOf(),
+    ): OpChangesWithCount =
+        backend.removeNotes(noteIds = nids, cardIds = cids).also {
             Timber.d("removeNotes: %d changes", it.count)
         }
-    }
 
     fun removeCardsAndOrphanedNotes(cardIds: Iterable<Long>) {
         backend.removeCards(cardIds)
     }
 
-    fun addNote(note: Note, deckId: DeckId): OpChanges {
+    fun addNote(
+        note: Note,
+        deckId: DeckId,
+    ): OpChanges {
         val resp = backend.addNote(note.toBackendNote(), deckId)
         note.id = resp.noteId
         return resp.changes
@@ -600,10 +611,14 @@ class Collection(
         if (db.queryScalar("select 1 from cards where nid not in (select id from notes) limit 1") > 0) {
             return false
         }
-        val badNotes = db.queryScalar(
-            "select 1 from notes where id not in (select distinct nid from cards) " +
-                "or mid not in " + ids2str(notetypes.ids()) + " limit 1"
-        ) > 0
+        val badNotes =
+            db.queryScalar(
+                """select 1 from notes where
+                  id not in (select distinct nid from cards)
+                  or
+                  mid not in ${ids2str(notetypes.ids())}
+                limit 1""",
+            ) > 0
         // notes without cards or models
         if (badNotes) {
             return false
@@ -616,12 +631,16 @@ class Collection(
             }
             // Make a list of valid ords for this model
             val tmpls = m.getJSONArray("tmpls")
-            val badOrd = db.queryScalar(
-                "select 1 from cards where (ord < 0 or ord >= ?) and nid in ( " +
-                    "select id from notes where mid = ?) limit 1",
-                tmpls.length(),
-                m.getLong("id")
-            ) > 0
+            val badOrd =
+                db.queryScalar(
+                    """select 1 from cards where
+                        (ord < 0 or ord >= ?)
+                        and
+                        nid in (select id from notes where mid = ?)
+                      limit 1""",
+                    tmpls.length(),
+                    m.getLong("id"),
+                ) > 0
             if (badOrd) {
                 return false
             }
@@ -632,16 +651,16 @@ class Collection(
     /**
      * Card Flags *****************************************************************************************************
      */
-    fun setUserFlag(flag: Int, cids: List<Long>) {
-        assert(flag in (0..7))
+    fun setUserFlag(
+        flag: Flag,
+        cids: List<Long>,
+    ) {
         db.execute(
-            "update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + ids2str(
-                cids
-            ),
+            "update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in ${ids2str(cids)}",
             7,
-            flag,
+            flag.code,
             usn(),
-            TimeManager.time.intTime()
+            TimeManager.time.intTime(),
         )
     }
 
@@ -652,63 +671,45 @@ class Collection(
 
     @NotInLibAnki
     @CheckResult
-    fun filterToValidCards(cards: LongArray?): List<Long> {
-        return db.queryLongList("select id from cards where id in " + ids2str(cards))
-    }
+    fun filterToValidCards(cards: LongArray?): List<Long> = db.queryLongList("select id from cards where id in " + ids2str(cards))
 
-    fun setDeck(cids: Iterable<CardId>, did: DeckId): OpChangesWithCount {
-        return backend.setDeck(cardIds = cids, deckId = did)
-    }
+    fun setDeck(
+        cids: Iterable<CardId>,
+        did: DeckId,
+    ): OpChangesWithCount = backend.setDeck(cardIds = cids, deckId = did)
 
     /** Save (flush) the note to the DB. Unlike note.flush(), this is undoable. This should
      * not be used for adding new notes. */
-    fun updateNote(note: Note): OpChanges {
-        return backend.updateNotes(notes = listOf(note.toBackendNote()), skipUndoEntry = false)
-    }
+    fun updateNote(note: Note): OpChanges = backend.updateNotes(notes = listOf(note.toBackendNote()), skipUndoEntry = false)
 
-    fun updateNotes(notes: Iterable<Note>): OpChanges {
-        return backend.updateNotes(notes = notes.map { it.toBackendNote() }, skipUndoEntry = false)
-    }
+    fun updateNotes(notes: Iterable<Note>): OpChanges = backend.updateNotes(notes = notes.map { it.toBackendNote() }, skipUndoEntry = false)
 
     @NotInLibAnki
-    fun emptyCids(): List<CardId> {
-        return getEmptyCards().notesList.flatMap { it.cardIdsList }
-    }
+    fun emptyCids(): List<CardId> = getEmptyCards().notesList.flatMap { it.cardIdsList }
 
     /** Fixes and optimizes the database. If any errors are encountered, a list of
      * problems is returned. Throws if DB is unreadable. */
-    fun fixIntegrity(): List<String> {
-        return backend.checkDatabase()
-    }
+    fun fixIntegrity(): List<String> = backend.checkDatabase()
 
     /** Change the flag color of the specified cards. flag=0 removes flag. */
     @CheckResult
-    fun setUserFlagForCards(cids: Iterable<Long>, flag: Int): OpChangesWithCount {
-        return backend.setFlag(cardIds = cids, flag = flag)
-    }
+    fun setUserFlagForCards(
+        cids: Iterable<Long>,
+        flag: Flag,
+    ): OpChangesWithCount = backend.setFlag(cardIds = cids, flag = flag.code)
 
-    fun getEmptyCards(): EmptyCardsReport {
-        return backend.getEmptyCards()
-    }
+    fun getEmptyCards(): EmptyCardsReport = backend.getEmptyCards()
 
     @Suppress("unused")
-    fun syncStatus(auth: SyncAuth): SyncStatusResponse {
-        return backend.syncStatus(input = auth)
-    }
+    fun syncStatus(auth: SyncAuth): SyncStatusResponse = backend.syncStatus(input = auth)
 
     /** Takes raw input from TypeScript frontend and returns suitable translations. */
-    fun i18nResourcesRaw(input: ByteArray): ByteArray {
-        return backend.i18nResourcesRaw(input = input)
-    }
+    fun i18nResourcesRaw(input: ByteArray): ByteArray = backend.i18nResourcesRaw(input = input)
 
     // Python code has a cardsOfNote, but not vice-versa yet
-    fun notesOfCards(cids: Iterable<CardId>): List<NoteId> {
-        return db.queryLongList("select distinct nid from cards where id in ${ids2str(cids)}")
-    }
+    fun notesOfCards(cids: Iterable<CardId>): List<NoteId> = db.queryLongList("select distinct nid from cards where id in ${ids2str(cids)}")
 
-    fun cardIdsOfNote(nid: NoteId): List<CardId> {
-        return backend.cardsOfNote(nid = nid)
-    }
+    fun cardIdsOfNote(nid: NoteId): List<CardId> = backend.cardsOfNote(nid = nid)
 
     /**
      * returns the list of cloze ordinals in a note
@@ -717,50 +718,56 @@ class Collection(
      */
     fun clozeNumbersInNote(n: Note): List<Int> {
         // the call appears to be non-deterministic. Sort ascending
-        return backend.clozeNumbersInNote(n.toBackendNote())
+        return backend
+            .clozeNumbersInNote(n.toBackendNote())
             .sorted()
     }
 
-    fun getImageForOcclusionRaw(input: ByteArray): ByteArray {
-        return backend.getImageForOcclusionRaw(input = input)
-    }
+    fun getImageForOcclusionRaw(input: ByteArray): ByteArray = backend.getImageForOcclusionRaw(input = input)
 
-    fun getImageOcclusionNoteRaw(input: ByteArray): ByteArray {
-        return backend.getImageOcclusionNoteRaw(input = input)
-    }
-    fun getImageOcclusionFieldsRaw(input: ByteArray): ByteArray {
-        return backend.getImageOcclusionFieldsRaw(input = input)
-    }
-    fun addImageOcclusionNoteRaw(input: ByteArray): ByteArray {
-        return backend.addImageOcclusionNoteRaw(input = input)
-    }
+    fun getImageOcclusionNoteRaw(input: ByteArray): ByteArray = backend.getImageOcclusionNoteRaw(input = input)
 
-    fun updateImageOcclusionNoteRaw(input: ByteArray): ByteArray {
-        return backend.updateImageOcclusionNoteRaw(input = input)
-    }
+    fun getImageOcclusionFieldsRaw(input: ByteArray): ByteArray = backend.getImageOcclusionFieldsRaw(input = input)
 
-    fun congratsInfoRaw(input: ByteArray): ByteArray {
-        return backend.congratsInfoRaw(input = input)
-    }
+    fun addImageOcclusionNoteRaw(input: ByteArray): ByteArray = backend.addImageOcclusionNoteRaw(input = input)
 
-    fun compareAnswer(expected: String, provided: String, combining: Boolean = true): String {
-        return backend.compareAnswer(expected = expected, provided = provided, combining = combining)
-    }
+    fun updateImageOcclusionNoteRaw(input: ByteArray): ByteArray = backend.updateImageOcclusionNoteRaw(input = input)
 
-    fun extractClozeForTyping(text: String, ordinal: Int): String {
-        return backend.extractClozeForTyping(text = text, ordinal = ordinal)
-    }
+    fun congratsInfoRaw(input: ByteArray): ByteArray = backend.congratsInfoRaw(input = input)
+
+    fun setWantsAbortRaw(input: ByteArray): ByteArray = backend.setWantsAbortRaw(input = input)
+
+    fun latestProgressRaw(input: ByteArray): ByteArray = backend.latestProgressRaw(input = input)
+
+    fun getSchedulingStatesWithContextRaw(input: ByteArray): ByteArray = backend.getSchedulingStatesWithContextRaw(input = input)
+
+    fun setSchedulingStatesRaw(input: ByteArray): ByteArray = backend.setSchedulingStatesRaw(input = input)
+
+    fun getChangeNotetypeInfoRaw(input: ByteArray): ByteArray = backend.getChangeNotetypeInfoRaw(input = input)
+
+    fun changeNotetypeRaw(input: ByteArray): ByteArray = backend.changeNotetypeRaw(input = input)
+
+    fun importJsonStringRaw(input: ByteArray): ByteArray = backend.importJsonStringRaw(input = input)
+
+    fun importJsonFileRaw(input: ByteArray): ByteArray = backend.importJsonFileRaw(input = input)
+
+    fun compareAnswer(
+        expected: String,
+        provided: String,
+        combining: Boolean = true,
+    ): String = backend.compareAnswer(expected = expected, provided = provided, combining = combining)
+
+    fun extractClozeForTyping(
+        text: String,
+        ordinal: Int,
+    ): String = backend.extractClozeForTyping(text = text, ordinal = ordinal)
 
     fun defaultsForAdding(currentReviewCard: Card? = null): anki.notes.DeckAndNotetype {
         val homeDeck = currentReviewCard?.currentDeckId()?.did ?: 0L
         return backend.defaultsForAdding(homeDeckOfCurrentReviewCard = homeDeck)
     }
 
-    fun getPreferences(): Preferences {
-        return backend.getPreferences()
-    }
+    fun getPreferences(): Preferences = backend.getPreferences()
 
-    fun setPreferences(preferences: Preferences): OpChanges {
-        return backend.setPreferences(preferences)
-    }
+    fun setPreferences(preferences: Preferences): OpChanges = backend.setPreferences(preferences)
 }

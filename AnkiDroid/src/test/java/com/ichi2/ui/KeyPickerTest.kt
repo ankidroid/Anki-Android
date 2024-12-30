@@ -31,11 +31,11 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class KeyPickerTest : RobolectricTest() {
-
-    private var keyPicker: KeyPicker = run {
-        targetContext.setTheme(Theme.LIGHT.resId)
-        KeyPicker.inflate(targetContext)
-    }
+    private var keyPicker: KeyPicker =
+        run {
+            targetContext.setTheme(Theme.LIGHT.resId)
+            KeyPicker.inflate(targetContext)
+        }
 
     @Test
     fun test_normal_binding() {
@@ -83,5 +83,6 @@ class KeyPickerTest : RobolectricTest() {
     }
 
     private fun getVKey() = KeyEventUtils.getVKey()
+
     private fun getInvalidEvent() = KeyEventUtils.getInvalid()
 }

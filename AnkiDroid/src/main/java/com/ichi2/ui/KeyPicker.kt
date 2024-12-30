@@ -32,7 +32,9 @@ typealias KeyCode = Int
  * Square dialog which allows a user to select a [Binding] for a key press
  * This does not yet support bluetooth headsets.
  */
-class KeyPicker(val rootLayout: View) : WarningDisplay {
+class KeyPicker(
+    val rootLayout: View,
+) : WarningDisplay {
     private val textView: TextView = rootLayout.findViewById(R.id.key_picker_selected_key)
 
     override val warningTextView: FixedTextView = rootLayout.findViewById(R.id.warning)
@@ -57,9 +59,11 @@ class KeyPicker(val rootLayout: View) : WarningDisplay {
         if (event.action != KeyEvent.ACTION_DOWN) return true
 
         // When accepting a keypress, we only want to find the keycode, not the unicode character.
-        val newBinding = Binding.possibleKeyBindings(event)
-            .filterIsInstance<Binding.KeyCode>()
-            .firstOrNull { binding -> isValidKeyCode?.invoke(binding.keycode) != false } ?: return true
+        val newBinding =
+            Binding
+                .possibleKeyBindings(event)
+                .filterIsInstance<Binding.KeyCode>()
+                .firstOrNull { binding -> isValidKeyCode?.invoke(binding.keycode) != false } ?: return true
         Timber.d("Changed key to '%s'", newBinding)
         binding = newBinding
         text = newBinding.toDisplayString(context)

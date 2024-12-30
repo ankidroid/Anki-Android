@@ -59,7 +59,12 @@ import com.ichi2.utils.title
  */
 class ControlPreference : ListPreference {
     @Suppress("unused")
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
+    constructor(
+        context: Context,
+        attrs: AttributeSet?,
+        defStyleAttr: Int,
+        defStyleRes: Int,
+    ) : super(context, attrs, defStyleAttr, defStyleRes)
 
     @Suppress("unused")
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
@@ -102,8 +107,10 @@ class ControlPreference : ListPreference {
     }
 
     /** The summary that appears on the preference */
-    override fun getSummary(): CharSequence = MappableBinding.fromPreferenceString(value)
-        .joinToString(", ") { it.toDisplayString(context) }
+    override fun getSummary(): CharSequence =
+        MappableBinding
+            .fromPreferenceString(value)
+            .joinToString(", ") { it.toDisplayString(context) }
 
     /** Called when an element is selected in the ListView */
     @SuppressLint("CheckResult")
@@ -118,10 +125,11 @@ class ControlPreference : ListPreference {
 
                     positiveButton(R.string.dialog_ok) {
                         val gesture = gesturePicker.getGesture() ?: return@positiveButton
-                        val mappableBinding = fromGesture(
-                            gesture,
-                            screenBuilder
-                        )
+                        val mappableBinding =
+                            fromGesture(
+                                gesture,
+                                screenBuilder,
+                            )
                         if (bindingIsUsedOnAnotherCommand(mappableBinding)) {
                             showDialogToReplaceBinding(mappableBinding, context.getString(R.string.binding_replace_gesture), it)
                         } else {
@@ -146,10 +154,11 @@ class ControlPreference : ListPreference {
 
                     // When the user presses a key
                     keyPicker.setBindingChangedListener { binding ->
-                        val mappableBinding = MappableBinding(
-                            binding,
-                            screenBuilder(CardSide.BOTH)
-                        )
+                        val mappableBinding =
+                            MappableBinding(
+                                binding,
+                                screenBuilder(CardSide.BOTH),
+                            )
                         warnIfBindingIsUsed(mappableBinding, keyPicker)
                     }
 
@@ -186,11 +195,13 @@ class ControlPreference : ListPreference {
     private fun displayAddAxisDialog() {
         val actionName = title
         val axisPicker: AxisPicker = AxisPicker.inflate(context)
-        val dialog = AlertDialog.Builder(context)
-            .customView(view = axisPicker.rootLayout)
-            .title(text = actionName.toString())
-            .negativeButton(R.string.dialog_cancel) { it.dismiss() }
-            .create()
+        val dialog =
+            AlertDialog
+                .Builder(context)
+                .customView(view = axisPicker.rootLayout)
+                .title(text = actionName.toString())
+                .negativeButton(R.string.dialog_cancel) { it.dismiss() }
+                .create()
 
         axisPicker.setBindingChangedListener { binding ->
             showToastIfBindingIsUsed(MappableBinding(binding, screenBuilder(CardSide.BOTH)))
@@ -212,11 +223,12 @@ class ControlPreference : ListPreference {
     /**
      * Return if another command uses
      */
-    private fun bindingIsUsedOnAnotherCommand(binding: MappableBinding): Boolean {
-        return getCommandWithBindingExceptThis(binding) != null
-    }
+    private fun bindingIsUsedOnAnotherCommand(binding: MappableBinding): Boolean = getCommandWithBindingExceptThis(binding) != null
 
-    private fun warnIfBindingIsUsed(binding: MappableBinding, warningDisplay: WarningDisplay) {
+    private fun warnIfBindingIsUsed(
+        binding: MappableBinding,
+        warningDisplay: WarningDisplay,
+    ) {
         getCommandWithBindingExceptThis(binding)?.let {
             val name = context.getString(it.resourceId)
             val warning = context.getString(R.string.bindings_already_bound, name)
@@ -226,8 +238,9 @@ class ControlPreference : ListPreference {
 
     /** Displays a warning to the user if the provided binding couldn't be used */
     private fun showToastIfBindingIsUsed(binding: MappableBinding) {
-        val bindingCommand = getCommandWithBindingExceptThis(binding)
-            ?: return
+        val bindingCommand =
+            getCommandWithBindingExceptThis(binding)
+                ?: return
 
         val commandName = context.getString(bindingCommand.resourceId)
         val text = context.getString(R.string.bindings_already_bound, commandName)
@@ -235,11 +248,12 @@ class ControlPreference : ListPreference {
     }
 
     /** @return command where the binding is mapped excluding the current command */
-    private fun getCommandWithBindingExceptThis(binding: MappableBinding): ViewerCommand? {
-        return MappableBinding.allMappings(context.sharedPrefs())
+    private fun getCommandWithBindingExceptThis(binding: MappableBinding): ViewerCommand? =
+        MappableBinding
+            .allMappings(context.sharedPrefs())
             // filter to the commands which have a binding matching this one except this
-            .firstOrNull { x -> x.second.any { cmdBinding -> cmdBinding == binding } && x.first.preferenceKey != key }?.first
-    }
+            .firstOrNull { x -> x.second.any { cmdBinding -> cmdBinding == binding } && x.first.preferenceKey != key }
+            ?.first
 
     private fun addBinding(binding: MappableBinding) {
         val bindings = MappableBinding.fromPreferenceString(value)
@@ -254,8 +268,9 @@ class ControlPreference : ListPreference {
      */
     private fun clearBinding(binding: MappableBinding) {
         for (command in ViewerCommand.entries) {
-            val commandPreference = preferenceManager.findPreference<ControlPreference>(command.preferenceKey)
-                ?: continue
+            val commandPreference =
+                preferenceManager.findPreference<ControlPreference>(command.preferenceKey)
+                    ?: continue
             val bindings = MappableBinding.fromPreferenceString(commandPreference.value)
             if (binding in bindings) {
                 bindings.remove(binding)
@@ -264,7 +279,11 @@ class ControlPreference : ListPreference {
         }
     }
 
-    private fun showDialogToReplaceBinding(binding: MappableBinding, title: String, parentDialog: DialogInterface) {
+    private fun showDialogToReplaceBinding(
+        binding: MappableBinding,
+        title: String,
+        parentDialog: DialogInterface,
+    ) {
         val commandName = context.getString(getCommandWithBindingExceptThis(binding)!!.resourceId)
 
         AlertDialog.Builder(context).show {

@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">%d കാർഡുകളിൽ കൂടുതൽ</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">വൈബ്രേറ്റുചെയ്യുക</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">ബ്ലിങ്ക് ലൈറ്റ്</string>
-    <string name="timeout_answer_text" maxLength="41">യാന്ത്രിക പ്രദർശന ഉത്തരം</string>
-    <string name="timeout_answer_summ2">ഉപയോക്തൃ ഇൻപുട്ട് ഇല്ലാതെ ഉത്തരം സ്വയമേവ കാണിക്കുക. ഡെക്ക് ഓപ്ഷനുകളിൽ നിന്ന് കോൺഫിഗർ ചെയ്യുക.</string>
     <string name="select_locale_title">ഭാഷ തിരഞ്ഞെടുക്കുക</string>
     <string name="software_render" maxLength="41">കാർഡ് ഹാർഡ്‌വെയർ റെൻഡർ പ്രവർത്തനരഹിതമാക്കുക</string>
     <string name="software_render_summ">ഹാർഡ്‌വെയർ റെൻഡർ വേഗതയേറിയതാണെങ്കിലും പ്രശ്‌നങ്ങളുണ്ടാകാം, പ്രത്യേകിച്ചും Android 8 / 8.1. കാർഡ് അവലോകന ഉപയോക്തൃ ഇന്റർഫേസിന്റെ ഭാഗങ്ങൾ നിങ്ങൾക്ക് കാണാൻ കഴിയുന്നില്ലെങ്കിൽ, ഈ ക്രമീകരണം പരീക്ഷിക്കുക.</string>

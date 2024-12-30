@@ -23,7 +23,10 @@ import java.util.TimeZone
 
 /** @param [step] Number of milliseconds between each call.
  * @param [initTime]: Time since epoch in MS. */
-open class MockTime(initTime: Long, private val step: Int = 0) : Time() {
+open class MockTime(
+    initTime: Long,
+    private val step: Int = 0,
+) : Time() {
     protected var time = initTime
         private set
 
@@ -36,10 +39,10 @@ open class MockTime(initTime: Long, private val step: Int = 0) : Time() {
         minute: Int,
         second: Int,
         milliseconds: Int,
-        step: Int
+        step: Int,
     ) : this(
         timeStamp(year, month, date, hourOfDay, minute, second, milliseconds),
-        step
+        step,
     )
 
     /** Time in millisecond since epoch.  */
@@ -87,7 +90,15 @@ open class MockTime(initTime: Long, private val step: Int = 0) : Time() {
          * @return the time stamp of this instant in GMT calendar
          */
         @SuppressLint("DirectGregorianInstantiation")
-        fun timeStamp(year: Int, month: Int, date: Int, hourOfDay: Int, minute: Int, second: Int, milliseconds: Int = 0): Long {
+        fun timeStamp(
+            year: Int,
+            month: Int,
+            date: Int,
+            hourOfDay: Int,
+            minute: Int,
+            second: Int,
+            milliseconds: Int = 0,
+        ): Long {
             val timeZone = TimeZone.getTimeZone("GMT")
             val gregorianCalendar: Calendar = GregorianCalendar(year, month, date, hourOfDay, minute, second)
             gregorianCalendar.timeZone = timeZone

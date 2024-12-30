@@ -52,7 +52,7 @@
     <string name="CardEditorModel">Loại:</string>
     <string name="CardEditorTags">Các đuôi: %1$s</string>
     <string name="CardEditorCards">Các thẻ: %1$s</string>
-    <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="edit_occlusions">Sửa Occlusions</string>
     <string name="tag_name">Tên đuôi</string>
     <string name="add_new_filter_tags">Thêm/lọc các đuôi</string>
     <string name="add_tag" maxLength="28">Thêm đuôi</string>
@@ -82,16 +82,12 @@
     <string name="webview_crash_loop_dialog_content">Hệ thống WebView không thể hiển thị thẻ \'%1$s\'.\ n%2$s</string>
     <string name="filter_by_flags" maxLength="41">Cờ</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Sửa đổi giới hạn thẻ mới của ngày hôm nay</string>
-    <string name="custom_study_increase_review_limit">Sửa đổi giới hạn thẻ ôn tập của ngày hôm nay</string>
-    <string name="custom_study_review_forgotten">Ôn tập các thẻ đã quên</string>
-    <string name="custom_study_review_ahead">Ôn tập trước kỳ hạn</string>
-    <string name="custom_study_random_selection">Học các thẻ được chọn ngẫu nhiên</string>
-    <string name="custom_study_preview_new">Xem trước thẻ mới</string>
     <string name="custom_study_limit_tags">Giới hạn cho các đuôi cụ thể</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="other">+%d buried</item>
+        <item quantity="other">+%d tạm ẩn</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Tổng số thẻ mới</string>
+    <string name="studyoptions_total_label">Tổng số thẻ</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Sửa ghi chú</string>
     <string name="discard">Loại bỏ</string>
@@ -160,13 +156,12 @@
         ]]></string>
     <string name="export_choice_share">Chia sẻ</string>
     <string name="export_choice_save_to">Lưu tới</string>
-    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
+    <string name="export_saving_exported_collection">Đang lưu tệp đã xuất&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Tuỳ chọn</string>
     <string name="menu__deck_options" maxLength="28">Tùy chọn bộ thẻ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Tùy chọn học tập</string>
     <string name="select_tts" maxLength="28">Thiết lập ngôn ngữ TTS</string>
     <string name="custom_study" maxLength="28">Học theo tuỳ chọn</string>
-    <string name="more_options">Xem thêm</string>
     <string name="dyn_deck_desc">Đây là bộ thẻ đặc biệt phục vụ cho việc học ngoài lịch trình thông thường. Các thẻ sẽ tự động quay lại bộ thẻ ban đầu của chúng sau khi ôn tập. Xoá bộ thẻ này khỏi danh sách sẽ chuyển toàn bộ thẻ còn lại về bộ thẻ ban đầu của chúng.</string>
     <string name="steps_error">Các bước phải là số lớn hơn 0</string>
     <string name="steps_min_error">Yêu cầu phải có ít nhất một bước</string>
@@ -182,7 +177,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">Hệ thống chưa cài đặt ứng dụng có thể thực hiện tác vụ này.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Hình ảnh máy ảnh có thể lớn. Bạn có thể muốn nén và thay đổi kích thước hình ảnh trong thư mục media]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
+    <string name="no_browser_msg">Không tìm thấy trình duyệt để mở liên kết: %s</string>
     <string name="web_page_error">Lỗi khi tải trang: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -231,9 +226,9 @@
     <string name="edit_toolbar_item">Chỉnh sửa mục Thanh công cụ</string>
     <string name="toolbar_item_explain_edit_or_remove">Nhập HTML sẽ được chèn vào trước và sau văn bản đã chọn\n\nNhấn và giữ một mục trên thanh công cụ để chỉnh sửa hoặc xóa nó</string>
     <string name="remove_toolbar_item">Xóa Mục Thanh công cụ?</string>
-    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
-    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
-    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
+    <string name="note_editor_image_too_large">Hình ảnh quá lớn, vui lòng chèn hình ảnh theo cách thủ công</string>
+    <string name="note_editor_video_too_large">Tập tin video quá lớn, vui lòng chèn video theo cách thủ công</string>
+    <string name="note_editor_audio_too_large">Tệp âm thanh quá lớn, vui lòng chèn âm thanh thủ công</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android đang sao lưu. Hãy thử lại sau</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Bạn có thể cần sử dụng iManager để cho phép AnkiDroid thêm phím tắt</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Màn hình chính của bạn không cho phép AnkiDroid thêm phím tắt</string>
@@ -326,32 +321,32 @@
     <string name="failed_to_copy">Không sao chép được</string>
     <string name="card_browser_unavailable_when_notes_mode">Không khả dụng ở chế độ ‘Ghi chú’</string>
     <plurals name="unbury_cards_feedback">
-        <item quantity="other">%d cards unburied</item>
+        <item quantity="other">%d thẻ chưa được ẩn</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Đặt lại vị trí</string>
     <string name="start_recording">Ghi âm</string>
     <string name="stop_recording">Dừng</string>
     <string name="play_recording">Phát</string>
-    <string name="next_recording">Next</string>
+    <string name="next_recording">Tiếp theo</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot Delete Card Type</string>
-    <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
-    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
+    <string name="orphan_note_title">Không thể xoá loại thẻ</string>
+    <string name="orphan_note_message">Việc xóa loại thẻ này sẽ để lại một số ghi chú không có thẻ nào liên kết.</string>
+    <string name="voice_not_supported">Giọng nói không được hỗ trợ. Hãy thử cái khác hoặc cài đặt một công cụ giọng nói.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
+    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Hiển thị cửa sổ phím tắt</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Trình chọn bộ thẻ</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
-    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
-    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Trình ghi chú</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Chọn bộ thẻ</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Chọn loại ghi chú</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Trình chỉnh sửa Tag</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
-    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Chỉnh sửa mẫu mặt trước</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Chỉnh sửa mẫu mặt sau</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
-    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
-    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
-    <string name="show_shortcuts_message">Press Alt+K to show keyboard shortcuts</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Sao chép mẫu dưới dạng markdown</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Chỉnh sửa giao diện trình duyệt</string>
+    <string name="show_shortcuts_message">Nhấn Alt+K để hiển thị lối tắt bàn phím</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
     <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
 </resources>

@@ -34,7 +34,7 @@ import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.compat.CompatHelper.Companion.getSerializableExtraCompat
 import com.ichi2.themes.setTransparentStatusBar
-import com.ichi2.utils.getInstanceFromClassName
+import com.ichi2.utils.FragmentFactoryUtils
 import timber.log.Timber
 import java.io.Serializable
 import kotlin.reflect.KClass
@@ -53,14 +53,15 @@ data class MultimediaActivityExtra(
     val index: Int,
     val field: IField,
     val note: IMultimediaEditableNote,
-    val imageUri: String? = null
+    val imageUri: String? = null,
 ) : Serializable
 
 /**
  * Multimedia activity that allows users to attach media files to an input field in NoteEditor.
  */
-class MultimediaActivity : AnkiActivity(), BaseSnackbarBuilderProvider {
-
+class MultimediaActivity :
+    AnkiActivity(),
+    BaseSnackbarBuilderProvider {
     private val Intent.multimediaArgsExtra: MultimediaActivityExtra?
         get() = extras?.getSerializableCompat(MULTIMEDIA_ARGS_EXTRA)
 
@@ -74,25 +75,28 @@ class MultimediaActivity : AnkiActivity(), BaseSnackbarBuilderProvider {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_multimedia)
         setTransparentStatusBar()
+
+        val toolbar: MaterialToolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
         // avoid recreating the fragment on configuration changes
         if (savedInstanceState != null) {
             return
         }
-
-        val toolbar: MaterialToolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
 
         val fragmentClassName =
             requireNotNull(intent.getStringExtra(MULTIMEDIA_FRAGMENT_NAME_EXTRA)) {
                 "'$MULTIMEDIA_FRAGMENT_NAME_EXTRA' extra should be provided"
             }
 
-        val fragment = getInstanceFromClassName<Fragment>(fragmentClassName).apply {
-            arguments = bundleOf(
-                MULTIMEDIA_ARGS_EXTRA to intent.multimediaArgsExtra,
-                EXTRA_MEDIA_OPTIONS to intent.mediaOptionsExtra
-            )
-        }
+        val fragment =
+            FragmentFactoryUtils.instantiate<Fragment>(this, fragmentClassName).apply {
+                arguments =
+                    bundleOf(
+                        MULTIMEDIA_ARGS_EXTRA to intent.multimediaArgsExtra,
+                        EXTRA_MEDIA_OPTIONS to intent.mediaOptionsExtra,
+                    )
+            }
 
         supportFragmentManager.commit {
             replace(R.id.fragment_container, fragment)
@@ -129,13 +133,12 @@ class MultimediaActivity : AnkiActivity(), BaseSnackbarBuilderProvider {
             context: Context,
             fragmentClass: KClass<out Fragment>,
             arguments: MultimediaActivityExtra? = null,
-            mediaOptions: Serializable? = null
-        ): Intent {
-            return Intent(context, MultimediaActivity::class.java).apply {
+            mediaOptions: Serializable? = null,
+        ): Intent =
+            Intent(context, MultimediaActivity::class.java).apply {
                 putExtra(MULTIMEDIA_ARGS_EXTRA, arguments)
                 putExtra(MULTIMEDIA_FRAGMENT_NAME_EXTRA, fragmentClass.jvmName)
                 putExtra(EXTRA_MEDIA_OPTIONS, mediaOptions)
             }
-        }
     }
 }

@@ -41,7 +41,11 @@ interface PromptBackgroundInterface {
      * @param clipToBounds Should the prompt be clipped to the supplied clipBounds.
      * @param clipBounds The bounds to clip the drawing to.
      */
-    fun prepare(options: PromptOptions<*>, clipToBounds: Boolean, clipBounds: Rect)
+    fun prepare(
+        options: PromptOptions<*>,
+        clipToBounds: Boolean,
+        clipBounds: Rect,
+    )
 
     /**
      * Update the current prompt rendering state based on the prompt options and current reveal & alpha scales.
@@ -51,7 +55,11 @@ interface PromptBackgroundInterface {
      * @param revealModifier The current size/revealed scale from 0 - 1.
      * @param alphaModifier The current colour alpha scale from 0 - 1.
      */
-    fun update(options: PromptOptions<*>, revealModifier: Float, alphaModifier: Float)
+    fun update(
+        options: PromptOptions<*>,
+        revealModifier: Float,
+        alphaModifier: Float,
+    )
 
     /**
      * Draw the dimmed background and the prompt background.
@@ -67,32 +75,41 @@ interface PromptBackgroundInterface {
      * @param y y-coordinate.
      * @return true if the element contains the point, false otherwise.
      */
-    fun contains(x: Float, y: Float): Boolean
+    fun contains(
+        x: Float,
+        y: Float,
+    ): Boolean
 
     /**
      * Sets the colour to use for the background.
      *
      * @param colour Colour integer representing the colour.
      */
-    fun setColour(@ColorInt colour: Int)
+    fun setColour(
+        @ColorInt colour: Int,
+    )
 }
 
 /**
  * Converts from abstract [PromptBackground] to [PromptBackgroundInterface] to allow extensions of a
  * [PromptBackground] without the requirement to inherit from an empty abstract class.
  */
-class PromptBackgroundInterfaceAdapter(private val promptBackground: PromptBackground) : PromptBackgroundInterface {
+class PromptBackgroundInterfaceAdapter(
+    private val promptBackground: PromptBackground,
+) : PromptBackgroundInterface {
     companion object {
         /**
          * Takes PromptBackground and returns PromptBackgroundInterfaceAdapter which
          * implements PromptBackgroundInterface.
          */
-        fun PromptBackground.toInterface(): PromptBackgroundInterface {
-            return PromptBackgroundInterfaceAdapter(this)
-        }
+        fun PromptBackground.toInterface(): PromptBackgroundInterface = PromptBackgroundInterfaceAdapter(this)
     }
 
-    override fun update(options: PromptOptions<out PromptOptions<*>>, revealModifier: Float, alphaModifier: Float) {
+    override fun update(
+        options: PromptOptions<out PromptOptions<*>>,
+        revealModifier: Float,
+        alphaModifier: Float,
+    ) {
         promptBackground.update(options, revealModifier, alphaModifier)
     }
 
@@ -100,15 +117,20 @@ class PromptBackgroundInterfaceAdapter(private val promptBackground: PromptBackg
         promptBackground.draw(canvas)
     }
 
-    override fun contains(x: Float, y: Float): Boolean {
-        return promptBackground.contains(x, y)
-    }
+    override fun contains(
+        x: Float,
+        y: Float,
+    ): Boolean = promptBackground.contains(x, y)
 
     override fun setColour(colour: Int) {
         promptBackground.setColour(colour)
     }
 
-    override fun prepare(options: PromptOptions<out PromptOptions<*>>, clipToBounds: Boolean, clipBounds: Rect) {
+    override fun prepare(
+        options: PromptOptions<out PromptOptions<*>>,
+        clipToBounds: Boolean,
+        clipBounds: Rect,
+    ) {
         promptBackground.prepare(options, clipToBounds, clipBounds)
     }
 }

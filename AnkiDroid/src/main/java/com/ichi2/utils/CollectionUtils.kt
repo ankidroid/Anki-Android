@@ -16,26 +16,24 @@
 package com.ichi2.utils
 
 object CollectionUtils {
-
     /**
      * Given an array: `[A, B, C]`, returns `[[A, B], [A, C], [B, C]]`
      * @return Each pair `[A, B]` for `A` occurring before `B` in the input list.
      */
-    fun <T> List<T>.combinations(): Sequence<Pair<T, T>> = sequence {
-        this@combinations.let { list ->
-            for (i in 0 until list.size - 1) {
-                for (j in i + 1 until list.size) {
-                    yield(Pair(list[i], list[j]))
+    fun <T> List<T>.combinations(): Sequence<Pair<T, T>> =
+        sequence {
+            this@combinations.let { list ->
+                for (i in 0 until list.size - 1) {
+                    for (j in i + 1 until list.size) {
+                        yield(Pair(list[i], list[j]))
+                    }
                 }
             }
         }
-    }
 
     /**
      * Return the average of the elements in the iterable,
      * or null if the iterable is empty.
      */
-    fun <T> Iterable<T>.average(f: (T) -> Int): Double? {
-        return this.map(f).average().let { if (it.isNaN()) null else it }
-    }
+    fun <T> Iterable<T>.average(f: (T) -> Int): Double? = this.map(f).average().let { if (it.isNaN()) null else it }
 }

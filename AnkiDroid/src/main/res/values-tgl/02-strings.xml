@@ -82,17 +82,13 @@
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Flags</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
-    <string name="custom_study_review_forgotten">Balikaralan ang mga nakalimutang baraha</string>
-    <string name="custom_study_review_ahead">Magbalik-aral ng mas maaga</string>
-    <string name="custom_study_random_selection">Mag-aral ng random na seleksyon ng mga baraha</string>
-    <string name="custom_study_preview_new">I-preview ang mga bagong baraha</string>
     <string name="custom_study_limit_tags">Limitahan sa mga natatanging mga tag</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">I-edit ang paalala</string>
     <string name="discard">Discard</string>
@@ -169,7 +165,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts" maxLength="28">Itakda ang wika ng TTS</string>
     <string name="custom_study" maxLength="28">Pasadyang pag-aaral</string>
-    <string name="more_options">Higit pa</string>
     <string name="dyn_deck_desc">Ito ay isang espesyal na deck para sa pag-aaral sa labas ng normal na iskedyul. Ang mga baraha ay awtomatikong ibabalik sa kanilang orihinal na mga deck matapos mong balik-aralan ang mga ito. Ang pagtanggal sa deck mula sa listahan ng deck ay babalik ang lahat ng natitirang mga baraha sa kanilang orihinal na deck.</string>
     <string name="steps_error">Ang mga hakbang ay dapat may mga numero na mas malaki sa 0</string>
     <string name="steps_min_error">Kinakailangan ang hindi bababa sa isang hakbang</string>

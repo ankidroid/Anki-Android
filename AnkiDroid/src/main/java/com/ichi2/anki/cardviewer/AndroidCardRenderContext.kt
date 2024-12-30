@@ -37,14 +37,17 @@ class AndroidCardRenderContext(
     private val typeAnswer: TypeAnswer,
     private val cardAppearance: CardAppearance,
     private val cardTemplate: CardTemplate,
-    private val showAudioPlayButtons: Boolean
+    private val showAudioPlayButtons: Boolean,
 ) {
-
     /**
      * Renders Android-specific functionality to produce a [RenderedCard]
      */
     @CheckResult
-    fun renderCard(col: Collection, card: Card, side: SingleCardSide): RenderedCard {
+    fun renderCard(
+        col: Collection,
+        card: Card,
+        side: SingleCardSide,
+    ): RenderedCard {
         // obtain the libAnki-rendered card
         var content: String = if (side == SingleCardSide.FRONT) card.question(col) else card.answer(col)
         // IRI-encodes media: `foo bar` -> `foo%20bar`
@@ -62,16 +65,20 @@ class AndroidCardRenderContext(
         return render(content, card.ord)
     }
 
-    private fun render(content: String, ord: Int): RenderedCard {
+    private fun render(
+        content: String,
+        ord: Int,
+    ): RenderedCard {
         val requiresMathjax = MathJax.textContainsMathjax(content)
 
         val style = cardAppearance.style
-        val script = when (requiresMathjax) {
-            false -> ""
-            true ->
-                """        <script src="file:///android_asset/backend/js/mathjax.js"></script>
+        val script =
+            when (requiresMathjax) {
+                false -> ""
+                true ->
+                    """        <script src="file:///android_asset/backend/js/mathjax.js"></script>
         <script src="file:///android_asset/backend/js/vendor/mathjax/tex-chtml-full.js"></script>"""
-        }
+            }
         val cardClass = cardAppearance.getCardClass(ord + 1) + if (requiresMathjax) " mathjax-needs-to-render" else ""
 
         Timber.v("content card = \n %s", content)
@@ -86,27 +93,34 @@ class AndroidCardRenderContext(
      * @param content The content to surround with tags.
      * @return The enriched content
      */
-    private fun enrichWithQADiv(content: String) = buildString {
-        append("""<div id="qa">""")
-        append(content)
-        append("</div>")
-    }
+    private fun enrichWithQADiv(content: String) =
+        buildString {
+            append("""<div id="qa">""")
+            append(content)
+            append("</div>")
+        }
 
-    private fun filterTypeAnswer(content: String, side: SingleCardSide): String {
-        return when (side) {
+    private fun filterTypeAnswer(
+        content: String,
+        side: SingleCardSide,
+    ): String =
+        when (side) {
             SingleCardSide.FRONT -> typeAnswer.filterQuestion(content)
             SingleCardSide.BACK -> typeAnswer.filterAnswer(content)
         }
-    }
 
-    private fun expandSounds(content: String, renderOutput: TemplateRenderOutput, col: Collection): String {
+    private fun expandSounds(
+        content: String,
+        renderOutput: TemplateRenderOutput,
+        col: Collection,
+    ): String {
         val mediaDir = col.media.dir
 
         return Sound.expandSounds(
             content,
             renderOutput,
             showAudioPlayButtons,
-            mediaDir
+            mediaDir,
         )
     }
 
@@ -114,7 +128,7 @@ class AndroidCardRenderContext(
         fun createInstance(
             context: Context,
             col: Collection,
-            typeAnswer: TypeAnswer
+            typeAnswer: TypeAnswer,
         ): AndroidCardRenderContext {
             val preferences = context.sharedPrefs()
             val cardAppearance = CardAppearance.create(ReviewerCustomFonts(), preferences)
@@ -124,7 +138,7 @@ class AndroidCardRenderContext(
                 typeAnswer,
                 cardAppearance,
                 cardHtmlTemplate,
-                showAudioPlayButtons
+                showAudioPlayButtons,
             )
         }
     }

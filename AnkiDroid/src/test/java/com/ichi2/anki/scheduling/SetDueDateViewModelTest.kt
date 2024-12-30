@@ -30,81 +30,91 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class SetDueDateViewModelTest : JvmTest() {
     @Test
-    fun `initial values`() = runViewModelTest(cardIds = listOf(1, 2)) {
-        assertThat("card count", cardCount, equalTo(2))
-        assertThat("is not valid", !isValid)
-        assertThat("initial tab is single day", currentTab, equalTo(Tab.SINGLE_DAY))
-    }
-
-    @Test
-    fun `single day validation`() = runViewModelTest {
-        fun canSaveWithValue(input: NumberOfDaysInFuture?, expected: Boolean) {
-            nextSingleDayDueDate = input
-            assertThat("$input", isValid == expected, equalTo(true))
+    fun `initial values`() =
+        runViewModelTest(cardIds = listOf(1, 2)) {
+            assertThat("card count", cardCount, equalTo(2))
+            assertThat("is not valid", !isValid)
+            assertThat("initial tab is single day", currentTab, equalTo(Tab.SINGLE_DAY))
         }
-        assertThat("is not valid", !isValid)
-        canSaveWithValue(-1, false)
-        canSaveWithValue(0, true)
-        canSaveWithValue(null, false)
-        canSaveWithValue(1, true)
-    }
 
     @Test
-    fun `date range validation`() = runViewModelTest {
-        fun canSaveWithValue(
-            start: NumberOfDaysInFuture?,
-            end: NumberOfDaysInFuture?,
-            expected: Boolean,
-            message: String? = null
-        ) {
-            setNextDateRangeStart(start)
-            setNextDateRangeEnd(end)
-            assertThat(message ?: "${DateRange(start, end)}", isValid == expected, equalTo(true))
+    fun `single day validation`() =
+        runViewModelTest {
+            fun canSaveWithValue(
+                input: NumberOfDaysInFuture?,
+                expected: Boolean,
+            ) {
+                nextSingleDayDueDate = input
+                assertThat("$input", isValid == expected, equalTo(true))
+            }
+            assertThat("is not valid", !isValid)
+            canSaveWithValue(-1, false)
+            canSaveWithValue(0, true)
+            canSaveWithValue(null, false)
+            canSaveWithValue(1, true)
         }
-        currentTab = Tab.DATE_RANGE
-        assertThat("initially not valid", !isValid)
-        canSaveWithValue(-1, -1, false)
-        canSaveWithValue(-1, 0, false)
-        canSaveWithValue(0, -1, false)
-
-        canSaveWithValue(0, 0, true)
-
-        canSaveWithValue(null, null, false)
-        canSaveWithValue(null, 1, false)
-        canSaveWithValue(1, null, false)
-
-        canSaveWithValue(2, 3, true)
-        canSaveWithValue(3, 2, false, "start must be <= end")
-    }
 
     @Test
-    fun `test string output`() = runViewModelTest {
-        fun eq(s: String) = equalTo(SetDueDateDays(s))
-        currentTab = Tab.SINGLE_DAY
-        assertThat(calculateDaysParameter(), equalTo(null))
+    fun `date range validation`() =
+        runViewModelTest {
+            fun canSaveWithValue(
+                start: NumberOfDaysInFuture?,
+                end: NumberOfDaysInFuture?,
+                expected: Boolean,
+                message: String? = null,
+            ) {
+                setNextDateRangeStart(start)
+                setNextDateRangeEnd(end)
+                assertThat(message ?: "${DateRange(start, end)}", isValid == expected, equalTo(true))
+            }
+            currentTab = Tab.DATE_RANGE
+            assertThat("initially not valid", !isValid)
+            canSaveWithValue(-1, -1, false)
+            canSaveWithValue(-1, 0, false)
+            canSaveWithValue(0, -1, false)
 
-        nextSingleDayDueDate = 1
-        assertThat(calculateDaysParameter(), eq("1"))
+            canSaveWithValue(0, 0, true)
 
-        updateIntervalToMatchDueDate = true
-        assertThat(calculateDaysParameter(), eq("1!"))
+            canSaveWithValue(null, null, false)
+            canSaveWithValue(null, 1, false)
+            canSaveWithValue(1, null, false)
 
-        updateIntervalToMatchDueDate = false
-        currentTab = Tab.DATE_RANGE
-        assertThat(calculateDaysParameter(), equalTo(null))
+            canSaveWithValue(2, 3, true)
+            canSaveWithValue(3, 2, false, "start must be <= end")
+        }
 
-        setNextDateRangeStart(0)
-        setNextDateRangeEnd(0)
-        assertThat(calculateDaysParameter(), eq("0"))
+    @Test
+    fun `test string output`() =
+        runViewModelTest {
+            fun eq(s: String) = equalTo(SetDueDateDays(s))
+            currentTab = Tab.SINGLE_DAY
+            assertThat(calculateDaysParameter(), equalTo(null))
 
-        setNextDateRangeEnd(1)
-        assertThat(calculateDaysParameter(), eq("0-1"))
+            nextSingleDayDueDate = 1
+            assertThat(calculateDaysParameter(), eq("1"))
 
-        updateIntervalToMatchDueDate = true
-        assertThat(calculateDaysParameter(), eq("0-1!"))
-    }
+            updateIntervalToMatchDueDate = true
+            assertThat(calculateDaysParameter(), eq("1!"))
 
-    private fun runViewModelTest(cardIds: List<CardId> = listOf(1, 2, 3), testBody: suspend SetDueDateViewModel.() -> Unit) = runTest {
+            updateIntervalToMatchDueDate = false
+            currentTab = Tab.DATE_RANGE
+            assertThat(calculateDaysParameter(), equalTo(null))
+
+            setNextDateRangeStart(0)
+            setNextDateRangeEnd(0)
+            assertThat(calculateDaysParameter(), eq("0"))
+
+            setNextDateRangeEnd(1)
+            assertThat(calculateDaysParameter(), eq("0-1"))
+
+            updateIntervalToMatchDueDate = true
+            assertThat(calculateDaysParameter(), eq("0-1!"))
+        }
+
+    private fun runViewModelTest(
+        cardIds: List<CardId> = listOf(1, 2, 3),
+        testBody: suspend SetDueDateViewModel.() -> Unit,
+    ) = runTest {
         val viewModel = SetDueDateViewModel()
         viewModel.init(cardIds.toLongArray())
         testBody(viewModel)

@@ -82,17 +82,13 @@
     <string name="webview_crash_loop_dialog_content">سسٹم WebView کارڈ \'%1$s\' رینڈر کرنے میں ناکام رہا۔\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">جھنڈے</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">آج کی نئی کارڈ کی حد میں ترمیم کریں۔</string>
-    <string name="custom_study_increase_review_limit">آج کی نظرثانی کارڈ کی حد میں ترمیم کریں۔</string>
-    <string name="custom_study_review_forgotten">بھولے ہوئے کارڈ دہرائیں</string>
-    <string name="custom_study_review_ahead">آگے کا جائزہ لیں</string>
-    <string name="custom_study_random_selection">کارڈز کے بے ترتیب انتخاب کا مطالعہ کریں۔</string>
-    <string name="custom_study_preview_new">نئے کارڈز کا مشاہدہ کریں</string>
     <string name="custom_study_limit_tags">مخصوص ٹیگز تک محدود</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="one">+%d دفن کر دیا گیا۔</item>
+        <item quantity="other">+%d دفن کر دیا گیا۔</item>
     </plurals>
+    <string name="studyoptions_total_new_label">کل نئے کارڈز</string>
+    <string name="studyoptions_total_label">کل کارڈز</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">نوٹ میں ترمیم کریں</string>
     <string name="discard">رد کر دیں</string>
@@ -135,7 +131,7 @@
     <string name="delete_deck">ڈیک کو حذف کیا جا رہا ہے&#8230;</string>
     <string name="info_rate">AnkiDroid کی درجہ بندی کریں</string>
     <string name="import_title">درآمد</string>
-    <string name="import_preparing_file">Preparing file for import&#8230;</string>
+    <string name="import_preparing_file">درآمد کے لیے فائل تیار ہو رہی ہے&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">شامل کریں</string>
     <string name="import_message_replace_confirm">یہ آپ کے موجودہ مجموعہ کو حذف کر دے گا اور اسے فائل کے ڈیٹا سے بدل دے گا %s</string>
     <string name="import_dialog_message_add">مجموعہ میں \"%s\" شامل کریں؟ اس میں کافی وقت لگ سکتا ہے۔</string>
@@ -163,13 +159,12 @@
         ]]></string>
     <string name="export_choice_share">بانٹیں</string>
     <string name="export_choice_save_to">محفوظ کریں</string>
-    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
+    <string name="export_saving_exported_collection">برآمد شدہ فائل محفوظ ہو رہی ہے&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">اختیارات</string>
     <string name="menu__deck_options" maxLength="28">ڈیک کے اختیارات</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">مطالعہ کے اختیارات</string>
     <string name="select_tts" maxLength="28">TTS زبان سیٹ کریں۔</string>
     <string name="custom_study" maxLength="28">اپنی مرضی کے مطابق مطالعہ</string>
-    <string name="more_options">مزید</string>
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.
 یہ عام شیڈول سے ہٹ کر مطالعہ کرنے کے لیے ایک خاص ڈیک ہے۔آپ کے ان کا جائزہ لینے کے بعد کارڈز خود بخود ان کے اصل ڈیک پر واپس آ جائیں گے۔ڈیک کی فہرست سے اس ڈیک کو حذف کرنے سے باقی تمام کارڈز ان کے اصل ڈیک پر واپس آجائیں گے۔</string>
     <string name="steps_error">اقدامات کے نمبر 0 سے زیادہ ہونے چاہئیں</string>
@@ -236,9 +231,9 @@
     <string name="edit_toolbar_item">ٹول بار آئٹم میں ترمیم کریں۔</string>
     <string name="toolbar_item_explain_edit_or_remove">منتخب کردہ متن سے پہلے اور بعد میں داخل کرنے کے لیے HTML درج کریں\n\nٹول بار آئٹم میں ترمیم کرنے یا اسے ہٹانے کے لیے دیر تک دبائیں</string>
     <string name="remove_toolbar_item">ٹول بار آئٹم کو ہٹائیں؟</string>
-    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
-    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
-    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
+    <string name="note_editor_image_too_large">تصویر بہت بڑی ہے، براہ کرم دستی طور پر تصویر داخل کریں۔</string>
+    <string name="note_editor_video_too_large">ویڈیو فائل بہت بڑی ہے، براہ کرم ویڈیو کو دستی طور پر داخل کریں۔</string>
+    <string name="note_editor_audio_too_large">آڈیو فائل بہت بڑی ہے، براہ کرم آڈیو کو دستی طور پر داخل کریں۔</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android بیک اپ جاری ہے۔ دوبارہ کوشش کریں</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid کو شارٹ کٹ شامل کرنے کی اجازت دینے کے لیے آپ کو iManager استعمال کرنے کی ضرورت پڑ سکتی ہے۔</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">آپ کی ہوم اسکرین AnkiDroid کو شارٹ کٹ شامل کرنے کی اجازت نہیں دیتی ہے۔</string>
@@ -341,16 +336,16 @@
     <string name="play_recording">چلائیں</string>
     <string name="next_recording">اگلے</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot Delete Card Type</string>
-    <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
-    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
+    <string name="orphan_note_title">کارڈ کی قسم کو حذف نہیں کیا جا سکتا</string>
+    <string name="orphan_note_message">اس کارڈ کی قسم کو حذف کرنے سے کچھ نوٹ بغیر کسی کارڈ کے رہ جائیں گے۔</string>
+    <string name="voice_not_supported">آواز تعاون یافتہ نہیں ہے۔ دوسرا آزمائیں یا صوتی انجن انسٹال کریں۔</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
-    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
-    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
+    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">کی بورڈ شارٹ کٹ ڈائیلاگ دکھائیں۔</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">ڈیک چننے والا</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">تصدیق کے بغیر ڈیک کو حذف کریں۔</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">نوٹ ایڈیٹر</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">ڈیک منتخب کریں۔</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">نوٹ کی قسم منتخب کریں۔</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>

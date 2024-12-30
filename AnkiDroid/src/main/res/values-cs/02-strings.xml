@@ -82,12 +82,6 @@
     <string name="webview_crash_loop_dialog_content">Systémovému WebView se nepodařilo vykreslit kartu „%1$s“.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Příznaky</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Upravit dnešní limit nových karet</string>
-    <string name="custom_study_increase_review_limit">Upravit dnešní limit opakování</string>
-    <string name="custom_study_review_forgotten">Opakovat zapomenuté karty</string>
-    <string name="custom_study_review_ahead">Opakovat dopředu</string>
-    <string name="custom_study_random_selection">Studovat náhodný výběr karet</string>
-    <string name="custom_study_preview_new">Náhled nových karet</string>
     <string name="custom_study_limit_tags">Omezit podle štítků</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d přeskočená</item>
@@ -95,6 +89,8 @@
         <item quantity="many">+%d přeskočené</item>
         <item quantity="other">+%d přeskočených</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Upravit poznámku</string>
     <string name="discard">Zahodit</string>
@@ -175,7 +171,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Možnosti studia</string>
     <string name="select_tts" maxLength="28">Nastavit jazyk TTS</string>
     <string name="custom_study" maxLength="28">Vlastní studium</string>
-    <string name="more_options">Více</string>
     <string name="dyn_deck_desc">Toto je speciální balíček pro studium mimo normální plán. Karty se po opakování automaticky vrátí do svých původních balíčků. Odstraněním tohoto balíčku ze seznamu se všechny zbývající karty vrátí do svých původních balíčků.</string>
     <string name="steps_error">Kroky musí být čísla větší než 0</string>
     <string name="steps_min_error">Je požadován alespoň jeden krok</string>

@@ -81,6 +81,7 @@ class ControlsSettingsFragment : SettingsFragment() {
         }
     }
 
-    private fun String.toSentenceCase(@StringRes resId: Int): String =
-        this.toSentenceCase(this@ControlsSettingsFragment, resId)
+    private fun String.toSentenceCase(
+        @StringRes resId: Int,
+    ): String = this.toSentenceCase(this@ControlsSettingsFragment, resId)
 }

@@ -27,8 +27,8 @@ import android.widget.RemoteViews
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShorcuts
 import com.ichi2.anki.R
-import com.ichi2.anki.Reviewer
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.anki.pages.DeckOptions
@@ -56,7 +56,7 @@ data class DeckWidgetData(
     val name: String,
     val reviewCount: Int,
     val learnCount: Int,
-    val newCount: Int
+    val newCount: Int,
 )
 
 /**
@@ -67,9 +67,7 @@ data class DeckWidgetData(
  * There is only one way to configure the widget i.e. while adding it on home screen,
  */
 class DeckPickerWidget : AnalyticsWidgetProvider() {
-
     companion object {
-
         /**
          * Key used for passing the selected deck IDs in the intent extras.
          */
@@ -94,7 +92,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: AppWidgetId,
-            deckIds: LongArray?
+            deckIds: LongArray?,
         ) {
             val remoteViews = RemoteViews(context.packageName, R.layout.widget_deck_picker_large)
             if (deckIds == null || deckIds.isEmpty()) {
@@ -124,7 +122,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             appWidgetManager: AppWidgetManager,
             appWidgetId: AppWidgetId,
             remoteViews: RemoteViews,
-            deckIds: LongArray
+            deckIds: LongArray,
         ) {
             remoteViews.removeAllViews(R.id.deckCollection)
             val deckData = getDeckNamesAndStats(deckIds.toList())
@@ -140,22 +138,20 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
 
                 val isEmptyDeck = deck.newCount == 0 && deck.reviewCount == 0 && deck.learnCount == 0
 
-                val intent = if (!isEmptyDeck) {
-                    Intent(context, Reviewer::class.java).apply {
-                        action = Intent.ACTION_VIEW
-                        putExtra("deckId", deck.deckId)
-                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                val intent =
+                    if (!isEmptyDeck) {
+                        intentToReviewDeckFromShorcuts(context, deck.deckId)
+                    } else {
+                        DeckOptions.getIntent(context, deck.deckId)
                     }
-                } else {
-                    DeckOptions.getIntent(context, deck.deckId)
-                }
 
-                val pendingIntent = PendingIntent.getActivity(
-                    context,
-                    deck.deckId.toInt(),
-                    intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                )
+                val pendingIntent =
+                    PendingIntent.getActivity(
+                        context,
+                        deck.deckId.toInt(),
+                        intent,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+                    )
 
                 deckView.setOnClickPendingIntent(R.id.deckName, pendingIntent)
                 remoteViews.addView(R.id.deckCollection, deckView)
@@ -168,22 +164,24 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: AppWidgetId,
-            remoteViews: RemoteViews
+            remoteViews: RemoteViews,
         ) {
             remoteViews.setTextViewText(R.id.empty_widget, context.getString(R.string.empty_collection_state_in_widget))
             remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
             remoteViews.setViewVisibility(R.id.deckCollection, View.GONE)
 
-            val configIntent = Intent(context, DeckPickerWidgetConfig::class.java).apply {
-                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
-            val configPendingIntent = PendingIntent.getActivity(
-                context,
-                appWidgetId,
-                configIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
+            val configIntent =
+                Intent(context, DeckPickerWidgetConfig::class.java).apply {
+                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                }
+            val configPendingIntent =
+                PendingIntent.getActivity(
+                    context,
+                    appWidgetId,
+                    configIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+                )
             remoteViews.setOnClickPendingIntent(R.id.empty_widget, configPendingIntent)
 
             appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
@@ -193,22 +191,24 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: AppWidgetId,
-            remoteViews: RemoteViews
+            remoteViews: RemoteViews,
         ) {
             remoteViews.setTextViewText(R.id.empty_widget, context.getString(R.string.empty_widget_state))
             remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
             remoteViews.setViewVisibility(R.id.deckCollection, View.GONE)
 
-            val configIntent = Intent(context, DeckPickerWidgetConfig::class.java).apply {
-                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
-            val configPendingIntent = PendingIntent.getActivity(
-                context,
-                appWidgetId,
-                configIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
+            val configIntent =
+                Intent(context, DeckPickerWidgetConfig::class.java).apply {
+                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                }
+            val configPendingIntent =
+                PendingIntent.getActivity(
+                    context,
+                    appWidgetId,
+                    configIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+                )
             remoteViews.setOnClickPendingIntent(R.id.empty_widget, configPendingIntent)
 
             appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
@@ -239,7 +239,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray,
-        usageAnalytics: UsageAnalytics
+        usageAnalytics: UsageAnalytics,
     ) {
         Timber.d("Performing widget update for appWidgetIds: %s", appWidgetIds)
 
@@ -266,7 +266,10 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
         Timber.d("Widget update process completed for appWidgetIds: ${appWidgetIds.joinToString(", ")}")
     }
 
-    override fun onReceive(context: Context?, intent: Intent?) {
+    override fun onReceive(
+        context: Context?,
+        intent: Intent?,
+    ) {
         if (context == null || intent == null) {
             Timber.e("Context or intent is null in onReceive")
             return
@@ -283,7 +286,11 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                 val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
                 val selectedDeckIds = intent.getLongArrayExtra(EXTRA_SELECTED_DECK_IDS)
 
-                Timber.d("Received ACTION_APPWIDGET_UPDATE with widget ID: $appWidgetId and selectedDeckIds: ${selectedDeckIds?.joinToString(", ")}")
+                Timber.d(
+                    "Received ACTION_APPWIDGET_UPDATE with widget ID: $appWidgetId and selectedDeckIds: ${selectedDeckIds?.joinToString(
+                        ", ",
+                    )}",
+                )
 
                 if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID && selectedDeckIds != null) {
                     Timber.d("Updating widget with ID: $appWidgetId")
@@ -325,13 +332,16 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                     Exception("Unexpected action received: ${intent.action}"),
                     "DeckPickerWidget - onReceive",
                     null,
-                    onlyIfSilent = true
+                    onlyIfSilent = true,
                 )
             }
         }
     }
 
-    override fun onDeleted(context: Context?, appWidgetIds: IntArray?) {
+    override fun onDeleted(
+        context: Context?,
+        appWidgetIds: IntArray?,
+    ) {
         if (context == null) {
             Timber.w("Context is null in onDeleted")
             return
@@ -354,9 +364,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
  * @param deckId the list of deck ID to retrieve data for
  * @return a list of DeckPickerWidgetData objects containing deck names and statistics
  */
-suspend fun getDeckNameAndStats(deckId: DeckId): DeckWidgetData? {
-    return getDeckNamesAndStats(listOf(deckId)).getOrNull(0)
-}
+suspend fun getDeckNameAndStats(deckId: DeckId): DeckWidgetData? = getDeckNamesAndStats(listOf(deckId)).getOrNull(0)
 
 suspend fun getDeckNamesAndStats(deckIds: List<DeckId>): List<DeckWidgetData> {
     val result = mutableListOf<DeckWidgetData>()
@@ -371,8 +379,8 @@ suspend fun getDeckNamesAndStats(deckIds: List<DeckId>): List<DeckWidgetData> {
                 name = node.lastDeckNameComponent,
                 reviewCount = node.revCount,
                 learnCount = node.lrnCount,
-                newCount = node.newCount
-            )
+                newCount = node.newCount,
+            ),
         )
     }
 

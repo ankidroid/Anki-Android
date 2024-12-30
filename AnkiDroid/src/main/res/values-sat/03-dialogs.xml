@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">ᱟᱢ ᱫᱚ ᱱᱚᱶᱟ database ᱥᱟᱡᱟᱣ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ ᱥᱮ ? \n\nᱮᱛᱷᱚᱵ ᱢᱟᱲᱟᱝ ᱨᱮ, ᱢᱤᱫᱴᱟᱝ ᱠᱚᱯᱤ \&quot;%s\&quot; ᱥᱚᱵᱼᱯᱷᱚᱞᱰᱟᱨ ᱨᱮ ᱛᱮᱭᱨᱚᱜᱽᱟ ᱱᱟᱦ ᱾</string>
     <string name="intent_aedict_empty">ᱴᱩᱢᱟᱹᱞ \&quot;default\&quot; ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="intent_aedict_category">AnkiDroid ᱛᱮ ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱞᱟᱹᱜᱤᱫ Notepad ᱴᱩᱢᱟᱹᱞ ᱵᱷᱮᱜᱟᱨ ᱠᱟᱜ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ “default” ᱧᱩᱛᱩᱢ ᱠᱟᱜ ᱢᱮ</string>
-    <string name="custom_study_new_total_new">ᱰᱮᱠ ᱨᱮ ᱱᱟᱶᱟ ᱠᱟᱰᱺ%d</string>
-    <string name="custom_study_rev_total_rev">ᱰᱮᱠ ᱨᱮ ᱞᱟᱦᱟ ᱛᱮᱭᱟᱜ ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭᱺ%d</string>
     <string name="custom_study_new_extend">ᱵᱚᱰᱷᱟᱣ/ᱠᱚᱢᱢᱮ (“-3”) ᱛᱮᱦᱚᱸᱧᱟᱜᱽ ᱱᱟᱶᱟ ᱠᱟᱰ ᱥᱤᱢᱟᱹ</string>
     <string name="custom_study_rev_extend">ᱵᱚᱰᱷᱟᱣ/ᱠᱚᱢᱢᱮ (“-3”) ᱛᱮᱦᱚᱸᱧᱟᱜᱽ ᱨᱤᱵᱷᱤᱣ ᱞᱤᱢᱤᱴ</string>
     <string name="custom_study_forgotten">ᱨᱤᱵᱷᱭᱩ ᱠᱟᱰ x ᱫᱤᱱ ᱨᱮ ᱦᱤᱲᱤᱧᱟᱜ ᱠᱚᱺ</string>
     <string name="custom_study_ahead">᱑᱐ ᱫᱤᱱ ᱢᱟᱲᱟᱝ ᱥᱮᱱ ᱨᱤᱵᱷᱤᱣᱺ</string>
-    <string name="custom_study_random">ᱴᱟᱴᱠᱟ ᱡᱟᱱᱟᱢ(ᱟᱛᱷᱟᱹᱲᱤ) x ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱵᱟᱪᱷᱟᱣ ᱠᱚᱨᱟᱣ ᱢᱮ ᱰᱮᱠ ᱠᱷᱚᱱᱺ</string>
     <string name="custom_study_preview">ᱢᱟᱲᱟᱝ xᱫᱤᱱ ᱨᱮ ᱥᱮᱞᱮᱫ ᱠᱟᱱ ᱠᱟᱰ ᱠᱚ preview ᱢᱮ</string>
-    <string name="custom_study_rebuild_deck_corrupt">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱷᱟᱣᱜ ᱰᱮᱠ ᱫᱟᱭ ᱛᱮᱭᱟᱨ ᱞᱮᱱᱟ</string>
     <string name="storage_full_title">ᱥᱴᱳᱨᱮᱡ ᱯᱩᱨᱤ</string>
     <string name="storage_almost_full_title">ᱥᱴᱳᱨᱮᱡ ᱜᱮ ᱯᱩᱨᱤ</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ᱡᱟᱭᱜᱟ ᱵᱟᱹᱱᱩᱜ-ᱟ</string>
@@ -235,7 +231,7 @@
     <string name="dismiss_backup_warning_upgrade">        ᱟᱱᱰᱨᱚᱭᱮᱰ ᱯᱨᱟᱭᱵᱷᱮᱴᱤ ᱪᱮᱱᱡᱟᱨ ᱠᱷᱟᱹᱛᱤᱨ ᱟᱢᱟᱜ ᱰᱮᱴᱟ ᱟᱨ ᱚᱴᱚᱢᱮᱴᱤᱠ ᱵᱮᱠ-ᱟᱯ ᱠᱚ ᱮᱯᱞᱤᱠᱮᱥᱚᱱ ᱵᱚᱫᱚᱞ ᱞᱮᱱ ᱠᱷᱟᱱ ᱵᱟᱝ ᱥᱮᱴᱮᱨᱚᱜ-ᱟ
     </string>
     <string name="deck_already_exists">ᱰᱮᱠ ᱱᱤᱛᱚᱜ ᱢᱮᱱᱟᱜᱼᱟ</string>
-    <string name="empty_deck_name">Deck name cannot be empty</string>
+    <string name="empty_deck_name">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱵᱟᱱᱩᱜᱼᱟ</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">ᱥᱚᱢᱟᱱ ᱢᱩᱞᱩᱠ ᱨᱮ ᱥᱮᱴᱮᱨ ᱢᱮ</string>
@@ -260,15 +256,15 @@
     <string name="open">ᱡᱷᱤᱡᱽ</string>
     <string name="change_cloze_number">ᱥᱞᱳᱡ ᱮᱞ ᱛᱚᱨᱡᱚᱢᱟ ᱢᱮ</string>
     <string name="cloze_number">ᱠᱞᱳᱡ ᱱᱚᱢᱵᱚᱨ:</string>
-    <string name="change_editor_mode">Change editor mode</string>
-    <string name="open_note_editor">Open note editor</string>
-    <string name="change_cloze_mode">Change cloze mode</string>
+    <string name="change_editor_mode">ᱮᱰᱤᱴᱚᱨ ᱢᱚᱰ ᱨᱮ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
+    <string name="open_note_editor">ᱚᱯᱮᱱ ᱱᱳᱴ ᱮᱰᱤᱴᱚᱨ</string>
+    <string name="change_cloze_mode">ᱥᱞᱳᱡᱤᱸᱜ ᱢᱚᱰ ᱨᱮ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
-    <string name="compress">Compress</string>
+    <string name="compress">ᱠᱚᱢᱯᱨᱮᱥ</string>
     <!-- Tts playback error dialog -->
-    <string name="tts_error_dialog_title">Language not supported</string>
+    <string name="tts_error_dialog_title">ᱯᱟᱹᱨᱥᱤ ᱵᱟᱭ ᱥᱚᱦᱚᱫᱚᱜ ᱠᱟᱱᱟ</string>
     <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
-    <string name="tts_error_dialog_change_button_text">Change engine</string>
-    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
+    <string name="tts_error_dialog_change_button_text">ᱢᱚᱴᱚᱨ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
+    <string name="tts_error_dialog_supported_voices_button_text">ᱨᱚᱲ ᱵᱟᱵᱚᱫᱽ</string>
 </resources>

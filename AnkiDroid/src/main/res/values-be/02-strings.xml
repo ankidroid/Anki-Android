@@ -82,12 +82,6 @@
     <string name="webview_crash_loop_dialog_content">Сістэмнаму WebView не атрымалася апрацаваць картку \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Сцягі</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Змяніць абмежаванні новых картак на сёння</string>
-    <string name="custom_study_increase_review_limit">Змяніць абмежаванні паўтарэння картак на сёння</string>
-    <string name="custom_study_review_forgotten">Паўтарыць забытыя карткі</string>
-    <string name="custom_study_review_ahead">Паўтарыць наперад</string>
-    <string name="custom_study_random_selection">Вывучыць выпадкова адабраныя карткі</string>
-    <string name="custom_study_preview_new">Папярэдні прагляд новых картак</string>
     <string name="custom_study_limit_tags">Абмежаваць вызначанымі меткамі</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d адкладзеная</item>
@@ -95,6 +89,8 @@
         <item quantity="many">+%d адкладзеных</item>
         <item quantity="other">+%d адкладзеных</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Рэдагаваць нататку</string>
     <string name="discard">Адхіліць</string>
@@ -175,7 +171,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Параметры навучання</string>
     <string name="select_tts" maxLength="28">Прызначыць сінтэз маўлення</string>
     <string name="custom_study" maxLength="28">Індывідуальнае навучанне</string>
-    <string name="more_options">Яшчэ</string>
     <string name="dyn_deck_desc">Гэта спецыяльная калода для навучання па-за межамі звыклага графіка. Пасля паўтору, карткі будуць аўтаматычна вяртацца ў сваю першапачатковую калоду. Выдаленне гэтай калоды верне ўсе карткі ў іх першапачатковую калоду.</string>
     <string name="steps_error">Крокі павінны быць лікамі, якія больш за 0</string>
     <string name="steps_min_error">Патрабуецца прынамсі адзін крок</string>

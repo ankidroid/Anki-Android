@@ -53,20 +53,24 @@ class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_record
         }
     }
 
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            Timber.d("Audio permission granted")
-            initializeAudioRecorder()
-            setupDoneButton()
-        } else {
-            Timber.d("Audio permission denied")
-            showErrorDialog(resources.getString(R.string.multimedia_editor_audio_permission_refused))
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+        ) { isGranted ->
+            if (isGranted) {
+                Timber.d("Audio permission granted")
+                initializeAudioRecorder()
+                setupDoneButton()
+            } else {
+                Timber.d("Audio permission denied")
+                showErrorDialog(resources.getString(R.string.multimedia_editor_audio_permission_refused))
+            }
         }
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         if (!hasMicPermission()) {
@@ -103,10 +107,11 @@ class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_record
             field.mediaPath = viewModel.currentMultimediaPath.value
             field.hasTemporaryMedia = true
 
-            val resultData = Intent().apply {
-                putExtra(MULTIMEDIA_RESULT, field)
-                putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
-            }
+            val resultData =
+                Intent().apply {
+                    putExtra(MULTIMEDIA_RESULT, field)
+                    putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
+                }
             requireActivity().setResult(AppCompatActivity.RESULT_OK, resultData)
             requireActivity().finish()
         }
@@ -117,12 +122,13 @@ class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_record
         if (audioRecordingController != null) return
         Timber.d("Initialising AudioRecordingController")
         try {
-            audioRecordingController = AudioRecordingController(
-                context = requireActivity(),
-                linearLayout = view?.findViewById(R.id.audio_recorder_layout)!!,
-                viewModel = viewModel,
-                note = note
-            )
+            audioRecordingController =
+                AudioRecordingController(
+                    context = requireActivity(),
+                    linearLayout = view?.findViewById(R.id.audio_recorder_layout)!!,
+                    viewModel = viewModel,
+                    note = note,
+                )
         } catch (e: Exception) {
             Timber.w(e, "unable to add the audio recorder to toolbar")
             CrashReportService.sendExceptionReport(e, "Unable to create recorder tool bar")
@@ -141,16 +147,14 @@ class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_record
     }
 
     companion object {
-
         fun getIntent(
             context: Context,
-            multimediaExtra: MultimediaActivityExtra
-        ): Intent {
-            return MultimediaActivity.getIntent(
+            multimediaExtra: MultimediaActivityExtra,
+        ): Intent =
+            MultimediaActivity.getIntent(
                 context,
                 AudioRecordingFragment::class,
-                multimediaExtra
+                multimediaExtra,
             )
-        }
     }
 }

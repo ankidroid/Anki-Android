@@ -35,7 +35,6 @@ import org.junit.runner.RunWith
 /** @see BrowserColumnCollection */
 @RunWith(AndroidJUnit4::class)
 class BrowserColumnCollectionTest : RobolectricTest() {
-
     val prefs = this.getSharedPrefs()
 
     @Test
@@ -81,16 +80,14 @@ class BrowserColumnCollectionTest : RobolectricTest() {
         assertThat("null column is replaced with third", updated[1], equalTo(FSRS_STABILITY))
     }
 
-    private fun BrowserColumnCollection.toKeyArray() =
-        columns.map { it.ankiColumnKey }
+    private fun BrowserColumnCollection.toKeyArray() = columns.map { it.ankiColumnKey }
 
     @CheckResult
-    private fun load(cardsOrNotes: CardsOrNotes) =
-        BrowserColumnCollection.load(prefs, cardsOrNotes)
+    private fun load(cardsOrNotes: CardsOrNotes) = BrowserColumnCollection.load(prefs, cardsOrNotes)
 
     private fun updateColumns(
         cardsOrNotes: CardsOrNotes,
-        block: (MutableList<CardBrowserColumn?>) -> Unit
+        block: (MutableList<CardBrowserColumn?>) -> Unit,
     ) {
         BrowserColumnCollection.update(prefs, cardsOrNotes) {
             block(it)

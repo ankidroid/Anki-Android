@@ -38,14 +38,15 @@ object AnkiDroidJsAPIConstants {
     const val CURRENT_JS_API_VERSION = "0.0.3"
     const val MINIMUM_JS_API_VERSION = "0.0.3"
 
-    val flagCommands = mapOf(
-        "none" to ViewerCommand.UNSET_FLAG,
-        "red" to ViewerCommand.TOGGLE_FLAG_RED,
-        "orange" to ViewerCommand.TOGGLE_FLAG_ORANGE,
-        "green" to ViewerCommand.TOGGLE_FLAG_GREEN,
-        "blue" to ViewerCommand.TOGGLE_FLAG_BLUE,
-        "pink" to ViewerCommand.TOGGLE_FLAG_PINK,
-        "turquoise" to ViewerCommand.TOGGLE_FLAG_TURQUOISE,
-        "purple" to ViewerCommand.TOGGLE_FLAG_PURPLE
-    )
+    val flagCommands =
+        mapOf(
+            "none" to ViewerCommand.UNSET_FLAG,
+            "red" to ViewerCommand.TOGGLE_FLAG_RED,
+            "orange" to ViewerCommand.TOGGLE_FLAG_ORANGE,
+            "green" to ViewerCommand.TOGGLE_FLAG_GREEN,
+            "blue" to ViewerCommand.TOGGLE_FLAG_BLUE,
+            "pink" to ViewerCommand.TOGGLE_FLAG_PINK,
+            "turquoise" to ViewerCommand.TOGGLE_FLAG_TURQUOISE,
+            "purple" to ViewerCommand.TOGGLE_FLAG_PURPLE,
+        )
 }

@@ -151,8 +151,6 @@
     <string name="notification_minimum_cards_due">%d ਤੋਂ ਵੱਧ ਕਾਰਡ ਬਕਾਇਆ ਹਨ</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">ਵਾਈਬ੍ਰੇਟ</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">ਬਲਿੰਕ ਰੋਸ਼ਨੀ</string>
-    <string name="timeout_answer_text" maxLength="41">ਆਟੋਮੈਟਿਕ ਡਿਸਪਲੇ ਜਵਾਬ</string>
-    <string name="timeout_answer_summ2">ਉਪਭੋਗਤਾ ਇੰਪੁੱਟ ਦੇ ਬਿਨਾਂ ਆਪਣੇ ਆਪ ਜਵਾਬ ਦਿਖਾਓ। ਡੈੱਕ ਵਿਕਲਪਾਂ ਤੋਂ ਸੰਰਚਨਾ ਕਰੋ।</string>
     <string name="select_locale_title">ਭਾਸ਼ਾ ਚੁਣੋ</string>
     <string name="software_render" maxLength="41">ਕਾਰਡ ਹਾਰਡਵੇਅਰ ਰੈਂਡਰ ਨੂੰ ਅਸਮਰੱਥ ਬਣਾਓ</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>

@@ -23,19 +23,16 @@ import timber.log.Timber
 import java.io.ByteArrayInputStream
 
 open class AnkiServer(
-    private val postHandler: PostRequestHandler
+    private val postHandler: PostRequestHandler,
 ) : NanoHTTPD(LOCALHOST, 0) {
-
-    fun baseUrl(): String {
-        return "http://$LOCALHOST:$listeningPort/"
-    }
+    fun baseUrl(): String = "http://$LOCALHOST:$listeningPort/"
 
     // it's faster to serve local files without GZip. see 'page render' in logs
     // This also removes 'W/System: A resource failed to call end.'
     override fun useGzipWhenAccepted(r: Response?) = false
 
-    override fun serve(session: IHTTPSession): Response {
-        return when (session.method) {
+    override fun serve(session: IHTTPSession): Response =
+        when (session.method) {
             Method.POST -> {
                 val uri = session.uri
                 Timber.d("POST: Requested %s", uri)
@@ -58,19 +55,17 @@ open class AnkiServer(
                 newFixedLengthResponse(null)
             }
         }
-    }
 
     private fun buildResponse(
         data: ByteArray?,
         mimeType: String = "application/binary",
-        status: Response.IStatus = Response.Status.OK
-    ): Response {
-        return if (data == null) {
+        status: Response.IStatus = Response.Status.OK,
+    ): Response =
+        if (data == null) {
             newFixedLengthResponse(null)
         } else {
             newChunkedResponse(status, mimeType, ByteArrayInputStream(data))
         }
-    }
 
     companion object {
         const val LOCALHOST = "127.0.0.1"

@@ -100,26 +100,30 @@ public class Time {
 
     @Test
     fun showsErrorForInvalidUsage() {
-        TestLintTask.lint().allowMissingSdk().allowCompilationErrors()
+        TestLintTask
+            .lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
             .files(
                 JavaTestFile.create(stubZoned),
                 JavaTestFile.create(stubGregorian),
-                JavaTestFile.create(javaFileWithFromCall)
-            )
-            .issues(DirectGregorianInstantiation.ISSUE)
+                JavaTestFile.create(javaFileWithFromCall),
+            ).issues(DirectGregorianInstantiation.ISSUE)
             .run()
             .expectErrorCount(1)
             .check({ output: String ->
                 Assert.assertTrue(output.contains(DirectGregorianInstantiation.ID))
                 Assert.assertTrue(output.contains(DirectGregorianInstantiation.DESCRIPTION))
             })
-        TestLintTask.lint().allowMissingSdk().allowCompilationErrors()
+        TestLintTask
+            .lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
             .files(
                 JavaTestFile.create(stubZoned),
                 JavaTestFile.create(stubGregorian),
-                JavaTestFile.create(javaFileWithConstructorInvocation)
-            )
-            .issues(DirectGregorianInstantiation.ISSUE)
+                JavaTestFile.create(javaFileWithConstructorInvocation),
+            ).issues(DirectGregorianInstantiation.ISSUE)
             .run()
             .expectErrorCount(1)
             .check({ output: String ->
@@ -130,7 +134,9 @@ public class Time {
 
     @Test
     fun doesNotShowErrorsWhenUsedInTime() {
-        TestLintTask.lint().allowMissingSdk()
+        TestLintTask
+            .lint()
+            .allowMissingSdk()
             .allowCompilationErrors()
             .files(JavaTestFile.create(stubGregorian), JavaTestFile.create(javaFileWithTime))
             .issues(DirectGregorianInstantiation.ISSUE)

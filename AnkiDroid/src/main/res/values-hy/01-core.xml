@@ -65,8 +65,8 @@
         <item quantity="other">Մնաց %1$d ժամ %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">Մնաց %1$d օր %2$dժ</item>
+        <item quantity="other">Մնաց %1$d օր %2$dժ</item>
     </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>
     <string name="no_cards_placeholder_description">Ավելացրեք քարտեր\n+ կոճակի միջոցով։</string>
@@ -82,7 +82,7 @@
     <string name="menu_import" maxLength="28">Ներմուծել</string>
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Հետարկել</string>
     <string name="redo" maxLength="28">Կրկնել</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Undo stroke</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Հետարկել գիծը</string>
     <string name="move_all_to_deck">Տեղափոխել բոլորը կապուկի մեջ</string>
     <string name="unbury" maxLength="28">Վերադարձնել առանձնացվածները</string>
     <string name="rename_deck" maxLength="28">Վերանվանել կապուկը</string>
@@ -108,8 +108,8 @@
     <string name="menu_search" maxLength="28">Որոնում %1$s-ում</string>
     <string name="menu_mark_note" maxLength="28">Նշել գրառումը</string>
     <string name="menu_unmark_note">Ապանշել գրառումը</string>
-    <string name="menu_enable_voice_playback" maxLength="28">Enable voice playback</string>
-    <string name="menu_disable_voice_playback">Disable voice playback</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Միացնել ձայնի նվագարկումը</string>
+    <string name="menu_disable_voice_playback">Անջատել ձայնի նվագարկումը</string>
     <string name="new_deck">Ստեղծել կապուկ</string>
     <string name="new_dynamic_deck">Ստեղծել զտված կապուկ</string>
     <string name="directory_inaccessible">AnkiDroid-ի պանակը անհասանելի է</string>
@@ -118,11 +118,11 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Շարունակելու համար թույլատրեք AnkiDroid-ին «Ֆայլեր» թույլտվությունը</string>
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Վերակառուցվում է զտված կապուկը&#8230;</string>
     <string name="rebuild_cram_label" maxLength="28">Վերակառուցել</string>
     <string name="empty_cram_label" maxLength="28">Դատարկ</string>
-    <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="create_subdeck">Ստեղծել ենթակապուկ</string>
+    <string name="empty_filtered_deck">Զտված կապուկը դատարկվում է&#8230;</string>
     <string name="custom_study_deck_name">Ուսուցման լրացուցիչ աշխատաշրջան</string>
     <string name="custom_study_deck_exists">Սկզբում վերանվանել լրացուցիչ ուսուցման առկա կապուկը</string>
     <string name="search_deck" comment="Deck search for selecting it">Կապուկների որոնում</string>
@@ -160,8 +160,8 @@
         <item quantity="one">Ջնջե՞լ «%2$s» քարտերի տեսակը և նրա «%1$d» քարտը:</item>
         <item quantity="other">Ջնջե՞լ «%2$s» քարտերի տեսակը և նրա «%1$d» քարտը:</item>
     </plurals>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="card_template_editor_save_error">Չստացվեց պահպանել քարտի կաղապարի փոփոխությունները. %s</string>
+    <string name="template_for_current_card_deleted">Ներկայիս քարտի տեսակը ջնջվել է։</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Զննիչի տեսք</string>
     <!-- card Info -->
@@ -178,13 +178,13 @@
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
     <string name="sync_conflict_remote_confirm_new">Փոխարինե՞լ ձեր AnkiDroid-ի հավաքածուն ձեր AnkiWeb-ի հավաքածուով։</string>
     <string name="sync_conflict_local_confirm_new">Փոխարինե՞լ ձեր AnkiWeb-ի հավաքածուն ձեր AnkiDroid-ի հավաքածուով։</string>
-    <string name="sync_conflict_title_new">Select collection to keep</string>
-    <string name="sync_conflict_replace_title">Replace collection</string>
+    <string name="sync_conflict_title_new">Ընտրել պահպանվող հավաքածուն</string>
+    <string name="sync_conflict_replace_title">Փոխարինել հավաքածուն</string>
     <!-- Generic errors -->
-    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
-    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
+    <string name="error__etc__cannot_write_to_or_create_file">Չստացվեց խմբագրել կամ ստեղծել %s ֆայլը</string>
+    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Հավաքածուն անհասանելի է</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Play Խանութի փոփոխությունների պատճառով AnkiDroid-ը ջնջելուց հետո այն չի կարող բացել ձեր հավաքածուն։\n\nՁեր տվյալները ապահով են և կարող են վերականգնվել։ Նրանք գտնվում են հետևյալ վայրում`\n%s\n\nՎերականգնելու համար ընտրեք տարբերակներից մեկը.</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android-ը հեռացրել է AnkiDroid-ի %1$s թույլտվությունը` ծրագրի քիչ օգտագործման պատճառով։\n\nՁեր տվյալները ապահով են և կարող են վերականգնվել։ Նրանք գտնվում են հետևյալ վայրում`\n%2$s\n\nՎերականգնելու համար ընտրեք տարբերակներից մեկը.</string>
     <string name="restore_data_from_ankiweb">Վերականգնել AnkiWeb-ից (նախընտրելի)</string>
     <string name="install_non_play_store_ankidroid_recommended">Վերականգնել թղթապանակի հասանելիությունը (նախընտրելի)</string>
     <string name="install_non_play_store_ankidroid">Վերականգնել թղթապանակի հասանելիությունը (խորացված)</string>

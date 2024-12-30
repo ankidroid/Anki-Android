@@ -27,7 +27,6 @@ import androidx.test.runner.lifecycle.Stage
 import org.hamcrest.Matcher
 
 object TestUtils {
-
     /**
      * Get instance of current activity
      */
@@ -37,7 +36,7 @@ object TestUtils {
             InstrumentationRegistry.getInstrumentation().runOnMainSync {
                 val resumedActivities: Collection<*> =
                     ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(
-                        Stage.RESUMED
+                        Stage.RESUMED,
                     )
                 if (resumedActivities.iterator().hasNext()) {
                     val currentActivity = resumedActivities.iterator().next() as Activity
@@ -52,31 +51,30 @@ object TestUtils {
      * so test for that screen layout in our resources configuration
      */
     val isTablet: Boolean
-        get() = (
-            activityInstance!!.resources.configuration.screenLayout and
-                Configuration.SCREENLAYOUT_SIZE_MASK
+        get() =
+            (
+                activityInstance!!.resources.configuration.screenLayout and
+                    Configuration.SCREENLAYOUT_SIZE_MASK
             ) ==
-            Configuration.SCREENLAYOUT_SIZE_XLARGE
+                Configuration.SCREENLAYOUT_SIZE_XLARGE
 
     /**
      * Click on a view using its ID inside a RecyclerView item
      */
-    fun clickChildViewWithId(id: Int): ViewAction {
-        return object : ViewAction {
-            override fun getConstraints(): Matcher<View>? {
-                return null
-            }
+    fun clickChildViewWithId(id: Int): ViewAction =
+        object : ViewAction {
+            override fun getConstraints(): Matcher<View>? = null
 
-            override fun getDescription(): String {
-                return "Click on a child view with specified id."
-            }
+            override fun getDescription(): String = "Click on a child view with specified id."
 
-            override fun perform(uiController: UiController, view: View) {
+            override fun perform(
+                uiController: UiController,
+                view: View,
+            ) {
                 val v = view.findViewById<View>(id)
                 v.performClick()
             }
         }
-    }
 
     /** @return if the instrumented tests were built on a CI machine
      */

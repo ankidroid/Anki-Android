@@ -19,8 +19,9 @@ package com.ichi2.widget.deckpicker
 import android.content.Context
 import androidx.core.content.edit
 
-class DeckPickerWidgetPreferences(context: Context) {
-
+class DeckPickerWidgetPreferences(
+    context: Context,
+) {
     /**
      * Prefix for the SharedPreferences key used to store the selected decks for the DeckPickerWidget.
      * The full key is constructed by appending the appWidgetId to this prefix, ensuring that each
@@ -55,7 +56,10 @@ class DeckPickerWidgetPreferences(context: Context) {
     /**
      * Saves the selected deck IDs to the shared preferences for the given widget ID.
      */
-    fun saveSelectedDecks(appWidgetId: Int, selectedDecks: List<String>) {
+    fun saveSelectedDecks(
+        appWidgetId: Int,
+        selectedDecks: List<String>,
+    ) {
         deckPickerSharedPreferences.edit {
             putString(getDeckPickerWidgetKey(appWidgetId), selectedDecks.joinToString(","))
         }
@@ -65,6 +69,4 @@ class DeckPickerWidgetPreferences(context: Context) {
 /**
  * Generates the key for the shared preferences for the given widget ID.
  */
-private fun getDeckPickerWidgetKey(appWidgetId: Int): String {
-    return "deck_picker_widget_selected_decks_$appWidgetId"
-}
+private fun getDeckPickerWidgetKey(appWidgetId: Int): String = "deck_picker_widget_selected_decks_$appWidgetId"

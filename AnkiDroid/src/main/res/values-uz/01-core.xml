@@ -57,7 +57,7 @@
     <string name="expand">Kengaytirish</string>
     <string name="collapse">Toraytirish</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
+        <item quantity="one">%d minut qoldi</item>
         <item quantity="other">%d minut qoldi</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">

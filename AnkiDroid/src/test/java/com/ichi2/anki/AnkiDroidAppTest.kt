@@ -23,7 +23,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class AnkiDroidAppTest {
-
     @Test
     fun reportingDoesNotThrowException() {
         AnkiAssert.assertDoesNotThrow { sendExceptionReport("Test", "AnkiDroidAppTest") }

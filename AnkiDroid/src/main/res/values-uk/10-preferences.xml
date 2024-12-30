@@ -140,7 +140,7 @@
     <string name="metered_sync_title" maxLength="41">Дозволити синхронізацію на вимірюваному Інтернет-підключенні</string>
     <string name="metered_sync_summary">Якщо вимкнено, то вас буде попереджено коли ви спробуєте синхронізувати при вимірюваному Інтернет підключенні</string>
     <string name="backup_limits_frequency">Частота</string>
-    <string name="backup_limits_lifetime">Довічно</string>
+    <string name="backup_limits_lifetime">Тривалість збереження</string>
     <string name="app_theme" maxLength="41">Тема</string>
     <string name="day_theme" maxLength="41">Денна тема</string>
     <string name="night_theme" maxLength="41">Нічна тема</string>
@@ -153,8 +153,6 @@
     <string name="notification_minimum_cards_due">%d карток в черзі</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Вібрація</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Миготіння світлодіоду</string>
-    <string name="timeout_answer_text" maxLength="41">Автоматично відображати відповідь</string>
-    <string name="timeout_answer_summ2">Показувати відповідь автоматично без введення даних користувачем. Налаштуйте в параметрах колоди.</string>
     <string name="select_locale_title">Виберіть мову</string>
     <string name="software_render" maxLength="41">Вимкнути апаратне відображення карт</string>
     <string name="software_render_summ">Апаратне відображення швидше, але має проблеми, зокрема на Android 8/8.1. Якщо Ви не бачите частини інтерфейсу, спробуйте це налаштування.</string>

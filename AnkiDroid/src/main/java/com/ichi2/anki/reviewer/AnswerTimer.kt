@@ -41,8 +41,9 @@ import kotlinx.coroutines.withContext
  *
  * @see [Card.timeTaken] - used by the scheduler
  */
-class AnswerTimer(private val cardTimer: Chronometer) {
-
+class AnswerTimer(
+    private val cardTimer: Chronometer,
+) {
     @VisibleForTesting
     var limit: Int = 0
         private set
@@ -62,7 +63,10 @@ class AnswerTimer(private val cardTimer: Chronometer) {
      * This may also change the limit, based on [Card.timeLimit]
      */
     @MainThread // resetTimerUI
-    fun setupForCard(col: Collection, newCard: Card) {
+    fun setupForCard(
+        col: Collection,
+        newCard: Card,
+    ) {
         currentCard = newCard
         showTimer = newCard.shouldShowTimer(col)
         if (showTimer && cardTimer.visibility == View.INVISIBLE) {

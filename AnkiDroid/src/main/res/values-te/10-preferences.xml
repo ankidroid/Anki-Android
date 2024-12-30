@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">%d కార్ల కంటే ఎక్కువ</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">కదలుట</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">బ్లింక్ కాంతి</string>
-    <string name="timeout_answer_text" maxLength="41">స్వయంచాలక ప్రదర్శన సమాధానం</string>
-    <string name="timeout_answer_summ2">వినియోగదారు ఇన్‌పుట్ లేకుండా స్వయంచాలకంగా సమాధానాన్ని చూపుతుంది. డెక్ ఎంపికల నుండి కాన్ఫిగర్ చేయండి.</string>
     <string name="select_locale_title">భాషను ఎంచుకోండి</string>
     <string name="software_render" maxLength="41">హార్డ్‌వేర్ రెండర్ కార్డ్‌ను నిలిపివేయండి</string>
     <string name="software_render_summ">హార్డ్‌వేర్ రెండర్ వేగవంతమైనది కానీ సమస్యలు ఉండవచ్చు, ముఖ్యంగా Android 8/8.1లో. మీరు కార్డ్ రివ్యూ యూజర్ ఇంటర్‌ఫేస్ భాగాలను చూడలేకపోతే, ఈ సెట్టింగ్‌ని ప్రయత్నించండి.</string>

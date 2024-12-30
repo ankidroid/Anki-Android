@@ -83,16 +83,12 @@
 %2$s</string>
     <string name="filter_by_flags" maxLength="41">플래그</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">오늘의 새로운 카드 학습량 늘리기</string>
-    <string name="custom_study_increase_review_limit">오늘의 복습 카드 학습량 늘리기</string>
-    <string name="custom_study_review_forgotten">잊어버린 카드 복습하기</string>
-    <string name="custom_study_review_ahead">미리 복습하기</string>
-    <string name="custom_study_random_selection">무작위 카드 학습하기</string>
-    <string name="custom_study_preview_new">새로운 카드 미리보기</string>
     <string name="custom_study_limit_tags">특정 태그로만 제한하기</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="other">+%d 숨겨짐</item>
     </plurals>
+    <string name="studyoptions_total_new_label">새 카드 수</string>
+    <string name="studyoptions_total_label">전체 카드</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">노트 편집하기</string>
     <string name="discard">삭제</string>
@@ -169,7 +165,6 @@ Context | Request Context    [1]</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">학습 옵션</string>
     <string name="select_tts" maxLength="28">TTS 언어 설정</string>
     <string name="custom_study" maxLength="28">맞춤 학습</string>
-    <string name="more_options">더 보기</string>
     <string name="dyn_deck_desc">이것은 평상시 일정 이상으로 학습하기 위한 특별한 카드 묶음입니다. 카드들은 복습 후 자동으로 원래의 카드 묶음으로 돌아가게 됩니다. 카드 묶음 목록에서 이 카드 묶음을 지운다면 남아 있는 모든 카드는 원래의 카드 묶음으로 돌아가게 됩니다.</string>
     <string name="steps_error">단계는 0보다 커야 합니다.</string>
     <string name="steps_min_error">적어도 하나 이상의 단계가 필요합니다.</string>
@@ -356,5 +351,5 @@ Context | Request Context    [1]</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">브라우저 외관 편집</string>
     <string name="show_shortcuts_message">키보드 단축키를 보려면 Alt + K를 누르세요.</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">이 노트 유형에는 사용자 행동 %s이(가) 설정되어 있지 않습니다. 설정을 확인해 주세요.</string>
-    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
+    <string name="directory_inaccessible_info">여기에서 액세스를 복원하는 방법에 대해 자세히 알아보세요 %s 또는 설정으로 이동하여 컬렉션 폴더를 업데이트하세요.</string>
 </resources>

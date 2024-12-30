@@ -20,14 +20,15 @@ import com.ichi2.utils.deepClonedInto
 import org.json.JSONObject
 import timber.log.Timber
 
-class DeckConfig
 /**
  * Creates a copy from [JSONObject] and use it as a string
  *
  * This function will perform deepCopy on the passed object
  *
- */(json: JSONObject) : JSONObject() {
-
+ */
+class DeckConfig(
+    json: JSONObject,
+) : JSONObject() {
     var conf: Long
         get() = getLong("conf")
         set(value) {
@@ -66,8 +67,10 @@ class DeckConfig
         /**
          * @return The 'timer' property on [config], or [defaultValue] if it's not set.
          */
-        fun parseTimerOpt(config: JSONObject, defaultValue: Boolean): Boolean =
-            parseTimer(config) ?: defaultValue
+        fun parseTimerOpt(
+            config: JSONObject,
+            defaultValue: Boolean,
+        ): Boolean = parseTimer(config) ?: defaultValue
     }
 
     init {

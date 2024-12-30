@@ -82,16 +82,12 @@
     <string name="webview_crash_loop_dialog_content">系統 WebView 渲染卡片 ‘%1$s’ 失敗。\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">標籤</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">修改今日新卡片上限</string>
-    <string name="custom_study_increase_review_limit">修改今日複習卡片上限</string>
-    <string name="custom_study_review_forgotten">複習忘記的卡片</string>
-    <string name="custom_study_review_ahead">提早複習</string>
-    <string name="custom_study_random_selection">隨機選擇卡片來複習</string>
-    <string name="custom_study_preview_new">預覽新卡片</string>
     <string name="custom_study_limit_tags">僅限特定標籤的卡片</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">編輯筆記</string>
     <string name="discard">捨棄</string>
@@ -166,7 +162,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">學習選項</string>
     <string name="select_tts" maxLength="28">設定 TTS 語言</string>
     <string name="custom_study" maxLength="28">自訂學習</string>
-    <string name="more_options">更多</string>
     <string name="dyn_deck_desc">這是專門用來進行額外學習進度的牌組。卡片在你複習完以後會自動回歸原本的牌組。如果在牌組列表中刪除這個牌組，其他剩下的卡片也會回歸它們原本的牌組。</string>
     <string name="steps_error">步驟必須是大於 0 的數字</string>
     <string name="steps_min_error">至少需要一步</string>

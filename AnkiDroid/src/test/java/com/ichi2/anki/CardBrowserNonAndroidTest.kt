@@ -48,34 +48,30 @@ class CardBrowserNonAndroidTest {
     }
 
     @CheckResult
-    private fun formatWithFilenamesRetained(input: String): String {
-        return CardBrowser.formatQAInternal(
+    private fun formatWithFilenamesRetained(input: String): String =
+        CardBrowser.formatQAInternal(
             input,
             TemplateRenderOutput(
                 questionText = input,
                 answerText = input,
                 questionAvTags = listOf(SoundOrVideoTag("foo.mp3")),
                 answerAvTags = listOf(SoundOrVideoTag("foo.mp3")),
-                css = ""
-
+                css = "",
             ),
-            true
+            true,
         )
-    }
 
     @CheckResult
-    private fun formatWithFilenamesStripped(input: String): String {
-        return CardBrowser.formatQAInternal(
+    private fun formatWithFilenamesStripped(input: String): String =
+        CardBrowser.formatQAInternal(
             input,
             TemplateRenderOutput(
                 questionText = input,
                 answerText = input,
                 questionAvTags = listOf(SoundOrVideoTag("foo.mp3")),
                 answerAvTags = listOf(SoundOrVideoTag("foo.mp3")),
-                css = ""
-
+                css = "",
             ),
-            false
+            false,
         )
-    }
 }

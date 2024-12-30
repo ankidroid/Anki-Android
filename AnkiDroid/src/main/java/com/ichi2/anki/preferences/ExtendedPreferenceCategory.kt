@@ -30,32 +30,33 @@ import com.ichi2.preferences.usingStyledAttributes
  *
  * * app:helpLink (string): adds a help button that opens the provided link when tapped
  */
-class ExtendedPreferenceCategory @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = androidx.preference.R.attr.preferenceCategoryStyle,
-    defStyleRes: Int = androidx.preference.R.style.Preference_Category
-) : PreferenceCategory(context, attrs, defStyleAttr, defStyleRes) {
+class ExtendedPreferenceCategory
+    @JvmOverloads
+    constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = androidx.preference.R.attr.preferenceCategoryStyle,
+        defStyleRes: Int = androidx.preference.R.style.Preference_Category,
+    ) : PreferenceCategory(context, attrs, defStyleAttr, defStyleRes) {
+        private val helpLink: String?
 
-    private val helpLink: String?
-
-    init {
-        layoutResource = R.layout.extended_category
-        context.usingStyledAttributes(attrs, R.styleable.ExtendedPreferenceCategory) {
-            helpLink = getString(R.styleable.ExtendedPreferenceCategory_helpLink)
+        init {
+            layoutResource = R.layout.extended_category
+            context.usingStyledAttributes(attrs, R.styleable.ExtendedPreferenceCategory) {
+                helpLink = getString(R.styleable.ExtendedPreferenceCategory_helpLink)
+            }
         }
-    }
 
-    override fun onBindViewHolder(holder: PreferenceViewHolder) {
-        super.onBindViewHolder(holder)
+        override fun onBindViewHolder(holder: PreferenceViewHolder) {
+            super.onBindViewHolder(holder)
 
-        helpLink?.let { helpLink ->
-            val uri = helpLink.toUri()
-            val helpIcon = holder.findViewById(R.id.help_icon)
-            helpIcon.isVisible = true
-            helpIcon.setOnClickListener {
-                context.openUrl(uri)
+            helpLink?.let { helpLink ->
+                val uri = helpLink.toUri()
+                val helpIcon = holder.findViewById(R.id.help_icon)
+                helpIcon.isVisible = true
+                helpIcon.setOnClickListener {
+                    context.openUrl(uri)
+                }
             }
         }
     }
-}

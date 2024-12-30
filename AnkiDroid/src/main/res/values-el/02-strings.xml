@@ -82,17 +82,13 @@
     <string name="webview_crash_loop_dialog_content">Το σύστημα WebView απέτυχε να αποδώσει την κάρτα \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Σημαίες</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Τροποποίηση σημερινού ορίου νέων καρτών</string>
-    <string name="custom_study_increase_review_limit">Τροποποίηση σημερινού ορίου επαναλήψεων</string>
-    <string name="custom_study_review_forgotten">Επανάληψη ξεχασμένων καρτών</string>
-    <string name="custom_study_review_ahead">Review ahead</string>
-    <string name="custom_study_random_selection">Μελέτη μιας τυχαίας επιλογής καρτών</string>
-    <string name="custom_study_preview_new">Προεπισκόπηση νέων καρτών</string>
     <string name="custom_study_limit_tags">Περιορισμός σε συγκεκριμένες ετικέτες</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Σύνταξη Σημείωσης</string>
     <string name="discard">Απόρριψη</string>
@@ -169,7 +165,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Επιλογές μελέτης</string>
     <string name="select_tts" maxLength="28">Ορισμός γλώσσας TTS</string>
     <string name="custom_study" maxLength="28">Προσαρμοσμένη μελέτη</string>
-    <string name="more_options">Περισσότερα</string>
     <string name="dyn_deck_desc">Αυτή είναι μια ειδική τράπουλα για μάθηση εκτός του κανονικού προγράμματος. Οι κάρτες θα επιστραφούν αυτόματα στην αρχική τους τράπουλα μετά την επανάληψή τους. Η διαγραφή αυτής της τράπουλας από τη λίστα τραπουλών θα επιστρέψει όλες τις κάρτες στην αρχική τους τράπουλα.</string>
     <string name="steps_error">Τα βήματα πρέπει να είναι αριθμοί μεγαλύτεροι από 0</string>
     <string name="steps_min_error">Απαιτείται τουλάχιστον ένα βήμα</string>
@@ -235,9 +230,9 @@
     <string name="edit_toolbar_item">Επεξεργασία Αντικειμένου Γραμμής Εργαλείων</string>
     <string name="toolbar_item_explain_edit_or_remove">Εισάγετε το HTML που θα εισαχθεί πριν και μετά το επιλεγμένο κείμενο\n\nΠατήστε παρατεταμένα ένα αντικείμενο γραμμής εργαλείων για να το επεξεργαστείτε ή να το αφαιρέσετε</string>
     <string name="remove_toolbar_item">Αφαίρεση Αντικειμένου Γραμμής Εργαλείων;</string>
-    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
-    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
-    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
+    <string name="note_editor_image_too_large">Η εικόνα είναι πολύ μεγάλη, παρακαλώ εισάγετε την εικόνα χειροκίνητα</string>
+    <string name="note_editor_video_too_large">Το αρχείο βίντεο είναι πολύ μεγάλο, παρακαλώ εισάγετε το βίντεο χειροκίνητα</string>
+    <string name="note_editor_audio_too_large">Το αρχείο ήχου είναι πολύ μεγάλο, παρακαλώ εισάγετε ήχο χειροκίνητα</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Αντίγραφο ασφαλείας Android σε εξέλιξη. Παρακαλώ προσπαθήστε ξανά</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Ίσως χρειαστεί να χρησιμοποιήσετε το iManager για να επιτρέψετε στο AnkiDroid να προσθέσει συντομεύσεις</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Η αρχική σας οθόνη δεν επιτρέπει στο AnkiDroid να προσθέσει συντομεύσεις</string>
@@ -248,7 +243,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="invalid_email">Enter a valid email</string>
+    <string name="invalid_email">Εισάγετε ένα έγκυρο email</string>
     <string name="password_empty">Απαιτείται κωδικός πρόσβασης</string>
     <string name="back_pressed_once">Πιέστε το πίσω ξανά για έξοδο</string>
     <string name="back_pressed_once_reviewer">Πιέστε το πίσω ξανά για επιστροφή</string>
@@ -288,7 +283,7 @@
     <string name="expand_tag">Ανάπτυξη ετικέτας \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Αποτυχία πρόσβασης στη συλλογή. Παρακαλώ προσπαθήστε ξανά!</string>
-    <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <string name="cd_manage_notetypes_add">Προσθήκη νέου τύπου σημείωσης</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Διαβάστε λιγότερο</string>
     <string name="intro_ankidroid_tagline_two">Απομνημόνευση περισσότερων</string>
@@ -296,7 +291,7 @@
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Ξεκινήστε</string>
     <string name="intro_sync_from_ankiweb">Συγχρονισμός απο το AnkiWeb</string>
     <!-- IntentHandler -->
-    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
+    <string name="app_not_initialized_new">Το AnkiDroid δεν έχει ξεκινήσει ακόμα. Παρακαλώ ανοίξτε το AnkiDroid και προσπαθήστε ξανά</string>
     <string name="already_logged_in">Ήδη συνδεδεμένος</string>
     <!-- Deck Creation -->
     <string name="deck_created">Η τράπουλα δημιουργήθηκε</string>
@@ -341,23 +336,23 @@
     <string name="next_recording">Επόμενο</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Αδυναμία διαγραφής τύπου κάρτας</string>
-    <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
+    <string name="orphan_note_message">Διαγράφοντας αυτόν τον τύπο κάρτας θα αφήσετε κάποιες σημειώσεις χωρίς κάρτες.</string>
     <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
+    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Εμφάνιση διαλόγου συντομεύσεων πληκτρολογίου</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
-    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
-    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
-    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
-    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
-    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Διαγραφή τράπουλας χωρίς επιβεβαίωση</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Επεξεργασία Σημείωσης</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Επιλογή τράπουλας</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Επιλογή τύπου σημείωσης</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Επεξεργασία ετικετών</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Επεξεργασία Προτύπου Κάρτας</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Επεξεργασία μπροστινού προτύπου</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Επεξεργασία πίσω προτύπου</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Επεξεργασία μορφοποίησης</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
-    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
-    <string name="show_shortcuts_message">Press Alt+K to show keyboard shortcuts</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Επεξεργασία εμφάνισης περιηγητή</string>
+    <string name="show_shortcuts_message">Πατήστε Alt+K για να εμφανίσετε συντομεύσεις πληκτρολογίου</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
     <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
 </resources>

@@ -31,17 +31,20 @@ import com.ichi2.anki.dialogs.WarningDisplay
 import com.ichi2.utils.UiUtil.setSelectedValue
 import timber.log.Timber
 
+// This class exists as elements resized when adding in the spinner to GestureDisplay.kt
+
 /** [View] which allows selection of a gesture either via taps/swipes, or via a [Spinner]
  * The spinner aids discoverability of [Gesture.DOUBLE_TAP] and [Gesture.LONG_TAP]
  * as they're not explained in [GestureDisplay].
  *
  * Current use is via [com.ichi2.anki.dialogs.GestureSelectionDialogBuilder]
  */
-// This class exists as elements resized when adding in the spinner to GestureDisplay.kt
-class GesturePicker(ctx: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int = 0) :
-    ConstraintLayout(ctx, attributeSet, defStyleAttr),
+class GesturePicker(
+    ctx: Context,
+    attributeSet: AttributeSet? = null,
+    defStyleAttr: Int = 0,
+) : ConstraintLayout(ctx, attributeSet, defStyleAttr),
     WarningDisplay {
-
     private val gestureSpinner: Spinner
     private val gestureDisplay: GestureDisplay
     override val warningTextView: FixedTextView
@@ -83,16 +86,14 @@ class GesturePicker(ctx: Context, attributeSet: AttributeSet? = null, defStyleAt
         onGestureListener = listener
     }
 
-    private fun allGestures(): List<GestureWrapper> {
-        return (listOf(null) + availableGestures()).map(this::GestureWrapper).toList()
-    }
+    private fun allGestures(): List<GestureWrapper> = (listOf(null) + availableGestures()).map(this::GestureWrapper).toList()
 
     private fun availableGestures() = gestureDisplay.availableValues()
 
-    inner class GestureWrapper(val gesture: Gesture?) {
-        override fun toString(): String {
-            return gesture?.toDisplayString(context) ?: resources.getString(R.string.gestures_none)
-        }
+    inner class GestureWrapper(
+        val gesture: Gesture?,
+    ) {
+        override fun toString(): String = gesture?.toDisplayString(context) ?: resources.getString(R.string.gestures_none)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
@@ -107,7 +108,12 @@ class GesturePicker(ctx: Context, attributeSet: AttributeSet? = null, defStyleAt
     }
 
     private inner class InnerSpinner : AdapterView.OnItemSelectedListener {
-        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        override fun onItemSelected(
+            parent: AdapterView<*>?,
+            view: View?,
+            position: Int,
+            id: Long,
+        ) {
             val wrapper = parent?.getItemAtPosition(position) as? GestureWrapper
             onGesture(wrapper?.gesture)
         }

@@ -39,14 +39,13 @@ suspend fun importAnkiPackageUndoable(input: ByteArray): ByteArray {
     }
 }
 
-suspend fun importCsvRaw(input: ByteArray): ByteArray {
-    return withContext(Dispatchers.Main) {
+suspend fun importCsvRaw(input: ByteArray): ByteArray =
+    withContext(Dispatchers.Main) {
         val output = withCol { importCsvRaw(input) }
         val changes = OpChangesOnly.parseFrom(output)
         undoableOp { changes }
         output
     }
-}
 
 /**
  * Css to hide the "Show" button from the final backend import page. As the user could import a lot
@@ -56,7 +55,8 @@ suspend fun importCsvRaw(input: ByteArray): ByteArray {
  *
  * NOTE: this should be used only with [android.webkit.WebView.evaluateJavascript].
  */
-val hideShowButtonCss = """
+val hideShowButtonCss =
+    """
     javascript:(
         function() {
             var hideShowButtonStyle = '.desktop-only { display: none !important; }';
@@ -65,7 +65,7 @@ val hideShowButtonCss = """
             document.head.appendChild(newStyle);       
         }
     )()
-""".trimIndent()
+    """.trimIndent()
 
 /**
  * Calls the native [CardBrowser] to display the results of the search query constructed from the
@@ -73,10 +73,11 @@ val hideShowButtonCss = """
  */
 suspend fun FragmentActivity.searchInBrowser(input: ByteArray): ByteArray {
     val searchString = withCol { buildSearchString(input) }
-    val starterIntent = Intent(this, CardBrowser::class.java).apply {
-        putExtra("search_query", searchString)
-        putExtra("all_decks", true)
-    }
+    val starterIntent =
+        Intent(this, CardBrowser::class.java).apply {
+            putExtra("search_query", searchString)
+            putExtra("all_decks", true)
+        }
     startActivity(starterIntent)
     return input
 }

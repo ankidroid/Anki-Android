@@ -28,7 +28,9 @@ enum class LogType {
     ROBOLECTRIC,
 
     /** @see ProductionCrashReportingTree */
-    PRODUCTION;
+    PRODUCTION,
+
+    ;
 
     companion object {
         val value: LogType

@@ -32,7 +32,7 @@ import org.intellij.lang.annotations.Language
  */
 fun stdHtml(
     context: Context = AnkiDroidApp.instance,
-    nightMode: Boolean = false
+    nightMode: Boolean = false,
 ): String {
     val languageDirectionality = if (LanguageUtils.appLanguageIsRTL()) "rtl" else "ltr"
 
@@ -46,64 +46,66 @@ fun stdHtml(
         baseTheme = "light"
     }
 
-    val colors = if (!nightMode) {
-        val canvasColor = MaterialColors.getColor(
-            context,
-            android.R.attr.colorBackground,
-            android.R.color.white
-        ).toRGBHex()
-        val fgColor =
-            MaterialColors.getColor(context, android.R.attr.textColor, android.R.color.black).toRGBHex()
-        ":root { --canvas: $canvasColor ; --fg: $fgColor; }"
-    } else {
-        val canvasColor = MaterialColors.getColor(
-            context,
-            android.R.attr.colorBackground,
-            android.R.color.black
-        ).toRGBHex()
-        val fgColor =
-            MaterialColors.getColor(context, android.R.attr.textColor, android.R.color.white).toRGBHex()
-        ":root[class*=night-mode] { --canvas: $canvasColor; --fg: $fgColor; }"
-    }
+    val colors =
+        if (!nightMode) {
+            val canvasColor =
+                MaterialColors
+                    .getColor(
+                        context,
+                        android.R.attr.colorBackground,
+                        android.R.color.white,
+                    ).toRGBHex()
+            val fgColor =
+                MaterialColors.getColor(context, android.R.attr.textColor, android.R.color.black).toRGBHex()
+            ":root { --canvas: $canvasColor ; --fg: $fgColor; }"
+        } else {
+            val canvasColor =
+                MaterialColors
+                    .getColor(
+                        context,
+                        android.R.attr.colorBackground,
+                        android.R.color.black,
+                    ).toRGBHex()
+            val fgColor =
+                MaterialColors.getColor(context, android.R.attr.textColor, android.R.color.white).toRGBHex()
+            ":root[class*=night-mode] { --canvas: $canvasColor; --fg: $fgColor; }"
+        }
 
     @Language("HTML")
-    val html = """
-                <!DOCTYPE html>
-                <html class="$docClass" dir="$languageDirectionality" data-bs-theme="$baseTheme">
-                <head>
-                    <title>AnkiDroid</title>
-                        <link rel="stylesheet" type="text/css" href="file:///android_asset/backend/css/root-vars.css">
-                        <link rel="stylesheet" type="text/css" href="file:///android_asset/backend/css/reviewer.css">
-                        <link rel="stylesheet" type="text/css" href="file:///android_asset/ankidroid.css">
-                    <style>
-                        .night-mode button { --canvas: #606060; --fg: #eee; }
-                        $colors
-                    </style>
-                </head>
-                <body class="${bodyClass()}">
-                    <div id="_mark" hidden>&#x2605;</div>
-                    <div id="_flag" hidden>&#x2691;</div>
-                    <div id="qa"></div>
-                    <script src="file:///android_asset/backend/js/jquery.min.js"></script>
-                    <script src="file:///android_asset/backend/js/mathjax.js"></script>
-                    <script src="file:///android_asset/backend/js/vendor/mathjax/tex-chtml-full.js"></script>
-                    <script src="file:///android_asset/scripts/ankidroid.js"></script>
-                    <script src="file:///android_asset/backend/js/reviewer.js"></script>
-                    <script>bridgeCommand = function(){};</script>
-                </body>
-                </html>
-    """.trimIndent()
+    val html =
+        """
+        <!DOCTYPE html>
+        <html class="$docClass" dir="$languageDirectionality" data-bs-theme="$baseTheme">
+        <head>
+            <title>AnkiDroid</title>
+                <link rel="stylesheet" type="text/css" href="file:///android_asset/backend/css/root-vars.css">
+                <link rel="stylesheet" type="text/css" href="file:///android_asset/backend/css/reviewer.css">
+                <link rel="stylesheet" type="text/css" href="file:///android_asset/ankidroid.css">
+            <style>
+                .night-mode button { --canvas: #606060; --fg: #eee; }
+                $colors
+            </style>
+        </head>
+        <body class="${bodyClass()}">
+            <div id="_mark" hidden>&#x2605;</div>
+            <div id="_flag" hidden>&#x2691;</div>
+            <div id="qa"></div>
+            <script src="file:///android_asset/backend/js/jquery.min.js"></script>
+            <script src="file:///android_asset/backend/js/mathjax.js"></script>
+            <script src="file:///android_asset/backend/js/vendor/mathjax/tex-chtml-full.js"></script>
+            <script src="file:///android_asset/scripts/ankidroid.js"></script>
+            <script src="file:///android_asset/backend/js/reviewer.js"></script>
+            <script>bridgeCommand = function(){};</script>
+        </body>
+        </html>
+        """.trimIndent()
     return html
 }
 
 /** @return body classes used when showing a card */
 fun bodyClassForCardOrd(
     cardOrd: Int,
-    nightMode: Boolean = Themes.currentTheme.isNightMode
-): String {
-    return "card card${cardOrd + 1} ${bodyClass(nightMode)}"
-}
+    nightMode: Boolean = Themes.currentTheme.isNightMode,
+): String = "card card${cardOrd + 1} ${bodyClass(nightMode)}"
 
-private fun bodyClass(nightMode: Boolean = Themes.currentTheme.isNightMode): String {
-    return if (nightMode) "nightMode night_mode" else ""
-}
+private fun bodyClass(nightMode: Boolean = Themes.currentTheme.isNightMode): String = if (nightMode) "nightMode night_mode" else ""
