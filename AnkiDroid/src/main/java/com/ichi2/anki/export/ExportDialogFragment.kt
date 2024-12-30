@@ -209,8 +209,6 @@ class ExportDialogFragment : DialogFragment() {
     /**
      * Initializes the views representing the extra options available when exporting a collection.
      */
-    @NeedsTest("Checkbox is only available on two selections ")
-    @NeedsTest("Checkbox defaults to false")
     @NeedsTest("Checkbox value is provided to the correct export functions (true/false)")
     private fun View.initializeCollectionExportUi() =
         with(CollectionManager.TR) {
@@ -227,8 +225,6 @@ class ExportDialogFragment : DialogFragment() {
     /**
      * Initializes the views representing the extra options available when exporting an Anki package.
      */
-    @NeedsTest("Checkbox is only available on two selections ")
-    @NeedsTest("Checkbox defaults to false")
     @NeedsTest("Checkbox value is provided to the correct export functions (true/false)")
     private fun View.initializeApkgExportUi() =
         with(CollectionManager.TR) {
