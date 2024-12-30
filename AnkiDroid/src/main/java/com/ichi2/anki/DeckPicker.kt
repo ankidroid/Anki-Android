@@ -127,6 +127,7 @@ import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.dialogs.SyncErrorDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.SyncErrorDialog.SyncErrorDialogListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.anki.export.ActivityExportingDelegate
@@ -599,6 +600,15 @@ open class DeckPicker :
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
 
         checkWebviewVersion(this)
+
+        supportFragmentManager.setFragmentResultListener("CustomStudyDialog", this) { requestKey, bundle ->
+            val actionOrdinal = bundle.getInt("action")
+            val action = CustomStudyAction.entries[actionOrdinal]
+            when (action) {
+                CustomStudyAction.CUSTOM_STUDY_SESSION -> onCreateCustomStudySession()
+                CustomStudyAction.EXTEND_STUDY_LIMITS -> onExtendStudyLimits()
+            }
+        }
 
         supportFragmentManager.setFragmentResultListener(DeckPickerContextMenu.REQUEST_KEY_CONTEXT_MENU, this) { requestKey, arguments ->
             when (requestKey) {

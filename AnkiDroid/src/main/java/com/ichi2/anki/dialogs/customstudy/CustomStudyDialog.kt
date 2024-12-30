@@ -28,7 +28,9 @@ import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
+import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.setFragmentResult
 import anki.scheduler.CustomStudyDefaultsResponse
 import anki.scheduler.customStudyRequest
 import com.ichi2.anki.CollectionManager.TR
@@ -116,6 +118,11 @@ class CustomStudyDialog(
         fun onCreateCustomStudySession()
 
         fun onExtendStudyLimits()
+    }
+
+    enum class CustomStudyAction {
+        EXTEND_STUDY_LIMITS,
+        CUSTOM_STUDY_SESSION,
     }
 
     /** ID of the [Deck] which this dialog was created for */
@@ -286,12 +293,14 @@ class CustomStudyDialog(
             undoableOp {
                 collection.sched.customStudy(request)
             }
-            when (contextMenuOption) {
-                STUDY_NEW, STUDY_REV ->
-                    customStudyListener?.onExtendStudyLimits()
-                STUDY_FORGOT, STUDY_AHEAD, STUDY_PREVIEW -> customStudyListener?.onCreateCustomStudySession()
-                STUDY_TAGS -> TODO("This branch has not been covered before")
-            }
+            val action =
+                when (contextMenuOption) {
+                    STUDY_NEW, STUDY_REV -> CustomStudyAction.EXTEND_STUDY_LIMITS
+                    STUDY_FORGOT, STUDY_AHEAD, STUDY_PREVIEW -> CustomStudyAction.CUSTOM_STUDY_SESSION
+                    STUDY_TAGS -> TODO("This branch has not been covered before")
+                }
+
+            setFragmentResult("CustomStudyDialog", bundleOf("action" to action.ordinal))
         } finally {
             requireActivity().dismissAllDialogFragments()
         }
@@ -455,7 +464,7 @@ class CustomStudyDialog(
         Timber.d("rebuildDynamicDeck()")
         withProgress {
             withCol { sched.rebuildDyn(decks.selected()) }
-            customStudyListener?.onCreateCustomStudySession()
+            setFragmentResult("CustomStudyDialog", bundleOf("action" to CustomStudyAction.CUSTOM_STUDY_SESSION.ordinal))
         }
     }
 
