@@ -509,13 +509,14 @@ open class CardBrowser :
         fun setupColumnSpinners() {
             // Create a spinner for column 1
             findViewById<Spinner>(R.id.browser_column1_spinner).apply {
-                adapter = ArrayAdapter(
-                    this@CardBrowser,
-                    android.R.layout.simple_spinner_item,
-                    viewModel.column1Candidates.map { it.getLabel(viewModel.cardsOrNotes) }
-                ).apply {
-                    setDropDownViewResource(R.layout.spinner_custom_layout)
-                }
+                adapter =
+                    ArrayAdapter(
+                        this@CardBrowser,
+                        android.R.layout.simple_spinner_item,
+                        viewModel.column1Candidates.map { it.getLabel(viewModel.cardsOrNotes) }
+                    ).apply {
+                        setDropDownViewResource(R.layout.spinner_custom_layout)
+                    }
                 setSelection(COLUMN1_KEYS.indexOf(viewModel.column1))
                 onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
                     viewModel.setColumn1(COLUMN1_KEYS[pos])
@@ -524,19 +525,21 @@ open class CardBrowser :
 
             // Setup the column 2 heading as a spinner so that users can easily change the column type
             findViewById<Spinner>(R.id.browser_column2_spinner).apply {
-                adapter = ArrayAdapter(
-                    this@CardBrowser,
-                    android.R.layout.simple_spinner_item,
-                    viewModel.column2Candidates.map { it.getLabel(viewModel.cardsOrNotes) }
-                ).apply {
-                    // The custom layout for the adapter is used to prevent the overlapping of various interactive components on the screen
-                    setDropDownViewResource(R.layout.spinner_custom_layout)
-                }
+                adapter =
+                    ArrayAdapter(
+                        this@CardBrowser,
+                        android.R.layout.simple_spinner_item,
+                        viewModel.column2Candidates.map { it.getLabel(viewModel.cardsOrNotes) }
+                    ).apply {
+                        // The custom layout for the adapter is used to prevent the overlapping of various interactive components on the screen
+                        setDropDownViewResource(R.layout.spinner_custom_layout)
+                    }
                 setSelection(COLUMN2_KEYS.indexOf(viewModel.column2))
                 // Create a new list adapter with updated column map any time the user changes the column
-                onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
-                    viewModel.setColumn2(COLUMN2_KEYS[pos])
-                }
+                onItemSelectedListener =
+                    BasicItemSelectedListener { pos, _ ->
+                        viewModel.setColumn2(COLUMN2_KEYS[pos])
+                    }
             }
         }
 
@@ -925,10 +928,12 @@ open class CardBrowser :
 
     override fun onResume() {
         super.onResume()
+
         // only when viewModel is initiated and columns value has been assigned
         if (viewModel.flowOfInitCompleted.value) {
             viewModel.flowOfLanguageChanged.update { LanguageUtil.getSystemLocale().language }
         }
+
         selectNavigationItem(R.id.nav_browser)
         updateNumCardsToRender()
     }
