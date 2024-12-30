@@ -571,11 +571,6 @@ open class CardBrowser :
             }
         }
 
-        suspend fun updateColumnLanguageChange(value: String) {
-            viewModel.fetchColumn()
-            setupColumnSpinners()
-        }
-
         fun initCompletedChanged(completed: Boolean) {
             if (!completed) return
 
@@ -599,7 +594,7 @@ open class CardBrowser :
         }
 
         suspend fun updateColumnLanguageChange(value: String) {
-            viewModel.fetchColumns()
+            viewModel.fetchColumn()
             setupColumnSpinners()
         }
 
