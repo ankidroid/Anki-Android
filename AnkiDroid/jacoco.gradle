@@ -123,7 +123,7 @@ def testReport = tasks.register('jacocoTestReport', JacocoReport) {
 }
 testReport.configure {
     dependsOn('testPlayDebugUnitTest')
-    dependsOn(rootProject.androidTestName)
+    dependsOn("connectedPlay${rootProject.androidTestVariantName}AndroidTest")
 }
 
 // A unit-test only report task
@@ -174,7 +174,7 @@ def androidTestReport = tasks.register('jacocoAndroidTestReport', JacocoReport) 
     ])
 }
 
-androidTestReport.configure { dependsOn(rootProject.androidTestName) }
+androidTestReport.configure { dependsOn("connectedPlay${rootProject.androidTestVariantName}AndroidTest") }
 
 // Issue 16640 - some emulators run, but register zero coverage
 tasks.register('assertNonzeroAndroidTestCoverage') {
