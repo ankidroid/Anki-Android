@@ -300,7 +300,13 @@ tasks.register('assertNonzeroAndroidTests') {
     }
 }
 afterEvaluate {
-    tasks.named(androidTestName).configure { finalizedBy('assertNonzeroAndroidTests') }
+    tasks.named("connectedPlay${rootProject.androidTestVariantName}AndroidTest").configure {
+        finalizedBy('assertNonzeroAndroidTests')
+    }
+    tasks.named("packagePlay${rootProject.androidTestVariantName}AndroidTest").configure {
+        // Issue 17520 - ensures testlib is built
+        dependsOn(":testlib:assemblePlay${rootProject.androidTestVariantName}")
+    }
 }
 
 apply from: "./robolectricDownloader.gradle"
