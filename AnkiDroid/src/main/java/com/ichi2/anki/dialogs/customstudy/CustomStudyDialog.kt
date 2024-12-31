@@ -123,6 +123,14 @@ class CustomStudyDialog(
     enum class CustomStudyAction {
         EXTEND_STUDY_LIMITS,
         CUSTOM_STUDY_SESSION,
+        ;
+
+        companion object {
+            const val REQUEST_KEY = "CustomStudyDialog"
+            const val BUNDLE_KEY = "action"
+
+            fun fromOrdinal(ordinal: Int): CustomStudyAction? = entries.find { it.ordinal == ordinal }
+        }
     }
 
     /** ID of the [Deck] which this dialog was created for */
@@ -300,7 +308,7 @@ class CustomStudyDialog(
                     STUDY_TAGS -> TODO("This branch has not been covered before")
                 }
 
-            setFragmentResult("CustomStudyDialog", bundleOf("action" to action.ordinal))
+            setFragmentResult(CustomStudyAction.REQUEST_KEY, bundleOf(CustomStudyAction.BUNDLE_KEY to action.ordinal))
         } finally {
             requireActivity().dismissAllDialogFragments()
         }
@@ -464,7 +472,12 @@ class CustomStudyDialog(
         Timber.d("rebuildDynamicDeck()")
         withProgress {
             withCol { sched.rebuildDyn(decks.selected()) }
-            setFragmentResult("CustomStudyDialog", bundleOf("action" to CustomStudyAction.CUSTOM_STUDY_SESSION.ordinal))
+            setFragmentResult(
+                CustomStudyAction.REQUEST_KEY,
+                bundleOf(
+                    CustomStudyAction.BUNDLE_KEY to CustomStudyAction.CUSTOM_STUDY_SESSION.ordinal,
+                ),
+            )
         }
     }
 

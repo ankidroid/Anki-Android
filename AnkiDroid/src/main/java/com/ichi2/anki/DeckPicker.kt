@@ -601,12 +601,13 @@ open class DeckPicker :
 
         checkWebviewVersion(this)
 
-        supportFragmentManager.setFragmentResultListener("CustomStudyDialog", this) { requestKey, bundle ->
-            val actionOrdinal = bundle.getInt("action")
-            val action = CustomStudyAction.entries[actionOrdinal]
+        supportFragmentManager.setFragmentResultListener(CustomStudyAction.REQUEST_KEY, this) { requestKey, bundle ->
+            val actionOrdinal = bundle.getInt(CustomStudyAction.BUNDLE_KEY)
+            val action = CustomStudyAction.fromOrdinal(actionOrdinal)
             when (action) {
                 CustomStudyAction.CUSTOM_STUDY_SESSION -> onCreateCustomStudySession()
                 CustomStudyAction.EXTEND_STUDY_LIMITS -> onExtendStudyLimits()
+                else -> error("Invalid CustomStudyAction")
             }
         }
 
