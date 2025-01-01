@@ -30,8 +30,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.BundleCompat
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
 import com.canhub.cropper.CropImageView
-import com.ichi2.anki.AnkiFragment
 import com.ichi2.anki.R
 import com.ichi2.anki.snackbar.showSnackbar
 import kotlinx.parcelize.Parcelize
@@ -47,7 +47,7 @@ import timber.log.Timber
  * Attribution to the original authors of the CanHub/Android-Image-Cropper for their contributions.
  */
 class ImageCropper :
-    AnkiFragment(R.layout.fragment_image_cropper),
+    Fragment(R.layout.fragment_image_cropper),
     CropImageView.OnSetImageUriCompleteListener,
     CropImageView.OnCropImageCompleteListener,
     MenuProvider {
@@ -137,7 +137,7 @@ class ImageCropper :
                 CROP_IMAGE_RESULT,
                 CropResultData(
                     uriContent = result.uriContent,
-                    uriPath = result.getUriFilePath(ankiActivity),
+                    uriPath = context?.let { result.getUriFilePath(it) },
                 ),
             )
             activity?.setResult(Activity.RESULT_OK, resultIntent)
