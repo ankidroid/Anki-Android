@@ -29,7 +29,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.BundleCompat
-import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import com.canhub.cropper.CropImageView
 import com.ichi2.anki.AnkiFragment
@@ -50,7 +49,8 @@ import timber.log.Timber
 class ImageCropper :
     AnkiFragment(R.layout.fragment_image_cropper),
     CropImageView.OnSetImageUriCompleteListener,
-    CropImageView.OnCropImageCompleteListener {
+    CropImageView.OnCropImageCompleteListener,
+    MenuProvider {
     private lateinit var cropImageView: CropImageView
 
     override fun onViewCreated(
@@ -74,54 +74,47 @@ class ImageCropper :
                     BundleCompat.getParcelable(requireArguments(), CROP_IMAGE_URI, Uri::class.java)
                 setImageUriAsync(originalImageUri)
             }
-        setUpMenu()
+        requireActivity().addMenuProvider(this, viewLifecycleOwner)
     }
 
-    private fun setUpMenu() {
-        val menuHost: MenuHost = ankiActivity
-        menuHost.addMenuProvider(
-            object : MenuProvider {
-                override fun onCreateMenu(
-                    menu: Menu,
-                    menuInflater: MenuInflater,
-                ) {
-                    menu.clear()
-                    // TODO make our own menu, we shouldn't rely on third party menu files
-                    menuInflater.inflate(com.canhub.cropper.R.menu.crop_image_menu, menu)
-                }
-
-                override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
-                    when (menuItem.itemId) {
-                        com.canhub.cropper.R.id.crop_image_menu_crop -> {
-                            Timber.d("Crop image clicked")
-                            cropImageView.croppedImageAsync()
-                            true
-                        }
-
-                        com.canhub.cropper.R.id.ic_rotate_right_24 -> {
-                            Timber.d("Rotate right clicked")
-                            cropImageView.rotateImage(90)
-                            true
-                        }
-
-                        com.canhub.cropper.R.id.ic_flip_24_horizontally -> {
-                            Timber.d("Flip horizontally clicked")
-
-                            cropImageView.flipImageHorizontally()
-                            true
-                        }
-
-                        com.canhub.cropper.R.id.ic_flip_24_vertically -> {
-                            Timber.d("Flip vertically clicked")
-                            cropImageView.flipImageVertically()
-                            true
-                        }
-
-                        else -> false
-                    }
-            },
-        )
+    override fun onCreateMenu(
+        menu: Menu,
+        menuInflater: MenuInflater,
+    ) {
+        menu.clear()
+        // TODO make our own menu, we shouldn't rely on third party menu files
+        menuInflater.inflate(com.canhub.cropper.R.menu.crop_image_menu, menu)
     }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
+        when (menuItem.itemId) {
+            com.canhub.cropper.R.id.crop_image_menu_crop -> {
+                Timber.d("Crop image clicked")
+                cropImageView.croppedImageAsync()
+                true
+            }
+
+            com.canhub.cropper.R.id.ic_rotate_right_24 -> {
+                Timber.d("Rotate right clicked")
+                cropImageView.rotateImage(90)
+                true
+            }
+
+            com.canhub.cropper.R.id.ic_flip_24_horizontally -> {
+                Timber.d("Flip horizontally clicked")
+
+                cropImageView.flipImageHorizontally()
+                true
+            }
+
+            com.canhub.cropper.R.id.ic_flip_24_vertically -> {
+                Timber.d("Flip vertically clicked")
+                cropImageView.flipImageVertically()
+                true
+            }
+
+            else -> false
+        }
 
     override fun onSetImageUriComplete(
         view: CropImageView,
