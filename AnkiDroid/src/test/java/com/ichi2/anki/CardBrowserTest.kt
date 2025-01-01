@@ -400,7 +400,7 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     fun flagValueIsShownOnCard() {
-        val n = addNoteUsingBasicModel("1", "back")
+        val n = addBasicNote("1", "back")
         flagCardForNote(n, Flag.RED)
 
         val cardId = n.cids()[0]
@@ -440,7 +440,7 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun tagWithBracketsDisplaysProperly() =
         runTest {
-            val n = addNoteUsingBasicModel("Hello", "World")
+            val n = addBasicNote("Hello", "World")
             n.addTag("sketchy::(1)")
             n.flush()
 
@@ -455,8 +455,8 @@ class CardBrowserTest : RobolectricTest() {
     fun previewWorksAfterSort() =
         runTest {
             // #7286
-            val cid1 = addNoteUsingBasicModel("Hello", "World").cards()[0].id
-            val cid2 = addNoteUsingBasicModel("Hello2", "World2").cards()[0].id
+            val cid1 = addBasicNote("Hello", "World").cards()[0].id
+            val cid2 = addBasicNote("Hello2", "World2").cards()[0].id
 
             val b = browserWithNoNewCards
 
@@ -557,7 +557,7 @@ class CardBrowserTest : RobolectricTest() {
     fun resetDataTest() =
         runTest {
             TimeManager.reset()
-            addNoteUsingBasicModel("Hello", "World").firstCard().update {
+            addBasicNote("Hello", "World").firstCard().update {
                 due = 5
                 queue = Consts.QUEUE_TYPE_REV
                 type = Consts.CARD_TYPE_REV
@@ -648,8 +648,8 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun checkSearchString() =
         runTest {
-            addNoteUsingBasicModel("Hello", "John")
-            addNoteUsingBasicModel("New", "world").firstCard().update {
+            addBasicNote("Hello", "John")
+            addBasicNote("New", "world").firstCard().update {
                 did = addDeck("Deck 1", setAsSelected = true)
             }
 
@@ -728,8 +728,8 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun checkIfSearchAllDecksWorks() =
         runTest {
-            addNoteUsingBasicModel("Hello", "World")
-            addNoteUsingBasicModel("Front", "Back").firstCard().update {
+            addBasicNote("Hello", "World")
+            addBasicNote("Front", "Back").firstCard().update {
                 did = addDeck("Test Deck", setAsSelected = true)
             }
 
@@ -752,8 +752,8 @@ class CardBrowserTest : RobolectricTest() {
     fun `'notes-only mode' returns one card from each note`() =
         runTest {
             // #14623: The functionality was broken
-            addNoteUsingBasicAndReversedModel("Hello", "World")
-            addNoteUsingBasicAndReversedModel("Hello", "Anki")
+            addBasicAndReverseNote("Hello", "World")
+            addBasicAndReverseNote("Hello", "Anki")
 
             browserWithNoNewCards.apply {
                 searchAllDecks().join()
@@ -860,11 +860,11 @@ class CardBrowserTest : RobolectricTest() {
         ensureCollectionLoadIsSynchronous()
         if (reversed) {
             for (i in 0 until noteCount) {
-                addNoteUsingBasicAndReversedModel(i.toString(), "back")
+                addBasicAndReverseNote(i.toString(), "back")
             }
         } else {
             for (i in 0 until noteCount) {
-                addNoteUsingBasicModel(i.toString(), "back")
+                addBasicNote(i.toString(), "back")
             }
         }
         return super.startRegularActivity<CardBrowser>(Intent()).also {
@@ -1101,8 +1101,8 @@ class CardBrowserTest : RobolectricTest() {
 
             // We're going to move this functionality entirely to the ViewModel over the next few weeks
             // so this test should be updated and working after the refactorings are completed
-            addNoteUsingBasicModel().moveToDeck("First")
-            addNoteUsingBasicModel().moveToDeck("Second")
+            addBasicNote().moveToDeck("First")
+            addBasicNote().moveToDeck("Second")
 
             val secondDeckId = requireNotNull(col.decks.idForName("Second"))
 
@@ -1138,7 +1138,7 @@ class CardBrowserTest : RobolectricTest() {
     @Config(qualifiers = "en")
     fun nextDueTest() {
         TimeManager.reset()
-        val n = addNoteUsingBasicModel("Front", "Back")
+        val n = addBasicNote("Front", "Back")
         val c = n.firstCard()
         val decks = col.decks
         val cal = Calendar.getInstance()
@@ -1236,7 +1236,7 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun `tts tags are stripped`() {
         val note =
-            addNonClozeModel(
+            addNonClozeNoteType(
                 "test",
                 arrayOf("Front", "Back"),
                 "[anki:tts lang=de_DE voices=com.google.android.tts-de-DE-language]{{Front}}[/anki:tts]",
@@ -1256,7 +1256,7 @@ class CardBrowserTest : RobolectricTest() {
     fun `initial value is correct column`() {
         // Column 1 is [QUESTION, SFLD], the values when [SFLD] is selected
 
-        addNoteUsingBasicAndReversedModel("Hello", "World")
+        addBasicAndReverseNote("Hello", "World")
 
         withBrowser {
             assertThat(viewModel.column1, equalTo(SFLD))
@@ -1272,7 +1272,7 @@ class CardBrowserTest : RobolectricTest() {
             "use an integration test",
     )
     fun `column text is updated - cardsOrNotes and column change`() {
-        addNoteUsingBasicAndReversedModel("Hello", "World")
+        addBasicAndReverseNote("Hello", "World")
 
         withBrowser {
             assertThat("cards: original column", column2TitleText, equalTo("Card Type"))
@@ -1295,7 +1295,7 @@ class CardBrowserTest : RobolectricTest() {
     fun NotetypeJson.addNote(
         field: String,
         vararg fields: String,
-    ): Note = addNoteUsingModelName(this.name, field, *fields)
+    ): Note = addNoteUsingNoteTypeName(this.name, field, *fields)
 
     @Suppress("SameParameterValue")
     private fun withBrowser(

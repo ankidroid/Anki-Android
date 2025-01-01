@@ -89,7 +89,7 @@ class CardBrowserColumnTest : JvmTest() {
             ),
         )
 
-        val note = addNoteUsingBasicModel()
+        val note = addBasicNote()
         val cid = note.cids()[0]
         val nid = note.id
 

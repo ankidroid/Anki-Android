@@ -78,7 +78,7 @@ class CustomStudyDialogTest : RobolectricTest() {
         runTest {
             val studyType = ContextMenuOption.STUDY_PREVIEW
             // we need a non-empty deck to custom study
-            addNoteUsingBasicModel()
+            addBasicNote()
 
             withCustomStudyFragment(
                 args = argumentsDisplayingSubscreen(studyType),
@@ -128,7 +128,7 @@ class CustomStudyDialogTest : RobolectricTest() {
     fun `previous value for 'increase new card limit' is suggested`() {
         // add cards to be sure we can extend successfully. Needs to be > 20
         repeat(23) {
-            addNoteUsingBasicModel()
+            addBasicNote()
         }
         val newExtendByValue = 1
 

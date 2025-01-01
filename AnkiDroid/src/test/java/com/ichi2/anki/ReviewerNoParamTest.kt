@@ -124,7 +124,7 @@ class ReviewerNoParamTest : RobolectricTest() {
 
     @Test
     fun flippingCardHidesFullscreen() {
-        addNoteUsingBasicModel("Hello", "World")
+        addBasicNote("Hello", "World")
         val reviewer = startReviewerFullScreen()
 
         val hideCount = reviewer.delayedHideCount
@@ -142,7 +142,7 @@ class ReviewerNoParamTest : RobolectricTest() {
             "         but: <2> was equal to <2>",
     )
     fun showingCardHidesFullScreen() {
-        addNoteUsingBasicModel("Hello", "World")
+        addBasicNote("Hello", "World")
         val reviewer = startReviewerFullScreen()
 
         reviewer.displayCardAnswer()
@@ -160,7 +160,7 @@ class ReviewerNoParamTest : RobolectricTest() {
     @Flaky(OS.ALL, "Expected: a value greater than <2> but: <2> was equal to <2>")
     fun undoingCardHidesFullScreen() =
         runTest {
-            addNoteUsingBasicModel("Hello", "World")
+            addBasicNote("Hello", "World")
             val reviewer = startReviewerFullScreen()
 
             reviewer.displayCardAnswer()
@@ -352,7 +352,7 @@ class ReviewerNoParamTest : RobolectricTest() {
     @CheckResult
     private fun startReviewerForWhiteboard(): Whiteboard {
         // we need a card for the reviewer to start
-        addNoteUsingBasicModel("Hello", "World")
+        addBasicNote("Hello", "World")
 
         val reviewer = startReviewer()
 
@@ -364,7 +364,7 @@ class ReviewerNoParamTest : RobolectricTest() {
 
     @CheckResult
     private fun startReviewerForWhiteboardInDarkMode(): Whiteboard {
-        addNoteUsingBasicModel("Hello", "World")
+        addBasicNote("Hello", "World")
 
         val reviewer = startReviewer()
         currentTheme = Theme.DARK

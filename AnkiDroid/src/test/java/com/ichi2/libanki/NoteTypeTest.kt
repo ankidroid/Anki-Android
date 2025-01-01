@@ -16,7 +16,7 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.libanki.Consts.MODEL_CLOZE
+import com.ichi2.libanki.Consts.NOTE_TYPE_CLOZE
 import com.ichi2.libanki.Utils.stripHTML
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.testutils.JvmTest
@@ -86,11 +86,11 @@ class NotetypeTest : JvmTest() {
     }
 
     /*****************
-     * Models       *
+     * Note Types    *
      */
     @Test
     @Throws(ConfirmModSchemaException::class)
-    fun test_modelDelete() {
+    fun test_noteTypeDelete() {
         val note = col.newNote()
         note.setItem("Front", "1")
         note.setItem("Back", "2")
@@ -325,7 +325,7 @@ class NotetypeTest : JvmTest() {
         col.notetypes.setCurrent(col.notetypes.byName("Cloze")!!)
         var note = col.newNote()
         assertEquals("Cloze", note.notetype.getString("name"))
-        // a cloze model with no clozes is not empty
+        // a cloze note type with no clozes is not empty
         note.setItem("Text", "nothing")
         assertEquals(1, col.addNote(note))
         clearId(note)
@@ -416,7 +416,7 @@ class NotetypeTest : JvmTest() {
 
     @Test
     @Throws(ConfirmModSchemaException::class)
-    fun test_modelChange() {
+    fun test_noteTypeChange() {
         val cloze = col.notetypes.byName("Cloze")
         // enable second template and add a note
         val basic = col.notetypes.current()
@@ -473,12 +473,12 @@ class NotetypeTest : JvmTest() {
         note.load()
         assertEquals("", note.getItem("Front"))
         assertEquals("note", note.getItem("Back"))
-        // another note to try model conversion
+        // another note to try note type conversion
         note = col.newNote()
         note.setItem("Front", "f2")
         note.setItem("Back", "b2")
         col.addNote(note)
-        // counts = col.getModels().all_use_counts();
+        // counts = col.getNoteTypes().all_use_counts();
         // Using older version of the test
         assertEquals(2, col.notetypes.useCount(basic))
         assertEquals(0, col.notetypes.useCount(cloze!!))
@@ -506,7 +506,7 @@ class NotetypeTest : JvmTest() {
     }
 
     private fun reqSize(notetype: NotetypeJson?) {
-        if (notetype!!.getInt("type") == MODEL_CLOZE) {
+        if (notetype!!.getInt("type") == NOTE_TYPE_CLOZE) {
             return
         }
         assertEquals(
@@ -532,7 +532,7 @@ class NotetypeTest : JvmTest() {
     }
 
     /**
-     * tests if Model.getDid() returns model did
+     * tests if NoteType.getDid() returns note type did
      * or default deck id (1) if null
      */
 
@@ -543,13 +543,13 @@ class NotetypeTest : JvmTest() {
         basic!!.put("did", 999L)
 
         val expected = 999L
-        assertEquals("getDid() should return the model did", expected, basic.did)
+        assertEquals("getDid() should return the note type did", expected, basic.did)
 
         // Check if returns default deck id (1) when did is null
         basic.put("did", null as Int?)
         val expected2 = 1L
         assertEquals(
-            "getDid() should return 1 (default deck id) if model did is null",
+            "getDid() should return 1 (default deck id) if note type did is null",
             expected2,
             basic.did,
         )

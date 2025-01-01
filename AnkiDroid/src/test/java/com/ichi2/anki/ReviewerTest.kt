@@ -45,7 +45,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
-import com.ichi2.utils.BASIC_MODEL_NAME
+import com.ichi2.utils.BASIC_NOTE_TYPE_NAME
 import com.ichi2.utils.deepClone
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
@@ -81,8 +81,8 @@ class ReviewerTest : RobolectricTest() {
 
     @Test
     fun testOnSelectedTags() {
-        // Add a note using basic model
-        addNoteUsingBasicModel()
+        // Add a note using basic note type
+        addBasicNote()
 
         // Start the Reviewer activity
         val viewer = startRegularActivity<Reviewer>()
@@ -147,7 +147,7 @@ class ReviewerTest : RobolectricTest() {
 
     @Test
     fun noErrorShouldOccurIfSoundFileNotPresent() {
-        addNoteUsingBasicModel("[[sound:not_on_file_system.mp3]]", "World")
+        addBasicNote("[[sound:not_on_file_system.mp3]]", "World")
             .firstCard()
             .moveToReviewQueue()
 
@@ -233,9 +233,9 @@ class ReviewerTest : RobolectricTest() {
 
             val cards =
                 arrayOf(
-                    addRevNoteUsingBasicModelDueToday("1", "bar").firstCard(),
-                    addNoteUsingBasicModel("2", "bar").firstCard(),
-                    addNoteUsingBasicModel("3", "bar").firstCard(),
+                    addRevNoteUsingBasicNoteTypeDueToday("1", "bar").firstCard(),
+                    addBasicNote("2", "bar").firstCard(),
+                    addBasicNote("3", "bar").firstCard(),
                 )
             waitForAsyncTasksToComplete()
 
@@ -271,12 +271,12 @@ class ReviewerTest : RobolectricTest() {
     @Test
     fun jsAnkiGetDeckName() =
         runTest {
-            val models = col.notetypes
+            val noteTypes = col.notetypes
 
             val didAb = addDeck("A::B")
-            val basic = models.byName(BASIC_MODEL_NAME)
+            val basic = noteTypes.byName(BASIC_NOTE_TYPE_NAME)
             basic!!.put("did", didAb)
-            addNoteUsingBasicModel("foo", "bar")
+            addBasicNote("foo", "bar")
 
             addDeck("A", setAsSelected = true)
 
@@ -302,7 +302,7 @@ class ReviewerTest : RobolectricTest() {
             waitForAsyncTasksToComplete()
 
             // #6587
-            addNoteUsingBasicModel("Hello", "World")
+            addBasicNote("Hello", "World")
 
             val sched = col.sched
 
@@ -447,14 +447,14 @@ class ReviewerTest : RobolectricTest() {
 
     @Throws(ConfirmModSchemaException::class)
     private fun addNoteWithThreeCards() {
-        val models = col.notetypes
-        var notetype: NotetypeJson? = models.copy(models.current())
+        val noteTypes = col.notetypes
+        var notetype: NotetypeJson? = noteTypes.copy(noteTypes.current())
         notetype!!.put("name", "Three")
-        models.add(notetype)
-        notetype = models.byName("Three")
+        noteTypes.add(notetype)
+        notetype = noteTypes.byName("Three")
 
-        cloneTemplate(models, notetype, "1")
-        cloneTemplate(models, notetype, "2")
+        cloneTemplate(noteTypes, notetype, "1")
+        cloneTemplate(noteTypes, notetype, "2")
 
         val newNote = col.newNote()
         newNote.setField(0, "Hello")
@@ -485,7 +485,7 @@ class ReviewerTest : RobolectricTest() {
     @CheckResult
     private fun startReviewer(withCards: Int = 0): Reviewer {
         for (i in 0 until withCards) {
-            addNoteUsingBasicModel()
+            addBasicNote()
         }
         return startReviewer(this)
     }
@@ -498,7 +498,7 @@ class ReviewerTest : RobolectricTest() {
         block: suspend Reviewer.() -> Unit,
     ) = runTest {
         for (frontSide in cards) {
-            addNoteUsingBasicModel(front = frontSide)
+            addBasicNote(front = frontSide)
         }
         val reviewer = startReviewer(this@ReviewerTest)
         block(reviewer)

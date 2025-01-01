@@ -1369,7 +1369,7 @@ abstract class AbstractFlashcardViewer :
             return
         }
 
-        // TODO needs testing: changing a card's model without flipping it back to the front
+        // TODO needs testing: changing a card's note type without flipping it back to the front
         //  (such as editing a card, then editing the card template)
         typeAnswer!!.updateInfo(getColUnsafe, currentCard!!, resources)
 

@@ -857,7 +857,7 @@ class CardContentProvider : ContentProvider() {
                     // Add the fields
                     val allFields = Utils.splitFields(fieldNames)
                     for (f: String? in allFields) {
-                        noteTypes.addFieldInNewModel(newNoteType, noteTypes.newField(f!!))
+                        noteTypes.addFieldInNewNoteType(newNoteType, noteTypes.newField(f!!))
                     }
                     // Add some empty card templates
                     var idx = 0
@@ -870,7 +870,7 @@ class CardContentProvider : ContentProvider() {
                             answerField = allFields[1]
                         }
                         t.put("afmt", "{{FrontSide}}\\n\\n<hr id=answer>\\n\\n{{$answerField}}")
-                        noteTypes.addTemplateInNewModel(newNoteType, t)
+                        noteTypes.addTemplateInNewNoteType(newNoteType, t)
                         idx++
                     }
                     // Add the CSS if specified
@@ -1305,13 +1305,13 @@ class CardContentProvider : ContentProvider() {
     ): Long {
         val noteTypeIdSegment = uri.pathSegments[1]
         val id: Long =
-            if (noteTypeIdSegment == FlashCardsContract.Model.CURRENT_MODEL_ID) {
+            if (noteTypeIdSegment == FlashCardsContract.Model.CURRENT_NOTE_TYPE_ID) {
                 col.notetypes.current().optLong("id", -1)
             } else {
                 try {
                     uri.pathSegments[1].toLong()
                 } catch (e: NumberFormatException) {
-                    throw IllegalArgumentException("Note type ID must be either numeric or the String CURRENT_MODEL_ID", e)
+                    throw IllegalArgumentException("Note type ID must be either numeric or the String CURRENT_NOTE_TYPE_ID", e)
                 }
             }
         return id

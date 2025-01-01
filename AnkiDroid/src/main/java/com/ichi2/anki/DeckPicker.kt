@@ -1136,8 +1136,8 @@ open class DeckPicker :
                 handleEmptyCards()
                 return true
             }
-            R.id.action_model_browser_open -> {
-                Timber.i("DeckPicker:: Model browser button pressed")
+            R.id.action_note_type_browser_open -> {
+                Timber.i("DeckPicker:: Note type browser button pressed")
                 openManageNoteTypes()
                 return true
             }
@@ -1654,13 +1654,13 @@ open class DeckPicker :
             if (previous < 20600123) {
                 Timber.i("Fixing font-family definition in templates")
                 try {
-                    val models = getColUnsafe.notetypes
-                    for (m in models.all()) {
+                    val noteTypes = getColUnsafe.notetypes
+                    for (m in noteTypes.all()) {
                         val css = m.getString("css")
                         @Suppress("SpellCheckingInspection")
                         if (css.contains("font-familiy")) {
                             m.put("css", css.replace("font-familiy", "font-family"))
-                            models.save(m)
+                            noteTypes.save(m)
                         }
                     }
                 } catch (e: JSONException) {

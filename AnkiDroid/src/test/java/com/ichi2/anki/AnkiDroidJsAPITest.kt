@@ -23,7 +23,7 @@ import com.ichi2.anki.AnkiDroidJsAPI.Companion.SUCCESS_KEY
 import com.ichi2.anki.AnkiDroidJsAPI.Companion.VALUE_KEY
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.BASIC_MODEL_NAME
+import com.ichi2.utils.BASIC_NOTE_TYPE_NAME
 import net.ankiweb.rsdroid.withoutUnicodeIsolation
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -38,11 +38,11 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     @Test
     fun ankiGetNextTimeTest() =
         runTest {
-            val models = col.notetypes
+            val noteTypes = col.notetypes
             val didA = addDeck("Test", setAsSelected = true)
-            val basic = models.byName(BASIC_MODEL_NAME)
+            val basic = noteTypes.byName(BASIC_NOTE_TYPE_NAME)
             basic!!.put("did", didA)
-            addNoteUsingBasicModel("foo", "bar")
+            addBasicNote("foo", "bar")
 
             val reviewer: Reviewer = startReviewer()
             val jsapi = reviewer.jsApi
@@ -72,11 +72,11 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     @Test
     fun ankiTestCurrentCard() =
         runTest {
-            val models = col.notetypes
+            val noteTypes = col.notetypes
             val didA = addDeck("Test", setAsSelected = true)
-            val basic = models.byName(BASIC_MODEL_NAME)
+            val basic = noteTypes.byName(BASIC_NOTE_TYPE_NAME)
             basic!!.put("did", didA)
-            addNoteUsingBasicModel("foo", "bar")
+            addBasicNote("foo", "bar")
 
             val reviewer: Reviewer = startReviewer()
             val jsapi = reviewer.jsApi
@@ -183,11 +183,11 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     @Test
     fun ankiJsUiTest() =
         runTest {
-            val models = col.notetypes
+            val noteTypes = col.notetypes
             val didA = addDeck("Test", setAsSelected = true)
-            val basic = models.byName(BASIC_MODEL_NAME)
+            val basic = noteTypes.byName(BASIC_NOTE_TYPE_NAME)
             basic!!.put("did", didA)
-            addNoteUsingBasicModel("foo", "bar")
+            addBasicNote("foo", "bar")
 
             val reviewer: Reviewer = startReviewer()
             val jsapi = reviewer.jsApi
@@ -226,11 +226,11 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     fun ankiMarkAndFlagCardTest() =
         runTest {
             // js api test for marking and flagging card
-            val models = col.notetypes
+            val noteTypes = col.notetypes
             val didA = addDeck("Test", setAsSelected = true)
-            val basic = models.byName(BASIC_MODEL_NAME)
+            val basic = noteTypes.byName(BASIC_NOTE_TYPE_NAME)
             basic!!.put("did", didA)
-            addNoteUsingBasicModel("foo", "bar")
+            addBasicNote("foo", "bar")
 
             val reviewer: Reviewer = startReviewer()
             val jsapi = reviewer.jsApi
@@ -287,15 +287,15 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             // add five notes, four will be buried and suspended
             // count number of notes, if buried or suspended then
             // in scheduling the count will be less than previous scheduling
-            val models = col.notetypes
+            val noteTypes = col.notetypes
             val didA = addDeck("Test", setAsSelected = true)
-            val basic = models.byName(BASIC_MODEL_NAME)
+            val basic = noteTypes.byName(BASIC_NOTE_TYPE_NAME)
             basic!!.put("did", didA)
-            addNoteUsingBasicModel("foo", "bar")
-            addNoteUsingBasicModel("baz", "bak")
-            addNoteUsingBasicModel("Anki", "Droid")
-            addNoteUsingBasicModel("Test Card", "Bury and Suspend Card")
-            addNoteUsingBasicModel("Test Note", "Bury and Suspend Note")
+            addBasicNote("foo", "bar")
+            addBasicNote("baz", "bak")
+            addBasicNote("Anki", "Droid")
+            addBasicNote("Test Card", "Bury and Suspend Card")
+            addBasicNote("Test Note", "Bury and Suspend Note")
 
             val reviewer: Reviewer = startReviewer()
             val jsapi = reviewer.jsApi
@@ -356,12 +356,12 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     fun ankiSetCardDueTest() =
         runTest {
             TimeManager.reset()
-            val models = col.notetypes
+            val noteTypes = col.notetypes
             val didA = addDeck("Test", setAsSelected = true)
-            val basic = models.byName(BASIC_MODEL_NAME)
+            val basic = noteTypes.byName(BASIC_NOTE_TYPE_NAME)
             basic!!.put("did", didA)
-            addNoteUsingBasicModel("foo", "bar")
-            addNoteUsingBasicModel("baz", "bak")
+            addBasicNote("foo", "bar")
+            addBasicNote("baz", "bak")
 
             val reviewer: Reviewer = startReviewer()
             waitForAsyncTasksToComplete()
@@ -385,7 +385,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     @Test
     fun ankiResetProgressTest() =
         runTest {
-            val n = addNoteUsingBasicModel("Front", "Back")
+            val n = addBasicNote("Front", "Back")
             val c = n.firstCard()
 
             // Make card review with 28L due and 280% ease

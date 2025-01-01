@@ -55,13 +55,13 @@ class NoteServiceTest : RobolectricTest() {
     // tests if the text fields of the notes are the same after calling updateJsonNoteFromMultimediaNote
     @Test
     fun updateJsonNoteTest() {
-        val testModel = col.notetypes.byName("Basic")
-        val multiMediaNote: IMultimediaEditableNote? = NoteService.createEmptyNote(testModel!!)
+        val testNoteType = col.notetypes.byName("Basic")
+        val multiMediaNote: IMultimediaEditableNote? = NoteService.createEmptyNote(testNoteType!!)
         multiMediaNote!!.getField(0)!!.text = "foo"
         multiMediaNote.getField(1)!!.text = "bar"
 
         val basicNote =
-            Note.fromNotetypeId(col, testModel.id).apply {
+            Note.fromNotetypeId(col, testNoteType.id).apply {
                 setField(0, "this should be changed to foo")
                 setField(1, "this should be changed to bar")
             }
@@ -74,11 +74,11 @@ class NoteServiceTest : RobolectricTest() {
     // tests if updateJsonNoteFromMultimediaNote throws a RuntimeException if the ID's of the notes don't match
     @Test
     fun updateJsonNoteRuntimeErrorTest() {
-        // model with ID 42
+        // note type with ID 42
         var testNotetype = NotetypeJson("""{"flds": [{"name": "foo bar", "ord": "1"}], "id": "42"}""")
         val multiMediaNoteWithID42: IMultimediaEditableNote? = NoteService.createEmptyNote(testNotetype)
 
-        // model with ID 45
+        // note type with ID 45
         testNotetype = col.notetypes.newBasicNotetype()
         testNotetype.id = 45
         col.notetypes.add(testNotetype)
@@ -279,7 +279,7 @@ class NoteServiceTest : RobolectricTest() {
     @Test
     fun testAvgEase() {
         // basic case: no cards are new
-        val note = addNoteUsingModelName("Cloze", "{{c1::Hello}}{{c2::World}}{{c3::foo}}{{c4::bar}}", "extra")
+        val note = addNoteUsingNoteTypeName("Cloze", "{{c1::Hello}}{{c2::World}}{{c3::foo}}{{c4::bar}}", "extra")
         // factor for cards: 3000, 1500, 1000, 750
         for ((i, card) in note.cards().withIndex()) {
             card.update {
@@ -306,7 +306,7 @@ class NoteServiceTest : RobolectricTest() {
     @Test
     fun testAvgInterval() {
         // basic case: all cards are relearning or review
-        val note = addNoteUsingModelName("Cloze", "{{c1::Hello}}{{c2::World}}{{c3::foo}}{{c4::bar}}", "extra")
+        val note = addNoteUsingNoteTypeName("Cloze", "{{c1::Hello}}{{c2::World}}{{c3::foo}}{{c4::bar}}", "extra")
         val reviewOrRelearningList = listOf(Consts.CARD_TYPE_REV, Consts.CARD_TYPE_RELEARNING)
         val newOrLearningList = listOf(Consts.CARD_TYPE_NEW, Consts.CARD_TYPE_LRN)
 

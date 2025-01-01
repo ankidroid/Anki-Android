@@ -29,7 +29,7 @@ import com.ichi2.libanki.undoableOp
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
-import com.ichi2.utils.createBasicTypingModel
+import com.ichi2.utils.createBasicTypingNoteType
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.equalTo
@@ -150,7 +150,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     fun testEditingCardChangesTypedAnswer() =
         runTest {
             // 7363
-            addNoteUsingBasicTypedModel("Hello", "World")
+            addBasicTypedNote("Hello", "World")
 
             val viewer: NonAbstractFlashcardViewer = getViewer(true)
 
@@ -171,7 +171,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     fun testEditingCardChangesTypedAnswerOnDisplayAnswer() =
         runTest {
             // 7363
-            addNoteUsingBasicTypedModel("Hello", "World")
+            addBasicTypedNote("Hello", "World")
 
             val viewer: NonAbstractFlashcardViewer = getViewer(true)
 
@@ -250,22 +250,22 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     @Flaky(OS.ALL, "executeCommand(FLIP_OR_ANSWER_EASE4) cannot be awaited")
     fun typedLanguageIsSet() =
         runTest {
-            val withLanguage = col.createBasicTypingModel("a")
-            val normal = col.createBasicTypingModel("b")
+            val withLanguage = col.createBasicTypingNoteType("a")
+            val normal = col.createBasicTypingNoteType("b")
             val typedField = 1 // BACK
 
             LanguageHintService.setLanguageHintForField(col.notetypes, withLanguage, typedField, Locale("ja"))
 
-            addNoteUsingModelName(withLanguage.getString("name"), "ichi", "ni")
-            addNoteUsingModelName(normal.getString("name"), "one", "two")
+            addNoteUsingNoteTypeName(withLanguage.getString("name"), "ichi", "ni")
+            addNoteUsingNoteTypeName(normal.getString("name"), "one", "two")
             val viewer = getViewer(false)
 
-            assertThat("A model with a language hint (japanese) should use it", viewer.hintLocale, equalTo("ja"))
+            assertThat("A note type with a language hint (japanese) should use it", viewer.hintLocale, equalTo("ja"))
 
             viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
             viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
 
-            assertThat("A default model should have no preference", viewer.hintLocale, nullValue())
+            assertThat("A default note type should have no preference", viewer.hintLocale, nullValue())
         }
 
     @Test
@@ -297,7 +297,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     @Test
     fun `Show audio play buttons preference handling - sound`() =
         runTest {
-            addNoteUsingBasicTypedModel("SOUND [sound:android_audiorec.3gp]", "back")
+            addBasicTypedNote("SOUND [sound:android_audiorec.3gp]", "back")
             getViewerContent().let { content ->
                 assertThat("show audio preference default value: enabled", content, containsString("playsound:q:0"))
                 assertThat("show audio preference default value: enabled", content, containsString("SOUND"))

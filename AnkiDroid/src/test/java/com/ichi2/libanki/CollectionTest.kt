@@ -19,7 +19,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.notes.NoteFieldsCheckResponse
 import anki.notetypes.StockNotetype
 import com.ichi2.testutils.JvmTest
-import com.ichi2.utils.createBasicModel
+import com.ichi2.utils.createBasicNoteType
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.hamcrest.Matchers.equalTo
@@ -40,7 +40,7 @@ class CollectionTest : JvmTest() {
     fun editClozeGenerateCardsInSameDeck() {
         // #7781
         // Technically, editing a card with conditional fields can also cause this, but cloze cards are much more common
-        val n = addNoteUsingModelName("Cloze", "{{c1::Hello}} {{c2::World}}", "Extra")
+        val n = addNoteUsingNoteTypeName("Cloze", "{{c1::Hello}} {{c2::World}}", "Extra")
         val did = addDeck("Testing")
         n.updateCards { this.did = did }
         assertThat("two cloze notes should be generated", n.numberOfCards(), equalTo(2))
@@ -180,12 +180,12 @@ class CollectionTest : JvmTest() {
         // old code used StdModels.STD_MODELS.size for this variable. There were 6 models:
         // BASIC_MODEL, BASIC_TYPING_MODEL, FORWARD_REVERSE_MODEL, FORWARD_OPTIONAL_REVERSE_MODEL,
         // CLOZE_MODEL, IMAGE_OCCLUSION_MODEL
-        val numberOfStandardModels = StockNotetype.Kind.entries.count { it != StockNotetype.Kind.UNRECOGNIZED }
-        assertEquals(col.notetypes.all().size, numberOfStandardModels)
+        val numberOfStandardNoteTypes = StockNotetype.Kind.entries.count { it != StockNotetype.Kind.UNRECOGNIZED }
+        assertEquals(col.notetypes.all().size, numberOfStandardNoteTypes)
         for (i in 0..99) {
-            col.createBasicModel()
+            col.createBasicNoteType()
         }
-        assertEquals(col.notetypes.all().size, (100 + numberOfStandardModels))
+        assertEquals(col.notetypes.all().size, (100 + numberOfStandardNoteTypes))
     }
 
     @Test
@@ -214,7 +214,7 @@ class CollectionTest : JvmTest() {
 
     @Test
     fun test_filterToValidCards() {
-        val cid = addNoteUsingBasicModel("foo", "bar").firstCard().id
+        val cid = addBasicNote("foo", "bar").firstCard().id
         assertEquals(ArrayList(setOf(cid)), col.filterToValidCards(longArrayOf(cid, cid + 1)))
     }
 

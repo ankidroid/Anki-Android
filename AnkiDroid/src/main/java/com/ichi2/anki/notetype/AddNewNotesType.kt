@@ -53,7 +53,7 @@ class AddNewNotesType(
         val (allOptions, currentNames) =
             activity.withProgress {
                 withCol {
-                    val standardNotetypesModels =
+                    val standardNotetypesNoteTypes =
                         StockNotetype.Kind.entries
                             .filter { it != StockNotetype.Kind.UNRECOGNIZED }
                             .map {
@@ -67,7 +67,7 @@ class AddNewNotesType(
                     val foundNotetypes = getNotetypeNames()
                     Pair(
                         mutableListOf<AddNotetypeUiModel>().apply {
-                            addAll(standardNotetypesModels)
+                            addAll(standardNotetypesNoteTypes)
                             addAll(foundNotetypes.map { it.toUiModel() })
                         },
                         foundNotetypes.map { it.name },
@@ -165,11 +165,11 @@ class AddNewNotesType(
 
     private fun cloneStandardNotetype(
         newName: String,
-        model: AddNotetypeUiModel,
+        noteType: AddNotetypeUiModel,
     ) {
         activity.launchCatchingTask {
             activity.runAndRefreshAfter {
-                val targetNotetype = getNotetype(model.id)
+                val targetNotetype = getNotetype(noteType.id)
                 val newNotetype =
                     targetNotetype.copy {
                         id = 0

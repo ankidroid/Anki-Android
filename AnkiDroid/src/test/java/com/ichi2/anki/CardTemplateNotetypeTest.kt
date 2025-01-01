@@ -34,22 +34,22 @@ import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 class CardTemplateNotetypeTest : RobolectricTest() {
     @Test
     @Throws(Exception::class)
-    fun testTempModelStorage() {
+    fun testTempNoteTypeStorage() {
         // Start off with clean state in the cache dir
-        CardTemplateNotetype.clearTempModelFiles()
+        CardTemplateNotetype.clearTempNoteTypeFiles()
 
         // Make sure save / retrieve works
-        val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, JSONObject("{\"foo\": \"bar\"}"))
-        assertNotNull("Saving temp model unsuccessful", tempModelPath)
-        val tempModel: JSONObject = CardTemplateNotetype.getTempModel(tempModelPath!!)
-        assertNotNull("Temp model not read successfully", tempModel)
-        Assert.assertEquals(JSONObject("{\"foo\": \"bar\"}").toString(), tempModel.toString())
+        val tempNoteTypePath = CardTemplateNotetype.saveTempNoteType(targetContext, JSONObject("{\"foo\": \"bar\"}"))
+        assertNotNull("Saving temp note type unsuccessful", tempNoteTypePath)
+        val tempNoteType: JSONObject = CardTemplateNotetype.getTempNoteType(tempNoteTypePath!!)
+        assertNotNull("Temp note type not read successfully", tempNoteType)
+        Assert.assertEquals(JSONObject("{\"foo\": \"bar\"}").toString(), tempNoteType.toString())
 
         // Make sure clearing works
-        Assert.assertEquals(1, CardTemplateNotetype.clearTempModelFiles().toLong())
+        Assert.assertEquals(1, CardTemplateNotetype.clearTempNoteTypeFiles().toLong())
         Timber.i("The following logged NoSuchFileException is an expected part of verifying a file delete.")
         try {
-            CardTemplateNotetype.getTempModel(tempModelPath)
+            CardTemplateNotetype.getTempNoteType(tempNoteTypePath)
             Assert.fail("Should have caught an exception here because the file is missing")
         } catch (e: IOException) {
             // this is expected
@@ -58,7 +58,7 @@ class CardTemplateNotetypeTest : RobolectricTest() {
 
     @Test
     fun testAddDeleteTracking() {
-        // Assume you start with a 2 template model (like "Basic (and reversed)")
+        // Assume you start with a 2 template note type (like "Basic (and reversed)")
         // Add a 3rd new template, remove the 2nd, remove the 1st, add a new now-2nd, remove 1st again
         // ...and it should reduce to just removing the original 1st/2nd and adding the final as first
         val tempNotetype = CardTemplateNotetype(NotetypeJson("{ \"foo\": \"bar\" }"))
