@@ -27,11 +27,11 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.BundleCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import com.canhub.cropper.CropImageView
-import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.AnkiFragment
 import com.ichi2.anki.R
 import com.ichi2.anki.snackbar.showSnackbar
@@ -58,7 +58,13 @@ class ImageCropper :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        ankiActivity.setSupportActionBar(view.findViewById(R.id.toolbar))
+        (activity as? AppCompatActivity)?.apply {
+            setSupportActionBar(view.findViewById(R.id.toolbar))
+            // there's no need for a title anyway and if we don't set it we end up with "AnkiDroid"
+            // as the title which is useless
+            supportActionBar?.title = ""
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
         cropImageView =
             view.findViewById<CropImageView>(R.id.cropImageView).apply {
                 setOnSetImageUriCompleteListener(this@ImageCropper)
@@ -80,19 +86,8 @@ class ImageCropper :
                     menuInflater: MenuInflater,
                 ) {
                     menu.clear()
+                    // TODO make our own menu, we shouldn't rely on third party menu files
                     menuInflater.inflate(com.canhub.cropper.R.menu.crop_image_menu, menu)
-
-                    // Canhub has white color icons we need to change that
-                    for (i in 0 until menu.size()) {
-                        val menuItem = menu.getItem(i)
-                        menuItem.icon?.setTint(
-                            MaterialColors.getColor(
-                                requireContext(),
-                                R.attr.toolbarIconColor,
-                                0,
-                            ),
-                        )
-                    }
                 }
 
                 override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
