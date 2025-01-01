@@ -33,6 +33,7 @@ import androidx.core.view.MenuProvider
 import com.canhub.cropper.CropImageView
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.AnkiFragment
+import com.ichi2.anki.R
 import com.ichi2.anki.snackbar.showSnackbar
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
@@ -41,13 +42,13 @@ import timber.log.Timber
  * Fragment for cropping images within the AnkiDroid, uses [CropImageView] to crop the image and
  * sends the image uri as result.
  *
- * Portions of this code were adapted from the Canub project.
+ * Portions of this code were adapted from the CanHub project.
  * Original source: https://github.com/CanHub/Android-Image-Cropper
  *
  * Attribution to the original authors of the CanHub/Android-Image-Cropper for their contributions.
  */
 class ImageCropper :
-    AnkiFragment(com.ichi2.anki.R.layout.fragment_image_cropper),
+    AnkiFragment(R.layout.fragment_image_cropper),
     CropImageView.OnSetImageUriCompleteListener,
     CropImageView.OnCropImageCompleteListener {
     private lateinit var cropImageView: CropImageView
@@ -57,16 +58,17 @@ class ImageCropper :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        cropImageView = findViewById(com.ichi2.anki.R.id.cropImageView)
-        ankiActivity.setSupportActionBar(findViewById(com.ichi2.anki.R.id.toolbar))
-        setOptions()
+        ankiActivity.setSupportActionBar(view.findViewById(R.id.toolbar))
+        cropImageView =
+            view.findViewById<CropImageView>(R.id.cropImageView).apply {
+                setOnSetImageUriCompleteListener(this@ImageCropper)
+                setOnCropImageCompleteListener(this@ImageCropper)
+                cropRect = Rect(100, 300, 500, 1200)
+                val originalImageUri =
+                    BundleCompat.getParcelable(requireArguments(), CROP_IMAGE_URI, Uri::class.java)
+                setImageUriAsync(originalImageUri)
+            }
         setUpMenu()
-        cropImageView.setOnSetImageUriCompleteListener(this)
-        cropImageView.setOnCropImageCompleteListener(this)
-
-        val originalImageUri =
-            BundleCompat.getParcelable(requireArguments(), CROP_IMAGE_URI, Uri::class.java)
-        cropImageView.setImageUriAsync(originalImageUri)
     }
 
     private fun setUpMenu() {
@@ -86,7 +88,7 @@ class ImageCropper :
                         menuItem.icon?.setTint(
                             MaterialColors.getColor(
                                 requireContext(),
-                                com.ichi2.anki.R.attr.toolbarIconColor,
+                                R.attr.toolbarIconColor,
                                 0,
                             ),
                         )
@@ -133,7 +135,7 @@ class ImageCropper :
     ) {
         if (error != null) {
             Timber.e(error, "Failed to load image by URI")
-            showSnackbar(com.ichi2.anki.R.string.something_wrong)
+            showSnackbar(R.string.something_wrong)
         }
     }
 
@@ -154,12 +156,8 @@ class ImageCropper :
             activity?.finish()
         } else {
             Timber.e(result.error, "Failed to crop image")
-            showSnackbar(com.ichi2.anki.R.string.something_wrong)
+            showSnackbar(R.string.something_wrong)
         }
-    }
-
-    private fun setOptions() {
-        cropImageView.cropRect = Rect(100, 300, 500, 1200)
     }
 
     override fun onDestroyView() {
