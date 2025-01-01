@@ -142,7 +142,16 @@ class ImageCropper :
         result: CropImageView.CropResult,
     ) {
         if (result.error == null) {
-            sendCropResult(result)
+            val resultIntent = Intent()
+            resultIntent.putExtra(
+                CROP_IMAGE_RESULT,
+                CropResultData(
+                    uriContent = result.uriContent,
+                    uriPath = result.getUriFilePath(ankiActivity),
+                ),
+            )
+            activity?.setResult(Activity.RESULT_OK, resultIntent)
+            activity?.finish()
         } else {
             Timber.e(result.error, "Failed to crop image")
             showSnackbar(com.ichi2.anki.R.string.something_wrong)
@@ -151,18 +160,6 @@ class ImageCropper :
 
     private fun setOptions() {
         cropImageView.cropRect = Rect(100, 300, 500, 1200)
-    }
-
-    private fun sendCropResult(result: CropImageView.CropResult) {
-        val resultIntent =
-            Intent().apply {
-                putExtra(
-                    CROP_IMAGE_RESULT,
-                    CropResultData(error = result.error, uriContent = result.uriContent, uriPath = result.getUriFilePath(ankiActivity)),
-                )
-            }
-        activity?.setResult(Activity.RESULT_OK, resultIntent)
-        activity?.finish()
     }
 
     override fun onDestroyView() {
@@ -185,7 +182,6 @@ class ImageCropper :
 
     @Parcelize
     data class CropResultData(
-        val error: Exception? = null,
         val uriContent: Uri? = null,
         val uriPath: String? = null,
     ) : Parcelable

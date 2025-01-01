@@ -39,10 +39,8 @@ import androidx.core.content.IntentCompat
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.canhub.cropper.CropException
 import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.DrawingActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.EXTRA_MEDIA_OPTIONS
@@ -193,10 +191,6 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                                 ImageCropper.CropResultData::class.java,
                             )
                         Timber.d("Cropped image data: $cropResultData")
-
-                        if (cropResultData?.error != null) {
-                            handleCropResultError(error = cropResultData.error)
-                        }
 
                         if (cropResultData?.uriPath == null || cropResultData.uriContent == null) return@registerForActivityResult
                         updateAndDisplayImageSize(cropResultData.uriPath)
@@ -642,21 +636,6 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             Timber.w(e, "Error reading SVG from URI")
             null
         }
-
-    private fun handleCropResultError(error: Exception) {
-        // cropImage can give us more information. Not sure it is actionable so for now just log it.
-        Timber.w(error, "cropImage threw an error")
-        // condition can be removed if #12768 get fixed by Canhub
-        if (error is CropException.Cancellation) {
-            Timber.i(error, "CropException caught, seemingly nothing to do ")
-        } else {
-            showErrorDialog(resources.getString(R.string.activity_result_unexpected))
-            CrashReportService.sendExceptionReport(
-                error,
-                "cropImage threw an error",
-            )
-        }
-    }
 
     /**
      * Rotate and compress the image, with the side effect of the current image being backed by a new file
