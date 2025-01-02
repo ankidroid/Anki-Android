@@ -204,6 +204,8 @@ object LanguageUtil {
             "Tsonga" to "ts",
             // Tatar (Russia)
             "Татар (Россия)" to "tt-RU",
+            // Uyghur
+            "ئۇيغۇرچە" to "ug",
             // Ukrainian
             "Українська" to "uk",
             // Urdu (Pakistan)
@@ -333,6 +335,8 @@ object LanguageUtil {
             "th",
             // Türkçe
             "tr",
+            // ئۇيغۇرچە
+            "ug",
             // Yкраїнська мова
             "uk",
             // Tiếng Việt
