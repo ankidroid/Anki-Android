@@ -346,14 +346,14 @@
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">نوٹ ایڈیٹر</string>
     <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">ڈیک منتخب کریں۔</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">نوٹ کی قسم منتخب کریں۔</string>
-    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
-    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
-    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
-    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
-    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
-    <string name="show_shortcuts_message">Press Alt+K to show keyboard shortcuts</string>
-    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
-    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">ٹیگ ایڈیٹر</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">کارڈ ٹیمپلیٹ ایڈیٹر</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">سامنے والے ٹیمپلیٹ میں ترمیم کریں۔</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">واپس ٹیمپلیٹ میں ترمیم کریں۔</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">اسٹائل میں ترمیم کریں</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">ٹیمپلیٹ کو بطور مارک ڈاؤن کاپی کریں</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">براؤزر کی ظاہری شکل میں ترمیم کریں</string>
+    <string name="show_shortcuts_message">کی بورڈ شارٹ کٹ دکھانے کے لیے Alt+K دبائیں</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">صارف کی کارروائی %s اس نوٹ ٹائپ میں سیٹ نہیں ہے۔ براہ کرم اسے ترتیب دیں</string>
+    <string name="directory_inaccessible_info">یہاں %s تک رسائی کو بحال کرنے کے بارے میں مزید جانیں یا کلیکشن فولڈر کو اپ ڈیٹ کرنے کے لیے سیٹنگز پر جائیں۔</string>
 </resources>

@@ -70,7 +70,7 @@
     <string name="sync_title">동기화</string>
     <string name="sync_log_uploading_message">기기 기준 전체 동기화</string>
     <string name="sync_database_acknowledge">컬렉션 동기화됨</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
+    <string name="col_synced_media_in_background">컬렉션 동기화됨. 미디어는 백그라운드에서 동기화되는 중입니다.</string>
     <string name="sync_corrupt_database">데이터베이스가 손상되었습니다. 동기화 재시도 전에 문제를 수정하십시오. \n\n 데이터베이스 수정을 위해서는 %s 를 참고하세요.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">장치</string>

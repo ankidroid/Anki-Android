@@ -161,10 +161,10 @@
     <string name="disable_extended_text_ui_summ">لینڈ اسکیپ موڈ میں ہونے پر \'کلوز ڈیلیٹ\' سیاق و سباق کے مینو کی اجازت دیتا ہے</string>
     <string name="vertical_centering" maxLength="41">بیچ میں سیدھ کریں</string>
     <string name="vertical_centering_summ">کارڈز کے مواد کو عمودی طور پر مرکز کریں</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
-    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
-    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
-    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">دو بار تھپتھپائیں وقت کا وقفہ (ملی سیکنڈ)</string>
+    <string name="pref_double_tap_time_interval_summary">اگر یہ وقت نہیں گزرا ہے تو جوابی بٹنوں کے ایک دوسرے ٹیپ کو نظر انداز کر دیا جائے گا۔ یہ حادثاتی ڈبل نلکے کو روکتا ہے</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">طویل پریس ٹائم جواب دکھائیں</string>
+    <string name="pref_show_answer_long_press_time_summary">کم از کم دبانے کا وقت اس سے پہلے کہ شو جواب بٹن ٹچ رجسٹر کرے</string>
     <string name="show_estimates" maxLength="41">Show button time</string>
     <string name="show_estimates_summ">Show next review time on answer buttons</string>
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>

@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">सही उत्तर </string>
     <string name="answer_easy" maxLength="41">आसान उत्तर</string>
     <string name="gesture_play" maxLength="41">मीडिया चलाएं</string>
-    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_abort_learning" maxLength="41">समीक्षक बंद करें</string>
     <string name="gesture_flag_red" maxLength="41">लाल ध्वज टॉगल करें</string>
     <string name="gesture_flag_orange" maxLength="41">नारंगी ध्वज टॉगल करें</string>
     <string name="gesture_flag_green" maxLength="41">हरा ध्वज टॉगल करें</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">ध्वज हटाएं</string>
     <string name="gesture_page_up" maxLength="41">पन्ना ऊपर</string>
     <string name="gesture_page_down" maxLength="41">पन्ना निचे</string>
-    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_abort_sync" maxLength="41">समीक्षक बंद करें और सिंक करें</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">श्वेतपट्ट टॉगल करें</string>
     <string name="gesture_show_hint" maxLength="41">संकेत दिखाएं</string>
     <string name="gesture_show_all_hints" maxLength="41">सभी संकेत दिखाएं</string>

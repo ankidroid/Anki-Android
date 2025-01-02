@@ -49,7 +49,7 @@
     <plurals name="pref_summ_minutes">
         <item quantity="other">%d분</item>
     </plurals>
-    <string name="pref_milliseconds">%s ms</string>
+    <string name="pref_milliseconds">%s 밀리초</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">검색 결과 없음</string>
     <!-- preferences.xml categories-->
@@ -156,29 +156,29 @@
     <string name="safe_display_summ">모든 애니메이션을 비활성화하고 더 안전한 그리기 방법을 사용합니다. 전자 잉크 기기에는 이 기능이 필요할 수 있습니다.</string>
     <string name="disable_extended_text_ui" maxLength="41">단일 필드 편집 모드 비활성화</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">가로 모드에서 \'빈칸 뚫기\' 메뉴를 표시합니다.</string>
     <string name="vertical_centering" maxLength="41">가운데 정렬</string>
     <string name="vertical_centering_summ">카드의 내용을 세로로 중앙에 배치</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
-    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
-    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
-    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">더블 탭 인식 간격 (밀리초)</string>
+    <string name="pref_double_tap_time_interval_summary">이 간격보다 짧은 간격의 더블 탭은 무시됩니다. (실수 방지)</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">정답 보기 버튼 홀드 시간</string>
+    <string name="pref_show_answer_long_press_time_summary">정답 보기 버튼을 눌러야 하는 최소 시간입니다.</string>
     <string name="show_estimates" maxLength="41">버튼에 시간 표시</string>
     <string name="show_estimates_summ">답변 버튼에 다음 복습 시간 표시</string>
-    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
-    <string name="show_top_bar" maxLength="41">Show top bar</string>
-    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
+    <string name="show_large_answer_buttons" maxLength="41">버튼 크기 크게</string>
+    <string name="show_large_answer_buttons_summ">버튼을 두 줄로 표시합니다.</string>
+    <string name="show_top_bar" maxLength="41">상단 바 표시</string>
+    <string name="show_top_bar_summary">카드 수, 타이머, 플래그, 강조를 상단 바에 표시합니다.</string>
     <string name="show_progress" maxLength="41">남은 개수 표시</string>
     <string name="show_progress_summ">남은 카드 개수 표시</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">예상 시간 표시</string>
+    <string name="show_eta_summ">남은 시간 표시</string>
     <string name="use_current" maxLength="41">새 카드의 카드 묶음</string>
     <string name="learn_cutoff" maxLength="41">미리 학습하기 시간 설정</string>
     <string name="time_limit" maxLength="41">타임박스 시간 설정</string>
     <string name="day_offset_with_description" maxLength="41">다음 날의 시작</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="other">자정 %d시간 이후</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">화면을 켜진 상태로 유지</string>
     <string name="pref_keep_screen_on_summ">화면 꺼짐 시간 비활성화</string>
@@ -190,19 +190,19 @@
     <string name="custom_buttons_setting_if_room">공간이 있는 경우 표시</string>
     <string name="custom_buttons_setting_menu_only">메뉴만</string>
     <string name="reset_custom_buttons" maxLength="41">기본값으로 초기화</string>
-    <string name="reset_settings_to_default">Reset settings to default</string>
-    <string name="reset">Reset</string>
+    <string name="reset_settings_to_default">기본값으로 초기화</string>
+    <string name="reset">초기화</string>
     <string name="thirdparty_apps_title" maxLength="41">타사 API 앱</string>
     <string name="thirdparty_apps_summary">Ankidroid API를 사용하는 어플 목록 보기 (사전, 편집기 등)</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="pref_cat_reviewer" maxLength="41">복습</string>
+    <string name="show_deck_title" maxLength="41">덱 이름 표시</string>
+    <string name="accessibility" maxLength="41">접근성</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">클립보드 이미지를 PNG로 붙여넣기</string>
     <string name="paste_as_png_summary">기본적으로 Anki는 클립보드의 이미지를 JPG로 저장해 저장 공간을 절약합니다. 이 옵션을 사용해 대신 PNG 이미지를 사용할 수 있습니다.</string>
     <string name="exit_via_double_tap_back" maxLength="41">뒤로가기 버튼 두번 눌러 돌아가기/나가기</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <string name="exit_via_double_tap_back_summ">실수로 인한 학습 종료와 앱 종료 방지</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
@@ -269,26 +269,26 @@
     <string name="user_action_1" maxLength="28">User action 1</string>
     <string name="user_action_2" maxLength="28">User action 2</string>
     <string name="user_action_3" maxLength="28">User action 3</string>
-    <string name="user_action_4" maxLength="28">User action 4</string>
-    <string name="user_action_5" maxLength="28">User action 5</string>
-    <string name="user_action_6" maxLength="28">User action 6</string>
-    <string name="user_action_7" maxLength="28">User action 7</string>
-    <string name="user_action_8" maxLength="28">User action 8</string>
-    <string name="user_action_9" maxLength="28">User action 9</string>
-    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
+    <string name="user_action_4" maxLength="28">사용자 액션 4</string>
+    <string name="user_action_5" maxLength="28">사용자 액션 5</string>
+    <string name="user_action_6" maxLength="28">사용자 액션 6</string>
+    <string name="user_action_7" maxLength="28">사용자 액션 7</string>
+    <string name="user_action_8" maxLength="28">사용자 액션 8</string>
+    <string name="user_action_9" maxLength="28">사용자 액션 9</string>
+    <string name="toggle_auto_advance" maxLength="41">자동 넘기기 켜기/끄기</string>
     <!-- Select card side -->
-    <string name="card_side_selection_title">Select card side</string>
-    <string name="card_side_question">Question</string>
-    <string name="card_side_answer">Answer</string>
-    <string name="card_side_both" maxLength="28">Question &amp; Answer</string>
+    <string name="card_side_selection_title">카드 면 선택</string>
+    <string name="card_side_question">질문</string>
+    <string name="card_side_answer">정답</string>
+    <string name="card_side_both" maxLength="28">질문 &amp; 정답</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
-    <string name="bindings_already_bound">Already bound to ‘%s’</string>
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">\'%s\' 제거</string>
+    <string name="bindings_already_bound">\'%s\'에 이미 할당됨</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">실험적</string>
     <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Please upgrade to the new text to speech format</string>
     <!-- Developer options -->

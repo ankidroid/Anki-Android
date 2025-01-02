@@ -87,7 +87,7 @@
     <string name="fullscreen_review" maxLength="41">ফুলস্ক্রিন মোড</string>
     <string name="full_screen_off">বন্ধ</string>
     <string name="full_screen_system">সিস্টেম বার আড়াল করুন </string>
-    <string name="full_screen_complete">Hide the system bars and answer buttons</string>
+    <string name="full_screen_complete">সিস্টেম বার এবং উত্তর বোতাম লুকান</string>
     <string name="answer_buttons_position" maxLength="41">উত্তর বোতামের অবস্থান</string>
     <string-array name="answer_buttons_position_labels">
         <item>শীর্ষ</item>
@@ -125,19 +125,18 @@
     <string name="tts" maxLength="41">টেক্সট টু বক্তৃতা</string>
     <string name="tts_summ">Reads out question and answer if no sound file is included</string>
     <!-- Sync -->
-    <string name="sync_fetch_missing_media" maxLength="41">Fetch media on sync</string>
+    <string name="sync_fetch_missing_media" maxLength="41">সিঙ্ক করার জন্য মিডিয়া আনুন</string>
     <string name="sync_account" maxLength="41">AnkiWeb account</string>
-    <string name="sync_account_summ_logged_out">Not logged in</string>
-    <string name="automatic_sync_choice" maxLength="41">Automatic synchronization</string>
-    <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
-        minutes ago.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
-    <string name="sync_media_never">Never</string>
-    <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="sync_account_summ_logged_out">লগ ইন করা হয়নি</string>
+    <string name="automatic_sync_choice" maxLength="41">স্বয়ংক্রিয় সিঙ্ক্রোনাইজেশন</string>
+    <string name="automatic_sync_choice_summ">শেষ সিঙ্ক যদি 10 মিনিটের বেশি আগে হয় তবে অ্যাপ শুরু/প্রস্থানে স্বয়ংক্রিয়ভাবে সিঙ্ক করুন।</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">সবসময়</string>
+    <string name="sync_media_only_unmetered">শুধুমাত্র আনমিটার সংযোগে</string>
+    <string name="sync_media_never">কখনই</string>
+    <string name="sync_status_badge" maxLength="41">সিঙ্ক্রোনাইজেশন স্থিতি প্রদর্শন করুন</string>
+    <string name="sync_status_badge_summ">যখন পরিবর্তনগুলি আপলোড করা যায় তখন সিঙ্ক আইকন পরিবর্তন করুন৷</string>
+    <string name="metered_sync_title" maxLength="41">মিটারযুক্ত সংযোগগুলিতে সিঙ্ক করার অনুমতি দিন</string>
+    <string name="metered_sync_summary">যদি অক্ষম করা হয়, আপনি একটি মিটারযুক্ত সংযোগের মাধ্যমে সিঙ্ক করার চেষ্টা করলে আপনাকে সতর্ক করা হবে৷</string>
     <string name="backup_limits_frequency">ফ্রিকোয়েন্সি</string>
     <string name="backup_limits_lifetime">চিরকাল</string>
     <string name="app_theme" maxLength="41">থিম</string>
@@ -145,8 +144,8 @@
     <string name="night_theme" maxLength="41">রাতের থিম</string>
     <string name="language" maxLength="41">ভাষা</string>
     <string name="language_system">সিস্টেম ভাষা</string>
-    <string name="notification_pref" maxLength="41">Notifications</string>
-    <string name="notification_pref_title" maxLength="41">Notify when</string>
+    <string name="notification_pref" maxLength="41">লক্ষ্য করুন</string>
+    <string name="notification_pref_title" maxLength="41">আমাকে বলুন কখন</string>
     <string name="never_notify">কখনই অবহিত করবেন না</string>
     <string name="notify_when_pending">মুলতুবি বার্তা পাওয়া যায়</string>
     <string name="notification_minimum_cards_due">%dটির বেশি কার্ড বাকি আছে</string>
@@ -168,7 +167,7 @@
     <string name="pref_show_answer_long_press_time_summary">একটি স্পর্শ নিবন্ধন করার আগে উত্তর বোতাম ন্যূনতম প্রেস সময় দেখান.</string>
     <string name="show_estimates" maxLength="41">বোতামের সময় দেখান</string>
     <string name="show_estimates_summ">উত্তর বোতামে পরবর্তী পর্যালোচনা সময় দেখান</string>
-    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons" maxLength="41">বৃহত্তর উত্তর বোতাম দেখান</string>
     <string name="show_large_answer_buttons_summ">2 সারিতে উত্তর বোতাম দেখান</string>
     <string name="show_top_bar" maxLength="41">শীর্ষ বার দেখান</string>
     <string name="show_top_bar_summary">কার্ড গণনা, উত্তর টাইমার, পতাকা এবং শীর্ষ বিএ প্রতীক দেখান</string>
@@ -176,9 +175,9 @@
     <string name="show_progress_summ">অবশিষ্ট কার্ডের সংখ্যা দেখান</string>
     <string name="show_eta" maxLength="41">ETA দেখান</string>
     <string name="show_eta_summ">বাকি সময় দেখান</string>
-    <string name="use_current" maxLength="41">Deck for new cards</string>
-    <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
-    <string name="time_limit" maxLength="41">Timebox time limit</string>
+    <string name="use_current" maxLength="41">নতুন কার্ডের জন্য ডেক</string>
+    <string name="learn_cutoff" maxLength="41">এগিয়ে সীমা শিখুন</string>
+    <string name="time_limit" maxLength="41">টাইমবক্স হল সময়সীমা</string>
     <string name="day_offset_with_description" maxLength="41">পরের দিনের শুরু</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="one">মধ্যরাতের %d ঘন্টা</item>
@@ -201,18 +200,18 @@
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">রিভিউয়ার</string>
     <string name="show_deck_title" maxLength="41">ডেক শিরোনাম দেখান</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="accessibility" maxLength="41">অ্যাক্সেসযোগ্যতা</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">PNG হিসাবে ক্লিপবোর্ড ছবি আটকান</string>
-    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
+    <string name="paste_as_png_summary">ডিফল্টরূপে আঙ্কি ডিস্কের স্থান বাঁচাতে JPG ফাইল হিসেবে ক্লিপবোর্ডে ছবি পেস্ট করে। আপনি পরিবর্তে একটি PNG চিত্র হিসাবে পেস্ট করতে এই বিকল্পটি ব্যবহার করতে পারেন৷</string>
     <string name="exit_via_double_tap_back" maxLength="41">ফিরে যেতে/প্রস্থান করতে দুবার ব্যাক টিপুন</string>
     <string name="exit_via_double_tap_back_summ">ভুলবশত রিভিউয়ার বা অ্যাপ ছেড়ে যাওয়া এড়াতে</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
-    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <string name="media_import_allow_all_files" maxLength="41">সমস্ত ফাইলকে মিডিয়া আমদানি করার অনুমতি দিন</string>
+    <string name="media_import_allow_all_files_summ">যদি অ্যান্ড্রয়েড একটি মিডিয়া ফাইল চিনতে না পারে</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title" maxLength="41">Custom sync server</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
+    <string name="custom_sync_server_title" maxLength="41">কাস্টম সিঙ্ক সার্ভার</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">ব্যবহার করা হয়নি</string>
     <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
         you may use your own server for synchronization.
         If not set, the default AnkiWeb server will be used instead.
@@ -224,34 +223,34 @@
     <string name="keyboard">কীবোর্ড</string>
     <string name="bluetooth">ব্লুটুথ</string>
     <string name="answer_buttons" maxLength="41">উত্তর বোতাম</string>
-    <string name="card" maxLength="41">Card</string>
-    <string name="note" maxLength="41">Note</string>
+    <string name="card" maxLength="41">কার্ড</string>
+    <string name="note" maxLength="41">দ্রষ্টব্য</string>
     <string name="navigation" maxLength="41">নেভিগেশন</string>
-    <string name="media" maxLength="41">Media</string>
+    <string name="media" maxLength="41">মিডিয়া</string>
     <string name="misc" maxLength="41">বিবিধ</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">ট্যাগ নির্বাচন করুন</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">সাধারণ</string>
     <string name="deck_conf_reminders" maxLength="41">অনুস্মারক</string>
-    <string name="deck_conf_cram_filter" maxLength="41">Filter</string>
-    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Search</string>
-    <string name="deck_conf_cram_limit" maxLength="41">Limit to</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reschedule</string>
-    <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">Define custom steps</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_filter" maxLength="41">ফিল্টার</string>
+    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">অনুসন্ধান</string>
+    <string name="deck_conf_cram_limit" maxLength="41">সীমিত</string>
+    <string name="deck_conf_cram_order" maxLength="41">দ্বারা নির্বাচিত কার্ড</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">পুনঃনির্ধারণ</string>
+    <string name="deck_conf_cram_reschedule_summ">এই ডেকে আমার উত্তরগুলির উপর ভিত্তি করে কার্ডগুলি পুনরায় বরাদ্দ করুন৷</string>
+    <string name="deck_conf_cram_filter_2_check">দ্বিতীয় ফিল্টার সক্রিয় করুন</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">কাস্টম পদক্ষেপ সংজ্ঞায়িত করুন</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">প্রিভিউ বিলম্ব</string>
+    <string name="deck_conf_cram_preview_delays_summ">বিলম্ব সেকেন্ডে হয়। 0 আসল ডেকে কার্ড ফেরত দেয়।</string>
     <!-- analytics options -->
-    <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
-    <string name="analytics_title" maxLength="41">Share feature usage</string>
-    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
-    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="analytics_dialog_title">AnkiDroid আরও ভাল করতে সাহায্য করুন!</string>
+    <string name="analytics_title" maxLength="41">বৈশিষ্ট্য ব্যবহার শেয়ার করুন</string>
+    <string name="analytics_summ">লোকেরা কী কী বৈশিষ্ট্য ব্যবহার করে তা দেখতে বিকাশ দলকে সাহায্য করে আপনি AnkiDroid-এ অবদান রাখতে পারেন</string>
+    <string name="note_editor_replace_newlines" maxLength="41">HTML দিয়ে নতুন লাইন প্রতিস্থাপন করুন</string>
+    <string name="note_editor_replace_newlines_summ">নোট এডিটরে, &lt;br&gt; একটি কার্ড সম্পাদনা করার সময় নতুন লাইন।</string>
+    <string name="type_in_answer_focus" maxLength="41">ফোকাস \'টাইপ উত্তর\'</string>
+    <string name="type_in_answer_focus_summ">পর্যালোচকের \'টাইপ ইন উত্তর\' ক্ষেত্রে স্বয়ংক্রিয়ভাবে ফোকাস করুন</string>
     <!-- About -->
     <string name="open_changelog">চেঞ্জলগ খুলুন</string>
     <string name="pref_cat_about_title" maxLength="41">সম্পর্কে</string>
@@ -261,17 +260,17 @@
     <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
     <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
     <!-- Controls -->
-    <string name="binding_add_gesture">Add gesture</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
-    <string name="binding_add_key">Add key</string>
-    <string name="binding_replace_key">Replace key</string>
+    <string name="binding_add_gesture">অঙ্গভঙ্গি যোগ করুন</string>
+    <string name="binding_replace_gesture">অঙ্গভঙ্গি প্রতিস্থাপন</string>
+    <string name="binding_add_key">কী যোগ করুন</string>
+    <string name="binding_replace_key">কী প্রতিস্থাপন করুন</string>
     <string name="key_picker_default_press_key">একটি কী টিপুন</string>
     <string name="binding_add_axis">জয়স্টিক/মোশন কন্ট্রোল যোগ করুন</string>
     <string name="axis_picker_move_joystick">একটি জয়স্টিক/মোশন কন্ট্রোলার সরান</string>
     <string name="user_actions" maxLength="41">ব্যবহারকারী কার্যকলাপ</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="28">User action 1</string>
-    <string name="user_action_2" maxLength="28">User action 2</string>
+    <string name="user_actions_summary" maxLength="41">পর্যালোচনা পর্দা থেকে জাভাস্ক্রিপ্ট ট্রিগার</string>
+    <string name="user_action_1" maxLength="28">ব্যবহারকারীর ক্রিয়া 1</string>
+    <string name="user_action_2" maxLength="28">ব্যবহারকারীর কর্ম 2</string>
     <string name="user_action_3" maxLength="28">ব্যবহারকারীর ক্রিয়া 3</string>
     <string name="user_action_4" maxLength="28">ব্যবহারকারীর ক্রিয়া 4</string>
     <string name="user_action_5" maxLength="28">ব্যবহারকারীর ক্রিয়া 5</string>
@@ -281,7 +280,7 @@
     <string name="user_action_9" maxLength="28">ব্যবহারকারীর ক্রিয়া 9</string>
     <string name="toggle_auto_advance" maxLength="41">স্বয়ংক্রিয় অগ্রিম টগল করুন</string>
     <!-- Select card side -->
-    <string name="card_side_selection_title">Select card side</string>
+    <string name="card_side_selection_title">কার্ডের মুখ নির্বাচন করুন</string>
     <string name="card_side_question">প্রশ্ন</string>
     <string name="card_side_answer">উত্তর</string>
     <string name="card_side_both" maxLength="28">প্রশ্ন &amp; উত্তর</string>
@@ -313,24 +312,24 @@
         <br><br>
         You can restore from a backup and export your collection in the deck list menu.
     ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">স্বয়ংক্রিয় ব্যাকআপের মধ্যে মিনিট</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">প্রতিদিনের ব্যাকআপ রাখুন</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">সাপ্তাহিক ব্যাকআপ রাখুন</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">প্রতি মাসে ব্যাকআপ নিতে হবে</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
-    <string name="pref__manage_space__screen_title">Manage space</string>
+    <string name="pref__manage_space__screen_title">স্থান পরিচালনা করুন</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Error</string>
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">ত্রুটি</string>
     <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
         <item quantity="one">%1$d file\n%2$s</item>
         <item quantity="other">%1$d files\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
-    <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">অব্যবহৃত মিডিয়া ফাইল মুছুন</string>
+    <string name="pref__delete_unused_media_files__summary">ছবি এবং অন্যান্য মিডিয়া মুছুন যা _ এর সাথে প্রিফিক্স করা হয়নি এবং কোনো নোট দ্বারা উল্লেখ করা হয়নি</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">অব্যবহৃত মিডিয়া ফাইল মুছুন</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">ব্যাকআপ মুছুন</string>
@@ -345,11 +344,11 @@
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">সবকিছু মুছে ফেলুন</string>
     <string name="pref__delete_everything__summary">সংগ্রহ, মিডিয়া, ব্যাকআপ এবং সেটিংস মুছুন</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Delete everything</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">সবকিছু মুছে ফেলুন</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">আপনি কি নিশ্চিত যে আপনি সমস্ত ডেটা মুছে ফেলতে চান? এর মধ্যে আপনার সংগ্রহ, মিডিয়া, ব্যাকআপ এবং পছন্দগুলি অন্তর্ভুক্ত রয়েছে৷\n\nদ্রষ্টব্য: এই ক্রিয়াটি উইন্ডোটি বন্ধ করবে৷</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Delete app data</string>
-    <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">অ্যাপ ডেটা মুছুন</string>
+    <string name="pref__delete_app_data__summary">সেটিংস এবং অন্যান্য অ্যাপ ডেটা মুছুন</string>
     <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">অ্যাপ ডেটা মুছুন</string>
     <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">আপনি কি অ্যাপ ডেটা মুছতে চান? এর মধ্যে সেটিংস এবং অন্যান্য অ্যাপ ডেটা অন্তর্ভুক্ত রয়েছে৷\n\nদ্রষ্টব্য: এই ক্রিয়াটি উইন্ডোটি বন্ধ করে দেবে৷</string>
     <!-- #######################################################################################
@@ -358,17 +357,17 @@
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">সংগ্রহ নেই</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">ত্রুটি</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">আনা হচ্ছে&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">গণনা করা হচ্ছে&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">সংগ্রহ বিদ্যমান নেই</string>
-    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">সিস্টেম বার লুকান</string>
     <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">তাদের কেউ না</string>
     <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">স্ট্যাটাস বার</string>
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">নেভিগেশন বার</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">সব</string>
     <string name="ignore_display_cutout" maxLength="41">ডিসপ্লে কাটউ উপেক্ষা করুন</string>
-    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
-    <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
+    <string name="hide_answer_buttons" maxLength="41">উত্তর বোতাম লুকান</string>
+    <string name="hide_hard_and_easy" maxLength="41">\'হার্ড\' এবং \'সহজ\' বোতামগুলি লুকান</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">সেটিংস খুলুন</string>
 </resources>

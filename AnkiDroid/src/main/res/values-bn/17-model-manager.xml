@@ -45,17 +45,17 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">নোটের ধরন মুছুন</string>
-    <string name="model_browser_rename" comment="Rename a note type">Rename</string>
+    <string name="model_browser_rename" comment="Rename a note type">নাম পরিবর্তন করুন</string>
     <string name="model_browser_template">কার্ডটি সম্পাদনা করুন</string>
     <!--Rename-->
-    <string name="rename_model">Rename note type</string>
+    <string name="rename_model">নোট টাইপ নাম পরিবর্তন করুন</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">ভাষার ইঙ্গিতটি %s এ সেট করুন</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">ক্ষেত্র সম্পাদনা করুন</string>
     <string name="model_field_editor_add" maxLength="28">ক্ষেত্র যোগ করুন</string>
     <string name="model_field_editor_delete">ক্ষেত্রটি মুছুন</string>
-    <string name="model_field_editor_rename">Rename field</string>
+    <string name="model_field_editor_rename">ক্ষেত্রের নাম পরিবর্তন করুন</string>
     <string name="model_field_editor_language_hint">কীবোর্ড ভাষার ইঙ্গিত সেট করুন</string>
     <string name="model_field_editor_reposition_menu">Reposition field</string>
     <string name="model_field_editor_reposition">Reposition field (enter a value %1$d–%2$d)</string>
@@ -64,11 +64,11 @@
     <string name="model_field_editor_sort_field">এই ক্ষেত্র অনুসারে সাজান</string>
     <!--Warnings-->
     <string name="model_delete_warning">আপনি এই নোট টাইপ মুছে ফেলার বিষয়ে নিশ্চিত?</string>
-    <string name="field_delete_warning">Are you sure you wish to delete this field?</string>
+    <string name="field_delete_warning">আপনি এই ক্ষেত্র মুছে ফেলার বিষয়ে নিশ্চিত?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">যোগ করুন: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">Clone: %1$s </string>
+    <string name="model_browser_add_clone">ক্লোন: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
     <string name="card_template_browser_appearance_question_format">প্রশ্ন বিন্যাস</string>

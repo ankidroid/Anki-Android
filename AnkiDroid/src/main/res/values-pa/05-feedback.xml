@@ -47,10 +47,10 @@
     <!-- Feedback.java -->
     <string name="empty_string"></string>
     <string name="error_reporting_choice" maxLength="41">ਗੜਬੜ ਰਿਪੋਰਟਿੰਗ ਮੋਡ</string>
-    <string name="feedback_disclaimer">Disclaimer: We don’t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occurring.</string>
+    <string name="feedback_disclaimer">ਬੇਦਾਅਵਾ: ਅਸੀਂ ਕੋਈ ਵੀ ਨਿੱਜੀ ਜਾਣਕਾਰੀ ਇਕੱਠੀ ਨਹੀਂ ਕਰਦੇ ਜਿਵੇਂ ਕਿ ਤੁਹਾਡਾ ਈਮੇਲ ਪਤਾ, ਫ਼ੋਨ ਨੰਬਰ, ਜਾਂ ਤੁਹਾਡੇ ਫ਼ੋਨ IMEI। ਅਸੀਂ ਤੁਹਾਡੀ ਡਿਵਾਈਸ ਬਾਰੇ ਕੁਝ ਖਾਸ ਜਾਣਕਾਰੀ ਇਕੱਠੀ ਕਰਦੇ ਹਾਂ ਜਿਵੇਂ ਕਿ ਨਿਰਮਾਤਾ, ਮਾਡਲ ਅਤੇ ਐਂਡਰੌਇਡ ਦਾ ਸੰਸਕਰਣ, ਨਾਲ ਹੀ ਰਿਪੋਰਟ ਕੀਤੀਆਂ ਗਈਆਂ ਤਰੁੱਟੀਆਂ ਦੀ ਪ੍ਰਕਿਰਤੀ ਅਤੇ ਉਹਨਾਂ ਨੂੰ ਵਾਪਰਨ ਵੱਲ ਲੈ ਜਾਣ ਵਾਲੇ ਕਦਮ।</string>
     <string name="feedback_title">AnkiDroid ਫੀਡਬੈਕ</string>
     <string name="feedback_default_text">ਤੁਹਾਡੇ ਦੁਆਰਾ ਰਿਪੋਰਟ ਕੀਤੀ ਜਾ ਰਹੀ ਕਿਸੇ ਵੀ ਤਰੁਟੀ ਦੀ ਪ੍ਰਕਿਰਤੀ ਬਾਰੇ ਆਪਣਾ ਫੀਡਬੈਕ ਜਾਂ ਜਾਣਕਾਰੀ ਦਰਜ ਕਰੋ।</string>
-    <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
+    <string name="feedback_auto_toast_text">AnkiDroid ਨੂੰ ਇੱਕ ਸਮੱਸਿਆ ਆਈ ਹੈ; ਡਿਵੈਲਪਰਾਂ ਨੂੰ ਰਿਪੋਰਟ ਭੇਜੀ ਜਾ ਰਹੀ ਹੈ&#8230;</string>
     <string name="feedback_for_manual_toast_text">ਡਿਵੈਲਪਰਾਂ ਲਈ ਇੱਕ ਤਰੁੱਟੀ ਰਿਪੋਰਟ ਤਿਆਰ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ&#8230;</string>
     <string name="feedback_copy_debug">ਡੀਬੱਗ ਜਾਣਕਾਰੀ ਕਾਪੀ ਕਰੋ</string>
     <string name="feedback_report">ਰਿਪੋਰਟ</string>

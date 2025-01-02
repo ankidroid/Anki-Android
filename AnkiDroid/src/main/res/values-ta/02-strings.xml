@@ -87,8 +87,8 @@
         <item quantity="one">+%d புதைக்கப்பட்டது</item>
         <item quantity="other">+%d புதைக்கப்பட்டது</item>
     </plurals>
-    <string name="studyoptions_total_new_label">Total new cards</string>
-    <string name="studyoptions_total_label">Total cards</string>
+    <string name="studyoptions_total_new_label">மொத்த புதிய அட்டைகள்</string>
+    <string name="studyoptions_total_label">மொத்த அட்டைகள்</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">குறிப்பைத் திருத்தவும்</string>
     <string name="discard">நிராகரி</string>
@@ -354,5 +354,5 @@
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">உலாவியின் தோற்றத்தைத் திருத்தவும்</string>
     <string name="show_shortcuts_message">விசைப்பலகை குறுக்குவழிகளைக் காட்ட Alt+K ஐ அழுத்தவும்</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">இந்த நோட்டிப்பில் பயனர் செயல் %s அமைக்கப்படவில்லை. தயவுசெய்து அதை உள்ளமைக்கவும்</string>
-    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
+    <string name="directory_inaccessible_info">அணுகலை எவ்வாறு மீட்டெடுப்பது என்பது பற்றி இங்கே %s இல் மேலும் அறிக அல்லது சேகரிப்பு கோப்புறையைப் புதுப்பிக்க அமைப்புகளுக்குச் செல்லவும்.</string>
 </resources>

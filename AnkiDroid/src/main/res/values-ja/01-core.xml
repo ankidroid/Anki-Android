@@ -94,7 +94,7 @@
     <string name="menu_bury_note" maxLength="28">ノートを今日は非表示</string>
     <string name="menu_suspend_card" maxLength="28">カードを休止</string>
     <string name="menu_suspend_note" maxLength="28">ノートを休止</string>
-    <string name="menu_bury" maxLength="28">明日に延期</string>
+    <string name="menu_bury" maxLength="28">今日は非表示</string>
     <string name="menu_suspend" maxLength="28">休止</string>
     <string name="menu_delete_note" maxLength="28">ノートを削除</string>
     <string name="menu_flag" maxLength="41">フラグ</string>

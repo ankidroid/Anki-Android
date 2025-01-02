@@ -49,12 +49,12 @@
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Удалить колоду</string>
     <string name="delete_deck_title">Удалить колоду?</string>
     <plurals name="delete_deck_message">
-        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
-        <item quantity="few">Delete all cards in %1$s? It contains %2$d cards</item>
-        <item quantity="many">Delete all cards in %1$s? It contains %2$d cards</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="one">Удалить все карточки в %1$s? В ней %2$d карточка</item>
+        <item quantity="few">Удалить все карточки в %1$s? В ней %2$d карточки</item>
+        <item quantity="many">Удалить все карточки в %1$s? В ней %2$d карточек</item>
+        <item quantity="other">Удалить все карточки в %1$s? В ней %2$d карточек</item>
     </plurals>
-    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
+    <string name="delete_cram_deck_message">Удалить отфильтрованную колоду %s и отправить все карточки обратно в оригинальные колоды?</string>
     <string name="no_tts_available_message">Синтез речи недоступен</string>
     <string name="tts_no_tts">Не произносить</string>
     <string name="unused_strings">\n\nНеиспользуемые файлы:\n</string>
@@ -110,7 +110,7 @@
     <string name="dialog_positive_repair">Исправить</string>
     <string name="dialog_positive_replace">Заменить</string>
     <string name="dialog_collection_path_not_dir">Указанный путь не является допустимой папкой</string>
-    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate">Предоставленный текст не преобразуется в допустимый X509 сертификат PEM</string>
     <string name="dialog_invalid_custom_certificate_title">Ошибка при обработке сертификата</string>
     <string name="dialog_updated_custom_certificate">Сертификат обновлён</string>
     <!-- Media checking -->
@@ -216,7 +216,7 @@
         <item quantity="many">Автоматическая синхронизация может быть запущена через %d секунд</item>
         <item quantity="other">Автоматическая синхронизация может быть запущена через %d секунд</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
+    <string name="metered_sync_data_warning">Ваш интернет провайдер может взимать плату за использование данных</string>
     <string name="deck_picker_new">Количество новых карточек на сегодня в этой колоде.</string>
     <string name="deck_picker_rev">Количество карточек на сегодня в колоде.</string>
     <string name="deck_picker_lrn">Количество изучаемых карточек в колоде.</string>
@@ -242,8 +242,8 @@
     <string name="dismiss_backup_warning_upgrade">        В связи с изменениями конфиденциальности Android, после удалении приложения ваши данные и автоматизированные резервные копии будут недоступны
     </string>
     <string name="deck_already_exists">Колода уже существует</string>
-    <string name="empty_deck_name">Deck name cannot be empty</string>
-    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <string name="empty_deck_name">Название колоды не может быть пустым</string>
+    <string name="create_deck_numeric_hint">Если у вас возникли проблемы с сортировкой колоды (например, \'10\' появляется перед \'2\'), замените \'2\' на \'02\'</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Задать то же значение интервалу</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
@@ -269,19 +269,19 @@
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">До</string>
     <!-- Instant Note Editor -->
     <string name="cloze_note_required">Нужен тип записи с пропусками</string>
-    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="cloze_not_found_message">Записей с пропусками не найдено, откройте редактор записей или попробуйте снова после добавления карточки с пропусками. </string>
     <string name="open">Открыть</string>
-    <string name="change_cloze_number">Change cloze number</string>
-    <string name="cloze_number">Cloze number:</string>
-    <string name="change_editor_mode">Change editor mode</string>
+    <string name="change_cloze_number">Количество пропусков</string>
+    <string name="cloze_number">Количество пропусков:</string>
+    <string name="change_editor_mode">Режим редактирования</string>
     <string name="open_note_editor">Открыть редактор записей</string>
-    <string name="change_cloze_mode">Change cloze mode</string>
+    <string name="change_cloze_mode">Режим пропусков</string>
     <!-- Outdated WebView dialog -->
-    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
-    <string name="compress">Compress</string>
+    <string name="webview_update_message">Системный WebView устарел. Некоторые функции не будут работать корректно. Пожалуйста, обновите его.\n\nУстановленная версия: %1$d\nМинимальная требуемая версия: %2$d</string>
+    <string name="compress">Сжать</string>
     <!-- Tts playback error dialog -->
-    <string name="tts_error_dialog_title">Language not supported</string>
-    <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
-    <string name="tts_error_dialog_change_button_text">Change engine</string>
-    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
+    <string name="tts_error_dialog_title">Язык не поддерживается</string>
+    <string name="tts_error_dialog_reason_text">TTS движок <b>%1$s</b> не поддерживает язык: <b>%2$s</b></string>
+    <string name="tts_error_dialog_change_button_text">Изменить движок</string>
+    <string name="tts_error_dialog_supported_voices_button_text">Настройки голоса</string>
 </resources>

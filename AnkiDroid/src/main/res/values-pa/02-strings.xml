@@ -73,9 +73,9 @@
     <string name="leech_suspend_notification">ਕਾਰਡ ਨੂੰ ਲੀਚ ਕੀਤੇ ਅਤੇ ਮੁਅੱਤਲ ਵਜੋਂ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਗਿਆ ਸੀ</string>
     <string name="leech_notification">ਲੀਚ ਵਜੋਂ ਚਿੰਨ੍ਹਿਤ ਕਾਰਡ</string>
     <string name="webview_crash_unknown">Unknown error</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
+    <string name="webview_crash_unknwon_detailed">ਇਹ WebView ਵਿੱਚ ਇੱਕ ਅੰਦਰੂਨੀ ਗੜਬੜ ਕਾਰਨ ਹੋਇਆ ਸੀ</string>
     <string name="webview_crash_oom">ਯਾਦਦਾਸ਼ਤ ਤੋਂ ਬਾਹਰ</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
+    <string name="webview_crash_oom_details">WebView ਸਿਸਟਮ ਦੁਆਰਾ ਬੰਦ ਕੀਤਾ ਗਿਆ ਸੀ। ਇਹ ਆਮ ਤੌਰ \'ਤੇ ਉਦੋਂ ਵਾਪਰਦਾ ਹੈ ਜਦੋਂ ਐਪਲੀਕੇਸ਼ਨ ਦੀ ਮੈਮੋਰੀ ਖਤਮ ਹੋ ਜਾਂਦੀ ਹੈ, ਅਕਸਰ ਵੱਡੇ ਫੌਂਟਾਂ ਜਾਂ ਮੀਡੀਆ ਦੇ ਕਾਰਨ।</string>
     <string name="webview_crash_nonfatal">WebView ਰੈਂਡਰਰ ਕ੍ਰੈਸ਼ ਹੋ ਗਿਆ। ਕਾਰਨ: %s</string>
     <string name="webview_crash_fatal">ਘਾਤਕ ਗੜਬੜ: WebView ਰੈਂਡਰਰ ਕ੍ਰੈਸ਼ ਹੋ ਗਿਆ। ਕਾਰਨ: %s</string>
     <string name="webview_crash_loop_dialog_title">ਸਿਸਟਮ WebView ਰੈਂਡਰਿੰਗ ਅਸਫਲਤਾ</string>
@@ -84,16 +84,16 @@
     <!-- Custom study options -->
     <string name="custom_study_limit_tags">Limit to particular tags</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="one">+%d ਦਫ਼ਨਾਇਆ ਗਿਆ</item>
+        <item quantity="other">+%d ਦਫ਼ਨਾਇਆ ਗਿਆ</item>
     </plurals>
-    <string name="studyoptions_total_new_label">Total new cards</string>
-    <string name="studyoptions_total_label">Total cards</string>
+    <string name="studyoptions_total_new_label">ਕੁੱਲ ਨਵੇਂ ਕਾਰਡ</string>
+    <string name="studyoptions_total_label">ਕੁੱਲ ਕਾਰਡ</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">ਨੋਟਸ ਦਾ ਸੰਪਾਦਨ ਕਰੋ</string>
-    <string name="discard">Discard</string>
+    <string name="discard">ਰੱਦ ਕਰੋ</string>
     <string name="note_editor_no_cards_created">ਕੋਈ ਕਾਰਡ ਨਹੀਂ ਬਣਾਏ ਗਏ ਹਨ। ਕਿਰਪਾ ਕਰਕੇ ਹੋਰ ਖੇਤਰ ਭਰੋ</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
+    <string name="note_editor_no_cards_created_all_fields">ਮੌਜੂਦਾ ਨੋਟ ਕਿਸਮ ਨੇ ਇੱਕ ਕਾਰਡ ਨਹੀਂ ਬਣਾਇਆ ਹੈ।\nਕਿਰਪਾ ਕਰਕੇ ਨੋਟ ਦੀ ਕੋਈ ਹੋਰ ਕਿਸਮ ਚੁਣੋ, ਜਾਂ \'ਕਾਰਡ\' \'ਤੇ ਕਲਿੱਕ ਕਰੋ ਅਤੇ ਇੱਕ ਫੀਲਡ ਬਦਲ ਸ਼ਾਮਲ ਕਰੋ।</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">ਨੋਟ ਸੰਭਾਲ ਰਿਹਾ ਹੈ</string>
     <string name="saving_model">ਨੋਟ ਦੀ ਕਿਸਮ ਸੁਰੱਖਿਅਤ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ</string>
@@ -165,7 +165,7 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ਅਧਿਐਨ ਦੇ ਵਿਕਲਪ</string>
     <string name="select_tts" maxLength="28">TTS ਭਾਸ਼ਾ ਸੈੱਟ ਕਰੋ</string>
     <string name="custom_study" maxLength="28">ਕਸਟਮ ਅਧਿਐਨ</string>
-    <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
+    <string name="dyn_deck_desc">ਇਹ ਆਮ ਅਨੁਸੂਚੀ ਤੋਂ ਬਾਹਰ ਅਧਿਐਨ ਕਰਨ ਲਈ ਇੱਕ ਵਿਸ਼ੇਸ਼ ਡੈੱਕ ਹੈ। ਤੁਹਾਡੇ ਦੁਆਰਾ ਉਹਨਾਂ ਦੀ ਸਮੀਖਿਆ ਕਰਨ ਤੋਂ ਬਾਅਦ ਕਾਰਡ ਆਪਣੇ ਆਪ ਉਹਨਾਂ ਦੇ ਅਸਲ ਡੈੱਕ \'ਤੇ ਵਾਪਸ ਆ ਜਾਣਗੇ। ਡੈੱਕ ਸੂਚੀ ਵਿੱਚੋਂ ਇਸ ਡੈੱਕ ਨੂੰ ਮਿਟਾਉਣ ਨਾਲ ਬਾਕੀ ਸਾਰੇ ਕਾਰਡ ਉਹਨਾਂ ਦੇ ਅਸਲ ਡੈੱਕ \'ਤੇ ਵਾਪਸ ਆ ਜਾਣਗੇ।</string>
     <string name="steps_error">ਕਦਮਾਂ ਦੀ ਗਿਣਤੀ 0 ਤੋਂ ਵੱਧ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ</string>
     <string name="steps_min_error">ਘੱਟੋ-ਘੱਟ ਇੱਕ ਕਦਮ ਦੀ ਲੋੜ ਹੈ</string>
     <string name="tag_editor_add_feedback">\"%1$s\" ਨੂੰ ਜੋੜਨ ਦੀ ਪੁਸ਼ਟੀ ਕਰਨ ਲਈ \"%2$s\" ਨੂੰ ਛੋਹਵੋ।</string>
@@ -198,10 +198,10 @@
     <string name="title_whiteboard_editor" maxLength="28">ਵ੍ਹਾਈਟਬੋਰਡ ਸੰਪਾਦਕ</string>
     <string name="user_is_a_robot">ਖੋਜਿਆ ਆਟੋਮੈਟਿਕ ਟੈਸਟ. ਜੇਕਰ ਤੁਸੀਂ ਮਨੁੱਖ ਹੋ, ਤਾਂ AnkiDroid ਸਹਾਇਤਾ ਨਾਲ ਸੰਪਰਕ ਕਰੋ</string>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
+    <string name="api_version_developer_contact">ਇਹ ਕਾਰਡ ਅਸਮਰਥਿਤ AnkiDroid ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਦੀ ਵਰਤੋਂ ਕਰਦਾ ਹੈ। ਡਿਵੈਲਪਰ %1$s ਨਾਲ ਸੰਪਰਕ ਕਰੋ, ਜਾਂ ਵਿਕੀ ਦੇਖੋ। %2$s</string>
     <string name="invalid_json_data">ਕਾਰਡ ਨੇ ਅਵੈਧ ਡੇਟਾ ਪ੍ਰਦਾਨ ਕੀਤਾ। %s</string>
     <string name="valid_js_api_version">ਅਵੈਧ AnkiDroid JS API ਸੰਸਕਰਣ। ਡਿਵੈਲਪਰ %s ਨਾਲ ਸੰਪਰਕ ਕਰੋ, ਜਾਂ ਵਿਕੀ ਵੇਖੋ</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
+    <string name="update_js_api_version">AnkiDroid JS API ਅੱਪਡੇਟ ਉਪਲਬਧ ਹੈ। ਡਿਵੈਲਪਰ %s ਨਾਲ ਸੰਪਰਕ ਕਰੋ, ਜਾਂ ਵਿਕੀ ਵੇਖੋ</string>
     <string name="reviewer_invalid_api_version_visit_documentation">ਦੇਖੋ</string>
     <string name="anki_js_error_code">(ਗਲਤੀ ਕੋਡ: %d)</string>
     <!-- About AnkiDroid screen -->
@@ -294,7 +294,7 @@
     <string name="app_not_initialized_new">AnkiDroid ਨੂੰ ਅਜੇ ਲਾਂਚ ਨਹੀਂ ਕੀਤਾ ਗਿਆ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ AnkiDroid ਖੋਲ੍ਹੋ ਅਤੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
     <string name="already_logged_in">ਪਹਿਲਾਂ ਹੀ ਲੌਗ ਇਨ ਹੈ</string>
     <!-- Deck Creation -->
-    <string name="deck_created">Deck created</string>
+    <string name="deck_created">ਡੇਕ ਬਣਾਇਆ ਗਿਆ ਸੀ</string>
     <string name="deck_renamed">ਡੇਕ ਦਾ ਨਾਮ ਬਦਲਿਆ ਗਿਆ</string>
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">ਡੈੱਕ ਮਿਟਾਇਆ ਗਿਆ। ਕਿਰਪਾ ਕਰਕੇ ਸ਼ਾਰਟਕੱਟ ਹਟਾਓ</string>
@@ -303,10 +303,10 @@
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ਨੋਟਸ</string>
     <string name="toggle_cards_notes">ਕਾਰਡ/ਨੋਟਸ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
     <string name="toggle_browser_mode_help">ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਕਾਰਡ ਜਾਂ ਨੋਟ ਦਿਖਾਉਣ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="truncate_content_help">ਸਮੱਗਰੀ ਦੀਆਂ ਸਿਰਫ਼ ਪਹਿਲੀਆਂ 3 ਲਾਈਨਾਂ ਦਿਖਾਉਣ ਲਈ ਬ੍ਰਾਊਜ਼ਰ ਦੀ ਹਰੇਕ ਕਤਾਰ ਦੀ ਉਚਾਈ ਨੂੰ ਛੋਟਾ ਕਰੋ</string>
     <string name="browser_options_dialog_heading">ਬ੍ਰਾਊਜ਼ਰ ਵਿਕਲਪ</string>
     <string name="audio_saved">ਰਿਕਾਰਡਿੰਗ ਸੁਰੱਖਿਅਤ ਕੀਤੀ ਗਈ</string>
-    <string name="deleting_selected_notes">Deleting selected notes</string>
+    <string name="deleting_selected_notes">ਚੁਣੇ ਗਏ ਨੋਟਸ ਮਿਟਾਓ</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">ਸੁਣਨ ਲਈ ਇੱਕ ਅਵਾਜ਼ \'ਤੇ ਟੈਪ ਕਰੋ</string>
     <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">ਅਵਾਜ਼ ਵਰਤਣ ਤੋਂ ਪਹਿਲਾਂ ਇੰਸਟਾਲ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ</string>
     <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">ਕਿਸੇ ਵੀ ਤਰ੍ਹਾਂ ਵਰਤੋ</string>
@@ -320,8 +320,8 @@
     <string name="failed_to_copy">ਕਾਪੀ ਕਰਨਾ ਅਸਫਲ ਰਿਹਾ</string>
     <string name="card_browser_unavailable_when_notes_mode">\'ਨੋਟਸ\' ਮੋਡ ਵਿੱਚ ਉਪਲਬਧ ਨਹੀਂ ਹੈ</string>
     <plurals name="unbury_cards_feedback">
-        <item quantity="one">%d card unburied</item>
-        <item quantity="other">%d cards unburied</item>
+        <item quantity="one">%d ਕਾਰਡ ਹਸਤਾਖਰਿਤ ਨਹੀਂ ਕੀਤਾ ਗਿਆ</item>
+        <item quantity="other">%d ਕਾਰਡ ਅਣਦਫਨ ਕੀਤੇ ਗਏ</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Reposition</string>
     <string name="start_recording">ਰਿਕਾਰਡ</string>
@@ -330,23 +330,23 @@
     <string name="next_recording">ਅਗਲਾ</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">ਕਾਰਡ ਦੀ ਕਿਸਮ ਨੂੰ ਮਿਟਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ</string>
-    <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
+    <string name="orphan_note_message">ਇਸ ਕਾਰਡ ਦੀ ਕਿਸਮ ਨੂੰ ਮਿਟਾਉਣ ਨਾਲ ਕੁਝ ਨੋਟ ਬਿਨਾਂ ਕਿਸੇ ਕਾਰਡ ਦੇ ਰਹਿ ਜਾਣਗੇ।</string>
     <string name="voice_not_supported">ਵੌਇਸ ਸਮਰਥਿਤ ਨਹੀਂ ਹੈ। ਕੋਈ ਹੋਰ ਅਜ਼ਮਾਓ ਜਾਂ ਇੱਕ ਵੌਇਸ ਇੰਜਣ ਸਥਾਪਤ ਕਰੋ।</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
-    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
-    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
-    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
-    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
-    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
-    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
-    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
-    <string name="show_shortcuts_message">Press Alt+K to show keyboard shortcuts</string>
-    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
-    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
+    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">ਕੀਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਡਾਇਲਾਗ ਦਿਖਾਓ</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">ਡੈੱਕ ਚੋਣਕਾਰ</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">ਅਪ੍ਰਮਾਣਿਤ ਡੇਕ ਮਿਟਾਓ</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">ਨੋਟ ਸੰਪਾਦਕ</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">ਡੇਕ ਦੀ ਚੋਣ ਕਰੋ</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">ਨੋਟ ਦੀ ਕਿਸਮ ਚੁਣੋ</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">ਟੈਗ ਸੰਪਾਦਕ</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">ਕਾਰਡ ਟੈਮਪਲੇਟ ਸੰਪਾਦਕ</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">ਸਾਹਮਣੇ ਵਾਲੇ ਟੈਂਪਲੇਟ ਨੂੰ ਸੰਪਾਦਿਤ ਕਰੋ</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">ਪਿਛਲੇ ਟੈਂਪਲੇਟ ਨੂੰ ਸੰਪਾਦਿਤ ਕਰੋ</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">ਸਟਾਈਲ ਦਾ ਸੰਪਾਦਨ ਕਰੋ</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">ਟੈਂਪਲੇਟ ਨੂੰ ਮਾਰਕਡਾਊਨ ਵਜੋਂ ਕਾਪੀ ਕਰੋ</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">ਬ੍ਰਾਊਜ਼ਰ ਦੀ ਦਿੱਖ ਨੂੰ ਸੰਪਾਦਿਤ ਕਰੋ</string>
+    <string name="show_shortcuts_message">ਕੀਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਦਿਖਾਉਣ ਲਈ Alt+K ਦਬਾਓ</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">ਇਸ ਨੋਟ ਕਿਸਮ ਵਿੱਚ ਉਪਭੋਗਤਾ ਕਾਰਵਾਈ %s ਸੈੱਟ ਨਹੀਂ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਇਸਨੂੰ ਕੌਂਫਿਗਰ ਕਰੋ</string>
+    <string name="directory_inaccessible_info">ਇੱਥੇ %s ਪਹੁੰਚ ਨੂੰ ਕਿਵੇਂ ਬਹਾਲ ਕਰਨਾ ਹੈ ਬਾਰੇ ਹੋਰ ਜਾਣੋ ਜਾਂ ਸੰਗ੍ਰਹਿ ਫੋਲਡਰ ਨੂੰ ਅੱਪਡੇਟ ਕਰਨ ਲਈ ਸੈਟਿੰਗਾਂ \'ਤੇ ਜਾਓ।</string>
 </resources>

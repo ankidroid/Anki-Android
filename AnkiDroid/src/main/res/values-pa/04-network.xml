@@ -66,10 +66,10 @@
     <string name="lost_mail_instructions">ਈਮੇਲ ਭੁੱਲ ਗਏ ਹੋ?</string>
     <string name="sign_in">ਸਾਈਨ ਇਨ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Options for XXX</string>
-    <string name="sync_title">Synchronization</string>
+    <string name="deckpreferences_title">XXX ਲਈ ਵਿਕਲਪ</string>
+    <string name="sync_title">ਸਮਕਾਲੀਕਰਨ</string>
     <string name="sync_log_uploading_message">ਸਥਾਨਕ ਤੋਂ ਪੂਰਾ ਸਿੰਕ</string>
-    <string name="sync_database_acknowledge">Collection synchronized</string>
+    <string name="sync_database_acknowledge">ਸਮਕਾਲੀ ਸੰਗ੍ਰਹਿ</string>
     <string name="col_synced_media_in_background">ਸੰਗ੍ਰਹਿ ਸਿੰਕ ਕੀਤਾ ਗਿਆ। ਮੀਡੀਆ ਨੂੰ ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਸਿੰਕ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ।</string>
     <string name="sync_corrupt_database">ਤੁਹਾਡਾ ਡਾਟਾਬੇਸ ਭ੍ਰਿਸ਼ਟ ਹੈ। ਦੁਬਾਰਾ ਸਿੰਕ ਕਰਨ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਕਿਰਪਾ ਕਰਕੇ ਇਸਨੂੰ ਠੀਕ ਕਰੋ।\n\nਆਪਣੇ ਡੇਟਾਬੇਸ ਦੀ ਮੁਰੰਮਤ ਕਰਨ ਬਾਰੇ ਜਾਣਕਾਰੀ ਲਈ %s ਦੇਖੋ।</string>
     <!-- Please run ‘Check database’ before syncing -->
