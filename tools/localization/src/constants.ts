@@ -161,6 +161,7 @@ export const LANGUAGES = [
     "tr",
     "ts",
     "tt-RU",
+    "ug",
     "uk",
     "ur-PK",
     "uz",
