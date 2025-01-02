@@ -68,7 +68,7 @@
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Optionen für XXX</string>
     <string name="sync_title">Synchronisation</string>
-    <string name="sync_log_uploading_message">Vollsynchronisation des lokalen Stapels</string>
+    <string name="sync_log_uploading_message">Einweg-Synchronisierung des lokalen Stapels</string>
     <string name="sync_database_acknowledge">Sammlung synchronisiert</string>
     <string name="col_synced_media_in_background">Sammlung synchronisiert. Medien werden im Hintergrund synchronisiert.</string>
     <string name="sync_corrupt_database">Ihre Datenbank ist beschädigt. Bitte reparieren Sie sie vor einem erneuten Synchronisationsversuch.\n\nBesuchen Sie %s für Informationen zum Reparieren Ihrer Datenbank.</string>
@@ -77,7 +77,7 @@
     <string name="sync_sanity_remote">Remote</string>
     <string name="one_way_sync_title" maxLength="41">Einweg-Synchronisierung</string>
     <string name="one_way_sync_confirmation">Einweg-Synchronisierung angefordert</string>
-    <string name="full_sync_confirmation">Diese Änderung erfordert das Hochladen der gesamten Datenbank beim nächsten Synchronisieren Ihrer Sammlung. Lernfortschritte und andere noch nicht synchronisierte Änderungen auf anderen Geräten werden dabei verloren gehen. Fortfahren?</string>
+    <string name="full_sync_confirmation">Diese Änderungen erfordern eine Einweg-Synchronisierung. Änderungen, die auf einem anderen Gerät vorgenommen, aber noch nicht synchronisiert wurden, gehen dabei verloren. Möchten Sie fortfahren?</string>
     <string name="full_sync_confirmation_upgrade">Wegen eines Fehlers in einer früheren Version von AnkiDroid sollten Sie eine Vollsynchronisation erzwingen.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_one_way_sync">Synchronisierung (Einweg)</string>

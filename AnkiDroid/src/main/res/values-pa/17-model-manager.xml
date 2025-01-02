@@ -70,7 +70,7 @@
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">ਕਲੋਨ: %1$s</string>
     <!--Browser Appearance-->
-    <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
+    <string name="card_template_browser_appearance_summary">ਉਹ ਟੈਂਪਲੇਟ ਦਾਖਲ ਕਰੋ ਜਿਸਦੀ ਵਰਤੋਂ ਕਾਰਡ ਬ੍ਰਾਊਜ਼ਰ ਤੁਹਾਡੇ ਕਾਰਡਾਂ ਨੂੰ ਪ੍ਰਦਰਸ਼ਿਤ ਕਰਨ ਲਈ ਕਰੇਗਾ। ਹੋਰ ਸੰਖੇਪ ਜਵਾਬ ਦਿਖਾਉਣ ਲਈ ਇਸਦੀ ਵਰਤੋਂ ਕਰੋ।\n\n“{{Country}} ਦੀ ਰਾਜਧਾਨੀ ਹੈ:”\n\n“ਰਾਜਧਾਨੀ: {{Country}}” ਵਿੱਚ ਸਮੇਟਿਆ ਜਾ ਸਕਦਾ ਹੈ।</string>
     <string name="card_template_browser_appearance_question_format">ਪ੍ਰਸ਼ਨ ਫਾਰਮੈਟ</string>
     <string name="card_template_browser_appearance_answer_format">ਜਵਾਬ ਫਾਰਮੈਟ</string>
     <string name="card_template_browser_appearance_restore_default_dialog">ਕੀ ਪੂਰਵ-ਨਿਰਧਾਰਤ ਮੁੱਲਾਂ ਨੂੰ ਰੀਸਟੋਰ ਕਰਨਾ ਹੈ?</string>

@@ -84,11 +84,11 @@
     <!-- Custom study options -->
     <string name="custom_study_limit_tags">নির্দিষ্ট ট্যাগে সীমিতকরণ</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="one">+%d সমাহিত করা হয়েছে</item>
+        <item quantity="other">+%d সমাহিত করা হয়েছে</item>
     </plurals>
-    <string name="studyoptions_total_new_label">Total new cards</string>
-    <string name="studyoptions_total_label">Total cards</string>
+    <string name="studyoptions_total_new_label">মোট নতুন কার্ড</string>
+    <string name="studyoptions_total_label">মোট কার্ড</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">নোট সম্পাদন</string>
     <string name="discard">বাতিল করুন</string>
@@ -120,7 +120,7 @@
     <string name="card_editor_reset_card" maxLength="28">অগ্রগতি পুনঃস্থাপন কর</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">সময় পুনঃনির্ধারণ</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">একটু দেখাও</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Copy as Markdown</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">মার্কডাউন হিসাবে অনুলিপি করুন</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d -র মধ্যে %1$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">পুনঃনামকরণ</string>
     <string name="checks_action" maxLength="28">চেক করুন</string>
@@ -131,7 +131,7 @@
     <string name="delete_deck">ডেক মুছছি&#8230;</string>
     <string name="info_rate">আনকি-ড্রয়েডকে রেটিং দিন</string>
     <string name="import_title">আমদানি হচ্ছে</string>
-    <string name="import_preparing_file">Preparing file for import&#8230;</string>
+    <string name="import_preparing_file">আমদানির জন্য ফাইল প্রস্তুত করা হচ্ছে&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">যোগ কর</string>
     <string name="import_message_replace_confirm">এর ফলে আপনার বর্তমান সংগ্রহ মুছে যাবে এবং %s ফাইলের ডেটা দ্বারা প্রতিস্থাপিত হবে।</string>
     <string name="import_dialog_message_add">\"%s\"কে সংগ্রহে যোগ করবেন? অনেক সময় প্রয়োজন হতে পারে</string>
@@ -139,9 +139,9 @@
     <string name="import_title_error" comment="Title of error dialog">ত্রুটি</string>
     <string name="import_error_handle_exception">ফাইল আমদানিতে ব্যর্থ\n\n%s</string>
     <string name="import_error_not_apkg_extension"> \"%s\" ফাইলে .apkg বা .colpkg এক্সটেনশন নেই</string>
-    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
-    <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
+    <string name="import_error_load_imported_database">Anki ডাটাবেস (.anki2) প্রতিস্থাপন এখনও সমর্থিত নয়। প্রতিস্থাপন নির্দেশাবলীর জন্য ম্যানুয়াল দেখুন।</string>
+    <string name="import_error_content_provider">নির্বাচিত ফাইলটি AnkiDroid দ্বারা স্বয়ংক্রিয়ভাবে আমদানি করা যায়নি। আনকি ফাইলটি ম্যানুয়ালি কিভাবে আমদানি করতে হয় তার জন্য অনুগ্রহ করে ব্যবহারকারীর ম্যানুয়ালটি পড়ুন: \n%s</string>
+    <string name="import_error_copy_to_cache">ফাইল ক্যাশে করতে ব্যর্থ হয়েছে (সম্ভবত স্টোরেজ স্পেস নেই)</string>
     <string name="import_interrupted">আমদানি ব্যাধিত: AnkiDroid বন্ধ করা হয়েছে</string>
     <string name="export_preparation_in_progress">রপ্তানি প্রস্তুত করা হচ্ছে&#8230;</string>
     <string name="export_ready_title">রপ্তানি প্রস্তুতি সমাপ্ত</string>
@@ -157,17 +157,17 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_choice_share">Share</string>
-    <string name="export_choice_save_to">Save to</string>
-    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Options</string>
-    <string name="menu__deck_options" maxLength="28">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
-    <string name="select_tts" maxLength="28">Set TTS language</string>
+    <string name="export_choice_share">শেয়ার করুন</string>
+    <string name="export_choice_save_to">সংরক্ষণ</string>
+    <string name="export_saving_exported_collection">রপ্তানি করা ফাইল সংরক্ষণ করা হচ্ছে</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">বিকল্প</string>
+    <string name="menu__deck_options" maxLength="28">ডেক বিকল্প</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">অধ্যয়নের বিকল্প</string>
+    <string name="select_tts" maxLength="28">TTS ভাষা সেট করুন</string>
     <string name="custom_study" maxLength="28">কাস্টম অধ্যয়ন </string>
     <string name="dyn_deck_desc">স্বাভাবিক সময়সূচীর বাইরে অধ্যয়ন করার জন্য এটি একটি বিশেষ ডেক। রিভিউয়ের পর কার্ডসমূহকে স্বয়ংক্রিয়ভাবে তাদের আসল ডেকসমূহে ফিরিয়ে দেয়া হবে। এই ডেকটি মুছে ফেলা হলে বাকি থাকা কার্ডগুলিকে তাদের আসল ডেকে ফিরিয়ে দেয়া হবে।</string>
-    <string name="steps_error">Steps must be numbers greater than 0</string>
-    <string name="steps_min_error">At least one step is required</string>
+    <string name="steps_error">ধাপ 0-এর বেশি হতে হবে</string>
+    <string name="steps_min_error">অন্তত একটি পদক্ষেপ প্রয়োজন</string>
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
     <!-- Time spans -->
@@ -179,64 +179,64 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Error sharing apkg file</string>
     <!-- Import and export v2 feedback -->
-    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="activity_start_failed">এই ক্রিয়াটি সম্পাদন করতে পারে এমন সিস্টেমে কোনও অ্যাপ ইনস্টল করা নেই৷</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[ক্যামেরা ছবি বড় করা যেতে পারে. আপনি মিডিয়া ডিরেক্টরিতে ইমেজ কম্প্রেস এবং রিসাইজ করতে চাইতে পারেন]]></string>
+    <string name="no_browser_msg">লিঙ্ক খোলার জন্য কোনো ব্রাউজার পাওয়া যায়নি: %s</string>
+    <string name="web_page_error">পৃষ্ঠা লোড করার সময় ত্রুটি: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title" maxLength="41">Background</string>
+    <string name="background_image_title" maxLength="41">পটভূমি</string>
     <string name="choose_an_image" maxLength="41">Select image</string>
-    <string name="remove_background_image">Remove background?</string>
+    <string name="remove_background_image">পটভূমি সরান?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Restore Default</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="restore_default" maxLength="28">ডিফল্ট পুনরুদ্ধার করুন</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">খালি</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">হোয়াইটবোর্ড ছবি সংরক্ষণ করতে ব্যর্থ হয়েছে. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">Whiteboard pen color</string>
-    <string name="title_whiteboard_editor" maxLength="28">Whiteboard editor</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="white_board_image_saved">হোয়াইটবোর্ড ছবি %s-এ সংরক্ষিত হয়েছে</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">হোয়াইটবোর্ড কলমের রঙ</string>
+    <string name="title_whiteboard_editor" maxLength="28">হোয়াইটবোর্ড সম্পাদক</string>
+    <string name="user_is_a_robot">স্বয়ংক্রিয় পরীক্ষা সনাক্ত করা হয়েছে. আপনি যদি একজন মানুষ হন তবে AnkiDroid সহায়তার সাথে যোগাযোগ করুন</string>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
+    <string name="api_version_developer_contact">এই কার্ডটি অসমর্থিত AnkiDroid বৈশিষ্ট্য ব্যবহার করে। বিকাশকারী %1$s এর সাথে যোগাযোগ করুন বা উইকি %2$s দেখুন৷</string>
+    <string name="invalid_json_data">কার্ড অবৈধ তথ্য প্রদান করা হয়েছে. %s</string>
+    <string name="valid_js_api_version">অবৈধ AnkiDroid JS API সংস্করণ। বিকাশকারী %s-এর সাথে যোগাযোগ করুন বা উইকিতে যান</string>
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="anki_js_error_code">(ত্রুটি কোড: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">ক্লিপবোর্ডে কপি করা হয়েছে</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
     <!-- Deck Picker -->
-    <string name="search_decks" maxLength="28">Search decks</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
+    <string name="search_decks" maxLength="28">অনুসন্ধান ডেক</string>
+    <string name="ankidroid_init_failed_webview_title">মারাত্মক ত্রুটি</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">ফন্টের আকার</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">টুলবার দেখান</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
+    <string name="format_insert_bold">বোল্ড হিসাবে ফর্ম্যাট করা হয়েছে৷</string>
+    <string name="format_insert_italic">তির্যক হিসাবে বিন্যাস</string>
+    <string name="format_insert_underline">আন্ডারলাইন হিসাবে বিন্যাস করুন</string>
     <string name="insert_horizontal_line">অনুভূমিক লাইন ঢোকান</string>
-    <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="insert_heading">শিরোনাম ঢোকান</string>
+    <string name="format_font_size">ফন্টের আকার পরিবর্তন করুন</string>
+    <string name="insert_mathjax">MathJax সমীকরণ সন্নিবেশ করান</string>
     <string name="note_editor_toolbar_icon">বোতাম পাঠ্য</string>
     <string name="before_text">নির্বাচনের আগে HTML</string>
     <string name="after_text">নির্বাচনের পর এইচটিএমএল</string>
     <string name="add_toolbar_item">টুলবার আইটেম তৈরি করুন</string>
     <string name="edit_toolbar_item">টুলবার আইটেম সম্পাদনা করুন</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
+    <string name="toolbar_item_explain_edit_or_remove">নির্বাচিত পাঠ্যের আগে এবং পরে সন্নিবেশ করতে HTML লিখুন\n\nএকটি টুলবার আইটেম সম্পাদনা বা সরাতে দীর্ঘক্ষণ টিপুন</string>
     <string name="remove_toolbar_item">টুলবার আইটেম সরান?</string>
     <string name="note_editor_image_too_large">ছবি খুবই বড়, অনুগ্রহ করে ম্যানুয়ালি ছবি ঢোকান</string>
     <string name="note_editor_video_too_large">ভিডিও ফাইলটি খুব বড়, দয়া করে ভিডিওটি ম্যানুয়ালি ঢোকান৷</string>
     <string name="note_editor_audio_too_large">অডিও ফাইলটি খুব বড়, অনুগ্রহ করে ম্যানুয়ালি অডিও ঢোকান৷</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">অ্যান্ড্রয়েড ব্যাকআপ চলছে। আবার চেষ্টা করুন</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid-কে শর্টকাট যোগ করার অনুমতি দিতে আপনাকে iManager ব্যবহার করতে হতে পারে</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">আপনার হোম স্ক্রীন AnkiDroid-কে শর্টকাট যোগ করার অনুমতি দেয় না</string>
+    <string name="create_shortcut_error">শর্টকাট যোগ করার সময় ত্রুটি: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Capitalize sentences</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">টুলবার স্ক্রোল করুন</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
@@ -249,14 +249,14 @@
     <string name="back_pressed_once_reviewer">ফিরে আসতে আবার টিপুন</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
+    <string name="download_deck">ডেক ডাউনলোড করুন</string>
     <string name="try_again">আবার চেষ্টা করুন</string>
     <string name="cancel_download">ডাউনলোড বাতিল করুন</string>
     <string name="cancel_download_question_title">ডাউনলোড বাতিল করবেন?</string>
     <string name="downloading_file">%s ডাউনলোড হচ্ছে</string>
     <string name="import_deck">আমদানি ডেক</string>
     <string name="something_wrong">কিছু ভুল হয়েছে, আবার চেষ্টা করুন</string>
-    <string name="download_failed">Download failed</string>
+    <string name="download_failed">ডাউনলোড ব্যর্থ হয়েছে৷</string>
     <string name="deck_download_progress_message">ডাউনলোড করার সময় আপনি অন্যান্য অ্যাপ ব্যবহার করতে পারেন</string>
     <string name="check_network">আপনার নেটওয়ার্ক সংযোগ পরীক্ষা করুন</string>
     <string name="search_using_deck_name">ডেকের নাম ব্যবহার করে অনুসন্ধান করুন</string>
@@ -264,13 +264,13 @@
     <string name="home" maxLength="28">বাড়ি</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">কার্ড কবর দেওয়া হয়</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="one">%d কার্ড সাসপেন্ড করা হয়েছে।</item>
+        <item quantity="other">%d কার্ড সাসপেন্ড করা হয়েছে</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">ক্ষেত্র %s স্টিকি করুন</string>
     <string name="scoped_storage_learn_more">আরও জানুন</string>
     <string name="search_card_js_api_no_results">অনুসন্ধান কোন ফলাফল ফেরত</string>
     <!--  JS Addons  -->
@@ -295,12 +295,12 @@
     <string name="already_logged_in">ইতিমধ্যে লগ ইন</string>
     <!-- Deck Creation -->
     <string name="deck_created">ডেক নির্মিত হয়</string>
-    <string name="deck_renamed">Deck renamed</string>
+    <string name="deck_renamed">ডেকের নাম পরিবর্তন করা হয়েছে</string>
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">ডেক মুছে ফেলা হয়েছে. অনুগ্রহ করে শর্টকাটটি সরিয়ে দিন</string>
     <!-- Browser Options Dialog -->
-    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
-    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">কার্ড</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">নোট</string>
     <string name="toggle_cards_notes">কার্ড নাকি নোট?</string>
     <string name="toggle_browser_mode_help">ব্রাউজার এ কার্ড নাকি নোট দেখাবে?</string>
     <string name="truncate_content_help">ব্রাউজারের প্রতি সারীর উচ্চতা প্রথম ৩ লাইনে সীমাবদ্ধ করুন</string>
@@ -324,7 +324,7 @@
         <item quantity="other">%d কার্ড আনবুরি করা হয়েছে</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">রিপজিশন</string>
-    <string name="start_recording">Record</string>
+    <string name="start_recording">রেকর্ড</string>
     <string name="stop_recording">রেকর্ড</string>
     <string name="play_recording">Play</string>
     <string name="next_recording">পরবর্তী</string>
@@ -337,12 +337,12 @@
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">ডেক পিকার</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">নিশ্চিতকরণ ছাড়াই ডেক মুছুন</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">নোট সম্পাদক</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
-    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
-    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">ডেক নির্বাচন করুন</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">নোটের ধরন নির্বাচন করুন</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">ট্যাগ সম্পাদক</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">কার্ড টেমপ্লেট সম্পাদক</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
-    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">সম্মুখ টেমপ্লেট সম্পাদনা করুন</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">টেমপ্লেট সম্পাদনা করতে ফিরে যান</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">স্টাইলিং সম্পাদনা করুন</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">টেমপ্লেটটিকে মার্কডাউন হিসাবে অনুলিপি করুন</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">ব্রাউজারের চেহারা সম্পাদনা করুন</string>

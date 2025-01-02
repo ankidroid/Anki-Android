@@ -55,7 +55,7 @@
     </plurals>
     <string name="card_browser_all_decks">সকল ডেক</string>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
+        <item quantity="one">নোট মুছুন</item>
         <item quantity="other">নোট ডিলিট করুন</item>
     </plurals>
     <string name="card_browser_change_deck" maxLength="28">ডেক পরিবর্তন</string>
@@ -70,11 +70,11 @@
     <string name="card_browser_list_my_searches_new_name">এ অনুসন্ধানের নাম</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">নামহীন অনুসন্ধান সংরক্ষণ করা যাবেনা</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">নামটি আগের থেকেই আছে</string>
-    <string name="no_note_to_edit">No note to edit</string>
+    <string name="no_note_to_edit">সম্পাদনা করার জন্য কোন নোট নেই</string>
     <string name="card_browser_list_my_searches_remove_content">“%1$s” মুছব?</string>
     <string name="card_browser_change_display_order" maxLength="28">প্রদর্শন-ক্রম বদলাও</string>
-    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">অনুসন্ধান</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">অনুসন্ধান</string>
     <string name="card_browser_change_display_order_title">প্রদর্শন-ক্রম বাছুন</string>
     <string name="card_details_tags">ট্যাগসমূহ</string>
     <string-array name="card_browser_order_labels">
@@ -98,13 +98,13 @@
     <string name="card_browser_search_all_decks">সবগুলো ডেক খুঁজো</string>
     <string name="card_browser_unknown_deck_name">অজানা</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">বিষয়বস্ত ছাঁটাই</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">আজ \'0 %1$s\', আগামীকাল \'1 %2$s\', ইত্যাদি&#8230;</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
+        <item quantity="one">রপ্তানি কার্ড</item>
         <item quantity="other">কার্ড রপ্তানি করুন</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
+        <item quantity="one">নোট রপ্তানি করুন</item>
         <item quantity="other">নোট রপ্তানি করুন</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
@@ -112,6 +112,6 @@
         <item quantity="other">%d টি কার্ড মুছেছি</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">ট্যাগ ডায়ালগ সম্পাদনা করুন</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">অর্ডার ডায়ালগ দেখান</string>
 </resources>

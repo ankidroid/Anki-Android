@@ -65,8 +65,8 @@
         <item quantity="other">%1$d ঘণ্টা %2$d মিনিট বাকি</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">%1$d দিন %2$dh বাকি</item>
+        <item quantity="other">%1$d দিন %2$dh বাকি</item>
     </plurals>
     <string name="no_cards_placeholder_title">সংগ্রহটি খালি</string>
     <string name="no_cards_placeholder_description">কার্ড অ্যাড করা শুরু করুন\n+ আইকন চেপে</string>
@@ -101,15 +101,15 @@
     <string name="menu_suspend" maxLength="28">স্থগিত</string>
     <string name="menu_delete_note" maxLength="28">নোট মুছে ফেলুন</string>
     <string name="menu_flag" maxLength="41">ফ্ল্যাগ</string>
-    <string name="rename_flag">Rename flags</string>
+    <string name="rename_flag">পতাকার নাম পরিবর্তন করুন</string>
     <string name="menu_flag_card" maxLength="28">ফ্ল্যাগ কার্ড</string>
     <string name="menu_edit_tags" maxLength="28">এডিট ফ্ল্যাগ</string>
     <string name="delete_note_message">সত্যি এই নোট এবং এর কার্ড মুছবেন? \n%s</string>
     <string name="menu_search" maxLength="28">অনুসন্ধান করুন %1$s</string>
     <string name="menu_mark_note" maxLength="28">টীকা চিহ্ন</string>
     <string name="menu_unmark_note">নোটের টীকা চিহ্ন মুছুন</string>
-    <string name="menu_enable_voice_playback" maxLength="28">Enable voice playback</string>
-    <string name="menu_disable_voice_playback">Disable voice playback</string>
+    <string name="menu_enable_voice_playback" maxLength="28">ভয়েস প্লেব্যাক সক্ষম করুন</string>
+    <string name="menu_disable_voice_playback">ভয়েস প্লেব্যাক অক্ষম করুন</string>
     <string name="new_deck">ডেক তৈরি করুন</string>
     <string name="new_dynamic_deck">ফিল্টার করা ডেক তৈরি করুন</string>
     <string name="directory_inaccessible">আনকিড্রইড ডাইরেক্টরি অপ্রবেশ্য।</string>
@@ -130,7 +130,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">ডেক অনুসন্ধান</string>
     <string name="invalid_deck_name">ডেক নাম বৈধ নয়</string>
     <string name="studyoptions_congrats_finished">অভিনন্দন! আপাতত আপনার সমাপ্ত হয়েছে।</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">ডেক আপাতত শেষ! %s</string>
     <string name="studyoptions_no_cards_due">কোন কার্ড এখনও কার্যকরী হবে</string>
     <string name="sd_card_not_mounted">ডিভাইস স্টোরেজ মাউন্টেড নয়</string>
     <string name="button_sync" comment="Text of the sync button" maxLength="28">সিংক্রোনাইজ</string>
@@ -140,7 +140,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelling&#8230;\nThis কিছু সময় লাগতে পারে।</string>
     <string name="syncing_media">মিডিয়া সিঙ্ক হচ্ছে</string>
     <string name="export_deck" maxLength="28">ডেক রপ্তানি করুন</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_collection">রপ্তানি সংগ্রহ</string>
     <string name="nothing">কিছুই না</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">কার্ডের ধরন</string>
@@ -199,5 +199,5 @@
     <string name="image_occlusion">ছবিতে শূন্য স্থান পূরণ করা</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">অ্যাকাউন্ট মুছে ফেলুন</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">তাত্ক্ষণিক কার্ড</string>
 </resources>
