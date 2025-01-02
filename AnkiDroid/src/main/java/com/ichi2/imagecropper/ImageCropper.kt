@@ -48,8 +48,6 @@ import timber.log.Timber
  */
 class ImageCropper :
     Fragment(R.layout.fragment_image_cropper),
-    CropImageView.OnSetImageUriCompleteListener,
-    CropImageView.OnCropImageCompleteListener,
     MenuProvider {
     private lateinit var cropImageView: CropImageView
 
@@ -67,8 +65,8 @@ class ImageCropper :
         }
         cropImageView =
             view.findViewById<CropImageView>(R.id.cropImageView).apply {
-                setOnSetImageUriCompleteListener(this@ImageCropper)
-                setOnCropImageCompleteListener(this@ImageCropper)
+                setOnSetImageUriCompleteListener(::onSetImageUriComplete)
+                setOnCropImageCompleteListener(::onCropImageComplete)
                 cropRect = Rect(100, 300, 500, 1200)
                 val originalImageUri =
                     BundleCompat.getParcelable(requireArguments(), CROP_IMAGE_URI, Uri::class.java)
@@ -116,9 +114,9 @@ class ImageCropper :
             else -> false
         }
 
-    override fun onSetImageUriComplete(
-        view: CropImageView,
-        uri: Uri,
+    private fun onSetImageUriComplete(
+        @Suppress("UNUSED_PARAMETER") view: CropImageView,
+        @Suppress("UNUSED_PARAMETER") uri: Uri,
         error: Exception?,
     ) {
         if (error != null) {
@@ -127,8 +125,8 @@ class ImageCropper :
         }
     }
 
-    override fun onCropImageComplete(
-        view: CropImageView,
+    private fun onCropImageComplete(
+        @Suppress("UNUSED_PARAMETER") view: CropImageView,
         result: CropImageView.CropResult,
     ) {
         if (result.error == null) {
