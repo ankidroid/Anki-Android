@@ -119,6 +119,7 @@
         <ignore path="res/values-tr/" />
         <ignore path="res/values-ts/" />
         <ignore path="res/values-tt/" />
+        <ignore path="res/values-ug/" />
         <ignore path="res/values-uk/" />
         <ignore path="res/values-ur/" />
         <ignore path="res/values-uz/" />
