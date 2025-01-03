@@ -196,7 +196,7 @@ class CreateDeckDialogTest : RobolectricTest() {
 
                 // After the last deck was created, delete a deck
                 if (decksCount() >= 10) {
-                    deckPicker.confirmDeckDeletion(did)
+                    deckPicker.viewModel.deleteDeck(did).join()
                     assertEquals(deckCounter.decrementAndGet(), decksCount())
 
                     assertEquals(deckCounter.get(), decksCount())

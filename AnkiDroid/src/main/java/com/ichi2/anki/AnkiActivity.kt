@@ -43,6 +43,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -54,6 +55,7 @@ import com.ichi2.anki.android.input.Shortcut
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.android.input.shortcut
+import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.CustomExceptionData
@@ -74,7 +76,11 @@ import com.ichi2.compat.customtabs.CustomTabsHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.themes.Themes
 import com.ichi2.utils.AdaptionUtil
+import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.KotlinCleanup
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import androidx.browser.customtabs.CustomTabsIntent.Builder as CustomTabsIntentBuilder
 
@@ -714,6 +720,22 @@ open class AnkiActivity :
         Timber.w("finishing activity. No storage permission")
         finish()
         return false
+    }
+
+    // TODO: Move this to an extension method once we have context parameters
+    protected fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
+        lifecycleScope.launch {
+            this@launchCollectionInLifecycleScope.collect {
+                if (isRobolectric) {
+                    // hack: lifecycleScope/runOnUiThread do not handle our
+                    // test dispatcher overriding both IO and Main
+                    // in tests, waitForAsyncTasksToComplete may be required.
+                    HandlerUtils.postOnNewHandler { runBlocking { block(it) } }
+                } else {
+                    block(it)
+                }
+            }
+        }
     }
 
     override val shortcuts

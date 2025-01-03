@@ -69,7 +69,6 @@ import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.browser.getLabel
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
-import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.dialogs.BrowserOptionsDialog
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
@@ -134,7 +133,6 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.Themes
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.ui.FixedTextView
-import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.LanguageUtil
@@ -143,9 +141,7 @@ import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.Translations
@@ -2628,21 +2624,6 @@ open class CardBrowser :
                 }
             return LanguageUtil.getShortDateFormatFromS(date)
         } // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
-    }
-
-    private fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
-        lifecycleScope.launch {
-            this@launchCollectionInLifecycleScope.collect {
-                if (isRobolectric) {
-                    // hack: lifecycleScope/runOnUiThread do not handle our
-                    // test dispatcher overriding both IO and Main
-                    // in tests, waitForAsyncTasksToComplete may be required.
-                    HandlerUtils.postOnNewHandler { runBlocking { block(it) } }
-                } else {
-                    block(it)
-                }
-            }
-        }
     }
 }
 
