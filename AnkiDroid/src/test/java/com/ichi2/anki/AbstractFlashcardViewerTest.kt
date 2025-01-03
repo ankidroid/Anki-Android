@@ -150,7 +150,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     fun testEditingCardChangesTypedAnswer() =
         runTest {
             // 7363
-            addNoteUsingBasicTypedModel("Hello", "World")
+            addBasicWithTypingNote("Hello", "World")
 
             val viewer: NonAbstractFlashcardViewer = getViewer(true)
 
@@ -171,7 +171,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     fun testEditingCardChangesTypedAnswerOnDisplayAnswer() =
         runTest {
             // 7363
-            addNoteUsingBasicTypedModel("Hello", "World")
+            addBasicWithTypingNote("Hello", "World")
 
             val viewer: NonAbstractFlashcardViewer = getViewer(true)
 
@@ -256,8 +256,8 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
             LanguageHintService.setLanguageHintForField(col.notetypes, withLanguage, typedField, Locale("ja"))
 
-            addNoteUsingModelName(withLanguage.getString("name"), "ichi", "ni")
-            addNoteUsingModelName(normal.getString("name"), "one", "two")
+            addNoteUsingNoteTypeName(withLanguage.getString("name"), "ichi", "ni")
+            addNoteUsingNoteTypeName(normal.getString("name"), "one", "two")
             val viewer = getViewer(false)
 
             assertThat("A model with a language hint (japanese) should use it", viewer.hintLocale, equalTo("ja"))
@@ -297,7 +297,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     @Test
     fun `Show audio play buttons preference handling - sound`() =
         runTest {
-            addNoteUsingBasicTypedModel("SOUND [sound:android_audiorec.3gp]", "back")
+            addBasicWithTypingNote("SOUND [sound:android_audiorec.3gp]", "back")
             getViewerContent().let { content ->
                 assertThat("show audio preference default value: enabled", content, containsString("playsound:q:0"))
                 assertThat("show audio preference default value: enabled", content, containsString("SOUND"))
@@ -317,7 +317,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     @Test
     fun `Show audio play buttons preference handling - tts`() =
         runTest {
-            addNoteUsingTextToSpeechNoteType("TTS", "BACK")
+            addTextToSpeechNote("TTS", "BACK")
             getViewerContent().let { content ->
                 assertThat("show audio preference default value: enabled", content, containsString("playsound:q:0"))
                 assertThat("show audio preference default value: enabled", content, containsString("TTS"))

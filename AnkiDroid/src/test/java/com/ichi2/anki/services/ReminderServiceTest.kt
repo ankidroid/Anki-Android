@@ -42,7 +42,7 @@ class ReminderServiceTest : RobolectricTest() {
 
     @Test
     fun testReminderServiceReviewsDue() {
-        addNoteUsingBasicModel("test front", "test back")
+        addBasicNote("test front", "test back")
         assertThat("No notifications exist", notificationManagerShadow.size(), equalTo(0))
         buildDefaultDeckReminders()
         assertThat("No notifications exist", notificationManagerShadow.size(), equalTo(1))
@@ -50,7 +50,7 @@ class ReminderServiceTest : RobolectricTest() {
 
     @Test
     fun testReminderServiceNullCollection() {
-        addNoteUsingBasicModel("test front", "test back")
+        addBasicNote("test front", "test back")
         enableNullCollection()
         assertThat("No notifications exist", notificationManagerShadow.size(), equalTo(0))
         buildDefaultDeckReminders()

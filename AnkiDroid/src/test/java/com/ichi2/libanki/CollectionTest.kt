@@ -40,7 +40,7 @@ class CollectionTest : JvmTest() {
     fun editClozeGenerateCardsInSameDeck() {
         // #7781
         // Technically, editing a card with conditional fields can also cause this, but cloze cards are much more common
-        val n = addNoteUsingModelName("Cloze", "{{c1::Hello}} {{c2::World}}", "Extra")
+        val n = addNoteUsingNoteTypeName("Cloze", "{{c1::Hello}} {{c2::World}}", "Extra")
         val did = addDeck("Testing")
         n.updateCards { this.did = did }
         assertThat("two cloze notes should be generated", n.numberOfCards(), equalTo(2))
@@ -214,7 +214,7 @@ class CollectionTest : JvmTest() {
 
     @Test
     fun test_filterToValidCards() {
-        val cid = addNoteUsingBasicModel("foo", "bar").firstCard().id
+        val cid = addBasicNote("foo", "bar").firstCard().id
         assertEquals(ArrayList(setOf(cid)), col.filterToValidCards(longArrayOf(cid, cid + 1)))
     }
 

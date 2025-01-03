@@ -180,7 +180,7 @@ class DeckPickerTest : RobolectricTest() {
         dconf.getJSONObject("new").put("perDay", 10)
         col.decks.save(dconf)
         for (i in 0..10) {
-            addNoteUsingBasicModel("Which card is this ?", i.toString())
+            addBasicNote("Which card is this ?", i.toString())
         }
         // This set a card as current card
         sched.card
@@ -503,7 +503,7 @@ class DeckPickerTest : RobolectricTest() {
                 val deckId = addDeck("Deck 1")
                 getColUnsafe.decks.select(deckId)
                 getColUnsafe.notetypes.byName("Basic")!!.put("did", deckId)
-                val card = addNoteUsingBasicModel("front", "back").firstCard()
+                val card = addBasicNote("front", "back").firstCard()
                 getColUnsafe.sched.buryCards(listOf(card.id))
                 updateDeckList()
                 assertEquals(1, visibleDeckCount)
@@ -519,7 +519,7 @@ class DeckPickerTest : RobolectricTest() {
             startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
                 val cardIds =
                     (0..3)
-                        .map { addNoteUsingBasicModel("$it", "").firstCard().id }
+                        .map { addBasicNote("$it", "").firstCard().id }
                 assertTrue(allCardsInSameDeck(cardIds, 1))
                 val deckId = addDynamicDeck("Deck 1")
                 getColUnsafe.sched.rebuildDyn(deckId)
@@ -703,7 +703,7 @@ class DeckPickerTest : RobolectricTest() {
         col.notetypes.byName("Basic (and reversed card)")!!.also { noteType ->
             col.notetypes.save(noteType.apply { put("did", deckWithCards) })
         }
-        addNoteUsingBasicAndReversedModel()
+        addBasicAndReversedNote()
 
         // Answer 'Easy' for one of the cards, burying the other
         col.decks.select(deckWithCards)

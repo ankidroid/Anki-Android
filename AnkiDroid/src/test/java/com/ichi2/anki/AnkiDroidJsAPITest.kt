@@ -42,7 +42,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             val didA = addDeck("Test", setAsSelected = true)
             val basic = models.byName(BASIC_MODEL_NAME)
             basic!!.put("did", didA)
-            addNoteUsingBasicModel("foo", "bar")
+            addBasicNote("foo", "bar")
 
             val reviewer: Reviewer = startReviewer()
             val jsapi = reviewer.jsApi
@@ -76,7 +76,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             val didA = addDeck("Test", setAsSelected = true)
             val basic = models.byName(BASIC_MODEL_NAME)
             basic!!.put("did", didA)
-            addNoteUsingBasicModel("foo", "bar")
+            addBasicNote("foo", "bar")
 
             val reviewer: Reviewer = startReviewer()
             val jsapi = reviewer.jsApi
@@ -187,7 +187,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             val didA = addDeck("Test", setAsSelected = true)
             val basic = models.byName(BASIC_MODEL_NAME)
             basic!!.put("did", didA)
-            addNoteUsingBasicModel("foo", "bar")
+            addBasicNote("foo", "bar")
 
             val reviewer: Reviewer = startReviewer()
             val jsapi = reviewer.jsApi
@@ -230,7 +230,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             val didA = addDeck("Test", setAsSelected = true)
             val basic = models.byName(BASIC_MODEL_NAME)
             basic!!.put("did", didA)
-            addNoteUsingBasicModel("foo", "bar")
+            addBasicNote("foo", "bar")
 
             val reviewer: Reviewer = startReviewer()
             val jsapi = reviewer.jsApi
@@ -291,11 +291,11 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             val didA = addDeck("Test", setAsSelected = true)
             val basic = models.byName(BASIC_MODEL_NAME)
             basic!!.put("did", didA)
-            addNoteUsingBasicModel("foo", "bar")
-            addNoteUsingBasicModel("baz", "bak")
-            addNoteUsingBasicModel("Anki", "Droid")
-            addNoteUsingBasicModel("Test Card", "Bury and Suspend Card")
-            addNoteUsingBasicModel("Test Note", "Bury and Suspend Note")
+            addBasicNote("foo", "bar")
+            addBasicNote("baz", "bak")
+            addBasicNote("Anki", "Droid")
+            addBasicNote("Test Card", "Bury and Suspend Card")
+            addBasicNote("Test Note", "Bury and Suspend Note")
 
             val reviewer: Reviewer = startReviewer()
             val jsapi = reviewer.jsApi
@@ -360,8 +360,8 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             val didA = addDeck("Test", setAsSelected = true)
             val basic = models.byName(BASIC_MODEL_NAME)
             basic!!.put("did", didA)
-            addNoteUsingBasicModel("foo", "bar")
-            addNoteUsingBasicModel("baz", "bak")
+            addBasicNote("foo", "bar")
+            addBasicNote("baz", "bak")
 
             val reviewer: Reviewer = startReviewer()
             waitForAsyncTasksToComplete()
@@ -385,7 +385,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     @Test
     fun ankiResetProgressTest() =
         runTest {
-            val n = addNoteUsingBasicModel("Front", "Back")
+            val n = addBasicNote("Front", "Back")
             val c = n.firstCard()
 
             // Make card review with 28L due and 280% ease
