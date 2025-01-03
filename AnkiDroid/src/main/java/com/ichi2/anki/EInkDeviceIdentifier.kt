@@ -102,7 +102,6 @@ class EInkDeviceIdentifier {
         DeviceInfo("onyx", "TabUltraC"),
         DeviceInfo("onyx", "TabUltraCPro"),
         DeviceInfo("onyx", "TabX"),
-
         // Source: https://github.com/koreader/android-luajit-launcher/blob/6bba3f4bb4da8073d0f4ea4f270828c8603aa54d/app/src/main/java/org/koreader/launcher/device/DeviceInfo.kt
         DeviceInfo("boyue", "rk30sdk"),
         DeviceInfo("boeye", "rk30sdk"),
@@ -138,7 +137,6 @@ class EInkDeviceIdentifier {
         DeviceInfo("artatech", "pri"), // Probably an eink device
         DeviceInfo("crema", "crema-0710c"), // Probably an eink device
         DeviceInfo("crema", "crema-0670c"), // Probably an eink device
-
         // Source: https://github.com/plotn/coolreader/blob/e5baf0607e678468aa045053ba5f092164aa1dd7/android/src/org/coolreader/crengine/DeviceInfo.java
         DeviceInfo("barnesandnoble", "NOOK"),
         DeviceInfo("barnesandnoble", "bnrv350"),
@@ -146,9 +144,8 @@ class EInkDeviceIdentifier {
         DeviceInfo("barnesandnoble", "bnrv500"),
         DeviceInfo("sony", "PRS-T"), // Probably an eink device
         DeviceInfo("dns", "DNS Airbook EGH"),
-
         // Source: https://github.com/ankidroid/Anki-Android/issues/17618
-        DeviceInfo("Viwoods", "Viwoods AiPaper")
+        DeviceInfo("Viwoods", "Viwoods AiPaper"),
     )
 
     private val eInkManufacturersList = setOf(
@@ -163,12 +160,12 @@ class EInkDeviceIdentifier {
         "sony",
         "barnesandnoble",
         "freescale",
-        "Viwoods",
+        "viwoods",
         "artatech",
         "dns",
         "crema",
-        "kindle",
-        "bigme"
+        "foxconn",
+        "bigme",
     )
 
     /**
@@ -185,14 +182,16 @@ class EInkDeviceIdentifier {
         // Check if the device is an exact match or a partial match.
         for (device in knownEInkDevices) {
             // Check if the device is an exact match.
-            if (currentDevice.manufacturer == device.manufacturer &&
+            if (
+                currentDevice.manufacturer == device.manufacturer &&
                 currentDevice.model == device.model
             ) {
                 isExactMatch = true
                 break
             }
             // Check if the device is a partial match. Partial matches are detected using substring matching.
-            if ((currentDevice.manufacturer.contains(device.manufacturer) ||
+            if (
+                (currentDevice.manufacturer.contains(device.manufacturer) ||
                         device.manufacturer.contains(currentDevice.manufacturer)) &&
                 (currentDevice.model.contains(device.model) ||
                         device.model.contains(currentDevice.model))
