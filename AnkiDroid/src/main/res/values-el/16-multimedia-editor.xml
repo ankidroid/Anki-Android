@@ -71,7 +71,6 @@
     <string name="crop_button" maxLength="28">Περικοπή εικόνας</string>
     <string name="save_dialog_content">Το τρέχον μέγεθος εικόνας είναι %sMB. Το προεπιλεγμένο όριο μεγέθους εικόνας είναι 1MB. Θέλετε να το περικόψετε;</string>
     <string name="select_image_failed">"Η επιλογή εικόνας απέτυχε, Παρακαλώ προσπαθήστε ξανά"</string>
-    <string name="activity_result_unexpected">Η εφαρμογή επέστρεψε μια μη αναμενόμενη τιμή. Μπορεί να χρειαστεί να χρησιμοποιήσετε μια διαφορετική εφαρμογή</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Περιεχόμενα Πεδίου</string>
     <string name="reselect" maxLength="28">Επανεπιλογή</string>
 </resources>

@@ -71,7 +71,6 @@
     <string name="crop_button" maxLength="28">Pritondi bildon</string>
     <string name="save_dialog_content">Bild-grando estas %s MB. Implicita limigo bild-grando estas 1 MB. Ĉu vi volas densigi la bildon?</string>
     <string name="select_image_failed">"Fiaskis konservi bildon, reprovu"</string>
-    <string name="activity_result_unexpected">Aplikaĵo liveris neatenditan valoron. Eble vi uzu alian aplikaĵon</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Enhavo de kampo</string>
     <string name="reselect" maxLength="28">Reelekti</string>
 </resources>

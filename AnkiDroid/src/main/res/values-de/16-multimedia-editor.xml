@@ -71,7 +71,6 @@
     <string name="crop_button" maxLength="28">Bild zuschneiden</string>
     <string name="save_dialog_content">Die aktuelle Bildgröße beträgt %sMB. Die Standardbild Größenbegrenzung beträgt 1 MB. Möchten Sie es komprimieren?</string>
     <string name="select_image_failed">"Bildauswahl fehlgeschlagen, bitte erneut versuchen"</string>
-    <string name="activity_result_unexpected">Die Anwendung hat einen unerwarteten Wert zurückgegeben. Möglicherweise müssen Sie eine andere Anwendung verwenden</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Feldinhalte</string>
     <string name="reselect" maxLength="28">Erneut Auswählen</string>
 </resources>

@@ -71,7 +71,6 @@
     <string name="crop_button" maxLength="28">છબીને કાપો</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"છબી પસંદ કરવામાં નિષ્ફળ, કૃપા કરીને ફરી પ્રયાસ કરો"</string>
-    <string name="activity_result_unexpected">ஆப்ஸ் எதிர்பாராத மதிப்பை வழங்கியது. நீங்கள் வேறு ஆப்ஸைப் பயன்படுத்த வேண்டியிருக்கலாம்</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">புல உள்ளடக்கங்கள்</string>
     <string name="reselect" maxLength="28">மீண்டும் தேர்ந்தெடுக்கவும்</string>
 </resources>

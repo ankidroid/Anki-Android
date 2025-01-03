@@ -71,7 +71,6 @@
     <string name="crop_button" maxLength="28">Pangkas gambar</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"Memilih gambar gagal, coba lagi"</string>
-    <string name="activity_result_unexpected">Aplikasi mengembalikan nilai tak terduga. Kamu bisa menggunakan aplikasi lain</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Konten Kolom</string>
     <string name="reselect" maxLength="28">Reselect</string>
 </resources>

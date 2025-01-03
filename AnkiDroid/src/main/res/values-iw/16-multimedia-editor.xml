@@ -71,7 +71,6 @@
     <string name="crop_button" maxLength="28">חיתוך תמונה</string>
     <string name="save_dialog_content">גודל התמונה הנוכחי הוא %sMB. מגבלת ברירת המחדל של גודל התמונה היא 1MB. האם אתה רוצה לדחוס אותו?</string>
     <string name="select_image_failed">"בחירת התמונה נכשלה, אנא נסה שוב"</string>
-    <string name="activity_result_unexpected">האפליקציה החזירה ערך לא צפוי. ייתכן שתצטרך להשתמש באפליקציה אחרת</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">תוכן השדה</string>
     <string name="reselect" maxLength="28">בחר מחדש</string>
 </resources>

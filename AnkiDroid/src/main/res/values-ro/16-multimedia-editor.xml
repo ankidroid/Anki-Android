@@ -71,7 +71,6 @@
     <string name="crop_button" maxLength="28">Decupează imaginea</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"Selectarea imaginii a eșuat. Vă rugăm reîncercați"</string>
-    <string name="activity_result_unexpected">Aplicația a returnat o valoare neașteptată. S-ar putea să fie nevoie să utilizați o aplicație diferită</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Conținutul câmpului</string>
     <string name="reselect" maxLength="28">Reselect</string>
 </resources>
