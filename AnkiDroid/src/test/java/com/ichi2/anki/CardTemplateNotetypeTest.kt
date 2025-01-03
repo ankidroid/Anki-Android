@@ -39,9 +39,9 @@ class CardTemplateNotetypeTest : RobolectricTest() {
         CardTemplateNotetype.clearTempModelFiles()
 
         // Make sure save / retrieve works
-        val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, JSONObject("{\"foo\": \"bar\"}"))
+        val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, NotetypeJson("{\"foo\": \"bar\"}"))
         assertNotNull("Saving temp model unsuccessful", tempModelPath)
-        val tempModel: JSONObject = CardTemplateNotetype.getTempModel(tempModelPath!!)
+        val tempModel = CardTemplateNotetype.getTempModel(tempModelPath!!)
         assertNotNull("Temp model not read successfully", tempModel)
         Assert.assertEquals(JSONObject("{\"foo\": \"bar\"}").toString(), tempModel.toString())
 
