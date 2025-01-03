@@ -136,7 +136,7 @@ class CustomStudyDialogTest : RobolectricTest() {
 
         // extend limits with a value of '1'
         withCustomStudyFragment(
-            args = argumentsDisplayingSubscreen(ContextMenuOption.STUDY_NEW),
+            args = argumentsDisplayingSubscreen(ContextMenuOption.EXTEND_NEW),
         ) { dialogFragment: CustomStudyDialog ->
 
             onSubscreenEditText()
@@ -154,7 +154,7 @@ class CustomStudyDialogTest : RobolectricTest() {
 
         // ensure 'newExtendByValue' is used by our UI
         withCustomStudyFragment(
-            args = argumentsDisplayingSubscreen(ContextMenuOption.STUDY_NEW),
+            args = argumentsDisplayingSubscreen(ContextMenuOption.EXTEND_NEW),
         ) { dialogFragment: CustomStudyDialog ->
             onSubscreenEditText()
                 .check(matches(withText(newExtendByValue.toString())))
