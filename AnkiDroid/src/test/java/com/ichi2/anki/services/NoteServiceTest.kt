@@ -279,7 +279,7 @@ class NoteServiceTest : RobolectricTest() {
     @Test
     fun testAvgEase() {
         // basic case: no cards are new
-        val note = addNoteUsingModelName("Cloze", "{{c1::Hello}}{{c2::World}}{{c3::foo}}{{c4::bar}}", "extra")
+        val note = addNoteUsingNoteTypeName("Cloze", "{{c1::Hello}}{{c2::World}}{{c3::foo}}{{c4::bar}}", "extra")
         // factor for cards: 3000, 1500, 1000, 750
         for ((i, card) in note.cards().withIndex()) {
             card.update {
@@ -306,7 +306,7 @@ class NoteServiceTest : RobolectricTest() {
     @Test
     fun testAvgInterval() {
         // basic case: all cards are relearning or review
-        val note = addNoteUsingModelName("Cloze", "{{c1::Hello}}{{c2::World}}{{c3::foo}}{{c4::bar}}", "extra")
+        val note = addNoteUsingNoteTypeName("Cloze", "{{c1::Hello}}{{c2::World}}{{c3::foo}}{{c4::bar}}", "extra")
         val reviewOrRelearningList = listOf(CardType.Rev, CardType.Relearning)
         val newOrLearningList = listOf(CardType.New, CardType.Lrn)
 

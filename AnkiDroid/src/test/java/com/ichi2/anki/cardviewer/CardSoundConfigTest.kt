@@ -34,7 +34,7 @@ class CardSoundConfigTest : JvmTest() {
     fun `default values`() =
         runTest {
             // defaults as-of Anki Desktop 23.10 (51a10f09)
-            val note = addNoteUsingBasicModel()
+            val note = addBasicNote()
             val card = note.firstCard()
             createCardSoundConfig(card).run {
                 assertThat(EXTRA_DECK_ID, deckId, equalTo(card.did))
@@ -50,7 +50,7 @@ class CardSoundConfigTest : JvmTest() {
     @Test
     fun `cards from the same note are equal`() =
         runTest {
-            val note = addNoteUsingBasicAndReversedModel()
+            val note = addBasicAndReversedNote()
             val (card1, card2) = note.cards()
             createCardSoundConfig(card1).run {
                 assertThat("same note", this.appliesTo(card2))

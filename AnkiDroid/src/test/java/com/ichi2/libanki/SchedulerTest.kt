@@ -53,7 +53,7 @@ open class SchedulerTest : JvmTest() {
     @Throws(ConfirmModSchemaException::class)
     fun handlesSmallSteps() {
         // a delay of 0 crashed the app (step of 0.01).
-        addNoteUsingBasicModel("Hello", "World")
+        addBasicNote("Hello", "World")
         col.decks
             .allConfig()[0]
             .getJSONObject("new")
@@ -1333,7 +1333,7 @@ open class SchedulerTest : JvmTest() {
         // "https://github.com/ankidroid/Anki-Android/issues/7285"
         val decks = col.decks
         val sched = col.sched
-        addNoteUsingBasicModel("foo", "bar")
+        addBasicNote("foo", "bar")
         val did = addDynamicDeck("test")
         val deck = decks.get(did)!!
         deck.put("resched", false)

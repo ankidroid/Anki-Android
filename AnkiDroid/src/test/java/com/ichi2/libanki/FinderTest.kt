@@ -47,7 +47,7 @@ class FinderTest : JvmTest() {
     fun searchForBuriedReturnsManuallyAndSiblingBuried() {
         val searchQuery = "is:buried"
         enableBurySiblings()
-        super.addNoteUsingModelName("Basic (and reversed card)", "Front", "Back")
+        super.addNoteUsingNoteTypeName("Basic (and reversed card)", "Front", "Back")
         val toAnswer: Card = col.sched.card!!
 
         // act

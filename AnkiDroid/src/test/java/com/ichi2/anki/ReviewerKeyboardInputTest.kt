@@ -133,7 +133,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     @Test
     fun pressingStarWillMarkCard() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
-        underTest.currentCard = addNoteUsingBasicModel("a", "").firstCard()
+        underTest.currentCard = addBasicNote("a", "").firstCard()
         underTest.handleUnicodeKeyPress('*')
         assertThat("Mark Card was called", underTest.markCardCalled)
     }
@@ -141,7 +141,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     @Test
     fun pressingEqualsWillBuryNote() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
-        underTest.currentCard = addNoteUsingBasicModel("a", "").firstCard()
+        underTest.currentCard = addBasicNote("a", "").firstCard()
         underTest.handleUnicodeKeyPress('=')
         assertThat("Bury Note should be called", underTest.buryNoteCalled)
     }
@@ -151,7 +151,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     @Test
     fun pressingAtWillSuspendCard() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
-        underTest.currentCard = addNoteUsingBasicModel("a", "").firstCard()
+        underTest.currentCard = addBasicNote("a", "").firstCard()
         underTest.handleUnicodeKeyPress('@')
         assertThat("Suspend Card should be called", underTest.suspendCardCalled)
     }
@@ -159,7 +159,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     @Test
     fun pressingExclamationWillSuspendNote() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
-        underTest.currentCard = addNoteUsingBasicModel("a", "").firstCard()
+        underTest.currentCard = addBasicNote("a", "").firstCard()
         underTest.handleUnicodeKeyPress('!')
         assertThat("Suspend Note should be called", underTest.suspendNoteCalled)
     }
