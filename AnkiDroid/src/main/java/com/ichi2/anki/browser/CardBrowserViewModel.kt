@@ -46,11 +46,11 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.ChangeManager
-import com.ichi2.libanki.Consts
-import com.ichi2.libanki.Consts.QUEUE_TYPE_MANUALLY_BURIED
-import com.ichi2.libanki.Consts.QUEUE_TYPE_SIBLING_BURIED
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.NoteId
+import com.ichi2.libanki.QueueType
+import com.ichi2.libanki.QueueType.ManuallyBuried
+import com.ichi2.libanki.QueueType.SiblingBuried
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
@@ -539,7 +539,7 @@ class CardBrowserViewModel(
             val cardIds = queryAllSelectedCardIds()
 
             undoableOp<OpChanges> {
-                val wantUnsuspend = cardIds.all { getCard(it).queue == Consts.QUEUE_TYPE_SUSPENDED }
+                val wantUnsuspend = cardIds.all { getCard(it).queue == QueueType.Suspended }
                 if (wantUnsuspend) {
                     sched.unsuspendCards(cardIds)
                 } else {
@@ -566,7 +566,7 @@ class CardBrowserViewModel(
         }
 
         // https://github.com/ankitects/anki/blob/074becc0cee1e9ae59be701ad6c26787f74b4594/qt/aqt/browser/browser.py#L896-L902
-        fun Card.isBuried(): Boolean = queue == QUEUE_TYPE_MANUALLY_BURIED || queue == QUEUE_TYPE_SIBLING_BURIED
+        fun Card.isBuried(): Boolean = queue == ManuallyBuried || queue == SiblingBuried
 
         val cardIds = queryAllSelectedCardIds()
 

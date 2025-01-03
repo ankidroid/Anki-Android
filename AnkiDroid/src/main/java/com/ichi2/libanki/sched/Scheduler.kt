@@ -44,17 +44,13 @@ import com.ichi2.anki.Ease
 import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
+import com.ichi2.libanki.CardType
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Consts.CARD_TYPE_LRN
-import com.ichi2.libanki.Consts.CARD_TYPE_NEW
-import com.ichi2.libanki.Consts.CARD_TYPE_RELEARNING
-import com.ichi2.libanki.Consts.CARD_TYPE_REV
-import com.ichi2.libanki.Consts.QUEUE_TYPE_NEW
-import com.ichi2.libanki.Consts.QUEUE_TYPE_REV
 import com.ichi2.libanki.DeckConfig
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.EpochSeconds
 import com.ichi2.libanki.NoteId
+import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
@@ -496,7 +492,7 @@ open class Scheduler(
     @Suppress("ktlint:standard:max-line-length")
     fun totalNewForCurrentDeck(): Int =
         col.db.queryScalar(
-            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN ${deckLimit()} AND queue = $QUEUE_TYPE_NEW LIMIT ?)",
+            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN ${deckLimit()} AND queue = ${QueueType.New.code} LIMIT ?)",
             REPORT_LIMIT,
         )
 
@@ -521,14 +517,14 @@ open class Scheduler(
     open fun revDue() =
         col.db
             .queryScalar(
-                """SELECT 1 FROM cards WHERE did IN ${deckLimit()} AND queue = $QUEUE_TYPE_REV AND due <= ? LIMIT 1""",
+                """SELECT 1 FROM cards WHERE did IN ${deckLimit()} AND queue = ${QueueType.Rev.code} AND due <= ? LIMIT 1""",
                 today,
             ) != 0
 
     /** true if there are any new cards due.  */
     @Suppress("ktlint:standard:max-line-length")
     open fun newDue(): Boolean =
-        col.db.queryScalar("SELECT 1 FROM cards WHERE did IN ${deckLimit()} AND queue = $QUEUE_TYPE_NEW LIMIT 1") !=
+        col.db.queryScalar("SELECT 1 FROM cards WHERE did IN ${deckLimit()} AND queue = ${QueueType.New.code} LIMIT 1") !=
             0
 
     private val etaCache: DoubleArray = doubleArrayOf(-1.0, -1.0, -1.0, -1.0, -1.0, -1.0)
@@ -566,12 +562,12 @@ open class Scheduler(
                 .db
                 .query(
                     """select
-                          avg(case when type = $CARD_TYPE_NEW then case when ease > 1 then 1.0 else 0.0 end else null end) as newRate,
-                          avg(case when type = $CARD_TYPE_NEW then time else null end) as newTime,
-                          avg(case when type in ($CARD_TYPE_LRN, $CARD_TYPE_RELEARNING) then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate,
-                          avg(case when type in ($CARD_TYPE_LRN, $CARD_TYPE_RELEARNING) then time else null end) as revTime,
-                          avg(case when type = $CARD_TYPE_REV then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate,
-                          avg(case when type = $CARD_TYPE_REV then time else null end) as relrnTime
+                          avg(case when type = ${CardType.New.code} then case when ease > 1 then 1.0 else 0.0 end else null end) as newRate,
+                          avg(case when type = ${CardType.New.code} then time else null end) as newTime,
+                          avg(case when type in (${CardType.Lrn.code}, ${CardType.Relearning.code}) then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate,
+                          avg(case when type in (${CardType.Lrn.code}, ${CardType.Relearning.code}) then time else null end) as revTime,
+                          avg(case when type = ${CardType.Rev.code} then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate,
+                          avg(case when type = ${CardType.Rev.code} then time else null end) as relrnTime
                         from revlog where id > ?""",
                     (col.sched.dayCutoff - (10 * SECONDS_PER_DAY)) * 1000,
                 ).use { cur ->

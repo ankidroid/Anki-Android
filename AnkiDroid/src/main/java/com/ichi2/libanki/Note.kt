@@ -21,7 +21,6 @@ import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import anki.notes.NoteFieldsCheckResponse
 import com.ichi2.libanki.Consts.DEFAULT_DECK_ID
-import com.ichi2.libanki.Consts.MODEL_STD
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.set
@@ -116,7 +115,7 @@ class Note : Cloneable {
             if (customTemplate != null) {
                 customTemplate.deepClone()
             } else {
-                val index = if (model.type == MODEL_STD) ord else 0
+                val index = if (model.isStd) ord else 0
                 model.tmpls[index]
             }
         // may differ in cloze case

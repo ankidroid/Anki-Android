@@ -20,6 +20,7 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.CardType
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckConfig
@@ -27,6 +28,7 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
+import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.utils.set
 import kotlinx.coroutines.Dispatchers
@@ -58,8 +60,8 @@ interface TestClass {
     ): Note {
         val note = addNoteUsingBasicModel(front, back)
         val card = note.firstCard()
-        card.queue = Consts.QUEUE_TYPE_REV
-        card.type = Consts.CARD_TYPE_REV
+        card.queue = QueueType.Rev
+        card.type = CardType.Rev
         card.due = col.sched.today
         return note
     }

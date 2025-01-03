@@ -71,9 +71,9 @@ class NotetypeJson : JSONObject {
     val templatesNames: List<String>
         get() = getJSONArray("tmpls").toStringList("name")
     val isStd: Boolean
-        get() = getInt("type") == Consts.MODEL_STD
+        get() = type == NoteTypeKind.Std
     val isCloze: Boolean
-        get() = getInt("type") == Consts.MODEL_CLOZE
+        get() = type == NoteTypeKind.Cloze
 
     /**
      * @param sfld Fields of a note of this note type
@@ -129,12 +129,10 @@ class NotetypeJson : JSONObject {
             put("sortf", value)
         }
 
-    // TODO: Not constrained
-    @Consts.ModelType
-    var type: Int
-        get() = getInt("type")
+    var type: NoteTypeKind
+        get() = NoteTypeKind.fromCode(getInt("type"))
         set(value) {
-            put("type", value)
+            put("type", value.code)
         }
 
     /**
