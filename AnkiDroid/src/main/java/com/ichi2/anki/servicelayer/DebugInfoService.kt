@@ -53,13 +53,18 @@ object DebugInfoService {
     }
 
     private fun isSendingCrashReports(context: Context): Boolean = CrashReportService.isAcraEnabled(context, false)
-
-    private suspend fun getFSRSStatus(): Boolean? =
-        try {
-            CollectionManager.withOpenColOrNull { config.get<Boolean>("fsrs", false) }
-        } catch (e: Throwable) {
-            // Error and Exception paths are the same, so catch Throwable
-            Timber.w(e)
-            null
-        }
 }
+
+/**
+ * Whether the Free Spaced Repetition Scheduler is enabled
+ *
+ * Note: this can return `null` if the collection is not openable
+ */
+suspend fun getFSRSStatus(): Boolean? =
+    try {
+        CollectionManager.withOpenColOrNull { config.get<Boolean>("fsrs", false) }
+    } catch (e: Throwable) {
+        // Error and Exception paths are the same, so catch Throwable
+        Timber.w(e)
+        null
+    }
