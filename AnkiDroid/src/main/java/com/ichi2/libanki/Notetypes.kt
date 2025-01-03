@@ -434,7 +434,7 @@ class Notetypes(
      * [ConfirmModSchemaException]
      */
     @RustCleanup("Since Kotlin doesn't have throws, this may not be needed")
-    fun addFieldInNewModel(
+    fun addFieldInNewNoteType(
         notetype: NotetypeJson,
         field: Field,
     ) {
@@ -448,7 +448,7 @@ class Notetypes(
         }
     }
 
-    fun addTemplateInNewModel(
+    fun addTemplateInNewNoteType(
         notetype: NotetypeJson,
         template: CardTemplate,
     ) {

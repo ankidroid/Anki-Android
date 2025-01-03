@@ -83,7 +83,7 @@ class ReviewerTest : RobolectricTest() {
     @Test
     fun testOnSelectedTags() {
         // Add a note using basic model
-        addNoteUsingBasicModel()
+        addBasicNoteType()
 
         // Start the Reviewer activity
         val viewer = startRegularActivity<Reviewer>()
@@ -148,7 +148,7 @@ class ReviewerTest : RobolectricTest() {
 
     @Test
     fun noErrorShouldOccurIfSoundFileNotPresent() {
-        addNoteUsingBasicModel("[[sound:not_on_file_system.mp3]]", "World")
+        addBasicNoteType("[[sound:not_on_file_system.mp3]]", "World")
             .firstCard()
             .moveToReviewQueue()
 
@@ -234,9 +234,9 @@ class ReviewerTest : RobolectricTest() {
 
             val cards =
                 arrayOf(
-                    addRevNoteUsingBasicModelDueToday("1", "bar").firstCard(),
-                    addNoteUsingBasicModel("2", "bar").firstCard(),
-                    addNoteUsingBasicModel("3", "bar").firstCard(),
+                    addRevBasicNoteDueToday("1", "bar").firstCard(),
+                    addBasicNoteType("2", "bar").firstCard(),
+                    addBasicNoteType("3", "bar").firstCard(),
                 )
             waitForAsyncTasksToComplete()
 
@@ -277,7 +277,7 @@ class ReviewerTest : RobolectricTest() {
             val didAb = addDeck("A::B")
             val basic = models.byName(BASIC_MODEL_NAME)
             basic!!.put("did", didAb)
-            addNoteUsingBasicModel("foo", "bar")
+            addBasicNoteType("foo", "bar")
 
             addDeck("A", setAsSelected = true)
 
@@ -303,7 +303,7 @@ class ReviewerTest : RobolectricTest() {
             waitForAsyncTasksToComplete()
 
             // #6587
-            addNoteUsingBasicModel("Hello", "World")
+            addBasicNoteType("Hello", "World")
 
             val sched = col.sched
 
@@ -487,7 +487,7 @@ class ReviewerTest : RobolectricTest() {
     @CheckResult
     private fun startReviewer(withCards: Int = 0): Reviewer {
         for (i in 0 until withCards) {
-            addNoteUsingBasicModel()
+            addBasicNoteType()
         }
         return startReviewer(this)
     }
@@ -500,7 +500,7 @@ class ReviewerTest : RobolectricTest() {
         block: suspend Reviewer.() -> Unit,
     ) = runTest {
         for (frontSide in cards) {
-            addNoteUsingBasicModel(front = frontSide)
+            addBasicNoteType(front = frontSide)
         }
         val reviewer = startReviewer(this@ReviewerTest)
         block(reviewer)

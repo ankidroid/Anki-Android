@@ -853,7 +853,7 @@ class CardContentProvider : ContentProvider() {
                     // Add the fields
                     val allFields = Utils.splitFields(fieldNames)
                     for (f: String? in allFields) {
-                        noteTypes.addFieldInNewModel(newNoteType, noteTypes.newField(f!!))
+                        noteTypes.addFieldInNewNoteType(newNoteType, noteTypes.newField(f!!))
                     }
                     // Add some empty card templates
                     var idx = 0
@@ -866,7 +866,7 @@ class CardContentProvider : ContentProvider() {
                             answerField = allFields[1]
                         }
                         t.afmt = "{{FrontSide}}\\n\\n<hr id=answer>\\n\\n{{$answerField}}"
-                        noteTypes.addTemplateInNewModel(newNoteType, t)
+                        noteTypes.addTemplateInNewNoteType(newNoteType, t)
                         idx++
                     }
                     // Add the CSS if specified
