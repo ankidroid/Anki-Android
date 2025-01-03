@@ -40,6 +40,7 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.SharedDecksActivity.Companion.DOWNLOAD_FILE
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.openUrl
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.utils.ImportUtils
@@ -70,6 +71,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
     private lateinit var downloadPercentageText: TextView
     private lateinit var downloadProgressBar: ProgressBar
     private lateinit var checkNetworkInfoText: TextView
+    private lateinit var downloadFromBrowser: Button
 
     /**
      * Android's DownloadManager - Used here to manage the functionality of downloading decks, one
@@ -106,6 +108,8 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
          * so our FileProvider can actually serve the file!
          */
         const val SHARED_DECKS_DOWNLOAD_FOLDER = "shared_decks"
+
+        private val deckIdRegex = "download-deck/(\\d+)".toRegex()
     }
 
     override fun onViewCreated(
@@ -120,6 +124,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         importDeckButton = view.findViewById(R.id.import_shared_deck_button)
         tryAgainButton = view.findViewById(R.id.try_again_deck_download)
         checkNetworkInfoText = view.findViewById(R.id.check_network_info_text)
+        downloadFromBrowser = view.findViewById(R.id.download_shared_deck_from_browser)
 
         val fileToBeDownloaded = arguments?.getSerializableCompat<DownloadFile>(DOWNLOAD_FILE)!!
         downloadManager = (activity as SharedDecksActivity).downloadManager
@@ -136,12 +141,30 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
             openDownloadedDeck(context)
         }
 
+        downloadFromBrowser.setOnClickListener {
+            Timber.i("'Download from AnkiWeb' clicked")
+            downloadManager.remove(downloadId)
+            openUrl(getDeckPageUri(fileToBeDownloaded.url))
+            parentFragmentManager.popBackStack()
+        }
+
         tryAgainButton.setOnClickListener {
             Timber.i("Try again button clicked, retry downloading of deck")
             downloadManager.remove(downloadId)
             downloadFile(fileToBeDownloaded)
             cancelButton.visibility = View.VISIBLE
             tryAgainButton.visibility = View.GONE
+            downloadFromBrowser.visibility = View.GONE
+        }
+    }
+
+    private fun getDeckPageUri(orgUrl: String): Uri {
+        val matchResult = deckIdRegex.find(orgUrl)
+        val deckId = matchResult?.groups?.get(1)?.value
+        return if (deckId != null) {
+            Uri.parse("https://ankiweb.net/shared/info/$deckId")
+        } else {
+            Uri.parse(resources.getString(R.string.shared_decks_url))
         }
         requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
     }
@@ -485,6 +508,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 context?.let { showThemedToast(it, R.string.something_wrong, false) }
                 // Update UI if download could not be successful
                 tryAgainButton.visibility = View.VISIBLE
+                downloadFromBrowser.visibility = View.VISIBLE
                 cancelButton.visibility = View.GONE
                 downloadPercentageText.text = getString(R.string.download_failed)
                 downloadProgressBar.progress = DOWNLOAD_STARTED_PROGRESS_PERCENTAGE.toInt()
