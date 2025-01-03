@@ -22,10 +22,13 @@ import com.ichi2.anki.scheduling.SetDueDateViewModel.Tab
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.sched.SetDueDateDays
 import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.common.assertThrows
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class SetDueDateViewModelTest : JvmTest() {
@@ -111,12 +114,58 @@ class SetDueDateViewModelTest : JvmTest() {
             assertThat(calculateDaysParameter(), eq("0-1!"))
         }
 
+    @Test
+    fun `if FSRS is enabled updateIntervalToMatchDueDate may not be set to false`() {
+        runViewModelTest(fsrsEnabled = true) {
+            // the value can be set to true
+            updateIntervalToMatchDueDate = true
+
+            assertFalse(
+                canSetUpdateIntervalToMatchDueDate,
+                "canSetUpdateIntervalToMatchDueDate when FSRS enabled",
+            )
+
+            val ex =
+                assertThrows<UnsupportedOperationException>("due date mismatch & FSRS enabled") {
+                    updateIntervalToMatchDueDate = false
+                }
+            assertThat(ex.message, equalTo("due date must match interval if using FSRS"))
+        }
+
+        runViewModelTest(fsrsEnabled = false) {
+            assertTrue(
+                canSetUpdateIntervalToMatchDueDate,
+                "canSetUpdateIntervalToMatchDueDate and no FSRS",
+            )
+        }
+    }
+
+    @Test
+    fun `updateIntervalToMatchDueDate default value, given scheduler`() {
+        runViewModelTest(fsrsEnabled = true) {
+            assertThat(
+                "updateIntervalToMatchDueDate default if FSRS",
+                updateIntervalToMatchDueDate,
+                equalTo(true),
+            )
+        }
+
+        runViewModelTest(fsrsEnabled = false) {
+            assertThat(
+                "updateIntervalToMatchDueDate default if no FSRS",
+                updateIntervalToMatchDueDate,
+                equalTo(false),
+            )
+        }
+    }
+
     private fun runViewModelTest(
         cardIds: List<CardId> = listOf(1, 2, 3),
+        fsrsEnabled: Boolean = false,
         testBody: suspend SetDueDateViewModel.() -> Unit,
     ) = runTest {
         val viewModel = SetDueDateViewModel()
-        viewModel.init(cardIds.toLongArray())
+        viewModel.init(cardIds.toLongArray(), fsrsEnabled = fsrsEnabled)
         testBody(viewModel)
     }
 }
