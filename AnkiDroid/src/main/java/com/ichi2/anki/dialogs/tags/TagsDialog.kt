@@ -313,6 +313,7 @@ class TagsDialog : AnalyticsDialogFragment {
                 }.input(
                     hint = getString(R.string.tag_name),
                     inputType = InputType.TYPE_CLASS_TEXT,
+                    displayKeyboard = true,
                 ) { d: AlertDialog?, input: CharSequence ->
                     addTag(input.toString())
                     d?.dismiss()
