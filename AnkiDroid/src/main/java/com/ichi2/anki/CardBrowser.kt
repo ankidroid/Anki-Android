@@ -144,6 +144,7 @@ import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -591,6 +592,12 @@ open class CardBrowser :
                 adapter.addAll(viewModel.column2Candidates.map { it.getLabel(cardsOrNotes) })
             }
         }
+
+        suspend fun updateColumnLanguageChange(value: String) {
+            viewModel.fetchColumn()
+            setupColumnSpinners()
+        }
+
         viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         viewModel.flowOfSearchQueryExpanded.launchCollectionInLifecycleScope(::onSearchQueryExpanded)
         viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
@@ -600,6 +607,7 @@ open class CardBrowser :
         viewModel.flowOfDeckId.launchCollectionInLifecycleScope(::onDeckIdChanged)
         viewModel.flowOfCanSearch.launchCollectionInLifecycleScope(::onCanSaveChanged)
         viewModel.flowOfIsInMultiSelectMode.launchCollectionInLifecycleScope(::isInMultiSelectModeChanged)
+        viewModel.flowOfLanguageChanged.launchCollectionInLifecycleScope(::updateColumnLanguageChange)
         viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
         viewModel.flowOfInitCompleted.launchCollectionInLifecycleScope(::initCompletedChanged)
@@ -954,6 +962,12 @@ open class CardBrowser :
 
     override fun onResume() {
         super.onResume()
+
+        // only when viewModel is initiated and columns value has been assigned
+        if (viewModel.flowOfInitCompleted.value) {
+            viewModel.flowOfLanguageChanged.update { LanguageUtil.getSystemLocale().language }
+        }
+
         selectNavigationItem(R.id.nav_browser)
         updateNumCardsToRender()
     }
