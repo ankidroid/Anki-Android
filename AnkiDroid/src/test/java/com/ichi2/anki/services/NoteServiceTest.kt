@@ -21,7 +21,6 @@ import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.ImageField
 import com.ichi2.anki.multimediacard.fields.MediaClipField
 import com.ichi2.anki.servicelayer.NoteService
-import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.testutils.createTransientFile
@@ -274,65 +273,5 @@ class NoteServiceTest : RobolectricTest() {
         NoteService.importMediaToDirectory(col, field)
 
         assertThat("Image temporary file should have been deleted after importing", file, not(anExistingFile()))
-    }
-
-    @Test
-    fun testAvgEase() {
-        // basic case: no cards are new
-        val note = addNoteUsingModelName("Cloze", "{{c1::Hello}}{{c2::World}}{{c3::foo}}{{c4::bar}}", "extra")
-        // factor for cards: 3000, 1500, 1000, 750
-        for ((i, card) in note.cards().withIndex()) {
-            card.update {
-                type = Consts.CARD_TYPE_REV
-                factor = 3000 / (i + 1)
-            }
-        }
-        // avg ease = (3000/10 + 1500/10 + 100/10 + 750/10) / 4 = [156.25] = 156
-        assertEquals(156, NoteService.avgEase(col, note))
-
-        // test case: one card is new
-        note.cards()[2].update {
-            type = Consts.CARD_TYPE_NEW
-        }
-        // avg ease = (3000/10 + 1500/10 + 750/10) / 3 = [175] = 175
-        assertEquals(175, NoteService.avgEase(col, note))
-
-        // test case: all cards are new
-        note.updateCards { type = Consts.CARD_TYPE_NEW }
-        // no cards are rev, so avg ease cannot be calculated
-        assertEquals(null, NoteService.avgEase(col, note))
-    }
-
-    @Test
-    fun testAvgInterval() {
-        // basic case: all cards are relearning or review
-        val note = addNoteUsingModelName("Cloze", "{{c1::Hello}}{{c2::World}}{{c3::foo}}{{c4::bar}}", "extra")
-        val reviewOrRelearningList = listOf(Consts.CARD_TYPE_REV, Consts.CARD_TYPE_RELEARNING)
-        val newOrLearningList = listOf(Consts.CARD_TYPE_NEW, Consts.CARD_TYPE_LRN)
-
-        // interval for cards: 3000, 1500, 1000, 750
-        for ((i, card) in note.cards().withIndex()) {
-            card.update {
-                type = reviewOrRelearningList.shuffled().first()
-                ivl = 3000 / (i + 1)
-            }
-        }
-
-        // avg interval = (3000 + 1500 + 1000 + 750) / 4 = [1562.5] = 1562
-        assertEquals(1562, NoteService.avgInterval(col, note))
-
-        // case: one card is new or learning
-        note.cards()[2].update {
-            type = newOrLearningList.shuffled().first()
-        }
-
-        // avg interval = (3000 + 1500 + 750) / 3 = [1750] = 1750
-        assertEquals(1750, NoteService.avgInterval(col, note))
-
-        // case: all cards are new or learning
-        note.updateCards { type = newOrLearningList.shuffled().first() }
-
-        // no cards are rev or relearning, so avg interval cannot be calculated
-        assertEquals(null, NoteService.avgInterval(col, note))
     }
 }

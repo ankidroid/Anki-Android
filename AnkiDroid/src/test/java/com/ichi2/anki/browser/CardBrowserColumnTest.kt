@@ -16,21 +16,7 @@
 
 package com.ichi2.anki.browser
 
-import com.ichi2.anki.CardBrowser
-import com.ichi2.anki.browser.CardBrowserColumn.CHANGED
-import com.ichi2.anki.browser.CardBrowserColumn.CREATED
-import com.ichi2.anki.browser.CardBrowserColumn.DUE
-import com.ichi2.anki.browser.CardBrowserColumn.EDITED
-import com.ichi2.anki.browser.CardBrowserColumn.FSRS_DIFFICULTY
-import com.ichi2.anki.browser.CardBrowserColumn.FSRS_RETRIEVABILITY
-import com.ichi2.anki.browser.CardBrowserColumn.FSRS_STABILITY
-import com.ichi2.anki.browser.CardBrowserColumn.ORIGINAL_POSITION
-import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.testutils.JvmTest
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
-import org.hamcrest.Matchers.`in`
-import org.hamcrest.Matchers.not
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
@@ -58,68 +44,5 @@ class CardBrowserColumnTest : JvmTest() {
         val collectionColumns = col.backend.allBrowserColumns()
         Timber.w("%s", collectionColumns.joinToString { it.key })
         assertNotNull(collectionColumns.find(column))
-    }
-
-    @Test
-    fun `cards - ensure old values match backend values`() {
-        CardsOrNotes.CARDS.saveToCollection(col)
-        `ensure old values match backend values`(CardsOrNotes.CARDS)
-    }
-
-    @Test
-    fun `notes - ensure old values match backend values`() {
-        CardsOrNotes.NOTES.saveToCollection(col)
-        `ensure old values match backend values`(CardsOrNotes.NOTES)
-    }
-
-    private fun `ensure old values match backend values`(cardsOrNotes: CardsOrNotes) {
-        // dates seem correct - we don't currently display minutes
-        assumeThat(column, not(`in`(listOf(CHANGED, CREATED, EDITED))))
-        // FSRS is not implemented
-        assumeThat(
-            column,
-            not(
-                `in`(
-                    listOf(
-                        FSRS_DIFFICULTY,
-                        FSRS_RETRIEVABILITY,
-                        FSRS_STABILITY,
-                    ),
-                ),
-            ),
-        )
-
-        val note = addNoteUsingBasicModel()
-        val cid = note.cids()[0]
-        val nid = note.id
-
-        var oldData =
-            CardBrowser
-                .CardCache(cid, col, 0, cardsOrNotes)
-                .getColumnHeaderText(column)
-
-        val newData =
-            column.let {
-                col.backend.setActiveBrowserColumns(listOf(it.ankiColumnKey))
-                val rowId = if (cardsOrNotes == CardsOrNotes.CARDS) cid else nid
-                col.backend
-                    .browserRowForId(rowId)
-                    .getCells(0)
-                    .text
-            }
-
-        if (column == DUE) {
-            oldData =
-                when (cardsOrNotes) {
-                    CardsOrNotes.CARDS -> "New #\u2068${oldData}\u2069"
-                    CardsOrNotes.NOTES -> ""
-                }
-        } else if (column == ORIGINAL_POSITION) {
-            // original position is generated in the backend.
-            // should be "1" since this is our first card.
-            oldData = "1"
-        }
-
-        assertThat(newData, equalTo(oldData))
     }
 }

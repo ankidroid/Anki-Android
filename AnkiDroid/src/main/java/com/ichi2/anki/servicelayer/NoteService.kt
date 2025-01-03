@@ -41,7 +41,6 @@ import com.ichi2.libanki.NoteTypeId
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.undoableOp
-import com.ichi2.utils.CollectionUtils.average
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File
@@ -151,7 +150,8 @@ object NoteService {
                     }
                     when (field.type) {
                         EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP, EFieldType.IMAGE -> field.mediaPath = outFile.absolutePath
-                        EFieldType.TEXT -> {}
+                        else -> {
+                        }
                     }
                 }
             } catch (e: IOException) {
@@ -221,45 +221,6 @@ object NoteService {
         note: Note,
     ): Boolean = note.hasTag(col, tag = "marked")
 
-    //  TODO: should make a direct SQL query to do this
-
-    /**
-     * returns the average ease of all the non-new cards in the note,
-     * or if all the cards in the note are new, returns null
-     */
-    fun avgEase(
-        col: Collection,
-        note: Note,
-    ): Int? {
-        val nonNewCards = note.cards(col).filter { it.type != Consts.CARD_TYPE_NEW }
-
-        return nonNewCards.average { it.factor }?.let { it / 10 }?.toInt()
-    }
-
-    //  TODO: should make a direct SQL query to do this
-    fun totalLapses(
-        col: Collection,
-        note: Note,
-    ) = note.cards(col).sumOf { it.lapses }
-
-    fun totalReviews(
-        col: Collection,
-        note: Note,
-    ) = note.cards(col).sumOf { it.reps }
-
-    /**
-     * Returns the average interval of all the non-new and non-learning cards in the note,
-     * or if all the cards in the note are new or learning, returns null
-     */
-    fun avgInterval(
-        col: Collection,
-        note: Note,
-    ): Int? {
-        val nonNewOrLearningCards = note.cards(col).filter { it.type != Consts.CARD_TYPE_NEW && it.type != Consts.CARD_TYPE_LRN }
-
-        return nonNewOrLearningCards.average { it.ivl }?.toInt()
-    }
-
     interface NoteField {
         val ord: Int
 
@@ -269,12 +230,6 @@ object NoteService {
 }
 
 const val MARKED_TAG = "marked"
-
-fun Card.totalLapsesOfNote(col: Collection) = NoteService.totalLapses(col, note(col))
-
-fun Card.totalReviewsForNote(col: Collection) = NoteService.totalReviews(col, note(col))
-
-fun Card.avgIntervalOfNote(col: Collection) = NoteService.avgInterval(col, note(col))
 
 suspend fun isBuryNoteAvailable(card: Card): Boolean =
     withCol {
