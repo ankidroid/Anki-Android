@@ -181,7 +181,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.json.JSONArray
-import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
 import java.util.LinkedList
@@ -1130,8 +1129,8 @@ class NoteEditor :
 
         // changed note type?
         if (!addNote && currentEditedCard != null) {
-            val newModel: JSONObject? = currentlySelectedNotetype
-            val oldModel: JSONObject = currentEditedCard!!.noteType(getColUnsafe)
+            val newModel = currentlySelectedNotetype
+            val oldModel = currentEditedCard!!.noteType(getColUnsafe)
             if (newModel != oldModel) {
                 return true
             }
