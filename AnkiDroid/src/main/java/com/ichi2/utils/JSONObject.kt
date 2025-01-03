@@ -91,7 +91,7 @@ fun <T : JSONObject> JSONObject.deepClonedInto(clone: T): T {
  * @return Exactly the same object, with a different type.
  */
 
-fun fromMap(map: Map<String, Any>): JSONObject =
+fun fromMap(map: Map<String, Any>) =
     JSONObject().apply {
         map.forEach { (k, v) -> put(k, v) }
     }

@@ -27,10 +27,10 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckConfigId
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.DeckNode
-import org.json.JSONObject
 import timber.log.Timber
 
 class ReminderService : BroadcastReceiver() {
@@ -147,7 +147,7 @@ class ReminderService : BroadcastReceiver() {
             val decks: MutableList<DeckNode> = ArrayList(dues.size)
             // This loop over top level deck only. No notification will ever occur for subdecks.
             for (node in dues) {
-                val deck: JSONObject? = col.decks.get(node.did)
+                val deck: Deck? = col.decks.get(node.did)
                 // Dynamic deck has no "conf", so are not added here.
                 if (deck != null && deck.optLong("conf") == dConfId) {
                     decks.add(node)

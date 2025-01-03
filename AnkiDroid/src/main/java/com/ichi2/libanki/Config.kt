@@ -83,12 +83,11 @@ class Config(
     fun getObject(
         key: String,
         default: JSONObject,
-    ): JSONObject =
-        try {
-            JSONObject(backend.getConfigJson(key).toStringUtf8())
-        } catch (ex: BackendNotFoundException) {
-            default
-        } catch (ex: JSONException) {
-            default
-        }
+    ) = try {
+        JSONObject(backend.getConfigJson(key).toStringUtf8())
+    } catch (ex: BackendNotFoundException) {
+        default
+    } catch (ex: JSONException) {
+        default
+    }
 }

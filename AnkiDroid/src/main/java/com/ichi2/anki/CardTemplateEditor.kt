@@ -297,7 +297,7 @@ open class CardTemplateEditor :
     }
 
     fun modelHasChanged(): Boolean {
-        val oldModel: JSONObject? = getColUnsafe.notetypes.get(modelId)
+        val oldModel: NotetypeJson? = getColUnsafe.notetypes.get(modelId)
         return tempModel != null && tempModel!!.notetype.toString() != oldModel.toString()
     }
 

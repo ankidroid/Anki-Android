@@ -30,7 +30,6 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.NoteTypeId
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.utils.KotlinCleanup
-import org.json.JSONObject
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -337,7 +336,7 @@ class CardTemplateNotetype(
          */
         fun saveTempModel(
             context: Context,
-            tempModel: JSONObject,
+            tempModel: NotetypeJson,
         ): String? {
             Timber.d("saveTempModel() saving tempModel")
             var tempModelFile: File
