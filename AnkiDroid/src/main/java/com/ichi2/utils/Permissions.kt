@@ -28,6 +28,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.common.utils.android.isRobolectric
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
 import com.ichi2.compat.PackageInfoFlagsCompat
 import timber.log.Timber
@@ -174,7 +175,7 @@ object Permissions {
 
     fun canManageExternalStorage(context: Context): Boolean {
         // TODO: See if we can move this to a testing manifest
-        if (isRobolectric) {
+        if (isRobolectric or context.sharedPrefs().getBoolean("skipStoragePermission", false)) {
             return false
         }
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.R &&

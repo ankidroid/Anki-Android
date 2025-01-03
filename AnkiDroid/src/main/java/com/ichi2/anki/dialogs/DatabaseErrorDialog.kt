@@ -56,6 +56,7 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.INCOMP
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
 import com.ichi2.anki.isLoggedIn
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog
@@ -496,7 +497,10 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
 
         companion object {
             /** A dialog which creates a new collection in an unsafe location */
-            fun displayResetToNewDirectoryDialog(context: AnkiActivity) {
+            fun displayResetToNewDirectoryDialog(
+                context: AnkiActivity,
+                skipButton: Boolean = false,
+            ) {
                 AlertDialog.Builder(context).show {
                     title(R.string.backup_new_collection)
                     setIcon(R.drawable.ic_warning)
@@ -507,6 +511,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                             "closeCollection: %s",
                             "DatabaseErrorDialog: Before Create New Collection",
                         )
+                        if (skipButton) {
+                            val sharedPrefsEdit = context.sharedPrefs().edit()
+                            sharedPrefsEdit.putBoolean("skipStoragePermission", true)
+                            sharedPrefsEdit.apply()
+                        }
                         CollectionManager.closeCollectionBlocking()
                         CollectionHelper.resetAnkiDroidDirectory(context)
                         context.closeCollectionAndFinish()

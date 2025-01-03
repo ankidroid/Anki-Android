@@ -75,6 +75,7 @@
     <string name="dialog_keep">Keep</string>
     <string name="dialog_remove">Remove</string>
     <string name="dialog_continue">Continue</string>
+    <string name="dialog_skip">Skip</string>
     <string name="dialog_processing">Processing…</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Create</string>
     <string name="dialog_positive_delete" maxLength="28">Delete</string>
