@@ -75,10 +75,12 @@ export const I18N_FILES = [
 // 3) When you add a language, please also add it to APP_LANGUAGES in LanguageUtil.kt
 //    BACKEND_LANGS in LanguageUtil is informational and not used for anything, so it's not imperative
 //    to keep it up to date.
-// 4) If you add a language with a regional variant (anything with a hyphen) and a different variant
+// 4) add it to LanguageUtilsTest > testCurrentLanguagesHaveNotChanged, taking care to
+//    follow the instructions there to alter the the previous vs current variable definitions
+// 5) If you add a language with a regional variant (anything with a hyphen) and a different variant
 //    with the same root exists, you must add the root to 'localizedRegions'
 //    e.g., 'ga-IE' exists with no other 'ga-' entries yet, to add 'ga-EN', also add ga to localizedRegions
-// 5) Update MissingDefaultResource in lint-release.xml
+// 6) Update MissingDefaultResource in lint-release.xml
 export const LANGUAGES = [
     "af",
     "am",
@@ -161,6 +163,7 @@ export const LANGUAGES = [
     "tr",
     "ts",
     "tt-RU",
+    "ug",
     "uk",
     "ur-PK",
     "uz",
