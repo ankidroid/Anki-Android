@@ -63,3 +63,15 @@ object BundleUtils {
             getInt(key)
         }
 }
+
+/**
+ * Retrieves a [Boolean] value from a [Bundle] using a key, throws if not found
+ *
+ * @param key A string key
+ * @return the value associated with [key]
+ * @throws IllegalStateException If [key] does not exist in the bundle
+ */
+fun Bundle.requireBoolean(key: String): Boolean {
+    check(containsKey(key)) { "key: '$key' not found" }
+    return getBoolean(key)
+}

@@ -18,6 +18,8 @@ package com.ichi2.utils
 import android.os.Bundle
 import com.ichi2.utils.BundleUtils.getNullableLong
 import com.ichi2.utils.BundleUtils.requireLong
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.mockito.Mockito.anyString
@@ -83,6 +85,34 @@ class BundleUtilsTest {
 
         verify(mockedBundle).containsKey(eq(KEY))
         verify(mockedBundle).getLong(eq(KEY))
+
+        assertEquals(expected, value)
+    }
+
+    @Test
+    fun test_RequireBoolean_NotFound_ThrowsException() {
+        val mockedBundle = mock(Bundle::class.java)
+
+        whenever(mockedBundle.containsKey(anyString())).thenReturn(false)
+
+        val exception = assertFailsWith<IllegalStateException> { mockedBundle.requireBoolean(KEY) }
+
+        assertThat(exception.message, equalTo("key: 'KEY' not found"))
+        verify(mockedBundle).containsKey(eq(KEY))
+    }
+
+    @Test
+    fun test_RequireBoolean_Found_ReturnIt() {
+        val expected = true
+        val mockedBundle = mock(Bundle::class.java)
+
+        whenever(mockedBundle.containsKey(anyString())).thenReturn(true)
+        whenever(mockedBundle.getBoolean(anyString())).thenReturn(expected)
+
+        val value = mockedBundle.requireBoolean(KEY)
+
+        verify(mockedBundle).containsKey(eq(KEY))
+        verify(mockedBundle).getBoolean(eq(KEY))
 
         assertEquals(expected, value)
     }
