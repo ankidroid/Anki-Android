@@ -27,12 +27,12 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.BundleCompat
-import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
 import com.canhub.cropper.CropImageView
-import com.google.android.material.color.MaterialColors
-import com.ichi2.anki.AnkiFragment
+import com.ichi2.anki.R
 import com.ichi2.anki.snackbar.showSnackbar
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
@@ -41,15 +41,14 @@ import timber.log.Timber
  * Fragment for cropping images within the AnkiDroid, uses [CropImageView] to crop the image and
  * sends the image uri as result.
  *
- * Portions of this code were adapted from the Canub project.
+ * Portions of this code were adapted from the CanHub project.
  * Original source: https://github.com/CanHub/Android-Image-Cropper
  *
  * Attribution to the original authors of the CanHub/Android-Image-Cropper for their contributions.
  */
 class ImageCropper :
-    AnkiFragment(com.ichi2.anki.R.layout.fragment_image_cropper),
-    CropImageView.OnSetImageUriCompleteListener,
-    CropImageView.OnCropImageCompleteListener {
+    Fragment(R.layout.fragment_image_cropper),
+    MenuProvider {
     private lateinit var cropImageView: CropImageView
 
     override fun onViewCreated(
@@ -57,112 +56,94 @@ class ImageCropper :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        cropImageView = findViewById(com.ichi2.anki.R.id.cropImageView)
-        ankiActivity.setSupportActionBar(findViewById(com.ichi2.anki.R.id.toolbar))
-        setOptions()
-        setUpMenu()
-        cropImageView.setOnSetImageUriCompleteListener(this)
-        cropImageView.setOnCropImageCompleteListener(this)
-
-        val originalImageUri =
-            BundleCompat.getParcelable(requireArguments(), CROP_IMAGE_URI, Uri::class.java)
-        cropImageView.setImageUriAsync(originalImageUri)
+        (activity as? AppCompatActivity)?.apply {
+            setSupportActionBar(view.findViewById(R.id.toolbar))
+            // there's no need for a title anyway and if we don't set it we end up with "AnkiDroid"
+            // as the title which is useless
+            supportActionBar?.title = ""
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
+        cropImageView =
+            view.findViewById<CropImageView>(R.id.cropImageView).apply {
+                setOnSetImageUriCompleteListener(::onSetImageUriComplete)
+                setOnCropImageCompleteListener(::onCropImageComplete)
+                cropRect = Rect(100, 300, 500, 1200)
+                val originalImageUri =
+                    BundleCompat.getParcelable(requireArguments(), CROP_IMAGE_URI, Uri::class.java)
+                setImageUriAsync(originalImageUri)
+            }
+        requireActivity().addMenuProvider(this, viewLifecycleOwner)
     }
 
-    private fun setUpMenu() {
-        val menuHost: MenuHost = ankiActivity
-        menuHost.addMenuProvider(
-            object : MenuProvider {
-                override fun onCreateMenu(
-                    menu: Menu,
-                    menuInflater: MenuInflater,
-                ) {
-                    menu.clear()
-                    menuInflater.inflate(com.canhub.cropper.R.menu.crop_image_menu, menu)
-
-                    // Canhub has white color icons we need to change that
-                    for (i in 0 until menu.size()) {
-                        val menuItem = menu.getItem(i)
-                        menuItem.icon?.setTint(
-                            MaterialColors.getColor(
-                                requireContext(),
-                                com.ichi2.anki.R.attr.toolbarIconColor,
-                                0,
-                            ),
-                        )
-                    }
-                }
-
-                override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
-                    when (menuItem.itemId) {
-                        com.canhub.cropper.R.id.crop_image_menu_crop -> {
-                            Timber.d("Crop image clicked")
-                            cropImageView.croppedImageAsync()
-                            true
-                        }
-
-                        com.canhub.cropper.R.id.ic_rotate_right_24 -> {
-                            Timber.d("Rotate right clicked")
-                            cropImageView.rotateImage(90)
-                            true
-                        }
-
-                        com.canhub.cropper.R.id.ic_flip_24_horizontally -> {
-                            Timber.d("Flip horizontally clicked")
-
-                            cropImageView.flipImageHorizontally()
-                            true
-                        }
-
-                        com.canhub.cropper.R.id.ic_flip_24_vertically -> {
-                            Timber.d("Flip vertically clicked")
-                            cropImageView.flipImageVertically()
-                            true
-                        }
-
-                        else -> false
-                    }
-            },
-        )
+    override fun onCreateMenu(
+        menu: Menu,
+        menuInflater: MenuInflater,
+    ) {
+        menu.clear()
+        // TODO make our own menu, we shouldn't rely on third party menu files
+        menuInflater.inflate(com.canhub.cropper.R.menu.crop_image_menu, menu)
     }
 
-    override fun onSetImageUriComplete(
-        view: CropImageView,
-        uri: Uri,
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
+        when (menuItem.itemId) {
+            com.canhub.cropper.R.id.crop_image_menu_crop -> {
+                Timber.d("Crop image clicked")
+                cropImageView.croppedImageAsync()
+                true
+            }
+
+            com.canhub.cropper.R.id.ic_rotate_right_24 -> {
+                Timber.d("Rotate right clicked")
+                cropImageView.rotateImage(90)
+                true
+            }
+
+            com.canhub.cropper.R.id.ic_flip_24_horizontally -> {
+                Timber.d("Flip horizontally clicked")
+
+                cropImageView.flipImageHorizontally()
+                true
+            }
+
+            com.canhub.cropper.R.id.ic_flip_24_vertically -> {
+                Timber.d("Flip vertically clicked")
+                cropImageView.flipImageVertically()
+                true
+            }
+
+            else -> false
+        }
+
+    private fun onSetImageUriComplete(
+        @Suppress("UNUSED_PARAMETER") view: CropImageView,
+        @Suppress("UNUSED_PARAMETER") uri: Uri,
         error: Exception?,
     ) {
         if (error != null) {
             Timber.e(error, "Failed to load image by URI")
-            showSnackbar(com.ichi2.anki.R.string.something_wrong)
+            showSnackbar(R.string.something_wrong)
         }
     }
 
-    override fun onCropImageComplete(
-        view: CropImageView,
+    private fun onCropImageComplete(
+        @Suppress("UNUSED_PARAMETER") view: CropImageView,
         result: CropImageView.CropResult,
     ) {
         if (result.error == null) {
-            sendCropResult(result)
+            val resultIntent = Intent()
+            resultIntent.putExtra(
+                CROP_IMAGE_RESULT,
+                CropResultData(
+                    uriContent = result.uriContent,
+                    uriPath = context?.let { result.getUriFilePath(it) },
+                ),
+            )
+            activity?.setResult(Activity.RESULT_OK, resultIntent)
+            activity?.finish()
         } else {
             Timber.e(result.error, "Failed to crop image")
-            showSnackbar(com.ichi2.anki.R.string.something_wrong)
+            showSnackbar(R.string.something_wrong)
         }
-    }
-
-    private fun setOptions() {
-        cropImageView.cropRect = Rect(100, 300, 500, 1200)
-    }
-
-    private fun sendCropResult(result: CropImageView.CropResult) {
-        val resultIntent =
-            Intent().apply {
-                putExtra(
-                    CROP_IMAGE_RESULT,
-                    CropResultData(error = result.error, uriContent = result.uriContent, uriPath = result.getUriFilePath(ankiActivity)),
-                )
-            }
-        activity?.setResult(Activity.RESULT_OK, resultIntent)
-        activity?.finish()
     }
 
     override fun onDestroyView() {
@@ -185,7 +166,6 @@ class ImageCropper :
 
     @Parcelize
     data class CropResultData(
-        val error: Exception? = null,
         val uriContent: Uri? = null,
         val uriPath: String? = null,
     ) : Parcelable
