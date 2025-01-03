@@ -184,7 +184,7 @@ class SetDueDateDialog : DialogFragment() {
 
     companion object {
         const val ARG_CARD_IDS = "ARGS_CARD_IDS"
-        const val MAX_WIDTH_DP = 450
+        const val MAX_WIDTH_DP = 450f
 
         @CheckResult
         fun newInstance(cardIds: List<CardId>) =
@@ -309,5 +309,5 @@ private fun AnkiActivity.updateDueDate(viewModel: SetDueDateViewModel) =
         showSnackbar(TR.schedulingSetDueDateDone(cardsUpdated), Snackbar.LENGTH_SHORT)
     }
 
-// TODO: See if we can turn this to a `val` when context parameters are back
-fun Int.dpToPx(context: Context): Int = (this * context.resources.displayMetrics.density + 0.5f).toInt()
+// TODO: better to use 16.dp ... toPx(context)
+fun Float.dpToPx(context: Context): Int = (this * context.resources.displayMetrics.density + 0.5f).toInt()
