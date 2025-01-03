@@ -17,8 +17,9 @@ class EInkDeviceIdentifier {
             get() = originalModel.lowercase(Locale.ROOT).trim()
 
         companion object {
-            val current: DeviceInfo
-                get() = DeviceInfo(Build.MANUFACTURER, Build.MODEL)
+            val current: DeviceInfo by lazy {
+                DeviceInfo(Build.MANUFACTURER, Build.MODEL)
+            }
         }
     }
 
@@ -122,7 +123,7 @@ class EInkDeviceIdentifier {
         DeviceInfo("barnesandnoble", "bnrv520"),
         DeviceInfo("barnesandnoble", "bnrv700"),
         DeviceInfo("barnesandnoble", "evk_mx6s1"),
-        DeviceInfo("barnesandnoble","ereader"), // probably a eink device
+        DeviceInfo("barnesandnoble", "ereader"), // Probably an eink device
         DeviceInfo("freescale", "bnrv510"),
         DeviceInfo("freescale", "bnrv520"),
         DeviceInfo("freescale", "bnrv700"),
@@ -134,20 +135,20 @@ class EInkDeviceIdentifier {
         DeviceInfo("sony", "dpt-rp1"),
         DeviceInfo("onyx", "tagus_pokep"),
         DeviceInfo("xiaomi", "xiaomi_reader"),
-        DeviceInfo("artatech", "pri"), // probably a eink device
-        DeviceInfo("crema", "crema-0710c"), // probably a eink device
-        DeviceInfo("crema", "crema-0670c"), // probably a eink device
+        DeviceInfo("artatech", "pri"), // Probably an eink device
+        DeviceInfo("crema", "crema-0710c"), // Probably an eink device
+        DeviceInfo("crema", "crema-0670c"), // Probably an eink device
 
         // Source: https://github.com/plotn/coolreader/blob/e5baf0607e678468aa045053ba5f092164aa1dd7/android/src/org/coolreader/crengine/DeviceInfo.java
         DeviceInfo("barnesandnoble", "NOOK"),
         DeviceInfo("barnesandnoble", "bnrv350"),
         DeviceInfo("barnesandnoble", "bnrv300"),
         DeviceInfo("barnesandnoble", "bnrv500"),
-        DeviceInfo("sony", "PRS-T"), // probably a eink device
+        DeviceInfo("sony", "PRS-T"), // Probably an eink device
         DeviceInfo("dns", "DNS Airbook EGH"),
 
         // Source: https://github.com/ankidroid/Anki-Android/issues/17618
-        DeviceInfo("Viwoods", "Viwoods AiPaper"),
+        DeviceInfo("Viwoods", "Viwoods AiPaper")
     )
 
     private val eInkManufacturersList = setOf(
@@ -167,7 +168,7 @@ class EInkDeviceIdentifier {
         "dns",
         "crema",
         "kindle",
-        "bigme",
+        "bigme"
     )
 
     /**
@@ -185,7 +186,8 @@ class EInkDeviceIdentifier {
         for (device in knownEInkDevices) {
             // Check if the device is an exact match.
             if (currentDevice.manufacturer == device.manufacturer &&
-                currentDevice.model == device.model) {
+                currentDevice.model == device.model
+            ) {
                 isExactMatch = true
                 break
             }
@@ -193,7 +195,8 @@ class EInkDeviceIdentifier {
             if ((currentDevice.manufacturer.contains(device.manufacturer) ||
                         device.manufacturer.contains(currentDevice.manufacturer)) &&
                 (currentDevice.model.contains(device.model) ||
-                        device.model.contains(currentDevice.model))) {
+                        device.model.contains(currentDevice.model))
+            ) {
                 isPartialMatch = true
             }
         }
@@ -202,7 +205,7 @@ class EInkDeviceIdentifier {
             Timber.d("Confirmed E-ink device: $currentDevice")
             return true
         }
-        //if the device is a partial match or if the manufacturer is in the list of known E-ink manufacturers then report it
+        // If the device is a partial match or if the manufacturer is in the list of known E-ink manufacturers then report it
         if (isPartialMatch || eInkManufacturersList.contains(currentDevice.manufacturer)) {
             Timber.w("Potential E-ink device: $currentDevice")
             ACRA.errorReporter.handleSilentException(Exception("Potential E-ink device: $currentDevice"))
