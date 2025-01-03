@@ -31,7 +31,7 @@ import org.junit.runner.RunWith
 class PreviewerFragmentTest : RobolectricTest() {
     @Test
     fun `previewer - back button`() {
-        val note = addNoteUsingBasicAndReversedModel()
+        val note = addBasicAndReversedNoteType()
 
         val intent =
             PreviewerFragment.getIntent(
