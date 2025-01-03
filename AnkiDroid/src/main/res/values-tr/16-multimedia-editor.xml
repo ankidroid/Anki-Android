@@ -71,7 +71,6 @@
     <string name="crop_button" maxLength="28">Görüntüyü kırp</string>
     <string name="save_dialog_content">Şu anki resim boyutu %s MB. Varsayılan resim boyut sınırı 1 MB. Resmi sıkıştırmak ister misiniz?</string>
     <string name="select_image_failed">"Resim seçilemedi, Lütfen tekrar deneyin"</string>
-    <string name="activity_result_unexpected">Uygulama beklenmeyen bir değer döndürdü. Farklı bir uygulama kullanmanız gerekebilir</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Alan İçeriği</string>
     <string name="reselect" maxLength="28">Yeniden seç</string>
 </resources>

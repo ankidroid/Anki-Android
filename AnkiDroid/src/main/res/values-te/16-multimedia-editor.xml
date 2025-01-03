@@ -71,7 +71,6 @@
     <string name="crop_button" maxLength="28">చిత్రాన్ని కత్తిరించండి</string>
     <string name="save_dialog_content">ప్రస్తుత చిత్రం పరిమాణం %sMB. డిఫాల్ట్ చిత్రం పరిమాణం పరిమితి 1MB. మీరు దానిని కుదించాలనుకుంటున్నారా?</string>
     <string name="select_image_failed">"చిత్రాన్ని ఎంచుకోవడంలో విఫలమైంది, దయచేసి మళ్లీ ప్రయత్నించండి"</string>
-    <string name="activity_result_unexpected">యాప్ ఊహించని విలువను అందించింది. మీరు వేరే యాప్‌ని ఉపయోగించాల్సి రావచ్చు</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">ఫీల్డ్ విషయాలు</string>
     <string name="reselect" maxLength="28">మళ్లీ ఎంచుకోండి</string>
 </resources>
