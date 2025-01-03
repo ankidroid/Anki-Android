@@ -19,10 +19,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.replaceText
-import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.RootMatchers.isDialog
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.isEnabled
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -47,6 +46,7 @@ import com.ichi2.testutils.isJsonEqual
 import io.mockk.every
 import io.mockk.mockk
 import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.intellij.lang.annotations.Language
 import org.json.JSONObject
@@ -172,7 +172,7 @@ class CustomStudyDialogTest : RobolectricTest() {
         ) { dialogFragment: CustomStudyDialog ->
             onView(withText(TR.customStudyIncreaseTodaysNewCardLimit()))
                 .inRoot(isDialog())
-                .check(matches(isDisplayed()))
+                .check(matches(isEnabled()))
         }
     }
 
@@ -187,7 +187,7 @@ class CustomStudyDialogTest : RobolectricTest() {
         ) { dialogFragment: CustomStudyDialog ->
             onView(withText(TR.customStudyIncreaseTodaysNewCardLimit()))
                 .inRoot(isDialog())
-                .check(doesNotExist())
+                .check(matches(not(isEnabled())))
         }
     }
 
@@ -202,7 +202,7 @@ class CustomStudyDialogTest : RobolectricTest() {
         ) { dialogFragment: CustomStudyDialog ->
             onView(withText(TR.customStudyIncreaseTodaysReviewCardLimit()))
                 .inRoot(isDialog())
-                .check(matches(isDisplayed()))
+                .check(matches(isEnabled()))
         }
     }
 
@@ -217,7 +217,7 @@ class CustomStudyDialogTest : RobolectricTest() {
         ) { dialogFragment: CustomStudyDialog ->
             onView(withText(TR.customStudyIncreaseTodaysReviewCardLimit()))
                 .inRoot(isDialog())
-                .check(doesNotExist())
+                .check(matches(not(isEnabled())))
         }
     }
 
