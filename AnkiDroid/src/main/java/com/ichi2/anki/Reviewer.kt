@@ -683,10 +683,11 @@ open class Reviewer :
         }
     }
 
-    private fun showDueDateDialog() {
-        val dialog = SetDueDateDialog.newInstance(listOf(currentCardId!!))
-        showDialogFragment(dialog)
-    }
+    private fun showDueDateDialog() =
+        launchCatchingTask {
+            val dialog = SetDueDateDialog.newInstance(listOf(currentCardId!!))
+            showDialogFragment(dialog)
+        }
 
     private fun showResetCardDialog() {
         Timber.i("showResetCardDialog() Reset progress button pressed")

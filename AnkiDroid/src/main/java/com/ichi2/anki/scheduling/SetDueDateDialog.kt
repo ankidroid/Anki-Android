@@ -28,6 +28,7 @@ import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -48,6 +49,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.scheduling.SetDueDateViewModel.Tab
+import com.ichi2.anki.servicelayer.getFSRSStatus
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
@@ -59,6 +61,7 @@ import com.ichi2.utils.create
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
+import com.ichi2.utils.requireBoolean
 import com.ichi2.utils.title
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -84,10 +87,15 @@ class SetDueDateDialog : DialogFragment() {
     // used to determine if a rotation has taken place
     private var initialRotation: Int = 0
 
+    val cardIds: LongArray
+        get() = requireNotNull(requireArguments().getLongArray(ARG_CARD_IDS)) { ARG_CARD_IDS }
+
+    val fsrsEnabled: Boolean
+        get() = requireArguments().requireBoolean(ARG_FSRS)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val cardIds = requireNotNull(requireArguments().getLongArray(ARG_CARD_IDS)) { ARG_CARD_IDS }
-        viewModel.init(cardIds)
+        viewModel.init(cardIds, fsrsEnabled)
         Timber.d("Set due date dialog: %d card(s)", cardIds.size)
         this.initialRotation = getScreenRotation()
     }
@@ -151,9 +159,12 @@ class SetDueDateDialog : DialogFragment() {
                 )
 
                 // setup 'set interval to same value' checkbox
-                findViewById<MaterialCheckBox>(R.id.change_interval)!!.apply {
-                    isChecked = viewModel.updateIntervalToMatchDueDate
-                    setOnCheckedChangeListener { _, isChecked ->
+                findViewById<MaterialCheckBox>(R.id.change_interval)!!.also { cb ->
+                    // `.also` is used as .isVisible is an extension, so Kotlin prefers
+                    // incorrectly setting Fragment.isVisible
+                    cb.isVisible = viewModel.canSetUpdateIntervalToMatchDueDate
+                    cb.isChecked = viewModel.updateIntervalToMatchDueDate
+                    cb.setOnCheckedChangeListener { _, isChecked ->
                         viewModel.updateIntervalToMatchDueDate = isChecked
                     }
                 }
@@ -184,12 +195,17 @@ class SetDueDateDialog : DialogFragment() {
 
     companion object {
         const val ARG_CARD_IDS = "ARGS_CARD_IDS"
+        const val ARG_FSRS = "ARGS_FSRS"
         const val MAX_WIDTH_DP = 450f
 
         @CheckResult
-        fun newInstance(cardIds: List<CardId>) =
+        suspend fun newInstance(cardIds: List<CardId>) =
             SetDueDateDialog().apply {
-                arguments = bundleOf(ARG_CARD_IDS to cardIds.toLongArray())
+                arguments =
+                    bundleOf(
+                        ARG_CARD_IDS to cardIds.toLongArray(),
+                        ARG_FSRS to (getFSRSStatus() ?: false.also { Timber.w("FSRS Status error") }),
+                    )
                 Timber.i("Showing 'set due date' dialog for %d cards", cardIds.size)
             }
     }

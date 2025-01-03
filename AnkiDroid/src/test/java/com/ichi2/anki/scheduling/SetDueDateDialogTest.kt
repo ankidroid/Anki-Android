@@ -39,6 +39,7 @@ import org.junit.runner.RunWith
 
 @Ignore("selectTab(1) does not attach Ids")
 @NeedsTest("get the tests working")
+@NeedsTest("set interval to same value visibility with FSRS")
 @RunWith(AndroidJUnit4::class)
 class SetDueDateDialogTest : RobolectricTest() {
     @Test
