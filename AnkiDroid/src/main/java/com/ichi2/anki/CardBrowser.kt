@@ -42,12 +42,14 @@ import android.widget.CheckBox
 import android.widget.ListView
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.CheckResult
 import androidx.annotation.ColorInt
 import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -284,6 +286,31 @@ open class CardBrowser :
     private var shouldRestoreScroll = false
     private var postAutoScroll = false
 
+    private val drawerBackCallback =
+        object : OnBackPressedCallback(false) {
+            override fun handleOnBackPressed() {
+                closeDrawer()
+            }
+        }
+
+    private val multiSelectBackCallback =
+        object : OnBackPressedCallback(false) {
+            override fun handleOnBackPressed() {
+                viewModel.endMultiSelectMode()
+            }
+        }
+
+    private val closeCardBrowserBackCallback =
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Timber.i("Back key pressed")
+                val data = Intent()
+                // Add reload flag to result intent so that schedule reset when returning to note editor
+                data.putExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, reloadRequired)
+                closeCardBrowser(RESULT_OK, data)
+            }
+        }
+
     init {
         ChangeManager.subscribe(this)
     }
@@ -443,6 +470,27 @@ open class CardBrowser :
 
         setupFlows()
         registerOnForgetHandler { viewModel.queryAllSelectedCardIds() }
+        val drawerListener =
+            object : ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                R.string.drawer_open,
+                R.string.drawer_close,
+            ) {
+                override fun onDrawerClosed(drawerView: View) {
+                    super.onDrawerClosed(drawerView)
+                    drawerBackCallback.isEnabled = false
+                }
+
+                override fun onDrawerOpened(drawerView: View) {
+                    super.onDrawerOpened(drawerView)
+                    drawerBackCallback.isEnabled = true
+                }
+            }
+        drawerLayout.addDrawerListener(drawerListener)
+        onBackPressedDispatcher.addCallback(this, closeCardBrowserBackCallback)
+        onBackPressedDispatcher.addCallback(this, multiSelectBackCallback)
+        onBackPressedDispatcher.addCallback(this, drawerBackCallback)
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -498,6 +546,7 @@ open class CardBrowser :
                 // show title and hide spinner
                 actionBarTitle.visibility = View.VISIBLE
                 deckSpinnerSelection.setSpinnerVisibility(View.GONE)
+                multiSelectBackCallback.isEnabled = true
             } else {
                 Timber.d("end multiselect mode")
                 // If view which was originally selected when entering multi-select is visible then maintain its position
@@ -507,6 +556,7 @@ open class CardBrowser :
                 cardsAdapter.notifyDataSetChanged()
                 deckSpinnerSelection.setSpinnerVisibility(View.VISIBLE)
                 actionBarTitle.visibility = View.GONE
+                multiSelectBackCallback.isEnabled = false
             }
             // reload the actionbar using the multi-select mode actionbar
             invalidateOptionsMenu()
@@ -924,22 +974,6 @@ open class CardBrowser :
     override fun onDestroy() {
         invalidate()
         super.onDestroy()
-    }
-
-    @Deprecated("Deprecated in Java")
-    @Suppress("DEPRECATION")
-    override fun onBackPressed() {
-        when {
-            isDrawerOpen -> super.onBackPressed()
-            viewModel.isInMultiSelectMode -> viewModel.endMultiSelectMode()
-            else -> {
-                Timber.i("Back key pressed")
-                val data = Intent()
-                // Add reload flag to result intent so that schedule reset when returning to note editor
-                data.putExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, reloadRequired)
-                closeCardBrowser(RESULT_OK, data)
-            }
-        }
     }
 
     override fun onPause() {
