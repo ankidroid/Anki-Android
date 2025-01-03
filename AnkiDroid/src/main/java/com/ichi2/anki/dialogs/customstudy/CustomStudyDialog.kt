@@ -40,11 +40,11 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.EXTEND_NEW
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.EXTEND_REV
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_AHEAD
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_FORGOT
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_NEW
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_PREVIEW
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_REV
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_TAGS
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.Companion.toDomainModel
 import com.ichi2.anki.dialogs.tags.TagsDialog
@@ -192,8 +192,8 @@ class CustomStudyDialog(
                     )
                 requireActivity().showDialogFragment(dialogFragment)
             }
-            STUDY_NEW,
-            STUDY_REV,
+            EXTEND_NEW,
+            EXTEND_REV,
             STUDY_FORGOT,
             STUDY_AHEAD,
             STUDY_PREVIEW,
@@ -226,8 +226,8 @@ class CustomStudyDialog(
         ContextMenuOption.entries
             .map {
                 when (it) {
-                    STUDY_NEW -> Pair(it, defaults.extendNew.isUsable)
-                    STUDY_REV -> Pair(it, defaults.extendReview.isUsable)
+                    EXTEND_NEW -> Pair(it, defaults.extendNew.isUsable)
+                    EXTEND_REV -> Pair(it, defaults.extendReview.isUsable)
                     else -> Pair(it, true)
                 }
             }.forEach { (menuItem, isItemEnabled) ->
@@ -275,7 +275,7 @@ class CustomStudyDialog(
                 setSelectAllOnFocus(true)
                 requestFocus()
                 // a user may enter a negative value when extending limits
-                if (contextMenuOption == STUDY_NEW || contextMenuOption == STUDY_REV) {
+                if (contextMenuOption == EXTEND_NEW || contextMenuOption == EXTEND_REV) {
                     inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
                 }
             }
@@ -315,8 +315,8 @@ class CustomStudyDialog(
             customStudyRequest {
                 deckId = dialogDeckId
                 when (contextMenuOption) {
-                    STUDY_NEW -> newLimitDelta = userEntry
-                    STUDY_REV -> reviewLimitDelta = userEntry
+                    EXTEND_NEW -> newLimitDelta = userEntry
+                    EXTEND_REV -> reviewLimitDelta = userEntry
                     STUDY_FORGOT -> forgotDays = userEntry
                     STUDY_AHEAD -> reviewAheadDays = userEntry
                     STUDY_PREVIEW -> previewDays = userEntry
@@ -329,7 +329,7 @@ class CustomStudyDialog(
                 collection.sched.customStudy(request)
             }
             when (contextMenuOption) {
-                STUDY_NEW, STUDY_REV ->
+                EXTEND_NEW, EXTEND_REV ->
                     customStudyListener?.onExtendStudyLimits()
                 STUDY_FORGOT, STUDY_AHEAD, STUDY_PREVIEW -> customStudyListener?.onCreateCustomStudySession()
                 STUDY_TAGS -> TODO("This branch has not been covered before")
@@ -343,7 +343,7 @@ class CustomStudyDialog(
             STUDY_FORGOT -> sharedPrefs().edit { putInt("forgottenDays", userEntry) }
             STUDY_AHEAD -> sharedPrefs().edit { putInt("aheadDays", userEntry) }
             STUDY_PREVIEW -> sharedPrefs().edit { putInt("previewDays", userEntry) }
-            STUDY_NEW, STUDY_REV -> {
+            EXTEND_NEW, EXTEND_REV -> {
                 // Nothing to do in ankidroid. The default value is provided by the backend.
             }
             STUDY_TAGS -> TODO("This branch has not been covered before")
@@ -381,8 +381,8 @@ class CustomStudyDialog(
     private val text1: String
         get() =
             when (selectedSubDialog) {
-                STUDY_NEW -> defaults.labelForNewQueueAvailable()
-                STUDY_REV -> defaults.labelForReviewQueueAvailable()
+                EXTEND_NEW -> defaults.labelForNewQueueAvailable()
+                EXTEND_REV -> defaults.labelForReviewQueueAvailable()
                 STUDY_FORGOT,
                 STUDY_AHEAD,
                 STUDY_PREVIEW,
@@ -396,8 +396,8 @@ class CustomStudyDialog(
         get() {
             val res = resources
             return when (selectedSubDialog) {
-                STUDY_NEW -> res.getString(R.string.custom_study_new_extend)
-                STUDY_REV -> res.getString(R.string.custom_study_rev_extend)
+                EXTEND_NEW -> res.getString(R.string.custom_study_new_extend)
+                EXTEND_REV -> res.getString(R.string.custom_study_rev_extend)
                 STUDY_FORGOT -> res.getString(R.string.custom_study_forgotten)
                 STUDY_AHEAD -> res.getString(R.string.custom_study_ahead)
                 STUDY_PREVIEW -> res.getString(R.string.custom_study_preview)
@@ -412,8 +412,8 @@ class CustomStudyDialog(
         get() {
             val prefs = requireActivity().sharedPrefs()
             return when (selectedSubDialog) {
-                STUDY_NEW -> defaults.extendNew.initialValue.toString()
-                STUDY_REV -> defaults.extendReview.initialValue.toString()
+                EXTEND_NEW -> defaults.extendNew.initialValue.toString()
+                EXTEND_REV -> defaults.extendReview.initialValue.toString()
                 STUDY_FORGOT -> prefs.getInt("forgottenDays", 1).toString()
                 STUDY_AHEAD -> prefs.getInt("aheadDays", 1).toString()
                 STUDY_PREVIEW -> prefs.getInt("previewDays", 1).toString()
@@ -492,10 +492,10 @@ class CustomStudyDialog(
         val getTitle: Resources.() -> String,
     ) {
         /** Increase today's new card limit */
-        STUDY_NEW({ TR.customStudyIncreaseTodaysNewCardLimit() }),
+        EXTEND_NEW({ TR.customStudyIncreaseTodaysNewCardLimit() }),
 
         /** Increase today's review card limit */
-        STUDY_REV({ TR.customStudyIncreaseTodaysReviewCardLimit() }),
+        EXTEND_REV({ TR.customStudyIncreaseTodaysReviewCardLimit() }),
 
         /** Review forgotten cards */
         STUDY_FORGOT({ TR.customStudyReviewForgottenCards() }),
