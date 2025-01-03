@@ -264,6 +264,23 @@ open class AnkiDroidApp :
         TtsVoices.launchBuildLocalesJob()
         // enable {{tts-voices:}} field filter
         TtsVoicesFieldFilter.ensureApplied()
+        // initialize safe display mode for e-ink devices
+        initializeSafeDisplayMode()
+    }
+
+    /**
+     * Initializes the safe display mode for e-ink devices.
+     *
+     * This method checks if the `safe_display` key is already set in the shared preferences.
+     * If the key is not set and the device has an e-ink display, it sets the `safe_display` key to `true`.
+     */
+    private fun initializeSafeDisplayMode() {
+        val preferences = this.sharedPrefs()
+        val isSafeDisplaySet = preferences.contains("safeDisplay")
+        val deviceIdentifier = EInkDeviceIdentifier()
+        if (!isSafeDisplaySet && deviceIdentifier.isEInkDevice()) {
+            preferences.edit().putBoolean("safeDisplay", true).apply()
+        }
     }
 
     /**
