@@ -54,7 +54,12 @@ fun View.setPaddingRelative(
     top: DisplayPixels,
     end: DisplayPixels,
     bottom: DisplayPixels,
-) = setPaddingRelative(start.toPx(context), top.toPx(context), end.toPx(context), bottom.toPx(context))
+) = setPaddingRelative(
+    start.toPx(context),
+    top.toPx(context),
+    end.toPx(context),
+    bottom.toPx(context),
+)
 
 /** Returns a [DisplayPixels] instance equal to this [Int] number of display pixels. */
 val Int.dp
