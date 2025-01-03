@@ -20,10 +20,16 @@ package com.ichi2.anki.dialogs.customstudy
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.res.Resources
+import android.graphics.Color
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.ListView
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
@@ -36,11 +42,11 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.EXTEND_NEW
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.EXTEND_REV
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_AHEAD
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_FORGOT
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_NEW
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_PREVIEW
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_REV
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_TAGS
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.Companion.toDomainModel
 import com.ichi2.anki.dialogs.tags.TagsDialog
@@ -51,6 +57,8 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.anki.utils.ext.dp
+import com.ichi2.anki.utils.ext.setPaddingRelative
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withProgress
@@ -65,7 +73,6 @@ import com.ichi2.utils.BundleUtils.getNullableInt
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.customView
-import com.ichi2.utils.listItems
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.textAsIntOrNull
@@ -167,44 +174,99 @@ class CustomStudyDialog(
         }
     }
 
+    /**
+     * Handles selecting an item from the main menu of the dialog
+     */
+    private fun onMenuItemSelected(item: ContextMenuOption) =
+        when (item) {
+            STUDY_TAGS -> {
+            /*
+             * This is a special Dialog for CUSTOM STUDY, where instead of only collecting a
+             * number, it is necessary to collect a list of tags. This case handles the creation
+             * of that Dialog.
+             */
+                val dialogFragment =
+                    TagsDialog().withArguments(
+                        context = requireContext(),
+                        type = TagsDialog.DialogType.CUSTOM_STUDY_TAGS,
+                        checkedTags = ArrayList(),
+                        allTags = ArrayList(collection.tags.byDeck(dialogDeckId)),
+                    )
+                requireActivity().showDialogFragment(dialogFragment)
+            }
+            EXTEND_NEW,
+            EXTEND_REV,
+            STUDY_FORGOT,
+            STUDY_AHEAD,
+            STUDY_PREVIEW,
+            -> {
+                // User asked for a standard custom study option
+                val d =
+                    CustomStudyDialog(collection, customStudyListener)
+                        .withArguments(dialogDeckId, item)
+                requireActivity().showDialogFragment(d)
+            }
+        }
+
     private fun buildContextMenu(): AlertDialog {
-        val listIds = getListIds()
+        val menuItems = buildMenuItems()
+
+        val adapter =
+            object : ArrayAdapter<ContextMenuData>(requireContext(), android.R.layout.simple_list_item_1, menuItems) {
+                override fun getView(
+                    position: Int,
+                    convertView: View?,
+                    parent: ViewGroup,
+                ): View {
+                    val view = convertView ?: LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1, parent, false)
+                    val textView = view.findViewById<TextView>(android.R.id.text1)
+
+                    val (item, isEnabled) = getItem(position)!!
+                    textView.text = item.getTitle(resources)
+                    textView.isEnabled = isEnabled
+                    textView.setTextAppearance(android.R.style.TextAppearance_Material_Body1)
+                    return view
+                }
+            }
+
+        // we use a custom view, because we want 'disabled' items, where clicking them performs
+        // a no-op rather than closing the dialog
+        val listView =
+            ListView(context).apply {
+                this.adapter = adapter
+
+                divider = null
+                setPaddingRelative(9.dp)
+
+                this.setOnItemClickListener { _, _, index, _ ->
+                    val selectedItem = menuItems[index]
+                    if (!selectedItem.enabled) {
+                        return@setOnItemClickListener.also {
+                            Timber.d("disabled item '%s' clicked", selectedItem.item)
+                        }
+                    }
+
+                    onMenuItemSelected(selectedItem.item)
+                }
+
+                // some items are disabled
+                val disabledChildItems =
+                    menuItems
+                        .withIndex()
+                        .filter { !it.value.enabled }
+                        .map { getChildAt(it.index) }
+                for (child in disabledChildItems) {
+                    child?.isEnabled = false
+                    child?.setBackgroundColor(Color.TRANSPARENT) // remove selectable background
+                }
+            }
 
         return AlertDialog
             .Builder(requireActivity())
             .title(text = TR.actionsCustomStudy().toSentenceCase(this, R.string.sentence_custom_study))
             .cancelable(true)
-            .listItems(items = listIds.map { it.getTitle(resources) }) { _, index ->
-                when (listIds[index]) {
-                    STUDY_TAGS -> {
-                        /*
-                         * This is a special Dialog for CUSTOM STUDY, where instead of only collecting a
-                         * number, it is necessary to collect a list of tags. This case handles the creation
-                         * of that Dialog.
-                         */
-                        val dialogFragment =
-                            TagsDialog().withArguments(
-                                context = requireContext(),
-                                type = TagsDialog.DialogType.CUSTOM_STUDY_TAGS,
-                                checkedTags = ArrayList(),
-                                allTags = ArrayList(collection.tags.byDeck(dialogDeckId)),
-                            )
-                        requireActivity().showDialogFragment(dialogFragment)
-                    }
-                    STUDY_NEW,
-                    STUDY_REV,
-                    STUDY_FORGOT,
-                    STUDY_AHEAD,
-                    STUDY_PREVIEW,
-                    -> {
-                        // User asked for a standard custom study option
-                        val d =
-                            CustomStudyDialog(collection, customStudyListener)
-                                .withArguments(dialogDeckId, listIds[index])
-                        requireActivity().showDialogFragment(d)
-                    }
-                }
-            }.create()
+            .customView(listView)
+            .create()
     }
 
     /**
@@ -233,7 +295,7 @@ class CustomStudyDialog(
                 setSelectAllOnFocus(true)
                 requestFocus()
                 // a user may enter a negative value when extending limits
-                if (contextMenuOption == STUDY_NEW || contextMenuOption == STUDY_REV) {
+                if (contextMenuOption == EXTEND_NEW || contextMenuOption == EXTEND_REV) {
                     inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
                 }
             }
@@ -273,8 +335,8 @@ class CustomStudyDialog(
             customStudyRequest {
                 deckId = dialogDeckId
                 when (contextMenuOption) {
-                    STUDY_NEW -> newLimitDelta = userEntry
-                    STUDY_REV -> reviewLimitDelta = userEntry
+                    EXTEND_NEW -> newLimitDelta = userEntry
+                    EXTEND_REV -> reviewLimitDelta = userEntry
                     STUDY_FORGOT -> forgotDays = userEntry
                     STUDY_AHEAD -> reviewAheadDays = userEntry
                     STUDY_PREVIEW -> previewDays = userEntry
@@ -287,7 +349,7 @@ class CustomStudyDialog(
                 collection.sched.customStudy(request)
             }
             when (contextMenuOption) {
-                STUDY_NEW, STUDY_REV ->
+                EXTEND_NEW, EXTEND_REV ->
                     customStudyListener?.onExtendStudyLimits()
                 STUDY_FORGOT, STUDY_AHEAD, STUDY_PREVIEW -> customStudyListener?.onCreateCustomStudySession()
                 STUDY_TAGS -> TODO("This branch has not been covered before")
@@ -301,7 +363,7 @@ class CustomStudyDialog(
             STUDY_FORGOT -> sharedPrefs().edit { putInt("forgottenDays", userEntry) }
             STUDY_AHEAD -> sharedPrefs().edit { putInt("aheadDays", userEntry) }
             STUDY_PREVIEW -> sharedPrefs().edit { putInt("previewDays", userEntry) }
-            STUDY_NEW, STUDY_REV -> {
+            EXTEND_NEW, EXTEND_REV -> {
                 // Nothing to do in ankidroid. The default value is provided by the backend.
             }
             STUDY_TAGS -> TODO("This branch has not been covered before")
@@ -336,28 +398,26 @@ class CustomStudyDialog(
     }
 
     /**
-     * Retrieve the list of ids to put in the context menu list
-     * @return the ids of which values to show
+     * @return the items and their enabled status
+     * @see ContextMenuData
      */
-    private fun getListIds(): List<ContextMenuOption> {
-        // Standard context menu
-        return mutableListOf(STUDY_FORGOT, STUDY_AHEAD, STUDY_PREVIEW, STUDY_TAGS).apply {
-            if (defaults.extendReview.isUsable) {
-                this.add(0, STUDY_REV)
-            }
-            // We want 'Extend new' above 'Extend review' if both appear
-            if (defaults.extendNew.isUsable) {
-                this.add(0, STUDY_NEW)
-            }
+    private fun buildMenuItems(): List<ContextMenuData> =
+        mutableListOf(EXTEND_NEW, EXTEND_REV, STUDY_FORGOT, STUDY_AHEAD, STUDY_PREVIEW, STUDY_TAGS).map { option ->
+            val enabled =
+                when (option) {
+                    EXTEND_NEW -> defaults.extendNew.isUsable
+                    EXTEND_REV -> defaults.extendReview.isUsable
+                    else -> true
+                }
+            ContextMenuData(option, enabled)
         }
-    }
 
     /** Line 1 of the number entry dialog */
     private val text1: String
         get() =
             when (selectedSubDialog) {
-                STUDY_NEW -> defaults.labelForNewQueueAvailable()
-                STUDY_REV -> defaults.labelForReviewQueueAvailable()
+                EXTEND_NEW -> defaults.labelForNewQueueAvailable()
+                EXTEND_REV -> defaults.labelForReviewQueueAvailable()
                 STUDY_FORGOT,
                 STUDY_AHEAD,
                 STUDY_PREVIEW,
@@ -371,8 +431,8 @@ class CustomStudyDialog(
         get() {
             val res = resources
             return when (selectedSubDialog) {
-                STUDY_NEW -> res.getString(R.string.custom_study_new_extend)
-                STUDY_REV -> res.getString(R.string.custom_study_rev_extend)
+                EXTEND_NEW -> res.getString(R.string.custom_study_new_extend)
+                EXTEND_REV -> res.getString(R.string.custom_study_rev_extend)
                 STUDY_FORGOT -> res.getString(R.string.custom_study_forgotten)
                 STUDY_AHEAD -> res.getString(R.string.custom_study_ahead)
                 STUDY_PREVIEW -> res.getString(R.string.custom_study_preview)
@@ -387,8 +447,8 @@ class CustomStudyDialog(
         get() {
             val prefs = requireActivity().sharedPrefs()
             return when (selectedSubDialog) {
-                STUDY_NEW -> defaults.extendNew.initialValue.toString()
-                STUDY_REV -> defaults.extendReview.initialValue.toString()
+                EXTEND_NEW -> defaults.extendNew.initialValue.toString()
+                EXTEND_REV -> defaults.extendReview.initialValue.toString()
                 STUDY_FORGOT -> prefs.getInt("forgottenDays", 1).toString()
                 STUDY_AHEAD -> prefs.getInt("aheadDays", 1).toString()
                 STUDY_PREVIEW -> prefs.getInt("previewDays", 1).toString()
@@ -460,17 +520,26 @@ class CustomStudyDialog(
     }
 
     /**
-     * Possible context menu options that could be shown in the custom study dialog.
+     * A [context menu item][ContextMenuOption], and whether it is usable.
+     * Example: [EXTEND_NEW] would be unusable if there are no new cards
+     */
+    data class ContextMenuData(
+        val item: ContextMenuOption,
+        val enabled: Boolean,
+    )
+
+    /**
+     * Context menu options shown in the custom study dialog.
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     enum class ContextMenuOption(
         val getTitle: Resources.() -> String,
     ) {
         /** Increase today's new card limit */
-        STUDY_NEW({ TR.customStudyIncreaseTodaysNewCardLimit() }),
+        EXTEND_NEW({ TR.customStudyIncreaseTodaysNewCardLimit() }),
 
         /** Increase today's review card limit */
-        STUDY_REV({ TR.customStudyIncreaseTodaysReviewCardLimit() }),
+        EXTEND_REV({ TR.customStudyIncreaseTodaysReviewCardLimit() }),
 
         /** Review forgotten cards */
         STUDY_FORGOT({ TR.customStudyReviewForgottenCards() }),

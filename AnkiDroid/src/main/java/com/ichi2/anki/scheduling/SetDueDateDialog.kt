@@ -309,5 +309,5 @@ private fun AnkiActivity.updateDueDate(viewModel: SetDueDateViewModel) =
         showSnackbar(TR.schedulingSetDueDateDone(cardsUpdated), Snackbar.LENGTH_SHORT)
     }
 
-// TODO: See if we can turn this to a `val` when context parameters are back
+// TODO: better to use 16.dp ... toPx(context)
 fun Int.dpToPx(context: Context): Int = (this * context.resources.displayMetrics.density + 0.5f).toInt()
