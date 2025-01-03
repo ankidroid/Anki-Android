@@ -21,9 +21,13 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.res.Resources
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
@@ -65,9 +69,10 @@ import com.ichi2.utils.BundleUtils.getNullableInt
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.customView
-import com.ichi2.utils.listItems
+import com.ichi2.utils.dp
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
+import com.ichi2.utils.setPaddingRelative
 import com.ichi2.utils.textAsIntOrNull
 import com.ichi2.utils.title
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
@@ -167,44 +172,81 @@ class CustomStudyDialog(
         }
     }
 
+    /**
+     * Handles selecting an item from the main menu of the dialog
+     */
+    private fun onMenuItemSelected(item: ContextMenuOption) =
+        when (item) {
+            STUDY_TAGS -> {
+            /*
+             * This is a special Dialog for CUSTOM STUDY, where instead of only collecting a
+             * number, it is necessary to collect a list of tags. This case handles the creation
+             * of that Dialog.
+             */
+                val dialogFragment =
+                    TagsDialog().withArguments(
+                        context = requireContext(),
+                        type = TagsDialog.DialogType.CUSTOM_STUDY_TAGS,
+                        checkedTags = ArrayList(),
+                        allTags = ArrayList(collection.tags.byDeck(dialogDeckId)),
+                    )
+                requireActivity().showDialogFragment(dialogFragment)
+            }
+            STUDY_NEW,
+            STUDY_REV,
+            STUDY_FORGOT,
+            STUDY_AHEAD,
+            STUDY_PREVIEW,
+            -> {
+                // User asked for a standard custom study option
+                val d =
+                    CustomStudyDialog(collection, customStudyListener)
+                        .withArguments(dialogDeckId, item)
+                requireActivity().showDialogFragment(d)
+            }
+        }
+
     private fun buildContextMenu(): AlertDialog {
-        val listIds = getListIds()
+        val customMenuView = ScrollView(requireContext())
+        val container =
+            LinearLayout(requireContext())
+                .apply {
+                    orientation = LinearLayout.VERTICAL
+                    setPaddingRelative(9.dp.toPx(requireContext()))
+                }
+        customMenuView.addView(
+            container,
+            FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+            ),
+        )
+        val ta = TypedValue()
+        requireContext().theme.resolveAttribute(android.R.attr.selectableItemBackground, ta, true)
+        ContextMenuOption.entries
+            .map {
+                when (it) {
+                    STUDY_NEW -> Pair(it, defaults.extendNew.isUsable)
+                    STUDY_REV -> Pair(it, defaults.extendReview.isUsable)
+                    else -> Pair(it, true)
+                }
+            }.forEach { (menuItem, isItemEnabled) ->
+                (layoutInflater.inflate(android.R.layout.simple_list_item_1, container, false) as TextView)
+                    .apply {
+                        text = menuItem.getTitle(requireContext().resources)
+                        isEnabled = isItemEnabled
+                        setBackgroundResource(ta.resourceId)
+                        setTextAppearance(android.R.style.TextAppearance_Material_Body1)
+                        setOnClickListener { onMenuItemSelected(menuItem) }
+                    }.also { container.addView(it) }
+            }
 
         return AlertDialog
             .Builder(requireActivity())
             .title(text = TR.actionsCustomStudy().toSentenceCase(this, R.string.sentence_custom_study))
             .cancelable(true)
-            .listItems(items = listIds.map { it.getTitle(resources) }) { _, index ->
-                when (listIds[index]) {
-                    STUDY_TAGS -> {
-                        /*
-                         * This is a special Dialog for CUSTOM STUDY, where instead of only collecting a
-                         * number, it is necessary to collect a list of tags. This case handles the creation
-                         * of that Dialog.
-                         */
-                        val dialogFragment =
-                            TagsDialog().withArguments(
-                                context = requireContext(),
-                                type = TagsDialog.DialogType.CUSTOM_STUDY_TAGS,
-                                checkedTags = ArrayList(),
-                                allTags = ArrayList(collection.tags.byDeck(dialogDeckId)),
-                            )
-                        requireActivity().showDialogFragment(dialogFragment)
-                    }
-                    STUDY_NEW,
-                    STUDY_REV,
-                    STUDY_FORGOT,
-                    STUDY_AHEAD,
-                    STUDY_PREVIEW,
-                    -> {
-                        // User asked for a standard custom study option
-                        val d =
-                            CustomStudyDialog(collection, customStudyListener)
-                                .withArguments(dialogDeckId, listIds[index])
-                        requireActivity().showDialogFragment(d)
-                    }
-                }
-            }.create()
+            .customView(customMenuView)
+            .create()
     }
 
     /**
@@ -335,23 +377,6 @@ class CustomStudyDialog(
         )
     }
 
-    /**
-     * Retrieve the list of ids to put in the context menu list
-     * @return the ids of which values to show
-     */
-    private fun getListIds(): List<ContextMenuOption> {
-        // Standard context menu
-        return mutableListOf(STUDY_FORGOT, STUDY_AHEAD, STUDY_PREVIEW, STUDY_TAGS).apply {
-            if (defaults.extendReview.isUsable) {
-                this.add(0, STUDY_REV)
-            }
-            // We want 'Extend new' above 'Extend review' if both appear
-            if (defaults.extendNew.isUsable) {
-                this.add(0, STUDY_NEW)
-            }
-        }
-    }
-
     /** Line 1 of the number entry dialog */
     private val text1: String
         get() =
@@ -460,7 +485,7 @@ class CustomStudyDialog(
     }
 
     /**
-     * Possible context menu options that could be shown in the custom study dialog.
+     * Context menu options shown in the custom study dialog.
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     enum class ContextMenuOption(
