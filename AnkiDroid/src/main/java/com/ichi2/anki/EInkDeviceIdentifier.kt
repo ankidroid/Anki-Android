@@ -1,7 +1,6 @@
 package com.ichi2.anki
 
 import android.os.Build
-import org.acra.ACRA
 import timber.log.Timber
 import java.util.Locale
 
@@ -10,17 +9,12 @@ class EInkDeviceIdentifier {
         private val originalManufacturer: String,
         private val originalModel: String,
     ) {
-        val manufacturer: String
-            get() = originalManufacturer.lowercase(Locale.ROOT).trim()
+        val manufacturer = originalManufacturer.lowercase(Locale.ROOT).trim()
+        val model = originalModel.lowercase(Locale.ROOT).trim()
+    }
 
-        val model: String
-            get() = originalModel.lowercase(Locale.ROOT).trim()
-
-        companion object {
-            val current: DeviceInfo by lazy {
-                DeviceInfo(Build.MANUFACTURER, Build.MODEL)
-            }
-        }
+    companion object {
+        val current = DeviceInfo(Build.MANUFACTURER, Build.MODEL)
     }
 
     private val knownEInkDevices = setOf(
@@ -122,7 +116,7 @@ class EInkDeviceIdentifier {
         DeviceInfo("barnesandnoble", "bnrv520"),
         DeviceInfo("barnesandnoble", "bnrv700"),
         DeviceInfo("barnesandnoble", "evk_mx6s1"),
-        DeviceInfo("barnesandnoble", "ereader"), // Probably an eink device
+        DeviceInfo("barnesandnoble", "ereader"), // For a partial match
         DeviceInfo("freescale", "bnrv510"),
         DeviceInfo("freescale", "bnrv520"),
         DeviceInfo("freescale", "bnrv700"),
@@ -134,15 +128,15 @@ class EInkDeviceIdentifier {
         DeviceInfo("sony", "dpt-rp1"),
         DeviceInfo("onyx", "tagus_pokep"),
         DeviceInfo("xiaomi", "xiaomi_reader"),
-        DeviceInfo("artatech", "pri"), // Probably an eink device
-        DeviceInfo("crema", "crema-0710c"), // Probably an eink device
-        DeviceInfo("crema", "crema-0670c"), // Probably an eink device
+        DeviceInfo("artatech", "pri"), // For a partial match
+        DeviceInfo("crema", "crema-0710c"), // For a partial match
+        DeviceInfo("crema", "crema-0670c"), // For a partial match
         // Source: https://github.com/plotn/coolreader/blob/e5baf0607e678468aa045053ba5f092164aa1dd7/android/src/org/coolreader/crengine/DeviceInfo.java
         DeviceInfo("barnesandnoble", "NOOK"),
         DeviceInfo("barnesandnoble", "bnrv350"),
         DeviceInfo("barnesandnoble", "bnrv300"),
         DeviceInfo("barnesandnoble", "bnrv500"),
-        DeviceInfo("sony", "PRS-T"), // Probably an eink device
+        DeviceInfo("sony", "PRS-T"), // For a partial match
         DeviceInfo("dns", "DNS Airbook EGH"),
         // Source: https://github.com/ankidroid/Anki-Android/issues/17618
         DeviceInfo("Viwoods", "Viwoods AiPaper"),
@@ -173,41 +167,31 @@ class EInkDeviceIdentifier {
      */
     // Checks if the device has an E-Ink display by matching its manufacturer and model.
     fun isEInkDevice(): Boolean {
-        val currentDevice = DeviceInfo.current
-        Timber.v("Checking device: $currentDevice")
+        val currentDevice = current
+        Timber.v("Checking device: %s", currentDevice)
 
-        var isExactMatch = false
-        var isPartialMatch = false
-
-        // Check if the device is an exact match or a partial match.
-        for (device in knownEInkDevices) {
-            // Check if the device is an exact match.
-            if (
-                currentDevice.manufacturer == device.manufacturer &&
-                currentDevice.model == device.model
-            ) {
-                isExactMatch = true
-                break
-            }
-            // Check if the device is a partial match. Partial matches are detected using substring matching.
-            if (
-                (currentDevice.manufacturer.contains(device.manufacturer) ||
-                        device.manufacturer.contains(currentDevice.manufacturer)) &&
-                (currentDevice.model.contains(device.model) ||
-                        device.model.contains(currentDevice.model))
-            ) {
-                isPartialMatch = true
-            }
+        val isExactMatch = knownEInkDevices.any { device ->
+            currentDevice.manufacturer == device.manufacturer && currentDevice.model == device.model
         }
 
         if (isExactMatch) {
-            Timber.d("Confirmed E-ink device: $currentDevice")
+          Timber.d("Confirmed E-ink device: %s", currentDevice)
             return true
         }
-        // If the device is a partial match or if the manufacturer is in the list of known E-ink manufacturers then report it
+
+        val isPartialMatch = knownEInkDevices.any { device ->
+            (currentDevice.manufacturer.startsWith(device.manufacturer) || device.manufacturer.startsWith(currentDevice.manufacturer)) &&
+                    (currentDevice.model.startsWith(device.model) || device.model.startsWith(currentDevice.model))
+        }
+
         if (isPartialMatch || eInkManufacturersList.contains(currentDevice.manufacturer)) {
-            Timber.w("Potential E-ink device: $currentDevice")
-            ACRA.errorReporter.handleSilentException(Exception("Potential E-ink device: $currentDevice"))
+            Timber.w("Potential E-ink device: %s", currentDevice)
+            CrashReportService.sendExceptionReport(
+                Exception("Potential E-ink device: ${Build.MANUFACTURER} | ${Build.BRAND} | ${Build.DEVICE} | ${Build.PRODUCT} | ${Build.MODEL} | ${Build.HARDWARE}"),
+                origin = "EInkDeviceIdentifier",
+                additionalInfo = null,
+                onlyIfSilent = true
+            )
         }
 
         return false

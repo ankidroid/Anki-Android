@@ -279,7 +279,9 @@ open class AnkiDroidApp :
         val isSafeDisplaySet = preferences.contains("safeDisplay")
         val deviceIdentifier = EInkDeviceIdentifier()
         if (!isSafeDisplaySet && deviceIdentifier.isEInkDevice()) {
-            preferences.edit().putBoolean("safeDisplay", true).apply()
+            preferences.edit {
+                putBoolean("safeDisplay", true)
+            }
         }
     }
 
