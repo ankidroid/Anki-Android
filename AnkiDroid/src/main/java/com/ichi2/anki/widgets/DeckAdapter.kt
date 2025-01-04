@@ -21,27 +21,21 @@ import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.annotation.CheckResult
-import androidx.annotation.VisibleForTesting
 import androidx.core.content.res.getDrawableOrThrow
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.R
 import com.ichi2.anki.utils.ext.findViewById
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.DeckNode
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import net.ankiweb.rsdroid.RustCleanup
-import timber.log.Timber
 
 /**
  * A [RecyclerView.Adapter] used to show the list of decks inside [com.ichi2.anki.DeckPicker].
@@ -55,7 +49,6 @@ import timber.log.Timber
  * @param onDeckContextRequested callback triggered when the user requested to see extra actions for
  * a deck. This consists in a context menu brought in by either a long touch or a right click.
  */
-@RustCleanup("Lots of bad code: should not be using suspend functions inside an adapter")
 @RustCleanup("Differs from legacy backend: Create deck 'One', create deck 'One::two'. 'One::two' was not expanded")
 class DeckAdapter(
     context: Context,
@@ -64,13 +57,8 @@ class DeckAdapter(
     private val onDeckCountsSelected: (DeckId) -> Unit,
     private val onDeckChildrenToggled: (DeckId) -> Unit,
     private val onDeckContextRequested: (DeckId) -> Unit,
-) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(),
-    Filterable {
+) : ListAdapter<DeckNode, DeckAdapter.ViewHolder>(deckNodeDiffCallback) {
     private val layoutInflater = LayoutInflater.from(context)
-    private var deckTree: DeckNode? = null
-
-    /** The non-collapsed subset of the deck tree that matches the current search. */
-    private var filteredDeckList: List<DeckNode> = ArrayList()
     private val zeroCountColor: Int
     private val newCountColor: Int
     private val learnCountColor: Int
@@ -103,32 +91,44 @@ class DeckAdapter(
         val deckRev: TextView = findViewById(R.id.deckpicker_rev)
     }
 
-    private val mutex = Mutex()
-
     /**
-     * Consume a list of [DeckNode]s to render a new deck list.
-     * @param filter The string to filter the deck by
+     * Set new data in the adapter. This should be used instead of [submitList] (which is called
+     * by this method) so there's no need to call [notifyDataSetChanged] on the adapter.
      */
-    suspend fun buildDeckList(
-        node: DeckNode,
-        filter: CharSequence?,
+    fun submit(
+        data: List<DeckNode>,
+        hasSubDecks: Boolean,
+        currentDeckId: DeckId,
     ) {
-        Timber.d("buildDeckList")
-        // TODO: This is a lazy hack to fix a bug. We hold the lock for far too long
-        // and do I/O inside it. Better to calculate the new lists outside the lock, then swap
-        mutex.withLock {
-            deckTree = node
-            hasSubdecks = node.children.any { it.children.any() }
-            currentDeckId = withCol { decks.current().optLong("id") }
-            // Filtering performs notifyDataSetChanged after the async work is complete
-            getFilter()?.filter(filter)
+        // submitList is smart to not trigger a refresh if the new list is the same, but we do need
+        // an adapter refresh if the other two properties have changed even if the new data is the
+        // same as they modify some of the adapter's content appearance
+        val forceRefresh =
+            areDataSetsEqual(currentList, data) &&
+                (this.hasSubdecks != hasSubDecks || this.currentDeckId != currentDeckId)
+        this.hasSubdecks = hasSubDecks
+        this.currentDeckId = currentDeckId
+        submitList(data)
+        if (forceRefresh) notifyDataSetChanged()
+    }
+
+    private fun areDataSetsEqual(
+        currentSet: List<DeckNode>,
+        newSet: List<DeckNode>,
+    ): Boolean {
+        if (currentSet.size != newSet.size) return false
+        return currentSet.zip(newSet).all { (fst, snd) ->
+            fst.fullDeckName == snd.fullDeckName
         }
     }
 
-    @CheckResult
-    fun getNodeByDid(did: DeckId): DeckNode {
-        val pos = findDeckPosition(did)
-        return deckList[pos]
+    /**
+     * Update the current selected deck so the adapter shows the proper backgrounds.
+     * Calls [notifyDataSetChanged].
+     */
+    fun updateSelectedDeck(deckId: DeckId) {
+        this.currentDeckId = deckId
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(
@@ -140,8 +140,7 @@ class DeckAdapter(
         holder: ViewHolder,
         position: Int,
     ) {
-        // Update views for this node
-        val node = filteredDeckList[position]
+        val node = getItem(position)
         // Set the expander icon and padding according to whether or not there are any subdecks
         val deckLayout = holder.deckLayout
         if (hasSubdecks) {
@@ -191,8 +190,6 @@ class DeckAdapter(
         holder.countsLayout.setOnClickListener { onDeckCountsSelected(node.did) }
     }
 
-    override fun getItemCount(): Int = filteredDeckList.size
-
     private fun setDeckExpander(
         expander: ImageButton,
         indent: ImageButton,
@@ -214,54 +211,6 @@ class DeckAdapter(
         }
         // Add some indenting for each nested level
         indent.minimumWidth = nestedIndent * node.depth
-    }
-
-    /**
-     * Return the position of the deck in the deck list. If the deck is a child of a collapsed deck
-     * (i.e., not visible in the deck list), then the position of the parent deck is returned instead.
-     *
-     * An invalid deck ID will return position 0.
-     */
-    fun findDeckPosition(did: DeckId): Int {
-        filteredDeckList.forEachIndexed { index, treeNode ->
-            if (treeNode.did == did) {
-                return index
-            }
-        }
-
-        // If the deck is not in our list, we search again using the immediate parent
-        // If the deck is not found, return 0
-        val collapsedDeck = deckTree?.find(did) ?: return 0
-        val parent = collapsedDeck.parent?.get() ?: return 0
-        return findDeckPosition(parent.did)
-    }
-
-    private val deckList: List<DeckNode>
-        get() = filteredDeckList
-
-    override fun getFilter(): Filter? = deckTree?.let { DeckFilter(it) }
-
-    @VisibleForTesting
-    inner class DeckFilter(
-        private val top: DeckNode,
-    ) : Filter() {
-        override fun performFiltering(constraint: CharSequence?): FilterResults {
-            val out = top.filterAndFlatten(constraint)
-            Timber.i("deck filter: %d (%s)", out.size, constraint)
-            return FilterResults().also {
-                it.values = out
-                it.count = out.size
-            }
-        }
-
-        override fun publishResults(
-            constraint: CharSequence?,
-            results: FilterResults,
-        ) {
-            @Suppress("unchecked_cast")
-            filteredDeckList = results.values as List<DeckNode>
-            notifyDataSetChanged()
-        }
     }
 
     companion object {
@@ -301,3 +250,22 @@ class DeckAdapter(
         ta.recycle()
     }
 }
+
+private val deckNodeDiffCallback =
+    object : DiffUtil.ItemCallback<DeckNode>() {
+        override fun areItemsTheSame(
+            oldItem: DeckNode,
+            newItem: DeckNode,
+        ): Boolean = oldItem.did == newItem.did
+
+        override fun areContentsTheSame(
+            oldItem: DeckNode,
+            newItem: DeckNode,
+        ): Boolean =
+            oldItem.did == newItem.did &&
+                oldItem.filtered == newItem.filtered &&
+                oldItem.fullDeckName == newItem.fullDeckName &&
+                oldItem.newCount == newItem.newCount &&
+                oldItem.lrnCount == newItem.lrnCount &&
+                oldItem.revCount == newItem.revCount
+    }

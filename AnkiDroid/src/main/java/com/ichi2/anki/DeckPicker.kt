@@ -43,7 +43,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewPropertyAnimator
-import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
@@ -981,21 +980,17 @@ open class DeckPicker :
                     }
 
                     override fun onQueryTextChange(newText: String): Boolean {
-                        val adapter = recyclerView.adapter as? Filterable
-                        if (adapter == null || adapter.filter == null) {
-                            Timber.w(
-                                "DeckPicker.onQueryTextChange: adapter is null: %s, filter is null: %s, adapter type: %s",
-                                adapter == null,
-                                adapter?.filter == null,
-                                adapter?.javaClass?.simpleName ?: "Unknown",
-                            )
-                            CrashReportService.sendExceptionReport(
-                                Exception("DeckPicker.onQueryTextChanged with unexpected null adapter or filter. Carefully examine logcat"),
-                                "DeckPicker",
-                            )
-                            return true
+                        val adapter = recyclerView.adapter as DeckAdapter
+                        launchCatchingTask {
+                            val selectedDeckId = withCol { decks.current().getLong("id") }
+                            dueTree?.let {
+                                adapter.submit(
+                                    data = it.filterAndFlatten(newText),
+                                    hasSubDecks = it.children.any { deckNode -> deckNode.children.any() },
+                                    currentDeckId = selectedDeckId,
+                                )
+                            }
                         }
-                        adapter.filter.filter(newText)
                         return true
                     }
                 },
@@ -2136,12 +2131,12 @@ open class DeckPicker :
             promptUserToUpdateScheduler()
             return
         }
-
         withCol { decks.select(did) }
+        deckListAdapter.updateSelectedDeck(did)
         // Also forget the last deck used by the Browser
         CardBrowser.clearLastDeckId()
         viewModel.focusedDeck = did
-        val deck = deckListAdapter.getNodeByDid(did)
+        val deck = getNodeByDid(did)
         if (deck.hasCardsReadyToStudy()) {
             openReviewerOrStudyOptions(selectionType)
             return
@@ -2169,8 +2164,28 @@ open class DeckPicker :
      * @param did The deck ID of the deck to select.
      */
     private fun scrollDecklistToDeck(did: DeckId) {
-        val position = deckListAdapter.findDeckPosition(did)
+        val position = findDeckPosition(did)
         recyclerViewLayoutManager.scrollToPositionWithOffset(position, recyclerView.height / 2)
+    }
+
+    /**
+     * Return the position of the deck in the deck list. If the deck is a child of a collapsed deck
+     * (i.e., not visible in the deck list), then the position of the parent deck is returned instead.
+     *
+     * An invalid deck ID will return position 0.
+     */
+    private fun findDeckPosition(did: DeckId): Int {
+        deckListAdapter.currentList.forEachIndexed { index, treeNode ->
+            if (treeNode.did == did) {
+                return index
+            }
+        }
+
+        // If the deck is not in our list, we search again using the immediate parent
+        // If the deck is not found, return 0
+        val collapsedDeck = dueTree?.find(did) ?: return 0
+        val parent = collapsedDeck.parent?.get() ?: return 0
+        return findDeckPosition(parent.did)
     }
 
     /**
@@ -2282,20 +2297,26 @@ open class DeckPicker :
                 }
             }
         }
-        val currentFilter = if (toolbarSearchView != null) toolbarSearchView!!.query else null
+        val currentFilter = toolbarSearchView?.query
 
         if (isEmpty) {
-            if (supportActionBar != null) {
-                supportActionBar!!.subtitle = null
-            }
+            supportActionBar?.subtitle = null
             if (toolbarSearchView != null) {
-                deckListAdapter.filter?.filter(currentFilter)
+                deckListAdapter.submit(
+                    data = emptyList(),
+                    hasSubDecks = false,
+                    currentDeckId = -1,
+                )
             }
             Timber.d("Not rendering deck list as there are no cards")
             // We're done here
             return
         }
-        deckListAdapter.buildDeckList(tree, currentFilter)
+        deckListAdapter.submit(
+            data = tree.filterAndFlatten(currentFilter),
+            hasSubDecks = tree.children.any { it.children.any() },
+            currentDeckId = withCol { decks.current().getLong("id") },
+        )
 
         // Set the "x due" subtitle
         runCatchingKotlin {
@@ -2314,6 +2335,11 @@ open class DeckPicker :
             viewModel.focusedDeck = current
         }
     }
+
+    /**
+     * Get the [DeckNode] identified by [did] from [DeckAdapter].
+     */
+    private fun DeckPicker.getNodeByDid(did: DeckId): DeckNode = deckListAdapter.currentList[findDeckPosition(did)]
 
     // Callback to show study options for currently selected deck
     fun showContextMenuDeckOptions(did: DeckId) {
@@ -2654,7 +2680,10 @@ open class DeckPicker :
             withCol { sched.hasCardsTodayAfterStudyAheadLimit() } -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
             withCol { sched.newDue() || sched.revDue() } -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
             withCol { decks.isFiltered(did) } -> CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED
-            deckListAdapter.getNodeByDid(did).children.isEmpty() && withCol { decks.isEmpty(did) } -> CompletedDeckStatus.EMPTY_REGULAR_DECK
+            getNodeByDid(did).children.isEmpty() &&
+                withCol {
+                    decks.isEmpty(did)
+                } -> CompletedDeckStatus.EMPTY_REGULAR_DECK
             else -> CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY
         }
 

@@ -505,6 +505,7 @@ class DeckPickerTest : RobolectricTest() {
                 val card = addBasicNote("front", "back").firstCard()
                 getColUnsafe.sched.buryCards(listOf(card.id))
                 updateDeckList()
+                advanceRobolectricLooper()
                 assertEquals(1, visibleDeckCount)
                 assertTrue(getColUnsafe.sched.haveBuried(), "Deck should have buried cards")
                 supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.UNBURY, deckId)
