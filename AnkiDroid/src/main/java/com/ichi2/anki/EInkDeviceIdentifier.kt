@@ -17,7 +17,8 @@ class EInkDeviceIdentifier {
         val current = DeviceInfo(Build.MANUFACTURER, Build.MODEL)
     }
 
-    private val knownEInkDevices = setOf(
+    private val knownEInkDevices =
+        setOf(
         // Source: https://github.com/Hagb/decryptBooxUpdateUpx/blob/162c29f99bc6b725d1be265cfc17359aa5b55150/BooxKeys.csv
         DeviceInfo("onyx", "FLOW"),
         DeviceInfo("onyx", "FLOWPro"),
@@ -142,7 +143,8 @@ class EInkDeviceIdentifier {
         DeviceInfo("Viwoods", "Viwoods AiPaper"),
     )
 
-    private val eInkManufacturersList = setOf(
+    private val eInkManufacturersList =
+        setOf(
         "onyx",
         "boyue",
         "boeye",
@@ -170,17 +172,21 @@ class EInkDeviceIdentifier {
         val currentDevice = current
         Timber.v("Checking device: %s", currentDevice)
 
-        val isExactMatch = knownEInkDevices.any { device ->
-            currentDevice.manufacturer == device.manufacturer && currentDevice.model == device.model
+        val isExactMatch =
+            knownEInkDevices.any {
+                device ->
+                currentDevice.manufacturer == device.manufacturer &&
+                        currentDevice.model == device.model
         }
 
         if (isExactMatch) {
-          Timber.d("Confirmed E-ink device: %s", currentDevice)
+            Timber.d("Confirmed E-ink device: %s", currentDevice)
             return true
         }
 
-        val isPartialMatch = knownEInkDevices.any { device ->
-            (currentDevice.manufacturer.startsWith(device.manufacturer) || device.manufacturer.startsWith(currentDevice.manufacturer)) &&
+        val isPartialMatch =
+            knownEInkDevices.any { device ->
+                (currentDevice.manufacturer.startsWith(device.manufacturer) || device.manufacturer.startsWith(currentDevice.manufacturer)) &&
                     (currentDevice.model.startsWith(device.model) || device.model.startsWith(currentDevice.model))
         }
 
