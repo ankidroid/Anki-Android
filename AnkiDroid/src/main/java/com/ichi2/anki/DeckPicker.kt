@@ -2028,6 +2028,11 @@ open class DeckPicker :
             )
 
     fun openAnkiWebSharedDecks() {
+        if (!NetworkUtils.isOnline) {
+            showSnackbar(R.string.check_network)
+            Timber.d("DeckPicker:: No network, Shared deck download failed")
+            return
+        }
         val intent = Intent(this, SharedDecksActivity::class.java)
         startActivity(intent)
     }
