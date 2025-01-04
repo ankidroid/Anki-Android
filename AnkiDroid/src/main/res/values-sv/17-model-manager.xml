@@ -70,7 +70,7 @@
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">Klona: %1$s </string>
     <!--Browser Appearance-->
-    <string name="card_template_browser_appearance_summary">Ange den mall som kortets webbläsare kommer att använda för att visa dina kort. Använd detta för att visa ett mer koncist svar.\n\nEn frontmall\n“Huvudstaden {{Country}} är:”\nkan komprimeras i kortets webbläsare till\n“Huvudstad: {{Country}}”</string>
+    <string name="card_template_browser_appearance_summary">Ange den mall som kortbläddraren kommer att använda för att visa dina kort. Använd detta för att visa ett mer koncist svar.\n\nEn framsidomall \n“Huvudstaden i {{Country}} är:”\nkan i kortbläddraren komprimeras till\n“Huvudstad: {{Country}}”</string>
     <string name="card_template_browser_appearance_question_format">Frågeformat</string>
     <string name="card_template_browser_appearance_answer_format">Svarsformat</string>
     <string name="card_template_browser_appearance_restore_default_dialog">Återställ standardvärden?</string>
