@@ -218,7 +218,7 @@ class TemplateManager {
                         backend.renderUncommittedCardLegacy(
                             _note.toBackendNote(),
                             _card.ord,
-                            BackendUtils.toJsonBytes(_template!!.deepClone()),
+                            BackendUtils.toJsonBytes(_template!!),
                             fillEmpty,
                             true,
                         )
