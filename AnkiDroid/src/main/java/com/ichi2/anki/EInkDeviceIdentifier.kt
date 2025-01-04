@@ -185,10 +185,12 @@ class EInkDeviceIdentifier {
 
         val isPartialMatch =
             knownEInkDevices.any { device ->
-                (currentDevice.manufacturer.startsWith(device.manufacturer) ||
-                        device.manufacturer.startsWith(currentDevice.manufacturer)) &&
-                        (currentDevice.model.startsWith(device.model) ||
-                                device.model.startsWith(currentDevice.model))
+                (
+                        currentDevice.manufacturer.startsWith(device.manufacturer) ||
+                                device.manufacturer.startsWith(currentDevice.manufacturer)) &&
+                        (
+                                currentDevice.model.startsWith(device.model) ||
+                                        device.model.startsWith(currentDevice.model))
             }
 
         if (isPartialMatch || eInkManufacturersList.contains(currentDevice.manufacturer)) {
