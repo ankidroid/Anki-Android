@@ -61,8 +61,4 @@ class TextField :
     ) {
         _text = value
     }
-
-    companion object {
-        private const val SERIAL_VERSION_UID = -6508967905716947525L
-    }
 }
