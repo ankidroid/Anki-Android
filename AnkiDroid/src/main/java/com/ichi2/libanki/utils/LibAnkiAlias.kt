@@ -22,5 +22,5 @@ package com.ichi2.libanki.utils
  */
 @Retention(AnnotationRetention.SOURCE)
 annotation class LibAnkiAlias(
-    val alias: String,
+    @Suppress("unused") val alias: String,
 )
