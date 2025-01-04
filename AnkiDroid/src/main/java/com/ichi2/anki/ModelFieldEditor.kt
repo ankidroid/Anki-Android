@@ -40,6 +40,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Fields
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.ui.FixedEditText
@@ -48,7 +49,6 @@ import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
-import com.ichi2.utils.toStringList
 import com.ichi2.widget.WidgetStatus
 import org.json.JSONArray
 import org.json.JSONException
@@ -63,8 +63,10 @@ class ModelFieldEditor :
     private lateinit var fieldsListView: ListView
     private var fieldNameInput: EditText? = null
     private lateinit var notetype: NotetypeJson
-    private lateinit var noteFields: JSONArray
     private lateinit var fieldsLabels: List<String>
+
+    // WARN: this should be lateinit, but this can't yet be done on an inline class
+    private var noteFields: Fields = Fields(JSONArray())
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -122,8 +124,8 @@ class ModelFieldEditor :
             return
         }
         notetype = collectionModel
-        noteFields = notetype.getJSONArray("flds")
-        fieldsLabels = noteFields.toStringList("name")
+        noteFields = notetype.flds
+        fieldsLabels = notetype.fieldsNames
         fieldsListView.adapter = ArrayAdapter(this, R.layout.model_field_editor_list_item, fieldsLabels)
         fieldsListView.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position: Int, _ ->
@@ -176,7 +178,7 @@ class ModelFieldEditor :
         fieldNameInput?.let { fieldNameInput ->
             fieldNameInput.isSingleLine = true
             AlertDialog.Builder(this).show {
-                customView(view = fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
+                customView(view = fieldNameInput, paddingStart = 64, paddingEnd = 64, paddingTop = 32)
                 title(R.string.model_field_editor_add)
                 positiveButton(R.string.dialog_ok) {
                     // Name is valid, now field is added
@@ -276,7 +278,7 @@ class ModelFieldEditor :
                 val result =
                     withCol {
                         try {
-                            notetypes.remFieldLegacy(notetype, noteFields.getJSONObject(currentPos))
+                            notetypes.remFieldLegacy(notetype, noteFields[currentPos])
                             true
                         } catch (e: ConfirmModSchemaException) {
                             // Should never be reached
@@ -303,7 +305,7 @@ class ModelFieldEditor :
             fieldNameInput.setText(fieldsLabels[currentPos])
             fieldNameInput.setSelection(fieldNameInput.text!!.length)
             AlertDialog.Builder(this).show {
-                customView(view = fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
+                customView(view = fieldNameInput, paddingStart = 64, paddingEnd = 64, paddingTop = 32)
                 title(R.string.model_field_editor_rename)
                 positiveButton(R.string.rename) {
                     if (uniqueName(fieldNameInput) == null) {
@@ -347,7 +349,7 @@ class ModelFieldEditor :
         fieldNameInput?.let { fieldNameInput ->
             fieldNameInput.setRawInputType(InputType.TYPE_CLASS_NUMBER)
             AlertDialog.Builder(this).show {
-                customView(view = fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
+                customView(view = fieldNameInput, paddingStart = 64, paddingEnd = 64, paddingTop = 32)
                 title(text = String.format(resources.getString(R.string.model_field_editor_reposition), 1, fieldsLabels.size))
                 positiveButton(R.string.dialog_ok) {
                     val newPosition = fieldNameInput.text.toString()
@@ -398,7 +400,7 @@ class ModelFieldEditor :
                     withCol {
                         Timber.d("doInBackgroundRepositionField")
                         try {
-                            notetypes.moveFieldLegacy(notetype, noteFields.getJSONObject(currentPos), index)
+                            notetypes.moveFieldLegacy(notetype, noteFields[currentPos], index)
                             true
                         } catch (e: ConfirmModSchemaException) {
                             e.log()
@@ -424,7 +426,7 @@ class ModelFieldEditor :
                 .text
                 .toString()
                 .replace("[\\n\\r]".toRegex(), "")
-        val field = noteFields.getJSONObject(currentPos)
+        val field = noteFields[currentPos]
         getColUnsafe.notetypes.renameFieldLegacy(notetype, field, fieldLabel)
         initialize()
     }
@@ -465,14 +467,12 @@ class ModelFieldEditor :
         initialize()
     }
 
-    /*
+    /**
      * Toggle the "Remember last input" setting AKA the "Sticky" setting
      */
     private fun toggleStickyField() {
-        // Get the current field
-        val field = noteFields.getJSONObject(currentPos)
-        // If the sticky setting is enabled then disable it, otherwise enable it
-        field.put("sticky", !field.getBoolean("sticky"))
+        val field = noteFields[currentPos]
+        field.sticky = !field.sticky
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean =

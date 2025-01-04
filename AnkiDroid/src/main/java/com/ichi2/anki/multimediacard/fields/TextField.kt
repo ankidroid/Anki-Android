@@ -41,7 +41,7 @@ class TextField :
         get() = _text
         set(value) {
             _text = value!!
-            setThisModified()
+            thisModified = true
         }
 
     override var hasTemporaryMedia: Boolean = false

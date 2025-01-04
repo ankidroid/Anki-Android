@@ -65,8 +65,8 @@
         <item quantity="other">%1$d ਘੰਟੇ %2$d ਬਾਕੀ</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">%1$d ਦਿਨ %2$dh ਬਾਕੀ</item>
+        <item quantity="other">%1$d ਦਿਨ %2$dh ਬਾਕੀ</item>
     </plurals>
     <string name="no_cards_placeholder_title">ਸੰਗ੍ਰਹਿ ਖਾਲੀ ਹੈ</string>
     <string name="no_cards_placeholder_description">ਕਾਰਡ ਸ਼ਾਮਲ ਕਰਨਾ ਸ਼ੁਰੂ ਕਰੋ\N ਆਈਕਨ ਦੀ ਵਰਤੋਂ ਕਰਕੇ.</string>
@@ -145,45 +145,45 @@
     <!-- Card template editor -->
     <string name="title_activity_template_editor">ਕਾਰਡ ਦੀਆਂ ਕਿਸਮਾਂ</string>
     <string name="card_template_editor_front">ਫਰੰਟ ਟੈਂਪਲੇਟ</string>
-    <string name="card_template_editor_back">Back template</string>
+    <string name="card_template_editor_back">ਪਿਛਲਾ ਟੈਮਪਲੇਟ</string>
     <string name="card_template_editor_styling" maxLength="28">ਸਟਾਈਲਿੰਗ</string>
     <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">ਕਾਰਡ ਬ੍ਰਾਊਜ਼ਰ ਦੀ ਦਿੱਖ</string>
     <string name="card_template_editor_deck_override" maxLength="28">ਡੈੱਕ ਓਵਰਰਾਈਡ</string>
     <string name="card_template_editor_insert_field" maxLength="28">ਖੇਤਰ ਸ਼ਾਮਲ ਕਰੋ</string>
-    <string name="card_template_editor_select_field">Select field</string>
+    <string name="card_template_editor_select_field">ਖੇਤਰ ਚੁਣੋ</string>
     <string name="card_template_editor_cant_delete">ਘੱਟੋ-ਘੱਟ ਇੱਕ ਕਾਰਡ ਕਿਸਮ ਦੀ ਲੋੜ ਹੈ</string>
     <plurals name="card_template_editor_confirm_add">
         <item quantity="one">ਇਹ %1$d ਕਾਰਡ ਬਣਾਏਗਾ। ਅੱਗੇ ਵਧਣਾ?</item>
         <item quantity="other">ਇਹ %1$d ਕਾਰਡ ਬਣਾਏਗਾ। ਅੱਗੇ ਵਧਣਾ?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
-        <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+        <item quantity="one">ਕੀ ਕਾਰਡ ਕਿਸਮ “%2$s”, ਅਤੇ ਇਸਦਾ %1$d ਕਾਰਡ ਮਿਟਾਉਣਾ ਹੈ?</item>
+        <item quantity="other">ਕੀ ਕਾਰਡ ਕਿਸਮ “%2$s”, ਅਤੇ ਇਸਦੇ %1$d ਕਾਰਡਾਂ ਨੂੰ ਮਿਟਾਉਣਾ ਹੈ?</item>
     </plurals>
     <string name="card_template_editor_save_error">ਕਾਰਡ ਟੈਮਪਲੇਟ ਤਬਦੀਲੀਆਂ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰਨ ਵਿੱਚ ਅਸਮਰੱਥ: %s</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">ਮੌਜੂਦਾ ਕਾਰਡ ਲਈ ਕਾਰਡ ਦੀ ਕਿਸਮ ਮਿਟਾ ਦਿੱਤੀ ਗਈ ਸੀ।</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">ਬਰਾਊਜ਼ਰ ਦੀ ਦਿੱਖ</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">ਕਾਰਡ ਦੀ ਜਾਣਕਾਰੀ</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid ਡੇਟਾਬੇਸ ਨੂੰ ਪੜ੍ਹੋ ਅਤੇ ਲਿਖੋ</string>
-    <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+    <string name="read_write_permission_description">ਮੌਜੂਦਾ ਨੋਟਸ, ਕਾਰਡ, ਨੋਟ ਕਿਸਮਾਂ ਅਤੇ ਡੇਕ ਤੱਕ ਪਹੁੰਚ ਕਰੋ, ਨਾਲ ਹੀ ਨਵੇਂ ਬਣਾਓ</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">ਕਾਰਡ ਬ੍ਰਾਊਜ਼ਰ</string>
     <string name="context_menu_anki_card_label">ਅੰਕੀ ਕਾਰਡ</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_message_new">ਸੰਗ੍ਰਹਿ ਸ਼ਾਮਲ ਨਹੀਂ ਕੀਤੇ ਜਾ ਸਕਦੇ ਹਨ।\nਤੁਸੀਂ ਕਿਹੜਾ ਸੰਗ੍ਰਹਿ ਰੱਖਣਾ ਚਾਹੋਗੇ?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
-    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
+    <string name="sync_conflict_remote_confirm_new">AnkiDroid \'ਤੇ ਆਪਣੇ ਸੰਗ੍ਰਹਿ ਨੂੰ AnkiWeb ਤੋਂ ਆਪਣੇ ਸੰਗ੍ਰਹਿ ਨਾਲ ਬਦਲਣਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
+    <string name="sync_conflict_local_confirm_new">AnkiWeb \'ਤੇ ਆਪਣੇ ਸੰਗ੍ਰਹਿ ਨੂੰ AnkiDroid ਤੋਂ ਆਪਣੇ ਸੰਗ੍ਰਹਿ ਨਾਲ ਬਦਲਣਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
     <string name="sync_conflict_title_new">ਰੱਖਣ ਲਈ ਸੰਗ੍ਰਹਿ ਚੁਣੋ</string>
     <string name="sync_conflict_replace_title">ਸੰਗ੍ਰਹਿ ਨੂੰ ਬਦਲੋ</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">ਫਾਈਲ %s ਨੂੰ ਨਹੀਂ ਲਿਖ ਸਕਦਾ ਜਾਂ ਨਹੀਂ ਬਣਾ ਸਕਦਾ</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">ਸੰਗ੍ਰਹਿ ਪਹੁੰਚ ਤੋਂ ਬਾਹਰ</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">ਪਲੇ ਸਟੋਰ ਨੀਤੀ ਬਦਲਾਅ ਦੇ ਕਾਰਨ AnkiDroid ਨੂੰ ਅਣਇੰਸਟੌਲ ਕਰਨ ਤੋਂ ਬਾਅਦ ਅਸੀਂ ਤੁਹਾਡੇ ਸੰਗ੍ਰਹਿ ਤੱਕ ਪਹੁੰਚ ਕਰਨ ਵਿੱਚ ਅਸਮਰੱਥ ਹਾਂ\n\nਤੁਹਾਡਾ ਡੇਟਾ ਸੁਰੱਖਿਅਤ ਹੈ ਅਤੇ ਇਸਨੂੰ ਰੀਸਟੋਰ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ। ਇਹ \n%s\n\n \'ਤੇ ਸਥਿਤ ਹੈ ਬਹਾਲ ਕਰਨ ਲਈ ਹੇਠਾਂ ਇੱਕ ਵਿਕਲਪ ਚੁਣੋ:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">ਐਪ ਅਕਿਰਿਆਸ਼ੀਲਤਾ ਦੇ ਕਾਰਨ Android ਨੇ AnkiDroid ਦੀ %1$s ਅਨੁਮਤੀ ਨੂੰ ਹਟਾ ਦਿੱਤਾ ਹੈ।\n\nਤੁਹਾਡਾ ਡਾਟਾ ਸੁਰੱਖਿਅਤ ਹੈ ਅਤੇ ਇਸਨੂੰ ਰੀਸਟੋਰ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ। ਇਹ \n%2$s\n\n\n\nਤੇ ਸਥਿਤ ਹੈ ਬਹਾਲ ਕਰਨ ਲਈ ਹੇਠਾਂ ਇੱਕ ਵਿਕਲਪ ਚੁਣੋ:</string>
     <string name="restore_data_from_ankiweb">AnkiWeb ਤੋਂ ਰੀਸਟੋਰ ਕਰੋ (ਸਿਫਾਰਸ਼ੀ)</string>
     <string name="install_non_play_store_ankidroid_recommended">ਫੋਲਡਰ ਐਕਸੈਸ ਰੀਸਟੋਰ ਕਰੋ (ਸਿਫਾਰਸ਼ੀ)</string>

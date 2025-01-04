@@ -89,9 +89,9 @@
     <string name="gesture_flag_orange" maxLength="41">Переключити помаранчевий прапорець</string>
     <string name="gesture_flag_green" maxLength="41">Переключити зелений прапорець</string>
     <string name="gesture_flag_blue" maxLength="41">Переключити синій прапорець</string>
-    <string name="gesture_flag_pink" maxLength="41">Перемкнути рожевий прапор</string>
-    <string name="gesture_flag_turquoise" maxLength="41">Перемкнути бірюзовий прапорець</string>
-    <string name="gesture_flag_purple" maxLength="41">Перемкнути фіолетовий прапорець</string>
+    <string name="gesture_flag_pink" maxLength="41">Переключити рожевий прапорець</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Переключити бірюзовий прапорець</string>
+    <string name="gesture_flag_purple" maxLength="41">Переключити фіолетовий прапорець</string>
     <string name="gesture_flag_remove" maxLength="41">Прибрати прапорець</string>
     <string name="gesture_page_up" maxLength="41">Попередня сторінка</string>
     <string name="gesture_page_down" maxLength="41">Наступна сторінка</string>

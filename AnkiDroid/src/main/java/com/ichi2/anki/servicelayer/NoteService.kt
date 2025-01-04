@@ -38,11 +38,11 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteTypeId
+import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.CollectionUtils.average
 import org.json.JSONException
-import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -54,19 +54,16 @@ object NoteService {
      * @param model the model in JSONObject format
      * @return a new MultimediaEditableNote instance
      */
-    fun createEmptyNote(model: JSONObject): MultimediaEditableNote {
+    fun createEmptyNote(model: NotetypeJson): MultimediaEditableNote {
         val note = MultimediaEditableNote()
         try {
-            val fieldsArray = model.getJSONArray("flds")
-            val numOfFields = fieldsArray.length()
-            note.setNumFields(numOfFields)
-
-            for (i in 0 until numOfFields) {
-                val fieldObject = fieldsArray.getJSONObject(i)
+            val fieldsArray = model.flds
+            note.setNumFields(fieldsArray.length())
+            for ((i, field) in fieldsArray.withIndex()) {
                 val uiTextField =
                     TextField().apply {
-                        name = fieldObject.getString("name")
-                        text = fieldObject.getString("name")
+                        name = field.name
+                        text = field.name
                     }
                 note.setField(i, uiTextField)
             }

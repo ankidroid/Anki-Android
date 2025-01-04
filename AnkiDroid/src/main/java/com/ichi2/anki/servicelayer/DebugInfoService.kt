@@ -41,25 +41,13 @@ object DebugInfoService {
         val isFSRSEnabled = getFSRSStatus()
         return """
             AnkiDroid Version = $pkgVersionName (${BuildConfig.GIT_COMMIT_HASH})
-            
             Backend Version = ${BuildConfig.BACKEND_VERSION} (${BackendBuildConfig.ANKI_DESKTOP_VERSION} ${BackendBuildConfig.ANKI_COMMIT_HASH})
-            
             Android Version = ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT})
-            
             ProductFlavor = ${BuildConfig.FLAVOR}
-            
-            Manufacturer = ${Build.MANUFACTURER}
-            
-            Model = ${Build.MODEL}
-            
-            Hardware = ${Build.HARDWARE}
-            
+            Device Info = ${Build.MANUFACTURER} | ${Build.BRAND} | ${Build.DEVICE} | ${Build.PRODUCT} | ${Build.MODEL} | ${Build.HARDWARE}
             Webview User Agent = $webviewUserAgent
-            
             ACRA UUID = ${Installation.id(info)}
-            
             FSRS = ${BackendBuildConfig.FSRS_VERSION} (Enabled: $isFSRSEnabled)
-            
             Crash Reports Enabled = ${isSendingCrashReports(info)}
             """.trimIndent()
     }

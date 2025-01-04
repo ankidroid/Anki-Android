@@ -82,15 +82,11 @@
 לפני תחילת ניסיון התיקון, יתבצע שמירת העתק בתקייה %s</string>
     <string name="intent_aedict_empty">הקטגוריה \'ברירת מחדל\' ריקה</string>
     <string name="intent_aedict_category">כדי להוסיף כרטיסים ל-AnkiDroid הסר את כל קטגוריות פנקס הרשימות או הוסף אחת בשם \"ברירת מחדל\"</string>
-    <string name="custom_study_new_total_new">כרטיסים חדשים בחפיסה: %d</string>
-    <string name="custom_study_rev_total_rev">שינונים מועדים בחפיסות: %d</string>
     <string name="custom_study_new_extend">הוספה/הורדה(“-3”) הגבלת כרטיסים חדשים להיום ב</string>
     <string name="custom_study_rev_extend">הוספה/הורדה(“-3”) הגבלת חזרות להיום ב</string>
     <string name="custom_study_forgotten">חזרה על כרטיסים נשכחים בx ימים האחרונים </string>
     <string name="custom_study_ahead">עבור כמה ימים ברצונך לשנן מראש?</string>
-    <string name="custom_study_random">נא לבחור כמות מסוימת של קלפים מהחפיסה באקראי:</string>
     <string name="custom_study_preview">צפייה ראשונית בכרטיסים חדשים שנוספו בx ימים האחרונים:</string>
-    <string name="custom_study_rebuild_deck_corrupt">לא ניתן היה לבנות מחדש חפיסות לימוד מותאם אישית</string>
     <string name="storage_full_title">האיחסון מלא</string>
     <string name="storage_almost_full_title">שטח האחסון כמעט מלא</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">אין מקום</string>

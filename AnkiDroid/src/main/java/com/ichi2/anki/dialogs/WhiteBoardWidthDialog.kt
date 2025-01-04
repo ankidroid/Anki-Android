@@ -59,7 +59,7 @@ class WhiteBoardWidthDialog(
     fun showStrokeWidthDialog() {
         val layout = LinearLayout(context)
         layout.orientation = LinearLayout.VERTICAL
-        layout.setPadding(6, 6, 6, 6)
+        layout.setPaddingRelative(6, 6, 6, 6)
         strokeWidthText = FixedTextView(context)
         strokeWidthText!!.gravity = Gravity.CENTER_HORIZONTAL
         strokeWidthText!!.textSize = 30f

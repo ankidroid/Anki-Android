@@ -178,17 +178,17 @@ class DeckAdapter(
         val node = filteredDeckList[position]
         // Set the expander icon and padding according to whether or not there are any subdecks
         val deckLayout = holder.deckLayout
-        val rightPadding = deckLayout.resources.getDimension(R.dimen.deck_picker_right_padding).toInt()
+        val endPadding = deckLayout.resources.getDimension(R.dimen.deck_picker_right_padding).toInt()
         if (hasSubdecks) {
             val smallPadding = deckLayout.resources.getDimension(R.dimen.deck_picker_left_padding_small).toInt()
-            deckLayout.setPadding(smallPadding, 0, rightPadding, 0)
+            deckLayout.setPaddingRelative(smallPadding, 0, endPadding, 0)
             holder.deckExpander.visibility = View.VISIBLE
             // Create the correct expander for this deck
             runBlocking { setDeckExpander(holder.deckExpander, holder.indentView, node) }
         } else {
             holder.deckExpander.visibility = View.GONE
             val normalPadding = deckLayout.resources.getDimension(R.dimen.deck_picker_left_padding).toInt()
-            deckLayout.setPadding(normalPadding, 0, rightPadding, 0)
+            deckLayout.setPaddingRelative(normalPadding, 0, endPadding, 0)
         }
         if (node.children.isNotEmpty()) {
             holder.deckExpander.tag = node.did

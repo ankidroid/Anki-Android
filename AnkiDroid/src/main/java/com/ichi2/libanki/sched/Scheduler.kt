@@ -487,6 +487,7 @@ open class Scheduler(
     @CheckResult
     fun customStudy(request: CustomStudyRequest): OpChanges = col.backend.customStudy(request)
 
+    @CheckResult
     fun customStudyDefaults(deckId: DeckId): CustomStudyDefaultsResponse = col.backend.customStudyDefaults(deckId)
 
     /**
@@ -496,16 +497,6 @@ open class Scheduler(
     fun totalNewForCurrentDeck(): Int =
         col.db.queryScalar(
             "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN ${deckLimit()} AND queue = $QUEUE_TYPE_NEW LIMIT ?)",
-            REPORT_LIMIT,
-        )
-
-    /** @return Number of review cards in current deck.
-     */
-    @Suppress("ktlint:standard:max-line-length")
-    fun totalRevForCurrentDeck(): Int =
-        col.db.queryScalar(
-            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN ${deckLimit()} AND queue = $QUEUE_TYPE_REV AND due <= ? LIMIT ?)",
-            today,
             REPORT_LIMIT,
         )
 

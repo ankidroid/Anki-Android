@@ -52,13 +52,13 @@
     <string name="menu_get_shared_decks">একটি শেয়ার্ড ডেক পান</string>
     <string name="connection_error_message">একটি নেটওয়ার্ক ত্রুটি ঘটেছে</string>
     <string name="not_logged_in_title">AnkiWeb লগ ইন করুন</string>
-    <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
+    <string name="login_create_account_message">ক্লাউড সিঙ্ক পরিষেবা ব্যবহার করার জন্য আপনাকে অবশ্যই একটি তৃতীয় পক্ষের অ্যাকাউন্টে লগ ইন করতে হবে আপনি পরবর্তী ধাপে একটি তৈরি করতে পারেন৷</string>
     <!-- MyAccount.kt -->
     <string name="username">ইমেইল ঠিকানা</string>
     <string name="password">পাসওয়ার্ড</string>
     <string name="log_in">লগ ইন করুন</string>
     <string name="sign_up_description">একটি AnkiWeb অ্যাকাউন্ট নেই? এটা বিনামূল্যে!</string>
-    <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
+    <string name="sign_up_not_affiliated">দ্রষ্টব্য: AnkiWeb AnkiDroid এর সাথে অনুমোদিত নয়</string>
     <string name="sign_up">সাইন আপ</string>
     <string name="logged_as">হিসাবে লগ ইন করুন</string>
     <string name="log_out">লগ আউট করুন</string>
@@ -70,15 +70,15 @@
     <string name="sync_title">সিঙ্ক্রোনাইজেশন</string>
     <string name="sync_log_uploading_message">স্থানীয় থেকে সম্পূর্ণ সিঙ্ক</string>
     <string name="sync_database_acknowledge">সংগ্রহ সিঙ্ক্রোনাইজ করা হয়</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
-    <string name="sync_corrupt_database">Your database is corrupt. Please fix it before trying again to sync.\n\nSee %s for information about repairing your database.</string>
+    <string name="col_synced_media_in_background">সংগ্রহটি সিঙ্ক করা হয়েছে। পটভূমিতে মিডিয়া সিঙ্ক করা হচ্ছে।</string>
+    <string name="sync_corrupt_database">আপনার ডাটাবেস দূষিত হয়েছে. আবার সিঙ্ক করার চেষ্টা করার আগে দয়া করে এটি ঠিক করুন৷\n\nআপনার ডাটাবেস মেরামত সম্পর্কে তথ্যের জন্য %s দেখুন৷</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">স্থানীয়</string>
-    <string name="sync_sanity_remote">Remote</string>
-    <string name="one_way_sync_title" maxLength="41">One-way sync</string>
-    <string name="one_way_sync_confirmation">One way sync requested</string>
-    <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
-    <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
+    <string name="sync_sanity_remote">দূরবর্তী</string>
+    <string name="one_way_sync_title" maxLength="41">ওয়ান ওয়ে সিঙ্ক</string>
+    <string name="one_way_sync_confirmation">এক উপায় সিঙ্ক অনুরোধ করা হয়</string>
+    <string name="full_sync_confirmation">অনুরোধ করা পরিবর্তনগুলির জন্য ডাটাবেসে একটি সম্পূর্ণ আপলোড প্রয়োজন হবে যখন আপনি পরবর্তীতে আপনার সংগ্রহটি সিঙ্ক্রোনাইজ করবেন৷ আপনি যদি এখনও এখানে সিঙ্ক করা হয়নি এমন অন্যান্য ডিভাইসে পর্যালোচনা বা অন্যান্য পরিবর্তনের অপেক্ষায় থাকেন, তাহলে সেগুলি হারিয়ে যাবে৷ চালিয়ে যেতে?</string>
+    <string name="full_sync_confirmation_upgrade">AnkiDroid এর আগে থেকে ইনস্টল করা সংস্করণে একটি বাগ থাকার কারণে, এটি একটি সম্পূর্ণ সিঙ্ক জোরপূর্বক করার সুপারিশ করা হয়।</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_one_way_sync">সিঙ্ক (এক উপায়)</string>
     <string name="sync_menu_title_no_account">সিঙ্ক (লগ ইন)</string>

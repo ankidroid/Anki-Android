@@ -41,8 +41,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
-import org.intellij.lang.annotations.Language
-import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
 
 class PreviewerViewModel(
@@ -109,7 +107,7 @@ class PreviewerViewModel(
                 showQuestion()
                 cardMediaPlayer.autoplayAllSoundsForSide(CardSide.QUESTION)
             } else if (backSideOnly.value && !showingAnswer.value) {
-                showAnswerInternal()
+                showAnswer()
                 cardMediaPlayer.autoplayAllSoundsForSide(CardSide.ANSWER)
             }
         }
@@ -149,7 +147,7 @@ class PreviewerViewModel(
     fun onNextButtonClick() {
         launchCatchingIO {
             if (!showingAnswer.value && !backSideOnly.value) {
-                showAnswerInternal()
+                showAnswer()
                 cardMediaPlayer.autoplayAllSoundsForSide(CardSide.ANSWER)
             } else {
                 currentIndex.update { it + 1 }
@@ -209,7 +207,7 @@ class PreviewerViewModel(
             asyncIO {
                 withCol { getCard(selectedCardIds[currentIndex.value]) }
             }
-        if (showAnswer) showAnswerInternal() else showQuestion()
+        if (showAnswer) showAnswer() else showQuestion()
         updateFlagIcon()
         updateMarkIcon()
     }
@@ -236,11 +234,15 @@ class PreviewerViewModel(
     }
 
     /** From the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L671) */
-    override suspend fun typeAnsFilter(text: String): String =
+    override suspend fun typeAnsFilter(
+        text: String,
+        typedAnswer: String?,
+    ): String =
         if (showingAnswer.value) {
-            typeAnsAnswerFilter(currentCard.await(), text)
+            val typeAnswer = TypeAnswer.getInstance(currentCard.await(), text)
+            typeAnswer?.answerFilter() ?: text
         } else {
-            typeAnsQuestionFilter(text)
+            TypeAnswer.removeTags(text)
         }
 
     companion object {
@@ -254,30 +256,5 @@ class PreviewerViewModel(
                     PreviewerViewModel(previewerIdsFile, currentIndex, cardMediaPlayer)
                 }
             }
-
-        /** removes `[[type:]]` blocks in questions */
-        @VisibleForTesting
-        fun typeAnsQuestionFilter(text: String) = typeAnsRe.replace(text, "")
-
-        /** Adapted from the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L720) */
-        suspend fun typeAnsAnswerFilter(
-            card: Card,
-            text: String,
-        ): String {
-            val typeAnswerField =
-                getTypeAnswerField(card, text)
-                    ?: return typeAnsRe.replace(text, "")
-            val expectedAnswer =
-                getExpectedTypeInAnswer(card, typeAnswerField)
-                    ?: return typeAnsRe.replace(text, "")
-            val typeFont = typeAnswerField.getString("font")
-            val typeSize = getFontSize(typeAnswerField)
-            val answerComparison = withCol { compareAnswer(expectedAnswer, provided = "") }
-
-            @Language("HTML")
-            val output =
-                """<div style="font-family: '$typeFont'; font-size: ${typeSize}px">$answerComparison</div>"""
-            return typeAnsRe.replace(text, output)
-        }
     }
 }

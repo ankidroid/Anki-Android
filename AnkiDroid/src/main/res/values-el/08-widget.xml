@@ -60,12 +60,12 @@
         <item quantity="other">Απομένουν %d λεπτά</item>
     </plurals>
     <string name="widget_add_note_button">Προσθήκη νέας σημείωσης AnkiDroid</string>
-    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">Deck Picker</string>
+    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">Επιλογή τράπουλας </string>
     <string name="card_analysis_extra_widget_description">Ανάλυση καρτών</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
     <string name="select_decks_title" comment="Title for Deck Selection Dialog">Επιλογή τραπουλών</string>
     <string name="select_deck_title" comment="Title for Deck Selection Dialog">Επιλογή τράπουλας</string>
-    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Select decks to display in the widget. Select decks with the + icon.</string>
+    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Διάλεξε τράπουλες που θα δείξει το πρόγραμμα. Κάνετε την επιλογή σας με το σύμβολο +.</string>
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Η τράπουλα αφαιρέθηκε</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">Αυτή η τράπουλα είναι ήδη επιλεγμένη</string>
     <plurals name="deck_limit_reached">

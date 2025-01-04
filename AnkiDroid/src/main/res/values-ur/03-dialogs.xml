@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">کیا آپ واقعی ڈیٹا بیس کو ٹھیک کرنے کی کوشش کرنا چاہتے ہیں؟\n\nکوشش شروع کرنے سے پہلے، ذیلی فولڈر \"%s\" میں ایک کاپی بنائی جائے گی۔</string>
     <string name="intent_aedict_empty">زمرہ \"ڈیفالٹ\" خالی ہے۔</string>
     <string name="intent_aedict_category">AnkiDroid میں کارڈز شامل کرنے کے لیے تمام نوٹ پیڈ کیٹیگریز کو ہٹا دیں یا \"ڈیفالٹ\" کے نام سے ایک شامل کریں۔</string>
-    <string name="custom_study_new_total_new">ڈیک میں نئے کارڈز: %d</string>
-    <string name="custom_study_rev_total_rev">ڈیک میں جائزے باقی ہیں: %d</string>
     <string name="custom_study_new_extend">آج کی نئی کارڈ کی حد (\"-3\") میں اضافہ/کم کریں۔</string>
     <string name="custom_study_rev_extend">آج کی نظرثانی کی حد میں اضافہ/کمی (\"-3\")</string>
     <string name="custom_study_forgotten">پچھلے دنوں میں بھولے گئے کارڈز کا جائزہ لیں:</string>
     <string name="custom_study_ahead">ایکس دنوں میں آگے کا جائزہ لیں:</string>
-    <string name="custom_study_random">ڈیک سے تصادفی طور پر ایکس کارڈز منتخب کریں:</string>
     <string name="custom_study_preview">پچھلے x دنوں میں شامل کیے گئے نئے کارڈز کا جائزہ لیں:</string>
-    <string name="custom_study_rebuild_deck_corrupt">حسب ضرورت مطالعہ ڈیک کو دوبارہ نہیں بنایا جا سکا</string>
     <string name="storage_full_title">اسٹوریج بھرا ہوا ہے</string>
     <string name="storage_almost_full_title">اسٹوریج تقریباً بھر گیا ہے</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">کوئی جگہ نہیں</string>
@@ -168,12 +164,12 @@
     <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <string name="intent_handler_failed_no_storage_permission">مطلوبہ اسٹوریج کی اجازت غائب ہے۔ براہ کرم اسٹوریج کی اجازت دیں پھر اپنے عمل کی دوبارہ کوشش کریں۔</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <string name="card_template_editor_card_browser_appearance_failed">کارڈ براؤزر کی ظاہری شکل کو لوڈ نہیں کیا جا سکا</string>
     <!-- Boot Service -->
-    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
-    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <string name="boot_service_failed_to_schedule_notifications">یاد دہانیوں کو شیڈول کرنے میں ناکام</string>
+    <string name="boot_service_too_many_notifications">بہت زیادہ یاد دہانیاں شیڈول کی گئی ہیں۔ کچھ ظاہر نہیں ہوں گے</string>
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">زبان سیٹ کریں۔</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
@@ -184,17 +180,17 @@
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
     <string name="help_title_get_help">مدد حاصل کریں۔</string>
     <string name="help_item_mailing_list">میلنگ لسٹ</string>
-    <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a Bug</string>
-    <string name="help_title_support_ankidroid" maxLength="28">Support AnkiDroid</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_develop_ankidroid">Develop</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
-    <string name="help_item_support_other_ankidroid">Other</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="help_item_reddit">ریڈٹ</string>
+    <string name="help_item_report_bug">بگ کی اطلاع دیں</string>
+    <string name="help_title_support_ankidroid" maxLength="28">AnkiDroid کو سپورٹ کریں</string>
+    <string name="help_item_support_opencollective_donate">عطیہ کریں</string>
+    <string name="help_item_support_develop_ankidroid">ترقی کرنا</string>
+    <string name="help_item_support_rate_ankidroid">ریٹ کریں</string>
+    <string name="help_item_support_other_ankidroid">دیگر</string>
+    <string name="multimedia_editor_trans_translate">ترجمہ</string>
     <string name="help_title_community">برادری</string>
     <string name="help_item_anki_forums">انکی فورمز</string>
-    <string name="help_item_discord">Discord</string>
+    <string name="help_item_discord">ڈسکورڈ</string>
     <string name="help_item_facebook">فیس بک</string>
     <string name="help_item_twitter">ٹویٹر</string>
     <string name="help_title_privacy">رازداری</string>

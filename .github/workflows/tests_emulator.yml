@@ -1,4 +1,4 @@
-name: Emulator Tests
+name: 🛠️ Emulator Tests
 
 on:
   workflow_dispatch:

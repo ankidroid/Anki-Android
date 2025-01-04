@@ -15,6 +15,7 @@
  */
 package com.ichi2.testutils.libanki
 
+import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import org.hamcrest.MatcherAssert.assertThat
@@ -23,7 +24,7 @@ import org.hamcrest.Matchers.equalTo
 object CollectionAssert {
     fun assertSuspended(
         collection: Collection,
-        cardId: Long,
+        cardId: CardId,
     ) {
         assertThat("Card should be suspended", collection.getCard(cardId).queue, equalTo(Consts.QUEUE_TYPE_SUSPENDED))
     }

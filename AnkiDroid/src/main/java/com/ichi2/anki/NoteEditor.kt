@@ -73,6 +73,7 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.OnReceiveContentListener
 import androidx.core.view.isVisible
 import androidx.draganddrop.DropHelper
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import anki.config.ConfigKey
@@ -124,7 +125,7 @@ import com.ichi2.anki.pages.ImageOcclusion
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerPage
-import com.ichi2.anki.servicelayer.LanguageHintService
+import com.ichi2.anki.servicelayer.LanguageHintService.languageHint
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
@@ -145,6 +146,8 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
+import com.ichi2.libanki.Field
+import com.ichi2.libanki.Fields
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.Note.ClozeUtils
 import com.ichi2.libanki.NoteTypeId
@@ -153,6 +156,7 @@ import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.undoableOp
+import com.ichi2.themes.Themes
 import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.ClipboardUtil.MEDIA_MIME_TYPES
 import com.ichi2.utils.ClipboardUtil.hasMedia
@@ -202,9 +206,7 @@ const val CALLER_KEY = "caller"
 @KotlinCleanup("Go through the class and select elements to fix")
 @KotlinCleanup("see if we can lateinit")
 class NoteEditor :
-    AnkiFragment(
-        R.layout.note_editor,
-    ),
+    Fragment(R.layout.note_editor),
     DeckSelectionListener,
     SubtitleListener,
     TagsDialogListener,
@@ -218,6 +220,12 @@ class NoteEditor :
     private var isFieldEdited = false
 
     private var multimediaActionJob: Job? = null
+
+    private val getColUnsafe: Collection
+        get() = CollectionManager.getColUnsafe()
+
+    private val mainToolbar: androidx.appcompat.widget.Toolbar
+        get() = requireView().findViewById(R.id.toolbar)
 
     /**
      * Flag which forces the calling activity to rebuild it's definition of current card from scratch
@@ -468,7 +476,7 @@ class NoteEditor :
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
         if (sharedPrefs().getBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, true)) {
-            anchorView = findViewById<Toolbar>(R.id.editor_toolbar)
+            anchorView = requireView().findViewById<Toolbar>(R.id.editor_toolbar)
         }
     }
 
@@ -477,7 +485,6 @@ class NoteEditor :
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
     // ----------------------------------------------------------------------------
-    @KotlinCleanup("fix suppress")
     override fun onCreate(savedInstanceState: Bundle?) {
         tagsDialogFactory = TagsDialogFactory(this).attachToFragmentManager<TagsDialogFactory>(parentFragmentManager)
         mediaRegistration = MediaRegistration(requireContext())
@@ -510,9 +517,11 @@ class NoteEditor :
         view: View,
         savedInstanceState: Bundle?,
     ) {
+        @Suppress("deprecation", "API35 properly handle edge-to-edge")
+        requireActivity().window.statusBarColor = Themes.getColorFromAttr(requireContext(), R.attr.appBarColor)
         super.onViewCreated(view, savedInstanceState)
         // Set up toolbar
-        toolbar = findViewById(R.id.editor_toolbar)
+        toolbar = view.findViewById(R.id.editor_toolbar)
         toolbar.apply {
             formatListener =
                 TextFormatListener { formatter: Toolbar.TextFormatter ->
@@ -532,7 +541,7 @@ class NoteEditor :
         try {
             setupEditor(getColUnsafe)
         } catch (ex: RuntimeException) {
-            ankiActivity.onCollectionLoadError()
+            requireAnkiActivity().onCollectionLoadError()
             return
         }
         // TODO this callback doesn't handle predictive back navigation!
@@ -542,7 +551,9 @@ class NoteEditor :
             closeCardEditorWithCheck()
         }
 
-        setNavigationBarColor(R.attr.toolbarBackgroundColor)
+        @Suppress("deprecation", "API35 properly handle edge-to-edge")
+        requireActivity().window.navigationBarColor =
+            Themes.getColorFromAttr(requireContext(), R.attr.toolbarBackgroundColor)
 
         // R.id.home is handled in setNavigationOnClickListener
         // Set a listener for back button clicks in the toolbar
@@ -610,25 +621,22 @@ class NoteEditor :
         savedInstanceState.putStringArrayList("tags", selectedTags?.let { ArrayList(it) })
     }
 
-    private val fieldsAsBundleForPreview: Bundle
-        get() = NoteService.getFieldsAsBundleForPreview(editFields, shouldReplaceNewlines())
-
     // Finish initializing the fragment after the collection has been correctly loaded
     private fun setupEditor(col: Collection) {
         val intent = requireActivity().intent
         Timber.d("NoteEditor() onCollectionLoaded: caller: %s", caller)
-        ankiActivity.registerReceiver()
-        fieldsLayoutContainer = findViewById(R.id.CardEditorEditFieldsLayout)
-        tagsButton = findViewById(R.id.CardEditorTagButton)
-        cardsButton = findViewById(R.id.CardEditorCardsButton)
+        requireAnkiActivity().registerReceiver()
+        fieldsLayoutContainer = requireView().findViewById(R.id.CardEditorEditFieldsLayout)
+        tagsButton = requireView().findViewById(R.id.CardEditorTagButton)
+        cardsButton = requireView().findViewById(R.id.CardEditorCardsButton)
         cardsButton!!.setOnClickListener {
             Timber.i("NoteEditor:: Cards button pressed. Opening template editor")
             showCardTemplateEditor()
         }
-        imageOcclusionButtonsContainer = findViewById(R.id.ImageOcclusionButtonsLayout)
-        editOcclusionsButton = findViewById(R.id.EditOcclusionsButton)
-        selectImageForOcclusionButton = findViewById(R.id.SelectImageForOcclusionButton)
-        pasteOcclusionImageButton = findViewById(R.id.PasteImageForOcclusionButton)
+        imageOcclusionButtonsContainer = requireView().findViewById(R.id.ImageOcclusionButtonsLayout)
+        editOcclusionsButton = requireView().findViewById(R.id.EditOcclusionsButton)
+        selectImageForOcclusionButton = requireView().findViewById(R.id.SelectImageForOcclusionButton)
+        pasteOcclusionImageButton = requireView().findViewById(R.id.PasteImageForOcclusionButton)
 
         try {
             clipboard = requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -738,19 +746,19 @@ class NoteEditor :
         }
 
         // Note type Selector
-        noteTypeSpinner = findViewById(R.id.note_type_spinner)
+        noteTypeSpinner = requireView().findViewById(R.id.note_type_spinner)
         allModelIds = setupNoteTypeSpinner(requireContext(), noteTypeSpinner!!, col)
 
         // Deck Selector
-        val deckTextView = findViewById<TextView>(R.id.CardEditorDeckText)
+        val deckTextView = requireView().findViewById<TextView>(R.id.CardEditorDeckText)
         // If edit mode and more than one card template distinguish between "Deck" and "Card deck"
-        if (!addNote && editorNote!!.notetype.getJSONArray("tmpls").length() > 1) {
+        if (!addNote && editorNote!!.notetype.tmpls.length() > 1) {
             deckTextView.setText(R.string.CardEditorCardDeck)
         }
         deckSpinnerSelection =
             DeckSpinnerSelection(
                 requireContext() as AppCompatActivity,
-                findViewById(R.id.note_deck_spinner),
+                requireView().findViewById(R.id.note_deck_spinner),
                 showAllDecks = false,
                 alwaysShowDefault = true,
                 showFilteredDecks = false,
@@ -763,7 +771,7 @@ class NoteEditor :
         setNote(editorNote, FieldChangeType.onActivityCreation(shouldReplaceNewlines()))
         if (addNote) {
             noteTypeSpinner!!.onItemSelectedListener = SetNoteTypeListener()
-            setTitle(R.string.menu_add)
+            mainToolbar.setTitle(R.string.menu_add)
             // set information transferred by intent
             var contents: String? = null
             val tags = requireArguments().getStringArray(EXTRA_TAGS)
@@ -806,9 +814,9 @@ class NoteEditor :
             if (caller == NoteEditorCaller.ADD_IMAGE) lifecycleScope.launch { handleImageIntent(intent) }
         } else {
             noteTypeSpinner!!.onItemSelectedListener = EditNoteTypeListener()
-            setTitle(R.string.cardeditor_title_edit_card)
+            mainToolbar.setTitle(R.string.cardeditor_title_edit_card)
         }
-        findViewById<View>(R.id.CardEditorTagButton).setOnClickListener {
+        requireView().findViewById<View>(R.id.CardEditorTagButton).setOnClickListener {
             Timber.i("NoteEditor:: Tags button pressed... opening tags editor")
             showTagsDialog()
         }
@@ -1129,7 +1137,7 @@ class NoteEditor :
             }
         }
         // changed deck?
-        if (!addNote && currentEditedCard != null && currentEditedCard!!.currentDeckId().did != deckId) {
+        if (!addNote && currentEditedCard != null && currentEditedCard!!.currentDeckId() != deckId) {
             return true
         }
         // changed fields?
@@ -1181,7 +1189,7 @@ class NoteEditor :
 
     private suspend fun saveNoteWithProgress() {
         // adding current note to collection
-        withProgress(resources.getString(R.string.saving_facts)) {
+        requireActivity().withProgress(resources.getString(R.string.saving_facts)) {
             undoableOp {
                 editorNote!!.notetype.put("tags", tags)
                 notetypes.save(editorNote!!.notetype)
@@ -1261,7 +1269,7 @@ class NoteEditor :
             // Regular changes in note content
             var modified = false
             // changed did? this has to be done first as remFromDyn() involves a direct write to the database
-            if (currentEditedCard != null && currentEditedCard!!.currentDeckId().did != deckId) {
+            if (currentEditedCard != null && currentEditedCard!!.currentDeckId() != deckId) {
                 reloadRequired = true
                 undoableOp { setDeck(listOf(currentEditedCard!!.id), deckId) }
                 // refresh the card object to reflect the database changes from above
@@ -1296,7 +1304,7 @@ class NoteEditor :
             // and no longer using the legacy ActivityResultCallback/onActivityResult to
             // accept & update the note in the activity
             if (caller == NoteEditorCaller.PREVIEWER_EDIT || caller == NoteEditorCaller.EDIT) {
-                withProgress {
+                requireActivity().withProgress {
                     undoableOp {
                         updateNote(currentEditedCard!!.note(this@undoableOp))
                     }
@@ -1315,7 +1323,7 @@ class NoteEditor :
         oldNotetype: NotetypeJson,
         newNotetype: NotetypeJson,
     ) = launchCatchingTask {
-        if (!userAcceptsSchemaChange()) return@launchCatchingTask
+        if (!requireAnkiActivity().userAcceptsSchemaChange()) return@launchCatchingTask
 
         val noteId = editorNote!!.id
         undoableOp {
@@ -1589,7 +1597,7 @@ class NoteEditor :
                     ActivityTransitionAnimation.Direction::class.java,
                 )
             if (animation != null) {
-                ankiActivity.finishWithAnimation(animation)
+                requireAnkiActivity().finishWithAnimation(animation)
             } else {
                 finish()
             }
@@ -1678,8 +1686,8 @@ class NoteEditor :
         return note
     }
 
-    val currentFields: JSONArray
-        get() = editorNote!!.notetype.getJSONArray("flds")
+    val currentFields: Fields
+        get() = editorNote!!.notetype.flds
 
     @get:CheckResult
     val currentFieldStrings: Array<String?>
@@ -1707,9 +1715,9 @@ class NoteEditor :
         if (currentNotetypeIsImageOcclusion()) {
             val occlusionTag = "0"
             val imageTag = "1"
-            val fields = currentlySelectedNotetype!!.getJSONArray("flds")
-            for (i in 0 until fields.length()) {
-                val tag = fields.getJSONObject(i).getString("tag")
+            val fields = currentlySelectedNotetype!!.flds
+            for ((i, field) in fields.withIndex()) {
+                val tag = field.imageOcclusionTag
                 if (tag == occlusionTag || tag == imageTag) {
                     indicesToHide.add(i)
                 }
@@ -1744,14 +1752,14 @@ class NoteEditor :
             )
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
                 if (i == 0) {
-                    findViewById<View>(R.id.note_deck_spinner).nextFocusForwardId = newEditText.id
+                    requireView().findViewById<View>(R.id.note_deck_spinner).nextFocusForwardId = newEditText.id
                 }
                 if (previous != null) {
                     previous.lastViewInTabOrder.nextFocusForwardId = newEditText.id
                 }
             }
             previous = editLineView
-            editLineView.setEnableAnimation(animationEnabled())
+            editLineView.enableAnimation = requireAnkiActivity().animationEnabled()
 
             // Use custom implementation of ActionMode.Callback customize selection and insert menus
             editLineView.setActionModeCallbacks(getActionModeCallback(newEditText, View.generateViewId()))
@@ -2014,7 +2022,7 @@ class NoteEditor :
         toggleStickyButton: ImageButton,
         index: Int,
     ) {
-        if (currentFields.getJSONObject(index).getBoolean("sticky")) {
+        if (currentFields[index].sticky) {
             toggleStickyText.getOrPut(index) { "" }
         }
         if (toggleStickyText[index] == null) {
@@ -2165,13 +2173,10 @@ class NoteEditor :
     }
 
     @KotlinCleanup("make name non-null in FieldEditLine")
-    private fun getHintLocaleForField(name: String?): Locale? {
-        val field = getFieldByName(name) ?: return null
-        return LanguageHintService.getLanguageHintForField(field)
-    }
+    private fun getHintLocaleForField(name: String?): Locale? = getFieldByName(name)?.languageHint
 
-    private fun getFieldByName(name: String?): JSONObject? {
-        val pair: Pair<Int, JSONObject>? =
+    private fun getFieldByName(name: String?): Field? {
+        val pair: Pair<Int, Field>? =
             try {
                 Notetypes.fieldMap(currentlySelectedNotetype!!)[name]
             } catch (e: Exception) {
@@ -2239,7 +2244,7 @@ class NoteEditor :
         fun calculateDeckId(): DeckId {
             if (deckId != 0L) return deckId
             if (note != null && !addNote && currentEditedCard != null) {
-                return currentEditedCard!!.currentDeckId().did
+                return currentEditedCard!!.currentDeckId()
             }
 
             if (!getColUnsafe.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
@@ -2315,7 +2320,7 @@ class NoteEditor :
     }
 
     private fun updateToolbar() {
-        val editorLayout = findViewById<View>(R.id.note_editor_layout)
+        val editorLayout = requireView().findViewById<View>(R.id.note_editor_layout)
         val bottomMargin =
             if (shouldHideToolbar()) {
                 0
@@ -2449,7 +2454,7 @@ class NoteEditor :
             AlertDialog
                 .Builder(requireContext())
                 .neutralButton(R.string.help) {
-                    openUrl(Uri.parse(getString(R.string.link_manual_note_format_toolbar)))
+                    requireAnkiActivity().openUrl(Uri.parse(getString(R.string.link_manual_note_format_toolbar)))
                 }.negativeButton(R.string.dialog_cancel)
 
     private fun displayAddToolbarDialog() {
@@ -2506,13 +2511,13 @@ class NoteEditor :
         get() =
             ShortcutGroup(
                 listOf(
-                    shortcut("Ctrl+ENTER", R.string.save),
-                    shortcut("Ctrl+D", R.string.select_deck),
-                    shortcut("Ctrl+L", R.string.card_template_editor_group),
-                    shortcut("Ctrl+N", R.string.select_note_type),
-                    shortcut("Ctrl+Shift+T", R.string.tag_editor),
-                    shortcut("Ctrl+Shift+C", R.string.multimedia_editor_popup_cloze),
-                    shortcut("Ctrl+P", R.string.card_editor_preview_card),
+                    shortcut("Ctrl+ENTER", { getString(R.string.save) }),
+                    shortcut("Ctrl+D", { getString(R.string.select_deck) }),
+                    shortcut("Ctrl+L", { getString(R.string.card_template_editor_group) }),
+                    shortcut("Ctrl+N", { getString(R.string.select_note_type) }),
+                    shortcut("Ctrl+Shift+T", { getString(R.string.tag_editor) }),
+                    shortcut("Ctrl+Shift+C", { getString(R.string.multimedia_editor_popup_cloze) }),
+                    shortcut("Ctrl+P", { getString(R.string.card_editor_preview_card) }),
                 ),
                 R.string.note_editor_group,
             )
@@ -2532,20 +2537,21 @@ class NoteEditor :
     }
 
     /** Update the list of card templates for current note type  */
-    private fun updateCards(model: JSONObject?) {
+    @KotlinCleanup("make non-null")
+    private fun updateCards(model: NotetypeJson?) {
         Timber.d("updateCards()")
-        val tmpls = model!!.getJSONArray("tmpls")
+        val tmpls = model!!.tmpls
         var cardsList = StringBuilder()
         // Build comma separated list of card names
         Timber.d("updateCards() template count is %s", tmpls.length())
-        for (i in 0 until tmpls.length()) {
-            var name = tmpls.getJSONObject(i).optString("name")
+        for ((i, tmpl) in tmpls.withIndex()) {
+            var name = tmpl.jsonObject.optString("name")
             // If more than one card, and we have an existing card, underline existing card
             if (!addNote &&
                 tmpls.length() > 1 &&
                 model === editorNote!!.notetype &&
                 currentEditedCard != null &&
-                currentEditedCard!!.template(getColUnsafe).optString("name") == name
+                currentEditedCard!!.template(getColUnsafe).jsonObject.optString("name") == name
             ) {
                 name = "<u>$name</u>"
             }
@@ -2555,7 +2561,7 @@ class NoteEditor :
             }
         }
         // Make cards list red if the number of cards is being reduced
-        if (!addNote && tmpls.length() < editorNote!!.notetype.getJSONArray("tmpls").length()) {
+        if (!addNote && tmpls.length() < editorNote!!.notetype.tmpls.length()) {
             cardsList = StringBuilder("<font color='red'>$cardsList</font>")
         }
         cardsButton!!.text =
@@ -2700,7 +2706,7 @@ class NoteEditor :
                 @KotlinCleanup("Check if this ever happens")
                 val tmpls =
                     try {
-                        newModel.getJSONArray("tmpls")
+                        newModel.tmpls
                     } catch (e: Exception) {
                         Timber.w("error in obtaining templates from model %s", allModelIds!![pos])
                         return
@@ -2726,7 +2732,7 @@ class NoteEditor :
                 // Don't let the user change any other values at the same time as changing note type
                 selectedTags = editorNote!!.tags
                 updateTags()
-                findViewById<View>(R.id.CardEditorTagButton).isEnabled = false
+                requireView().findViewById<View>(R.id.CardEditorTagButton).isEnabled = false
                 // ((LinearLayout) findViewById(R.id.CardEditorCardsButton)).setEnabled(false);
                 deckSpinnerSelection!!.setEnabledActionBarSpinner(false)
                 deckSpinnerSelection!!.updateDeckPosition(currentEditedCard!!.did)
@@ -2734,7 +2740,7 @@ class NoteEditor :
             } else {
                 populateEditFields(FieldChangeType.refresh(shouldReplaceNewlines()), false)
                 updateCards(currentEditedCard!!.noteType(getColUnsafe))
-                findViewById<View>(R.id.CardEditorTagButton).isEnabled = true
+                requireView().findViewById<View>(R.id.CardEditorTagButton).isEnabled = true
                 // ((LinearLayout) findViewById(R.id.CardEditorCardsButton)).setEnabled(false);
                 deckSpinnerSelection!!.setEnabledActionBarSpinner(true)
             }

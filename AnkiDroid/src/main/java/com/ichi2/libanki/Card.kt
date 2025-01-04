@@ -30,7 +30,6 @@ import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.TimeManager
 import net.ankiweb.rsdroid.RustCleanup
-import org.json.JSONObject
 
 /**
  * A Card is the ultimate entity subject to review; it encapsulates the scheduling parameters (from which to derive
@@ -106,7 +105,7 @@ open class Card : Cloneable {
         loadFromBackendCard(card)
     }
 
-    constructor(col: Collection, id: Long? = null) {
+    constructor(col: Collection, id: CardId? = null) {
         if (id != null) {
             this.id = id
             load(col)
@@ -218,12 +217,12 @@ open class Card : Cloneable {
     open fun noteType(col: Collection): NotetypeJson = note(col).notetype
 
     @LibAnkiAlias("template")
-    fun template(col: Collection): JSONObject {
+    fun template(col: Collection): CardTemplate {
         val m = noteType(col)
         return if (m.isStd) {
-            m.getJSONArray("tmpls").getJSONObject(ord)
+            m.tmpls[ord]
         } else {
-            noteType(col).getJSONArray("tmpls").getJSONObject(0)
+            noteType(col).tmpls[0]
         }
     }
 
@@ -234,14 +233,14 @@ open class Card : Cloneable {
 
     @LibAnkiAlias("current_deck_id")
     @NeedsTest("Test functionality which calls this")
-    fun currentDeckId() = deckId { did = oDid.ifZero { this@Card.did } }
+    fun currentDeckId() = oDid.ifZero { did }
 
     /**
      * Time limit for answering in milliseconds.
      */
     @LibAnkiAlias("time_limit")
     fun timeLimit(col: Collection): Int {
-        val conf = col.decks.configDictForDeckId(currentDeckId().did)
+        val conf = col.decks.configDictForDeckId(currentDeckId())
         return conf.getInt("maxTaken") * 1000
     }
 
@@ -281,18 +280,18 @@ open class Card : Cloneable {
 
     @LibAnkiAlias("should_show_timer")
     fun shouldShowTimer(col: Collection): Boolean {
-        val options = col.decks.configDictForDeckId(currentDeckId().did)
+        val options = col.decks.configDictForDeckId(currentDeckId())
         return DeckConfig.parseTimerOpt(options, true)
     }
 
     @LibAnkiAlias("replay_question_audio_on_answer_side")
     fun replayQuestionAudioOnAnswerSide(col: Collection): Boolean {
-        val conf = col.decks.configDictForDeckId(currentDeckId().did)
+        val conf = col.decks.configDictForDeckId(currentDeckId())
         return conf.optBoolean("replayq", true)
     }
 
     @LibAnkiAlias("autoplay")
-    fun autoplay(col: Collection): Boolean = col.decks.configDictForDeckId(currentDeckId().did).getBoolean("autoplay")
+    fun autoplay(col: Collection): Boolean = col.decks.configDictForDeckId(currentDeckId()).getBoolean("autoplay")
 
     @NotInLibAnki
     public override fun clone(): Card =

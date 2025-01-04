@@ -40,5 +40,6 @@ undoActionUndone()
     <string name="sentence_gesture_flag_remove">Remove flag</string>
     <string name="sentence_gesture_abort_sync">Abort learning and sync</string>
     <string name="sentence_gesture_toggle_whiteboard">Toggle whiteboard</string>
+    <string name="sentence_custom_study">Custom study</string>
 
 </resources>

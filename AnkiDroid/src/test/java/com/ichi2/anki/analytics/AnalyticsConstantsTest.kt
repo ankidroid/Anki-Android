@@ -22,7 +22,6 @@ import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import java.lang.RuntimeException
-import kotlin.Throws
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.javaField
 
@@ -32,9 +31,7 @@ import kotlin.reflect.jvm.javaField
  * inner class is non-parameterized and will run only once.
  */
 @RunWith(Enclosed::class)
-@KotlinCleanup("auto IDE lint")
 @KotlinCleanup("remove JavaField accessors and check for annotations on the property")
-@KotlinCleanup("Remove @Throws")
 object AnalyticsConstantsTest {
     private val listOfConstantFields: MutableList<String> = ArrayList()
 
@@ -89,7 +86,6 @@ object AnalyticsConstantsTest {
          * the test failure.
          */
         @Test
-        @Throws(IllegalAccessException::class)
         fun checkAnalyticsString() {
             Assert.assertEquals(
                 """Re-check if you renamed any string in the analytics string constants of 
@@ -103,7 +99,6 @@ object AnalyticsConstantsTest {
             )
         }
 
-        @Throws(IllegalAccessException::class)
         fun getStringFromReflection(analyticsStringToBeChecked: String): String? {
             for (value in analyticsConstantFields) {
                 val reflectedValue = value.get(UsageAnalytics.Actions)

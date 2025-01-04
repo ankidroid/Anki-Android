@@ -69,9 +69,8 @@
     <!-- Crop function-->
     <string name="crop_image">ਕੀ ਤੁਸੀਂ ਇਸ ਚਿੱਤਰ ਨੂੰ ਕੱਟਣਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
     <string name="crop_button" maxLength="28">Crop image</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
+    <string name="save_dialog_content">ਮੌਜੂਦਾ ਚਿੱਤਰ ਦਾ ਆਕਾਰ %sMB ਹੈ। ਪੂਰਵ-ਨਿਰਧਾਰਤ ਚਿੱਤਰ ਆਕਾਰ ਸੀਮਾ 1MB ਹੈ। ਕੀ ਤੁਸੀਂ ਇਸਨੂੰ ਸੰਕੁਚਿਤ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
     <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="activity_result_unexpected">ਐਪ ਨੇ ਇੱਕ ਅਚਾਨਕ ਮੁੱਲ ਵਾਪਸ ਕੀਤਾ। ਤੁਹਾਨੂੰ ਇੱਕ ਵੱਖਰੀ ਐਪ ਵਰਤਣ ਦੀ ਲੋੜ ਹੋ ਸਕਦੀ ਹੈ</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">ਖੇਤਰ ਸਮੱਗਰੀ</string>
     <string name="reselect" maxLength="28">ਮੁੜ-ਚੁਣੋ</string>
 </resources>

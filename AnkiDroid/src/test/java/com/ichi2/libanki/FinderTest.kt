@@ -95,7 +95,7 @@ class FinderTest : JvmTest() {
 
     private fun buryManually(
         sched: Scheduler,
-        id: Long,
+        id: CardId,
     ): Card {
         sched.buryCards(listOf(id), true)
         val manuallyBuriedCard = Card(col, id)
@@ -135,14 +135,16 @@ class FinderTest : JvmTest() {
         note.setItem("Back", "sheep")
         col.addNote(note)
         val catCard = note.cards()[0]
-        var m = col.notetypes.current()
-        m = col.notetypes.copy(m)
-        val mm = col.notetypes
-        val t = Notetypes.newTemplate("Reverse")
-        t.put("qfmt", "{{Back}}")
-        t.put("afmt", "{{Front}}")
-        mm.addTemplateModChanged(m, t)
-        mm.save(m)
+        var noteType = col.notetypes.current()
+        noteType = col.notetypes.copy(noteType)
+        val noteTypes = col.notetypes
+        val t =
+            Notetypes.newTemplate("Reverse").apply {
+                qfmt = "{{Back}}"
+                afmt = "{{Front}}"
+            }
+        noteTypes.addTemplateModChanged(noteType, t)
+        noteTypes.save(noteType)
         note = col.newNote()
         note.setItem("Front", "test")
         note.setItem("Back", "foo bar")

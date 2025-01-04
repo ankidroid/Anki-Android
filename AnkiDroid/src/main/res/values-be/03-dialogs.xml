@@ -81,15 +81,11 @@
     <string name="repair_deck_dialog">Вы сапраўды хочаце аднавіць базу даных?\n\nПерад спробай па яе аднаўленні, будзе створана копія ў  падпапцы \'%s\'.</string>
     <string name="intent_aedict_empty">Катэгорыя “default” нічога не змяшчае</string>
     <string name="intent_aedict_category">Для таго, каб дадаць карткі ў AnkiDroid, выдаліце ўсе катэгорыі Notepad або дадайце катэгорыю з назвай \"default\"</string>
-    <string name="custom_study_new_total_new">Новых картак у калодзе: %d</string>
-    <string name="custom_study_rev_total_rev">Картак для паўтарэння: %d</string>
     <string name="custom_study_new_extend">Павялічыць/паменшыць (“-3”) абмежаванні новых картак на сёння </string>
     <string name="custom_study_rev_extend">Павялічыць/паменшыць (“-3”) абмежаванні паўтарэння новых картак на сёння </string>
     <string name="custom_study_forgotten">Паўтарыць забытыя карткі за апошнія некалькі дзён:</string>
     <string name="custom_study_ahead">Вывучыць на некалькі дзён наперад:</string>
-    <string name="custom_study_random">Выбраць некалькі выпадковых картак з калоды:</string>
     <string name="custom_study_preview">Прагледзець новыя карткі, якія дадзены за апошнія некалькі дзён:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Не атрымалася перабудаваць калоду індывідуальнага навучання</string>
     <string name="storage_full_title">Сховішча запоўнена</string>
     <string name="storage_almost_full_title">Сховішча амаль запоўнена</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Памяць запоўненая</string>

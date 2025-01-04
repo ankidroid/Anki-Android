@@ -628,7 +628,7 @@ open class CardBrowser :
                 }
             }
         }
-        @KotlinCleanup("helper function for min/max range")
+
         cardsListView.setOnItemLongClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
             if (viewModel.isInMultiSelectMode) {
                 viewModel.selectRowsBetweenPositions(lastSelectedPosition, position)
@@ -2072,7 +2072,6 @@ open class CardBrowser :
             return v
         }
 
-        @KotlinCleanup("Unchecked cast")
         private fun bindView(
             position: Int,
             v: View,
@@ -2238,7 +2237,7 @@ open class CardBrowser :
         override var position: Int
 
         private val inCardMode: Boolean
-        constructor(id: Long, col: Collection, position: Int, cardsOrNotes: CardsOrNotes) : super(col, id) {
+        constructor(id: CardId, col: Collection, position: Int, cardsOrNotes: CardsOrNotes) : super(col, id) {
             this.position = position
             this.inCardMode = cardsOrNotes == CARDS
         }
@@ -2283,7 +2282,16 @@ open class CardBrowser :
                 CardBrowserColumn.SFLD -> card.note(col).sFld(col)
                 CardBrowserColumn.DECK -> col.decks.name(card.did)
                 CardBrowserColumn.TAGS -> card.note(col).stringTags(col)
-                CardBrowserColumn.CARD -> if (inCardMode) card.template(col).optString("name") else "${card.note(col).numberOfCards(col)}"
+                CardBrowserColumn.CARD ->
+                    if (inCardMode) {
+                        card
+                            .template(
+                                col,
+                            ).jsonObject
+                            .optString("name")
+                    } else {
+                        "${card.note(col).numberOfCards(col)}"
+                    }
                 CardBrowserColumn.DUE -> dueString(col, card)
                 CardBrowserColumn.EASE -> if (inCardMode) getEaseForCards() else getAvgEaseForNotes()
                 CardBrowserColumn.CHANGED -> LanguageUtil.getShortDateFormatFromS(if (inCardMode) card.mod else card.note(col).mod.toLong())

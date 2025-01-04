@@ -17,7 +17,6 @@
 package com.ichi2.libanki
 
 import androidx.annotation.CheckResult
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.deepClonedInto
 import com.ichi2.utils.toStringList
 import org.intellij.lang.annotations.Language
@@ -33,8 +32,6 @@ import java.util.HashSet
  * `Models.save(this, true)` should be called. However, you should do the change in batch and change only when all are d
  * one, because recomputing the list of card is an expensive operation.
  */
-@KotlinCleanup("fix kotlin docs")
-@KotlinCleanup("IDE Lint")
 class NotetypeJson : JSONObject {
     /**
      * Creates a new empty model object
@@ -62,14 +59,14 @@ class NotetypeJson : JSONObject {
     }
 
     val fieldsNames: List<String>
-        get() = getJSONArray("flds").toStringList("name")
+        get() = flds.map { it.name }
 
-    fun getField(pos: Int): JSONObject = getJSONArray("flds").getJSONObject(pos)
+    fun getField(pos: Int): Field = flds[pos]
 
     /**
      * @return model did or default deck id (1) if null
      */
-    val did: Long
+    val did: DeckId
         get() = if (isNull("did")) 1L else getLong("did")
     val templatesNames: List<String>
         get() = getJSONArray("tmpls").toStringList("name")
@@ -89,8 +86,9 @@ class NotetypeJson : JSONObject {
             .filter { (sfld, _) -> sfld.trim { it <= ' ' }.isNotEmpty() }
             .mapTo(HashSet()) { (_, fieldName) -> fieldName }
 
-    /** Python method
-     * https://docs.python.org/3/library/stdtypes.html?highlight=dict#dict.update
+    /**
+     * Python method
+     * [dict.update](https://docs.python.org/3/library/stdtypes.html?highlight=dict#dict.update)
      *
      * Update the dictionary with the provided key/value pairs, overwriting existing keys
      */
@@ -100,19 +98,19 @@ class NotetypeJson : JSONObject {
         }
     }
 
-    var flds: JSONArray
-        get() = getJSONArray("flds")
+    var flds: Fields
+        get() = Fields(getJSONArray("flds"))
         set(value) {
-            put("flds", value)
+            put("flds", value.jsonArray)
         }
 
-    var tmpls: JSONArray
-        get() = getJSONArray("tmpls")
+    var tmpls: CardTemplates
+        get() = CardTemplates(getJSONArray("tmpls"))
         set(value) {
-            put("tmpls", value)
+            put("tmpls", value.jsonArray)
         }
 
-    var id: Long
+    var id: NoteTypeId
         get() = getLong("id")
         set(value) {
             put("id", value)
@@ -137,5 +135,45 @@ class NotetypeJson : JSONObject {
         get() = getInt("type")
         set(value) {
             put("type", value)
+        }
+
+    /**
+     * Defines the requirements for generating cards (for [standard note types][Consts.MODEL_STD])
+     *
+     * A requirement states that either one of, or all of a set of fields must be non-empty to
+     * generate a card using a template. Meaning for a standard note, each template has a
+     * requirement, which generates 0 or 1 cards
+     *
+     * **Example - Basic (optional reversed card):**
+     *
+     * * Fields: `["Front", "Back", "Add Reverse"]`
+     * * `req: [[0, 'any', [0]], [1, 'all', [1, 2]]]`
+     *
+     * meaning:
+     *
+     * * Card 1 needs "Front" to be non-empty
+     * * Card 2 needs both "Back" and "Add Reverse" to be non-empty
+     *
+     * The array is of the form `[T, string, list]`, where:
+     * - `T` is the ordinal of the template.
+     * - `string` is 'none', 'all' or 'any'.
+     * - `list` contains ordinals of fields, in increasing order.
+     *
+     * The output is defined based on the `string`:
+     * - if `"none"'`, no cards are generated for this template. `list` should be empty.
+     * - if `"all"'`, the card is generated if all fields in `list` are non-empty
+     * - if `"any"'`, the card is generated if any field in `list` is non-empty.
+     *
+     * See [The algorithm to decide how to compute req from the template]
+     * (https://github.com/Arthur-Milchior/anki/blob/commented/documentation//templates_generation_rules.md) is explained on:
+     */
+    @Deprecated(
+        "req is no longer used. Exists for backwards compatibility:" +
+            "https://forums.ankiweb.net/t/is-req-still-used-or-present/9977",
+    )
+    var req: JSONArray
+        get() = getJSONArray("req")
+        set(value) {
+            put("req", value)
         }
 }

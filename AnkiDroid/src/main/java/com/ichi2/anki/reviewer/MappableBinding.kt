@@ -165,11 +165,6 @@ class MappableBinding(
         }
     }
 
-    /** the serialisation version */
-    enum class Version {
-        ONE,
-    }
-
     companion object {
         const val PREF_SEPARATOR = '|'
 
@@ -185,12 +180,8 @@ class MappableBinding(
                 .mapNotNull { it.toPreferenceString() }
                 .joinToString(prefix = "1/", separator = PREF_SEPARATOR.toString())
 
-        @Suppress("UNUSED_PARAMETER")
         @CheckResult
-        fun fromString(
-            s: String,
-            v: Version = Version.ONE,
-        ): MappableBinding? {
+        fun fromString(s: String): MappableBinding? {
             if (s.isEmpty()) {
                 return null
             }

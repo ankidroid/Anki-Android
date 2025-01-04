@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
+import com.ichi2.libanki.DeckId
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -93,7 +94,7 @@ class WidgetConfigScreenAdapter(
         notifyItemInserted(decks.size - 1)
     }
 
-    fun removeDeck(deckId: Long) {
+    fun removeDeck(deckId: DeckId) {
         // Find the position of the deck with the given ID
         val position = decks.indexOfFirst { it.deckId == deckId }
         if (position != -1) {

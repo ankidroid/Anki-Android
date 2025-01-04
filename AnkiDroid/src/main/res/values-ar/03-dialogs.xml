@@ -87,15 +87,11 @@
     <string name="repair_deck_dialog">هل تريد حقًا إصلاح قاعدة البيانات؟\n\nقبل بدء هذه المحاولة، ستُنشَأ نسخة في المجلد الفرعي “%s”.</string>
     <string name="intent_aedict_empty">تصنيف “default” فارغ</string>
     <string name="intent_aedict_category">لإضافة بطاقات إلى أنكيدرويد، أزل كل تصنيفات المفكرة أو أضف تصنيفًا باسم “default”</string>
-    <string name="custom_study_new_total_new">البطاقات الجديدة في شَدة الأورق: %d</string>
-    <string name="custom_study_rev_total_rev">المراجعات المستحقة في الرزمة: %d</string>
     <string name="custom_study_new_extend">رفع/إنقاص (“-3”) الحد اليومي للبطاقات الجديدة بـ</string>
     <string name="custom_study_rev_extend">رفع/إنقاص (“-3”) الحد اليومي للمراجعات بـ</string>
     <string name="custom_study_forgotten">راجع البطاقات المنسية في آخر س يوم:</string>
     <string name="custom_study_ahead">راجع مبكرًا بـ س يوم:</string>
-    <string name="custom_study_random">اختر س بطاقة من الرزمة عشوائيًا:</string>
     <string name="custom_study_preview">عاين البطاقات الجديدة المضافة في آخر س يوم:</string>
-    <string name="custom_study_rebuild_deck_corrupt">تعذرت إعادة إنشاء شَدّة الدراسة المخصصة</string>
     <string name="storage_full_title">ذاكرة التخزين ممتلئة</string>
     <string name="storage_almost_full_title">بطاقة الـSD ممتلئة تقريبًا</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">لا توجد مساحة</string>

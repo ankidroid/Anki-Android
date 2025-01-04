@@ -26,7 +26,6 @@ import timber.log.Timber
  *
  */
 @KotlinCleanup("see about lateinit")
-@KotlinCleanup("IDE lint")
 @WorkerThread
 object MetaDB {
     /** The name of the file storing the meta-db.  */
@@ -59,7 +58,7 @@ object MetaDB {
     /** Creating any table that missing and upgrading necessary tables.  */
     private fun upgradeDB(
         metaDb: SQLiteDatabase,
-        databaseVersion: Int,
+        @Suppress("SameParameterValue") databaseVersion: Int,
     ): SQLiteDatabase {
         Timber.i("MetaDB:: Upgrading Internal Database..")
         // if (mMetaDb.getVersion() == 0) {
@@ -583,7 +582,7 @@ object MetaDB {
      * Stores the state of the mic toolbar for a given deck.
      *
      * @param did deck id to store mic toolbar state for
-     * @param micToolbarState `true` if the toolbar should be shown, `false` otherwise
+     * @param isEnabled `true` if the toolbar should be shown, `false` otherwise
      */
     fun storeMicToolbarState(
         context: Context,

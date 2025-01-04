@@ -109,7 +109,6 @@ import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
 import com.ichi2.utils.cancelable
@@ -129,7 +128,6 @@ import java.io.File
 import kotlin.coroutines.resume
 
 @Suppress("LeakingThis")
-@KotlinCleanup("too many to count")
 @NeedsTest("#14709: Timebox shouldn't appear instantly when the Reviewer is opened")
 open class Reviewer :
     AbstractFlashcardViewer(),
@@ -1523,25 +1521,25 @@ open class Reviewer :
     }
 
     private fun createWhiteboard() {
-        whiteboard = createInstance(this, true, this)
+        val whiteboard =
+            createInstance(this, true, this).also { whiteboard ->
+                this.whiteboard = whiteboard
+            }
 
         // We use the pen color of the selected deck at the time the whiteboard is enabled.
         // This is how all other whiteboard settings are
         val whiteboardPenColor = MetaDB.getWhiteboardPenColor(this, parentDid).fromPreferences()
         if (whiteboardPenColor != null) {
-            whiteboard!!.penColor = whiteboardPenColor
+            whiteboard.penColor = whiteboardPenColor
         }
-        whiteboard!!.setOnPaintColorChangeListener(
-            object : OnPaintColorChangeListener {
-                override fun onPaintColorChange(color: Int?) {
-                    MetaDB.storeWhiteboardPenColor(this@Reviewer, parentDid, !currentTheme.isNightMode, color)
-                }
-            },
-        )
-        whiteboard!!.setOnTouchListener { v: View, event: MotionEvent? ->
+        whiteboard.onPaintColorChangeListener =
+            OnPaintColorChangeListener { color ->
+                MetaDB.storeWhiteboardPenColor(this@Reviewer, parentDid, !currentTheme.isNightMode, color)
+            }
+        whiteboard.setOnTouchListener { v: View, event: MotionEvent? ->
             if (event == null) return@setOnTouchListener false
             // If the whiteboard is currently drawing, and triggers the system UI to show, we want to continue drawing.
-            if (!whiteboard!!.isCurrentlyDrawing &&
+            if (!whiteboard.isCurrentlyDrawing &&
                 (
                     !showWhiteboard ||
                         (
@@ -1554,7 +1552,7 @@ open class Reviewer :
                 v.performClick()
                 return@setOnTouchListener gestureDetector!!.onTouchEvent(event)
             }
-            whiteboard!!.handleTouchEvent(event)
+            whiteboard.handleTouchEvent(event)
         }
     }
 
@@ -1612,7 +1610,6 @@ open class Reviewer :
      * Whether or not dismiss note is available for current card and specified DismissType
      * @return true if there is another card of same note that could be dismissed
      */
-    @KotlinCleanup("mCurrentCard handling")
     private fun suspendNoteAvailable(): Boolean {
         return if (currentCard == null) {
             false
@@ -1626,7 +1623,6 @@ open class Reviewer :
         // whether there exists a sibling not buried.
     }
 
-    @KotlinCleanup("mCurrentCard handling")
     private fun buryNoteAvailable(): Boolean {
         return if (currentCard == null) {
             false

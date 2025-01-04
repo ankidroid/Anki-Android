@@ -26,7 +26,7 @@ import org.junit.runner.RunWith
 class AsyncDialogFragmentsTest {
     @Test
     fun `SyncErrorDialog does not require context`() {
-        for (dialogType in SyncErrorDialog.dialogTypes) {
+        for (dialogType in SyncErrorDialog.Type.entries) {
             val instance = SyncErrorDialog.newInstance(dialogType, dialogMessage = null)
 
             assertDoesNotThrow("$dialogType message required a context") { instance.notificationMessage }
@@ -52,7 +52,7 @@ class AsyncDialogFragmentsTest {
 
     @Test
     fun `MediaCheckDialog does not require context`() {
-        for (dialogType in MediaCheckDialog.dialogTypes) {
+        for (dialogType in MediaCheckDialog.Type.entries) {
             val instance = MediaCheckDialog.newInstance(dialogType)
             assertDoesNotThrow("$dialogType message required a context") { instance.notificationMessage }
             assertDoesNotThrow("$dialogType title required a context") { instance.notificationTitle }
@@ -61,7 +61,7 @@ class AsyncDialogFragmentsTest {
 
     @Test
     fun `ImportDialog does not require context`() {
-        for (dialogType in ImportDialog.dialogTypes) {
+        for (dialogType in ImportDialog.Type.entries) {
             val instance = ImportDialog.newInstance(dialogType, "path")
             assertDoesNotThrow("$dialogType message required a context") { instance.notificationMessage }
             assertDoesNotThrow("$dialogType title required a context") { instance.notificationTitle }

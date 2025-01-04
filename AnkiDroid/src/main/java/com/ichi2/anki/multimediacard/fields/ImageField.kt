@@ -49,7 +49,7 @@ class ImageField :
         get() = extraImagePathRef
         set(value) {
             extraImagePathRef = value
-            setThisModified()
+            thisModified = true
         }
 
     override var text: String? = null
@@ -76,8 +76,6 @@ class ImageField :
     }
 
     companion object {
-        private const val SERIAL_VERSION_UID = 4431611060655809687L
-
         @VisibleForTesting
         @NeedsTest("files with HTML illegal chars can be imported and rendered")
         fun formatImageFileName(file: File): String =

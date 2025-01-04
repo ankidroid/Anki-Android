@@ -198,7 +198,7 @@ object CollectionHelper {
      *
      * @return Absolute path to the AnkiDroid directory in primary shared/external storage
      */
-    val legacyAnkiDroidDirectory: String
+    private val legacyAnkiDroidDirectory: String
         get() = File(Environment.getExternalStorageDirectory(), "AnkiDroid").absolutePath
 
     /**

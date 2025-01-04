@@ -53,13 +53,7 @@ import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.libanki.utils.append
-import com.ichi2.libanki.utils.index
-import com.ichi2.libanki.utils.insert
-import com.ichi2.libanki.utils.len
-import com.ichi2.libanki.utils.remove
-import com.ichi2.libanki.utils.set
-import com.ichi2.utils.HashUtil
-import com.ichi2.utils.jsonObjectIterable
+import com.ichi2.utils.len
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import org.intellij.lang.annotations.Language
@@ -73,10 +67,6 @@ class NoteTypeNameID(
 )
 
 private typealias int = Long
-
-// # types
-private typealias Field = JSONObject // Dict<str, Any>
-typealias Template = JSONObject // Dict<str, Union3<str, int, Unit>>
 
 class Notetypes(
     val col: Collection,
@@ -222,8 +212,8 @@ class Notetypes(
     fun new(name: String): NotetypeJson {
         // caller should call save() after modifying
         val nt = newBasicNotetype()
-        nt.flds = JSONArray()
-        nt.tmpls = JSONArray()
+        nt.flds = Fields(JSONArray())
+        nt.tmpls = CardTemplates(JSONArray())
         nt.name = name
         return nt
     }
@@ -319,12 +309,12 @@ class Notetypes(
      * This code is currently only used by unit tests. If the  GUI starts to use it, the signature
      * should be updated so that a translated name is passed in. */
     fun copy(notetype: NotetypeJson): NotetypeJson {
-        val m2 = notetype.deepClone()
-        m2.name = "${m2.name} copy"
-        // m2.name = col.context.getString(R.string.copy_note_type_name, m2.name)
-        m2.id = 0
-        add(m2)
-        return m2
+        val noteType2 = notetype.deepClone()
+        noteType2.name = "${noteType2.name} copy"
+        // noteType2.name = col.context.getString(R.string.copy_note_type_name, noteType2.name)
+        noteType2.id = 0
+        add(noteType2)
+        return noteType2
     }
 
     /*
@@ -332,13 +322,12 @@ class Notetypes(
     ##################################################
      */
 
-    @RustCleanup("Check JSONObject.NULL")
     @LibAnkiAlias("new_field")
     fun newField(name: String): Field {
         val nt = newBasicNotetype()
-        val field = nt.flds.getJSONObject(0)
-        field.put("name", name)
-        field.put("ord", JSONObject.NULL)
+        val field = nt.flds[0]
+        field.name = name
+        field.setOrd(null)
         return field
     }
 
@@ -382,8 +371,8 @@ class Notetypes(
         field: Field,
         newName: String,
     ) {
-        check(notetype.flds.jsonObjectIterable().contains(field)) { "Field to be renamed was not found in the notetype fields" }
-        field["name"] = newName
+        check(notetype.flds.contains(field)) { "Field to be renamed was not found in the notetype fields" }
+        field.name = newName
     }
 
     /** Modifies schema. */
@@ -447,7 +436,7 @@ class Notetypes(
     @RustCleanup("Since Kotlin doesn't have throws, this may not be needed")
     fun addFieldInNewModel(
         notetype: NotetypeJson,
-        field: JSONObject,
+        field: Field,
     ) {
         check(isModelNew(notetype)) { "Model was assumed to be new, but is not" }
         try {
@@ -461,7 +450,7 @@ class Notetypes(
 
     fun addTemplateInNewModel(
         notetype: NotetypeJson,
-        template: JSONObject,
+        template: CardTemplate,
     ) {
         // similar to addTemplate, but doesn't throw exception;
         // asserting the model is new.
@@ -478,7 +467,7 @@ class Notetypes(
 
     fun addFieldModChanged(
         notetype: NotetypeJson,
-        field: JSONObject,
+        field: Field,
     ) {
         // similar to Anki's addField; but thanks to assumption that
         // mod is already changed, it never has to throw
@@ -489,7 +478,7 @@ class Notetypes(
 
     fun addTemplateModChanged(
         notetype: NotetypeJson,
-        template: JSONObject,
+        template: CardTemplate,
     ) {
         // similar to addTemplate, but doesn't throw exception;
         // asserting the model is new.
@@ -504,13 +493,13 @@ class Notetypes(
 
     @RustCleanup("Check JSONObject.NULL")
     @LibAnkiAlias("new_template")
-    fun newTemplate(name: String): Template {
+    fun newTemplate(name: String): CardTemplate {
         val nt = newBasicNotetype()
-        val template = nt.tmpls.getJSONObject(0)
-        template["name"] = name
-        template["qfmt"] = ""
-        template["afmt"] = ""
-        template.put("ord", JSONObject.NULL)
+        val template = nt.tmpls[0]
+        template.name = name
+        template.qfmt = ""
+        template.afmt = ""
+        template.setOrd(null)
         return template
     }
 
@@ -518,7 +507,7 @@ class Notetypes(
     @LibAnkiAlias("add_template")
     fun add_template(
         notetype: NotetypeJson,
-        template: Template,
+        template: CardTemplate,
     ) {
         notetype.tmpls.append(template)
     }
@@ -527,7 +516,7 @@ class Notetypes(
     @LibAnkiAlias("remove_template")
     fun removeTemplate(
         notetype: NotetypeJson,
-        template: Template,
+        template: CardTemplate,
     ) {
         check(len(notetype.tmpls) > 1) { "Attempting to remove the last template" }
         notetype.tmpls.remove(template)
@@ -537,7 +526,7 @@ class Notetypes(
     @LibAnkiAlias("reposition_template")
     fun repositionTemplate(
         notetype: NotetypeJson,
-        template: Template,
+        template: CardTemplate,
         idx: Int,
     ) {
         val oldidx = notetype.tmpls.index(template).get()
@@ -553,7 +542,7 @@ class Notetypes(
 
     fun addTemplate(
         notetype: NotetypeJson,
-        template: Template,
+        template: CardTemplate,
     ) {
         add_template(notetype, template)
         if (notetype.id != 0L) {
@@ -563,7 +552,7 @@ class Notetypes(
 
     fun remTemplate(
         notetype: NotetypeJson,
-        template: Template,
+        template: CardTemplate,
     ) {
         removeTemplate(notetype, template)
         save(notetype)
@@ -571,7 +560,7 @@ class Notetypes(
 
     fun moveTemplate(
         notetype: NotetypeJson,
-        template: Template,
+        template: CardTemplate,
         idx: Int,
     ) {
         repositionTemplate(notetype, template, idx)
@@ -650,11 +639,11 @@ class Notetypes(
     /** Return a hash of the schema, to see if models are compatible. */
     fun scmhash(notetype: NotetypeJson): String {
         var s = ""
-        for (f in notetype.flds.jsonObjectIterable()) {
-            s += f["name"]
+        for (f in notetype.flds) {
+            s += f.name
         }
-        for (t in notetype.tmpls.jsonObjectIterable()) {
-            s += t["name"]
+        for (t in notetype.tmpls) {
+            s += t.name
         }
         return checksum(s)
     }
@@ -708,9 +697,9 @@ class Notetypes(
     companion object {
         const val NOT_FOUND_NOTE_TYPE = -1L
 
-        fun newTemplate(name: String): JSONObject =
-            JSONObject(DEFAULT_TEMPLATE).also {
-                it.put("name", name)
+        fun newTemplate(name: String): CardTemplate =
+            CardTemplate(JSONObject(DEFAULT_TEMPLATE)).also {
+                it.name = name
             }
 
         @Language("JSON")
@@ -718,24 +707,15 @@ class Notetypes(
             """{"name": "", "ord": null, "qfmt": "", "afmt": "", "did": null, "bqfmt": "","bafmt": "","bfont": "", "bsize": 0 }"""
 
         /** "Mapping of field name -> (ord, field).  */
-        fun fieldMap(notetype: NotetypeJson): Map<String, Pair<Int, JSONObject>> {
-            val flds = notetype.getJSONArray("flds")
-            // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
-            val result: MutableMap<String, Pair<Int, JSONObject>> = HashUtil.hashMapInit(flds.length())
-            for (f in flds.jsonObjectIterable()) {
-                result[f.getString("name")] = Pair(f.getInt("ord"), f)
-            }
-            return result
-        }
+        fun fieldMap(notetype: NotetypeJson): Map<String, Pair<Int, Field>> =
+            notetype.flds.associateBy({ f -> f.name }, { f -> Pair(f.ord, f) })
 
         // not in anki
         fun isModelNew(notetype: NotetypeJson): Boolean = notetype.getLong("id") == 0L
 
         fun _updateTemplOrds(notetype: NotetypeJson) {
-            val tmpls = notetype.getJSONArray("tmpls")
-            for (i in 0 until tmpls.length()) {
-                val f = tmpls.getJSONObject(i)
-                f.put("ord", i)
+            for ((i, template) in notetype.tmpls.withIndex()) {
+                template.setOrd(i)
             }
         }
     }
@@ -765,13 +745,13 @@ fun Collection.getFieldNamesRaw(input: ByteArray): ByteArray = backend.getFieldN
 
 fun Collection.updateNotetype(updatedNotetype: Notetype): OpChanges = backend.updateNotetype(input = updatedNotetype)
 
-fun Collection.removeNotetype(notetypeId: Long): OpChanges = backend.removeNotetype(ntid = notetypeId)
+fun Collection.removeNotetype(notetypeId: NoteTypeId): OpChanges = backend.removeNotetype(ntid = notetypeId)
 
 fun Collection.addNotetype(newNotetype: Notetype): OpChangesWithId = backend.addNotetype(input = newNotetype)
 
 fun Collection.getNotetypeNameIdUseCount(): List<NotetypeNameIdUseCount> = backend.getNotetypeNamesAndCounts()
 
-fun Collection.getNotetype(notetypeId: Long): Notetype = backend.getNotetype(ntid = notetypeId)
+fun Collection.getNotetype(notetypeId: NoteTypeId): Notetype = backend.getNotetype(ntid = notetypeId)
 
 fun Collection.getNotetypeNames(): List<NotetypeNameId> = backend.getNotetypeNames()
 

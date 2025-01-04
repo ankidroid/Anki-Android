@@ -26,12 +26,13 @@ import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService
-import com.ichi2.anki.OnPageFinishedCallback
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DiscardChangesDialog
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.updateDeckConfigsRaw
 import kotlinx.coroutines.Dispatchers
@@ -40,8 +41,11 @@ import timber.log.Timber
 
 @NeedsTest("15130: pressing back: icon + button should return to options if the manual is open")
 class DeckOptions : PageFragment() {
-    // handle going back from the manual
-    private val onBackCallback =
+    /**
+     * Callback enabled when the manual is opened in the deck options.
+     * It requests the webview to go back to the Deck Options.
+     */
+    private val onBackFromManual =
         object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
                 Timber.v("webView: navigating back")
@@ -49,25 +53,65 @@ class DeckOptions : PageFragment() {
             }
         }
 
-    // HACK: this is enabled unconditionally as we currently cannot get the 'changed' status
-    private val onBackSaveCallback =
+    /**
+     * Callback used when nothing is on top of the deck options, neither manual nor modal.
+     * It sends the webview a request to deal with the closing request, requesting confirmation if
+     * that would lose the local changes and otherwise close the webview.
+     */
+    private val onBackFromDeckOptions =
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                Timber.v("DeckOptions: showing 'discard changes'")
-                DiscardChangesDialog.showDialog(requireContext()) {
-                    Timber.i("OK button pressed to confirm discard changes")
-                    this.isEnabled = false
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                Timber.v("DeckOptions: requesting the webview to handle the user close request.")
+                webView.evaluateJavascript("anki.deckOptionsPendingChanges()") {
+                    // No callback. Checking whether there are change is asynchronous. Javascript will use the BridgeCommand to request
+                    // Kotlin to either close (if there is no change) or request the user to confirm they want to discard the changes.
                 }
             }
         }
 
+    override val bridgeCommands =
+        mapOf<String, () -> Unit>(
+            "confirmDiscardChanges" to {
+                launchCatchingTask {
+                    requestConfirmDiscard()
+                }
+            },
+            "_close" to {
+                actuallyClose()
+            },
+        )
+
+    /**
+     * Close the view, discarding change if needed.
+     */
+    private fun actuallyClose() {
+        onBackFromDeckOptions.isEnabled = false
+        Timber.v("webView: navigating back")
+        launchCatchingTask {
+            // Required to be in a task to ensure the callback is disabled.
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+    }
+
+    /**
+     * Request the user to confirm they want to close the options, discarding change. If they accept, do it.
+     */
+    private fun requestConfirmDiscard() {
+        Timber.v("DeckOptions: showing 'discard changes'")
+        DiscardChangesDialog.showDialog(requireActivity()) {
+            actuallyClose()
+        }
+    }
+
+    /**
+     * Callback used when a modal is opened in the webview. It requests the webview to close it.
+     */
     @NeedsTest("disabled by default")
     @NeedsTest("enabled if a modal is displayed")
     @NeedsTest("disabled if a modal is hidden")
     @NeedsTest("disabled if back button is pressed: no error")
     @NeedsTest("disabled if back button is pressed: with error closing modal")
-    private val onCloseBootstrapModalCallback =
+    private val onBackFromModal =
         object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
                 Timber.i("back button: closing displayed modal")
@@ -97,11 +141,11 @@ class DeckOptions : PageFragment() {
             when (request) {
                 "open" -> {
                     Timber.d("WebVew modal opened")
-                    onCloseBootstrapModalCallback.isEnabled = true
+                    onBackFromModal.isEnabled = true
                 }
                 "close" -> {
                     Timber.d("WebView modal closed")
-                    onCloseBootstrapModalCallback.isEnabled = false
+                    onBackFromModal.isEnabled = false
                 }
                 else -> Timber.w("Unknown command: $request")
             }
@@ -116,10 +160,10 @@ class DeckOptions : PageFragment() {
 
     @NeedsTest("going back on a manual page takes priority over closing a modal")
     override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
-        requireActivity().onBackPressedDispatcher.addCallback(this, onBackSaveCallback)
-        requireActivity().onBackPressedDispatcher.addCallback(this, onCloseBootstrapModalCallback)
+        requireActivity().onBackPressedDispatcher.addCallback(this, onBackFromDeckOptions)
+        requireActivity().onBackPressedDispatcher.addCallback(this, onBackFromModal)
         // going back on a manual page takes priority over closing a modal
-        requireActivity().onBackPressedDispatcher.addCallback(this, onBackCallback)
+        requireActivity().onBackPressedDispatcher.addCallback(this, onBackFromManual)
 
         return object : PageWebViewClient() {
             private val ankiManualHostRegex = Regex("^docs\\.ankiweb\\.net\$")
@@ -138,15 +182,14 @@ class DeckOptions : PageFragment() {
                 }
             }
         }.apply {
-            onPageFinishedCallback =
-                OnPageFinishedCallback { view ->
-                    Timber.v("canGoBack: %b", view.canGoBack())
-                    onBackCallback.isEnabled = view.canGoBack()
-                    // reset the modal state on page load
-                    // clicking a link to the online manual closes the modal and reloads the page
-                    onCloseBootstrapModalCallback.isEnabled = false
-                    listenToModalShowHideEvents()
-                }
+            onPageFinishedCallbacks.add { view ->
+                Timber.v("canGoBack: %b", view.canGoBack())
+                onBackFromManual.isEnabled = view.canGoBack()
+                // reset the modal state on page load
+                // clicking a link to the online manual closes the modal and reloads the page
+                onBackFromModal.isEnabled = false
+                listenToModalShowHideEvents()
+            }
         }
     }
 
@@ -179,7 +222,7 @@ class DeckOptions : PageFragment() {
     companion object {
         fun getIntent(
             context: Context,
-            deckId: Long,
+            deckId: DeckId,
         ): Intent {
             val title = context.getString(R.string.menu__deck_options)
             return getIntent(context, "deck-options/$deckId", title, DeckOptions::class)

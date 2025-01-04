@@ -18,9 +18,11 @@ package com.ichi2.anki.dialogs
 
 import android.os.Bundle
 import androidx.annotation.CheckResult
-import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import androidx.core.os.bundleOf
 import com.ichi2.anki.R
+import com.ichi2.anki.dialogs.ImportDialog.Type.DIALOG_IMPORT_ADD_CONFIRM
+import com.ichi2.anki.dialogs.ImportDialog.Type.DIALOG_IMPORT_REPLACE_CONFIRM
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -34,15 +36,19 @@ class ImportDialog : AsyncDialogFragment() {
         fun importReplace(importPath: String)
     }
 
+    private val dialogType: Type
+        get() = Type.fromCode(requireArguments().getInt(IMPORT_DIALOG_TYPE_KEY))
+
+    private val packagePath: String
+        get() = requireArguments().getString(IMPORT_DIALOG_PACKAGE_PATH_KEY)!!
+
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         super.onCreate(savedInstanceState)
-        val type = requireArguments().getInt("dialogType")
         val dialog = AlertDialog.Builder(requireActivity())
         dialog.setCancelable(true)
-        val packagePath = requireArguments().getString("packagePath")!!
         val displayFileName = filenameFromPath(convertToDisplayName(packagePath))
 
-        return when (type) {
+        return when (dialogType) {
             DIALOG_IMPORT_ADD_CONFIRM -> {
                 dialog
                     .setTitle(R.string.import_title)
@@ -63,7 +69,6 @@ class ImportDialog : AsyncDialogFragment() {
                     }.negativeButton(R.string.dialog_cancel)
                     .create()
             }
-            else -> null!!
         }
     }
 
@@ -88,16 +93,21 @@ class ImportDialog : AsyncDialogFragment() {
             return res().getString(R.string.import_title)
         }
 
-    companion object {
-        const val DIALOG_IMPORT_ADD_CONFIRM = 2
-        const val DIALOG_IMPORT_REPLACE_CONFIRM = 3
+    enum class Type(
+        val code: Int,
+    ) {
+        DIALOG_IMPORT_ADD_CONFIRM(0),
+        DIALOG_IMPORT_REPLACE_CONFIRM(1),
+        ;
 
-        @VisibleForTesting
-        val dialogTypes =
-            arrayOf(
-                DIALOG_IMPORT_ADD_CONFIRM,
-                DIALOG_IMPORT_REPLACE_CONFIRM,
-            )
+        companion object {
+            fun fromCode(code: Int) = Type.entries.first { code == it.code }
+        }
+    }
+
+    companion object {
+        const val IMPORT_DIALOG_TYPE_KEY = "dialogType"
+        const val IMPORT_DIALOG_PACKAGE_PATH_KEY = "packagePath"
 
         /**
          * A set of dialogs which deal with importing a file
@@ -107,16 +117,16 @@ class ImportDialog : AsyncDialogFragment() {
          */
         @CheckResult
         fun newInstance(
-            dialogType: Int,
+            dialogType: Type,
             packagePath: String,
-        ): ImportDialog {
-            val f = ImportDialog()
-            val args = Bundle()
-            args.putInt("dialogType", dialogType)
-            args.putString("packagePath", packagePath)
-            f.arguments = args
-            return f
-        }
+        ): ImportDialog =
+            ImportDialog().apply {
+                arguments =
+                    bundleOf(
+                        IMPORT_DIALOG_TYPE_KEY to dialogType.code,
+                        IMPORT_DIALOG_PACKAGE_PATH_KEY to packagePath,
+                    )
+            }
 
         private fun filenameFromPath(path: String): String = path.split("/").toTypedArray()[path.split("/").toTypedArray().size - 1]
     }

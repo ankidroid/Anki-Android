@@ -71,7 +71,6 @@
     <string name="crop_button" maxLength="28">ಚಿತ್ರವನ್ನು ಕ್ರಾಪ್ ಮಾಡಿ</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"ಇಮೇಜ್ ಆಯ್ಕೆ ವಿಫಲವಾಗಿದೆ, ದಯವಿಟ್ಟು ಮರುಪ್ರಯತ್ನಿಸಿ"</string>
-    <string name="activity_result_unexpected">ಅಪ್ಲಿಕೇಶನ್ ಅನಿರೀಕ್ಷಿತ ಮೌಲ್ಯವನ್ನು ಹಿಂತಿರುಗಿಸಿದೆ. ನೀವು ಬೇರೆ ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಬಳಸಬೇಕಾಗಬಹುದು</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">ಕ್ಷೇತ್ರ ವಿಷಯಗಳು</string>
     <string name="reselect" maxLength="28">Reselect</string>
 </resources>

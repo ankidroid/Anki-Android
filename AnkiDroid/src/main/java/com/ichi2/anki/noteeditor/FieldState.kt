@@ -22,11 +22,11 @@ import android.view.View
 import com.ichi2.anki.FieldEditLine
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
+import com.ichi2.libanki.Field
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.MapUtil.getKeyByValue
-import org.json.JSONObject
 import java.util.ArrayList
 import kotlin.math.min
 
@@ -53,9 +53,8 @@ class FieldState private constructor(
         if (type.type == Type.CLEAR_KEEP_STICKY) {
             // we use the UI values here as the model will post-processing steps (newline -> br).
             val currentFieldStrings = editor.currentFieldStrings
-            val flds = editor.currentFields
-            for (fldIdx in 0 until flds.length()) {
-                if (flds.getJSONObject(fldIdx).getBoolean("sticky")) {
+            for ((fldIdx, field) in editor.currentFields.withIndex()) {
+                if (field.sticky) {
                     fieldEditLines[fldIdx].setContent(currentFieldStrings[fldIdx], type.replaceNewlines)
                 }
             }
@@ -93,7 +92,7 @@ class FieldState private constructor(
         if (type.type == Type.REFRESH_WITH_MAP) {
             val items = editor.fieldsFromSelectedNote
             val fMapNew = Notetypes.fieldMap(type.newNotetype!!)
-            return fromFieldMap(editor.requireContext(), items, fMapNew, type.modelChangeFieldMap)
+            return fromFieldMap(editor.requireContext(), items, fMapNew, type.modelChangeFieldMap!!)
         }
         return editor.fieldsFromSelectedNote
     }
@@ -154,8 +153,8 @@ class FieldState private constructor(
         private fun fromFieldMap(
             context: Context,
             oldFields: Array<Array<String>>,
-            fMapNew: Map<String, Pair<Int, JSONObject>>,
-            modelChangeFieldMap: Map<Int, Int>?,
+            fMapNew: Map<String, Pair<Int, Field>>,
+            modelChangeFieldMap: Map<Int, Int>,
         ): Array<Array<String>> {
             // Build array of label/values to provide to field EditText views
             val fields = Array(fMapNew.size) { arrayOfNulls<String>(2) }
@@ -164,7 +163,7 @@ class FieldState private constructor(
                 // Field index of new note type
                 val i = fieldPair.first
                 // Add values from old note type if they exist in map, otherwise make the new field empty
-                if (modelChangeFieldMap!!.containsValue(i)) {
+                if (modelChangeFieldMap.containsValue(i)) {
                     // Get index of field from old note type given the field index of new note type
                     val j = getKeyByValue(modelChangeFieldMap, i) ?: continue
                     // Set the new field label text

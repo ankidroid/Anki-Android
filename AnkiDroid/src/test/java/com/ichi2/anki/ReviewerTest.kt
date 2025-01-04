@@ -28,6 +28,7 @@ import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AnkiDroidJsAPITest.Companion.formatApiResult
 import com.ichi2.anki.AnkiDroidJsAPITest.Companion.getDataFromRequest
 import com.ichi2.anki.AnkiDroidJsAPITest.Companion.jsApiContract
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand.FLIP_OR_ANSWER_EASE1
 import com.ichi2.anki.cardviewer.ViewerCommand.MARK
@@ -47,7 +48,6 @@ import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import com.ichi2.utils.BASIC_MODEL_NAME
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.deepClone
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
@@ -148,8 +148,9 @@ class ReviewerTest : RobolectricTest() {
 
     @Test
     fun noErrorShouldOccurIfSoundFileNotPresent() {
-        val firstNote = addNoteUsingBasicModel("[[sound:not_on_file_system.mp3]]", "World")
-        moveToReviewQueue(firstNote.firstCard())
+        addNoteUsingBasicModel("[[sound:not_on_file_system.mp3]]", "World")
+            .firstCard()
+            .moveToReviewQueue()
 
         val reviewer = startReviewer()
         reviewer.displayCardQuestion()
@@ -446,12 +447,13 @@ class ReviewerTest : RobolectricTest() {
     }
 
     @Throws(ConfirmModSchemaException::class)
+    @KotlinCleanup("use a assertNotNull which returns rather than !!")
     private fun addNoteWithThreeCards() {
         val models = col.notetypes
-        var notetype: NotetypeJson? = models.copy(models.current())
-        notetype!!.put("name", "Three")
+        var notetype: NotetypeJson = models.copy(models.current())
+        notetype.put("name", "Three")
         models.add(notetype)
-        notetype = models.byName("Three")
+        notetype = models.byName("Three")!!
 
         cloneTemplate(models, notetype, "1")
         cloneTemplate(models, notetype, "2")
@@ -466,18 +468,18 @@ class ReviewerTest : RobolectricTest() {
     @Throws(ConfirmModSchemaException::class)
     private fun cloneTemplate(
         notetypes: Notetypes,
-        notetype: NotetypeJson?,
+        notetype: NotetypeJson,
         extra: String,
     ) {
-        val tmpls = notetype!!.getJSONArray("tmpls")
-        val defaultTemplate = tmpls.getJSONObject(0)
+        val tmpls = notetype.tmpls
+        val defaultTemplate = tmpls.first()
 
         val newTemplate = defaultTemplate.deepClone()
-        newTemplate.put("ord", tmpls.length())
+        newTemplate.setOrd(tmpls.length())
 
-        val cardName = CollectionManager.TR.cardTemplatesCard(tmpls.length() + 1)
-        newTemplate.put("name", cardName)
-        newTemplate.put("qfmt", newTemplate.getString("qfmt") + extra)
+        val cardName = TR.cardTemplatesCard(tmpls.length() + 1)
+        newTemplate.name = cardName
+        newTemplate.qfmt += extra
 
         notetypes.addTemplate(notetype, newTemplate)
     }
@@ -504,9 +506,8 @@ class ReviewerTest : RobolectricTest() {
         block(reviewer)
     }
 
-    @KotlinCleanup("use extension function")
-    private fun moveToReviewQueue(reviewCard: Card) {
-        reviewCard.update {
+    private fun Card.moveToReviewQueue() {
+        update {
             queue = Consts.QUEUE_TYPE_REV
             type = Consts.CARD_TYPE_REV
             due = 0

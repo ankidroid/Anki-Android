@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">क्या आप वास्तव में डेटाबेस को सुधारने का प्रयास करना चाहते हैं? \n\nBefore प्रयास प्रारंभ कर रहा है, एक प्रतिलिपि सबफ़ोल्डर \"%s\" में बनाया जाएगा ।</string>
     <string name="intent_aedict_empty">श्रेणी \"डिफ़ॉल्ट\" रिक्त है</string>
     <string name="intent_aedict_category">AnkiDroid में कार्ड जोड़ने के लिए सभी नोटपैड श्रेणियों को हटाएँ या एक \"डिफ़ॉल्ट\" नामक पत्ता जोड़ें</string>
-    <string name="custom_study_new_total_new">डेक में नए पत्ते: %d</string>
-    <string name="custom_study_rev_total_rev">डेक में समीक्षा के लिए बाकी: %d</string>
     <string name="custom_study_new_extend">आज की कार्ड सीमा को बढ़ाएँ / घटाएँ (\"-3\")</string>
     <string name="custom_study_rev_extend">आज की समीक्षा सीमा बढ़ाएँ / घटाएँ (\"-3\")</string>
     <string name="custom_study_forgotten">पिछले x दिनों में भूल गए कार्ड की समीक्षा करें:</string>
     <string name="custom_study_ahead">X दिनों से आगे की समीक्षा करें:</string>
-    <string name="custom_study_random">डेक से यादृच्छिक रूप से एक्स कार्ड का चयन करें:</string>
     <string name="custom_study_preview">पिछले x दिनों में जोड़े गए नए कार्ड का पूर्वावलोकन करें:</string>
-    <string name="custom_study_rebuild_deck_corrupt">कस्टम अध्ययन डेक का पुनर्निर्माण नहीं किया जा सका</string>
     <string name="storage_full_title">स्टोरेज भर गया</string>
     <string name="storage_almost_full_title">स्टोरेज लगभग पूर्ण</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">कोई जगह नहीं</string>
@@ -235,7 +231,7 @@
     <string name="dismiss_backup_warning_upgrade">        एंड्रॉइड गोपनीयता परिवर्तनों के कारण, ऐप अनइंस्टॉल होने पर आपका डेटा और स्वचालित बैकअप पहुंच योग्य नहीं होगा
     </string>
     <string name="deck_already_exists">डेक पहले से मौजूद है</string>
-    <string name="empty_deck_name">Deck name cannot be empty</string>
+    <string name="empty_deck_name">डेक का नाम खाली नहीं हो सकता</string>
     <string name="create_deck_numeric_hint">यदि आपके पास डेक ऑर्डरिंग समस्याएं हैं (उदाहरण के लिए \'10\' \'2\' से पहले आता है), तो \'2\' को \'02\' से बदलें</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">अंतराल को समान मान पर सेट करें</string>
@@ -265,7 +261,7 @@
     <string name="change_cloze_mode">क्लोज़ मोड बदलें</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">सिस्टम WebView पुराना हो चुका है. कुछ सुविधाएं ठीक से काम नहीं करेंगी. कृपया इसे अपडेट करें।\n\nस्थापित संस्करण: %1$d\nन्यूनतम आवश्यक संस्करण: %2$d</string>
-    <string name="compress">Compress</string>
+    <string name="compress">संकुचित करें</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">भाषा समर्थित नहीं है</string>
     <string name="tts_error_dialog_reason_text">टेक्स्ट टू स्पीच इंजन <b>%1$s</b> निम्नलिखित भाषा का समर्थन नहीं करता: <b>%2$s</b></string>

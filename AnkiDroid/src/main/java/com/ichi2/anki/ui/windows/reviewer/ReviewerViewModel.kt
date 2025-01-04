@@ -37,6 +37,7 @@ import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.preferences.getShowIntervalOnButtons
 import com.ichi2.anki.previewer.CardViewerViewModel
+import com.ichi2.anki.previewer.TypeAnswer
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
@@ -78,6 +79,7 @@ class ReviewerViewModel(
     val undoLabelFlow = MutableStateFlow<String?>(null)
     val redoLabelFlow = MutableStateFlow<String?>(null)
     val countsFlow = MutableStateFlow(Counts() to Counts.Queue.NEW)
+    val typeAnswerFlow = MutableStateFlow<TypeAnswer?>(null)
 
     override val server = AnkiServer(this).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
@@ -132,7 +134,7 @@ class ReviewerViewModel(
         if (isAfterRecreation) {
             launchCatchingIO {
                 // TODO handle "Don't keep activities"
-                if (showingAnswer.value) showAnswerInternal() else showQuestion()
+                if (showingAnswer.value) showAnswer() else showQuestion()
             }
         } else {
             launchCatchingIO {
@@ -141,13 +143,19 @@ class ReviewerViewModel(
         }
     }
 
-    fun showAnswer() {
+    /**
+     * Sends an [eval] request to load the card answer, and updates components
+     * with behavior specific to the `Answer` card side.
+     *
+     * @see showAnswer
+     */
+    fun onShowAnswer(typedAnswer: String? = null) {
         launchCatchingIO {
             while (!statesMutated) {
                 delay(50)
             }
             updateNextTimes()
-            showAnswerInternal()
+            showAnswer(typedAnswer)
             loadAndPlaySounds(CardSide.ANSWER)
             if (!autoAdvance.shouldWaitForAudio()) {
                 autoAdvance.onShowAnswer()
@@ -417,8 +425,19 @@ class ReviewerViewModel(
         countsFlow.emit(state.counts to state.countsIndex)
     }
 
-    // TODO
-    override suspend fun typeAnsFilter(text: String): String = text
+    override suspend fun typeAnsFilter(
+        text: String,
+        typedAnswer: String?,
+    ): String {
+        val typeAnswer = TypeAnswer.getInstance(currentCard.await(), text)
+        return if (showingAnswer.value) {
+            typeAnswerFlow.emit(null)
+            typeAnswer?.answerFilter(typedAnswer ?: "") ?: text
+        } else {
+            typeAnswerFlow.emit(typeAnswer)
+            TypeAnswer.removeTags(text)
+        }
+    }
 
     private suspend fun updateUndoAndRedoLabels() {
         undoLabelFlow.emit(withCol { undoLabel() })

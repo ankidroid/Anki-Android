@@ -80,15 +80,11 @@
                    In antis de incumintzare cun sa proa s\'at a creare una còpia in sa suta-cartella “%s”.</string>
     <string name="intent_aedict_empty">Sa categoria “default” est bòida</string>
     <string name="intent_aedict_category">Pro annànghere cartas a AnkiDroid boga totu sas categorias de Notepad o annanghe·nde una ponende·li “default” comente nùmene</string>
-    <string name="custom_study_new_total_new">Cartas noas in su matzu: %d</string>
-    <string name="custom_study_rev_total_rev">De revisionare in su matzu: %d</string>
     <string name="custom_study_new_extend">Ismànnia/mìnima (“-3”) su lìmite de cartas noas de oe de</string>
     <string name="custom_study_rev_extend">Ismànnia/mìnima (“-3”) su lìmite de revisiones de oe de</string>
     <string name="custom_study_forgotten">Revisiona sas cartas ismentigadas in sas ùrtimas x dies:</string>
     <string name="custom_study_ahead">Revisiona in antìtzipu de x dies:</string>
-    <string name="custom_study_random">Ischerta x cartas a casu dae su matzu:</string>
     <string name="custom_study_preview">Ammustra s\'antiprima de sas cartas noas annànghidas in sas ùrtimas x dies:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Ricostrutzione de su matzu de istùdiu personalizadu fallida</string>
     <string name="storage_full_title">Memòria prena</string>
     <string name="storage_almost_full_title">Memòria belle prena</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Non b\'at ispàtziu</string>

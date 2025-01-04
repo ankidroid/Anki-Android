@@ -9,23 +9,23 @@
     android:fitsSystemWindows="true"
     tools:context=".ui.windows.reviewer.ReviewerFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="4dp">
+        android:layout_marginBottom="4dp"
+        android:orientation="vertical">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent">
+            >
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 app:navigationIcon="?attr/homeAsUpIndicator"
                 app:navigationContentDescription="@string/abc_action_bar_up_description"
                 android:layout_width="match_parent"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/alternativeBackgroundColor"
                 >
@@ -71,29 +71,56 @@
             android:id="@+id/webview_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginHorizontal="@dimen/reviewer_side_margin"
             android:layout_marginBottom="4dp"
-            app:layout_constraintTop_toBottomOf="@id/appbar"
-            app:layout_constraintBottom_toTopOf="@id/buttons_area"
-            style="@style/CardView.PreviewerStyle">
+            style="@style/CardView.ViewerStyle"
+            android:layout_weight="1">
 
             <WebView
                 android:id="@+id/webview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </WebView>
+                android:layout_height="match_parent"/>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Use the same card style of the WebView -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/type_answer_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            style="@style/CardView.ViewerStyle"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/type_answer_hint"
+                app:endIconMode="clear_text"
+                app:boxBackgroundMode="filled"
+                app:boxStrokeWidth="0dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/type_answer_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionDone"
+                    android:inputType="text|textNoSuggestions"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
         <FrameLayout
             android:id="@+id/buttons_area"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/touch_target"
             android:layout_marginTop="2dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/webview_container"
-            app:layout_constraintStart_toStartOf="@id/webview_container"
-            app:layout_constraintTop_toBottomOf="@id/webview_container"
+            android:layout_marginHorizontal="@dimen/reviewer_side_margin"
             >
 
             <com.google.android.material.button.MaterialButton
@@ -106,7 +133,7 @@
                 tools:visibility="gone"
                 />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:id="@+id/answer_buttons"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -117,64 +144,52 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/again_button"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="match_parent"
                     android:text="@string/ease_button_again"
                     android:backgroundTint="@color/again_button_bg"
                     android:textColor="@color/again_button_text"
-                    android:layout_marginHorizontal="3dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/hard_button"
+                    android:layout_marginEnd="@dimen/answer_button_margin_horizontal"
                     style="@style/AnswerButton"
+                    android:layout_weight="1"
                     />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/hard_button"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="match_parent"
                     android:text="@string/ease_button_hard"
                     android:backgroundTint="@color/hard_button_bg"
                     android:textColor="@color/hard_button_text"
-                    android:layout_marginHorizontal="3dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/again_button"
-                    app:layout_constraintEnd_toStartOf="@id/good_button"
+                    android:layout_marginHorizontal="@dimen/answer_button_margin_horizontal"
                     style="@style/AnswerButton"
+                    android:layout_weight="1"
                     />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/good_button"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="match_parent"
                     android:text="@string/ease_button_good"
                     android:backgroundTint="@color/good_button_bg"
                     android:textColor="@color/good_button_text"
-                    android:layout_marginHorizontal="3dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/hard_button"
-                    app:layout_constraintEnd_toStartOf="@id/easy_button"
+                    android:layout_marginHorizontal="@dimen/answer_button_margin_horizontal"
                     style="@style/AnswerButton"
+                    android:layout_weight="1"
                     />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/easy_button"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="match_parent"
                     android:padding="0dp"
                     android:text="@string/ease_button_easy"
                     android:backgroundTint="@color/easy_button_bg"
                     android:textColor="@color/easy_button_text"
-                    android:layout_marginHorizontal="3dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/good_button"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="@dimen/answer_button_margin_horizontal"
                     style="@style/AnswerButton"
+                    android:layout_weight="1"
                     />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
         </FrameLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -63,15 +63,14 @@
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Attach multimedia content to the %1$s field</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
-    <string name="multimedia_editor_audio_view_recording_failed">Recording failed</string>
+    <string name="multimedia_editor_audio_view_recording_failed">রেকর্ডিং ব্যর্থ হয়েছে</string>
     <string name="multimedia_editor_audio_view_playing_failed">Playing failed</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
+    <string name="multimedia_editor_audio_view_create_failed">রেকর্ডার টুল বার তৈরি করতে অক্ষম</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
-    <string name="crop_button" maxLength="28">Crop image</string>
+    <string name="crop_image">আপনি কি এই ছবিটি ক্রপ করতে চান?</string>
+    <string name="crop_button" maxLength="28">ছবিটি ক্রপ করুন</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
-    <string name="reselect" maxLength="28">Reselect</string>
+    <string name="select_image_failed">"ছবি নির্বাচন করতে ব্যর্থ, আবার চেষ্টা করুন"</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">ক্ষেত্রের বিষয়বস্তু</string>
+    <string name="reselect" maxLength="28">আবার নির্বাচন করুন</string>
 </resources>

@@ -71,7 +71,6 @@
     <string name="crop_button" maxLength="28">Ritaglia l\'immagine</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"Impossible selezionare l\'immagine, si prega di riprovare"</string>
-    <string name="activity_result_unexpected">L\'applicazione ha restituito un valore inatteso. Potrebbe essere necessario utilizzare un\'altra applicazione</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Contenuti del campo</string>
     <string name="reselect" maxLength="28">Reselect</string>
 </resources>

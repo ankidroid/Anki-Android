@@ -72,15 +72,11 @@
     <string name="repair_deck_dialog">你真的想要修復資料庫嗎？\n\n在開始修復之前，會先複製一份備份檔案放置於資料夾\'%s\'中。</string>
     <string name="intent_aedict_empty">\'default\'類別是空的</string>
     <string name="intent_aedict_category">若要增加新卡片至 AnkiDroid，刪除所有的記事本類別或新增一個 \'default\' 牌組</string>
-    <string name="custom_study_new_total_new">牌組的新卡片：%d</string>
-    <string name="custom_study_rev_total_rev">牌組中複習到期的卡片：%d</string>
     <string name="custom_study_new_extend">將今天的新卡片上限新增/減少(“-3”)</string>
     <string name="custom_study_rev_extend">將今天的複習卡片上限新增/減少(“-3”)</string>
     <string name="custom_study_forgotten">過去 x 天內忘記的複習卡:</string>
     <string name="custom_study_ahead">提早複習 x 天:</string>
-    <string name="custom_study_random">隨機選擇 x 張卡片，從牌組:</string>
     <string name="custom_study_preview">預覽過去 x 天新增的卡片:</string>
-    <string name="custom_study_rebuild_deck_corrupt">無法重構自訂學習牌組</string>
     <string name="storage_full_title">存儲已滿</string>
     <string name="storage_almost_full_title">存儲空間幾乎滿了</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">沒有空間</string>

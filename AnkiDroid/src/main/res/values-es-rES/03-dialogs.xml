@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">¿Realmente deseas intentar reparar la base de datos?\n\nAntes de iniciar el intento, se creará una copia en la subcarpeta \'%s\'.</string>
     <string name="intent_aedict_empty">La categoría \'por defecto\' está vacía</string>
     <string name="intent_aedict_category">Para añadir tarjetas AnkiDroid borra todas las categorías del Bloc de notas o agrega una llamada \'por defecto\'</string>
-    <string name="custom_study_new_total_new">Tarjetas nuevas en el mazo: %d</string>
-    <string name="custom_study_rev_total_rev">Repasos pendientes en el mazo: %d</string>
     <string name="custom_study_new_extend">Aumentar/disminuir (“-3”) el límite actual de tarjetas en</string>
     <string name="custom_study_rev_extend">Aumentar/disminuir (“-3”) el límite actual de revisión por</string>
     <string name="custom_study_forgotten">Revisar tarjetas olvidadas en los últimos x días:</string>
     <string name="custom_study_ahead">Revisar con x días de adelanto:</string>
-    <string name="custom_study_random">Selecciona x tarjetas al azar del mazo:</string>
     <string name="custom_study_preview">Previsualizar nuevas tarjetas añadidas en los últimos x días:</string>
-    <string name="custom_study_rebuild_deck_corrupt">No se pudo reconstruir el mazo de estudio personalizado</string>
     <string name="storage_full_title">Almacenamiento lleno</string>
     <string name="storage_almost_full_title">Almacenamiento casi lleno</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Sin spacio</string>
@@ -255,14 +251,14 @@
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">De</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">A</string>
     <!-- Instant Note Editor -->
-    <string name="cloze_note_required">Cloze Type Note Required</string>
-    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="cloze_note_required">Nota de tipo cloze requerida</string>
+    <string name="cloze_not_found_message">No se encontró nota de tipo cloze. Abra el editor de notas o vuelva a intentarlo después de añadir una nota de tipo cloze.</string>
     <string name="open">Abrir</string>
-    <string name="change_cloze_number">Change cloze number</string>
-    <string name="cloze_number">Cloze number:</string>
+    <string name="change_cloze_number">Cambiar número de cloze</string>
+    <string name="cloze_number">Número de cloze:</string>
     <string name="change_editor_mode">Cambiar modo editor</string>
     <string name="open_note_editor">Abrir editor de notas</string>
-    <string name="change_cloze_mode">Change cloze mode</string>
+    <string name="change_cloze_mode">Cambiar modo de cloze</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">El sistema WebView está obsoleto. Algunas funciones no funcionarán correctamente. Por favor, actualízalo.\nnVersión instalada: %1$d\nVersión mínima requerida: %2$d</string>
     <string name="compress">Comprimir</string>

@@ -82,18 +82,12 @@
     <string name="webview_crash_loop_dialog_content">AndroidシステムのWebViewがカード \'%1$s\' のレンダリングに失敗しました。\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">フラグ</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">今日の新規カード上限を変更</string>
-    <string name="custom_study_increase_review_limit">今日の復習カード上限を変更</string>
-    <string name="custom_study_review_forgotten">間違えたカードを再学習</string>
-    <string name="custom_study_review_ahead">復習カードを予習</string>
-    <string name="custom_study_random_selection">カードをランダムに選んで学習</string>
-    <string name="custom_study_preview_new">新規カードを予習</string>
     <string name="custom_study_limit_tags">タグで抽出して学習</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="other">+%d 今日は非表示</item>
     </plurals>
-    <string name="studyoptions_total_new_label">新規カード総数</string>
-    <string name="studyoptions_total_label">カード総数</string>
+    <string name="studyoptions_total_new_label">新規（未学習）総数</string>
+    <string name="studyoptions_total_label">デッキ内総数</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">ノートを編集</string>
     <string name="discard">破棄</string>

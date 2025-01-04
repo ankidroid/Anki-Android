@@ -103,12 +103,12 @@ open class SchedulerTest : JvmTest() {
         // disabled for now, as the learn fudging makes this randomly fail
         // // the default order should ensure siblings are not seen together, and
         // // should show all cards
-        // Model m = col.getModels().current(); Models mm = col.getModels()
-        // JSONObject t = mm.newTemplate("Reverse")
+        // Model noteType = col.getModels().current(); Models noteTypes = col.getModels()
+        // JSONObject t = noteTypes.newTemplate("Reverse")
         // t['qfmt'] = "{{Back}}"
         // t['afmt'] = "{{Front}}"
-        // mm.addTemplateModChanged(m, t)
-        // mm.save(m)
+        // noteTypes.addTemplateModChanged(noteType, t)
+        // noteTypes.save(noteType)
         // note = col.newNote()
         // note['Front'] = u"2"; note['Back'] = u"2"
         // col.addNote(note)
@@ -897,17 +897,21 @@ open class SchedulerTest : JvmTest() {
     @Throws(Exception::class)
     fun test_ordcycleV2() {
         // add two more templates and set second active
-        val m = col.notetypes.current()
-        val mm = col.notetypes
-        var t = Notetypes.newTemplate("Reverse")
-        t.put("qfmt", "{{Back}}")
-        t.put("afmt", "{{Front}}")
-        mm.addTemplateModChanged(m, t)
-        t = Notetypes.newTemplate("f2")
-        t.put("qfmt", "{{Front}}1")
-        t.put("afmt", "{{Back}}")
-        mm.addTemplateModChanged(m, t)
-        mm.save(m)
+        val noteType = col.notetypes.current()
+        val noteTypes = col.notetypes
+        var t =
+            Notetypes.newTemplate("Reverse").apply {
+                qfmt = "{{Back}}"
+                afmt = "{{Front}}"
+            }
+        noteTypes.addTemplateModChanged(noteType, t)
+        t =
+            Notetypes.newTemplate("f2").apply {
+                qfmt = "{{Front}}1"
+                afmt = "{{Back}}"
+            }
+        noteTypes.addTemplateModChanged(noteType, t)
+        noteTypes.save(noteType)
         // create a new note; it should have 3 cards
         val note = col.newNote()
         note.setItem("Front", "1")

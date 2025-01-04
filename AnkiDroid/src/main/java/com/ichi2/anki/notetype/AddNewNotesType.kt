@@ -78,7 +78,7 @@ class AddNewNotesType(
             AlertDialog
                 .Builder(activity)
                 .apply {
-                    customView(dialogView, paddingLeft = 32, paddingRight = 32, paddingTop = 64, paddingBottom = 64)
+                    customView(dialogView, paddingStart = 32, paddingEnd = 32, paddingTop = 64, paddingBottom = 64)
                     positiveButton(R.string.dialog_ok) { _ ->
                         val newName =
                             dialogView.findViewById<EditText>(R.id.notetype_new_name).text.toString()

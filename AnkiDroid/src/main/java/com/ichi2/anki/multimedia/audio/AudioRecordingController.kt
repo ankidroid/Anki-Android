@@ -167,7 +167,7 @@ class AudioRecordingController(
                         FixedTextView(this).apply {
                             text = field?.text
                             textSize = 16f
-                            setPadding(16, 0, 16, 24)
+                            setPaddingRelative(16, 0, 16, 24)
                             previewLayout.addView(this)
                         }
                         hasTextContents = hasTextContents or !field?.text.isNullOrBlank()

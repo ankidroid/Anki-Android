@@ -28,7 +28,6 @@ import com.ichi2.libanki.utils.set
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.deepClone
 import com.ichi2.utils.emptyStringArray
-import org.json.JSONObject
 import java.util.AbstractSet
 import java.util.regex.Pattern
 
@@ -37,24 +36,24 @@ class Note : Cloneable {
     /**
      * Should only be mutated by addNote()
      */
-    var id: Long = 0
+    var id: NoteId = 0L
 
     @get:VisibleForTesting
     var guId: String? = null
         private set
     lateinit var notetype: NotetypeJson
 
-    var mid: Long = 0
+    var mid: NoteTypeId = 0L
         private set
     lateinit var tags: MutableList<String>
     lateinit var fields: MutableList<String>
-    private var fMap: Map<String, Pair<Int, JSONObject>>? = null
+    private var fMap: Map<String, Pair<Int, Field>>? = null
     var usn = 0
         private set
     var mod: Int = 0
         private set
 
-    constructor(col: Collection, id: Long) {
+    constructor(col: Collection, id: NoteId) {
         this.id = id
         load(col)
     }
@@ -105,7 +104,7 @@ class Note : Cloneable {
         col: Collection,
         ord: Int = 0,
         customNoteType: NotetypeJson? = null,
-        customTemplate: Template? = null,
+        customTemplate: CardTemplate? = null,
         fillEmpty: Boolean = false,
     ): Card {
         val card = Card(col, id = null)
@@ -118,10 +117,10 @@ class Note : Cloneable {
                 customTemplate.deepClone()
             } else {
                 val index = if (model.type == MODEL_STD) ord else 0
-                model.tmpls.getJSONObject(index)
+                model.tmpls[index]
             }
         // may differ in cloze case
-        template["ord"] = card.ord
+        template.setOrd(card.ord)
 
         val output =
             TemplateManager.TemplateRenderContext

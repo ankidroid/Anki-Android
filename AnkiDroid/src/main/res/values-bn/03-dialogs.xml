@@ -73,17 +73,13 @@
     <string name="answering_error_report">ত্রুটি রিপোর্ট</string>
     <string name="storage_full_message">AnkiDroid খোলার জন্য পর্যাপ্ত ফ্রি স্টোরেজ স্পেস নেই। চালিয়ে যেতে কিছু জায়গা খালি করুন।</string>
     <string name="repair_deck_dialog">আপনি কি ডাটাবেস মেরামত করার চেষ্টা করার বিষয়ে নিশ্চিত?\n\nপ্রয়াস শুরু করার আগে, সাবফোল্ডার “%s”-এ একটি অনুলিপি তৈরি করা হবে।</string>
-    <string name="intent_aedict_empty">Category “default” is empty</string>
-    <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
-    <string name="custom_study_new_total_new">ডেকে নতুন কার্ড: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="intent_aedict_empty">বিভাগ \"ডিফল্ট\" খালি</string>
+    <string name="intent_aedict_category">AnkiDroid-এ কার্ড যোগ করতে নোটপ্যাডের সমস্ত বিভাগ সরিয়ে ফেলুন বা \"ডিফল্ট\" নামে একটি যোগ করুন।</string>
+    <string name="custom_study_new_extend">আজকের নতুন কার্ডের সীমা বাড়ান/কমান (“-3”)</string>
     <string name="custom_study_rev_extend">আজকের পর্যালোচনা সীমা বাড়ান/কমান (“-3”)</string>
-    <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
-    <string name="custom_study_ahead">Review ahead by x days:</string>
-    <string name="custom_study_random">Select x cards randomly from the deck:</string>
-    <string name="custom_study_preview">Preview new cards added in the last x days:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="custom_study_forgotten">গত x দিনে ভুলে যাওয়া কার্ডগুলি পর্যালোচনা করুন:</string>
+    <string name="custom_study_ahead">x দিন আগে পর্যালোচনা করুন:</string>
+    <string name="custom_study_preview">গত x দিনে যোগ করা নতুন কার্ডের পূর্বরূপ দেখুন:</string>
     <string name="storage_full_title">স্টোরেজ পূর্ণ</string>
     <string name="storage_almost_full_title">স্টোরেজ প্রায় পূর্ণ</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
@@ -109,7 +105,7 @@
     <string name="dialog_positive_replace">প্রতিস্থাপন</string>
     <string name="dialog_collection_path_not_dir">নির্দিষ্ট পথ একটি বৈধ ডিরেক্টরি ছিল না</string>
     <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
-    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
+    <string name="dialog_invalid_custom_certificate_title">শংসাপত্র পার্সিং ত্রুটি৷</string>
     <string name="dialog_updated_custom_certificate">সার্টিফিকেট আপডেট করা হয়েছে</string>
     <!-- Media checking -->
     <string name="check_media_title">মিডিয়া চেক করবেন?</string>
@@ -117,10 +113,10 @@
     <string name="check_media_message">মিডিয়া পরীক্ষা করা হচ্ছে&#8230;</string>
     <string name="check_media_acknowledge">মিডিয়া চেক করা হয়েছে</string>
     <string name="check_media_invalid">অবৈধ এনকোডিং সহ ফাইল: %d</string>
-    <string name="check_media_unused">Files in media folder but not used by any cards: %d</string>
+    <string name="check_media_unused">মিডিয়া ফোল্ডারে ফাইল করুন কিন্তু কোনো কার্ড ব্যবহার হচ্ছে না: %d</string>
     <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
-    <string name="check_media_no_unused_missing">No unused or missing files found</string>
-    <string name="check_media_db_updated">Media database rebuilt</string>
+    <string name="check_media_no_unused_missing">কোন অব্যবহৃত বা অনুপস্থিত ফাইল খুঁজে পাওয়া যায়নি</string>
+    <string name="check_media_db_updated">মিডিয়া ডাটাবেস পুনর্নির্মাণ</string>
     <string name="check_media_delete_unused">অব্যবহৃত মুছুন</string>
     <string name="delete_media_message">মিডিয়া মুছে ফেলা হচ্ছে&#8230;</string>
     <string name="delete_media_result_title">মুছে ফেলার ফলাফল</string>
@@ -144,7 +140,7 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid আপগ্রেড করা হয়েছে</string>
     <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
+    <string name="integrity_check_continue_anyway">যাইহোক চালিয়ে যান</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nআপনার কাছে বর্তমানে %s বিনামূল্যে আছে।</string>
     <!-- Card Browser -->
@@ -163,23 +159,23 @@
     <string name="error_selecting_image">ছবি নির্বাচন করার সময় ত্রুটি। ম্যানুয়াল দেখুন। %s</string>
     <string name="error_deleting_image">ছবি মোছার সময় ত্রুটি</string>
     <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
-    <string name="background_image_too_large">Deck Picker background too large</string>
-    <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
+    <string name="background_image_too_large">ডেক পিকার ব্যাকগ্রাউন্ড বিশাল</string>
+    <string name="image_max_size_allowed">সর্বাধিক অনুমোদিত চিত্রের আকার হল %d MB</string>
     <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <string name="intent_handler_failed_no_storage_permission">প্রয়োজনীয় স্টোরেজ অনুমতি অনুপস্থিত. অনুগ্রহ করে সঞ্চয়স্থানের অনুমতি দিন তারপর আবার আপনার কাজের চেষ্টা করুন।</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <string name="card_template_editor_card_browser_appearance_failed">কার্ড ব্রাউজার ভিউ লোড করা যায়নি</string>
     <!-- Boot Service -->
-    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
-    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <string name="boot_service_failed_to_schedule_notifications">অনুস্মারক শিডিউল করতে ব্যর্থ হয়েছে</string>
+    <string name="boot_service_too_many_notifications">অনেক অনুস্মারক নির্ধারিত হয় কিছুই প্রদর্শিত হবে না</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
+    <string name="locale_selection_dialog_title_new">ভাষা সেট করুন</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid ব্যবহার করে</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid ম্যানুয়াল</string>
     <string name="help_item_anki_manual">Anki Manual</string>
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
     <string name="help_title_get_help">সাহায্য পান</string>

@@ -19,8 +19,6 @@
 
 package com.ichi2.anki.multimediacard.fields
 
-import com.ichi2.utils.KotlinCleanup
-
 /**
  * Base for all field types.
  * <p>
@@ -28,10 +26,4 @@ import com.ichi2.utils.KotlinCleanup
  */
 open class FieldBase {
     var thisModified = false
-        private set
-
-    @KotlinCleanup("Can be a var")
-    fun setThisModified() {
-        thisModified = true
-    }
 }

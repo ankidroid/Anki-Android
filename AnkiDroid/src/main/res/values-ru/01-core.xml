@@ -64,15 +64,15 @@
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">Остался %1$d час %2$d</item>
-        <item quantity="few">%1$d hours %2$d left</item>
+        <item quantity="few">Осталось %1$d часа %2$d</item>
         <item quantity="many">Осталось %1$d часов %2$d</item>
         <item quantity="other">Осталось %1$d часов %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">Остался %1$d день %2$dh</item>
-        <item quantity="few">%1$d days %2$dh left</item>
-        <item quantity="many">Осталось %1$d дней %2$dh</item>
-        <item quantity="other">Осталось %1$d дней %2$dh</item>
+        <item quantity="one">Остался %1$d день %2$dч.</item>
+        <item quantity="few">Осталось %1$d дня %2$dч.</item>
+        <item quantity="many">Осталось %1$d дней %2$dч.</item>
+        <item quantity="other">Осталось %1$d дней %2$dч.</item>
     </plurals>
     <string name="no_cards_placeholder_title">Коллекция пуста</string>
     <string name="no_cards_placeholder_description">Добавляйте карточки\nс помощью значка «+».</string>
@@ -88,7 +88,7 @@
     <string name="menu_import" maxLength="28">Импортировать</string>
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Отменить</string>
     <string name="redo" maxLength="28">Вернуть</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Отменить черту</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Отменить штрих</string>
     <string name="move_all_to_deck">Переместить всё в колоду</string>
     <string name="unbury" maxLength="28">Вернуть</string>
     <string name="rename_deck" maxLength="28">Переименовать колоду</string>
@@ -115,7 +115,7 @@
     <string name="menu_mark_note" maxLength="28">Отметить запись</string>
     <string name="menu_unmark_note">Снять отметку</string>
     <string name="menu_enable_voice_playback" maxLength="28">Включить воспроизведение голоса</string>
-    <string name="menu_disable_voice_playback">Выключить воспроизведение голоса</string>
+    <string name="menu_disable_voice_playback">Выключить проигрывание голоса</string>
     <string name="new_deck">Создать колоду</string>
     <string name="new_dynamic_deck">Создать фильтрованную колоду</string>
     <string name="directory_inaccessible">Папка AnkiDroid недоступна</string>
@@ -194,7 +194,7 @@
     <string name="error__etc__cannot_write_to_or_create_file">Не удалось записать или создать файл %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Коллекция недоступна</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Не удаётся получить доступ к вашей коллекции, так как AnkiDroid был удалён из-за изменения политики Play Store\n\nВаши данные в безопасности и могут быть восстановлены. Они расположены в\n%s\n\nВыберите способ восстановления:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android удалил разрешение AnkiDroid %1$s из-за неактивности приложения.\n\nВаши данные в безопасности и могут быть восстановлены. Он расположен на\n%2$s\n\nВыберите опцию ниже для восстановления:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android убрал разрешение AnkiDroid %1$s из-за неактивности приложения.\n\nВаши данные в безопасности и могут быть восстановлены. Они расположены в\n%2$s\n\nВыберите опцию ниже для восстановления:</string>
     <string name="restore_data_from_ankiweb">Восстановить из AnkiWeb (рекомендуемый)</string>
     <string name="install_non_play_store_ankidroid_recommended">Восстановить доступ к папке (рекомендуемый)</string>
     <string name="install_non_play_store_ankidroid">Восстановить доступ к папке (продвинутый)</string>

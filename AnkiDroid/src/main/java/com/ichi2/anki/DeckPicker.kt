@@ -451,6 +451,7 @@ open class DeckPicker :
         OnContextAndLongClickListener { v ->
             val deckId = v.tag as DeckId
             showDeckPickerContextMenu(deckId)
+            Timber.v("Long press on deck %d", deckId)
             true
         }
 
@@ -1127,7 +1128,7 @@ open class DeckPicker :
             }
             R.id.action_check_media -> {
                 Timber.i("DeckPicker:: Check media button pressed")
-                showMediaCheckDialog(MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK)
+                showMediaCheckDialog(MediaCheckDialog.Type.DIALOG_CONFIRM_MEDIA_CHECK)
                 return true
             }
             R.id.action_empty_cards -> {
@@ -1475,7 +1476,7 @@ open class DeckPicker :
             }
             KeyEvent.KEYCODE_M -> {
                 Timber.i("Check media from keypress")
-                showMediaCheckDialog(MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK)
+                showMediaCheckDialog(MediaCheckDialog.Type.DIALOG_CONFIRM_MEDIA_CHECK)
                 return true
             }
             KeyEvent.KEYCODE_E -> {
@@ -1792,12 +1793,12 @@ open class DeckPicker :
         }
     }
 
-    override fun showMediaCheckDialog(dialogType: Int) {
+    override fun showMediaCheckDialog(dialogType: MediaCheckDialog.Type) {
         showAsyncDialogFragment(MediaCheckDialog.newInstance(dialogType))
     }
 
     override fun showMediaCheckDialog(
-        dialogType: Int,
+        dialogType: MediaCheckDialog.Type,
         checkList: MediaCheckResult,
     ) {
         showAsyncDialogFragment(MediaCheckDialog.newInstance(dialogType, checkList))
@@ -1807,7 +1808,7 @@ open class DeckPicker :
      * Show a specific sync error dialog
      * @param dialogType id of dialog to show
      */
-    override fun showSyncErrorDialog(dialogType: Int) {
+    override fun showSyncErrorDialog(dialogType: SyncErrorDialog.Type) {
         showSyncErrorDialog(dialogType, "")
     }
 
@@ -1817,7 +1818,7 @@ open class DeckPicker :
      * @param message text to show
      */
     override fun showSyncErrorDialog(
-        dialogType: Int,
+        dialogType: SyncErrorDialog.Type,
         message: String?,
     ) {
         val newFragment: AsyncDialogFragment = newInstance(dialogType, message)
@@ -1885,7 +1886,7 @@ open class DeckPicker :
     override fun mediaCheck() {
         launchCatchingTask {
             val mediaCheckResult = checkMedia()
-            showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, mediaCheckResult)
+            showMediaCheckDialog(MediaCheckDialog.Type.DIALOG_MEDIA_CHECK_RESULTS, mediaCheckResult)
         }
     }
 
@@ -1942,7 +1943,7 @@ open class DeckPicker :
         if (hkey!!.isEmpty()) {
             Timber.w("User not logged in")
             pullToSyncWrapper.isRefreshing = false
-            showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC)
+            showSyncErrorDialog(SyncErrorDialog.Type.DIALOG_USER_NOT_LOGGED_IN_SYNC)
             return
         }
 

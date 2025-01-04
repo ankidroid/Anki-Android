@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">Realment voleu intentar reparar la base de dades? \n\nAbans de començar, es desarà una còpia a la carpeta \'%s\'.</string>
     <string name="intent_aedict_empty">La categoria \'per omissió\' és buida</string>
     <string name="intent_aedict_category">Per afegir fitxes d\'AnkiDroid treieu totes les categories del bloc de notes o afegiu-ne una anomenada \'per omissió\'</string>
-    <string name="custom_study_new_total_new">Noves cartes al paquet: %d</string>
-    <string name="custom_study_rev_total_rev">Revisions vençudes al paquet: %d</string>
     <string name="custom_study_new_extend">Augmenta/disminueix (\"-3\") el límit d\'avui de noves cartes a</string>
     <string name="custom_study_rev_extend">Augmenta/disminueix (\"-3\") el límit d\'avui de revisions a</string>
     <string name="custom_study_forgotten">Revisa les fitxes oblidades en els darrers x dies:</string>
     <string name="custom_study_ahead">Revisió de x dies endavant:</string>
-    <string name="custom_study_random">Tria aleatòriament x fitxes del paquet:</string>
     <string name="custom_study_preview">Mostra les fitxes noves afegides en els últims x dies:</string>
-    <string name="custom_study_rebuild_deck_corrupt">No s\'ha pogut reconstruir el paquet d\'estudi personalitzat</string>
     <string name="storage_full_title">No queda espai al disc</string>
     <string name="storage_almost_full_title">El disc està gairebé ple</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Sense espai</string>

@@ -231,7 +231,7 @@
         <item name="android:textColor">?attr/progressDialogButtonTextColor</item>
     </style>
 
-    <style name="CardView.PreviewerStyle" parent="Widget.Material3.CardView.Elevated">
+    <style name="CardView.ViewerStyle" parent="Widget.Material3.CardView.Elevated">
         <item name="android:elevation">0.8dp</item>
     </style>
 

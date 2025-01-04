@@ -32,7 +32,6 @@ import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
@@ -227,8 +226,6 @@ class SharedDecksActivity : AnkiActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        webviewToolbar.navigationIcon = ContextCompat.getDrawable(applicationContext, R.drawable.close_icon)
-
         webView = findViewById(R.id.web_view)
 
         downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
@@ -283,8 +280,12 @@ class SharedDecksActivity : AnkiActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.home) {
+            // R.id.home refers to a custom 'home' menu item defined in your app resources (res/menu/...).
             shouldHistoryBeCleared = true
             webView.loadUrl(resources.getString(R.string.shared_decks_url))
+        } else if (item.itemId == android.R.id.home) {
+            // android.R.id.home refers to the system-provided "up" button in the app toolbar
+            onBackPressedCallback.isEnabled = false
         }
         return super.onOptionsItemSelected(item)
     }

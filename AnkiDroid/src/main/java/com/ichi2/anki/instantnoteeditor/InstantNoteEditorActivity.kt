@@ -58,7 +58,7 @@ import com.ichi2.libanki.NotetypeJson
 import com.ichi2.themes.setTransparentBackground
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.AssetHelper.TEXT_PLAIN
-import com.ichi2.utils.jsonObjectIterable
+import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -248,6 +248,7 @@ class InstantNoteEditorActivity :
         )
     }
 
+    @KotlinCleanup("notetypeJson -> non-null")
     private fun createEditFields(
         context: Context,
         notetypeJson: NotetypeJson?,
@@ -257,7 +258,7 @@ class InstantNoteEditorActivity :
         val clozeFields = viewModel.getClozeFields()
         var clozeFieldsSet = false
 
-        for (i in notetypeJson?.flds!!.jsonObjectIterable()) {
+        for (field in notetypeJson!!.flds) {
             // Inflate the existing layout
             val inflater = LayoutInflater.from(context)
             val existingLayout = inflater.inflate(R.layout.instant_editor_field_layout, null)
@@ -267,7 +268,7 @@ class InstantNoteEditorActivity :
             val textInputEditText =
                 existingLayout.findViewById<TextInputEditText>(R.id.edit_field_text)
 
-            val name = i.getString("name")
+            val name = field.name
             textInputLayout.hint = name
 
             Timber.d("Populating the cloze edit text fields")

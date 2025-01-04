@@ -539,7 +539,7 @@ class DeckPickerTest : RobolectricTest() {
 
     private fun allCardsInSameDeck(
         cardIds: List<Long>,
-        deckId: Long,
+        deckId: DeckId,
     ): Boolean = cardIds.all { col.getCard(it).did == deckId }
 
     @Test

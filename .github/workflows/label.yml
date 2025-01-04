@@ -1,4 +1,4 @@
-name: Add/Remove Labels
+name: 🛠️ Add/Remove Labels
 
 on:
   pull_request_target:

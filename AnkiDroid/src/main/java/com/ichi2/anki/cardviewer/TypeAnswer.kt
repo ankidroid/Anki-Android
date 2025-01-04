@@ -22,12 +22,10 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
 import com.ichi2.anki.servicelayer.LanguageHint
-import com.ichi2.anki.servicelayer.LanguageHintService
+import com.ichi2.anki.servicelayer.LanguageHintService.languageHint
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
-import com.ichi2.utils.jsonObjectIterable
 import org.intellij.lang.annotations.Language
-import org.json.JSONArray
 import timber.log.Timber
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -107,18 +105,17 @@ class TypeAnswer(
             fldTag = fldTag.split(":").toTypedArray()[1]
         }
         // loop through fields for a match
-        val flds: JSONArray = card.noteType(col).getJSONArray("flds")
-        for (fld in flds.jsonObjectIterable()) {
-            val name = fld.getString("name")
+        for (fld in card.noteType(col).flds) {
+            val name = fld.name
             if (name == fldTag) {
                 correct = card.note(col).getItem(name)
                 if (clozeIdx != 0) {
                     // narrow to cloze
                     correct = contentForCloze(correct!!, clozeIdx)
                 }
-                font = fld.getString("font")
-                size = fld.getInt("size")
-                languageHint = LanguageHintService.getLanguageHintForField(fld)
+                font = fld.font
+                size = fld.fontSize
+                languageHint = fld.languageHint
                 break
             }
         }

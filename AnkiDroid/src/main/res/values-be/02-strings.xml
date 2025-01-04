@@ -82,12 +82,6 @@
     <string name="webview_crash_loop_dialog_content">Сістэмнаму WebView не атрымалася апрацаваць картку \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Сцягі</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Змяніць абмежаванні новых картак на сёння</string>
-    <string name="custom_study_increase_review_limit">Змяніць абмежаванні паўтарэння картак на сёння</string>
-    <string name="custom_study_review_forgotten">Паўтарыць забытыя карткі</string>
-    <string name="custom_study_review_ahead">Паўтарыць наперад</string>
-    <string name="custom_study_random_selection">Вывучыць выпадкова адабраныя карткі</string>
-    <string name="custom_study_preview_new">Папярэдні прагляд новых картак</string>
     <string name="custom_study_limit_tags">Абмежаваць вызначанымі меткамі</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d адкладзеная</item>

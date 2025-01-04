@@ -1,6 +1,7 @@
 
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.extension.impl.AndroidComponentsExtensionImpl
+import com.android.ide.common.util.parseIntOrDefault
 import com.slack.keeper.optInToKeeper
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.internal.jvm.Jvm
@@ -26,12 +27,14 @@ if (project.rootProject.file("local.properties").exists()) {
 }
 val fatalWarnings = !(localProperties["fatal_warnings"] == "false")
 
+// can't be obtained inside 'subprojects'
+val ktlintVersion = libs.versions.ktlint.get()
+
 // Here we extract per-module "best practices" settings to a single top-level evaluation
 subprojects {
-    // TODO: should be able to use libs.versions.toml here
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
     configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
-        version.set("1.5.0")
+        version.set(ktlintVersion)
     }
 
     afterEvaluate {
@@ -101,16 +104,19 @@ subprojects {
 }
 
 val jvmVersion = Jvm.current().javaVersion?.majorVersion
+val minSdk = libs.versions.compileSdk.get()
 if (jvmVersion != "17" && jvmVersion != "21") {
     println("\n\n\n")
     println("**************************************************************************************************************")
     println("\n\n\n")
     println("ERROR: AnkiDroid builds with JVM version 17 or 21.")
-    println("  Incompatible major version detected: '" + jvmVersion + "'")
-    println("\n\n\n")
-    println("  If you receive this error because you want to use a newer JDK, we may accept PRs to support new versions.")
-    println("  Edit the main build.gradle file, find this message in the file, and add support for the new version.")
-    println("  Please make sure the `jacocoTestReport` target works on an emulator with our minSdkVersion (currently 23).")
+    println("  Incompatible major version detected: '$jvmVersion'")
+    if (jvmVersion.parseIntOrDefault(defaultValue = 0) > 21) {
+        println("\n\n\n")
+        println("  If you receive this error because you want to use a newer JDK, we may accept PRs to support new versions.")
+        println("  Edit the main build.gradle file, find this message in the file, and add support for the new version.")
+        println("  Please make sure the `jacocoTestReport` target works on an emulator with our minSdk (currently $minSdk).")
+    }
     println("\n\n\n")
     println("**************************************************************************************************************")
     println("\n\n\n")
@@ -124,8 +130,8 @@ val preDexEnabled by extra("true" == System.getProperty("pre-dex", "true"))
 val universalApkEnabled by extra("true" == System.getProperty("universal-apk", "false"))
 
 val testReleaseBuild by extra(System.getenv("TEST_RELEASE_BUILD") == "true")
-var androidTestName by extra(
-    if (testReleaseBuild) "connectedPlayReleaseAndroidTest" else "connectedPlayDebugAndroidTest"
+var androidTestVariantName by extra(
+    if (testReleaseBuild) "Release" else "Debug"
 )
 
 val gradleTestMaxParallelForks by extra(

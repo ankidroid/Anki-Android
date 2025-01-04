@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">Είστε βέβαιοι ότι θέλετε να επιδιορθώσετε τη βάση δεδομένων;\n\nΠριν να ξεκινήσει η απόπειρα, θα δημιουργηθεί ένα αντίγραφο στον υποφάκελο \'%s\'.</string>
     <string name="intent_aedict_empty">Η κατηγορία «προεπιλεγμένο» είναι κενή</string>
     <string name="intent_aedict_category">Για να προσθέσετε κάρτες στο Ανκί-Ντρόιντ αφαιρέστε όλες τις κατηγορίες Notepad ή προσθέστε μία με όνομα «προεπιλεγμένο»</string>
-    <string name="custom_study_new_total_new">Νέες κάρτες στην τράπουλα: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
     <string name="custom_study_new_extend">Αύξηση / μείωση (“-3”) σημερινού ορίου νέων καρτών κατά</string>
     <string name="custom_study_rev_extend">Αύξηση / μείωση (“-3”) σημερινού ορίου επαναλήψεων κατά</string>
     <string name="custom_study_forgotten">Επανάληψη ξεχασμένων καρτών στις τελευταίες x μέρες:</string>
     <string name="custom_study_ahead">Επανάληψη μπροστά κατά x μέρες:</string>
-    <string name="custom_study_random">Τυχαία επιλογή x καρτών από την τράπουλα:</string>
     <string name="custom_study_preview">Προεπισκόπηση νέων καρτών του προστέθηκαν στις τελευταίες x μέρες:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Αδυναμία ανακατασκευής προσαρμοσμένης τράπουλας μελέτης</string>
     <string name="storage_full_title">Γεμάτος χώρος αποθήκευσης</string>
     <string name="storage_almost_full_title">Χώρος αποθήκευσης σχεδόν πλήρης</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Χωρίς αποθηκευτικό χώρο</string>
@@ -108,7 +104,7 @@
     <string name="dialog_positive_repair">Επισκευή</string>
     <string name="dialog_positive_replace">Αντικατάσταση</string>
     <string name="dialog_collection_path_not_dir">Η καθορισμένη διαδρομή δεν ήταν ένας έγκυρος κατάλογος</string>
-    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate">Το κείμενο που εισέρθηκε δεν αντιπροσωπεί σε έγκυρο πιστοποιητικό Χ509 του κωδικού PEM.</string>
     <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
     <string name="dialog_updated_custom_certificate">Το πιστοποιητικό ενημερώθηκε</string>
     <!-- Media checking -->
@@ -211,7 +207,7 @@
     </plurals>
     <string name="metered_sync_data_warning">Ο πάροχος σας μπορεί να χρεώσει χρήματα για χρήση δεδομένων</string>
     <string name="deck_picker_new">Αριθμός νέων καρτών για να δείτε σήμερα σε αυτή την τράπουλα.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
+    <string name="deck_picker_rev">Αριθμός καρτών που λήγουν σήμερα σε αυτήν την τράπουλα.</string>
     <string name="deck_picker_lrn">Αριθμός καρτών σε εκμάθηση σε αυτή την τράπουλα.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable

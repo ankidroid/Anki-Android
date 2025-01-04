@@ -25,6 +25,7 @@ import androidx.core.os.bundleOf
 import com.ichi2.async.saveModel
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
+import com.ichi2.libanki.CardTemplate
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.NoteTypeId
 import com.ichi2.libanki.NotetypeJson
@@ -47,7 +48,6 @@ class CardTemplateNotetype(
     }
 
     private var _templateChanges = ArrayList<Array<Any>>()
-    var editedModelFileName: String? = null
 
     fun toBundle(): Bundle =
         bundleOf(
@@ -63,13 +63,13 @@ class CardTemplateNotetype(
         }
     }
 
-    fun getTemplate(ord: Int): JSONObject {
+    fun getTemplate(ord: Int): CardTemplate {
         Timber.d("getTemplate() on ordinal %s", ord)
-        return notetype.getJSONArray("tmpls").getJSONObject(ord)
+        return notetype.tmpls[ord]
     }
 
     val templateCount: Int
-        get() = notetype.getJSONArray("tmpls").length()
+        get() = notetype.tmpls.length()
 
     val modelId: NoteTypeId
         get() = notetype.getLong("id")
@@ -83,14 +83,14 @@ class CardTemplateNotetype(
 
     fun updateTemplate(
         ordinal: Int,
-        template: JSONObject,
+        template: CardTemplate,
     ) {
-        notetype.getJSONArray("tmpls").put(ordinal, template)
+        notetype.tmpls[ordinal] = template
     }
 
-    fun addNewTemplate(newTemplate: JSONObject) {
+    fun addNewTemplate(newTemplate: CardTemplate) {
         Timber.d("addNewTemplate()")
-        addTemplateChange(ChangeType.ADD, newTemplate.getInt("ord"))
+        addTemplateChange(ChangeType.ADD, newTemplate.ord)
     }
 
     fun removeTemplate(ord: Int) {

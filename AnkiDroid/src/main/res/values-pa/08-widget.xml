@@ -72,6 +72,6 @@
         <item quantity="one">ਤੁਸੀਂ %d ਡੇਕ ਤੱਕ ਚੁਣ ਸਕਦੇ ਹੋ।</item>
         <item quantity="other">ਤੁਸੀਂ %d ਡੇਕ ਤੱਕ ਚੁਣ ਸਕਦੇ ਹੋ।</item>
     </plurals>
-    <string name="empty_widget_state" comment="To denote the widget is empty">Missing deck. Tap to reconfigure.</string>
-    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Collection is empty, use app to add decks then reconfigure</string>
+    <string name="empty_widget_state" comment="To denote the widget is empty">ਗੁੰਮ ਡੇਕ ਮੁੜ ਸੰਰਚਿਤ ਕਰਨ ਲਈ ਟੈਪ ਕਰੋ।</string>
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">ਸੰਗ੍ਰਹਿ ਖਾਲੀ ਹੈ, ਡੈੱਕ ਜੋੜਨ ਲਈ ਐਪ ਦੀ ਵਰਤੋਂ ਕਰੋ ਫਿਰ ਮੁੜ ਸੰਰਚਿਤ ਕਰੋ</string>
 </resources>

@@ -81,6 +81,7 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.postDelayed
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
+import com.ichi2.libanki.CardTemplates
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteId
@@ -98,7 +99,6 @@ import com.ichi2.ui.FixedEditText
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.copyToClipboard
-import com.ichi2.utils.jsonObjectIterable
 import com.ichi2.utils.listItems
 import com.ichi2.utils.show
 import net.ankiweb.rsdroid.Translations
@@ -110,6 +110,8 @@ import java.util.regex.Pattern
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.time.Duration.Companion.seconds
+
+private typealias BackendCardTemplate = com.ichi2.libanki.CardTemplate
 
 /**
  * Allows the user to view the template for the current note type
@@ -276,7 +278,7 @@ open class CardTemplateEditor :
         // Set up the ViewPager with the sections adapter.
         viewPager.adapter = TemplatePagerAdapter(this@CardTemplateEditor)
         TabLayoutMediator(slidingTabLayout!!, viewPager) { tab: TabLayout.Tab, position: Int ->
-            tab.text = tempModel!!.getTemplate(position).getString("name")
+            tab.text = tempModel!!.getTemplate(position).name
         }.apply { attach() }
 
         // Set activity title
@@ -318,7 +320,7 @@ open class CardTemplateEditor :
 
         val ordinal = viewPager.currentItem
         val template = tempModel!!.getTemplate(ordinal)
-        val templateName = template.getString("name")
+        val templateName = template.name
 
         if (deck != null && getColUnsafe.decks.isFiltered(deck.deckId)) {
             Timber.w("Attempted to set default deck of %s to dynamic deck %s", templateName, deck.name)
@@ -329,11 +331,11 @@ open class CardTemplateEditor :
         val message: String =
             if (deck == null) {
                 Timber.i("Removing default template from template '%s'", templateName)
-                template.put("did", JSONObject.NULL)
+                template.jsonObject.put("did", JSONObject.NULL)
                 getString(R.string.model_manager_deck_override_removed_message, templateName)
             } else {
                 Timber.i("Setting template '%s' to '%s'", templateName, deck.name)
-                template.put("did", deck.deckId)
+                template.jsonObject.put("did", deck.deckId)
                 getString(R.string.model_manager_deck_override_added_message, templateName, deck.name)
             }
 
@@ -494,7 +496,7 @@ open class CardTemplateEditor :
             val cardIndex = requireArguments().getInt(CARD_INDEX)
             tempModel = templateEditor.tempModel!!
             // Load template
-            val template: JSONObject =
+            val template: BackendCardTemplate =
                 try {
                     tempModel.getTemplate(cardIndex)
                 } catch (e: JSONException) {
@@ -517,10 +519,10 @@ open class CardTemplateEditor :
                     R.id.back_edit ->
                         setCurrentEditorView(
                             currentSelectedId,
-                            template.getString("afmt"),
+                            template.afmt,
                             R.string.card_template_editor_back,
                         )
-                    else -> setCurrentEditorView(currentSelectedId, template.getString("qfmt"), R.string.card_template_editor_front)
+                    else -> setCurrentEditorView(currentSelectedId, template.qfmt, R.string.card_template_editor_front)
                 }
                 // contents of menu have changed and menu should be redrawn
                 templateEditor.invalidateOptionsMenu()
@@ -545,8 +547,8 @@ open class CardTemplateEditor :
                         templateEditor.tabToCursorPosition[cardIndex] = editorEditText.selectionStart
                         when (currentEditorViewId) {
                             R.id.styling_edit -> tempModel.updateCss(editorEditText.text.toString())
-                            R.id.back_edit -> template.put("afmt", editorEditText.text)
-                            else -> template.put("qfmt", editorEditText.text)
+                            R.id.back_edit -> template.afmt = editorEditText.text.toString()
+                            else -> template.qfmt = editorEditText.text.toString()
                         }
                         templateEditor.tempModel!!.updateTemplate(cardIndex, template)
                         val updateRunnable =
@@ -664,9 +666,9 @@ open class CardTemplateEditor :
 
             RenameCardTemplateDialog.showInstance(
                 requireContext(),
-                prefill = template.getString("name"),
+                prefill = template.name,
             ) { newName ->
-                template.put("name", newName)
+                template.name = newName
                 Timber.i("updated card template name")
                 Timber.d("updated name of template %d to '%s'", ordinal, newName)
 
@@ -861,7 +863,7 @@ open class CardTemplateEditor :
                 val template = getCurrentTemplate()
 
                 @StringRes val overrideStringRes =
-                    if (template != null && template.has("did") && !template.isNull("did")) {
+                    if (template != null && template.jsonObject.has("did") && !template.jsonObject.isNull("did")) {
                         R.string.card_template_editor_deck_override_on
                     } else {
                         R.string.card_template_editor_deck_override_off
@@ -1002,10 +1004,10 @@ open class CardTemplateEditor :
             get() =
                 try {
                     val tempModel = templateEditor.tempModel
-                    val template: JSONObject = tempModel!!.getTemplate(templateEditor.viewPager.currentItem)
+                    val template: BackendCardTemplate = tempModel!!.getTemplate(templateEditor.viewPager.currentItem)
                     CardTemplate(
-                        front = template.getString("qfmt"),
-                        back = template.getString("afmt"),
+                        front = template.qfmt,
+                        back = template.afmt,
                         style = tempModel.css,
                     )
                 } catch (e: Exception) {
@@ -1082,26 +1084,23 @@ open class CardTemplateEditor :
             try {
                 val ordinal = templateEditor.viewPager.currentItem
                 val template = tempModel.getTemplate(ordinal)
-                template.getString("name")
+                template.name
             } catch (e: Exception) {
                 Timber.w(e, "Failed to get name for template")
                 ""
             }
 
-        private fun launchCardBrowserAppearance(currentTemplate: JSONObject) {
+        private fun launchCardBrowserAppearance(currentTemplate: BackendCardTemplate) {
             val context = AnkiDroidApp.instance.baseContext
             val browserAppearanceIntent = CardTemplateBrowserAppearanceEditor.getIntentFromTemplate(context, currentTemplate)
             onCardBrowserAppearanceActivityResult.launch(browserAppearanceIntent)
         }
 
         @CheckResult
-        private fun getCurrentTemplate(): JSONObject? {
+        private fun getCurrentTemplate(): BackendCardTemplate? {
             val currentCardTemplateIndex = getCurrentCardTemplateIndex()
             return try {
-                templateEditor.tempModel!!
-                    .notetype
-                    .getJSONArray("tmpls")
-                    .getJSONObject(currentCardTemplateIndex)
+                templateEditor.tempModel!!.notetype.tmpls[currentCardTemplateIndex]
             } catch (e: JSONException) {
                 Timber.w(e, "CardTemplateEditor::getCurrentTemplate - unexpectedly unable to fetch template? %d", currentCardTemplateIndex)
                 null
@@ -1181,7 +1180,7 @@ open class CardTemplateEditor :
          * @param numAffectedCards number of cards which will be affected
          */
         private fun confirmDeleteCards(
-            tmpl: JSONObject,
+            tmpl: BackendCardTemplate,
             notetype: NotetypeJson,
             numAffectedCards: Int,
         ) {
@@ -1193,7 +1192,7 @@ open class CardTemplateEditor :
                         numAffectedCards,
                     ),
                     numAffectedCards,
-                    tmpl.optString("name"),
+                    tmpl.jsonObject.optString("name"),
                 )
             d.setArgs(msg)
 
@@ -1268,20 +1267,20 @@ open class CardTemplateEditor :
          * @param notetype model to remove from, updated in place by reference
          */
         private fun deleteTemplate(
-            tmpl: JSONObject,
+            tmpl: BackendCardTemplate,
             notetype: NotetypeJson,
         ) {
-            val oldTemplates = notetype.getJSONArray("tmpls")
-            val newTemplates = JSONArray()
-            for (possibleMatch in oldTemplates.jsonObjectIterable()) {
-                if (possibleMatch.getInt("ord") != tmpl.getInt("ord")) {
-                    newTemplates.put(possibleMatch)
+            val oldTemplates = notetype.tmpls
+            val newTemplates = CardTemplates(JSONArray())
+            for (possibleMatch in oldTemplates) {
+                if (possibleMatch.ord != tmpl.ord) {
+                    newTemplates.append(possibleMatch)
                 } else {
-                    Timber.d("deleteTemplate() found match - removing template with ord %s", possibleMatch.getInt("ord"))
-                    templateEditor.tempModel!!.removeTemplate(possibleMatch.getInt("ord"))
+                    Timber.d("deleteTemplate() found match - removing template with ord %s", possibleMatch.ord)
+                    templateEditor.tempModel!!.removeTemplate(possibleMatch.ord)
                 }
             }
-            notetype.put("tmpls", newTemplates)
+            notetype.tmpls = newTemplates
             Notetypes._updateTemplOrds(notetype)
             // Make sure the fragments reinitialize, otherwise the reused ordinal causes staleness
             (templateEditor.viewPager.adapter as TemplatePagerAdapter).ordinalShift()
@@ -1293,23 +1292,23 @@ open class CardTemplateEditor :
          * Add new template to a given model
          * @param model model to add new template to
          */
-        private fun addNewTemplate(model: JSONObject) {
+        private fun addNewTemplate(model: NotetypeJson) {
             // Build new template
             val oldCardIndex = requireArguments().getInt(CARD_INDEX)
-            val templates = model.getJSONArray("tmpls")
-            val oldTemplate = templates.getJSONObject(oldCardIndex)
+            val templates = model.tmpls
+            val oldTemplate = templates[oldCardIndex]
             val newTemplate = Notetypes.newTemplate(newCardName(templates))
             // Set up question & answer formats
-            newTemplate.put("qfmt", oldTemplate.getString("qfmt"))
-            newTemplate.put("afmt", oldTemplate.getString("afmt"))
+            newTemplate.qfmt = oldTemplate.qfmt
+            newTemplate.afmt = oldTemplate.afmt
             // Reverse the front and back if only one template
             if (templates.length() == 1) {
                 flipQA(newTemplate)
             }
-            val lastExistingOrd = templates.getJSONObject(templates.length() - 1).getInt("ord")
+            val lastExistingOrd = templates.last().ord
             Timber.d("addNewTemplate() lastExistingOrd was %s", lastExistingOrd)
-            newTemplate.put("ord", lastExistingOrd + 1)
-            templates.put(newTemplate)
+            newTemplate.setOrd(lastExistingOrd + 1)
+            templates.append(newTemplate)
             templateEditor.tempModel!!.addNewTemplate(newTemplate)
             templateEditor.viewPager.adapter!!.notifyDataSetChanged()
             templateEditor.viewPager.setCurrentItem(templates.length() - 1, templateEditor.animationDisabled())
@@ -1320,16 +1319,17 @@ open class CardTemplateEditor :
          * @param template template to flip
          */
         @KotlinCleanup("Use Kotlin's Regex methods")
-        private fun flipQA(template: JSONObject) {
-            val qfmt = template.getString("qfmt")
-            val afmt = template.getString("afmt")
+        private fun flipQA(template: BackendCardTemplate) {
+            val qfmt = template.qfmt
+            val afmt = template.afmt
             val m = Pattern.compile("(?s)(.+)<hr id=answer>(.+)").matcher(afmt)
-            if (!m.find()) {
-                template.put("qfmt", afmt.replace("{{FrontSide}}", ""))
-            } else {
-                template.put("qfmt", m.group(2)!!.trim { it <= ' ' })
-            }
-            template.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n$qfmt")
+            template.qfmt =
+                if (!m.find()) {
+                    afmt.replace("{{FrontSide}}", "")
+                } else {
+                    m.group(2)!!.trim { it <= ' ' }
+                }
+            template.afmt = "{{FrontSide}}\n\n<hr id=answer>\n\n$qfmt"
         }
 
         /**
@@ -1337,15 +1337,15 @@ open class CardTemplateEditor :
          * @param templates array of templates which is being added to
          * @return name for new template
          */
-        private fun newCardName(templates: JSONArray): String {
+        private fun newCardName(templates: CardTemplates): String {
             // Start by trying to set the name to "Card n" where n is the new num of templates
             var n = templates.length() + 1
             // If the starting point for name already exists, iteratively increase n until we find a unique name
             while (true) {
                 // Get new name
-                val name = CollectionManager.TR.cardTemplatesCard(n)
+                val name = TR.cardTemplatesCard(n)
                 // Cycle through all templates checking if new name exists
-                if (templates.jsonObjectIterable().all { name != it.getString("name") }) {
+                if (templates.all { name != it.name }) {
                     return name
                 }
                 n += 1

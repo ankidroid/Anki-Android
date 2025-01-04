@@ -82,19 +82,13 @@
     <string name="webview_crash_loop_dialog_content">\'%1$s\' కార్డ్‌ని రెండర్ చేయడంలో సిస్టమ్ WebView విఫలమైంది.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">జెండాలు</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">నేటి కొత్త కార్డ్ పరిమితిని సవరించండి</string>
-    <string name="custom_study_increase_review_limit">నేటి సమీక్ష కార్డ్ పరిమితిని సవరించండి</string>
-    <string name="custom_study_review_forgotten">మర్చిపోయి కార్డులను సమీక్షించండి</string>
-    <string name="custom_study_review_ahead">Review ahead</string>
-    <string name="custom_study_random_selection">కార్డులు యాదృచ్ఛిక ఎంపిక అధ్యయనం</string>
-    <string name="custom_study_preview_new">క్రొత్త కార్డులను పరిదృశ్యం చేయండి</string>
     <string name="custom_study_limit_tags">నిర్దిష్ట ట్యాగ్లకు పరిమితం చేయండి</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d ఖననం చేయబడింది</item>
         <item quantity="other">+%d ఖననం చేయబడింది</item>
     </plurals>
-    <string name="studyoptions_total_new_label">Total new cards</string>
-    <string name="studyoptions_total_label">Total cards</string>
+    <string name="studyoptions_total_new_label">మొత్తం కొత్త కార్డులు</string>
+    <string name="studyoptions_total_label">మొత్తం కార్డులు</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">గమనికను సవరించండి</string>
     <string name="discard">విస్మరించండి</string>
@@ -354,5 +348,5 @@
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">బ్రౌజర్ రూపాన్ని సవరించండి</string>
     <string name="show_shortcuts_message">కీబోర్డ్ సత్వరమార్గాలను చూపడానికి Alt+K నొక్కండి</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">ఈ నోట్‌టైప్‌లో వినియోగదారు చర్య %s సెట్ చేయబడలేదు. దయచేసి దీన్ని కాన్ఫిగర్ చేయండి</string>
-    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
+    <string name="directory_inaccessible_info">ఇక్కడ యాక్సెస్‌ని ఎలా పునరుద్ధరించాలనే దాని గురించి మరింత తెలుసుకోండి %s లేదా సేకరణ ఫోల్డర్‌ని నవీకరించడానికి సెట్టింగ్‌లకు వెళ్లండి.</string>
 </resources>

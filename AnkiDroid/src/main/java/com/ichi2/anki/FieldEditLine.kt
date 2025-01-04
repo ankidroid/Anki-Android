@@ -16,7 +16,6 @@
 package com.ichi2.anki
 
 import android.content.Context
-import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Parcel
@@ -42,8 +41,6 @@ import com.ichi2.utils.KotlinCleanup
 import java.util.Locale
 
 @KotlinCleanup("replace _name with `field`")
-@KotlinCleanup("remove setTypeface")
-@KotlinCleanup("replace setEnableAnimation with var")
 class FieldEditLine : FrameLayout {
     val editText: FieldEditText
     private val label: TextView
@@ -52,7 +49,8 @@ class FieldEditLine : FrameLayout {
     private val expandButton: ImageButton
     private var _name: String? = null
     private var expansionState = ExpansionState.EXPANDED
-    private var enableAnimation = true
+
+    var enableAnimation = true
 
     constructor(context: Context) : super(context)
 
@@ -87,7 +85,7 @@ class FieldEditLine : FrameLayout {
         setExpanderBackgroundImage()
         expandButton.setOnClickListener { toggleExpansionState() }
         editText.init()
-        label.setPadding(getDensityAdjustedValue(context, 3.4f).toInt(), 0, 0, 0)
+        label.setPaddingRelative(getDensityAdjustedValue(context, 3.4f).toInt(), 0, 0, 0)
     }
 
     private fun toggleExpansionState() {
@@ -121,12 +119,6 @@ class FieldEditLine : FrameLayout {
         editText.customInsertionActionModeCallback = callback
     }
 
-    fun setTypeface(typeface: Typeface?) {
-        if (typeface != null) {
-            editText.typeface = typeface
-        }
-    }
-
     fun setHintLocale(hintLocale: Locale?) {
         if (hintLocale != null) {
             editText.setHintLocale(hintLocale)
@@ -142,10 +134,6 @@ class FieldEditLine : FrameLayout {
 
     fun setOrd(i: Int) {
         editText.ord = i
-    }
-
-    fun setEnableAnimation(value: Boolean) {
-        enableAnimation = value
     }
 
     var name: String?

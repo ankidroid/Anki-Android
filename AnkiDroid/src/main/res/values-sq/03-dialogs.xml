@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">Dëshiron vërtet të provosh të riparosh bazën e të dhënave?\n\nPara fillimit të përpjekjes, do të krijohet një kopje në nënfolderin \"%s\".</string>
     <string name="intent_aedict_empty">Kategoria \"e parazgjedhur\" është bosh</string>
     <string name="intent_aedict_category">Për të shtuar karta në AnkiDroid, hiqni të gjitha kategoritë e Notepad ose shtoni një të quajtur \"default\"</string>
-    <string name="custom_study_new_total_new">Kartat e reja në kuvertë: %d</string>
-    <string name="custom_study_rev_total_rev">Komentet e parapara në kuvertë: %d</string>
     <string name="custom_study_new_extend">Rrit/zvogëlo (“-3”) kufirin e ri të kartës së sotme me</string>
     <string name="custom_study_rev_extend">Rrit/zvogëlo (“-3”) kufirin e sotëm të rishikimit me</string>
     <string name="custom_study_forgotten">Rishikoni kartat e harruara në x ditët e fundit:</string>
     <string name="custom_study_ahead">Rishikoni përpara për x ditë:</string>
-    <string name="custom_study_random">Zgjidhni x kartat rastësisht nga kuverta:</string>
     <string name="custom_study_preview">Shikoni paraprakisht kartat e reja të shtuara në x ditët e fundit:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Nuk mund të rindërtohej kuverta e studimit të personalizuar</string>
     <string name="storage_full_title">Magazinimi plot</string>
     <string name="storage_almost_full_title">Magazinimi pothuajse i mbushur</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Nuk ka hapësirë</string>

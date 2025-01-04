@@ -28,9 +28,7 @@ import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.utils.append
 import com.ichi2.libanki.utils.len
-import com.ichi2.utils.deepClone
 import net.ankiweb.rsdroid.exceptions.BackendTemplateException
-import org.json.JSONObject
 
 private typealias Union<A, B> = Pair<A, B>
 private typealias TemplateReplacementList = MutableList<Union<String?, TemplateManager.TemplateReplacement?>>
@@ -122,7 +120,7 @@ class TemplateManager {
         note: Note,
         browser: Boolean = false,
         notetype: NotetypeJson? = null,
-        template: JSONObject? = null,
+        template: CardTemplate? = null,
         private var fillEmpty: Boolean = false,
     ) {
         @Suppress("ktlint:standard:backing-property-naming")
@@ -135,7 +133,7 @@ class TemplateManager {
         private var _browser: Boolean = browser
 
         @Suppress("ktlint:standard:backing-property-naming")
-        private var _template: JSONObject? = template
+        private var _template: CardTemplate? = template
 
         private var noteType: NotetypeJson = notetype ?: note.notetype
 
@@ -150,7 +148,7 @@ class TemplateManager {
                 note: Note,
                 card: Card,
                 notetype: NotetypeJson,
-                template: JSONObject,
+                template: CardTemplate,
                 fillEmpty: Boolean,
             ): TemplateRenderContext =
                 TemplateRenderContext(

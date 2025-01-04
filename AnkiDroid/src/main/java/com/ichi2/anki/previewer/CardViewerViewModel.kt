@@ -40,8 +40,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import org.jetbrains.annotations.VisibleForTesting
-import org.json.JSONObject
 import timber.log.Timber
 
 abstract class CardViewerViewModel(
@@ -108,12 +106,18 @@ abstract class CardViewerViewModel(
      *************************************** Internal methods ***************************************
      ********************************************************************************************* */
 
-    protected abstract suspend fun typeAnsFilter(text: String): String
+    protected abstract suspend fun typeAnsFilter(
+        text: String,
+        typedAnswer: String? = null,
+    ): String
 
     private suspend fun bodyClass(): String = bodyClassForCardOrd(currentCard.await().ord)
 
     /** From the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L358) */
-    private suspend fun mungeQA(text: String): String = typeAnsFilter(prepareCardTextForDisplay(text))
+    private suspend fun mungeQA(
+        text: String,
+        typedAnswer: String? = null,
+    ): String = typeAnsFilter(prepareCardTextForDisplay(text), typedAnswer)
 
     private suspend fun prepareCardTextForDisplay(text: String): String =
         Sound.addPlayButtons(
@@ -134,13 +138,21 @@ abstract class CardViewerViewModel(
         eval.emit("_showQuestion(${Json.encodeToString(question)}, ${Json.encodeToString(answer)}, '${bodyClass()}');")
     }
 
-    protected open suspend fun showAnswerInternal() {
+    /**
+     * Parses the card answer and sends a [eval] request to load it into the `qa` HTML div
+     *
+     * * [Anki reference](https://github.com/ankitects/anki/blob/c985acb9fe36d3651eb83cf4cfe44d046ec7458f/qt/aqt/reviewer.py#L460)
+     * * [Typescript reference](https://github.com/ankitects/anki/blob/c985acb9fe36d3651eb83cf4cfe44d046ec7458f/ts/reviewer/index.ts#L193)
+     *
+     * @see [stdHtml]
+     */
+    protected open suspend fun showAnswer(typedAnswer: String? = null) {
         Timber.v("showAnswer()")
         showingAnswer.emit(true)
 
         val card = currentCard.await()
         val answerData = withCol { card.answer(this) }
-        val answer = mungeQA(answerData)
+        val answer = mungeQA(answerData, typedAnswer)
 
         eval.emit("_showAnswer(${Json.encodeToString(answer)}, '${bodyClass()}');")
     }
@@ -195,54 +207,4 @@ abstract class CardViewerViewModel(
         } else {
             throw IllegalArgumentException("Unhandled POST request: $uri")
         }
-
-    companion object {
-        // ********************************** Type-in answer ************************************
-        /** From the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L669] */
-        @VisibleForTesting
-        val typeAnsRe = Regex("\\[\\[type:(.+?)]]")
-
-        suspend fun getTypeAnswerField(
-            card: Card,
-            text: String,
-        ): JSONObject? {
-            val match = typeAnsRe.find(text) ?: return null
-
-            val typeAnsFieldName =
-                match.groups[1]!!.value.let {
-                    if (it.startsWith("cloze:")) {
-                        it.split(":")[1]
-                    } else {
-                        it
-                    }
-                }
-
-            val fields = withCol { card.noteType(this).flds }
-            for (i in 0 until fields.length()) {
-                val field = fields.get(i) as JSONObject
-                if (field.getString("name") == typeAnsFieldName) {
-                    return field
-                }
-            }
-            return null
-        }
-
-        suspend fun getExpectedTypeInAnswer(
-            card: Card,
-            field: JSONObject,
-        ): String? {
-            val fieldName = field.getString("name")
-            val expected = withCol { card.note(this@withCol).getItem(fieldName) }
-            return if (fieldName.startsWith("cloze:")) {
-                val clozeIdx = card.ord + 1
-                withCol {
-                    extractClozeForTyping(expected, clozeIdx).takeIf { it.isNotBlank() }
-                }
-            } else {
-                expected
-            }
-        }
-
-        fun getFontSize(field: JSONObject): String = field.getString("size")
-    }
 }

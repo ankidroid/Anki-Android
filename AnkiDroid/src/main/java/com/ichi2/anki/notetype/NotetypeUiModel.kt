@@ -17,13 +17,14 @@ package com.ichi2.anki.notetype
 
 import anki.notetypes.NotetypeNameId
 import anki.notetypes.NotetypeNameIdUseCount
+import com.ichi2.libanki.NoteTypeId
 
 /**
  * Data holder class which contains the data to display a single note type in [ManageNotetypes]'s
  * list of notetypes.
  */
 internal data class ManageNoteTypeUiModel(
-    val id: Long,
+    val id: NoteTypeId,
     val name: String,
     /**
      * The number of note using this note type.
@@ -38,7 +39,7 @@ internal fun NotetypeNameIdUseCount.toUiModel(): ManageNoteTypeUiModel = ManageN
  * list of notetypes.
  */
 internal data class AddNotetypeUiModel(
-    val id: Long,
+    val id: NoteTypeId,
     val name: String,
     /**
      * Whether this is a note type provided by Anki by default.

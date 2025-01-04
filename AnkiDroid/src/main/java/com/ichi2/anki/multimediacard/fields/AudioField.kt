@@ -33,7 +33,7 @@ abstract class AudioField :
         get() = field
         set(value) {
             field = value
-            setThisModified()
+            thisModified = true
         }
 
     override var text: String? = null
