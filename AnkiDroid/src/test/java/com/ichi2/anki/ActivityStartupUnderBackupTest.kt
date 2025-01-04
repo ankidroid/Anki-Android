@@ -45,6 +45,7 @@ class ActivityStartupUnderBackupTest : RobolectricTest() {
     // Only used for display, but needs to be defined
     @ParameterizedRobolectricTestRunner.Parameter(1)
     @JvmField // required for Parameter
+    @Suppress("unused")
     var activityName: String? = null
 
     @Before
