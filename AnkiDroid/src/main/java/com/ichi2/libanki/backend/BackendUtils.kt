@@ -20,7 +20,7 @@ package com.ichi2.libanki.backend
 
 import com.google.protobuf.ByteString
 import com.ichi2.libanki.utils.LibAnkiAlias
-import net.ankiweb.rsdroid.RustCleanup
+import com.ichi2.utils.JSONObjectHolder
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -30,13 +30,13 @@ object BackendUtils {
 
     fun jsonToArray(json: ByteString): JSONArray = JSONArray(json.toStringUtf8())
 
-    @RustCleanup("Confirm edge cases")
-    fun toByteString(conf: Any?): ByteString {
+    fun toByteString(conf: JSONObject): ByteString {
         val asString: String = conf.toString()
         return ByteString.copyFromUtf8(asString)
     }
 
-    @RustCleanup("Confirm edge cases")
     @LibAnkiAlias("to_json_bytes")
-    fun toJsonBytes(json: Any?): ByteString = toByteString(json)
+    fun toJsonBytes(json: JSONObject): ByteString = toByteString(json)
+
+    fun toJsonBytes(json: JSONObjectHolder): ByteString = toJsonBytes(json.jsonObject)
 }
