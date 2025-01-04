@@ -47,7 +47,6 @@ import com.ichi2.utils.jsonObjectIterable
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
-import org.json.JSONArray
 import java.util.LinkedList
 
 typealias UpdateDeckConfigs = UpdateDeckConfigsRequest
@@ -190,24 +189,20 @@ class Decks(
     fun addDeck(deck: anki.decks.Deck): OpChangesWithId = col.backend.addDeck(input = deck)
 
     @LibAnkiAlias("new_deck_legacy")
-    private fun newDeckLegacy(filtered: Boolean): Deck {
-        val deck = BackendUtils.fromJsonBytes(col.backend.newDeckLegacy(filtered))
-        return Deck(
+    private fun newDeckLegacy(filtered: Boolean) =
+        Deck(BackendUtils.fromJsonBytes(col.backend.newDeckLegacy(filtered))).apply {
             if (filtered) {
                 // until migrating to the dedicated method for creating filtered decks,
                 // we need to ensure the default config matches legacy expectations
-                val terms = deck.getJSONArray("terms").getJSONArray(0)
-                terms.put(0, "")
-                terms.put(2, 0)
-                deck.put("terms", JSONArray(listOf(terms)))
-                deck.put("browserCollapsed", false)
-                deck.put("collapsed", false)
-                deck
-            } else {
-                deck
-            },
-        )
-    }
+                firstFilter.apply {
+                    search = ""
+                    order = 0
+                }
+                removeSecondFilter()
+                browserCollapsed = false
+                collapsed = false
+            }
+        }
 
     @RustCleanup("implement and make public")
     @LibAnkiAlias("deck_tree")
@@ -596,11 +591,7 @@ class Decks(
 
     /** For new code, prefer [getOrCreateFilteredDeck] */
     @LibAnkiAlias("new_filtered")
-    fun newFiltered(name: String): DeckId {
-        val did = id(name, type = DEFAULT_DECK_CONF_ID)
-        select(did!!)
-        return did
-    }
+    fun newFiltered(name: String) = id(name, type = DEFAULT_DECK_CONF_ID).also { select(it) }
 
     @LibAnkiAlias("is_filtered")
     fun isFiltered(did: DeckId): Boolean = this.get(did)?.isFiltered == true
@@ -624,7 +615,7 @@ class Decks(
             return null
         }
         val deck = get(did) ?: return null
-        return deck.getString("name") + DECK_SEPARATOR + subdeckName
+        return deck.name + DECK_SEPARATOR + subdeckName
     }
 
     @NotInLibAnki

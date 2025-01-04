@@ -2303,7 +2303,7 @@ open class DeckPicker :
         } catch (e: RuntimeException) {
             Timber.e(e, "RuntimeException setting time remaining")
         }
-        val current = withCol { decks.current().optLong("id") }
+        val current = withCol { decks.current().id }
         if (focusedDeck != current) {
             scrollDecklistToDeck(current)
             focusedDeck = current

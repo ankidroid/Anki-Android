@@ -28,14 +28,13 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.utils.ext.description
 import com.ichi2.anki.utils.ext.update
 import com.ichi2.libanki.DeckId
 import com.ichi2.themes.Themes
 import timber.log.Timber
 
 /**
- * Allows a user to edit the [deck description][description]
+ * Allows a user to edit the [deck description][desc]
  *
  * This is visible on [StudyOptionsFragment]
  */
@@ -116,11 +115,11 @@ class EditDeckDescriptionDialog : DialogFragment() {
             }
         }
 
-    private suspend fun getDescription() = withCol { decks.get(deckId)!!.description }
+    private suspend fun getDescription() = withCol { decks.get(deckId)!!.desc }
 
     private suspend fun setDescription(value: String) {
         Timber.i("updating deck description")
-        withCol { decks.update(deckId) { description = value } }
+        withCol { decks.update(deckId) { desc = value } }
     }
 
     companion object {
