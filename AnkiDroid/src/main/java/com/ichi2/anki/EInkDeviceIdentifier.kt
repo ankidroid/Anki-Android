@@ -188,7 +188,6 @@ class EInkDeviceIdentifier {
             Timber.w("Potential E-ink device: %s", currentDevice)
             CrashReportService.sendExceptionReport(
                 Exception("Potential E-ink device: ${Build.MANUFACTURER} | ${Build.BRAND} | ${Build.DEVICE} | ${Build.PRODUCT} | ${Build.MODEL} | ${Build.HARDWARE}"),
-
                 origin = "EInkDeviceIdentifier",
                 additionalInfo = null,
                 onlyIfSilent = true
