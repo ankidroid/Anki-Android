@@ -11,8 +11,4 @@ class MediaClipField : AudioField() {
     override val isModified: Boolean = false
 
     override var name: String? = null
-
-    companion object {
-        private const val SERIAL_VERSION_UID = 2937641017832762987L
-    }
 }

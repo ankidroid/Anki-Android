@@ -106,8 +106,4 @@ class MultimediaEditableNote : IMultimediaEditableNote {
 
     val isEmpty: Boolean
         get() = fields.isNullOrEmpty()
-
-    companion object {
-        private const val SERIAL_VERSION_UID = -6161821367135636659L
-    }
 }

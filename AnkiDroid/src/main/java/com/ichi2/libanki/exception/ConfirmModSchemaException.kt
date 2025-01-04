@@ -26,11 +26,4 @@ class ConfirmModSchemaException : Exception() {
     fun log() {
         Timber.v(this)
     }
-
-    companion object {
-        /**
-         *
-         */
-        private const val SERIAL_VERSION_UID = -9215098969154590797L
-    }
 }
