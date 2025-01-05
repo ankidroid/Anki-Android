@@ -149,7 +149,6 @@ import com.ichi2.anki.servicelayer.checkMedia
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.widgets.DeckAdapter
@@ -2472,12 +2471,7 @@ open class DeckPicker :
     }
 
     private fun openReviewer() {
-        val intent =
-            if (sharedPrefs().getBoolean("newReviewer", false)) {
-                ReviewerFragment.getIntent(this)
-            } else {
-                Intent(this, Reviewer::class.java)
-            }
+        val intent = Reviewer.getIntent(this)
         reviewLauncher.launch(intent)
     }
 

@@ -207,7 +207,7 @@ class StudyOptionsFragment :
 
     private fun openReviewer() {
         Timber.i("openReviewer()")
-        val reviewer = Intent(activity, Reviewer::class.java)
+        val reviewer = Reviewer.getIntent(requireContext())
         if (fragmented) {
             toReviewer = true
             Timber.i("openReviewer() fragmented mode")
