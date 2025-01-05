@@ -90,7 +90,8 @@ class StudyOptionsActivity :
                 launchCatchingTask {
                     undoAndShowSnackbar()
                     // TODO why are we going to the Reviewer from here? Desktop doesn't do this
-                    Intent(this@StudyOptionsActivity, Reviewer::class.java)
+                    Reviewer
+                        .getIntent(this@StudyOptionsActivity)
                         .apply { flags = Intent.FLAG_ACTIVITY_FORWARD_RESULT }
                         .also { startActivity(it) }
                     finish()

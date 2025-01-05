@@ -437,7 +437,7 @@ abstract class NavigationDrawerActivity :
                 return
             }
             // Review Cards Shortcut
-            val intentReviewCards = Intent(context, Reviewer::class.java)
+            val intentReviewCards = Reviewer.getIntent(context)
             intentReviewCards.action = Intent.ACTION_VIEW
             intentReviewCards.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             intentReviewCards.putExtra(EXTRA_STARTED_WITH_SHORTCUT, true)
