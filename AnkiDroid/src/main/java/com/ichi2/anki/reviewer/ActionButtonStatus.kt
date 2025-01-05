@@ -109,6 +109,8 @@ class ActionButtonStatus {
 
     fun buryIsDisabled(): Boolean = customButtons[R.id.action_bury] == MENU_DISABLED
 
+    fun flagsIsOverflown(): Boolean = customButtons[R.id.action_flag] == SHOW_AS_ACTION_NEVER
+
     companion object {
         const val SHOW_AS_ACTION_NEVER = MenuItem.SHOW_AS_ACTION_NEVER
         const val SHOW_AS_ACTION_IF_ROOM = MenuItem.SHOW_AS_ACTION_IF_ROOM

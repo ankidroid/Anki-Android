@@ -48,6 +48,7 @@ import androidx.annotation.IntDef
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
+import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -734,9 +735,13 @@ open class Reviewer :
         val flagIcon = menu.findItem(R.id.action_flag)
         if (flagIcon != null) {
             if (currentCard != null) {
-                flagIcon.setIcon(currentCard!!.userFlag().drawableReviewerRes())
+                val flag = currentCard!!.userFlag()
+                flagIcon.setIcon(flag.drawableRes)
+                if (flag == Flag.NONE && actionButtons.status.flagsIsOverflown()) {
+                    val flagColor = ThemeUtils.getThemeAttrColor(this, android.R.attr.colorControlNormal)
+                    flagIcon.icon?.mutate()?.setTint(flagColor)
+                }
             }
-            flagIcon.iconAlpha = alpha
         }
 
         // Anki Desktop Translations
@@ -879,11 +884,8 @@ open class Reviewer :
     private fun setupFlags(subMenu: SubMenu) {
         lifecycleScope.launch {
             for ((flag, displayName) in Flag.queryDisplayNames()) {
-                val menuItem =
-                    subMenu
-                        .add(Menu.NONE, flag.code, Menu.NONE, displayName)
-                        .setIcon(flag.drawableRes)
-                flagItemIds.add(menuItem.itemId)
+                subMenu.findItem(flag.id).setTitle(displayName)
+                flagItemIds.add(flag.id)
             }
         }
     }

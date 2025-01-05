@@ -58,7 +58,38 @@
         android:icon="@drawable/ic_flag_transparent"
         ankidroid:showAsAction="always" >
         <menu>
-            <!-- flags are dynamically added -->
+            <item
+                android:id="@id/flag_none"
+                android:icon="@drawable/ic_flag_lightgrey"
+                tools:title="No Flag"/>
+            <item
+                android:id="@id/flag_red"
+                tools:title="Red"
+                android:icon="@drawable/ic_flag_red"/>
+            <item
+                android:id="@id/flag_orange"
+                tools:title="Orange"
+                android:icon="@drawable/ic_flag_orange"/>
+            <item
+                android:id="@id/flag_green"
+                tools:title="Green"
+                android:icon="@drawable/ic_flag_green"/>
+            <item
+                android:id="@id/flag_blue"
+                tools:title="Blue"
+                android:icon="@drawable/ic_flag_blue"/>
+            <item
+                android:id="@id/flag_pink"
+                tools:title="Pink"
+                android:icon="@drawable/ic_flag_pink"/>
+            <item
+                android:id="@id/flag_turquoise"
+                tools:title="Turquoise"
+                android:icon="@drawable/ic_flag_turquoise"/>
+            <item
+                android:id="@id/flag_purple"
+                tools:title="Purple"
+                android:icon="@drawable/ic_flag_purple"/>
         </menu>
     </item>
     <item
