@@ -29,7 +29,7 @@
     <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">노트 유형 관리</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">필드 관리</string>
     <!--Toasts-->
-    <string name="toast_last_model">You cannot delete your last note type</string>
+    <string name="toast_last_model">마지막 노트 유형은 삭제 할 수 없습니다.</string>
     <string name="toast_last_field">노트 유형은 최소한 하나의 필드가 필요합니다.</string>
     <string name="toast_empty_name">이름을 입력하셔야 합니다.</string>
     <string name="toast_duplicate_field">필드 이름이 이미 사용 중 입니다.</string>
@@ -48,16 +48,16 @@
     <!--Rename-->
     <string name="rename_model">노트 유형 이름 바꾸기 </string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
+    <string name="model_field_editor_language_hint_dialog_success_result">키보드 언어 힌트를 %s로 설정하기</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">필드 편집</string>
     <string name="model_field_editor_add" maxLength="28">필드 추가</string>
     <string name="model_field_editor_delete">필드 삭제</string>
     <string name="model_field_editor_rename">필드 이름 변경</string>
-    <string name="model_field_editor_language_hint">Set keyboard language hint</string>
+    <string name="model_field_editor_language_hint">키보드 언어 힌트 설정</string>
     <string name="model_field_editor_reposition_menu">필드 재배치</string>
     <string name="model_field_editor_reposition">필드 재배치 (%1$d–%2$d 값을 입력하세요)</string>
-    <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
+    <string name="model_field_editor_toggle_sticky">추가할 때 마지막 입력을 기억하기</string>
     <string name="model_field_editor_changing">필드 업데이트 중</string>
     <string name="model_field_editor_sort_field">이 필드로 정렬</string>
     <!--Warnings-->
