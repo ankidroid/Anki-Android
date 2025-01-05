@@ -135,21 +135,21 @@ object InitialActivity {
     fun isLatestVersion(preferences: SharedPreferences): Boolean = preferences.getString("lastVersion", "") == pkgVersionName
 
     sealed class StartupFailure {
-        object SDCardNotMounted : StartupFailure()
+        data object SDCardNotMounted : StartupFailure()
 
-        object DirectoryNotAccessible : StartupFailure()
+        data object DirectoryNotAccessible : StartupFailure()
 
-        object FutureAnkidroidVersion : StartupFailure()
+        data object FutureAnkidroidVersion : StartupFailure()
 
         class DBError(
             val exception: Exception,
         ) : StartupFailure()
 
-        object DatabaseLocked : StartupFailure()
+        data object DatabaseLocked : StartupFailure()
 
-        object WebviewFailed : StartupFailure()
+        data object WebviewFailed : StartupFailure()
 
-        object DiskFull : StartupFailure()
+        data object DiskFull : StartupFailure()
     }
 }
 

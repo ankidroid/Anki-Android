@@ -22,13 +22,13 @@ import kotlin.annotation.Retention
 sealed class CardType(
     val code: Int,
 ) {
-    object New : CardType(0)
+    data object New : CardType(0)
 
-    object Lrn : CardType(1)
+    data object Lrn : CardType(1)
 
-    object Rev : CardType(2)
+    data object Rev : CardType(2)
 
-    object Relearning : CardType(3)
+    data object Relearning : CardType(3)
 
     class Unknown(
         code: Int,
@@ -49,21 +49,21 @@ sealed class CardType(
 sealed class QueueType(
     val code: Int,
 ) {
-    object ManuallyBuried : QueueType(-3)
+    data object ManuallyBuried : QueueType(-3)
 
-    object SiblingBuried : QueueType(-2)
+    data object SiblingBuried : QueueType(-2)
 
-    object Suspended : QueueType(-1)
+    data object Suspended : QueueType(-1)
 
-    object New : QueueType(0)
+    data object New : QueueType(0)
 
-    object Lrn : QueueType(1)
+    data object Lrn : QueueType(1)
 
-    object Rev : QueueType(2)
+    data object Rev : QueueType(2)
 
-    object DayLearnRelearn : QueueType(3)
+    data object DayLearnRelearn : QueueType(3)
 
-    object Preview : QueueType(4)
+    data object Preview : QueueType(4)
 
     class Unknown(
         code: Int,
@@ -98,9 +98,9 @@ sealed class QueueType(
 sealed class NoteTypeKind(
     val code: Int,
 ) {
-    object Std : NoteTypeKind(0)
+    data object Std : NoteTypeKind(0)
 
-    object Cloze : NoteTypeKind(1)
+    data object Cloze : NoteTypeKind(1)
 
     class Unknown(
         code: Int,
