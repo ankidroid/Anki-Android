@@ -97,9 +97,6 @@
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Обрати все</string>
     <string name="card_browser_select_none" maxLength="28">Зняти виділення</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(нова)</string>
-    <string name="card_browser_due_filtered_card">(фільтрована)</string>
-    <string name="card_browser_interval_learning_card">(вивчається)</string>
     <string name="card_browser_no_cards_in_deck">Не знайдено жодної картки в колоді «%s»</string>
     <string name="card_browser_search_all_decks">Шукати у всіх колодах</string>
     <string name="card_browser_unknown_deck_name">Невідома</string>

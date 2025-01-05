@@ -91,9 +91,6 @@
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Ischerta totu</string>
     <string name="card_browser_select_none" maxLength="28">Boga s\'ischerta</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(noa)</string>
-    <string name="card_browser_due_filtered_card">(filtradu)</string>
-    <string name="card_browser_interval_learning_card">(imparòngiu)</string>
     <string name="card_browser_no_cards_in_deck">Peruna carta agatada in su matzu ‘%s’</string>
     <string name="card_browser_search_all_decks">Chirca in totu sos matzos</string>
     <string name="card_browser_unknown_deck_name">Disconnotu</string>

@@ -91,9 +91,6 @@
     </string-array>
     <string name="card_browser_select_all" maxLength="28">تمام منتخب کریں</string>
     <string name="card_browser_select_none" maxLength="28">کچھ نہ چنیں</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(نئی)</string>
-    <string name="card_browser_due_filtered_card">(فلٹر شدہ)</string>
-    <string name="card_browser_interval_learning_card">(سیکھنا)</string>
     <string name="card_browser_no_cards_in_deck">ڈیک \'%s\' میں کوئی کارڈ نہیں ملا</string>
     <string name="card_browser_search_all_decks">تمام ڈیک تلاش کریں</string>
     <string name="card_browser_unknown_deck_name">نامعلوم</string>

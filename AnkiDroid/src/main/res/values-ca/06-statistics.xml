@@ -44,9 +44,5 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; anys</string>
-    <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; mesos</string>
-    <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; dies</string>
-    <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; hores</string>
     <string name="open_statistics" comment="Description of the shortcut that opens the statistics page">Obre les estadístiques</string>
 </resources>

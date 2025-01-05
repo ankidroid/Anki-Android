@@ -91,9 +91,6 @@
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Selecciona-ho tot</string>
     <string name="card_browser_select_none" maxLength="28">No en seleccionis cap</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nou)</string>
-    <string name="card_browser_due_filtered_card">(filtrat)</string>
-    <string name="card_browser_interval_learning_card">(aprenentatge)</string>
     <string name="card_browser_no_cards_in_deck">No s\'han trobat cartes al paquet \'%s\'</string>
     <string name="card_browser_search_all_decks">Cerca tots els paquets</string>
     <string name="card_browser_unknown_deck_name">Desconegut</string>

@@ -44,9 +44,5 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; лет</string>
-    <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; мес.</string>
-    <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; дн.</string>
-    <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; ч.</string>
     <string name="open_statistics" comment="Description of the shortcut that opens the statistics page">Открыть статистику</string>
 </resources>

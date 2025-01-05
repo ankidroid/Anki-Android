@@ -88,9 +88,6 @@
     </string-array>
     <string name="card_browser_select_all" maxLength="28">全选</string>
     <string name="card_browser_select_none" maxLength="28">取消全选</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">（新卡片）</string>
-    <string name="card_browser_due_filtered_card">（已筛选）</string>
-    <string name="card_browser_interval_learning_card">（学习中的卡片）</string>
     <string name="card_browser_no_cards_in_deck">未在牌组「%s」中找到卡片</string>
     <string name="card_browser_search_all_decks">搜索全部牌组</string>
     <string name="card_browser_unknown_deck_name">未知</string>

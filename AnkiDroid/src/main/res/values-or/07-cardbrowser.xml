@@ -91,9 +91,6 @@
     </string-array>
     <string name="card_browser_select_all" maxLength="28">ସବୁ ଚୟନ କରନ୍ତୁ</string>
     <string name="card_browser_select_none" maxLength="28">କିଛି ଚୟନ କରନ୍ତୁନି</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(ନୂଆ)</string>
-    <string name="card_browser_due_filtered_card">(ଶୋଧିତ)</string>
-    <string name="card_browser_interval_learning_card">(ଶିଖୁଛନ୍ତି)</string>
     <string name="card_browser_no_cards_in_deck">ତାସଖଣ୍ଡ ‘%s’ ରେ କୌଣସି ପତ୍ର ମିଳିଲା ନାହିଁ</string>
     <string name="card_browser_search_all_decks">ସମସ୍ତ ତାସଖଣ୍ଡରେ ଖୋଜନ୍ତୁ</string>
     <string name="card_browser_unknown_deck_name">ଅଜ୍ଞାତ</string>
