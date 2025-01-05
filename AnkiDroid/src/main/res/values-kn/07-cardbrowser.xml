@@ -91,9 +91,6 @@
     </string-array>
     <string name="card_browser_select_all" maxLength="28">ಎಲ್ಲವನ್ನು ಆರಿಸು</string>
     <string name="card_browser_select_none" maxLength="28">ಯಾವುದನ್ನೂ ಆಯ್ಕೆ ಮಾಡಬೇಡಿ</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(ಹೊಸ)</string>
-    <string name="card_browser_due_filtered_card">(ಫಿಲ್ಟರ್ ಮಾಡಲಾಗಿದೆ)</string>
-    <string name="card_browser_interval_learning_card">(ಕಲಿಕೆ)</string>
     <string name="card_browser_no_cards_in_deck">\'%s\' ಡೆಕ್‌ನಲ್ಲಿ ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳು ಕಂಡುಬಂದಿಲ್ಲ</string>
     <string name="card_browser_search_all_decks">ಎಲ್ಲಾ ಡೆಕ್‌ಗಳನ್ನು ಹುಡುಕಿ</string>
     <string name="card_browser_unknown_deck_name">ಅಜ್ಞಾತ</string>

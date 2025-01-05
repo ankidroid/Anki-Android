@@ -91,9 +91,6 @@
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Piliin lahat</string>
     <string name="card_browser_select_none" maxLength="28">Walang piliin</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(bago)</string>
-    <string name="card_browser_due_filtered_card">(nasala)</string>
-    <string name="card_browser_interval_learning_card">(pinag-aaralan)</string>
     <string name="card_browser_no_cards_in_deck">Walang mga card na nahanap sa deck na\'%s\'</string>
     <string name="card_browser_search_all_decks">Hanapin sa lahat ng deck</string>
     <string name="card_browser_unknown_deck_name">Hindi Matukoy</string>

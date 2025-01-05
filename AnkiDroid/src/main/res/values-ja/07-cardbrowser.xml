@@ -88,9 +88,6 @@
     </string-array>
     <string name="card_browser_select_all" maxLength="28">すべて選択</string>
     <string name="card_browser_select_none" maxLength="28">選択をすべて解除</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(新規)</string>
-    <string name="card_browser_due_filtered_card">(フィルター)</string>
-    <string name="card_browser_interval_learning_card">(習得中)</string>
     <string name="card_browser_no_cards_in_deck">%s のデッキにカードが見つかりませんでした</string>
     <string name="card_browser_search_all_decks">全デッキで検索</string>
     <string name="card_browser_unknown_deck_name">不明</string>

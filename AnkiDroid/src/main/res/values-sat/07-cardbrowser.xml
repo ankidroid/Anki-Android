@@ -91,9 +91,6 @@
     </string-array>
     <string name="card_browser_select_all" maxLength="28">ᱡᱷᱚᱛᱚ ᱵᱟᱪᱷᱟᱣ ᱢᱮ</string>
     <string name="card_browser_select_none" maxLength="28">ᱟᱞᱚ ᱵᱟᱪᱷᱟᱣ ᱟ</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(ᱱᱟᱶᱟ)</string>
-    <string name="card_browser_due_filtered_card">(ᱪᱷᱟᱹᱱᱤᱭᱟᱜ)</string>
-    <string name="card_browser_interval_learning_card">(ᱪᱮᱫᱚᱜ)</string>
     <string name="card_browser_no_cards_in_deck">ᱰᱮᱠ ᱨᱮ ᱪᱚᱫ ᱠᱟᱰ ᱠᱚ ᱵᱟᱹᱱᱩᱜᱼᱟ ‘%s’</string>
     <string name="card_browser_search_all_decks">ᱠᱷᱚᱛᱚ ᱰᱮᱠ ᱠᱚ ᱥᱮᱸᱫᱽᱨᱟᱭ ᱢᱮ</string>
     <string name="card_browser_unknown_deck_name">ᱵᱟᱝ ᱵᱟᱰᱟᱭᱟᱜ</string>

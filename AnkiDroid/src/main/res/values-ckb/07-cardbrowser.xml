@@ -91,9 +91,6 @@
     </string-array>
     <string name="card_browser_select_all" maxLength="28">گشت دیاریبکە</string>
     <string name="card_browser_select_none" maxLength="28">هیچ دیاریمەکە</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(نوێ)</string>
-    <string name="card_browser_due_filtered_card">(پاڵێوراو)</string>
-    <string name="card_browser_interval_learning_card">(لە باری فێربوون)</string>
     <string name="card_browser_no_cards_in_deck">هیچ کارتێک نەدۆزرایەوە لە دەستەی \'%s\'</string>
     <string name="card_browser_search_all_decks">لە گشت دەستەکاندا بگەڕێ</string>
     <string name="card_browser_unknown_deck_name">نەزانراو</string>

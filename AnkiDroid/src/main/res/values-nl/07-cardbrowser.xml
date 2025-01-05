@@ -91,9 +91,6 @@
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Alles selecteren</string>
     <string name="card_browser_select_none" maxLength="28">Niets selecteren</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nieuw)</string>
-    <string name="card_browser_due_filtered_card">(gefilterd)</string>
-    <string name="card_browser_interval_learning_card">(leren)</string>
     <string name="card_browser_no_cards_in_deck">Geen kaarten gevonden in leerset ‘%s</string>
     <string name="card_browser_search_all_decks">Alle leersets doorzoeken</string>
     <string name="card_browser_unknown_deck_name">Onbekend</string>

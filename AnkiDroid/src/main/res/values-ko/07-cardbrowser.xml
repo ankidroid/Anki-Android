@@ -88,9 +88,6 @@
     </string-array>
     <string name="card_browser_select_all" maxLength="28">모두 선택</string>
     <string name="card_browser_select_none" maxLength="28">모두 선택 안함</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(새 카드)</string>
-    <string name="card_browser_due_filtered_card">(필터링됨)</string>
-    <string name="card_browser_interval_learning_card">(학습 중)</string>
     <string name="card_browser_no_cards_in_deck">덱 \'%s\'에 카드 없음</string>
     <string name="card_browser_search_all_decks">모든 덱 검색</string>
     <string name="card_browser_unknown_deck_name">알 수 없음</string>

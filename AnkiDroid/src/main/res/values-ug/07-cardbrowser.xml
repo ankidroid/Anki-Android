@@ -91,9 +91,6 @@
     </string-array>
     <string name="card_browser_select_all" maxLength="28">ھەممىنى تاللا</string>
     <string name="card_browser_select_none" maxLength="28">ھەممىنى تاللىما</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(يېڭى)</string>
-    <string name="card_browser_due_filtered_card">(سۈزۈلگەن)</string>
-    <string name="card_browser_interval_learning_card">(ئۆگىنىۋاتىدۇ)</string>
     <string name="card_browser_no_cards_in_deck">«%s» دەستىدە ھېچقانداق كارتا تېپىلمىدى</string>
     <string name="card_browser_search_all_decks">ھەممە دەستىنى ئىزدە</string>
     <string name="card_browser_unknown_deck_name">يوچۇن</string>

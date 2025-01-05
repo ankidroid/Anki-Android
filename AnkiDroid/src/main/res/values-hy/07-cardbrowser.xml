@@ -91,9 +91,6 @@
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Նշել բոլորը</string>
     <string name="card_browser_select_none" maxLength="28">Ոչինչ չնշել</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(նոր)</string>
-    <string name="card_browser_due_filtered_card">(զտված)</string>
-    <string name="card_browser_interval_learning_card">(սովորելու)</string>
     <string name="card_browser_no_cards_in_deck">%s-ում ոչ մի քարտ չի գտնվել</string>
     <string name="card_browser_search_all_decks">Որոնել բոլոր կապուկներում</string>
     <string name="card_browser_unknown_deck_name">Անհայտ</string>

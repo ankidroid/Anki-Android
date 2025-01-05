@@ -91,9 +91,6 @@
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Selecionar todos</string>
     <string name="card_browser_select_none" maxLength="28">Desselecionar todos</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(novo)</string>
-    <string name="card_browser_due_filtered_card">(filtrada)</string>
-    <string name="card_browser_interval_learning_card">(aprendizado)</string>
     <string name="card_browser_no_cards_in_deck">Nenhum card encontrado no deck ‘%s\'</string>
     <string name="card_browser_search_all_decks">Pesquisar em todos os baralhos</string>
     <string name="card_browser_unknown_deck_name">Desconhecido</string>

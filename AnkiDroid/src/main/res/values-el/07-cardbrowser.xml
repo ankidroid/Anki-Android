@@ -91,9 +91,6 @@
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Επιλογή όλων</string>
     <string name="card_browser_select_none" maxLength="28">Επιλογή κανενός</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(νέο)</string>
-    <string name="card_browser_due_filtered_card">(φιλτραρισμένο)</string>
-    <string name="card_browser_interval_learning_card">(εκμάθηση)</string>
     <string name="card_browser_no_cards_in_deck">Δεν βρέθηκαν κάρτες στην τράπουλα ‘%s’</string>
     <string name="card_browser_search_all_decks">Αναζήτηση όλων των τραπουλών</string>
     <string name="card_browser_unknown_deck_name">Άγνωστο</string>
