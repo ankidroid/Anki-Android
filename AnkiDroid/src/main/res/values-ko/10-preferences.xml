@@ -204,11 +204,11 @@
     <string name="exit_via_double_tap_back" maxLength="41">뒤로가기 버튼 두번 눌러 돌아가기/나가기</string>
     <string name="exit_via_double_tap_back_summ">실수로 인한 학습 종료와 앱 종료 방지</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
-    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <string name="media_import_allow_all_files" maxLength="41">미디어 파일 허용</string>
+    <string name="media_import_allow_all_files_summ">만약 안드로이드가 미디어파일을 인식하지 못한다면</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">자체 동기화 서버</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">사용되지 않음</string>
     <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
         you may use your own server for synchronization.
         If not set, the default AnkiWeb server will be used instead.
@@ -217,13 +217,13 @@
     <string name="custom_sync_server_base_url_title" maxLength="41">동기화 URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">Custom root certificate (PEM)</string>
     <!-- Key Bindings -->
-    <string name="keyboard">Keyboard</string>
-    <string name="bluetooth">Bluetooth</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41">Card</string>
-    <string name="note" maxLength="41">Note</string>
-    <string name="navigation" maxLength="41">Navigation</string>
-    <string name="media" maxLength="41">Media</string>
+    <string name="keyboard">키보드</string>
+    <string name="bluetooth">블루투스</string>
+    <string name="answer_buttons" maxLength="41">정답 버튼</string>
+    <string name="card" maxLength="41">카드</string>
+    <string name="note" maxLength="41">노트</string>
+    <string name="navigation" maxLength="41">탐색</string>
+    <string name="media" maxLength="41">미디어</string>
     <string name="misc" maxLength="41">Misc</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">태그 선택</string>
@@ -236,7 +236,7 @@
     <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">일정을 다시</string>
     <string name="deck_conf_cram_reschedule_summ">이 카드묶음에서 내 대답에 근거에 재조정된 카드들</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
+    <string name="deck_conf_cram_filter_2_check">2번째 필터 적용</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">사용자 정의 단계 정의</string>
     <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
     <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
@@ -251,24 +251,24 @@
     <!-- About -->
     <string name="open_changelog">Open Changelog</string>
     <string name="pref_cat_about_title" maxLength="41">About</string>
-    <string name="contributors_title">Contributors</string>
+    <string name="contributors_title">기여자들</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
+    <string name="license">라이센스</string>
     <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
     <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
     <!-- Controls -->
-    <string name="binding_add_gesture">Add gesture</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
-    <string name="binding_add_key">Add key</string>
-    <string name="binding_replace_key">Replace key</string>
-    <string name="key_picker_default_press_key">Press a key</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
+    <string name="binding_add_gesture">제스쳐 추가</string>
+    <string name="binding_replace_gesture">제스쳐 대체</string>
+    <string name="binding_add_key">키 추가</string>
+    <string name="binding_replace_key">키 대체</string>
+    <string name="key_picker_default_press_key">키 누르기</string>
+    <string name="binding_add_axis">조이스틱/모션 컨트롤러 추가</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
-    <string name="user_actions" maxLength="41">User actions</string>
+    <string name="user_actions" maxLength="41">사용자 행동</string>
     <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="28">User action 1</string>
-    <string name="user_action_2" maxLength="28">User action 2</string>
-    <string name="user_action_3" maxLength="28">User action 3</string>
+    <string name="user_action_1" maxLength="28">사용자 행동 1</string>
+    <string name="user_action_2" maxLength="28">사용자 행동 2</string>
+    <string name="user_action_3" maxLength="28">사용자 행동 3</string>
     <string name="user_action_4" maxLength="28">사용자 액션 4</string>
     <string name="user_action_5" maxLength="28">사용자 액션 5</string>
     <string name="user_action_6" maxLength="28">사용자 액션 6</string>
@@ -290,9 +290,9 @@
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">실험적</string>
     <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Please upgrade to the new text to speech format</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">새로운 TTS 포맷을 위해 업데이트 해주세요.</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
+    <string name="pref_cat_dev_options" maxLength="41">개발자 옵션</string>
     <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
     <string name="disable_dev_options">Disable developer options</string>
     <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
@@ -318,7 +318,7 @@
          ####################################################################################### -->
     <string name="pref__manage_space__screen_title">Manage space</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Error</string>
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">에러</string>
     <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
         <item quantity="other">%1$d files\n%2$s</item>
