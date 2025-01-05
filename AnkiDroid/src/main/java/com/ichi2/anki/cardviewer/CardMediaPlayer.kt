@@ -128,6 +128,7 @@ class CardMediaPlayer : Closeable {
         }
 
     private var playSoundsJob: Job? = null
+    val isPlaying get() = playSoundsJob != null
 
     private var onSoundGroupCompleted: (() -> Unit)? = null
 
@@ -224,7 +225,7 @@ class CardMediaPlayer : Closeable {
     }
 
     suspend fun stopSounds() {
-        if (playSoundsJob != null) Timber.i("stopping sounds")
+        if (isPlaying) Timber.i("stopping sounds")
         cancelPlaySoundsJob(playSoundsJob)
         ReadText.stopTts() // TODO: Reconsider design
     }
