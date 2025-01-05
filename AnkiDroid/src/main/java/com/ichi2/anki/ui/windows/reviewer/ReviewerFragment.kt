@@ -249,6 +249,11 @@ class ReviewerFragment :
         }
     }
 
+    private fun resetZoom() {
+        webView.settings.loadWithOverviewMode = false
+        webView.settings.loadWithOverviewMode = true
+    }
+
     private fun setupAnswerButtons(view: View) {
         val hideAnswerButtons = sharedPrefs().getBoolean(getString(R.string.hide_answer_buttons_key), false)
         if (hideAnswerButtons) {
@@ -309,6 +314,7 @@ class ReviewerFragment :
                 showAnswerButton.isVisible = true
                 answerButtonsLayout.isVisible = false
             }
+            resetZoom()
         }
 
         if (sharedPrefs().getBoolean(getString(R.string.hide_hard_and_easy_key), false)) {
