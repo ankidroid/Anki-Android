@@ -76,6 +76,7 @@ import com.ichi2.anki.preferences.reviewer.ViewerAction.REDO
 import com.ichi2.anki.preferences.reviewer.ViewerAction.SUSPEND_CARD
 import com.ichi2.anki.preferences.reviewer.ViewerAction.SUSPEND_MENU
 import com.ichi2.anki.preferences.reviewer.ViewerAction.SUSPEND_NOTE
+import com.ichi2.anki.preferences.reviewer.ViewerAction.TOGGLE_AUTO_ADVANCE
 import com.ichi2.anki.preferences.reviewer.ViewerAction.UNDO
 import com.ichi2.anki.preferences.reviewer.ViewerAction.UNSET_FLAG
 import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_1
@@ -180,6 +181,7 @@ class ReviewerFragment :
             MARK -> viewModel.toggleMark()
             REDO -> viewModel.redo()
             UNDO -> viewModel.undo()
+            TOGGLE_AUTO_ADVANCE -> viewModel.toggleAutoAdvance()
             BURY_NOTE -> viewModel.buryNote()
             BURY_CARD -> viewModel.buryCard()
             SUSPEND_NOTE -> viewModel.suspendNote()

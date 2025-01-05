@@ -314,6 +314,28 @@ class ReviewerViewModel(
         autoAdvance.cancelQuestionAndAnswerActionJobs()
     }
 
+    fun toggleAutoAdvance() {
+        launchCatchingIO {
+            autoAdvance.isEnabled = !autoAdvance.isEnabled
+
+            val message =
+                if (autoAdvance.isEnabled) {
+                    CollectionManager.TR.actionsAutoAdvanceActivated()
+                } else {
+                    CollectionManager.TR.actionsAutoAdvanceDeactivated()
+                }
+            actionFeedbackFlow.emit(message)
+
+            if (autoAdvance.shouldWaitForAudio() && cardMediaPlayer.isPlaying) return@launchCatchingIO
+
+            if (showingAnswer.value) {
+                autoAdvance.onShowAnswer()
+            } else {
+                autoAdvance.onShowQuestion()
+            }
+        }
+    }
+
     /* *********************************************************************************************
      *************************************** Internal methods ***************************************
      ********************************************************************************************* */

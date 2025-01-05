@@ -36,6 +36,13 @@ import kotlinx.coroutines.delay
 class AutoAdvance(
     val viewModel: ReviewerViewModel,
 ) {
+    var isEnabled = false
+        set(value) {
+            field = value
+            if (!value) {
+                cancelQuestionAndAnswerActionJobs()
+            }
+        }
     private var questionActionJob: Job? = null
     private var answerActionJob: Job? = null
 
@@ -70,7 +77,7 @@ class AutoAdvance(
 
     suspend fun onShowQuestion() {
         answerActionJob?.cancel()
-        if (!durationToShowQuestionFor().isPositive()) return
+        if (!durationToShowQuestionFor().isPositive() || !isEnabled) return
 
         questionActionJob =
             viewModel.launchCatchingIO {
@@ -84,7 +91,7 @@ class AutoAdvance(
 
     suspend fun onShowAnswer() {
         questionActionJob?.cancel()
-        if (!durationToShowAnswerFor().isPositive()) return
+        if (!durationToShowAnswerFor().isPositive() || !isEnabled) return
 
         answerActionJob =
             viewModel.launchCatchingIO {
