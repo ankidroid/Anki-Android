@@ -105,10 +105,11 @@ class Note : Cloneable {
         customNoteType: NotetypeJson? = null,
         customTemplate: CardTemplate? = null,
         fillEmpty: Boolean = false,
+        deckId: DeckId = DEFAULT_DECK_ID,
     ): Card {
         val card = Card(col, id = null)
         card.ord = ord
-        card.did = DEFAULT_DECK_ID
+        card.did = deckId
 
         val model = customNoteType ?: notetype
         val template =
