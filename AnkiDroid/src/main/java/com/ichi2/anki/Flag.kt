@@ -37,13 +37,8 @@ enum class Flag(
      * Color for the background of cards with this flag in the card browser.
      */
     @ColorRes val browserColorRes: Int?,
-    /**
-     * Flag drawn to represents this flagInTheReviewer if it differs from [drawableRes].
-     * @TODO: Checks whether we can use colorControlNormal everywhere.
-     */
-    @DrawableRes val drawableReviewerRes: Int? = null,
 ) {
-    NONE(0, R.id.flag_none, R.drawable.ic_flag_lightgrey, null, R.drawable.ic_flag_transparent),
+    NONE(0, R.id.flag_none, R.drawable.ic_flag_transparent, null),
     RED(1, R.id.flag_red, R.drawable.ic_flag_red, R.color.flag_red),
     ORANGE(
         2,
@@ -67,11 +62,6 @@ enum class Flag(
         R.color.flag_purple,
     ),
     ;
-
-    /**
-     * Flag drawn to represents this flagInTheReviewer.
-     */
-    @DrawableRes fun drawableReviewerRes() = drawableReviewerRes ?: drawableRes
 
     /**
      * Retrieves the name associated with the flag. This may be user-defined

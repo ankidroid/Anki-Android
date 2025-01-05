@@ -38,6 +38,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.ThemeUtils
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -1016,9 +1017,14 @@ open class CardBrowser :
                 }
 
             for ((flag, displayName) in Flag.queryDisplayNames()) {
-                subMenu
-                    .add(groupId, flag.code, Menu.NONE, displayName)
-                    .setIcon(flag.drawableRes)
+                val item =
+                    subMenu
+                        .add(groupId, flag.code, Menu.NONE, displayName)
+                        .setIcon(flag.drawableRes)
+                if (flag == Flag.NONE) {
+                    val color = ThemeUtils.getThemeAttrColor(this@CardBrowser, android.R.attr.colorControlNormal)
+                    item.icon?.mutate()?.setTint(color)
+                }
             }
         }
     }
