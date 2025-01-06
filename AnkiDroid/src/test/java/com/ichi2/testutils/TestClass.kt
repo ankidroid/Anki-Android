@@ -76,7 +76,7 @@ interface TestClass {
         @Suppress("SameParameterValue") back: String,
     ): Note = addNoteUsingNoteTypeName("Basic (type in the answer)", front, back)
 
-    fun addCloseNote(
+    fun addClozeNote(
         text: String,
         extra: String = "Extra",
     ): Note =
