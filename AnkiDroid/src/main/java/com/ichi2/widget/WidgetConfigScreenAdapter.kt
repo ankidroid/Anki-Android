@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
+import com.ichi2.anki.utils.ext.findViewById
 import com.ichi2.libanki.DeckId
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -49,8 +50,8 @@ class WidgetConfigScreenAdapter(
     class DeckViewHolder(
         itemView: View,
     ) : RecyclerView.ViewHolder(itemView) {
-        val deckNameTextView: TextView = itemView.findViewById(R.id.deck_name)
-        val removeButton: ImageButton = itemView.findViewById(R.id.action_button_remove_deck)
+        val deckNameTextView: TextView = findViewById(R.id.deck_name)
+        val removeButton: ImageButton = findViewById(R.id.action_button_remove_deck)
     }
 
     /** Creates and inflates the view for each item in the RecyclerView

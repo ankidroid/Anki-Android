@@ -24,6 +24,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.R
+import com.ichi2.anki.utils.ext.findViewById
 
 class ReviewerMenuSettingsAdapter(
     private val items: List<ReviewerMenuSettingsRecyclerItem>,
@@ -72,10 +73,10 @@ class ReviewerMenuSettingsAdapter(
         itemView: View,
     ) : RecyclerView.ViewHolder(itemView) {
         fun bind(action: ViewerAction) {
-            action.titleRes.let { itemView.findViewById<TextView>(R.id.title).setText(it) }
-            action.drawableRes?.let { itemView.findViewById<AppCompatImageView>(R.id.icon).setBackgroundResource(it) }
+            action.titleRes.let { findViewById<TextView>(R.id.title).setText(it) }
+            action.drawableRes?.let { findViewById<AppCompatImageView>(R.id.icon).setBackgroundResource(it) }
 
-            itemView.findViewById<AppCompatImageView>(R.id.drag_handle).setOnTouchListener { _, event ->
+            findViewById<AppCompatImageView>(R.id.drag_handle).setOnTouchListener { _, event ->
                 if (event.action == MotionEvent.ACTION_DOWN) {
                     onDragHandleTouchedListener?.invoke(this)
                 }
@@ -89,7 +90,7 @@ class ReviewerMenuSettingsAdapter(
         itemView: View,
     ) : RecyclerView.ViewHolder(itemView) {
         fun bind(displayCategory: MenuDisplayType) {
-            itemView.findViewById<MaterialTextView>(R.id.title).setText(displayCategory.title)
+            findViewById<MaterialTextView>(R.id.title).setText(displayCategory.title)
         }
     }
 }

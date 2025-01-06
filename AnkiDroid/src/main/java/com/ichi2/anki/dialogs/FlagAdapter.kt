@@ -32,6 +32,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
+import com.ichi2.anki.utils.ext.findViewById
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -46,15 +47,15 @@ class FlagAdapter(
     inner class FlagViewHolder(
         itemView: View,
     ) : RecyclerView.ViewHolder(itemView) {
-        val flagImageView: ImageView = itemView.findViewById(R.id.ic_flag)
-        val flagNameText: TextView = itemView.findViewById(R.id.flag_name)
-        val flagNameEdit: TextInputEditText = itemView.findViewById(R.id.flag_name_edit_text)
-        val editButton: MaterialButton = itemView.findViewById(R.id.action_edit_flag)
-        val saveButton: MaterialButton = itemView.findViewById(R.id.action_save_flag_name)
-        val cancelButton: MaterialButton = itemView.findViewById(R.id.action_cancel_flag_rename)
+        val flagImageView: ImageView = findViewById(R.id.ic_flag)
+        val flagNameText: TextView = findViewById(R.id.flag_name)
+        val flagNameEdit: TextInputEditText = findViewById(R.id.flag_name_edit_text)
+        val editButton: MaterialButton = findViewById(R.id.action_edit_flag)
+        val saveButton: MaterialButton = findViewById(R.id.action_save_flag_name)
+        val cancelButton: MaterialButton = findViewById(R.id.action_cancel_flag_rename)
 
-        val flagNameViewLayout: LinearLayout = itemView.findViewById(R.id.flag_name_view_layout)
-        val flagNameEditLayout: LinearLayout = itemView.findViewById(R.id.edit_flag_name_layout)
+        val flagNameViewLayout: LinearLayout = findViewById(R.id.flag_name_view_layout)
+        val flagNameEditLayout: LinearLayout = findViewById(R.id.edit_flag_name_layout)
     }
 
     override fun onCreateViewHolder(

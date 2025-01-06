@@ -38,6 +38,7 @@ import com.ichi2.anki.AnkiDroidApp.Companion.sharedPrefs
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.utils.android.darkenColor
+import com.ichi2.anki.utils.ext.findViewById
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
 import kotlin.math.abs
@@ -69,9 +70,9 @@ class BrowserMultiColumnAdapter(
         holder: View,
     ) : RecyclerView.ViewHolder(holder) {
         var id: CardOrNoteId? = null
-        private val checkBoxView = this.itemView.findViewById<CheckBox>(R.id.card_checkbox)
-        private val firstColumnView = this.itemView.findViewById<TextView>(R.id.card_sfld)
-        private val secondColumnView = this.itemView.findViewById<TextView>(R.id.card_column2)
+        private val checkBoxView = findViewById<CheckBox>(R.id.card_checkbox)
+        private val firstColumnView = findViewById<TextView>(R.id.card_sfld)
+        private val secondColumnView = findViewById<TextView>(R.id.card_column2)
 
         init {
             this.itemView.setOnClickListener {
