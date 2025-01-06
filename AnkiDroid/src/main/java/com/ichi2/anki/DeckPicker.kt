@@ -107,6 +107,7 @@ import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.DeckDeletionResult
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
+import com.ichi2.anki.deckpicker.EmptyCardsResult
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
 import com.ichi2.anki.dialogs.ConfirmationDialog
@@ -642,7 +643,14 @@ open class DeckPicker :
             }
         }
 
+        fun onCardsEmptied(result: EmptyCardsResult) {
+            showSnackbar(result.toHumanReadableString(), Snackbar.LENGTH_SHORT) {
+                setAction(R.string.undo) { undo() }
+            }
+        }
+
         viewModel.deckDeletedNotification.launchCollectionInLifecycleScope(::onDeckDeleted)
+        viewModel.emptyCardsNotification.launchCollectionInLifecycleScope(::onCardsEmptied)
     }
 
     private val onReceiveContentListener =
@@ -2485,26 +2493,23 @@ open class DeckPicker :
 
     private fun handleEmptyCards() {
         launchCatchingTask {
-            val emptyCids =
+            val emptyCards =
                 withProgress(R.string.emtpy_cards_finding) {
-                    withCol {
-                        emptyCids()
-                    }
+                    viewModel.findEmptyCards()
                 }
             AlertDialog.Builder(this@DeckPicker).show {
                 setTitle(TR.emptyCardsWindowTitle())
-                if (emptyCids.isEmpty()) {
+                if (emptyCards.isEmpty()) {
                     setMessage(TR.emptyCardsNotFound())
                     setPositiveButton(R.string.dialog_ok) { _, _ -> }
                 } else {
-                    setMessage(getString(R.string.empty_cards_count, emptyCids.size))
+                    setMessage(getString(R.string.empty_cards_count, emptyCards.size))
                     setPositiveButton(R.string.dialog_positive_delete) { _, _ ->
                         launchCatchingTask {
                             withProgress(TR.emptyCardsDeleting()) {
-                                withCol { removeCardsAndOrphanedNotes(emptyCids) }
+                                viewModel.deleteEmptyCards(emptyCards).join()
                             }
                         }
-                        showSnackbar(getString(R.string.empty_cards_deleted, emptyCids.size))
                     }
                     setNegativeButton(R.string.dialog_cancel) { _, _ -> }
                 }
