@@ -32,7 +32,9 @@ import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
+import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.setFragmentResult
 import anki.scheduler.CustomStudyDefaultsResponse
 import anki.scheduler.customStudyRequest
 import com.ichi2.anki.CollectionManager.TR
@@ -111,18 +113,10 @@ import timber.log.Timber
  * * [https://github.com/ankitects/anki/blob/main/qt/aqt/customstudy.py](https://github.com/ankitects/anki/blob/main/qt/aqt/customstudy.py)
  */
 @KotlinCleanup("remove 'collection' parameter and use withCol { }")
-@KotlinCleanup("remove 'customStudyListener' parameter and use FragmentResult")
 class CustomStudyDialog(
     private val collection: Collection,
-    private val customStudyListener: CustomStudyListener?,
 ) : AnalyticsDialogFragment(),
     TagsDialogListener {
-    interface CustomStudyListener {
-        fun onCreateCustomStudySession()
-
-        fun onExtendStudyLimits()
-    }
-
     /** ID of the [Deck] which this dialog was created for */
     private val dialogDeckId: DeckId
         get() = requireArguments().getLong(ARG_DID)
@@ -200,7 +194,7 @@ class CustomStudyDialog(
             -> {
                 // User asked for a standard custom study option
                 val d =
-                    CustomStudyDialog(collection, customStudyListener)
+                    CustomStudyDialog(collection)
                         .withArguments(dialogDeckId, item)
                 requireActivity().showDialogFragment(d)
             }
@@ -328,12 +322,14 @@ class CustomStudyDialog(
             undoableOp {
                 collection.sched.customStudy(request)
             }
-            when (contextMenuOption) {
-                EXTEND_NEW, EXTEND_REV ->
-                    customStudyListener?.onExtendStudyLimits()
-                STUDY_FORGOT, STUDY_AHEAD, STUDY_PREVIEW -> customStudyListener?.onCreateCustomStudySession()
-                STUDY_TAGS -> TODO("This branch has not been covered before")
-            }
+            val action =
+                when (contextMenuOption) {
+                    EXTEND_NEW, EXTEND_REV -> CustomStudyAction.EXTEND_STUDY_LIMITS
+                    STUDY_FORGOT, STUDY_AHEAD, STUDY_PREVIEW -> CustomStudyAction.CUSTOM_STUDY_SESSION
+                    STUDY_TAGS -> TODO("This branch has not been covered before")
+                }
+
+            setFragmentResult(CustomStudyAction.REQUEST_KEY, bundleOf(CustomStudyAction.BUNDLE_KEY to action.ordinal))
         } finally {
             requireActivity().dismissAllDialogFragments()
         }
@@ -480,7 +476,33 @@ class CustomStudyDialog(
         Timber.d("rebuildDynamicDeck()")
         withProgress {
             withCol { sched.rebuildDyn(decks.selected()) }
-            customStudyListener?.onCreateCustomStudySession()
+            setFragmentResult(
+                CustomStudyAction.REQUEST_KEY,
+                bundleOf(
+                    CustomStudyAction.BUNDLE_KEY to CustomStudyAction.CUSTOM_STUDY_SESSION.ordinal,
+                ),
+            )
+        }
+    }
+
+    /**
+     * Represents actions for managing custom study sessions and extending study limits.
+     * These actions are passed between fragments and activities via the FragmentResult API.
+     */
+    enum class CustomStudyAction {
+        EXTEND_STUDY_LIMITS,
+        CUSTOM_STUDY_SESSION,
+        ;
+
+        companion object {
+            const val REQUEST_KEY = "CustomStudyDialog"
+            const val BUNDLE_KEY = "action"
+
+            /** Extracts a [CustomStudyAction] from a [Bundle] */
+            fun fromBundle(bundle: Bundle): CustomStudyAction =
+                bundle.getInt(CustomStudyAction.BUNDLE_KEY).let { actionOrdinal ->
+                    entries.first { it.ordinal == actionOrdinal }
+                }
         }
     }
 

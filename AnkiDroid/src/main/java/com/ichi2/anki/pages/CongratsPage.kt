@@ -21,6 +21,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.flowWithLifecycle
@@ -36,6 +37,7 @@ import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.R
 import com.ichi2.anki.StudyOptionsActivity
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.preferences.sharedPrefs
@@ -55,7 +57,6 @@ import kotlin.math.round
 
 class CongratsPage :
     PageFragment(),
-    CustomStudyDialog.CustomStudyListener,
     ChangeManager.Subscriber {
     private val viewModel by viewModels<CongratsViewModel>()
 
@@ -110,6 +111,14 @@ class CongratsPage :
                 true
             }
         }
+
+        setFragmentResultListener(CustomStudyAction.REQUEST_KEY) { requestKey, bundle ->
+            when (CustomStudyAction.fromBundle(bundle)) {
+                CustomStudyAction.CUSTOM_STUDY_SESSION,
+                CustomStudyAction.EXTEND_STUDY_LIMITS,
+                -> openStudyOptionsAndFinish()
+            }
+        }
     }
 
     override val bridgeCommands =
@@ -130,21 +139,10 @@ class CongratsPage :
     private fun onStudyMore() {
         val col = CollectionManager.getColUnsafe()
         val dialogFragment =
-            CustomStudyDialog(CollectionManager.getColUnsafe(), this).withArguments(
+            CustomStudyDialog(CollectionManager.getColUnsafe()).withArguments(
                 col.decks.selected(),
             )
         dialogFragment.show(childFragmentManager, null)
-    }
-
-    /******************************** CustomStudyListener methods ********************************/
-    override fun onExtendStudyLimits() {
-        Timber.v("CustomStudyListener::onExtendStudyLimits()")
-        openStudyOptionsAndFinish()
-    }
-
-    override fun onCreateCustomStudySession() {
-        Timber.v("CustomStudyListener::onCreateCustomStudySession()")
-        openStudyOptionsAndFinish()
     }
 
     companion object {

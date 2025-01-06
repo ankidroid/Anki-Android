@@ -25,7 +25,7 @@ import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.ui.RtlCompliantActionProvider
@@ -36,7 +36,6 @@ import kotlinx.coroutines.launch
 class StudyOptionsActivity :
     AnkiActivity(),
     StudyOptionsListener,
-    CustomStudyListener,
     ChangeManager.Subscriber {
     private var undoState = UndoState()
 
@@ -44,7 +43,7 @@ class StudyOptionsActivity :
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-        val customStudyDialogFactory = CustomStudyDialogFactory({ this.getColUnsafe }, this)
+        val customStudyDialogFactory = CustomStudyDialogFactory { this.getColUnsafe }
         customStudyDialogFactory.attachToActivity<ExtendedFragmentFactory>(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.studyoptions)
@@ -53,6 +52,15 @@ class StudyOptionsActivity :
             loadStudyOptionsFragment()
         }
         setResult(RESULT_OK)
+
+        supportFragmentManager.setFragmentResultListener(CustomStudyAction.REQUEST_KEY, this) { requestKey, bundle ->
+            when (CustomStudyAction.fromBundle(bundle)) {
+                CustomStudyAction.CUSTOM_STUDY_SESSION,
+                CustomStudyAction.EXTEND_STUDY_LIMITS,
+                ->
+                    currentFragment!!.refreshInterface()
+            }
+        }
     }
 
     private fun loadStudyOptionsFragment() {
@@ -115,19 +123,6 @@ class StudyOptionsActivity :
     }
 
     override fun onRequireDeckListUpdate() {
-        currentFragment!!.refreshInterface()
-    }
-
-    /**
-     * Callback methods from CustomStudyDialog
-     */
-    override fun onCreateCustomStudySession() {
-        // Sched already reset by CollectionTask in CustomStudyDialog
-        currentFragment!!.refreshInterface()
-    }
-
-    override fun onExtendStudyLimits() {
-        // Sched needs to be reset so provide true argument
         currentFragment!!.refreshInterface()
     }
 

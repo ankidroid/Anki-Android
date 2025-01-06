@@ -127,7 +127,7 @@ import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.dialogs.SyncErrorDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.SyncErrorDialog.SyncErrorDialogListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportDialogFragment
@@ -240,7 +240,6 @@ open class DeckPicker :
     ImportDialogListener,
     MediaCheckDialogListener,
     OnRequestPermissionsResultCallback,
-    CustomStudyListener,
     ChangeManager.Subscriber,
     SyncCompletionListener,
     ImportColpkgListener,
@@ -493,7 +492,7 @@ open class DeckPicker :
             return
         }
         exportingDelegate = ActivityExportingDelegate(this) { getColUnsafe }
-        customStudyDialogFactory = CustomStudyDialogFactory({ getColUnsafe }, this).attachToActivity(this)
+        customStudyDialogFactory = CustomStudyDialogFactory { getColUnsafe }.attachToActivity(this)
 
         // Then set theme and content view
         super.onCreate(savedInstanceState)
@@ -598,6 +597,21 @@ open class DeckPicker :
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
 
         checkWebviewVersion(this)
+
+        supportFragmentManager.setFragmentResultListener(CustomStudyAction.REQUEST_KEY, this) { requestKey, bundle ->
+            when (CustomStudyAction.fromBundle(bundle)) {
+                CustomStudyAction.CUSTOM_STUDY_SESSION -> {
+                    updateDeckList()
+                    openStudyOptions(false)
+                }
+                CustomStudyAction.EXTEND_STUDY_LIMITS -> {
+                    if (fragmented) {
+                        fragment!!.refreshInterface()
+                    }
+                    updateDeckList()
+                }
+            }
+        }
 
         supportFragmentManager.setFragmentResultListener(DeckPickerContextMenu.REQUEST_KEY_CONTEXT_MENU, this) { requestKey, arguments ->
             when (requestKey) {
@@ -2473,18 +2487,6 @@ open class DeckPicker :
     private fun openReviewer() {
         val intent = Reviewer.getIntent(this)
         reviewLauncher.launch(intent)
-    }
-
-    override fun onCreateCustomStudySession() {
-        updateDeckList()
-        openStudyOptions(false)
-    }
-
-    override fun onExtendStudyLimits() {
-        if (fragmented) {
-            fragment!!.refreshInterface()
-        }
-        updateDeckList()
     }
 
     private fun handleEmptyCards() {
