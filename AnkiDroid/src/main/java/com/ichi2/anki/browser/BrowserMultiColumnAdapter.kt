@@ -121,9 +121,12 @@ class BrowserMultiColumnAdapter(
         fun setColor(
             @ColorInt color: Int,
         ) {
-            val pressedColor = darkenColor(color, 0.85f)
+            var pressedColor = darkenColor(color, 0.85f)
 
-            require(pressedColor != color)
+            if (pressedColor == color) {
+                pressedColor = darkenColor(color, 0.7f)
+            }
+
             val rippleDrawable =
                 RippleDrawable(
                     ColorStateList(
