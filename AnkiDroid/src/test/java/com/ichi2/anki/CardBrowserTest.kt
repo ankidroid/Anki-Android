@@ -19,14 +19,11 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.View
 import android.widget.Spinner
-import androidx.annotation.IdRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.search.BrowserRow
 import anki.search.BrowserRow.Color
@@ -53,6 +50,7 @@ import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeBrowserColumns.Companion.LEGACY_COLUMN1_KEYS
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeBrowserColumns.Companion.LEGACY_COLUMN2_KEYS
+import com.ichi2.anki.utils.ext.findViewById
 import com.ichi2.anki.utils.ext.getCurrentDialogFragment
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.libanki.BrowserConfig
@@ -1274,10 +1272,6 @@ fun CardBrowser.getVisibleRows() =
     }.toList().also {
         assertThat("has visible rows", it.any())
     }
-
-fun <T : View> RecyclerView.ViewHolder.findViewById(
-    @IdRes id: Int,
-): T = this.itemView.findViewById(id)
 
 val CardBrowser.isShowingSelectAll: Boolean
     get() {
