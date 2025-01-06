@@ -204,7 +204,7 @@
     <string name="keyboard">Keyboard</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41">Card</string>
+    <string name="card" maxLength="41" comment="Generic term to refer to a card">Card</string>
     <string name="note" maxLength="41">Note</string>
     <string name="navigation" maxLength="41">Navigation</string>
     <string name="media" maxLength="41">Media</string>
@@ -440,6 +440,11 @@ this formatter is used if the bind only applies to both the question and the ans
     <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
     <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
     <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
+    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the 'Card' card frame of the Reviewer"
+        >Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the 'Box' card frame of the Reviewer"
+        >Box</string>
 
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>

@@ -31,4 +31,12 @@
     <Preference
         android:title="Menu actions"
         android:key="@string/reviewer_menu_settings_key" />
+
+    <ListPreference
+        android:defaultValue="@string/reviewer_frame_style_card_value"
+        android:entries="@array/reviewer_frame_style_entries"
+        android:entryValues="@array/reviewer_frame_style_values"
+        android:key="@string/reviewer_frame_style_key"
+        android:title="@string/reviewer_frame_style"
+        app:useSimpleSummaryProvider="true"/>
 </androidx.preference.PreferenceScreen>

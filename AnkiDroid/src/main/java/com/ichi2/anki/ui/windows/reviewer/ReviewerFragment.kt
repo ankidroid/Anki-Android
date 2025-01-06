@@ -44,6 +44,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.shape.ShapeAppearanceModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
@@ -98,6 +99,7 @@ import com.ichi2.anki.utils.ext.menu
 import com.ichi2.anki.utils.ext.removeSubMenu
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.window
+import com.ichi2.anki.utils.setMargins
 import com.ichi2.libanki.sched.Counts
 import kotlinx.coroutines.launch
 
@@ -140,6 +142,7 @@ class ReviewerFragment :
         }
 
         setupImmersiveMode(view)
+        setupFrame(view)
         setupTypeAnswer(view)
         setupAnswerButtons(view)
         setupCounts(view)
@@ -458,6 +461,18 @@ class ReviewerFragment :
                 bottom = bars.bottom,
             )
             WindowInsetsCompat.CONSUMED
+        }
+    }
+
+    private fun setupFrame(view: View) {
+        val frameStyleKey = getString(R.string.reviewer_frame_style_key)
+        val boxValue = getString(R.string.reviewer_frame_style_box_value)
+        if (sharedPrefs().getString(frameStyleKey, null) == boxValue) {
+            view.findViewById<MaterialCardView>(R.id.webview_container).apply {
+                setMargins(0)
+                cardElevation = 0F
+                shapeAppearanceModel = ShapeAppearanceModel() // Remove corners
+            }
         }
     }
 
