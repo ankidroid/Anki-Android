@@ -16,57 +16,142 @@
 
 package com.ichi2.libanki
 
-import com.ichi2.utils.deepClonedInto
+import com.ichi2.libanki.utils.getLongOrNull
+import com.ichi2.utils.JSONObjectHolder
+import org.json.JSONArray
 import org.json.JSONObject
+import org.json.JSONObject.NULL
 
-class Deck : JSONObject {
-    /**
-     * Creates a copy from [JSONObject] and use it as a string
-     *
-     * This function will perform deepCopy on the passed object
-     *
-     * If you want to create a Deck without deepCopy
-     * @see Deck.from
-     */
-    constructor(json: JSONObject) : super() {
-        json.deepClonedInto(this)
-    }
-
+@JvmInline
+value class Deck(
+    override val jsonObject: JSONObject,
+) : JSONObjectHolder {
     /**
      * Creates a deck object form a json string
      */
-    constructor(json: String) : super(json)
+    constructor(json: String) : this(JSONObject(json))
 
     val isFiltered: Boolean
-        get() = getInt("dyn") != 0
+        get() = jsonObject.getInt("dyn") != 0
 
     val isNormal: Boolean
         get() = !isFiltered
 
     var name: String
-        get() = getString("name")
+        get() = jsonObject.getString("name")
         set(value) {
-            put("name", value)
+            jsonObject.put("name", value)
+        }
+
+    var browserCollapsed: Boolean
+        get() = jsonObject.getBoolean("browserCollapsed")
+        set(value) {
+            jsonObject.put("browserCollapsed", value)
         }
 
     var collapsed: Boolean
-        get() = getBoolean("collapsed")
+        get() = jsonObject.getBoolean("collapsed")
         set(value) {
-            put("collapsed", value)
+            jsonObject.put("collapsed", value)
         }
 
     var id: DeckId
-        get() = getLong("id")
+        get() = jsonObject.getLong("id")
         set(value) {
-            put("id", value)
+            jsonObject.put("id", value)
         }
 
     var conf: Long
         get() {
-            val value = optLong("conf")
+            val value = jsonObject.optLong("conf")
             return if (value > 0) value else 1
         }
         set(value) {
-            put("conf", value)
+            jsonObject.put("conf", value)
         }
+
+    var desc: String
+        get() = jsonObject.optString("desc")
+        set(value) {
+            jsonObject.put("desc", value)
+        }
+
+    var mid: NoteTypeId?
+        get() = jsonObject.getLongOrNull("mid")
+        set(value) {
+            jsonObject.put("mid", value)
+        }
+
+    var resched: Boolean
+        get() = jsonObject.getBoolean("resched")
+        set(value) {
+            jsonObject.put("resched", value)
+        }
+
+    var previewAgainSecs: String
+        get() = jsonObject.getString("previewAgainSecs")
+        set(value) {
+            jsonObject.put("previewAgainSecs", value)
+        }
+    var previewHardSecs: String
+        get() = jsonObject.getString("previewHardSecs")
+        set(value) {
+            jsonObject.put("previewHardSecs", value)
+        }
+    var previewGoodSecs: String
+        get() = jsonObject.getString("previewGoodSecs")
+        set(value) {
+            jsonObject.put("previewGoodSecs", value)
+        }
+
+    var delays: JSONArray?
+        get() = jsonObject.optJSONArray("delays")
+        set(value) {
+            val value =
+                if (value == null) {
+                    NULL
+                } else {
+                    value
+                }
+            jsonObject.put("delays", value)
+        }
+
+    fun removeEmpty() {
+        jsonObject.remove("empty")
+    }
+
+    @JvmInline
+    value class Term(
+        val array: JSONArray,
+    ) {
+        var search: String
+            get() = array.getString(0)
+            set(value) {
+                array.put(0, value)
+            }
+        var limit: String
+            get() = array.getString(1)
+            set(value) {
+                array.put(1, value)
+            }
+        var order: Int
+            get() = array.getInt(2)
+            set(value) {
+                array.put(2, value)
+            }
+    }
+
+    val firstFilter: Term
+        get() = Term(terms.getJSONArray(0))
+
+    var secondFilter: Term?
+        get() = terms.optJSONArray(1)?.let { Term(it) }
+        set(value) {
+            terms.put(2, value?.array)
+        }
+
+    fun removeSecondFilter() = terms.remove(1)
+
+    val terms: JSONArray
+        get() = jsonObject.getJSONArray("terms")
 }

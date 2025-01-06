@@ -61,7 +61,6 @@ import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
-import com.ichi2.libanki.Consts.DynPriority
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.undoableOp
@@ -76,7 +75,6 @@ import com.ichi2.utils.setPaddingRelative
 import com.ichi2.utils.textAsIntOrNull
 import com.ichi2.utils.title
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
-import org.json.JSONObject
 import timber.log.Timber
 
 /**
@@ -443,10 +441,10 @@ class CustomStudyDialog(
             } else {
                 Timber.i("Emptying dynamic deck '%s' for custom study", customStudyDeck)
                 // safe to empty
-                collection.sched.emptyDyn(cur.getLong("id"))
+                collection.sched.emptyDyn(cur.id)
                 // reuse; don't delete as it may have children
                 dyn = cur
-                decks.select(cur.getLong("id"))
+                decks.select(cur.id)
             }
         } else {
             Timber.i("Creating Dynamic Deck '%s' for custom study", customStudyDeck)
@@ -459,13 +457,13 @@ class CustomStudyDialog(
                 }
         }
         // and then set various options
-        dyn.put("delays", JSONObject.NULL)
-        val ar = dyn.getJSONArray("terms")
-        ar.getJSONArray(0).put(0, """deck:"$deckToStudyName" terms[0]""")
-        ar.getJSONArray(0).put(1, terms[1])
-        @DynPriority val priority = terms[2] as Int
-        ar.getJSONArray(0).put(2, priority)
-        dyn.put("resched", true)
+        dyn.delays = null
+        dyn.firstFilter.apply {
+            search = """deck:"$deckToStudyName" terms[0]"""
+            limit = terms[1] as String
+            order = terms[2] as Int
+        }
+        dyn.resched = true
         // Rebuild the filtered deck
         Timber.i("Rebuilding Custom Study Deck")
         // PERF: Should be in background

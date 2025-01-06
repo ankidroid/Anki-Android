@@ -80,7 +80,13 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
     protected lateinit var col: Collection
         private set
     protected lateinit var pref: PreferenceHack
-    protected lateinit var deck: Deck
+
+    protected var _deck: Deck? = null
+    protected var deck: Deck
+        get() = _deck!!
+        set(value) {
+            _deck = value
+        }
 
     abstract inner class AbstractPreferenceHack : SharedPreferences {
         val values: MutableMap<String, String> = HashUtil.hashMapInit(30) // At most as many as in cacheValues
