@@ -124,17 +124,36 @@ class BrowserMultiColumnAdapter(
             val pressedColor = darkenColor(color, 0.85f)
 
             require(pressedColor != color)
-            val rippleDrawable =
-                RippleDrawable(
-                    ColorStateList(
-                        arrayOf(intArrayOf(android.R.attr.state_pressed)),
-                        intArrayOf(pressedColor),
-                    ),
-                    ColorDrawable(color),
-                    null,
-                )
 
-            itemView.background = rippleDrawable
+            if (pressedColor == color) {
+                // Fallback color in case the pressedColor is the same as the input color
+                val fallbackColor = if (color == context.getColor(R.color.black)) {
+                    context.getColor(R.color.white)
+                } else {
+                    context.getColor(R.color.black)
+                }
+                val rippleDrawable =
+                    RippleDrawable(
+                        ColorStateList(
+                            arrayOf(intArrayOf(android.R.attr.state_pressed)),
+                            intArrayOf(fallbackColor),
+                        ),
+                        ColorDrawable(color),
+                        null,
+                    )
+                itemView.background = rippleDrawable
+            } else {
+                val rippleDrawable =
+                    RippleDrawable(
+                        ColorStateList(
+                            arrayOf(intArrayOf(android.R.attr.state_pressed)),
+                            intArrayOf(pressedColor),
+                        ),
+                        ColorDrawable(color),
+                        null,
+                    )
+                itemView.background = rippleDrawable
+            }
         }
 
         fun setIsTruncated(truncated: Boolean) {
