@@ -40,6 +40,25 @@ fun darkenColor(
 }
 
 /**
+ * Lightens the provided ARGB color by a provided [amount]
+ *
+ * @param argb The ARGB color to transform
+ * @param amount Amount to lighten, between 0.0f (no change) and 1.0f (100% brightness)
+ * @return The lightened color in ARGB
+ */
+@ColorInt
+fun lightenColorAbsolute(
+    @ColorInt argb: Int,
+    amount: Float,
+): Int {
+    val hsv = argb.toHSV()
+    // https://en.wikipedia.org/wiki/HSL_and_HSV
+    // The third component is the 'value', or 'lightness/darkness'
+    hsv[2] = (hsv[2] + amount).clamp(0f, 1f)
+    return Color.HSVToColor(hsv)
+}
+
+/**
  * Converts an ARGB color to an array of its HSV components
  *
  * [0] is Hue: `[0..360[`

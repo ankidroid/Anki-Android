@@ -38,7 +38,9 @@ import com.ichi2.anki.AnkiDroidApp.Companion.sharedPrefs
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.utils.android.darkenColor
+import com.ichi2.anki.utils.android.lightenColorAbsolute
 import com.ichi2.anki.utils.ext.findViewById
+import com.ichi2.annotations.NeedsTest
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
 import kotlin.math.abs
@@ -119,10 +121,19 @@ class BrowserMultiColumnAdapter(
             checkBoxView.isChecked = value
         }
 
+        @NeedsTest("17731 - maybe check all activities load in dark mode, at least check this code")
         fun setColor(
             @ColorInt color: Int,
         ) {
-            val pressedColor = darkenColor(color, 0.85f)
+            var pressedColor = darkenColor(color, 0.85f)
+
+            if (pressedColor == color) {
+                // if the color is black, we can't darken it.
+                // A non-black background looks unusual, so the 'press' should lighten the color
+
+                // 25% was determined by visual inspection
+                pressedColor = lightenColorAbsolute(pressedColor, 0.25f)
+            }
 
             require(pressedColor != color)
             val rippleDrawable =
