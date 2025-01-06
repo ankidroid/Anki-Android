@@ -542,9 +542,11 @@ class Collection(
             Timber.d("removeNotes: %d changes", it.count)
         }
 
-    fun removeCardsAndOrphanedNotes(cardIds: Iterable<Long>) {
-        backend.removeCards(cardIds)
-    }
+    /**
+     * @return the number of deleted cards. **Note:** if an invalid/duplicate [CardId] is provided,
+     * the output count may be less than the input.
+     */
+    fun removeCardsAndOrphanedNotes(cardIds: Iterable<CardId>) = backend.removeCards(cardIds)
 
     fun addNote(
         note: Note,

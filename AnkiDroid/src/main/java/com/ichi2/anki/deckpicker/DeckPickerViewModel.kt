@@ -23,6 +23,7 @@ import anki.i18n.GeneratedTranslations
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
+import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.undoableOp
@@ -36,6 +37,7 @@ class DeckPickerViewModel : ViewModel() {
      * @see DeckDeletionResult
      */
     val deckDeletedNotification = MutableSharedFlow<DeckDeletionResult>()
+    val emptyCardsNotification = MutableSharedFlow<EmptyCardsResult>()
 
     /**
      * Keep track of which deck was last given focus in the deck list. If we find that this value
@@ -77,6 +79,19 @@ class DeckPickerViewModel : ViewModel() {
             val targetDeckId = withCol { decks.selected() }
             deleteDeck(targetDeckId).join()
         }
+
+    /** Returns a list of cards to be passed to [deleteEmptyCards] (after user confirmation) */
+    suspend fun findEmptyCards() = EmptyCards(withCol { emptyCids() })
+
+    /**
+     * Removes the provided list of cards from the collection.
+     * @param emptyCards Cards to be deleted, result of [findEmptyCards]
+     */
+    fun deleteEmptyCards(emptyCards: EmptyCards) =
+        viewModelScope.launch {
+            val result = undoableOp { removeCardsAndOrphanedNotes(emptyCards) }
+            emptyCardsNotification.emit(EmptyCardsResult(cardsDeleted = result.count))
+        }
 }
 
 /** Result of [DeckPickerViewModel.deleteDeck] */
@@ -94,4 +109,22 @@ data class DeckDeletionResult(
             count = cardsDeleted,
             deckName = deckName,
         )
+}
+
+/**
+ * Result of [DeckPickerViewModel.findEmptyCards], used in [DeckPickerViewModel.deleteEmptyCards]
+ */
+@JvmInline
+value class EmptyCards(
+    val cards: List<CardId>,
+) : List<CardId> by cards
+
+/** Result of [DeckPickerViewModel.deleteEmptyCards] */
+data class EmptyCardsResult(
+    val cardsDeleted: Int,
+) {
+    /**
+     * @see GeneratedTranslations.emptyCardsDeletedCount */
+    @CheckResult
+    fun toHumanReadableString() = TR.emptyCardsDeletedCount(cardsDeleted)
 }
