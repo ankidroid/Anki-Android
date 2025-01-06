@@ -33,7 +33,6 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.Companion.toDomainModel
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.annotations.NeedsTest
@@ -41,7 +40,6 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.testutils.AnkiFragmentScenario
-import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.isJsonEqual
 import io.mockk.every
 import io.mockk.mockk
@@ -50,29 +48,14 @@ import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.intellij.lang.annotations.Language
 import org.json.JSONObject
-import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
 import org.mockito.kotlin.mock
 import org.robolectric.annotation.Config
 import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class CustomStudyDialogTest : RobolectricTest() {
-    private var mockListener: CustomStudyListener? = null
-
-    override fun setUp() {
-        super.setUp()
-        mockListener = Mockito.mock(CustomStudyListener::class.java)
-    }
-
-    @After
-    override fun tearDown() {
-        super.tearDown()
-        Mockito.reset(mockListener)
-    }
-
     @Test
     fun `new custom study decks have expected structure - issue 6289`() =
         runTest {
@@ -244,16 +227,16 @@ class CustomStudyDialogTest : RobolectricTest() {
                 }
         }
 
-    private fun dialogFactory(col: Collection? = null) = CustomStudyDialogFactory({ col ?: this.col }, mockListener)
+    private fun dialogFactory(col: Collection? = null) = CustomStudyDialogFactory { col ?: this.col }
 
     private fun argumentsDisplayingMainScreen() =
-        CustomStudyDialog(mock(), ParametersUtils.whatever())
+        CustomStudyDialog(mock())
             .displayingMainScreen()
             .requireArguments()
 
     @Suppress("SameParameterValue")
     private fun argumentsDisplayingSubscreen(subscreen: ContextMenuOption) =
-        CustomStudyDialog(mock(), ParametersUtils.whatever())
+        CustomStudyDialog(mock())
             .displayingSubscreen(subscreen)
             .requireArguments()
 
