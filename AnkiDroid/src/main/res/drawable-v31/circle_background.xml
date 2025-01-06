@@ -3,17 +3,3 @@
     android:shape="oval">
     <solid android:color="@android:color/system_accent1_600" />
 </shape>
-
-    <!--<padding android:left="7dp"-->
-    <!--android:top="7dp"-->
-    <!--android:right="7dp"-->
-    <!--android:bottom="7dp" />-->
-
-
-
-<!--<stroke android:color="@android:color/system_accent1_1000" android:width="1dp"/>-->
-
-<!--<gradient-->
-<!--android:angle="315"-->
-<!--android:endColor="@android:color/system_neutral1_900"-->
-<!--android:startColor="@android:color/system_neutral1_600" />-->
