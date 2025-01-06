@@ -79,7 +79,8 @@
             <WebView
                 android:id="@+id/webview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                tools:backgroundTint="@color/white"/>
 
         </com.google.android.material.card.MaterialCardView>
 

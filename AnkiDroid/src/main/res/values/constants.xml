@@ -241,6 +241,20 @@
         <item>@string/hide_system_bars_all_value</item>
     </string-array>
 
+    <string-array name="reviewer_frame_style_entries">
+        <item>@string/reviewer_frame_style_card</item>
+        <item>@string/reviewer_frame_style_box</item>
+    </string-array>
+
+    <string name="reviewer_frame_style_card_value">0</string>
+    <string name="reviewer_frame_style_box_value">1</string>
+
+    <string-array name="reviewer_frame_style_values">
+        <item>@string/reviewer_frame_style_card_value</item>
+        <item>@string/reviewer_frame_style_box_value</item>
+    </string-array>
+
+
     <!-- Preferences headers summaries -->
     <string-array name="general_summary_entries">
         <item>@string/language</item>
