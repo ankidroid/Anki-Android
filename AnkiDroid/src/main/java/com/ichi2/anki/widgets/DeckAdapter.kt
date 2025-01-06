@@ -141,16 +141,24 @@ class DeckAdapter(
         filter: CharSequence?,
     ) {
         Timber.d("buildDeckList")
-        // TODO: This is a lazy hack to fix a bug. We hold the lock for far too long
-        // and do I/O inside it. Better to calculate the new lists outside the lock, then swap
+        // Calculate the new lists outside the lock
+        val newDeckTree = node
+        val newHasSubdecks = node.children.any { it.children.any() }
+        val newCurrentDeckId = withCol { decks.current().optLong("id") }
+        val newRev = node.revCount
+        val newLrn = node.lrnCount
+        val newNew = node.newCount
+        val newNumbersComputed = true
+
+        // Swap the lists inside the lock
         mutex.withLock {
-            deckTree = node
-            hasSubdecks = node.children.any { it.children.any() }
-            currentDeckId = withCol { decks.current().optLong("id") }
-            rev = node.revCount
-            lrn = node.lrnCount
-            new = node.newCount
-            numbersComputed = true
+            deckTree = newDeckTree
+            hasSubdecks = newHasSubdecks
+            currentDeckId = newCurrentDeckId
+            rev = newRev
+            lrn = newLrn
+            new = newNew
+            numbersComputed = newNumbersComputed
             // Filtering performs notifyDataSetChanged after the async work is complete
             getFilter()?.filter(filter)
         }
