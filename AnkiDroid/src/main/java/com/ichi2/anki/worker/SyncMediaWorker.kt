@@ -87,6 +87,7 @@ class SyncMediaWorker(
         }
 
         Timber.d("SyncMediaWorker: success")
+        notificationManager.cancel(NotificationId.SYNC_MEDIA) // Pd8a3
         return Result.success()
     }
 
@@ -96,6 +97,7 @@ class SyncMediaWorker(
             val status = backend.mediaSyncStatus()
             if (!status.active) {
                 Timber.i("Ended media sync notification updates")
+                notificationManager.cancel(NotificationId.SYNC_MEDIA) // Pef99
                 break
             }
             // avoid sending repeated notifications
