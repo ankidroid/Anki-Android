@@ -526,7 +526,7 @@ open class CardBrowser :
                 setSelection(COLUMN1_KEYS.indexOf(viewModel.column1))
                 onItemSelectedListener =
                     BasicItemSelectedListener { pos, _ ->
-                        viewModel.setColumn1(COLUMN1_KEYS[pos])
+                        viewModel.setColumn(0, COLUMN1_KEYS[pos])
                     }
             }
 
@@ -545,7 +545,7 @@ open class CardBrowser :
                 // Create a new list adapter with updated column map any time the user changes the column
                 onItemSelectedListener =
                     BasicItemSelectedListener { pos, _ ->
-                        viewModel.setColumn2(COLUMN2_KEYS[pos])
+                        viewModel.setColumn(1, COLUMN2_KEYS[pos])
                     }
             }
         }
