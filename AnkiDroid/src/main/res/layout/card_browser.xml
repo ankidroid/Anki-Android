@@ -39,8 +39,6 @@
             android:id="@+id/card_browser_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?android:attr/colorBackground"
-            android:divider="?attr/cardBrowserDivider"
             android:overScrollFooter="@color/transparent"
             android:dividerHeight="0.5dp"
             android:clipToPadding="false"

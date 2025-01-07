@@ -36,7 +36,7 @@
         <item name="goodButtonRippleRef">@drawable/footer_button_all_plain_ripple</item>
         <item name="easyButtonRippleRef">@drawable/footer_button_all_plain_ripple</item>
         <!-- Card Browser Colors -->
-        <item name="cardBrowserDivider">?attr/dividerHorizontal</item>
+        <item name="cardBrowserDivider">#CCCCCC</item>
         <!-- Note editor colors -->
         <item name="editTextBackgroundColor">#EBCCCCCC</item>
         <item name="toolbarBackgroundColor">#D6D7D7</item>

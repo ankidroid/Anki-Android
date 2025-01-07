@@ -39,8 +39,10 @@ import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.ThemeUtils
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import anki.collection.OpChanges
@@ -379,6 +381,11 @@ open class CardBrowser :
         // Load reference to action bar title
         actionBarTitle = findViewById(R.id.toolbar_title)
         cardsListView = findViewById(R.id.card_browser_list)
+        DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
+            setDrawable(ContextCompat.getDrawable(this@CardBrowser, R.drawable.browser_divider)!!)
+            cardsListView.addItemDecoration(this)
+        }
+
         // get the font and font size from the preferences
         // make a new list adapter mapping the data in mCards to column1 and column2 of R.layout.card_item_browser
         cardsAdapter =
