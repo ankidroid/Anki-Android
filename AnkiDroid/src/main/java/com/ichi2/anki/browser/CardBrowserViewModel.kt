@@ -138,12 +138,33 @@ class CardBrowserViewModel(
     private val reverseDirectionFlow = MutableStateFlow(ReverseDirection(orderAsc = false))
     val orderAsc get() = reverseDirectionFlow.value.orderAsc
 
+    val flowOfActiveColumns =
+        MutableStateFlow(
+            BrowserColumnCollection(
+                listOf(
+                    CardBrowserColumn.QUESTION,
+                    CardBrowserColumn.ANSWER,
+                ),
+            ),
+        )
+
     // TODO: Initial values are temporary - set in init { } as they depend on cardsOrNotes
     // consider a loading state
-    val flowOfColumn1 = MutableStateFlow(CardBrowserColumn.QUESTION)
-    val flowOfColumn2 = MutableStateFlow(CardBrowserColumn.ANSWER)
+    val flowOfColumn1 =
+        flowOfActiveColumns.map { it.columns[0] }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = flowOfActiveColumns.value.columns[0],
+        )
+    val flowOfColumn2 =
+        flowOfActiveColumns.map { it.columns[1] }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = flowOfActiveColumns.value.columns[1],
+        )
     val column1 get() = flowOfColumn1.value
     val column2 get() = flowOfColumn2.value
+    private val activeColumns get() = flowOfActiveColumns.value.columns
 
     /** Potential headings for the first column */
     lateinit var column1Candidates: List<BrowserColumns.Column>
@@ -336,9 +357,7 @@ class CardBrowserViewModel(
     private suspend fun setupColumns(cardsOrNotes: CardsOrNotes) {
         Timber.d("loading columns columns for %s mode", cardsOrNotes)
         val columns = BrowserColumnCollection.load(sharedPrefs(), cardsOrNotes)
-        flowOfColumn1.update { columns.columns[0] }
-        flowOfColumn2.update { columns.columns[1] }
-
+        flowOfActiveColumns.update { columns }
         withCol { backend.setActiveBrowserColumns(columns.backendKeys) }
     }
 
@@ -523,14 +542,21 @@ class CardBrowserViewModel(
         }
     }
 
-    fun setColumn1(value: CardBrowserColumn) {
-        Timber.d("updating column 1 to %s", value)
-        flowOfColumn1.update { value }
-    }
+    fun setColumn(
+        index: Int,
+        value: CardBrowserColumn,
+    ): Boolean {
+        if (activeColumns[index] == value) return false.also { Timber.d("setColumn: no changes") }
 
-    fun setColumn2(value: CardBrowserColumn) {
-        Timber.d("updating column 2 to %s", value)
-        flowOfColumn2.update { value }
+        Timber.d("updating column index %d to %s", index, value)
+        flowOfActiveColumns.update {
+            BrowserColumnCollection.update(sharedPrefs(), cardsOrNotes) { cols ->
+                cols[index] = value
+                true
+            }!!
+        }
+
+        return true
     }
 
     /**
