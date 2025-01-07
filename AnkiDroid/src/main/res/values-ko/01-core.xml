@@ -54,7 +54,7 @@
     <string name="send_feedback">의견 보내기</string>
     <string name="studyoptions_start">학습</string>
     <!-- DeckPicker.kt -->
-    <string name="expand">확장</string>
+    <string name="expand">확장하기</string>
     <string name="collapse">감추기</string>
     <plurals name="reviewer_window_title">
         <item quantity="other">%d분 남음</item>

@@ -74,7 +74,7 @@
     <string name="reset_languages" maxLength="41">언어 재설정</string>
     <string name="reset_languages_summ">모든 카드 묶음에 할당된 언어(사전과 TTS) 초기화</string>
     <string name="reset_languages_question">모든 언어 설정을 재설정할까요?</string>
-    <string name="reset_confirmation">모든 상태 재설정</string>
+    <string name="reset_confirmation">모든 상태 초기화</string>
     <string name="card_zoom" maxLength="41">카드 확대</string>
     <string name="image_zoom" maxLength="41">이미지 확대</string>
     <string name="button_size" maxLength="41">정답 버튼 크기</string>
@@ -102,7 +102,7 @@
     <string name="gestures_swipe_up" maxLength="41">위로 밀기</string>
     <string name="gestures_swipe_down" maxLength="41">아래로 밀기</string>
     <string name="gestures_swipe_left" maxLength="41">왼쪽 밀기</string>
-    <string name="gestures_swipe_right" maxLength="41">오른쪽 밀기</string>
+    <string name="gestures_swipe_right" maxLength="41">오른쪽으로 밀기</string>
     <string name="gestures_double_tap" maxLength="41">더블 탭</string>
     <string name="gestures_long_tap" maxLength="41">길게 누르기</string>
     <string name="gestures_tap_top" maxLength="41">상단 탭하기</string>
@@ -209,13 +209,12 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">자체 동기화 서버</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">사용되지 않음</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
-        ]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[AnkiWeb와 동기화하는 대신에
+자신의 서버와 동기화 할 수 있습니다.
+설정하지 않으면 기본 AnkiWeb 서버가 사용됩니다.
+<a href="%s">더 알아보기</a>]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">동기화 URL</string>
-    <string name="custom_sync_certificate_title" maxLength="41">Custom root certificate (PEM)</string>
+    <string name="custom_sync_certificate_title" maxLength="41">사용자 지정 루트 인증서</string>
     <!-- Key Bindings -->
     <string name="keyboard">키보드</string>
     <string name="bluetooth">블루투스</string>
@@ -234,17 +233,17 @@
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">검색</string>
     <string name="deck_conf_cram_limit" maxLength="41">한도</string>
     <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">일정을 다시</string>
-    <string name="deck_conf_cram_reschedule_summ">이 카드묶음에서 내 대답에 근거에 재조정된 카드들</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">일정변경</string>
+    <string name="deck_conf_cram_reschedule_summ">이 카드묶음에서 내 대답에 근거에 따라 재일정된 카드들</string>
     <string name="deck_conf_cram_filter_2_check">2번째 필터 적용</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">사용자 정의 단계 정의</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">미리보기 딜레이</string>
     <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid를 개선하는데 도움을 주세요!</string>
-    <string name="analytics_title" maxLength="41">Share feature usage</string>
-    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
-    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
+    <string name="analytics_title" maxLength="41">기능 사용 공유하기</string>
+    <string name="analytics_summ">개발팀이 사람들이 어떤 기능을 사용하는지 볼 수 있도록 도와주어 AnkiDroid에 기여할 수 있습니다.</string>
+    <string name="note_editor_replace_newlines" maxLength="41">HTML로 신규 라인 교체</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
