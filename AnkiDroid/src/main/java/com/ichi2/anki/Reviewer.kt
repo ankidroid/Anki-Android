@@ -399,7 +399,7 @@ open class Reviewer :
             return true
         }
 
-        Flag.entries.find { it.ordinal == item.itemId }?.let { flag ->
+        Flag.entries.find { it.id == item.itemId }?.let { flag ->
             Timber.i("Reviewer:: onOptionItemSelected Flag - ${flag.name} clicked")
             onFlag(currentCard, flag)
             return true
