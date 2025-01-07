@@ -79,7 +79,7 @@
         <item name="goodButtonRippleRef">@drawable/footer_button_ripple</item>
         <item name="easyButtonRippleRef">@drawable/footer_button_ripple</item>
         <!-- Card Browser Colors -->
-        <item name="cardBrowserDivider">?attr/dividerHorizontal</item>
+        <item name="cardBrowserDivider">#CCCCCC</item>
         <!-- Browser colors -->
         <item name="suspendedColor">#FFFFB2</item>
         <item name="buriedColor">#FFCE7C</item>
