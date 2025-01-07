@@ -221,7 +221,7 @@
     <string name="keyboard">కీబోర్డ్</string>
     <string name="bluetooth">బ్లూటూత్</string>
     <string name="answer_buttons" maxLength="41">జవాబు బటన్లు</string>
-    <string name="card" maxLength="41">కార్డ్</string>
+    <string name="card" maxLength="41" comment="Generic term to refer to a card">కార్డ్</string>
     <string name="note" maxLength="41">గమనిక</string>
     <string name="navigation" maxLength="41">నావిగేషన్</string>
     <string name="media" maxLength="41">Media</string>
@@ -364,6 +364,9 @@
     <string name="ignore_display_cutout" maxLength="41">డిస్‌ప్లే కటౌట్‌ను విస్మరించండి</string>
     <string name="hide_answer_buttons" maxLength="41">జవాబు బటన్లను దాచండి</string>
     <string name="hide_hard_and_easy" maxLength="41">\'హార్డ్\' మరియు \'ఈజీ\' బటన్లను దాచండి</string>
+    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">సెట్టింగ్‌లను తెరవండి</string>
 </resources>

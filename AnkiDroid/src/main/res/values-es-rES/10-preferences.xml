@@ -222,7 +222,7 @@
     <string name="keyboard">Teclado</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="answer_buttons" maxLength="41">Botones de respuesta</string>
-    <string name="card" maxLength="41">Tarjeta</string>
+    <string name="card" maxLength="41" comment="Generic term to refer to a card">Tarjeta</string>
     <string name="note" maxLength="41">Nota</string>
     <string name="navigation" maxLength="41">Navegación</string>
     <string name="media" maxLength="41">Multimedia</string>
@@ -366,6 +366,9 @@ Puedes restaurar una colección desde una copia de seguridad en el menú de la l
     <string name="ignore_display_cutout" maxLength="41">Ignorar el recorte de la pantalla</string>
     <string name="hide_answer_buttons" maxLength="41">Ocultar botones de respuesta</string>
     <string name="hide_hard_and_easy" maxLength="41">Ocultar los botones \"Difícil\" y \"Fácil\"</string>
+    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Abrir la configuración</string>
 </resources>

@@ -220,7 +220,7 @@
     <string name="keyboard">鍵盤</string>
     <string name="bluetooth">藍芽</string>
     <string name="answer_buttons" maxLength="41">回答按鈕</string>
-    <string name="card" maxLength="41">卡</string>
+    <string name="card" maxLength="41" comment="Generic term to refer to a card">卡</string>
     <string name="note" maxLength="41">筆記</string>
     <string name="navigation" maxLength="41">瀏覽</string>
     <string name="media" maxLength="41">媒體</string>
@@ -364,6 +364,9 @@
     <string name="ignore_display_cutout" maxLength="41">忽略熒幕缺口</string>
     <string name="hide_answer_buttons" maxLength="41">隱藏答案按鈕</string>
     <string name="hide_hard_and_easy" maxLength="41">隱藏\"難\"和\"簡單\"按鈕</string>
+    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
 </resources>

@@ -220,7 +220,7 @@
     <string name="keyboard">キーボード</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="answer_buttons" maxLength="41">解答表示ボタン・回答ボタン</string>
-    <string name="card" maxLength="41">カード</string>
+    <string name="card" maxLength="41" comment="Generic term to refer to a card">カード</string>
     <string name="note" maxLength="41">ノート</string>
     <string name="navigation" maxLength="41">画面移動</string>
     <string name="media" maxLength="41">音声・動画</string>
@@ -364,6 +364,9 @@
     <string name="ignore_display_cutout" maxLength="41">ノッチ（ディスプレイ上部のくぼみ）を無視</string>
     <string name="hide_answer_buttons" maxLength="41">解答ボタン・回答ボタンを隠す</string>
     <string name="hide_hard_and_easy" maxLength="41">「難しい」ボタンと「簡単」ボタンを隠す</string>
+    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">設定画面を開く</string>
 </resources>

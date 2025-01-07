@@ -223,7 +223,7 @@
     <string name="keyboard">ھەرپتاختا</string>
     <string name="bluetooth">كۆكچىش</string>
     <string name="answer_buttons" maxLength="41">جاۋاب توپچە</string>
-    <string name="card" maxLength="41">كارتا</string>
+    <string name="card" maxLength="41" comment="Generic term to refer to a card">كارتا</string>
     <string name="note" maxLength="41">خاتىرە</string>
     <string name="navigation" maxLength="41">يولباشچى</string>
     <string name="media" maxLength="41">ۋاسىتە</string>
@@ -368,6 +368,9 @@
     <string name="ignore_display_cutout" maxLength="41">كۆرسىتىش قايچىلاشقا پەرۋا قىلما</string>
     <string name="hide_answer_buttons" maxLength="41">جاۋاب توپچەنى يوشۇر</string>
     <string name="hide_hard_and_easy" maxLength="41">«تەس» ۋە «ئاسان» توپچەنى يوشۇر</string>
+    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">تەڭشەكنى ئاچ</string>
 </resources>
