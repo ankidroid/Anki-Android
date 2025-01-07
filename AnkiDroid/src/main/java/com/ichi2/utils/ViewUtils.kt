@@ -111,6 +111,9 @@ fun View.setPaddingRelative(
 val Int.dp
     get() = Dp(dp = this.toFloat())
 
+val Double.dp
+    get() = Dp(dp = this.toFloat())
+
 /**
  * Helper for 'display pixels' to 'pixels' conversions
  */

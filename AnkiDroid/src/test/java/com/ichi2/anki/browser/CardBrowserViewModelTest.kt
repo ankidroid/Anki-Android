@@ -340,18 +340,18 @@ class CardBrowserViewModelTest : JvmTest() {
     @Test
     fun `cards - changing column index 1`() =
         runViewModelTest {
-            flowOfColumn1.test {
+            flowOfActiveColumns.test {
                 ignoreEventsDuringViewModelInit()
 
                 assertThat("default column1 value", column1, equalTo(SFLD))
 
-                setColumn1(QUESTION)
+                setColumn(0, QUESTION)
 
-                assertThat("flowOfColumn1", awaitItem(), equalTo(QUESTION))
+                assertThat("flowOfColumn1", awaitItem().columns[0], equalTo(QUESTION))
                 assertThat("column1", column1, equalTo(QUESTION))
 
                 // expect no change if the value is selected again
-                setColumn1(QUESTION)
+                setColumn(0, QUESTION)
                 expectNoEvents()
             }
         }
@@ -359,18 +359,18 @@ class CardBrowserViewModelTest : JvmTest() {
     @Test
     fun `cards - changing column index 2`() =
         runViewModelTest {
-            flowOfColumn2.test {
+            flowOfActiveColumns.test {
                 ignoreEventsDuringViewModelInit()
 
                 assertThat("default column2Index value", column2, equalTo(CARD))
 
-                setColumn2(ANSWER)
+                setColumn(1, ANSWER)
 
-                assertThat("flowOfColumnIndex2", awaitItem(), equalTo(ANSWER))
+                assertThat("flowOfColumnIndex2", awaitItem().columns[1], equalTo(ANSWER))
                 assertThat("column2Index", column2, equalTo(ANSWER))
 
                 // expect no change if the value is selected again
-                setColumn2(ANSWER)
+                setColumn(1, ANSWER)
                 expectNoEvents()
             }
         }
@@ -378,18 +378,18 @@ class CardBrowserViewModelTest : JvmTest() {
     @Test
     fun `notes - changing column index 1`() =
         runViewModelNotesTest {
-            flowOfColumn1.test {
+            flowOfActiveColumns.test {
                 ignoreEventsDuringViewModelInit()
 
                 assertThat("default column1 value", column1, equalTo(SFLD))
 
-                setColumn1(QUESTION)
+                setColumn(0, QUESTION)
 
-                assertThat("flowOfColumn1", awaitItem(), equalTo(QUESTION))
+                assertThat("flowOfColumn1", awaitItem().columns[0], equalTo(QUESTION))
                 assertThat("column1", column1, equalTo(QUESTION))
 
                 // expect no change if the value is selected again
-                setColumn1(QUESTION)
+                setColumn(0, QUESTION)
                 expectNoEvents()
             }
         }
@@ -397,18 +397,18 @@ class CardBrowserViewModelTest : JvmTest() {
     @Test
     fun `notes - changing column index 2`() =
         runViewModelNotesTest {
-            flowOfColumn2.test {
+            flowOfActiveColumns.test {
                 ignoreEventsDuringViewModelInit()
 
                 assertThat("default column2Index value", column2, equalTo(NOTE_TYPE))
 
-                setColumn2(ANSWER)
+                setColumn(1, ANSWER)
 
-                assertThat("flowOfColumnIndex2", awaitItem(), equalTo(ANSWER))
+                assertThat("flowOfColumnIndex2", awaitItem().columns[1], equalTo(ANSWER))
                 assertThat("column2Index", column2, equalTo(ANSWER))
 
                 // expect no change if the value is selected again
-                setColumn2(ANSWER)
+                setColumn(1, ANSWER)
                 expectNoEvents()
             }
         }
