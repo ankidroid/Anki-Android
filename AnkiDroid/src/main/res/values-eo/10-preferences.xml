@@ -218,7 +218,7 @@
     <string name="keyboard">Klavaro</string>
     <string name="bluetooth">Bludento</string>
     <string name="answer_buttons" maxLength="41">Butonoj de respondo</string>
-    <string name="card" maxLength="41">Karto</string>
+    <string name="card" maxLength="41" comment="Generic term to refer to a card">Karto</string>
     <string name="note" maxLength="41">Noto</string>
     <string name="navigation" maxLength="41">Navigi</string>
     <string name="media" maxLength="41">Aŭdvidaĵo</string>
@@ -358,6 +358,9 @@ Vi povas restarigi el sekurkopio aŭ elporti vian kolekton per la menuo de listo
     <string name="ignore_display_cutout" maxLength="41">Ignori eltondaĵojn en la ekrano</string>
     <string name="hide_answer_buttons" maxLength="41">Kaŝi respondajn butonojn</string>
     <string name="hide_hard_and_easy" maxLength="41">Kaŝi butonojn “malfacile” kaj “facile”</string>
+    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Malfermi agordojn</string>
 </resources>

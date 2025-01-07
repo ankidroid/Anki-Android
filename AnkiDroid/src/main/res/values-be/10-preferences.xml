@@ -227,7 +227,7 @@
     <string name="keyboard">Клавіятура</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="answer_buttons" maxLength="41">Кнопкі адказу</string>
-    <string name="card" maxLength="41">Картка</string>
+    <string name="card" maxLength="41" comment="Generic term to refer to a card">Картка</string>
     <string name="note" maxLength="41">Нататка</string>
     <string name="navigation" maxLength="41">Навігацыя</string>
     <string name="media" maxLength="41">Медыя</string>
@@ -375,6 +375,9 @@
     <string name="ignore_display_cutout" maxLength="41">Ігнараваць выраз экрана</string>
     <string name="hide_answer_buttons" maxLength="41">Схаваць кнопкі адказу</string>
     <string name="hide_hard_and_easy" maxLength="41">Схаваць кнопкі ‘Цяжкі’ і ‘Лёгкі’</string>
+    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Адкрыць налады</string>
 </resources>

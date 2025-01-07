@@ -219,7 +219,7 @@
     <string name="keyboard">Bàn phím</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="answer_buttons" maxLength="41">Phím trả lời</string>
-    <string name="card" maxLength="41">Thẻ</string>
+    <string name="card" maxLength="41" comment="Generic term to refer to a card">Thẻ</string>
     <string name="note" maxLength="41">ghi chú</string>
     <string name="navigation" maxLength="41">Điều hướng</string>
     <string name="media" maxLength="41">Đa phương tiện</string>
@@ -363,6 +363,9 @@
     <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
     <string name="hide_answer_buttons" maxLength="41">Ẩn các nút trả lời</string>
     <string name="hide_hard_and_easy" maxLength="41">Ẩn các nút \"Khó\' và \'Dễ\'</string>
+    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Mở cài đặt</string>
 </resources>

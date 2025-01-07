@@ -222,7 +222,7 @@
     <string name="keyboard">Tecladu</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="answer_buttons" maxLength="41">Butones de risposta</string>
-    <string name="card" maxLength="41">Carta</string>
+    <string name="card" maxLength="41" comment="Generic term to refer to a card">Carta</string>
     <string name="note" maxLength="41">Nota</string>
     <string name="navigation" maxLength="41">Navigatzione</string>
     <string name="media" maxLength="41">Mèdios</string>
@@ -367,6 +367,9 @@
     <string name="ignore_display_cutout" maxLength="41">Ignora sa truncadura de s\'ischermu</string>
     <string name="hide_answer_buttons" maxLength="41">Cua su butone de sas rispostas</string>
     <string name="hide_hard_and_easy" maxLength="41">Cua sos butones ‘Difìtzile’ e ‘Fàtzile’</string>
+    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Aberi sas impostatziones</string>
 </resources>
