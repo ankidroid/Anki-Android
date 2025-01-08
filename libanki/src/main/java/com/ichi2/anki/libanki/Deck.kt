@@ -131,6 +131,19 @@ data class Deck(
         get() = Term(terms.getJSONArray(0))
 
     /**
+     * An optional second search filter. Setting this to null removes only that filter.
+     */
+    var secondFilter: Term?
+        get() = terms.optJSONArray(1)?.let { Term(it) }
+        set(value) {
+            if (value == null) {
+                terms.remove(1)
+            } else {
+                terms.put(1, value.array)
+            }
+        }
+
+    /**
      * The array of filters. Only for filtered decks.
      */
     private val terms by jsonArray("terms")
