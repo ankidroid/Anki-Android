@@ -54,6 +54,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.browser.BrowserColumnCollection
+import com.ichi2.anki.browser.BrowserColumnSelectionFragment
 import com.ichi2.anki.browser.BrowserMultiColumnAdapter
 import com.ichi2.anki.browser.BrowserRowCollection
 import com.ichi2.anki.browser.CardBrowserColumn
@@ -405,7 +406,15 @@ open class CardBrowser :
                 showFilteredDecks = true,
             )
 
-        this.browserColumnHeadings = findViewById<ViewGroup>(R.id.browser_column_headings)
+        this.browserColumnHeadings =
+            findViewById<ViewGroup>(R.id.browser_column_headings).apply {
+                setOnLongClickListener {
+                    Timber.d("long press on headings: opening column selection options")
+                    val dialog = BrowserColumnSelectionFragment()
+                    dialog.show(supportFragmentManager, null)
+                    true
+                }
+            }
 
         startLoadingCollection()
 
