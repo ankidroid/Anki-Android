@@ -6,6 +6,7 @@ package com.ichi2.anki.libanki
 import androidx.annotation.VisibleForTesting
 import anki.decks.Deck.Filtered.SearchTerm.Order
 import com.ichi2.anki.common.json.JSONObjectHolder
+import com.ichi2.anki.common.json.jsonArray
 import com.ichi2.anki.common.json.jsonBoolean
 import com.ichi2.anki.common.json.jsonLong
 import com.ichi2.anki.common.json.jsonString
@@ -13,6 +14,7 @@ import com.ichi2.anki.common.utils.ext.getLongOrNull
 import com.ichi2.anki.libanki.utils.NotInPyLib
 import net.ankiweb.rsdroid.Translations
 import org.intellij.lang.annotations.Language
+import org.json.JSONArray
 import org.json.JSONObject
 
 /** Wraps legacy deck JSON without copying it. Property changes update the supplied object. */
@@ -81,6 +83,57 @@ data class Deck(
         }
 
     var resched by jsonBoolean("resched")
+
+    /**
+     * The options configuring which cards are shown in a filtered deck.
+     * See https://docs.ankiweb.net/filtered-decks.html
+     */
+    @JvmInline
+    value class Term(
+        val array: JSONArray,
+    ) {
+        constructor(search: String, limit: Int, order: Int) : this(JSONArray(listOf(search, limit, order))) {}
+
+        /**
+         Only cards satisfying this search query are shown.
+         */
+        var search: String
+            get() = array.getString(0)
+            set(value) {
+                array.put(0, value)
+            }
+
+        /**
+         * At most this number of cards are shown.
+         */
+        var limit: Int
+            get() = array.getInt(1)
+            set(value) {
+                array.put(1, value)
+            }
+
+        /**
+         * The order in which cards are shown. See https://docs.ankiweb.net/filtered-decks.html#order.
+         */
+        var order: Int
+            get() = array.getInt(2)
+            set(value) {
+                array.put(2, value)
+            }
+
+        override fun toString(): String = array.toString()
+    }
+
+    /**
+     * The options deciding which cards are shown in a filtered deck.
+     */
+    val firstFilter: Term
+        get() = Term(terms.getJSONArray(0))
+
+    /**
+     * The array of filters. Only for filtered decks.
+     */
+    private val terms by jsonArray("terms")
 
     /**
      * The description, shown on the deck overview and optionally the congratulations screen.
