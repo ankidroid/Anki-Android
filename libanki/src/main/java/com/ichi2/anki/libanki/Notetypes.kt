@@ -751,11 +751,11 @@ class Notetypes(
  * This better approximates `JSON.get` in the Python
  */
 private fun Deck.getLongOrNull(key: String): Long? {
-    if (!has(key)) {
+    if (!jsonObject.has(key)) {
         return null
     }
     try {
-        return getLong(key)
+        return jsonObject.getLong(key)
     } catch (ex: Exception) {
         return null
     }

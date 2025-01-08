@@ -82,7 +82,7 @@ class Decks(
     fun save(g: Deck) {
         g.id =
             col.backend.addOrUpdateDeckLegacy(
-                BackendUtils.toByteString(g),
+                toJsonBytes(g),
                 preserveUsnAndMtime = false,
             )
     }
