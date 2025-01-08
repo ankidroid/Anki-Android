@@ -26,7 +26,8 @@
             android:id="@+id/select_browser_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp">
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="16dp">
 
             <RadioButton
                 android:id="@+id/select_cards_mode"
@@ -41,13 +42,6 @@
                 android:text="@string/show_notes" />
 
         </RadioGroup>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/toggle_browser_mode_help"
-            android:textColor="?android:attr/textColorSecondary"
-            android:layout_marginHorizontal="16dp" />
     </LinearLayout>
 
     <LinearLayout
