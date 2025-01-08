@@ -302,9 +302,8 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">ਕਾਰਡ</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ਨੋਟਸ</string>
     <string name="toggle_cards_notes">ਕਾਰਡ/ਨੋਟਸ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
-    <string name="toggle_browser_mode_help">ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਕਾਰਡ ਜਾਂ ਨੋਟ ਦਿਖਾਉਣ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
     <string name="truncate_content_help">ਸਮੱਗਰੀ ਦੀਆਂ ਸਿਰਫ਼ ਪਹਿਲੀਆਂ 3 ਲਾਈਨਾਂ ਦਿਖਾਉਣ ਲਈ ਬ੍ਰਾਊਜ਼ਰ ਦੀ ਹਰੇਕ ਕਤਾਰ ਦੀ ਉਚਾਈ ਨੂੰ ਛੋਟਾ ਕਰੋ</string>
-    <string name="browser_options_dialog_heading">ਬ੍ਰਾਊਜ਼ਰ ਵਿਕਲਪ</string>
+    <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">ਰਿਕਾਰਡਿੰਗ ਸੁਰੱਖਿਅਤ ਕੀਤੀ ਗਈ</string>
     <string name="deleting_selected_notes">ਚੁਣੇ ਗਏ ਨੋਟਸ ਮਿਟਾਓ</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">ਸੁਣਨ ਲਈ ਇੱਕ ਅਵਾਜ਼ \'ਤੇ ਟੈਪ ਕਰੋ</string>

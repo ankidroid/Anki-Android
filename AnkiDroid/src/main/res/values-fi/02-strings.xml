@@ -302,9 +302,8 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kortit</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Muistiinpanot</string>
     <string name="toggle_cards_notes">Näytä kortit/muistiinpanot</string>
-    <string name="toggle_browser_mode_help">Valitse, näytetäänkö selaimessa kortit vai muistiinpanot.</string>
     <string name="truncate_content_help">Katkaise selaimen jokaisen rivin korkeus niin, että näytetään vain 3 ensimmäistä riviä sisältöä.</string>
-    <string name="browser_options_dialog_heading">Selaimen asetukset</string>
+    <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">Äänitys tallennettu</string>
     <string name="deleting_selected_notes">Poistetaan valittuja muistiinpanoja</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Kuuntele napauttamalla ääntä</string>

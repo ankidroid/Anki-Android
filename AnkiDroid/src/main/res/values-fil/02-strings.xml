@@ -302,9 +302,8 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Mga Card</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Mga Tala</string>
     <string name="toggle_cards_notes">I-toggle ang mga card/tala</string>
-    <string name="toggle_browser_mode_help">I-toggle ang mga nagpapakitang card o tala sa browser</string>
     <string name="truncate_content_help">Paliitin ang height sa bawat hilera ng browser upang ipakita lamang ang unang 3 laman na linya.</string>
-    <string name="browser_options_dialog_heading">Mga Opsiyon ng Browser</string>
+    <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">Nai-save ang narekord</string>
     <string name="deleting_selected_notes">Binubura ang mga napiling tala</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Pumindot ng boses para pakinggan

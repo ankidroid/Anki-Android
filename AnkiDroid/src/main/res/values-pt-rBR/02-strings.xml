@@ -302,9 +302,8 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notas</string>
     <string name="toggle_cards_notes">Alternar Cards/Notas</string>
-    <string name="toggle_browser_mode_help">Alternar exibição de cartões ou notas no navegador</string>
     <string name="truncate_content_help">Truncar a altura de cada linha do navegador para mostrar apenas as 3 primeiras linhas de conteúdo</string>
-    <string name="browser_options_dialog_heading">Opções do Navegador</string>
+    <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">Gravação salva</string>
     <string name="deleting_selected_notes">Excluindo notas selecionadas</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Toque numa voz para ouvir

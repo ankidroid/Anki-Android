@@ -312,9 +312,8 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">כרטיסים</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">פתקים</string>
     <string name="toggle_cards_notes">החלף כרטיסים/פתקים</string>
-    <string name="toggle_browser_mode_help">החלף הצגת כרטיסים או פתקים בדפדפן</string>
     <string name="truncate_content_help">חתוך את הגובה של כל שורה בדפדפן כדי להציג רק 3 שורות תוכן ראשונות</string>
-    <string name="browser_options_dialog_heading">אפשרויות דפדפן</string>
+    <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">ההקלטה נשמרה</string>
     <string name="deleting_selected_notes">מחיקת הערות שנבחרו</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">הקש על קול כדי להאזין</string>

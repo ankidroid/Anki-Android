@@ -297,9 +297,8 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">卡片</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">筆記</string>
     <string name="toggle_cards_notes">切換卡片/筆記</string>
-    <string name="toggle_browser_mode_help">在瀏覽器中切換顯示卡片或筆記</string>
     <string name="truncate_content_help">截斷瀏覽器每行高度僅顯示內容前三行</string>
-    <string name="browser_options_dialog_heading">瀏覽器選項</string>
+    <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">錄音已儲存</string>
     <string name="deleting_selected_notes">刪除選取的筆記</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen

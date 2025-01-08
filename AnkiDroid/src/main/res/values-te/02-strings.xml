@@ -302,9 +302,8 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">కార్డులు</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">గమనికలు</string>
     <string name="toggle_cards_notes">కార్డ్‌లు/నోట్‌లను టోగుల్ చేయండి</string>
-    <string name="toggle_browser_mode_help">బ్రౌజర్‌లో కార్డ్‌లు లేదా గమనికలను చూపడాన్ని టోగుల్ చేయండి</string>
     <string name="truncate_content_help">కంటెంట్‌లోని మొదటి 3 లైన్‌లను మాత్రమే చూపడానికి బ్రౌజర్‌లో ప్రతి అడ్డు వరుస ఎత్తును కుదించండి</string>
-    <string name="browser_options_dialog_heading">బ్రౌజర్ ఎంపికలు</string>
+    <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">రికార్డింగ్ సేవ్ చేయబడింది</string>
     <string name="deleting_selected_notes">ఎంచుకున్న గమనికలను తొలగిస్తోంది</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">వినడానికి వాయిస్ నొక్కండి</string>

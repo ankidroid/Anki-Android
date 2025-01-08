@@ -302,9 +302,8 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">ბარათები</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">შენიშვნები</string>
     <string name="toggle_cards_notes">ბარათების/შენიშვნების ნახვა/დამალვა</string>
-    <string name="toggle_browser_mode_help">ბარათების ან შენიშვნების საძიებოში ჩვენების გადართვა</string>
     <string name="truncate_content_help">ბარათების საძიებოს თითო მწკრივის სიმაღლის ისე დამოკლება, რომ მხოლოდ შიგთავსის პირველი 3 სტრიქონი აჩვენოს</string>
-    <string name="browser_options_dialog_heading">ბარათების საძიებოს პარამეტრები</string>
+    <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">ჩანაწერი შენახულია</string>
     <string name="deleting_selected_notes">მონიშნული შენიშვნების წაშლა</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        მოსასმენად შეეხეთ ხმას
