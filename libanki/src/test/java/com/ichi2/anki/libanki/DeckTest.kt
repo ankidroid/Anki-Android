@@ -55,6 +55,25 @@ class DeckTest : InMemoryAnkiTest() {
     }
 
     @Test
+    fun `legacy filtered deck defaults and term changes persist`() {
+        val id = col.decks.newFiltered("Filtered")
+        val deck = col.decks.get(id)!!
+        assertEquals(1, deck.jsonObject.getJSONArray("terms").length())
+        assertEquals("", deck.firstFilter.search)
+        assertEquals(0, deck.firstFilter.order)
+        assertFalse(deck.browserCollapsed)
+        assertFalse(deck.collapsed)
+        deck.firstFilter.search = "is:new"
+        deck.firstFilter.limit = 7
+        deck.firstFilter.order = 2
+        col.decks.save(deck)
+        val saved = col.decks.get(id)!!
+        assertEquals("is:new", saved.firstFilter.search)
+        assertEquals(7, saved.firstFilter.limit)
+        assertEquals(2, saved.firstFilter.order)
+    }
+
+    @Test
     fun testFiltered() {
         // `dyn` can't be set by the front-end anymore.
         val d = Deck("""{"dyn" :1}""")
@@ -126,5 +145,41 @@ class DeckTest : InMemoryAnkiTest() {
         assertTrue(d.resched)
         d.resched = false
         assertTrue(!d.resched)
+    }
+
+    val search = "search"
+    val limit = 7
+    val order = 42
+    val t = Deck.Term(search, limit, order)
+
+    @Test
+    fun testSearch() {
+        val expectedSearch = "expectedSearch"
+        t.search = expectedSearch
+        assertEquals(expectedSearch, t.search)
+    }
+
+    @Test
+    fun testLimit() {
+        val expectedLimit = 10
+        t.limit = expectedLimit
+        assertEquals(expectedLimit, t.limit)
+    }
+
+    @Test
+    fun testOrder() {
+        val expectedOrder = 7
+        t.order = expectedOrder
+        assertEquals(expectedOrder, t.order)
+    }
+
+    @Test
+    fun testFirstFilter() {
+        // All decks are expected to have at least one term.
+        val d = Deck("""{"terms": [$t]}""")
+        val firstFilter = d.firstFilter
+        assertEquals(firstFilter.search, search)
+        assertEquals(firstFilter.limit, limit)
+        assertEquals(firstFilter.order, order)
     }
 }
