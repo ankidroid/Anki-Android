@@ -86,9 +86,11 @@ class BrowserMultiColumnAdapter(
                 field = value
                 // remove the past set of columns
                 mainView.removeChildren { it !is CheckBox }
+                columnViews.clear()
 
                 val layoutInflater = LayoutInflater.from(context)
 
+                // inflates and returns the inflated view
                 fun inflate(
                     @IdRes id: Int,
                 ) = layoutInflater.inflate(id, mainView, false).apply {
@@ -105,11 +107,11 @@ class BrowserMultiColumnAdapter(
                         inflate(R.layout.browser_column_divider)
                     }
                 }
+
+                columnViews.forEach { it.setupTextSize() }
             }
 
         init {
-            numberOfColumns = 2
-
             this.itemView.setOnClickListener {
                 id?.let { id ->
                     Timber.d("Tapped: %s", id)
@@ -129,8 +131,6 @@ class BrowserMultiColumnAdapter(
                     onTap(id)
                 }
             }
-
-            columnViews.forEach { it.setupTextSize() }
         }
 
         fun setInMultiSelect(inMultiSelect: Boolean) {
@@ -244,8 +244,11 @@ class BrowserMultiColumnAdapter(
                     input = row.getCells(columnIndex).text,
                     showMediaFilenames = viewModel.showMediaFilenames,
                 )
-            holder.columnViews[0].text = renderColumn(0)
-            holder.columnViews[1].text = renderColumn(1)
+            holder.numberOfColumns = row.cellsCount
+
+            for (i in 0 until row.cellsCount) {
+                holder.columnViews[i].text = renderColumn(i)
+            }
             holder.setIsSelected(isSelected)
             holder.setColor(backendColorToColor(row.color))
             holder.setIsDeleted(false)
