@@ -129,7 +129,7 @@
     <string name="empty_deck">Այս կապուկը դատարկ է</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Կապուկների որոնում</string>
     <string name="invalid_deck_name">Կապուկի անվավեր անվանում</string>
-    <string name="studyoptions_congrats_finished">Կեցցե՜ք։ Դուք առայժմ ավարտել եք:</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Առայժմ կապուկն ավարտվե՜լ է։ %s</string>
     <string name="studyoptions_no_cards_due">Կրկնելիք քարտեր դեռ չկան</string>
     <string name="sd_card_not_mounted">Սարքի պահեստը տեղադրված չէ</string>

@@ -141,7 +141,7 @@
     <string name="empty_deck">هذه الرزمة فارغة</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">بحث عن رزمة</string>
     <string name="invalid_deck_name">اسم رزمة غير صالح</string>
-    <string name="studyoptions_congrats_finished">مبارك! أكملت مهامك الحالية.</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">انتهت حصتك المحددة من الرزمة  %s</string>
     <string name="studyoptions_no_cards_due">لا توجد بطاقات مستحقة بعد</string>
     <string name="sd_card_not_mounted">لا توجد وحدة تخزين خارجية</string>

@@ -129,7 +129,7 @@
     <string name="empty_deck">Αυτή η τράπουλα είναι κενή</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Αναζήτηση</string>
     <string name="invalid_deck_name">Μη έγκυρο όνομα</string>
-    <string name="studyoptions_congrats_finished">Συγχαρητήρια! Έχετε τελειώσει για τώρα.</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Η τράπουλα τελείωσε για τώρα! %s</string>
     <string name="studyoptions_no_cards_due">Δεν υπάρχουν ακόμη κάρτες για επανάληψη</string>
     <string name="sd_card_not_mounted">O χώρος αποθήκευσης συσκευής δεν έχει προσαρτηθεί</string>

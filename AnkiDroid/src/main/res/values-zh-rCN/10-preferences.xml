@@ -364,9 +364,9 @@
     <string name="ignore_display_cutout" maxLength="41">忽略显示屏刘海</string>
     <string name="hide_answer_buttons" maxLength="41">隐藏回答按钮</string>
     <string name="hide_hard_and_easy" maxLength="41">隐藏“困难”和“简单”按钮</string>
-    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <string name="reviewer_frame_style" maxLength="41">框架样式</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">卡片</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">文本框</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">打开设置</string>
 </resources>

@@ -131,7 +131,7 @@
     <string name="empty_deck">Custu matzu est bòidu</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Chirca de matzos</string>
     <string name="invalid_deck_name">Nùmene de su matzu non vàlidu</string>
-    <string name="studyoptions_congrats_finished">Bene meda! Pro como as agabbadu.</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Matzu acabbadu pro como! %s</string>
     <string name="studyoptions_no_cards_due">Peruna carta de revisionare como</string>
     <string name="sd_card_not_mounted">Sa memòria de su dispositivu no est montada</string>

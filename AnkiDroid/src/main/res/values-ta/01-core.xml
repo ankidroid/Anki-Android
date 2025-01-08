@@ -129,7 +129,7 @@
     <string name="empty_deck">இந்த கட்டு காலியாக உள்ளது</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">டெக் தேடல்</string>
     <string name="invalid_deck_name">தவறான தளத்தின் பெயர்</string>
-    <string name="studyoptions_congrats_finished">வாழ்த்துகள்! இப்போதைக்கு முடித்துவிட்டீர்கள்.</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">இப்போதைக்கு டெக் முடிந்தது! %s</string>
     <string name="studyoptions_no_cards_due">இல்லை அட்டைகள் இன்னும் காரணமாக உள்ளன</string>
     <string name="sd_card_not_mounted">சாதன சேமிப்பகம் பொருத்தப்படவில்லை</string>

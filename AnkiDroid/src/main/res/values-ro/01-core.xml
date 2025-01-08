@@ -132,7 +132,7 @@
     <string name="empty_deck">Acest pachet este gol</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Căutare Pachete</string>
     <string name="invalid_deck_name">Nume pachet invalid</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Niciun cartonaș scadent</string>
     <string name="sd_card_not_mounted">Cardul SD nu a fost găsit</string>

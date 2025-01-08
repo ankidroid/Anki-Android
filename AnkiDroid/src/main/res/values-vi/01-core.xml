@@ -126,7 +126,7 @@
     <string name="empty_deck">Bộ thẻ này rỗng</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Tìm kiếm bộ thẻ</string>
     <string name="invalid_deck_name">Tên bộ thẻ không hợp lệ</string>
-    <string name="studyoptions_congrats_finished">Chúc mừng! Bây giờ bạn đã hoàn thành.</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Bộ thẻ tạm thời hoàn tất! %s</string>
     <string name="studyoptions_no_cards_due">Chưa có thẻ nào tới hạn</string>
     <string name="sd_card_not_mounted">Chưa gắn ổ lưu trữ thiết bị</string>

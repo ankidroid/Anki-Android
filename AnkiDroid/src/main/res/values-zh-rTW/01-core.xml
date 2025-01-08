@@ -127,7 +127,7 @@
     <string name="empty_deck">這是個空牌組</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">牌組搜尋</string>
     <string name="invalid_deck_name">無效牌組名稱</string>
-    <string name="studyoptions_congrats_finished">恭喜！你完成今天的進度了。</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">完成了本牌組了！ %s</string>
     <string name="studyoptions_no_cards_due">尚無到期的卡片。</string>
     <string name="sd_card_not_mounted">儲存裝置未掛載</string>
