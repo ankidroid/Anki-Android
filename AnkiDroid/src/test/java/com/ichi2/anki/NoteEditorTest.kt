@@ -414,7 +414,7 @@ class NoteEditorTest : RobolectricTest() {
 
             // Selecting a note type in the add editor also stores it on the current deck.
             val currentDeck = col.decks.current()
-            currentDeck.jsonObject.put("mid", col.notetypes.basic.id)
+            currentDeck.noteTypeId = col.notetypes.basic.id
             col.decks.save(currentDeck)
 
             val editor =
