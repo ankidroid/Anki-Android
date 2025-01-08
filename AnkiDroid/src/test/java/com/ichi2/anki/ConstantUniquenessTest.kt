@@ -16,6 +16,7 @@
 
 package com.ichi2.anki
 
+import com.ichi2.anki.browser.BrowserColumnSelectionRecyclerItem
 import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsRecyclerItem
 import com.ichi2.anki.settings.PrefKey
@@ -35,6 +36,7 @@ class ConstantUniquenessTest {
         assertConstantUniqueness(UniqueWorkNames::class)
         assertConstantUniqueness(ReviewerMenuSettingsRecyclerItem.Companion::class)
         assertConstantUniqueness(PrefKey::class)
+        assertConstantUniqueness(BrowserColumnSelectionRecyclerItem.Companion::class)
     }
 
     companion object {

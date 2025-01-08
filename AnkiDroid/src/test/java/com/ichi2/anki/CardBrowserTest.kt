@@ -19,10 +19,11 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.widget.Spinner
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.search.BrowserRow
@@ -32,15 +33,15 @@ import com.ichi2.anki.RobolectricTest.Companion.waitForAsyncTasksToComplete
 import com.ichi2.anki.browser.BrowserMultiColumnAdapter
 import com.ichi2.anki.browser.BrowserMultiColumnAdapter.Companion.LINES_VISIBLE_WHEN_COLLAPSED
 import com.ichi2.anki.browser.CardBrowserColumn
-import com.ichi2.anki.browser.CardBrowserColumn.CARD
 import com.ichi2.anki.browser.CardBrowserColumn.DECK
-import com.ichi2.anki.browser.CardBrowserColumn.EASE
 import com.ichi2.anki.browser.CardBrowserColumn.QUESTION
 import com.ichi2.anki.browser.CardBrowserColumn.SFLD
 import com.ichi2.anki.browser.CardBrowserColumn.TAGS
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModelTest
 import com.ichi2.anki.browser.CardOrNoteId
+import com.ichi2.anki.browser.column1
+import com.ichi2.anki.browser.setColumn
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.model.CardsOrNotes.CARDS
@@ -50,7 +51,6 @@ import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeBrowserColumns.Companion.LEGACY_COLUMN1_KEYS
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeBrowserColumns.Companion.LEGACY_COLUMN2_KEYS
-import com.ichi2.anki.utils.ext.findViewById
 import com.ichi2.anki.utils.ext.getCurrentDialogFragment
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.libanki.BrowserConfig
@@ -66,8 +66,6 @@ import com.ichi2.testutils.TestClass
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import com.ichi2.testutils.getSharedPrefs
-import com.ichi2.ui.FixedTextView
-import com.ichi2.utils.UiUtil.setSelectedValue
 import io.mockk.every
 import io.mockk.mockkObject
 import io.mockk.mockkStatic
@@ -954,16 +952,8 @@ class CardBrowserTest : RobolectricTest() {
             val cardBrowser: CardBrowser = getBrowserWithNotes(5)
 
             // THEN: Display column selections should default to position 0
-            val column1Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column1_spinner)
-            val column2Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column2_spinner)
-            val column1SpinnerPosition = column1Spinner.selectedItemPosition
-            val column2SpinnerPosition = column2Spinner.selectedItemPosition
-
-            val selectedColumn1 = CardBrowserColumn.COLUMN1_KEYS[column1SpinnerPosition]
-            val selectedColumn2 = CardBrowserColumn.COLUMN2_KEYS[column2SpinnerPosition]
-
-            assertThat(selectedColumn1, equalTo(SFLD))
-            assertThat(selectedColumn2, equalTo(CARD))
+            assertThat(cardBrowser.columnHeadings[0], equalTo("Sort Field"))
+            assertThat(cardBrowser.columnHeadings[1], equalTo("Card Type"))
         }
 
     @Test
@@ -978,16 +968,8 @@ class CardBrowserTest : RobolectricTest() {
             val cardBrowser: CardBrowser = getBrowserWithNotes(7)
 
             // THEN: The display column selections should match the shared preferences values
-            val column1Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column1_spinner)
-            val column2Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column2_spinner)
-            val column1SpinnerPosition = column1Spinner.selectedItemPosition
-            val column2SpinnerPosition = column2Spinner.selectedItemPosition
-
-            val selectedColumn1 = CardBrowserColumn.COLUMN1_KEYS[column1SpinnerPosition]
-            val selectedColumn2 = CardBrowserColumn.COLUMN2_KEYS[column2SpinnerPosition]
-
-            assertThat(selectedColumn1, equalTo(QUESTION))
-            assertThat(selectedColumn2, equalTo(EASE))
+            assertThat(cardBrowser.columnHeadings[0], equalTo("Question"))
+            assertThat(cardBrowser.columnHeadings[1], equalTo("Ease"))
         }
 
     @Test
@@ -1011,16 +993,8 @@ class CardBrowserTest : RobolectricTest() {
             val cardBrowser: CardBrowser = getBrowserWithNotes(7)
 
             // THEN: The display column selections should match the shared preferences values
-            val column1Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column1_spinner)
-            val column2Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column2_spinner)
-            val column1SpinnerPosition = column1Spinner.selectedItemPosition
-            val column2SpinnerPosition = column2Spinner.selectedItemPosition
-
-            val selectedColumn1 = CardBrowserColumn.COLUMN1_KEYS[column1SpinnerPosition]
-            val selectedColumn2 = CardBrowserColumn.COLUMN2_KEYS[column2SpinnerPosition]
-
-            assertThat(selectedColumn1, equalTo(SFLD))
-            assertThat(selectedColumn2, equalTo(TAGS))
+            assertThat(cardBrowser.columnHeadings[0], equalTo("Sort Field"))
+            assertThat(cardBrowser.columnHeadings[1], equalTo("Tags"))
 
             assertThat("column 1 is cleared", !getSharedPrefs().all.containsKey("cardBrowserColumn1"))
             assertThat("column 2 is cleared", !getSharedPrefs().all.containsKey("cardBrowserColumn2"))
@@ -1037,34 +1011,24 @@ class CardBrowserTest : RobolectricTest() {
         // WHEN: CardBrowser is created
         val cardBrowser: CardBrowser = getBrowserWithNotes(7)
 
-        // THEN: The display column selections should match the shared preferences values
-        val column1Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column1_spinner)
-        val column2Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column2_spinner)
-        val column1SpinnerPosition = column1Spinner.selectedItemPosition
-        val column2SpinnerPosition = column2Spinner.selectedItemPosition
-
-        val selectedColumn1 = CardBrowserColumn.COLUMN1_KEYS[column1SpinnerPosition]
-        val selectedColumn2 = CardBrowserColumn.COLUMN2_KEYS[column2SpinnerPosition]
-
         // In future, we may want to keep the 'question' value and only reset
         // the corrupt column.
-        assertThat("column 1 reset to default", selectedColumn1, equalTo(SFLD))
-        assertThat("column 2 reset to default", selectedColumn2, equalTo(CARD))
+        assertThat("column 1 reset to default", cardBrowser.columnHeadings[0], equalTo("Sort Field"))
+        assertThat("column 2 reset to default", cardBrowser.columnHeadings[1], equalTo("Card Type"))
     }
 
     @Test
     @Ignore("issues with launchCollectionInLifecycleScope")
     fun `column titles update when moving to notes mode`() =
         withBrowser {
-            val column2Spinner = findViewById<Spinner>(R.id.browser_column2_spinner)
-            column2Spinner.setSelectedValue("Interval")
+            viewModel.setColumn(0, CardBrowserColumn.INTERVAL)
 
-            assertThat("spinner title: cards", column2Spinner.selectedItem, equalTo("Interval"))
+            assertThat("spinner title: cards", columnHeadings[1], equalTo("Interval"))
 
             viewModel.setCardsOrNotes(NOTES)
             waitForAsyncTasksToComplete()
 
-            assertThat("spinner title: notes", column2Spinner.selectedItem, equalTo("Avg. Interval"))
+            assertThat("spinner title: notes", columnHeadings[1], equalTo("Avg. Interval"))
         }
 
     @Test
@@ -1153,20 +1117,20 @@ class CardBrowserTest : RobolectricTest() {
         addBasicAndReversedNote("Hello", "World")
 
         withBrowser {
-            assertThat("cards: original column", column2TitleText, equalTo("Card Type"))
+            assertThat("cards: original column", columnHeadings[1], equalTo("Card Type"))
 
-            setColumn2(DECK)
-            assertThat("cards: changed column", column2TitleText, equalTo("Deck"))
+            viewModel.setColumn(1, DECK)
+            assertThat("cards: changed column", columnHeadings[1], equalTo("Deck"))
 
             viewModel.setCardsOrNotes(NOTES)
             waitForAsyncTasksToComplete()
 
-            assertThat("notes: default column", column2TitleText, equalTo("Note Type"))
-            setColumn2(DECK)
-            assertThat("notes: changed column", column2TitleText, equalTo("Avg. Due"))
+            assertThat("notes: default column", columnHeadings[1], equalTo("Note Type"))
+            viewModel.setColumn(1, DECK)
+            assertThat("notes: changed column", columnHeadings[1], equalTo("Avg. Due"))
 
             viewModel.setCardsOrNotes(CARDS)
-            assertThat("cards: updated column used", column2TitleText, equalTo("Deck"))
+            assertThat("cards: updated column used", columnHeadings[1], equalTo("Deck"))
         }
     }
 
@@ -1207,22 +1171,7 @@ fun CardBrowser.replaceSelectionWith(positions: IntArray) {
     selectRowsWithPositions(*positions)
 }
 
-private val CardBrowser.column2TitleText: String
-    get() =
-        findViewById<Spinner>(R.id.browser_column2_spinner)
-            .selectedItem
-            .toString()
-
-private fun CardBrowser.setColumn2(col: CardBrowserColumn) {
-    findViewById<Spinner>(R.id.browser_column2_spinner)
-        .setSelection(CardBrowserColumn.COLUMN2_KEYS.indexOf(col))
-}
-
-fun CardBrowser.column1Text(row: Int): CharSequence? {
-    val rowView = getVisibleRows()[row]
-    val column1 = rowView.findViewById<FixedTextView>(R.id.card_sfld)
-    return column1.text
-}
+fun CardBrowser.column1Text(row: Int): CharSequence? = getVisibleRows()[row].columnViews[0].text
 
 fun CardBrowser.selectRowsWithPositions(vararg positions: Int) {
     // PREF: inefficient as the card flow is updated each iteration
@@ -1289,3 +1238,13 @@ val CardBrowser.isShowingSelectNone: Boolean
         waitForAsyncTasksToComplete()
         return actionBarMenu?.findItem(R.id.action_select_none)?.isVisible == true
     }
+
+val CardBrowser.columnHeadingViews
+    get() =
+        this.browserColumnHeadings.children
+            .filterIsInstance<TextView>()
+            .toList()
+
+val CardBrowser.columnHeadings
+    get() =
+        columnHeadingViews.map { it.text.toString() }

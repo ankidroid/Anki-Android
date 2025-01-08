@@ -107,6 +107,26 @@ fun View.setPaddingRelative(
     bottom: Dp,
 ) = setPaddingRelative(start.toPx(context), top.toPx(context), end.toPx(context), bottom.toPx(context))
 
+/**
+ * Updates the relative padding for the [View]
+ * This version of the method allows using named parameters to just set one or more axes.
+ *
+ * @see View.setPaddingRelative
+ */
+fun View.updatePaddingRelative(
+    start: Dp? = null,
+    top: Dp? = null,
+    end: Dp? = null,
+    bottom: Dp? = null,
+) {
+    setPaddingRelative(
+        start?.toPx(context) ?: this.paddingStart,
+        top?.toPx(context) ?: this.paddingTop,
+        end?.toPx(context) ?: this.paddingEnd,
+        bottom?.toPx(context) ?: this.paddingBottom,
+    )
+}
+
 /** Returns a [Dp] instance equal to this [Int] number of display pixels. */
 val Int.dp
     get() = Dp(dp = this.toFloat())

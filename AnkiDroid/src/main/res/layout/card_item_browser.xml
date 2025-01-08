@@ -3,7 +3,8 @@
     android:id="@+id/card_item_browser"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground">
+    android:background="?attr/selectableItemBackground"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <CheckBox
         android:id="@+id/card_checkbox"
@@ -14,15 +15,21 @@
         android:visibility="gone"
         android:gravity= "center_vertical"/>
 
+    <!--
+        These views are designer-only. When the screen is running,
+        BrowserMultiColumnAdapter is responsible for dynamically adding
+        a variable number of columns
+     -->
+
     <com.ichi2.ui.FixedTextView
         android:id="@+id/card_sfld"
         android:layout_width="0dip"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:paddingStart="3dp"
-        android:paddingEnd="3dp"
-        android:paddingVertical="1dp"
-        android:gravity="top"/>
+        android:visibility="gone"
+        tools:text="Question"
+        tools:visibility="visible"
+        />
 
     <View
         android:layout_width="0.5dp"
@@ -30,13 +37,11 @@
         android:background="?attr/cardBrowserDivider" />
 
     <com.ichi2.ui.FixedTextView
-        android:id="@+id/card_column2"
         android:layout_width="0dip"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:paddingStart="4dp"
-        android:paddingEnd="2dp"
-        android:paddingVertical="1dp"
-        android:gravity="top"/>
+        android:visibility="gone"
+        tools:text="Answer"
+        tools:visibility="visible" />
 
 </LinearLayout>

@@ -126,7 +126,7 @@ class CardBrowserViewModel(
      * Whether the browser is working in Cards mode or Notes mode.
      * default: [CARDS]
      * */
-    val flowOfCardsOrNotes = MutableStateFlow(CARDS)
+    private val flowOfCardsOrNotes = MutableStateFlow(CARDS)
     val cardsOrNotes get() = flowOfCardsOrNotes.value
 
     // card that was clicked (not marked)
@@ -148,29 +148,12 @@ class CardBrowserViewModel(
             ),
         )
 
-    // TODO: Initial values are temporary - set in init { } as they depend on cardsOrNotes
-    // consider a loading state
-    val flowOfColumn1 =
-        flowOfActiveColumns.map { it.columns[0] }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Eagerly,
-            initialValue = flowOfActiveColumns.value.columns[0],
-        )
-    val flowOfColumn2 =
-        flowOfActiveColumns.map { it.columns[1] }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Eagerly,
-            initialValue = flowOfActiveColumns.value.columns[1],
-        )
-    val column1 get() = flowOfColumn1.value
-    val column2 get() = flowOfColumn2.value
-    private val activeColumns get() = flowOfActiveColumns.value.columns
+    @get:VisibleForTesting
+    val activeColumns
+        get() = flowOfActiveColumns.value.columns
 
-    /** Potential headings for the first column */
-    lateinit var column1Candidates: List<BrowserColumns.Column>
-
-    /** Potential headings for the second column */
-    lateinit var column2Candidates: List<BrowserColumns.Column>
+    /** Available columns with names */
+    lateinit var namedColumns: List<BrowserColumns.Column>
 
     val flowOfSearchQueryExpanded = MutableStateFlow(false)
 
@@ -258,6 +241,9 @@ class CardBrowserViewModel(
 
     val flowOfInitCompleted = MutableStateFlow(false)
 
+    val columnNamesLoaded
+        get() = ::namedColumns.isInitialized
+
     /**
      * Whether the task launched from CardBrowserViewModel.init has completed.
      *
@@ -304,16 +290,6 @@ class CardBrowserViewModel(
             null -> {}
         }
 
-        flowOfColumn1
-            .ignoreValuesFromViewModelLaunch()
-            .onEach { column1 -> updateColumnCollection { toUpdate -> toUpdate[0] = column1 } }
-            .launchIn(viewModelScope)
-
-        flowOfColumn2
-            .ignoreValuesFromViewModelLaunch()
-            .onEach { column2 -> updateColumnCollection { toUpdate -> toUpdate[1] = column2 } }
-            .launchIn(viewModelScope)
-
         performSearchFlow
             .onEach {
                 launchSearchForCards()
@@ -337,8 +313,8 @@ class CardBrowserViewModel(
             flowOfCardsOrNotes.update { cardsOrNotes }
 
             val allColumns = withCol { allBrowserColumns() }.associateBy { it.key }
-            column1Candidates = CardBrowserColumn.COLUMN1_KEYS.map { allColumns[it.ankiColumnKey]!! }
-            column2Candidates = CardBrowserColumn.COLUMN2_KEYS.map { allColumns[it.ankiColumnKey]!! }
+            namedColumns =
+                CardBrowserColumn.entries.map { allColumns[it.ankiColumnKey]!! }
 
             setupColumns(cardsOrNotes)
 
@@ -542,18 +518,39 @@ class CardBrowserViewModel(
         }
     }
 
-    fun setColumn(
-        index: Int,
-        value: CardBrowserColumn,
-    ): Boolean {
-        if (activeColumns[index] == value) return false.also { Timber.d("setColumn: no changes") }
+    /**
+     * Updates the backend with a new collection of columns
+     *
+     * @return Whether the operation was successful (a valid list was provided, and it was a change)
+     */
+    @CheckResult
+    fun updateActiveColumns(columns: List<CardBrowserColumn>): Boolean {
+        if (columns.isEmpty()) {
+            Timber.d("updateColumns: no columns")
+            return false
+        }
+        if (activeColumns == columns) {
+            Timber.d("updateColumns: no changes")
+            return false
+        }
 
-        Timber.d("updating column index %d to %s", index, value)
-        flowOfActiveColumns.update {
-            BrowserColumnCollection.update(sharedPrefs(), cardsOrNotes) { cols ->
-                cols[index] = value
-                true
-            }!!
+        // update the backend with the new columns
+        val columnCollection =
+            BrowserColumnCollection.replace(sharedPrefs(), cardsOrNotes, columns).newColumns
+
+        // A user can edit the non-active columns if they:
+        // * Edit the cards/notes setting in the browser options
+        // * Edit the visible columns
+        // * Save the columns and discard the options changes
+        val isEditingCurrentHeadings = cardsOrNotes == this.cardsOrNotes
+        Timber.d("editing columns for current headings: %b", isEditingCurrentHeadings)
+
+        if (isEditingCurrentHeadings) {
+            Timber.d("updating active columns")
+            viewModelScope.launch {
+                withCol { backend.setActiveBrowserColumns(columnCollection.backendKeys) }
+                flowOfActiveColumns.update { columnCollection }
+            }
         }
 
         return true
@@ -895,20 +892,31 @@ class CardBrowserViewModel(
         flowOfCardsUpdated.emit(Unit)
     }
 
-    private suspend fun updateColumnCollection(block: (MutableList<CardBrowserColumn?>) -> Unit) {
-        Timber.d("updateColumnCollection")
-        val columns =
-            BrowserColumnCollection.update(sharedPrefs(), cardsOrNotes) {
-                block(it)
-                return@update true
-            } ?: return
-
-        withCol { backend.setActiveBrowserColumns(columns.backendKeys) }
-    }
-
     suspend fun queryCardIdAtPosition(index: Int): CardId = cards.queryCardIdsAt(index).first()
 
     suspend fun querySelectedCardIdAtPosition(index: Int): CardId = selectedRows.toList()[index].toCardId(cardsOrNotes)
+
+    /**
+     * Obtains two lists of column headings with preview data
+     * (preview uses the first row of data, if it exists)
+     *
+     * The two lists are:
+     * (1): An ordered list of columns which is displayed to the user
+     * (2): A list of columns which are available to display to the user
+     */
+    suspend fun previewColumnHeadings(): Pair<List<ColumnWithSample>, List<ColumnWithSample>> {
+        val currentColumns = activeColumns
+
+        val columnsWithSample = ColumnWithSample.loadSample(cards.firstOrNull(), cardsOrNotes)
+
+        // we return this as two lists as 'currentColumns' uses the collection ordering
+        return Pair(
+            columnsWithSample
+                .filter { currentColumns.contains(it.columnType) }
+                .sortedBy { currentColumns.indexOf(it.columnType) },
+            columnsWithSample.filter { !currentColumns.contains(it.columnType) },
+        )
+    }
 
     companion object {
         fun factory(

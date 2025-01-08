@@ -29,10 +29,23 @@ import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.browser.CardBrowserColumn.ANSWER
 import com.ichi2.anki.browser.CardBrowserColumn.CARD
+import com.ichi2.anki.browser.CardBrowserColumn.CHANGED
+import com.ichi2.anki.browser.CardBrowserColumn.CREATED
+import com.ichi2.anki.browser.CardBrowserColumn.DECK
+import com.ichi2.anki.browser.CardBrowserColumn.DUE
+import com.ichi2.anki.browser.CardBrowserColumn.EASE
+import com.ichi2.anki.browser.CardBrowserColumn.EDITED
 import com.ichi2.anki.browser.CardBrowserColumn.FSRS_DIFFICULTY
+import com.ichi2.anki.browser.CardBrowserColumn.FSRS_RETRIEVABILITY
+import com.ichi2.anki.browser.CardBrowserColumn.FSRS_STABILITY
+import com.ichi2.anki.browser.CardBrowserColumn.INTERVAL
+import com.ichi2.anki.browser.CardBrowserColumn.LAPSES
 import com.ichi2.anki.browser.CardBrowserColumn.NOTE_TYPE
+import com.ichi2.anki.browser.CardBrowserColumn.ORIGINAL_POSITION
 import com.ichi2.anki.browser.CardBrowserColumn.QUESTION
+import com.ichi2.anki.browser.CardBrowserColumn.REVIEWS
 import com.ichi2.anki.browser.CardBrowserColumn.SFLD
+import com.ichi2.anki.browser.CardBrowserColumn.TAGS
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.DeepLink
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.SystemContextMenu
 import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
@@ -40,7 +53,7 @@ import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.flagCardForNote
 import com.ichi2.anki.model.CardsOrNotes
-import com.ichi2.anki.model.SortType.EASE
+import com.ichi2.anki.model.SortType
 import com.ichi2.anki.model.SortType.NO_SORTING
 import com.ichi2.anki.model.SortType.SORT_FIELD
 import com.ichi2.anki.servicelayer.NoteService
@@ -61,6 +74,7 @@ import com.ichi2.testutils.ensureOpsExecuted
 import com.ichi2.testutils.mockIt
 import kotlinx.coroutines.flow.first
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.contains
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasSize
@@ -76,6 +90,7 @@ import kotlin.io.path.createTempDirectory
 import kotlin.io.path.pathString
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class CardBrowserViewModelTest : JvmTest() {
@@ -446,17 +461,17 @@ class CardBrowserViewModelTest : JvmTest() {
                 assertThat("initial direction", !orderAsc)
 
                 // changing the order performs a search & changes order
-                changeCardOrder(EASE)
+                changeCardOrder(SortType.EASE)
                 expectMostRecentItem()
-                assertThat("order changed", order, equalTo(EASE))
+                assertThat("order changed", order, equalTo(SortType.EASE))
                 assertThat("changed direction is the default", !orderAsc)
 
                 waitForSearchResults()
 
                 // pressing 'ease' again changes direction
-                changeCardOrder(EASE)
+                changeCardOrder(SortType.EASE)
                 expectMostRecentItem()
-                assertThat("order unchanged", order, equalTo(EASE))
+                assertThat("order unchanged", order, equalTo(SortType.EASE))
                 assertThat("direction is changed", orderAsc)
             }
         }
@@ -785,7 +800,7 @@ class CardBrowserViewModelTest : JvmTest() {
 
         BrowserColumnCollection.update(AnkiDroidApp.sharedPreferencesProvider.sharedPrefs(), CardsOrNotes.CARDS) {
             it[0] = QUESTION
-            return@update true
+            true
         }
 
         runViewModelTest {
@@ -834,6 +849,135 @@ class CardBrowserViewModelTest : JvmTest() {
                 )
             }
         }
+    }
+
+    @Test
+    fun `preview - no notes`() {
+        // add a card: a preview should
+        addBasicNote("Hello", "").firstCard().update {
+            did = addDeck("Non-default Deck")
+        }
+        runViewModelTest {
+            assertThat("no rows", rowCount, equalTo(0))
+            this.previewColumnHeadings().apply {
+                assertTrue("no sample values") { allColumns.all { it.sampleValue == null } }
+                val (displayed, _) = this
+                assertThat(
+                    "displayed: cards",
+                    displayed.map { it.columnType },
+                    equalTo(listOf(SFLD, CARD, DUE, DECK)),
+                )
+            }
+        }
+
+        runViewModelNotesTest {
+            assertThat("no rows", rowCount, equalTo(0))
+            this.previewColumnHeadings().apply {
+                assertTrue("no sample values") { allColumns.all { it.sampleValue == null } }
+                val (displayed, _) = this
+                assertThat(
+                    "displayed: notes",
+                    displayed.map { it.columnType },
+                    equalTo(listOf(SFLD, NOTE_TYPE, CARD, TAGS)),
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `preview - cards`() {
+        runViewModelTest(notes = 1) {
+            for (preview in previewColumnHeadings().allColumns) {
+                val (expectedLabel, expectedValue) =
+                    when (preview.columnType) {
+                        SFLD -> Pair("Sort Field", "Front")
+                        QUESTION -> Pair("Question", "Front")
+                        ANSWER -> Pair("Answer", "Back")
+                        DECK -> Pair("Deck", "Default")
+                        TAGS -> Pair("Tags", "")
+                        CARD -> Pair("Card Type", "Card 1")
+                        DUE -> Pair("Due", "New #\u20681\u2069")
+                        NOTE_TYPE -> Pair("Note Type", "Basic")
+                        EASE -> Pair("Ease", "(new)")
+                        INTERVAL -> Pair("Interval", "(new)")
+                        LAPSES -> Pair("Lapses", "0")
+                        REVIEWS -> Pair("Reviews", "0")
+                        ORIGINAL_POSITION -> Pair("Position", "1")
+                        CHANGED, CREATED, EDITED -> {
+                            assertDate(preview.sampleValue)
+                            continue
+                        }
+                        FSRS_DIFFICULTY -> Pair("Difficulty", "")
+                        FSRS_RETRIEVABILITY -> Pair("Retrievability", "")
+                        FSRS_STABILITY -> Pair("Stability", "")
+                    }
+                assertThat("${preview.columnType} value", preview.sampleValue, equalTo(expectedValue))
+                assertThat("${preview.columnType} label", preview.label, equalTo(expectedLabel))
+            }
+        }
+    }
+
+    @Test
+    fun `preview - notes`() {
+        runViewModelNotesTest(notes = 1) {
+            for (preview in previewColumnHeadings().allColumns) {
+                val (expectedLabel, expectedValue) =
+                    when (preview.columnType) {
+                        SFLD -> Pair("Sort Field", "Front")
+                        QUESTION -> Pair("Question", "Front")
+                        ANSWER -> Pair("Answer", "Back")
+                        DECK -> Pair("Deck", "Default")
+                        TAGS -> Pair("Tags", "")
+                        CARD -> Pair("Cards", "2")
+                        DUE -> Pair("Due", "")
+                        NOTE_TYPE -> Pair("Note Type", "Basic (and reversed card)")
+                        EASE -> Pair("Avg. Ease", "(new)")
+                        INTERVAL -> Pair("Avg. Interval", "")
+                        LAPSES -> Pair("Lapses", "0")
+                        REVIEWS -> Pair("Reviews", "0")
+                        ORIGINAL_POSITION -> Pair("Position", "1")
+                        CHANGED, CREATED, EDITED -> {
+                            assertDate(preview.sampleValue)
+                            continue
+                        }
+                        FSRS_DIFFICULTY -> Pair("Difficulty", "")
+                        FSRS_RETRIEVABILITY -> Pair("Retrievability", "")
+                        FSRS_STABILITY -> Pair("Stability", "")
+                    }
+                assertThat("${preview.columnType} value", preview.sampleValue, equalTo(expectedValue))
+                assertThat("${preview.columnType} label", preview.label, equalTo(expectedLabel))
+            }
+        }
+    }
+
+    @Test
+    fun `preview - round trip`() {
+        runViewModelTest {
+            previewColumnHeadings().also { columns ->
+                assertThat(
+                    "initial columns",
+                    columns.first.map { it.columnType },
+                    contains(SFLD, CARD, DUE, DECK),
+                )
+            }
+
+            @Suppress("UNUSED_VARIABLE")
+            val unused = updateActiveColumns(listOf(CARD, DECK, SFLD, DUE, FSRS_STABILITY))
+
+            previewColumnHeadings().also { columns ->
+                assertThat(
+                    "updated columns",
+                    columns.first.map { it.columnType },
+                    contains(CARD, DECK, SFLD, DUE, FSRS_STABILITY),
+                )
+            }
+        }
+    }
+
+    private fun assertDate(str: String?) {
+        // 2025-01-09 @ 18:06
+        assertNotNull(str)
+        assertTrue("date expected: $str") { str[4] == '-' && str[11] == '@' }
     }
 
     private var showMediaFilenamesPreference: Boolean
@@ -1000,3 +1144,21 @@ private fun TestClass.suspend(vararg cardIds: CardId) {
 private fun TestClass.suspend(note: Note) {
     col.sched.suspendCards(note.cardIds(col))
 }
+
+val CardBrowserViewModel.column1
+    get() = this.activeColumns[0]
+
+val CardBrowserViewModel.column2
+    get() = this.activeColumns[1]
+
+fun CardBrowserViewModel.setColumn(
+    index: Int,
+    column: CardBrowserColumn,
+): Boolean {
+    val newColumns = activeColumns.toMutableList()
+    newColumns[index] = column
+    return updateActiveColumns(newColumns)
+}
+
+val Pair<List<ColumnWithSample>, List<ColumnWithSample>>.allColumns
+    get() = this.first + this.second

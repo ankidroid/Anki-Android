@@ -23,12 +23,13 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.SubMenu
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.ArrayAdapter
 import android.widget.BaseAdapter
 import android.widget.Spinner
 import android.widget.TextView
@@ -52,11 +53,10 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
+import com.ichi2.anki.browser.BrowserColumnCollection
 import com.ichi2.anki.browser.BrowserMultiColumnAdapter
 import com.ichi2.anki.browser.BrowserRowCollection
 import com.ichi2.anki.browser.CardBrowserColumn
-import com.ichi2.anki.browser.CardBrowserColumn.Companion.COLUMN1_KEYS
-import com.ichi2.anki.browser.CardBrowserColumn.Companion.COLUMN2_KEYS
 import com.ichi2.anki.browser.CardBrowserLaunchOptions
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState
@@ -98,7 +98,6 @@ import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.scheduling.registerOnForgetHandler
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.ui.BasicItemSelectedListener
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.getCurrentDialogFragment
 import com.ichi2.anki.utils.ext.ifNotZero
@@ -117,7 +116,9 @@ import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.TagsUtil.getUpdatedTags
+import com.ichi2.utils.dp
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
+import com.ichi2.utils.updatePaddingRelative
 import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -158,6 +159,9 @@ open class CardBrowser :
     @VisibleForTesting
     lateinit var cardsListView: RecyclerView
     private var searchView: CardBrowserSearchView? = null
+
+    @VisibleForTesting
+    lateinit var browserColumnHeadings: ViewGroup
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     lateinit var cardsAdapter: BrowserMultiColumnAdapter
@@ -379,8 +383,6 @@ open class CardBrowser :
             cardsListView.addItemDecoration(this)
         }
 
-        // get the font and font size from the preferences
-        // make a new list adapter mapping the data in mCards to column1 and column2 of R.layout.card_item_browser
         cardsAdapter =
             BrowserMultiColumnAdapter(
                 this,
@@ -388,10 +390,11 @@ open class CardBrowser :
                 onTap = ::onTap,
                 onLongPress = ::onLongPress,
             )
-        // link the adapter to the main mCardsListView
         cardsListView.adapter = cardsAdapter
         cardsAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-        cardsListView.layoutManager = LinearLayoutManager(this)
+        val layoutManager = LinearLayoutManager(this)
+        cardsListView.layoutManager = layoutManager
+        cardsListView.addItemDecoration(DividerItemDecoration(this@CardBrowser, layoutManager.orientation))
 
         deckSpinnerSelection =
             DeckSpinnerSelection(
@@ -401,6 +404,8 @@ open class CardBrowser :
                 alwaysShowDefault = false,
                 showFilteredDecks = true,
             )
+
+        this.browserColumnHeadings = findViewById<ViewGroup>(R.id.browser_column_headings)
 
         startLoadingCollection()
 
@@ -446,16 +451,28 @@ open class CardBrowser :
 
         fun onSelectedRowsChanged(rows: Set<Any>) = onSelectionChanged()
 
-        fun onColumn1Changed(column: CardBrowserColumn) {
+        fun onColumnsChanged(columnCollection: BrowserColumnCollection) {
             notifyDataSetChanged()
-            findViewById<Spinner>(R.id.browser_column1_spinner)
-                .setSelection(COLUMN1_KEYS.indexOf(column))
-        }
 
-        fun onColumn2Changed(column: CardBrowserColumn) {
-            notifyDataSetChanged()
-            findViewById<Spinner>(R.id.browser_column2_spinner)
-                .setSelection(COLUMN2_KEYS.indexOf(column))
+            if (!viewModel.columnNamesLoaded) return
+
+            // reset headings
+            val headingsContainer =
+                browserColumnHeadings.apply {
+                    removeAllViews()
+                }
+
+            val layoutInflater = LayoutInflater.from(headingsContainer.context)
+            for (column in columnCollection.columns) {
+                Timber.d("setting up column %s", column)
+                layoutInflater.inflate(R.layout.browser_column_heading, headingsContainer, false).apply {
+                    headingsContainer.addView(this)
+                    (this as TextView).text =
+                        viewModel
+                            .namedColumns[CardBrowserColumn.entries.indexOf(column)]
+                            .getLabel(viewModel.cardsOrNotes)
+                }
+            }
         }
 
         fun onFilterQueryChanged(filterQuery: String) {
@@ -481,12 +498,16 @@ open class CardBrowser :
                 // show title and hide spinner
                 actionBarTitle.visibility = View.VISIBLE
                 deckSpinnerSelection.setSpinnerVisibility(View.GONE)
+                // A checkbox is added on the rows, match padding to keep the headings aligned
+                // Due to the ripple on long press, we set padding
+                browserColumnHeadings.updatePaddingRelative(start = 48.dp)
             } else {
                 Timber.d("end multiselect mode")
                 // update adapter to remove check boxes
                 notifyDataSetChanged()
                 deckSpinnerSelection.setSpinnerVisibility(View.VISIBLE)
                 actionBarTitle.visibility = View.GONE
+                browserColumnHeadings.updatePaddingRelative(start = 0.dp)
             }
             // reload the actionbar using the multi-select mode actionbar
             invalidateOptionsMenu()
@@ -512,70 +533,16 @@ open class CardBrowser :
             }
         }
 
-        fun setupColumnSpinners() {
-            // Create a spinner for column 1
-            findViewById<Spinner>(R.id.browser_column1_spinner).apply {
-                adapter =
-                    ArrayAdapter(
-                        this@CardBrowser,
-                        android.R.layout.simple_spinner_item,
-                        viewModel.column1Candidates.map { it.getLabel(viewModel.cardsOrNotes) },
-                    ).apply {
-                        setDropDownViewResource(R.layout.spinner_custom_layout)
-                    }
-                setSelection(COLUMN1_KEYS.indexOf(viewModel.column1))
-                onItemSelectedListener =
-                    BasicItemSelectedListener { pos, _ ->
-                        viewModel.setColumn(0, COLUMN1_KEYS[pos])
-                    }
-            }
-
-            // Setup the column 2 heading as a spinner so that users can easily change the column type
-            findViewById<Spinner>(R.id.browser_column2_spinner).apply {
-                adapter =
-                    ArrayAdapter(
-                        this@CardBrowser,
-                        android.R.layout.simple_spinner_item,
-                        viewModel.column2Candidates.map { it.getLabel(viewModel.cardsOrNotes) },
-                    ).apply {
-                        // The custom layout for the adapter is used to prevent the overlapping of various interactive components on the screen
-                        setDropDownViewResource(R.layout.spinner_custom_layout)
-                    }
-                setSelection(COLUMN2_KEYS.indexOf(viewModel.column2))
-                // Create a new list adapter with updated column map any time the user changes the column
-                onItemSelectedListener =
-                    BasicItemSelectedListener { pos, _ ->
-                        viewModel.setColumn(1, COLUMN2_KEYS[pos])
-                    }
-            }
-        }
-
         fun initCompletedChanged(completed: Boolean) {
             if (!completed) return
 
-            setupColumnSpinners()
             searchCards()
         }
 
-        @Suppress("UNCHECKED_CAST") // as? ArrayAdapter<String>?
-        fun cardsOrNotesChanged(cardsOrNotes: CardsOrNotes) {
-            Timber.d("mode change: %s - updating spinner titles", cardsOrNotes)
-            findViewById<Spinner>(R.id.browser_column1_spinner)?.adapter?.apply {
-                val adapter = this as? ArrayAdapter<String>? ?: return@apply
-                adapter.clear()
-                adapter.addAll(viewModel.column1Candidates.map { it.getLabel(cardsOrNotes) })
-            }
-            findViewById<Spinner>(R.id.browser_column2_spinner)?.adapter?.apply {
-                val adapter = this as? ArrayAdapter<String>? ?: return@apply
-                adapter.clear()
-                adapter.addAll(viewModel.column2Candidates.map { it.getLabel(cardsOrNotes) })
-            }
-        }
         viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         viewModel.flowOfSearchQueryExpanded.launchCollectionInLifecycleScope(::onSearchQueryExpanded)
         viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
-        viewModel.flowOfColumn1.launchCollectionInLifecycleScope(::onColumn1Changed)
-        viewModel.flowOfColumn2.launchCollectionInLifecycleScope(::onColumn2Changed)
+        viewModel.flowOfActiveColumns.launchCollectionInLifecycleScope(::onColumnsChanged)
         viewModel.flowOfFilterQuery.launchCollectionInLifecycleScope(::onFilterQueryChanged)
         viewModel.flowOfDeckId.launchCollectionInLifecycleScope(::onDeckIdChanged)
         viewModel.flowOfCanSearch.launchCollectionInLifecycleScope(::onCanSaveChanged)
@@ -583,7 +550,6 @@ open class CardBrowser :
         viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
         viewModel.flowOfInitCompleted.launchCollectionInLifecycleScope(::initCompletedChanged)
-        viewModel.flowOfCardsOrNotes.launchCollectionInLifecycleScope(::cardsOrNotesChanged)
     }
 
     // Finish initializing the activity after the collection has been correctly loaded
