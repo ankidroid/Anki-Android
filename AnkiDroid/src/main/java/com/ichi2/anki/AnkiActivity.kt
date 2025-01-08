@@ -43,7 +43,9 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -725,14 +727,16 @@ open class AnkiActivity :
     // TODO: Move this to an extension method once we have context parameters
     protected fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
         lifecycleScope.launch {
-            this@launchCollectionInLifecycleScope.collect {
-                if (isRobolectric) {
-                    // hack: lifecycleScope/runOnUiThread do not handle our
-                    // test dispatcher overriding both IO and Main
-                    // in tests, waitForAsyncTasksToComplete may be required.
-                    HandlerUtils.postOnNewHandler { runBlocking { block(it) } }
-                } else {
-                    block(it)
+            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                this@launchCollectionInLifecycleScope.collect {
+                    if (isRobolectric) {
+                        // hack: lifecycleScope/runOnUiThread do not handle our
+                        // test dispatcher overriding both IO and Main
+                        // in tests, waitForAsyncTasksToComplete may be required.
+                        HandlerUtils.postOnNewHandler { runBlocking { block(it) } }
+                    } else {
+                        block(it)
+                    }
                 }
             }
         }
