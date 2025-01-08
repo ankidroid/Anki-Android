@@ -302,9 +302,8 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">ପତ୍ର</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ନୋଟ୍</string>
     <string name="toggle_cards_notes">ପତ୍ର/ନୋଟ୍ ଦେଖାଇବା ଟୋଗଲ୍ କରିବା</string>
-    <string name="toggle_browser_mode_help">ବ୍ରାଉଜର୍ ରେ ପତ୍ର କିମ୍ବା ନୋଟ୍ ଦେଖାଇବା ଟୋଗଲ୍ କରିବା</string>
     <string name="truncate_content_help">ବିଷୟବସ୍ତୁର କେବଳ ପ୍ରଥମ ୩ଟି ଧାଡ଼ି ଦେଖାଇବାକୁ ବ୍ରାଉଜର୍‌ର ପ୍ରତ୍ୟେକ ଧାଉଡ଼ିର ଉଚ୍ଚତାକୁ କମେଇ ଦେବା</string>
-    <string name="browser_options_dialog_heading">ବ୍ରାଉଜର ଵିକଳ୍ପ</string>
+    <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">ରେକର୍ଡିଂ ସଞ୍ଚୟ ହୋଇଛି</string>
     <string name="deleting_selected_notes">ବଚ୍ଛିତ ନୋଟଗୁଡ଼ିକ ବିଲୋପ କରାଯାଉଛି</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        ଶୁଣିବା ପାଇଁ ଏକ ସ୍ୱର ଉପରେ ସ୍ପର୍ଶ କରିବା

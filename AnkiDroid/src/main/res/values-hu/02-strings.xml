@@ -303,9 +303,8 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kártyák</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Jegyzetek</string>
     <string name="toggle_cards_notes">Kártyák/Jegyzetek váltása</string>
-    <string name="toggle_browser_mode_help">Kártyák vagy jegyzetek megjelenítésének váltása</string>
     <string name="truncate_content_help">A böngésző minden sorának magasságát úgy állítja be, hogy csak az első 3 sor legyen látható.</string>
-    <string name="browser_options_dialog_heading">Böngésző beállításai</string>
+    <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">Felvétel mentve</string>
     <string name="deleting_selected_notes">A kijelölt jegyzetek törlése.</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Nyomj egy hangra a meghallgatáshoz</string>

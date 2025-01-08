@@ -297,9 +297,8 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kartu</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Catatan</string>
     <string name="toggle_cards_notes">Ubah antara Kartu/Catatan</string>
-    <string name="toggle_browser_mode_help">Saklar Penampilan kartu atau catatan dalam peramban</string>
     <string name="truncate_content_help">Kurangi ketinggian setiap baris dari Peramban untuk hanya menampilkan 3 baris pertama dari konten</string>
-    <string name="browser_options_dialog_heading">Opsi Peramban</string>
+    <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">Rekaman disimpan</string>
     <string name="deleting_selected_notes">Menghapus catatan yang dipilih</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Ketuk sebuah suara untuk didengarkan

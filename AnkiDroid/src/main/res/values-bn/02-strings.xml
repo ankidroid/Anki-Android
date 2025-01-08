@@ -302,9 +302,8 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">কার্ড</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">নোট</string>
     <string name="toggle_cards_notes">কার্ড নাকি নোট?</string>
-    <string name="toggle_browser_mode_help">ব্রাউজার এ কার্ড নাকি নোট দেখাবে?</string>
     <string name="truncate_content_help">ব্রাউজারের প্রতি সারীর উচ্চতা প্রথম ৩ লাইনে সীমাবদ্ধ করুন</string>
-    <string name="browser_options_dialog_heading">ব্রাউজার অপশন</string>
+    <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">রেকর্ডিং সংরক্ষিত হয়</string>
     <string name="deleting_selected_notes">Deleting selected notes</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">শুনতে একটি ভয়েস আলতো চাপুন</string>

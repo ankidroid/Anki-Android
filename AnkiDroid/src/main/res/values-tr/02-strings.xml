@@ -302,9 +302,8 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kartlar</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notlar</string>
     <string name="toggle_cards_notes">Kartları/Notları Aç/Kapat</string>
-    <string name="toggle_browser_mode_help">Kartları veya notları tarayıcıda göstermeyi aç/kapat</string>
     <string name="truncate_content_help">Tarayıcının her sırasının yüksekliğini içeriğin sadece ilk 3 satırını gösterecek şekilde kırp</string>
-    <string name="browser_options_dialog_heading">Tarayıcı Seçenekleri</string>
+    <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">Alınan kayıtlar kaydedildi. </string>
     <string name="deleting_selected_notes">Seçili notlar siliniyor</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Bir sesi dinlemek için dokunun

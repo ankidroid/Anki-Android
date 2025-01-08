@@ -302,9 +302,8 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kaarte</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notas</string>
     <string name="toggle_cards_notes">Toggle Cards/Notes</string>
-    <string name="toggle_browser_mode_help">Wissel Vertoon van Kaartjies of Aantekeninge in die Blaaier</string>
     <string name="truncate_content_help">Verkort die hoogte van elke ry van die Blaaier om slegs die eerste 3 reëls van inhoud te wys</string>
-    <string name="browser_options_dialog_heading">Kaartblaaier Opsies</string>
+    <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">Opname gestoor</string>
     <string name="deleting_selected_notes">Besig om geselekteerde notas uit te vee</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tik \'n stem om te luister
