@@ -40,14 +40,13 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.testutils.AnkiFragmentScenario
-import com.ichi2.testutils.isJsonEqual
+import com.ichi2.testutils.isJsonHolderEqual
 import io.mockk.every
 import io.mockk.mockk
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.intellij.lang.annotations.Language
-import org.json.JSONObject
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
@@ -73,9 +72,9 @@ class CustomStudyDialogTest : RobolectricTest() {
             assertThat("Custom Study should be filtered", customStudy.isFiltered)
 
             // remove timestamps to allow us to compare JSON
-            customStudy.remove("id")
-            customStudy.remove("mod")
-            customStudy.remove("name")
+            customStudy.jsonObject.remove("id")
+            customStudy.jsonObject.remove("mod")
+            customStudy.jsonObject.remove("name")
 
             // compare JSON
             @Language("json")
@@ -103,7 +102,7 @@ class CustomStudyDialogTest : RobolectricTest() {
                     "usn": -1
                 }
                 """.trimIndent()
-            assertThat(customStudy, isJsonEqual(JSONObject(expected)))
+            assertThat(customStudy, isJsonHolderEqual(expected))
         }
 
     @Test
