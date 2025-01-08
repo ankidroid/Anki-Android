@@ -129,7 +129,7 @@
     <string name="empty_deck">Esta baralla está baleira</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Deck Search</string>
     <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Aínda non hai cartóns pendentes</string>
     <string name="sd_card_not_mounted">Almacenamento do dispositivo non montado</string>

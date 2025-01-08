@@ -129,7 +129,7 @@
     <string name="empty_deck">ഈ ഡെക്ക് ശൂന്യമാണ്</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">ഡെക്ക് തിരയൽ</string>
     <string name="invalid_deck_name">ഡെക്കിന്റെ പേര് അസാധുവാണ്</string>
-    <string name="studyoptions_congrats_finished">അഭിനന്ദനങ്ങൾ! നിങ്ങൾ ഇപ്പോൾ പൂർത്തിയാക്കി.</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">ഡെക്ക് ഇപ്പോൾ പൂർത്തിയായി! %s</string>
     <string name="studyoptions_no_cards_due">കാർഡുകളൊന്നും ഇതുവരെ ലഭിച്ചിട്ടില്ല</string>
     <string name="sd_card_not_mounted">ഉപകരണ സംഭരണം മ .ണ്ട് ചെയ്തിട്ടില്ല</string>

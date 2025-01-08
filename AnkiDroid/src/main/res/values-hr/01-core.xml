@@ -132,7 +132,7 @@
     <string name="empty_deck">Ova skupina je prazna</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Deck Search</string>
     <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_congrats_finished">Čestitamo! Za sada ste završili.</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Još nije potrebno dovršiti ni jednu karticu</string>
     <string name="sd_card_not_mounted">Pohrana uređaja nije montirana</string>

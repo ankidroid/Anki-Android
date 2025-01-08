@@ -129,7 +129,7 @@
     <string name="empty_deck">Dieser Stapel ist leer</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Stapelsuche</string>
     <string name="invalid_deck_name">Ungültiger Stapelname</string>
-    <string name="studyoptions_congrats_finished">Glückwunsch! Das war alles für heute.</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Dieser Stapel ist vorerst geschafft! %s</string>
     <string name="studyoptions_no_cards_due">Es sind noch keine Karten fällig</string>
     <string name="sd_card_not_mounted">Gerätespeicher nicht eingebunden</string>

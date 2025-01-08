@@ -135,7 +135,7 @@
     <string name="empty_deck">Гэта калода пустая</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Пошук калоды</string>
     <string name="invalid_deck_name">Памылковая назва калоды</string>
-    <string name="studyoptions_congrats_finished">Віншуем! На сёння ўсе карткі вывучаны.</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Калода скончылася! %s</string>
     <string name="studyoptions_no_cards_due">На сёння картак не засталося.</string>
     <string name="sd_card_not_mounted">Картка памяці не падключаная</string>

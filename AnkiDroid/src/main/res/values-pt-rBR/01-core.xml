@@ -129,7 +129,7 @@
     <string name="empty_deck">Este baralho está vazio</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Pesquisar baralho</string>
     <string name="invalid_deck_name">Nome do baralho inválido</string>
-    <string name="studyoptions_congrats_finished">Parabéns! Você concluiu por enquanto.</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Baralho finalizado por enquanto! %s</string>
     <string name="studyoptions_no_cards_due">Sem cartões pendentes por enquanto.</string>
     <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>

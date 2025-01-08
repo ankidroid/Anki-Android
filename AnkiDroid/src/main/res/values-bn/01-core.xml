@@ -129,7 +129,7 @@
     <string name="empty_deck">এই ডেক ফাঁকা।</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">ডেক অনুসন্ধান</string>
     <string name="invalid_deck_name">ডেক নাম বৈধ নয়</string>
-    <string name="studyoptions_congrats_finished">অভিনন্দন! আপাতত আপনার সমাপ্ত হয়েছে।</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">ডেক আপাতত শেষ! %s</string>
     <string name="studyoptions_no_cards_due">কোন কার্ড এখনও কার্যকরী হবে</string>
     <string name="sd_card_not_mounted">ডিভাইস স্টোরেজ মাউন্টেড নয়</string>

@@ -129,7 +129,7 @@
     <string name="empty_deck">Това тесте е празно</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Потърси тесте</string>
     <string name="invalid_deck_name">Невалидно име на тесте</string>
-    <string name="studyoptions_congrats_finished">Поздравления! Засега това е всичко. </string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Това е всичко от тестето засега. %s</string>
     <string name="studyoptions_no_cards_due">Няма оставащи карти</string>
     <string name="sd_card_not_mounted">Не е поставена SD-карта памет</string>
