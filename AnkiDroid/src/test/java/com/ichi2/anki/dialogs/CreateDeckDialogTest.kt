@@ -99,7 +99,7 @@ class CreateDeckDialogTest : RobolectricTest() {
         ensureExecutionOfScenario(DeckDialogType.DECK) { createDeckDialog, assertionCalled ->
             createDeckDialog.onNewDeckCreated = { id: DeckId ->
                 // a deck was created
-                assertThat(id, equalTo(col.decks.byName(deckName)!!.getLong("id")))
+                assertThat(id, equalTo(col.decks.byName(deckName)!!.id))
                 assertionCalled()
             }
             createDeckDialog.createDeck(deckName)

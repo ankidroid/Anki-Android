@@ -109,7 +109,7 @@ class DeckPickerViewModel(
             if (tree == null) return@combine FlattenedDeckList.empty
 
             // TODO: use flowOfFocusedDeck once it's set on all instances
-            val currentDeckId = withCol { decks.current().getLong("id") }
+            val currentDeckId = withCol { decks.current().id }
             Timber.i("currentDeckId: %d", currentDeckId)
 
             FlattenedDeckList(

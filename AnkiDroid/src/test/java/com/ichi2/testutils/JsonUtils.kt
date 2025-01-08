@@ -78,3 +78,5 @@ private fun jsonObjectOf(vararg pairs: Pair<String, Any>): JSONObject =
             put(key, value)
         }
     }
+
+fun isJsonHolderEqual(expectedValue: JSONObjectHolder) = IsJsonHolderEqual(expectedValue.jsonObject)

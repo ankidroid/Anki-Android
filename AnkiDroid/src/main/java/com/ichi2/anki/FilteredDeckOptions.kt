@@ -30,25 +30,24 @@ import android.preference.Preference
 import android.preference.PreferenceCategory
 import androidx.annotation.CheckResult
 import androidx.core.content.edit
-import anki.decks.Deck
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.ext.stringIterable
 import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.Deck
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.toDisplayString
 import com.ichi2.preferences.StepsPreference.Companion.convertFromJSON
 import com.ichi2.preferences.StepsPreference.Companion.convertToJSON
 import com.ichi2.themes.Themes
 import com.ichi2.ui.AppCompatPreferenceActivity
-import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
 
 /** Available items for 'Cards selected by' */
-private typealias CardSelectionOrder = Deck.Filtered.SearchTerm.Order
+private typealias CardSelectionOrder = anki.decks.Deck.Filtered.SearchTerm.Order
 
 @NeedsTest("construction + onCreate - do this after converting to fragment-based preferences.")
 class FilteredDeckOptions :
@@ -70,23 +69,22 @@ class FilteredDeckOptions :
         )
 
     inner class DeckPreferenceHack : AppCompatPreferenceActivity<FilteredDeckOptions.DeckPreferenceHack>.AbstractPreferenceHack() {
-        var secondFilter = false
+        val hasSecondFilter: Boolean
+            get() = deck.secondFilter != null
 
         override fun cacheValues() {
             Timber.d("cacheValues()")
-            val ar = deck.getJSONArray("terms").getJSONArray(0)
-            secondFilter = deck.getJSONArray("terms").length() > 1
-            val ar2: JSONArray?
-            values["search"] = ar.getString(0)
-            values["limit"] = ar.getString(1)
-            values["order"] = ar.getString(2)
-            if (secondFilter) {
-                ar2 = deck.getJSONArray("terms").getJSONArray(1)
-                values["search_2"] = ar2.getString(0)
-                values["limit_2"] = ar2.getString(1)
-                values["order_2"] = ar2.getString(2)
+            deck.firstFilter.apply {
+                values["search"] = search
+                values["limit"] = limit.toString()
+                values["order"] = order.toString()
             }
-            val delays = deck.optJSONArray("delays")
+            deck.secondFilter?.apply {
+                values["search_2"] = search
+                values["limit_2"] = limit.toString()
+                values["order_2"] = order.toString()
+            }
+            val delays = deck.delays
             if (delays != null) {
                 values["steps"] = convertFromJSON(delays)
                 values["stepsOn"] = java.lang.Boolean.toString(true)
@@ -94,67 +92,66 @@ class FilteredDeckOptions :
                 values["steps"] = "1 10"
                 values["stepsOn"] = java.lang.Boolean.toString(false)
             }
-            values["resched"] = java.lang.Boolean.toString(deck.getBoolean("resched"))
-            values["previewAgainSecs"] = deck.getString("previewAgainSecs")
-            values["previewHardSecs"] = deck.getString("previewHardSecs")
-            values["previewGoodSecs"] = deck.getString("previewGoodSecs")
+            values["resched"] = java.lang.Boolean.toString(deck.resched)
+            values["previewAgainSecs"] = deck.previewAgainSecs.toString()
+            values["previewHardSecs"] = deck.previewHardSecs.toString()
+            values["previewGoodSecs"] = deck.previewGoodSecs.toString()
         }
 
-        inner class Editor : AppCompatPreferenceActivity<FilteredDeckOptions.DeckPreferenceHack>.AbstractPreferenceHack.Editor() {
+        inner class Editor : AppCompatPreferenceActivity<DeckPreferenceHack>.AbstractPreferenceHack.Editor() {
             override fun commit(): Boolean {
                 Timber.d("commit() changes back to database")
                 for ((key, value) in update.valueSet()) {
                     Timber.i("Change value for key '%s': %s", key, value)
-                    val ar = deck.getJSONArray("terms")
-                    if (pref.secondFilter) {
+                    deck.secondFilter?.apply {
                         when (key) {
                             "search_2" -> {
-                                ar.getJSONArray(1).put(0, value)
+                                search = value as String
                             }
                             "limit_2" -> {
-                                ar.getJSONArray(1).put(1, value)
+                                limit = (value as String).toInt()
                             }
                             "order_2" -> {
-                                ar.getJSONArray(1).put(2, (value as String).toInt())
+                                order = (value as String).toInt()
                             }
                         }
                     }
                     when (key) {
                         "search" -> {
-                            ar.getJSONArray(0).put(0, value)
+                            deck.firstFilter.search = value as String
                         }
 
                         "limit" -> {
-                            ar.getJSONArray(0).put(1, value)
+                            deck.firstFilter.limit = (value as String).toInt()
                         }
                         "order" -> {
-                            ar.getJSONArray(0).put(2, (value as String).toInt())
+                            deck.firstFilter.order = (value as String).toInt()
                         }
                         "resched" -> {
-                            deck.put("resched", value)
+                            deck.resched = value as Boolean
                         }
                         "previewAgainSecs" -> {
-                            deck.put("previewAgainSecs", value)
+                            deck.previewAgainSecs = value as Int
                         }
                         "previewHardSecs" -> {
-                            deck.put("previewHardSecs", value)
+                            deck.previewHardSecs = value as Int
                         }
                         "previewGoodSecs" -> {
-                            deck.put("previewGoodSecs", value)
+                            deck.previewGoodSecs = value as Int
                         }
                         "stepsOn" -> {
                             val on = value as Boolean
                             if (on) {
                                 val steps = convertToJSON(values["steps"]!!)
                                 if (steps!!.length() > 0) {
-                                    deck.put("delays", steps)
+                                    deck.delays = steps
                                 }
                             } else {
-                                deck.put("delays", JSONObject.NULL)
+                                deck.delays = null
                             }
                         }
                         "steps" -> {
-                            deck.put("delays", convertToJSON((value as String)))
+                            deck.delays = convertToJSON((value as String))
                         }
                         "preset" -> {
                             val i: Int = (value as String).toInt()
@@ -248,7 +245,7 @@ class FilteredDeckOptions :
         if (title.contains("XXX")) {
             title =
                 try {
-                    title.replace("XXX", deck.getString("name"))
+                    title.replace("XXX", deck.name)
                 } catch (e: JSONException) {
                     Timber.w(e)
                     title.replace("XXX", "???")
@@ -292,7 +289,7 @@ class FilteredDeckOptions :
         if (prefChanged) {
             // Rebuild the filtered deck if a setting has changed
             try {
-                col.sched.rebuildDyn(deck.getLong("id"))
+                col.sched.rebuildDyn(deck.id)
             } catch (e: JSONException) {
                 Timber.e(e)
             }
@@ -353,7 +350,7 @@ class FilteredDeckOptions :
         (findPreference("order_2") as ListPreference).apply {
             entries = displayStrings
             entryValues = values
-            if (pref.secondFilter) {
+            if (pref.hasSecondFilter) {
                 value = pref.getString("order_2", CardSelectionOrder.ADDED.number.toString())
             }
         }
@@ -363,7 +360,7 @@ class FilteredDeckOptions :
     private fun setupSecondFilterListener() {
         val secondFilterSign = findPreference("filterSecond") as CheckBoxPreference
         val secondFilter = findPreference("secondFilter") as PreferenceCategory
-        if (pref.secondFilter) {
+        if (pref.hasSecondFilter) {
             secondFilter.isEnabled = true
             secondFilterSign.isChecked = true
         }
@@ -373,15 +370,14 @@ class FilteredDeckOptions :
                     return@OnPreferenceChangeListener true
                 }
                 if (!newValue) {
-                    deck.getJSONArray("terms").remove(1)
+                    deck.secondFilter = null
                     secondFilter.isEnabled = false
                 } else {
                     secondFilter.isEnabled = true
                     /**Link to the defaults used in AnkiDesktop
                      * <https://github.com/ankitects/anki/blob/1b15069b248a8f86f9bd4b3c66a9bfeab8dfb2b8/qt/aqt/filtered_deck.py#L148-L149>
                      */
-                    val narr = JSONArray(listOf("", 20, 5))
-                    deck.getJSONArray("terms").put(1, narr)
+                    deck.secondFilter = Deck.Term("", 20, 5)
                     val newOrderPrefSecond = findPreference("order_2") as ListPreference
                     newOrderPrefSecond.value = CardSelectionOrder.ADDED.number.toString()
                 }

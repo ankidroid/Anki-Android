@@ -853,7 +853,7 @@ open class SchedulerTest : InMemoryAnkiTest() {
         // cram deck
         val did = addDynamicDeck("Cram")
         val cram = col.decks.getLegacy(did)!!
-        cram.put("resched", false)
+        cram.resched = false
         col.decks.save(cram)
         col.sched.rebuildDyn(did)
         // grab the first card
@@ -1333,7 +1333,7 @@ open class SchedulerTest : InMemoryAnkiTest() {
         addBasicNote("foo", "bar")
         val did = addDynamicDeck("test")
         val deck = decks.getLegacy(did)!!
-        deck.put("resched", false)
+        deck.resched = false
         sched.rebuildDyn(did)
         var card: Card?
         for (i in 0..2) {

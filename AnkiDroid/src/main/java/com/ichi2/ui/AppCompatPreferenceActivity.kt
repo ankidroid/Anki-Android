@@ -82,7 +82,16 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
     protected lateinit var col: Collection
         private set
     protected lateinit var pref: PreferenceHack
-    protected lateinit var deck: Deck
+
+    // value class can't be lateinit.
+    // Instead we use a backing field.
+    // We can't use `_deck` as this is only allowed for public properties.
+    private var deckBackupField: Deck? = null
+    protected var deck: Deck
+        get() = deckBackupField!!
+        set(value) {
+            deckBackupField = value
+        }
 
     abstract inner class AbstractPreferenceHack : SharedPreferences {
         val values: MutableMap<String, String> = HashUtil.hashMapInit(30) // At most as many as in cacheValues

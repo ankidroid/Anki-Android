@@ -149,7 +149,7 @@ class ReminderService : BroadcastReceiver() {
             for (node in dues) {
                 val deck: Deck? = col.decks.getLegacy(node.did)
                 // Dynamic deck has no "conf", so are not added here.
-                if (deck != null && deck.optLong("conf") == dConfId) {
+                if (deck != null && deck.conf == dConfId) {
                     decks.add(node)
                 }
             }

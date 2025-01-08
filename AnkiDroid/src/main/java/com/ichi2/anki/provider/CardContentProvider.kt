@@ -983,7 +983,7 @@ class CardContentProvider : ContentProvider() {
                     try {
                         val deckDesc = values.getAsString(FlashCardsContract.Deck.DECK_DESC)
                         if (deckDesc != null) {
-                            deck.put("desc", deckDesc)
+                            deck.description = deckDesc
                         }
                     } catch (e: JSONException) {
                         Timber.e(e, "Could not set a field of new deck %s", deckName)
