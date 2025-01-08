@@ -77,7 +77,7 @@ class AutoAdvance(
 
     suspend fun onShowQuestion() {
         answerActionJob?.cancel()
-        if (!durationToShowQuestionFor().isPositive() || !isEnabled) return
+        if (!durationToShowQuestionFor().isPositive() && !isEnabled) return
 
         questionActionJob =
             viewModel.launchCatchingIO {
@@ -91,7 +91,7 @@ class AutoAdvance(
 
     suspend fun onShowAnswer() {
         questionActionJob?.cancel()
-        if (!durationToShowAnswerFor().isPositive() || !isEnabled) return
+        if (!durationToShowAnswerFor().isPositive() && !isEnabled) return
 
         answerActionJob =
             viewModel.launchCatchingIO {
