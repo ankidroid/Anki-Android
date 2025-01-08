@@ -699,7 +699,7 @@ class Decks(
             return null
         }
         val deck = getLegacy(did) ?: return null
-        return deck.getString("name") + DECK_SEPARATOR + subdeckName
+        return deck.name + DECK_SEPARATOR + subdeckName
     }
 
     @NotInPyLib
