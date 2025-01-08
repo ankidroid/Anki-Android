@@ -24,10 +24,7 @@ import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.libanki.BrowserConfig
-import com.ichi2.libanki.BrowserConfig.ACTIVE_CARD_COLUMNS_KEY
-import com.ichi2.libanki.BrowserConfig.ACTIVE_NOTE_COLUMNS_KEY
 import com.ichi2.libanki.BrowserDefaults
-import net.ankiweb.rsdroid.Backend
 import timber.log.Timber
 
 /**
@@ -67,6 +64,33 @@ class BrowserColumnCollection(
                     value.split(SEPARATOR_CHAR).map { CardBrowserColumn.fromColumnKey(it) }
                 }
             return BrowserColumnCollection(columns)
+        }
+
+        class ColumnReplacement(
+            val newColumns: BrowserColumnCollection,
+            val originalColumns: List<CardBrowserColumn>,
+        )
+
+        fun replace(
+            prefs: SharedPreferences,
+            mode: CardsOrNotes,
+            newColumns: List<CardBrowserColumn>,
+        ): ColumnReplacement {
+            val oldColumns = mutableListOf<CardBrowserColumn>()
+
+            val newColumnCollection =
+                update(prefs, mode) { cols ->
+                    oldColumns.addAll(cols.filterNotNull())
+                    cols.clear()
+                    cols.addAll(newColumns)
+                    return@update true
+                    // guaranteed to be non-null, since we return true
+                }!!
+
+            return ColumnReplacement(
+                newColumns = newColumnCollection,
+                originalColumns = oldColumns,
+            )
         }
 
         /**

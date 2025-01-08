@@ -23,9 +23,7 @@ import net.ankiweb.rsdroid.Backend
 /**
  * A column available in the [browser][CardBrowser]
  *
- * @see COLUMN1_KEYS - values for first column
- * @see COLUMN2_KEYS - values for second column
- * @see CardBrowser.CardCache.getColumnHeaderText - how columns are rendered
+ * @see [anki.search.BrowserRow] for data associated with a column
  *
  * @param ankiColumnKey The key used in [Backend.setActiveBrowserColumns]
  */
@@ -119,10 +117,6 @@ enum class CardBrowserColumn(
     ;
 
     companion object {
-        val COLUMN1_KEYS = arrayOf(QUESTION, SFLD)
-
-        val COLUMN2_KEYS = entries.toTypedArray()
-
         fun fromColumnKey(key: String): CardBrowserColumn =
             entries.firstOrNull { it.ankiColumnKey == key }
                 ?: throw IllegalArgumentException("Invalid key: $key")

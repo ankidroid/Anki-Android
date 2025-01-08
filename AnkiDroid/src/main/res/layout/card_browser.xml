@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:tools="http://schemas.android.com/tools"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,35 +16,25 @@
         <include layout="@layout/toolbar" />
 
         <LinearLayout
+            android:id="@+id/browser_column_headings"
             android:layout_width="match_parent"
             android:background="?android:attr/colorBackground"
             android:orientation="horizontal"
-            android:layout_height="?attr/listPreferredItemHeight">
+            android:paddingVertical="2dp"
+            android:layout_height="wrap_content">
 
-            <Spinner
-                android:id="@+id/browser_column1_spinner"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                />
-
-            <Spinner
-                android:id="@+id/browser_column2_spinner"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/card_browser_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="?android:attr/colorBackground"
             android:overScrollFooter="@color/transparent"
-            android:dividerHeight="0.5dp"
             android:clipToPadding="false"
             android:paddingBottom="72dp"
             android:drawSelectorOnTop="true"
+            tools:listitem="@layout/card_item_browser"
             />
 
     </LinearLayout>
