@@ -1062,10 +1062,7 @@ class ContentProviderTest : InstrumentedTest() {
         val filteredDeckId = col.decks.newFiltered("Raw due filtered deck")
         testDeckIds.add(filteredDeckId)
         val filteredDeck = checkNotNull(col.decks.getLegacy(filteredDeckId))
-        filteredDeck.jsonObject
-            .getJSONArray("terms")
-            .getJSONArray(0)
-            .put(0, "cid:${card.id}")
+        filteredDeck.firstFilter.search = "cid:${card.id}"
         col.decks.save(filteredDeck)
         col.sched.rebuildFilteredDeck(filteredDeckId)
         card.load(col)
