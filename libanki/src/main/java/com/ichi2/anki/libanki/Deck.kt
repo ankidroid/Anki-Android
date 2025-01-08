@@ -3,52 +3,47 @@
 
 package com.ichi2.anki.libanki
 
+import androidx.annotation.VisibleForTesting
 import anki.decks.Deck.Filtered.SearchTerm.Order
-import com.ichi2.anki.common.utils.ext.deepClonedInto
+import com.ichi2.anki.common.json.JSONObjectHolder
 import com.ichi2.anki.libanki.utils.NotInPyLib
 import net.ankiweb.rsdroid.Translations
+import org.intellij.lang.annotations.Language
 import org.json.JSONObject
 
-class Deck : JSONObject {
+/** Wraps legacy deck JSON without copying it. Property changes update the supplied object. */
+data class Deck(
+    @VisibleForTesting override val jsonObject: JSONObject,
+) : JSONObjectHolder {
     /**
-     * Creates a copy from [JSONObject] and use it as a string
-     *
-     * This function will perform deepCopy on the passed object
-     *
-     * If you want to create a Deck without deepCopy
-     * @see Deck.from
+     * Creates a deck object from a JSON string
      */
-    constructor(json: JSONObject) : super() {
-        json.deepClonedInto(this)
-    }
-
-    /**
-     * Creates a deck object form a json string
-     */
-    constructor(json: String) : super(json)
+    constructor(
+        @Language("JSON") json: String,
+    ) : this(JSONObject(json))
 
     val isFiltered: Boolean
-        get() = getInt("dyn") != 0
+        get() = jsonObject.getInt("dyn") != 0
 
     val isNormal: Boolean
         get() = !isFiltered
 
     var name: String
-        get() = getString("name")
+        get() = jsonObject.getString("name")
         set(value) {
-            put("name", value)
+            jsonObject.put("name", value)
         }
 
     var collapsed: Boolean
-        get() = getBoolean("collapsed")
+        get() = jsonObject.getBoolean("collapsed")
         set(value) {
-            put("collapsed", value)
+            jsonObject.put("collapsed", value)
         }
 
     var browserCollapsed: Boolean
-        get() = optBoolean("browserCollapsed", false)
+        get() = jsonObject.optBoolean("browserCollapsed", false)
         set(value) {
-            put("browserCollapsed", value)
+            jsonObject.put("browserCollapsed", value)
         }
 
     /**
@@ -57,18 +52,18 @@ class Deck : JSONObject {
      * @see DeckId
      */
     var id: DeckId
-        get() = getLong("id")
+        get() = jsonObject.getLong("id")
         set(value) {
-            put("id", value)
+            jsonObject.put("id", value)
         }
 
     var conf: DeckConfigId
         get() {
-            val value = optLong("conf")
+            val value = jsonObject.optLong("conf")
             return if (value > 0) value else 1
         }
         set(value) {
-            put("conf", value)
+            jsonObject.put("conf", value)
         }
 
     /**
@@ -77,9 +72,9 @@ class Deck : JSONObject {
      * May be HTML or Markdown, depending on [descriptionAsMarkdown].
      */
     var description: String
-        get() = optString("desc", "")
+        get() = jsonObject.optString("desc", "")
         set(value) {
-            put("desc", value)
+            jsonObject.put("desc", value)
         }
 
     /**
@@ -97,10 +92,12 @@ class Deck : JSONObject {
      * @see anki.i18n.GeneratedTranslations.deckConfigDescriptionNewHandlingHint
      */
     var descriptionAsMarkdown: Boolean
-        get() = optBoolean("md", false)
+        get() = jsonObject.optBoolean("md", false)
         set(value) {
-            put("md", value)
+            jsonObject.put("md", value)
         }
+
+    override fun toString(): String = jsonObject.toString()
 }
 
 /**
@@ -129,7 +126,7 @@ fun Order.toDisplayString(translations: Translations) =
 @NotInPyLib
 internal fun Deck.confOrNull(): DeckConfigId? =
     try {
-        val value = getLong("conf")
+        val value = jsonObject.getLong("conf")
         if (value > 0) value else null
     } catch (e: Exception) {
         null
