@@ -38,16 +38,17 @@ import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.Deck
+import com.ichi2.libanki.Deck.Term
 import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.testutils.AnkiFragmentScenario
-import com.ichi2.testutils.isJsonEqual
+import com.ichi2.testutils.isJsonHolderEqual
 import io.mockk.every
 import io.mockk.mockk
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
-import org.intellij.lang.annotations.Language
-import org.json.JSONObject
+import org.json.JSONArray
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
@@ -72,37 +73,38 @@ class CustomStudyDialogTest : RobolectricTest() {
             assertThat("Custom Study should be filtered", customStudy.isFiltered)
 
             // remove timestamps to allow us to compare JSON
-            customStudy.remove("id")
-            customStudy.remove("mod")
-            customStudy.remove("name")
+            customStudy.jsonObject.remove("id")
+            customStudy.jsonObject.remove("mod")
+            customStudy.jsonObject.remove("name")
 
-            // compare JSON
-            @Language("json")
+            // Putting in the Strings value that AnkiDroid currently don't allow to configure.
+            // Using setters when possible.
             val expected =
-                """
+                Deck(
+                    """
                 {
-                    "browserCollapsed": true,
-                    "collapsed": true,
-                    "delays": null,
-                    "desc": "",
-                    "dyn": 1,
                     "lrnToday": [0, 0],
                     "newToday": [0, 0],
                     "previewDelay": 10,
-                    "previewAgainSecs": 60,
-                    "previewHardSecs": 600,
-                    "previewGoodSecs": 0,
-                    "resched": false,
                     "revToday": [0, 0],
                     "separate": true,
-                    "terms": [
-                        ["is:new added:1 deck:Default", 99999, 5]
-                    ],
                     "timeToday": [0, 0],
                     "usn": -1
+                    }
+                    """,
+                ).apply {
+                    browserCollapsed = true
+                    collapsed = true
+                    delays = null
+                    description = ""
+                    isFiltered = true
+                    previewAgainSecs = 60
+                    previewHardSecs = 600
+                    previewGoodSecs = 0
+                    resched = false
+                    terms = JSONArray(listOf(Term("is:new added:1 deck:Default", 99999, 5).array))
                 }
-                """.trimIndent()
-            assertThat(customStudy, isJsonEqual(JSONObject(expected)))
+            assertThat(expected, isJsonHolderEqual(customStudy))
         }
 
     @Test

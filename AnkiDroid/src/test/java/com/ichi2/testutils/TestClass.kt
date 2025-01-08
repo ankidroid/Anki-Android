@@ -181,7 +181,7 @@ interface TestClass {
             col.decks.newFiltered(name).also { did ->
                 if (search == null) return@also
                 val deck = col.decks.get(did)!!
-                deck.getJSONArray("terms").getJSONArray(0).put(0, search)
+                deck.firstFilter.search = search
                 col.decks.save(deck)
                 col.sched.rebuildDyn(did)
             }

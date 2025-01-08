@@ -854,7 +854,7 @@ open class SchedulerTest : JvmTest() {
         // cram deck
         val did = addDynamicDeck("Cram")
         val cram = col.decks.get(did)!!
-        cram.put("resched", false)
+        cram.resched = false
         col.decks.save(cram)
         col.sched.rebuildDyn(did)
         // grab the first card
@@ -1335,7 +1335,7 @@ open class SchedulerTest : JvmTest() {
         addBasicNote("foo", "bar")
         val did = addDynamicDeck("test")
         val deck = decks.get(did)!!
-        deck.put("resched", false)
+        deck.resched = false
         sched.rebuildDyn(did)
         var card: Card?
         for (i in 0..2) {
