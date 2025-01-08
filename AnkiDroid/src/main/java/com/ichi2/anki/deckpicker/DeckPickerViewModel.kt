@@ -120,7 +120,7 @@ class DeckPickerViewModel :
             // TODO: use flowOfFocusedDeck once it's set on all instances
             // This flow can outlive the visible screen. Do not reopen the collection just to redraw it.
             val currentDeckId =
-                withOpenColOrNull { decks.current().getLong("id") }
+                withOpenColOrNull { decks.current().id }
                     ?: return@combine FlattenedDeckList.empty
             Timber.i("currentDeckId: %d", currentDeckId)
 
