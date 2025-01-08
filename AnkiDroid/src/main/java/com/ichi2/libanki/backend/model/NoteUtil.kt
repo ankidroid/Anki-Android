@@ -24,7 +24,7 @@ fun Note.toBackendNote(): anki.notes.Note {
     return note {
         id = note.id
         guid = note.guId!!
-        notetypeId = note.mid
+        notetypeId = note.noteTypeId
         mtimeSecs = note.mod
         usn = note.usn
         tags.addAll(note.tags.asIterable())

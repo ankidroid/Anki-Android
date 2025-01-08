@@ -112,7 +112,7 @@ object NoteService {
         editorNoteDst: Note,
     ) {
         if (noteSrc is MultimediaEditableNote) {
-            if (noteSrc.modelId != editorNoteDst.mid) {
+            if (noteSrc.modelId != editorNoteDst.noteTypeId) {
                 throw RuntimeException("Source and Destination Note ID do not match.")
             }
             val totalFields: Int = noteSrc.numberOfFields
