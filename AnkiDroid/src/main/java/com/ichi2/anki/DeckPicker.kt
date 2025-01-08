@@ -2303,7 +2303,7 @@ open class DeckPicker :
         } catch (e: RuntimeException) {
             Timber.e(e, "RuntimeException setting time remaining")
         }
-        val current = withCol { decks.current().optLong("id") }
+        val current = withCol { decks.current().id }
         if (focusedDeck != current) {
             scrollDecklistToDeck(current)
             focusedDeck = current
@@ -2683,7 +2683,12 @@ open class DeckPicker :
             withCol { sched.hasCardsTodayAfterStudyAheadLimit() } -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
             withCol { sched.newDue() || sched.revDue() } -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
             withCol { decks.isFiltered(did) } -> CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED
-            deckListAdapter.getNodeByDid(did).children.isEmpty() && withCol { decks.isEmpty(did) } -> CompletedDeckStatus.EMPTY_REGULAR_DECK
+            deckListAdapter
+                .getNodeByDid(
+                    did,
+                ).children
+                .isEmpty() &&
+                withCol { decks.isEmpty(did) } -> CompletedDeckStatus.EMPTY_REGULAR_DECK
             else -> CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY
         }
 

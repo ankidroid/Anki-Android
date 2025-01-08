@@ -34,7 +34,6 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.Ease
 import com.ichi2.anki.FlashCardsContract
-import com.ichi2.anki.utils.ext.description
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardTemplate
 import com.ichi2.libanki.Collection
@@ -979,7 +978,7 @@ class CardContentProvider : ContentProvider() {
                     try {
                         val deckDesc = values.getAsString(FlashCardsContract.Deck.DECK_DESC)
                         if (deckDesc != null) {
-                            deck.put("desc", deckDesc)
+                            deck.description = deckDesc
                         }
                     } catch (e: JSONException) {
                         Timber.e(e, "Could not set a field of new deck %s", deckName)

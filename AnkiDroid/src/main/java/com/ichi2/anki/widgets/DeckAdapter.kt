@@ -146,7 +146,7 @@ class DeckAdapter(
         mutex.withLock {
             deckTree = node
             hasSubdecks = node.children.any { it.children.any() }
-            currentDeckId = withCol { decks.current().optLong("id") }
+            currentDeckId = withCol { decks.current().id }
             rev = node.revCount
             lrn = node.lrnCount
             new = node.newCount

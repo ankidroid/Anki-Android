@@ -80,7 +80,16 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
     protected lateinit var col: Collection
         private set
     protected lateinit var pref: PreferenceHack
-    protected lateinit var deck: Deck
+
+    // value class can't be lateinit.
+    // Instead we use a backing field. As suggested by Kotlin documentation, its name is
+    // the field, prefixed by _.
+    private var _deck: Deck? = null
+    protected var deck: Deck
+        get() = _deck!!
+        set(value) {
+            _deck = value
+        }
 
     abstract inner class AbstractPreferenceHack : SharedPreferences {
         val values: MutableMap<String, String> = HashUtil.hashMapInit(30) // At most as many as in cacheValues
