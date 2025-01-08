@@ -73,6 +73,14 @@ data class Deck(
             jsonObject.put("conf", value)
         }
 
+    var noteTypeId: NoteTypeId?
+        get() = jsonObject.getLongOrNull("mid")
+        set(value) {
+            jsonObject.put("mid", value)
+        }
+
+    var resched by jsonBoolean("resched")
+
     /**
      * The description, shown on the deck overview and optionally the congratulations screen.
      *

@@ -2546,7 +2546,7 @@ class NoteEditorFragment :
 
         getColUnsafe.notetypes.setCurrent(noteType)
         val currentDeck = getColUnsafe.decks.current()
-        currentDeck.jsonObject.put("mid", newId)
+        currentDeck.noteTypeId = newId
         getColUnsafe.decks.save(currentDeck)
 
         // Update deck

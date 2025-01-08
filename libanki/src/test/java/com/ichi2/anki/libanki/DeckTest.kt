@@ -43,7 +43,7 @@ class DeckTest : InMemoryAnkiTest() {
         // Legacy learning steps are numbers in minutes, not strings such as "1h".
         val deck = Deck("""{"delays":[60,1],"previewAgainSecs":60,"previewHardSecs":600,"previewGoodSecs":0}""")
         deck.name = "Filtered"
-        deck.jsonObject.put("resched", false)
+        deck.resched = false
         val serialized = JSONObject(BackendUtils.toJsonBytes(deck).toStringUtf8())
         assertEquals(deck.jsonObject.toString(), deck.toString())
         assertEquals("Filtered", serialized.get("name"))
@@ -111,5 +111,20 @@ class DeckTest : InMemoryAnkiTest() {
         val description = "foo"
         d.description = description
         assertEquals(description, d.description)
+    }
+
+    @Test
+    fun testNoteTypeId() {
+        val noteTypeId = 42L
+        d.noteTypeId = noteTypeId
+        assertEquals(noteTypeId, d.noteTypeId)
+    }
+
+    @Test
+    fun testResched() {
+        d.resched = true
+        assertTrue(d.resched)
+        d.resched = false
+        assertTrue(!d.resched)
     }
 }
