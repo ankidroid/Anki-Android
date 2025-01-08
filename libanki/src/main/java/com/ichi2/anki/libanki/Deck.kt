@@ -6,6 +6,9 @@ package com.ichi2.anki.libanki
 import androidx.annotation.VisibleForTesting
 import anki.decks.Deck.Filtered.SearchTerm.Order
 import com.ichi2.anki.common.json.JSONObjectHolder
+import com.ichi2.anki.common.json.jsonBoolean
+import com.ichi2.anki.common.json.jsonLong
+import com.ichi2.anki.common.json.jsonString
 import com.ichi2.anki.libanki.utils.NotInPyLib
 import net.ankiweb.rsdroid.Translations
 import org.intellij.lang.annotations.Language
@@ -22,41 +25,45 @@ data class Deck(
         @Language("JSON") json: String,
     ) : this(JSONObject(json))
 
+    /**
+     * Whether this deck is a filtered deck.
+     */
     val isFiltered: Boolean
         get() = jsonObject.getInt("dyn") != 0
 
+    /**
+     * Whether this deck is a normal deck. That is, not a filtered deck.
+     */
     val isNormal: Boolean
         get() = !isFiltered
 
-    var name: String
-        get() = jsonObject.getString("name")
-        set(value) {
-            jsonObject.put("name", value)
-        }
-
-    var collapsed: Boolean
-        get() = jsonObject.getBoolean("collapsed")
-        set(value) {
-            jsonObject.put("collapsed", value)
-        }
-
-    var browserCollapsed: Boolean
-        get() = jsonObject.optBoolean("browserCollapsed", false)
-        set(value) {
-            jsonObject.put("browserCollapsed", value)
-        }
+    /**
+     * The name of the deck. Mutable. If you want a way to persistently represents this deck, use [id] instead.
+     */
+    var name by jsonString("name")
 
     /**
-     * Unique identifier of the deck
+     * If this deck has subdecks, whether those subdecks should be collapsed in the desktop card browser.
+     * Not used in ankidroid at the moment.
+     */
+    var browserCollapsed by jsonBoolean("browserCollapsed", defaultValue = false)
+
+    /**
+     * If this deck has subdecks, whether those subdecks should be collapsed in the deck picker.
+     */
+    var collapsed by jsonBoolean("collapsed")
+
+    /**
+     * The id of the deck. Should be globally unique
+     * (created as a timestamp, very small chance of collision between two different decks from different users)
      *
      * @see DeckId
      */
-    var id: DeckId
-        get() = jsonObject.getLong("id")
-        set(value) {
-            jsonObject.put("id", value)
-        }
+    var id: DeckId by jsonLong("id")
 
+    /**
+     * The id of the deck option.
+     */
     var conf: DeckConfigId
         get() {
             val value = jsonObject.optLong("conf")
@@ -71,11 +78,7 @@ data class Deck(
      *
      * May be HTML or Markdown, depending on [descriptionAsMarkdown].
      */
-    var description: String
-        get() = jsonObject.optString("desc", "")
-        set(value) {
-            jsonObject.put("desc", value)
-        }
+    var description by jsonString("desc", defaultValue = "")
 
     /**
      * Treats [description] as Markdown, cleaning HTML input and stripping images.
@@ -91,11 +94,7 @@ data class Deck(
      * @see anki.i18n.GeneratedTranslations.deckConfigDescriptionNewHandling
      * @see anki.i18n.GeneratedTranslations.deckConfigDescriptionNewHandlingHint
      */
-    var descriptionAsMarkdown: Boolean
-        get() = jsonObject.optBoolean("md", false)
-        set(value) {
-            jsonObject.put("md", value)
-        }
+    var descriptionAsMarkdown by jsonBoolean("md", defaultValue = false)
 
     override fun toString(): String = jsonObject.toString()
 }
