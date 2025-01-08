@@ -200,7 +200,10 @@ interface AnkiTest {
             col.decks.newFiltered(name).also { did ->
                 if (search == null) return@also
                 val deck = col.decks.getLegacy(did)!!
-                deck.getJSONArray("terms").getJSONArray(0).put(0, search)
+                deck.jsonObject
+                    .getJSONArray("terms")
+                    .getJSONArray(0)
+                    .put(0, search)
                 col.decks.save(deck)
                 col.sched.rebuildFilteredDeck(did)
             }

@@ -44,7 +44,7 @@ import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.testutils.AnkiFragmentScenario
-import com.ichi2.testutils.isJsonEqual
+import com.ichi2.testutils.isJsonHolderEqual
 import com.ichi2.testutils.launchFragment
 import com.ichi2.testutils.uninitializeField
 import com.ichi2.utils.positiveButton
@@ -92,9 +92,9 @@ class CustomStudyDialogTest : RobolectricTest() {
             assertThat("Custom Study should be filtered", customStudy.isFiltered)
 
             // remove timestamps to allow us to compare JSON
-            customStudy.remove("id")
-            customStudy.remove("mod")
-            customStudy.remove("name")
+            customStudy.jsonObject.remove("id")
+            customStudy.jsonObject.remove("mod")
+            customStudy.jsonObject.remove("name")
 
             // compare JSON
             @Language("json")
@@ -122,7 +122,7 @@ class CustomStudyDialogTest : RobolectricTest() {
                     "usn": -1
                 }
                 """.trimIndent()
-            assertThat(customStudy, isJsonEqual(expected))
+            assertThat(customStudy, isJsonHolderEqual(expected))
         }
 
     @Test
