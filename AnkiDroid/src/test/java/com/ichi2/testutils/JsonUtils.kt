@@ -82,6 +82,8 @@ private fun jsonObjectOf(vararg pairs: Pair<String, Any>): JSONObject =
         }
     }
 
+fun isJsonHolderEqual(expectedValue: JSONObjectHolder) = IsJsonHolderEqual(expectedValue.jsonObject)
+
 /**
  * Returns whether [a] and [b] produce the same JSON output as a string
  *

@@ -82,7 +82,7 @@ class StudyOptionsViewModel : ViewModel() {
             buriedReview = tree.reviewCount - counts.rev
         }
         val isDynamic = deck.isFiltered
-        val fullName = deck.getString("name")
+        val fullName = deck.name
         val description =
             if (isDynamic) {
                 null
