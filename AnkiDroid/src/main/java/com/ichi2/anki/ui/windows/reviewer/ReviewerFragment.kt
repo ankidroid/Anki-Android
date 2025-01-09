@@ -37,6 +37,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -260,9 +261,11 @@ class ReviewerFragment :
     }
 
     private fun setupAnswerButtons(view: View) {
-        val hideAnswerButtons = sharedPrefs().getBoolean(getString(R.string.hide_answer_buttons_key), false)
+        val prefs = sharedPrefs()
+        val hideAnswerButtons = prefs.getBoolean(getString(R.string.hide_answer_buttons_key), false)
+        val buttonsAreaLayout = view.findViewById<FrameLayout>(R.id.buttons_area)
         if (hideAnswerButtons) {
-            view.findViewById<FrameLayout>(R.id.buttons_area).isVisible = false
+            buttonsAreaLayout.isVisible = false
             return
         }
 
@@ -323,9 +326,18 @@ class ReviewerFragment :
             resetZoom()
         }
 
-        if (sharedPrefs().getBoolean(getString(R.string.hide_hard_and_easy_key), false)) {
+        if (prefs.getBoolean(getString(R.string.hide_hard_and_easy_key), false)) {
             hardButton.isVisible = false
             easyButton.isVisible = false
+        }
+
+        val buttonsHeight = prefs.getInt("answerButtonSize", 100)
+        if (buttonsHeight != 100) {
+            buttonsAreaLayout.post {
+                buttonsAreaLayout.updateLayoutParams {
+                    height = buttonsAreaLayout.measuredHeight * buttonsHeight / 100
+                }
+            }
         }
     }
 
