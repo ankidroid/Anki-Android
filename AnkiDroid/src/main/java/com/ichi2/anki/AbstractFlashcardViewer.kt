@@ -1308,7 +1308,7 @@ abstract class AbstractFlashcardViewer :
         easeButton1!!.performSafeClick()
     }
 
-    override fun automaticShowAnswer() {
+    override fun automaticShowAnswer(action: AutomaticAnswerAction) {
         if (flipCardLayout!!.isEnabled && flipCardLayout!!.visibility == View.VISIBLE) {
             flipCardLayout!!.performClick()
         }
