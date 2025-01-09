@@ -18,6 +18,7 @@ package com.ichi2.anki.reviewer
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.reviewer.AutomaticAnswer.AutomaticallyAnswered
+import com.ichi2.anki.ui.windows.reviewer.autoadvance.QuestionAction
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.CoreMatchers.equalTo
@@ -124,9 +125,9 @@ class AutomaticAnswerTest : JvmTest() {
 
         val automaticAnswerHandler =
             object : AutomaticallyAnswered {
-                override fun automaticShowAnswer() {
+                override fun automaticShowAnswer(action: QuestionAction) {
                     automaticAnswerHandle?.simulateCardFlip()
-                    automaticallyAnswered?.automaticShowAnswer()
+                    automaticallyAnswered?.automaticShowAnswer(action)
                 }
 
                 override fun automaticShowQuestion(action: AutomaticAnswerAction) {
@@ -150,7 +151,7 @@ class AutomaticAnswerTest : JvmTest() {
         var answerShown: Boolean = false,
         var questionShown: Boolean = false,
     ) : AutomaticallyAnswered {
-        override fun automaticShowAnswer() {
+        override fun automaticShowAnswer(action: QuestionAction) {
             answerShown = true
         }
 

@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.ui.windows.reviewer.autoadvance
 
+import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.libanki.DeckConfig
 import com.ichi2.libanki.DeckConfig.Companion.QUESTION_ACTION
 
@@ -24,6 +25,13 @@ enum class QuestionAction(
     SHOW_ANSWER(0),
     SHOW_REMINDER(1),
     ;
+
+    /** Convert to a [ViewerCommand] */
+    fun toCommand(): ViewerCommand? =
+        when (this) {
+            SHOW_ANSWER -> ViewerCommand.SHOW_ANSWER
+            SHOW_REMINDER -> null
+        }
 
     companion object {
         fun from(code: Int): QuestionAction = entries.firstOrNull { it.code == code } ?: SHOW_ANSWER
