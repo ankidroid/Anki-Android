@@ -422,10 +422,21 @@ class Collection(
         return null
     }
 
-    // consider changing implementation to return protobuf directly
+    /**
+     * Returns a [BrowserRow], cells dependent on [Backend.setActiveBrowserColumns]
+     *
+     * WARN: As this is a latency-sensitive call, most callers should use [Backend.browserRowForId]
+     *
+     * @param id Either a [CardId] or a [NoteId], depending on the value of
+     * [ConfigKey.Bool.BROWSER_TABLE_SHOW_NOTES_MODE]
+     *
+     * @see [setBrowserCardColumns]
+     * @see [setBrowserNoteColumns]
+     */
+    // For performance, this does not match upstream:
+    // https://github.com/ankitects/anki/blob/1fb1cbbf85c48a54c05cb4442b1b424a529cac60/pylib/anki/collection.py#L869-L881
     @LibAnkiAlias("browser_row_for_id")
-    @Deprecated("not implemented", replaceWith = ReplaceWith("nothing"))
-    fun browserRowForId(id: Long): BrowserRow = TODO()
+    fun browserRowForId(id: Long): BrowserRow = backend.browserRowForId(id)
 
     /** Return the stored card column names and ensure the backend columns are set and in sync. */
     @LibAnkiAlias("load_browser_card_columns")

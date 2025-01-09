@@ -428,7 +428,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     private fun getCardFlagAfterFlagChangeDone(cardId: CardId): Flag {
-        val data = col.backend.browserRowForId(cardId)
+        val data = col.browserRowForId(cardId)
 
         return when (data.color) {
             Color.COLOR_FLAG_BLUE -> Flag.BLUE
@@ -1173,7 +1173,7 @@ class CardBrowserTest : RobolectricTest() {
     private fun CheckedCardResult.getColumnHeaderText(header: CardBrowserColumn): String? {
         // There's currently a minimum of 2 columns
         col.backend.setActiveBrowserColumns(listOf(header.ankiColumnKey, "answer"))
-        return col.backend
+        return col
             .browserRowForId(this.cardOrNoteId)
             .getCells(0)
             .text
