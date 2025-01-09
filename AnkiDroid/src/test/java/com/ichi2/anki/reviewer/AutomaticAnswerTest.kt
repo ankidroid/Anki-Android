@@ -124,9 +124,9 @@ class AutomaticAnswerTest : JvmTest() {
 
         val automaticAnswerHandler =
             object : AutomaticallyAnswered {
-                override fun automaticShowAnswer() {
+                override fun automaticShowAnswer(action: AutomaticAnswerAction) {
                     automaticAnswerHandle?.simulateCardFlip()
-                    automaticallyAnswered?.automaticShowAnswer()
+                    automaticallyAnswered?.automaticShowAnswer(action)
                 }
 
                 override fun automaticShowQuestion(action: AutomaticAnswerAction) {
@@ -150,7 +150,7 @@ class AutomaticAnswerTest : JvmTest() {
         var answerShown: Boolean = false,
         var questionShown: Boolean = false,
     ) : AutomaticallyAnswered {
-        override fun automaticShowAnswer() {
+        override fun automaticShowAnswer(action: AutomaticAnswerAction) {
             answerShown = true
         }
 

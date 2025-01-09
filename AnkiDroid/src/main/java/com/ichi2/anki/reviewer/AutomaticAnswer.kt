@@ -18,7 +18,6 @@ package com.ichi2.anki.reviewer
 
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
-import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.AnswerButtons.AGAIN
@@ -89,7 +88,7 @@ class AutomaticAnswer(
                 Timber.d("showAnswer: disabled")
                 return@Runnable
             }
-            target.automaticShowAnswer()
+            target.automaticShowAnswer(settings.answerAction)
         }
     private val showQuestionTask =
         Runnable {
@@ -211,7 +210,7 @@ class AutomaticAnswer(
     }
 
     interface AutomaticallyAnswered {
-        fun automaticShowAnswer()
+        fun automaticShowAnswer(action: AutomaticAnswerAction)
 
         fun automaticShowQuestion(action: AutomaticAnswerAction)
     }
@@ -307,13 +306,16 @@ enum class AutomaticAnswerAction(
     SHOW_REMINDER(4),
     ;
 
-    fun execute(reviewer: Reviewer) {
+    fun execute(
+        reviewer: Reviewer,
+        snackbarMessage: String,
+    ) {
         val action = this.toCommand()
         if (action != null) {
             Timber.i("Executing %s", action)
             reviewer.executeCommand(action)
         } else {
-            reviewer.showSnackbar(TR.studyingAnswerTimeElapsed())
+            reviewer.showSnackbar(snackbarMessage)
         }
     }
 
