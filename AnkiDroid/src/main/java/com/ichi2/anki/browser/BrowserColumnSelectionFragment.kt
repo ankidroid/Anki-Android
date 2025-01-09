@@ -23,6 +23,7 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
 import androidx.core.os.BundleCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -37,6 +38,7 @@ import com.ichi2.anki.browser.BrowserColumnSelectionRecyclerItem.UsageItem
 import com.ichi2.anki.browser.ColumnUsage.ACTIVE
 import com.ichi2.anki.browser.ColumnUsage.AVAILABLE
 import com.ichi2.anki.dialogs.DiscardChangesDialog
+import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import kotlinx.coroutines.runBlocking
@@ -71,6 +73,12 @@ class BrowserColumnSelectionFragment : DialogFragment(R.layout.preferences_brows
     private lateinit var initiallySelectedColumns: List<CardBrowserColumn>
 
     private lateinit var toolbar: MaterialToolbar
+
+    private val cardsOrNotes: CardsOrNotes
+        get() =
+            requireNotNull(
+                BundleCompat.getParcelable(requireArguments(), ARG_MODE, CardsOrNotes::class.java),
+            )
 
     // this is needed as requireActivity().onBackPressedDispatcher.onBackPressed()
     // closes the activity, but an actual back press closes the dialog
@@ -114,7 +122,7 @@ class BrowserColumnSelectionFragment : DialogFragment(R.layout.preferences_brows
         val (active, available) =
             if (savedInstanceState == null) {
                 // TODO: runBlocking shouldn't be necessary here.
-                runBlocking { viewModel.previewColumnHeadings() }
+                runBlocking { viewModel.previewColumnHeadings(cardsOrNotes) }
             } else {
                 fun getSavedList(key: String) = BundleCompat.getParcelableArrayList(savedInstanceState, key, ColumnWithSample::class.java)!!
 
@@ -133,7 +141,7 @@ class BrowserColumnSelectionFragment : DialogFragment(R.layout.preferences_brows
                     }
 
                     Timber.d("save columns and close")
-                    if (viewModel.updateActiveColumns(columnAdapter.selected)) {
+                    if (viewModel.updateActiveColumns(columnAdapter.selected, cardsOrNotes)) {
                         dismiss()
                         true
                     } else {
@@ -247,8 +255,18 @@ class BrowserColumnSelectionFragment : DialogFragment(R.layout.preferences_brows
         get() = initiallySelectedColumns != columnAdapter.selected
 
     companion object {
+        const val ARG_MODE = "mode"
         private const val STATE_ACTIVE = "active"
         private const val STATE_AVAILABLE = "available"
+
+        fun createInstance(cardsOrNotes: CardsOrNotes): BrowserColumnSelectionFragment =
+            BrowserColumnSelectionFragment().apply {
+                Timber.d("Building 'Manage columns' dialog for %s mode", cardsOrNotes)
+                arguments =
+                    bundleOf(
+                        ARG_MODE to cardsOrNotes,
+                    )
+            }
     }
 }
 

@@ -428,6 +428,29 @@ class CardBrowserViewModelTest : JvmTest() {
         }
 
     @Test
+    fun `mode mismatch - changing columns`() {
+        // a user can use the options to update the inactive column set
+        // this should cause an update to the backend, but no frontend events should be obtained
+        runViewModelTest {
+            flowOfActiveColumns.test {
+                ignoreEventsDuringViewModelInit()
+                assertThat("cardsOrNotes", cardsOrNotes, equalTo(CardsOrNotes.CARDS))
+
+                // we're in cards so editing NOTES should not update visible columns
+                setColumn(1, FSRS_STABILITY, CardsOrNotes.NOTES)
+                expectNoEvents()
+
+                BrowserColumnCollection.load(sharedPrefs(), CardsOrNotes.NOTES).apply {
+                    assertThat("notes is changed", this.columns[1], equalTo(FSRS_STABILITY))
+                }
+                BrowserColumnCollection.load(sharedPrefs(), CardsOrNotes.CARDS).apply {
+                    assertThat("cards is unchanged", this.columns[1], not(equalTo(FSRS_STABILITY)))
+                }
+            }
+        }
+    }
+
+    @Test
     fun `change card order to NO_SORTING is a no-op if done twice`() =
         runViewModelTest {
             flowOfSearchState.test {
@@ -858,7 +881,7 @@ class CardBrowserViewModelTest : JvmTest() {
         }
         runViewModelTest(notes = 0) {
             assertThat("no rows", rowCount, equalTo(0))
-            this.previewColumnHeadings().apply {
+            this.previewColumnHeadings(CardsOrNotes.CARDS).apply {
                 assertTrue("no sample values") { allColumns.all { it.sampleValue == null } }
                 val (displayed, _) = this
                 assertThat(
@@ -871,7 +894,7 @@ class CardBrowserViewModelTest : JvmTest() {
 
         runViewModelNotesTest(notes = 0) {
             assertThat("no rows", rowCount, equalTo(0))
-            this.previewColumnHeadings().apply {
+            this.previewColumnHeadings(CardsOrNotes.NOTES).apply {
                 assertTrue("no sample values") { allColumns.all { it.sampleValue == null } }
                 val (displayed, _) = this
                 assertThat(
@@ -892,7 +915,7 @@ class CardBrowserViewModelTest : JvmTest() {
     @Test
     fun `preview - cards`() {
         runViewModelTest(notes = 1) {
-            for (preview in previewColumnHeadings().allColumns) {
+            for (preview in previewColumnHeadings(CardsOrNotes.CARDS).allColumns) {
                 val (expectedLabel, expectedValue) =
                     when (preview.columnType) {
                         SFLD -> Pair("Sort Field", "Front")
@@ -925,7 +948,7 @@ class CardBrowserViewModelTest : JvmTest() {
     @Test
     fun `preview - notes`() {
         runViewModelNotesTest(notes = 1) {
-            for (preview in previewColumnHeadings().allColumns) {
+            for (preview in previewColumnHeadings(CardsOrNotes.NOTES).allColumns) {
                 val (expectedLabel, expectedValue) =
                     when (preview.columnType) {
                         SFLD -> Pair("Sort Field", "Front")
@@ -1129,10 +1152,11 @@ val CardBrowserViewModel.column2
 fun CardBrowserViewModel.setColumn(
     index: Int,
     column: CardBrowserColumn,
+    cardsOrNotes: CardsOrNotes = this.cardsOrNotes,
 ): Boolean {
     val newColumns = activeColumns.toMutableList()
     newColumns[index] = column
-    return updateActiveColumns(newColumns)
+    return updateActiveColumns(newColumns, cardsOrNotes)
 }
 
 val Pair<List<ColumnWithSample>, List<ColumnWithSample>>.allColumns

@@ -410,7 +410,7 @@ open class CardBrowser :
             findViewById<ViewGroup>(R.id.browser_column_headings).apply {
                 setOnLongClickListener {
                     Timber.d("long press on headings: opening column selection options")
-                    val dialog = BrowserColumnSelectionFragment()
+                    val dialog = BrowserColumnSelectionFragment.createInstance(viewModel.cardsOrNotes)
                     dialog.show(supportFragmentManager, null)
                     true
                 }
