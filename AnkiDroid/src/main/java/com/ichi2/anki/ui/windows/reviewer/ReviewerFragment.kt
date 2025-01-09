@@ -312,12 +312,13 @@ class ReviewerFragment :
 
         // TODO add some kind of feedback/animation after tapping show answer or the answer buttons
         viewModel.showingAnswer.collectLatestIn(lifecycleScope) { shouldShowAnswer ->
+            // use INVISIBLE instead of GONE to keep the same button height
             if (shouldShowAnswer) {
-                showAnswerButton.isVisible = false
-                answerButtonsLayout.isVisible = true
+                showAnswerButton.visibility = View.INVISIBLE
+                answerButtonsLayout.visibility = View.VISIBLE
             } else {
-                showAnswerButton.isVisible = true
-                answerButtonsLayout.isVisible = false
+                showAnswerButton.visibility = View.VISIBLE
+                answerButtonsLayout.visibility = View.INVISIBLE
             }
             resetZoom()
         }

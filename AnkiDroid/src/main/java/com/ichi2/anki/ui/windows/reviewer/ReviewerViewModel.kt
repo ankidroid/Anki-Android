@@ -112,6 +112,10 @@ class ReviewerViewModel(
         ChangeManager.subscribe(this)
         launchCatchingIO {
             updateUndoAndRedoLabels()
+            // The height of the answer buttons may increase if `Show button time` is enabled.
+            // To ensure consistent height, load the times to match the height of the `Show answer`
+            // button with the answer buttons.
+            updateNextTimes()
         }
         cardMediaPlayer.setOnSoundGroupCompletedListener {
             launchCatchingIO {
