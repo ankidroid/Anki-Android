@@ -1599,7 +1599,6 @@ open class CardBrowser :
         }
     }
 
-    @RustCleanup("remove card cache; switch to RecyclerView and browserRowForId (#11889)")
     @VisibleForTesting
     fun searchCards() {
         launchCatchingTask {

@@ -335,7 +335,6 @@ class CardBrowserViewModel(
         flowOfColumn1.update { columns.columns[0] }
         flowOfColumn2.update { columns.columns[1] }
 
-        // This impacts browserRowForId(), which we do not use yet
         withCol { backend.setActiveBrowserColumns(columns.backendKeys) }
     }
 
