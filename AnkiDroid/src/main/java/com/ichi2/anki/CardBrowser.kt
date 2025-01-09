@@ -204,6 +204,7 @@ open class CardBrowser :
                 if (reviewerCardId == currentCardId) {
                     reloadRequired = true
                 }
+                cardsAdapter.notifyDataSetChanged()
             }
             invalidateOptionsMenu() // maybe the availability of undo changed
         }
@@ -215,6 +216,7 @@ open class CardBrowser :
             }
             if (result.resultCode == RESULT_OK) {
                 forceRefreshSearch(useSearchTextValue = true)
+                cardsAdapter.notifyDataSetChanged()
             }
             invalidateOptionsMenu() // maybe the availability of undo changed
         }
@@ -437,6 +439,7 @@ open class CardBrowser :
         fun onIsTruncatedChanged(isTruncated: Boolean) = notifyDataSetChanged()
 
         fun onSearchQueryExpanded(searchQueryExpanded: Boolean) {
+            if (searchItem == null) return
             Timber.d("query expansion changed: %b", searchQueryExpanded)
             if (searchQueryExpanded) {
                 searchItem?.expandActionView()
@@ -1638,6 +1641,7 @@ open class CardBrowser :
     private fun updateList() {
         if (!colIsOpenUnsafe()) return
         Timber.d("updateList")
+        notifyDataSetChanged()
         deckSpinnerSelection.notifyDataSetChanged()
         onSelectionChanged()
         updatePreviewMenuItem()
