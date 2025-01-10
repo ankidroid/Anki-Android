@@ -64,6 +64,7 @@ interface TestClass {
         card.queue = QueueType.Rev
         card.type = CardType.Rev
         card.due = col.sched.today
+        col.updateCards(listOf(card), skipUndoEntry = true)
         return note
     }
 
