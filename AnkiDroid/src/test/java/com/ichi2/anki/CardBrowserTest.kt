@@ -937,6 +937,23 @@ class CardBrowserTest : RobolectricTest() {
         }
 
     @Test
+    fun checkIfScrollPositionSavedOnLongPress() =
+        runTest {
+            val cardBrowser = getBrowserWithNotes(10)
+            cardBrowser.longClickRowAtPosition(5)
+            assertThat(cardBrowser.viewModel.lastSelectedPosition, equalTo(5))
+        }
+
+    @Test
+    fun checkIfScrollPositionSavedOnTap() =
+        runTest {
+            val cardBrowser = getBrowserWithNotes(10)
+            cardBrowser.longClickRowAtPosition(1)
+            cardBrowser.clickRowAtPosition(5)
+            assertThat(cardBrowser.viewModel.lastSelectedPosition, equalTo(5))
+        }
+
+    @Test
     fun `column spinner positions are set if no preferences exist`() =
         runBlocking {
             // GIVEN: No shared preferences exist for display column selections
