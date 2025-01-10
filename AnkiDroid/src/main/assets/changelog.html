@@ -466,6 +466,190 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
+<h2 id="_version_2_20_1_20241223"><a class="anchor" href="#_version_2_20_1_20241223"></a>Version 2.20.1 (20241223)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Happy Holidays from your AnkiDroid team!</p>
+</div>
+<div class="paragraph">
+<p>What an incredible year for AnkiDroid, looking back at the release notes</p>
+</div>
+<div class="paragraph">
+<p>Hope you enjoyed it :-)</p>
+</div>
+<div class="paragraph">
+<p>Thanks so much for the <a href="https://opencollective.com/ankidroid/contribute">donations</a>, we really appreciate it ❤️</p>
+</div>
+<div class="paragraph">
+<p>Small collection of bugfixes for the 2.20.0 release:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Fix shared deck download on Android 15 devices</p>
+</li>
+<li>
+<p>Add ability to detailed error information if collection inaccessible</p>
+</li>
+<li>
+<p>Fix note editor not keeping state if window resizes</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_version_2_20_0_20241204"><a class="anchor" href="#_version_2_20_0_20241204"></a>Version 2.20.0 (20241204)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In 2020, implementing Anki&#8217;s latest scheduling improvements would have taken years. Today, the same process takes weeks due to the extensive effort of merging Anki&#8217;s codebase into AnkiDroid. Enjoy your even more efficient reviews!</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Your <a href="https://opencollective.com/ankidroid/contribute">donations</a> paid for the work to make this happen so quickly 🤗</p>
+</li>
+<li>
+<p><strong>AnkiDroid Updates</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Includes <a href="https://apps.ankiweb.net/">Anki 24.11</a>, with <a href="https://github.com/open-spaced-repetition/fsrs4anki">FSRS 5.0</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p>If you use FSRS, we recommend re-optimizing parameters</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Forget Cards: Add link to manual</p>
+</li>
+<li>
+<p>Deck Overview: Re-include 'total cards' statistics</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Anki 24.11 Features</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>FSRS 5.0</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Want to try FSRS (the Free Spaced Repetition Scheduler)? Enable it in deck options</p>
+</li>
+<li>
+<p>(experimental) FSRS now schedules same-day reviews if you remove all learning steps</p>
+</li>
+<li>
+<p>Load balancing: within your fuzz range, Anki will now try to pick days that have fewer reviews waiting.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Deck Options: <a href="https://docs.ankiweb.net/deck-options.html#the-simulator">FSRS Simulator</a></p>
+</li>
+<li>
+<p>Deck Options: <a href="https://docs.ankiweb.net/deck-options.html?#easy-days">Easy days</a> - you can now tell Anki to try avoid certain days of the week</p>
+</li>
+<li>
+<p>Card Info: Add forgetting curve</p>
+</li>
+<li>
+<p>Decks can now be sorted by descending retrievability.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Simulations have shown this is a better choice when you have a backlog, and this sort order is likely to become the default in the future.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Statistics: Add true retention stats</p>
+</li>
+<li>
+<p>Statistics: Estimated total knowledge by note, and daily load</p>
+</li>
+<li>
+<p>Card Info: Include card position information</p>
+</li>
+<li>
+<p>See more in <a href="https://github.com/ankitects/anki/releases/tag/24.11">the Anki 24.11 changelog</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Fixes</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Blocked AnkiWeb email addresses being sent to our private crash reporting server if an error occurs when displaying sync server email verification messages</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Crash reports are <strong>never</strong> shared nor permitted to be shared, but;</p>
+</li>
+<li>
+<p>Wiped those records anyway and installed rules to reject them on server as well</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Removed 'show keyboard shortcuts' hint after numeric keypresses</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Deprecation</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>AnkiDroid 2.20.0 no longer supports <a href="https://apilevels.com/">Android 6 (2015)</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="https://crowdin.com/project/ankidroid">New community-provided language translations</a></p>
+</li>
+<li>
+<p><a href="https://github.com/ankidroid/Anki-Android/milestone/64?closed=1">Full changelog</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_version_2_19_4_20250110"><a class="anchor" href="#_version_2_19_4_20250110"></a>Version 2.19.4 (20250110)</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Restore the 2.19 series to the Play Store for Android versions 6 and older
+We do our best to make sure old devices are not forced into obsolescence
+We had to drop support for Android &lt; 6 in AnkiDroid 2.20, but we intended
+to make sure 2.19 was still available and instead the Play Store removed it</p>
+</li>
+<li>
+<p>As ever, huge thanks for the <a href="https://opencollective.com/ankidroid">donations</a> 😍
+they help us maintain support for old devices much longer than other apps,
+and keep old versions available for them even when we are forced to move on</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_version_2_19_3_20241129"><a class="anchor" href="#_version_2_19_3_20241129"></a>Version 2.19.3 (20241129)</h2>
 <div class="sectionbody">
 <div class="ulist">
@@ -4403,7 +4587,7 @@ essentially rewritten from scratch to be compatible with the new Anki Desktop v2
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-11-29 18:16:13 UTC
+Last updated 2025-01-10 13:56:20 UTC
 </div>
 </div>
 </body>
