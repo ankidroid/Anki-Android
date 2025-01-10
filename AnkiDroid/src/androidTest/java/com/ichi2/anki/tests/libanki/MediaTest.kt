@@ -19,6 +19,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.BackupManager
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission
+import com.ichi2.anki.testutil.addNote
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Media
 import com.ichi2.libanki.exception.EmptyMediaException

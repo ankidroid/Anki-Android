@@ -20,6 +20,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.Ease
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.ext.addNote
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasItemInArray
 import org.junit.Assert.assertEquals

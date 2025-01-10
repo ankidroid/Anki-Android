@@ -23,6 +23,7 @@ import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AnkiAssert
 import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.ext.addNote
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.greaterThan

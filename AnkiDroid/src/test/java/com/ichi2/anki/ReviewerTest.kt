@@ -47,6 +47,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
+import com.ichi2.testutils.ext.addNote
 import com.ichi2.utils.BASIC_MODEL_NAME
 import com.ichi2.utils.KotlinCleanup
 import junit.framework.TestCase.assertEquals

@@ -28,6 +28,7 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.testutils.assertFalse
+import com.ichi2.testutils.ext.addNote
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.json.JSONObject
