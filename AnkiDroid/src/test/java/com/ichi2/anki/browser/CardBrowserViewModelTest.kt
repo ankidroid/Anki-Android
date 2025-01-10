@@ -35,6 +35,8 @@ import com.ichi2.anki.browser.CardBrowserColumn.QUESTION
 import com.ichi2.anki.browser.CardBrowserColumn.SFLD
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.DeepLink
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.SystemContextMenu
+import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
+import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.flagCardForNote
 import com.ichi2.anki.model.CardsOrNotes
@@ -66,6 +68,7 @@ import org.hamcrest.Matchers.lessThan
 import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.nullValue
 import org.junit.Test
+import org.junit.jupiter.api.assertInstanceOf
 import org.junit.runner.RunWith
 import timber.log.Timber
 import java.io.File
@@ -790,6 +793,46 @@ class CardBrowserViewModelTest : JvmTest() {
             val (row, _) = this.transformBrowserRow(this.cards.single())
             val question = row.getCells(0)
             assertThat(question.text, equalTo(EXPECTED_SOUND))
+        }
+    }
+
+    @Test
+    fun `reposition - non new card`() {
+        addBasicNote("New")
+        addRevBasicNoteDueToday("Review", "Today")
+
+        runViewModelTest {
+            selectAll()
+            assertThat("2 selected rows", selectedRows.size, equalTo(2))
+
+            val repositionResult = prepareToRepositionCards()
+            assertInstanceOf<ContainsNonNewCardsError>(repositionResult, "new cards error")
+        }
+    }
+
+    @Test
+    fun `reposition - new cards`() {
+        repeat(2) { addBasicNote("New") }
+
+        runViewModelTest {
+            selectAll()
+
+            val repositionResult = prepareToRepositionCards()
+            assertInstanceOf<RepositionData>(repositionResult, "non-error").apply {
+                assertThat("queueTop", queueTop, equalTo(1))
+                assertThat("queueBottom", queueBottom, equalTo(2))
+
+                assertThat(
+                    "message",
+                    this.toHumanReadableContent(),
+                    equalTo(
+                        """
+                        Queue top: ⁨1⁩
+                        Queue bottom: ⁨2⁩
+                        """.trimIndent(),
+                    ),
+                )
+            }
         }
     }
 

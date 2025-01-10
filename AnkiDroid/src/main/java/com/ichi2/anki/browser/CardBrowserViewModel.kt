@@ -30,10 +30,13 @@ import anki.search.BrowserColumns
 import anki.search.BrowserRow
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.Flag
 import com.ichi2.anki.PreviewerDestination
+import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.export.ExportDialogFragment.ExportType
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.model.CardStateFilter
@@ -46,6 +49,7 @@ import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
+import com.ichi2.libanki.CardType
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.QueueType
@@ -604,6 +608,41 @@ class CardBrowserViewModel(
     }
 
     /**
+     * Obtains data to be displayed to the user then sent to [repositionSelectedRows]
+     */
+    suspend fun prepareToRepositionCards(): RepositionCardsRequest {
+        val selectedCardIds = queryAllSelectedCardIds()
+        // Only new cards may be repositioned (If any non-new found show error dialog and return false)
+        if (selectedCardIds.any { withCol { getCard(it).queue != QueueType.New } }) {
+            return RepositionCardsRequest.ContainsNonNewCardsError
+        }
+
+        // query obtained from Anki Desktop
+        // https://github.com/ankitects/anki/blob/1fb1cbbf85c48a54c05cb4442b1b424a529cac60/qt/aqt/operations/scheduling.py#L117
+        try {
+            val (min, max) =
+                withCol {
+                    db.query("select min(due), max(due) from cards where type=? and odid=0", CardType.New.code).use {
+                        it.moveToNext()
+                        return@withCol Pair(max(0, it.getInt(0)), it.getInt(1))
+                    }
+                }
+            return RepositionData(
+                min = min,
+                max = max,
+            )
+        } catch (e: Exception) {
+            // TODO: Remove this once we've verified no production errors
+            Timber.w(e, "getting min/max position")
+            CrashReportService.sendExceptionReport(e, "prepareToRepositionCards")
+            return RepositionData(
+                min = null,
+                max = null,
+            )
+        }
+    }
+
+    /**
      * @see [com.ichi2.libanki.sched.Scheduler.sortCards]
      * @return the number of cards which were repositioned
      */
@@ -952,6 +991,37 @@ class PreviewerIdsFile(
 
                 override fun newArray(size: Int): Array<PreviewerIdsFile> = arrayOf()
             }
+    }
+}
+
+sealed class RepositionCardsRequest {
+    /** Only new cards may be repositioned */
+    data object ContainsNonNewCardsError : RepositionCardsRequest()
+
+    /** Should contain queue top & bottom positions. Null on error */
+    class RepositionData(
+        val min: Int?,
+        val max: Int?,
+    ) : RepositionCardsRequest() {
+        val queueTop: Int?
+        val queueBottom: Int?
+
+        init {
+            if (min != null && max != null) {
+                // queue top: the lower of the two
+                queueTop = min(min, max)
+                queueBottom = max(min, max)
+            } else {
+                queueTop = null
+                queueBottom = null
+            }
+        }
+
+        fun toHumanReadableContent(): String? {
+            if (queueTop == null || queueBottom == null) return null
+            // ints are required for the translation
+            return TR.browsingQueueTop(queueTop) + "\n" + TR.browsingQueueBottom(queueBottom)
+        }
     }
 }
 
