@@ -101,6 +101,9 @@ class CardBrowserViewModel(
     private val manualInit: Boolean = false,
 ) : ViewModel(),
     SharedPreferencesProvider by preferences {
+    var lastSelectedPosition: Int = 0
+    var oldCardTopOffset: Int = 0
+
     // TODO: abstract so we can use a `Context` and `pref_display_filenames_in_browser_key`
     val showMediaFilenames = sharedPrefs().getBoolean("card_browser_show_media_filenames", false)
 
@@ -1029,6 +1032,12 @@ class CardBrowserViewModel(
         data class Error(
             val error: String,
         ) : SearchState
+    }
+
+    fun saveScrollingState(id: CardOrNoteId) {
+        cards.indexOf(id).takeIf { it >= 0 }?.let { position ->
+            lastSelectedPosition = position
+        }
     }
 }
 
