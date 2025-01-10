@@ -62,6 +62,8 @@ import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState
 import com.ichi2.anki.browser.CardOrNoteId
 import com.ichi2.anki.browser.PreviewerIdsFile
+import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
+import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.browser.getLabel
@@ -109,7 +111,6 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.DeckNameId
 import com.ichi2.libanki.NoteId
-import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.SortOrder
 import com.ichi2.libanki.undoableOp
 import com.ichi2.ui.CardBrowserSearchView
@@ -1334,28 +1335,36 @@ open class CardBrowser :
         Timber.i("CardBrowser:: Reposition button pressed")
         if (warnUserIfInNotesOnlyMode()) return false
         launchCatchingTask {
-            val selectedCardIds = viewModel.queryAllSelectedCardIds()
-            // Only new cards may be repositioned (If any non-new found show error dialog and return false)
-            if (selectedCardIds.any { getColUnsafe.getCard(it).queue != QueueType.New }) {
-                showDialogFragment(
-                    SimpleMessageDialog.newInstance(
-                        title = getString(R.string.vague_error),
-                        message = getString(R.string.reposition_card_not_new_error),
-                        reload = false,
-                    ),
-                )
-                return@launchCatchingTask
-            }
-            val repositionDialog =
-                IntegerDialog().apply {
-                    setArgs(
-                        title = this@CardBrowser.getString(R.string.reposition_card_dialog_title),
-                        prompt = this@CardBrowser.getString(R.string.reposition_card_dialog_message),
-                        digits = 5,
+            val repositionCardsResult = viewModel.prepareToRepositionCards()
+            when (repositionCardsResult) {
+                is ContainsNonNewCardsError -> {
+                    // Only new cards may be repositioned (If any non-new found show error dialog and return false)
+                    showDialogFragment(
+                        SimpleMessageDialog.newInstance(
+                            title = getString(R.string.vague_error),
+                            message = getString(R.string.reposition_card_not_new_error),
+                            reload = false,
+                        ),
                     )
-                    setCallbackRunnable(::repositionCardsNoValidation)
+                    return@launchCatchingTask
                 }
-            showDialogFragment(repositionDialog)
+                is RepositionData -> {
+                    // TODO: This dialog is missing:
+                    // Randomize order
+                    // Shift position of existing cards
+                    val repositionDialog =
+                        IntegerDialog().apply {
+                            setArgs(
+                                title = this@CardBrowser.getString(R.string.reposition_card_dialog_title),
+                                prompt = TR.browsingStartPosition(),
+                                content = repositionCardsResult.toHumanReadableContent(),
+                                digits = 5,
+                            )
+                            setCallbackRunnable(::repositionCardsNoValidation)
+                        }
+                    showDialogFragment(repositionDialog)
+                }
+            }
         }
         return true
     }
