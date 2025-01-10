@@ -30,6 +30,7 @@ import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.provider.pureAnswer
 import com.ichi2.anki.testutil.DatabaseUtils.cursorFillWindow
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
+import com.ichi2.anki.testutil.addNote
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.DeckId

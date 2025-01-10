@@ -19,6 +19,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.libanki.Utils.stripHTML
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.ext.addNote
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString

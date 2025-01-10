@@ -544,13 +544,6 @@ class Collection(
         return resp.changes
     }
 
-    /** allowEmpty is ignored in the new schema */
-    @RustCleanup("Remove this in favour of addNote() above; call addNote() inside undoableOp()")
-    fun addNote(note: Note): Int {
-        addNote(note, note.notetype.did)
-        return note.numberOfCards(this)
-    }
-
     /**
      * Card Flags *****************************************************************************************************
      */

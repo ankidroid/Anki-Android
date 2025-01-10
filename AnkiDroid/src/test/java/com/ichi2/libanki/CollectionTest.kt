@@ -19,6 +19,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.notes.NoteFieldsCheckResponse
 import anki.notetypes.StockNotetype
 import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.ext.addNote
 import com.ichi2.utils.createBasicModel
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers

@@ -820,7 +820,7 @@ class CardContentProvider : ContentProvider() {
                     newNote.setTagsFromStr(col, tags)
                 }
                 // Add to collection
-                col.addNote(newNote)
+                col.addNote(newNote, newNote.notetype.did)
 
                 Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, newNote.id.toString())
             }

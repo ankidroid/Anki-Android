@@ -29,6 +29,7 @@ import com.ichi2.libanki.undoableOp
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
+import com.ichi2.testutils.ext.addNote
 import com.ichi2.utils.createBasicTypingModel
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString

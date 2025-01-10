@@ -28,6 +28,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.testutils.AnkiAssert
 import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.ext.addNote
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
