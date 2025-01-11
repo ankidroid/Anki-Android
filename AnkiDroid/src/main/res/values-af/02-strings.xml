@@ -94,7 +94,7 @@
     <string name="discard">Weggooi</string>
     <string name="note_editor_no_cards_created">Geen kaarte geskep nie, vul asseblief meer velde in</string>
     <string name="note_editor_no_cards_created_all_fields">Die huidige notatip het nie enige kaarte geproduseer nie.\nKies asseblief \'n ander notatip, of klik op ‘Kaarte’ en voeg \'n veldvervanging by.</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze-verwydering sal slegs op \'n cloze-nota-tipe werk</string>
     <string name="saving_facts">Stoor nota</string>
     <string name="saving_model">Stoor nota tipe</string>
     <string name="save" maxLength="28">Stoor</string>
