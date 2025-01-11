@@ -57,7 +57,6 @@
     <string name="tts_no_tts">Não falar</string>
     <string name="unused_strings">\n\nFicheiros não utilizados:\n</string>
     <string name="reposition_card_dialog_title">Reposicionar a nova ficha</string>
-    <string name="reposition_card_dialog_message">Posição inicial:</string>
     <string name="reposition_card_not_new_error">Apenas novas fichas podem ser reposicionadas.</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d ficha reposicionada</item>

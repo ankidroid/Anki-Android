@@ -57,7 +57,6 @@
     <string name="tts_no_tts">No hablar</string>
     <string name="unused_strings">\n\nArchivos sin utilizar:\n</string>
     <string name="reposition_card_dialog_title">Reposicionar nueva tarjeta</string>
-    <string name="reposition_card_dialog_message">Posición de inicio:</string>
     <string name="reposition_card_not_new_error">Sólo las tarjetas nuevas pueden ser reposicionadas</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d tarjeta reposicionada</item>

@@ -57,7 +57,6 @@
     <string name="tts_no_tts">സംസാരിക്കരുത്</string>
     <string name="unused_strings">\n\nഉപയോഗിക്കാത്ത ഫയലുകൾ:\n</string>
     <string name="reposition_card_dialog_title">പുതിയ കാർഡ് പുന  സ്ഥാപിക്കുക</string>
-    <string name="reposition_card_dialog_message">പ്രാരംഭ സ്ഥാനം</string>
     <string name="reposition_card_not_new_error">പുതിയ കാർഡുകൾ മാത്രമേ പുന  സ്ഥാപിക്കാൻ കഴിയൂ</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d കാർഡ് സ്ഥാനം മാറ്റി</item>

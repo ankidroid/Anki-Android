@@ -57,7 +57,6 @@
     <string name="tts_no_tts">Չխոսել</string>
     <string name="unused_strings">\n\nՉօգտագործվող ֆայլեր`\n</string>
     <string name="reposition_card_dialog_title">Տեղափոխել նոր քարտը</string>
-    <string name="reposition_card_dialog_message">Սկսման դիրքը</string>
     <string name="reposition_card_not_new_error">Կարելի է տեղափոխել միայն նոր քարտերը</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">Տեղափոխվել է %d քարտ</item>

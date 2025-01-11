@@ -57,7 +57,6 @@
     <string name="tts_no_tts">Ne paroli</string>
     <string name="unused_strings">\n\nNeuzataj dosieroj:\n</string>
     <string name="reposition_card_dialog_title">Repozicii novan karton</string>
-    <string name="reposition_card_dialog_message">Komenca pozicio:</string>
     <string name="reposition_card_not_new_error">Nur novaj kartoj povas esti repoziciitaj</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d karto estas repoziciita</item>

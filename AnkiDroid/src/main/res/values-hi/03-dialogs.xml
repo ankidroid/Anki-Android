@@ -57,7 +57,6 @@
     <string name="tts_no_tts">बात न करें</string>
     <string name="unused_strings">\n\nअप्रयुक्त फाइलें:\n</string>
     <string name="reposition_card_dialog_title">नया कार्ड पुन: प्रस्तुत करें</string>
-    <string name="reposition_card_dialog_message">शुरू करने की स्थिति:</string>
     <string name="reposition_card_not_new_error">केवल नए कार्डों को बदला जा सकता है</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d कार्डों का स्थान बदल दिया गया है</item>

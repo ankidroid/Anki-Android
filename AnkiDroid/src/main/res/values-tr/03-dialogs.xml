@@ -57,7 +57,6 @@
     <string name="tts_no_tts">Konuşma</string>
     <string name="unused_strings">\n\nKullanılmayan dosyalar:\n</string>
     <string name="reposition_card_dialog_title">Yeni kartın yerini değiştir</string>
-    <string name="reposition_card_dialog_message">Başlangıç konumu:</string>
     <string name="reposition_card_not_new_error">Yalnızca yeni kartların yeri değiştirilebilir</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d kartın yeri değiştirildi</item>

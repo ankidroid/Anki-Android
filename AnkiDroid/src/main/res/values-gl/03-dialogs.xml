@@ -57,7 +57,6 @@
     <string name="tts_no_tts">Non fales</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
     <string name="reposition_card_dialog_title">Reposicionar novo cartón</string>
-    <string name="reposition_card_dialog_message">Posición inicial:</string>
     <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d card repositioned</item>

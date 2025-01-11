@@ -57,7 +57,6 @@
     <string name="tts_no_tts">سۆزلىمە</string>
     <string name="unused_strings">\n\nئىشلىتىلمىگەن ھۆججەت:\n</string>
     <string name="reposition_card_dialog_title">يېڭى كارتىنى قايتا تەرتىپلە</string>
-    <string name="reposition_card_dialog_message">باشلاش ئورنى:</string>
     <string name="reposition_card_not_new_error">پەقەت يېڭى كارتىنىڭ ئورنىنىلا يۆتكىگىلى بولىدۇ</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d كارتىنىڭ ئورنى يۆتكەلدى</item>

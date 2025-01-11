@@ -59,7 +59,6 @@
     <string name="tts_no_tts">Не произносить</string>
     <string name="unused_strings">\n\nНеиспользуемые файлы:\n</string>
     <string name="reposition_card_dialog_title">Переместить новую карточку</string>
-    <string name="reposition_card_dialog_message">Начальная позиция:</string>
     <string name="reposition_card_not_new_error">Можно переместить только новые карточки</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d карточка перемещена</item>

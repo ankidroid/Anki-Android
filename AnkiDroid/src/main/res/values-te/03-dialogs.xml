@@ -57,7 +57,6 @@
     <string name="tts_no_tts">మాట్లాడకండి</string>
     <string name="unused_strings">\n\nఉపయోగించని ఫైళ్లు:\n</string>
     <string name="reposition_card_dialog_title">కొత్త కార్డును భర్తీ చేయండి</string>
-    <string name="reposition_card_dialog_message">ప్రారంభ స్థానం:</string>
     <string name="reposition_card_not_new_error">కొత్త కార్డ్‌లను మాత్రమే రీపోజిషన్ చేయవచ్చు</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d కార్డ్ రీపోజిషన్ చేయబడింది</item>

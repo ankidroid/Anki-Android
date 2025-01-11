@@ -57,7 +57,6 @@
     <string name="tts_no_tts">ಮಾತನಾಡಬೇಡ</string>
     <string name="unused_strings">\n\nಬಳಕೆಯಾಗದ ಫೈಲ್‌ಗಳು:\n</string>
     <string name="reposition_card_dialog_title">ಹೊಸ ಕಾರ್ಡ್ ಅನ್ನು ಮರುಸೇರಿಸಿ</string>
-    <string name="reposition_card_dialog_message">ಆರಂಭಿಕ ಸ್ಥಾನ:</string>
     <string name="reposition_card_not_new_error">ಹೊಸ ಕಾರ್ಡ್‌ಗಳನ್ನು ಮಾತ್ರ ಮರುಸ್ಥಾಪಿಸಬಹುದು</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d ಕಾರ್ಡ್ ಅನ್ನು ಮರುಸ್ಥಾನಗೊಳಿಸಲಾಗಿದೆ</item>

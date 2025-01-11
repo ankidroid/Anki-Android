@@ -57,7 +57,6 @@
     <string name="tts_no_tts">নিশ্চুপ</string>
     <string name="unused_strings">\n\nঅব্যবহৃত ফাইলসমূহ:\n</string>
     <string name="reposition_card_dialog_title">নতুন কার্ড এর ক্রম পরিবর্তন</string>
-    <string name="reposition_card_dialog_message">শুরুর অবস্থান:</string>
     <string name="reposition_card_not_new_error">শুধু মাত্র নতুন কার্ড এর ক্রম বদলানো যাবে</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d টি কার্ড পুনঃস্থাপিত</item>

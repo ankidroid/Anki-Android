@@ -57,7 +57,6 @@
     <string name="tts_no_tts">Tala inte</string>
     <string name="unused_strings">\n\nOanvända filer:\n</string>
     <string name="reposition_card_dialog_title">Ompositionera nytt kort</string>
-    <string name="reposition_card_dialog_message">Startposition:</string>
     <string name="reposition_card_not_new_error">Endast nya kort kan ompositioneras</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d kort ompositionerat</item>

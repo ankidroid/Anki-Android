@@ -59,7 +59,6 @@
     <string name="tts_no_tts">Nemluv</string>
     <string name="unused_strings">\n\nNepoužité soubory:\n</string>
     <string name="reposition_card_dialog_title">Změnit pořadí nové karty</string>
-    <string name="reposition_card_dialog_message">Počáteční pozice:</string>
     <string name="reposition_card_not_new_error">Změnit pořadí lze pouze u nových karet</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d karta přesunuta</item>

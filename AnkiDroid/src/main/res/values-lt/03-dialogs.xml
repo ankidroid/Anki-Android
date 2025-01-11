@@ -59,7 +59,6 @@
     <string name="tts_no_tts">Nekalbėkite</string>
     <string name="unused_strings">\n\nNenaudojami failai:\n</string>
     <string name="reposition_card_dialog_title">Pakeiskite naujos kortelės padėtį</string>
-    <string name="reposition_card_dialog_message">Pradinė padėtis:</string>
     <string name="reposition_card_not_new_error">Gali būti keičiamas tik naujų kortelių išdėstymas</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">Pakeistas %d kortelės išdėstymas</item>
