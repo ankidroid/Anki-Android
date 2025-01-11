@@ -140,7 +140,6 @@
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Поиск пустых карточек&#8230;</string>
     <string name="empty_cards_count">Карточек к удалению: %d</string>
-    <string name="empty_cards_deleted">Удалено карточек: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Не удалось получить разрешение на микрофон.</string>
     <string name="multimedia_editor_failed">Не удалось открыть редактор мультимедиа</string>

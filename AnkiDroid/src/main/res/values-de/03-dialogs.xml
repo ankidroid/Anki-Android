@@ -131,7 +131,6 @@
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Leere Karten werden gesucht &#8230;</string>
     <string name="empty_cards_count">%d zu löschende Karten</string>
-    <string name="empty_cards_deleted">%d Karten gelöscht</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Zugriffsberechtigung für das Mikrofon konnte nicht erlangt werden.</string>
     <string name="multimedia_editor_failed">Multimedia-Editor konnte nicht geöffnet werden</string>

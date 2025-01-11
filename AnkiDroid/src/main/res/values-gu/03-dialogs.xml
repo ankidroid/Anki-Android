@@ -131,7 +131,6 @@
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">ખાલી કાર્ડ શોધી રહ્યાં છીએ&#8230;</string>
     <string name="empty_cards_count">કાઢી નાખવાના કાર્ડ્સ: %d</string>
-    <string name="empty_cards_deleted">કાર્ડ કાઢી નાખ્યા: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">માઇક્રોફોનની પરવાનગી મેળવી શકાઈ નથી.</string>
     <string name="multimedia_editor_failed">મલ્ટીમીડિયા એડિટર ખોલવામાં નિષ્ફળ</string>

@@ -131,7 +131,6 @@
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">ശൂന്യമായ കാർഡുകൾ കണ്ടെത്തുന്നു&#8230;</string>
     <string name="empty_cards_count">ഇല്ലാതാക്കാനുള്ള കാർഡുകൾ: %d</string>
-    <string name="empty_cards_deleted">കാർഡുകൾ ഇല്ലാതാക്കി: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">മൈക്രോഫോൺ അനുമതി നേടാനായില്ല.</string>
     <string name="multimedia_editor_failed">മൾട്ടിമീഡിയ എഡിറ്റർ തുറക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>

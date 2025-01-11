@@ -131,7 +131,6 @@
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">ਖਾਲੀ ਕਾਰਡ ਲੱਭੇ ਜਾ ਰਹੇ ਹਨ&#8230;</string>
     <string name="empty_cards_count">ਮਿਟਾਉਣ ਲਈ ਕਾਰਡ: %d</string>
-    <string name="empty_cards_deleted">ਕਾਰਡ ਮਿਟਾਏ ਗਏ: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਮਿਲ ਸਕੀ।</string>
     <string name="multimedia_editor_failed">ਮਲਟੀਮੀਡੀਆ ਸੰਪਾਦਕ ਨੂੰ ਖੋਲ੍ਹਣ ਵਿੱਚ ਅਸਫਲ</string>

@@ -147,7 +147,6 @@
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">يجري البحث عن بطاقات فارغة&#8230;</string>
     <string name="empty_cards_count">بطاقات ستُحذَف: %d</string>
-    <string name="empty_cards_deleted">بطاقات حُذِفت: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">تعذر الحصول على إذن الميكروفون.</string>
     <string name="multimedia_editor_failed">تعذر فتح محرر الوسائط المتعددة</string>

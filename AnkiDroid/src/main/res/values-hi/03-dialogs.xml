@@ -131,7 +131,6 @@
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">रिक्त कार्ड ढूंढ रहा है.. ।</string>
     <string name="empty_cards_count">कार्ड हटाने के लिए: %d</string>
-    <string name="empty_cards_deleted">हटाई गई फ़ाइलें: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">माइक्रोफ़ोन अनुमति प्राप्त नहीं कर सका।</string>
     <string name="multimedia_editor_failed">मल्टीमीडिया संपादक खोलने में विफल</string>
