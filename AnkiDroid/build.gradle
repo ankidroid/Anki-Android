@@ -275,6 +275,11 @@ play {
                 421904300L, // (2.19.4, minSdk 23, ABI x86_64)
         ])
     }
+
+    // If you retain APKs in a release with different names as we do above,
+    // the plugin + Play Store has no idea how to name the release except by date.
+    // release name is developer only, but sane names really help, so set one
+    releaseName.set(android.defaultConfig.versionName)
 }
 
 // Install Git pre-commit hook for Ktlint
