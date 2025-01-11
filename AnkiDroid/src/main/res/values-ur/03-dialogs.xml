@@ -57,7 +57,6 @@
     <string name="tts_no_tts">مت بولو</string>
     <string name="unused_strings">\n\nغیر استعمال شدہ فائلیں:\n</string>
     <string name="reposition_card_dialog_title">نئے کارڈ کی جگہ</string>
-    <string name="reposition_card_dialog_message">شروع کی پوزیشن:</string>
     <string name="reposition_card_not_new_error">صرف نئے کارڈز کی جگہ تبدیل کی جا سکتی ہے۔</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d کارڈ دوبارہ ترتیب دیا گیا۔</item>

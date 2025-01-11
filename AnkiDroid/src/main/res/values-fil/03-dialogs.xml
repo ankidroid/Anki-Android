@@ -57,7 +57,6 @@
     <string name="tts_no_tts">Huwag magsalita</string>
     <string name="unused_strings">\n\nHindi nagamit na mga file:\n</string>
     <string name="reposition_card_dialog_title">Iposisyon muli ang card</string>
-    <string name="reposition_card_dialog_message">Panimulang posisyon:</string>
     <string name="reposition_card_not_new_error">Mga bagong card lamang ang maaaring iposisyon muli</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d card ang pinosisyon muli</item>

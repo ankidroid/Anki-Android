@@ -57,7 +57,6 @@
     <string name="tts_no_tts">Σίγαση</string>
     <string name="unused_strings">\n\nΑχρησιμοποίητα αρχεία:\n</string>
     <string name="reposition_card_dialog_title">Επανατοποθέτηση νέας κάρτας</string>
-    <string name="reposition_card_dialog_message">Θέση έναρξης:</string>
     <string name="reposition_card_not_new_error">Μόνο νέες κάρτες μπορούν να επανατοποθετηθούν</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">Επανατοποθετήθηκε %d κάρτα</item>

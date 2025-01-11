@@ -57,7 +57,6 @@
     <string name="tts_no_tts">Не говори</string>
     <string name="unused_strings">\n\nНеизползвани файли:\n</string>
     <string name="reposition_card_dialog_title">Преместване на нова карта</string>
-    <string name="reposition_card_dialog_message">Начална позиция:</string>
     <string name="reposition_card_not_new_error">Само нови карти могат да бъдат премествани</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d картата е преместена</item>

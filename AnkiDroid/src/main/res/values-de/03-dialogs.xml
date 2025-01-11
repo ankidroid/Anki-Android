@@ -57,7 +57,6 @@
     <string name="tts_no_tts">Nicht vorlesen</string>
     <string name="unused_strings">\n\nUnbenutzte Dateien:\n</string>
     <string name="reposition_card_dialog_title">Position der neuen Karte ändern</string>
-    <string name="reposition_card_dialog_message">Anfangsposition:</string>
     <string name="reposition_card_not_new_error">Die Position kann nur für neue Karten geändert werden</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d Karte neu positioniert</item>

@@ -57,7 +57,6 @@
     <string name="tts_no_tts">Moet nie praat nie</string>
     <string name="unused_strings">\n\nOngebruikte lêers:\n</string>
     <string name="reposition_card_dialog_title">Herposisioneer nuwe kaart</string>
-    <string name="reposition_card_dialog_message">Beginposisie:</string>
     <string name="reposition_card_not_new_error">Slegs nuwe kaarte kan herposisioneer word</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d kaart herposisioneer</item>

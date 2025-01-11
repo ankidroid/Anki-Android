@@ -59,7 +59,6 @@
     <string name="tts_no_tts">אל תדבר.‏</string>
     <string name="unused_strings">\n\nקבצים שאינם בשימוש:\n</string>
     <string name="reposition_card_dialog_title">שינוי מיקום כרטיס חדש</string>
-    <string name="reposition_card_dialog_message">מיקום התחלתי:</string>
     <string name="reposition_card_not_new_error">ניתן לשנות מיקום לכרטיסים חדשים בלבד</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">כרטיס %d הושם מחדש</item>

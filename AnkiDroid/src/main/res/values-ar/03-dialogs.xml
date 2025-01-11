@@ -61,7 +61,6 @@
     <string name="tts_no_tts">لا تنطق</string>
     <string name="unused_strings">\n\nملفات عير مستخدمة:\n</string>
     <string name="reposition_card_dialog_title">تغيير موضع البطاقة الجديدة</string>
-    <string name="reposition_card_dialog_message">موضع البداية:</string>
     <string name="reposition_card_not_new_error">يمكن تغيير موضع البطاقات الجديدة فقط</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="zero">تم تغيير موضع %d بطاقة</item>

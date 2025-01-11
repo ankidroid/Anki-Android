@@ -57,7 +57,6 @@
     <string name="tts_no_tts">Non parlare</string>
     <string name="unused_strings">\n\nFile inutilizzati:\n</string>
     <string name="reposition_card_dialog_title">Riposiziona nuova carta</string>
-    <string name="reposition_card_dialog_message">Posizione iniziale:</string>
     <string name="reposition_card_not_new_error">Solo le nuove carte possono essere riposizionate</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d carta riposizionata</item>

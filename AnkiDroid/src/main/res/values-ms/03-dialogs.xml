@@ -56,7 +56,6 @@
     <string name="tts_no_tts">Jangan bercakap</string>
     <string name="unused_strings">\n\nFail tidak digunakan:\n</string>
     <string name="reposition_card_dialog_title">Alih posisi kad baru</string>
-    <string name="reposition_card_dialog_message">Posisi mula:</string>
     <string name="reposition_card_not_new_error">Hanya kad baru boleh alih posisi</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="other">%d kad telah alih posisi</item>

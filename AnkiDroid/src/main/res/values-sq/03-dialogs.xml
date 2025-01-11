@@ -57,7 +57,6 @@
     <string name="tts_no_tts">mos fol</string>
     <string name="unused_strings">\n\nSkedarët e papërdorur:\n</string>
     <string name="reposition_card_dialog_title">Rivendosni kartën e re</string>
-    <string name="reposition_card_dialog_message">Pozicioni fillestar:</string>
     <string name="reposition_card_not_new_error">Vetëm kartat e reja mund të ripozicionohen</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d kartë u ripozicionua</item>

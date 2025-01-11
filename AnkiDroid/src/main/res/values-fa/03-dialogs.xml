@@ -57,7 +57,6 @@
     <string name="tts_no_tts">حرف نزن</string>
     <string name="unused_strings">\n\nفایل های استفاده نشده:\n</string>
     <string name="reposition_card_dialog_title">تغییر مکان کارت جدید</string>
-    <string name="reposition_card_dialog_message">موقعیت شروع:</string>
     <string name="reposition_card_not_new_error">فقط کارت‌های جدید می‌توانند جابه‌جا شوند</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d کارت جابه‌جا شد</item>

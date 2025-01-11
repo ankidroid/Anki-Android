@@ -57,7 +57,6 @@
     <string name="tts_no_tts">ᱟᱞᱚᱢ ᱨᱚᱲᱟ</string>
     <string name="unused_strings">\n\nUnused ᱯᱟᱹᱤᱞ:\n</string>
     <string name="reposition_card_dialog_title">ᱱᱟᱶᱟ ᱠᱟᱰ ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱯᱮ</string>
-    <string name="reposition_card_dialog_message">ᱮᱛᱦᱚᱵ ᱡᱟᱭᱜᱟᱺ</string>
     <string name="reposition_card_not_new_error">ᱠᱷᱟᱹᱞᱤ ᱱᱟᱶᱟ ᱠᱟᱰ ᱜᱮ ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱫᱟᱲᱮᱭᱟᱜᱟᱢ</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d ᱠᱟᱰ ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱮᱱᱟ</item>

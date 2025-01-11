@@ -57,7 +57,6 @@
     <string name="tts_no_tts">No parlis</string>
     <string name="unused_strings">\n\Fitxers no usats:\n</string>
     <string name="reposition_card_dialog_title">Recol·locar carta nova</string>
-    <string name="reposition_card_dialog_message">Posició inicial</string>
     <string name="reposition_card_not_new_error">Solament es poden recol·locar les cartes noves</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d carta recol·locada</item>

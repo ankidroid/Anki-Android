@@ -56,7 +56,6 @@
     <string name="tts_no_tts">不要發音</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
     <string name="reposition_card_dialog_title">變更新卡片位置</string>
-    <string name="reposition_card_dialog_message">開始位置：</string>
     <string name="reposition_card_not_new_error">只有新卡片可以變更位置</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="other">%d 卡片已變更位置</item>
