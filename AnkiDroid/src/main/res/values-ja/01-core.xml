@@ -126,7 +126,7 @@
     <string name="empty_deck">このデッキにはカードがありません</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">デッキを検索</string>
     <string name="invalid_deck_name">無効なデッキ名です</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
+    <string name="studyoptions_congrats_finished">おめでとうございます！ このデッキの今日の課題をすべて達成しました！</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">このデッキの現在の課題をすべて達成しました。\nなお、%s</string>
     <string name="studyoptions_no_cards_due">このデッキの今日の課題はまだ残っていますが、どれもまだ学習予定時刻に達していません</string>
     <string name="sd_card_not_mounted">デバイスのストレージがマウントされていません</string>
