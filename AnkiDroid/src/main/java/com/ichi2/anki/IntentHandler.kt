@@ -160,13 +160,19 @@ class IntentHandler : AbstractIntentHandler() {
                 }
             }
         CollectionManager.getColUnsafe().decks.select(deckId)
-        // Clean the stack out under the reviewer to avoid any incorrect activities / dialogs /
-        // data state from prior app usage showing after reviewer exits if going to reviewer directly
-        TaskStackBuilder
-            .create(applicationContext)
-            .addNextIntent(reloadIntent)
-            .addNextIntent(reviewIntent)
-            .startActivities()
+        // Check if the reviewer is already open and if the current deck matches the deck in the shortcut
+        if (Reviewer.isReviewerOpen && Reviewer.currentDeckId == deckId) {
+            // Bring the app to the foreground without changing the current card
+            Reviewer.bringToForeground()
+        } else {
+            // Clean the stack out under the reviewer to avoid any incorrect activities / dialogs /
+            // data state from prior app usage showing after reviewer exits if going to reviewer directly
+            TaskStackBuilder
+                .create(applicationContext)
+                .addNextIntent(reloadIntent)
+                .addNextIntent(reviewIntent)
+                .startActivities()
+        }
         finish()
     }
 
