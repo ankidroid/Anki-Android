@@ -58,6 +58,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.widget.TooltipCompat
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
 import androidx.core.content.edit
@@ -69,6 +70,7 @@ import androidx.core.util.component1
 import androidx.core.util.component2
 import androidx.core.view.MenuItemCompat
 import androidx.core.view.OnReceiveContentListener
+import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.draganddrop.DropHelper
 import androidx.fragment.app.commit
@@ -2245,12 +2247,21 @@ open class DeckPicker :
         dueTree = result
         launchCatchingTask { renderPage(collectionHasNoCards) }
         // Update the mini statistics bar as well
-        reviewSummaryTextView.setSingleLine()
         launchCatchingTask {
             reviewSummaryTextView.text =
                 withCol {
-                    sched.studiedToday()
+                    // Backend returns studiedToday() with newlines for HTML formatting,so we replace them with spaces.
+                    sched.studiedToday().replace("\n", " ")
                 }
+            val fabLinearLayout = findViewById<LinearLayout>(R.id.fabLinearLayout)
+            // Adjust bottom margin of fabLinearLayout based on reviewSummaryTextView height
+            reviewSummaryTextView.doOnLayout {
+                if (reviewSummaryTextView.lineCount > 1) {
+                    val layoutParams = fabLinearLayout.layoutParams as CoordinatorLayout.LayoutParams
+                    layoutParams.setMargins(0, 0, 0, reviewSummaryTextView.height / 2)
+                    fabLinearLayout.layoutParams = layoutParams
+                }
+            }
         }
         Timber.d("Startup - Deck List UI Completed")
     }
