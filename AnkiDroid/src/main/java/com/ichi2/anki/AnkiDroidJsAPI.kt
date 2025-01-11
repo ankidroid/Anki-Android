@@ -45,14 +45,17 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks
+import com.ichi2.libanki.Note
 import com.ichi2.libanki.SortOrder
 import com.ichi2.utils.NetworkUtils
+import com.ichi2.utils.stringIterable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
+import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
@@ -373,6 +376,36 @@ open class AnkiDroidJsAPI(
                 getColUnsafe.updateNote(note)
                 convertToByteArray(apiContract, true)
             }
+
+            "setNoteTags" -> {
+                val jsonObject = JSONObject(apiParams)
+                val noteId = jsonObject.getLong("noteId")
+                val tags = jsonObject.getJSONArray("tags")
+                withCol {
+                    fun Note.setTagsFromList(tagList: List<String>) {
+                        val tagsAsString = this@withCol.tags.join(tagList)
+                        setTagsFromStr(this@withCol, tagsAsString)
+                    }
+
+                    val note =
+                        getNote(noteId).apply {
+                            setTagsFromList(tags.stringIterable().toList())
+                        }
+                    updateNote(note)
+                }
+                convertToByteArray(apiContract, true)
+            }
+
+            "getNoteTags" -> {
+                val jsonObject = JSONObject(apiParams)
+                val noteId = jsonObject.getLong("noteId")
+                val noteTags =
+                    withCol {
+                        getNote(noteId).tags
+                    }
+                convertToByteArray(apiContract, JSONArray(noteTags).toString())
+            }
+
             "sttSetLanguage" -> convertToByteArray(apiContract, speechRecognizer.setLanguage(apiParams))
             "sttStart" -> {
                 val callback =
