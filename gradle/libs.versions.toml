@@ -1,6 +1,13 @@
 [versions]
 compileSdk = "35"
+
+# Changing minSdk means newer AnkiDroid versions will not support older devices.
+# However the Play Store will keep old AnkiDroid versions available for older
+# devices *if* you also change AnkiDroid/build.gradle play { retain {} } block
+# to include the version codes of the last released version for the older
+# minSdk. It is critical to update those version codes when you change this.
 minSdk = "24"  # also in testlib/build.gradle.kts
+
 targetSdk = "34"  # also in  ../robolectricDownloader.gradle
 acra = '5.12.0'
 ktlint = '1.5.0'
