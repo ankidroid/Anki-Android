@@ -131,7 +131,6 @@
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Recherche de cartes vides en cours&#8230;</string>
     <string name="empty_cards_count">Cartes à supprimer : %d</string>
-    <string name="empty_cards_deleted">Cartes supprimées : %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Impossible d\'obtenir l\'autorisation du micro.</string>
     <string name="multimedia_editor_failed">Impossible d’ouvrir l’éditeur multimédia</string>

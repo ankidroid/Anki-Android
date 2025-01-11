@@ -131,7 +131,6 @@
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">ಖಾಲಿ ಕಾರ್ಡ್‌ಗಳಿಗಾಗಿ ಹುಡುಕಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="empty_cards_count">ಅಳಿಸಲು ಕಾರ್ಡ್‌ಗಳು: %d</string>
-    <string name="empty_cards_deleted">ಕಾರ್ಡ್‌ಗಳನ್ನು ಅಳಿಸಲಾಗಿದೆ: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">ಮೈಕ್ರೊಫೋನ್ ಅನುಮತಿಯನ್ನು ಪಡೆಯಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.</string>
     <string name="multimedia_editor_failed">ಮಲ್ಟಿಮೀಡಿಯಾ ಸಂಪಾದಕವನ್ನು ತೆರೆಯಲು ವಿಫಲವಾಗಿದೆ</string>

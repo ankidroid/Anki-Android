@@ -127,7 +127,6 @@
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">빈 카드를 찾는 중&#8230;</string>
     <string name="empty_cards_count">삭제할 카드: %d</string>
-    <string name="empty_cards_deleted">삭제된 카드: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">마이크 사용 권한을 얻을 수 없습니다.</string>
     <string name="multimedia_editor_failed">멀티미디어 편집기를 열기 실패</string>

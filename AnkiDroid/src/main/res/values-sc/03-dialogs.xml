@@ -136,7 +136,6 @@
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Agatende sas cartas bòidas&#8230;</string>
     <string name="empty_cards_count">Cartas de iscantzellare: %d</string>
-    <string name="empty_cards_deleted">Cartas iscantzelladas: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">No est istadu possìbile otènnere su permissu pro su micròfonu.</string>
     <string name="multimedia_editor_failed">Abertura de s\'Editore Multimediale fallida</string>
