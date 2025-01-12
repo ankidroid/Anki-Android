@@ -15,9 +15,39 @@
  ****************************************************************************************/
 package com.ichi2.anki.notetype
 
+import android.content.Intent
 import anki.notetypes.NotetypeNameId
-import anki.notetypes.NotetypeNameIdUseCount
 import com.ichi2.libanki.NoteTypeId
+
+/**
+ * Contains the required information for [ManageNotetypes].
+ * @param isProcessing true if there's ongoing work happening and [ManageNotetypes] should show a
+ * "loading" ui while this takes place
+ * @param destination if non null then [ManageNotetypes] should navigate to the screen referenced by
+ * the destination
+ */
+data class NotetypesUiState(
+    val notetypes: List<NotetypeItemUiState> = emptyList(),
+    val isProcessing: Boolean = true,
+    val destination: NotetypesDestination? = null,
+)
+
+/**
+ * Encapsulate the possible destination to go from [ManageNotetypes].
+ * @param extras the optional extras that [ManageNotetypes] might want to send through an [Intent]
+ * to screens that it starts
+ */
+sealed class NotetypesDestination(
+    val extras: Map<String, Any>,
+) {
+    data class CardTemplateEditor(
+        val templateExtras: Map<String, Any>,
+    ) : NotetypesDestination(templateExtras)
+
+    data class Fields(
+        val fieldsExtras: Map<String, Any>,
+    ) : NotetypesDestination(fieldsExtras)
+}
 
 /**
  * Contains the data to display a single note type in [ManageNotetypes]'s list of notetypes.
@@ -27,9 +57,8 @@ data class NotetypeItemUiState(
     val id: NoteTypeId,
     val name: String,
     val useCount: Int,
+    val onNavigateTo: (NotetypesDestination) -> Unit,
 )
-
-fun NotetypeNameIdUseCount.toUiModel(): NotetypeItemUiState = NotetypeItemUiState(id, name, useCount)
 
 /**
  * Contains the data to display a single note type in [AddNewNotesType]'s list of notetypes.

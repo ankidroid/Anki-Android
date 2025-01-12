@@ -41,8 +41,6 @@ private val notetypeNamesAndCountDiff =
 
 internal class NotetypesAdapter(
     context: Context,
-    private val onShowFields: (NotetypeItemUiState) -> Unit,
-    private val onEditCards: (NotetypeItemUiState) -> Unit,
     private val onRename: (NotetypeItemUiState) -> Unit,
     private val onDelete: (NotetypeItemUiState) -> Unit,
 ) : ListAdapter<NotetypeItemUiState, NotetypeViewHolder>(notetypeNamesAndCountDiff) {
@@ -56,8 +54,6 @@ internal class NotetypesAdapter(
             rowView = layoutInflater.inflate(R.layout.item_manage_note_type, parent, false),
             onDelete = onDelete,
             onRename = onRename,
-            onEditCards = onEditCards,
-            onShowFields = onShowFields,
         )
 
     override fun onBindViewHolder(
@@ -70,8 +66,6 @@ internal class NotetypesAdapter(
 
 internal class NotetypeViewHolder(
     rowView: View,
-    onShowFields: (NotetypeItemUiState) -> Unit,
-    onEditCards: (NotetypeItemUiState) -> Unit,
     onRename: (NotetypeItemUiState) -> Unit,
     onDelete: (NotetypeItemUiState) -> Unit,
 ) : RecyclerView.ViewHolder(rowView) {
@@ -84,8 +78,27 @@ internal class NotetypeViewHolder(
     private val resources = rowView.context.resources
 
     init {
-        rowView.setOnClickListener { notetypeItemUiState?.let(onShowFields) }
-        btnEditCards.setOnClickListener { notetypeItemUiState?.let(onEditCards) }
+        rowView.setOnClickListener {
+            notetypeItemUiState?.let { state ->
+                state.onNavigateTo(
+                    NotetypesDestination.Fields(
+                        mapOf(
+                            "title" to state.name,
+                            "noteTypeID" to state.id,
+                        ),
+                    ),
+                )
+            }
+        }
+        btnEditCards.setOnClickListener {
+            notetypeItemUiState?.let { state ->
+                state.onNavigateTo(
+                    NotetypesDestination.CardTemplateEditor(
+                        mapOf("modelId" to state.id),
+                    ),
+                )
+            }
+        }
         btnDelete.setOnClickListener { notetypeItemUiState?.let(onDelete) }
         btnRename.setOnClickListener { notetypeItemUiState?.let(onRename) }
     }

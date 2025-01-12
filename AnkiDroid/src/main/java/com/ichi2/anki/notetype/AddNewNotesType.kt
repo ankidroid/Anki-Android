@@ -45,6 +45,7 @@ import com.ichi2.utils.positiveButton
 
 class AddNewNotesType(
     private val activity: ManageNotetypes,
+    private val viewModel: ManageNotetypeViewModel,
 ) {
     private lateinit var dialogView: View
 
@@ -152,7 +153,7 @@ class AddNewNotesType(
         selectedOption: AddNotetypeUiModel,
     ) {
         activity.launchCatchingTask {
-            activity.runAndRefreshAfter {
+            withCol {
                 val kind = StockNotetype.Kind.forNumber(selectedOption.id.toInt())
                 val updatedStandardNotetype =
                     BackendUtils.fromJsonBytes(getStockNotetypeLegacy(kind)).apply {
@@ -160,6 +161,7 @@ class AddNewNotesType(
                     }
                 addNotetypeLegacy(BackendUtils.toJsonBytes(updatedStandardNotetype))
             }
+            viewModel.refresh()
         }
     }
 
@@ -168,7 +170,7 @@ class AddNewNotesType(
         model: AddNotetypeUiModel,
     ) {
         activity.launchCatchingTask {
-            activity.runAndRefreshAfter {
+            withCol {
                 val targetNotetype = getNotetype(model.id)
                 val newNotetype =
                     targetNotetype.copy {
@@ -177,6 +179,7 @@ class AddNewNotesType(
                     }
                 addNotetype(newNotetype)
             }
+            viewModel.refresh()
         }
     }
 
