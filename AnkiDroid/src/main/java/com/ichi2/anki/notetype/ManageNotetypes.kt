@@ -57,7 +57,7 @@ class ManageNotetypes : AnkiActivity() {
     private lateinit var actionBar: ActionBar
     private lateinit var noteTypesList: RecyclerView
 
-    private var currentNotetypes: List<ManageNoteTypeUiModel> = emptyList()
+    private var currentNotetypes: List<NotetypeItemUiState> = emptyList()
 
     // Store search query
     private var searchQuery: String = ""
@@ -146,7 +146,7 @@ class ManageNotetypes : AnkiActivity() {
     }
 
     @SuppressLint("CheckResult")
-    private fun renameNotetype(manageNoteTypeUiModel: ManageNoteTypeUiModel) {
+    private fun renameNotetype(notetypeItemUiState: NotetypeItemUiState) {
         launchCatchingTask {
             val allNotetypes = mutableListOf<AddNotetypeUiModel>()
             allNotetypes.addAll(
@@ -162,7 +162,7 @@ class ManageNotetypes : AnkiActivity() {
                         positiveButton(R.string.rename) {
                             launchCatchingTask {
                                 runAndRefreshAfter {
-                                    val initialNotetype = getNotetype(manageNoteTypeUiModel.id)
+                                    val initialNotetype = getNotetype(notetypeItemUiState.id)
                                     val renamedNotetype =
                                         initialNotetype.copy {
                                             this.name = (it as AlertDialog).getInputField().text.toString()
@@ -174,7 +174,7 @@ class ManageNotetypes : AnkiActivity() {
                         negativeButton(R.string.dialog_cancel)
                         setView(R.layout.dialog_generic_text_input)
                     }.input(
-                        prefill = manageNoteTypeUiModel.name,
+                        prefill = notetypeItemUiState.name,
                         waitForPositiveButton = false,
                         displayKeyboard = true,
                         callback = { dialog, text ->
@@ -190,7 +190,7 @@ class ManageNotetypes : AnkiActivity() {
         }
     }
 
-    private fun deleteNotetype(manageNoteTypeUiModel: ManageNoteTypeUiModel) {
+    private fun deleteNotetype(notetypeItemUiState: NotetypeItemUiState) {
         launchCatchingTask {
             val messageResourceId: Int? =
                 if (userAcceptsSchemaChange()) {
@@ -214,7 +214,7 @@ class ManageNotetypes : AnkiActivity() {
                 message(messageResourceId)
                 positiveButton(R.string.dialog_positive_delete) {
                     launchCatchingTask {
-                        runAndRefreshAfter { removeNotetype(manageNoteTypeUiModel.id) }
+                        runAndRefreshAfter { removeNotetype(notetypeItemUiState.id) }
                     }
                 }
                 negativeButton(R.string.dialog_cancel)
