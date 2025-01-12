@@ -16,7 +16,6 @@ import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.KeyboardShortcutGroup
 import android.view.Menu
 import android.view.MenuItem
@@ -47,13 +46,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.color.MaterialColors
-import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.DEFAULT
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.NONE
 import com.ichi2.anki.analytics.UsageAnalytics
-import com.ichi2.anki.android.input.Shortcut
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.android.input.shortcut
@@ -659,52 +656,18 @@ open class AnkiActivity :
     }
 
     /**
-     * Shows keyboard shortcuts dialog
-     */
-    fun showKeyboardShortcutsDialog() {
-        val shortcutsGroup = getShortcuts()
-        // Don't show keyboard shortcuts dialog if there is no available shortcuts and also
-        // if there's 1 item because shortcutsGroup always includes generalShortcutGroup.
-        if (shortcutsGroup.size <= 1) return
-        Timber.i("displaying keyboard shortcut screen")
-        requestShowKeyboardShortcuts()
-    }
-
-    /**
      * Get current activity keyboard shortcuts
      */
-    fun getShortcuts(): List<KeyboardShortcutGroup> {
+    private fun getShortcuts(): List<KeyboardShortcutGroup> {
         val generalShortcutGroup =
             ShortcutGroup(
                 listOf(
-                    shortcut("Alt+K", R.string.show_keyboard_shortcuts_dialog),
                     shortcut("Ctrl+Z", R.string.undo),
                 ),
                 R.string.pref_cat_general,
             ).toShortcutGroup(this)
 
         return listOfNotNull(shortcuts?.toShortcutGroup(this), generalShortcutGroup)
-    }
-
-    override fun onKeyUp(
-        keyCode: Int,
-        event: KeyEvent,
-    ): Boolean {
-        if (event.isAltPressed && keyCode == KeyEvent.KEYCODE_K) {
-            showKeyboardShortcutsDialog()
-            return true
-        }
-
-        val done = super.onKeyUp(keyCode, event)
-
-        if (done || shortcuts == null) return false
-
-        // Show snackbar only if the current activity have shortcuts, a modifier key is pressed and the keyCode is an unmapped alphabet or num key
-        if (Shortcut.isPotentialShortcutCombination(event, keyCode)) {
-            showSnackbar(R.string.show_shortcuts_message, Snackbar.LENGTH_SHORT)
-            return true
-        }
-        return false
     }
 
     /**

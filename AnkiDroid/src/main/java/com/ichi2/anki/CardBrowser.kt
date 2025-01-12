@@ -654,10 +654,6 @@ open class CardBrowser :
                     Timber.i("Ctrl+K: Toggle Mark")
                     toggleMark()
                     return true
-                } else if (event.isAltPressed) {
-                    Timber.i("Alt+K: Show keyboard shortcuts dialog")
-                    showKeyboardShortcutsDialog()
-                    return true
                 }
             }
             KeyEvent.KEYCODE_R -> {
