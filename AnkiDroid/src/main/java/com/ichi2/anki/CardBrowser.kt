@@ -145,7 +145,7 @@ open class CardBrowser :
      * Provides an instance of NoteEditorLauncher for adding a note
      */
     @get:VisibleForTesting
-    val addNoteLauncher: NoteEditorLauncher
+    val addNoteLauncher: NoteEditorLauncher.AddNoteFromCardBrowser
         get() = createAddNoteLauncher(viewModel, fragmented)
 
     /**
@@ -362,6 +362,7 @@ open class CardBrowser :
     @VisibleForTesting
     fun onTap(id: CardOrNoteId) =
         launchCatchingTask {
+            cardsAdapter.focusedRow = id
             if (viewModel.isInMultiSelectMode) {
                 val wasSelected = viewModel.selectedRows.contains(id)
                 viewModel.toggleRowSelection(id)
@@ -380,6 +381,7 @@ open class CardBrowser :
     fun onLongPress(id: CardOrNoteId) {
         launchCatchingTask {
             currentCardId = id.toCardId(viewModel.cardsOrNotes)
+            cardsAdapter.focusedRow = id
             // click on whole cell triggers select
             if (viewModel.isInMultiSelectMode && viewModel.lastSelectedId != null) {
                 viewModel.selectRowsBetween(viewModel.lastSelectedId!!, id)
@@ -1792,7 +1794,7 @@ open class CardBrowser :
             // Hide note editor frame if deck is empty and fragmented
             noteEditorFrame?.visibility =
                 if (fragmented && !isDeckEmpty) {
-                    currentCardId = viewModel.cards[0].toCardId(viewModel.cardsOrNotes)
+                    currentCardId = cardsAdapter.focusedRow?.toCardId(viewModel.cardsOrNotes) ?: 0
                     loadNoteEditorFragmentIfFragmented(editNoteLauncher)
                     View.VISIBLE
                 } else {
@@ -2098,7 +2100,7 @@ open class CardBrowser :
         fun createAddNoteLauncher(
             viewModel: CardBrowserViewModel,
             inFragmentedActivity: Boolean = false,
-        ): NoteEditorLauncher.AddNoteFromCardBrowser = NoteEditorLauncher.AddNoteFromCardBrowser(viewModel, inFragmentedActivity)
+        ) = NoteEditorLauncher.AddNoteFromCardBrowser(viewModel, inFragmentedActivity)
     }
 }
 
