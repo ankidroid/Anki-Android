@@ -32,7 +32,6 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
-import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
 /**
@@ -96,7 +95,7 @@ class DB(
 
     // Allows to avoid using new Object[]
     fun query(
-        @Language("SQL") query: String,
+        query: String,
         vararg selectionArgs: Any,
     ): Cursor = database.query(query, selectionArgs)
 
@@ -107,7 +106,7 @@ class DB(
      * @return The integer result of the query.
      */
     fun queryScalar(
-        @Language("SQL") query: String,
+        query: String,
         vararg selectionArgs: Any,
     ): Int {
         val scalar: Int
@@ -122,7 +121,7 @@ class DB(
 
     @Throws(SQLException::class)
     fun queryString(
-        @Language("SQL") query: String,
+        query: String,
         vararg bindArgs: Any,
     ): String {
         database.query(query, bindArgs).use { cursor ->
@@ -134,7 +133,7 @@ class DB(
     }
 
     fun queryLongScalar(
-        @Language("SQL") query: String,
+        query: String,
         vararg bindArgs: Any,
     ): Long {
         var scalar: Long
@@ -154,7 +153,7 @@ class DB(
      * @return An ArrayList with the contents of the specified column.
      */
     fun queryLongList(
-        @Language("SQL") query: String,
+        query: String,
         vararg bindArgs: Any,
     ): ArrayList<Long> {
         val results = ArrayList<Long>()
@@ -173,7 +172,7 @@ class DB(
      * @return An ArrayList with the contents of the specified column.
      */
     fun queryStringList(
-        @Language("SQL") query: String,
+        query: String,
         vararg bindArgs: Any,
     ): ArrayList<String> {
         val results = ArrayList<String>()
@@ -186,7 +185,7 @@ class DB(
     }
 
     fun execute(
-        @Language("SQL") sql: String,
+        sql: String,
         vararg `object`: Any?,
     ) {
         val s = sql.trim { it <= ' ' }.lowercase()
@@ -205,9 +204,7 @@ class DB(
      * not contain any non-statement-terminating semicolons.
      */
     @KotlinCleanup("""Use Kotlin string. Change split so that there is no empty string after last ";".""")
-    fun executeScript(
-        @Language("SQL") sql: String,
-    ) {
+    fun executeScript(sql: String) {
         val queries = java.lang.String(sql).split(";")
         for (query in queries) {
             database.execSQL(query)
