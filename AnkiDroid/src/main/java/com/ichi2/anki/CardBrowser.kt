@@ -153,7 +153,10 @@ open class CardBrowser :
      * Provides an instance of NoteEditorLauncher for editing a note
      */
     private val editNoteLauncher: NoteEditorLauncher
-        get() = NoteEditorLauncher.EditCard(currentCardId, Direction.DEFAULT, fragmented)
+        get() =
+            NoteEditorLauncher.EditCard(currentCardId, Direction.DEFAULT, fragmented).also {
+                Timber.i("editNoteLauncher: %s", it)
+            }
 
     override fun onDeckSelected(deck: SelectableDeck?) {
         deck?.let {
@@ -422,7 +425,10 @@ open class CardBrowser :
          * If both conditions are true, assign true to the variable [fragmented], otherwise assign false.
          * [fragmented] will be true if the view size is large otherwise false
          */
-        fragmented = noteEditorFrame?.visibility == View.VISIBLE
+        fragmented =
+            (noteEditorFrame?.visibility == View.VISIBLE).apply {
+                Timber.i("Using split Browser: %b", this)
+            }
 
         // initialize the lateinit variables
         // Load reference to action bar title
@@ -1823,7 +1829,9 @@ open class CardBrowser :
             // Hide note editor frame if deck is empty and fragmented
             noteEditorFrame?.visibility =
                 if (fragmented && !isDeckEmpty) {
-                    currentCardId = cardsAdapter.focusedRow?.toCardId(viewModel.cardsOrNotes) ?: 0
+                    currentCardId =
+                        (cardsAdapter.focusedRow ?: viewModel.cards[0])
+                            .toCardId(viewModel.cardsOrNotes)
                     loadNoteEditorFragmentIfFragmented(editNoteLauncher)
                     View.VISIBLE
                 } else {

@@ -289,7 +289,8 @@ class NoteEditor :
      * Whether this is displayed in a fragment view.
      * If true, this fragment is on the trailing side of the card browser.
      */
-    private var inFragmentedActivity = false
+    private val inFragmentedActivity
+        get() = requireArguments().getBoolean(IN_FRAGMENTED_ACTIVITY)
 
     private val requestAddLauncher =
         registerForActivityResult(
@@ -525,8 +526,6 @@ class NoteEditor :
         @Suppress("deprecation", "API35 properly handle edge-to-edge")
         requireActivity().window.statusBarColor = Themes.getColorFromAttr(requireContext(), R.attr.appBarColor)
         super.onViewCreated(view, savedInstanceState)
-        // Retrieve the boolean argument "inFragmentedActivity" from the fragment's arguments bundle
-        inFragmentedActivity = requireArguments().getBoolean(IN_FRAGMENTED_ACTIVITY)
         // Set up toolbar
         toolbar = view.findViewById(R.id.editor_toolbar)
         toolbar.apply {
@@ -1606,8 +1605,11 @@ class NoteEditor :
 
             // Don't close this fragment if it is in fragmented activity
             if (inFragmentedActivity) {
+                Timber.i("not closing activity: fragmented")
                 return
             }
+
+            Timber.i("Closing note editor")
 
             // Set the finish animation if there is one on the intent which created the activity
             val animation =
