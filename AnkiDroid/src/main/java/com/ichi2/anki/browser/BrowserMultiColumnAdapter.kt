@@ -63,6 +63,8 @@ class BrowserMultiColumnAdapter(
     private val onLongPress: (CardOrNoteId) -> Unit,
     private val onTap: (CardOrNoteId) -> Unit,
 ) : RecyclerView.Adapter<BrowserMultiColumnAdapter.MultiColumnViewHolder>() {
+    var focusedRow: CardOrNoteId? = null
+
     val fontSizeScalePercent =
         sharedPrefs().getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO)
 
@@ -246,7 +248,13 @@ class BrowserMultiColumnAdapter(
                 holder.columnViews[i].text = renderColumn(i)
             }
             holder.setIsSelected(isSelected)
-            holder.setColor(backendColorToColor(row.color))
+            val rowColor =
+                if (focusedRow == id) {
+                    ThemeUtils.getThemeAttrColor(context, R.attr.focusedRowBackgroundColor)
+                } else {
+                    backendColorToColor(row.color)
+                }
+            holder.setColor(rowColor)
             holder.setIsDeleted(false)
         } catch (e: BackendException) {
             holder.columnViews.forEach { it.text = e.localizedMessage }

@@ -30,6 +30,7 @@
         <!-- Deck list colors and divider -->
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
         <item name="currentDeckBackgroundColor">@color/theme_black_row_current</item>
+        <item name="focusedRowBackgroundColor">@color/theme_black_row_current</item>
         <item name="dynDeckColor">#305683</item>
         <item name="deckDivider">@drawable/divider_black</item>
         <item name="expandRef">@drawable/ic_chevron_right_white</item>
