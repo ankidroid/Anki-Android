@@ -364,6 +364,7 @@ open class CardBrowser :
     @VisibleForTesting
     fun onTap(id: CardOrNoteId) =
         launchCatchingTask {
+            cardsAdapter.focusedRow = id
             if (viewModel.isInMultiSelectMode) {
                 val wasSelected = viewModel.selectedRows.contains(id)
                 viewModel.toggleRowSelection(id)
@@ -672,6 +673,7 @@ open class CardBrowser :
         }
 
         fun onSelectedRowUpdated(id: CardOrNoteId?) {
+            cardsAdapter.focusedRow = id
             loadNoteEditorFragmentIfFragmented(editNoteLauncher)
             if (!viewModel.isInMultiSelectMode || viewModel.lastSelectedId == null) {
                 viewModel.oldCardTopOffset = calculateTopOffset(viewModel.lastSelectedPosition)
@@ -1733,7 +1735,7 @@ open class CardBrowser :
             // Hide note editor frame if deck is empty and fragmented
             noteEditorFrame?.visibility =
                 if (fragmented && !isDeckEmpty) {
-                    viewModel.currentCardId = viewModel.cards[0].toCardId(viewModel.cardsOrNotes)
+                    viewModel.currentCardId = (cardsAdapter.focusedRow ?: viewModel.cards[0]).toCardId(viewModel.cardsOrNotes)
                     loadNoteEditorFragmentIfFragmented(editNoteLauncher)
                     View.VISIBLE
                 } else {
