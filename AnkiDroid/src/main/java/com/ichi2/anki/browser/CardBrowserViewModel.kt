@@ -495,6 +495,8 @@ class CardBrowserViewModel(
 
     suspend fun selectedNoteCount() = selectedRows.queryNoteIds(cardsOrNotes).distinct().size
 
+    fun hasSelectedAllDecks(): Boolean = lastDeckId == ALL_DECKS_ID
+
     suspend fun changeCardOrder(which: SortType): Job? {
         val changeType =
             when {
@@ -650,7 +652,7 @@ class CardBrowserViewModel(
         val ids = queryAllSelectedCardIds()
         Timber.d("repositioning %d cards to %d", ids.size, position)
         return undoableOp {
-            sched.sortCards(cids = ids, position, 1, shuffle = false, shift = true)
+            sched.sortCards(cids = ids, position, step = 1, shuffle = false, shift = true)
         }.count
     }
 
@@ -672,18 +674,18 @@ class CardBrowserViewModel(
         selectNone()
     }
 
-    private suspend fun updateSavedSearches(func: HashMap<String, String>.() -> Unit): HashMap<String, String> {
-        val filters = savedSearches()
+    private suspend fun updateSavedSearches(func: MutableMap<String, String>.() -> Unit): Map<String, String> {
+        val filters = savedSearches().toMutableMap()
         func(filters)
         withCol { config.set("savedFilters", filters) }
         return filters
     }
 
-    suspend fun savedSearches(): HashMap<String, String> = withCol { config.get("savedFilters") } ?: hashMapOf()
+    suspend fun savedSearches(): Map<String, String> = withCol { config.get("savedFilters") } ?: hashMapOf()
 
-    fun savedSearchesUnsafe(col: com.ichi2.libanki.Collection): HashMap<String, String> = col.config.get("savedFilters") ?: hashMapOf()
+    fun savedSearchesUnsafe(col: com.ichi2.libanki.Collection): Map<String, String> = col.config.get("savedFilters") ?: hashMapOf()
 
-    suspend fun removeSavedSearch(searchName: String): HashMap<String, String> {
+    suspend fun removeSavedSearch(searchName: String): Map<String, String> {
         Timber.d("removing user search")
         return updateSavedSearches {
             remove(searchName)
@@ -710,7 +712,7 @@ class CardBrowserViewModel(
     /** Ignores any values before [initCompleted] is set */
     private fun <T> Flow<T>.ignoreValuesFromViewModelLaunch(): Flow<T> = this.filter { initCompleted }
 
-    suspend fun setFilterQuery(filterQuery: String) {
+    private suspend fun setFilterQuery(filterQuery: String) {
         this.flowOfFilterQuery.emit(filterQuery)
         launchSearchForCards(filterQuery)
     }

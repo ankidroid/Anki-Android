@@ -946,8 +946,6 @@ private suspend fun CardBrowserViewModel.waitForSearchResults() {
     searchJob?.join()
 }
 
-private fun CardBrowserViewModel.hasSelectedAllDecks() = lastDeckId == DeckSpinnerSelection.ALL_DECKS_ID
-
 private suspend fun CardBrowserViewModel.waitForInit() {
     this.flowOfInitCompleted.first { initCompleted -> initCompleted }
 }

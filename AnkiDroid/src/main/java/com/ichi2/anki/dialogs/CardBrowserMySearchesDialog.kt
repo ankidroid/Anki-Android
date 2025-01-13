@@ -113,7 +113,7 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
         private var mySearchesDialogListener: MySearchesDialogListener? = null
 
         fun newInstance(
-            savedFilters: HashMap<String, String>?,
+            savedFilters: Map<String, String>?,
             mySearchesDialogListener: MySearchesDialogListener?,
             currentSearchTerms: String?,
             type: Int,
@@ -121,7 +121,7 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
             this.mySearchesDialogListener = mySearchesDialogListener
             val cardBrowserMySearchesDialog = CardBrowserMySearchesDialog()
             val args = Bundle()
-            args.putSerializable("savedFilters", savedFilters)
+            args.putSerializable("savedFilters", savedFilters?.let(::HashMap))
             args.putInt("type", type)
             args.putString("currentSearchTerms", currentSearchTerms)
             cardBrowserMySearchesDialog.arguments = args
