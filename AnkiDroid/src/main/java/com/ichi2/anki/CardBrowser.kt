@@ -240,7 +240,6 @@ open class CardBrowser :
             }
             invalidateOptionsMenu() // maybe the availability of undo changed
         }
-    private var lastRenderStart: Long = 0
     private lateinit var actionBarTitle: TextView
     private var reloadRequired = false
 
@@ -321,10 +320,7 @@ open class CardBrowser :
 
     private fun canPerformCardInfo(): Boolean = viewModel.selectedRowCount() == 1
 
-    private fun canPerformMultiSelectEditNote(): Boolean {
-        // The noteId is not currently available. Only allow if a single card is selected for now.
-        return viewModel.selectedRowCount() == 1
-    }
+    private fun canPerformMultiSelectEditNote(): Boolean = viewModel.selectedRowCount() == 1
 
     /**
      * Change Deck
@@ -600,7 +596,12 @@ open class CardBrowser :
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         deckSpinnerSelection.apply {
             initializeActionBarDeckSpinner(col, supportActionBar!!)
-            launchCatchingTask { selectDeckById(viewModel.deckId ?: ALL_DECKS_ID, false) }
+            launchCatchingTask {
+                selectDeckById(
+                    viewModel.deckId ?: DeckSpinnerSelection.ALL_DECKS_ID,
+                    false,
+                )
+            }
         }
     }
 
@@ -844,10 +845,7 @@ open class CardBrowser :
         launchCatchingTask {
             // Check whether the deck is empty
             if (viewModel.rowCount == 0) {
-                showSnackbar(
-                    R.string.no_note_to_edit,
-                    Snackbar.LENGTH_LONG,
-                )
+                showSnackbar(R.string.no_note_to_edit)
                 return@launchCatchingTask
             }
 
@@ -856,10 +854,7 @@ open class CardBrowser :
                 openNoteEditorForCard(cardId)
             } catch (e: Exception) {
                 Timber.w(e, "Error Opening Note Editor")
-                showSnackbar(
-                    R.string.multimedia_editor_something_wrong,
-                    Snackbar.LENGTH_LONG,
-                )
+                showSnackbar(R.string.multimedia_editor_something_wrong)
             }
         }
 
@@ -869,10 +864,6 @@ open class CardBrowser :
         if (!isFinishing) {
             updateInBackground(this)
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     @Deprecated("Deprecated in Java")
@@ -919,7 +910,7 @@ open class CardBrowser :
             saveSearchItem?.isVisible = false // the searchview's query always starts empty.
             mySearchesItem = menu.findItem(R.id.action_list_my_searches)
             val savedFiltersObj = viewModel.savedSearchesUnsafe(getColUnsafe)
-            mySearchesItem!!.isVisible = savedFiltersObj.size > 0
+            mySearchesItem!!.isVisible = savedFiltersObj.isNotEmpty()
             searchItem = menu.findItem(R.id.action_search)
             searchItem!!.setOnActionExpandListener(
                 object : MenuItem.OnActionExpandListener {
@@ -1099,9 +1090,7 @@ open class CardBrowser :
         actionBarMenu.findItem(R.id.action_view_card_info).isVisible = canPerformCardInfo()
     }
 
-    private fun hasSelectedAllCards(): Boolean {
-        return viewModel.selectedRowCount() >= viewModel.rowCount // must handle 0.
-    }
+    private fun hasSelectedAllCards(): Boolean = viewModel.selectedRowCount() >= viewModel.rowCount // must handle 0.
 
     private fun updateFlagForSelectedRows(flag: Flag) =
         launchCatchingTask {
@@ -1335,8 +1324,7 @@ open class CardBrowser :
         Timber.i("CardBrowser:: Reposition button pressed")
         if (warnUserIfInNotesOnlyMode()) return false
         launchCatchingTask {
-            val repositionCardsResult = viewModel.prepareToRepositionCards()
-            when (repositionCardsResult) {
+            when (val repositionCardsResult = viewModel.prepareToRepositionCards()) {
                 is ContainsNonNewCardsError -> {
                     // Only new cards may be repositioned (If any non-new found show error dialog and return false)
                     showDialogFragment(
@@ -1572,15 +1560,17 @@ open class CardBrowser :
     }
 
     private fun showFilterByTagsDialog() {
-        tagsDialogListenerAction = TagsDialogListenerAction.FILTER
-        val dialog =
-            tagsDialogFactory.newTagsDialog().withArguments(
-                context = this@CardBrowser,
-                type = TagsDialog.DialogType.FILTER_BY_TAG,
-                checkedTags = ArrayList(0),
-                allTags = getColUnsafe.tags.all(),
-            )
-        showDialogFragment(dialog)
+        launchCatchingTask {
+            tagsDialogListenerAction = TagsDialogListenerAction.FILTER
+            val dialog =
+                tagsDialogFactory.newTagsDialog().withArguments(
+                    context = this@CardBrowser,
+                    type = TagsDialog.DialogType.FILTER_BY_TAG,
+                    checkedTags = ArrayList(0),
+                    allTags = withCol { tags.all() },
+                )
+            showDialogFragment(dialog)
+        }
     }
 
     private fun showOptionsDialog() {
@@ -1625,7 +1615,7 @@ open class CardBrowser :
             return
         }
         updateList()
-        if (hasSelectedAllDecks()) {
+        if (viewModel.hasSelectedAllDecks()) {
             showSnackbar(subtitleText, Snackbar.LENGTH_SHORT)
         } else {
             // If we haven't selected all decks, allow the user the option to search all decks.
@@ -1761,7 +1751,7 @@ open class CardBrowser :
         }
 
     private fun showUndoSnackbar(message: CharSequence) {
-        showSnackbar(message, Snackbar.LENGTH_LONG) {
+        showSnackbar(message) {
             setAction(R.string.undo) { launchCatchingTask { undoAndShowSnackbar() } }
             undoSnackbar = this
         }
@@ -1777,12 +1767,10 @@ open class CardBrowser :
         invalidateOptionsMenu() // maybe the availability of undo changed
     }
 
-    fun hasSelectedAllDecks(): Boolean = viewModel.lastDeckId == ALL_DECKS_ID
-
     fun searchAllDecks() =
         launchCatchingTask {
             // all we need to do is select all decks
-            viewModel.setDeckId(ALL_DECKS_ID)
+            viewModel.setDeckId(DeckSpinnerSelection.ALL_DECKS_ID)
         }
 
     /**
@@ -1795,7 +1783,7 @@ open class CardBrowser :
             try {
                 when (val deckId = viewModel.lastDeckId) {
                     null -> getString(R.string.card_browser_unknown_deck_name)
-                    ALL_DECKS_ID -> getString(R.string.card_browser_all_decks)
+                    DeckSpinnerSelection.ALL_DECKS_ID -> getString(R.string.card_browser_all_decks)
                     else -> getColUnsafe.decks.name(deckId)
                 }
             } catch (e: Exception) {
@@ -1907,8 +1895,6 @@ open class CardBrowser :
         private const val CHANGE_DECK_KEY = "CHANGE_DECK"
 
         // Values related to persistent state data
-        private const val ALL_DECKS_ID = 0L
-
         fun clearLastDeckId() = SharedPreferencesLastDeckIdRepository.clearLastDeckId()
 
         @VisibleForTesting
