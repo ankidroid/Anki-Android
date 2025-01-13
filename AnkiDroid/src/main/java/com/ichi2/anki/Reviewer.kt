@@ -1093,9 +1093,9 @@ open class Reviewer :
                 state.topCard.load(getColUnsafe)
                 val leechMessage: String =
                     if (state.topCard.queue.buriedOrSuspended()) {
-                        resources.getString(R.string.leech_notification)
-                    } else {
                         resources.getString(R.string.leech_suspend_notification)
+                    } else {
+                        resources.getString(R.string.leech_notification)
                     }
                 showSnackbar(leechMessage, Snackbar.LENGTH_SHORT)
             }
