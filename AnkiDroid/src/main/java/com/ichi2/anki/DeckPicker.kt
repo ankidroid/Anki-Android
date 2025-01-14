@@ -123,6 +123,7 @@ import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceLeftDialog
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialog
+import com.ichi2.anki.dialogs.EmptyCardsDialogFragment
 import com.ichi2.anki.dialogs.ImportDialog.ImportDialogListener
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ApkgImportResultLauncherProvider
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.CsvImportResultLauncherProvider
@@ -1150,7 +1151,10 @@ open class DeckPicker :
             }
             R.id.action_empty_cards -> {
                 Timber.i("DeckPicker:: Empty cards button pressed")
-                handleEmptyCards()
+                EmptyCardsDialogFragment().show(
+                    supportFragmentManager,
+                    EmptyCardsDialogFragment.TAG,
+                )
                 return true
             }
             R.id.action_model_browser_open -> {
@@ -2498,32 +2502,6 @@ open class DeckPicker :
     private fun openReviewer() {
         val intent = Reviewer.getIntent(this)
         reviewLauncher.launch(intent)
-    }
-
-    private fun handleEmptyCards() {
-        launchCatchingTask {
-            val emptyCards =
-                withProgress(R.string.emtpy_cards_finding) {
-                    viewModel.findEmptyCards()
-                }
-            AlertDialog.Builder(this@DeckPicker).show {
-                setTitle(TR.emptyCardsWindowTitle())
-                if (emptyCards.isEmpty()) {
-                    setMessage(TR.emptyCardsNotFound())
-                    setPositiveButton(R.string.dialog_ok) { _, _ -> }
-                } else {
-                    setMessage(getString(R.string.empty_cards_count, emptyCards.size))
-                    setPositiveButton(R.string.dialog_positive_delete) { _, _ ->
-                        launchCatchingTask {
-                            withProgress(TR.emptyCardsDeleting()) {
-                                viewModel.deleteEmptyCards(emptyCards).join()
-                            }
-                        }
-                    }
-                    setNegativeButton(R.string.dialog_cancel) { _, _ -> }
-                }
-            }
-        }
     }
 
     private fun createSubDeckDialog(did: DeckId) {
