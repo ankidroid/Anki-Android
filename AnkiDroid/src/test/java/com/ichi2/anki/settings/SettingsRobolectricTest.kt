@@ -22,6 +22,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.preferences.PreferenceTestUtils
 import com.ichi2.anki.preferences.PreferenceTestUtils.getAttrsFromXml
 import com.ichi2.anki.preferences.SettingsFragment
+import com.ichi2.anki.settings.enums.SettingEnum
 import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -50,16 +51,25 @@ class SettingsRobolectricTest : RobolectricTest() {
     fun `all default values match the preference XMLs`() {
         val settingsSpy = spy(Settings)
         val keysAndDefaultValues: MutableMap<String, Any?> = mutableMapOf()
+        var lastKey = ""
         doAnswer { invocation ->
-            val key = invocation.arguments[0] as String
-            val value = invocation.callRealMethod()
-            keysAndDefaultValues[key] = value
-            value
-        }.whenever(settingsSpy).getBoolean(anyString(), anyBoolean())
+            lastKey = invocation.arguments[0] as String
+            keysAndDefaultValues[lastKey] = null
+            invocation.callRealMethod()
+        }.run {
+            whenever(settingsSpy).getBoolean(anyString(), anyBoolean())
+            whenever(settingsSpy).getString(anyString(), anyString())
+        }
 
         for (property in Settings::class.memberProperties) {
             if (property.visibility != KVisibility.PUBLIC) continue
-            property.getter.call(settingsSpy)
+            val defaultValue = property.getter.call(settingsSpy)
+            keysAndDefaultValues[lastKey] =
+                if (defaultValue is SettingEnum) {
+                    defaultValue.entryValue
+                } else {
+                    defaultValue
+                }
         }
 
         val prefs =

@@ -17,6 +17,8 @@ package com.ichi2.anki.settings
 
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.settings.enums.FrameStyle
+import com.ichi2.anki.settings.enums.SettingEnum
 
 object Settings {
     private val prefs by lazy { AnkiDroidApp.sharedPrefs() }
@@ -33,6 +35,18 @@ object Settings {
         defValue: String?,
     ): String? = prefs.getString(key, defValue)
 
+    @VisibleForTesting
+    fun <E> getEnum(
+        key: String,
+        defaultValue: E,
+    ): E where E : Enum<E>, E : SettingEnum {
+        val enumClass = defaultValue.javaClass
+        val stringValue = getString(key, defaultValue.entryValue)
+        return enumClass.enumConstants?.firstOrNull {
+            it.entryValue == stringValue
+        } ?: defaultValue
+    }
+
     // ****************************************** Sync ****************************************** //
 
     val isAutoSyncEnabled: Boolean
@@ -40,4 +54,9 @@ object Settings {
 
     val username: String
         get() = getString(SettingKey.USERNAME, "") ?: ""
+
+    // **************************************** Reviewer **************************************** //
+
+    val frameStyle: FrameStyle
+        get() = getEnum(SettingKey.FRAME_STYLE, FrameStyle.CARD)
 }

@@ -13,13 +13,8 @@
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.anki.settings
+package com.ichi2.anki.settings.enums
 
-object SettingKey {
-    // ****************************************** Sync ****************************************** //
-    const val AUTO_SYNC = "automaticSyncMode"
-    const val USERNAME = "username"
-
-    // **************************************** Reviewer **************************************** //
-    const val FRAME_STYLE = "reviewerFrameStyle"
+interface SettingEnum {
+    val entryValue: String
 }
