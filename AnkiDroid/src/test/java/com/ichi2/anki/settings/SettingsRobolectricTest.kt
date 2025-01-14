@@ -29,6 +29,7 @@ import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mockito.anyBoolean
 import org.mockito.Mockito.anyString
 import org.mockito.Mockito.doAnswer
@@ -59,6 +60,7 @@ class SettingsRobolectricTest : RobolectricTest() {
         }.run {
             whenever(settingsSpy).getBoolean(anyString(), anyBoolean())
             whenever(settingsSpy).getString(anyString(), anyString())
+            whenever(settingsSpy).getInt(anyString(), anyInt())
         }
 
         for (property in Settings::class.memberProperties) {

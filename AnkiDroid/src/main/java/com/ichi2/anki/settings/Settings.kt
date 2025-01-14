@@ -36,6 +36,12 @@ object Settings {
     ): String? = prefs.getString(key, defValue)
 
     @VisibleForTesting
+    fun getInt(
+        key: String,
+        defValue: Int,
+    ): Int = prefs.getInt(key, defValue)
+
+    @VisibleForTesting
     fun <E> getEnum(
         key: String,
         defaultValue: E,
@@ -59,4 +65,9 @@ object Settings {
 
     val frameStyle: FrameStyle
         get() = getEnum(SettingKey.FRAME_STYLE, FrameStyle.CARD)
+
+    // ************************************** Accessibility ************************************* //
+
+    val answerButtonsSize: Int
+        get() = getInt(SettingKey.ANSWER_BUTTON_SIZE, 100)
 }

@@ -333,7 +333,7 @@ class ReviewerFragment :
             easyButton.isVisible = false
         }
 
-        val buttonsHeight = prefs.getInt("answerButtonSize", 100)
+        val buttonsHeight = Settings.answerButtonsSize
         if (buttonsHeight != 100) {
             buttonsAreaLayout.post {
                 buttonsAreaLayout.updateLayoutParams {

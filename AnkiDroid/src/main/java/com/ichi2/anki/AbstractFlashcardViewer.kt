@@ -121,6 +121,7 @@ import com.ichi2.anki.reviewer.MotionEventHandler
 import com.ichi2.anki.reviewer.PreviousAnswerIndicator
 import com.ichi2.anki.servicelayer.LanguageHintService.applyLanguageHint
 import com.ichi2.anki.servicelayer.NoteService.isMarked
+import com.ichi2.anki.settings.Settings
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
@@ -1226,7 +1227,7 @@ abstract class AbstractFlashcardViewer :
         // mDeckFilename = preferences.getString("deckFilename", "");
         minimalClickSpeed = preferences.getInt("showCardAnswerButtonTime", 0)
         fullscreenMode = fromPreference(preferences)
-        relativeButtonSize = preferences.getInt("answerButtonSize", 100)
+        relativeButtonSize = Settings.answerButtonsSize
         tts.enabled = preferences.getBoolean("tts", false)
         doubleScrolling = preferences.getBoolean("double_scrolling", false)
         prefShowTopbar = preferences.getBoolean("showTopbar", true)

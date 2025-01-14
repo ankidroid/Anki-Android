@@ -570,7 +570,7 @@ object UsageAnalytics {
             // ******************************** Accessibility ******************************************
             "cardZoom",
             "imageZoom",
-            "answerButtonSize",
+            SettingKey.ANSWER_BUTTON_SIZE,
             "showLargeAnswerButtons",
             "relativeCardBrowserFontSize",
             "showCardAnswerButtonTime",

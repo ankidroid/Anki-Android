@@ -22,4 +22,7 @@ object SettingKey {
 
     // **************************************** Reviewer **************************************** //
     const val FRAME_STYLE = "reviewerFrameStyle"
+
+    // ************************************** Accessibility ************************************* //
+    const val ANSWER_BUTTON_SIZE = "answerButtonSize"
 }
