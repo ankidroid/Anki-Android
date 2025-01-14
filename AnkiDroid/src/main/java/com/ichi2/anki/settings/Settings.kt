@@ -31,7 +31,8 @@ object Settings {
         defValue: Boolean,
     ): Boolean = prefs.getBoolean(key, defValue)
 
-    private fun putBoolean(
+    @VisibleForTesting
+    fun putBoolean(
         key: String,
         value: Boolean,
     ) {
@@ -44,7 +45,8 @@ object Settings {
         defValue: String?,
     ): String? = prefs.getString(key, defValue)
 
-    private fun putString(
+    @VisibleForTesting
+    fun putString(
         key: String,
         value: String?,
     ) {
