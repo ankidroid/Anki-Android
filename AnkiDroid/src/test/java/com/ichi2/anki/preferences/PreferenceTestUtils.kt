@@ -98,7 +98,7 @@ object PreferenceTestUtils {
         return fragments.distinctBy { it::class } // and remove any repeated fragments
     }
 
-    private fun attrValueToString(
+    fun attrValueToString(
         value: String,
         context: Context,
     ): String =
