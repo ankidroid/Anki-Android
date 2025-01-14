@@ -24,9 +24,11 @@ import android.webkit.WebView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChanges
+import anki.collection.Progress
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.ProgressContext
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.launchCatchingTask
@@ -236,24 +238,7 @@ suspend fun FragmentActivity.updateDeckConfigsRaw(input: ByteArray): ByteArray {
         withContext(Dispatchers.Main) {
             withProgress(
                 extractProgress = {
-                    text =
-                        if (progress.hasComputeParams()) {
-                            val value = progress.computeParams
-                            val label =
-                                TR.deckConfigOptimizingPreset(
-                                    currentCount = value.currentPreset,
-                                    totalCount = value.totalPresets,
-                                )
-                            val pct = if (value.total > 0) (value.current.toDouble() / value.total.toDouble() * 100.0) else 0.0
-                            val reviewsLabel =
-                                TR.deckConfigPercentOfReviews(
-                                    pct = "%.1f".format(pct),
-                                    reviews = value.reviews,
-                                )
-                            label + "\n" + reviewsLabel
-                        } else {
-                            getString(R.string.dialog_processing)
-                        }
+                    text = this.toOptimizingPresetString() ?: getString(R.string.dialog_processing)
                 },
             ) {
                 withContext(Dispatchers.IO) {
@@ -264,4 +249,31 @@ suspend fun FragmentActivity.updateDeckConfigsRaw(input: ByteArray): ByteArray {
     undoableOp { OpChanges.parseFrom(output) }
     withContext(Dispatchers.Main) { finish() }
     return output
+}
+
+/**
+ * ```
+ * Optimizing preset 1/20
+ * 5.2% of 1000 reviews
+ * ```
+ *
+ * @return the above string, or `null` if [ProgressContext] has no
+ * [compute parameters][Progress.hasComputeParams]
+ */
+private fun ProgressContext.toOptimizingPresetString(): String? {
+    if (!progress.hasComputeParams()) return null
+
+    val value = progress.computeParams
+    val label =
+        TR.deckConfigOptimizingPreset(
+            currentCount = value.currentPreset,
+            totalCount = value.totalPresets,
+        )
+    val pct = if (value.total > 0) (value.current.toDouble() / value.total.toDouble() * 100.0) else 0.0
+    val reviewsLabel =
+        TR.deckConfigPercentOfReviews(
+            pct = "%.1f".format(pct),
+            reviews = value.reviews,
+        )
+    return label + "\n" + reviewsLabel
 }
