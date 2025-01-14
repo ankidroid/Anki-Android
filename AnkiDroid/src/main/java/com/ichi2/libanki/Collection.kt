@@ -594,7 +594,7 @@ class Collection(
     fun updateNotes(notes: Iterable<Note>): OpChanges = backend.updateNotes(notes = notes.map { it.toBackendNote() }, skipUndoEntry = false)
 
     @NotInLibAnki
-    fun emptyCids(): List<CardId> = getEmptyCards().notesList.flatMap { it.cardIdsList }
+    fun emptyCids(): List<CardId> = getEmptyCards().emptyCids()
 
     /** Fixes and optimizes the database. If any errors are encountered, a list of
      * problems is returned. Throws if DB is unreadable. */
@@ -680,3 +680,6 @@ class Collection(
 
     fun setPreferences(preferences: Preferences): OpChanges = backend.setPreferences(preferences)
 }
+
+@NotInLibAnki
+fun EmptyCardsReport.emptyCids(): List<CardId> = notesList.flatMap { it.cardIdsList }

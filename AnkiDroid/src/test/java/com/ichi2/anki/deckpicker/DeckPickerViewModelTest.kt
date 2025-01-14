@@ -18,9 +18,9 @@ package com.ichi2.anki.deckpicker
 
 import androidx.annotation.CheckResult
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.card_rendering.emptyCardsReport
 import app.cash.turbine.test
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.libanki.CardId
 import com.ichi2.libanki.undoStatus
 import com.ichi2.testutils.ensureOpsExecuted
 import org.hamcrest.CoreMatchers.not
@@ -30,6 +30,7 @@ import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import timber.log.Timber
+import anki.card_rendering.EmptyCardsReport as BackendReport
 
 /** Test of [DeckPickerViewModel] */
 @RunWith(AndroidJUnit4::class)
@@ -46,7 +47,7 @@ class DeckPickerViewModelTest : RobolectricTest() {
                 viewModel.deleteEmptyCards(cardsToEmpty).join()
 
                 expectMostRecentItem().also {
-                    assertThat("cards deleted", it.cardsDeleted, equalTo(1))
+                    assertThat("cards deleted", it.cardsDeleted, equalTo(EXPECTED_CARDS))
                 }
 
                 // ensure a duplicate output is displayed to the user
@@ -54,20 +55,26 @@ class DeckPickerViewModelTest : RobolectricTest() {
                 viewModel.deleteEmptyCards(newCardsToEmpty).join()
 
                 expectMostRecentItem().also {
-                    assertThat("cards deleted: duplicate output", it.cardsDeleted, equalTo(1))
+                    assertThat("cards deleted: duplicate output", it.cardsDeleted, equalTo(EXPECTED_CARDS))
                 }
 
                 // send the same collection in, but with the same ids.
                 // the output should only show 1 card deleted
-                val emptyCardsSentTwice = createEmptyCards()
-                viewModel.deleteEmptyCards(emptyCardsSentTwice + emptyCardsSentTwice).join()
+                val emptyCardsSentTwice =
+                    createEmptyCards().let { orig ->
+                        emptyCardsReport {
+                            notes.addAll(orig.innerReport.notesList + orig.innerReport.notesList)
+                        }
+                    }
+
+                viewModel.deleteEmptyCards(emptyCardsSentTwice).join()
 
                 expectMostRecentItem().also {
-                    assertThat("cards deleted: duplicate input", it.cardsDeleted, equalTo(1))
+                    assertThat("cards deleted: duplicate input", it.cardsDeleted, equalTo(EXPECTED_CARDS))
                 }
 
                 // test an empty list: a no-op should inform the user, rather than do nothing
-                viewModel.deleteEmptyCards(listOf()).join()
+                viewModel.deleteEmptyCards(EmptyCardsReport(emptyCardsReport { })).join()
 
                 expectMostRecentItem().also {
                     assertThat("'no cards deleted' is notified", it.cardsDeleted, equalTo(0))
@@ -89,18 +96,50 @@ class DeckPickerViewModelTest : RobolectricTest() {
             assertThat("col undo status", col.undoStatus().undo, equalTo("Empty Cards"))
         }
 
+    @Test
+    fun `empty cards - keep notes`() =
+        runTest {
+            val emptyCardsReport = createEmptyCards()
+
+            viewModel.emptyCardsNotification.test {
+                viewModel.deleteEmptyCards(emptyCardsReport, preserveNotes = true).join()
+
+                expectMostRecentItem().also {
+                    assertThat("note is retained", it.cardsDeleted, equalTo(EXPECTED_CARDS - 1))
+                }
+
+                viewModel.deleteEmptyCards(viewModel.assertEmptyCardsReport(), preserveNotes = false).join()
+
+                expectMostRecentItem().also {
+                    assertThat("note is deleted", it.cardsDeleted, equalTo(1))
+                }
+            }
+        }
+
+    /** Creates a note with 2 empty cards */
     @CheckResult
-    private suspend fun createEmptyCards(): List<CardId> {
-        addNoteUsingNoteTypeName("Cloze", "{{c1::Hello}} {{c2::World}}", "").apply {
-            setField(0, "{{c1::Hello}}")
+    private suspend fun createEmptyCards(): EmptyCardsReport {
+        addNoteUsingNoteTypeName("Cloze", "{{c1::Hello}} {{c3::There}} {{c2::World}}", "").apply {
+            assertThat("note cards", numberOfCards(), equalTo(EXPECTED_CARDS))
+            setField(0, "Hello")
             col.updateNote(this)
         }
-        return viewModel.findEmptyCards().also { cardsToEmpty ->
+        return viewModel.assertEmptyCardsReport()
+    }
+
+    private suspend fun DeckPickerViewModel.assertEmptyCardsReport(): EmptyCardsReport =
+        findEmptyCards().also { cardsToEmpty ->
             assertThat("there are empty cards", cardsToEmpty, not(empty()))
             Timber.d("created %d empty cards: [%s]", cardsToEmpty.size, cardsToEmpty)
         }
-    }
 
-    /** test helper to use [deleteEmptyCards] without an [EmptyCards] instance */
-    private fun DeckPickerViewModel.deleteEmptyCards(list: List<CardId>) = deleteEmptyCards(EmptyCards(list))
+    /** test helper to use [deleteEmptyCards] with the original test `preserveNotes` value */
+    private fun DeckPickerViewModel.deleteEmptyCards(report: EmptyCardsReport) = deleteEmptyCards(report, false)
+
+    /** test helper to use [deleteEmptyCards] without an [EmptyCardsReport] instance */
+    private fun DeckPickerViewModel.deleteEmptyCards(report: BackendReport) = deleteEmptyCards(EmptyCardsReport(report))
+
+    companion object {
+        private const val EXPECTED_CARDS: Int = 3
+    }
 }

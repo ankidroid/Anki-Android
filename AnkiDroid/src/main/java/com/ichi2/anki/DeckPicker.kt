@@ -109,7 +109,7 @@ import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.DeckDeletionResult
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
-import com.ichi2.anki.deckpicker.EmptyCards
+import com.ichi2.anki.deckpicker.EmptyCardsReport
 import com.ichi2.anki.deckpicker.EmptyCardsResult
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
@@ -197,6 +197,7 @@ import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
+import com.ichi2.utils.requireBoolean
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import com.ichi2.widget.WidgetStatus
@@ -600,11 +601,13 @@ open class DeckPicker :
         }
 
         supportFragmentManager.setFragmentResultListener(EmptyCardsDialog.REQUEST_KEY, this) { _, bundle ->
-            Timber.d("Empty Cards request received")
-            val report = BundleCompat.getSerializable(bundle, EmptyCardsDialog.RESULT_REPORT_KEY, EmptyCards::class.java)!!
+            val report = BundleCompat.getSerializable(bundle, EmptyCardsDialog.RESULT_REPORT_KEY, EmptyCardsReport::class.java)!!
+            val keepNotes = bundle.requireBoolean(EmptyCardsDialog.RESULT_KEEP_NOTES_KEY)
+
+            Timber.i("Handling Empty Cards request. %d cards, keepNotes: %b", report.size, keepNotes)
             launchCatchingTask {
                 withProgress(TR.emptyCardsDeleting()) {
-                    viewModel.deleteEmptyCards(report).join()
+                    viewModel.deleteEmptyCards(report, keepNotes).join()
                 }
             }
         }
@@ -2519,18 +2522,18 @@ open class DeckPicker :
 
     private fun handleEmptyCards() {
         launchCatchingTask {
-            val emptyCards =
+            val emptyCardsReport =
                 withProgress(R.string.emtpy_cards_finding) {
                     viewModel.findEmptyCards()
                 }
-            if (emptyCards.isEmpty()) {
+            if (emptyCardsReport.isEmpty()) {
                 AlertDialog.Builder(this@DeckPicker).show {
                     setTitle(TR.emptyCardsWindowTitle())
                     setMessage(TR.emptyCardsNotFound())
                     setPositiveButton(R.string.dialog_ok) { _, _ -> }
                 }
             } else {
-                val emptyCardsDialog = EmptyCardsDialog.createInstance(emptyCards)
+                val emptyCardsDialog = EmptyCardsDialog.createInstance(emptyCardsReport)
                 showDialogFragment(emptyCardsDialog)
             }
         }
