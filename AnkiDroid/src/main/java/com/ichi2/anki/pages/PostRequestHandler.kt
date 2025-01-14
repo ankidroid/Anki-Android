@@ -36,7 +36,6 @@ import com.ichi2.libanki.getDeckNamesRaw
 import com.ichi2.libanki.getFieldNamesRaw
 import com.ichi2.libanki.getImportAnkiPackagePresetsRaw
 import com.ichi2.libanki.getNotetypeNamesRaw
-import com.ichi2.libanki.sched.computeFsrsParamsRaw
 import com.ichi2.libanki.sched.computeOptimalRetentionRaw
 import com.ichi2.libanki.sched.evaluateParamsRaw
 import com.ichi2.libanki.sched.simulateFsrsReviewRaw
@@ -77,7 +76,6 @@ val collectionMethods =
         "getFieldNames" to { bytes -> getFieldNamesRaw(bytes) },
         "cardStats" to { bytes -> cardStatsRaw(bytes) },
         "getDeckConfigsForUpdate" to { bytes -> getDeckConfigsForUpdateRaw(bytes) },
-        "computeFsrsParams" to { bytes -> computeFsrsParamsRaw(bytes) },
         "computeOptimalRetention" to { bytes -> computeOptimalRetentionRaw(bytes) },
         "evaluateParams" to { bytes -> evaluateParamsRaw(bytes) },
         "simulateFsrsReview" to { bytes -> simulateFsrsReviewRaw(bytes) },
@@ -124,6 +122,7 @@ val uiMethods =
                 withCol { updateImageOcclusionNoteRaw(bytes) }
             }
         },
+        "computeFsrsParams" to { bytes -> lifecycleScope.async { computeFsrsParams(bytes) } },
     )
 
 suspend fun FragmentActivity?.handleUiPostRequest(
