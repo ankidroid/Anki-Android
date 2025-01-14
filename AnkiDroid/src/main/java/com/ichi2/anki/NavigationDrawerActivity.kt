@@ -63,7 +63,7 @@ abstract class NavigationDrawerActivity :
     private var navButtonGoesBack = false
 
     // Navigation drawer list item entries
-    private lateinit var drawerLayout: DrawerLayout
+    lateinit var drawerLayout: DrawerLayout
     private var navigationView: NavigationView? = null
     lateinit var drawerToggle: ActionBarDrawerToggle
         private set
@@ -399,7 +399,7 @@ abstract class NavigationDrawerActivity :
         drawerLayout.openDrawer(GravityCompat.START, animationEnabled())
     }
 
-    private fun closeDrawer() {
+    protected fun closeDrawer() {
         drawerLayout.closeDrawer(GravityCompat.START, animationEnabled())
     }
 
