@@ -125,4 +125,6 @@ object PreferenceTestUtils {
         keys.remove("appBarButtonsScreen")
         return keys
     }
+
+    fun getDevOptionsKeys(context: Context): Set<String> = getKeysFromXml(context, R.xml.preferences_dev_options).toSet()
 }

@@ -25,4 +25,7 @@ object SettingKey {
 
     // ************************************** Accessibility ************************************* //
     const val ANSWER_BUTTON_SIZE = "answerButtonSize"
+
+    // ************************************* Developer options ********************************** //
+    const val DEV_OPTIONS_ENABLED = "devOptionsEnabledByUser"
 }

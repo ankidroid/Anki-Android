@@ -16,7 +16,9 @@
 package com.ichi2.anki.settings
 
 import androidx.annotation.VisibleForTesting
+import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.settings.enums.SettingEnum
 
@@ -28,6 +30,13 @@ object Settings {
         key: String,
         defValue: Boolean,
     ): Boolean = prefs.getBoolean(key, defValue)
+
+    private fun putBoolean(
+        key: String,
+        value: Boolean,
+    ) {
+        prefs.edit { putBoolean(key, value) }
+    }
 
     @VisibleForTesting
     fun getString(
@@ -70,4 +79,10 @@ object Settings {
 
     val answerButtonsSize: Int
         get() = getInt(SettingKey.ANSWER_BUTTON_SIZE, 100)
+
+    // ************************************* Developer options ********************************** //
+
+    var isDevOptionsEnabled: Boolean
+        get() = getBoolean(SettingKey.DEV_OPTIONS_ENABLED, false) || BuildConfig.DEBUG
+        set(value) = putBoolean(SettingKey.DEV_OPTIONS_ENABLED, value)
 }

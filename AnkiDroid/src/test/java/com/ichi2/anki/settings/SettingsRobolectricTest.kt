@@ -48,14 +48,14 @@ class SettingsRobolectricTest : RobolectricTest() {
             SPMockBuilder().createSharedPreferences()
     }
 
-    @Test
-    fun `all default values match the preference XMLs`() {
+    private fun getKeysAndDefaultValues(): MutableMap<String, Any?> {
         val settingsSpy = spy(Settings)
         val keysAndDefaultValues: MutableMap<String, Any?> = mutableMapOf()
-        var lastKey = ""
+        var key = ""
+
         doAnswer { invocation ->
-            lastKey = invocation.arguments[0] as String
-            keysAndDefaultValues[lastKey] = null
+            key = invocation.arguments[0] as String
+            keysAndDefaultValues[key] = null
             invocation.callRealMethod()
         }.run {
             whenever(settingsSpy).getBoolean(anyString(), anyBoolean())
@@ -66,14 +66,20 @@ class SettingsRobolectricTest : RobolectricTest() {
         for (property in Settings::class.memberProperties) {
             if (property.visibility != KVisibility.PUBLIC) continue
             val defaultValue = property.getter.call(settingsSpy)
-            keysAndDefaultValues[lastKey] =
+            keysAndDefaultValues[key] =
                 if (defaultValue is SettingEnum) {
                     defaultValue.entryValue
                 } else {
                     defaultValue
                 }
         }
+        return keysAndDefaultValues
+    }
 
+    @Test
+    fun `all default values match the preference XMLs`() {
+        val keysAndDefaultValues = getKeysAndDefaultValues()
+        val devOptionsKeys = PreferenceTestUtils.getDevOptionsKeys(targetContext)
         val prefs =
             PreferenceTestUtils
                 .getAllPreferencesFragments(targetContext)
@@ -85,9 +91,9 @@ class SettingsRobolectricTest : RobolectricTest() {
                 .associate { PreferenceTestUtils.attrValueToString(it["key"]!!, targetContext) to it["defaultValue"] }
 
         for ((key, defaultValue) in keysAndDefaultValues.entries) {
-            if (key !in prefs) continue
+            if (key !in prefs || key in devOptionsKeys) continue
             val prefsDefaultValue = prefs.getValue(key)
-            assertThat(defaultValue.toString(), equalTo(prefsDefaultValue))
+            assertThat("The default value of '$key' matches the preference XML", defaultValue.toString(), equalTo(prefsDefaultValue))
         }
     }
 }
