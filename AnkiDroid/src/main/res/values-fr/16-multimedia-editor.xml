@@ -42,7 +42,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Ajouter une image</string>
     <string name="multimedia_editor_popup_audio_clip">Ajouter un extrait audio</string>
-    <string name="multimedia_editor_popup_video_clip">Ajouter un extrait audio</string>
+    <string name="multimedia_editor_popup_video_clip">Ajouter un extrait vidéo</string>
     <string name="multimedia_editor_popup_audio">Enregistrer un son</string>
     <string name="multimedia_editor_popup_cloze">Texte à trou</string>
     <!-- Field editing general -->
@@ -60,7 +60,7 @@
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Quelque chose s’est mal passé</string>
     <string name="multimedia_editor_png_paste_error">Erreur lors de la convertion de l\'image du presse-papier au format PNG: %s</string>
-    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Joindre le contenu multimédia au %1$s champ</string>
+    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Joindre le contenu multimédia au champ %1$s</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Échec de l’enregistrement</string>
@@ -69,8 +69,8 @@
     <!-- Crop function-->
     <string name="crop_image">Voulez-vous rogner cette image ?</string>
     <string name="crop_button" maxLength="28">Rogner l\'image</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
+    <string name="save_dialog_content">La taille actuelle de l\'image est de %s Mo. La taille de l\'image par défaut est de 1 Mo. Voulez-vous la compresser ?</string>
     <string name="select_image_failed">"La sélection de l\'image a échoué, veuillez réessayer"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Contenus du champ</string>
-    <string name="reselect" maxLength="28">Reselect</string>
+    <string name="reselect" maxLength="28">Sélectionner à nouveau</string>
 </resources>
