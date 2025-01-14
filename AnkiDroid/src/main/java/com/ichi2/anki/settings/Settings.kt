@@ -27,8 +27,17 @@ object Settings {
         defValue: Boolean,
     ): Boolean = prefs.getBoolean(key, defValue)
 
+    @VisibleForTesting
+    fun getString(
+        key: String,
+        defValue: String?,
+    ): String? = prefs.getString(key, defValue)
+
     // ****************************************** Sync ****************************************** //
 
     val isAutoSyncEnabled: Boolean
         get() = getBoolean(SettingKey.AUTO_SYNC, false)
+
+    val username: String
+        get() = getString(SettingKey.USERNAME, "") ?: ""
 }

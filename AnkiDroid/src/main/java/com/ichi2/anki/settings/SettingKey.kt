@@ -17,4 +17,5 @@ package com.ichi2.anki.settings
 
 object SettingKey {
     const val AUTO_SYNC = "automaticSyncMode"
+    const val USERNAME = "username"
 }

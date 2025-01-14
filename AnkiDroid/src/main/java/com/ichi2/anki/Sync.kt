@@ -31,6 +31,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.settings.SettingKey
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.libanki.ChangeManager.notifySubscribersAllValuesChanged
@@ -55,7 +56,6 @@ import timber.log.Timber
 
 object SyncPreferences {
     const val HKEY = "hkey"
-    const val USERNAME = "username"
     const val CURRENT_SYNC_URI = "currentSyncUri"
     const val CUSTOM_SYNC_URI = "syncBaseUrl"
     const val CUSTOM_SYNC_ENABLED = CUSTOM_SYNC_URI + VersatileTextWithASwitchPreference.SWITCH_SUFFIX
@@ -125,7 +125,7 @@ suspend fun syncLogout(context: Context) {
     val preferences = context.sharedPrefs()
     preferences.edit {
         remove(SyncPreferences.HKEY)
-        remove(SyncPreferences.USERNAME)
+        remove(SettingKey.USERNAME)
         remove(SyncPreferences.CURRENT_SYNC_URI)
         remove(SyncPreferences.HOSTNUM)
     }
@@ -212,7 +212,7 @@ private fun updateLogin(
 ) {
     val preferences = context.sharedPrefs()
     preferences.edit {
-        putString(SyncPreferences.USERNAME, username)
+        putString(SettingKey.USERNAME, username)
         putString(SyncPreferences.HKEY, hkey)
     }
 }
