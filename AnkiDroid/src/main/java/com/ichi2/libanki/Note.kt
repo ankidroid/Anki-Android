@@ -22,10 +22,10 @@ import androidx.annotation.VisibleForTesting
 import anki.notes.NoteFieldsCheckResponse
 import com.ichi2.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.libanki.backend.model.toBackendNote
+import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.emptyStringArray
-import java.util.AbstractSet
 import java.util.regex.Pattern
 
 @KotlinCleanup("lots to do")
@@ -77,6 +77,7 @@ class Note : Cloneable {
         loadFromBackendNote(col, note)
     }
 
+    @LibAnkiAlias("_load_from_backend_note")
     private fun loadFromBackendNote(
         col: Collection,
         note: anki.notes.Note,
@@ -100,6 +101,7 @@ class Note : Cloneable {
 
     fun cards(col: Collection): List<Card> = cardIds(col).map { col.getCard(it) }
 
+    @LibAnkiAlias("ephemeral_card")
     fun ephemeralCard(
         col: Collection,
         ord: Int = 0,
@@ -139,6 +141,7 @@ class Note : Cloneable {
 
     /** The first card, assuming it exists. */
     @CheckResult
+    @NotInLibAnki
     fun firstCard(col: Collection): Card =
         col.getCard(
             col.db.queryLongScalar(
@@ -171,6 +174,7 @@ class Note : Cloneable {
         return result
     }
 
+    @LibAnkiAlias("_field_index")
     private fun fieldIndex(key: String): Int {
         val fieldPair =
             fMap!![key]
@@ -183,8 +187,10 @@ class Note : Cloneable {
         return fieldPair.first
     }
 
+    @LibAnkiAlias("__getitem__")
     fun getItem(key: String): String = fields[fieldIndex(key)]
 
+    @LibAnkiAlias("__setitem__")
     fun setItem(
         key: String,
         value: String,
@@ -192,26 +198,37 @@ class Note : Cloneable {
         fields[fieldIndex(key)] = value
     }
 
+    @LibAnkiAlias("__contains__")
     operator fun contains(key: String): Boolean = fMap!!.containsKey(key)
+
+    @NotInLibAnki
+    fun setField(
+        index: Int,
+        value: String,
+    ) {
+        fields[index] = value
+    }
 
     /**
      * Tags
      * ***********************************************************
      */
+
+    @LibAnkiAlias("has_tag")
     fun hasTag(
         col: Collection,
         tag: String,
     ): Boolean = col.tags.inList(tag, tags)
 
-    fun stringTags(col: Collection): String = col.tags.join(col.tags.canonify(tags))
-
-    fun setTagsFromStr(
-        col: Collection,
-        str: String,
-    ) {
-        tags = col.tags.split(str)
+    /**
+     * Add tag. Duplicates will be stripped on save.
+     */
+    @LibAnkiAlias("add_tag")
+    fun addTag(tag: String) {
+        tags.add(tag)
     }
 
+    @LibAnkiAlias("remove_tag")
     fun removeTag(tag: String) {
         val rem: MutableList<String> =
             ArrayList(
@@ -227,31 +244,24 @@ class Note : Cloneable {
         }
     }
 
-    /*
-     *  duplicates will be stripped on save
-     */
-    fun addTag(tag: String) {
-        tags.add(tag)
-    }
+    @LibAnkiAlias("string_tags")
+    fun stringTags(col: Collection): String = col.tags.join(col.tags.canonify(tags))
 
-    fun addTags(tags: AbstractSet<String>) {
-        tags.addAll(tags)
+    @LibAnkiAlias("set_tags_from_str")
+    fun setTagsFromStr(
+        col: Collection,
+        str: String,
+    ) {
+        tags = col.tags.split(str)
     }
 
     /**
      * Unique/duplicate check
      * ***********************************************************
      */
+
+    @LibAnkiAlias("fields_check")
     fun fieldsCheck(col: Collection): NoteFieldsCheckResponse.State = col.backend.noteFieldsCheck(toBackendNote()).state
-
-    fun sFld(col: Collection): String = col.db.queryString("SELECT sfld FROM notes WHERE id = ?", id)
-
-    fun setField(
-        index: Int,
-        value: String,
-    ) {
-        fields[index] = value
-    }
 
     public override fun clone(): Note =
         try {
@@ -270,7 +280,7 @@ class Note : Cloneable {
     override fun hashCode(): Int = (id xor (id ushr 32)).toInt()
 
     object ClozeUtils {
-        private val mClozeRegexPattern = Pattern.compile("\\{\\{c(\\d+)::")
+        private val clozeRegexPattern = Pattern.compile("\\{\\{c(\\d+)::")
 
         /**
          * Calculate the next number that should be used if inserting a new cloze deletion.
@@ -286,7 +296,7 @@ class Note : Cloneable {
             // Begin looping through the fields
             for (fieldLiteral in fieldValues) {
                 // Begin searching in the current field for cloze references
-                val matcher = mClozeRegexPattern.matcher(fieldLiteral)
+                val matcher = clozeRegexPattern.matcher(fieldLiteral)
                 while (matcher.find()) {
                     val detectedClozeId = matcher.group(1)!!.toInt()
                     if (detectedClozeId > highestClozeId) {
