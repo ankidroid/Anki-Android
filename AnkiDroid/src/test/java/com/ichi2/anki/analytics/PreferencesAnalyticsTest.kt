@@ -80,6 +80,13 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             "syncBaseUrl",
             "language",
             "customSyncCertificate",
+            // Experimental settings
+            "reviewerMenuSettings",
+            "hideAnswerButtons",
+            "hideHardAndEasy",
+            "reviewerFrameStyle",
+            "hideSystemBars",
+            "ignoreDisplayCutout",
         )
 
     @Test

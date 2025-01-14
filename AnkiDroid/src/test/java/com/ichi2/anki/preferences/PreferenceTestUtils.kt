@@ -86,7 +86,7 @@ object PreferenceTestUtils {
         @XmlRes xml: Int,
     ): List<Fragment> {
         val fragments = getFragmentsFromXml(context, xml).toMutableList()
-        for (fragment in fragments.filterIsInstance<SettingsFragment>()) {
+        for (fragment in fragments.filterIsInstance<PreferenceXmlSource>()) {
             fragments.addAll(getFragmentsFromXmlRecursively(context, fragment.preferenceResource))
         }
         return fragments.toList()
@@ -115,7 +115,7 @@ object PreferenceTestUtils {
 
     fun getAllPreferenceKeys(context: Context): Set<String> =
         getAllPreferencesFragments(context)
-            .filterIsInstance<SettingsFragment>()
+            .filterIsInstance<PreferenceXmlSource>()
             .map { it.preferenceResource }
             .flatMapTo(hashSetOf()) { getKeysFromXml(context, it) }
 
