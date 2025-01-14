@@ -40,6 +40,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.ThemeUtils
 import androidx.core.content.ContextCompat
+import androidx.core.os.BundleCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -65,9 +66,13 @@ import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.SaveSearchResult
+import com.ichi2.anki.browser.SearchParameters
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.browser.getLabel
+import com.ichi2.anki.browser.setupChips
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
+import com.ichi2.anki.browser.toQuery
+import com.ichi2.anki.browser.updateChips
 import com.ichi2.anki.dialogs.BrowserOptionsDialog
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
@@ -121,6 +126,8 @@ import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.runningFold
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.RustCleanup
@@ -138,9 +145,7 @@ open class CardBrowser :
     ChangeManager.Subscriber,
     ExportDialogsFactoryProvider {
     override fun onDeckSelected(deck: SelectableDeck?) {
-        deck?.let {
-            launchCatchingTask { selectDeckAndSave(deck.deckId) }
-        }
+        deck?.let { selectDeckAndSave(deck.deckId) }
     }
 
     private enum class TagsDialogListenerAction {
@@ -418,7 +423,7 @@ open class CardBrowser :
                 dialogFragment.dismiss()
             }
         }
-
+        setupChips(findViewById(R.id.filtering_chips_group))
         setupFlows()
         registerOnForgetHandler { viewModel.queryAllSelectedCardIds() }
     }
@@ -462,10 +467,16 @@ open class CardBrowser :
                 .setSelection(COLUMN2_KEYS.indexOf(column))
         }
 
-        fun onFilterQueryChanged(filterQuery: String) {
-            // setQuery before expand does not set the view's value
-            searchItem!!.expandActionView()
-            searchView!!.setQuery(filterQuery, submit = false)
+        suspend fun onFilterQueryChanged(params: Pair<SearchParameters, SearchParameters>) {
+            val (oldParameters, newParameters) = params
+            // TODO; Confirm this logic
+            // don't open the actionView if a chip was pressed
+            if (newParameters.userInput.isNotEmpty()) {
+                // setQuery before expand does not set the view's value
+                searchItem?.expandActionView()
+                searchView?.setQuery(newParameters.userInput, submit = false)
+            }
+            updateChips(findViewById(R.id.filtering_chips_group), oldParameters, newParameters)
         }
 
         suspend fun onDeckIdChanged(deckId: DeckId?) {
@@ -504,8 +515,8 @@ open class CardBrowser :
             when (searchState) {
                 SearchState.Initializing -> { }
                 SearchState.Searching -> {
-                    if ("" != viewModel.searchTerms && searchView != null) {
-                        searchView!!.setQuery(viewModel.searchTerms, false)
+                    if (viewModel.searchTerms.userInput.isNotEmpty() && searchView != null) {
+                        searchView!!.setQuery(viewModel.searchTerms.userInput, false)
                         searchItem!!.expandActionView()
                     }
                 }
@@ -580,7 +591,12 @@ open class CardBrowser :
         viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         viewModel.flowOfColumn1.launchCollectionInLifecycleScope(::onColumn1Changed)
         viewModel.flowOfColumn2.launchCollectionInLifecycleScope(::onColumn2Changed)
-        viewModel.flowOfFilterQuery.launchCollectionInLifecycleScope(::onFilterQueryChanged)
+        viewModel.flowOfFilterQuery
+            .runningFold(
+                initial = Pair(SearchParameters.EMPTY, SearchParameters.EMPTY),
+                operation = { accumulator, new -> Pair(accumulator.second, new) },
+            ).filterNotNull()
+            .launchCollectionInLifecycleScope(::onFilterQueryChanged)
         viewModel.flowOfDeckId.launchCollectionInLifecycleScope(::onDeckIdChanged)
         viewModel.flowOfCanSearch.launchCollectionInLifecycleScope(::onCanSaveChanged)
         viewModel.flowOfIsInMultiSelectMode.launchCollectionInLifecycleScope(::isInMultiSelectModeChanged)
@@ -604,7 +620,7 @@ open class CardBrowser :
         }
     }
 
-    suspend fun selectDeckAndSave(deckId: DeckId) {
+    fun selectDeckAndSave(deckId: DeckId) {
         viewModel.setDeckId(deckId)
     }
 
@@ -911,9 +927,6 @@ open class CardBrowser :
             // restore drawer click listener and icon
             restoreDrawerIcon()
             menuInflater.inflate(R.menu.card_browser, menu)
-            menu.findItem(R.id.action_search_by_flag).subMenu?.let { subMenu ->
-                setupFlags(subMenu, Mode.SINGLE_SELECT)
-            }
             menu.findItem(R.id.action_create_filtered_deck).title = TR.qtMiscCreateFilteredDeck()
             saveSearchItem = menu.findItem(R.id.action_save_search)
             saveSearchItem?.isVisible = false // the searchview's query always starts empty.
@@ -932,7 +945,7 @@ open class CardBrowser :
                         viewModel.setSearchQueryExpanded(false)
                         // SearchView doesn't support empty queries so we always reset the search when collapsing
                         searchView!!.setQuery("", false)
-                        searchCards("")
+                        searchCards(viewModel.searchTerms.copy(userInput = ""))
                         return true
                     }
                 },
@@ -952,7 +965,7 @@ open class CardBrowser :
                             }
 
                             override fun onQueryTextSubmit(query: String): Boolean {
-                                searchCards(query)
+                                searchCards(viewModel.searchTerms.copy(userInput = query))
                                 searchView!!.clearFocus()
                                 return true
                             }
@@ -961,20 +974,20 @@ open class CardBrowser :
                 }
             // Fixes #6500 - keep the search consistent if coming back from note editor
             // Fixes #9010 - consistent search after drawer change calls invalidateOptionsMenu
-            if (!viewModel.tempSearchQuery.isNullOrEmpty() || viewModel.searchTerms.isNotEmpty()) {
-                searchItem!!.expandActionView() // This calls mSearchView.setOnSearchClickListener
-                val toUse = if (!viewModel.tempSearchQuery.isNullOrEmpty()) viewModel.tempSearchQuery else viewModel.searchTerms
+            if (!viewModel.tempSearchQuery.isNullOrEmpty() || viewModel.searchTerms.userInput.isNotEmpty()) {
+                searchItem!!.expandActionView() // This calls searchView.setOnSearchClickListener
+                val toUse = if (!viewModel.tempSearchQuery.isNullOrEmpty()) viewModel.tempSearchQuery else viewModel.searchTerms.userInput
                 searchView!!.setQuery(toUse!!, false)
             }
             searchView!!.setOnSearchClickListener {
                 // Provide SearchView with the previous search terms
-                searchView!!.setQuery(viewModel.searchTerms, false)
+                searchView!!.setQuery(viewModel.searchTerms.userInput, false)
             }
         } else {
             // multi-select mode
             menuInflater.inflate(R.menu.card_browser_multiselect, menu)
             menu.findItem(R.id.action_flag).subMenu?.let { subMenu ->
-                setupFlags(subMenu, Mode.MULTI_SELECT)
+                setupFlags(subMenu)
             }
             showBackIcon()
             increaseHorizontalPaddingOfOverflowMenuIcons(menu)
@@ -999,31 +1012,12 @@ open class CardBrowser :
         return super.onCreateOptionsMenu(menu)
     }
 
-    /**
-     * Representing different selection modes.
-     */
-    enum class Mode(
-        val value: Int,
-    ) {
-        SINGLE_SELECT(1000),
-        MULTI_SELECT(1001),
-    }
-
-    private fun setupFlags(
-        subMenu: SubMenu,
-        mode: Mode,
-    ) {
+    private fun setupFlags(subMenu: SubMenu) {
         lifecycleScope.launch {
-            val groupId =
-                when (mode) {
-                    Mode.SINGLE_SELECT -> mode.value
-                    Mode.MULTI_SELECT -> mode.value
-                }
-
             for ((flag, displayName) in Flag.queryDisplayNames()) {
                 val item =
                     subMenu
-                        .add(groupId, flag.code, Menu.NONE, displayName)
+                        .add(MULTI_SELECT_FLAG, flag.code, Menu.NONE, displayName)
                         .setIcon(flag.drawableRes)
                 if (flag == Flag.NONE) {
                     val color = ThemeUtils.getThemeAttrColor(this@CardBrowser, android.R.attr.colorControlNormal)
@@ -1152,8 +1146,7 @@ open class CardBrowser :
 
         Flag.entries.find { it.ordinal == item.itemId }?.let { flag ->
             when (item.groupId) {
-                Mode.SINGLE_SELECT.value -> filterByFlag(flag)
-                Mode.MULTI_SELECT.value -> updateFlagForSelectedRows(flag)
+                MULTI_SELECT_FLAG -> updateFlagForSelectedRows(flag)
                 else -> return@let
             }
             return true
@@ -1320,15 +1313,17 @@ open class CardBrowser :
     }
 
     private fun openSaveSearchView() {
-        val searchTerms = searchView!!.query.toString()
-        showDialogFragment(
-            newInstance(
-                null,
-                mySearchesDialogListener,
-                searchTerms,
-                CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_SAVE,
-            ),
-        )
+        val searchTerms = viewModel.searchTerms.copy(userInput = searchView!!.query.toString())
+        launchCatchingTask {
+            showDialogFragment(
+                newInstance(
+                    null,
+                    mySearchesDialogListener,
+                    searchTerms.toQuery(),
+                    CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_SAVE,
+                ),
+            )
+        }
     }
 
     private fun repositionSelectedCards(): Boolean {
@@ -1590,19 +1585,25 @@ open class CardBrowser :
 
     public override fun onSaveInstanceState(outState: Bundle) {
         // Save current search terms
-        outState.putString("mSearchTerms", viewModel.searchTerms)
+        outState.putParcelable("mSearchTerms", viewModel.searchTerms)
         exportingDelegate.onSaveInstanceState(outState)
         super.onSaveInstanceState(outState)
     }
 
     public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        searchCards(savedInstanceState.getString("mSearchTerms", ""))
+        val savedSearchTerms =
+            BundleCompat.getParcelable(
+                savedInstanceState,
+                "mSearchTerms",
+                SearchParameters::class.java,
+            ) ?: return
+        searchCards(savedSearchTerms)
     }
 
     private fun forceRefreshSearch(useSearchTextValue: Boolean = false) {
         if (useSearchTextValue && searchView != null) {
-            searchCards(searchView!!.query.toString())
+            searchCards(viewModel.searchTerms.copy(userInput = searchView!!.query.toString()))
         } else {
             searchCards()
         }
@@ -1726,10 +1727,6 @@ open class CardBrowser :
         viewModel.filterByTags(selectedTags, cardState)
     }
 
-    /** Updates search terms to only show cards with selected flag.  */
-    @VisibleForTesting
-    fun filterByFlag(flag: Flag) = launchCatchingTask { viewModel.setFlagFilter(flag) }
-
     /**
      * Loads/Reloads (Updates the Q, A & etc) of cards in the [cardIds] list
      * @param cardIds Card IDs that were changed
@@ -1837,7 +1834,7 @@ open class CardBrowser :
     }
 
     @VisibleForTesting
-    fun searchCards(searchQuery: String) =
+    fun searchCards(searchQuery: SearchParameters) =
         launchCatchingTask {
             withProgress { viewModel.launchSearchForCards(searchQuery)?.join() }
         }
@@ -1905,6 +1902,8 @@ open class CardBrowser :
          * since the cards are unselected when this happens
          */
         private const val CHANGE_DECK_KEY = "CHANGE_DECK"
+
+        private const val MULTI_SELECT_FLAG = 1001
 
         // Values related to persistent state data
         private const val ALL_DECKS_ID = 0L

@@ -114,6 +114,12 @@
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
         <item name="editTextDisabled">@color/material_grey_500</item>
 
+        <item name="bottomSheetFilterBackgroundColor">#eee</item>
+        <item name="chipInactiveStrokeColor">#ddd</item>
+        <item name="chipInactiveTextAndIconColor">#444</item>
+        <item name="chipActiveBackgroundColor">#cef</item>
+        <item name="chipActiveTextAndIconColor">#023</item>
+
         <!-- Snackbar. Attributes snackbarStyle, snackbarTextViewStyle and snackbarButtonStyle
              must be *all* present in a theme (or its parent) in order for the snackbar
              to pick up the proper layout that uses these attributes. -->

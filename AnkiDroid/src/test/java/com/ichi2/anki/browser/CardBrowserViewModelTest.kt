@@ -44,7 +44,6 @@ import com.ichi2.anki.model.SortType.EASE
 import com.ichi2.anki.model.SortType.NO_SORTING
 import com.ichi2.anki.model.SortType.SORT_FIELD
 import com.ichi2.anki.servicelayer.NoteService
-import com.ichi2.anki.setFlagFilterSync
 import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.DeckId
@@ -160,7 +159,7 @@ class CardBrowserViewModelTest : JvmTest() {
             val anotherCardWithRedFlag = addBasicNote("Second card with red flag", "Reverse")
             flagCardForNote(anotherCardWithRedFlag, Flag.RED)
 
-            setFlagFilterSync(Flag.RED)
+            launchSearchForCards(searchTerms.copy(flags = setOf(Flag.RED)))?.join()
 
             assertThat("Flagged cards should be returned", rowCount, equalTo(2))
         }
@@ -240,7 +239,7 @@ class CardBrowserViewModelTest : JvmTest() {
     fun `default init`() =
         runTest {
             viewModel().apply {
-                assertThat(searchTerms, equalTo(""))
+                assertThat(searchTerms.userInput, equalTo(""))
             }
         }
 
@@ -248,7 +247,7 @@ class CardBrowserViewModelTest : JvmTest() {
     fun `Card Browser menu init`() =
         runTest {
             viewModel(intent = SystemContextMenu("Hello")).apply {
-                assertThat(searchTerms, equalTo("Hello"))
+                assertThat(searchTerms.userInput, equalTo("Hello"))
             }
         }
 
@@ -256,7 +255,7 @@ class CardBrowserViewModelTest : JvmTest() {
     fun `Deep Link init`() =
         runTest {
             viewModel(intent = DeepLink("Hello")).apply {
-                assertThat(searchTerms, equalTo("Hello"))
+                assertThat(searchTerms.userInput, equalTo("Hello"))
             }
         }
 

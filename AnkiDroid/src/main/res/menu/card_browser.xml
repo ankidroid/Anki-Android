@@ -35,15 +35,6 @@
         android:title="@string/card_browser_search_by_tag"/>
 
     <item
-        ankidroid:showAsAction="never"
-        android:id="@+id/action_search_by_flag"
-        android:title="@string/card_browser_search_by_flag">
-        <menu>
-            <!-- flags are dynamically added -->
-        </menu>
-    </item>
-
-    <item
         ankidroid:showAsAction="ifRoom"
         android:id="@+id/action_undo"
         android:title="@string/undo"
