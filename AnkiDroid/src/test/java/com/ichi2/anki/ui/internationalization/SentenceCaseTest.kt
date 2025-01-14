@@ -38,6 +38,7 @@ class SentenceCaseTest : RobolectricTest() {
             assertThat(TR.browsingToggleBury().toSentenceCase(this, R.string.sentence_toggle_bury), equalTo("Toggle bury"))
             assertThat(TR.actionsSetDueDate().toSentenceCase(this, R.string.sentence_set_due_date), equalTo("Set due date"))
             assertThat(TR.actionsCustomStudy().toSentenceCase(this, R.string.sentence_custom_study), equalTo("Custom study"))
+            assertThat(TR.emptyCardsWindowTitle().toSentenceCase(this, R.string.sentence_empty_cards), equalTo("Empty cards"))
 
             assertThat("Toggle Suspend".toSentenceCase(this, R.string.sentence_toggle_suspend), equalTo("Toggle suspend"))
             assertThat("Ook? Ook?".toSentenceCase(this, R.string.sentence_toggle_suspend), equalTo("Ook? Ook?"))

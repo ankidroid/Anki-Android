@@ -157,6 +157,7 @@ import com.ichi2.anki.servicelayer.checkMedia
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.widgets.DeckAdapter
@@ -2528,7 +2529,7 @@ open class DeckPicker :
                 }
             if (emptyCardsReport.isEmpty()) {
                 AlertDialog.Builder(this@DeckPicker).show {
-                    setTitle(TR.emptyCardsWindowTitle())
+                    setTitle(TR.emptyCardsWindowTitle().toSentenceCase(context, R.string.sentence_empty_cards))
                     setMessage(TR.emptyCardsNotFound())
                     setPositiveButton(R.string.dialog_ok) { _, _ -> }
                 }

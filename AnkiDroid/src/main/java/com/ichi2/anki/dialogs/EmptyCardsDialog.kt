@@ -28,6 +28,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.deckpicker.EmptyCardsReport
+import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.utils.create
 import timber.log.Timber
 
@@ -57,7 +58,7 @@ class EmptyCardsDialog : DialogFragment() {
             }
 
         return MaterialAlertDialogBuilder(requireContext()).create {
-            setTitle(TR.emptyCardsWindowTitle())
+            setTitle(TR.emptyCardsWindowTitle().toSentenceCase(context, R.string.sentence_empty_cards))
             setPositiveButton(TR.actionsDelete()) { _, _ -> deleteEmptyCards() }
             setNegativeButton(R.string.dialog_cancel) { _, _ -> Timber.i("Empty Cards dialog cancelled") }
             setView(view)
