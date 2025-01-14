@@ -29,6 +29,7 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
+import java.io.Serializable
 
 /** @see [DeckPicker] */
 class DeckPickerViewModel : ViewModel() {
@@ -117,7 +118,8 @@ data class DeckDeletionResult(
 @JvmInline
 value class EmptyCards(
     val cards: List<CardId>,
-) : List<CardId> by cards
+) : List<CardId> by cards,
+    Serializable
 
 /** Result of [DeckPickerViewModel.deleteEmptyCards] */
 data class EmptyCardsResult(

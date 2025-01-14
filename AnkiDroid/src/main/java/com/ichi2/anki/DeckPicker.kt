@@ -65,6 +65,7 @@ import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
+import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.core.util.component1
 import androidx.core.util.component2
@@ -108,6 +109,7 @@ import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.DeckDeletionResult
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
+import com.ichi2.anki.deckpicker.EmptyCards
 import com.ichi2.anki.deckpicker.EmptyCardsResult
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
@@ -123,6 +125,7 @@ import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceLeftDialog
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialog
+import com.ichi2.anki.dialogs.EmptyCardsDialog
 import com.ichi2.anki.dialogs.ImportDialog.ImportDialogListener
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ApkgImportResultLauncherProvider
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.CsvImportResultLauncherProvider
@@ -592,6 +595,16 @@ open class DeckPicker :
                         fragment!!.refreshInterface()
                     }
                     updateDeckList()
+                }
+            }
+        }
+
+        supportFragmentManager.setFragmentResultListener(EmptyCardsDialog.REQUEST_KEY, this) { _, bundle ->
+            Timber.d("Empty Cards request received")
+            val report = BundleCompat.getSerializable(bundle, EmptyCardsDialog.RESULT_REPORT_KEY, EmptyCards::class.java)!!
+            launchCatchingTask {
+                withProgress(TR.emptyCardsDeleting()) {
+                    viewModel.deleteEmptyCards(report).join()
                 }
             }
         }
@@ -2510,22 +2523,15 @@ open class DeckPicker :
                 withProgress(R.string.emtpy_cards_finding) {
                     viewModel.findEmptyCards()
                 }
-            AlertDialog.Builder(this@DeckPicker).show {
-                setTitle(TR.emptyCardsWindowTitle())
-                if (emptyCards.isEmpty()) {
+            if (emptyCards.isEmpty()) {
+                AlertDialog.Builder(this@DeckPicker).show {
+                    setTitle(TR.emptyCardsWindowTitle())
                     setMessage(TR.emptyCardsNotFound())
                     setPositiveButton(R.string.dialog_ok) { _, _ -> }
-                } else {
-                    setMessage(getString(R.string.empty_cards_count, emptyCards.size))
-                    setPositiveButton(R.string.dialog_positive_delete) { _, _ ->
-                        launchCatchingTask {
-                            withProgress(TR.emptyCardsDeleting()) {
-                                viewModel.deleteEmptyCards(emptyCards).join()
-                            }
-                        }
-                    }
-                    setNegativeButton(R.string.dialog_cancel) { _, _ -> }
                 }
+            } else {
+                val emptyCardsDialog = EmptyCardsDialog.createInstance(emptyCards)
+                showDialogFragment(emptyCardsDialog)
             }
         }
     }
