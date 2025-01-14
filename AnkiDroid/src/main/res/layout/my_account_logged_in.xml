@@ -15,76 +15,82 @@
 
         <include layout="@layout/toolbar" />
 
-        <LinearLayout
-            android:id="@+id/logged_text"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:padding="15dp"
-            android:layout_centerInParent="true"
-            >
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolbar"
+            android:fillViewport="true">
 
-            <ImageView
-                android:id="@+id/login_logo"
-                android:layout_width="339dp"
-                android:layout_height="223dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="0dp"
-                app:srcCompat="@drawable/logged_in_logo" />
-
-            <com.ichi2.ui.FixedTextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/logged_text"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/logged_as"
-                android:textSize="@dimen/title_textsize"
-                android:layout_margin="@dimen/content_vertical_padding"/>
+                android:layout_marginBottom="15dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="15dp"
+                >
 
-            <com.ichi2.ui.FixedTextView
-                android:id="@+id/username_logged_in"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/title_textsize"
-                android:textStyle="bold"
-                android:layout_margin="@dimen/content_vertical_padding"
-                tools:text="user@example.com"
-                />
+                <ImageView
+                    android:id="@+id/login_logo"
+                    android:layout_width="330dp"
+                    android:layout_height="223dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="0dp"
+                    app:srcCompat="@drawable/logged_in_logo" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/logout_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="200dp"
-                android:layout_gravity="center"
-                android:text="@string/log_out"
-                android:layout_margin="@dimen/content_vertical_padding"
-                />
+                <com.ichi2.ui.FixedTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/logged_as"
+                    android:textSize="@dimen/title_textsize"
+                    android:layout_margin="@dimen/content_vertical_padding"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/remove_account_button"
-                app:backgroundTint="@color/material_red_500"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="200dp"
-                android:layout_gravity="center"
-                android:text="@string/remove_account"
-                android:layout_margin="@dimen/content_vertical_padding"
-                />
+                <com.ichi2.ui.FixedTextView
+                    android:id="@+id/username_logged_in"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/title_textsize"
+                    android:textStyle="bold"
+                    android:layout_margin="@dimen/content_vertical_padding"
+                    tools:text="user@example.com"
+                    />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/privacy_policy_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:textSize="@dimen/abc_text_size_button_material"
-                style="@style/Widget.Material3.Button.TextButton"
-                android:padding="3dp"
-                android:layout_gravity="center"
-                android:singleLine="true"
-                android:text="@string/help_title_privacy" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/logout_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="200dp"
+                    android:layout_gravity="center"
+                    android:text="@string/log_out"
+                    android:layout_margin="@dimen/content_vertical_padding"
+                    />
 
-        </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/remove_account_button"
+                    app:backgroundTint="@color/material_red_500"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="200dp"
+                    android:layout_gravity="center"
+                    android:text="@string/remove_account"
+                    android:layout_margin="@dimen/content_vertical_padding"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/privacy_policy_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:textSize="@dimen/abc_text_size_button_material"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:padding="3dp"
+                    android:layout_gravity="center"
+                    android:singleLine="true"
+                    android:text="@string/help_title_privacy" />
+
+            </LinearLayout>
+        </ScrollView>
     </RelativeLayout>
     <!-- opens a WebView for 'remove account', replaces the layout above -->
     <FrameLayout
