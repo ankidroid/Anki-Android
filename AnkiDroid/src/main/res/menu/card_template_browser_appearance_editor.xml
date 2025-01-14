@@ -19,7 +19,7 @@
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_restore_default"
-        android:icon="@drawable/ic_clear_white"
+        android:icon="@drawable/ic_restore_variant"
         android:title="@string/restore_default"
         ankidroid:showAsAction="ifRoom"
         android:visible="true"/>
