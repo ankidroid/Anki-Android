@@ -39,6 +39,24 @@ class SettingsTest {
     }
 
     @Test
+    fun `booleanSetting getter and setter work`() {
+        var setting by Settings.booleanSetting("boolKey", false)
+        assertThat(setting, equalTo(false))
+
+        setting = true
+        assertThat(setting, equalTo(true))
+    }
+
+    @Test
+    fun `stringSetting getter and setter work`() {
+        var setting by Settings.stringSetting("stringKey", "defaultValue")
+        assertThat(setting, equalTo("defaultValue"))
+
+        setting = "newValue"
+        assertThat(setting, equalTo("newValue"))
+    }
+
+    @Test
     fun `getters and setters use the same key`() {
         val settingsSpy = spy(Settings)
         var key = ""

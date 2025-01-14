@@ -21,6 +21,8 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.settings.enums.SettingEnum
+import kotlin.properties.ReadWriteProperty
+import kotlin.reflect.KProperty
 
 object Settings {
     private val prefs by lazy { AnkiDroidApp.sharedPrefs() }
@@ -71,18 +73,57 @@ object Settings {
         } ?: defaultValue
     }
 
+    // **************************************** Delegates *************************************** //
+
+    @VisibleForTesting
+    fun booleanSetting(
+        key: String,
+        defaultValue: Boolean,
+    ): ReadWriteProperty<Any?, Boolean> =
+        object : ReadWriteProperty<Any?, Boolean> {
+            override fun getValue(
+                thisRef: Any?,
+                property: KProperty<*>,
+            ): Boolean = getBoolean(key, defaultValue)
+
+            override fun setValue(
+                thisRef: Any?,
+                property: KProperty<*>,
+                value: Boolean,
+            ) {
+                putBoolean(key, value)
+            }
+        }
+
+    @VisibleForTesting
+    fun stringSetting(
+        key: String,
+        defaultValue: String? = null,
+    ): ReadWriteProperty<Any?, String?> =
+        object : ReadWriteProperty<Any?, String?> {
+            override fun getValue(
+                thisRef: Any?,
+                property: KProperty<*>,
+            ): String? = getString(key, defaultValue) ?: defaultValue
+
+            override fun setValue(
+                thisRef: Any?,
+                property: KProperty<*>,
+                value: String?,
+            ) {
+                putString(key, value)
+            }
+        }
+
+    // ****************************************************************************************** //
+    // **************************************** Settings **************************************** //
+    // ****************************************************************************************** //
+
     // ****************************************** Sync ****************************************** //
 
-    val isAutoSyncEnabled: Boolean
-        get() = getBoolean(SettingKey.AUTO_SYNC, false)
-
-    var username: String
-        get() = getString(SettingKey.USERNAME, "") ?: ""
-        set(value) = putString(SettingKey.USERNAME, value)
-
-    var hkey: String?
-        get() = getString(SettingKey.HKEY, "")
-        set(value) = putString(SettingKey.HKEY, value)
+    val isAutoSyncEnabled by booleanSetting(SettingKey.AUTO_SYNC, false)
+    var username by stringSetting(SettingKey.USERNAME)
+    var hkey by stringSetting(SettingKey.HKEY)
 
     // **************************************** Reviewer **************************************** //
 
