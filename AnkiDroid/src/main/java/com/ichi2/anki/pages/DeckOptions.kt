@@ -25,6 +25,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DiscardChangesDialog
@@ -237,15 +238,18 @@ suspend fun FragmentActivity.updateDeckConfigsRaw(input: ByteArray): ByteArray {
                 extractProgress = {
                     text =
                         if (progress.hasComputeParams()) {
-                            val tr = CollectionManager.TR
                             val value = progress.computeParams
                             val label =
-                                tr.deckConfigOptimizingPreset(
+                                TR.deckConfigOptimizingPreset(
                                     currentCount = value.currentPreset,
                                     totalCount = value.totalPresets,
                                 )
-                            val pct = if (value.total > 0) (value.current / value.total * 100) else 0
-                            val reviewsLabel = tr.deckConfigPercentOfReviews(pct = pct.toString(), reviews = value.reviews)
+                            val pct = if (value.total > 0) (value.current.toDouble() / value.total.toDouble() * 100.0) else 0.0
+                            val reviewsLabel =
+                                TR.deckConfigPercentOfReviews(
+                                    pct = "%.1f".format(pct),
+                                    reviews = value.reviews,
+                                )
                             label + "\n" + reviewsLabel
                         } else {
                             getString(R.string.dialog_processing)
