@@ -904,6 +904,12 @@ class CardBrowserViewModel(
             val error: String,
         ) : SearchState
     }
+
+    fun saveScrollingState(id: CardOrNoteId) {
+        cards.indexOf(id).takeIf { it >= 0 }?.let { position ->
+            lastSelectedPosition = position
+        }
+    }
 }
 
 enum class SaveSearchResult {

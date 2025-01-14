@@ -341,7 +341,7 @@ open class CardBrowser :
         launchCatchingTask {
             if (viewModel.isInMultiSelectMode) {
                 viewModel.toggleRowSelection(id)
-                saveScrollingState(id)
+                viewModel.saveScrollingState(id)
             } else {
                 val cardId = viewModel.queryDataForCardEdit(id)
                 openNoteEditorForCard(cardId)
@@ -354,7 +354,7 @@ open class CardBrowser :
         if (viewModel.isInMultiSelectMode && viewModel.lastSelectedId != null) {
             viewModel.selectRowsBetween(viewModel.lastSelectedId!!, id)
         } else {
-            saveScrollingState(id)
+            viewModel.saveScrollingState(id)
             viewModel.toggleRowSelection(id)
         }
     }
@@ -1912,12 +1912,6 @@ open class CardBrowser :
             context: Context,
             viewModel: CardBrowserViewModel,
         ): Intent = NoteEditorLauncher.AddNoteFromCardBrowser(viewModel).getIntent(context)
-    }
-
-    private fun saveScrollingState(id: CardOrNoteId) {
-        viewModel.cards.indexOf(id).takeIf { it >= 0 }?.let { position ->
-            viewModel.lastSelectedPosition = position
-        }
     }
 
     private fun autoScrollTo(newPosition: Int) {
