@@ -20,11 +20,11 @@ import android.app.Dialog
 import android.os.Bundle
 import android.widget.CheckBox
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.deckpicker.EmptyCardsReport
@@ -56,7 +56,7 @@ class EmptyCardsDialog : DialogFragment() {
                 }
             }
 
-        return AlertDialog.Builder(requireContext()).create {
+        return MaterialAlertDialogBuilder(requireContext()).create {
             setTitle(TR.emptyCardsWindowTitle())
             setPositiveButton(TR.actionsDelete()) { _, _ -> deleteEmptyCards() }
             setNegativeButton(R.string.dialog_cancel) { _, _ -> Timber.i("Empty Cards dialog cancelled") }
