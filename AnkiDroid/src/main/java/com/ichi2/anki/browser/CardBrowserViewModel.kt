@@ -64,6 +64,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.combineTransform
 import kotlinx.coroutines.flow.filter
@@ -138,6 +139,13 @@ class CardBrowserViewModel(
     private val reverseDirectionFlow = MutableStateFlow(ReverseDirection(orderAsc = false))
     val orderAsc get() = reverseDirectionFlow.value.orderAsc
 
+    /**
+     * A map from column backend key to backend column definition
+     *
+     * @see [flowOfColumnHeadings]
+     */
+    private val flowOfAllColumns = MutableSharedFlow<Map<String, BrowserColumns.Column>>()
+
     val flowOfActiveColumns =
         MutableStateFlow(
             BrowserColumnCollection(
@@ -151,9 +159,6 @@ class CardBrowserViewModel(
     @get:VisibleForTesting
     val activeColumns
         get() = flowOfActiveColumns.value.columns
-
-    /** Available columns with names */
-    lateinit var namedColumns: List<BrowserColumns.Column>
 
     val flowOfSearchQueryExpanded = MutableStateFlow(false)
 
@@ -241,8 +246,16 @@ class CardBrowserViewModel(
 
     val flowOfInitCompleted = MutableStateFlow(false)
 
-    val columnNamesLoaded
-        get() = ::namedColumns.isInitialized
+    val flowOfColumnHeadings: StateFlow<List<ColumnHeading>> =
+        combine(flowOfActiveColumns, flowOfCardsOrNotes, flowOfAllColumns) { activeColumns, cardsOrNotes, allColumns ->
+            Timber.d("updated headings for %d columns", activeColumns.count)
+            activeColumns.columns.map {
+                ColumnHeading(
+                    label = allColumns[it.ankiColumnKey]!!.getLabel(cardsOrNotes),
+                )
+            }
+            // stateIn is required for tests
+        }.stateIn(viewModelScope, SharingStarted.Eagerly, initialValue = emptyList())
 
     /**
      * Whether the task launched from CardBrowserViewModel.init has completed.
@@ -305,18 +318,20 @@ class CardBrowserViewModel(
             .onEach { sortType -> withCol { sortType.save(config, sharedPrefs()) } }
             .launchIn(viewModelScope)
 
+        flowOfCardsOrNotes
+            .onEach { cardsOrNotes ->
+                Timber.d("loading columns for %s mode", cardsOrNotes)
+                updateActiveColumns(BrowserColumnCollection.load(sharedPrefs(), cardsOrNotes))
+            }.launchIn(viewModelScope)
+
         viewModelScope.launch {
             val initialDeckId = if (selectAllDecks) ALL_DECKS_ID else getInitialDeck()
             // PERF: slightly inefficient if the source was lastDeckId
             setDeckId(initialDeckId)
+            refreshBackendColumns()
+
             val cardsOrNotes = withCol { CardsOrNotes.fromCollection(this@withCol) }
             flowOfCardsOrNotes.update { cardsOrNotes }
-
-            val allColumns = withCol { allBrowserColumns() }.associateBy { it.key }
-            namedColumns =
-                CardBrowserColumn.entries.map { allColumns[it.ankiColumnKey]!! }
-
-            setupColumns(cardsOrNotes)
 
             withCol {
                 sortTypeFlow.update { SortType.fromCol(config, cardsOrNotes, sharedPrefs()) }
@@ -331,11 +346,41 @@ class CardBrowserViewModel(
         }
     }
 
-    private suspend fun setupColumns(cardsOrNotes: CardsOrNotes) {
-        Timber.d("loading columns columns for %s mode", cardsOrNotes)
-        val columns = BrowserColumnCollection.load(sharedPrefs(), cardsOrNotes)
-        flowOfActiveColumns.update { columns }
+    /**
+     * Called if `onCreate` is called again, which may be due to the collection being reopened
+     *
+     * If this is the case, the backend has lost the active columns state, which is required for
+     * [transformBrowserRow]
+     */
+    fun onReinit() {
+        // this can occur after process death, if so, the ViewModel starts normally
+        if (!initCompleted) return
+
+        Timber.d("onReinit: executing")
+
+        // we currently have no way to test whether setActiveBrowserColumns was called
+        // so set it again. This needs to be done immediately to ensure that the RecyclerView
+        // gets correct values when initialized
+        CollectionManager
+            .getBackend()
+            .setActiveBrowserColumns(flowOfActiveColumns.value.backendKeys)
+
+        // if the language has changed, the backend column labels may have changed
+        viewModelScope.launch {
+            refreshBackendColumns()
+        }
+    }
+
+    /** Handles an update to the list of backend columns */
+    private suspend fun refreshBackendColumns() {
+        flowOfAllColumns.emit(withCol { allBrowserColumns() }.associateBy { it.key })
+    }
+
+    /** Handles an update of the visible columns */
+    private suspend fun updateActiveColumns(columns: BrowserColumnCollection) {
+        Timber.d("updating active columns")
         withCol { backend.setActiveBrowserColumns(columns.backendKeys) }
+        flowOfActiveColumns.update { columns }
     }
 
     @VisibleForTesting
@@ -398,7 +443,6 @@ class CardBrowserViewModel(
                 newValue.saveToCollection(this@withCol)
             }
             flowOfCardsOrNotes.update { newValue }
-            setupColumns(newValue)
         }
 
     fun setTruncated(value: Boolean) {
@@ -553,10 +597,8 @@ class CardBrowserViewModel(
         Timber.d("editing columns for current headings: %b", isEditingCurrentHeadings)
 
         if (isEditingCurrentHeadings) {
-            Timber.d("updating active columns")
             viewModelScope.launch {
-                withCol { backend.setActiveBrowserColumns(columnCollection.backendKeys) }
-                flowOfActiveColumns.update { columnCollection }
+                updateActiveColumns(columnCollection)
             }
         }
 
@@ -1074,3 +1116,7 @@ sealed class RepositionCardsRequest {
 }
 
 fun BrowserColumns.Column.getLabel(cardsOrNotes: CardsOrNotes): String = if (cardsOrNotes == CARDS) cardsModeLabel else notesModeLabel
+
+data class ColumnHeading(
+    val label: String,
+)
