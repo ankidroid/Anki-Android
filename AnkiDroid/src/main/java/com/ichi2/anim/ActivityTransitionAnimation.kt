@@ -31,7 +31,7 @@ object ActivityTransitionAnimation {
                 }
             Direction.RIGHT -> activity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out)
             Direction.LEFT -> activity.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out)
-            Direction.FADE -> activity.overridePendingTransition(R.anim.fade_out, R.anim.fade_in)
+            Direction.FADE -> activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
             Direction.UP -> activity.overridePendingTransition(R.anim.slide_up_in, R.anim.slide_up_out)
             Direction.DOWN -> activity.overridePendingTransition(R.anim.slide_down_in, R.anim.slide_down_out)
             Direction.NONE -> activity.overridePendingTransition(R.anim.none, R.anim.none)
@@ -73,7 +73,7 @@ object ActivityTransitionAnimation {
                 }
             Direction.RIGHT -> ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.slide_right_in, R.anim.slide_right_out)
             Direction.LEFT -> ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.slide_left_in, R.anim.slide_left_out)
-            Direction.FADE -> ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.fade_out, R.anim.fade_in)
+            Direction.FADE -> ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.fade_in, R.anim.fade_out)
             Direction.UP -> ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.slide_up_in, R.anim.slide_up_out)
             Direction.DOWN -> ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.slide_down_in, R.anim.slide_down_out)
             Direction.NONE -> ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.none, R.anim.none)
