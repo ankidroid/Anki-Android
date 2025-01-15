@@ -24,20 +24,20 @@
 
         <RadioGroup
             android:id="@+id/select_browser_mode"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginHorizontal="16dp">
 
             <RadioButton
                 android:id="@+id/select_cards_mode"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/show_cards" />
 
             <RadioButton
                 android:id="@+id/select_notes_mode"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/show_notes" />
 
@@ -59,7 +59,7 @@
 
         <CheckBox
             android:id="@+id/truncate_checkbox"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/card_browser_truncate"
             android:layout_marginHorizontal="16dp" />
