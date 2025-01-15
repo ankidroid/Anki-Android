@@ -20,11 +20,13 @@ import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.settings.enums.FrameStyle
-import com.ichi2.anki.settings.enums.SettingEnum
+import com.ichi2.anki.settings.enums.PrefEnum
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-object Settings {
+// TODO move this to `com.ichi2.anki.preferences`
+//  after the UI classes of that package are moved to `com.ichi2.anki.ui.preferences`
+object Prefs {
     private val prefs by lazy { AnkiDroidApp.sharedPrefs() }
 
     @VisibleForTesting
@@ -65,7 +67,7 @@ object Settings {
     fun <E> getEnum(
         key: String,
         defaultValue: E,
-    ): E where E : Enum<E>, E : SettingEnum {
+    ): E where E : Enum<E>, E : PrefEnum {
         val enumClass = defaultValue.javaClass
         val stringValue = getString(key, defaultValue.entryValue)
         return enumClass.enumConstants?.firstOrNull {
@@ -76,7 +78,7 @@ object Settings {
     // **************************************** Delegates *************************************** //
 
     @VisibleForTesting
-    fun booleanSetting(
+    fun booleanPref(
         key: String,
         defaultValue: Boolean,
     ): ReadWriteProperty<Any?, Boolean> =
@@ -96,7 +98,7 @@ object Settings {
         }
 
     @VisibleForTesting
-    fun stringSetting(
+    fun stringPref(
         key: String,
         defaultValue: String? = null,
     ): ReadWriteProperty<Any?, String?> =
@@ -121,23 +123,23 @@ object Settings {
 
     // ****************************************** Sync ****************************************** //
 
-    val isAutoSyncEnabled by booleanSetting(SettingKey.AUTO_SYNC, false)
-    var username by stringSetting(SettingKey.USERNAME)
-    var hkey by stringSetting(SettingKey.HKEY)
+    val isAutoSyncEnabled by booleanPref(PrefKey.AUTO_SYNC, false)
+    var username by stringPref(PrefKey.USERNAME)
+    var hkey by stringPref(PrefKey.HKEY)
 
     // **************************************** Reviewer **************************************** //
 
     val frameStyle: FrameStyle
-        get() = getEnum(SettingKey.FRAME_STYLE, FrameStyle.CARD)
+        get() = getEnum(PrefKey.FRAME_STYLE, FrameStyle.CARD)
 
     // ************************************** Accessibility ************************************* //
 
     val answerButtonsSize: Int
-        get() = getInt(SettingKey.ANSWER_BUTTON_SIZE, 100)
+        get() = getInt(PrefKey.ANSWER_BUTTON_SIZE, 100)
 
     // ************************************* Developer options ********************************** //
 
     var isDevOptionsEnabled: Boolean
-        get() = getBoolean(SettingKey.DEV_OPTIONS_ENABLED, false) || BuildConfig.DEBUG
-        set(value) = putBoolean(SettingKey.DEV_OPTIONS_ENABLED, value)
+        get() = getBoolean(PrefKey.DEV_OPTIONS_ENABLED, false) || BuildConfig.DEBUG
+        set(value) = putBoolean(PrefKey.DEV_OPTIONS_ENABLED, value)
 }

@@ -22,7 +22,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.preferences.PreferenceTestUtils
 import com.ichi2.anki.preferences.PreferenceTestUtils.getAttrsFromXml
 import com.ichi2.anki.preferences.SettingsFragment
-import com.ichi2.anki.settings.enums.SettingEnum
+import com.ichi2.anki.settings.enums.PrefEnum
 import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -41,7 +41,7 @@ import kotlin.reflect.full.memberProperties
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
-class SettingsRobolectricTest : RobolectricTest() {
+class PrefsRobolectricTest : RobolectricTest() {
     @Before
     fun setup() {
         AnkiDroidApp.sharedPreferencesTestingOverride =
@@ -49,7 +49,7 @@ class SettingsRobolectricTest : RobolectricTest() {
     }
 
     private fun getKeysAndDefaultValues(): MutableMap<String, Any?> {
-        val settingsSpy = spy(Settings)
+        val settingsSpy = spy(Prefs)
         val keysAndDefaultValues: MutableMap<String, Any?> = mutableMapOf()
         var key = ""
 
@@ -63,11 +63,11 @@ class SettingsRobolectricTest : RobolectricTest() {
             whenever(settingsSpy).getInt(anyString(), anyInt())
         }
 
-        for (property in Settings::class.memberProperties) {
+        for (property in Prefs::class.memberProperties) {
             if (property.visibility != KVisibility.PUBLIC) continue
             val defaultValue = property.getter.call(settingsSpy)
             keysAndDefaultValues[key] =
-                if (defaultValue is SettingEnum) {
+                if (defaultValue is PrefEnum) {
                     defaultValue.entryValue
                 } else {
                     defaultValue

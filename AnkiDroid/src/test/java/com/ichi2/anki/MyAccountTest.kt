@@ -21,7 +21,7 @@ import android.content.Intent
 import android.widget.Button
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.android.material.textfield.TextInputEditText
-import com.ichi2.anki.settings.Settings
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.ui.TextInputEditField
 import junit.framework.TestCase.assertFalse
 import org.junit.Before
@@ -33,8 +33,8 @@ import kotlin.test.assertTrue
 class MyAccountTest : RobolectricTest() {
     @Before
     fun setup() {
-        Settings.username = ""
-        Settings.hkey = ""
+        Prefs.username = ""
+        Prefs.hkey = ""
     }
 
     @Test

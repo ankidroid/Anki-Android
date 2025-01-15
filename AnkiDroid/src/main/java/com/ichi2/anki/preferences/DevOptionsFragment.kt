@@ -28,7 +28,7 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.settings.Settings
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.withProgress
@@ -173,7 +173,7 @@ class DevOptionsFragment : SettingsFragment() {
         AlertDialog.Builder(requireContext()).show {
             setTitle(R.string.disable_dev_options)
             setPositiveButton(R.string.dialog_ok) { _, _ ->
-                Settings.isDevOptionsEnabled = false
+                Prefs.isDevOptionsEnabled = false
                 parentFragmentManager.popBackStack()
                 ActivityCompat.recreate(requireActivity())
             }

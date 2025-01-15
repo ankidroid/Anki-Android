@@ -31,7 +31,7 @@ import kotlin.reflect.KMutableProperty
 import kotlin.reflect.KVisibility
 import kotlin.reflect.full.memberProperties
 
-class SettingsTest {
+class PrefsTest {
     @BeforeEach
     fun setup() {
         AnkiDroidApp.sharedPreferencesTestingOverride =
@@ -40,7 +40,7 @@ class SettingsTest {
 
     @Test
     fun `booleanSetting getter and setter work`() {
-        var setting by Settings.booleanSetting("boolKey", false)
+        var setting by Prefs.booleanPref("boolKey", false)
         assertThat(setting, equalTo(false))
 
         setting = true
@@ -49,7 +49,7 @@ class SettingsTest {
 
     @Test
     fun `stringSetting getter and setter work`() {
-        var setting by Settings.stringSetting("stringKey", "defaultValue")
+        var setting by Prefs.stringPref("stringKey", "defaultValue")
         assertThat(setting, equalTo("defaultValue"))
 
         setting = "newValue"
@@ -58,7 +58,7 @@ class SettingsTest {
 
     @Test
     fun `getters and setters use the same key`() {
-        val settingsSpy = spy(Settings)
+        val settingsSpy = spy(Prefs)
         var key = ""
 
         doAnswer { invocation ->
@@ -72,7 +72,7 @@ class SettingsTest {
             whenever(settingsSpy).getInt(anyString(), anyInt())
         }
 
-        for (property in Settings::class.memberProperties) {
+        for (property in Prefs::class.memberProperties) {
             if (property.visibility != KVisibility.PUBLIC || property !is KMutableProperty<*>) continue
 
             property.getter.call(settingsSpy)

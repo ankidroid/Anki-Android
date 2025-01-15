@@ -17,7 +17,7 @@ package com.ichi2.anki.settings.enums
 
 enum class FrameStyle(
     override val entryValue: String,
-) : SettingEnum {
+) : PrefEnum {
     CARD("0"),
     BOX("1"),
 }

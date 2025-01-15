@@ -15,6 +15,6 @@
  */
 package com.ichi2.anki.settings.enums
 
-interface SettingEnum {
+interface PrefEnum {
     val entryValue: String
 }
