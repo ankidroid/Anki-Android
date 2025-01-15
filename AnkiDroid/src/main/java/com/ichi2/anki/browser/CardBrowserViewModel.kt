@@ -326,6 +326,7 @@ class CardBrowserViewModel(
 
             if (!manualInit) {
                 flowOfInitCompleted.update { true }
+                launchSearchForCards()
             }
         }
     }
@@ -492,18 +493,18 @@ class CardBrowserViewModel(
 
     fun hasSelectedAllDecks(): Boolean = lastDeckId == ALL_DECKS_ID
 
-    suspend fun changeCardOrder(which: SortType): Job? {
+    fun changeCardOrder(which: SortType) {
         val changeType =
             when {
                 which != order -> ChangeCardOrder.OrderChange(which)
                 // if the same element is selected again, reverse the order
                 which != SortType.NO_SORTING -> ChangeCardOrder.DirectionChange
                 else -> null
-            } ?: return null
+            } ?: return
 
         Timber.i("updating order: %s", changeType)
 
-        return when (changeType) {
+        when (changeType) {
             is ChangeCardOrder.OrderChange -> {
                 sortTypeFlow.update { which }
                 reverseDirectionFlow.update { ReverseDirection(orderAsc = false) }
@@ -512,8 +513,7 @@ class CardBrowserViewModel(
             ChangeCardOrder.DirectionChange -> {
                 reverseDirectionFlow.update { ReverseDirection(orderAsc = !orderAsc) }
                 cards.reverse()
-                flowOfSearchState.emit(SearchState.Completed)
-                null
+                viewModelScope.launch { flowOfSearchState.emit(SearchState.Completed) }
             }
         }
     }
@@ -854,45 +854,57 @@ class CardBrowserViewModel(
      */
     fun endMultiSelectMode() = selectNone()
 
-    suspend fun launchSearchForCards(searchQuery: String): Job? {
+    /**
+     * @param forceRefresh if `true`, perform a search even if the search query is unchanged
+     */
+    fun launchSearchForCards(
+        searchQuery: String,
+        forceRefresh: Boolean = true,
+    ) {
+        if (!forceRefresh && searchTerms == searchQuery) {
+            Timber.d("skipping duplicate search: forceRefresh is false")
+            return
+        }
         searchTerms = searchQuery
-        return launchSearchForCards()
+        launchSearchForCards()
     }
 
     /**
      * @see com.ichi2.anki.searchForRows
      */
     @NeedsTest("Invalid searches are handled. For instance: 'and'")
-    suspend fun launchSearchForCards(): Job? {
-        if (!initCompleted) return null
-        // update the UI while we're searching
-        clearCardsList()
+    fun launchSearchForCards() {
+        if (!initCompleted) return
 
-        val query: String =
-            if (searchTerms.contains("deck:")) {
-                "($searchTerms)"
-            } else {
-                if ("" != searchTerms) "$restrictOnDeck($searchTerms)" else restrictOnDeck
-            }
+        viewModelScope.launch {
+            // update the UI while we're searching
+            clearCardsList()
 
-        searchJob?.cancel()
-        searchJob =
-            launchCatchingIO(
-                errorMessageHandler = { error -> flowOfSearchState.emit(SearchState.Error(error)) },
-            ) {
-                flowOfSearchState.emit(SearchState.Searching)
-                Timber.d("performing search: '%s'", query)
-                val cards = com.ichi2.anki.searchForRows(query, order.toSortOrder(), cardsOrNotes)
-                Timber.d("Search returned %d card(s)", cards.size)
+            val query: String =
+                if (searchTerms.contains("deck:")) {
+                    "($searchTerms)"
+                } else {
+                    if ("" != searchTerms) "$restrictOnDeck($searchTerms)" else restrictOnDeck
+                }
 
-                ensureActive()
-                this@CardBrowserViewModel.cards.replaceWith(cardsOrNotes, cards)
-                flowOfSearchState.emit(SearchState.Completed)
-            }
-        return searchJob!!
+            searchJob?.cancel()
+            searchJob =
+                launchCatchingIO(
+                    errorMessageHandler = { error -> flowOfSearchState.emit(SearchState.Error(error)) },
+                ) {
+                    flowOfSearchState.emit(SearchState.Searching)
+                    Timber.d("performing search: '%s'", query)
+                    val cards = com.ichi2.anki.searchForRows(query, order.toSortOrder(), cardsOrNotes)
+                    Timber.d("Search returned %d card(s)", cards.size)
+
+                    ensureActive()
+                    this@CardBrowserViewModel.cards.replaceWith(cardsOrNotes, cards)
+                    flowOfSearchState.emit(SearchState.Completed)
+                }
+        }
     }
 
-    private suspend fun refreshSearch() = launchSearchForCards()?.join()
+    private fun refreshSearch() = launchSearchForCards()
 
     private suspend fun clearCardsList() {
         cards.reset()

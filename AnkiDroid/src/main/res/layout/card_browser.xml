@@ -26,6 +26,14 @@
 
         </LinearLayout>
 
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/browser_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="gone"
+            />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/card_browser_list"
             android:layout_width="match_parent"
@@ -39,7 +47,5 @@
             />
 
     </LinearLayout>
-
-    <include layout="@layout/anki_progress"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
