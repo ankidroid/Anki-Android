@@ -19,6 +19,7 @@ object SettingKey {
     // ****************************************** Sync ****************************************** //
     const val AUTO_SYNC = "automaticSyncMode"
     const val USERNAME = "username"
+    const val HKEY = "hkey"
 
     // **************************************** Reviewer **************************************** //
     const val FRAME_STYLE = "reviewerFrameStyle"

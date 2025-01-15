@@ -44,6 +44,13 @@ object Settings {
         defValue: String?,
     ): String? = prefs.getString(key, defValue)
 
+    private fun putString(
+        key: String,
+        value: String?,
+    ) {
+        prefs.edit { putString(key, value) }
+    }
+
     @VisibleForTesting
     fun getInt(
         key: String,
@@ -67,8 +74,13 @@ object Settings {
     val isAutoSyncEnabled: Boolean
         get() = getBoolean(SettingKey.AUTO_SYNC, false)
 
-    val username: String
+    var username: String
         get() = getString(SettingKey.USERNAME, "") ?: ""
+        set(value) = putString(SettingKey.USERNAME, value)
+
+    var hkey: String?
+        get() = getString(SettingKey.HKEY, "")
+        set(value) = putString(SettingKey.HKEY, value)
 
     // **************************************** Reviewer **************************************** //
 
