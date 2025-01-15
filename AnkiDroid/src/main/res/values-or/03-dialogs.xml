@@ -163,8 +163,6 @@
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">ଆବଶ୍ୟକୀୟ ଷ୍ଟୋରେଜ୍ ଅନୁମତି ନାହିଁ। ଦୟାକରି ଷ୍ଟୋରେଜ୍ ଅନୁମତି ପ୍ରଦାନ କରନ୍ତୁ ତାପରେ ଆପଣଙ୍କର କ୍ରିୟା ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ।</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">ପତ୍ର ବ୍ରାଉଜର୍ ରୂପ ଲୋଡ୍ ହୋଇପାରିଲା ନାହିଁ</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">ସ୍ମାରକଗୁଡ଼ିକୁ ନିର୍ଦ୍ଧାରଣ କରିବାରେ ବିଫଳ ହୋଇଛି</string>
     <string name="boot_service_too_many_notifications">ଅତ୍ୟଧିକ ସ୍ମାରକ ନିର୍ଦ୍ଧାରିତ ହୋଇଛି। କିଛିଟା ଦେଖାଯିବ ନାହିଁ</string>

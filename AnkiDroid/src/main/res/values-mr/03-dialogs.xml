@@ -163,8 +163,6 @@
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">आवश्यक संचय परवानगी गहाळ आहे. कृपया संचयनास परवानगी द्या त्यानंतर आपल्या कृतीचा पुन्हा प्रयत्न करा.</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">कार्ड ब्राउझर स्वरूप लोड करणे शक्य झाले नाही</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">स्मरणपत्रे शेड्यूल करण्यात अयशस्वी</string>
     <string name="boot_service_too_many_notifications">बरीच स्मरणपत्रे शेड्यूल केली. काही दिसणार नाहीत</string>

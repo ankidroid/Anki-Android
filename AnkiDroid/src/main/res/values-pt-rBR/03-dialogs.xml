@@ -163,8 +163,6 @@
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Falta a permissão de armazenamento necessário. Por favor, conceda permissão de armazenamento e tente novamente.</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Não foi possível carregar a Aparência do Navegador de Cards</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Falha ao agendar lembretes</string>
     <string name="boot_service_too_many_notifications">Muitos lembretes programados. Alguns não aparecerão</string>

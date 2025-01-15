@@ -163,8 +163,6 @@
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">ᱫᱚᱦᱚ ᱪᱷᱟᱰ ᱵᱟᱱᱩᱜᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱫᱚᱦᱚ ᱪᱷᱟᱰ ᱮᱢᱚᱜ ᱢᱮ ᱟᱨ ᱯᱷᱮᱨ ᱪᱮᱥᱴᱟᱭ ᱢᱮ</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ ᱧᱮᱞᱚᱜ ᱵᱟᱭ ᱞᱚᱰᱚᱜ ᱠᱟᱱᱟ</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">ᱠᱟᱹᱢᱤ ᱦᱚᱨᱟ ᱩᱭᱦᱟᱹᱨ ᱰᱤᱜᱟᱹᱣ</string>
     <string name="boot_service_too_many_notifications">ᱟᱹᱰᱤᱜᱟᱱ ᱠᱟᱹᱢᱤ ᱦᱚᱨᱟ ᱩᱭᱦᱟᱹᱨ ᱾ ᱛᱤᱱᱟᱹᱝᱜᱟᱱ ᱡᱤᱱᱥ ᱵᱟᱭ ᱫᱮᱠᱷᱟᱣᱟ</string>

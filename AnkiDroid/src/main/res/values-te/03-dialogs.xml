@@ -163,8 +163,6 @@
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">అవసరమైన నిల్వ అనుమతి లేదు. దయచేసి నిల్వ అనుమతిని మంజూరు చేసి, మీ చర్యను మళ్లీ ప్రయత్నించండి.</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">కార్డ్ బ్రౌజర్ ఫారమ్‌ను లోడ్ చేయడం సాధ్యపడలేదు</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">రిమైండర్‌లను షెడ్యూల్ చేయడంలో విఫలమైంది</string>
     <string name="boot_service_too_many_notifications">చాలా ఎక్కువ రిమైండర్‌లు షెడ్యూల్ చేయబడ్డాయి. కొన్ని కనిపించవు</string>

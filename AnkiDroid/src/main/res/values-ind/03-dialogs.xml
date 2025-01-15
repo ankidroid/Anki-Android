@@ -159,8 +159,6 @@
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Izin penyimpanan diperlukan. Harap izinkan akses penyimpanan lalu coba lagi.</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Tidak dapat memuat Tampilan Peramban Kartu</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Gagal menjadwalkan pengingat</string>
     <string name="boot_service_too_many_notifications">Terlalu banyak pengingat dijadwalkan. Sebagian tidak akan muncul</string>

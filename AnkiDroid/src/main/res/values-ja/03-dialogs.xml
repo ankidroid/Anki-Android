@@ -159,8 +159,6 @@
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">必要なストレージ権限がありません。ストレージ権限を付与してから、アクションを再試行してください。</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">カードブラウザ用の表示設定を読み込めませんでした</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">リマインダーのスケジュールに失敗しました</string>
     <string name="boot_service_too_many_notifications">スケジュールされたリマインダーが多すぎます。一部のリマインダーは表示されません</string>
