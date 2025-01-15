@@ -254,6 +254,22 @@
         <item>@string/reviewer_frame_style_box_value</item>
     </string-array>
 
+    <!-- Reviewer settings > Show answer buttons  -->
+    <string-array name="show_answer_buttons_entries">
+        <item>@string/show_answer_buttons_all</item>
+        <item>@string/show_answer_buttons_good_and_again</item>
+        <item>@string/show_answer_buttons_none</item>
+    </string-array>
+
+    <string name="show_answer_buttons_all_value">0</string>
+    <string name="show_answer_buttons_good_and_again_value">1</string>
+    <string name="show_answer_buttons_none_value">2</string>
+
+    <string-array name="show_answer_buttons_values">
+        <item>@string/show_answer_buttons_all_value</item>
+        <item>@string/show_answer_buttons_good_and_again_value</item>
+        <item>@string/show_answer_buttons_none_value</item>
+    </string-array>
 
     <!-- Preferences headers summaries -->
     <string-array name="general_summary_entries">

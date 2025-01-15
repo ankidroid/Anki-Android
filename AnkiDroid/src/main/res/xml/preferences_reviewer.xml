@@ -16,16 +16,13 @@
         android:title="@string/ignore_display_cutout"
         />
 
-    <SwitchPreferenceCompat
-        android:defaultValue="false"
-        android:key="@string/hide_answer_buttons_key"
-        android:title="@string/hide_answer_buttons"
-        />
-
-    <SwitchPreferenceCompat
-        android:defaultValue="false"
-        android:key="@string/hide_hard_and_easy_key"
-        android:title="@string/hide_hard_and_easy"
+    <ListPreference
+        android:key="@string/show_answer_buttons_key"
+        android:title="@string/show_answer_buttons"
+        android:defaultValue="@string/show_answer_buttons_all_value"
+        android:entries="@array/show_answer_buttons_entries"
+        android:entryValues="@array/show_answer_buttons_values"
+        app:useSimpleSummaryProvider="true"
         />
 
     <Preference

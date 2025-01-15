@@ -94,6 +94,7 @@ import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.FrameStyle
+import com.ichi2.anki.settings.enums.ShowAnswerButtons
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
@@ -263,10 +264,8 @@ class ReviewerFragment :
     }
 
     private fun setupAnswerButtons(view: View) {
-        val prefs = sharedPrefs()
-        val hideAnswerButtons = prefs.getBoolean(getString(R.string.hide_answer_buttons_key), false)
         val buttonsAreaLayout = view.findViewById<FrameLayout>(R.id.buttons_area)
-        if (hideAnswerButtons) {
+        if (Prefs.showAnswerButtons == ShowAnswerButtons.NONE) {
             buttonsAreaLayout.isVisible = false
             return
         }
@@ -328,7 +327,7 @@ class ReviewerFragment :
             resetZoom()
         }
 
-        if (prefs.getBoolean(getString(R.string.hide_hard_and_easy_key), false)) {
+        if (Prefs.showAnswerButtons == ShowAnswerButtons.GOOD_AND_AGAIN) {
             hardButton.isVisible = false
             easyButton.isVisible = false
         }
