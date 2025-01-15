@@ -59,19 +59,18 @@ import com.ichi2.anki.browser.BrowserColumnCollection
 import com.ichi2.anki.browser.BrowserColumnSelectionFragment
 import com.ichi2.anki.browser.BrowserMultiColumnAdapter
 import com.ichi2.anki.browser.BrowserRowCollection
-import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.anki.browser.CardBrowserLaunchOptions
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Initializing
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Searching
 import com.ichi2.anki.browser.CardOrNoteId
+import com.ichi2.anki.browser.ColumnHeading
 import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
-import com.ichi2.anki.browser.getLabel
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.dialogs.BrowserOptionsDialog
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog
@@ -455,27 +454,8 @@ open class CardBrowser :
         fun onSelectedRowsChanged(rows: Set<Any>) = onSelectionChanged()
 
         fun onColumnsChanged(columnCollection: BrowserColumnCollection) {
+            Timber.d("columns changed")
             notifyDataSetChanged()
-
-            if (!viewModel.columnNamesLoaded) return
-
-            // reset headings
-            val headingsContainer =
-                browserColumnHeadings.apply {
-                    removeAllViews()
-                }
-
-            val layoutInflater = LayoutInflater.from(headingsContainer.context)
-            for (column in columnCollection.columns) {
-                Timber.d("setting up column %s", column)
-                layoutInflater.inflate(R.layout.browser_column_heading, headingsContainer, false).apply {
-                    headingsContainer.addView(this)
-                    (this as TextView).text =
-                        viewModel
-                            .namedColumns[CardBrowserColumn.entries.indexOf(column)]
-                            .getLabel(viewModel.cardsOrNotes)
-                }
-            }
         }
 
         fun onFilterQueryChanged(filterQuery: String) {
@@ -540,6 +520,22 @@ open class CardBrowser :
             }
         }
 
+        fun onColumnNamesChanged(columnCollection: List<ColumnHeading>) {
+            Timber.d("column names changed")
+            // reset headings
+            browserColumnHeadings.removeAllViews()
+
+            // set up the new columns
+            val layoutInflater = LayoutInflater.from(browserColumnHeadings.context)
+            for (column in columnCollection) {
+                Timber.d("setting up column %s", column)
+                layoutInflater.inflate(R.layout.browser_column_heading, browserColumnHeadings, false).apply {
+                    browserColumnHeadings.addView(this)
+                    (this as TextView).text = column.label
+                }
+            }
+        }
+
         viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         viewModel.flowOfSearchQueryExpanded.launchCollectionInLifecycleScope(::onSearchQueryExpanded)
         viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
@@ -550,6 +546,7 @@ open class CardBrowser :
         viewModel.flowOfIsInMultiSelectMode.launchCollectionInLifecycleScope(::isInMultiSelectModeChanged)
         viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
+        viewModel.flowOfColumnHeadings.launchCollectionInLifecycleScope(::onColumnNamesChanged)
     }
 
     // Finish initializing the activity after the collection has been correctly loaded
@@ -1552,6 +1549,7 @@ open class CardBrowser :
 
     public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
+        viewModel.onReinit()
         viewModel.launchSearchForCards(
             savedInstanceState.getString("mSearchTerms", ""),
             forceRefresh = false,
