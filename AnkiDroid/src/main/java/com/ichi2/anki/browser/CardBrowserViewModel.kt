@@ -692,18 +692,6 @@ class CardBrowserViewModel(
 
     fun getRowAtPosition(position: Int) = cards[position]
 
-    override fun onCleared() {
-        super.onCleared()
-        invalidate()
-    }
-
-    private fun invalidate() {
-        Timber.d("invalidate")
-        // TODO: this may no longer be needed now we call invalidate from onCleared
-        cards.clear()
-        selectNone()
-    }
-
     private suspend fun updateSavedSearches(func: MutableMap<String, String>.() -> Unit): Map<String, String> {
         val filters = savedSearches().toMutableMap()
         func(filters)

@@ -156,9 +156,6 @@ open class CardBrowser :
 
     lateinit var viewModel: CardBrowserViewModel
 
-    /** List of cards in the browser.
-     * When the list is changed, the position member of its elements should get changed. */
-    private val cards get() = viewModel.cards
     private lateinit var deckSpinnerSelection: DeckSpinnerSelection
 
     @VisibleForTesting
