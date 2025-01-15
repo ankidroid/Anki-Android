@@ -163,8 +163,6 @@
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">مطلوبہ اسٹوریج کی اجازت غائب ہے۔ براہ کرم اسٹوریج کی اجازت دیں پھر اپنے عمل کی دوبارہ کوشش کریں۔</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">کارڈ براؤزر کی ظاہری شکل کو لوڈ نہیں کیا جا سکا</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">یاد دہانیوں کو شیڈول کرنے میں ناکام</string>
     <string name="boot_service_too_many_notifications">بہت زیادہ یاد دہانیاں شیڈول کی گئی ہیں۔ کچھ ظاہر نہیں ہوں گے</string>

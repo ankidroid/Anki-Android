@@ -163,8 +163,6 @@
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">भंडारण की अनुमति की आवश्यकता नहीं है। कृपया भंडारण अनुमति प्रदान करें और फिर अपनी कार्रवाई पुनः करें।</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">कार्ड ब्राउज़र प्रकटन लोड नहीं किया जा सका</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">रिमाइंडर शेड्यूल करने में विफल</string>
     <string name="boot_service_too_many_notifications">बहुत सारे अनुस्मारक निर्धारित हैं। कुछ दिखाई नहीं देगा</string>

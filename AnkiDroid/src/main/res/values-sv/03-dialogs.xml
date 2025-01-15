@@ -163,8 +163,6 @@
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Behörighet saknas för lagringsutrymme. Vänligen ge lagringsbehörighet och försök sedan igen.</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Kunde inte ladda kortläsarens utseende</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Det gick inte att schemalägga påminnelser</string>
     <string name="boot_service_too_many_notifications">För många påminnelser schemalagda. Vissa kommer inte att visas</string>

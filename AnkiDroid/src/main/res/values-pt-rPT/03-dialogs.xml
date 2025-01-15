@@ -163,8 +163,6 @@
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Permissão de armazenamento em falta. Por favor, conceda esta permissão e volte a tentar.</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Não foi possível carregar a aparência do Explorador de Fichas.</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Falha ao agendar lembretes</string>
     <string name="boot_service_too_many_notifications">Demasiados lembretes agendados. Alguns não aparecerão.</string>

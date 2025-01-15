@@ -163,8 +163,6 @@
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Mungon leja e kërkuar e ruajtjes. Jepni lejen e ruajtjes dhe më pas riprovoni veprimin tuaj.</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Pamja e shfletuesit të kartës nuk mund të ngarkohej</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Planifikimi i rikujtuesve dështoi</string>
     <string name="boot_service_too_many_notifications">Shumë rikujtues të planifikuar. Disa nuk do të shfaqen</string>

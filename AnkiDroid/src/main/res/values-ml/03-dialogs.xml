@@ -163,8 +163,6 @@
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">ആവശ്യമായ സംഭരണ ​​അനുമതി നഷ്‌ടമായി. സംഭരണ ​​അനുമതി നൽകി നിങ്ങളുടെ പ്രവർത്തനം വീണ്ടും ശ്രമിക്കുക.</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">കാർഡ് Browser സർ രൂപം ലോഡുചെയ്യാനായില്ല</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">ഓർമ്മപ്പെടുത്തലുകൾ ഷെഡ്യൂൾ ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു</string>
     <string name="boot_service_too_many_notifications">വളരെയധികം ഓർമ്മപ്പെടുത്തലുകൾ ഷെഡ്യൂൾ ചെയ്‌തു. ചിലത് ദൃശ്യമാകില്ല</string>

@@ -163,8 +163,6 @@
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">প্রয়োজনীয় স্টোরেজ অনুমতি অনুপস্থিত. অনুগ্রহ করে সঞ্চয়স্থানের অনুমতি দিন তারপর আবার আপনার কাজের চেষ্টা করুন।</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">কার্ড ব্রাউজার ভিউ লোড করা যায়নি</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">অনুস্মারক শিডিউল করতে ব্যর্থ হয়েছে</string>
     <string name="boot_service_too_many_notifications">অনেক অনুস্মারক নির্ধারিত হয় কিছুই প্রদর্শিত হবে না</string>

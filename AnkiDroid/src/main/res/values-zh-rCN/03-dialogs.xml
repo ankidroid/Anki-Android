@@ -159,8 +159,6 @@
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">缺少所需的存储权限。请授予存储权限，然后重试您的操作。</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">无法加载卡牌浏览器外观</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">计划提醒失败</string>
     <string name="boot_service_too_many_notifications">已计划的提醒太多。有些提醒将不会出现</string>

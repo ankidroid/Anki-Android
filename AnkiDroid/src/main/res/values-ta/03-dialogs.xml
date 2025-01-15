@@ -163,8 +163,6 @@
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">தேவையான சேமிப்பக அனுமதி இல்லை. சேமிப்பக அனுமதியை வழங்கவும், உங்கள் செயலை மீண்டும் முயற்சிக்கவும்.</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">கார்டு உலாவியின் தோற்றத்தை ஏற்ற முடியவில்லை</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">நினைவூட்டல்களைத் திட்டமிடுவதில் தோல்வி</string>
     <string name="boot_service_too_many_notifications">பல நினைவூட்டல்கள் திட்டமிடப்பட்டுள்ளன. சில தோன்றாது</string>
