@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_layout"
@@ -16,7 +17,8 @@
 
         <include
             layout="@layout/toolbar"
-            android:id="@+id/toolbar" /> <!-- Ensure toolbar has an ID if used in layout_below -->
+            android:id="@+id/toolbar"
+            />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -39,14 +41,16 @@
                     android:layout_height="223dp"
                     android:layout_gravity="center"
                     android:layout_marginBottom="0dp"
-                    app:srcCompat="@drawable/logged_in_logo" />
+                    app:srcCompat="@drawable/logged_in_logo"
+                    />
 
                 <com.ichi2.ui.FixedTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/logged_as"
                     android:textSize="@dimen/title_textsize"
-                    android:layout_margin="@dimen/content_vertical_padding" />
+                    android:layout_margin="@dimen/content_vertical_padding"
+                    />
 
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/username_logged_in"
@@ -55,7 +59,8 @@
                     android:textSize="@dimen/title_textsize"
                     android:textStyle="bold"
                     android:layout_margin="@dimen/content_vertical_padding"
-                    tools:text="user@example.com" />
+                    tools:text="user@example.com"
+                    />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/logout_button"
@@ -64,7 +69,8 @@
                     android:minWidth="200dp"
                     android:layout_gravity="center"
                     android:text="@string/log_out"
-                    android:layout_margin="@dimen/content_vertical_padding" />
+                    android:layout_margin="@dimen/content_vertical_padding"
+                    />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/remove_account_button"
@@ -74,7 +80,8 @@
                     android:minWidth="200dp"
                     android:layout_gravity="center"
                     android:text="@string/remove_account"
-                    android:layout_margin="@dimen/content_vertical_padding" />
+                    android:layout_margin="@dimen/content_vertical_padding"
+                    />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/privacy_policy_button"
@@ -86,18 +93,19 @@
                     android:padding="3dp"
                     android:layout_gravity="center"
                     android:singleLine="true"
-                    android:text="@string/help_title_privacy" />
+                    android:text="@string/help_title_privacy"
+                    />
 
-            </LinearLayout> <!-- Closing LinearLayout -->
-        </ScrollView> <!-- Closing ScrollView -->
-    </RelativeLayout> <!-- Closing RelativeLayout -->
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
 
-    <!-- Opens a WebView for 'remove account', replaces the layout above -->
     <FrameLayout
         android:id="@+id/remove_account_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        tools:context=".pages.RemoveAccountFragment" />
+        tools:context=".pages.RemoveAccountFragment"
+        />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout> <!-- Closing CoordinatorLayout -->
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
