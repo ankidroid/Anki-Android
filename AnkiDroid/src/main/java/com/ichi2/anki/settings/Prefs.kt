@@ -139,6 +139,11 @@ object Prefs {
 
     // ************************************* Developer options ********************************** //
 
+    /**
+     * Whether developer options should be shown to the user.
+     * True in case [BuildConfig.DEBUG] is true
+     * or if the user has enabled it with the secret on [com.ichi2.anki.preferences.AboutFragment]
+     */
     var isDevOptionsEnabled: Boolean
         get() = getBoolean(PrefKey.DEV_OPTIONS_ENABLED, false) || BuildConfig.DEBUG
         set(value) = putBoolean(PrefKey.DEV_OPTIONS_ENABLED, value)
