@@ -41,12 +41,14 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.ThemeUtils
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import anki.collection.OpChanges
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anki.CollectionManager.TR
@@ -61,6 +63,8 @@ import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.anki.browser.CardBrowserLaunchOptions
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState
+import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Initializing
+import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Searching
 import com.ichi2.anki.browser.CardOrNoteId
 import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
@@ -254,13 +258,6 @@ open class CardBrowser :
     init {
         ChangeManager.subscribe(this)
     }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    fun changeCardOrder(sortType: SortType) =
-        launchCatchingTask {
-            // TODO: remove withProgress and replace with search progress bar
-            withProgress { viewModel.changeCardOrder(sortType)?.join() }
-        }
 
     @VisibleForTesting
     internal val mySearchesDialogListener: MySearchesDialogListener =
@@ -527,9 +524,13 @@ open class CardBrowser :
         fun searchStateChanged(searchState: SearchState) {
             Timber.d("search state: %s", searchState)
             notifyDataSetChanged()
+
+            findViewById<LinearProgressIndicator>(R.id.browser_progress).isVisible =
+                searchState == Initializing ||
+                searchState == Searching
             when (searchState) {
-                SearchState.Initializing -> { }
-                SearchState.Searching -> {
+                Initializing -> { }
+                Searching -> {
                     if ("" != viewModel.searchTerms && searchView != null) {
                         searchView!!.setQuery(viewModel.searchTerms, false)
                         searchItem!!.expandActionView()
@@ -542,12 +543,6 @@ open class CardBrowser :
             }
         }
 
-        fun initCompletedChanged(completed: Boolean) {
-            if (!completed) return
-
-            searchCards()
-        }
-
         viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         viewModel.flowOfSearchQueryExpanded.launchCollectionInLifecycleScope(::onSearchQueryExpanded)
         viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
@@ -558,7 +553,6 @@ open class CardBrowser :
         viewModel.flowOfIsInMultiSelectMode.launchCollectionInLifecycleScope(::isInMultiSelectModeChanged)
         viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
-        viewModel.flowOfInitCompleted.launchCollectionInLifecycleScope(::initCompletedChanged)
     }
 
     // Finish initializing the activity after the collection has been correctly loaded
@@ -566,7 +560,6 @@ open class CardBrowser :
         super.onCollectionLoaded(col)
         Timber.d("onCollectionLoaded()")
         registerReceiver()
-        cards.reset()
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         deckSpinnerSelection.apply {
@@ -898,7 +891,7 @@ open class CardBrowser :
                         viewModel.setSearchQueryExpanded(false)
                         // SearchView doesn't support empty queries so we always reset the search when collapsing
                         searchView!!.setQuery("", false)
-                        searchCards("")
+                        viewModel.launchSearchForCards("")
                         return true
                     }
                 },
@@ -918,7 +911,7 @@ open class CardBrowser :
                             }
 
                             override fun onQueryTextSubmit(query: String): Boolean {
-                                searchCards(query)
+                                viewModel.launchSearchForCards(query)
                                 searchView!!.clearFocus()
                                 return true
                             }
@@ -1264,7 +1257,7 @@ open class CardBrowser :
             // TODO: move this into the ViewModel
             CardBrowserOrderDialog.newInstance { dialog: DialogInterface, which: Int ->
                 dialog.dismiss()
-                changeCardOrder(SortType.fromCardBrowserLabelIndex(which))
+                viewModel.changeCardOrder(SortType.fromCardBrowserLabelIndex(which))
             },
         )
     }
@@ -1562,22 +1555,17 @@ open class CardBrowser :
 
     public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        searchCards(savedInstanceState.getString("mSearchTerms", ""))
+        viewModel.launchSearchForCards(
+            savedInstanceState.getString("mSearchTerms", ""),
+            forceRefresh = false,
+        )
     }
 
     private fun forceRefreshSearch(useSearchTextValue: Boolean = false) {
         if (useSearchTextValue && searchView != null) {
-            searchCards(searchView!!.query.toString())
+            viewModel.launchSearchForCards(searchView!!.query.toString())
         } else {
-            searchCards()
-        }
-    }
-
-    @VisibleForTesting
-    fun searchCards() {
-        launchCatchingTask {
-            // TODO: Move this to a LinearProgressIndicator and remove withProgress
-            withProgress { viewModel.launchSearchForCards()?.join() }
+            viewModel.launchSearchForCards()
         }
     }
 
@@ -1798,12 +1786,6 @@ open class CardBrowser :
         onSelectedTags(tags.toList(), emptyList(), CardStateFilter.ALL_CARDS)
         filterByTags(tags.toList(), CardStateFilter.ALL_CARDS)
     }
-
-    @VisibleForTesting
-    fun searchCards(searchQuery: String) =
-        launchCatchingTask {
-            withProgress { viewModel.launchSearchForCards(searchQuery)?.join() }
-        }
 
     override fun opExecuted(
         changes: OpChanges,

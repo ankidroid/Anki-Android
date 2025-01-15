@@ -494,7 +494,7 @@ class CardBrowserTest : RobolectricTest() {
             )
 
             // reverse
-            b.changeCardOrder(SortType.SORT_FIELD)
+            b.viewModel.changeCardOrder(SortType.SORT_FIELD)
 
             b.replaceSelectionWith(intArrayOf(0))
             val intentAfterReverse = b.viewModel.queryPreviewIntentData()
@@ -704,7 +704,7 @@ class CardBrowserTest : RobolectricTest() {
         )
 
         // Change the display order of the card browser
-        cardBrowserController.get().changeCardOrder(SortType.EASE)
+        cardBrowserController.get().viewModel.changeCardOrder(SortType.EASE)
 
         // Kill and restart the activity and ensure that display order is preserved
         val outBundle = Bundle()
@@ -749,8 +749,7 @@ class CardBrowserTest : RobolectricTest() {
             }
 
             val cardBrowser = browserWithNoNewCards
-            cardBrowser.searchCards("Hello").join()
-            waitForAsyncTasksToComplete()
+            cardBrowser.searchCards("Hello")
             assertThat(
                 "Card browser should have Test Deck as the selected deck",
                 cardBrowser.selectedDeckNameForUi,
@@ -786,8 +785,8 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun checkDisplayOrderAfterTogglingCardsToNotes() {
         browserWithNoNewCards.apply {
-            changeCardOrder(SortType.EASE) // order no. 7 corresponds to "cardEase"
-            changeCardOrder(SortType.EASE) // reverse the list
+            viewModel.changeCardOrder(SortType.EASE) // order no. 7 corresponds to "cardEase"
+            viewModel.changeCardOrder(SortType.EASE) // reverse the list
 
             viewModel.setCardsOrNotes(NOTES)
             searchCards()
@@ -1248,3 +1247,12 @@ val CardBrowser.columnHeadingViews
 val CardBrowser.columnHeadings
     get() =
         columnHeadingViews.map { it.text.toString() }
+
+fun CardBrowser.searchCards(search: String? = null) {
+    if (search != null) {
+        viewModel.launchSearchForCards(search)
+    } else {
+        viewModel.launchSearchForCards()
+    }
+    runBlocking { viewModel.searchJob?.join() }
+}
