@@ -2571,7 +2571,7 @@ open class DeckPicker :
     override val shortcuts
         get() =
             ShortcutGroup(
-                listOf(
+                listOfNotNull(
                     shortcut("A", R.string.menu_add_note),
                     shortcut("B", R.string.card_browser_context_menu),
                     shortcut("Y", R.string.pref_cat_sync),
@@ -2581,9 +2581,9 @@ open class DeckPicker :
                     shortcut("C", R.string.check_db),
                     shortcut("D", R.string.new_deck),
                     shortcut("F", R.string.new_dynamic_deck),
-                    shortcut("DEL", R.string.delete_deck_title),
-                    shortcut("Shift+DEL", R.string.delete_deck_without_confirmation),
-                    shortcut("R", R.string.rename_deck),
+                    if (fragmented) shortcut("DEL", R.string.contextmenu_deckpicker_delete_deck) else null,
+                    if (fragmented) shortcut("Shift+DEL", R.string.delete_deck_without_confirmation) else null,
+                    if (fragmented) shortcut("R", R.string.rename_deck) else null,
                     shortcut("P", R.string.open_settings),
                     shortcut("M", R.string.check_media),
                     shortcut("Ctrl+E", R.string.export_collection),
