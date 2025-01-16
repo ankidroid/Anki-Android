@@ -21,6 +21,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.CardId
+import com.ichi2.libanki.Consts
+import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.Note
 import com.ichi2.libanki.undoStatus
 import com.ichi2.testutils.ensureOpsExecuted
 import org.hamcrest.CoreMatchers.not
@@ -89,6 +92,33 @@ class DeckPickerViewModelTest : RobolectricTest() {
             assertThat("col undo status", col.undoStatus().undo, equalTo("Empty Cards"))
         }
 
+    @Test
+    fun `empty filtered - functionality`() {
+        runTest {
+            val note = addBasicNote("To", "Filtered")
+            val filteredDeckId = moveAllCardsToFilteredDeck(assertOn = note)
+
+            viewModel.emptyFilteredDeck(filteredDeckId).join()
+
+            assertThat("deck was reset", note.firstCard().did, equalTo(Consts.DEFAULT_DECK_ID))
+        }
+    }
+
+    @Test
+    fun `empty filtered - flows`() {
+        runTest {
+            viewModel.flowOfDeckCountsChanged.test {
+                val filteredDeckId = moveAllCardsToFilteredDeck()
+                expectNoEvents()
+                viewModel.emptyFilteredDeck(filteredDeckId).join()
+                awaitItem()
+                expectNoEvents()
+                viewModel.emptyFilteredDeck(filteredDeckId).join()
+                awaitItem()
+            }
+        }
+    }
+
     @CheckResult
     private suspend fun createEmptyCards(): List<CardId> {
         addNoteUsingNoteTypeName("Cloze", "{{c1::Hello}} {{c2::World}}", "").apply {
@@ -103,4 +133,16 @@ class DeckPickerViewModelTest : RobolectricTest() {
 
     /** test helper to use [deleteEmptyCards] without an [EmptyCards] instance */
     private fun DeckPickerViewModel.deleteEmptyCards(list: List<CardId>) = deleteEmptyCards(EmptyCards(list))
+
+    /**
+     * Moves all cards to a deck named "Filtered"
+     *
+     * If there are no notes, one is created
+     * @return The [DeckId] of the filtered deck
+     */
+    private fun moveAllCardsToFilteredDeck(assertOn: Note = addBasicNote("To", "Filtered")): DeckId =
+        addDynamicDeck("Filtered", "").also { did ->
+            assertThat("filter - did", assertOn.firstCard().did, equalTo(did))
+            assertThat("filter - odid", assertOn.firstCard().oDid, equalTo(Consts.DEFAULT_DECK_ID))
+        }
 }

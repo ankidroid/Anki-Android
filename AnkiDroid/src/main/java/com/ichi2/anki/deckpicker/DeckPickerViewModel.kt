@@ -27,8 +27,10 @@ import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.undoableOp
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /** @see [DeckPicker] */
 class DeckPickerViewModel : ViewModel() {
@@ -38,6 +40,12 @@ class DeckPickerViewModel : ViewModel() {
      */
     val deckDeletedNotification = MutableSharedFlow<DeckDeletionResult>()
     val emptyCardsNotification = MutableSharedFlow<EmptyCardsResult>()
+
+    /**
+     * A notification that the study counts have changed
+     */
+    // TODO: most of the recalculation should be moved inside the ViewModel
+    val flowOfDeckCountsChanged = MutableSharedFlow<Unit>()
 
     /**
      * Keep track of which deck was last given focus in the deck list. If we find that this value
@@ -91,6 +99,16 @@ class DeckPickerViewModel : ViewModel() {
         viewModelScope.launch {
             val result = undoableOp { removeCardsAndOrphanedNotes(emptyCards) }
             emptyCardsNotification.emit(EmptyCardsResult(cardsDeleted = result.count))
+        }
+
+    // TODO: move withProgress to the ViewModel, so we don't return 'Job'
+    // TODO: undoableOp { } on emptyDyn
+    fun emptyFilteredDeck(deckId: DeckId): Job =
+        viewModelScope.launch {
+            Timber.i("empty filtered deck %s", deckId)
+            withCol { decks.select(deckId) }
+            withCol { sched.emptyDyn(decks.selected()) }
+            flowOfDeckCountsChanged.emit(Unit)
         }
 }
 
