@@ -558,7 +558,7 @@ class CardContentProvider : ContentProvider() {
             }
             NOTE_TYPES_ID_TEMPLATES -> throw IllegalArgumentException("Cannot update templates in bulk")
             NOTE_TYPES_ID_TEMPLATES_ID -> {
-                val mid = values!!.getAsLong(FlashCardsContract.CardTemplate.MODEL_ID)
+                val noteTypeId = values!!.getAsLong(FlashCardsContract.CardTemplate.MODEL_ID)
                 val ord = values.getAsInteger(FlashCardsContract.CardTemplate.ORD)
                 val name = values.getAsString(FlashCardsContract.CardTemplate.NAME)
                 val qfmt = values.getAsString(FlashCardsContract.CardTemplate.QUESTION_FORMAT)
@@ -566,7 +566,7 @@ class CardContentProvider : ContentProvider() {
                 val bqfmt = values.getAsString(FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT)
                 val bafmt = values.getAsString(FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT)
                 // Throw exception if read-only fields are included
-                if (mid != null || ord != null) {
+                if (noteTypeId != null || ord != null) {
                     throw IllegalArgumentException("Updates to mid or ord are not allowed")
                 }
                 // Update the noteType
@@ -893,8 +893,8 @@ class CardContentProvider : ContentProvider() {
                     noteTypes.add(newNoteType)
 
                     // Get the mid and return a URI
-                    val mid = newNoteType.getLong("id").toString()
-                    Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, mid)
+                    val noteTypeId = newNoteType.getLong("id").toString()
+                    Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, noteTypeId)
                 } catch (e: JSONException) {
                     Timber.e(e, "Could not set a field of new note type %s", noteTypeName)
                     null
@@ -904,10 +904,10 @@ class CardContentProvider : ContentProvider() {
             NOTE_TYPES_ID_TEMPLATES -> {
                 run {
                     val notetypes: Notetypes = col.notetypes
-                    val mid: NoteTypeId = getNoteTypeIdFromUri(uri, col)
+                    val noteTypeId: NoteTypeId = getNoteTypeIdFromUri(uri, col)
                     val existingNoteType: NotetypeJson =
-                        notetypes.get(mid)
-                            ?: throw IllegalArgumentException("note type missing: $mid")
+                        notetypes.get(noteTypeId)
+                            ?: throw IllegalArgumentException("note type missing: $noteTypeId")
                     val name: String = values!!.getAsString(FlashCardsContract.CardTemplate.NAME)
                     val qfmt: String = values.getAsString(FlashCardsContract.CardTemplate.QUESTION_FORMAT)
                     val afmt: String = values.getAsString(FlashCardsContract.CardTemplate.ANSWER_FORMAT)
@@ -936,13 +936,13 @@ class CardContentProvider : ContentProvider() {
             NOTE_TYPES_ID_FIELDS -> {
                 run {
                     val notetypes: Notetypes = col.notetypes
-                    val mid: NoteTypeId = getNoteTypeIdFromUri(uri, col)
+                    val noteTypeId: NoteTypeId = getNoteTypeIdFromUri(uri, col)
                     val existingNoteType: NotetypeJson =
-                        notetypes.get(mid)
-                            ?: throw IllegalArgumentException("note type missing: $mid")
+                        notetypes.get(noteTypeId)
+                            ?: throw IllegalArgumentException("note type missing: $noteTypeId")
                     val name: String =
                         values!!.getAsString(FlashCardsContract.Model.FIELD_NAME)
-                            ?: throw IllegalArgumentException("field name missing for note type: $mid")
+                            ?: throw IllegalArgumentException("field name missing for note type: $noteTypeId")
                     val field = notetypes.newField(name)
                     try {
                         notetypes.addFieldLegacy(existingNoteType, field)

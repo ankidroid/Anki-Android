@@ -319,7 +319,7 @@ class NoteEditor :
             NoteEditorActivityResultCallback {
                 // Model can change regardless of exit type - update ourselves and CardBrowser
                 reloadRequired = true
-                editorNote!!.notetype = getColUnsafe.notetypes.get(editorNote!!.mid)!!
+                editorNote!!.notetype = getColUnsafe.notetypes.get(editorNote!!.noteTypeId)!!
                 if (currentEditedCard == null ||
                     !editorNote!!
                         .cardIds(getColUnsafe)
@@ -1680,7 +1680,7 @@ class NoteEditor :
     private suspend fun getCurrentMultimediaEditableNote(): MultimediaEditableNote {
         val note = NoteService.createEmptyNote(editorNote!!.notetype)
         val fields = currentFieldStrings.requireNoNulls()
-        withCol { NoteService.updateMultimediaNoteFromFields(this@withCol, fields, editorNote!!.mid, note) }
+        withCol { NoteService.updateMultimediaNoteFromFields(this@withCol, fields, editorNote!!.noteTypeId, note) }
 
         return note
     }
@@ -2797,9 +2797,9 @@ class NoteEditor :
     fun getFieldForTest(index: Int): FieldEditText = editFields!![index]
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun setCurrentlySelectedModel(mid: NoteTypeId) {
-        val position = allModelIds!!.indexOf(mid)
-        check(position != -1) { "$mid not found" }
+    fun setCurrentlySelectedModel(noteTypeId: NoteTypeId) {
+        val position = allModelIds!!.indexOf(noteTypeId)
+        check(position != -1) { "$noteTypeId not found" }
         noteTypeSpinner!!.setSelection(position)
     }
 

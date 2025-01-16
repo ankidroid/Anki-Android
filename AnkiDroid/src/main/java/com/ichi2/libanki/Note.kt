@@ -23,9 +23,7 @@ import anki.notes.NoteFieldsCheckResponse
 import com.ichi2.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.utils.NotInLibAnki
-import com.ichi2.libanki.utils.set
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.deepClone
 import com.ichi2.utils.emptyStringArray
 import java.util.AbstractSet
 import java.util.regex.Pattern
@@ -42,8 +40,11 @@ class Note : Cloneable {
         private set
     lateinit var notetype: NotetypeJson
 
-    var mid: NoteTypeId = 0L
-        private set
+    val noteTypeId: NoteTypeId
+        get() = mid
+
+    /** for upstream compatibility, use [noteTypeId] outside libAnki */
+    private var mid: NoteTypeId = 0L
     lateinit var tags: MutableList<String>
     lateinit var fields: MutableList<String>
     private var fMap: Map<String, Pair<Int, Field>>? = null
@@ -83,7 +84,7 @@ class Note : Cloneable {
         id = note.id
         guId = note.guid
         mid = note.notetypeId
-        notetype = col.notetypes.get(mid)!! // not in libAnki
+        notetype = col.notetypes.get(noteTypeId)!! // not in libAnki
         mod = note.mtimeSecs
         usn = note.usn
         // the lists in the protobuf are NOT mutable, even though they cast to MutableList

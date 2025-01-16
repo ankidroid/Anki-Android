@@ -570,10 +570,10 @@ class ContentProviderTest : InstrumentedTest() {
         val noteTypeUri = cr.insert(FlashCardsContract.Model.CONTENT_URI, cv)
         assertNotNull("Check inserted note type isn't null", noteTypeUri)
         assertNotNull("Check last path segment exists", noteTypeUri!!.lastPathSegment)
-        val mid = noteTypeUri.lastPathSegment!!.toLong()
+        val noteTypeId = noteTypeUri.lastPathSegment!!.toLong()
         var col = reopenCol()
         try {
-            var noteType = col.notetypes.get(mid)
+            var noteType = col.notetypes.get(noteTypeId)
             assertNotNull("Check note type", noteType)
             assertEquals("Check note type name", TEST_NOTE_TYPE_NAME, noteType!!.getString("name"))
             assertEquals(
@@ -602,7 +602,7 @@ class ContentProviderTest : InstrumentedTest() {
                 greaterThan(0),
             )
             col = reopenCol()
-            noteType = col.notetypes.get(mid)
+            noteType = col.notetypes.get(noteTypeId)
             assertNotNull("Check note type", noteType)
             assertEquals("Check css", TEST_NOTE_TYPE_CSS, noteType!!.getString("css"))
             // Update each of the templates in note type (to test updating NOTE_TYPES_ID_TEMPLATES_ID Uri)
@@ -626,7 +626,7 @@ class ContentProviderTest : InstrumentedTest() {
                     greaterThan(0),
                 )
                 col = reopenCol()
-                noteType = col.notetypes.get(mid)
+                noteType = col.notetypes.get(noteTypeId)
                 assertNotNull("Check note type", noteType)
                 val template = noteType!!.tmpls[i]
                 assertEquals(
@@ -643,7 +643,7 @@ class ContentProviderTest : InstrumentedTest() {
             // Delete the note type (this will force a full-sync)
             col.modSchemaNoCheck()
             try {
-                val noteType = col.notetypes.get(mid)
+                val noteType = col.notetypes.get(noteTypeId)
                 assertNotNull("Check note type", noteType)
                 col.notetypes.rem(noteType!!)
             } catch (e: ConfirmModSchemaException) {
