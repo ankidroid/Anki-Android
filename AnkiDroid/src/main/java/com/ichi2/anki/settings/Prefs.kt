@@ -130,6 +130,8 @@ object Prefs {
 
     // **************************************** Reviewer **************************************** //
 
+    val ignoreDisplayCutout by booleanPref(PrefKey.IGNORE_DISPLAY_CUTOUT, false)
+
     val frameStyle: FrameStyle
         get() = getEnum(PrefKey.FRAME_STYLE, FrameStyle.CARD)
 

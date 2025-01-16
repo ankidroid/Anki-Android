@@ -467,7 +467,7 @@ class ReviewerFragment :
             systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
 
-        val ignoreDisplayCutout = sharedPrefs().getBoolean(getString(R.string.ignore_display_cutout_key), false)
+        val ignoreDisplayCutout = Prefs.ignoreDisplayCutout
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
             val defaultTypes = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
             val typeMask =

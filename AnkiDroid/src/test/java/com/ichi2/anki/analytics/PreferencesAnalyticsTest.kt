@@ -86,7 +86,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             "hideHardAndEasy",
             "reviewerFrameStyle",
             PrefKey.HIDE_SYSTEM_BARS,
-            "ignoreDisplayCutout",
+            PrefKey.IGNORE_DISPLAY_CUTOUT,
         )
 
     @Test
