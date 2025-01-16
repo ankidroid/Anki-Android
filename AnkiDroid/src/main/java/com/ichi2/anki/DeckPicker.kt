@@ -652,7 +652,7 @@ open class DeckPicker :
 
     override fun setupBackPressedCallbacks() {
         onBackPressedDispatcher.addCallback(this, exitAndSyncBackCallback)
-        onBackPressedDispatcher.addCallback(this, exitViaDoubleTapBackCallback(R.string.back_pressed_once))
+        onBackPressedDispatcher.addCallback(this, exitViaDoubleTapBackCallback())
         onBackPressedDispatcher.addCallback(this, closeFloatingActionBarBackPressCallback)
         super.setupBackPressedCallbacks()
     }
