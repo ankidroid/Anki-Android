@@ -20,6 +20,7 @@ import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.settings.enums.FrameStyle
+import com.ichi2.anki.settings.enums.HideSystemBars
 import com.ichi2.anki.settings.enums.PrefEnum
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
@@ -27,41 +28,41 @@ import kotlin.reflect.KProperty
 // TODO move this to `com.ichi2.anki.preferences`
 //  after the UI classes of that package are moved to `com.ichi2.anki.ui.preferences`
 object Prefs {
-    private val prefs by lazy { AnkiDroidApp.sharedPrefs() }
+    private val sharedPrefs get() = AnkiDroidApp.sharedPrefs()
 
     @VisibleForTesting
     fun getBoolean(
         key: String,
         defValue: Boolean,
-    ): Boolean = prefs.getBoolean(key, defValue)
+    ): Boolean = sharedPrefs.getBoolean(key, defValue)
 
     @VisibleForTesting
     fun putBoolean(
         key: String,
         value: Boolean,
     ) {
-        prefs.edit { putBoolean(key, value) }
+        sharedPrefs.edit { putBoolean(key, value) }
     }
 
     @VisibleForTesting
     fun getString(
         key: String,
         defValue: String?,
-    ): String? = prefs.getString(key, defValue)
+    ): String? = sharedPrefs.getString(key, defValue)
 
     @VisibleForTesting
     fun putString(
         key: String,
         value: String?,
     ) {
-        prefs.edit { putString(key, value) }
+        sharedPrefs.edit { putString(key, value) }
     }
 
     @VisibleForTesting
     fun getInt(
         key: String,
         defValue: Int,
-    ): Int = prefs.getInt(key, defValue)
+    ): Int = sharedPrefs.getInt(key, defValue)
 
     @VisibleForTesting
     fun <E> getEnum(
@@ -129,8 +130,14 @@ object Prefs {
 
     // **************************************** Reviewer **************************************** //
 
+    val ignoreDisplayCutout by booleanPref(PrefKey.IGNORE_DISPLAY_CUTOUT, false)
+    val autoFocusTypeAnswer by booleanPref(PrefKey.AUTO_FOCUS_TYPE_ANSWER, true)
+
     val frameStyle: FrameStyle
         get() = getEnum(PrefKey.FRAME_STYLE, FrameStyle.CARD)
+
+    val hideSystemBars: HideSystemBars
+        get() = getEnum(PrefKey.HIDE_SYSTEM_BARS, HideSystemBars.NONE)
 
     // ************************************** Accessibility ************************************* //
 

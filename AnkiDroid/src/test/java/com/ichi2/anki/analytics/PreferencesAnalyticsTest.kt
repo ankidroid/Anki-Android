@@ -21,6 +21,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.analytics.UsageAnalytics.preferencesWhoseChangesShouldBeReported
 import com.ichi2.anki.preferences.PreferenceTestUtils
 import com.ichi2.anki.preferences.SettingsFragment
+import com.ichi2.anki.settings.PrefKey
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.junit.Test
@@ -84,8 +85,8 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             "hideAnswerButtons",
             "hideHardAndEasy",
             "reviewerFrameStyle",
-            "hideSystemBars",
-            "ignoreDisplayCutout",
+            PrefKey.HIDE_SYSTEM_BARS,
+            PrefKey.IGNORE_DISPLAY_CUTOUT,
         )
 
     @Test
