@@ -147,7 +147,7 @@ abstract class NavigationDrawerActivity :
                     closeDrawer()
                 }
             }
-        onBackPressedDispatcher.addCallback(drawerBackCallback)
+        onBackPressedDispatcher.addCallback(this, drawerBackCallback)
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
         drawerToggle =
