@@ -146,7 +146,10 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                         updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE)
                         updateViews.setViewVisibility(R.id.widget_due, View.VISIBLE)
                         updateViews.setTextViewText(R.id.widget_due, dueCardsCount.toString())
-                        updateViews.setContentDescription(R.id.widget_due, context.resources.getQuantityString(R.plurals.widget_cards_due, dueCardsCount, dueCardsCount))
+                        updateViews.setContentDescription(
+                            R.id.widget_due,
+                            context.resources.getQuantityString(R.plurals.widget_cards_due, dueCardsCount, dueCardsCount),
+                        )
                     }
                     if (eta <= 0 || dueCardsCount <= 0) {
                         updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)
@@ -157,7 +160,10 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                         } else {
                             updateViews.setTextViewText(R.id.widget_eta, "$eta")
                         }
-                        updateViews.setContentDescription(R.id.widget_eta, context.resources.getQuantityString(R.plurals.widget_eta, eta, eta))
+                        updateViews.setContentDescription(
+                            R.id.widget_eta,
+                            context.resources.getQuantityString(R.plurals.widget_eta, eta, eta),
+                        )
                     }
                     updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE)
                 } else {
