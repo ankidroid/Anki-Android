@@ -21,6 +21,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.settings.enums.PrefEnum
+import com.ichi2.anki.settings.enums.ShowAnswerButtons
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -131,6 +132,9 @@ object Prefs {
 
     val frameStyle: FrameStyle
         get() = getEnum(PrefKey.FRAME_STYLE, FrameStyle.CARD)
+
+    val showAnswerButtons: ShowAnswerButtons
+        get() = getEnum(PrefKey.SHOW_ANSWER_BUTTONS, ShowAnswerButtons.ALL)
 
     // ************************************** Accessibility ************************************* //
 

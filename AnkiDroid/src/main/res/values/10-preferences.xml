@@ -438,8 +438,12 @@ this formatter is used if the bind only applies to both the question and the ans
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars"
         >All</string>
     <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
-    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
-    <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
+    <string name="show_answer_buttons" maxLength="41">Show answer buttons</string>
+    <string name="show_answer_buttons_all" maxLength="41" comment="Option to show all answer buttons">All</string>
+    <string name="show_answer_buttons_good_and_again" maxLength="41" comment="Option to show only the ‘Good’ and ‘Again’ answer buttons">‘Good’ and ‘Again’</string>
+    <string name="show_answer_buttons_none" maxLength="41" comment="Option to show no answer buttons">None</string>
+
+
     <string name="reviewer_frame_style" maxLength="41">Frame style</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the 'Card' card frame of the Reviewer"
         >Card</string>

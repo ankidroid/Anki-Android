@@ -23,6 +23,7 @@ object PrefKey {
 
     // **************************************** Reviewer **************************************** //
     const val FRAME_STYLE = "reviewerFrameStyle"
+    const val SHOW_ANSWER_BUTTONS = "showAnswerButtons"
 
     // ************************************** Accessibility ************************************* //
     const val ANSWER_BUTTON_SIZE = "answerButtonSize"
