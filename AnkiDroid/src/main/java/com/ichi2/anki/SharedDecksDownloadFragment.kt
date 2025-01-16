@@ -472,14 +472,16 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
      * If there are any pending downloads, continue with them.
      * Else, set mIsPreviousDownloadOngoing as false and unregister mOnComplete broadcast receiver.
      */
-    @Suppress("deprecation") // onBackPressed
-    private fun checkDownloadStatusAndUnregisterReceiver(isSuccessful: Boolean, isInvalidDeckFile: Boolean = false) {
+    private fun checkDownloadStatusAndUnregisterReceiver(
+        isSuccessful: Boolean,
+        isInvalidDeckFile: Boolean = false,
+    ) {
         if (isVisible && !isSuccessful) {
             if (isInvalidDeckFile) {
                 Timber.i("File is not a valid deck, hence return from the download screen")
                 context?.let { showThemedToast(it, R.string.import_log_no_apkg, false) }
                 // Go back if file is not a deck and cannot be imported
-                activity?.onBackPressed()
+                activity?.onBackPressedDispatcher?.onBackPressed()
             } else {
                 Timber.i("Download failed, update UI and provide option to retry")
                 context?.let { showThemedToast(it, R.string.something_wrong, false) }
