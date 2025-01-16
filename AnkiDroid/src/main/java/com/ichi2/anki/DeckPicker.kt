@@ -623,6 +623,7 @@ open class DeckPicker :
         setupFlows()
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun setupFlows() {
         fun onDeckDeleted(result: DeckDeletionResult) {
             showSnackbar(result.toHumanReadableString(), Snackbar.LENGTH_SHORT) {
@@ -636,8 +637,14 @@ open class DeckPicker :
             }
         }
 
+        fun onDeckCountsChanged(unit: Unit) {
+            updateDeckList()
+            if (fragmented) loadStudyOptionsFragment(false)
+        }
+
         viewModel.deckDeletedNotification.launchCollectionInLifecycleScope(::onDeckDeleted)
         viewModel.emptyCardsNotification.launchCollectionInLifecycleScope(::onCardsEmptied)
+        viewModel.flowOfDeckCountsChanged.launchCollectionInLifecycleScope(::onDeckCountsChanged)
     }
 
     private val onReceiveContentListener =
@@ -2474,16 +2481,10 @@ open class DeckPicker :
     }
 
     private fun emptyFiltered(did: DeckId) {
-        getColUnsafe.decks.select(did)
         launchCatchingTask {
             withProgress {
-                withCol {
-                    Timber.d("doInBackgroundEmptyCram")
-                    sched.emptyDyn(decks.selected())
-                }
+                viewModel.emptyFilteredDeck(did).join()
             }
-            updateDeckList()
-            if (fragmented) loadStudyOptionsFragment(false)
         }
     }
 
