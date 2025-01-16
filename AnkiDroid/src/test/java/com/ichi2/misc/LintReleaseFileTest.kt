@@ -27,7 +27,6 @@ import kotlin.test.assertTrue
  * Test to verify that we don't end up with multiple declarations of a lint rule in lint-release.xml.
  */
 class LintReleaseFileTest {
-
     @Test
     fun failsWithMultipleDeclarations() {
         // this runs in the AnkiDroid module folder so we need go up one level
@@ -42,20 +41,20 @@ class LintReleaseFileTest {
                     uri: String?,
                     localName: String?,
                     qName: String?,
-                    attributes: Attributes?
+                    attributes: Attributes?,
                 ) {
                     if (qName != null && qName == "issue") {
                         if (attributes != null) {
                             val currentIssue = attributes.getValue("id")
                             assertFalse(
                                 "Duplicate $currentIssue lint rule in lint-release.xml",
-                                seenIssues.contains(currentIssue)
+                                seenIssues.contains(currentIssue),
                             )
                             seenIssues.add(currentIssue)
                         }
                     }
                 }
-            }
+            },
         )
     }
 }

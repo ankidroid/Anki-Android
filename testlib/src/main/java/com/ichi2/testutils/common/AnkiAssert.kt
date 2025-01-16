@@ -30,6 +30,7 @@ import org.junit.function.ThrowingRunnable
  * @param runnable a function that is expected to throw an exception when executed
  * @return the exception thrown by [runnable]
  */
-inline fun <reified T : Throwable> assertThrows(message: String? = null, runnable: ThrowingRunnable) {
-    org.junit.Assert.assertThrows(message, T::class.java, runnable)
-}
+inline fun <reified T : Throwable> assertThrows(
+    message: String? = null,
+    runnable: ThrowingRunnable,
+): T = org.junit.Assert.assertThrows(message, T::class.java, runnable)

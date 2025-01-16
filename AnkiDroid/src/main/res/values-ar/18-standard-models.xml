@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">الأمامي</string>
-    <string name="back_field_name">خلف</string>
+    <string name="front_field_name" maxLength="28">الأمامي</string>
+    <string name="back_field_name" maxLength="28">خلف</string>
 </resources>

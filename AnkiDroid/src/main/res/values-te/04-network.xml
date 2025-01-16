@@ -70,12 +70,12 @@
     <string name="sync_title">సమకాలీకరణ</string>
     <string name="sync_log_uploading_message">స్థానికం నుండి పూర్తి సమకాలీకరణ</string>
     <string name="sync_database_acknowledge">సేకరణ సమకాలీకరించబడింది</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
+    <string name="col_synced_media_in_background">సేకరణ సమకాలీకరించబడింది. ఈ నేపథ్యంలో మీడియా సమకాలీకరించబడుతోంది.</string>
     <string name="sync_corrupt_database">మీ డేటాబేస్ అవినీతి ఉంది. దయచేసి మళ్లీ సమకాలీకరించడానికి ప్రయత్నించే ముందు దాన్ని పరిష్కరించండి.\n\n మీ డేటాబేస్ను సరిచేయడానికి సమాచారం కోసం %s వీక్షించండి.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">స్థానిక</string>
     <string name="sync_sanity_remote">రిమోట్</string>
-    <string name="one_way_sync_title">వన్-వే సింక్</string>
+    <string name="one_way_sync_title" maxLength="41">వన్-వే సింక్</string>
     <string name="one_way_sync_confirmation">వన్ వే సింక్రొనైజేషన్ అభ్యర్థించబడింది</string>
     <string name="full_sync_confirmation">మీ సేకరణ సమకాలీకరించినప్పుడు అభ్యర్థించిన మార్పుకు మీ డేటాబేస్ యొక్క పూర్తి అప్లోడ్ అవసరం అవుతుంది. ఇప్పటికీ సమీక్షలు లేదా ఇతర మార్పులు ఇప్పటికీ ఇక్కడ సమకాలీకరించబడకపోతే, అవి పోతాయి. కొనసాగించు?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid గతంలో సంస్థాపించిన సంస్కరణలో బగ్, ఇది పూర్తి సమకాలీకరణను బలపరచటానికి మద్దతిస్తుంది.</string>

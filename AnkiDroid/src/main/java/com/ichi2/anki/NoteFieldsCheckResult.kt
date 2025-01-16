@@ -17,7 +17,6 @@
 
 package com.ichi2.anki
 
-import android.content.Context
 import anki.notes.NoteFieldsCheckResponse
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -38,9 +37,9 @@ sealed interface NoteFieldsCheckResult {
     data object Success : NoteFieldsCheckResult
 
     /** @property localizedMessage user-readable error message */
-    data class Failure(private val localizedMessage: String?) : NoteFieldsCheckResult {
-        fun getLocalizedMessage(context: Context) = localizedMessage ?: context.getString(R.string.something_wrong)
-    }
+    data class Failure(
+        val localizedMessage: String?,
+    ) : NoteFieldsCheckResult
 }
 
 /**
@@ -54,14 +53,15 @@ suspend fun checkNoteFieldsResponse(note: Note): NoteFieldsCheckResult {
     val fieldsCheckState = withCol { note.fieldsCheck(this) }
 
     return when (fieldsCheckState) {
-        NoteFieldsCheckResponse.State.NORMAL, NoteFieldsCheckResponse.State.DUPLICATE
+        NoteFieldsCheckResponse.State.NORMAL, NoteFieldsCheckResponse.State.DUPLICATE,
         -> Success
 
-        NoteFieldsCheckResponse.State.EMPTY -> if (note.notetype.isImageOcclusion) {
-            Failure(TR.notetypesNoOcclusionCreated2())
-        } else {
-            Failure(TR.addingTheFirstFieldIsEmpty())
-        }
+        NoteFieldsCheckResponse.State.EMPTY ->
+            if (note.notetype.isImageOcclusion) {
+                Failure(TR.notetypesNoOcclusionCreated2())
+            } else {
+                Failure(TR.addingTheFirstFieldIsEmpty())
+            }
 
         NoteFieldsCheckResponse.State.MISSING_CLOZE ->
             Failure(TR.addingYouHaveAClozeDeletionNote())

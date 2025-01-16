@@ -60,4 +60,18 @@
         <item quantity="other">%d Minuten verbleibend</item>
     </plurals>
     <string name="widget_add_note_button">Neue AnkiDroid-Notiz hinzufügen</string>
+    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">Stapel-Auswahl</string>
+    <string name="card_analysis_extra_widget_description">Kartenanalyse</string>
+    <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
+    <string name="select_decks_title" comment="Title for Deck Selection Dialog">Stapel auswählen</string>
+    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Stapel auswählen</string>
+    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Stapel auswählen, die im widget angezeigt werden sollen. Stapel mit dem «+» symbol auswählen.</string>
+    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Stapel entfernt</string>
+    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">Dieser Stapel ist bereits ausgewählt</string>
+    <plurals name="deck_limit_reached">
+        <item quantity="one">Sie können bis zu %d Stapel auswählen.</item>
+        <item quantity="other">Sie können bis zu %d Stapel auswählen.</item>
+    </plurals>
+    <string name="empty_widget_state" comment="To denote the widget is empty">Fehlender Stapel. Tippen, um neu zu konfigurieren.</string>
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Sammlung ist leer, verwenden Sie die App, um Stapel hinzuzufügen, und konfigurieren Sie dann neu</string>
 </resources>

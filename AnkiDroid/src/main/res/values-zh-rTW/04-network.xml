@@ -64,22 +64,22 @@
     <string name="log_out">登出</string>
     <string name="reset_password">忘記密碼</string>
     <string name="lost_mail_instructions">忘記了電郵地址？</string>
-    <string name="sign_in">Signing in</string>
+    <string name="sign_in">登入中</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX 的選項</string>
     <string name="sync_title">同步</string>
     <string name="sync_log_uploading_message">由本地端完整同步</string>
     <string name="sync_database_acknowledge">集合同步完成</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
+    <string name="col_synced_media_in_background">收藏已同步。媒體正在背景同步。</string>
     <string name="sync_corrupt_database">你的資料庫已損壞。請先嘗試修復然後再試一次。\n\n關於如何修復資料庫，請參考 %s 。</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">本機</string>
     <string name="sync_sanity_remote">遠端</string>
-    <string name="one_way_sync_title">One-way sync</string>
-    <string name="one_way_sync_confirmation">One way sync requested</string>
+    <string name="one_way_sync_title" maxLength="41">單向同步</string>
+    <string name="one_way_sync_confirmation">請求單向同步</string>
     <string name="full_sync_confirmation">此變動會使你下一次同步你的集合時，需要完整上傳你的資料庫。如果同步的話，你其他的裝置上尚未同步的複習卡片或其他變動的部分將會遺失，你是否要繼續？</string>
     <string name="full_sync_confirmation_upgrade">由於先前安裝的 AnkiDroid 版本的程式錯誤，我們建議你強制完整同步一次。</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
+    <string name="sync_menu_title_one_way_sync">同步（單向）</string>
     <string name="sync_menu_title_no_account">同步 (登入)</string>
 </resources>

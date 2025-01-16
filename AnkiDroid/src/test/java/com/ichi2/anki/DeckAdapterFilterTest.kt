@@ -27,13 +27,14 @@ class DeckAdapterFilterTest : RobolectricTest() {
     fun verifyFilterResultsReturnsCorrectList() {
         val pattern = "Math"
         val actual = deckTree.filterAndFlatten(pattern)
-        val expected = deckTree.getByNames(
-            "Chanson",
-            "Chanson::Math HW",
-            "Chanson::Math HW::Theory",
-            "Chanson::Important",
-            "Chanson::Important::Math"
-        )
+        val expected =
+            deckTree.getByNames(
+                "Chanson",
+                "Chanson::Math HW",
+                "Chanson::Math HW::Theory",
+                "Chanson::Important",
+                "Chanson::Important::Math",
+            )
         Assert.assertEquals(expected.map { it.fullDeckName }, actual.map { it.fullDeckName })
     }
 
@@ -45,18 +46,19 @@ class DeckAdapterFilterTest : RobolectricTest() {
     }
 
     private val deckTree: DeckNode by lazy {
-        val names = listOf(
-            "Chanson",
-            "Chanson::A Vers",
-            "Chanson::A Vers::1",
-            "Chanson::A Vers::Other",
-            "Chanson::Math HW",
-            "Chanson::Math HW::Theory",
-            "Chanson::Important",
-            "Chanson::Important::Stuff",
-            "Chanson::Important::Math",
-            "Chanson::Important::Stuff::Other Stuff"
-        )
+        val names =
+            listOf(
+                "Chanson",
+                "Chanson::A Vers",
+                "Chanson::A Vers::1",
+                "Chanson::A Vers::Other",
+                "Chanson::Math HW",
+                "Chanson::Math HW::Theory",
+                "Chanson::Important",
+                "Chanson::Important::Stuff",
+                "Chanson::Important::Math",
+                "Chanson::Important::Stuff::Other Stuff",
+            )
         names.forEach {
             val did = col.decks.id(it)
             col.decks.collapse(did)

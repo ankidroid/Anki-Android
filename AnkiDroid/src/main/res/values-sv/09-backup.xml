@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">Säkerhetskopiering kunde inte utföras på grund av otillräckligt lagringsutrymme. Frigör utrymme eller minska djupet på säkerhetskopian.</string>
     <string name="storage_warning">Mindre än %d MB lagringsutrymme kvar.\nFrigör utrymme för att undvika dataförlust.</string>
-    <string name="backup_restore">Återställ från säkerhetskopia</string>
+    <string name="backup_restore" maxLength="28">Återställ från säkerhetskopia</string>
     <string name="backup_new_collection">Ny samling</string>
     <string name="backup_del_collection">Ta bort samling och skapa en ny</string>
     <string name="backup_del_collection_question">Är du säker att du vill ta bort denna samling och skapa en ny? Detta kommer ta bort alla framsteg samt radera alla kort!</string>

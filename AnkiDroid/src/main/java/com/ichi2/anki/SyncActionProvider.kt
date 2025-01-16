@@ -18,17 +18,18 @@ package com.ichi2.anki
 import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.view.isVisible
 import com.google.android.material.progressindicator.LinearProgressIndicator
+import com.ichi2.compat.setTooltipTextCompat
 import com.ichi2.ui.RtlCompliantActionProvider.Companion.unwrapContext
 
-class SyncActionProvider(context: Context) : ActionProviderCompat(context) {
+class SyncActionProvider(
+    context: Context,
+) : ActionProviderCompat(context) {
     val activity: Activity = unwrapContext(context)
 
     private var progressIndicator: LinearProgressIndicator? = null
@@ -48,20 +49,20 @@ class SyncActionProvider(context: Context) : ActionProviderCompat(context) {
         val view = inflater.inflate(R.layout.sync_progress_layout, null)
 
         progressIndicator = view.findViewById(R.id.progress_indicator)
-        syncButton = view.findViewById<AppCompatImageButton?>(R.id.button).apply {
-            setOnClickListener {
-                if (!forItem.isEnabled) {
-                    return@setOnClickListener
+        syncButton =
+            view.findViewById<AppCompatImageButton?>(R.id.button).apply {
+                setOnClickListener {
+                    if (!forItem.isEnabled) {
+                        return@setOnClickListener
+                    }
+                    activity.onOptionsItemSelected(forItem)
                 }
-                activity.onOptionsItemSelected(forItem)
             }
-        }
 
         return view
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun setTooltipText(value: CharSequence) {
-        syncButton?.tooltipText = value
+        syncButton?.setTooltipTextCompat(value)
     }
 }

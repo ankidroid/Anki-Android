@@ -19,8 +19,6 @@
         android:layout_width="0dip"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
         android:paddingStart="3dp"
         android:paddingEnd="3dp"
         android:paddingVertical="1dp"

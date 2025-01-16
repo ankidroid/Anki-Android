@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">x-ବଡ଼</string>
     <string name="html_size_code_xx_large">xx-ବଡ଼</string>
     <!-- gestures_labels -->
-    <string name="answer_again">ଉତ୍ତର ପୁଣି</string>
-    <string name="answer_hard">ଉତ୍ତର କଠିନ</string>
-    <string name="answer_good">ଉତ୍ତର ଭଲ</string>
-    <string name="answer_easy">ଉତ୍ତର ସହଜ</string>
-    <string name="gesture_play">ମିଡ଼ିଆ ଚଲାନ୍ତୁ</string>
-    <string name="gesture_abort_learning">ପଢ଼ିବା ବନ୍ଦ କରନ୍ତୁ</string>
-    <string name="gesture_flag_red">ନାଲି ପତାକା ଟୋଗଲ୍ କରିବା</string>
-    <string name="gesture_flag_orange">କମଳା ପତାକା ଟୋଗଲ୍ କରିବା</string>
-    <string name="gesture_flag_green">ସବୁଜ ପତାକା ଟୋଗଲ୍ କରିବା</string>
-    <string name="gesture_flag_blue">ନୀଳ ପତାକା ଟୋଗଲ୍ କରିବା</string>
-    <string name="gesture_flag_pink">ଗୋଲାପୀ ପତାକା ଟୋଗଲ୍ କରିବା</string>
-    <string name="gesture_flag_turquoise">ଫୀରୋଜା ପତାକା ଟୋଗଲ୍ କରିବା</string>
-    <string name="gesture_flag_purple">ବାଇଗଣୀ ପତାକା ଟୋଗଲ୍ କରିବା</string>
-    <string name="gesture_flag_remove">ପତାକା ହଟାନ୍ତୁ</string>
-    <string name="gesture_page_up">ଉପର ପୃଷ୍ଠା</string>
-    <string name="gesture_page_down">ତଳ ପୃଷ୍ଠା</string>
-    <string name="gesture_abort_sync">ପଢ଼ିବା ବନ୍ଦ କରି ସିଙ୍କ୍ କରନ୍ତୁ</string>
-    <string name="gesture_toggle_whiteboard">ଧଳାପଟା ଟୋଗଲ୍ କରିବା</string>
-    <string name="gesture_show_hint">ସଙ୍କେତ ଦେଖାଅ</string>
-    <string name="gesture_show_all_hints">ସବୁ ସଙ୍କେତ ଦେଖାଅ</string>
-    <string name="record_voice">ସ୍ୱର ରେକର୍ଡ କରନ୍ତୁ</string>
-    <string name="replay_voice">ସ୍ୱର ପୁନର୍ବାର ଚଲାନ୍ତୁ</string>
-    <string name="save_voice">ରେକର୍ଡିଂ ସଞ୍ଚୟ କରିବା</string>
+    <string name="answer_again" maxLength="41">ଉତ୍ତର ପୁଣି</string>
+    <string name="answer_hard" maxLength="41">ଉତ୍ତର କଠିନ</string>
+    <string name="answer_good" maxLength="41">ଉତ୍ତର ଭଲ</string>
+    <string name="answer_easy" maxLength="41">ଉତ୍ତର ସହଜ</string>
+    <string name="gesture_play" maxLength="41">ମିଡ଼ିଆ ଚଲାନ୍ତୁ</string>
+    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_flag_red" maxLength="41">ନାଲି ପତାକା ଟୋଗଲ୍ କରିବା</string>
+    <string name="gesture_flag_orange" maxLength="41">କମଳା ପତାକା ଟୋଗଲ୍ କରିବା</string>
+    <string name="gesture_flag_green" maxLength="41">ସବୁଜ ପତାକା ଟୋଗଲ୍ କରିବା</string>
+    <string name="gesture_flag_blue" maxLength="41">ନୀଳ ପତାକା ଟୋଗଲ୍ କରିବା</string>
+    <string name="gesture_flag_pink" maxLength="41">ଗୋଲାପୀ ପତାକା ଟୋଗଲ୍ କରିବା</string>
+    <string name="gesture_flag_turquoise" maxLength="41">ଫୀରୋଜା ପତାକା ଟୋଗଲ୍ କରିବା</string>
+    <string name="gesture_flag_purple" maxLength="41">ବାଇଗଣୀ ପତାକା ଟୋଗଲ୍ କରିବା</string>
+    <string name="gesture_flag_remove" maxLength="41">ପତାକା ହଟାନ୍ତୁ</string>
+    <string name="gesture_page_up" maxLength="41">ଉପର ପୃଷ୍ଠା</string>
+    <string name="gesture_page_down" maxLength="41">ତଳ ପୃଷ୍ଠା</string>
+    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">ଧଳାପଟା ଟୋଗଲ୍ କରିବା</string>
+    <string name="gesture_show_hint" maxLength="41">ସଙ୍କେତ ଦେଖାଅ</string>
+    <string name="gesture_show_all_hints" maxLength="41">ସବୁ ସଙ୍କେତ ଦେଖାଅ</string>
+    <string name="record_voice" maxLength="41">ସ୍ୱର ରେକର୍ଡ କରନ୍ତୁ</string>
+    <string name="replay_voice" maxLength="41">ସ୍ୱର ପୁନର୍ବାର ଚଲାନ୍ତୁ</string>
+    <string name="save_voice" maxLength="41">ରେକର୍ଡିଂ ସଞ୍ଚୟ କରିବା</string>
 </resources>

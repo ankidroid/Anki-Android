@@ -44,21 +44,11 @@
     <string name="multimedia_editor_popup_audio_clip">新增音訊剪輯</string>
     <string name="multimedia_editor_popup_video_clip">新增影片剪輯</string>
     <string name="multimedia_editor_popup_audio">錄音</string>
-    <string name="multimedia_editor_popup_text">進階編輯器</string>
     <string name="multimedia_editor_popup_cloze">克漏字測驗</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">文字</string>
-    <string name="multimedia_editor_field_editing_image">圖像</string>
     <string name="multimedia_editor_field_editing_audio">音訊錄製</string>
-    <string name="multimedia_editor_field_editing_audio_clip">音訊剪輯</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">完成</string>
-    <!-- Text field editing -->
-    <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_clear">清除 </string>
-    <string name="multimedia_editor_text_field_editing_clone">複製自</string>
-    <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">拿取自</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
@@ -66,28 +56,21 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">相簿</string>
     <string name="multimedia_editor_image_field_editing_photo">相機</string>
-    <string name="multimedia_editor_import_audio">音訊</string>
-    <string name="multimedia_editor_import_video">影片</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">發生狀況</string>
-    <string name="multimedia_editor_svg_preview">SVG 不可用於預覽</string>
     <string name="multimedia_editor_png_paste_error">將剪貼簿上的圖像轉換到PNG格式時出錯：%s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">將多媒體內容新增到 %1$s 字段</string>
-    <string name="multimedia_editor_attach_media">附上媒體檔</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">錄製失敗</string>
     <string name="multimedia_editor_audio_view_playing_failed">播放失敗</string>
     <string name="multimedia_editor_audio_view_create_failed">無法建立錄製器工具列</string>
-    <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">編輯欄位</string>
     <!-- Crop function-->
     <string name="crop_image">是否裁剪此圖像？</string>
-    <string name="crop_button">裁剪圖像</string>
-    <string name="save_dialog_content">當前圖像大小為%sMB。預設圖像大小限制為1MB。是否裁剪？</string>
+    <string name="crop_button" maxLength="28">裁剪圖像</string>
+    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"選取圖像失敗，請重試"</string>
-    <string name="activity_result_unexpected">程式返回了意料之外的值。你可能需要使用不同的程式</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">欄位內容</string>
-    <string name="reselect">Reselect</string>
+    <string name="reselect" maxLength="28">重選</string>
 </resources>

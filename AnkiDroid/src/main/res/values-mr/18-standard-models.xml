@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">समोर</string>
-    <string name="back_field_name">मागे</string>
+    <string name="front_field_name" maxLength="28">समोर</string>
+    <string name="back_field_name" maxLength="28">मागे</string>
 </resources>

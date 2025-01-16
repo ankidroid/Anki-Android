@@ -43,63 +43,63 @@
     <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
     Now arrays are defined in constants.xml, and the strings are here -->
     <!-- error_reporting_choice_labels -->
-    <string name="error_reporting_choice_always_report">Always report</string>
-    <string name="error_reporting_choice_never_report">Never report</string>
-    <string name="error_reporting_choice_ask_user">Ask me</string>
+    <string name="error_reporting_choice_always_report">ਹਮੇਸ਼ਾ ਰਿਪੋਰਟ ਕਰੋ</string>
+    <string name="error_reporting_choice_never_report">ਕਦੇ ਰਿਪੋਰਟ ਨਾ ਕਰੋ</string>
+    <string name="error_reporting_choice_ask_user">ਮੈਨੂੰ ਪੁਛੋ</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
     <!-- new_order_labels -->
     <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Oldest seen first</string>
-    <string name="cram_deck_conf_order_random">Random</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Increasing intervals</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Decreasing intervals</string>
-    <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
-    <string name="cram_deck_conf_order_order_added">Order added</string>
-    <string name="cram_deck_conf_order_order_due">Order due</string>
-    <string name="cram_deck_conf_order_latest_added_first">Latest added first</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
+    <string name="cram_deck_conf_order_oldest_seen_first">ਸਭ ਤੋਂ ਪੁਰਾਣਾ ਪਹਿਲਾਂ ਦੇਖਿਆ ਗਿਆ</string>
+    <string name="cram_deck_conf_order_random">ਬੇਤਰਤੀਬ</string>
+    <string name="cram_deck_conf_order_increasing_intervals">ਵਧ ਰਹੇ ਅੰਤਰਾਲ</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">ਅੰਤਰਾਲ ਘਟਣਾ</string>
+    <string name="cram_deck_conf_order_most_lapsed">ਜ਼ਿਆਦਾਤਰ ਗੋਦ</string>
+    <string name="cram_deck_conf_order_order_added">ਆਰਡਰ ਜੋੜਿਆ ਗਿਆ</string>
+    <string name="cram_deck_conf_order_order_due">ਆਰਡਰ ਬਕਾਇਆ</string>
+    <string name="cram_deck_conf_order_latest_added_first">ਸਭ ਤੋਂ ਨਵਾਂ ਪਹਿਲਾਂ ਜੋੜਿਆ ਗਿਆ</string>
+    <string name="cram_deck_conf_order_relative_overdueness">ਸਾਪੇਖਿਕ ਬਕਾਇਆ</string>
     <!-- add_to_cur_labels -->
-    <string name="add_to_deck_use_current_deck">Use current deck</string>
-    <string name="add_to_deck_decide_by_note_type">Decide by note type</string>
+    <string name="add_to_deck_use_current_deck">ਮੌਜੂਦਾ ਡੈੱਕ ਦੀ ਵਰਤੋਂ ਕਰੋ</string>
+    <string name="add_to_deck_decide_by_note_type">ਨੋਟ ਦੀ ਕਿਸਮ ਦੁਆਰਾ ਫੈਸਲਾ ਕਰੋ</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">ਸਿਸਟਮ ਦੀ ਪਾਲਣਾ ਕਰੋ</string>
     <!-- day_theme_labels -->
-    <string name="day_theme_light">Light</string>
-    <string name="day_theme_plain">Plain</string>
+    <string name="day_theme_light">ਰੋਸ਼ਨੀ</string>
+    <string name="day_theme_plain">ਸਧਾਰਨ</string>
     <!-- night_theme_labels -->
-    <string name="night_theme_black">Black</string>
-    <string name="night_theme_dark">Dark</string>
+    <string name="night_theme_black">ਕਾਲਾ</string>
+    <string name="night_theme_dark">ਹਨੇਰਾ</string>
     <!-- html_size_code_labels -->
-    <string name="html_size_code_xx_small">xx-small</string>
-    <string name="html_size_code_x_small">x-small</string>
-    <string name="html_size_code_small">small</string>
-    <string name="html_size_code_medium">medium</string>
-    <string name="html_size_code_large">large</string>
-    <string name="html_size_code_x_large">x-large</string>
-    <string name="html_size_code_xx_large">xx-large</string>
+    <string name="html_size_code_xx_small">xx-ਛੋਟਾ</string>
+    <string name="html_size_code_x_small">x-ਛੋਟਾ</string>
+    <string name="html_size_code_small">ਛੋਟਾ</string>
+    <string name="html_size_code_medium">ਮੱਧਮ</string>
+    <string name="html_size_code_large">ਵੱਡਾ</string>
+    <string name="html_size_code_x_large">x-ਵੱਡਾ</string>
+    <string name="html_size_code_xx_large">xx-ਵੱਡਾ</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
-    <string name="gesture_play">Play media</string>
-    <string name="gesture_abort_learning">Abort learning</string>
-    <string name="gesture_flag_red">Toggle Red Flag</string>
-    <string name="gesture_flag_orange">Toggle Orange Flag</string>
-    <string name="gesture_flag_green">Toggle Green Flag</string>
-    <string name="gesture_flag_blue">Toggle Blue Flag</string>
-    <string name="gesture_flag_pink">Toggle Pink Flag</string>
-    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple">Toggle Purple Flag</string>
-    <string name="gesture_flag_remove">Remove Flag</string>
-    <string name="gesture_page_up">Page Up</string>
-    <string name="gesture_page_down">Page Down</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="gesture_show_hint">Show Hint</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
-    <string name="record_voice">Record Voice</string>
-    <string name="replay_voice">Replay Voice</string>
-    <string name="save_voice">Save Recording</string>
+    <string name="answer_again" maxLength="41">ਦੁਬਾਰਾ ਜਵਾਬ ਦਿਓ</string>
+    <string name="answer_hard" maxLength="41">ਔਖਾ ਜਵਾਬ ਦਿਓ</string>
+    <string name="answer_good" maxLength="41">ਵਧੀਆ ਜਵਾਬ ਦਿਓ</string>
+    <string name="answer_easy" maxLength="41">ਆਸਾਨ ਜਵਾਬ</string>
+    <string name="gesture_play" maxLength="41">ਮੀਡੀਆ ਚਲਾਓ</string>
+    <string name="gesture_abort_learning" maxLength="41">ਸਮੀਖਿਅਕ ਨੂੰ ਬੰਦ ਕਰੋ</string>
+    <string name="gesture_flag_red" maxLength="41">ਲਾਲ ਝੰਡੇ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
+    <string name="gesture_flag_orange" maxLength="41">ਸੰਤਰੀ ਝੰਡੇ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
+    <string name="gesture_flag_green" maxLength="41">ਹਰੀ ਝੰਡੀ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
+    <string name="gesture_flag_blue" maxLength="41">ਨੀਲੇ ਝੰਡੇ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
+    <string name="gesture_flag_pink" maxLength="41">ਗੁਲਾਬੀ ਝੰਡੇ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
+    <string name="gesture_flag_turquoise" maxLength="41">ਫਿਰੋਜ਼ੀ ਫਲੈਗ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
+    <string name="gesture_flag_purple" maxLength="41">ਜਾਮਨੀ ਝੰਡੇ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
+    <string name="gesture_flag_remove" maxLength="41">ਝੰਡਾ ਹਟਾਓ</string>
+    <string name="gesture_page_up" maxLength="41">ਪੰਨਾ ਅੱਪ</string>
+    <string name="gesture_page_down" maxLength="41">ਪੰਨਾ ਹੇਠਾਂ</string>
+    <string name="gesture_abort_sync" maxLength="41">ਸਮੀਖਿਅਕ ਨੂੰ ਬੰਦ ਕਰੋ ਅਤੇ ਸਿੰਕ ਕਰੋ</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
+    <string name="gesture_show_hint" maxLength="41">ਸੰਕੇਤ ਦਿਖਾਓ</string>
+    <string name="gesture_show_all_hints" maxLength="41">ਸਾਰੇ ਚਿੰਨ੍ਹ ਦਿਖਾਓ</string>
+    <string name="record_voice" maxLength="41">ਆਵਾਜ਼ ਨੂੰ ਰਿਕਾਰਡ ਕਰੋ</string>
+    <string name="replay_voice" maxLength="41">ਆਵਾਜ਼ ਨੂੰ ਮੁੜ ਚਲਾਓ</string>
+    <string name="save_voice" maxLength="41">ਰਿਕਾਰਡਿੰਗ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰੋ</string>
 </resources>

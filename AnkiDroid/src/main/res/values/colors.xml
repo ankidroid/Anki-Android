@@ -135,5 +135,9 @@
     <color name="good_button_text">@color/material_green_900</color>
     <color name="easy_button_bg">@color/material_light_blue_100</color>
     <color name="easy_button_text">@color/material_light_blue_900</color>
+
+    <!-- color used for bury count in study options(same as anki for light and dark) -->
+    <color name="disabled_gray_light">#858585</color>
+    <color name="disabled_gray_dark">#fcfcfc</color>
 </resources>
 

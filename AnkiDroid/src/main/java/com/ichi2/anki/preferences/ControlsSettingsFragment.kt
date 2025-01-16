@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.preferences
 
+import androidx.annotation.StringRes
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.ViewerCommand
@@ -44,7 +45,9 @@ class ControlsSettingsFragment : SettingsFragment() {
 
     private fun setDynamicTitle() {
         findPreference<ControlPreference>(getString(R.string.reschedule_command_key))?.let {
-            it.title = TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
+            val preferenceTitle = TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
+            it.title = preferenceTitle
+            it.dialogTitle = preferenceTitle
         }
         findPreference<ControlPreference>(getString(R.string.toggle_whiteboard_command_key))?.let {
             it.title = getString(R.string.gesture_toggle_whiteboard).toSentenceCase(R.string.sentence_gesture_toggle_whiteboard)
@@ -77,4 +80,8 @@ class ControlsSettingsFragment : SettingsFragment() {
             it.title = getString(R.string.gesture_flag_remove).toSentenceCase(R.string.sentence_gesture_flag_remove)
         }
     }
+
+    private fun String.toSentenceCase(
+        @StringRes resId: Int,
+    ): String = this.toSentenceCase(this@ControlsSettingsFragment, resId)
 }

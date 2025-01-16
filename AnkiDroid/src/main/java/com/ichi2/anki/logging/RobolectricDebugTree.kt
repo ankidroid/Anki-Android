@@ -21,7 +21,12 @@ import timber.log.Timber
 
 /** Enable verbose error logging and do method tracing to put the Class name as log tag */
 class RobolectricDebugTree : Timber.DebugTree() {
-    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+    override fun log(
+        priority: Int,
+        tag: String?,
+        message: String,
+        t: Throwable?,
+    ) {
         // This is noisy in test environments
         when (tag) {
             "Backend\$checkMainThreadOp" -> return

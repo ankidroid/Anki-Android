@@ -70,12 +70,12 @@
     <string name="sync_title">Синхронизация</string>
     <string name="sync_log_uploading_message">Полностью синхронизировано с устройством</string>
     <string name="sync_database_acknowledge">Коллекция синхронизирована</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
+    <string name="col_synced_media_in_background">Коллекция синхронизирована. Медиафайлы синхронизируются в фоновом режиме.</string>
     <string name="sync_corrupt_database">База данных повреждена. Попробуйте исправить её и синхронизироваться опять.\n\nОб исправлении см. %s.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Локальную</string>
     <string name="sync_sanity_remote">Удалённую</string>
-    <string name="one_way_sync_title">Односторонняя синхронизация</string>
+    <string name="one_way_sync_title" maxLength="41">Односторонняя синхронизация</string>
     <string name="one_way_sync_confirmation">Запрошена односторонняя синхронизация</string>
     <string name="full_sync_confirmation">Последние изменения требуют полную выгрузку базы данных при следующей синхронизации. Если на другом вашем устройстве есть изменения, они будут утеряны. Продолжить?</string>
     <string name="full_sync_confirmation_upgrade">Из-за ошибке в прошлой версии AnkiDroid рекомендуем полную синхронизацию.</string>

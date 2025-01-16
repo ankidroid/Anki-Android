@@ -34,23 +34,19 @@ import com.ichi2.anki.pages.PostRequestHandler
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Sound
 import com.ichi2.libanki.TtsPlayer
-import com.ichi2.libanki.note
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import org.jetbrains.annotations.VisibleForTesting
-import org.json.JSONObject
 import timber.log.Timber
 
 abstract class CardViewerViewModel(
-    cardMediaPlayer: CardMediaPlayer
+    cardMediaPlayer: CardMediaPlayer,
 ) : ViewModel(),
     OnErrorListener,
     PostRequestHandler {
-
     override val onError = MutableSharedFlow<String>()
     val onMediaError = MutableSharedFlow<String>()
     val onTtsError = MutableSharedFlow<TtsPlayer.TtsError>()
@@ -60,10 +56,11 @@ abstract class CardViewerViewModel(
 
     val showingAnswer = MutableStateFlow(false)
 
-    protected val cardMediaPlayer = cardMediaPlayer.apply {
-        setSoundErrorListener(createSoundErrorListener())
-        javascriptEvaluator = { JavascriptEvaluator { launchCatchingIO { eval.emit(it) } } }
-    }
+    protected val cardMediaPlayer =
+        cardMediaPlayer.apply {
+            setSoundErrorListener(createSoundErrorListener())
+            javascriptEvaluator = { JavascriptEvaluator { launchCatchingIO { eval.emit(it) } } }
+        }
     abstract var currentCard: Deferred<Card>
 
     abstract val server: AnkiServer
@@ -75,8 +72,8 @@ abstract class CardViewerViewModel(
     }
 
     /* *********************************************************************************************
-    ************************ Public methods: meant to be used by the View **************************
-    ********************************************************************************************* */
+     ************************ Public methods: meant to be used by the View **************************
+     ********************************************************************************************* */
 
     /**
      * Call this after the webView has finished loading the page
@@ -106,23 +103,27 @@ abstract class CardViewerViewModel(
     fun onVideoPaused() = cardMediaPlayer.onVideoPaused()
 
     /* *********************************************************************************************
-    *************************************** Internal methods ***************************************
-    ********************************************************************************************* */
+     *************************************** Internal methods ***************************************
+     ********************************************************************************************* */
 
-    protected abstract suspend fun typeAnsFilter(text: String): String
+    protected abstract suspend fun typeAnsFilter(
+        text: String,
+        typedAnswer: String? = null,
+    ): String
 
     private suspend fun bodyClass(): String = bodyClassForCardOrd(currentCard.await().ord)
 
     /** From the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L358) */
-    private suspend fun mungeQA(text: String): String =
-        typeAnsFilter(prepareCardTextForDisplay(text))
+    private suspend fun mungeQA(
+        text: String,
+        typedAnswer: String? = null,
+    ): String = typeAnsFilter(prepareCardTextForDisplay(text), typedAnswer)
 
-    private suspend fun prepareCardTextForDisplay(text: String): String {
-        return Sound.addPlayButtons(
+    private suspend fun prepareCardTextForDisplay(text: String): String =
+        Sound.addPlayButtons(
             text = withCol { media.escapeMediaFilenames(text) },
-            renderOutput = currentCard.await().let { card -> withCol { card.renderOutput(this) } }
+            renderOutput = currentCard.await().let { card -> withCol { card.renderOutput(this) } },
         )
-    }
 
     protected open suspend fun showQuestion() {
         Timber.v("showQuestion()")
@@ -137,13 +138,21 @@ abstract class CardViewerViewModel(
         eval.emit("_showQuestion(${Json.encodeToString(question)}, ${Json.encodeToString(answer)}, '${bodyClass()}');")
     }
 
-    protected open suspend fun showAnswerInternal() {
+    /**
+     * Parses the card answer and sends a [eval] request to load it into the `qa` HTML div
+     *
+     * * [Anki reference](https://github.com/ankitects/anki/blob/c985acb9fe36d3651eb83cf4cfe44d046ec7458f/qt/aqt/reviewer.py#L460)
+     * * [Typescript reference](https://github.com/ankitects/anki/blob/c985acb9fe36d3651eb83cf4cfe44d046ec7458f/ts/reviewer/index.ts#L193)
+     *
+     * @see [stdHtml]
+     */
+    protected open suspend fun showAnswer(typedAnswer: String? = null) {
         Timber.v("showAnswer()")
         showingAnswer.emit(true)
 
         val card = currentCard.await()
         val answerData = withCol { card.answer(this) }
-        val answer = mungeQA(answerData)
+        val answer = mungeQA(answerData, typedAnswer)
 
         eval.emit("_showAnswer(${Json.encodeToString(answer)}, '${bodyClass()}');")
     }
@@ -169,13 +178,16 @@ abstract class CardViewerViewModel(
                 mp: MediaPlayer?,
                 which: Int,
                 extra: Int,
-                uri: Uri
+                uri: Uri,
             ): SoundErrorBehavior {
                 Timber.w("Media Error: (%d, %d)", which, extra)
                 return onError(uri)
             }
 
-            override fun onTtsError(error: TtsPlayer.TtsError, isAutomaticPlayback: Boolean) {
+            override fun onTtsError(
+                error: TtsPlayer.TtsError,
+                isAutomaticPlayback: Boolean,
+            ) {
                 mediaErrorHandler.processTtsFailure(error, isAutomaticPlayback) {
                     viewModelScope.launch { onTtsError.emit(error) }
                 }
@@ -183,8 +195,11 @@ abstract class CardViewerViewModel(
         }
     }
 
-    override suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray {
-        return if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
+    override suspend fun handlePostRequest(
+        uri: String,
+        bytes: ByteArray,
+    ): ByteArray =
+        if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
             when (uri.substring(AnkiServer.ANKI_PREFIX.length)) {
                 "i18nResources" -> withCol { i18nResourcesRaw(bytes) }
                 else -> throw IllegalArgumentException("Unhandled Anki request: $uri")
@@ -192,48 +207,4 @@ abstract class CardViewerViewModel(
         } else {
             throw IllegalArgumentException("Unhandled POST request: $uri")
         }
-    }
-
-    companion object {
-        /* ********************************** Type-in answer ************************************ */
-        /** From the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L669] */
-        @VisibleForTesting
-        val typeAnsRe = Regex("\\[\\[type:(.+?)]]")
-
-        suspend fun getTypeAnswerField(card: Card, text: String): JSONObject? {
-            val match = typeAnsRe.find(text) ?: return null
-
-            val typeAnsFieldName = match.groups[1]!!.value.let {
-                if (it.startsWith("cloze:")) {
-                    it.split(":")[1]
-                } else {
-                    it
-                }
-            }
-
-            val fields = withCol { card.noteType(this).flds }
-            for (i in 0 until fields.length()) {
-                val field = fields.get(i) as JSONObject
-                if (field.getString("name") == typeAnsFieldName) {
-                    return field
-                }
-            }
-            return null
-        }
-
-        suspend fun getExpectedTypeInAnswer(card: Card, field: JSONObject): String? {
-            val fieldName = field.getString("name")
-            val expected = withCol { card.note().getItem(fieldName) }
-            return if (fieldName.startsWith("cloze:")) {
-                val clozeIdx = card.ord + 1
-                withCol {
-                    extractClozeForTyping(expected, clozeIdx).takeIf { it.isNotBlank() }
-                }
-            } else {
-                expected
-            }
-        }
-
-        fun getFontSize(field: JSONObject): String = field.getString("size")
-    }
 }

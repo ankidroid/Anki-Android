@@ -20,7 +20,9 @@ import android.content.Intent
 import com.ichi2.anki.R
 import com.ichi2.libanki.CardId
 
-data class CardInfoDestination(val cardId: CardId) {
+data class CardInfoDestination(
+    val cardId: CardId,
+) {
     fun toIntent(context: Context): Intent {
         val title = context.getString(R.string.card_info_title)
         return PageFragment.getIntent(context, "card-info/$cardId", title)

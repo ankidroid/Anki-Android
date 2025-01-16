@@ -10,7 +10,9 @@
       <w>apkg</w>
       <w>apkgaa</w>
       <w>bafmt</w>
+      <w>bfont</w>
       <w>bqfmt</w>
+      <w>bsize</w>
       <w>cid</w>
       <w>cids</w>
       <w>cloze</w>
@@ -47,6 +49,7 @@
       <w>fname</w>
       <w>fnames</w>
       <w>frac</w>
+      <w>fsrs</w>
       <w>fullsync</w>
       <w>gendeck</w>
       <w>genrem</w>

@@ -24,7 +24,6 @@ import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
@@ -45,7 +44,6 @@ import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.utils.ext.sharedPrefs
-import com.ichi2.anki.utils.navBarNeedsScrim
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.performClickIfEnabled
 import kotlinx.coroutines.flow.collectLatest
@@ -56,11 +54,11 @@ class PreviewerFragment :
     Toolbar.OnMenuItemClickListener,
     BaseSnackbarBuilderProvider,
     DispatchKeyEventListener {
-
     override val viewModel: PreviewerViewModel by viewModels {
-        val previewerIdsFile = requireNotNull(BundleCompat.getParcelable(requireArguments(), CARD_IDS_FILE_ARG, PreviewerIdsFile::class.java)) {
-            "$CARD_IDS_FILE_ARG is required"
-        }
+        val previewerIdsFile =
+            requireNotNull(BundleCompat.getParcelable(requireArguments(), CARD_IDS_FILE_ARG, PreviewerIdsFile::class.java)) {
+                "$CARD_IDS_FILE_ARG is required"
+            }
         val currentIndex = requireArguments().getInt(CURRENT_INDEX_ARG, 0)
         PreviewerViewModel.factory(previewerIdsFile, currentIndex, CardMediaPlayer())
     }
@@ -70,14 +68,18 @@ class PreviewerFragment :
     override val baseSnackbarBuilder: SnackbarBuilder
         get() = {
             val slider = this@PreviewerFragment.view?.findViewById<Slider>(R.id.slider)
-            anchorView = if (slider?.isVisible == true) {
-                slider
-            } else {
-                this@PreviewerFragment.view?.findViewById<MaterialButton>(R.id.show_next)
-            }
+            anchorView =
+                if (slider?.isVisible == true) {
+                    slider
+                } else {
+                    this@PreviewerFragment.view?.findViewById<MaterialButton>(R.id.show_next)
+                }
         }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         val slider = view.findViewById<Slider>(R.id.slider)
         val nextButton = view.findViewById<MaterialButton>(R.id.show_next)
@@ -95,7 +97,7 @@ class PreviewerFragment :
                         getString(R.string.preview_progress_bar_text, displayIndex, cardsCount)
                 }
         }
-        /* ************************************* Menu items ************************************* */
+        // ************************************* Menu items *************************************
         val menu = view.findViewById<Toolbar>(R.id.toolbar).menu
         setupFlagMenu(menu)
 
@@ -125,10 +127,10 @@ class PreviewerFragment :
 
         // handle selection of a new flag
         lifecycleScope.launch {
-            viewModel.flagCode
+            viewModel.flag
                 .flowWithLifecycle(lifecycle)
-                .collectLatest { flagCode ->
-                    menu.findItem(R.id.action_flag).setIcon(Flag.fromCode(flagCode).drawableRes)
+                .collectLatest { flag ->
+                    menu.findItem(R.id.action_flag).setIcon(flag.drawableRes)
                 }
         }
 
@@ -147,7 +149,7 @@ class PreviewerFragment :
                     override fun onStopTrackingTouch(slider: Slider) {
                         viewModel.onSliderChange(slider.value.toInt())
                     }
-                }
+                },
             )
         }
 
@@ -179,21 +181,14 @@ class PreviewerFragment :
         if (sharedPrefs().getBoolean("safeDisplay", false)) {
             view.findViewById<MaterialCardView>(R.id.webview_container).elevation = 0F
         }
-
-        with(requireActivity()) {
-            // use the screen background color if the nav bar doesn't need a scrim when using a
-            // transparent background. e.g. when navigation gestures are enabled
-            if (!navBarNeedsScrim) {
-                window.navigationBarColor = ThemeUtils.getThemeAttrColor(this, R.attr.alternativeBackgroundColor)
-            }
-        }
     }
 
     private fun setupFlagMenu(menu: Menu) {
         val submenu = menu.findItem(R.id.action_flag).subMenu
         lifecycleScope.launch {
             for ((flag, name) in Flag.queryDisplayNames()) {
-                submenu?.add(Menu.NONE, flag.id, Menu.NONE, name)
+                submenu
+                    ?.add(Menu.NONE, flag.id, Menu.NONE, name)
                     ?.setIcon(flag.drawableRes)
             }
         }
@@ -216,7 +211,10 @@ class PreviewerFragment :
         return true
     }
 
-    private fun setBackSideOnlyButtonIcon(menu: Menu, isBackSideOnly: Boolean) {
+    private fun setBackSideOnlyButtonIcon(
+        menu: Menu,
+        isBackSideOnly: Boolean,
+    ) {
         menu.findItem(R.id.action_back_side_only).apply {
             if (isBackSideOnly) {
                 setIcon(R.drawable.ic_card_answer)
@@ -228,9 +226,10 @@ class PreviewerFragment :
         }
     }
 
-    private val editCardLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        viewModel.handleEditCardResult(result)
-    }
+    private val editCardLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            viewModel.handleEditCardResult(result)
+        }
 
     private fun editCard() {
         lifecycleScope.launch {
@@ -283,11 +282,16 @@ class PreviewerFragment :
         /** Argument key to a [PreviewerIdsFile] with the IDs of the cards to be displayed */
         const val CARD_IDS_FILE_ARG = "cardIdsFile"
 
-        fun getIntent(context: Context, previewerIdsFile: PreviewerIdsFile, currentIndex: Int): Intent {
-            val arguments = bundleOf(
-                CURRENT_INDEX_ARG to currentIndex,
-                CARD_IDS_FILE_ARG to previewerIdsFile
-            )
+        fun getIntent(
+            context: Context,
+            previewerIdsFile: PreviewerIdsFile,
+            currentIndex: Int,
+        ): Intent {
+            val arguments =
+                bundleOf(
+                    CURRENT_INDEX_ARG to currentIndex,
+                    CARD_IDS_FILE_ARG to previewerIdsFile,
+                )
             return CardViewerActivity.getIntent(context, PreviewerFragment::class, arguments)
         }
     }

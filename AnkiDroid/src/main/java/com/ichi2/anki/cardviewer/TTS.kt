@@ -44,13 +44,15 @@ class TTS {
      * @param card The card to check the type of before determining the ordinal.
      * @return The card ordinal. If it's a Cloze card, returns 0.
      */
-    private fun getOrdUsingCardType(card: Card, col: Collection): Int {
-        return if (card.noteType(col).isCloze) {
+    private fun getOrdUsingCardType(
+        card: Card,
+        col: Collection,
+    ): Int =
+        if (card.noteType(col).isCloze) {
             0
         } else {
             card.ord
         }
-    }
 
     /**
      * Reads the text (using TTS) for the given side of a card.
@@ -58,7 +60,12 @@ class TTS {
      * @param card     The card to play TTS for
      * @param cardSide The side of the current card to play TTS for
      */
-    fun readCardText(col: Collection, ttsTags: List<TTSTag>, card: Card, cardSide: CardSide) {
+    fun readCardText(
+        col: Collection,
+        ttsTags: List<TTSTag>,
+        card: Card,
+        cardSide: CardSide,
+    ) {
         ReadText.readCardSide(ttsTags, cardSide, CardUtils.getDeckIdForCard(card), getOrdUsingCardType(card, col))
     }
 
@@ -68,24 +75,35 @@ class TTS {
      * @param card The card to read text from
      * @param qa   The card question or card answer
      */
-    fun selectTts(col: Collection, context: Context, card: Card, qa: CardSide) {
+    fun selectTts(
+        col: Collection,
+        context: Context,
+        card: Card,
+        qa: CardSide,
+    ) {
         val textToRead = if (qa == CardSide.QUESTION) card.question(col, true) else card.pureAnswer(col)
         // get the text from the card
         ReadText.selectTts(
             getTextForTts(context, textToRead),
             CardUtils.getDeckIdForCard(card),
             getOrdUsingCardType(card, col),
-            qa
+            qa,
         )
     }
 
-    private fun getTextForTts(context: Context, text: String): String {
+    private fun getTextForTts(
+        context: Context,
+        text: String,
+    ): String {
         val clozeReplacement = context.getString(R.string.reviewer_tts_cloze_spoken_replacement)
         val clozeReplaced = text.replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, clozeReplacement)
         return Utils.stripHTML(clozeReplaced)
     }
 
-    fun initialize(ctx: Context, listener: ReadText.ReadTextListener) {
+    fun initialize(
+        ctx: Context,
+        listener: ReadText.ReadTextListener,
+    ) {
         if (!enabled) {
             return
         }

@@ -46,7 +46,7 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">შეცდომის შეტყობინების რეჟიმი</string>
+    <string name="error_reporting_choice" maxLength="41">შეცდომის შეტყობინების რეჟიმი</string>
     <string name="feedback_disclaimer">შენიშვნა: არ გაიგზავნება პირადი ინფორმაცია, როგორიც არის თქვენი ელფოსტის მისამართი, ტელეფონის ნომერი, ანდა მოწყობილობის საერთაშორისო იდენტიფიკატორი. ერთადერთი გაიგზავნება ზოგადი ინფორმაცია როგორიცაა მაგალითად მოწყობილობის ანდროიდის ვერსია, მწარმოებელი და მოდელი, და ასევე თვითონ შეტყობინებულ შეცდომასთან დაკავშირებული ინფორმაცია.</string>
     <string name="feedback_title">უკუკავშირი AnkiDroid-ს</string>
     <string name="feedback_default_text">Enter your feedback or information about the nature of any errors you’re reporting.</string>

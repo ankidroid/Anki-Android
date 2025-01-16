@@ -44,21 +44,11 @@
     <string name="multimedia_editor_popup_audio_clip">Dodaj klip dźwiękowy</string>
     <string name="multimedia_editor_popup_video_clip">Dodaj klip wideo</string>
     <string name="multimedia_editor_popup_audio">Nagraj dźwięk</string>
-    <string name="multimedia_editor_popup_text">Zaawansowany edytor</string>
     <string name="multimedia_editor_popup_cloze">Luka do wypełnienia</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Tekst</string>
-    <string name="multimedia_editor_field_editing_image">Obraz</string>
     <string name="multimedia_editor_field_editing_audio">Dodaj nagranie</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Klip dźwiękowy</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Zakończono</string>
-    <!-- Text field editing -->
-    <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_clear">Czyść</string>
-    <string name="multimedia_editor_text_field_editing_clone">Kopiuj z</string>
-    <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">Weź z</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
@@ -66,28 +56,21 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Galeria</string>
     <string name="multimedia_editor_image_field_editing_photo">Aparat</string>
-    <string name="multimedia_editor_import_audio">Dźwięk</string>
-    <string name="multimedia_editor_import_video">Wideo</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Coś poszło nie tak</string>
-    <string name="multimedia_editor_svg_preview">Pliki SVG nie są dostępne w podglądzie</string>
     <string name="multimedia_editor_png_paste_error">Błąd konwersji obrazu ze schowka do formatu png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Dołącz zawartość multimedialną do pola %1$s</string>
-    <string name="multimedia_editor_attach_media">Dołącz media</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Nagranie nie powiodło się</string>
     <string name="multimedia_editor_audio_view_playing_failed">Odtwarzanie dźwięku nie powiodło się</string>
     <string name="multimedia_editor_audio_view_create_failed">Nie udało się utworzyć paska  narzędzi nagrywania</string>
-    <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Pole edycji</string>
     <!-- Crop function-->
     <string name="crop_image">Czy chcesz przyciąć ten obraz?</string>
-    <string name="crop_button">Przytnij obraz</string>
-    <string name="save_dialog_content">Aktualny rozmiar obrazu: %sMB. Domyślny limit rozmiaru obrazu to 1 MB. Czy chcesz przyciąć obraz?</string>
+    <string name="crop_button" maxLength="28">Przytnij obraz</string>
+    <string name="save_dialog_content">Aktualny rozmiar obrazu to %sMB. Domyślny limit rozmiaru obrazu to 1 MB. Czy chcesz skompresować obraz?</string>
     <string name="select_image_failed">"Wybieranie obrazu nie powiodło się, spróbuj ponownie"</string>
-    <string name="activity_result_unexpected">Aplikacja zwróciła nieoczekiwaną wartość. Może być konieczne użycie innej aplikacji</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Zawartość pola</string>
-    <string name="reselect">Reselect</string>
+    <string name="reselect" maxLength="28">Reselect</string>
 </resources>

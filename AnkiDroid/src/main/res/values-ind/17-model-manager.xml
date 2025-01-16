@@ -26,7 +26,7 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Kelola tipe catatan</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">Kelola tipe catatan</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Kelola kolom</string>
     <!--Toasts-->
     <string name="toast_last_model">Kamu tidak bisa mengapus tipe catatan terakhirmu</string>
@@ -51,7 +51,7 @@
     <string name="model_field_editor_language_hint_dialog_success_result">Atur petunjuk bahasa menjadi %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Edit kolom</string>
-    <string name="model_field_editor_add">Tambah kolom</string>
+    <string name="model_field_editor_add" maxLength="28">Tambah kolom</string>
     <string name="model_field_editor_delete">Hapus kolom</string>
     <string name="model_field_editor_rename">Ubah nama kolom</string>
     <string name="model_field_editor_language_hint">Atur petunjuk bahasa papan tik</string>
@@ -79,5 +79,5 @@
     <string name="model_manager_deck_override_added_message">Mengatur lokasi dek dasar ‘%1$s’ ke ‘%2$s’</string>
     <string name="model_manager_deck_override_removed_message">Dek dasar untuk ‘%s’ dihapus</string>
     <string name="deck_override_explanation">Pilih dek untuk menaruh kartu baru ‘%s’</string>
-    <string name="deck_picker_dialog_filter_decks">Filter dek</string>
+    <string name="deck_picker_dialog_filter_decks" maxLength="28">Filter dek</string>
 </resources>

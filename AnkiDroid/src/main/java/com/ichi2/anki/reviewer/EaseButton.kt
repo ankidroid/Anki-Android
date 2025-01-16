@@ -23,6 +23,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.StringRes
 import com.ichi2.anki.AbstractFlashcardViewer
+import com.ichi2.anki.Ease
+import com.ichi2.utils.KotlinCleanup
 
 /**
  * The UI of an ease button
@@ -31,8 +33,12 @@ import com.ichi2.anki.AbstractFlashcardViewer
  * * [nextTime] is used by the API
  * * [canPerformClick] is used to determine if the answer is being shown and the button isn't blocked
  */
-class EaseButton(private val ease: Int, private val layout: LinearLayout, private val easeTextView: TextView, private val easeTimeView: TextView) {
-
+class EaseButton(
+    private val ease: Ease,
+    private val layout: LinearLayout,
+    private val easeTextView: TextView,
+    private val easeTimeView: TextView,
+) {
     var height: Int
         get() = layout.layoutParams.height
         set(value) {
@@ -97,7 +103,8 @@ class EaseButton(private val ease: Int, private val layout: LinearLayout, privat
      *
      * @param currentEase The current ease of the card
      */
-    fun unblockBasedOnEase(currentEase: Int) {
+    @KotlinCleanup("Make the type non nullable.")
+    fun unblockBasedOnEase(currentEase: Ease?) {
         if (this.ease == currentEase) {
             layout.isClickable = true
         } else {
@@ -110,7 +117,7 @@ class EaseButton(private val ease: Int, private val layout: LinearLayout, privat
      *
      * @param currentEase The current ease of the card
      */
-    fun blockBasedOnEase(currentEase: Int) {
+    fun blockBasedOnEase(currentEase: Ease) {
         if (this.ease == currentEase) {
             layout.isClickable = false
         } else {
@@ -126,7 +133,11 @@ class EaseButton(private val ease: Int, private val layout: LinearLayout, privat
     fun requestFocus() {
     }
 
-    fun setup(backgroundColor: Int, textColor: Int, @StringRes easeStringRes: Int) {
+    fun setup(
+        backgroundColor: Int,
+        textColor: Int,
+        @StringRes easeStringRes: Int,
+    ) {
         layout.visibility = View.VISIBLE
         layout.setBackgroundResource(backgroundColor)
         easeTextView.setText(easeStringRes)

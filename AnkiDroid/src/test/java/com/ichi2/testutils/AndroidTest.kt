@@ -20,10 +20,21 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.test.core.app.ApplicationProvider
+import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.preferences.sharedPrefs
 
-/** Marker interface for classes annotated with `@RunWith(AndroidJUnit4.class)` */
-interface AndroidTest : TestClass
+/**
+ * Marker interface for classes annotated with `@RunWith(AndroidJUnit4.class)` which do
+ * not need access to the collection
+ *
+ * Classes should also be marked with `@Config(application = EmptyApplication::class)` for
+ * performance improvements
+ *
+ * Use [JvmTest] if a reference to Android is not necessary but the collection is required
+ *
+ * Use [RobolectricTest] if access the collection is necessary
+ */
+interface AndroidTest
 
 val AndroidTest.targetContext: Context
     get() {
@@ -47,8 +58,11 @@ fun AndroidTest.getSharedPrefs(): SharedPreferences = targetContext.sharedPrefs(
 fun AndroidTest.getString(res: Int): String = targetContext.getString(res)
 
 @Suppress("unused")
-fun AndroidTest.getQuantityString(res: Int, quantity: Int, vararg formatArgs: Any): String =
-    targetContext.resources.getQuantityString(res, quantity, *formatArgs)
+fun AndroidTest.getQuantityString(
+    res: Int,
+    quantity: Int,
+    vararg formatArgs: Any,
+): String = targetContext.resources.getQuantityString(res, quantity, *formatArgs)
 
 /**
  * Allows editing of preferences, followed by a call to [apply][SharedPreferences.Editor.apply]:
@@ -57,5 +71,4 @@ fun AndroidTest.getQuantityString(res: Int, quantity: Int, vararg formatArgs: An
  * editPreferences { putString("key", value) }
  * ```
  */
-fun AndroidTest.editPreferences(action: SharedPreferences.Editor.() -> Unit) =
-    getSharedPrefs().edit(action = action)
+fun AndroidTest.editPreferences(action: SharedPreferences.Editor.() -> Unit) = getSharedPrefs().edit(action = action)

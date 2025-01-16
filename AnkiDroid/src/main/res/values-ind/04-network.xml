@@ -75,7 +75,7 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Lokal</string>
     <string name="sync_sanity_remote">Jarak jauh</string>
-    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_title" maxLength="41">One-way sync</string>
     <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">Perubahan yang diminta mengharuskan basis data diunggah seluruhnya saat Anda melakukan sinkronisasi koleksi Anda. Jika Anda memiliki ulasan atau perubahan lainnya yang menunggu di perangkat lain yang belum disinkronkan di sini, mereka akan hilang. Lanjutkan?</string>
     <string name="full_sync_confirmation_upgrade">Karena adanya bug pada versi AnkiDroid sebelumnya, disarankan untuk melakukan sinkronisasi penuh.</string>

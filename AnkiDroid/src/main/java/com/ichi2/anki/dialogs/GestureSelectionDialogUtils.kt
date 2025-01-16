@@ -23,9 +23,7 @@ import com.ichi2.ui.GesturePicker
 
 /** Helper functions for a Dialog which wraps a [com.ichi2.ui.GesturePicker]  */
 object GestureSelectionDialogUtils {
-    fun getGesturePicker(context: Context): GesturePicker {
-        return GesturePicker(context)
-    }
+    fun getGesturePicker(context: Context): GesturePicker = GesturePicker(context)
 
     /** Supplies a callback which is called each time the user gesture selection changes
      *

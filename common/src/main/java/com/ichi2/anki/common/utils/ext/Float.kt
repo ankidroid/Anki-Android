@@ -24,4 +24,7 @@ package com.ichi2.anki.common.utils.ext
  *
  * This does NOT validate that min < max for performance reasons
  */
-fun Float.clamp(min: Float, max: Float) = this.coerceIn(minimumValue = min, maximumValue = max)
+fun Float.clamp(
+    min: Float,
+    max: Float,
+) = this.coerceIn(minimumValue = min, maximumValue = max)

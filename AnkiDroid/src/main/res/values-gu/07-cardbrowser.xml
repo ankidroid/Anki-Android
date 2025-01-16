@@ -54,28 +54,27 @@
         <item quantity="other">%d નોંધો બતાવવામાં આવી</item>
     </plurals>
     <string name="card_browser_all_decks">બધા ડેક</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">કાર્ડ કાઢી નાખો</item>
-        <item quantity="other">કાર્ડ્સ કાઢી નાખો</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">નોંધ કાઢી નાખો</item>
         <item quantity="other">નોંધો કાઢી નાખો</item>
     </plurals>
-    <string name="card_browser_change_deck">ડેક બદલો</string>
+    <string name="card_browser_change_deck" maxLength="28">ડેક બદલો</string>
     <string name="delete_card_title">નોંધ કાઢી નાખીએ?</string>
-    <string name="card_browser_show_marked">ફિલ્ટર ચિહ્નિત</string>
-    <string name="card_browser_show_suspended">ફિલ્ટર સસ્પેન્ડ કર્યું</string>
-    <string name="card_browser_search_by_tag">ટેગ દ્વારા ફિલ્ટર કરો</string>
-    <string name="card_browser_search_by_flag">ધ્વજ દ્વારા ફિલ્ટર કરો</string>
-    <string name="card_browser_list_my_searches">મારી શોધ</string>
-    <string name="card_browser_list_my_searches_save">શોધ સાચવો</string>
+    <string name="card_browser_show_marked" maxLength="28">ફિલ્ટર ચિહ્નિત</string>
+    <string name="card_browser_show_suspended" maxLength="28">ફિલ્ટર સસ્પેન્ડ કર્યું</string>
+    <string name="card_browser_search_by_tag" maxLength="28">ટેગ દ્વારા ફિલ્ટર કરો</string>
+    <string name="card_browser_search_by_flag" maxLength="28">ધ્વજ દ્વારા ફિલ્ટર કરો</string>
+    <string name="card_browser_list_my_searches" maxLength="28">મારી શોધ</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">શોધ સાચવો</string>
     <string name="card_browser_list_my_searches_title">સાચવેલી શોધ પસંદ કરો</string>
     <string name="card_browser_list_my_searches_new_name">વર્તમાન શોધ માટે નામ</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">તમે નામ વગર શોધ સાચવી શકતા નથી</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">નામ અસ્તિત્વમાં છે</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">“%1$s” કાઢી નાખીએ?</string>
-    <string name="card_browser_change_display_order">ડિસ્પ્લે ઓર્ડર બદલો</string>
+    <string name="card_browser_change_display_order" maxLength="28">ડિસ્પ્લે ઓર્ડર બદલો</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">தேடு</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">ડિસ્પ્લે ઓર્ડર પસંદ કરો</string>
     <string name="card_details_tags">ટૅગ્સ</string>
     <string-array name="card_browser_order_labels">
@@ -90,11 +89,8 @@
         <item>સમીક્ષાઓ દ્વારા</item>
         <item>ક્ષતિઓ દ્વારા</item>
     </string-array>
-    <string name="card_browser_select_all">બધા પસંદ કરો</string>
-    <string name="card_browser_select_none">કોઈ પસંદ કરો</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(નવું)</string>
-    <string name="card_browser_due_filtered_card">(ફિલ્ટર કરેલ)</string>
-    <string name="card_browser_interval_learning_card">(શીખવું)</string>
+    <string name="card_browser_select_all" maxLength="28">બધા પસંદ કરો</string>
+    <string name="card_browser_select_none" maxLength="28">કોઈ પસંદ કરો</string>
     <string name="card_browser_no_cards_in_deck">ડેક \'%s\' માં કોઈ કાર્ડ મળ્યા નથી</string>
     <string name="card_browser_search_all_decks">બધા ડેક શોધો</string>
     <string name="card_browser_unknown_deck_name">અજ્ઞાત</string>
@@ -112,4 +108,7 @@
         <item quantity="one">%d કાર્ડ કાઢી નાખ્યું</item>
         <item quantity="other">%d કાર્ડ કાઢી નાખ્યા</item>
     </plurals>
+    <!--Keyboard shortcuts dialog-->
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
 </resources>

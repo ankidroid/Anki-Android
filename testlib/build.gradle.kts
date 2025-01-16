@@ -5,10 +5,16 @@ plugins {
 
 android {
     namespace = "com.ichi2.anki.testlib"
-    compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdk =
+        libs.versions.compileSdk
+            .get()
+            .toInt()
 
     defaultConfig {
-        minSdk = libs.versions.minSdk.get().toInt()
+        minSdk =
+            libs.versions.minSdk
+                .get()
+                .toInt()
     }
 
     flavorDimensions += "appStore"
@@ -36,18 +42,25 @@ android {
 
         packaging {
             resources {
+                // testlib is not compiled into the public apk
                 excludes += "META-INF/DEPENDENCIES"
+                excludes += "META-INF/LICENSE.md"
+                excludes += "META-INF/LICENSE-notice.md"
             }
         }
     }
 }
 
+apply(from = "../lint.gradle")
+
 dependencies {
     implementation(project(":AnkiDroid"))
     implementation(libs.jakewharton.timber)
-    compileOnly(libs.kotlinx.coroutines.core)
-    compileOnly(libs.hamcrest)
-    compileOnly(libs.junit.jupiter)
-    compileOnly(libs.junit.jupiter.params)
-    compileOnly(libs.junit.vintage.engine)
+    implementation(libs.hamcrest)
+    implementation(libs.hamcrest.library)
+    implementation(libs.junit.jupiter)
+    implementation(libs.androidx.test.junit)
+    testImplementation(libs.junit.vintage.engine)
+    testImplementation(libs.androidx.test.rules)
+    testRuntimeOnly(libs.junit.platform.launcher)
 }

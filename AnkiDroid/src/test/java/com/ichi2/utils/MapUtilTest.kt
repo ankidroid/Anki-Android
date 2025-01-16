@@ -20,12 +20,13 @@ import org.hamcrest.Matchers.not
 import org.junit.Test
 
 class MapUtilTest {
-    private var map = hashMapOf(
-        12 to "Anki",
-        5 to "AnkiMobile",
-        20 to "AnkiDroid",
-        30 to "AnkiDesktop"
-    )
+    private var map =
+        hashMapOf(
+            12 to "Anki",
+            5 to "AnkiMobile",
+            20 to "AnkiDroid",
+            30 to "AnkiDesktop",
+        )
 
     @Test
     fun getKeyByValueIsEqualTest() {

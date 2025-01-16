@@ -28,15 +28,19 @@ import com.ichi2.utils.IntentUtil
  * Help/Support menus. Used for testing.
  */
 interface HelpItemActionsDispatcher {
-
     fun onOpenUrl(url: String)
-    fun onOpenUrlResource(@StringRes url: Int)
+
+    fun onOpenUrlResource(
+        @StringRes url: Int,
+    )
+
     fun onRate()
+
     fun onSendReport()
 }
 
 class AnkiActivityHelpActionsDispatcher(
-    private val ankiActivity: AnkiActivity
+    private val ankiActivity: AnkiActivity,
 ) : HelpItemActionsDispatcher {
     override fun onOpenUrl(url: String) {
         ankiActivity.openUrl(Uri.parse(url))
@@ -49,7 +53,7 @@ class AnkiActivityHelpActionsDispatcher(
     override fun onRate() {
         IntentUtil.tryOpenIntent(
             ankiActivity,
-            AnkiDroidApp.getMarketIntent(ankiActivity)
+            AnkiDroidApp.getMarketIntent(ankiActivity),
         )
     }
 

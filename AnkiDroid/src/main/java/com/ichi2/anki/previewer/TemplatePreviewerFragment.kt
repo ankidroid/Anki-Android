@@ -15,36 +15,27 @@
  */
 package com.ichi2.anki.previewer
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
-import androidx.appcompat.widget.ThemeUtils
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.utils.ext.sharedPrefs
-import com.ichi2.anki.utils.navBarNeedsScrim
+import com.ichi2.utils.BundleUtils.getNullableInt
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class TemplatePreviewerFragment :
     CardViewerFragment(R.layout.template_previewer),
     BaseSnackbarBuilderProvider {
-
     override val viewModel: TemplatePreviewerViewModel by viewModels {
         val arguments = BundleCompat.getParcelable(requireArguments(), ARGS_KEY, TemplatePreviewerArguments::class.java)!!
         TemplatePreviewerViewModel.factory(arguments, CardMediaPlayer())
@@ -55,70 +46,51 @@ class TemplatePreviewerFragment :
     override val baseSnackbarBuilder: SnackbarBuilder
         get() = { anchorView = this@TemplatePreviewerFragment.view?.findViewById(R.id.show_answer) }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<MaterialToolbar>(R.id.toolbar).setNavigationOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
-        }
-
-        val showAnswerButton = view.findViewById<MaterialButton>(R.id.show_answer).apply {
-            setOnClickListener { viewModel.toggleShowAnswer() }
-        }
+        val showAnswerButton =
+            view.findViewById<MaterialButton>(R.id.show_answer).apply {
+                setOnClickListener { viewModel.toggleShowAnswer() }
+            }
         viewModel.showingAnswer
             .onEach { showingAnswer ->
-                showAnswerButton.text = if (showingAnswer) {
-                    getString(R.string.hide_answer)
-                } else {
-                    getString(R.string.show_answer)
-                }
-            }
-            .launchIn(lifecycleScope)
-
-        val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout)
-        lifecycleScope.launch {
-            for (templateName in viewModel.getTemplateNames()) {
-                tabLayout.addTab(tabLayout.newTab().setText(templateName))
-            }
-            tabLayout.selectTab(tabLayout.getTabAt(viewModel.getCurrentTabIndex()))
-            tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
-                override fun onTabSelected(tab: TabLayout.Tab) {
-                    Timber.v("Selected tab %d", tab.position)
-                    viewModel.onTabSelected(tab.position)
-                }
-
-                override fun onTabUnselected(tab: TabLayout.Tab) {
-                    // do nothing
-                }
-
-                override fun onTabReselected(tab: TabLayout.Tab) {
-                    // do nothing
-                }
-            })
-        }
+                showAnswerButton.text =
+                    if (showingAnswer) {
+                        getString(R.string.hide_answer)
+                    } else {
+                        getString(R.string.show_answer)
+                    }
+            }.launchIn(lifecycleScope)
 
         if (sharedPrefs().getBoolean("safeDisplay", false)) {
             view.findViewById<MaterialCardView>(R.id.webview_container).elevation = 0F
         }
 
-        with(requireActivity()) {
-            // use the screen background color if the nav bar doesn't need a scrim when using a
-            // transparent background. e.g. when navigation gestures are enabled
-            if (!navBarNeedsScrim) {
-                window.navigationBarColor = ThemeUtils.getThemeAttrColor(this, R.attr.alternativeBackgroundColor)
-            }
+        arguments?.getNullableInt(ARG_BACKGROUND_OVERRIDE_COLOR)?.let { color ->
+            view.setBackgroundColor(color)
         }
     }
 
     companion object {
         const val ARGS_KEY = "templatePreviewerArgs"
+        private const val ARG_BACKGROUND_OVERRIDE_COLOR = "arg_background_override_color"
 
-        fun getIntent(context: Context, arguments: TemplatePreviewerArguments): Intent {
-            return CardViewerActivity.getIntent(
-                context,
-                TemplatePreviewerFragment::class,
-                bundleOf(ARGS_KEY to arguments)
-            )
-        }
+        /**
+         * @param backgroundOverrideColor optional color to be used as background on the root view
+         * of this fragment
+         */
+        fun newInstance(
+            arguments: TemplatePreviewerArguments,
+            backgroundOverrideColor: Int? = null,
+        ): TemplatePreviewerFragment =
+            TemplatePreviewerFragment().apply {
+                val args = bundleOf(ARGS_KEY to arguments)
+                backgroundOverrideColor?.let { args.putInt(ARG_BACKGROUND_OVERRIDE_COLOR, backgroundOverrideColor) }
+                this.arguments = args
+            }
     }
 }

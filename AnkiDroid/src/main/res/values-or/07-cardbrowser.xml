@@ -54,28 +54,27 @@
         <item quantity="other">%dଟି ନୋଟ୍ ଦର୍ଶାଯାଉଛି</item>
     </plurals>
     <string name="card_browser_all_decks">ସମସ୍ତ ତାସଖଣ୍ଡ</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">ପତ୍ର ବିଲୋପ କରିବା</item>
-        <item quantity="other">ପତ୍ରଗୁଡ଼ିକୁ ବିଲୋପ କରିବା</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">ନୋଟ୍ ବିଲୋପ କରିବା</item>
         <item quantity="other">ନୋଟଗୁଡ଼ିକୁ ବିଲୋପ କରିବା</item>
     </plurals>
-    <string name="card_browser_change_deck">ତାସଖଣ୍ଡ ବଦଳାନ୍ତୁ</string>
+    <string name="card_browser_change_deck" maxLength="28">ତାସଖଣ୍ଡ ବଦଳାନ୍ତୁ</string>
     <string name="delete_card_title">ନୋଟ୍ ଵିଲୋପ କରିବେ ତ?</string>
-    <string name="card_browser_show_marked">ଚିହ୍ନିତ (ପତ୍ର) ଶୋଧନ କରନ୍ତୁ</string>
-    <string name="card_browser_show_suspended">ନିଲମ୍ବିତ (ପତ୍ର) ଶୋଧନ କରନ୍ତୁ</string>
-    <string name="card_browser_search_by_tag">ଟ୍ୟାଗ୍ ଅନୁସାରେ ଶୋଧନ</string>
-    <string name="card_browser_search_by_flag">ପତାକା ଅନୁସାରେ ଶୋଧନ</string>
-    <string name="card_browser_list_my_searches">ମୋ ସନ୍ଧାନଗୁଡ଼ିକ</string>
-    <string name="card_browser_list_my_searches_save">ସନ୍ଧାନ ସଂରକ୍ଷିତ କର</string>
+    <string name="card_browser_show_marked" maxLength="28">ଚିହ୍ନିତ (ପତ୍ର) ଶୋଧନ କରନ୍ତୁ</string>
+    <string name="card_browser_show_suspended" maxLength="28">ନିଲମ୍ବିତ (ପତ୍ର) ଶୋଧନ କରନ୍ତୁ</string>
+    <string name="card_browser_search_by_tag" maxLength="28">ଟ୍ୟାଗ୍ ଅନୁସାରେ ଶୋଧନ</string>
+    <string name="card_browser_search_by_flag" maxLength="28">ପତାକା ଅନୁସାରେ ଶୋଧନ</string>
+    <string name="card_browser_list_my_searches" maxLength="28">ମୋ ସନ୍ଧାନଗୁଡ଼ିକ</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">ସନ୍ଧାନ ସଂରକ୍ଷିତ କର</string>
     <string name="card_browser_list_my_searches_title">ଏକ ସଞ୍ଚିତ ସନ୍ଧାନ ବାଛନ୍ତୁ</string>
     <string name="card_browser_list_my_searches_new_name">ସାମ୍ପ୍ରତିକ ସନ୍ଧାନ ପାଇଁ ନାମ </string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">ଆପଣ ନାମ ବିନା ସନ୍ଧାନ ସଞ୍ଚୟ କରିପାରିବେ ନାହିଁ</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">ନାଁଟି ଵିଦ୍ୟମାନ ଅଛି</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">“%1$s” ଵିଲୋପ କରିବେ ତ?</string>
-    <string name="card_browser_change_display_order">ପ୍ରଦର୍ଶନ କ୍ରମ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
+    <string name="card_browser_change_display_order" maxLength="28">ପ୍ରଦର୍ଶନ କ୍ରମ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">ସନ୍ଧାନ</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">ପ୍ରଦର୍ଶନ କ୍ରମ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
     <string name="card_details_tags">ଟ୍ୟାଗ୍ </string>
     <string-array name="card_browser_order_labels">
@@ -90,11 +89,8 @@
         <item>ସମୀକ୍ଷା ଅନୁସାରେ</item>
         <item>ଲାପ୍ସ ଅନୁସାରେ</item>
     </string-array>
-    <string name="card_browser_select_all">ସବୁ ଚୟନ କରନ୍ତୁ</string>
-    <string name="card_browser_select_none">କିଛି ଚୟନ କରନ୍ତୁନି</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(ନୂଆ)</string>
-    <string name="card_browser_due_filtered_card">(ଶୋଧିତ)</string>
-    <string name="card_browser_interval_learning_card">(ଶିଖୁଛନ୍ତି)</string>
+    <string name="card_browser_select_all" maxLength="28">ସବୁ ଚୟନ କରନ୍ତୁ</string>
+    <string name="card_browser_select_none" maxLength="28">କିଛି ଚୟନ କରନ୍ତୁନି</string>
     <string name="card_browser_no_cards_in_deck">ତାସଖଣ୍ଡ ‘%s’ ରେ କୌଣସି ପତ୍ର ମିଳିଲା ନାହିଁ</string>
     <string name="card_browser_search_all_decks">ସମସ୍ତ ତାସଖଣ୍ଡରେ ଖୋଜନ୍ତୁ</string>
     <string name="card_browser_unknown_deck_name">ଅଜ୍ଞାତ</string>
@@ -112,4 +108,7 @@
         <item quantity="one">%dଟିଏ ପତ୍ର ବିଲୋପ ହେଲା</item>
         <item quantity="other">%dଟି ପତ୍ର ବିଲୋପ ହେଲା</item>
     </plurals>
+    <!--Keyboard shortcuts dialog-->
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
 </resources>

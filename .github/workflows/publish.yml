@@ -1,4 +1,4 @@
-name: Publish
+name: 🚀 Publish
 
 on:
   workflow_dispatch:
@@ -7,6 +7,15 @@ on:
         description: "any non-empty value triggers a public build - version not auto-incremented / changelog required"
         required: false
         type: string
+
+
+# We want concurrency control to allow multiple runs, but serially
+# Otherwise if you run two publishes that upload to google at same time
+# (for instance on a release branch for beta, and main for alpha), google
+# will error as it can only handle one edit in publish account at once
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
 
 jobs:
   release_app:

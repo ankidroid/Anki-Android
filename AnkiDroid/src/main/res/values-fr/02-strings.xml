@@ -55,21 +55,21 @@
     <string name="edit_occlusions">Modifier les Occlusions</string>
     <string name="tag_name">Nom d\'étiquette</string>
     <string name="add_new_filter_tags">Ajouter/filtrer étiquettes</string>
-    <string name="add_tag">Ajouter une étiquette</string>
-    <string name="check_all_tags">Cocher/décocher toutes les étiquettes</string>
-    <string name="filter_tags">Filtrer les étiquettes</string>
+    <string name="add_tag" maxLength="28">Ajouter une étiquette</string>
+    <string name="check_all_tags" maxLength="28">Cocher/décocher toutes les étiquettes</string>
+    <string name="filter_tags" maxLength="28">Filtrer les étiquettes</string>
     <string name="no_tags">Vous n\'avez pas encore ajouté d\'étiquettes</string>
     <string name="updated_version">Mis à jour à la version %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Enregistrer le tableau blanc</string>
-    <string name="enable_stylus">Activer le mode stylet</string>
+    <string name="save_whiteboard" maxLength="28">Enregistrer le tableau blanc</string>
+    <string name="enable_stylus" maxLength="28">Activer le mode stylet</string>
     <string name="disable_stylus">Désactiver le mode stylet</string>
-    <string name="enable_whiteboard">Activer le tableau blanc</string>
+    <string name="enable_whiteboard" maxLength="28">Activer le tableau blanc</string>
     <string name="disable_whiteboard">Désactiver le tableau blanc</string>
     <string name="show_whiteboard">Afficher le tableau blanc</string>
-    <string name="hide_whiteboard">Masquer le tableau blanc</string>
-    <string name="clear_whiteboard">Effacer le tableau blanc</string>
-    <string name="replay_audio">Rejouer le son</string>
+    <string name="hide_whiteboard" maxLength="28">Masquer le tableau blanc</string>
+    <string name="clear_whiteboard" maxLength="28">Effacer le tableau blanc</string>
+    <string name="replay_audio" maxLength="28">Rejouer le son</string>
     <string name="leech_suspend_notification">Carte marquée comme sangsue et suspendue</string>
     <string name="leech_notification">Carte marquée « encombrante »</string>
     <string name="webview_crash_unknown">Erreur inconnue</string>
@@ -80,24 +80,24 @@
     <string name="webview_crash_fatal">Erreur Fatale : Plantage du moteur de rendu Webview. Cause : %s</string>
     <string name="webview_crash_loop_dialog_title">Échec de rendu du système WebView</string>
     <string name="webview_crash_loop_dialog_content">Le système WebView n\'a pas réussi à afficher la carte « %1$s ».\n %2$s</string>
-    <string name="filter_by_flags">Marqueurs</string>
+    <string name="filter_by_flags" maxLength="41">Marqueurs</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modifier la limite de nouvelles cartes d\'aujourd\'hui</string>
-    <string name="custom_study_increase_review_limit">Modifier la limite de cartes à réviser d\'aujourd\'hui</string>
-    <string name="custom_study_review_forgotten">Réviser des cartes oubliées</string>
-    <string name="custom_study_review_ahead">Réviser à l\'avance</string>
-    <string name="custom_study_random_selection">Réviser une sélection aléatoire de cartes</string>
-    <string name="custom_study_preview_new">Prévisualiser les nouvelles cartes</string>
     <string name="custom_study_limit_tags">Limiter à certaines étiquettes</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d enterrée</item>
+        <item quantity="other">+%d enterrées</item>
+    </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total de cartes</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Modifier la note</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">Modifier la note</string>
     <string name="discard">Jeter</string>
     <string name="note_editor_no_cards_created">Aucune carte créée. Veuillez remplir plus de champs</string>
     <string name="note_editor_no_cards_created_all_fields">Le type de note actuel n’a produit aucune carte.\nVeuillez choisir un autre type de carte, ou cliquez sur « Cartes » et ajoutez un champ de substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Les textes à trous ne fonctionneront que sur une carte de type Cloze</string>
     <string name="saving_facts">Enregistrer la note</string>
     <string name="saving_model">Enregistrement du type de note</string>
-    <string name="save">Enregistrer</string>
+    <string name="save" maxLength="28">Enregistrer</string>
     <string name="close">Fermer</string>
     <string name="select">Sélectionner</string>
     <string name="field_remapping">%1$s (de « %2$s »)</string>
@@ -115,24 +115,23 @@
         <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Carte AnkiDroid</string>
-    <string name="note_editor_copy_note">Copier la note</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Repositionner</string>
-    <string name="card_editor_reset_card">Remettre les compteurs à 0</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Replanifier</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Aperçu</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copier en tant que Markdown</string>
+    <string name="note_editor_copy_note" maxLength="28">Copier la note</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Repositionner</string>
+    <string name="card_editor_reset_card" maxLength="28">Remettre les compteurs à 0</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Replanifier</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Aperçu</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Copier en tant que Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d sur %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Renommer</string>
-    <string name="checks_action">Vérifier</string>
-    <string name="check_db">Vérifier la base de données</string>
-    <string name="check_media">Vérifier les médias</string>
-    <string name="empty_cards">Cartes vides</string>
-    <string name="empty_card_warning">Cette carte est vide. Utilisez l\'option \"cartes vides\" du menu sur l\'écran de la liste de paquets.</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Renommer</string>
+    <string name="checks_action" maxLength="28">Vérifier</string>
+    <string name="check_db" maxLength="28">Vérifier la base de données</string>
+    <string name="check_media" maxLength="28">Vérifier les médias</string>
+    <string name="empty_cards" maxLength="28">Cartes vides</string>
     <string name="unknown_type_field_warning">Taper la réponse : champ inconnu %s</string>
     <string name="delete_deck">Suppression du paquet&#8230;</string>
     <string name="info_rate">Noter AnkiDroid</string>
     <string name="import_title">Importation en cours</string>
-    <string name="import_preparing_file">Preparing file for import&#8230;</string>
+    <string name="import_preparing_file">Préparation du fichier pour l\'import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Ajouter</string>
     <string name="import_message_replace_confirm">Ceci va supprimer votre collection existante et la remplacer par les données du fichier %s. Êtes-vous d\'accord ?</string>
     <string name="import_dialog_message_add">Ajouter \"%s\" à la collection ? Cela peut prendre beaucoup de temps</string>
@@ -160,13 +159,12 @@
         ]]></string>
     <string name="export_choice_share">Partager</string>
     <string name="export_choice_save_to">Enregistrer sous</string>
-    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
-    <string name="menu__deck_options">Options du deck</string>
+    <string name="export_saving_exported_collection">Enregistrement du fichier exporté&#8230;</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Options</string>
+    <string name="menu__deck_options" maxLength="28">Options du deck</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Options de révision</string>
-    <string name="select_tts">Définir la langue de synthèse vocale</string>
-    <string name="custom_study">Étude personnalisée</string>
-    <string name="more_options">Plus</string>
+    <string name="select_tts" maxLength="28">Définir la langue de synthèse vocale</string>
+    <string name="custom_study" maxLength="28">Étude personnalisée</string>
     <string name="dyn_deck_desc">Ceci est un paquet pour l\'étude en dehors des horaires normaux. Les cartes reviendront automatiquement à leur paquet d\'origine après leur révision. La suppression de ce paquet remettra toutes les cartes restantes dans leur paquet d\'origine.</string>
     <string name="steps_error">Les pas doivent être des nombres supérieurs à 0</string>
     <string name="steps_min_error">Au moins un pas est requis</string>
@@ -187,17 +185,17 @@
     <string name="web_page_error">Erreur lors du chargement de la page : %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Arrière-plan</string>
-    <string name="choose_an_image">Sélectionner une image</string>
+    <string name="background_image_title" maxLength="41">Arrière-plan</string>
+    <string name="choose_an_image" maxLength="41">Sélectionner une image</string>
     <string name="remove_background_image">Retirer l\'arrière-plan ?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Rétablir par défaut</string>
+    <string name="restore_default" maxLength="28">Rétablir par défaut</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Vide</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Impossible d\'enregistrer l\'image du tableau blanc. %s</string>
     <string name="white_board_image_saved">Image du tableau blanc enregistrée dans %s</string>
-    <string name="title_whiteboard_pen_color">Couleur du stylo du tableau blanc</string>
-    <string name="title_whiteboard_editor">Éditeur de tableau blanc</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">Couleur du stylo du tableau blanc</string>
+    <string name="title_whiteboard_editor" maxLength="28">Éditeur de tableau blanc</string>
     <string name="user_is_a_robot">Test automatisé détecté. Si vous êtes humain, contactez l\'assistance AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Cette carte utilise des fonctionnalités AnkiDroid non prises en charge. Contactez le développeur %1$s ou allez voir le wiki %2$s</string>
@@ -212,13 +210,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Impossible de charger « %s »</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Rechercher dans les paquets</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Afficher la progression de la migration</string>
+    <string name="search_decks" maxLength="28">Rechercher dans les paquets</string>
     <string name="ankidroid_init_failed_webview_title">Erreur fatale</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid s\'appuie sur la WebView du système qui n\'est pas disponible. Ceci peut se produire si le système installe des mises à jour. Veuillez réessayer dans quelques minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Taille de la police</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Afficher la barre d\'outils</string>
+    <string name="menu_font_size" maxLength="28">Taille de la police</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Afficher la barre d\'outils</string>
     <string name="format_insert_bold">Formater comme gras</string>
     <string name="format_insert_italic">Formater comme italique</string>
     <string name="format_insert_underline">Formater comme souligné</string>
@@ -233,13 +230,15 @@
     <string name="edit_toolbar_item">Modifier la barre d’outils</string>
     <string name="toolbar_item_explain_edit_or_remove">Entrez le code HTML à insérer avant et après le texte sélectionné\n\nAppuyez longuement sur un élément de la barre d\'outils pour le modifier ou le supprimer</string>
     <string name="remove_toolbar_item">Supprimer l\'élément de la barre d\'outils ?</string>
-    <string name="note_editor_paste_too_large">L\'image est trop large pour être collée, veuillez insérer l\'image manuellement</string>
+    <string name="note_editor_image_too_large">L’image est trop grande, veuillez insérer l’image manuellement</string>
+    <string name="note_editor_video_too_large">Le fichier vidéo est trop volumineux, insérez la vidéo manuellement.</string>
+    <string name="note_editor_audio_too_large">Le fichier audio est trop volumineux, insérez l’audio manuellement.</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Sauvergarde Android en cours. Veuillez réessayer</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Veuillez utiliser iManager pour autoriser AnkiDroid à ajouter des raccourcis</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Votre écran d\'accueil ne permet pas à AnkiDroid d\'ajouter des raccourcis</string>
     <string name="create_shortcut_error">Erreur lors de l\'ajout du raccourci : %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Mettre en majuscules les phrases</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Barre d\'outils à défilement</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Mettre en majuscules les phrases</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Barre d\'outils à défilement</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -262,7 +261,7 @@
     <string name="check_network">Veuillez vérifier votre connexion réseau</string>
     <string name="search_using_deck_name">Chercher en utilisant le nom du paquet</string>
     <string name="external_storage_unavailable">Téléchargement interrompu, le stockage externe n\'est pas disponible</string>
-    <string name="home">Accueil</string>
+    <string name="home" maxLength="28">Accueil</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Carte enterrée.</string>
@@ -272,16 +271,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Rendre le champ %s collant</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Transfert du stockage</string>
     <string name="scoped_storage_learn_more">En savoir plus</string>
-    <string name="scoped_storage_postpone">Reporter</string>
-    <string name="scoped_storage_migrate">Transférer</string>
     <string name="search_card_js_api_no_results">La recherche n\'a pas donné de résultats</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid a besoin de migrer son stockage pour se conformer à la politique de sécurité d\'Android 10.\n\nCeci améliorera les performances de la synchronisation des médias.&lt;br&gt;&lt;br&gt;Durant la migration, vous ne pourrez pas faire de synchronisation et certains paramètres seront désactivés. Une synchronisation des médias se produira avant que la migration ne commence à sécuriser vos données.&lt;br&gt;&lt;br&gt;Il est sécurisé d\'utiliser ou de fermer AnkiDroid pendant ce processus.</string>
-    <string name="start_migration_progress_message">Démarrage de la migration du stockage. Vous pouvez reprendre votre utilisation d\'AnkiDroid sous peu.</string>
-    <string name="migration_part_1_done_resume">Vous pouvez continuer à utiliser AnkiDroid.
-\nLa migration du stockage continuera en arrière-plan.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s n\'est pas un package d\'extension JavaScript valide</string>
     <string name="could_not_create_dir">Impossible de créer le répertoire %s</string>
@@ -292,7 +283,7 @@
     <string name="expand_tag">Développer l\'étiquette « %s »</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Impossible d\'accéder à la collection. Veuillez réessayer !</string>
-    <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <string name="cd_manage_notetypes_add">Ajouter un nouveau type de note</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Réviser moins</string>
     <string name="intro_ankidroid_tagline_two">Souvenez-vous de plus</string>
@@ -311,13 +302,8 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cartes</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
     <string name="toggle_cards_notes">Activer/Désactiver les Cartes/Notes</string>
-    <string name="toggle_browser_mode_help">Activer/désactiver l\'affichage des cartes ou des notes dans le navigateur</string>
     <string name="truncate_content_help">Tronquer la hauteur de chaque ligne du navigateur pour ne montrer que les 3 premières lignes de contenu</string>
     <string name="browser_options_dialog_heading">Options du navigateur</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">Cette fonctionnalité n\'est pas disponible durant la migration de stockage</string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Appuyez pour démarrer la migration de stockage</string>
-    <string name="media_sync_required_title">Synchronisation des médias requise</string>
-    <string name="media_sync_unavailable_message">La synchronisation des médias est désactivée dans les paramètres. Veuillez synchroniser et sauvegarder tout média qui n\'a pas encore été synchronisé avant de continuer.</string>
     <string name="audio_saved">Enregistrement sauvegardé</string>
     <string name="deleting_selected_notes">Suppression des notes sélectionnées</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Touchez une voix pour l\'écouter
@@ -339,12 +325,33 @@
     <string name="failed_to_copy">Échec de la copie</string>
     <string name="card_browser_unavailable_when_notes_mode">Non disponible en mode \"Notes\"</string>
     <plurals name="unbury_cards_feedback">
-        <item quantity="one">%d card unburied</item>
-        <item quantity="other">%d cards unburied</item>
+        <item quantity="one">Carte %d déterrée</item>
+        <item quantity="other">%d cartes  déterrées</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Repositionner</string>
-    <string name="start_recording">Record</string>
-    <string name="stop_recording">Stop</string>
-    <string name="play_recording">Play</string>
-    <string name="next_recording">Next</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Repositionner</string>
+    <string name="start_recording">Enregistrer</string>
+    <string name="stop_recording">Arrêter</string>
+    <string name="play_recording">Lecture</string>
+    <string name="next_recording">Suivant</string>
+    <!--  AlertDialog in the deleteCardTemplate  -->
+    <string name="orphan_note_title">Impossible de supprimer le type de carte</string>
+    <string name="orphan_note_message">Supprimer ce type de carte laissera certaines notes sans cartes.</string>
+    <string name="voice_not_supported">Voix non prise en charge. Essayez une autre ou installez un moteur vocal.</string>
+    <!--Keyboard shortcuts dialog-->
+    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Afficher la boîte de dialogue des raccourcis clavier</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Sélecteur de paquet</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Supprimer le paquet sans confirmation</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Éditeur de notes</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Choisir le paquet</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Sélectionner le type de note</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Éditeur d\'étiquette</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Éditeur de modèle de carte</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Modifier le modèle du recto</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Modifier le modèle verso</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Modifier le style</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copier le modèle en markdown</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Modifier l’apparence du navigateur</string>
+    <string name="show_shortcuts_message">Appuyez sur Alt+K pour afficher les raccourcis clavier</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">L’action utilisateur %s n’est pas définie dans ce type de note. Veuillez la configurer.</string>
+    <string name="directory_inaccessible_info">En savoir plus sur la restauration de l’accès ici %s ou allez dans les paramètres pour mettre à jour le dossier de collection.</string>
 </resources>

@@ -21,7 +21,7 @@
         android:id="@+id/deck_picker_dialog_action_filter"
         android:icon="@drawable/ic_search_white"
         android:title="@string/deck_picker_dialog_filter_decks"
-        ankidroid:actionViewClass="androidx.appcompat.widget.SearchView"
+        ankidroid:actionViewClass="com.ichi2.ui.AccessibleSearchView"
         ankidroid:showAsAction="always|collapseActionView"/>
     <item
         android:id="@+id/deck_picker_dialog_action_add_deck"

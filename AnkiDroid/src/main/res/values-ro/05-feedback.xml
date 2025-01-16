@@ -46,7 +46,7 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">Modul de raportare erori</string>
+    <string name="error_reporting_choice" maxLength="41">Modul de raportare erori</string>
     <string name="feedback_disclaimer">Disclaimer: Noi nu colectăm informaţii personale, cum ar fi adresa de e-mail, număr de telefon sau IMEI. Colectam informatii despre aparat, cum ar fi fabricant, model şi versiune de Android, precum și natura erorilor raportate și etapele care au dus la apariția acestora.</string>
     <string name="feedback_title">AnkiDroid Feedback</string>
     <string name="feedback_default_text">Introduceţi feedback-ul sau informaţii despre natura errorii pe care o raportati.</string>

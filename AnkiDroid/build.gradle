@@ -60,7 +60,6 @@ android {
         buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
         buildConfigField "String", "BACKEND_VERSION", "\"${libs.versions.ankiBackend.get()}\""
         buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "false"
-        buildConfigField "Boolean", "ALLOW_UNSAFE_MIGRATION", "false"
         buildConfigField "String", "GIT_COMMIT_HASH", "\"${gitCommitHash()}\""
         buildConfigField "long", "BUILD_TIME", System.currentTimeMillis().toString()
         resValue "string", "app_name", "AnkiDroid"
@@ -86,14 +85,9 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21900110
-        versionName="2.19alpha10"
+        versionCode=22100107
+        versionName="2.21alpha7"
         minSdk libs.versions.minSdk.get().toInteger()
-
-        // Stays until this is in a release: https://github.com/google/desugar_jdk_libs/commit/c01a5446ca13586b801dbba4d83c6821337b3cc2
-        if (testReleaseBuild && minSdk < 24) {
-            minSdk 24
-        }
 
         // After #13695: change .tests_emulator.yml
         targetSdk libs.versions.targetSdk.get().toInteger()
@@ -127,10 +121,6 @@ android {
                 if (localProperties['enable_languages'] == "false") {
                     android.defaultConfig.resConfigs "en"
                 }
-                // allows the scoped storage migration when the user is not logged in
-                if (localProperties["allow_unsafe_migration"] != null) {
-                    buildConfigField "Boolean", "ALLOW_UNSAFE_MIGRATION", localProperties["allow_unsafe_migration"]
-                }
                 // allow disabling leak canary
                 if (localProperties["enable_leak_canary"] != null) {
                     buildConfigField "Boolean", "ENABLE_LEAK_CANARY", localProperties["enable_leak_canary"]
@@ -148,7 +138,7 @@ android {
         }
         named('release') {
             testCoverageEnabled = testReleaseBuild
-            minifyEnabled true
+            minifyEnabled System.getenv("MINIFY_ENABLED") ? System.getenv("MINIFY_ENABLED") != "false" : true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             testProguardFile 'proguard-test-rules.pro'
             splits.abi.universalApk = universalApkEnabled // Build universal APK for release with `-Duniversal-apk=true`
@@ -266,13 +256,41 @@ android {
 play {
     serviceAccountCredentials.set(file("${homePath}/src/AnkiDroid-GCP-Publish-Credentials.json"))
     track.set('alpha')
+
+    // any time we bump minSdk we want Play Store to retain the old artifacts by version code,
+    // so that they remain available for older devices
+    retain {
+        artifacts.set([
+                20700300L, // (2.7, minSdk 10, universal APK)
+                20804300L, // (2.8.4, minSdk 10, universal APK)
+                21004300L, // (2.10.4, minSdk 15, universal APK)
+                // release-2.14 minSdk 16: missing and not re-publishable, see issue 17791
+                121603300L, // (2.16.3, minSdk 21, ABI armeabi-v7a)
+                221603300L, // (2.16.3, minSdk 21, ABI x86)
+                321603300L, // (2.16.3, minSdk 21, ABI arm64-v8a)
+                421603300L, // (2.16.3, minSdk 21, ABI x86_64)
+                121904300L, // (2.19.4, minSdk 23, ABI armeabi-v7a)
+                221904300L, // (2.19.4, minSdk 23, ABI x86)
+                321904300L, // (2.19.4, minSdk 23, ABI arm64-v8a)
+                421904300L, // (2.19.4, minSdk 23, ABI x86_64)
+        ])
+    }
+
+    // If you retain APKs in a release with different names as we do above,
+    // the plugin + Play Store has no idea how to name the release except by date.
+    // release name is developer only, but sane names really help, so set one
+    releaseName.set(android.defaultConfig.versionName)
 }
 
 // Install Git pre-commit hook for Ktlint
 tasks.register('installGitHook', Copy) {
     from new File(rootProject.rootDir, 'pre-commit')
     into { new File(rootProject.rootDir, '.git/hooks') }
-    fileMode 0755
+    filePermissions {
+        user {
+            read = write = execute = true
+        }
+    }
 }
 // to run manually: `./gradlew installGitHook`
 tasks.named('preBuild').configure { dependsOn('installGitHook') }
@@ -306,7 +324,13 @@ tasks.register('assertNonzeroAndroidTests') {
     }
 }
 afterEvaluate {
-    tasks.named(androidTestName).configure { finalizedBy('assertNonzeroAndroidTests') }
+    tasks.named("connectedPlay${rootProject.androidTestVariantName}AndroidTest").configure {
+        finalizedBy('assertNonzeroAndroidTests')
+    }
+    tasks.named("packagePlay${rootProject.androidTestVariantName}AndroidTest").configure {
+        // Issue 17520 - ensures testlib is built
+        dependsOn(":testlib:assemblePlay${rootProject.androidTestVariantName}")
+    }
 }
 
 apply from: "./robolectricDownloader.gradle"
@@ -317,7 +341,7 @@ dependencies {
     configurations.configureEach {
         resolutionStrategy {
             // Timber has this as a dependency but they are not up to date. We want to force our version.
-            force 'org.jetbrains:annotations:24.1.0'
+            force libs.jetbrains.annotations
         }
     }
     api project(":api")
@@ -337,6 +361,7 @@ dependencies {
     implementation libs.androidx.appcompat
     implementation libs.androidx.browser
     implementation libs.androidx.core.ktx
+    implementation libs.androidx.draganddrop
     implementation libs.androidx.exifinterface
     implementation libs.androidx.fragment.ktx
     implementation libs.androidx.media

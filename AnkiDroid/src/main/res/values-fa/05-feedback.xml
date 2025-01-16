@@ -46,7 +46,7 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">حالت گزارش خطا</string>
+    <string name="error_reporting_choice" maxLength="41">حالت گزارش خطا</string>
     <string name="feedback_disclaimer">سلب مسئولیت: ما هیچگونه اطلاعات شخصی مثل نشانی رایانامه، شماره تلفن ،و یا شماره سریال گوشی شما را جمع آوری نمی کنیم. آنچه را که ما جمع آوری می کنیم اطلاعاتى است راجع به دستگاه شما مثل کارخانه سازنده، مدل و نسخه اندروید و نیز ماهیت گزارشات خطاها و گام هايی که سبب به وجود آمدن اینگونه اشکالات شده اند.</string>
     <string name="feedback_title">بازخورد به انکی‌دروید</string>
     <string name="feedback_default_text">لطفا پيشنهاد و انتقاد خود را بفرستید و يا اطلاعاتی درباره ماهيت هر خطا گزارش کنید.</string>

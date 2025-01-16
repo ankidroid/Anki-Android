@@ -46,13 +46,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Database controleren?</string>
     <string name="check_db_warning">Dit kan een lange tijd duren</string>
-    <string name="contextmenu_deckpicker_delete_deck">Leerset verwijderen</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Leerset verwijderen</string>
     <string name="delete_deck_title">Verwijder set</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Alle kaarten verwijderen in %1$s? Het bevat %2$d kaart</item>
+        <item quantity="other">Alle kaarten verwijderen in %1$s? Het bevat %2$d kaarten</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Verwijder gefilterd deck %s en plaats alle kaarten terug in hun oorspronkelijke decks?</string>
     <string name="no_tts_available_message">Geen tekst-naar-spraak taal beschikbaar</string>
     <string name="tts_no_tts">Niet spreken</string>
     <string name="unused_strings">\n\nOngebruikte bestanden:\n</string>
     <string name="reposition_card_dialog_title">Nieuwe kaart verplaatsen</string>
-    <string name="reposition_card_dialog_message">Startpositie:</string>
     <string name="reposition_card_not_new_error">Alleen nieuwe kaarten kunnen verplaatst worden</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d kaart verplaatst</item>
@@ -70,15 +74,11 @@
     <string name="repair_deck_dialog">Weet u zeker dat wilt proberen de database te repareren?\n\nVoordat dit wordt geprobeerd, wordt een kopie gemaakt in de submap \'%s\'.</string>
     <string name="intent_aedict_empty">Categorie \'standaard\' is leeg</string>
     <string name="intent_aedict_category">Om kaarten aan AnkiDroid toe te voegen verwijder je alle Notepad categorieën of voeg een toe met de naam \'standaard\'</string>
-    <string name="custom_study_new_total_new">Nieuwe kaarten in set: %d</string>
-    <string name="custom_study_rev_total_rev">Overhoringen te doen in set: %d</string>
     <string name="custom_study_new_extend">De nieuwe kaartlimiet van vandaag verhogen/verlagen (\"-3\") met</string>
     <string name="custom_study_rev_extend">De nieuwe overhoringslimiet van vandaag verhogen/verlagen (\"-3\") met</string>
     <string name="custom_study_forgotten">Herhaal kaarten vergeten in de laatste x dagen:</string>
     <string name="custom_study_ahead">Herhaal x dagen vooruit:</string>
-    <string name="custom_study_random">Kies willekeurig x kaarten uit de set:</string>
     <string name="custom_study_preview">Voorbeschouw nieuwe kaarten toegevoegd in de laatste x dagen:</string>
-    <string name="custom_study_rebuild_deck_corrupt">De aangepaste studieset kon niet opnieuw worden opgebouwd</string>
     <string name="storage_full_title">Opslag vol</string>
     <string name="storage_almost_full_title">Opslag is bijna vol</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Geen ruimte</string>
@@ -96,7 +96,7 @@
     <string name="dialog_continue">Doorgaan</string>
     <string name="dialog_processing">Verwerking&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Maak</string>
-    <string name="dialog_positive_delete">Verwijder</string>
+    <string name="dialog_positive_delete" maxLength="28">Verwijder</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Uitschakelen</string>
     <string name="dialog_positive_overwrite">Overschrijven</string>
@@ -130,14 +130,11 @@
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Lege kaarten aan het zoeken&#8230;</string>
     <string name="empty_cards_count">Kaarten te verwijderen: %d</string>
-    <string name="empty_cards_deleted">Kaarten verwijderd: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Kon geen toestemming voor de microfoon verkrijgen.</string>
-    <string name="multimedia_editor_camera_permission_refused">Kon geen toestemming verkrijgen voor de camera. De functionaliteit is uitgeschakeld.</string>
     <string name="multimedia_editor_failed">Openen van de multimedia-editor is mislukt</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Toestemming voor audio-opname geweigerd</string>
-    <string name="mutimedia_editor_assertion_failed">Onbekende fout opgetreden bij de weergave van de geavanceerde editor</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid geüpgraded</string>
     <string name="integrity_check_startup_content">AnkiDroid is geüpgraded. Deze upgrade bevat correcties voor mogelijke problemen in de database en we raden u aan om de database nu te controleren.</string>
@@ -166,8 +163,6 @@
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Vereiste opslagtoestemming ontbreekt. Gelieve toestemming te verlenen voor de opslag en probeer opnieuw uw actie uit te voeren.</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Kon de kaartenbrowseropmaak niet laden</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Herinneringen plannen mislukt</string>
     <string name="boot_service_too_many_notifications">Te veel herinneringen gepland. Sommige zullen niet verschijnen</string>
@@ -183,7 +178,7 @@
     <string name="help_item_mailing_list">Mailinglijst</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Een fout melden</string>
-    <string name="help_title_support_ankidroid">AnkiDroid steunen</string>
+    <string name="help_title_support_ankidroid" maxLength="28">AnkiDroid steunen</string>
     <string name="help_item_support_opencollective_donate">Doneren</string>
     <string name="help_item_support_develop_ankidroid">Ontwikkelen</string>
     <string name="help_item_support_rate_ankidroid">Beoordelen</string>
@@ -222,7 +217,7 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">Maak een back-up van je collectie</string>
     <string name="backup_collection_message">Je hebt een tijdje geen back-up van je collectie gemaakt. Je moet dit nu doen om gegevensverlies te voorkomen</string>
-    <string name="button_backup">Back-up</string>
+    <string name="button_backup" maxLength="41">Back-up</string>
     <string name="button_disable_reminder">Herinnering uitschakelen</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Dit bericht niet meer tonen</string>
@@ -232,6 +227,7 @@
     <string name="dismiss_backup_warning_upgrade">        Door wijzigingen in de privacy van Android zullen uw gegevens en geautomatiseerde back-ups niet toegankelijk zijn als de app is verwijderd
     </string>
     <string name="deck_already_exists">Set bestaat al</string>
+    <string name="empty_deck_name">Deck name cannot be empty</string>
     <string name="create_deck_numeric_hint">Als je problemen met een leerset hebt (bijvoorbeeld ‘10’ treedt op voor ‘2’), vervang dan ‘2’ door ‘02’</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Stel interval in op dezelfde waarde</string>
@@ -256,6 +252,15 @@
     <string name="open">Openen</string>
     <string name="change_cloze_number">Wijzig het cloze-nummer</string>
     <string name="cloze_number">Cloze-nummer:</string>
+    <string name="change_editor_mode">Wijzig bewerkingsmodus</string>
+    <string name="open_note_editor">Open notitie editor</string>
+    <string name="change_cloze_mode">Wijzig het cloze nummer</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">De systeem WebView is verouderd. Sommige functies zullen niet correct werken. Gelieve te updaten.\n\nGeïnstalleerde versie: %1$d\nMinimale vereiste versie: %2$d</string>
+    <string name="compress">Compress</string>
+    <!-- Tts playback error dialog -->
+    <string name="tts_error_dialog_title">Taal niet ondersteund</string>
+    <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
+    <string name="tts_error_dialog_change_button_text">Change engine</string>
+    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
 </resources>

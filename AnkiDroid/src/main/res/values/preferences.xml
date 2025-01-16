@@ -13,7 +13,6 @@
     <string name="day_offset_preference">dayOffset</string>
     <string name="learn_cutoff_preference">learnCutoff</string>
     <string name="time_limit_preference">timeLimit</string>
-    <string name="timeout_answer_preference">timeoutAnswer</string>
     <string name="keep_screen_on_preference">keepScreenOn</string>
     <string name="double_tap_time_interval_preference">doubleTapTimeInterval</string>
     <!-- Sync -->
@@ -133,6 +132,7 @@
     <string name="user_action_7_key">binding_USER_ACTION_7</string>
     <string name="user_action_8_key">binding_USER_ACTION_8</string>
     <string name="user_action_9_key">binding_USER_ACTION_9</string>
+    <string name="toggle_auto_advance_command_key">binding_TOGGLE_AUTO_ADVANCE</string>
     <!-- Accessibility -->
     <string name="pref_accessibility_screen_key">accessibilityScreen</string>
     <string name="card_zoom_preference">cardZoom</string>
@@ -174,13 +174,13 @@
     <string name="pref_dev_options_screen_key">devOptionsKey</string>
     <string name="pref_trigger_crash_key">trigger_crash_preference</string>
     <string name="pref_analytics_debug_key">analytics_debug_preference</string>
+    <string name="pref_set_database_path_debug_key">debug_set_database_path</string>
     <string name="pref_lock_database_key">debug_lock_database</string>
     <string name="new_congrats_screen_pref_key">new_congrats_screen</string>
     <string name="new_reviewer_pref_key">newReviewer</string>
     <string name="new_reviewer_options_key">newReviewerOptions</string>
-    <string name="pref_show_onboarding_key">showOnboarding</string>
-    <string name="pref_reset_onboarding_key">resetOnboarding</string>
     <string name="dev_options_enabled_by_user_key">devOptionsEnabledByUser</string>
+    <string name="pref_cat_wip_key">workInProgressDevOptions</string>
     <!-- Developer options > Create fake media -->
     <string name="pref_fill_collection_key">fillCollection</string>
     <string name="pref_fill_collection_number_file_key">fillCollectionNumberFile</string>
@@ -191,6 +191,7 @@
     <string name="about_screen_key">aboutScreen</string>
 
     <!-- Backup limits -->
+    <string name="pref_backups_screen_key">backupsScreen</string>
     <string name="pref_backups_help_key">backups_help</string>
     <string name="pref_minutes_between_automatic_backups_key">minutes_between_automatic_backups</string>
     <string name="pref_daily_backups_to_keep_key">daily_backups_to_keep</string>
@@ -201,7 +202,8 @@
     <string name="hide_system_bars_key">hideSystemBars</string>
     <string name="ignore_display_cutout_key">ignoreDisplayCutout</string>
     <string name="hide_answer_buttons_key">hideAnswerButtons</string>
-
-    <string name="pref_new_multimedia_ui">newMultimediaUI</string>
+    <string name="hide_hard_and_easy_key">hideHardAndEasy</string>
+    <string name="reviewer_menu_settings_key">reviewerMenuSettings</string>
+    <string name="reviewer_frame_style_key">reviewerFrameStyle</string>
 
 </resources>

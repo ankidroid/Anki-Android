@@ -19,7 +19,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.CheckResult
-import com.canhub.cropper.CropImageActivity
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_ANSWER_FORMAT
@@ -41,14 +40,15 @@ import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.StudyOptionsActivity
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity
 import com.ichi2.anki.multimedia.MultimediaActivity
-import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.anki.notetype.ManageNotetypes
-import com.ichi2.anki.preferences.Preferences
+import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.services.ReminderService.Companion.getReviewDeckIntent
 import com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam.Companion.get
+import com.ichi2.widget.cardanalysis.CardAnalysisWidgetConfig
+import com.ichi2.widget.deckpicker.DeckPickerWidgetConfig
 import org.robolectric.Robolectric
 import org.robolectric.android.controller.ActivityController
 import java.util.function.Function
@@ -57,14 +57,14 @@ object ActivityList {
     // TODO: This needs a test to ensure that all activities are valid with the given intents
     // Otherwise, ActivityStartupUnderBackup and other classes could be flaky
     @CheckResult
-    fun allActivitiesAndIntents(): List<ActivityLaunchParam> {
-        return listOf(
+    fun allActivitiesAndIntents(): List<ActivityLaunchParam> =
+        listOf(
             get(DeckPicker::class.java),
             // IntentHandler has unhandled intents
             get(IntentHandler::class.java) { ctx: Context ->
                 getReviewDeckIntent(
                     ctx,
-                    1L
+                    1L,
                 )
             },
             get(IntentHandler2::class.java),
@@ -74,13 +74,11 @@ object ActivityList {
             // Likely has unhandled intents
             get(Reviewer::class.java),
             get(MyAccount::class.java),
-            get(Preferences::class.java),
-            get(CropImageActivity::class.java),
+            get(PreferencesActivity::class.java),
             get(FilteredDeckOptions::class.java),
             get(DrawingActivity::class.java),
             // Info has unhandled intents
             get(Info::class.java),
-            get(MultimediaEditFieldActivity::class.java),
             get(CardTemplateEditor::class.java) { intentForCardTemplateEditor() },
             get(CardTemplateBrowserAppearanceEditor::class.java) { intentForCardTemplateBrowserAppearanceEditor() },
             get(SharedDecksActivity::class.java),
@@ -92,9 +90,10 @@ object ActivityList {
             get(SingleFragmentActivity::class.java),
             get(CardViewerActivity::class.java),
             get(InstantNoteEditorActivity::class.java),
-            get(MultimediaActivity::class.java)
+            get(MultimediaActivity::class.java),
+            get(DeckPickerWidgetConfig::class.java),
+            get(CardAnalysisWidgetConfig::class.java),
         )
-    }
 
     private fun intentForCardTemplateBrowserAppearanceEditor(): Intent {
         // bundle != null
@@ -104,25 +103,24 @@ object ActivityList {
         }
     }
 
-    private fun intentForCardTemplateEditor(): Intent {
-        return Intent().apply { putExtra("modelId", 1L) }
-    }
+    private fun intentForCardTemplateEditor(): Intent = Intent().apply { putExtra("modelId", 1L) }
 
     class ActivityLaunchParam(
         var activity: Class<out Activity>,
-        private var intentBuilder: Function<Context, Intent>
+        private var intentBuilder: Function<Context, Intent>,
     ) {
         val simpleName: String = activity.simpleName
 
-        fun build(context: Context): ActivityController<out Activity> = Robolectric
-            .buildActivity(activity, intentBuilder.apply(context))
+        fun build(context: Context): ActivityController<out Activity> =
+            Robolectric
+                .buildActivity(activity, intentBuilder.apply(context))
 
         val className: String = activity.name
 
         companion object {
             operator fun get(
                 clazz: Class<out Activity>,
-                i: Function<Context, Intent> = Function { Intent() }
+                i: Function<Context, Intent> = Function { Intent() },
             ): ActivityLaunchParam = ActivityLaunchParam(clazz, i)
         }
     }

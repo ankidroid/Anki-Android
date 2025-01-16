@@ -16,8 +16,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <include layout="@layout/toolbar" />
-
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/pull_to_sync_wrapper"
             android:layout_width="match_parent"
@@ -34,7 +32,7 @@
                     android:orientation="vertical">
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/files"
+                        android:id="@+id/decks"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clipToPadding="false"
@@ -48,6 +46,10 @@
                     <com.ichi2.ui.FixedTextView
                         android:id="@+id/today_stats_text_view"
                         android:layout_width="match_parent"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentStart="true"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="4dp"

@@ -58,32 +58,29 @@
         <item quantity="other">%d записей показано</item>
     </plurals>
     <string name="card_browser_all_decks">Все колоды</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">Удалить карту</item>
-        <item quantity="few">Удалить карты</item>
-        <item quantity="many">Удалить карты</item>
-        <item quantity="other">Удалить карты</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">Удалить заметку</item>
         <item quantity="few">Удалить заметки</item>
         <item quantity="many">Удалить заметки</item>
         <item quantity="other">Удалить заметки</item>
     </plurals>
-    <string name="card_browser_change_deck">Сменить колоду</string>
+    <string name="card_browser_change_deck" maxLength="28">Сменить колоду</string>
     <string name="delete_card_title">Удалить запись?</string>
-    <string name="card_browser_show_marked">Отфильтровать отмеченные</string>
-    <string name="card_browser_show_suspended">Отфильтровать исключённые</string>
-    <string name="card_browser_search_by_tag">Отфильтровать по меткам</string>
-    <string name="card_browser_search_by_flag">Отфильтровать по флажкам</string>
-    <string name="card_browser_list_my_searches">Мои поисковые запросы</string>
-    <string name="card_browser_list_my_searches_save">Сохранить поисковый запрос</string>
+    <string name="card_browser_show_marked" maxLength="28">Отфильтровать отмеченные</string>
+    <string name="card_browser_show_suspended" maxLength="28">Отфильтровать исключённые</string>
+    <string name="card_browser_search_by_tag" maxLength="28">Отфильтровать по меткам</string>
+    <string name="card_browser_search_by_flag" maxLength="28">Отфильтровать по флажкам</string>
+    <string name="card_browser_list_my_searches" maxLength="28">Мои поисковые запросы</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">Сохранить поисковый запрос</string>
     <string name="card_browser_list_my_searches_title">Выберите сохраненный запрос</string>
     <string name="card_browser_list_my_searches_new_name">Название запроса</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Нельзя сохранить запрос без названия</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Такое название уже существует</string>
+    <string name="no_note_to_edit">Нет записей для редактирования</string>
     <string name="card_browser_list_my_searches_remove_content">Удалить «%1$s»?</string>
-    <string name="card_browser_change_display_order">Изменить сортировку</string>
+    <string name="card_browser_change_display_order" maxLength="28">Изменить сортировку</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Искать</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Искать</string>
     <string name="card_browser_change_display_order_title">Выберите тип сортировки</string>
     <string name="card_details_tags">Метки</string>
     <string-array name="card_browser_order_labels">
@@ -98,16 +95,13 @@
         <item>По повторениям</item>
         <item>По забытым</item>
     </string-array>
-    <string name="card_browser_select_all">Выбрать все</string>
-    <string name="card_browser_select_none">Снять выделение</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(новые)</string>
-    <string name="card_browser_due_filtered_card">(фильтрованные)</string>
-    <string name="card_browser_interval_learning_card">(изучаемые)</string>
+    <string name="card_browser_select_all" maxLength="28">Выбрать все</string>
+    <string name="card_browser_select_none" maxLength="28">Снять выделение</string>
     <string name="card_browser_no_cards_in_deck">В колоде «%s» не найдено карточек</string>
     <string name="card_browser_search_all_decks">Искать во всех колодах</string>
     <string name="card_browser_unknown_deck_name">Неизвестно</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Обрезать содержимое</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Сегодня ‘0 %1$s’, завтра ‘1 %2$s’, и тд&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Экспортировать карточку</item>
         <item quantity="few">Экспортировать карточки</item>
@@ -126,4 +120,7 @@
         <item quantity="many">%d карточек удалены</item>
         <item quantity="other">%d карточек удалено</item>
     </plurals>
+    <!--Keyboard shortcuts dialog-->
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Редактировать диалог меток</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Показать диалоговое окно порядка</string>
 </resources>

@@ -36,7 +36,9 @@ import timber.log.Timber
  *
  * @see AxisSelector
  */
-class AxisPicker(val rootLayout: ConstraintLayout) {
+class AxisPicker(
+    val rootLayout: ConstraintLayout,
+) {
     // DDisplays a message asking a user to provide input to the screen
     // We use a TextView to listen due to issues with handling AXIS_BRAKE and AXIS_GAS
     // When listening to 'rootLayout', these axes are ONLY detected after another joystick is moved

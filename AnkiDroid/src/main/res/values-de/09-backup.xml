@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">Sicherung nicht gespeichert. Kein ausreichender Speicherplatz auf Ihrem Speicher. Geben Sie mehr Speicherplatz frei oder verringern Sie die Sicherungstiefe.</string>
     <string name="storage_warning">Auf Ihrem Speicher sind weniger als %d MB frei.\nGeben Sie mehr Speicherplatz frei, um Datenverluste zu vermeiden.</string>
-    <string name="backup_restore">Von Sicherung wiederherstellen</string>
+    <string name="backup_restore" maxLength="28">Von Sicherung wiederherstellen</string>
     <string name="backup_new_collection">Neue Sammlung</string>
     <string name="backup_del_collection">Sammlung löschen und neue erstellen</string>
     <string name="backup_del_collection_question">Sammlung löschen und neue erstellen? Alle Ihre Karten und Ihr gesamter Lernfortschritt werden gelöscht.</string>

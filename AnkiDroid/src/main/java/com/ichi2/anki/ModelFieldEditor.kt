@@ -16,7 +16,6 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
-import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.view.Menu
@@ -25,7 +24,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ListView
-import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
@@ -39,7 +37,10 @@ import com.ichi2.anki.dialogs.ModelEditorContextMenu.Companion.newInstance
 import com.ichi2.anki.dialogs.ModelEditorContextMenu.ModelEditorContextMenuAction
 import com.ichi2.anki.servicelayer.LanguageHintService.setLanguageHintForField
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Fields
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.ui.FixedEditText
@@ -48,21 +49,24 @@ import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
-import com.ichi2.utils.toStringList
 import com.ichi2.widget.WidgetStatus
 import org.json.JSONArray
 import org.json.JSONException
 import timber.log.Timber
 import java.util.Locale
 
-class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
+class ModelFieldEditor :
+    AnkiActivity(),
+    LocaleSelectionDialogHandler {
     // Position of the current field selected
     private var currentPos = 0
     private lateinit var fieldsListView: ListView
     private var fieldNameInput: EditText? = null
     private lateinit var notetype: NotetypeJson
-    private lateinit var noteFields: JSONArray
     private lateinit var fieldsLabels: List<String>
+
+    // WARN: this should be lateinit, but this can't yet be done on an inline class
+    private var noteFields: Fields = Fields(JSONArray())
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -105,6 +109,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     // ----------------------------------------------------------------------------
     // UI SETUP
     // ----------------------------------------------------------------------------
+
     /**
      * Initialize the data holding properties and the UI from the model. This method expects that it
      * isn't followed by other type of work that access the data properties as it has the capability
@@ -119,25 +124,29 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             return
         }
         notetype = collectionModel
-        noteFields = notetype.getJSONArray("flds")
-        fieldsLabels = noteFields.toStringList("name")
+        noteFields = notetype.flds
+        fieldsLabels = notetype.fieldsNames
         fieldsListView.adapter = ArrayAdapter(this, R.layout.model_field_editor_list_item, fieldsLabels)
-        fieldsListView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position: Int, _ ->
-            showDialogFragment(newInstance(fieldsLabels[position]))
-            currentPos = position
-        }
+        fieldsListView.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, position: Int, _ ->
+                showDialogFragment(newInstance(fieldsLabels[position]))
+                currentPos = position
+            }
     }
     // ----------------------------------------------------------------------------
     // CONTEXT MENU DIALOGUES
     // ----------------------------------------------------------------------------
+
     /**
      * Clean the input field or explain why it's rejected
      * @param fieldNameInput Editor to get the input
      * @return The value to use, or null in case of failure
      */
     private fun uniqueName(fieldNameInput: EditText): String? {
-        var input = fieldNameInput.text.toString()
-            .replace("[\\n\\r{}:\"]".toRegex(), "")
+        var input =
+            fieldNameInput.text
+                .toString()
+                .replace("[\\n\\r{}:\"]".toRegex(), "")
         // The number of #, ^, /, space, tab, starting the input
         var offset = 0
         while (offset < input.length) {
@@ -159,20 +168,21 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     }
 
     /*
-    * Creates a dialog to create a field
-    */
+     * Creates a dialog to create a field
+     */
     private fun addFieldDialog() {
-        fieldNameInput = FixedEditText(this).apply {
-            focusWithKeyboard()
-        }
-        fieldNameInput?.let { _fieldNameInput ->
-            _fieldNameInput.isSingleLine = true
+        fieldNameInput =
+            FixedEditText(this).apply {
+                focusWithKeyboard()
+            }
+        fieldNameInput?.let { fieldNameInput ->
+            fieldNameInput.isSingleLine = true
             AlertDialog.Builder(this).show {
-                customView(view = _fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
+                customView(view = fieldNameInput, paddingStart = 64, paddingEnd = 64, paddingTop = 32)
                 title(R.string.model_field_editor_add)
                 positiveButton(R.string.dialog_ok) {
                     // Name is valid, now field is added
-                    val fieldName = uniqueName(_fieldNameInput)
+                    val fieldName = uniqueName(fieldNameInput)
                     try {
                         addField(fieldName, true)
                     } catch (e: ConfirmModSchemaException) {
@@ -181,14 +191,15 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                         // Create dialogue to for schema change
                         val c = ConfirmationDialog()
                         c.setArgs(resources.getString(R.string.full_sync_confirmation))
-                        val confirm = Runnable {
-                            try {
-                                addField(fieldName, false)
-                            } catch (e1: ConfirmModSchemaException) {
-                                e1.log()
-                                // This should never be thrown
+                        val confirm =
+                            Runnable {
+                                try {
+                                    addField(fieldName, false)
+                                } catch (e1: ConfirmModSchemaException) {
+                                    e1.log()
+                                    // This should never be thrown
+                                }
                             }
-                        }
                         c.setConfirm(confirm)
                         this@ModelFieldEditor.showDialogFragment(c)
                     }
@@ -204,7 +215,10 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      * Adds a field with the given name
      */
     @Throws(ConfirmModSchemaException::class)
-    private fun addField(fieldName: String?, modSchemaCheck: Boolean) {
+    private fun addField(
+        fieldName: String?,
+        modSchemaCheck: Boolean,
+    ) {
         fieldName ?: return
         // Name is valid, now field is added
         if (modSchemaCheck) {
@@ -227,13 +241,14 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      * Creates a dialog to delete the currently selected field
      */
     private fun deleteFieldDialog() {
-        val confirm = Runnable {
-            getColUnsafe.modSchemaNoCheck()
-            deleteField()
+        val confirm =
+            Runnable {
+                getColUnsafe.modSchemaNoCheck()
+                deleteField()
 
-            // This ensures that the context menu closes after the field has been deleted
-            supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-        }
+                // This ensures that the context menu closes after the field has been deleted
+                supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            }
 
         if (fieldsLabels.size < 2) {
             showThemedToast(this, resources.getString(R.string.toast_last_field), true)
@@ -260,16 +275,17 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         launchCatchingTask {
             Timber.d("doInBackGroundDeleteField")
             withProgress(message = getString(R.string.model_field_editor_changing)) {
-                val result = withCol {
-                    try {
-                        notetypes.remField(notetype, noteFields.getJSONObject(currentPos))
-                        true
-                    } catch (e: ConfirmModSchemaException) {
-                        // Should never be reached
-                        e.log()
-                        false
+                val result =
+                    withCol {
+                        try {
+                            notetypes.remFieldLegacy(notetype, noteFields[currentPos])
+                            true
+                        } catch (e: ConfirmModSchemaException) {
+                            // Should never be reached
+                            e.log()
+                            false
+                        }
                     }
-                }
                 if (!result) {
                     closeActivity()
                 }
@@ -284,15 +300,15 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      */
     private fun renameFieldDialog() {
         fieldNameInput = FixedEditText(this).apply { focusWithKeyboard() }
-        fieldNameInput?.let { _fieldNameInput ->
-            _fieldNameInput.isSingleLine = true
-            _fieldNameInput.setText(fieldsLabels[currentPos])
-            _fieldNameInput.setSelection(_fieldNameInput.text!!.length)
+        fieldNameInput?.let { fieldNameInput ->
+            fieldNameInput.isSingleLine = true
+            fieldNameInput.setText(fieldsLabels[currentPos])
+            fieldNameInput.setSelection(fieldNameInput.text!!.length)
             AlertDialog.Builder(this).show {
-                customView(view = _fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
+                customView(view = fieldNameInput, paddingStart = 64, paddingEnd = 64, paddingTop = 32)
                 title(R.string.model_field_editor_rename)
                 positiveButton(R.string.rename) {
-                    if (uniqueName(_fieldNameInput) == null) {
+                    if (uniqueName(fieldNameInput) == null) {
                         return@positiveButton
                     }
                     // Field is valid, now rename
@@ -304,15 +320,16 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                         // Handler mod schema confirmation
                         val c = ConfirmationDialog()
                         c.setArgs(resources.getString(R.string.full_sync_confirmation))
-                        val confirm = Runnable {
-                            getColUnsafe.modSchemaNoCheck()
-                            try {
-                                renameField()
-                            } catch (e1: ConfirmModSchemaException) {
-                                e1.log()
-                                // This should never be thrown
+                        val confirm =
+                            Runnable {
+                                getColUnsafe.modSchemaNoCheck()
+                                try {
+                                    renameField()
+                                } catch (e1: ConfirmModSchemaException) {
+                                    e1.log()
+                                    // This should never be thrown
+                                }
                             }
-                        }
                         c.setConfirm(confirm)
                         this@ModelFieldEditor.showDialogFragment(c)
                     }
@@ -329,22 +346,23 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      */
     private fun repositionFieldDialog() {
         fieldNameInput = FixedEditText(this).apply { focusWithKeyboard() }
-        fieldNameInput?.let { _fieldNameInput ->
-            _fieldNameInput.setRawInputType(InputType.TYPE_CLASS_NUMBER)
+        fieldNameInput?.let { fieldNameInput ->
+            fieldNameInput.setRawInputType(InputType.TYPE_CLASS_NUMBER)
             AlertDialog.Builder(this).show {
-                customView(view = _fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
+                customView(view = fieldNameInput, paddingStart = 64, paddingEnd = 64, paddingTop = 32)
                 title(text = String.format(resources.getString(R.string.model_field_editor_reposition), 1, fieldsLabels.size))
                 positiveButton(R.string.dialog_ok) {
-                    val newPosition = _fieldNameInput.text.toString()
-                    val pos: Int = try {
-                        newPosition.toInt()
-                    } catch (n: NumberFormatException) {
-                        Timber.w(n)
-                        _fieldNameInput.error = resources.getString(R.string.toast_out_of_range)
-                        return@positiveButton
-                    }
+                    val newPosition = fieldNameInput.text.toString()
+                    val pos: Int =
+                        try {
+                            newPosition.toInt()
+                        } catch (n: NumberFormatException) {
+                            Timber.w(n)
+                            fieldNameInput.error = resources.getString(R.string.toast_out_of_range)
+                            return@positiveButton
+                        }
                     if (pos < 1 || pos > fieldsLabels.size) {
-                        _fieldNameInput.error = resources.getString(R.string.toast_out_of_range)
+                        fieldNameInput.error = resources.getString(R.string.toast_out_of_range)
                     } else {
                         // Input is valid, now attempt to modify
                         try {
@@ -356,14 +374,15 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                             // Handle mod schema confirmation
                             val c = ConfirmationDialog()
                             c.setArgs(resources.getString(R.string.full_sync_confirmation))
-                            val confirm = Runnable {
-                                try {
-                                    getColUnsafe.modSchemaNoCheck()
-                                    repositionField(pos - 1)
-                                } catch (e1: JSONException) {
-                                    throw RuntimeException(e1)
+                            val confirm =
+                                Runnable {
+                                    try {
+                                        getColUnsafe.modSchemaNoCheck()
+                                        repositionField(pos - 1)
+                                    } catch (e1: JSONException) {
+                                        throw RuntimeException(e1)
+                                    }
                                 }
-                            }
                             c.setConfirm(confirm)
                             this@ModelFieldEditor.showDialogFragment(c)
                         }
@@ -377,17 +396,18 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     private fun repositionField(index: Int) {
         launchCatchingTask {
             withProgress(message = getString(R.string.model_field_editor_changing)) {
-                val result = withCol {
-                    Timber.d("doInBackgroundRepositionField")
-                    try {
-                        notetypes.moveField(notetype, noteFields.getJSONObject(currentPos), index)
-                        true
-                    } catch (e: ConfirmModSchemaException) {
-                        e.log()
-                        // Should never be reached
-                        false
+                val result =
+                    withCol {
+                        Timber.d("doInBackgroundRepositionField")
+                        try {
+                            notetypes.moveFieldLegacy(notetype, noteFields[currentPos], index)
+                            true
+                        } catch (e: ConfirmModSchemaException) {
+                            e.log()
+                            // Should never be reached
+                            false
+                        }
                     }
-                }
                 if (!result) {
                     closeActivity()
                 }
@@ -401,10 +421,13 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      */
     @Throws(ConfirmModSchemaException::class)
     private fun renameField() {
-        val fieldLabel = fieldNameInput!!.text.toString()
-            .replace("[\\n\\r]".toRegex(), "")
-        val field = noteFields.getJSONObject(currentPos)
-        getColUnsafe.notetypes.renameField(notetype, field, fieldLabel)
+        val fieldLabel =
+            fieldNameInput!!
+                .text
+                .toString()
+                .replace("[\\n\\r]".toRegex(), "")
+        val field = noteFields[currentPos]
+        getColUnsafe.notetypes.renameFieldLegacy(notetype, field, fieldLabel)
         initialize()
     }
 
@@ -420,42 +443,46 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             // Handler mMod schema confirmation
             val c = ConfirmationDialog()
             c.setArgs(resources.getString(R.string.full_sync_confirmation))
-            val confirm = Runnable {
-                getColUnsafe.modSchemaNoCheck()
-                launchCatchingTask { changeSortField(notetype, currentPos) }
-            }
+            val confirm =
+                Runnable {
+                    getColUnsafe.modSchemaNoCheck()
+                    launchCatchingTask { changeSortField(notetype, currentPos) }
+                }
             c.setConfirm(confirm)
             this@ModelFieldEditor.showDialogFragment(c)
         }
     }
 
-    private suspend fun changeSortField(notetype: NotetypeJson, idx: Int) {
+    private suspend fun changeSortField(
+        notetype: NotetypeJson,
+        idx: Int,
+    ) {
         withProgress(resources.getString(R.string.model_field_editor_changing)) {
             withCol {
                 Timber.d("doInBackgroundChangeSortField")
-                notetypes.set_sort_index(notetype, idx)
+                notetypes.setSortIndex(notetype, idx)
+                notetypes.save(notetype)
             }
         }
         initialize()
     }
 
-    /*
+    /**
      * Toggle the "Remember last input" setting AKA the "Sticky" setting
      */
     private fun toggleStickyField() {
-        // Get the current field
-        val field = noteFields.getJSONObject(currentPos)
-        // If the sticky setting is enabled then disable it, otherwise enable it
-        field.put("sticky", !field.getBoolean("sticky"))
+        val field = noteFields[currentPos]
+        field.sticky = !field.sticky
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.action_add_new_model -> {
-            addFieldDialog()
-            true
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        when (item.itemId) {
+            R.id.action_add_new_model -> {
+                addFieldDialog()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        else -> super.onOptionsItemSelected(item)
-    }
 
     private fun closeActivity() {
         finish()
@@ -468,20 +495,12 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             ModelEditorContextMenuAction.Delete -> deleteFieldDialog()
             ModelEditorContextMenuAction.Rename -> renameFieldDialog()
             ModelEditorContextMenuAction.ToggleSticky -> toggleStickyField()
-            ModelEditorContextMenuAction.AddLanguageHint -> {
-                Timber.i("displaying locale hint dialog")
-                // localeHintDialog() is safe to be called here without the check but we can't
-                // suppress @RequiresApi just for the method call, we would have to do it on
-                // handleAction() which is not ok
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    localeHintDialog()
-                }
-            }
+            ModelEditorContextMenuAction.AddLanguageHint -> localeHintDialog()
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private fun localeHintDialog() {
+        Timber.i("displaying locale hint dialog")
         // We don't currently show the current value, but we may want to in the future
         val dialogFragment: DialogFragment = LocaleSelectionDialog.newInstance(this)
         showDialogFragment(dialogFragment)
@@ -491,20 +510,17 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      * Sets the Locale Hint of the field to the provided value.
      * This allows some keyboard (GBoard) to change language
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private fun addFieldLocaleHint(selectedLocale: Locale) {
         setLanguageHintForField(getColUnsafe.notetypes, notetype, currentPos, selectedLocale)
         val format = getString(R.string.model_field_editor_language_hint_dialog_success_result, selectedLocale.displayName)
         showSnackbar(format, Snackbar.LENGTH_SHORT)
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     override fun onSelectedLocale(selectedLocale: Locale) {
         addFieldLocaleHint(selectedLocale)
         dismissAllDialogFragments()
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     override fun onLocaleSelectionCancelled() {
         dismissAllDialogFragments()
     }

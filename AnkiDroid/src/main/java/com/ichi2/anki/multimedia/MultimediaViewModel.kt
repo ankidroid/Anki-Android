@@ -26,7 +26,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class MultimediaViewModel : ViewModel() {
-
     /** Errors or Warnings related to the edit fields that might occur when trying to save note */
     val multimediaAction = MutableSharedFlow<MultimediaBottomSheet.MultimediaAction>()
 
@@ -47,7 +46,10 @@ class MultimediaViewModel : ViewModel() {
         }
     }
 
-    fun saveMultimediaForRevert(imagePath: String?, imageUri: Uri?) {
+    fun saveMultimediaForRevert(
+        imagePath: String?,
+        imageUri: Uri?,
+    ) {
         prevMultimediaPath = imagePath
         prevMultimediaUri = imageUri
     }
@@ -55,6 +57,10 @@ class MultimediaViewModel : ViewModel() {
     fun restoreMultimedia() {
         _currentMultimediaUri.value = prevMultimediaUri
         _currentMultimediaPath.value = prevMultimediaPath
+    }
+
+    fun updateMediaFileLength(length: Long) {
+        selectedMediaFileSize = length
     }
 
     fun updateCurrentMultimediaUri(uri: Uri?) {

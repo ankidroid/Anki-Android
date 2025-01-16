@@ -54,28 +54,27 @@
         <item quantity="other">%d Notizen angezeigt</item>
     </plurals>
     <string name="card_browser_all_decks">Alle Stapel</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">Karte löschen</item>
-        <item quantity="other">Karten löschen</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">Notiz löschen</item>
         <item quantity="other">Notizen löschen</item>
     </plurals>
-    <string name="card_browser_change_deck">Stapel wechseln</string>
+    <string name="card_browser_change_deck" maxLength="28">Stapel wechseln</string>
     <string name="delete_card_title">Notiz löschen?</string>
-    <string name="card_browser_show_marked">Markierte herausfiltern</string>
-    <string name="card_browser_show_suspended">Nach Ausgeschlossenen filtern</string>
-    <string name="card_browser_search_by_tag">Nach Schlagwort filtern</string>
-    <string name="card_browser_search_by_flag">Nach Flagge filtern</string>
-    <string name="card_browser_list_my_searches">Meine Suchen</string>
-    <string name="card_browser_list_my_searches_save">Suche speichern</string>
+    <string name="card_browser_show_marked" maxLength="28">Markierte herausfiltern</string>
+    <string name="card_browser_show_suspended" maxLength="28">Nach Ausgeschlossenen filtern</string>
+    <string name="card_browser_search_by_tag" maxLength="28">Nach Schlagwort filtern</string>
+    <string name="card_browser_search_by_flag" maxLength="28">Nach Flagge filtern</string>
+    <string name="card_browser_list_my_searches" maxLength="28">Meine Suchen</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">Suche speichern</string>
     <string name="card_browser_list_my_searches_title">Wählen Sie eine gespeicherte Suche</string>
     <string name="card_browser_list_my_searches_new_name">Name für die aktuelle Suche</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Sie können keine unbenannte Suche speichern</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Name bereits vorhanden</string>
+    <string name="no_note_to_edit">Keine notiz zum bearbeiten</string>
     <string name="card_browser_list_my_searches_remove_content">»%1$s« löschen?</string>
-    <string name="card_browser_change_display_order">Anzeigereihenfolge ändern</string>
+    <string name="card_browser_change_display_order" maxLength="28">Anzeigereihenfolge ändern</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Suchen</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Suchen</string>
     <string name="card_browser_change_display_order_title">Anzeigereihenfolge auswählen</string>
     <string name="card_details_tags">Schlagwörter</string>
     <string-array name="card_browser_order_labels">
@@ -88,13 +87,10 @@
         <item>Nach Intervall</item>
         <item>Nach Leichtigkeit</item>
         <item>Nach Wiederholungen</item>
-        <item>Nach Vergessenen</item>
+        <item>Nach Fehlversuchen</item>
     </string-array>
-    <string name="card_browser_select_all">Alle auswählen</string>
-    <string name="card_browser_select_none">Keine auswählen</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(neu)</string>
-    <string name="card_browser_due_filtered_card">(gefiltert)</string>
-    <string name="card_browser_interval_learning_card">(lernen)</string>
+    <string name="card_browser_select_all" maxLength="28">Alle auswählen</string>
+    <string name="card_browser_select_none" maxLength="28">Keine auswählen</string>
     <string name="card_browser_no_cards_in_deck">Keine Karten im Stapel »%s« gefunden</string>
     <string name="card_browser_search_all_decks">In allen Stapeln suchen</string>
     <string name="card_browser_unknown_deck_name">Unbekannt</string>
@@ -112,4 +108,7 @@
         <item quantity="one">%d Karte gelöscht</item>
         <item quantity="other">%d Karten gelöscht</item>
     </plurals>
+    <!--Keyboard shortcuts dialog-->
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Schlagwörter-dialog bearbeiten</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Bestellungsdialog anzeigen</string>
 </resources>

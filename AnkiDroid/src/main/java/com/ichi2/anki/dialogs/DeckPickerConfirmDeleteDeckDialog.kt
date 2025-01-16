@@ -23,6 +23,7 @@ import androidx.core.text.HtmlCompat
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.libanki.DeckId
 import com.ichi2.utils.BundleUtils.requireLong
 
@@ -33,38 +34,42 @@ class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
     private val isFilteredDeck get() = requireArguments().getBoolean("isFilteredDeck")
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val message = if (isFilteredDeck) {
-            resources.getString(R.string.delete_cram_deck_message, "<b>$deckName</b>")
-        } else {
-            resources.getQuantityString(
-                R.plurals.delete_deck_message,
-                totalCards,
-                "<b>$deckName</b>",
-                totalCards
-            )
-        }
+        val message =
+            if (isFilteredDeck) {
+                resources.getString(R.string.delete_cram_deck_message, "<b>$deckName</b>")
+            } else {
+                resources.getQuantityString(
+                    R.plurals.delete_deck_message,
+                    totalCards,
+                    "<b>$deckName</b>",
+                    totalCards,
+                )
+            }
         super.onCreate(savedInstanceState)
-        return AlertDialog.Builder(requireActivity())
+        return AlertDialog
+            .Builder(requireActivity())
             .setTitle(R.string.delete_deck_title)
             .setMessage(
                 HtmlCompat.fromHtml(
                     message,
-                    HtmlCompat.FROM_HTML_MODE_LEGACY
-                )
-            )
-            .setIcon(R.drawable.ic_warning)
+                    HtmlCompat.FROM_HTML_MODE_LEGACY,
+                ),
+            ).setIcon(R.drawable.ic_warning)
             .setPositiveButton(R.string.dialog_positive_delete) { _, _ ->
                 (activity as DeckPicker).deleteDeck(deckId)
-                (activity as DeckPicker).dismissAllDialogFragments()
-            }
-            .setNegativeButton(R.string.dialog_cancel) { _, _ ->
-                (activity as DeckPicker).dismissAllDialogFragments()
-            }
-            .create()
+                activity?.dismissAllDialogFragments()
+            }.setNegativeButton(R.string.dialog_cancel) { _, _ ->
+                activity?.dismissAllDialogFragments()
+            }.create()
     }
 
     companion object {
-        fun newInstance(deckName: String, deckId: DeckId, totalCards: Int, isFilteredDeck: Boolean): DeckPickerConfirmDeleteDeckDialog {
+        fun newInstance(
+            deckName: String,
+            deckId: DeckId,
+            totalCards: Int,
+            isFilteredDeck: Boolean,
+        ): DeckPickerConfirmDeleteDeckDialog {
             val f = DeckPickerConfirmDeleteDeckDialog()
             val args = Bundle()
             args.putString("deckName", deckName)

@@ -23,24 +23,30 @@ import android.text.style.UnderlineSpan
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
-import androidx.appcompat.view.menu.MenuBuilder
-import androidx.appcompat.widget.ThemeUtils
-import androidx.appcompat.widget.Toolbar
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.appcompat.view.menu.SubMenuBuilder
+import androidx.appcompat.widget.ActionMenuView
+import androidx.core.content.getSystemService
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.shape.ShapeAppearanceModel
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
 import com.ichi2.anki.CollectionManager
@@ -48,24 +54,64 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.CardMediaPlayer
+import com.ichi2.anki.noteeditor.NoteEditorLauncher
+import com.ichi2.anki.preferences.reviewer.ReviewerMenuView
+import com.ichi2.anki.preferences.reviewer.ViewerAction
+import com.ichi2.anki.preferences.reviewer.ViewerAction.ADD_NOTE
+import com.ichi2.anki.preferences.reviewer.ViewerAction.BURY_CARD
+import com.ichi2.anki.preferences.reviewer.ViewerAction.BURY_MENU
+import com.ichi2.anki.preferences.reviewer.ViewerAction.BURY_NOTE
+import com.ichi2.anki.preferences.reviewer.ViewerAction.CARD_INFO
+import com.ichi2.anki.preferences.reviewer.ViewerAction.DECK_OPTIONS
+import com.ichi2.anki.preferences.reviewer.ViewerAction.DELETE
+import com.ichi2.anki.preferences.reviewer.ViewerAction.EDIT
+import com.ichi2.anki.preferences.reviewer.ViewerAction.FLAG_BLUE
+import com.ichi2.anki.preferences.reviewer.ViewerAction.FLAG_GREEN
+import com.ichi2.anki.preferences.reviewer.ViewerAction.FLAG_MENU
+import com.ichi2.anki.preferences.reviewer.ViewerAction.FLAG_ORANGE
+import com.ichi2.anki.preferences.reviewer.ViewerAction.FLAG_PINK
+import com.ichi2.anki.preferences.reviewer.ViewerAction.FLAG_PURPLE
+import com.ichi2.anki.preferences.reviewer.ViewerAction.FLAG_RED
+import com.ichi2.anki.preferences.reviewer.ViewerAction.FLAG_TURQUOISE
+import com.ichi2.anki.preferences.reviewer.ViewerAction.MARK
+import com.ichi2.anki.preferences.reviewer.ViewerAction.REDO
+import com.ichi2.anki.preferences.reviewer.ViewerAction.SUSPEND_CARD
+import com.ichi2.anki.preferences.reviewer.ViewerAction.SUSPEND_MENU
+import com.ichi2.anki.preferences.reviewer.ViewerAction.SUSPEND_NOTE
+import com.ichi2.anki.preferences.reviewer.ViewerAction.TOGGLE_AUTO_ADVANCE
+import com.ichi2.anki.preferences.reviewer.ViewerAction.UNDO
+import com.ichi2.anki.preferences.reviewer.ViewerAction.UNSET_FLAG
+import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_1
+import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_2
+import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_3
+import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_4
+import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_5
+import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_6
+import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_7
+import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_8
+import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_9
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
+import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.settings.enums.FrameStyle
+import com.ichi2.anki.settings.enums.HideSystemBars
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.collectLatestIn
+import com.ichi2.anki.utils.ext.menu
+import com.ichi2.anki.utils.ext.removeSubMenu
 import com.ichi2.anki.utils.ext.sharedPrefs
-import com.ichi2.anki.utils.navBarNeedsScrim
+import com.ichi2.anki.utils.ext.window
+import com.ichi2.anki.utils.setMargins
 import com.ichi2.libanki.sched.Counts
-import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import kotlinx.coroutines.launch
 
 class ReviewerFragment :
     CardViewerFragment(R.layout.reviewer2),
     BaseSnackbarBuilderProvider,
-    Toolbar.OnMenuItemClickListener {
-
+    ActionMenuView.OnMenuItemClickListener {
     override val viewModel: ReviewerViewModel by viewModels {
         ReviewerViewModel.factory(CardMediaPlayer())
     }
@@ -74,7 +120,13 @@ class ReviewerFragment :
         get() = requireView().findViewById(R.id.webview)
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
-        anchorView = this@ReviewerFragment.view?.findViewById(R.id.buttons_area)
+        val typeAnswerContainer = this@ReviewerFragment.view?.findViewById<View>(R.id.type_answer_container)
+        anchorView =
+            if (typeAnswerContainer?.isVisible == true) {
+                typeAnswerContainer
+            } else {
+                this@ReviewerFragment.view?.findViewById(R.id.buttons_area)
+            }
     }
 
     override fun onStop() {
@@ -84,31 +136,25 @@ class ReviewerFragment :
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
+        view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
+            setNavigationOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
+        }
+
         setupImmersiveMode(view)
+        setupFrame(view)
+        setupTypeAnswer(view)
         setupAnswerButtons(view)
         setupCounts(view)
+        setupMenu(view)
 
-        view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
-            setOnMenuItemClickListener(this@ReviewerFragment)
-            setNavigationOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
-            (menu as? MenuBuilder)?.let {
-                setupMenuItems(it)
-                it.setOptionalIconsVisible(true)
-                requireContext().increaseHorizontalPaddingOfOverflowMenuIcons(it)
-            }
-        }
-
-        with(requireActivity()) {
-            if (!navBarNeedsScrim) {
-                window.navigationBarColor =
-                    ThemeUtils.getThemeAttrColor(this, R.attr.alternativeBackgroundColor)
-            }
-        }
-
-        viewModel.actionFeedbackFlow.flowWithLifecycle(lifecycle)
+        viewModel.actionFeedbackFlow
+            .flowWithLifecycle(lifecycle)
             .collectIn(lifecycleScope) { message ->
                 showSnackbar(message, duration = 500)
             }
@@ -131,66 +177,128 @@ class ReviewerFragment :
 
     // TODO
     override fun onMenuItemClick(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_add_note -> launchAddNote()
-            R.id.action_bury_card -> viewModel.buryCard()
-            R.id.action_bury_note -> viewModel.buryNote()
-            R.id.action_card_info -> launchCardInfo()
-            R.id.action_delete -> viewModel.deleteNote()
-            R.id.action_edit -> launchEditNote()
-            R.id.action_mark -> viewModel.toggleMark()
-            R.id.action_open_deck_options -> launchDeckOptions()
-            R.id.action_redo -> viewModel.redo()
-            R.id.action_suspend_card -> viewModel.suspendCard()
-            R.id.action_suspend_note -> viewModel.suspendNote()
-            R.id.action_undo -> viewModel.undo()
-            R.id.flag_none -> viewModel.setFlag(Flag.NONE)
-            R.id.flag_red -> viewModel.setFlag(Flag.RED)
-            R.id.flag_orange -> viewModel.setFlag(Flag.ORANGE)
-            R.id.flag_green -> viewModel.setFlag(Flag.GREEN)
-            R.id.flag_blue -> viewModel.setFlag(Flag.BLUE)
-            R.id.flag_pink -> viewModel.setFlag(Flag.PINK)
-            R.id.flag_turquoise -> viewModel.setFlag(Flag.TURQUOISE)
-            R.id.flag_purple -> viewModel.setFlag(Flag.PURPLE)
-            R.id.user_action_1 -> viewModel.userAction(1)
-            R.id.user_action_2 -> viewModel.userAction(2)
-            R.id.user_action_3 -> viewModel.userAction(3)
-            R.id.user_action_4 -> viewModel.userAction(4)
-            R.id.user_action_5 -> viewModel.userAction(5)
-            R.id.user_action_6 -> viewModel.userAction(6)
-            R.id.user_action_7 -> viewModel.userAction(7)
-            R.id.user_action_8 -> viewModel.userAction(8)
-            R.id.user_action_9 -> viewModel.userAction(9)
+        if (item.hasSubMenu()) return false
+        val action = ViewerAction.fromId(item.itemId)
+        when (action) {
+            ADD_NOTE -> launchAddNote()
+            CARD_INFO -> launchCardInfo()
+            DECK_OPTIONS -> launchDeckOptions()
+            EDIT -> launchEditNote()
+            DELETE -> viewModel.deleteNote()
+            MARK -> viewModel.toggleMark()
+            REDO -> viewModel.redo()
+            UNDO -> viewModel.undo()
+            TOGGLE_AUTO_ADVANCE -> viewModel.toggleAutoAdvance()
+            BURY_NOTE -> viewModel.buryNote()
+            BURY_CARD -> viewModel.buryCard()
+            SUSPEND_NOTE -> viewModel.suspendNote()
+            SUSPEND_CARD -> viewModel.suspendCard()
+            UNSET_FLAG -> viewModel.setFlag(Flag.NONE)
+            FLAG_RED -> viewModel.setFlag(Flag.RED)
+            FLAG_ORANGE -> viewModel.setFlag(Flag.ORANGE)
+            FLAG_BLUE -> viewModel.setFlag(Flag.BLUE)
+            FLAG_GREEN -> viewModel.setFlag(Flag.GREEN)
+            FLAG_PINK -> viewModel.setFlag(Flag.PINK)
+            FLAG_TURQUOISE -> viewModel.setFlag(Flag.TURQUOISE)
+            FLAG_PURPLE -> viewModel.setFlag(Flag.PURPLE)
+            USER_ACTION_1 -> viewModel.userAction(1)
+            USER_ACTION_2 -> viewModel.userAction(2)
+            USER_ACTION_3 -> viewModel.userAction(3)
+            USER_ACTION_4 -> viewModel.userAction(4)
+            USER_ACTION_5 -> viewModel.userAction(5)
+            USER_ACTION_6 -> viewModel.userAction(6)
+            USER_ACTION_7 -> viewModel.userAction(7)
+            USER_ACTION_8 -> viewModel.userAction(8)
+            USER_ACTION_9 -> viewModel.userAction(9)
+            SUSPEND_MENU -> viewModel.suspendCard()
+            BURY_MENU -> viewModel.buryCard()
+            FLAG_MENU -> return false
         }
         return true
     }
 
+    private fun setupTypeAnswer(view: View) {
+        // TODO keep text after configuration changes
+        val typeAnswerContainer = view.findViewById<MaterialCardView>(R.id.type_answer_container)
+        val typeAnswerEditText =
+            view.findViewById<TextInputEditText>(R.id.type_answer_edit_text).apply {
+                setOnEditorActionListener { editTextView, actionId, _ ->
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        viewModel.onShowAnswer(editTextView.text.toString())
+                        return@setOnEditorActionListener true
+                    }
+                    false
+                }
+                setOnFocusChangeListener { editTextView, hasFocus ->
+                    val insetsController = WindowInsetsControllerCompat(window, editTextView)
+                    if (hasFocus) {
+                        insetsController.show(WindowInsetsCompat.Type.ime())
+                    } else {
+                        insetsController.hide(WindowInsetsCompat.Type.ime())
+                    }
+                }
+            }
+        val autoFocusTypeAnswer = Prefs.autoFocusTypeAnswer
+        viewModel.typeAnswerFlow.collectIn(lifecycleScope) { typeInAnswer ->
+            typeAnswerEditText.text = null
+            if (typeInAnswer == null) {
+                typeAnswerContainer.isVisible = false
+                return@collectIn
+            }
+            typeAnswerContainer.isVisible = true
+            typeAnswerEditText.apply {
+                if (imeHintLocales != typeInAnswer.imeHintLocales) {
+                    imeHintLocales = typeInAnswer.imeHintLocales
+                    context?.getSystemService<InputMethodManager>()?.restartInput(this)
+                }
+                if (autoFocusTypeAnswer) {
+                    requestFocus()
+                }
+            }
+        }
+    }
+
+    private fun resetZoom() {
+        webView.settings.loadWithOverviewMode = false
+        webView.settings.loadWithOverviewMode = true
+    }
+
     private fun setupAnswerButtons(view: View) {
-        val hideAnswerButtons = sharedPrefs().getBoolean(getString(R.string.hide_answer_buttons_key), false)
+        val prefs = sharedPrefs()
+        val hideAnswerButtons = prefs.getBoolean(getString(R.string.hide_answer_buttons_key), false)
+        val buttonsAreaLayout = view.findViewById<FrameLayout>(R.id.buttons_area)
         if (hideAnswerButtons) {
-            view.findViewById<FrameLayout>(R.id.buttons_area).isVisible = false
+            buttonsAreaLayout.isVisible = false
             return
         }
 
-        fun MaterialButton.setAnswerButtonNextTime(@StringRes title: Int, nextTime: String?) {
+        fun MaterialButton.setAnswerButtonNextTime(
+            @StringRes title: Int,
+            nextTime: String?,
+        ) {
             val titleString = context.getString(title)
             text = ReviewerViewModel.buildAnswerButtonText(titleString, nextTime)
         }
 
-        val againButton = view.findViewById<MaterialButton>(R.id.again_button).apply {
-            setOnClickListener { viewModel.answerAgain() }
-        }
-        val hardButton = view.findViewById<MaterialButton>(R.id.hard_button).apply {
-            setOnClickListener { viewModel.answerHard() }
-        }
-        val goodButton = view.findViewById<MaterialButton>(R.id.good_button).apply {
-            setOnClickListener { viewModel.answerGood() }
-        }
-        val easyButton = view.findViewById<MaterialButton>(R.id.easy_button).apply {
-            setOnClickListener { viewModel.answerEasy() }
-        }
+        val againButton =
+            view.findViewById<MaterialButton>(R.id.again_button).apply {
+                setOnClickListener { viewModel.answerAgain() }
+            }
+        val hardButton =
+            view.findViewById<MaterialButton>(R.id.hard_button).apply {
+                setOnClickListener { viewModel.answerHard() }
+            }
+        val goodButton =
+            view.findViewById<MaterialButton>(R.id.good_button).apply {
+                setOnClickListener { viewModel.answerGood() }
+            }
+        val easyButton =
+            view.findViewById<MaterialButton>(R.id.easy_button).apply {
+                setOnClickListener { viewModel.answerEasy() }
+            }
 
-        viewModel.answerButtonsNextTimeFlow.flowWithLifecycle(lifecycle)
+        viewModel.answerButtonsNextTimeFlow
+            .flowWithLifecycle(lifecycle)
             .collectIn(lifecycleScope) { times ->
                 againButton.setAnswerButtonNextTime(R.string.ease_button_again, times?.again)
                 hardButton.setAnswerButtonNextTime(R.string.ease_button_hard, times?.hard)
@@ -198,21 +306,40 @@ class ReviewerFragment :
                 easyButton.setAnswerButtonNextTime(R.string.ease_button_easy, times?.easy)
             }
 
-        val showAnswerButton = view.findViewById<MaterialButton>(R.id.show_answer).apply {
-            setOnClickListener {
-                viewModel.showAnswer()
+        val showAnswerButton =
+            view.findViewById<MaterialButton>(R.id.show_answer).apply {
+                val editText = view.findViewById<TextInputEditText>(R.id.type_answer_edit_text)
+                setOnClickListener {
+                    val typedAnswer = editText?.text?.toString()
+                    viewModel.onShowAnswer(typedAnswer = typedAnswer)
+                }
             }
-        }
-        val answerButtonsLayout = view.findViewById<ConstraintLayout>(R.id.answer_buttons)
+        val answerButtonsLayout = view.findViewById<LinearLayout>(R.id.answer_buttons)
 
         // TODO add some kind of feedback/animation after tapping show answer or the answer buttons
         viewModel.showingAnswer.collectLatestIn(lifecycleScope) { shouldShowAnswer ->
+            // use INVISIBLE instead of GONE to keep the same button height
             if (shouldShowAnswer) {
-                showAnswerButton.isVisible = false
-                answerButtonsLayout.isVisible = true
+                showAnswerButton.visibility = View.INVISIBLE
+                answerButtonsLayout.visibility = View.VISIBLE
             } else {
-                showAnswerButton.isVisible = true
-                answerButtonsLayout.isVisible = false
+                showAnswerButton.visibility = View.VISIBLE
+                answerButtonsLayout.visibility = View.INVISIBLE
+            }
+            resetZoom()
+        }
+
+        if (prefs.getBoolean(getString(R.string.hide_hard_and_easy_key), false)) {
+            hardButton.isVisible = false
+            easyButton.isVisible = false
+        }
+
+        val buttonsHeight = Prefs.answerButtonsSize
+        if (buttonsHeight != 100) {
+            buttonsAreaLayout.post {
+                buttonsAreaLayout.updateLayoutParams {
+                    height = buttonsAreaLayout.measuredHeight * buttonsHeight / 100
+                }
             }
         }
     }
@@ -222,103 +349,117 @@ class ReviewerFragment :
         val learnCount = view.findViewById<MaterialTextView>(R.id.lrn_count)
         val reviewCount = view.findViewById<MaterialTextView>(R.id.rev_count)
 
-        viewModel.countsFlow.flowWithLifecycle(lifecycle)
+        viewModel.countsFlow
+            .flowWithLifecycle(lifecycle)
             .collectLatestIn(lifecycleScope) { (counts, countsType) ->
                 newCount.text = counts.new.toString()
                 learnCount.text = counts.lrn.toString()
                 reviewCount.text = counts.rev.toString()
 
-                val currentCount = when (countsType) {
-                    Counts.Queue.NEW -> newCount
-                    Counts.Queue.LRN -> learnCount
-                    Counts.Queue.REV -> reviewCount
-                }
+                val currentCount =
+                    when (countsType) {
+                        Counts.Queue.NEW -> newCount
+                        Counts.Queue.LRN -> learnCount
+                        Counts.Queue.REV -> reviewCount
+                    }
                 val spannableString = SpannableString(currentCount.text)
                 spannableString.setSpan(UnderlineSpan(), 0, currentCount.text.length, 0)
                 currentCount.text = spannableString
             }
     }
 
-    private fun setupFlagMenu(menu: Menu) {
-        val submenu = menu.findItem(R.id.action_flag).subMenu
-        lifecycleScope.launch {
-            for ((flag, name) in Flag.queryDisplayNames()) {
-                submenu?.add(Menu.NONE, flag.id, Menu.NONE, name)
-                    ?.setIcon(flag.drawableRes)
+    private fun setupBury(menu: ReviewerMenuView) {
+        val menuItem = menu.findItem(BURY_MENU.menuId) ?: return
+        val flow = viewModel.canBuryNoteFlow.flowWithLifecycle(lifecycle)
+        flow.collectLatestIn(lifecycleScope) { canBuryNote ->
+            if (canBuryNote) {
+                if (menuItem.hasSubMenu()) return@collectLatestIn
+                menuItem.setTitle(BURY_MENU.titleRes)
+                val submenu =
+                    SubMenuBuilder(menu.context, menuItem.menu, menuItem).apply {
+                        add(Menu.NONE, BURY_NOTE.menuId, Menu.NONE, BURY_NOTE.titleRes)
+                        add(Menu.NONE, BURY_CARD.menuId, Menu.NONE, BURY_CARD.titleRes)
+                    }
+                menuItem.setSubMenu(submenu)
+            } else {
+                menuItem.removeSubMenu()
+                menuItem.setTitle(BURY_CARD.titleRes)
             }
         }
-
-        viewModel.flagCodeFlow.flowWithLifecycle(lifecycle)
-            .collectLatestIn(lifecycleScope) { flagCode ->
-                menu.findItem(R.id.action_flag).setIcon(Flag.fromCode(flagCode).drawableRes)
-            }
     }
 
-    private fun setupMenuItems(menu: Menu) {
-        setupFlagMenu(menu)
+    private fun setupSuspend(menu: ReviewerMenuView) {
+        val menuItem = menu.findItem(SUSPEND_MENU.menuId) ?: return
+        val flow = viewModel.canSuspendNoteFlow.flowWithLifecycle(lifecycle)
+        flow.collectLatestIn(lifecycleScope) { canSuspendNote ->
+            if (canSuspendNote) {
+                if (menuItem.hasSubMenu()) return@collectLatestIn
+                menuItem.setTitle(SUSPEND_MENU.titleRes)
+                val submenu =
+                    SubMenuBuilder(menu.context, menuItem.menu, menuItem).apply {
+                        add(Menu.NONE, SUSPEND_NOTE.menuId, Menu.NONE, SUSPEND_NOTE.titleRes)
+                        add(Menu.NONE, SUSPEND_CARD.menuId, Menu.NONE, SUSPEND_CARD.titleRes)
+                    }
+                menuItem.setSubMenu(submenu)
+            } else {
+                menuItem.removeSubMenu()
+                menuItem.setTitle(SUSPEND_CARD.titleRes)
+            }
+        }
+    }
+
+    private fun setupMenu(view: View) {
+        val menu = view.findViewById<ReviewerMenuView>(R.id.reviewer_menu_view)
+        menu.setOnMenuItemClickListener(this)
+
+        viewModel.flagFlow
+            .flowWithLifecycle(lifecycle)
+            .collectLatestIn(lifecycleScope) { flagCode ->
+                menu.findItem(FLAG_MENU.menuId)?.setIcon(flagCode.drawableRes)
+            }
+
+        setupBury(menu)
+        setupSuspend(menu)
 
         // TODO show that the card is marked somehow when the menu item is overflowed or not shown
-        val markItem = menu.findItem(R.id.action_mark)
-        viewModel.isMarkedFlow.flowWithLifecycle(lifecycle)
+        val markItem = menu.findItem(MARK.menuId)
+        viewModel.isMarkedFlow
+            .flowWithLifecycle(lifecycle)
             .collectLatestIn(lifecycleScope) { isMarked ->
                 if (isMarked) {
-                    markItem.setIcon(R.drawable.ic_star)
-                    markItem.setTitle(R.string.menu_unmark_note)
+                    markItem?.setIcon(R.drawable.ic_star)
+                    markItem?.setTitle(R.string.menu_unmark_note)
                 } else {
-                    markItem.setIcon(R.drawable.ic_star_border_white)
-                    markItem.setTitle(R.string.menu_mark_note)
+                    markItem?.setIcon(R.drawable.ic_star_border_white)
+                    markItem?.setTitle(R.string.menu_mark_note)
                 }
             }
 
-        val buryItem = menu.findItem(R.id.action_bury)
-        val buryCardItem = menu.findItem(R.id.action_bury_card)
-        viewModel.canBuryNoteFlow.flowWithLifecycle(lifecycle)
-            .collectLatestIn(lifecycleScope) { canBuryNote ->
-                if (canBuryNote) {
-                    buryItem.isVisible = true
-                    buryCardItem.isVisible = false
-                } else {
-                    buryItem.isVisible = false
-                    buryCardItem.isVisible = true
-                }
-            }
-
-        val suspendItem = menu.findItem(R.id.action_suspend)
-        val suspendCardItem = menu.findItem(R.id.action_suspend_card)
-        viewModel.canSuspendNoteFlow.flowWithLifecycle(lifecycle)
-            .collectLatestIn(lifecycleScope) { canSuspendNote ->
-                if (canSuspendNote) {
-                    suspendItem.isVisible = true
-                    suspendCardItem.isVisible = false
-                } else {
-                    suspendItem.isVisible = false
-                    suspendItem.isVisible = true
-                }
-            }
-
-        val undoItem = menu.findItem(R.id.action_undo)
-        viewModel.undoLabelFlow.flowWithLifecycle(lifecycle)
+        val undoItem = menu.findItem(UNDO.menuId)
+        viewModel.undoLabelFlow
+            .flowWithLifecycle(lifecycle)
             .collectLatestIn(lifecycleScope) { label ->
-                undoItem.title = label ?: CollectionManager.TR.undoUndo()
-                undoItem.isEnabled = label != null
+                undoItem?.title = label ?: CollectionManager.TR.undoUndo()
+                undoItem?.isEnabled = label != null
             }
 
-        val redoItem = menu.findItem(R.id.action_redo)
-        viewModel.redoLabelFlow.flowWithLifecycle(lifecycle)
+        val redoItem = menu.findItem(REDO.menuId)
+        viewModel.redoLabelFlow
+            .flowWithLifecycle(lifecycle)
             .collectLatestIn(lifecycleScope) { label ->
-                redoItem.title = label ?: CollectionManager.TR.undoRedo()
-                redoItem.isEnabled = label != null
+                redoItem?.title = label ?: CollectionManager.TR.undoRedo()
+                redoItem?.isEnabled = label != null
             }
     }
 
     private fun setupImmersiveMode(view: View) {
-        val hideSystemBarsSetting = HideSystemBars.from(requireContext())
-        val barsToHide = when (hideSystemBarsSetting) {
-            HideSystemBars.NONE -> return
-            HideSystemBars.STATUS_BAR -> WindowInsetsCompat.Type.statusBars()
-            HideSystemBars.NAVIGATION_BAR -> WindowInsetsCompat.Type.navigationBars()
-            HideSystemBars.ALL -> WindowInsetsCompat.Type.systemBars()
-        }
+        val barsToHide =
+            when (Prefs.hideSystemBars) {
+                HideSystemBars.NONE -> return
+                HideSystemBars.STATUS_BAR -> WindowInsetsCompat.Type.statusBars()
+                HideSystemBars.NAVIGATION_BAR -> WindowInsetsCompat.Type.navigationBars()
+                HideSystemBars.ALL -> WindowInsetsCompat.Type.systemBars()
+            }
 
         val window = requireActivity().window
         with(WindowInsetsControllerCompat(window, window.decorView)) {
@@ -326,21 +467,33 @@ class ReviewerFragment :
             systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
 
-        val ignoreDisplayCutout = sharedPrefs().getBoolean(getString(R.string.ignore_display_cutout_key), false)
+        val ignoreDisplayCutout = Prefs.ignoreDisplayCutout
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
-            val typeMask = if (ignoreDisplayCutout) {
-                WindowInsetsCompat.Type.systemBars()
-            } else {
-                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
-            }
+            val defaultTypes = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
+            val typeMask =
+                if (ignoreDisplayCutout) {
+                    defaultTypes
+                } else {
+                    defaultTypes or WindowInsetsCompat.Type.displayCutout()
+                }
             val bars = insets.getInsets(typeMask)
             v.updatePadding(
                 left = bars.left,
                 top = bars.top,
                 right = bars.right,
-                bottom = bars.bottom
+                bottom = bars.bottom,
             )
             WindowInsetsCompat.CONSUMED
+        }
+    }
+
+    private fun setupFrame(view: View) {
+        if (Prefs.frameStyle == FrameStyle.BOX) {
+            view.findViewById<MaterialCardView>(R.id.webview_container).apply {
+                setMargins(0)
+                cardElevation = 0F
+                shapeAppearanceModel = ShapeAppearanceModel() // Remove corners
+            }
         }
     }
 
@@ -361,9 +514,7 @@ class ReviewerFragment :
     }
 
     private fun launchAddNote() {
-        val intent = Intent(context, NoteEditor::class.java).apply {
-            putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD)
-        }
+        val intent = NoteEditorLauncher.AddNoteFromReviewer().getIntent(requireContext())
         noteEditorLauncher.launch(intent)
     }
 
@@ -374,9 +525,10 @@ class ReviewerFragment :
         }
     }
 
-    private val deckOptionsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        viewModel.refreshCard()
-    }
+    private val deckOptionsLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            viewModel.refreshCard()
+        }
 
     private fun launchDeckOptions() {
         lifecycleScope.launch {
@@ -386,8 +538,6 @@ class ReviewerFragment :
     }
 
     companion object {
-        fun getIntent(context: Context): Intent {
-            return CardViewerActivity.getIntent(context, ReviewerFragment::class)
-        }
+        fun getIntent(context: Context): Intent = CardViewerActivity.getIntent(context, ReviewerFragment::class)
     }
 }

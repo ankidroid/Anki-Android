@@ -63,7 +63,7 @@
     <string name="add_to_deck_use_current_deck">ᱱᱤᱛᱚᱜᱟᱜ ᱰᱮᱠ ᱵᱮᱵᱷᱟᱨ ᱢᱮ</string>
     <string name="add_to_deck_decide_by_note_type">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱧᱮᱞᱠᱟᱛᱮ ᱪᱤᱱᱛᱟᱭ ᱢᱮ</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">ᱯᱷᱳᱞᱳ ᱥᱤᱥᱴᱮᱢ</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">ᱟᱨᱥᱟᱞ</string>
     <string name="day_theme_plain">ᱥᱟᱯᱷᱟ</string>
@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">x-ᱢᱟᱨᱟᱝ</string>
     <string name="html_size_code_xx_large">xx-ᱢᱟᱨᱟᱝ</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
-    <string name="gesture_play">ᱢᱮᱰᱤᱭᱟ ᱪᱟᱹᱞᱩᱭ ᱢᱮ</string>
-    <string name="gesture_abort_learning">ᱪᱮᱫᱚᱜ ᱵᱚᱸᱫ ᱛᱷᱟᱲ</string>
-    <string name="gesture_flag_red">ᱟᱨᱟᱜ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟ.ᱞ</string>
-    <string name="gesture_flag_orange">ᱜᱮᱨᱩᱟ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟᱹᱞ</string>
-    <string name="gesture_flag_green">ᱦᱟᱹᱨᱤᱭᱟᱲ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟᱹᱞ</string>
-    <string name="gesture_flag_blue">ᱞᱤᱞ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟᱹᱞ</string>
-    <string name="gesture_flag_pink">ᱜᱳᱞᱟᱯᱤ ᱯᱚᱛᱠᱟ ᱴᱳᱜᱚᱞ</string>
-    <string name="gesture_flag_turquoise">ᱯᱷᱤᱨᱚᱡᱟ ᱯᱚᱛᱠᱟ ᱴᱳᱜᱚᱞ ᱢᱮ</string>
-    <string name="gesture_flag_purple">ᱵᱮᱝᱜᱟᱲ ᱯᱚᱛᱠᱟ ᱴᱳᱜᱟᱹᱞ ᱢᱮ</string>
-    <string name="gesture_flag_remove">ᱯᱚᱛᱠᱟ ᱚᱪᱚᱜ ᱢᱮ</string>
-    <string name="gesture_page_up">ᱥᱟᱠᱟᱢ ᱪᱮᱛᱟᱱ</string>
-    <string name="gesture_page_down">ᱥᱟᱠᱟᱢ ᱞᱟᱛᱟᱨ</string>
-    <string name="gesture_abort_sync">ᱪᱮᱫᱚᱜ ᱵᱚᱸᱫᱚᱭ ᱢᱮ ᱟᱨ ᱥᱭᱸᱠ ᱢᱮ</string>
-    <string name="gesture_toggle_whiteboard">ᱯᱩᱱᱰᱵᱚᱰ ᱴᱩᱜᱟᱹᱞ ᱢᱮ</string>
-    <string name="gesture_show_hint">Show Hint</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
-    <string name="record_voice">ᱥᱟᱲᱮ ᱨᱮᱠᱚᱰ ᱢᱮ</string>
-    <string name="replay_voice">ᱥᱟᱲᱮ ᱨᱤᱯᱞᱮ ᱢᱮ</string>
-    <string name="save_voice">Save Recording</string>
+    <string name="answer_again" maxLength="41">ᱟᱨᱦᱚᱸ ᱮᱛᱦᱚᱵ ᱢᱮ</string>
+    <string name="answer_hard" maxLength="41">ᱟᱹᱰᱤ ᱜᱮ ᱨᱚᱲ ᱢᱮ</string>
+    <string name="answer_good" maxLength="41">ᱜᱟᱞᱢᱟᱨᱟᱣ</string>
+    <string name="answer_easy" maxLength="41">ᱞᱟᱹᱱᱟᱹᱭ ᱜᱮᱭᱟ</string>
+    <string name="gesture_play" maxLength="41">ᱢᱮᱰᱤᱭᱟ ᱪᱟᱹᱞᱩᱭ ᱢᱮ</string>
+    <string name="gesture_abort_learning" maxLength="41">ᱥᱩᱨ ᱨᱮᱠᱳᱨᱰᱚᱨ</string>
+    <string name="gesture_flag_red" maxLength="41">ᱟᱨᱟᱜ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟ.ᱞ</string>
+    <string name="gesture_flag_orange" maxLength="41">ᱜᱮᱨᱩᱟ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟᱹᱞ</string>
+    <string name="gesture_flag_green" maxLength="41">ᱦᱟᱹᱨᱤᱭᱟᱲ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟᱹᱞ</string>
+    <string name="gesture_flag_blue" maxLength="41">ᱞᱤᱞ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟᱹᱞ</string>
+    <string name="gesture_flag_pink" maxLength="41">ᱜᱳᱞᱟᱯᱤ ᱯᱚᱛᱠᱟ ᱴᱳᱜᱚᱞ</string>
+    <string name="gesture_flag_turquoise" maxLength="41">ᱯᱷᱤᱨᱚᱡᱟ ᱯᱚᱛᱠᱟ ᱴᱳᱜᱚᱞ ᱢᱮ</string>
+    <string name="gesture_flag_purple" maxLength="41">ᱵᱮᱝᱜᱟᱲ ᱯᱚᱛᱠᱟ ᱴᱳᱜᱟᱹᱞ ᱢᱮ</string>
+    <string name="gesture_flag_remove" maxLength="41">ᱯᱚᱛᱠᱟ ᱚᱪᱚᱜ ᱢᱮ</string>
+    <string name="gesture_page_up" maxLength="41">ᱥᱟᱠᱟᱢ ᱪᱮᱛᱟᱱ</string>
+    <string name="gesture_page_down" maxLength="41">ᱥᱟᱠᱟᱢ ᱞᱟᱛᱟᱨ</string>
+    <string name="gesture_abort_sync" maxLength="41">ᱥᱟᱱᱛᱟᱲᱤ ᱱᱤᱩᱡᱽ ᱰᱮᱥᱠ </string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">ᱯᱩᱱᱰᱵᱚᱰ ᱴᱩᱜᱟᱹᱞ ᱢᱮ</string>
+    <string name="gesture_show_hint" maxLength="41">ᱦᱤᱱᱫᱤ ᱪᱤᱛᱟᱹᱨ</string>
+    <string name="gesture_show_all_hints" maxLength="41">ᱡᱚᱛᱚ ᱥᱟᱹᱠᱷᱭᱟᱹᱛ ᱮᱢ ᱢᱮ</string>
+    <string name="record_voice" maxLength="41">ᱥᱟᱲᱮ ᱨᱮᱠᱚᱰ ᱢᱮ</string>
+    <string name="replay_voice" maxLength="41">ᱥᱟᱲᱮ ᱨᱤᱯᱞᱮ ᱢᱮ</string>
+    <string name="save_voice" maxLength="41">ᱨᱮᱠᱳᱨᱰᱤᱝ ᱫᱚᱦᱚᱭ ᱢᱮ</string>
 </resources>

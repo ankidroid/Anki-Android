@@ -29,7 +29,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class PythonExtensionsTest {
-
     @Test
     fun test_insert_end() {
         val initial = JSONObject(mapOf("a" to "b"))

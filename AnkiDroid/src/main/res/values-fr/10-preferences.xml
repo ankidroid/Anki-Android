@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">Plus de %d cartes dues</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrer</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Lumière de notification</string>
-    <string name="timeout_answer_text" maxLength="41">Affichage automatique de la réponse</string>
-    <string name="timeout_answer_summ2">Afficher la réponse automatiquement sans intervention de l\'utilisateur. Configurer à partir des options du deck.</string>
     <string name="select_locale_title">Sélectionnez la langue</string>
     <string name="software_render" maxLength="41">Désactiver le rendu matériel de carte</string>
     <string name="software_render_summ">Le rendu matériel est plus rapide mais peut rencontrer des problèmes, en particulier sur Android 8/8.1. Si vous ne pouvez pas visualiser certaines parties de l\'interface de révision des cartes, essayez d\'activer cette option.</string>
@@ -165,13 +163,13 @@
     <string name="pref_double_tap_time_interval" maxLength="41">Temps d\'intervalle de l\'appui double (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Un deusième appui sur le bouton de réponse va être ignoré si le temps est écoulé. Cela évite les appuis doubles involontaires.</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
-    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
+    <string name="pref_show_answer_long_press_time_summary">Un minimum de temps d\'appui avant que le bouton d\'affichage de réponse n\'enregistre une touche.</string>
     <string name="show_estimates" maxLength="41">Afficher le temps</string>
     <string name="show_estimates_summ">Afficher le temps avant la prochaine révision sur les boutons de réponse</string>
     <string name="show_large_answer_buttons" maxLength="41">Afficher de gros boutons de réponse</string>
     <string name="show_large_answer_buttons_summ">Afficher le bouton de réponse sur 2 lignes</string>
     <string name="show_top_bar" maxLength="41">Afficher la barre supérieure</string>
-    <string name="show_top_bar_summ">Afficher le nombre de cartes, la balise et la marque dans la barre supérieure</string>
+    <string name="show_top_bar_summary">Afficher le nombre de cartes, le chronomètre, la balise et la marque dans la barre supérieure</string>
     <string name="show_progress" maxLength="41">Afficher le nombre restant de révision</string>
     <string name="show_progress_summ">Montrer le nombre de cartes restantes</string>
     <string name="show_eta" maxLength="41">Afficher le temps restant</string>
@@ -219,12 +217,12 @@
         <a href="%s">En savoir plus</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Synchroniser l’URL</string>
-    <string name="custom_sync_certificate_title" maxLength="41">Custom root certificate (PEM)</string>
+    <string name="custom_sync_certificate_title" maxLength="41">Certificat racine personnalisé (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Clavier</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="answer_buttons" maxLength="41">Boutons de réponse</string>
-    <string name="card" maxLength="41">Carte</string>
+    <string name="card" maxLength="41" comment="Generic term to refer to a card">Carte</string>
     <string name="note" maxLength="41">Note</string>
     <string name="navigation" maxLength="41">Navigation</string>
     <string name="media" maxLength="41">Média</string>
@@ -235,7 +233,7 @@
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Général</string>
     <string name="deck_conf_reminders" maxLength="41">Rappels</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtre</string>
-    <string name="deck_conf_cram_search" maxLength="41">Recherche</string>
+    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Recherche</string>
     <string name="deck_conf_cram_limit" maxLength="41">Limiter à</string>
     <string name="deck_conf_cram_order" maxLength="41">Cartes sélectionnées par</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Replanifier</string>
@@ -270,20 +268,21 @@
     <string name="axis_picker_move_joystick">Déplacer un joystick/contrôleur de mouvement</string>
     <string name="user_actions" maxLength="41">Actions utilisateur</string>
     <string name="user_actions_summary" maxLength="41">Exécute du JavaScript lors de la révision</string>
-    <string name="user_action_1" maxLength="41">Action utilisateur 1</string>
-    <string name="user_action_2" maxLength="41">Action utilisateur 2</string>
-    <string name="user_action_3" maxLength="41">Action utilisateur 3</string>
-    <string name="user_action_4" maxLength="41">Action utilisateur 4</string>
-    <string name="user_action_5" maxLength="41">Action utilisateur 5</string>
-    <string name="user_action_6" maxLength="41">Action utilisateur 6</string>
-    <string name="user_action_7" maxLength="41">Action utilisateur 7</string>
-    <string name="user_action_8" maxLength="41">Action utilisateur 8</string>
-    <string name="user_action_9" maxLength="41">Action utilisateur 9</string>
+    <string name="user_action_1" maxLength="28">Action utilisateur 1</string>
+    <string name="user_action_2" maxLength="28">Action utilisateur 2</string>
+    <string name="user_action_3" maxLength="28">Action utilisateur 3</string>
+    <string name="user_action_4" maxLength="28">Action utilisateur 4</string>
+    <string name="user_action_5" maxLength="28">Action utilisateur 5</string>
+    <string name="user_action_6" maxLength="28">Action utilisateur 6</string>
+    <string name="user_action_7" maxLength="28">Action utilisateur 7</string>
+    <string name="user_action_8" maxLength="28">Action utilisateur 8</string>
+    <string name="user_action_9" maxLength="28">Action utilisateur 9</string>
+    <string name="toggle_auto_advance" maxLength="41">Activer/désactiver l\'avancement automatique</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Sélectionner le côté de la carte</string>
     <string name="card_side_question">Question</string>
     <string name="card_side_answer">Réponse</string>
-    <string name="card_side_both">Question &amp; Réponse</string>
+    <string name="card_side_both" maxLength="28">Question &amp; Réponse</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q : %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">R : %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -359,11 +358,17 @@
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Récupération en cours&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calcul en cours&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">La collection n\'existe pas</string>
-    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
-    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">None</string>
-    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Status bar</string>
-    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigation bar</string>
-    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
-    <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
-    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Masquer les barres système</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">Aucun</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Barre d\'État</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Barre de navigation</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Tout</string>
+    <string name="ignore_display_cutout" maxLength="41">Ignorer la découpe d\'affichage</string>
+    <string name="hide_answer_buttons" maxLength="41">Masquer les boutons de réponse</string>
+    <string name="hide_hard_and_easy" maxLength="41">Masquer les boutons « dur» et « facile»</string>
+    <string name="reviewer_frame_style" maxLength="41">Style de cadre</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Carte</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Boîte</string>
+    <!--Keyboard shortcuts dialog-->
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Aller aux paramètres</string>
 </resources>

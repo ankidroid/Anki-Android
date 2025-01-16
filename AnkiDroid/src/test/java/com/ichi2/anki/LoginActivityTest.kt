@@ -17,10 +17,10 @@
 package com.ichi2.anki
 
 import android.app.Activity
-import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario.launchActivityForResult
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.settings.Prefs
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
@@ -30,7 +30,7 @@ class LoginActivityTest : RobolectricTest() {
     @Test
     fun activityIsClosedIfStartedWhenLoggedIn() {
         // Effectively mocks isLoggedIn() to return true.
-        getPreferences().edit { putString(SyncPreferences.HKEY, "anything not null") }
+        Prefs.hkey = "anything not empty"
 
         launchActivityForResult(LoginActivity::class.java).use { scenario ->
             // When the user is logged in, we expect the activity to call finish() from onCreate().
@@ -43,7 +43,7 @@ class LoginActivityTest : RobolectricTest() {
     @Test
     fun activityIsNotFinishedOnStartupIfNotLoggedIn() {
         // Effectively mocks isLoggedIn() to return false.
-        getPreferences().edit { putString(SyncPreferences.HKEY, "") }
+        Prefs.hkey = ""
 
         val scenario = launchActivityForResult(LoginActivity::class.java)
 

@@ -41,10 +41,14 @@ import com.ichi2.anki.R
  * The preference inherits from [VersatileTextPreference] and supports any attributes it does,
  * including the regular [EditTextPreference] attributes.
  */
-class VersatileTextWithASwitchPreference(context: Context, attrs: AttributeSet?) :
-    VersatileTextPreference(context, attrs), DialogFragmentProvider {
-
-    init { widgetLayoutResource = R.layout.preference_widget_switch_with_separator }
+class VersatileTextWithASwitchPreference(
+    context: Context,
+    attrs: AttributeSet?,
+) : VersatileTextPreference(context, attrs),
+    DialogFragmentProvider {
+    init {
+        widgetLayoutResource = R.layout.preference_widget_switch_with_separator
+    }
 
     private val preferences get() = sharedPreferences!!
 
@@ -81,7 +85,6 @@ class VersatileTextWithASwitchPreference(context: Context, attrs: AttributeSet?)
 }
 
 class VersatileTextWithASwitchPreferenceDialogFragment : VersatileTextPreferenceDialogFragment() {
-
     // This replicates what the overridden method does, which is needed as we want to catch
     // the event when the Ok button was pressed and the change listener approved the new value.
     override fun onDialogClosed(positiveResult: Boolean) {

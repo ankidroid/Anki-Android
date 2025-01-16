@@ -11,7 +11,7 @@
     <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_search_white"
-        android:title="@string/deck_conf_cram_search"
+        android:title="@string/card_browser_cram_search"
         ankidroid:actionViewClass="com.ichi2.ui.CardBrowserSearchView"
         ankidroid:showAsAction="always|collapseActionView"/>
 
@@ -62,5 +62,11 @@
         android:id="@+id/action_open_options"
         android:title="@string/study_options"
         ankidroid:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_create_filtered_deck"
+        ankidroid:showAsAction="never"
+        tools:title="Create filtered deck..."
+        />
 
 </menu>

@@ -17,11 +17,12 @@ package com.ichi2.libanki
 
 import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.Ease
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.ext.addNote
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasItemInArray
-import org.json.JSONObject
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -39,7 +40,7 @@ class CardTest : JvmTest() {
         note.setItem("Back", "2")
         col.addNote(note)
         val cid = note.cards()[0].id
-        col.sched.answerCard(col.sched.card!!, Consts.BUTTON_TWO)
+        col.sched.answerCard(col.sched.card!!, Ease.HARD)
         col.removeCardsAndOrphanedNotes(listOf(cid))
         assertEquals(0, col.cardCount())
         assertEquals(0, col.noteCount())
@@ -57,7 +58,7 @@ class CardTest : JvmTest() {
         col.addNote(note)
         val c = note.cards()[0]
         col.notetypes.current().getLong("id")
-        assertEquals(0, c.template().getInt("ord"))
+        assertEquals(0, c.template().ord)
     }
 
     @Test
@@ -67,19 +68,23 @@ class CardTest : JvmTest() {
         note.setItem("Back", "")
         col.addNote(note)
         assertEquals(1, note.numberOfCards())
-        val m = col.notetypes.current()
-        val mm = col.notetypes
+        val noteType = col.notetypes.current()
+        val noteTypes = col.notetypes
         // adding a new template should automatically create cards
-        var t = Notetypes.newTemplate("rev")
-        t.put("qfmt", "{{Front}}1")
-        t.put("afmt", "")
-        mm.addTemplateModChanged(m, t)
-        mm.save(m)
+        var t =
+            Notetypes.newTemplate("rev").apply {
+                qfmt = "{{Front}}1"
+                afmt = ""
+            }
+        noteTypes.addTemplateModChanged(noteType, t)
+        noteTypes.save(noteType)
         assertEquals(2, note.numberOfCards())
         // if the template is changed to remove cards, they'll be removed
-        t = m.getJSONArray("tmpls").getJSONObject(1)
-        t.put("qfmt", "{{Back}}")
-        mm.save(m)
+        t =
+            noteType.tmpls[1].apply {
+                qfmt = "{{Back}}"
+            }
+        noteTypes.save(noteType)
         val rep = col.emptyCids()
         col.removeCardsAndOrphanedNotes(rep)
         assertEquals(1, note.numberOfCards())
@@ -119,17 +124,16 @@ class CardTest : JvmTest() {
         val models = col.notetypes
         val model = models.byName("Basic")
         assertNotNull(model)
-        models.renameField(model, model.getJSONArray("flds").getJSONObject(0), "A")
-        models.renameField(model, model.getJSONArray("flds").getJSONObject(1), "B")
+        models.renameFieldLegacy(model, model.flds[0], "A")
+        models.renameFieldLegacy(model, model.flds[1], "B")
         val fld2 = models.newField("C")
-        fld2.put("ord", JSONObject.NULL)
-        models.addField(model, fld2)
-        val tmpls = model.getJSONArray("tmpls")
-        tmpls.getJSONObject(0).put("qfmt", "{{A}}{{B}}{{C}}")
+        fld2.setOrd(null)
+        models.addFieldLegacy(model, fld2)
+        model.tmpls[0].qfmt = "{{A}}{{B}}{{C}}"
         // ensure first card is always generated,
         // because at last one card is generated
         val tmpl = Notetypes.newTemplate("AND_OR")
-        tmpl.put("qfmt", "        {{A}}    {{#B}}        {{#C}}            {{B}}        {{/C}}    {{/B}}")
+        tmpl.qfmt = "        {{A}}    {{#B}}        {{#C}}            {{B}}        {{/C}}    {{/B}}"
         models.addTemplate(model, tmpl)
         models.save(model)
         models.setCurrent(model)
@@ -168,18 +172,18 @@ class CardTest : JvmTest() {
         val models = col.notetypes
         val model = models.byName("Basic")
         assertNotNull(model)
-        val tmpls = model.getJSONArray("tmpls")
-        models.renameField(model, model.getJSONArray("flds").getJSONObject(0), "First")
-        models.renameField(model, model.getJSONArray("flds").getJSONObject(1), "Front")
+        val tmpls = model.tmpls
+        models.renameFieldLegacy(model, model.flds[0], "First")
+        models.renameFieldLegacy(model, model.flds[1], "Front")
         val fld2 = models.newField("AddIfEmpty")
-        fld2.put("name", "AddIfEmpty")
-        models.addField(model, fld2)
+        fld2.name = "AddIfEmpty"
+        models.addFieldLegacy(model, fld2)
 
         // ensure first card is always generated,
         // because at last one card is generated
-        tmpls.getJSONObject(0).put("qfmt", "{{AddIfEmpty}}{{Front}}{{First}}")
+        tmpls[0].qfmt = "{{AddIfEmpty}}{{Front}}{{First}}"
         val tmpl = Notetypes.newTemplate("NOT")
-        tmpl.put("qfmt", "    {{^AddIfEmpty}}        {{Front}}    {{/AddIfEmpty}}    ")
+        tmpl.qfmt = "    {{^AddIfEmpty}}        {{Front}}    {{/AddIfEmpty}}    "
         models.addTemplate(model, tmpl)
         models.save(model)
         models.setCurrent(model)
@@ -205,7 +209,10 @@ class CardTest : JvmTest() {
         assertNoteOrdinalAre(note, arrayOf(0, 1))
     }
 
-    private fun assertNoteOrdinalAre(note: Note, ords: Array<Int>) {
+    private fun assertNoteOrdinalAre(
+        note: Note,
+        ords: Array<Int>,
+    ) {
         val cards = note.cards()
         assumeThat(cards.size, equalTo(ords.size))
         for (card in cards) {

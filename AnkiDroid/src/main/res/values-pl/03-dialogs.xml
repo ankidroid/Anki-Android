@@ -46,13 +46,19 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Sprawdź bazę danych</string>
     <string name="check_db_warning">To może zająć dużo czasu.</string>
-    <string name="contextmenu_deckpicker_delete_deck">Skasuj talię</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Skasuj talię</string>
     <string name="delete_deck_title">Skasuj talię</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="few">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="many">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Czy na pewno chcesz usunąć filtrowaną talię %s i przenieść wszystkie karty do ich oryginalnych talii?</string>
     <string name="no_tts_available_message">Brak dostępnego języka zamiany tekstu na mowę</string>
     <string name="tts_no_tts">Nie mów</string>
     <string name="unused_strings">\n\nNieużywane pliki:\n</string>
     <string name="reposition_card_dialog_title">Przestawianie nowej karty</string>
-    <string name="reposition_card_dialog_message">Pozycja początkowa:</string>
     <string name="reposition_card_not_new_error">Tylko nowe karty mogą być przestawione</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d karta przestawiona</item>
@@ -74,15 +80,11 @@
     <string name="repair_deck_dialog">Czy na pewno chcesz próbować naprawić bazę danych? \n\nPrzed próbą naprawy zostanie utworzona kopia w katalogu \'%s\'.</string>
     <string name="intent_aedict_empty">Kategoria \'Domyślne\' jest pusta</string>
     <string name="intent_aedict_category">Aby dodać karty AnkiDroid usuń wszystkie kategorie Notatnika lub dodaj jedną o nazwie \'default\'</string>
-    <string name="custom_study_new_total_new">Nowe karty w talii: %d</string>
-    <string name="custom_study_rev_total_rev">Oczekujące na przejrzenie karty w talii: %d</string>
     <string name="custom_study_new_extend">Zwiększ/zmniejsz (“-3”) dzisiejszy limit nowych kart</string>
     <string name="custom_study_rev_extend">Zwiększ/zmniejsz (“-3”) dzisiejszy limit przeglądanych kart</string>
     <string name="custom_study_forgotten">Przejrzyj zapomniane karty z ostatnich x dni:</string>
     <string name="custom_study_ahead">Przejrzyj z wyprzedzeniem x dni:</string>
-    <string name="custom_study_random">Wybierz losowo x kart z talii:</string>
     <string name="custom_study_preview">Podgląd nowych kart dodanych w ostatnich x dniach:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Nie udało się przebudować talii nauki niestandardowej</string>
     <string name="storage_full_title">Pamięć jest pełna</string>
     <string name="storage_almost_full_title">Pamięć jest prawie pełna</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Brak miejsca</string>
@@ -100,7 +102,7 @@
     <string name="dialog_continue">Kontynuuj</string>
     <string name="dialog_processing">Przetwarzanie&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Utwórz</string>
-    <string name="dialog_positive_delete">Usuń</string>
+    <string name="dialog_positive_delete" maxLength="28">Usuń</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Wyłacz</string>
     <string name="dialog_positive_overwrite">Nadpisz</string>
@@ -136,14 +138,11 @@
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Wyszukiwanie pustych kart&#8230;</string>
     <string name="empty_cards_count">Kart do usunięcia: %d</string>
-    <string name="empty_cards_deleted">Usuniętych kart: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Nie udało się uzyskać uprawnień do interakcji z mikrofonem.</string>
-    <string name="multimedia_editor_camera_permission_refused">Nie można uzyskać uprawnień aparatu. Funkcjonalność została wyłączona.</string>
     <string name="multimedia_editor_failed">Nie udało się otworzyć edytora multimediów</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Nie uzyskano uprawnienia do nagrywania dźwięków</string>
-    <string name="mutimedia_editor_assertion_failed">Wystąpił nieznany błąd podczas wyświetlania zaawansowanego edytora</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid został zaktualizowany</string>
     <string name="integrity_check_startup_content">AnkiDroid został zaktualizowany. Ta aktualizacja zawiera poprawki dotyczące ewentualnych problemów z bazą danych. Zalecamy teraz sprawdzenie bazy danych.</string>
@@ -172,8 +171,6 @@
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Brak wymaganych uprawnień do przechowywania danych. Proszę przyznać uprawnienia do pamięci, a następnie ponowić próbę.</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Nie można załadować wyglądu przeglądarki kart</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Nie udało się ustawić przypomnień</string>
     <string name="boot_service_too_many_notifications">Ustawiono zbyt dużo przypomnień. Niektóre się nie pojawią</string>
@@ -189,7 +186,7 @@
     <string name="help_item_mailing_list">Lista mailingowa</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Zgłoś błąd</string>
-    <string name="help_title_support_ankidroid">Wesprzyj AnkiDroid</string>
+    <string name="help_title_support_ankidroid" maxLength="28">Wesprzyj AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Wesprzyj</string>
     <string name="help_item_support_develop_ankidroid">Rozbuduj</string>
     <string name="help_item_support_rate_ankidroid">Oceń</string>
@@ -230,7 +227,7 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">Utwórz kopię zapasową swojej kolekcji</string>
     <string name="backup_collection_message">Nie wykonałeś kopii zapasowej swojej kolekcji przez jakiś czas. Powinieneś to zrobić teraz, aby zapobiec utracie danych</string>
-    <string name="button_backup">Kopia zapasowa</string>
+    <string name="button_backup" maxLength="41">Kopia zapasowa</string>
     <string name="button_disable_reminder">Wyłącz przypomnienie</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Później</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Nie pokazuj ponownie</string>
@@ -240,6 +237,7 @@
     <string name="dismiss_backup_warning_upgrade">        Ze względu na zmiany prywatności w systemie Android Twoje dane i automatyczne kopie zapasowe będą niedostępne, jeśli aplikacja zostanie odinstalowana
     </string>
     <string name="deck_already_exists">Taka talia już istnieje</string>
+    <string name="empty_deck_name">Deck name cannot be empty</string>
     <string name="create_deck_numeric_hint">W przypadku wystąpienia problemów związanych z kolejnością talii (np. „10” pojawia się przed „2”), „2” należy zastąpić „02”.</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Ustaw interwał na tę samą wartość</string>
@@ -270,6 +268,15 @@
     <string name="open">Otwórz</string>
     <string name="change_cloze_number">Change cloze number</string>
     <string name="cloze_number">Cloze number:</string>
+    <string name="change_editor_mode">Zmień tryb edytora</string>
+    <string name="open_note_editor">Open note editor</string>
+    <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">System WebView jest nieaktualny. Niektóre funkcje nie będą działać poprawnie. Zaktualizuj go.\n\nZainstalowana wersja: %1$d\nMinimalna wymagana wersja: %2$d</string>
+    <string name="compress">Compress</string>
+    <!-- Tts playback error dialog -->
+    <string name="tts_error_dialog_title">Ten język nie jest obsługiwany</string>
+    <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
+    <string name="tts_error_dialog_change_button_text">Change engine</string>
+    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
 </resources>

@@ -22,45 +22,47 @@ import java.util.Random
 
 object NoteFieldDecorator {
     private val random = Random()
-    private val huevoDecorations = arrayOf(
-        "\uD83D\uDC8C",
-        "\uD83D\uDE3B",
-        "\uD83D\uDC96",
-        "\uD83D\uDC97",
-        "\uD83D\uDC93",
-        "\uD83D\uDC9E",
-        "\uD83D\uDC95",
-        "\uD83D\uDC9F",
-        "\uD83D\uDCAF",
-        "\uD83D\uDE03",
-        "\uD83D\uDE0D"
-    )
-    private val huevoOpciones = arrayOf(
-        "qnr",
-        "gvzenr",
-        "aboantb",
-        "avpbynf-enbhy",
-        "Neguhe-Zvypuvbe",
-        "zvxruneql",
-        "qnivq-nyyvfba",
-        "vavwh",
-        "uffz",
-        "syreqn",
-        "rqh-mnzben",
-        "ntehraroret",
-        "bfcnyu",
-        "znaqer",
-        "qnavry-fineq",
-        "vasvalgr7",
-        "Oynvfbeoynqr",
-        "genfuphggre",
-        "qzvgel-gvzbsrri",
-        "inabfgra",
-        "unacvatpuvarfr",
-        "jro5atnl",
-        "FuevquneTbry",
-        "Nxfunl0701"
-    )
+    private val huevoDecorations =
+        arrayOf(
+            "\uD83D\uDC8C",
+            "\uD83D\uDE3B",
+            "\uD83D\uDC96",
+            "\uD83D\uDC97",
+            "\uD83D\uDC93",
+            "\uD83D\uDC9E",
+            "\uD83D\uDC95",
+            "\uD83D\uDC9F",
+            "\uD83D\uDCAF",
+            "\uD83D\uDE03",
+            "\uD83D\uDE0D",
+        )
+    private val huevoOpciones =
+        arrayOf(
+            "qnr",
+            "gvzenr",
+            "aboantb",
+            "avpbynf-enbhy",
+            "Neguhe-Zvypuvbe",
+            "zvxruneql",
+            "qnivq-nyyvfba",
+            "vavwh",
+            "uffz",
+            "syreqn",
+            "rqh-mnzben",
+            "ntehraroret",
+            "bfcnyu",
+            "znaqer",
+            "qnavry-fineq",
+            "vasvalgr7",
+            "Oynvfbeoynqr",
+            "genfuphggre",
+            "qzvgel-gvzbsrri",
+            "inabfgra",
+            "unacvatpuvarfr",
+            "jro5atnl",
+            "FuevquneTbry",
+            "Nxfunl0701",
+        )
 
     fun aplicaHuevo(fieldText: String?): String? {
         val revuelto = huevoRevuelto(fieldText)
@@ -73,9 +75,7 @@ object NoteFieldDecorator {
         return fieldText
     }
 
-    private fun getRandomIndex(max: Int): Int {
-        return random.nextInt(max)
-    }
+    private fun getRandomIndex(max: Int): Int = random.nextInt(max)
 
     private fun huevoRevuelto(huevo: String?): String? {
         if (huevo.isNullOrEmpty()) {

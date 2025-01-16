@@ -124,7 +124,7 @@
     <string name="link_help_ar">https://docs.ankidroid.org/help-ar.html</string>
     <string name="link_manual_ar">https://docs.ankidroid.org/manual-ar.html</string>
     <string name="link_manual_note_format_toolbar">https://docs.ankidroid.org/manual.html#noteFormattingToolbar</string>
-    <string name="link_user_actions_help">https://ankidroid.org/#userActions</string>
+    <string name="link_user_actions_help">https://docs.ankidroid.org/#userActions</string>
     <string name="link_faq_tts">https://github.com/ankidroid/Anki-Android/wiki/FAQ#tts--text-to-speech-is-not-speaking</string>
     <string name="link_faq_missing_media" tools:ignore="Typos">https://github.com/ankidroid/Anki-Android/wiki/FAQ#why-doesnt-my-sound-or-image-work-on-ankidroid</string>
     <string name="link_third_party_api_apps">https://github.com/ankidroid/Anki-Android/wiki/Third-Party-Apps</string>
@@ -150,12 +150,11 @@
     <string name="link_opencollective_donate">https://opencollective.com/ankidroid/contribute</string>
     <string name="link_distributions">https://apps.ankiweb.net/#download</string>
     <string name="link_ankiweb_lost_email_instructions">https://github.com/ankidroid/Anki-Android/wiki/FAQ#forgotten-ankiweb-email-instructions</string>
-    <string name="link_scoped_storage_faq">https://github.com/ankidroid/Anki-Android/wiki/Storage-Migration-FAQ</string>
     <string name="link_install_non_play_store_install">https://github.com/ankidroid/Anki-Android/wiki/Full-Storage-Access</string>
     <string name="link_custom_sync_server_help_learn_more_en">https://docs.ankidroid.org/#_custom_sync_server</string>
-    <string name="link_migration_failed_dialog_learn_more_en">https://docs.ankidroid.org/storage-migration-error.html</string>
     <string name="link_set_due_date_help">https://docs.ankiweb.net/browsing.html#cards</string>
-    <string name="migration_failed_help_url">https://docs.ankidroid.org/storage-migration-error.html</string>
+    <string name="link_full_storage_access">https://github.com/ankidroid/Anki-Android/wiki/Full-Storage-Access</string>
+    <string name="link_help_forget_cards">https://docs.ankiweb.net/studying.html#editing-and-more</string>
 
     <string-array name="cram_deck_conf_order_values">
         <item>0</item>
@@ -242,6 +241,20 @@
         <item>@string/hide_system_bars_all_value</item>
     </string-array>
 
+    <string-array name="reviewer_frame_style_entries">
+        <item>@string/reviewer_frame_style_card</item>
+        <item>@string/reviewer_frame_style_box</item>
+    </string-array>
+
+    <string name="reviewer_frame_style_card_value">0</string>
+    <string name="reviewer_frame_style_box_value">1</string>
+
+    <string-array name="reviewer_frame_style_values">
+        <item>@string/reviewer_frame_style_card_value</item>
+        <item>@string/reviewer_frame_style_box_value</item>
+    </string-array>
+
+
     <!-- Preferences headers summaries -->
     <string-array name="general_summary_entries">
         <item>@string/language</item>
@@ -251,7 +264,7 @@
 
     <string-array name="reviewing_summary_entries">
         <item>@string/pref_cat_scheduling</item>
-        <item>@string/timeout_answer_text</item>
+        <item>@string/pref_keep_screen_on</item>
     </string-array>
 
     <string-array name="sync_summary_entries">
@@ -291,6 +304,11 @@
         <item>@string/pref_cat_plugins</item>
     </string-array>
 
+    <!-- Sample deck names and for Deck Picker Widget layout in widget picker screen
+       These strings are marked as `translatable=false` because translating them would defeat the purpose of the example, which relies on specific language usage.-->
+    <string name="deck1Name_deck_picker_widget" translatable="false" comment="Example of a Deck name. Android's widget provider displays it as an example of what the Deck Picker widget may look like">English</string>
+    <string name="deck2Name_deck_picker_widget" translatable="false" comment="Example of a Deck name. Android's widget provider displays it as an example of what the Deck Picker widget may look like">Español</string>
+    <string name="deck3Name_deck_picker_widget" translatable="false" comment="Example of a Deck name. Android's widget provider displays it as an example of what the Deck Picker widget may look like">日本語</string>
 
     <string name="answer_buttons_position_preference" translatable="false">answerButtonPosition</string>
     <string-array name="answer_buttons_position" translatable="false">
@@ -314,12 +332,4 @@
         <item>android.permission.WRITE_EXTERNAL_STORAGE</item>
     </string-array>
 
-    <!-- Onboarding -->
-    <string name="reset_onboarding" maxLength="41">Reset onboarding walkthrough</string>
-    <string name="show_onboarding" maxLength="41">Show onboarding walkthrough</string>
-    <string name="show_onboarding_desc">Display feature tutorial to learn more about the app</string>
-    <string name="reset_onboarding_desc">Show all tutorials again</string>
-
-    <!-- Multimedia UI -->
-    <string name="new_multimedia_ui">New multimedia UI</string>
 </resources>

@@ -1,4 +1,5 @@
 // noinspection MissingCopyrightHeader #8659
+
 /*
  * The MIT License (MIT)
 
@@ -31,6 +32,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
+import com.ichi2.anki.utils.ext.findViewById
 import com.ichi2.ui.ButtonItemAdapter.ButtonVH
 
 /**
@@ -40,30 +42,43 @@ import com.ichi2.ui.ButtonItemAdapter.ButtonVH
 class ButtonItemAdapter(
     private val items: ArrayList<String>,
     private val itemCallback: ItemCallback,
-    private val buttonCallback: ButtonCallback
+    private val buttonCallback: ButtonCallback,
 ) : RecyclerView.Adapter<ButtonVH>() {
     fun remove(searchName: String) {
         items.remove(searchName)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ButtonVH {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.card_browser_item_my_searches_dialog, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ButtonVH {
+        val view =
+            LayoutInflater
+                .from(parent.context)
+                .inflate(R.layout.card_browser_item_my_searches_dialog, parent, false)
         return ButtonVH(view, this)
     }
 
-    override fun onBindViewHolder(holder: ButtonVH, position: Int) {
+    override fun onBindViewHolder(
+        holder: ButtonVH,
+        position: Int,
+    ) {
         holder.title.text = items[position]
         holder.button.tag = items[position]
     }
 
     override fun getItemCount() = items.size
 
-    inner class ButtonVH(itemView: View, private val adapter: ButtonItemAdapter) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        val title: TextView = itemView.findViewById(R.id.card_browser_my_search_name_textview)
-        val button: ImageButton = itemView.findViewById<ImageButton?>(R.id.card_browser_my_search_remove_button).apply {
-            setOnClickListener(this@ButtonVH)
-        }
+    inner class ButtonVH(
+        itemView: View,
+        private val adapter: ButtonItemAdapter,
+    ) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
+        val title: TextView = findViewById(R.id.card_browser_my_search_name_textview)
+        val button =
+            findViewById<ImageButton>(R.id.card_browser_my_search_remove_button).apply {
+                setOnClickListener(this@ButtonVH)
+            }
 
         override fun onClick(view: View) {
             if (view is ImageButton) {

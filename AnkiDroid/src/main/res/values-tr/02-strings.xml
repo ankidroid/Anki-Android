@@ -55,21 +55,21 @@
     <string name="edit_occlusions">Örtüleri Düzenle</string>
     <string name="tag_name">Etiket adı</string>
     <string name="add_new_filter_tags">Etiket ekle/filtrele</string>
-    <string name="add_tag">Etiket ekle</string>
-    <string name="check_all_tags">Tüm etiketleri işaretle/kaldır</string>
-    <string name="filter_tags">Etiket filtrele</string>
+    <string name="add_tag" maxLength="28">Etiket ekle</string>
+    <string name="check_all_tags" maxLength="28">Tüm etiketleri işaretle/kaldır</string>
+    <string name="filter_tags" maxLength="28">Etiket filtrele</string>
     <string name="no_tags">Henüz herhangi bir etiket eklemediniz</string>
     <string name="updated_version">%s versiyonuna güncellendi</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Yazı tahtasını kaydet</string>
-    <string name="enable_stylus">Kalem modunu aç</string>
+    <string name="save_whiteboard" maxLength="28">Yazı tahtasını kaydet</string>
+    <string name="enable_stylus" maxLength="28">Kalem modunu aç</string>
     <string name="disable_stylus">Kalem kodunu kapat</string>
-    <string name="enable_whiteboard">Yazı tahtasını etkinleştir</string>
+    <string name="enable_whiteboard" maxLength="28">Yazı tahtasını etkinleştir</string>
     <string name="disable_whiteboard">Yazı tahtasını devre dışı bırak</string>
     <string name="show_whiteboard">Yazı tahtasını göster</string>
-    <string name="hide_whiteboard">Yazı tahtasını gizle</string>
-    <string name="clear_whiteboard">Yazı tahtasını temizle</string>
-    <string name="replay_audio">Sesi tekrar oynat</string>
+    <string name="hide_whiteboard" maxLength="28">Yazı tahtasını gizle</string>
+    <string name="clear_whiteboard" maxLength="28">Yazı tahtasını temizle</string>
+    <string name="replay_audio" maxLength="28">Sesi tekrar oynat</string>
     <string name="leech_suspend_notification">Kart asalak olarak işaretlenip askıya alınmış</string>
     <string name="leech_notification">Kart asalak olarak işaretlenmiş</string>
     <string name="webview_crash_unknown">Bilinmeyen hata</string>
@@ -80,24 +80,24 @@
     <string name="webview_crash_fatal">Kritik Hata: WebView oluşturucusu çöktü. Neden: %s</string>
     <string name="webview_crash_loop_dialog_title">Sistem WebView Oluşturma Hatası</string>
     <string name="webview_crash_loop_dialog_content">Sistem WebView bu kartı işleyemedi: \'%1$s\'.\n %2$s</string>
-    <string name="filter_by_flags">Bayraklar</string>
+    <string name="filter_by_flags" maxLength="41">Bayraklar</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Bugünün yeni kart sınırını düzenle</string>
-    <string name="custom_study_increase_review_limit">Bugünün çalışma kartı sınırını düzenle</string>
-    <string name="custom_study_review_forgotten">Unutulan kartları gözden geçir</string>
-    <string name="custom_study_review_ahead">Önceden çalış</string>
-    <string name="custom_study_random_selection">Rastgele seçilmiş kartları çalış</string>
-    <string name="custom_study_preview_new">Yeni kartlara önden bak</string>
     <string name="custom_study_limit_tags">Belirli etiketlere sınırla</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d gömülü</item>
+        <item quantity="other">+%d gömülü</item>
+    </plurals>
+    <string name="studyoptions_total_new_label">Toplam yeni kart</string>
+    <string name="studyoptions_total_label">Toplam kart</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Notu düzenle</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">Notu düzenle</string>
     <string name="discard">Vazgeç</string>
     <string name="note_editor_no_cards_created">Hiçbir kart yaratılmadı. Lütfen daha fazla alan doldurun</string>
     <string name="note_editor_no_cards_created_all_fields">Seçili not türü hiç kart çıkarmadı.\nLütfen başka bir not türü seçin, veya \"Kartlar\"a basıp alan değişikliği ekleyin.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Boşluk doldurma sadece Boşluklu not türünde çalışır</string>
     <string name="saving_facts">Not kaydediliyor</string>
     <string name="saving_model">Not tipi kaydediliyor</string>
-    <string name="save">Kaydet</string>
+    <string name="save" maxLength="28">Kaydet</string>
     <string name="close">Kapat</string>
     <string name="select">Seç</string>
     <string name="field_remapping">%1$s (\'%2$s\' içinden)</string>
@@ -115,19 +115,18 @@
         <item quantity="other">%1$d dakika</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid kartı</string>
-    <string name="note_editor_copy_note">Notu kopyala</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Yerini değiştir</string>
-    <string name="card_editor_reset_card">İlerlemeyi sıfırla</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Yeniden planla</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Önizle</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Markdown olarak kopyala</string>
+    <string name="note_editor_copy_note" maxLength="28">Notu kopyala</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Yerini değiştir</string>
+    <string name="card_editor_reset_card" maxLength="28">İlerlemeyi sıfırla</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Yeniden planla</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Önizle</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Markdown olarak kopyala</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d içinden %1$d tanesi</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Yeniden adlandır</string>
-    <string name="checks_action">Kontrol et</string>
-    <string name="check_db">Veritabanını denetle</string>
-    <string name="check_media">Medyayı kontrol et</string>
-    <string name="empty_cards">Boş kartlar</string>
-    <string name="empty_card_warning">Bu kart boş. Deste listesi ekranındaki menüden \"Boş kartlar\" seçeneğini kullanın.</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Yeniden adlandır</string>
+    <string name="checks_action" maxLength="28">Kontrol et</string>
+    <string name="check_db" maxLength="28">Veritabanını denetle</string>
+    <string name="check_media" maxLength="28">Medyayı kontrol et</string>
+    <string name="empty_cards" maxLength="28">Boş kartlar</string>
     <string name="unknown_type_field_warning">Cevabı yaz: bilinmeyen alan %s</string>
     <string name="delete_deck">Deste siliniyor&#8230;</string>
     <string name="info_rate">AnkiDroid\'e oy ver</string>
@@ -161,12 +160,11 @@
     <string name="export_choice_share">Paylaş</string>
     <string name="export_choice_save_to">Kaydet</string>
     <string name="export_saving_exported_collection">Dışarı aktarılan dosya kaydediliyor&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Seçenekler</string>
-    <string name="menu__deck_options">Deste seçenekleri</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Seçenekler</string>
+    <string name="menu__deck_options" maxLength="28">Deste seçenekleri</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Çalışma seçenekleri</string>
-    <string name="select_tts">Metin okuma dilini ayarla</string>
-    <string name="custom_study">Kişisel çalışma</string>
-    <string name="more_options">Daha fazlası</string>
+    <string name="select_tts" maxLength="28">Metin okuma dilini ayarla</string>
+    <string name="custom_study" maxLength="28">Kişisel çalışma</string>
     <string name="dyn_deck_desc">Bu normal programın dışında çalışmak için özel bir deste. Kartlar çalışıldıktan sonra otomatik olarak kendi destelerine geri dönecekler. Bu desteyi deste listesinden silmek kalan bütün kartları kendi destelerine geri döndürecek.</string>
     <string name="steps_error">Adım 0\'dan büyük bir sayı olmalıdır</string>
     <string name="steps_min_error">En az bir adım gerekiyor</string>
@@ -187,17 +185,17 @@
     <string name="web_page_error">Sayfa yüklenirken hata: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Arkaplan</string>
-    <string name="choose_an_image">Bir resim seç</string>
+    <string name="background_image_title" maxLength="41">Arkaplan</string>
+    <string name="choose_an_image" maxLength="41">Bir resim seç</string>
     <string name="remove_background_image">Arkaplan kaldırılsın mı?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Varsayılana Dön</string>
+    <string name="restore_default" maxLength="28">Varsayılana Dön</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Boş</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Yazı tahtası resmi kaydedilemedi. %s</string>
     <string name="white_board_image_saved">Yazı tahtası resmi bu adrese kaydedildi: %s</string>
-    <string name="title_whiteboard_pen_color">Yazı tahtası kalem rengi</string>
-    <string name="title_whiteboard_editor">Yazı tahtası düzenleyici</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">Yazı tahtası kalem rengi</string>
+    <string name="title_whiteboard_editor" maxLength="28">Yazı tahtası düzenleyici</string>
     <string name="user_is_a_robot">Otomatik test saptandı. Eğer insansanız, AnkiDroid desteğiyle iletişime geçin</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Bu kart desteklenmeyen AnkiDroid özellikleri kullanıyor. Geliştiriciyle iletişime geçin (%1$s), veya vikiye bakın. %2$s</string>
@@ -212,13 +210,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Kart İçeriği Hatası: \"%s\" yüklenemedi</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Deste ara</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Taşıma ilerlemesini göster</string>
+    <string name="search_decks" maxLength="28">Deste ara</string>
     <string name="ankidroid_init_failed_webview_title">Kritik Hata</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid şu an ulaşılamayan System WebView\'a dayanır. Bu sistem güncelleme yüklerken olabilir. Lütfen birkaç dakika sonra tekrar deneyin.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Yazı tipi boyutu</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Araç çubuğunu göster</string>
+    <string name="menu_font_size" maxLength="28">Yazı tipi boyutu</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Araç çubuğunu göster</string>
     <string name="format_insert_bold">Kalın olarak biçimlendir</string>
     <string name="format_insert_italic">İtalik olarak biçimlendir</string>
     <string name="format_insert_underline">Altı çizili olarak biçimlendir</string>
@@ -233,13 +230,15 @@
     <string name="edit_toolbar_item">Araç Çubuğu Öğesini düzenle</string>
     <string name="toolbar_item_explain_edit_or_remove">Seçili yazıdan önce ve sonra eklenecek HTML girin\n\nBir araç çubuğu öğesini değiştirmek ya da kaldırmak için basılı tutun</string>
     <string name="remove_toolbar_item">Araç Çubuğu Öğesini sil?</string>
-    <string name="note_editor_paste_too_large">Görüntü yapıştırılamayacak kadar büyük, lütfen görüntüyü manuel olarak ekleyin</string>
+    <string name="note_editor_image_too_large">Bu resim fazla büyük, lütfen resmi elle ekleyin</string>
+    <string name="note_editor_video_too_large">Bu video dosyası fazla büyük, lütfen videoyu elle ekleyin</string>
+    <string name="note_editor_audio_too_large">Bu ses dosyası fazla büyük, lütfen sesi elle ekleyin</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android yedeklemesi gerçekleştiriliyor. Lütfen tekrar deneyin</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid\'in kısayol eklemesine izin vermek için iManager kullanmanız gerekebilir</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Ana ekranın, kısayol ekleyebilmesi için AnkiDroid\'e izin vermiyor</string>
     <string name="create_shortcut_error">Kısayolu eklerken hata: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Cümlelerin baş harflerini büyült</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Araç çubuğunu kaydır</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Cümlelerin baş harflerini büyült</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Araç çubuğunu kaydır</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -262,7 +261,7 @@
     <string name="check_network">Lütfen ağ bağlantını kontrol et</string>
     <string name="search_using_deck_name">Deste ismini kullanarak ara</string>
     <string name="external_storage_unavailable">İndirme iptal edildi, harici hafıza erişilebilir değil.</string>
-    <string name="home">Ana sayfa</string>
+    <string name="home" maxLength="28">Ana sayfa</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Kart gizlendi.</string>
@@ -272,16 +271,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">%s alanını yapışkan yap</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Depolama geçişi</string>
     <string name="scoped_storage_learn_more">Daha fazlasını öğren</string>
-    <string name="scoped_storage_postpone">Ertele</string>
-    <string name="scoped_storage_migrate">Taşı</string>
     <string name="search_card_js_api_no_results">Arama sonuç vermedi</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid\'in Android 10 güvenlik poliçesine uyum sağlamak için depolamasını taşıması gerekiyor.\n\nBu, medya senkronizasyon performansını yükseltecek.&lt;br&gt;&lt;br&gt;Taşıma sırasında senkronizasyon yapılamaz ve bazı ayarlar değiştirilemez. Verilerinizi güvende tutmak için taşıma başlamadan önce bir medya senkronizasyonu gerçekleşecek.&lt;br&gt;&lt;br&gt;Bu işlem sırasında AnkiDroid\'i kullanmak veya kapatmak güvenlidir.</string>
-    <string name="start_migration_progress_message">Depolama geçişi başlatılıyor. Kısa bir süre sonra AnkiDroid\'i kullanmaya devam edebilirsiniz.</string>
-    <string name="migration_part_1_done_resume">AnkiDroid\'i kullanmaya devam edebilirsiniz.
-\nDepolama geçişi arkaplanda devam edecek.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s geçerli bir JavaScript eklenti paketi değil</string>
     <string name="could_not_create_dir">Klasör oluşturma hatası %s</string>
@@ -311,14 +302,8 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kartlar</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notlar</string>
     <string name="toggle_cards_notes">Kartları/Notları Aç/Kapat</string>
-    <string name="toggle_browser_mode_help">Kartları veya notları tarayıcıda göstermeyi aç/kapat</string>
     <string name="truncate_content_help">Tarayıcının her sırasının yüksekliğini içeriğin sadece ilk 3 satırını gösterecek şekilde kırp</string>
-    <string name="browser_options_dialog_heading">Tarayıcı Seçenekleri</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Bu işlev depolama taşıması sırasında kullanılamıyor
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Depolama taşımayı başlatmak için dokunun</string>
-    <string name="media_sync_required_title">Medya Senkronizasyonu Gerekiyor</string>
-    <string name="media_sync_unavailable_message">Medya senkronizasyonu ayarlardan kapalı. Lütfen devam etmeden önce senkronize edilmemiş medyayı senkronize edin ve yedekleyin.</string>
+    <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">Alınan kayıtlar kaydedildi. </string>
     <string name="deleting_selected_notes">Seçili notlar siliniyor</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Bir sesi dinlemek için dokunun
@@ -343,9 +328,30 @@
         <item quantity="one">%d kart çıkarıldı</item>
         <item quantity="other">%d kart çıkarıldı</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Yerini değiştir</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Yerini değiştir</string>
     <string name="start_recording">Kayda başla</string>
     <string name="stop_recording">Durdur</string>
     <string name="play_recording">Oynat</string>
     <string name="next_recording">Sonraki</string>
+    <!--  AlertDialog in the deleteCardTemplate  -->
+    <string name="orphan_note_title">Kart Türü Silinemiyor</string>
+    <string name="orphan_note_message">Bu kart türünü silmek bazı notları kartsız bırakacak.</string>
+    <string name="voice_not_supported">Seslendirme desteklenmiyor. Başka bir seslendirme motoru deneyin ya da bir tane yükleyin.</string>
+    <!--Keyboard shortcuts dialog-->
+    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Klavye kısayolları diyaloğunu göster</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deste Seçici</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Desteyi onay sormadan sil</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Not Düzenleyici</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Deste seç</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Not türü seç</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Etiket düzenleyici</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Kart Şablonu Düzenleyici</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Ön şablonu düzenle</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Arka şablonu düzenle</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Stili düzenle</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Şablonu markdown olarak kopyala</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Tarayıcı görünümünü düzenle</string>
+    <string name="show_shortcuts_message">Klavye kısayollarını göstermek için Alt+K\'ye basın</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">%s kullanıcı eylemi bu not türünde belirlenmemiş. Lütfen eylemi ayarlayın</string>
+    <string name="directory_inaccessible_info">Erişimin nasıl yeniden sağlanıldığına dair daha fazlasını burda %s öğrenin ya da koleksiyon klasörünü değiştirmek için ayarlara gidin.</string>
 </resources>

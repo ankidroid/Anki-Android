@@ -28,7 +28,10 @@ import timber.log.Timber
  * another broadcast intent will be sent to let the activities know about it
  */
 class SdCardReceiver : BroadcastReceiver() {
-    override fun onReceive(context: Context, intent: Intent) {
+    override fun onReceive(
+        context: Context,
+        intent: Intent,
+    ) {
         if (intent.action == Intent.ACTION_MEDIA_EJECT) {
             Timber.i("media eject detected - closing collection and sending broadcast")
             val i = Intent()

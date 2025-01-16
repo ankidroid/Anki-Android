@@ -33,31 +33,38 @@ import org.jetbrains.uast.UCallExpression
  * This custom Lint rules will raise an error if a developer uses the [System.currentTimeMillis] method instead
  * of using the time provided by the new Time class.
  */
-class DirectSystemCurrentTimeMillisUsage : Detector(), SourceCodeScanner {
-
+class DirectSystemCurrentTimeMillisUsage :
+    Detector(),
+    SourceCodeScanner {
     companion object {
         @VisibleForTesting
         const val ID = "DirectSystemCurrentTimeMillisUsage"
 
         @VisibleForTesting
         const val DESCRIPTION = "Use the collection's getTime() method instead of System.currentTimeMillis()"
-        private const val EXPLANATION = "Using time directly means time values cannot be controlled during testing. " +
-            "Time values like System.currentTimeMillis() must be obtained through the Time obtained from a Collection"
+        private const val EXPLANATION =
+            "Using time directly means time values cannot be controlled during testing. " +
+                "Time values like System.currentTimeMillis() must be obtained through the Time obtained from a Collection"
         private val implementation = Implementation(DirectSystemCurrentTimeMillisUsage::class.java, Scope.JAVA_FILE_SCOPE)
-        val ISSUE: Issue = Issue.create(
-            ID,
-            DESCRIPTION,
-            EXPLANATION,
-            Constants.ANKI_TIME_CATEGORY,
-            Constants.ANKI_TIME_PRIORITY,
-            Constants.ANKI_TIME_SEVERITY,
-            implementation
-        )
+        val ISSUE: Issue =
+            Issue.create(
+                ID,
+                DESCRIPTION,
+                EXPLANATION,
+                Constants.ANKI_TIME_CATEGORY,
+                Constants.ANKI_TIME_PRIORITY,
+                Constants.ANKI_TIME_SEVERITY,
+                implementation,
+            )
     }
 
     override fun getApplicableMethodNames() = mutableListOf("currentTimeMillis")
 
-    override fun visitMethodCall(context: JavaContext, node: UCallExpression, method: PsiMethod) {
+    override fun visitMethodCall(
+        context: JavaContext,
+        node: UCallExpression,
+        method: PsiMethod,
+    ) {
         super.visitMethodCall(context, node, method)
         val evaluator = context.evaluator
         val foundClasses = context.uastFile!!.classes
@@ -65,7 +72,7 @@ class DirectSystemCurrentTimeMillisUsage : Detector(), SourceCodeScanner {
             context.report(
                 ISSUE,
                 context.getCallLocation(node, includeReceiver = true, includeArguments = true),
-                DESCRIPTION
+                DESCRIPTION,
             )
         }
     }

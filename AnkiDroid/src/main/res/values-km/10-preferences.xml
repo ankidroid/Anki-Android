@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrate</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blink light</string>
-    <string name="timeout_answer_text" maxLength="41">Automatic display answer</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Select language</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
@@ -171,7 +169,7 @@
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
     <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Show top bar</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Show remaining</string>
     <string name="show_progress_summ">Show remaining card count</string>
     <string name="show_eta" maxLength="41">Show ETA</string>
@@ -223,7 +221,7 @@
     <string name="keyboard">Keyboard</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41">Card</string>
+    <string name="card" maxLength="41" comment="Generic term to refer to a card">Card</string>
     <string name="note" maxLength="41">Note</string>
     <string name="navigation" maxLength="41">Navigation</string>
     <string name="media" maxLength="41">Media</string>
@@ -234,9 +232,9 @@
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">General</string>
     <string name="deck_conf_reminders" maxLength="41">Reminders</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filter</string>
-    <string name="deck_conf_cram_search" maxLength="41">Search</string>
+    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Search</string>
     <string name="deck_conf_cram_limit" maxLength="41">Limit to</string>
-    <string name="deck_conf_cram_order" maxLength="41">cards selected by</string>
+    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reschedule</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
     <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
@@ -269,20 +267,21 @@
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <string name="user_actions" maxLength="41">User actions</string>
     <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="41">User action 1</string>
-    <string name="user_action_2" maxLength="41">User action 2</string>
-    <string name="user_action_3" maxLength="41">User action 3</string>
-    <string name="user_action_4" maxLength="41">User action 4</string>
-    <string name="user_action_5" maxLength="41">User action 5</string>
-    <string name="user_action_6" maxLength="41">User action 6</string>
-    <string name="user_action_7" maxLength="41">User action 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="user_action_1" maxLength="28">User action 1</string>
+    <string name="user_action_2" maxLength="28">User action 2</string>
+    <string name="user_action_3" maxLength="28">User action 3</string>
+    <string name="user_action_4" maxLength="28">User action 4</string>
+    <string name="user_action_5" maxLength="28">User action 5</string>
+    <string name="user_action_6" maxLength="28">User action 6</string>
+    <string name="user_action_7" maxLength="28">User action 7</string>
+    <string name="user_action_8" maxLength="28">User action 8</string>
+    <string name="user_action_9" maxLength="28">User action 9</string>
+    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Select card side</string>
     <string name="card_side_question">Question</string>
     <string name="card_side_answer">Answer</string>
-    <string name="card_side_both">Question &amp; Answer</string>
+    <string name="card_side_both" maxLength="28">Question &amp; Answer</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -365,4 +364,10 @@
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
     <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
     <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
+    <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
+    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <!--Keyboard shortcuts dialog-->
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
 </resources>

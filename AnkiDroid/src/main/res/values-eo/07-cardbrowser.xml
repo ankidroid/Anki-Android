@@ -54,28 +54,27 @@
         <item quantity="other">%d notoj montrita</item>
     </plurals>
     <string name="card_browser_all_decks">Ĉiuj kartaroj</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">Forigi karton</item>
-        <item quantity="other">Forigi kartojn</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">Forgi noton</item>
         <item quantity="other">Forigi notojn</item>
     </plurals>
-    <string name="card_browser_change_deck">Ŝanĝi kartaron</string>
+    <string name="card_browser_change_deck" maxLength="28">Ŝanĝi kartaron</string>
     <string name="delete_card_title">Ĉu forigi noton?</string>
-    <string name="card_browser_show_marked">Filtri markitajn</string>
-    <string name="card_browser_show_suspended">Filtri daŭre kaŝitajn</string>
-    <string name="card_browser_search_by_tag">Filtri laŭ etikedo</string>
-    <string name="card_browser_search_by_flag">Filtri laŭ flago</string>
-    <string name="card_browser_list_my_searches">Miaj serĉoj</string>
-    <string name="card_browser_list_my_searches_save">Konservi serĉon</string>
+    <string name="card_browser_show_marked" maxLength="28">Filtri markitajn</string>
+    <string name="card_browser_show_suspended" maxLength="28">Filtri daŭre kaŝitajn</string>
+    <string name="card_browser_search_by_tag" maxLength="28">Filtri laŭ etikedo</string>
+    <string name="card_browser_search_by_flag" maxLength="28">Filtri laŭ flago</string>
+    <string name="card_browser_list_my_searches" maxLength="28">Miaj serĉoj</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">Konservi serĉon</string>
     <string name="card_browser_list_my_searches_title">Elekti konservitan serĉon</string>
     <string name="card_browser_list_my_searches_new_name">Nomo por la nuna serĉo</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Ne povas konservi serĉon sen nomo</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Nomo jam ekzistas</string>
+    <string name="no_note_to_edit">Neniu noto por redakti</string>
     <string name="card_browser_list_my_searches_remove_content">Ĉu forigi “%1$s”?</string>
-    <string name="card_browser_change_display_order">Ŝanĝi ordon de vidigo</string>
+    <string name="card_browser_change_display_order" maxLength="28">Ŝanĝi ordon de vidigo</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Serĉi</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Serĉi</string>
     <string name="card_browser_change_display_order_title">Elekti ordon de vidigo</string>
     <string name="card_details_tags">Etikedoj</string>
     <string-array name="card_browser_order_labels">
@@ -90,16 +89,13 @@
         <item>Laŭ ripetoj</item>
         <item>Laŭ misrespondoj</item>
     </string-array>
-    <string name="card_browser_select_all">Elekti ĉiujn</string>
-    <string name="card_browser_select_none">Elekti neniujn</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nova)</string>
-    <string name="card_browser_due_filtered_card">(filtrita)</string>
-    <string name="card_browser_interval_learning_card">(lernata)</string>
+    <string name="card_browser_select_all" maxLength="28">Elekti ĉiujn</string>
+    <string name="card_browser_select_none" maxLength="28">Elekti neniujn</string>
     <string name="card_browser_no_cards_in_deck">Neniu karto trovita en la kartaro “%s”</string>
     <string name="card_browser_search_all_decks">Serĉi en ĉiuj kartaroj</string>
     <string name="card_browser_unknown_deck_name">Nekonata</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Senpintigi enhavon</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Hodiaŭ estas \'0 %1$s\', morgaŭ estas \'1 %2$s\', ktp&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Elporti karton</item>
         <item quantity="other">Elporti kartojn</item>
@@ -112,4 +108,7 @@
         <item quantity="one">Forigis %d karton</item>
         <item quantity="other">Forigis %d kartojn</item>
     </plurals>
+    <!--Keyboard shortcuts dialog-->
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Malfermi redaktilon de etikedoj</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Ŝanĝi ordigon</string>
 </resources>

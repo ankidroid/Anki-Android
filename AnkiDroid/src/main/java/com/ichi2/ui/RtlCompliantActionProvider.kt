@@ -19,15 +19,17 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
 import androidx.annotation.VisibleForTesting
-import androidx.appcompat.widget.TooltipCompat
 import com.ichi2.anki.ActionProviderCompat
+import com.ichi2.compat.setTooltipTextCompat
 
 /**
  * An Rtl version of a normal action view, where the drawable is mirrored
  */
-class RtlCompliantActionProvider(context: Context) : ActionProviderCompat(context) {
+class RtlCompliantActionProvider(
+    context: Context,
+) : ActionProviderCompat(context) {
     @VisibleForTesting
-    val activity: Activity
+    val activity: Activity = unwrapContext(context)
 
     /**
      * The action to perform when clicking the associated menu item. By default this delegates to
@@ -40,7 +42,7 @@ class RtlCompliantActionProvider(context: Context) : ActionProviderCompat(contex
 
     override fun onCreateActionView(forItem: MenuItem): View {
         val actionView = ImageButton(context, null, android.R.attr.actionButtonStyle)
-        TooltipCompat.setTooltipText(actionView, forItem.title)
+        actionView.setTooltipTextCompat(forItem.title)
         forItem.icon?.let {
             it.isAutoMirrored = true
             actionView.setImageDrawable(it)
@@ -71,9 +73,5 @@ class RtlCompliantActionProvider(context: Context) : ActionProviderCompat(contex
                 throw ClassCastException("Passed context should be either an instanceof Activity or a ContextWrapper wrapping an Activity")
             }
         }
-    }
-
-    init {
-        activity = unwrapContext(context)
     }
 }

@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">A cópia de segurança não foi guardada. Não há espaço suficiente para a guardar. Reduza o conteúdo da cópia ou remova outros ficheiros.</string>
     <string name="storage_warning">Menos de %d MB de espaço disponíveis.\nLiberte espaço para evitar perda de dados.</string>
-    <string name="backup_restore">Restaurar da cópia de segurança</string>
+    <string name="backup_restore" maxLength="28">Restaurar da cópia de segurança</string>
     <string name="backup_new_collection">Nova coleção</string>
     <string name="backup_del_collection">Eliminar coleção e criar uma nova</string>
     <string name="backup_del_collection_question">Eliminar a coleção e criar uma nova? Isto irá eliminar todo o seu progresso de aprendizagem e eliminar todas as fichas.</string>

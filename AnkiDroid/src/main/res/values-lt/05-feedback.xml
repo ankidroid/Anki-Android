@@ -46,7 +46,7 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">Klaidų pranešimo režimas</string>
+    <string name="error_reporting_choice" maxLength="41">Klaidų pranešimo režimas</string>
     <string name="feedback_disclaimer">Atsakomybės neprisiėmimas: mes nerenkame jokios asmeninės informacijos, tokios kaip el. pašto adresas, telefono numeris, ar jūsų telefono IMEI. Tačiau mes renkame tokią informaciją apie jūsų įrenginį, kaip gamintojas, modelis ir Android versija, praneštų klaidų pobūdis ir veiksmai, dėl kurių atsirado pranešimas apie klaidą.</string>
     <string name="feedback_title">AnkiDroid Feedback</string>
     <string name="feedback_default_text">Parašykite atsiliepimą arba pateikite informacija apie pranešamų klaidų pobūdį.</string>

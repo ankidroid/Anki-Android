@@ -31,7 +31,7 @@ fun interface JavascriptEvaluator {
                 } else {
                   codeToRun();
                 }
-        """
+        """,
         )
     }
 }

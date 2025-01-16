@@ -50,32 +50,31 @@
         <item quantity="other">%d ᱠᱟᱰ ᱫᱮᱠᱷᱟᱣᱼᱮᱱᱟ</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d ᱧᱮᱞᱚᱜ ᱟᱠᱟᱱ ᱱᱳᱴ</item>
+        <item quantity="other">%d ᱧᱮᱞ ᱟᱠᱟᱱ ᱱᱳᱴᱥ</item>
     </plurals>
     <string name="card_browser_all_decks">ᱡᱷᱚᱛᱚ ᱰᱮᱠ ᱠᱚ</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="other">Delete cards</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="one">ᱥᱟᱦᱴᱟ ᱵᱚᱫᱚᱞ ᱢᱮ</item>
+        <item quantity="other">ᱱᱳᱴᱥ ᱵᱚᱫᱚᱞ ᱢᱮ</item>
     </plurals>
-    <string name="card_browser_change_deck">ᱰᱮᱠ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
+    <string name="card_browser_change_deck" maxLength="28">ᱰᱮᱠ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="delete_card_title">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱜᱮᱫ ᱜᱤᱰᱤᱼᱟᱢ?</string>
-    <string name="card_browser_show_marked">ᱪᱷᱟᱱᱤᱭᱟᱜ ᱢᱮᱨᱠᱼᱠᱟᱱᱟ</string>
-    <string name="card_browser_show_suspended">ᱪᱷᱟᱱᱤᱭᱟᱜ ᱵᱚᱸᱫ ᱜᱤᱰᱤ ᱠᱟᱱᱟ</string>
-    <string name="card_browser_search_by_tag">ᱴᱮᱜ ᱛᱮ ᱪᱷᱟᱱᱠᱟᱱᱟ</string>
-    <string name="card_browser_search_by_flag">ᱯᱚᱛᱠᱟ ᱛᱮ ᱯᱷᱤᱞᱴᱚᱨ ᱢᱮ</string>
-    <string name="card_browser_list_my_searches">ᱤᱧᱟᱜ ᱥᱮᱸᱫᱽᱨᱟ</string>
-    <string name="card_browser_list_my_searches_save">ᱥᱮᱸᱫᱽᱨᱟ ᱥᱟᱧᱪᱟᱣ</string>
+    <string name="card_browser_show_marked" maxLength="28">ᱪᱷᱟᱱᱤᱭᱟᱜ ᱢᱮᱨᱠᱼᱠᱟᱱᱟ</string>
+    <string name="card_browser_show_suspended" maxLength="28">ᱪᱷᱟᱱᱤᱭᱟᱜ ᱵᱚᱸᱫ ᱜᱤᱰᱤ ᱠᱟᱱᱟ</string>
+    <string name="card_browser_search_by_tag" maxLength="28">ᱴᱮᱜ ᱛᱮ ᱪᱷᱟᱱᱠᱟᱱᱟ</string>
+    <string name="card_browser_search_by_flag" maxLength="28">ᱯᱚᱛᱠᱟ ᱛᱮ ᱯᱷᱤᱞᱴᱚᱨ ᱢᱮ</string>
+    <string name="card_browser_list_my_searches" maxLength="28">ᱤᱧᱟᱜ ᱥᱮᱸᱫᱽᱨᱟ</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">ᱥᱮᱸᱫᱽᱨᱟ ᱥᱟᱧᱪᱟᱣ</string>
     <string name="card_browser_list_my_searches_title">ᱥᱟᱧᱪᱟᱣᱠᱟᱱ ᱠᱟᱱ ᱠᱟᱰ ᱵᱟᱪᱷᱟᱣ</string>
     <string name="card_browser_list_my_searches_new_name">ᱱᱤᱛᱚᱜᱼᱟ ᱥᱮᱸᱫᱽᱨᱟ ᱧᱩᱛᱩᱢᱟᱼᱜ ᱢᱮ</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">ᱧᱩᱛᱩᱢ ᱵᱮᱜᱚᱨ ᱥᱮᱸᱫᱽᱨᱟ ᱵᱟᱝ ᱥᱟᱧᱪᱟᱣ ᱫᱟᱲᱮᱟᱼᱜᱟ</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">ᱧᱩᱛᱩᱢ ᱞᱟᱦᱟ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜᱼᱟ</string>
+    <string name="no_note_to_edit">ᱥᱟᱯᱲᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱪᱮᱫ ᱦᱚᱸ ᱵᱟᱝ</string>
     <string name="card_browser_list_my_searches_remove_content">“%1$s” ᱜᱮᱫ ᱜᱤᱰᱤᱼᱟ?</string>
-    <string name="card_browser_change_display_order">ᱧᱮᱞᱚᱜ ᱵᱚᱫᱚᱞ ᱛᱷᱟᱨ</string>
+    <string name="card_browser_change_display_order" maxLength="28">ᱧᱮᱞᱚᱜ ᱵᱚᱫᱚᱞ ᱛᱷᱟᱨ</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">ᱛᱚᱨᱡᱚᱢᱟ</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">ᱛᱚᱨᱡᱚᱢᱟ</string>
     <string name="card_browser_change_display_order_title">ᱧᱮᱞᱚᱜ ᱵᱚᱫᱚᱞ ᱛᱷᱟᱨ</string>
     <string name="card_details_tags">ᱴᱮᱜᱥ</string>
     <string-array name="card_browser_order_labels">
@@ -90,26 +89,26 @@
         <item>ᱫᱩᱦᱲᱟ ᱧᱮᱞ ᱛᱮ</item>
         <item>ᱪᱩᱠ ᱛᱮ</item>
     </string-array>
-    <string name="card_browser_select_all">ᱡᱷᱚᱛᱚ ᱵᱟᱪᱷᱟᱣ ᱢᱮ</string>
-    <string name="card_browser_select_none">ᱟᱞᱚ ᱵᱟᱪᱷᱟᱣ ᱟ</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(ᱱᱟᱶᱟ)</string>
-    <string name="card_browser_due_filtered_card">(ᱪᱷᱟᱹᱱᱤᱭᱟᱜ)</string>
-    <string name="card_browser_interval_learning_card">(ᱪᱮᱫᱚᱜ)</string>
+    <string name="card_browser_select_all" maxLength="28">ᱡᱷᱚᱛᱚ ᱵᱟᱪᱷᱟᱣ ᱢᱮ</string>
+    <string name="card_browser_select_none" maxLength="28">ᱟᱞᱚ ᱵᱟᱪᱷᱟᱣ ᱟ</string>
     <string name="card_browser_no_cards_in_deck">ᱰᱮᱠ ᱨᱮ ᱪᱚᱫ ᱠᱟᱰ ᱠᱚ ᱵᱟᱹᱱᱩᱜᱼᱟ ‘%s’</string>
     <string name="card_browser_search_all_decks">ᱠᱷᱚᱛᱚ ᱰᱮᱠ ᱠᱚ ᱥᱮᱸᱫᱽᱨᱟᱭ ᱢᱮ</string>
     <string name="card_browser_unknown_deck_name">ᱵᱟᱝ ᱵᱟᱰᱟᱭᱟᱜ</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">ᱴᱨᱟᱱᱠᱮᱴ ᱠᱟᱛᱷᱟ</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">ᱛᱮᱦᱮᱧ ᱫᱚ  ⁇ 0 %1$s ⁇ , ᱛᱮᱦᱮᱧ ᱫᱚ  ⁇ 1 %2$s ⁇ , ᱮᱢᱟᱱ&#8230;</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">ᱮᱠᱥᱯᱳᱨᱴ ᱠᱟᱨᱰ</item>
+        <item quantity="other">ᱮᱠᱥᱯᱳᱨᱴ ᱠᱟᱨᱰ</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">ᱮᱠᱥᱯᱳᱨᱴ ᱱᱳᱴ</item>
+        <item quantity="other">ᱮᱠᱥᱯᱳᱨᱴ ᱱᱳᱴᱥ</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟ</item>
         <item quantity="other">%d ᱠᱟᱰ ᱠᱚ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟ</item>
     </plurals>
+    <!--Keyboard shortcuts dialog-->
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">ᱴᱮᱜ ᱥᱟᱯᱲᱟᱣ ᱢᱮ</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">ᱚᱨᱰᱚᱨ ᱰᱟᱭᱞᱳᱜᱽ ᱧᱮᱞ ᱢᱮ</string>
 </resources>

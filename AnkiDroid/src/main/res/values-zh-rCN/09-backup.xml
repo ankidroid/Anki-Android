@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">备份未保存。您的剩余存储空间不足。降低备份深度或删除其他文件。</string>
     <string name="storage_warning">您的存储空间剩余不到 %d MB。\n释放一些空间以避免数据丢失。</string>
-    <string name="backup_restore">恢复备份</string>
+    <string name="backup_restore" maxLength="28">恢复备份</string>
     <string name="backup_new_collection">新建集合</string>
     <string name="backup_del_collection">删除集合，并创建新集合</string>
     <string name="backup_del_collection_question">您确定想要删除该集合然后重新创建一个吗？这将删除所有您的学习进度和删除所有卡片！</string>

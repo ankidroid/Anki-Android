@@ -42,10 +42,11 @@ class FlagRenameDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialogView = requireActivity().layoutInflater.inflate(R.layout.rename_flag_layout, null)
-        val builder = AlertDialog.Builder(requireContext()).apply {
-            customView(view = dialogView, 4, 4, 4, 4)
-            title(R.string.rename_flag)
-        }
+        val builder =
+            AlertDialog.Builder(requireContext()).apply {
+                customView(view = dialogView, 4, 4, 4, 4)
+                title(R.string.rename_flag)
+            }
         val dialog = builder.create()
 
         recyclerView = dialogView.findViewById(R.id.recyclerview_flags)
@@ -62,27 +63,29 @@ class FlagRenameDialog : DialogFragment() {
         super.onStart()
         dialog?.window?.clearFlags(
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
+                or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
         )
     }
 
-    private fun setupRecyclerView() = requireActivity().lifecycleScope.launch {
-        val flagItems = createFlagList()
-        flagAdapter = FlagAdapter(lifecycleScope = lifecycleScope)
-        recyclerView.adapter = flagAdapter
-        flagAdapter.submitList(flagItems)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-    }
+    private fun setupRecyclerView() =
+        requireActivity().lifecycleScope.launch {
+            val flagItems = createFlagList()
+            flagAdapter = FlagAdapter(lifecycleScope = lifecycleScope)
+            recyclerView.adapter = flagAdapter
+            flagAdapter.submitList(flagItems)
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        }
 
     private suspend fun createFlagList(): List<FlagItem> {
         Timber.d("Creating flag list")
-        return Flag.queryDisplayNames()
+        return Flag
+            .queryDisplayNames()
             .filter { it.key != Flag.NONE }
             .map { (flag, displayName) ->
                 FlagItem(
-                    ordinal = flag.code,
+                    flag = flag,
                     title = displayName,
-                    icon = flag.drawableRes
+                    icon = flag.drawableRes,
                 )
             }
     }

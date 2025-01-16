@@ -45,19 +45,33 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Cards due</string>
+    <string name="widget_minimum_cards_due_notification_ticker_title">அட்டைகள் சிறந்தவை</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%d AnkiDroid card due</item>
-        <item quantity="other">%d AnkiDroid cards due</item>
+        <item quantity="one">%d AnkiDroid கார்டு நிலுவையில் உள்ளது</item>
+        <item quantity="other">%d AnkiDroid கார்டு நிலுவையில் உள்ளது</item>
     </plurals>
-    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid small</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid சிறியது</string>
     <plurals name="widget_cards_due">
-        <item quantity="one">%d card due</item>
-        <item quantity="other">%d cards due</item>
+        <item quantity="one">%d கார்டு நிலுவையில் உள்ளது</item>
+        <item quantity="other">%d கார்டுகள் நிலுவையில் உள்ளன</item>
     </plurals>
     <plurals name="widget_eta">
-        <item quantity="one">%d minute remaining</item>
-        <item quantity="other">%d minutes remaining</item>
+        <item quantity="one">%d நிமிடங்கள் உள்ளன</item>
+        <item quantity="other">%d நிமிடங்கள் உள்ளன</item>
     </plurals>
-    <string name="widget_add_note_button">Add new AnkiDroid note</string>
+    <string name="widget_add_note_button">புதிய AnkiDroid குறிப்பைச் சேர்க்கவும்</string>
+    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">டெக் பிக்கர்</string>
+    <string name="card_analysis_extra_widget_description">அட்டை பகுப்பாய்வு</string>
+    <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
+    <string name="select_decks_title" comment="Title for Deck Selection Dialog">அடுக்குகளைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="select_deck_title" comment="Title for Deck Selection Dialog">ஒரு தளத்தைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">விட்ஜெட்டில் காட்ட லேயர்களைத் தேர்ந்தெடுக்கவும். + ஐகான் கொண்ட அடுக்குகளைத் தேர்ந்தெடுக்கவும்.</string>
+    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">தளம் அகற்றப்பட்டது</string>
+    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">இந்த தளம் ஏற்கனவே தேர்ந்தெடுக்கப்பட்டது</string>
+    <plurals name="deck_limit_reached">
+        <item quantity="one">நீங்கள் %d தளங்கள் வரை தேர்ந்தெடுக்கலாம்.</item>
+        <item quantity="other">நீங்கள் %d தளங்கள் வரை தேர்ந்தெடுக்கலாம்.</item>
+    </plurals>
+    <string name="empty_widget_state" comment="To denote the widget is empty">டெக் காணவில்லை. மறுகட்டமைக்க தட்டவும்.</string>
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">சேகரிப்பு காலியாக உள்ளது, டெக்குகளைச் சேர்க்க பயன்பாட்டைப் பயன்படுத்தி மீண்டும் கட்டமைக்கவும்</string>
 </resources>

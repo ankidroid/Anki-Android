@@ -45,41 +45,41 @@
 
 -->
 <resources>
-    <string name="youre_offline">You are offline</string>
-    <string name="sync_error">Sync error</string>
-    <string name="vague_error" comment="Network error dialog title">Error</string>
-    <string name="retry">Retry</string>
-    <string name="menu_get_shared_decks">Get shared decks</string>
-    <string name="connection_error_message">A network error has occurred</string>
-    <string name="not_logged_in_title">Log in to AnkiWeb</string>
-    <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
+    <string name="youre_offline">നിങ്ങൾ ഓഫ്‌ലൈനാണ്</string>
+    <string name="sync_error">സമന്വയ പിശക്</string>
+    <string name="vague_error" comment="Network error dialog title">പിശക്</string>
+    <string name="retry">വീണ്ടും ശ്രമിക്കുക</string>
+    <string name="menu_get_shared_decks">പങ്കിട്ട ഡെക്കുകൾ നേടുക</string>
+    <string name="connection_error_message">ഒരു നെറ്റ്‌വർക്ക് പിശക് സംഭവിച്ചു</string>
+    <string name="not_logged_in_title">AnkiWeb-ലേക്ക് ലോഗിൻ ചെയ്യുക</string>
+    <string name="login_create_account_message">ക്ലൗഡ് സമന്വയ സേവനം ഉപയോഗിക്കുന്നതിന് നിങ്ങൾ ഒരു മൂന്നാം കക്ഷി അക്കൗണ്ടിലേക്ക് ലോഗിൻ ചെയ്യണം. അടുത്ത ഘട്ടത്തിൽ നിങ്ങൾക്ക് ഒരെണ്ണം സൃഷ്ടിക്കാൻ കഴിയും.</string>
     <!-- MyAccount.kt -->
-    <string name="username">Email address</string>
-    <string name="password">Password</string>
-    <string name="log_in">Log in</string>
-    <string name="sign_up_description">Don’t have an AnkiWeb account? It’s free!</string>
-    <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
-    <string name="sign_up">Sign up</string>
-    <string name="logged_as">Logged in as</string>
+    <string name="username">ഇമെയിൽ വിലാസം</string>
+    <string name="password">രഹസ്യവാക്ക്</string>
+    <string name="log_in">ലോഗിൻ</string>
+    <string name="sign_up_description">AnkiWeb അക്കൗണ്ട് ഇല്ലേ? ഇത് സൗജന്യമാണ്!</string>
+    <string name="sign_up_not_affiliated">ശ്രദ്ധിക്കുക: AnkiWeb AnkiDroid-മായി അഫിലിയേറ്റ് ചെയ്തിട്ടില്ല</string>
+    <string name="sign_up">സൈൻ അപ്പ് ചെയ്യുക</string>
+    <string name="logged_as">ആയി ലോഗിൻ ചെയ്തു</string>
     <string name="log_out">Log out</string>
-    <string name="reset_password">Reset password</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="reset_password">പാസ്‌വേഡ് പുനഃസജ്ജമാക്കുക</string>
+    <string name="lost_mail_instructions">ഇമെയിൽ മറന്നോ?</string>
+    <string name="sign_in">സൈൻ ഇൻ ചെയ്യുന്നു</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Options for XXX</string>
-    <string name="sync_title">Synchronization</string>
-    <string name="sync_log_uploading_message">Full sync from local</string>
-    <string name="sync_database_acknowledge">Collection synchronized</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
-    <string name="sync_corrupt_database">Your database is corrupt. Please fix it before trying again to sync.\n\nSee %s for information about repairing your database.</string>
+    <string name="deckpreferences_title">XXX എന്നതിനായുള്ള ഓപ്ഷനുകൾ</string>
+    <string name="sync_title">സമന്വയിപ്പിക്കുക</string>
+    <string name="sync_log_uploading_message">ലോക്കലിൽ നിന്ന് പൂർണ്ണ സമന്വയം</string>
+    <string name="sync_database_acknowledge">ശേഖരം സമന്വയിപ്പിച്ചു</string>
+    <string name="col_synced_media_in_background">ശേഖരം സമന്വയിപ്പിച്ചു. പശ്ചാത്തലത്തിൽ മീഡിയയെ സമന്വയിപ്പിക്കുന്നു.</string>
+    <string name="sync_corrupt_database">നിങ്ങളുടെ ഡാറ്റാബേസ് കേടായി. വീണ്ടും സമന്വയിപ്പിക്കാൻ ശ്രമിക്കുന്നതിന് മുമ്പ് ദയവായി അത് പരിഹരിക്കുക.\n\nനിങ്ങളുടെ ഡാറ്റാബേസ് നന്നാക്കുന്നതിനുള്ള വിവരങ്ങൾക്ക് %s കാണുക.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_sanity_local">Local</string>
-    <string name="sync_sanity_remote">Remote</string>
-    <string name="one_way_sync_title">One-way sync</string>
-    <string name="one_way_sync_confirmation">One way sync requested</string>
+    <string name="sync_sanity_local">പ്രാദേശികമായ</string>
+    <string name="sync_sanity_remote">റിമോട്ട്</string>
+    <string name="one_way_sync_title" maxLength="41">വൺ-വേ സമന്വയം</string>
+    <string name="one_way_sync_confirmation">വൺ-വേ സിൻക്രൊണൈസേഷൻ</string>
     <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
-    <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
+    <string name="full_sync_confirmation_upgrade">AnkiDroid-ൻ്റെ മുമ്പ് ഇൻസ്റ്റാൾ ചെയ്ത പതിപ്പിലെ ഒരു ബഗ് കാരണം, പൂർണ്ണ സമന്വയം നിർബന്ധമാക്കാൻ ശുപാർശ ചെയ്യുന്നു.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_one_way_sync">സമന്വയം (വൺ-വേ)</string>
+    <string name="sync_menu_title_no_account">സമന്വയം (ലോഗിൻ ചെയ്യുക)</string>
 </resources>

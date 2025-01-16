@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Líc</string>
-    <string name="back_field_name">Rub</string>
+    <string name="front_field_name" maxLength="28">Líc</string>
+    <string name="back_field_name" maxLength="28">Rub</string>
 </resources>

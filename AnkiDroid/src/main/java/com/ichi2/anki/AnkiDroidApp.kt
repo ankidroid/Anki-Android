@@ -34,6 +34,7 @@ import androidx.core.content.edit
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.work.Configuration
+import anki.collection.OpChanges
 import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
@@ -48,16 +49,20 @@ import com.ichi2.anki.logging.RobolectricDebugTree
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.DebugInfoService
+import com.ichi2.anki.servicelayer.ThrowableFilterService
 import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
+import com.ichi2.libanki.ChangeManager
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.ExceptionUtil
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.Permissions
+import com.ichi2.widget.cardanalysis.CardAnalysisWidget
+import com.ichi2.widget.deckpicker.DeckPickerWidget
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -69,9 +74,11 @@ import java.util.Locale
 /**
  * Application class.
  */
-@KotlinCleanup("lots to do")
 @KotlinCleanup("IDE Lint")
-open class AnkiDroidApp : Application(), Configuration.Provider {
+open class AnkiDroidApp :
+    Application(),
+    Configuration.Provider,
+    ChangeManager.Subscriber {
     /** An exception if the WebView subsystem fails to load  */
     private var webViewError: Throwable? = null
     private val notifications = MutableLiveData<Void?>()
@@ -117,6 +124,9 @@ open class AnkiDroidApp : Application(), Configuration.Provider {
         // Get preferences
         val preferences = this.sharedPrefs()
 
+        // Ensures any change is propagated to widgets
+        ChangeManager.subscribe(this)
+
         CrashReportService.initialize(this)
         val logType = LogType.value
         when (logType) {
@@ -139,6 +149,9 @@ open class AnkiDroidApp : Application(), Configuration.Provider {
             UsageAnalytics.setDryRun(true)
         }
 
+        // Last in the UncaughtExceptionHandlers chain is our filter service
+        ThrowableFilterService.initialize()
+
         applicationScope.launch {
             Timber.i(DebugInfoService.getDebugInfo(this@AnkiDroidApp))
         }
@@ -160,12 +173,12 @@ open class AnkiDroidApp : Application(), Configuration.Provider {
             this,
             preferences.getBoolean(
                 getString(R.string.card_browser_external_context_menu_key),
-                false
-            )
+                false,
+            ),
         )
         AnkiCardContextMenu.ensureConsistentStateWithPreferenceStatus(
             this,
-            preferences.getBoolean(getString(R.string.anki_card_external_context_menu_key), true)
+            preferences.getBoolean(getString(R.string.anki_card_external_context_menu_key), true),
         )
         CompatHelper.compat.setupNotificationChannel(applicationContext)
 
@@ -181,7 +194,7 @@ open class AnkiDroidApp : Application(), Configuration.Provider {
         LanguageUtil.setDefaultBackendLanguages()
 
         // Create the AnkiDroid directory if missing. Send exception report if inaccessible.
-        if (Permissions.hasStorageAccessPermission(this)) {
+        if (Permissions.hasLegacyStorageAccessPermission(this)) {
             try {
                 val dir = CollectionHelper.getCurrentAnkiDroidDirectory(this)
                 CollectionHelper.initializeAnkiDroidDirectory(dir)
@@ -203,41 +216,49 @@ open class AnkiDroidApp : Application(), Configuration.Provider {
         // listen for day rollover: time + timezone changes
         DayRolloverHandler.listenForRolloverEvents(this)
 
-        registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
-            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-                Timber.i("${activity::class.simpleName}::onCreate")
-                (activity as? FragmentActivity)
-                    ?.supportFragmentManager
-                    ?.registerFragmentLifecycleCallbacks(
-                        FragmentLifecycleLogger(activity),
-                        true
-                    )
-            }
+        registerActivityLifecycleCallbacks(
+            object : ActivityLifecycleCallbacks {
+                override fun onActivityCreated(
+                    activity: Activity,
+                    savedInstanceState: Bundle?,
+                ) {
+                    Timber.i("${activity::class.simpleName}::onCreate")
+                    (activity as? FragmentActivity)
+                        ?.supportFragmentManager
+                        ?.registerFragmentLifecycleCallbacks(
+                            FragmentLifecycleLogger(activity),
+                            true,
+                        )
+                }
 
-            override fun onActivityStarted(activity: Activity) {
-                Timber.i("${activity::class.simpleName}::onStart")
-            }
+                override fun onActivityStarted(activity: Activity) {
+                    Timber.i("${activity::class.simpleName}::onStart")
+                }
 
-            override fun onActivityResumed(activity: Activity) {
-                Timber.i("${activity::class.simpleName}::onResume")
-            }
+                override fun onActivityResumed(activity: Activity) {
+                    Timber.i("${activity::class.simpleName}::onResume")
+                }
 
-            override fun onActivityPaused(activity: Activity) {
-                Timber.i("${activity::class.simpleName}::onPause")
-            }
+                override fun onActivityPaused(activity: Activity) {
+                    Timber.i("${activity::class.simpleName}::onPause")
+                }
 
-            override fun onActivityStopped(activity: Activity) {
-                Timber.i("${activity::class.simpleName}::onStop")
-            }
+                override fun onActivityStopped(activity: Activity) {
+                    Timber.i("${activity::class.simpleName}::onStop")
+                }
 
-            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-                Timber.i("${activity::class.simpleName}::onSaveInstanceState")
-            }
+                override fun onActivitySaveInstanceState(
+                    activity: Activity,
+                    outState: Bundle,
+                ) {
+                    Timber.i("${activity::class.simpleName}::onSaveInstanceState")
+                }
 
-            override fun onActivityDestroyed(activity: Activity) {
-                Timber.i("${activity::class.simpleName}::onDestroy")
-            }
-        })
+                override fun onActivityDestroyed(activity: Activity) {
+                    Timber.i("${activity::class.simpleName}::onDestroy")
+                }
+            },
+        )
 
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
         TtsVoices.launchBuildLocalesJob()
@@ -256,7 +277,7 @@ open class AnkiDroidApp : Application(), Configuration.Provider {
             "android:%s:%s:%s",
             BuildConfig.VERSION_NAME,
             Build.VERSION.RELEASE,
-            model
+            model,
         )
     }
 
@@ -265,8 +286,8 @@ open class AnkiDroidApp : Application(), Configuration.Provider {
     }
 
     @Suppress("deprecation") // 7109: setAcceptFileSchemeCookies
-    protected fun acceptFileSchemeCookies(): Boolean {
-        return try {
+    protected fun acceptFileSchemeCookies(): Boolean =
+        try {
             CookieManager.setAcceptFileSchemeCookies(true)
             true
         } catch (e: Throwable) {
@@ -278,10 +299,29 @@ open class AnkiDroidApp : Application(), Configuration.Provider {
             Timber.e(e, "setAcceptFileSchemeCookies")
             false
         }
+
+    /**
+     * Callback method invoked when operations that affect the app state are executed.
+     * If relevant changes related to the study queues are detected, the Deck Picker Widgets
+     * are updated accordingly.
+     *
+     * @param changes The set of changes that occurred.
+     * @param handler An optional handler that can be used for custom processing (unused here).
+     */
+    override fun opExecuted(
+        changes: OpChanges,
+        handler: Any?,
+    ) {
+        Timber.d("ChangeSubscriber - opExecuted called with changes: $changes")
+        if (changes.studyQueues) {
+            DeckPickerWidget.updateDeckPickerWidgets(this)
+            CardAnalysisWidget.updateCardAnalysisWidgets(this)
+        } else {
+            Timber.d("No relevant changes to update the widget")
+        }
     }
 
     companion object {
-
         /**
          * [CoroutineScope] tied to the [Application], allowing executing of tasks which should
          * execute as long as the app is running
@@ -305,6 +345,7 @@ open class AnkiDroidApp : Application(), Configuration.Provider {
         val sharedPreferencesProvider get() = SharedPreferencesProvider { sharedPrefs() }
 
         /** Running under instrumentation. a "/androidTest" directory will be created which contains a test collection  */
+        @Suppress("ktlint:standard:property-naming")
         var INSTRUMENTATION_TESTING = false
         const val XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki"
         const val ANDROID_NAMESPACE = "http://schemas.android.com/apk/res/android"
@@ -393,9 +434,9 @@ open class AnkiDroidApp : Application(), Configuration.Provider {
             val parsed = Uri.parse(uri)
             return Intent(Intent.ACTION_VIEW, parsed)
         } // TODO actually this can be done by translating "link_help" string for each language when the App is
-        // properly translated
+
         /**
-         * Get the url for the feedback page
+         * Get the url for the properly translated feedback page
          * @return
          */
         val feedbackUrl: String
@@ -407,9 +448,9 @@ open class AnkiDroidApp : Application(), Configuration.Provider {
                     "ar" -> appResources.getString(R.string.link_help_ar)
                     else -> appResources.getString(R.string.link_help)
                 } // TODO actually this can be done by translating "link_manual" string for each language when the App is
-        // properly translated
+
         /**
-         * Get the url for the manual
+         * Get the url for the properly translated manual
          * @return
          */
         val manualUrl: String
@@ -422,9 +463,7 @@ open class AnkiDroidApp : Application(), Configuration.Provider {
                     else -> appResources.getString(R.string.link_manual)
                 }
 
-        fun webViewFailedToLoad(): Boolean {
-            return instance.webViewError != null
-        }
+        fun webViewFailedToLoad(): Boolean = instance.webViewError != null
 
         val webViewErrorMessage: String?
             get() {

@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Cara delantera</string>
-    <string name="back_field_name">Reverso</string>
+    <string name="front_field_name" maxLength="28">Cara delantera</string>
+    <string name="back_field_name" maxLength="28">Reverso</string>
 </resources>

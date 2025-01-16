@@ -21,13 +21,19 @@ import androidx.annotation.CheckResult
 /**
  * Represents the three counts shown in deck picker and reviewer. Semantically more meaningful than int[]
  */
-class Counts(var new: Int = 0, var lrn: Int = 0, var rev: Int = 0) {
+class Counts(
+    var new: Int = 0,
+    var lrn: Int = 0,
+    var rev: Int = 0,
+) {
     enum class Queue {
-        NEW, LRN, REV
+        NEW,
+        LRN,
+        REV,
     }
 
-    fun addNew(new_: Int) {
-        new += new_
+    fun addNew(new: Int) {
+        this.new += new
     }
 
     fun addLrn(lrn: Int) {

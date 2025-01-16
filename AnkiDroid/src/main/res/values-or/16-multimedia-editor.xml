@@ -44,21 +44,11 @@
     <string name="multimedia_editor_popup_audio_clip">ଅଡ଼ିଓ କ୍ଲିପ୍ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="multimedia_editor_popup_video_clip">ଵିଡ଼ିଓ କ୍ଲିପ୍ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="multimedia_editor_popup_audio">ଅଡ଼ିଓ ରେକର୍ଡ କର</string>
-    <string name="multimedia_editor_popup_text">ଉନ୍ନତ ସମ୍ପାଦକ</string>
     <string name="multimedia_editor_popup_cloze">କ୍ଲୋଜ୍ ବିଲୋପ</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">ପାଠ୍ୟ</string>
-    <string name="multimedia_editor_field_editing_image">ପ୍ରତିଛବି</string>
     <string name="multimedia_editor_field_editing_audio">ଅଡ଼ିଓ ରେକର୍ଡିଂ</string>
-    <string name="multimedia_editor_field_editing_audio_clip">ଅଡ଼ିଓ କ୍ଲିପ୍</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">ହେଲା</string>
-    <!-- Text field editing -->
-    <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_clear">ସଫା</string>
-    <string name="multimedia_editor_text_field_editing_clone">ଏଥିରୁ ପ୍ରତିଲିପି ତିଆରି କରନ୍ତୁ</string>
-    <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">ଏଥିରୁ ନିଅ</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
@@ -66,28 +56,21 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">ଗ୍ୟାଲେରୀ</string>
     <string name="multimedia_editor_image_field_editing_photo">କ୍ୟାମେରା</string>
-    <string name="multimedia_editor_import_audio">ଅଡ଼ିଓ</string>
-    <string name="multimedia_editor_import_video">ଵିଡ଼ିଓ</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">କିଛି ଗଡ଼ବଡ଼ ଦେଖାଯାଇଛି</string>
-    <string name="multimedia_editor_svg_preview">ପୂର୍ଵାଵଲୋକନ ପାଇଁ SVG ଉପଲବ୍ଧ ନାହିଁ</string>
     <string name="multimedia_editor_png_paste_error">କ୍ଲିପବୋର୍ଡ ପ୍ରତିଛବିକୁ png ରେ ରୂପାନ୍ତର କରିବାରେ ତ୍ରୁଟି: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s କ୍ଷେତ୍ରରେ ମଲ୍ଟିମିଡ଼ିଆ ବିଷୟବସ୍ତୁ ସଂଲଗ୍ନ କରନ୍ତୁ</string>
-    <string name="multimedia_editor_attach_media">ମିଡ଼ିଆ ସଂଲଗ୍ନ କରନ୍ତୁ</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">ରେକର୍ଡିଂ ଵିଫଳ ହେଲା</string>
     <string name="multimedia_editor_audio_view_playing_failed">ଚଲେଇବା ଵିଫଳ ହେଲା</string>
     <string name="multimedia_editor_audio_view_create_failed">ରେକର୍ଡର୍-ଉପକରଣ-ଦଣ୍ଡିକା ସୃଷ୍ଟି କରିବାରେ ଅସମର୍ଥ</string>
-    <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">କ୍ଷେତ୍ରଟିର ସମ୍ପାଦନ ଚାଲିଛି</string>
     <!-- Crop function-->
     <string name="crop_image">ଆପଣ ଏହି ପ୍ରତିଛବି କ୍ରପ୍ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
-    <string name="crop_button">ପ୍ରତିଛବି କ୍ରପ୍ କରନ୍ତୁ</string>
-    <string name="save_dialog_content">ଚଳିତ ପ୍ରତିଛଵିର ଆକାର %sMB ଅଟେ। ଆଉ ଡିଫଲ୍ଟ ପ୍ରତିଛଵି ଆକାର ସୀମା ହେଉଛି 1MB। ଆପଣ ଏହାକୁ କ୍ରପ୍ କରିବାକୁ ଚାହାଁନ୍ତି କି?</string>
+    <string name="crop_button" maxLength="28">ପ୍ରତିଛବି କ୍ରପ୍ କରନ୍ତୁ</string>
+    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"ପ୍ରତିଛବି ଚୟନ ବିଫଳ ହୋଇଛି, ଦୟାକରି ପୁନଃଚେଷ୍ଟା କରିବା"</string>
-    <string name="activity_result_unexpected">ଆପ୍ ଏକ ଅପ୍ରତ୍ୟାଶିତ ମୂଲ୍ୟ ଫେରସ୍ତ କଲା। ଆପଣଙ୍କୁ ଏକ ଭିନ୍ନ ଆପ୍ ବ୍ୟବହାର କରିବାକୁ ପଡ଼ିପାରେ</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">କ୍ଷେତ୍ର ବିଷୟବସ୍ତୁ</string>
-    <string name="reselect">Reselect</string>
+    <string name="reselect" maxLength="28">Reselect</string>
 </resources>

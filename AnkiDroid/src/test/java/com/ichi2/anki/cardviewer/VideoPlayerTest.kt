@@ -24,6 +24,7 @@ import kotlinx.coroutines.CompletionHandler
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.InternalForInheritanceCoroutinesApi
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -32,8 +33,8 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
+@InternalForInheritanceCoroutinesApi
 class VideoPlayerTest : RobolectricTest() {
-
     @Test
     fun `stops audio playback when paused`() {
         val v = VideoPlayer { JavascriptEvaluator { } }
@@ -51,6 +52,7 @@ class VideoPlayerTest : RobolectricTest() {
     }
 
     // TODO: use a mock - couldn't get mockk working here
+    @InternalForInheritanceCoroutinesApi
     class MockContinuation : CancellableContinuation<Unit> {
         var result: Result<Unit>? = null
 
@@ -97,21 +99,39 @@ class VideoPlayerTest : RobolectricTest() {
         }
 
         @InternalCoroutinesApi
-        override fun tryResume(
-            value: Unit,
+        override fun <R : Unit> tryResume(
+            value: R,
             idempotent: Any?,
-            onCancellation: ((cause: Throwable) -> Unit)?
+            onCancellation: ((cause: Throwable, value: R, context: CoroutineContext) -> Unit)?,
         ): Any? {
             TODO("Not yet implemented")
         }
 
         @InternalCoroutinesApi
-        override fun tryResume(value: Unit, idempotent: Any?): Any? {
+        override fun tryResume(
+            value: Unit,
+            idempotent: Any?,
+        ): Any? {
             TODO("Not yet implemented")
         }
 
+        @Deprecated(
+            "Use the overload that also accepts the `value` and the coroutine context in lambda",
+            replaceWith = ReplaceWith("resume(value) { cause, _, _ -> onCancellation(cause) }"),
+            level = DeprecationLevel.WARNING,
+        )
         @ExperimentalCoroutinesApi
-        override fun resume(value: Unit, onCancellation: ((cause: Throwable) -> Unit)?) {
+        override fun resume(
+            value: Unit,
+            onCancellation: ((cause: Throwable) -> Unit)?,
+        ) {
+            TODO("Not yet implemented")
+        }
+
+        override fun <R : Unit> resume(
+            value: R,
+            onCancellation: ((cause: Throwable, value: R, context: CoroutineContext) -> Unit)?,
+        ) {
             TODO("Not yet implemented")
         }
 

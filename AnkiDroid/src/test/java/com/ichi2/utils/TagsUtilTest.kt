@@ -42,11 +42,12 @@ class TagsUtilTest {
 
         @Test
         fun test() {
-            val actual = TagsUtil.getUpdatedTags(
-                previous!!,
-                selected!!,
-                indeterminate!!
-            )
+            val actual =
+                TagsUtil.getUpdatedTags(
+                    previous!!,
+                    selected!!,
+                    indeterminate!!,
+                )
             assertListEquals(updated, actual)
         }
 
@@ -54,40 +55,39 @@ class TagsUtilTest {
             // suppressed to have a symmetry in all parameters, listOf(...) should be all you need.
             @JvmStatic // required for Parameters
             @Parameterized.Parameters
-            fun data(): Collection<Array<Any>> {
-                return listOf(
+            fun data(): Collection<Array<Any>> =
+                listOf(
                     arrayOf(
                         listOf<Any>(),
                         listOf<Any>(),
                         listOf<Any>(),
-                        listOf<Any>()
+                        listOf<Any>(),
                     ),
                     arrayOf(
                         listOf("a"),
                         listOf("b", "c"),
                         listOf<Any>(),
-                        listOf("b", "c")
+                        listOf("b", "c"),
                     ),
                     arrayOf(
                         listOf("a"),
                         listOf("a", "b"),
                         listOf("c"),
-                        listOf("a", "b")
+                        listOf("a", "b"),
                     ),
                     arrayOf(
                         listOf("a"),
                         listOf("a", "b"),
                         listOf("c"),
-                        listOf("a", "b")
+                        listOf("a", "b"),
                     ),
                     arrayOf(
                         listOf("a", "b", "c"),
                         listOf("a"),
                         listOf("b"),
-                        listOf("a", "b")
-                    )
+                        listOf("a", "b"),
+                    ),
                 )
-            }
         }
     }
 
@@ -100,11 +100,11 @@ class TagsUtilTest {
             assertEquals(listOf("first", "second:"), TagsUtil.getTagParts("first::second:"))
             assertEquals(
                 listOf("first", "second", "blank"),
-                TagsUtil.getTagParts("first::second::")
+                TagsUtil.getTagParts("first::second::"),
             )
             assertEquals(
                 listOf("blank", "first", "blank", ":second", "blank"),
-                TagsUtil.getTagParts("::first:::::second::")
+                TagsUtil.getTagParts("::first:::::second::"),
             )
         }
 
@@ -115,7 +115,7 @@ class TagsUtilTest {
             assertEquals(
                 "Should replace empty immediate parts to 'blank'",
                 "abc::def::blank",
-                TagsUtil.getUniformedTag("abc::def::::")
+                TagsUtil.getUniformedTag("abc::def::::"),
             )
         }
 
@@ -131,7 +131,7 @@ class TagsUtilTest {
         fun test_getTagAncestors() {
             assertEquals(
                 listOf("foo", "foo::bar", "foo::bar::aaa"),
-                TagsUtil.getTagAncestors("foo::bar::aaa::bbb")
+                TagsUtil.getTagAncestors("foo::bar::aaa::bbb"),
             )
             assertEquals(listOf("foo", "foo::blank"), TagsUtil.getTagAncestors("foo::::aaa"))
             assertEquals(listOf("blank", "blank::foo"), TagsUtil.getTagAncestors("::foo::aaa"))

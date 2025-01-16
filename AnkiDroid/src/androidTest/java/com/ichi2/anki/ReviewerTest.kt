@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki
 
+import androidx.core.content.edit
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.NoMatchingViewException
@@ -28,23 +29,29 @@ import androidx.test.espresso.matcher.ViewMatchers.withResourceName
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.tests.InstrumentedTest
+import com.ichi2.anki.tests.checkWithTimeout
 import com.ichi2.anki.tests.libanki.RetryRule
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.ThreadUtils
+import com.ichi2.anki.testutil.closeBackupCollectionDialogIfExists
+import com.ichi2.anki.testutil.closeGetStartedScreenIfExists
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
 import com.ichi2.libanki.Collection
+import com.ichi2.testutils.common.Flaky
+import com.ichi2.testutils.common.OS
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import timber.log.Timber
 import java.lang.AssertionError
 
 @RunWith(AndroidJUnit4::class)
 class ReviewerTest : InstrumentedTest() {
-
     // Launch IntroductionActivity instead of DeckPicker activity because in CI
     // builds, it seems to create IntroductionActivity after the DeckPicker,
     // causing the DeckPicker activity to be destroyed. As a consequence, this
@@ -61,7 +68,19 @@ class ReviewerTest : InstrumentedTest() {
     @get:Rule
     val retry = RetryRule(10)
 
+    override fun runBeforeEachTest() {
+        super.runBeforeEachTest()
+
+        // 17298: for an unknown reason, we were using the beta Reviewer
+        // This works on my MacBook, fails in CI
+        // failure is due to the card not being flipped
+        // since the feature is currently in beta and unexpectedly enabled, disable it
+        // TODO: remove this
+        disableNewReviewer()
+    }
+
     @Test
+    @Flaky(os = OS.ALL, "Fails on CI with timing issues frequently")
     fun testCustomSchedulerWithCustomData() {
         col.cardStateCustomizer =
             """
@@ -75,9 +94,13 @@ class ReviewerTest : InstrumentedTest() {
         card.moveToReviewQueue()
         col.backend.updateCards(
             listOf(
-                card.toBackendCard().toBuilder().setCustomData("""{"c":1}""").build()
+                card
+                    .toBackendCard()
+                    .toBuilder()
+                    .setCustomData("""{"c":1}""")
+                    .build(),
             ),
-            true
+            true,
         )
 
         closeGetStartedScreenIfExists()
@@ -109,6 +132,7 @@ class ReviewerTest : InstrumentedTest() {
     }
 
     @Test
+    @Flaky(os = OS.ALL, "Fails on CI with timing issues frequently")
     fun testCustomSchedulerWithRuntimeError() {
         // Issue 15035 - runtime errors weren't handled
         col.cardStateCustomizer = "states.this_is_not_defined.normal.review = 12;"
@@ -124,12 +148,12 @@ class ReviewerTest : InstrumentedTest() {
     }
 
     private fun clickOnDeckWithName(deckName: String) {
-        onView(withId(R.id.files)).checkWithTimeout(matches(hasDescendant(withText(deckName))))
-        onView(withId(R.id.files)).perform(
+        onView(withId(R.id.decks)).checkWithTimeout(matches(hasDescendant(withText(deckName))))
+        onView(withId(R.id.decks)).perform(
             RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
                 hasDescendant(withText(deckName)),
-                click()
-            )
+                click(),
+            ),
         )
     }
 
@@ -181,28 +205,32 @@ class ReviewerTest : InstrumentedTest() {
             // ...on the command line it has resource name "good_button"...
             onView(withResourceName("good_button")).checkWithTimeout(
                 matches(isDisplayed()),
-                100
+                100,
             )
         } catch (e: AssertionError) {
             // ...but in Android Studio it has resource name "flashcard_layout_ease3" !?
             onView(withResourceName("flashcard_layout_ease3")).checkWithTimeout(
                 matches(isDisplayed()),
-                100
+                100,
             )
+        }
+    }
+
+    private fun disableNewReviewer() {
+        val newReviewerPrefKey = testContext.getString(R.string.new_reviewer_pref_key)
+        val prefs = testContext.sharedPrefs()
+        val isUsingNewReviewer = prefs.getBoolean(newReviewerPrefKey, false)
+        if (!isUsingNewReviewer) return
+
+        Timber.w("unexpectedly using new reviewer: disabling it")
+        prefs.edit {
+            putBoolean(newReviewerPrefKey, false)
         }
     }
 }
 
 private var Collection.cardStateCustomizer: String?
     get() = config.get("cardStateCustomizer")
-    set(value) { config.set("cardStateCustomizer", value) }
-
-fun closeGetStartedScreenIfExists() {
-    onView(withId(R.id.get_started)).withFailureHandler { _, _ -> }.perform(click())
-}
-
-fun closeBackupCollectionDialogIfExists() {
-    onView(withText(R.string.button_backup_later))
-        .withFailureHandler { _, _ -> }
-        .perform(click())
-}
+    set(value) {
+        config.set("cardStateCustomizer", value)
+    }

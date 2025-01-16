@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Voorkant</string>
-    <string name="back_field_name">Achterzijde</string>
+    <string name="front_field_name" maxLength="28">Voorkant</string>
+    <string name="back_field_name" maxLength="28">Achterzijde</string>
 </resources>

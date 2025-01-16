@@ -31,42 +31,62 @@ import com.ichi2.anki.snackbar.showSnackbar
 import timber.log.Timber
 
 object ClipboardUtil {
-    // JPEG is sent via pasted content
-    val IMAGE_MIME_TYPES = arrayOf("image/gif", "image/png", "image/jpg", "image/jpeg")
+    val IMAGE_MIME_TYPES = arrayOf("image/*")
+    val AUDIO_MIME_TYPES = arrayOf("audio/*")
+    val VIDEO_MIME_TYPES = arrayOf("video/*")
+    val IMPORT_MIME_TYPES = arrayOf("application/*", "text/*")
+    val MEDIA_MIME_TYPES = arrayOf(*IMAGE_MIME_TYPES, *AUDIO_MIME_TYPES, *VIDEO_MIME_TYPES)
 
-    fun hasImage(clipboard: ClipboardManager?): Boolean {
-        return clipboard
-            ?.takeIf { it.hasPrimaryClip() }
+    fun hasImage(clipboard: ClipboardManager?): Boolean =
+        clipboard
             ?.primaryClip
             ?.let { hasImage(it.description) }
             ?: false
-    }
 
-    fun hasImage(description: ClipDescription?): Boolean {
-        return description
+    fun hasImage(description: ClipDescription?): Boolean =
+        description
             ?.run { IMAGE_MIME_TYPES.any { hasMimeType(it) } }
             ?: false
-    }
 
-    private fun getFirstItem(clipboard: ClipboardManager?) = clipboard
-        ?.takeIf { it.hasPrimaryClip() }
-        ?.primaryClip
-        ?.takeIf { it.itemCount > 0 }
-        ?.getItemAt(0)
+    fun hasVideo(description: ClipDescription?): Boolean =
+        description
+            ?.run { VIDEO_MIME_TYPES.any { hasMimeType(it) } }
+            ?: false
 
-    fun getImageUri(clipboard: ClipboardManager?): Uri? {
-        return getFirstItem(clipboard)?.uri
-    }
+    private fun ClipboardManager.getFirstItem() = primaryClip?.takeIf { it.itemCount > 0 }?.getItemAt(0)
+
+    fun getUri(clipboard: ClipboardManager?): Uri? = clipboard?.getFirstItem()?.uri
+
+    fun hasSVG(description: ClipDescription): Boolean = description.hasMimeType("image/svg+xml")
+
+    fun hasMedia(clipboard: ClipboardManager?): Boolean =
+        clipboard
+            ?.primaryClip
+            ?.let { hasMedia(it.description) }
+            ?: false
+
+    fun hasMedia(description: ClipDescription?): Boolean =
+        description
+            ?.run { MEDIA_MIME_TYPES.any { hasMimeType(it) } }
+            ?: false
+
+    fun ClipData.items() =
+        sequence {
+            for (j in 0 until itemCount) {
+                yield(getItemAt(j))
+            }
+        }
+
+    fun getDescription(clipboard: ClipboardManager?): ClipDescription? = clipboard?.primaryClip?.description
 
     @CheckResult
-    fun getText(clipboard: ClipboardManager?): CharSequence? {
-        return getFirstItem(clipboard)?.text
-    }
+    fun getText(clipboard: ClipboardManager?): CharSequence? = clipboard?.getFirstItem()?.text
 
     @CheckResult
-    fun getPlainText(clipboard: ClipboardManager?, context: Context): CharSequence? {
-        return getFirstItem(clipboard)?.coerceToText(context)
-    }
+    fun getPlainText(
+        clipboard: ClipboardManager?,
+        context: Context,
+    ): CharSequence? = clipboard?.getFirstItem()?.coerceToText(context)
 }
 
 /**
@@ -81,7 +101,7 @@ object ClipboardUtil {
 fun Context.copyToClipboard(
     text: String,
     @StringRes successMessageId: Int = R.string.about_ankidroid_successfully_copied_debug_info,
-    @StringRes failureMessageId: Int = R.string.failed_to_copy
+    @StringRes failureMessageId: Int = R.string.failed_to_copy,
 ) {
     val copied = copyTextToClipboard(text)
     // in Android S_V2 and above, the system is guaranteed to show a message on a successful copy
@@ -123,8 +143,8 @@ private fun Context.copyTextToClipboard(text: String): Boolean {
         clipboardManager.setPrimaryClip(
             ClipData.newPlainText(
                 "${VersionUtils.appName} v${VersionUtils.pkgVersionName}",
-                text
-            )
+                text,
+            ),
         )
         true
     } catch (e: Exception) {

@@ -27,52 +27,57 @@ import com.android.tools.lint.detector.api.XmlContext
 import com.android.tools.lint.detector.api.XmlScanner
 import com.google.common.annotations.VisibleForTesting
 import com.ichi2.anki.lint.utils.Constants
+import com.ichi2.anki.lint.utils.CrowdinContext.Companion.toCrowdinContext
 import com.ichi2.anki.lint.utils.ext.isRightToLeftLanguage
 import org.w3c.dom.Element
 
 /**
- * Ensures that strings are cased correctly
+ * Checks for a variety of errors commonly made in CrowdIn
  *
- * `JavaScript`, not `Javascript`
+ * `JavaScript`, not `Javascript`, ellipses, empty strings, etc
  */
-class TranslationTypo : ResourceXmlDetector(), XmlScanner {
+class TranslationTypo :
+    ResourceXmlDetector(),
+    XmlScanner {
     companion object {
         @VisibleForTesting
-        val ID_TITLE_LENGTH = "TranslationTypo"
+        val ID_TRANSLATION_TYPO = "TranslationTypo"
 
         @VisibleForTesting
-        val EXPLANATION_TITLE_LENGTH = "Typo in translation"
+        val EXPLANATION_TRANSLATION_TYPO = "Typo in translation"
 
         private val implementation = Implementation(TranslationTypo::class.java, Scope.RESOURCE_FILE_SCOPE)
-        val ISSUE: Issue = Issue.create(
-            ID_TITLE_LENGTH,
-            EXPLANATION_TITLE_LENGTH,
-            EXPLANATION_TITLE_LENGTH,
-            Constants.ANKI_XML_CATEGORY,
-            Constants.ANKI_XML_PRIORITY,
-            Constants.ANKI_XML_SEVERITY,
-            implementation
-        )
+        val ISSUE: Issue =
+            Issue.create(
+                ID_TRANSLATION_TYPO,
+                EXPLANATION_TRANSLATION_TYPO,
+                EXPLANATION_TRANSLATION_TYPO,
+                Constants.ANKI_XML_CATEGORY,
+                Constants.ANKI_XML_PRIORITY,
+                Constants.ANKI_XML_SEVERITY,
+                implementation,
+            )
 
         // copied from tools/localization/src/constants.ts
         // excludes marketdescription as it is .txt
-        private val I18N_FILES = listOf(
-            "01-core",
-            "02-strings",
-            "03-dialogs",
-            "04-network",
-            "05-feedback",
-            "06-statistics",
-            "07-cardbrowser",
-            "08-widget",
-            "09-backup",
-            "10-preferences",
-            "11-arrays",
-            "16-multimedia-editor",
-            "17-model-manager",
-            "18-standard-models",
-            "20-search-preference"
-        ).map { "$it.xml" }
+        private val I18N_FILES =
+            listOf(
+                "01-core",
+                "02-strings",
+                "03-dialogs",
+                "04-network",
+                "05-feedback",
+                "06-statistics",
+                "07-cardbrowser",
+                "08-widget",
+                "09-backup",
+                "10-preferences",
+                "11-arrays",
+                "16-multimedia-editor",
+                "17-model-manager",
+                "18-standard-models",
+                "20-search-preference",
+            ).map { "$it.xml" }
 
         // CrowdIn strings+ additional string XML which are not translated
         val STRING_XML_FILES = I18N_FILES + listOf("constants.xml", "sentence-case.xml")
@@ -83,7 +88,10 @@ class TranslationTypo : ResourceXmlDetector(), XmlScanner {
     override fun appliesTo(folderType: ResourceFolderType): Boolean =
         folderType == ResourceFolderType.XML || folderType == ResourceFolderType.VALUES
 
-    override fun visitElement(context: XmlContext, element: Element) {
+    override fun visitElement(
+        context: XmlContext,
+        element: Element,
+    ) {
         // ignore files not containing strings
         if (!STRING_XML_FILES.contains(context.file.name)) {
             return
@@ -94,20 +102,36 @@ class TranslationTypo : ResourceXmlDetector(), XmlScanner {
             return
         }
 
+        val crowdinContext = context.toCrowdinContext()
+
+        /** Helper function to report 'TranslationTypo' issues */
+        fun Element.reportIssue(message: String) {
+            val elementToReport = this
+            val crowdinEditUrl =
+                crowdinContext
+                    ?.getEditUrl(elementToReport)
+                    ?.let { url -> "\n$url" } ?: ""
+            context.report(
+                issue = ISSUE,
+                location = context.getElementLocation(elementToReport),
+                message = message + crowdinEditUrl,
+            )
+        }
+
         // use the unicode character instead of three dots for ellipsis
         // ignore RTL to reduce maintenance: GitHub incorrectly displays ellipsis, so hard to review
         if (element.textContent.contains("...") && !context.isRightToLeftLanguage()) {
-            context.report(ISSUE, context.getElementLocation(element), "should use unicode '&#8230;' instead of three dots for ellipsis")
+            element.reportIssue("should use unicode '&#8230;' for ellipsis not three dots; RTL languages best viewed on crowdin")
         }
 
         // casing of 'JavaScript'
         if (element.textContent.lowercase().contains("javascript") && !element.textContent.contains("JavaScript")) {
-            context.report(ISSUE, context.getElementLocation(element), "should be 'JavaScript'")
+            element.reportIssue("should be 'JavaScript'")
         }
 
         // remove empty strings
         if (element.textContent.isEmpty() && element.getAttribute("name") != "empty_string") {
-            context.report(ISSUE, context.getElementLocation(element), "should not be empty")
+            element.reportIssue("should not be empty")
         }
     }
 }

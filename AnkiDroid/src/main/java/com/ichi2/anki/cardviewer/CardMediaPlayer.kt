@@ -24,15 +24,16 @@ import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.getMediaBaseUrl
 import com.ichi2.anki.AndroidTtsError
-import com.ichi2.anki.AndroidTtsError.TtsErrorCode
 import com.ichi2.anki.AndroidTtsPlayer
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper.getMediaDirectory
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.R
 import com.ichi2.anki.ReadText
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.CONTINUE_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.RETRY_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.STOP_AUDIO
+import com.ichi2.anki.dialogs.TtsPlaybackErrorDialog
 import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.snackbar.showSnackbar
@@ -57,7 +58,6 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 import timber.log.Timber
 import java.io.Closeable
-import java.io.File
 
 /**
  * Handles the two ways an Anki card defines sound:
@@ -92,7 +92,6 @@ import java.io.File
 @NeedsTest("A sound is played after a video finishes")
 @NeedsTest("Pausing a video calls onSoundGroupCompleted")
 class CardMediaPlayer : Closeable {
-
     private val soundTagPlayer: SoundTagPlayer
     private val ttsPlayer: Deferred<TtsPlayer>
     private var soundErrorListener: SoundErrorListener? = null
@@ -106,7 +105,11 @@ class CardMediaPlayer : Closeable {
 
     constructor() {
         // javascriptEvaluator is wrapped in a lambda so the value in this class propagates down
-        this.soundTagPlayer = SoundTagPlayer(getMediaBaseUrl(getMediaDirectory(AnkiDroidApp.instance).path), VideoPlayer { javascriptEvaluator() })
+        this.soundTagPlayer =
+            SoundTagPlayer(
+                soundUriBase = getMediaBaseUrl(getMediaDirectory(AnkiDroidApp.instance).path),
+                videoPlayer = VideoPlayer { javascriptEvaluator() },
+            )
         this.ttsPlayer = scope.async { AndroidTtsPlayer.createInstance(AnkiDroidApp.instance, scope) }
     }
 
@@ -125,6 +128,7 @@ class CardMediaPlayer : Closeable {
         }
 
     private var playSoundsJob: Job? = null
+    val isPlaying get() = playSoundsJob != null
 
     private var onSoundGroupCompleted: (() -> Unit)? = null
 
@@ -140,11 +144,12 @@ class CardMediaPlayer : Closeable {
         Timber.i("loading sounds for card %d", card.id)
         stopSounds()
         val renderOutput = withCol { card.renderOutput(this) }
+        val autoPlay = withCol { card.autoplay(this) }
         this.questions = renderOutput.questionAvTags
         this.answers = renderOutput.answerAvTags
 
-        if (!this::config.isInitialized || !config.appliesTo(card)) {
-            config = withCol { CardSoundConfig.create(card) }
+        if (!this::config.isInitialized || !config.appliesTo(card) || (this::config.isInitialized && autoPlay != config.autoplay)) {
+            config = withCol { CardSoundConfig.create(this@withCol, card) }
         }
     }
 
@@ -162,7 +167,7 @@ class CardMediaPlayer : Closeable {
         this.answers = renderOutput.answerAvTags
 
         if (!this::config.isInitialized || !config.appliesTo(card)) {
-            config = withCol { CardSoundConfig.create(card) }
+            config = withCol { CardSoundConfig.create(this@withCol, card) }
         }
     }
 
@@ -199,27 +204,28 @@ class CardMediaPlayer : Closeable {
             }
         }
 
-        playSoundsJob = scope.launch {
-            try {
-                play(tag)
-            } catch (e: SoundException) {
-                when (e.continuationBehavior) {
-                    RETRY_AUDIO -> retry()
-                    CONTINUE_AUDIO, STOP_AUDIO -> { }
+        playSoundsJob =
+            scope.launch {
+                try {
+                    play(tag)
+                } catch (e: SoundException) {
+                    when (e.continuationBehavior) {
+                        RETRY_AUDIO -> retry()
+                        CONTINUE_AUDIO, STOP_AUDIO -> { }
+                    }
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    Timber.w(e, "Exception playing sound")
                 }
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                Timber.w(e, "Exception playing sound")
+                Timber.v("completed playing one sound")
+                playSoundsJob = null
             }
-            Timber.v("completed playing one sound")
-            playSoundsJob = null
-        }
         return playSoundsJob
     }
 
     suspend fun stopSounds() {
-        if (playSoundsJob != null) Timber.i("stopping sounds")
+        if (isPlaying) Timber.i("stopping sounds")
         cancelPlaySoundsJob(playSoundsJob)
         ReadText.stopTts() // TODO: Reconsider design
     }
@@ -249,13 +255,17 @@ class CardMediaPlayer : Closeable {
     /**
      * Obtains all the sounds for the [cardSide] and plays them sequentially
      */
-    private suspend fun playAllSoundsInternal(cardSide: CardSide, isAutomaticPlayback: Boolean) {
+    private suspend fun playAllSoundsInternal(
+        cardSide: CardSide,
+        isAutomaticPlayback: Boolean,
+    ) {
         if (!isEnabled) return
-        val soundList = when (cardSide) {
-            CardSide.QUESTION -> questions
-            CardSide.ANSWER -> answers
-            CardSide.BOTH -> questions + answers
-        }
+        val soundList =
+            when (cardSide) {
+                CardSide.QUESTION -> questions
+                CardSide.ANSWER -> answers
+                CardSide.BOTH -> questions + answers
+            }
 
         try {
             for ((index, sound) in soundList.withIndex()) {
@@ -275,73 +285,78 @@ class CardMediaPlayer : Closeable {
      * Plays the provided [tag] and returns whether playback should continue
      * @return whether playback should continue: `true`: continue, `false`: stop playback
      */
-    private suspend fun play(tag: AvTag, isAutomaticPlayback: Boolean): Boolean = withContext(Dispatchers.IO) {
-        suspend fun play() {
-            ensureActive()
-            when (tag) {
-                is SoundOrVideoTag -> soundTagPlayer.play(tag, soundErrorListener)
-                is TTSTag -> {
-                    awaitTtsPlayer(isAutomaticPlayback)?.play(tag)?.error?.let {
-                        soundErrorListener?.onTtsError(it, isAutomaticPlayback)
+    private suspend fun play(
+        tag: AvTag,
+        isAutomaticPlayback: Boolean,
+    ): Boolean =
+        withContext(Dispatchers.IO) {
+            suspend fun play() {
+                ensureActive()
+                when (tag) {
+                    is SoundOrVideoTag -> soundTagPlayer.play(tag, soundErrorListener)
+                    is TTSTag -> {
+                        awaitTtsPlayer(isAutomaticPlayback)?.play(tag)?.error?.let {
+                            soundErrorListener?.onTtsError(it, isAutomaticPlayback)
+                        }
                     }
                 }
-                else -> Timber.w("unknown audio: ${tag.javaClass}")
+                ensureActive()
             }
-            ensureActive()
-        }
 
-        try {
-            play()
-        } catch (e: SoundException) {
-            when (e.continuationBehavior) {
-                STOP_AUDIO -> return@withContext false
-                CONTINUE_AUDIO -> return@withContext true
-                RETRY_AUDIO -> {
-                    try {
-                        Timber.i("retrying audio")
-                        play()
-                        Timber.i("retry succeeded")
-                    } catch (e: CancellationException) {
-                        throw e
-                    } catch (e: Exception) {
-                        Timber.w("retry audio failed", e)
+            try {
+                play()
+            } catch (e: SoundException) {
+                when (e.continuationBehavior) {
+                    STOP_AUDIO -> return@withContext false
+                    CONTINUE_AUDIO -> return@withContext true
+                    RETRY_AUDIO -> {
+                        try {
+                            Timber.i("retrying audio")
+                            play()
+                            Timber.i("retry succeeded")
+                        } catch (e: CancellationException) {
+                            throw e
+                        } catch (e: Exception) {
+                            Timber.w(e, "retry audio failed")
+                        }
                     }
                 }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                Timber.w(e, "Unexpected audio exception. Continuing")
             }
-        } catch (e: CancellationException) {
-            throw e
-        } catch (e: Exception) {
-            Timber.w(e, "Unexpected audio exception. Continuing")
+            return@withContext true
         }
-        return@withContext true
-    }
 
-    fun hasSounds(displayAnswer: Boolean): Boolean =
-        if (displayAnswer) answers.any() else questions.any()
+    fun hasSounds(displayAnswer: Boolean): Boolean = if (displayAnswer) answers.any() else questions.any()
 
     /**
      * Plays all sounds for the current side, calling [onSoundGroupCompleted] when completed
      */
-    suspend fun playAllSounds(side: SingleCardSide) = when (side) {
-        SingleCardSide.FRONT -> playAllSoundsForSide(CardSide.QUESTION)
-        SingleCardSide.BACK -> playAllSoundsForSide(CardSide.ANSWER)
-    }
+    suspend fun playAllSounds(side: SingleCardSide) =
+        when (side) {
+            SingleCardSide.FRONT -> playAllSoundsForSide(CardSide.QUESTION)
+            SingleCardSide.BACK -> playAllSoundsForSide(CardSide.ANSWER)
+        }
 
     /**
      * Replays all sounds for the current side, calling [onSoundGroupCompleted] when completed
      */
-    suspend fun replayAllSounds(side: SingleCardSide) = when (side) {
-        SingleCardSide.BACK -> if (config.replayQuestion) playAllSoundsForSide(CardSide.BOTH) else playAllSoundsForSide(CardSide.ANSWER)
-        SingleCardSide.FRONT -> playAllSoundsForSide(CardSide.QUESTION)
-    }
+    suspend fun replayAllSounds(side: SingleCardSide) =
+        when (side) {
+            SingleCardSide.BACK -> if (config.replayQuestion) playAllSoundsForSide(CardSide.BOTH) else playAllSoundsForSide(CardSide.ANSWER)
+            SingleCardSide.FRONT -> playAllSoundsForSide(CardSide.QUESTION)
+        }
 
     private suspend fun awaitTtsPlayer(isAutomaticPlayback: Boolean): TtsPlayer? {
-        val player = withTimeoutOrNull(TTS_PLAYER_TIMEOUT_MS) {
-            ttsPlayer.await()
-        }
+        val player =
+            withTimeoutOrNull(TTS_PLAYER_TIMEOUT_MS) {
+                ttsPlayer.await()
+            }
         if (player == null) {
             Timber.v("timeout waiting for TTS Player")
-            val error = AndroidTtsError(TtsErrorCode.APP_TTS_INIT_TIMEOUT)
+            val error = AndroidTtsError.InitTimeout
             soundErrorListener?.onTtsError(error, isAutomaticPlayback)
         }
         return player
@@ -350,11 +365,12 @@ class CardMediaPlayer : Closeable {
     /** Ensures that only one [playSoundsJob] is running at once */
     private suspend fun playSoundsJob(block: suspend CoroutineScope.() -> Unit) {
         val oldJob = playSoundsJob
-        this.playSoundsJob = scope.launch {
-            cancelPlaySoundsJob(oldJob)
-            block()
-            playSoundsJob = null
-        }
+        this.playSoundsJob =
+            scope.launch {
+                cancelPlaySoundsJob(oldJob)
+                block()
+                playSoundsJob = null
+            }
     }
 
     @NeedsTest("finish moves to next sound")
@@ -375,7 +391,10 @@ class CardMediaPlayer : Closeable {
          * @param soundUriBase The base path to the sound directory as a `file://` URI
          */
         @NeedsTest("ensure the lifecycle is subscribed to in a Reviewer")
-        fun newInstance(viewer: AbstractFlashcardViewer, soundUriBase: String): CardMediaPlayer {
+        fun newInstance(
+            viewer: AbstractFlashcardViewer,
+            soundUriBase: String,
+        ): CardMediaPlayer {
             val scope = viewer.lifecycleScope
             val soundErrorListener = viewer.createSoundErrorListener()
             // tts can take a long time to init, this defers the operation until it's needed
@@ -386,7 +405,7 @@ class CardMediaPlayer : Closeable {
             return CardMediaPlayer(
                 soundTagPlayer = soundPlayer,
                 ttsPlayer = tts,
-                soundErrorListener = soundErrorListener
+                soundErrorListener = soundErrorListener,
             ).apply {
                 setOnSoundGroupCompletedListener(viewer::onSoundGroupCompleted)
             }
@@ -399,8 +418,17 @@ interface SoundErrorListener {
     fun onError(uri: Uri): SoundErrorBehavior
 
     @CheckResult
-    fun onMediaPlayerError(mp: MediaPlayer?, which: Int, extra: Int, uri: Uri): SoundErrorBehavior
-    fun onTtsError(error: TtsPlayer.TtsError, isAutomaticPlayback: Boolean)
+    fun onMediaPlayerError(
+        mp: MediaPlayer?,
+        which: Int,
+        extra: Int,
+        uri: Uri,
+    ): SoundErrorBehavior
+
+    fun onTtsError(
+        error: TtsPlayer.TtsError,
+        isAutomaticPlayback: Boolean,
+    )
 }
 
 enum class SoundErrorBehavior {
@@ -411,7 +439,7 @@ enum class SoundErrorBehavior {
     CONTINUE_AUDIO,
 
     /** Retry the current audio */
-    RETRY_AUDIO
+    RETRY_AUDIO,
 }
 
 fun AbstractFlashcardViewer.createSoundErrorListener(): SoundErrorListener {
@@ -419,28 +447,28 @@ fun AbstractFlashcardViewer.createSoundErrorListener(): SoundErrorListener {
     return object : SoundErrorListener {
         private var handledError: HashSet<String> = hashSetOf()
 
-        private fun AbstractFlashcardViewer.handleStorageMigrationError(file: File): Boolean {
-            val migrationService = migrationService ?: return false
-            if (handledError.contains(file.absolutePath)) {
-                return false
-            }
-            handledError.add(file.absolutePath)
-            return migrationService.migrateFileImmediately(file)
-        }
-
         override fun onMediaPlayerError(
             mp: MediaPlayer?,
             which: Int,
             extra: Int,
-            uri: Uri
+            uri: Uri,
         ): SoundErrorBehavior {
             Timber.w("Media Error: (%d, %d)", which, extra)
             return onError(uri)
         }
 
-        override fun onTtsError(error: TtsPlayer.TtsError, isAutomaticPlayback: Boolean) {
+        override fun onTtsError(
+            error: TtsPlayer.TtsError,
+            isAutomaticPlayback: Boolean,
+        ) {
             AbstractFlashcardViewer.mediaErrorHandler.processTtsFailure(error, isAutomaticPlayback) {
-                activity.showSnackbar(error.localizedErrorMessage(activity))
+                when (error) {
+                    is AndroidTtsError.MissingVoiceError ->
+                        TtsPlaybackErrorDialog.ttsPlaybackErrorDialog(activity, supportFragmentManager, error.tag)
+                    is AndroidTtsError.InvalidVoiceError ->
+                        activity.showSnackbar(getString(R.string.voice_not_supported))
+                    else -> activity.showSnackbar(error.localizedErrorMessage(activity))
+                }
             }
         }
 
@@ -454,12 +482,10 @@ fun AbstractFlashcardViewer.createSoundErrorListener(): SoundErrorListener {
                 // There is a multitude of transient issues with the MediaPlayer. (1, -1001) for example
                 // Retrying fixes most of these
                 if (file.exists()) return RETRY_AUDIO
-                // file doesn't exist - may be due to scoped storage
-                if (handleStorageMigrationError(file)) {
-                    return RETRY_AUDIO
-                }
                 // just doesn't exist - process the error
-                AbstractFlashcardViewer.mediaErrorHandler.processMissingSound(file) { filename: String? -> displayCouldNotFindMediaSnackbar(filename) }
+                AbstractFlashcardViewer.mediaErrorHandler.processMissingSound(
+                    file,
+                ) { filename: String? -> displayCouldNotFindMediaSnackbar(filename) }
                 return CONTINUE_AUDIO
             } catch (e: Exception) {
                 Timber.w(e)

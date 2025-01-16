@@ -26,9 +26,8 @@ import java.io.Closeable
 
 open class TtsVoice(
     val name: String,
-    val lang: String
+    val lang: String,
 ) {
-
     override fun toString(): String {
         var out = "{{tts $lang voices=$name}}"
         if (unavailable()) {
@@ -40,7 +39,10 @@ open class TtsVoice(
     open fun unavailable(): Boolean = false
 }
 
-data class TtsVoiceMatch(val voice: TtsVoice, val rank: Int)
+data class TtsVoiceMatch(
+    val voice: TtsVoice,
+    val rank: Int,
+)
 
 abstract class TtsPlayer : Closeable {
     open val defaultRank = 0
@@ -51,10 +53,15 @@ abstract class TtsPlayer : Closeable {
 
     abstract class TtsError
 
-    data class TtsCompletionStatus(val success: Boolean?, val error: TtsError? = null) {
+    data class TtsCompletionStatus(
+        val success: Boolean?,
+        val error: TtsError? = null,
+    ) {
         companion object {
             fun success() = TtsCompletionStatus(success = true)
+
             fun stopped() = TtsCompletionStatus(success = null)
+
             fun failure(errorCode: TtsError) = TtsCompletionStatus(success = false, errorCode)
         }
     }

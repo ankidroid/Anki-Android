@@ -28,6 +28,7 @@ import android.provider.Settings
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
 import com.ichi2.compat.CompatHelper.Companion.queryIntentActivitiesCompat
+import com.ichi2.compat.MATCH_DEFAULT_ONLY
 import com.ichi2.compat.PackageInfoFlagsCompat
 import com.ichi2.compat.ResolveInfoFlagsCompat
 import timber.log.Timber
@@ -36,6 +37,7 @@ import java.util.Locale
 object AdaptionUtil {
     private var sHasRunWebBrowserCheck = false
     private var sHasWebBrowser = true
+
     fun hasWebBrowser(context: Context): Boolean {
         if (sHasRunWebBrowserCheck) {
             return sHasWebBrowser
@@ -46,20 +48,22 @@ object AdaptionUtil {
     }
 
     val isUserATestClient: Boolean
-        get() = try {
-            ActivityManager.isUserAMonkey() ||
-                isRunningUnderFirebaseTestLab
-        } catch (e: Exception) {
-            Timber.w(e)
-            false
-        }
+        get() =
+            try {
+                ActivityManager.isUserAMonkey() ||
+                    isRunningUnderFirebaseTestLab
+            } catch (e: Exception) {
+                Timber.w(e)
+                false
+            }
     private val isRunningUnderFirebaseTestLab: Boolean
-        get() = try {
-            isRunningUnderFirebaseTestLab(AnkiDroidApp.instance.contentResolver)
-        } catch (e: Exception) {
-            Timber.w(e)
-            false
-        }
+        get() =
+            try {
+                isRunningUnderFirebaseTestLab(AnkiDroidApp.instance.contentResolver)
+            } catch (e: Exception) {
+                Timber.w(e)
+                false
+            }
 
     private fun isRunningUnderFirebaseTestLab(contentResolver: ContentResolver): Boolean {
         // https://firebase.google.com/docs/test-lab/android/android-studio#modify_instrumented_test_behavior_for
@@ -74,7 +78,7 @@ object AdaptionUtil {
         }
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"))
         val pm = context.packageManager
-        val list = pm.queryIntentActivitiesCompat(intent, ResolveInfoFlagsCompat.of(PackageManager.MATCH_DEFAULT_ONLY.toLong()))
+        val list = pm.queryIntentActivitiesCompat(intent, ResolveInfoFlagsCompat.of(MATCH_DEFAULT_ONLY.toLong()))
         for (ri in list) {
             if (!isValidBrowser(ri)) {
                 continue
@@ -98,12 +102,15 @@ object AdaptionUtil {
         return ri?.activityInfo != null && ri.activityInfo.exported
     }
 
-    private fun isSystemApp(packageName: String?, pm: PackageManager): Boolean {
+    private fun isSystemApp(
+        packageName: String?,
+        pm: PackageManager,
+    ): Boolean {
         return if (packageName != null) {
             try {
                 val info = pm.getPackageInfoCompat(packageName, PackageInfoFlagsCompat.EMPTY) ?: return false
-                info.applicationInfo != null &&
-                    info.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
+                val appInfo = info.applicationInfo ?: return false
+                appInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
             } catch (e: PackageManager.NameNotFoundException) {
                 Timber.w(e)
                 false

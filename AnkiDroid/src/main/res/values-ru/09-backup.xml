@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">Не удалось сохранить резервную копию из-за нехватки места в хранилище. Уменьшите количество копий или удалите какие-нибудь файлы.</string>
     <string name="storage_warning">В хранилище меньше %d МБ.\nОсвободите немного места, чтобы не потерять данные.</string>
-    <string name="backup_restore">Восстановить</string>
+    <string name="backup_restore" maxLength="28">Восстановить</string>
     <string name="backup_new_collection">Новая коллекция</string>
     <string name="backup_del_collection">Удалить коллекцию и создать новую</string>
     <string name="backup_del_collection_question">Удалить коллекцию и создать новую? Все карточки и статистика обучения будут удалены.</string>

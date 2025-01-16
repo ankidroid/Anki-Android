@@ -26,17 +26,16 @@ import com.ichi2.libanki.Collection
  */
 enum class CardsOrNotes {
     CARDS,
-    NOTES;
+    NOTES,
+    ;
 
-    context (Collection)
-    fun saveToCollection() {
-        this@Collection.config.setBool(ConfigKey.Bool.BROWSER_TABLE_SHOW_NOTES_MODE, this == NOTES)
+    fun saveToCollection(col: Collection) {
+        col.config.setBool(ConfigKey.Bool.BROWSER_TABLE_SHOW_NOTES_MODE, this == NOTES)
     }
 
     companion object {
-        context (Collection)
-        fun fromCollection(): CardsOrNotes =
-            when (this@Collection.config.getBool(ConfigKey.Bool.BROWSER_TABLE_SHOW_NOTES_MODE)) {
+        fun fromCollection(col: Collection): CardsOrNotes =
+            when (col.config.getBool(ConfigKey.Bool.BROWSER_TABLE_SHOW_NOTES_MODE)) {
                 true -> NOTES
                 false -> CARDS
             }

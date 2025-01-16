@@ -27,7 +27,10 @@ import java.io.File
 import java.lang.Exception
 
 object ExifUtil {
-    fun rotateFromCamera(theFile: File, bitmap: Bitmap): Bitmap {
+    fun rotateFromCamera(
+        theFile: File,
+        bitmap: Bitmap,
+    ): Bitmap {
         var bmp = bitmap
         return try {
             val exif = ExifInterface(theFile.path)

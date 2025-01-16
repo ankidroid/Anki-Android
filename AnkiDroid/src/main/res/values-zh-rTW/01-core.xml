@@ -45,71 +45,68 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks">牌組</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">瀏覽卡牌</string>
-    <string name="statistics">統計資料</string>
-    <string name="settings">設定</string>
-    <string name="help">幫助</string>
+    <string name="decks" maxLength="28">牌組</string>
+    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">瀏覽卡牌</string>
+    <string name="statistics" maxLength="28">統計資料</string>
+    <string name="settings" maxLength="28">設定</string>
+    <string name="help" maxLength="28">幫助</string>
     <string name="drawing">繪圖</string>
-    <string name="send_feedback">傳送問題回報</string>
-    <string name="studyoptions_due_today">今天到期:</string>
-    <string name="studyoptions_new_total">新卡片總數:</string>
-    <string name="studyoptions_total_cards">卡片總數:</string>
+    <string name="send_feedback">提供意見</string>
     <string name="studyoptions_start">開始學習</string>
     <!-- DeckPicker.kt -->
     <string name="expand">展開</string>
-    <string name="collapse">收回</string>
+    <string name="collapse">摺疊</string>
     <plurals name="reviewer_window_title">
-        <item quantity="other">剩下%d分鐘</item>
+        <item quantity="other">還剩%d分鐘</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">剩餘 %1$d 小時 %2$d 分鐘</item>
+        <item quantity="other">還剩%1$d小時%2$d分鐘</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">剩餘 %1$d 天 %2$d 小時</item>
+        <item quantity="other">%1$d days %2$dh left</item>
     </plurals>
-    <string name="no_cards_placeholder_title">牌組是空的</string>
+    <string name="no_cards_placeholder_title">收藏為空</string>
     <string name="no_cards_placeholder_description">使用「+」符號\n
 開始新增卡片</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">輸入答案</string>
-    <string name="show_answer">看答案</string>
+    <string name="show_answer" maxLength="41">顯示答案</string>
     <string name="hide_answer">隱藏答案</string>
-    <string name="ease_button_again">再一次</string>
-    <string name="ease_button_hard">難</string>
-    <string name="ease_button_good">中等</string>
+    <string name="ease_button_again" maxLength="41">再次</string>
+    <string name="ease_button_hard" maxLength="41">難</string>
+    <string name="ease_button_good" maxLength="41">還行</string>
     <string name="ease_button_easy">簡單</string>
-    <string name="menu_import">匯入</string>
-    <string name="undo">復原</string>
-    <string name="redo">重做</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">復原筆觸</string>
+    <string name="menu_import" maxLength="28">匯入</string>
+    <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">復原</string>
+    <string name="redo" maxLength="28">重做</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">復原筆觸</string>
     <string name="move_all_to_deck">全部移動到牌組</string>
-    <string name="unbury">取消暫時隱藏</string>
-    <string name="rename_deck">重新命名牌組</string>
-    <string name="create_shortcut">建立捷徑</string>
+    <string name="unbury" maxLength="28">取消暫時隱藏</string>
+    <string name="rename_deck" maxLength="28">重命名牌組</string>
+    <string name="create_shortcut">創建捷徑</string>
     <string name="browse_cards">瀏覽卡片</string>
     <string name="edit_deck_description" comment="edit the deck description">編輯描述</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">新增</string>
-    <string name="menu_add_note">新增筆記</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">新增</string>
+    <string name="menu_add_note" maxLength="28">增加筆記</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">同步帳戶</string>
-    <string name="menu_dismiss_note">隱藏/刪除</string>
-    <string name="menu_bury_card">暫時隱藏卡片</string>
-    <string name="menu_bury_note">暫時隱藏筆記</string>
-    <string name="menu_suspend_card">長久擱置卡片</string>
-    <string name="menu_suspend_note">長久擱置筆記</string>
-    <string name="menu_bury">隱藏</string>
-    <string name="menu_suspend">長久擱置</string>
-    <string name="menu_delete_note">刪除筆記</string>
-    <string name="menu_flag">標記</string>
-    <string name="rename_flag">重新命名標記</string>
-    <string name="menu_flag_card">標記卡片</string>
-    <string name="menu_edit_tags">編輯標籤</string>
-    <string name="delete_note_message">真的要刪除這個筆記跟它的卡片嗎？\n%s</string>
-    <string name="menu_search">在%1$s中查詢</string>
-    <string name="menu_mark_note">標記筆記</string>
+    <string name="menu_dismiss_note" maxLength="41">隐藏/删除</string>
+    <string name="menu_bury_card" maxLength="28">暫時隱藏卡片 </string>
+    <string name="menu_bury_note" maxLength="28">暫時隱藏筆記 </string>
+    <string name="menu_suspend_card" maxLength="28">暫停卡片 </string>
+    <string name="menu_suspend_note" maxLength="28">長久擱置筆記 </string>
+    <string name="menu_bury" maxLength="28">埋葬</string>
+    <string name="menu_suspend" maxLength="28">擱置</string>
+    <string name="menu_delete_note" maxLength="28">刪除筆記 </string>
+    <string name="menu_flag" maxLength="41">標記</string>
+    <string name="rename_flag">重命名標記</string>
+    <string name="menu_flag_card" maxLength="28">標記卡片</string>
+    <string name="menu_edit_tags" maxLength="28">編輯標籤</string>
+    <string name="delete_note_message">確認刪除這個筆記跟它的卡片嗎？\n%s</string>
+    <string name="menu_search" maxLength="28">在%1$s中查詢</string>
+    <string name="menu_mark_note" maxLength="28">標記筆記</string>
     <string name="menu_unmark_note">取消標記筆記</string>
-    <string name="menu_enable_voice_playback">啟動聲音重放功能</string>
+    <string name="menu_enable_voice_playback" maxLength="28">啟動聲音重放功能</string>
     <string name="menu_disable_voice_playback">關閉聲音重放功能</string>
     <string name="new_deck">建立牌組</string>
     <string name="new_dynamic_deck">新增篩選牌組</string>
@@ -120,38 +117,37 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">請授予 AnkiDroid ‘儲存空間’ 權限以繼續</string>
     <string name="rebuild_filtered_deck">重建已篩選牌組中&#8230;</string>
-    <string name="rebuild_cram_label">重建</string>
-    <string name="empty_cram_label">清空</string>
+    <string name="rebuild_cram_label" maxLength="28">重建</string>
+    <string name="empty_cram_label" maxLength="28">清空</string>
     <string name="create_subdeck">建立子牌組</string>
     <string name="empty_filtered_deck">清除已篩選牌組中&#8230;</string>
     <string name="custom_study_deck_name">自訂學程</string>
     <string name="custom_study_deck_exists">請先重新命名現有的「自訂學習」牌組。</string>
     <string name="search_deck" comment="Deck search for selecting it">牌組搜尋</string>
-    <string name="empty_deck">這個牌組是空的</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">牌組搜尋</string>
+    <string name="empty_deck">這是個空牌組</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">牌組搜尋</string>
     <string name="invalid_deck_name">無效牌組名稱</string>
-    <string name="studyoptions_congrats_finished">恭喜！你完成今天的進度了。</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">完成了本牌組了！ %s</string>
     <string name="studyoptions_no_cards_due">尚無到期的卡片。</string>
     <string name="sd_card_not_mounted">儲存裝置未掛載</string>
-    <string name="button_sync" comment="Text of the sync button">同步</string>
-    <string name="button_upgrade" comment="Text of the sync button">遷移到作用域存儲</string>
+    <string name="button_sync" comment="Text of the sync button" maxLength="28">同步</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">你要取消同步嗎？</string>
     <string name="continue_sync" tools:ignore="UnusedResources">繼續同步</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">同步已取消</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">正在取消&#8230;\n這可能需要一點時間。</string>
     <string name="syncing_media">正在使媒體同步</string>
-    <string name="export_deck">匯出牌組</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_deck" maxLength="28">匯出牌組</string>
+    <string name="export_collection">匯出集合</string>
     <string name="nothing">無</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">卡片種類</string>
     <string name="card_template_editor_front">正面樣本</string>
     <string name="card_template_editor_back">反面樣本</string>
-    <string name="card_template_editor_styling">樣式</string>
-    <string name="card_template_editor_menu_card_browser_appearance">卡片瀏覽器外觀</string>
-    <string name="card_template_editor_deck_override">牌組覆蓋</string>
-    <string name="card_template_editor_insert_field">插入欄位</string>
+    <string name="card_template_editor_styling" maxLength="28">樣式</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">卡片瀏覽器外觀</string>
+    <string name="card_template_editor_deck_override" maxLength="28">牌組覆蓋</string>
+    <string name="card_template_editor_insert_field" maxLength="28">插入欄位</string>
     <string name="card_template_editor_select_field">欄位選擇</string>
     <string name="card_template_editor_cant_delete">需要至少一個卡片種類。</string>
     <plurals name="card_template_editor_confirm_add">
@@ -160,86 +156,45 @@
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">刪除卡片種類 \"%2$s\"，和它的 %1$d 張卡片？</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">移除這個卡片種類將會導致一或多個筆記被刪除。請先新增並儲存一個卡片種類。</string>
     <string name="card_template_editor_save_error">無法儲存卡片模板變更：%s</string>
     <string name="template_for_current_card_deleted">當前卡片的卡片類型已被刪除。</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">瀏覽器外觀</string>
     <!-- card Info -->
-    <string name="card_info_title">卡片資訊</string>
+    <string name="card_info_title" maxLength="28">卡片資訊</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">讀寫 AnkiDroid 資料庫</string>
     <string name="read_write_permission_description">瀏覽現有的筆記、卡片、筆記類型和牌組，或者自己動手建立新的~</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">卡片瀏覽器</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">瀏覽卡片</string>
     <string name="context_menu_anki_card_label">Anki卡</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">收藏無法合併。 \n您想要保留哪個收藏？</string>
+    <string name="sync_conflict_message_new">收藏無法合併。 \n您要保留哪個收藏？</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
     <string name="sync_conflict_remote_confirm_new">用來自你的 AnkiWeb 的收藏替換 AnkiDroid 上的收藏嗎？</string>
     <string name="sync_conflict_local_confirm_new">用來自你的 AnkiDroid 的收藏替換 AnkiWeb 上的收藏嗎？</string>
     <string name="sync_conflict_title_new">選擇要保留的收藏</string>
     <string name="sync_conflict_replace_title">取代收藏</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="other">%1$d 張卡片待複習 (0 張到期)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">無法寫入或建立檔案 %s</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"發生了許多錯誤，其中最後一個是：%s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">多於一個連續錯誤發生並沒有任何進度，最新：%s</string>
-    <!-- Scoped storage migration -->
-    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">正在遷移數據</string>
-    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">複製中&#8230;</string>
-    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">遷移資料中</string>
-    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">計算傳輸檔案大小</string>
-    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">已遷移 %1$s / %2$s</string>
-    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">移轉成功</string>
-    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        您的數據已經成功轉移。
-        AnkiDroid 已經恢復正常工作，你可以進行同步。</string>
-    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">轉移失敗</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        複製數據出現問題，錯誤：%1$s
-        <br><br>
-        所有更改沒有还原
-        <br><br>
-        请重新進行遷移
-        去解决此问题，您可能需要釋放一些磁碟空問，
-        或重新連接儲存了文件亦能被刪除的空間
-        <br>
-        <a href="%2$s">了解更多並取得援助</a>
-    ]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        複製數據出現問題，錯誤：%1$s
-        <br><br>
-        所有更改<i>沒有</i>被還原
-        雖然數據沒有遺失，媒體數文件有機會於新與舊的文件夾內散開
-        <br><br>
-        請重新進行遷移
-        去解决此問题，您可能需要釋放一些磁碟空問，
-        或重新連接儲存了文件亦能被刪除的空間
-        <br>
-        <a href="%2$s">了解更多並取得援助</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        數據遷移已暫停，由於此錯誤出現：%1$s.
-        <br><br>
-        <a href="%2$s">了解更多並獲取援助</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">重新遷移</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">無法存取收藏</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">AnkiDroid 被卸載後，由於 Google Play 政策有改動，我們不能讀取你的收藏\n\n您的資料安全有能修復. 您的資料置於\n%s\n\n選擇以下一項選項以修復資料：</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">AnkiDroid 被卸載後，由於 Google Play 政策有改動，我們不能讀取你的收藏\n\n您的資料安全有能修復，您的資料置於\n%s\n\n選擇以下一項選項以修復資料：</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android 已移除 AnkiDroid 的 %1$s 權限，原因是應用程式不活動。
+您的資料是安全的，並且可以還原。它位於 %2$s 選擇下面的選項進行還原：</string>
     <string name="restore_data_from_ankiweb">從 AnkiWeb 回復 (推薦)</string>
-    <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
-    <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
+    <string name="install_non_play_store_ankidroid_recommended">還原資料夾存取權限 (建議)</string>
+    <string name="install_non_play_store_ankidroid">還原資料夾存取權限 (進階)</string>
     <string name="restore_data_from_backup">從 .colpkg 備份中回復 (進階使用者)</string>
     <string name="create_new_collection">建立新的收藏</string>
     <string name="new_unsafe_collection">這個新牌組會在解除安裝 AnkiDroid 後刪除</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
-    <string name="image_occlusion">Image Occlusion</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="permissions_screen_headline">AnkiDroid 需要一些權限才能運作</string>
+    <string name="storage_access_title">存取儲存空間</string>
+    <string name="storage_access_summary">將收藏儲存到安全的地方，即使應用程式卸載也不會被刪除</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">存取所有檔案</string>
+    <string name="image_occlusion">圖像遮蔽</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">移除帳戶</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">即時卡片</string>
 </resources>

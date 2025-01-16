@@ -99,9 +99,10 @@ open class BackupManagerTest {
         assertThat("should fail if collection too small", result, equalTo(false))
     }
 
-    private fun performBackup(bm: BackupManager, time: Time = MockTime(100000000)): Boolean {
-        return bm.performBackupInBackground("/AnkiDroid/", time)
-    }
+    private fun performBackup(
+        bm: BackupManager,
+        time: Time = MockTime(100000000),
+    ): Boolean = bm.performBackupInBackground("/AnkiDroid/", time)
 
     /** Returns a spy of BackupManager which would pass  */
     private val passingBackupManagerSpy: BackupManager

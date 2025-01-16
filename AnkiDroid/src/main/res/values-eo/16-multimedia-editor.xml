@@ -44,21 +44,11 @@
     <string name="multimedia_editor_popup_audio_clip">Aldoni aŭdaĵon</string>
     <string name="multimedia_editor_popup_video_clip">Aldoni filmeton</string>
     <string name="multimedia_editor_popup_audio">Registri sonon</string>
-    <string name="multimedia_editor_popup_text">Altnivela redaktilo</string>
     <string name="multimedia_editor_popup_cloze">Truteksta malpleno</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Teksto</string>
-    <string name="multimedia_editor_field_editing_image">Bildo</string>
     <string name="multimedia_editor_field_editing_audio">Aŭdaĵo</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Sona dosiero</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Farita</string>
-    <!-- Text field editing -->
-    <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_clear">Forviŝi</string>
-    <string name="multimedia_editor_text_field_editing_clone">Kopii de</string>
-    <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">Transpreni de</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
@@ -66,28 +56,21 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Galerio</string>
     <string name="multimedia_editor_image_field_editing_photo">Fotilo</string>
-    <string name="multimedia_editor_import_audio">Sono</string>
-    <string name="multimedia_editor_import_video">Filmeto</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Io fiaskis</string>
-    <string name="multimedia_editor_svg_preview">SVG-dosieroj ne povas esti antaŭrigardataj.</string>
     <string name="multimedia_editor_png_paste_error">Eraro dum konverti bildon el tondujo al PNG-formo: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Kunigi plurmedian enhavon al la kampo %1$s</string>
-    <string name="multimedia_editor_attach_media">Aldoni aŭdvidaĵon</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Fiaskis registri</string>
     <string name="multimedia_editor_audio_view_playing_failed">Fiaskis ludi</string>
     <string name="multimedia_editor_audio_view_create_failed">Ne povas krei ilarstrion de registrado</string>
-    <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Redakti kampon</string>
     <!-- Crop function-->
     <string name="crop_image">Ĉu vi volas pritondi tiun ĉi bildon?</string>
-    <string name="crop_button">Pritondi bildon</string>
-    <string name="save_dialog_content">La nuna limigo de grando de bildo estas %s MB. Implicita limigo de grando de bildo estas 1 MB. Ĉu vi volas pritondi ĝin?</string>
+    <string name="crop_button" maxLength="28">Pritondi bildon</string>
+    <string name="save_dialog_content">Bild-grando estas %s MB. Implicita limigo bild-grando estas 1 MB. Ĉu vi volas densigi la bildon?</string>
     <string name="select_image_failed">"Fiaskis konservi bildon, reprovu"</string>
-    <string name="activity_result_unexpected">Aplikaĵo liveris neatenditan valoron. Eble vi uzu alian aplikaĵon</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Enhavo de kampo</string>
-    <string name="reselect">Reselect</string>
+    <string name="reselect" maxLength="28">Reelekti</string>
 </resources>

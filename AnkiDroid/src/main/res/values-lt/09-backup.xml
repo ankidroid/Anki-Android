@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
     <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
-    <string name="backup_restore">Atkurti iš atsarginės kopijos</string>
+    <string name="backup_restore" maxLength="28">Atkurti iš atsarginės kopijos</string>
     <string name="backup_new_collection">Nauja kolekcija</string>
     <string name="backup_del_collection">Ištrinti kolekciją ir sukurti naują</string>
     <string name="backup_del_collection_question">Ar norite ištrinti kolekciją ir sukurti naują? Po to bus sumažinta jūsų mokymosi pažanga ir ištrintos visos kortelės.</string>

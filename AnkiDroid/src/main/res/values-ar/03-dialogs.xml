@@ -46,13 +46,21 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">هل تريد فحص قاعدة البيانات؟</string>
     <string name="check_db_warning">قد يستغرق هذا وقتًا طويلًا</string>
-    <string name="contextmenu_deckpicker_delete_deck">حذف الرزمة</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">حذف الرزمة</string>
     <string name="delete_deck_title">هل تريد حذف الرزمة؟</string>
+    <plurals name="delete_deck_message">
+        <item quantity="zero">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="two">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="few">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="many">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">لا يتوفر دعم تحويل النص إلى كلام لأي لغة</string>
     <string name="tts_no_tts">لا تنطق</string>
     <string name="unused_strings">\n\nملفات عير مستخدمة:\n</string>
     <string name="reposition_card_dialog_title">تغيير موضع البطاقة الجديدة</string>
-    <string name="reposition_card_dialog_message">موضع البداية:</string>
     <string name="reposition_card_not_new_error">يمكن تغيير موضع البطاقات الجديدة فقط</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="zero">تم تغيير موضع %d بطاقة</item>
@@ -78,15 +86,11 @@
     <string name="repair_deck_dialog">هل تريد حقًا إصلاح قاعدة البيانات؟\n\nقبل بدء هذه المحاولة، ستُنشَأ نسخة في المجلد الفرعي “%s”.</string>
     <string name="intent_aedict_empty">تصنيف “default” فارغ</string>
     <string name="intent_aedict_category">لإضافة بطاقات إلى أنكيدرويد، أزل كل تصنيفات المفكرة أو أضف تصنيفًا باسم “default”</string>
-    <string name="custom_study_new_total_new">البطاقات الجديدة في شَدة الأورق: %d</string>
-    <string name="custom_study_rev_total_rev">المراجعات المستحقة في الرزمة: %d</string>
     <string name="custom_study_new_extend">رفع/إنقاص (“-3”) الحد اليومي للبطاقات الجديدة بـ</string>
     <string name="custom_study_rev_extend">رفع/إنقاص (“-3”) الحد اليومي للمراجعات بـ</string>
     <string name="custom_study_forgotten">راجع البطاقات المنسية في آخر س يوم:</string>
     <string name="custom_study_ahead">راجع مبكرًا بـ س يوم:</string>
-    <string name="custom_study_random">اختر س بطاقة من الرزمة عشوائيًا:</string>
     <string name="custom_study_preview">عاين البطاقات الجديدة المضافة في آخر س يوم:</string>
-    <string name="custom_study_rebuild_deck_corrupt">تعذرت إعادة إنشاء شَدّة الدراسة المخصصة</string>
     <string name="storage_full_title">ذاكرة التخزين ممتلئة</string>
     <string name="storage_almost_full_title">بطاقة الـSD ممتلئة تقريبًا</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">لا توجد مساحة</string>
@@ -102,9 +106,9 @@
     <string name="dialog_keep">إبقاء</string>
     <string name="dialog_remove">حذف</string>
     <string name="dialog_continue">استمرار</string>
-    <string name="dialog_processing">تجري المعالجة...</string>
+    <string name="dialog_processing">تجري المعالجة&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">إنشاء</string>
-    <string name="dialog_positive_delete">حذف</string>
+    <string name="dialog_positive_delete" maxLength="28">حذف</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">تعطيل</string>
     <string name="dialog_positive_overwrite">استبدال</string>
@@ -142,14 +146,11 @@
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">يجري البحث عن بطاقات فارغة&#8230;</string>
     <string name="empty_cards_count">بطاقات ستُحذَف: %d</string>
-    <string name="empty_cards_deleted">بطاقات حُذِفت: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">تعذر الحصول على إذن الميكروفون.</string>
-    <string name="multimedia_editor_camera_permission_refused">تعذر الحصول على إذن الكاميرا. تم تعطيل الميزة.</string>
     <string name="multimedia_editor_failed">تعذر فتح محرر الوسائط المتعددة</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">رُفِض إذن تسجيل الصوت</string>
-    <string name="mutimedia_editor_assertion_failed">حدث خطأ غير معروف عند عرض المحرر المتقدم</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">تم تحديث أنكيدرويد</string>
     <string name="integrity_check_startup_content">تم تحديث أنكيدرويد. يتضمن هذا التحديث إصلاحًا لأعطال ممكنة في قاعدة البيانات، لذلك ننصح باستخدام ميزة فحص قاعدة البيانات الآن.</string>
@@ -178,8 +179,6 @@
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">يفتقد إذن التخزين المطلوب. يرجى منح إذن التخزين ثم المحاولة مجددًا.</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">تعذر تحميل مظهر متصفح البطاقات</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">تعذرت جدولة التنبيهات</string>
     <string name="boot_service_too_many_notifications">تمت جدولة كثير من التنبيهات. لن يظهر بعضها</string>
@@ -195,7 +194,7 @@
     <string name="help_item_mailing_list">القائمة البريدية</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">الإبلاغ عن خلل</string>
-    <string name="help_title_support_ankidroid">دعم أنكيدرويد</string>
+    <string name="help_title_support_ankidroid" maxLength="28">دعم أنكيدرويد</string>
     <string name="help_item_support_opencollective_donate">تبرع</string>
     <string name="help_item_support_develop_ankidroid">تطوير</string>
     <string name="help_item_support_rate_ankidroid">تقييم</string>
@@ -238,7 +237,7 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">انسخ  المجموعة الخاصة بك احتياطياً</string>
     <string name="backup_collection_message">لم تقم بنسخ مجموعتك احتياطياً في فترة من الزمن. يجب عليك القيام بذلك الآن لمنع فقدان البيانات</string>
-    <string name="button_backup">النسخ الاحتياطي</string>
+    <string name="button_backup" maxLength="41">النسخ الاحتياطي</string>
     <string name="button_disable_reminder">تعطيل التذكير</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">لاحقًا</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">لا تُظهر مجدّدًا</string>
@@ -248,6 +247,7 @@
     <string name="dismiss_backup_warning_upgrade">        بسبب تغييرات خصوصية الأندرويد، سيتم حذف بياناتك والنسخ الاحتياطية الآلية من هاتفك إذا تم إلغاء تثبيت التطبيق
     </string>
     <string name="deck_already_exists">هذه الرزمة موجودة بالفعل</string>
+    <string name="empty_deck_name">Deck name cannot be empty</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
@@ -284,6 +284,15 @@
     <string name="open">Open</string>
     <string name="change_cloze_number">Change cloze number</string>
     <string name="cloze_number">Cloze number:</string>
+    <string name="change_editor_mode">Change editor mode</string>
+    <string name="open_note_editor">Open note editor</string>
+    <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
+    <string name="compress">Compress</string>
+    <!-- Tts playback error dialog -->
+    <string name="tts_error_dialog_title">Language not supported</string>
+    <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
+    <string name="tts_error_dialog_change_button_text">Change engine</string>
+    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
 </resources>

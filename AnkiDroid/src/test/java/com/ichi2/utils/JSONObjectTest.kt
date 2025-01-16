@@ -18,6 +18,7 @@ package com.ichi2.utils
 import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.EmptyApplication
+import org.intellij.lang.annotations.Language
 import org.json.JSONObject
 import org.junit.Assert
 import org.junit.Before
@@ -32,10 +33,22 @@ import org.robolectric.annotation.Config
 @Config(application = EmptyApplication::class)
 @SuppressLint("CheckResult") // many usages: checking exceptions
 class JSONObjectTest {
-    private val correctJsonBasic = "{\"key1\":\"value1\"}"
-    private val correctJsonNested = "{\"key1\":{\"key1a\":\"value1a\",\"key1b\":\"value1b\"},\"key2\":\"value2\"}"
-    private val correctJsonWithArray = "{\"key1\":\"value1\",\"key2\":[{\"key2a\":\"value2a\"},{\"key2b\":\"value2b\"}],\"key3\":\"value3\"}"
-    private val correctJsonNestedWithArray = "{\"key1\":{\"key1a\":\"value1a\",\"key1b\":\"value1b\"},\"key2\":[{\"key2a\":\"value2a\"},{\"key2b\":\"value2b\"}],\"key3\":\"value3\"}"
+    @Language("JSON")
+    private val correctJsonBasic = """{"key1":"value1"}"""
+
+    @Language("JSON")
+    private val correctJsonNested =
+        """{"key1":{"key1a":"value1a","key1b":"value1b"},"key2":"value2"}"""
+
+    @Language("JSON")
+    private val correctJsonWithArray =
+        """{"key1":"value1","key2":[{"key2a":"value2a"},{"key2b":"value2b"}],"key3":"value3"}"""
+
+    @Language("JSON")
+    private val correctJsonNestedWithArray =
+        """{"key1":{"key1a":"value1a","key1b":"value1b"},
+            |"key2":[{"key2a":"value2a"},{"key2b":"value2b"}],"key3":"value3"}
+        """.trimMargin()
 
     private lateinit var correctJsonObjectBasic: JSONObject
     private lateinit var correctJsonObjectNested: JSONObject
@@ -67,9 +80,7 @@ class JSONObjectTest {
         /**
          * Sample overridden function
          */
-        override fun toString(): String {
-            return removeQuotes(super.toString())
-        }
+        override fun toString(): String = removeQuotes(super.toString())
     }
 
     @Test
@@ -106,8 +117,6 @@ class JSONObjectTest {
         /**
          * Wraps all the alphanumeric words in a string in quotes
          */
-        private fun removeQuotes(string: String): String {
-            return string.replace("\"([a-zA-Z0-9]+)\"".toRegex(), "$1")
-        }
+        private fun removeQuotes(string: String): String = string.replace("\"([a-zA-Z0-9]+)\"".toRegex(), "$1")
     }
 }

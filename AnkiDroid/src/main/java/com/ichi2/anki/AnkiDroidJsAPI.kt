@@ -25,21 +25,23 @@ import android.net.Uri
 import androidx.lifecycle.lifecycleScope
 import com.github.zafarkhaja.semver.Version
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeBuryCard
-import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeBuryNote
-import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeError
-import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeFlagCard
-import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeMarkCard
-import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeSetDue
-import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeSuspendCard
-import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeSuspendNote
+import com.ichi2.anki.AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_BURT_NOTE
+import com.ichi2.anki.AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_BURY_CARD
+import com.ichi2.anki.AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_ERROR
+import com.ichi2.anki.AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_FLAG_CARD
+import com.ichi2.anki.AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_MARK_CARD
+import com.ichi2.anki.AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_SET_DUE
+import com.ichi2.anki.AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_SUSPEND_CARD
+import com.ichi2.anki.AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_SUSPEND_NOTE
 import com.ichi2.anki.AnkiDroidJsAPIConstants.flagCommands
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.servicelayer.rescheduleCards
 import com.ichi2.anki.servicelayer.resetCards
 import com.ichi2.anki.snackbar.setMaxLines
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks
@@ -55,7 +57,15 @@ import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
 
-open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
+typealias JvmBoolean = Boolean
+typealias JvmInt = Int
+typealias JvmFloat = Float
+typealias JvmLong = Long
+typealias JvmString = String
+
+open class AnkiDroidJsAPI(
+    private val activity: AbstractFlashcardViewer,
+) {
     private val currentCard: Card
         get() = activity.currentCard!!
 
@@ -75,21 +85,25 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     // Speech to Text
     private val speechRecognizer = JavaScriptSTT(context)
 
-    open fun convertToByteArray(apiContract: ApiContract, boolean: Boolean): ByteArray {
-        return ApiResult(apiContract.isValid, boolean).toString().toByteArray()
-    }
+    open fun convertToByteArray(
+        apiContract: ApiContract,
+        boolean: Boolean,
+    ): ByteArray = ApiResult.Boolean(apiContract.isValid, boolean).toString().toByteArray()
 
-    open fun convertToByteArray(apiContract: ApiContract, int: Int): ByteArray {
-        return ApiResult(apiContract.isValid, int).toString().toByteArray()
-    }
+    open fun convertToByteArray(
+        apiContract: ApiContract,
+        int: Int,
+    ): ByteArray = ApiResult.Integer(apiContract.isValid, int).toString().toByteArray()
 
-    open fun convertToByteArray(apiContract: ApiContract, long: Long): ByteArray {
-        return ApiResult(apiContract.isValid, long).toString().toByteArray()
-    }
+    open fun convertToByteArray(
+        apiContract: ApiContract,
+        long: Long,
+    ): ByteArray = ApiResult.Long(apiContract.isValid, long).toString().toByteArray()
 
-    open fun convertToByteArray(apiContract: ApiContract, string: String): ByteArray {
-        return ApiResult(apiContract.isValid, string).toString().toByteArray()
-    }
+    open fun convertToByteArray(
+        apiContract: ApiContract,
+        string: String,
+    ): ByteArray = ApiResult.String(apiContract.isValid, string).toString().toByteArray()
 
     /**
      * The method parse json data and return api contract object
@@ -121,7 +135,10 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
      *
      * show developer contact if js api used in card is deprecated
      */
-    private fun showDeveloperContact(errorCode: Int, apiDevContact: String) {
+    private fun showDeveloperContact(
+        errorCode: Int,
+        apiDevContact: String,
+    ) {
         val errorMsg: String = context.getString(R.string.anki_js_error_code, errorCode)
         val snackbarMsg: String = context.getString(R.string.api_version_developer_contact, apiDevContact, errorMsg)
 
@@ -136,7 +153,10 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     /**
      * Supplied api version must be equal to current api version to call mark card, toggle flag functions etc.
      */
-    private fun requireApiVersion(apiVer: String, apiDevContact: String): Boolean {
+    private fun requireApiVersion(
+        apiVer: String,
+        apiDevContact: String,
+    ): Boolean {
         try {
             if (apiDevContact.isEmpty() || apiVer.isEmpty()) {
                 activity.runOnUiThread {
@@ -144,14 +164,14 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 }
                 return false
             }
-            val versionCurrent = Version.parse(AnkiDroidJsAPIConstants.currentJsApiVersion)
+            val versionCurrent = Version.parse(AnkiDroidJsAPIConstants.CURRENT_JS_API_VERSION)
             val versionSupplied = Version.parse(apiVer)
 
             /*
-            * if api major version equals to supplied major version then return true and also check for minor version and patch version
-            * show toast for update and contact developer if need updates
-            * otherwise return false
-            */
+             * if api major version equals to supplied major version then return true and also check for minor version and patch version
+             * show toast for update and contact developer if need updates
+             * otherwise return false
+             */
             return when {
                 versionSupplied == versionCurrent -> {
                     true
@@ -160,7 +180,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                     activity.runOnUiThread {
                         activity.showSnackbar(context.getString(R.string.update_js_api_version, apiDevContact))
                     }
-                    versionSupplied.isHigherThanOrEquivalentTo(Version.parse(AnkiDroidJsAPIConstants.minimumJsApiVersion))
+                    versionSupplied.isHigherThanOrEquivalentTo(Version.parse(AnkiDroidJsAPIConstants.MINIMUM_JS_API_VERSION))
                 }
                 else -> {
                     activity.runOnUiThread {
@@ -183,7 +203,11 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
      * @param returnDefaultValues `true` if default values should be returned (if non-[Reviewer])
      * @return
      */
-    open suspend fun handleJsApiRequest(methodName: String, bytes: ByteArray, returnDefaultValues: Boolean = true) = withContext(Dispatchers.Main) {
+    open suspend fun handleJsApiRequest(
+        methodName: String,
+        bytes: ByteArray,
+        returnDefaultValues: Boolean = true,
+    ) = withContext(Dispatchers.Main) {
         // the method will call to set the card supplied data and is valid version for each api request
         val apiContract = parseJsApiContract(bytes)!!
         // if api not init or is api not called from reviewer then return default -1
@@ -207,21 +231,24 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
             "nextTime4" -> convertToByteArray(apiContract, cardDataForJsAPI.nextTime4)
             "toggleFlag" -> {
                 if (apiParams !in flagCommands) {
-                    showDeveloperContact(ankiJsErrorCodeFlagCard, apiContract.cardSuppliedDeveloperContact)
+                    showDeveloperContact(ANKI_JS_ERROR_CODE_FLAG_CARD, apiContract.cardSuppliedDeveloperContact)
                     return@withContext convertToByteArray(apiContract, false)
                 }
                 convertToByteArray(apiContract, activity.executeCommand(flagCommands[apiParams]!!))
             }
-            "markCard" -> processAction({ activity.executeCommand(ViewerCommand.MARK) }, apiContract, ankiJsErrorCodeMarkCard, ::convertToByteArray)
-            "buryCard" -> processAction(activity::buryCard, apiContract, ankiJsErrorCodeBuryCard, ::convertToByteArray)
-            "buryNote" -> processAction(activity::buryNote, apiContract, ankiJsErrorCodeBuryNote, ::convertToByteArray)
-            "suspendCard" -> processAction(activity::suspendCard, apiContract, ankiJsErrorCodeSuspendCard, ::convertToByteArray)
-            "suspendNote" -> processAction(activity::suspendNote, apiContract, ankiJsErrorCodeSuspendNote, ::convertToByteArray)
+            "markCard" ->
+                processAction({
+                    activity.executeCommand(ViewerCommand.MARK)
+                }, apiContract, ANKI_JS_ERROR_CODE_MARK_CARD, ::convertToByteArray)
+            "buryCard" -> processAction(activity::buryCard, apiContract, ANKI_JS_ERROR_CODE_BURY_CARD, ::convertToByteArray)
+            "buryNote" -> processAction(activity::buryNote, apiContract, ANKI_JS_ERROR_CODE_BURT_NOTE, ::convertToByteArray)
+            "suspendCard" -> processAction(activity::suspendCard, apiContract, ANKI_JS_ERROR_CODE_SUSPEND_CARD, ::convertToByteArray)
+            "suspendNote" -> processAction(activity::suspendNote, apiContract, ANKI_JS_ERROR_CODE_SUSPEND_NOTE, ::convertToByteArray)
             "setCardDue" -> {
                 try {
                     val days = apiParams.toInt()
                     if (days < 0 || days > 9999) {
-                        showDeveloperContact(ankiJsErrorCodeSetDue, apiContract.cardSuppliedDeveloperContact)
+                        showDeveloperContact(ANKI_JS_ERROR_CODE_SET_DUE, apiContract.cardSuppliedDeveloperContact)
                         return@withContext convertToByteArray(apiContract, false)
                     }
                     activity.launchCatchingTask {
@@ -229,7 +256,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                     }
                     return@withContext convertToByteArray(apiContract, true)
                 } catch (e: NumberFormatException) {
-                    showDeveloperContact(ankiJsErrorCodeSetDue, apiContract.cardSuppliedDeveloperContact)
+                    showDeveloperContact(ANKI_JS_ERROR_CODE_SET_DUE, apiContract.cardSuppliedDeveloperContact)
                     return@withContext convertToByteArray(apiContract, false)
                 }
             }
@@ -239,19 +266,19 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 convertToByteArray(apiContract, true)
             }
             "cardMark" -> convertToByteArray(apiContract, currentCard.note(getColUnsafe).hasTag(getColUnsafe, "marked"))
-            "cardFlag" -> convertToByteArray(apiContract, currentCard.userFlag())
+            "cardFlag" -> convertToByteArray(apiContract, currentCard.userFlag().code)
             "cardReps" -> convertToByteArray(apiContract, currentCard.reps)
             "cardInterval" -> convertToByteArray(apiContract, currentCard.ivl)
             "cardFactor" -> convertToByteArray(apiContract, currentCard.factor)
             "cardMod" -> convertToByteArray(apiContract, currentCard.mod)
             "cardId" -> convertToByteArray(apiContract, currentCard.id)
             "cardNid" -> convertToByteArray(apiContract, currentCard.nid)
-            "cardType" -> convertToByteArray(apiContract, currentCard.type)
+            "cardType" -> convertToByteArray(apiContract, currentCard.type.code)
             "cardDid" -> convertToByteArray(apiContract, currentCard.did)
             "cardLeft" -> convertToByteArray(apiContract, currentCard.left)
             "cardODid" -> convertToByteArray(apiContract, currentCard.oDid)
             "cardODue" -> convertToByteArray(apiContract, currentCard.oDue)
-            "cardQueue" -> convertToByteArray(apiContract, currentCard.queue)
+            "cardQueue" -> convertToByteArray(apiContract, currentCard.queue.code)
             "cardLapses" -> convertToByteArray(apiContract, currentCard.lapses)
             "cardDue" -> convertToByteArray(apiContract, currentCard.due)
             "deckName" -> convertToByteArray(apiContract, Decks.basename(activity.getColUnsafe.decks.name(currentCard.did)))
@@ -273,10 +300,11 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
             }
             "ttsStop" -> convertToByteArray(apiContract, talker.stop())
             "searchCard" -> {
-                val intent = Intent(context, CardBrowser::class.java).apply {
-                    putExtra("currentCard", currentCard.id)
-                    putExtra("search_query", apiParams)
-                }
+                val intent =
+                    Intent(context, CardBrowser::class.java).apply {
+                        putExtra("currentCard", currentCard.id)
+                        putExtra("search_query", apiParams)
+                    }
                 activity.startActivity(intent)
                 convertToByteArray(apiContract, true)
             }
@@ -318,19 +346,19 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 convertToByteArray(apiContract, true)
             }
             "answerEase1" -> {
-                activity.flipOrAnswerCard(AbstractFlashcardViewer.EASE_1)
+                activity.flipOrAnswerCard(Ease.AGAIN)
                 convertToByteArray(apiContract, true)
             }
             "answerEase2" -> {
-                activity.flipOrAnswerCard(AbstractFlashcardViewer.EASE_2)
+                activity.flipOrAnswerCard(Ease.HARD)
                 convertToByteArray(apiContract, true)
             }
             "answerEase3" -> {
-                activity.flipOrAnswerCard(AbstractFlashcardViewer.EASE_3)
+                activity.flipOrAnswerCard(Ease.GOOD)
                 convertToByteArray(apiContract, true)
             }
             "answerEase4" -> {
-                activity.flipOrAnswerCard(AbstractFlashcardViewer.EASE_4)
+                activity.flipOrAnswerCard(Ease.EASY)
                 convertToByteArray(apiContract, true)
             }
 
@@ -338,36 +366,39 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 val jsonObject = JSONObject(apiParams)
                 val noteId = jsonObject.getLong("noteId")
                 val tag = jsonObject.getString("tag")
-                val note = getColUnsafe.getNote(noteId).apply {
-                    addTag(tag)
-                }
+                val note =
+                    getColUnsafe.getNote(noteId).apply {
+                        addTag(tag)
+                    }
                 getColUnsafe.updateNote(note)
                 convertToByteArray(apiContract, true)
             }
             "sttSetLanguage" -> convertToByteArray(apiContract, speechRecognizer.setLanguage(apiParams))
             "sttStart" -> {
-                val callback = object : JavaScriptSTT.SpeechRecognitionCallback {
-                    override fun onResult(results: List<String>) {
-                        activity.lifecycleScope.launch {
-                            val apiResult = ApiResult(true, Json.encodeToString(ListSerializer(String.serializer()), results))
-                            val jsonEncodedString = withContext(Dispatchers.Default) { JSONObject.quote(apiResult.toString()) }
-                            activity.webView!!.evaluateJavascript("ankiSttResult($jsonEncodedString)", null)
+                val callback =
+                    object : JavaScriptSTT.SpeechRecognitionCallback {
+                        override fun onResult(results: List<String>) {
+                            activity.lifecycleScope.launch {
+                                val apiResult = ApiResult.success(Json.encodeToString(ListSerializer(String.serializer()), results))
+                                val jsonEncodedString = withContext(Dispatchers.Default) { JSONObject.quote(apiResult.toString()) }
+                                activity.webView!!.evaluateJavascript("ankiSttResult($jsonEncodedString)", null)
+                            }
+                        }
+
+                        override fun onError(errorMessage: String) {
+                            activity.lifecycleScope.launch {
+                                val apiResult = ApiResult.failure(errorMessage)
+                                val jsonEncodedString = withContext(Dispatchers.Default) { JSONObject.quote(apiResult.toString()) }
+                                activity.webView!!.evaluateJavascript("ankiSttResult($jsonEncodedString)", null)
+                            }
                         }
                     }
-                    override fun onError(errorMessage: String) {
-                        activity.lifecycleScope.launch {
-                            val apiResult = ApiResult(false, errorMessage)
-                            val jsonEncodedString = withContext(Dispatchers.Default) { JSONObject.quote(apiResult.toString()) }
-                            activity.webView!!.evaluateJavascript("ankiSttResult($jsonEncodedString)", null)
-                        }
-                    }
-                }
                 speechRecognizer.setRecognitionCallback(callback)
                 convertToByteArray(apiContract, speechRecognizer.start())
             }
             "sttStop" -> convertToByteArray(apiContract, speechRecognizer.stop())
             else -> {
-                showDeveloperContact(ankiJsErrorCodeError, apiContract.cardSuppliedDeveloperContact)
+                showDeveloperContact(ANKI_JS_ERROR_CODE_ERROR, apiContract.cardSuppliedDeveloperContact)
                 throw Exception("unhandled request: $methodName")
             }
         }
@@ -377,7 +408,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         action: () -> Boolean,
         apiContract: ApiContract,
         errorCode: Int,
-        conversion: (ApiContract, Boolean) -> ByteArray
+        conversion: (ApiContract, Boolean) -> ByteArray,
     ): ByteArray {
         val status = action()
         if (!status) {
@@ -386,44 +417,48 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         return conversion(apiContract, status)
     }
 
-    private suspend fun ankiSearchCardWithCallback(apiContract: ApiContract): ByteArray = withContext(Dispatchers.Main) {
-        val cards = try {
-            searchForCards(apiContract.cardSuppliedData, SortOrder.UseCollectionOrdering(), CardsOrNotes.CARDS)
-        } catch (exc: Exception) {
-            activity.webView!!.evaluateJavascript(
-                "console.log('${context.getString(R.string.search_card_js_api_no_results)}')",
-                null
-            )
-            showDeveloperContact(AnkiDroidJsAPIConstants.ankiJsErrorCodeSearchCard, apiContract.cardSuppliedDeveloperContact)
-            return@withContext convertToByteArray(apiContract, false)
-        }
-        val searchResult: MutableList<String> = ArrayList()
-        for (card in cards.map { it.card }) {
-            val jsonObject = JSONObject()
-            val fieldsData = card.note(getColUnsafe).fields
-            val fieldsName = card.noteType(getColUnsafe).fieldsNames
+    @NeedsTest("needs coverage")
+    private suspend fun ankiSearchCardWithCallback(apiContract: ApiContract): ByteArray =
+        withContext(Dispatchers.Main) {
+            val cards =
+                try {
+                    searchForRows(apiContract.cardSuppliedData, SortOrder.UseCollectionOrdering(), CardsOrNotes.CARDS)
+                        .map { withCol { getCard(it.cardOrNoteId) } }
+                } catch (exc: Exception) {
+                    activity.webView!!.evaluateJavascript(
+                        "console.log('${context.getString(R.string.search_card_js_api_no_results)}')",
+                        null,
+                    )
+                    showDeveloperContact(AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_SEARCH_CARD, apiContract.cardSuppliedDeveloperContact)
+                    return@withContext convertToByteArray(apiContract, false)
+                }
+            val searchResult: MutableList<String> = ArrayList()
+            for (card in cards) {
+                val jsonObject = JSONObject()
+                val fieldsData = card.note(getColUnsafe).fields
+                val fieldsName = card.noteType(getColUnsafe).fieldsNames
 
-            val noteId = card.nid
-            val cardId = card.id
-            jsonObject.put("cardId", cardId)
-            jsonObject.put("noteId", noteId)
+                val noteId = card.nid
+                val cardId = card.id
+                jsonObject.put("cardId", cardId)
+                jsonObject.put("noteId", noteId)
 
-            val jsonFieldObject = JSONObject()
-            fieldsName.zip(fieldsData).forEach { pair ->
-                jsonFieldObject.put(pair.component1(), pair.component2())
+                val jsonFieldObject = JSONObject()
+                fieldsName.zip(fieldsData).forEach { pair ->
+                    jsonFieldObject.put(pair.component1(), pair.component2())
+                }
+                jsonObject.put("fieldsData", jsonFieldObject)
+
+                searchResult.add(jsonObject.toString())
             }
-            jsonObject.put("fieldsData", jsonFieldObject)
 
-            searchResult.add(jsonObject.toString())
+            // quote result to prevent JSON injection attack
+            val jsonEncodedString = JSONObject.quote(searchResult.toString())
+            activity.runOnUiThread {
+                activity.webView!!.evaluateJavascript("ankiSearchCard($jsonEncodedString)", null)
+            }
+            convertToByteArray(apiContract, true)
         }
-
-        // quote result to prevent JSON injection attack
-        val jsonEncodedString = JSONObject.quote(searchResult.toString())
-        activity.runOnUiThread {
-            activity.webView!!.evaluateJavascript("ankiSearchCard($jsonEncodedString)", null)
-        }
-        convertToByteArray(apiContract, true)
-    }
 
     open class CardDataForJsApi {
         var newCardCount: Int = -1
@@ -436,27 +471,82 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         var nextTime4 = ""
     }
 
-    class ApiResult(private val status: Boolean, private val value: Any) {
-        override fun toString(): String {
-            return JSONObject().apply {
-                put("success", status)
-                when (value) {
-                    is Boolean -> {
-                        put("value", value)
-                    }
-                    is Int -> {
-                        put("value", value)
-                    }
-                    is Long -> {
-                        put("value", value)
-                    }
-                    else -> {
-                        put("value", value.toString())
-                    }
-                }
-            }.toString()
+    sealed class ApiResult protected constructor(
+        private val status: JvmBoolean,
+    ) {
+        class Boolean(
+            status: JvmBoolean,
+            val value: JvmBoolean,
+        ) : ApiResult(status) {
+            override fun putValue(o: JSONObject) {
+                o.put(VALUE_KEY, value)
+            }
+        }
+
+        class Integer(
+            status: JvmBoolean,
+            val value: JvmInt,
+        ) : ApiResult(status) {
+            override fun putValue(o: JSONObject) {
+                o.put(VALUE_KEY, value)
+            }
+        }
+
+        class Float(
+            status: JvmBoolean,
+            val value: JvmFloat,
+        ) : ApiResult(status) {
+            override fun putValue(o: JSONObject) {
+                o.put(VALUE_KEY, value)
+            }
+        }
+
+        class Long(
+            status: JvmBoolean,
+            val value: JvmLong,
+        ) : ApiResult(status) {
+            override fun putValue(o: JSONObject) {
+                o.put(VALUE_KEY, value)
+            }
+        }
+
+        class String(
+            status: JvmBoolean,
+            val value: JvmString,
+        ) : ApiResult(status) {
+            override fun putValue(o: JSONObject) {
+                o.put(VALUE_KEY, value)
+            }
+        }
+
+        abstract fun putValue(o: JSONObject)
+
+        override fun toString() =
+            JSONObject()
+                .apply {
+                    put(SUCCESS_KEY, status)
+                    putValue(this)
+                }.toString()
+
+        @Suppress("RemoveRedundantQualifierName") // we don't want `String(true, value)`
+        companion object {
+            fun success(value: JvmString) = ApiResult.String(true, value)
+
+            fun failure(value: JvmString) = ApiResult.String(false, value)
         }
     }
 
-    class ApiContract(val isValid: Boolean, val cardSuppliedDeveloperContact: String, val cardSuppliedData: String)
+    class ApiContract(
+        val isValid: Boolean,
+        val cardSuppliedDeveloperContact: String,
+        val cardSuppliedData: String,
+    )
+
+    companion object {
+        /**
+         * Key for a success value.
+         */
+        const val VALUE_KEY = "value"
+        const val SUCCESS_KEY = "success"
+    }
 }

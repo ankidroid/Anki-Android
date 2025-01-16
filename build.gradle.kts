@@ -1,10 +1,11 @@
+
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.extension.impl.AndroidComponentsExtensionImpl
+import com.android.ide.common.util.parseIntOrDefault
 import com.slack.keeper.optInToKeeper
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.internal.jvm.Jvm
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.io.ByteArrayOutputStream
 import kotlin.math.max
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
@@ -15,7 +16,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize) apply false
     alias(libs.plugins.kotlin.jvm) apply false
     alias(libs.plugins.kotlin.serialization) apply false
-    alias(libs.plugins.ktlint) apply false
+    alias(libs.plugins.ktlint.gradle.plugin) apply false
     alias(libs.plugins.dokka) apply false
     alias(libs.plugins.keeper) apply false
 }
@@ -26,9 +27,15 @@ if (project.rootProject.file("local.properties").exists()) {
 }
 val fatalWarnings = !(localProperties["fatal_warnings"] == "false")
 
+// can't be obtained inside 'subprojects'
+val ktlintVersion = libs.versions.ktlint.get()
+
 // Here we extract per-module "best practices" settings to a single top-level evaluation
 subprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
+    configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+        version.set(ktlintVersion)
+    }
 
     afterEvaluate {
         if (hasProperty("android")) {
@@ -40,6 +47,9 @@ subprojects {
             androidExtension.testOptions.unitTests.all {
                 // tell backend to avoid rollover time, and disable interval fuzzing
                 it.environment("ANKI_TEST_MODE", "1")
+
+                it.maxHeapSize = "2g"
+                it.minHeapSize = "1g"
 
                 it.useJUnitPlatform()
                 it.testLogging {
@@ -83,7 +93,7 @@ subprojects {
         tasks.withType(KotlinCompile::class.java).configureEach {
             compilerOptions {
                 allWarningsAsErrors = fatalWarnings
-                val compilerArgs = mutableListOf("-Xjvm-default=all", "-Xcontext-receivers")
+                val compilerArgs = mutableListOf("-Xjvm-default=all")
                 if (project.name != "api") {
                     compilerArgs += "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
                 }
@@ -94,16 +104,19 @@ subprojects {
 }
 
 val jvmVersion = Jvm.current().javaVersion?.majorVersion
+val minSdk = libs.versions.compileSdk.get()
 if (jvmVersion != "17" && jvmVersion != "21") {
     println("\n\n\n")
     println("**************************************************************************************************************")
     println("\n\n\n")
     println("ERROR: AnkiDroid builds with JVM version 17 or 21.")
-    println("  Incompatible major version detected: '" + jvmVersion + "'")
-    println("\n\n\n")
-    println("  If you receive this error because you want to use a newer JDK, we may accept PRs to support new versions.")
-    println("  Edit the main build.gradle file, find this message in the file, and add support for the new version.")
-    println("  Please make sure the `jacocoTestReport` target works on an emulator with our minSdkVersion (currently 23).")
+    println("  Incompatible major version detected: '$jvmVersion'")
+    if (jvmVersion.parseIntOrDefault(defaultValue = 0) > 21) {
+        println("\n\n\n")
+        println("  If you receive this error because you want to use a newer JDK, we may accept PRs to support new versions.")
+        println("  Edit the main build.gradle file, find this message in the file, and add support for the new version.")
+        println("  Please make sure the `jacocoTestReport` target works on an emulator with our minSdk (currently $minSdk).")
+    }
     println("\n\n\n")
     println("**************************************************************************************************************")
     println("\n\n\n")
@@ -117,19 +130,16 @@ val preDexEnabled by extra("true" == System.getProperty("pre-dex", "true"))
 val universalApkEnabled by extra("true" == System.getProperty("universal-apk", "false"))
 
 val testReleaseBuild by extra(System.getenv("TEST_RELEASE_BUILD") == "true")
-var androidTestName by extra(
-    if (testReleaseBuild) "connectedPlayReleaseAndroidTest" else "connectedPlayDebugAndroidTest"
+var androidTestVariantName by extra(
+    if (testReleaseBuild) "Release" else "Debug"
 )
 
 val gradleTestMaxParallelForks by extra(
     if (System.getProperty("os.name") == "Mac OS X") {
         // macOS reports hardware cores. This is accurate for CI, Intel (halved due to SMT) and Apple Silicon
-        val outputStream = ByteArrayOutputStream()
-        project.exec {
+        providers.exec {
             commandLine("sysctl", "-n", "hw.physicalcpu")
-            standardOutput = outputStream
-        }
-        outputStream.toString().trim().toInt()
+        }.standardOutput.asText.get().trim().toInt()
     } else if (ciBuild) {
         // GitHub Actions run on Standard_D4ads_v5 Azure Compute Units with 4 vCPUs
         // They appear to be 2:1 vCPU to CPU on Linux/Windows with two vCPU cores but with performance 1:1-similar

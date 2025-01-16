@@ -52,26 +52,26 @@
         <item quantity="other">%d notes shown</item>
     </plurals>
     <string name="card_browser_all_decks">All decks</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="other">Delete cards</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="other">Delete notes</item>
     </plurals>
-    <string name="card_browser_change_deck">Change deck</string>
+    <string name="card_browser_change_deck" maxLength="28">Change deck</string>
     <string name="delete_card_title">Delete note?</string>
-    <string name="card_browser_show_marked">Filter marked</string>
-    <string name="card_browser_show_suspended">Filter suspended</string>
-    <string name="card_browser_search_by_tag">Filter by tag</string>
-    <string name="card_browser_search_by_flag">Filter by flag</string>
-    <string name="card_browser_list_my_searches">My searches</string>
-    <string name="card_browser_list_my_searches_save">Save search</string>
+    <string name="card_browser_show_marked" maxLength="28">Filter marked</string>
+    <string name="card_browser_show_suspended" maxLength="28">Filter suspended</string>
+    <string name="card_browser_search_by_tag" maxLength="28">Filter by tag</string>
+    <string name="card_browser_search_by_flag" maxLength="28">Filter by flag</string>
+    <string name="card_browser_list_my_searches" maxLength="28">My searches</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">Save search</string>
     <string name="card_browser_list_my_searches_title">Choose a saved search</string>
     <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
-    <string name="card_browser_change_display_order">Change display order</string>
+    <string name="card_browser_change_display_order" maxLength="28">Change display order</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">Choose display order</string>
     <string name="card_details_tags">Tags</string>
     <string-array name="card_browser_order_labels">
@@ -86,11 +86,8 @@
         <item>By reviews</item>
         <item>By lapses</item>
     </string-array>
-    <string name="card_browser_select_all">Select all</string>
-    <string name="card_browser_select_none">Select none</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(new)</string>
-    <string name="card_browser_due_filtered_card">(filtered)</string>
-    <string name="card_browser_interval_learning_card">(learning)</string>
+    <string name="card_browser_select_all" maxLength="28">Select all</string>
+    <string name="card_browser_select_none" maxLength="28">Select none</string>
     <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
     <string name="card_browser_search_all_decks">Search all decks</string>
     <string name="card_browser_unknown_deck_name">Unknown</string>
@@ -105,4 +102,7 @@
     <plurals name="card_browser_cards_deleted">
         <item quantity="other">%d cards deleted</item>
     </plurals>
+    <!--Keyboard shortcuts dialog-->
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
 </resources>

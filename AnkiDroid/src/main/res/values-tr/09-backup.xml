@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">Yedek kaydedilmedi. Depolamanızda yeterli alan kalmamış. Yedek derinliğini düşürün ya da başka bazı dosyaları kaldırın.</string>
     <string name="storage_warning">Depolamanızda %d MB\'tan az yer kalmış.\nVeri kaybını önlemek için biraz yer boşaltın.</string>
-    <string name="backup_restore">Yedekten geri yükle</string>
+    <string name="backup_restore" maxLength="28">Yedekten geri yükle</string>
     <string name="backup_new_collection">Yeni koleksiyon</string>
     <string name="backup_del_collection">Koleksiyonu silip yenisini oluştur</string>
     <string name="backup_del_collection_question">Koleksiyonu silip yenisini oluşturmayı gerçekten istiyor musunuz? Bu bütün öğrenme ilerlemenizi ve kartlarınızı silecek!</string>

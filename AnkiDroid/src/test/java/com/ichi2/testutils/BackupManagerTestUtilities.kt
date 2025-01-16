@@ -26,8 +26,9 @@ object BackupManagerTestUtilities {
     fun setupSpaceForBackup(context: Context) {
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context)
 
-        val path = File(currentAnkiDroidDirectory).parentFile
-            ?: throw IllegalStateException("currentAnkiDroidDirectory had no parent")
+        val path =
+            File(currentAnkiDroidDirectory).parentFile
+                ?: throw IllegalStateException("currentAnkiDroidDirectory had no parent")
         ShadowStatFs.markAsNonEmpty(path)
 
         assertTrue(enoughDiscSpace(currentAnkiDroidDirectory))

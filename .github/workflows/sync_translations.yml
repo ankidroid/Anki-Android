@@ -1,22 +1,21 @@
-name: Sync Translations
+name: 🌐 Sync Translations
 
 on:
   workflow_dispatch:
 
-permissions:
-  contents: read
+# We use a machine account PAT from secrets so workflows are triggered
+# the default token is not needed and should be fully restricted
+permissions: {}
 
 jobs:
   sync_translations:
-    permissions:
-      contents: write  # for Git to git push
-      pull-requests: write # to create the PR with changes
     name: 'Sync Translations with Crowdin'
     timeout-minutes: 20
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
           ref: 'main'
           fetch-depth: 0
 
@@ -86,6 +85,7 @@ jobs:
         if: ${{ steps.tr_check.outputs.HAS_CHANGES }}
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
           script: |
             const now = new Date();
             // Date format used: YYYY/MM/DD HH:MM , UTC time(ex: 2023/01/13 08:38) 
@@ -102,7 +102,7 @@ jobs:
                 title: "Updated strings from Crowdin " + formattedDate,
                 head: "i18n_sync",
                 base: "main",
-                body: "Contains the newest strings changes from Crowdin.\n\nhttps://crowdin.com/project/ankidroid/activity-stream",
+                body: "Contains the newest strings changes from Crowdin.\n\nhttps://crowdin.com/project/ankidroid/activity-stream\n\n[Re-sync translations](https://github.com/ankidroid/Anki-Android/actions/workflows/sync_translations.yml)",
                 maintainer_can_modify: true
               });
             } catch(err) {

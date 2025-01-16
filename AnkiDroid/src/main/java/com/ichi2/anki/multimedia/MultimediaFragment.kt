@@ -17,24 +17,34 @@
 
 package com.ichi2.anki.multimedia
 
+import android.net.Uri
 import android.os.Bundle
 import android.text.format.Formatter
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
+import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.IField
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.show
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
 
@@ -45,36 +55,97 @@ import java.io.File
  * including caching directories, managing fields and notes, and setting toolbar titles.
  *
  * @param layout The layout resource ID to be inflated by this fragment.
+ *
+ * @see MultimediaActivity
  */
-// TODO: show discard dialog in case there are changes
-abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
-
+abstract class MultimediaFragment(
+    @LayoutRes layout: Int,
+) : Fragment(layout) {
     abstract val title: String
+
+    val viewModel: MultimediaViewModel by viewModels()
 
     protected var ankiCacheDirectory: String? = null
 
     protected var indexValue: Int = 0
     protected lateinit var field: IField
     protected lateinit var note: IMultimediaEditableNote
+    protected var imageUri: Uri? = null
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    @NeedsTest("test discard dialog shown in case there are changes")
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         (activity as AnkiActivity).setToolbarTitle(title)
 
         if (arguments != null) {
             Timber.d("Getting MultimediaActivityExtra values from arguments")
-            val multimediaActivityExtra = arguments?.getSerializableCompat(MultimediaActivity.MULTIMEDIA_ARGS_EXTRA) as? MultimediaActivityExtra
+            val multimediaActivityExtra =
+                arguments?.getSerializableCompat(
+                    MultimediaActivity.MULTIMEDIA_ARGS_EXTRA,
+                ) as? MultimediaActivityExtra
 
             if (multimediaActivityExtra != null) {
                 indexValue = multimediaActivityExtra.index
                 field = multimediaActivityExtra.field
                 note = multimediaActivityExtra.note
+                if (multimediaActivityExtra.imageUri != null) {
+                    imageUri = Uri.parse(multimediaActivityExtra.imageUri)
+                }
             }
         }
+
+        val backCallback =
+            object : OnBackPressedCallback(
+                enabled = viewModel.currentMultimediaPath.value != null,
+            ) {
+                override fun handleOnBackPressed() {
+                    DiscardChangesDialog.showDialog(requireContext()) {
+                        Timber.i("MultimediaFragment:: OK button pressed to confirm discard changes")
+                        isEnabled = false
+                        requireActivity().onBackPressedDispatcher.onBackPressed()
+                    }
+                }
+            }
+
+        lifecycleScope.launch {
+            viewModel.currentMultimediaPath.collectLatest { value ->
+                backCallback.isEnabled = value != null
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backCallback)
     }
 
-    fun setMenuItemIcon(menuItem: MenuItem, @DrawableRes icon: Int) {
+    /**
+     * Get Uri based on current image path
+     *
+     * @param file the file to get URI for
+     * @return current image path's uri
+     */
+    fun getUriForFile(file: File): Uri {
+        Timber.d("getUriForFile() %s", file)
+        try {
+            return FileProvider.getUriForFile(
+                requireActivity(),
+                requireActivity().applicationContext.packageName + ".apkgfileprovider",
+                file,
+            )
+        } catch (e: Exception) {
+            // #6628 - What would cause this? Is the fallback is effective? Telemetry to diagnose more:
+            Timber.w(e, "getUriForFile failed on %s - attempting fallback", file)
+            CrashReportService.sendExceptionReport(e, "MultimediaFragment", "Unexpected getUriForFile failure on $file", true)
+        }
+        return Uri.fromFile(file)
+    }
+
+    fun setMenuItemIcon(
+        menuItem: MenuItem,
+        @DrawableRes icon: Int,
+    ) {
         menuItem.icon = ContextCompat.getDrawable(requireContext(), icon)
     }
 
@@ -99,13 +170,13 @@ abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
     }
 
     /**
-     * Creates and shows an AlertDialog with a predefined error message
+     * Creates and shows an AlertDialog with an error message
      * from the application's resources. The dialog includes an "OK" button that,
      * when clicked, finishes the current activity.
      */
-    fun showErrorDialog() {
+    fun showErrorDialog(errorMessage: String? = null) {
         AlertDialog.Builder(requireContext()).show {
-            setMessage(getString(R.string.something_wrong))
+            setMessage(errorMessage ?: resources.getString(R.string.something_wrong))
             setPositiveButton(getString(R.string.dialog_ok)) { _, _ ->
                 requireActivity().finish()
             }

@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">Más de %d tarjetas vencidas</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibración</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Parpadeo de luz</string>
-    <string name="timeout_answer_text" maxLength="41">Visualización automática de la respuesta</string>
-    <string name="timeout_answer_summ2">Mostrar respuesta automáticamente sin que el usuario la introduzca. Configurar desde las opciones del mazo.</string>
     <string name="select_locale_title">Selecciona idioma</string>
     <string name="software_render" maxLength="41">Deshabilitar el procesamiento de hardware de la tarjeta</string>
     <string name="software_render_summ">El procesamiento de hardware es más rápido, pero puede tener problemas, específicamente en Android 8/8.1. Si no puede ver partes de la interfaz de usuario de la tarjeta, prueba esta opción.</string>
@@ -171,7 +169,7 @@
     <string name="show_large_answer_buttons" maxLength="41">Mostrar botones de respuestas grandes</string>
     <string name="show_large_answer_buttons_summ">Mostrar botón de respuesta en 2 filas</string>
     <string name="show_top_bar" maxLength="41">Mostrar Barra Superior</string>
-    <string name="show_top_bar_summ">Mostrar recuento de tarjetas, banderas y marcas en la barra superior</string>
+    <string name="show_top_bar_summary">Mostrar recuento de cartas, temporizador de respuesta, bandera y marca en la barra superior</string>
     <string name="show_progress" maxLength="41">Mostrar restante</string>
     <string name="show_progress_summ">Mostrar contador de tarjetas restantes</string>
     <string name="show_eta" maxLength="41">Mostrar tiempo restante</string>
@@ -219,12 +217,12 @@
         <a href="%s">Más información</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Url de sincronización</string>
-    <string name="custom_sync_certificate_title" maxLength="41">Custom root certificate (PEM)</string>
+    <string name="custom_sync_certificate_title" maxLength="41">Certificado raíz personalizado (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Teclado</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="answer_buttons" maxLength="41">Botones de respuesta</string>
-    <string name="card" maxLength="41">Tarjeta</string>
+    <string name="card" maxLength="41" comment="Generic term to refer to a card">Tarjeta</string>
     <string name="note" maxLength="41">Nota</string>
     <string name="navigation" maxLength="41">Navegación</string>
     <string name="media" maxLength="41">Multimedia</string>
@@ -235,9 +233,9 @@
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">General</string>
     <string name="deck_conf_reminders" maxLength="41">Recordatorios</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtrar</string>
-    <string name="deck_conf_cram_search" maxLength="41">Buscar</string>
+    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Buscar</string>
     <string name="deck_conf_cram_limit" maxLength="41">Limitar a</string>
-    <string name="deck_conf_cram_order" maxLength="41">tarjetas seleccionadas por</string>
+    <string name="deck_conf_cram_order" maxLength="41">Tarjetas seleccionadas por</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reprogramar</string>
     <string name="deck_conf_cram_reschedule_summ">Reprogramar tarjetas en base a mis respuestas en este mazo</string>
     <string name="deck_conf_cram_filter_2_check">Activar segundo filtro</string>
@@ -270,20 +268,21 @@
     <string name="axis_picker_move_joystick">Mueve un joystick/controlador de movimiento</string>
     <string name="user_actions" maxLength="41">Acciones del usuario</string>
     <string name="user_actions_summary" maxLength="41">Activar JavaScript desde la pantalla de revisión</string>
-    <string name="user_action_1" maxLength="41">Acción del usuario 1</string>
-    <string name="user_action_2" maxLength="41">Acción del usuario 2</string>
-    <string name="user_action_3" maxLength="41">Acción del usuario 3</string>
-    <string name="user_action_4" maxLength="41">Acción del usuario 4</string>
-    <string name="user_action_5" maxLength="41">Acción del usuario 5</string>
-    <string name="user_action_6" maxLength="41">Acción del usuario 6</string>
-    <string name="user_action_7" maxLength="41">Acción del usuario 7</string>
-    <string name="user_action_8" maxLength="41">Acción del usuario 8</string>
-    <string name="user_action_9" maxLength="41">Acción del usuario 9</string>
+    <string name="user_action_1" maxLength="28">Acción del usuario 1</string>
+    <string name="user_action_2" maxLength="28">Acción del usuario 2</string>
+    <string name="user_action_3" maxLength="28">Acción del usuario 3</string>
+    <string name="user_action_4" maxLength="28">Acción del usuario 4</string>
+    <string name="user_action_5" maxLength="28">Acción del usuario 5</string>
+    <string name="user_action_6" maxLength="28">Acción del usuario 6</string>
+    <string name="user_action_7" maxLength="28">Acción del usuario 7</string>
+    <string name="user_action_8" maxLength="28">Acción del usuario 8</string>
+    <string name="user_action_9" maxLength="28">Acción del usuario 9</string>
+    <string name="toggle_auto_advance" maxLength="41">Alternar avance automático</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecciona el lado de la tarjeta</string>
     <string name="card_side_question">Pregunta</string>
     <string name="card_side_answer">Respuesta</string>
-    <string name="card_side_both">Preguntas y respuestas</string>
+    <string name="card_side_both" maxLength="28">Preguntas y respuestas</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">P: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">R: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -359,11 +358,17 @@ Puedes restaurar una colección desde una copia de seguridad en el menú de la l
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Obteniendo&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculando&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">La colección no existe</string>
-    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
-    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">None</string>
-    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Status bar</string>
-    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigation bar</string>
-    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
-    <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
-    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Ocultar barras de sistema</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">Ninguna</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Barra de estado</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Barra de navegación</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Todas</string>
+    <string name="ignore_display_cutout" maxLength="41">Ignorar el recorte de la pantalla</string>
+    <string name="hide_answer_buttons" maxLength="41">Ocultar botones de respuesta</string>
+    <string name="hide_hard_and_easy" maxLength="41">Ocultar los botones \"Difícil\" y \"Fácil\"</string>
+    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <!--Keyboard shortcuts dialog-->
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Abrir la configuración</string>
 </resources>

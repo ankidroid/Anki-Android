@@ -46,7 +46,7 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">Forma d\'enviar els informes d\'error</string>
+    <string name="error_reporting_choice" maxLength="41">Forma d\'enviar els informes d\'error</string>
     <string name="feedback_disclaimer">Nota: No apleguem cap informació personal com ara la vostra adreça de correu electrònic, telèfon, o IMEI del mòbil. En canvi, apleguem informació sobre el vostre dispositiu, model i versió d\'Android, els errors dels que heu informat i els passos que hi van portar.</string>
     <string name="feedback_title">Suport per a AnkiDroid</string>
     <string name="feedback_default_text">Introduïu els comentaris o la informació sobre els errors dels que voleu informar.</string>

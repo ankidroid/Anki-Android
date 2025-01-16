@@ -44,21 +44,11 @@
     <string name="multimedia_editor_popup_audio_clip">Tilføj lydfil</string>
     <string name="multimedia_editor_popup_video_clip">Tilføj videoklip</string>
     <string name="multimedia_editor_popup_audio">Optag lyd</string>
-    <string name="multimedia_editor_popup_text">Avanceret editor</string>
     <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Tekst</string>
-    <string name="multimedia_editor_field_editing_image">Billede</string>
     <string name="multimedia_editor_field_editing_audio">Lydoptagelse</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Lydklip</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Færdig</string>
-    <!-- Text field editing -->
-    <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_clear">Ryd</string>
-    <string name="multimedia_editor_text_field_editing_clone">Klon fra</string>
-    <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">Tag fra</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
@@ -66,28 +56,21 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Galleri</string>
     <string name="multimedia_editor_image_field_editing_photo">Kamera</string>
-    <string name="multimedia_editor_import_audio">Lyd</string>
-    <string name="multimedia_editor_import_video">Video</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Noget gik galt</string>
-    <string name="multimedia_editor_svg_preview">SVG\'er er ikke tilgængelige for forhåndsvisning</string>
     <string name="multimedia_editor_png_paste_error">Fejl ved konvertering af billede fra udklipsholder til png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Vedhæft multimedieindhold til feltet %1$s</string>
-    <string name="multimedia_editor_attach_media">Vedhæft medier</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Optagelse mislykkes</string>
     <string name="multimedia_editor_audio_view_playing_failed">Afspilning mislykkes</string>
     <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
-    <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Redigerer felt</string>
     <!-- Crop function-->
     <string name="crop_image">Vil du beskære billedet?</string>
-    <string name="crop_button">Beskær billede</string>
-    <string name="save_dialog_content">Den aktuelle billedstørrelse er %sMB. Grænsen for billedstørrelse er 1 MB. Vil du beskære det?</string>
+    <string name="crop_button" maxLength="28">Beskær billede</string>
+    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
-    <string name="reselect">Reselect</string>
+    <string name="reselect" maxLength="28">Reselect</string>
 </resources>

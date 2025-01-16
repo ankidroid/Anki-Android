@@ -26,7 +26,7 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱛᱩᱠᱟᱣ ᱢᱮ</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱛᱩᱠᱟᱣ ᱢᱮ</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">ᱡᱟᱭᱜᱟ ᱛᱩᱞᱟᱣ</string>
     <!--Toasts-->
     <string name="toast_last_model">ᱟᱢ ᱢᱟᱲᱟᱝᱼᱟᱜ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱵᱟᱝ ᱢᱮᱴᱟᱣ ᱫᱟᱲᱮᱟᱜᱼᱟ</string>
@@ -53,7 +53,7 @@
     <string name="model_field_editor_language_hint_dialog_success_result">%s ᱛᱮ ᱯᱟᱹᱨᱥᱤ ᱦᱤᱸᱴ ᱥᱮᱴ ᱢᱮ</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">ᱡᱟᱭᱜᱟ ᱥᱟᱯᱰᱟᱣ</string>
-    <string name="model_field_editor_add">ᱡᱟᱭᱜᱟ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
+    <string name="model_field_editor_add" maxLength="28">ᱡᱟᱭᱜᱟ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
     <string name="model_field_editor_delete">ᱡᱟᱭᱜᱟ ᱜᱮᱫ ᱜᱤᱰᱤ</string>
     <string name="model_field_editor_rename">ᱡᱟᱭᱜᱟ ᱫᱩᱦᱲᱟ ᱧᱩᱛᱩᱢᱟᱱ</string>
     <string name="model_field_editor_language_hint">ᱠᱤᱵᱚᱰ ᱯᱟᱹᱨᱥᱤ ᱦᱤᱸᱴ ᱥᱮᱴ ᱢᱮ</string>
@@ -81,5 +81,5 @@
     <string name="model_manager_deck_override_added_message">\'%1$s\' ᱰᱤᱯᱷᱟᱹᱞᱴ ᱰᱮᱠ \'%2$s\' ᱛᱮ ᱥᱮᱴ ᱢᱮ</string>
     <string name="model_manager_deck_override_removed_message">\'%s\' ᱞᱟᱹᱜᱤᱫ ᱰᱤᱯᱷᱟᱹᱞᱴ ᱰᱮᱠ ᱚᱰᱚᱠᱮᱱᱟ</string>
     <string name="deck_override_explanation">ᱰᱮᱠ ᱵᱟᱪᱷᱟᱣ ᱠᱟᱛᱮ ᱱᱟᱶᱟ \'%s\' ᱠᱟᱰ ᱠᱚ ᱫᱚᱦᱚᱭᱢᱮ</string>
-    <string name="deck_picker_dialog_filter_decks">ᱰᱮᱠ ᱠᱚ ᱪᱷᱟᱹᱱᱤ ᱢᱮ</string>
+    <string name="deck_picker_dialog_filter_decks" maxLength="28">ᱰᱮᱠ ᱠᱚ ᱪᱷᱟᱹᱱᱤ ᱢᱮ</string>
 </resources>

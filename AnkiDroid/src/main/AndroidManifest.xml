@@ -21,11 +21,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:installLocation="auto">
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
-    <uses-feature android:name="android.hardware.camera.any" android:required="false" />
+
+
     <uses-feature android:name="android.hardware.audio.output" android:required="false" />
     <uses-feature android:name="android.software.app_widgets" android:required="false" />
     <uses-feature android:name="android.hardware.microphone" android:required="false" />
+    <uses-feature android:name="androidx.draganddrop" android:required="false"/>
     <!-- `ScopedStorage` lint error is ignored:
         the recommended change is setting maxSDkVersion
          but this means preserveLegacyExternalStorage is inactive, and users do not have access to
@@ -271,7 +272,6 @@
             />
         <activity
             android:name="com.ichi2.anki.StudyOptionsActivity"
-            android:label="StudyOptions"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".DeckPicker"
@@ -346,7 +346,7 @@
             android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
-            android:name="com.ichi2.anki.preferences.Preferences"
+            android:name="com.ichi2.anki.preferences.PreferencesActivity"
             android:exported="false"
             android:configChanges="screenSize"
             >
@@ -411,11 +411,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.canhub.cropper.CropImageActivity"
-            android:exported="true"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/Base.Theme.AppCompat" />
-        <activity
             android:name="com.ichi2.anki.analytics.AnkiDroidCrashReportDialog"
             android:theme="@android:style/Theme.DeviceDefault.Dialog"
             android:process=":acra"
@@ -433,13 +428,6 @@
             android:exported="false"
             android:configChanges="orientation|screenSize"
             />
-        <activity
-            android:name=".multimediacard.activity.MultimediaEditFieldActivity"
-            android:label="@string/title_activity_edit_text"
-            android:exported="false"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            >
-        </activity>
         <activity
             android:name="com.ichi2.anki.CardTemplateEditor"
             android:label="@string/title_activity_template_editor"
@@ -486,10 +474,6 @@
         <!-- Service to perform web API queries -->
         <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />
 
-        <service
-            android:name="com.ichi2.anki.services.MigrationService"
-            android:foregroundServiceType="dataSync"
-            />
 
         <!-- Don't disable/enable the widgets here until min API>=31, see issue #15747 & https://issuetracker.google.com/issues/36914010 -->
         <!-- small widget -->
@@ -523,8 +507,62 @@
                 />
         </receiver>
 
+        <!-- A widget that displays a few decks's name and number of cards to review on the Android home screen.
+             The way to add it depends on the phone. It usually consists in a long press on the screen, followed by finding a "widget" button"-->
+        <receiver
+            android:name="com.ichi2.widget.deckpicker.DeckPickerWidget"
+            android:label="@string/deck_picker_widget_description"
+            android:exported="false"
+            >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_provider_deck_picker" />
+        </receiver>
+
+        <!-- Configuration view for the DeckPickerWidget above.
+             It is opened when adding a new deck picker widget and
+             by configuration button which appears when the widget is hold or resized.-->
+        <activity
+            android:name="com.ichi2.widget.deckpicker.DeckPickerWidgetConfig"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <!-- A widget that displays a deck name and number of cards to review on the Android home screen.
+             The way to add it depends on the phone. It usually consists in a long press on the screen, followed by finding a "widget" button"-->
+        <receiver
+            android:name="com.ichi2.widget.cardanalysis.CardAnalysisWidget"
+            android:label="@string/card_analysis_extra_widget_description"
+            android:exported="false"
+            >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_provider_card_analysis" />
+        </receiver>
+
+        <!-- Configuration view for the CardAnalysisWidget above.
+             It is opened when adding a new widget and
+             by configuration button which appears when the widget is hold or resized.-->
+        <activity
+            android:name="com.ichi2.widget.cardanalysis.CardAnalysisWidgetConfig"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
         <receiver android:name="com.ichi2.widget.WidgetPermissionReceiver"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.ichi2.widget.UPDATE_WIDGET" />
             </intent-filter>
@@ -619,6 +657,7 @@
             android:authorities="${applicationId}.flashcards"
             android:enabled="true"
             android:exported="true"
+            tools:ignore="ExportedContentProvider"
             >
             <meta-data android:name="com.ichi2.anki.provider.spec" android:value="2" />
         </provider>

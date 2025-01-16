@@ -47,14 +47,14 @@
     <!-- generic strings -->
     <string name="disabled">Выкл.</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="one">%d мин</item>
+        <item quantity="one">%d минута</item>
         <item quantity="few">%d мин</item>
         <item quantity="many">%d мин</item>
         <item quantity="other">%d мин</item>
     </plurals>
     <string name="pref_milliseconds">%s мс</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
-    <string name="pref_search_no_results">Не найдено</string>
+    <string name="pref_search_no_results">Ничего не найденo</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Общие</string>
     <string name="pref_cat_studying" maxLength="41">Поведение</string>
@@ -100,7 +100,7 @@
     <string name="gestures_corner_touch" maxLength="41">9 зон касания</string>
     <string name="gestures_corner_touch_summary">Разрешить сенсорные жесты в углах экрана</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Панель навигации при полном экране</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">Показывать панель навигации при смахивании в любом месте экрана</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Открывать панель навигации при смахивании вправо с любого места на экране</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">Нет</string>
     <string name="gestures_swipe_up" maxLength="41">Смахивание вверх</string>
     <string name="gestures_swipe_down" maxLength="41">Смахивание вниз</string>
@@ -152,8 +152,6 @@
     <string name="notification_minimum_cards_due">Когда >%d карточек</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Вибросигнал</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Мерцание светодиода</string>
-    <string name="timeout_answer_text" maxLength="41">Автоматически показывать ответ</string>
-    <string name="timeout_answer_summ2">Показывать ответ автоматически без пользовательского ввода. Настройте параметры колоды.</string>
     <string name="select_locale_title">Выберите язык</string>
     <string name="software_render" maxLength="41">Отключить аппаратную отрисовку</string>
     <string name="software_render_summ">Аппаратная отрисовка быстрее, но может вызывать проблемы (особенно на Android 8/8.1). Попробуйте отключить её если при повторении пропадают элементы интерфейса.</string>
@@ -167,13 +165,13 @@
     <string name="pref_double_tap_time_interval" maxLength="41">Интервал двойного нажатия (в мс)</string>
     <string name="pref_double_tap_time_interval_summary">Второе нажатие на ответ будет проигнорировано, если это время не истекло. Предотвращает случайное двойное нажатие</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Время длительного нажатия для ответа</string>
-    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
+    <string name="pref_show_answer_long_press_time_summary">Минимальное время нажатия перед тем как кнопка \"показать\" регистрирует касание</string>
     <string name="show_estimates" maxLength="41">Показывать время на кнопках</string>
     <string name="show_estimates_summ">Показывает время следующего повторения над кнопками ответа</string>
     <string name="show_large_answer_buttons" maxLength="41">Большие кнопки ответа</string>
     <string name="show_large_answer_buttons_summ">Кнопки ответа в две строки</string>
     <string name="show_top_bar" maxLength="41">Показывать верхнюю панель</string>
-    <string name="show_top_bar_summ">Показывает счётчик карточек и кнопки «Флажок» и «Отметить»</string>
+    <string name="show_top_bar_summary">Показать счетчик карт, время ответа, флаг и отметку в верхней строке</string>
     <string name="show_progress" maxLength="41">Показать оставшиеся</string>
     <string name="show_progress_summ">Показывает число оставшихся карточек</string>
     <string name="show_eta" maxLength="41">Показывать оценку времени</string>
@@ -222,12 +220,12 @@
         <a href="%s">Подробнее</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">URL для синхронизации</string>
-    <string name="custom_sync_certificate_title" maxLength="41">Custom root certificate (PEM)</string>
+    <string name="custom_sync_certificate_title" maxLength="41">Свой корневой сертификат (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Клавиатура</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="answer_buttons" maxLength="41">Кнопки ответа</string>
-    <string name="card" maxLength="41">Карточка</string>
+    <string name="card" maxLength="41" comment="Generic term to refer to a card">Карточка</string>
     <string name="note" maxLength="41">Запись</string>
     <string name="navigation" maxLength="41">Навигация</string>
     <string name="media" maxLength="41">Медиа</string>
@@ -238,9 +236,9 @@
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Общие</string>
     <string name="deck_conf_reminders" maxLength="41">Напоминания</string>
     <string name="deck_conf_cram_filter" maxLength="41">Фильтр</string>
-    <string name="deck_conf_cram_search" maxLength="41">Запрос</string>
+    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Запрос</string>
     <string name="deck_conf_cram_limit" maxLength="41">Количество</string>
-    <string name="deck_conf_cram_order" maxLength="41">Отобрать</string>
+    <string name="deck_conf_cram_order" maxLength="41">Карты выбраны</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Перепланировать</string>
     <string name="deck_conf_cram_reschedule_summ">Перепланировать карточки в зависимости от ответов</string>
     <string name="deck_conf_cram_filter_2_check">Включить второй фильтр</string>
@@ -273,20 +271,21 @@
     <string name="axis_picker_move_joystick">Переместить джойстик/контроллер движения</string>
     <string name="user_actions" maxLength="41">Пользовательские действия</string>
     <string name="user_actions_summary" maxLength="41">Запустить JavaScript на экране проверки</string>
-    <string name="user_action_1" maxLength="41">Пользовательское действие 1</string>
-    <string name="user_action_2" maxLength="41">Пользовательское действие 2</string>
-    <string name="user_action_3" maxLength="41">Пользовательское действие 3</string>
-    <string name="user_action_4" maxLength="41">Пользовательское действие 4</string>
-    <string name="user_action_5" maxLength="41">Пользовательское действие 5</string>
-    <string name="user_action_6" maxLength="41">Пользовательское действие 6</string>
-    <string name="user_action_7" maxLength="41">Пользовательское действие 7</string>
-    <string name="user_action_8" maxLength="41">Пользовательское действие 8</string>
-    <string name="user_action_9" maxLength="41">Пользовательское действие 9</string>
+    <string name="user_action_1" maxLength="28">Пользовательское действие 1</string>
+    <string name="user_action_2" maxLength="28">Пользовательское действие 2</string>
+    <string name="user_action_3" maxLength="28">Пользовательское действие 3</string>
+    <string name="user_action_4" maxLength="28">Пользовательское действие 4</string>
+    <string name="user_action_5" maxLength="28">Пользовательское действие 5</string>
+    <string name="user_action_6" maxLength="28">Пользовательское действие 6</string>
+    <string name="user_action_7" maxLength="28">Пользовательское действие 7</string>
+    <string name="user_action_8" maxLength="28">Пользовательское действие 8</string>
+    <string name="user_action_9" maxLength="28">Пользовательское действие 9</string>
+    <string name="toggle_auto_advance" maxLength="41">Включить/выключить авто переход</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Выберите сторону карточки</string>
     <string name="card_side_question">Вопрос</string>
     <string name="card_side_answer">Ответ</string>
-    <string name="card_side_both">Вопрос и ответ</string>
+    <string name="card_side_both" maxLength="28">Вопрос и ответ</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">В: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">О: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -364,11 +363,17 @@
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Данные получаются&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Вычисляется&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Коллекция не существует</string>
-    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
-    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">None</string>
-    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Status bar</string>
-    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigation bar</string>
-    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
-    <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
-    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Скрыть системные панели</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">Никакие</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Строка состояния</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Панель навигации</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Все</string>
+    <string name="ignore_display_cutout" maxLength="41">Игнорировать вырез экрана</string>
+    <string name="hide_answer_buttons" maxLength="41">Скрывать кнопки ответа</string>
+    <string name="hide_hard_and_easy" maxLength="41">Скрывать кнопки «Трудно» и «Легко»</string>
+    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <!--Keyboard shortcuts dialog-->
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Открыть настройки</string>
 </resources>

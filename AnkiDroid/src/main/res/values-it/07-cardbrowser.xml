@@ -54,28 +54,27 @@
         <item quantity="other">%d note mostrate</item>
     </plurals>
     <string name="card_browser_all_decks">Tutti i mazzi</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">Elimina carta</item>
-        <item quantity="other">Elimina carte</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">Elimina nota</item>
         <item quantity="other">Elimina note</item>
     </plurals>
-    <string name="card_browser_change_deck">Cambia mazzo</string>
+    <string name="card_browser_change_deck" maxLength="28">Cambia mazzo</string>
     <string name="delete_card_title">Elimina nota</string>
-    <string name="card_browser_show_marked">Filtra contrassegnate</string>
-    <string name="card_browser_show_suspended">Filtra sospese</string>
-    <string name="card_browser_search_by_tag">Filtra per etichetta</string>
-    <string name="card_browser_search_by_flag">Filtra per bandiera</string>
-    <string name="card_browser_list_my_searches">Le mie ricerche</string>
-    <string name="card_browser_list_my_searches_save">Salva ricerca</string>
+    <string name="card_browser_show_marked" maxLength="28">Filtra contrassegnate</string>
+    <string name="card_browser_show_suspended" maxLength="28">Filtra sospese</string>
+    <string name="card_browser_search_by_tag" maxLength="28">Filtra per etichetta</string>
+    <string name="card_browser_search_by_flag" maxLength="28">Filtra per bandiera</string>
+    <string name="card_browser_list_my_searches" maxLength="28">Le mie ricerche</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">Salva ricerca</string>
     <string name="card_browser_list_my_searches_title">Scegli una ricerca salvata</string>
     <string name="card_browser_list_my_searches_new_name">Nome per la ricerca corrente</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Non puoi salvare una ricerca senza un nome.</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Nome già esistente!</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Eliminare \"%1$s\"?</string>
-    <string name="card_browser_change_display_order">Modifica ordine visualizzazione</string>
+    <string name="card_browser_change_display_order" maxLength="28">Modifica ordine visualizzazione</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">Scegli ordine visualizzazione</string>
     <string name="card_details_tags">Etichette</string>
     <string-array name="card_browser_order_labels">
@@ -90,11 +89,8 @@
         <item>Per ripetizioni</item>
         <item>Per errori</item>
     </string-array>
-    <string name="card_browser_select_all">Seleziona tutto</string>
-    <string name="card_browser_select_none">Deseleziona tutto</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nuova)</string>
-    <string name="card_browser_due_filtered_card">(filtrata)</string>
-    <string name="card_browser_interval_learning_card">(in apprendimento)</string>
+    <string name="card_browser_select_all" maxLength="28">Seleziona tutto</string>
+    <string name="card_browser_select_none" maxLength="28">Deseleziona tutto</string>
     <string name="card_browser_no_cards_in_deck">Nessuna carta trovata nel mazzo «%s»</string>
     <string name="card_browser_search_all_decks">Cerca in tutti i mazzi</string>
     <string name="card_browser_unknown_deck_name">Sconosciuto</string>
@@ -112,4 +108,7 @@
         <item quantity="one">%d scheda eliminata</item>
         <item quantity="other">%d schede eliminate</item>
     </plurals>
+    <!--Keyboard shortcuts dialog-->
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
 </resources>

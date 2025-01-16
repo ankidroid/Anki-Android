@@ -47,22 +47,22 @@
     <!-- generic strings -->
     <string name="disabled">Malaktiva</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="one">%d min</item>
-        <item quantity="other">%d mins</item>
+        <item quantity="one">%d min</item>
+        <item quantity="other">%d min</item>
     </plurals>
-    <string name="pref_milliseconds">%s ms</string>
+    <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
-    <string name="pref_search_no_results">Neniuj rezultoj</string>
+    <string name="pref_search_no_results">neniu rezulto</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Ĝenerala</string>
     <string name="pref_cat_studying" maxLength="41">Studado</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_system_wide" maxLength="41">Operaciumo</string>
     <string name="pref_cat_reviewing" maxLength="41">Ripetado</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Samtempigo</string>
     <string name="pref_cat_scheduling" maxLength="41">Planado</string>
     <string name="pref_cat_whiteboard" maxLength="41">Skribtabulo</string>
     <string name="pref_cat_appearance" maxLength="41">Aspekto</string>
-    <string name="pref_cat_themes" maxLength="41">Etoso</string>
+    <string name="pref_cat_themes" maxLength="41">Haŭto</string>
     <string name="pref_cat_gestures" maxLength="41">Gestoj</string>
     <string name="pref_cat_controls" maxLength="41">Stiriloj</string>
     <string name="pref_cat_advanced" maxLength="41">Altnivelaj</string>
@@ -85,8 +85,8 @@
     <string name="col_path" maxLength="41">Dosierujo de AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Plenekrana reĝimo</string>
     <string name="full_screen_off">Malaktiva</string>
-    <string name="full_screen_system">Kaŝi sistemajn bretojn</string>
-    <string name="full_screen_complete">Kaŝi sistemajn bretojn kaj respondajn butonojn</string>
+    <string name="full_screen_system">Kaŝi striojn de operaciumo</string>
+    <string name="full_screen_complete">Kaŝi striojn de operaciumo kaj respondajn butonojn</string>
     <string name="answer_buttons_position" maxLength="41">Pozicio de respondaj butonoj</string>
     <string-array name="answer_buttons_position_labels">
         <item>Supre</item>
@@ -115,7 +115,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Frapeti centron</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Frapeti suban maldekstron</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Frapeti suban dekstron</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">Skui aparaton</string>
     <string name="card_browser_enable_external_context_menu">Menuo “%s”</string>
     <string name="card_browser_enable_external_context_menu_summary">Aktivigi la kuntekstan menuon “%s” tutaplikaĵe</string>
     <string name="double_scrolling_gap" maxLength="41">Duobla rulumado</string>
@@ -127,31 +127,29 @@
     <string name="sync_fetch_missing_media" maxLength="41">Elŝuti aŭdvidaĵojn dum samtempigado</string>
     <string name="sync_account" maxLength="41">AnkiWeb-konto</string>
     <string name="sync_account_summ_logged_out">Ne ensalutinta</string>
-    <string name="automatic_sync_choice" maxLength="41">Aŭtomata samtempigado</string>
-    <string name="automatic_sync_choice_summ">Aŭtomate sinkronigi je aplikaĵa starto/ĉeso nur se la antaŭa samtempigo okazis antaŭ pli ol 10 minutoj.</string>
+    <string name="automatic_sync_choice" maxLength="41">Aŭtomata samtempigo</string>
+    <string name="automatic_sync_choice_summ">Aŭtomate samtempigi je aplikaĵa starto/ĉeso nur se la antaŭa samtempigo okazis antaŭ pli ol 10 minutoj.</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">Ĉiam</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_only_unmetered">Nur je netarifaj retkonektoj</string>
     <string name="sync_media_never">Neniam</string>
     <string name="sync_status_badge" maxLength="41">Montri staton de samtempigo</string>
-    <string name="sync_status_badge_summ">Ŝanĝi la emblemon de samtempigo kiam povas alŝuti ŝanĝojn</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="sync_status_badge_summ">Ŝanĝi la bildsimbolon de samtempigo kiam povas alŝuti ŝanĝojn</string>
+    <string name="metered_sync_title" maxLength="41">Permesi samtempigon je tarifaj retkonektoj</string>
+    <string name="metered_sync_summary">Se malaktiva, vi ricevos averton dum provi samtempigi uzante tarifan (pagendan) retkonekton</string>
     <string name="backup_limits_frequency">Ofteco</string>
     <string name="backup_limits_lifetime">Daŭro de konservado</string>
-    <string name="app_theme" maxLength="41">Temo</string>
-    <string name="day_theme" maxLength="41">Taga etoso</string>
-    <string name="night_theme" maxLength="41">Nokta etoso</string>
+    <string name="app_theme" maxLength="41">Haŭto</string>
+    <string name="day_theme" maxLength="41">Taga haŭto</string>
+    <string name="night_theme" maxLength="41">Nokta haŭto</string>
     <string name="language" maxLength="41">Lingvo</string>
     <string name="language_system">Laŭ operaciumo</string>
     <string name="notification_pref" maxLength="41">Sciigoj</string>
-    <string name="notification_pref_title" maxLength="41">Averti nur</string>
+    <string name="notification_pref_title" maxLength="41">Kiam averti</string>
     <string name="never_notify">Neniam sciigi</string>
     <string name="notify_when_pending">Pri sistemaj agoj</string>
     <string name="notification_minimum_cards_due">Pri pli ol %d kartoj por lerni</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibri</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Lumpulsi</string>
-    <string name="timeout_answer_text" maxLength="41">Aŭtomate montri respondon</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Elekti lingvon</string>
     <string name="software_render" maxLength="41">Malaktivigi aparataran bildigilon de kartoj</string>
     <string name="software_render_summ">Aparatara bildigilo estas pli rapida, sed povas kaŭzi problemojn, precipe ĉe Android 8/8.1. Se parto de fasado ĉe la ekrano “ripeti karton” ne aperas, provu aktivigi tiun ĉi agordon.</string>
@@ -164,44 +162,44 @@
     <string name="vertical_centering_summ">Centrigi enhavon de kartoj vertikale</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Ignori duan frapeton antaŭ (milisekundoj)</string>
     <string name="pref_double_tap_time_interval_summary">La dua frapeto sur la butonoj de respondoj estos ignorita, se ĝi okazos antaŭ la agordita tempo Tio ĉi preventas de fari neatenditajn duoblaj frapetojn</string>
-    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
-    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Montri respondon post frapetadi</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimuma tempo de frapetado post kiu la butono “Montri respondon” registras frapeton.</string>
     <string name="show_estimates" maxLength="41">Montri tempon ĉe butono</string>
     <string name="show_estimates_summ">Montri tempon de sekva ripeto ĉe butonoj de respondoj</string>
     <string name="show_large_answer_buttons" maxLength="41">Grandaj butonoj de respondo</string>
     <string name="show_large_answer_buttons_summ">Montri butonojn de respondo en 2 vicoj</string>
-    <string name="show_top_bar" maxLength="41">Montri supran breton</string>
-    <string name="show_top_bar_summ">Montri nombron da kartoj, flagon kaj markon sur la supra breto</string>
+    <string name="show_top_bar" maxLength="41">Montri supran strion</string>
+    <string name="show_top_bar_summary">Montri nombron da kartoj, tempon de respondo, flagon kaj markon sur la supra strio</string>
     <string name="show_progress" maxLength="41">Montri pliajn kartojn</string>
     <string name="show_progress_summ">Montri nombron da pliaj kartoj</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">Montri proksimuman tempon</string>
+    <string name="show_eta_summ">Montri proksimuman pluan tempon</string>
     <string name="use_current" maxLength="41">Kartaro por novaj kartoj</string>
     <string name="learn_cutoff" maxLength="41">Limigo de anticipa lernado</string>
     <string name="time_limit" maxLength="41">Limigo de lernada tempero (timebox)</string>
     <string name="day_offset_with_description" maxLength="41">Komenco de tago (0 estas la horo 00:00. 23 estas la horo 23:00)</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d hour past midnight</item>
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="one">%d horo post noktmezo</item>
+        <item quantity="other">%d horoj post noktmezo</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Teni ekranon ŝaltita</string>
     <string name="pref_keep_screen_on_summ">Ne malŝalti ekranon</string>
     <string name="enable_api_title" maxLength="41">Aktivigi AnkiDroid-API</string>
     <string name="enable_api_summary">Ebligi al aliaj aplikaĵoj konekti al AnkiDroid kaj legi/skribi datumojn sen via ago</string>
-    <string name="custom_buttons" maxLength="41">Butonoj de aplikaĵa breto</string>
-    <string name="custom_buttons_summary">Alĝustigi agojn por vidigi en la aplikaĵa breto</string>
+    <string name="custom_buttons" maxLength="41">Butonoj sur ilarstrio</string>
+    <string name="custom_buttons_summary">Alĝustigi agojn por vidigi en la aplikaĵa ilarstrio</string>
     <string name="custom_buttons_setting_always_show">Ĉiam montri</string>
     <string name="custom_buttons_setting_if_room">Nur se spaco disponebla</string>
     <string name="custom_buttons_setting_menu_only">Nur en menuo</string>
     <string name="reset_custom_buttons" maxLength="41">Restarigi normojn</string>
-    <string name="reset_settings_to_default">Restarigi agordojn al implicita.</string>
+    <string name="reset_settings_to_default">Restarigi agordojn al implicitaj valoroj</string>
     <string name="reset">Restarigi</string>
     <string name="thirdparty_apps_title" maxLength="41">Eksteraj aplikaĵoj uzantaj API</string>
     <string name="thirdparty_apps_summary">Vidigi listojn de aplikaĵoj, kiuj uzas AnkiDroid API kiel vortaroj kaj iloj.</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="pref_cat_reviewer" maxLength="41">Lernada ekrano</string>
+    <string name="show_deck_title" maxLength="41">Montri titolon de kartaro</string>
+    <string name="accessibility" maxLength="41">Alirebleco</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Alglui bildojn kiel PNG</string>
     <string name="paste_as_png_summary">Implicite la aplikaĵo Anki algluas bildojn el la tondujo kiel dosierojn JPG por konservi spacon. Vi povas uzi tiun ĉi agordon por alglui ilin kiel PNG.</string>
@@ -211,39 +209,35 @@
     <string name="media_import_allow_all_files" maxLength="41">Ĉiuj dosieroj dum enporti aŭdvidaĵojn</string>
     <string name="media_import_allow_all_files_summ">Se Android ne povas rekoni dosierojn de aŭdvidaĵojn</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title" maxLength="41">Propra servilo por samtempigado</string>
+    <string name="custom_sync_server_title" maxLength="41">Propra servilo de samtempigo</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Ne uzata</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
-        ]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[Alternative al samtempigi kun AnkiWeb, vi povas uzi vian propran samtempigan servilon. Se nenio estas agordita, la implicita servilo de AnkiWeb estos uzata.<a href="%s">Pliaj informoj</a>]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Samtempiga servilo</string>
-    <string name="custom_sync_certificate_title" maxLength="41">Custom root certificate (PEM)</string>
+    <string name="custom_sync_certificate_title" maxLength="41">Propra radika atestilo (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Klavaro</string>
-    <string name="bluetooth">Bluetooth</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41">Karto</string>
+    <string name="bluetooth">Bludento</string>
+    <string name="answer_buttons" maxLength="41">Butonoj de respondo</string>
+    <string name="card" maxLength="41" comment="Generic term to refer to a card">Karto</string>
     <string name="note" maxLength="41">Noto</string>
-    <string name="navigation" maxLength="41">Navigation</string>
-    <string name="media" maxLength="41">Media</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="navigation" maxLength="41">Navigi</string>
+    <string name="media" maxLength="41">Aŭdvidaĵo</string>
+    <string name="misc" maxLength="41">Aliaj</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Elekti etikedojn</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Ĝeneralaj</string>
     <string name="deck_conf_reminders" maxLength="41">Memorigaĵoj</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtri</string>
-    <string name="deck_conf_cram_search" maxLength="41">Serĉi</string>
+    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Serĉi</string>
     <string name="deck_conf_cram_limit" maxLength="41">Limigi al</string>
-    <string name="deck_conf_cram_order" maxLength="41">kartoj elektitaj laŭ</string>
+    <string name="deck_conf_cram_order" maxLength="41">Kartoj elektitaj laŭ</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Replani</string>
     <string name="deck_conf_cram_reschedule_summ">Replani karton surbaze de miaj respondoj en tiu ĉi kartaro</string>
     <string name="deck_conf_cram_filter_2_check">Aktivigi duan filtrilon</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Difini proprajn paŝojn</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Intertempoj por antaŭripeto</string>
+    <string name="deck_conf_cram_preview_delays_summ">Intertempoj estas en sekundoj. La valoro “0” movas karton reen al originala kartaro.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Helpu, ke AnkiDroid fariĝos pli bona!</string>
     <string name="analytics_title" maxLength="41">Kunhavigi uzadon de eblaĵoj</string>
@@ -253,37 +247,38 @@
     <string name="type_in_answer_focus" maxLength="41">Marki kampon “enigi respondon”</string>
     <string name="type_in_answer_focus_summ">Aŭtomate marki la kampon “enigi respondon” dum ripetado</string>
     <!-- About -->
-    <string name="open_changelog">Montri ŝanĝoprotokolon</string>
+    <string name="open_changelog">Montri ŝanĝ-protokolon</string>
     <string name="pref_cat_about_title" maxLength="41">Pri</string>
-    <string name="contributors_title">Contributors</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="contributors_title">Kontribuantoj</string>
+    <string name="about_contributors_description"><![CDATA[Jen listo de niaj karaj <a href=\"%1$s\">kontribuantoj</a>. Vi ankaŭ povas helpi al AnkiDroid per programi, traduki, donaci <a href=\"%2$s\">kaj pli</a>!]]></string>
+    <string name="license">Permesilo</string>
+    <string name="license_description"><![CDATA[AnkiDroid estas eldonita laŭ la permesiloj <a href=\"%1$s\">GPL-3.0</a> kaj <a href=\"%2$s\">AGPL-3.0</a>, ĝia fontkodo estas disponebla en <a href=\"%3$s\">GitHub</a>.]]></string>
+    <string name="donate_description"><![CDATA[Vi povas subteni evoluigon de AnkiDroid per <a href=\"%1$s\">donaci monon</a>. Ĉiu monsumo estas dankinda.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Aldoni geston</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
+    <string name="binding_replace_gesture">Anstataŭigi geston</string>
     <string name="binding_add_key">Aldoni klavon</string>
-    <string name="binding_replace_key">Replace key</string>
+    <string name="binding_replace_key">Anstataŭigi klavon</string>
     <string name="key_picker_default_press_key">Premu klavon</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
-    <string name="user_actions" maxLength="41">User actions</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="41">User action 1</string>
-    <string name="user_action_2" maxLength="41">User action 2</string>
-    <string name="user_action_3" maxLength="41">User action 3</string>
-    <string name="user_action_4" maxLength="41">User action 4</string>
-    <string name="user_action_5" maxLength="41">User action 5</string>
-    <string name="user_action_6" maxLength="41">User action 6</string>
-    <string name="user_action_7" maxLength="41">User action 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="binding_add_axis">Asigni ludstirilon</string>
+    <string name="axis_picker_move_joystick">Movu per ludstirilo</string>
+    <string name="user_actions" maxLength="41">Agoj de uzanto</string>
+    <string name="user_actions_summary" maxLength="41">Plenumi JavaScript sur la lernada ekrano</string>
+    <string name="user_action_1" maxLength="28">Ago de uzanto #1</string>
+    <string name="user_action_2" maxLength="28">Ago de uzanto #2</string>
+    <string name="user_action_3" maxLength="28">Ago de uzanto #3</string>
+    <string name="user_action_4" maxLength="28">Ago de uzanto #4</string>
+    <string name="user_action_5" maxLength="28">Ago de uzanto #5</string>
+    <string name="user_action_6" maxLength="28">Ago de uzanto #6</string>
+    <string name="user_action_7" maxLength="28">Ago de uzanto #7</string>
+    <string name="user_action_8" maxLength="28">Ago de uzanto #8</string>
+    <string name="user_action_9" maxLength="28">Ago de uzanto #9</string>
+    <string name="toggle_auto_advance" maxLength="41">Baskuligi aŭtomatan malkaŝon</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Elekti kartflankon</string>
     <string name="card_side_question">Demando</string>
     <string name="card_side_answer">Respondo</string>
-    <string name="card_side_both">Demando kaj respondo</string>
+    <string name="card_side_both" maxLength="28">Demando kaj respondo</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">D: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">R: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -292,79 +287,80 @@
     <string name="bindings_already_bound">Jam asignita al %s</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Eksperimenta</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Please upgrade to the new text to speech format</string>
+    <string name="readtext_deprecation_warn">AnkiDroid enkondukis pli bonan meĥanismon por parolsintezo, kiu kongruas kun aliaj klientoj Anki kaj liveras pliajn voĉojn kaj plibonigojn al son-ludado!\n\nĜisdatigu viajn kartojn kiel eble plej rapide, ĉar tiu ĉi agordo baldaŭ estos forigita.</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Ĝisdatigu al pli nova formo de parolsintezo</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
-    <string name="disable_dev_options">Disable developer options</string>
-    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
-    </string>
+    <string name="pref_cat_dev_options" maxLength="41">Programistaj agordoj</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Aktivigi programistajn agordojn</string>
+    <string name="disable_dev_options">Malaktivigi programistajn agordojn</string>
+    <string name="dev_options_warning">Antaŭ ol aktivigi programistajn agordojn, certiĝu, ke vi scias kion vi faras. Tiuj ĉi agordoj estas danĝeraj kaj povas difekti la aplikaĵon aŭ vian kolekton.\n\nRimarko: tiuj ĉi agordoj ne taŭgas por kutimaj uzantoj, do ne estas tradukitaj (estas en la angla).</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
-        After backups are more than two days old,
-        AnkiDroid will start removing some of them to free up disk space.
-        <br><br>
-        Note that media files are not backed up.
-        To be safe, please periodically synchronize your collection, or back up exports of it.
-        <br><br>
-        You can restore from a backup and export your collection in the deck list menu.
-    ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+    <string name="pref__backups_help__summary"><![CDATA[AnkiDroid periode sekurkopias vian kolekton. Sekurkopioj pli malnovaj ol du tagoj estas forigataj por konservi spacon.
+<br><br>
+Rimarko: aŭdvidaĵoj ne estas sekurkopiataj. Por esti sekura, regule samtempigu vian kolekton aŭ sekurkopiu elportaĵojn de la kolekto.
+<br><br>
+Vi povas restarigi el sekurkopio aŭ elporti vian kolekton per la menuo de listo de kartaroj.]]></string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutoj inter aŭtomataj sekurkopioj</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Limigo de ĉiutagaj sekurkopioj</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Limigo de ĉiusemajnaj sekurkopioj</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Limigo de ĉiumonataj sekurkopioj</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
     <string name="pref__manage_space__screen_title">Administri spacon</string>
     <!-- TextWidgetPreference widget text -->
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Eraro</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Kalku-\nlado&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
-        <item quantity="one">%1$d file\n%2$s</item>
-        <item quantity="other">%1$d files\n%2$s</item>
+        <item quantity="one">%1$d dosiero\n%2$s</item>
+        <item quantity="other">%1$d dosieroj\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Forigi neuzatajn aŭdvidaĵojn</string>
-    <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
+    <string name="pref__delete_unused_media_files__summary">Forigi bildojn kaj aŭdvidaĵojn sen prefikso _ kaj tiujn, al kiu neniu noto indikas</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Forigi neuzatajn aŭdvidaĵojn</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Delete backups</string>
-    <string name="progress__deleting_backups">Deleting backups&#8230;</string>
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Forigi sekurkopiojn</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Forigi sekurkopiojn</string>
+    <string name="progress__deleting_backups">Forigado de sekurkopioj&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
-    <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Delete collection</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
-    <string name="progress__deleting_collection">Deleting collection&#8230;</string>
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Forigi kolekton</string>
+    <string name="pref__delete_collection__summary">Forigi kolekton, aŭdvidaĵojn kaj sekurkopiojn. Ne forigi agordojn de aplikaĵo</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Forigi kolekton</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Ĉu vi certe volas forigi vian kolekton, aŭdvidaĵojn kaj sekurkopiojn?\n\nRimarko: tiu ĉi ago fermos la fenestron.</string>
+    <string name="progress__deleting_collection">Forigado de kolekto&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>
-    <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Delete everything</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Forigi ĉion</string>
+    <string name="pref__delete_everything__summary">Forigi kolekton, aŭdvidaĵojn, sekurkopiojn kaj agordojn</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Forigi ĉion</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Ĉu vi certe volas forigi ĉiujn datumojn? Tio ĉi ampleksas vian kolekton, aŭdvidaĵojn, sekurkopiojn kaj preferojn.\n\nRimarko: tiu ĉi ago fermos la fenestron.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Delete app data</string>
-    <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Delete app data</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Forigi datumojn de aplikaĵo</string>
+    <string name="pref__delete_app_data__summary">Forigi agordojn kaj aliajn datumojn de aplikaĵo</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Forigi datumojn de aplikaĵo</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Ĉu vi certe volas forigi datumojn de aplikaĵo? Tio ĉu ampleksas agordojn kaj aliajn datumojn.\n\nRimarko: tiu ĉi ago fermos la fenestron.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Neniu kolekto</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Eraro</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Enlegado&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Kalkulado&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Kolekto ne ekzistas</string>
-    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
-    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">None</string>
-    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Status bar</string>
-    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigation bar</string>
-    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
-    <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
-    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Kaŝi striojn de operaciumo</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">Neniu</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Stata strio</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Naviga strio</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Ĉiuj</string>
+    <string name="ignore_display_cutout" maxLength="41">Ignori eltondaĵojn en la ekrano</string>
+    <string name="hide_answer_buttons" maxLength="41">Kaŝi respondajn butonojn</string>
+    <string name="hide_hard_and_easy" maxLength="41">Kaŝi butonojn “malfacile” kaj “facile”</string>
+    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <!--Keyboard shortcuts dialog-->
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Malfermi agordojn</string>
 </resources>

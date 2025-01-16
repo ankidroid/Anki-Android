@@ -20,6 +20,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.CallSuper
@@ -30,6 +31,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.themes.Themes
+import com.ichi2.themes.setTransparentStatusBar
 import timber.log.Timber
 import kotlin.reflect.KClass
 
@@ -37,10 +39,10 @@ import kotlin.reflect.KClass
  * Base class for displaying Anki HTML pages
  */
 @Suppress("LeakingThis")
-open class PageFragment(@LayoutRes contentLayoutId: Int = R.layout.page_fragment) :
-    Fragment(contentLayoutId),
+open class PageFragment(
+    @LayoutRes contentLayoutId: Int = R.layout.page_fragment,
+) : Fragment(contentLayoutId),
     PostRequestHandler {
-
     lateinit var webView: WebView
     private val server = AnkiServer(this).also { it.start() }
 
@@ -53,19 +55,60 @@ open class PageFragment(@LayoutRes contentLayoutId: Int = R.layout.page_fragment
      */
     protected open fun onCreateWebViewClient(savedInstanceState: Bundle?) = PageWebViewClient()
 
-    @CallSuper
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        webView = view.findViewById<WebView>(R.id.webview).apply {
-            with(settings) {
-                javaScriptEnabled = true
-                displayZoomControls = false
-                builtInZoomControls = true
-                setSupportZoom(true)
-            }
-            webViewClient = onCreateWebViewClient(savedInstanceState)
-            webChromeClient = PageChromeClient()
-        }
+    protected open fun onWebViewCreated(webView: WebView) { }
 
+    /**
+     * When the webview calls `BridgeCommand("foo")`, the PageFragment execute `bridgeCommands["foo"]`.
+     * By default, only bridge command is allowed, subclasses must redefine it if they expect bridge commands.
+     */
+    open val bridgeCommands: Map<String, () -> Unit> = mapOf()
+
+    /**
+     * Ensures that [pageWebViewClient] can receive `bridgeCommand` requests and execute the command from [bridgeCommands].
+     */
+    private fun setupBridgeCommand(pageWebViewClient: PageWebViewClient) {
+        if (bridgeCommands.isEmpty()) {
+            return
+        }
+        webView.addJavascriptInterface(
+            object : Object() {
+                @JavascriptInterface
+                fun bridgeCommandImpl(request: String) {
+                    bridgeCommands.orEmpty().getOrDefault(request) {
+                        Timber.d("Unknown request received %s", request)
+                    }()
+                }
+            },
+            "bridgeCommandInterface",
+        )
+        pageWebViewClient.onPageFinishedCallbacks.add { webView ->
+            webView.evaluateJavascript(
+                "bridgeCommand = function(request){ bridgeCommandInterface.bridgeCommandImpl(request); };",
+            ) {}
+        }
+    }
+
+    @CallSuper
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        val pageWebViewClient = onCreateWebViewClient(savedInstanceState)
+        webView =
+            view.findViewById<WebView>(R.id.webview).apply {
+                with(settings) {
+                    javaScriptEnabled = true
+                    displayZoomControls = false
+                    builtInZoomControls = true
+                    setSupportZoom(true)
+                }
+                webViewClient = pageWebViewClient
+                webChromeClient = PageChromeClient()
+            }
+        setupBridgeCommand(pageWebViewClient)
+        onWebViewCreated(webView)
+
+        requireActivity().setTransparentStatusBar()
         val arguments = requireArguments()
         val path = requireNotNull(arguments.getString(PATH_ARG_KEY)) { "'$PATH_ARG_KEY' missing" }
         val title = arguments.getString(TITLE_ARG_KEY)
@@ -85,21 +128,31 @@ open class PageFragment(@LayoutRes contentLayoutId: Int = R.layout.page_fragment
         }
     }
 
-    override suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray {
-        val methodName = if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
-            uri.substring(AnkiServer.ANKI_PREFIX.length)
-        } else {
-            throw IllegalArgumentException("unhandled request: $uri")
-        }
+    override suspend fun handlePostRequest(
+        uri: String,
+        bytes: ByteArray,
+    ): ByteArray {
+        val methodName =
+            if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
+                uri.substring(AnkiServer.ANKI_PREFIX.length)
+            } else {
+                throw IllegalArgumentException("unhandled request: $uri")
+            }
         return activity.handleUiPostRequest(methodName, bytes)
             ?: handleCollectionPostRequest(methodName, bytes)
             ?: throw IllegalArgumentException("unhandled method: $methodName")
     }
+
     companion object {
         const val PATH_ARG_KEY = "path"
         const val TITLE_ARG_KEY = "title"
 
-        fun getIntent(context: Context, path: String, title: String? = null, clazz: KClass<out PageFragment> = PageFragment::class): Intent {
+        fun getIntent(
+            context: Context,
+            path: String,
+            title: String? = null,
+            clazz: KClass<out PageFragment> = PageFragment::class,
+        ): Intent {
             val arguments = bundleOf(PATH_ARG_KEY to path, TITLE_ARG_KEY to title)
             return SingleFragmentActivity.getIntent(context, clazz, arguments)
         }

@@ -24,38 +24,32 @@ import android.os.StatFs
 import com.ichi2.compat.CompatHelper
 import timber.log.Timber
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.InputStream
-import java.util.AbstractMap
 
 object FileUtil {
-
     /**
      * Determine available storage space
      *
      * @param path the filesystem path you need free space information on
      * @return long indicating the bytes available for that path
      */
-    fun determineBytesAvailable(path: String): Long {
-        return StatFs(path).availableBytes
-    }
+    fun determineBytesAvailable(path: String): Long = StatFs(path).availableBytes
 
     /** Gets the free disk space given a file  */
-    fun getFreeDiskSpace(file: File, defaultValue: Long): Long {
-        return try {
+    fun getFreeDiskSpace(
+        file: File,
+        defaultValue: Long,
+    ): Long =
+        try {
             StatFs(file.parentFile?.path).availableBytes
         } catch (e: IllegalArgumentException) {
             Timber.e(e, "Free space could not be retrieved")
             defaultValue
         }
-    }
 
     /** Returns the current download Directory */
-    fun getDownloadDirectory(): String {
-        return Environment.DIRECTORY_DOWNLOADS
-    }
+    fun getDownloadDirectory(): String = Environment.DIRECTORY_DOWNLOADS
 
     /**
      * Returns a string representing the path to a private cache directory,
@@ -65,7 +59,10 @@ object FileUtil {
      * @param subdirectoryName  if the caller wants a sub-directory instead of the main directory
      * @return String file path to cache directory or null if error
      */
-    fun getAnkiCacheDirectory(context: Context, subdirectoryName: String? = null): String? {
+    fun getAnkiCacheDirectory(
+        context: Context,
+        subdirectoryName: String? = null,
+    ): String? {
         val cacheDirRoot = context.cacheDir
         if (cacheDirRoot == null) {
             Timber.e("createUI() unable to get cache directory")
@@ -91,14 +88,19 @@ object FileUtil {
      * @throws IOException
      */
     @Throws(IOException::class)
-    fun internalizeUri(uri: Uri, internalFile: File, contentResolver: ContentResolver): File {
+    fun internalizeUri(
+        uri: Uri,
+        internalFile: File,
+        contentResolver: ContentResolver,
+    ): File {
         // If we got a real file name, do a copy from it
-        val inputStream: InputStream = try {
-            contentResolver.openInputStream(uri)!!
-        } catch (e: Exception) {
-            Timber.w(e, "internalizeUri() unable to open input stream from content resolver for Uri %s", uri)
-            throw e
-        }
+        val inputStream: InputStream =
+            try {
+                contentResolver.openInputStream(uri)!!
+            } catch (e: Exception) {
+                Timber.w(e, "internalizeUri() unable to open input stream from content resolver for Uri %s", uri)
+                throw e
+            }
         try {
             CompatHelper.compat.copyFile(inputStream, internalFile.absolutePath)
         } catch (e: Exception) {
@@ -106,104 +108,6 @@ object FileUtil {
             throw e
         }
         return internalFile
-    }
-
-    /**
-     * @return Key: Filename; Value: extension including dot
-     */
-    fun getFileNameAndExtension(fileName: String?): Map.Entry<String, String>? {
-        if (fileName == null) {
-            return null
-        }
-        val index = fileName.lastIndexOf(".")
-        return if (index < 1) {
-            null
-        } else {
-            AbstractMap.SimpleEntry(fileName.substring(0, index), fileName.substring(index))
-        }
-    }
-
-    /**
-     * Calculates the size of a [File].
-     * If it is a file, returns the size.
-     * If the file does not exist, returns 0
-     * If the file is a directory, recursively explore the directory tree and summing the length of each
-     * file. The time taken to calculate directory size is proportional to the number of files in the directory
-     * and all of its sub-directories. See: [DirectoryContentInformation.fromDirectory]
-     * It is assumed that directory contains no symbolic links.
-     *
-     * @param file Abstract representation of the file/directory whose size needs to be calculated
-     * @return Size of the File/Directory in bytes. 0 if the [File] does not exist
-     */
-    fun getSize(file: File): Long {
-        if (file.isFile) {
-            return file.length()
-        } else if (!file.exists()) {
-            return 0L
-        }
-        return DirectoryContentInformation.fromDirectory(file).totalBytes
-    }
-
-    /**
-     * Information about the content of a directory `d`.
-     */
-    data class DirectoryContentInformation(
-        /**
-         * Size of all files contained in `d` directly or indirectly.
-         * Ignore the extra size taken by file system.
-         */
-        val totalBytes: Long,
-        /**
-         * Number of subdirectories of `d`, directly or indirectly. Not counting `d`.
-         */
-        val numberOfSubdirectories: Int,
-        /**
-         * Number of files contained in `d` directly or indirectly.
-         */
-        val numberOfFiles: Int
-    ) {
-        companion object {
-            /**
-             * @throws IOException [root] does not exist
-             */
-            fun fromDirectory(root: File): DirectoryContentInformation {
-                var totalBytes = 0L
-                var numberOfDirectories = 0
-                var numberOfFiles = 0
-                val directoriesToProcess = mutableListOf(root)
-                while (directoriesToProcess.isNotEmpty()) {
-                    val dir = directoriesToProcess.removeLast()
-                    listFiles(dir).forEach {
-                        if (it.isDirectory) {
-                            numberOfDirectories++
-                            directoriesToProcess.add(it)
-                        } else {
-                            numberOfFiles++
-                            totalBytes += it.length()
-                        }
-                    }
-                }
-
-                return DirectoryContentInformation(totalBytes, numberOfDirectories, numberOfFiles)
-            }
-        }
-    }
-
-    /**
-     * If dir exists, it must be a directory.
-     * If not, it is created, along with any necessary parent directories (see [File.mkdirs]).
-     * @param dir Abstract representation of a directory
-     * @throws IOException if dir is not a directory or could not be created
-     */
-    @Throws(IOException::class)
-    fun ensureFileIsDirectory(dir: File) {
-        if (dir.exists()) {
-            if (!dir.isDirectory) {
-                throw IOException("$dir exists but is not a directory")
-            }
-        } else if (!dir.mkdirs() && !dir.isDirectory) {
-            throw IOException("$dir directory cannot be created")
-        }
     }
 
     /**
@@ -216,64 +120,70 @@ object FileUtil {
      * by dir
      */
     @Throws(IOException::class)
-    fun listFiles(dir: File): Array<File> {
-        return dir.listFiles()
+    fun listFiles(dir: File): Array<File> =
+        dir.listFiles()
             ?: throw IOException("Failed to list the contents of '$dir'")
-    }
 
     /**
      * Returns a sequence containing the provided file, and its parents
      * up to the root of the filesystem.
      */
-    fun File.getParentsAndSelfRecursive() = sequence {
-        var currentPath: File? = this@getParentsAndSelfRecursive.canonicalFile
-        while (currentPath != null) {
-            yield(currentPath)
-            currentPath = currentPath.parentFile?.canonicalFile
+    fun File.getParentsAndSelfRecursive() =
+        sequence {
+            var currentPath: File? = this@getParentsAndSelfRecursive.canonicalFile
+            while (currentPath != null) {
+                yield(currentPath)
+                currentPath = currentPath.parentFile?.canonicalFile
+            }
         }
-    }
 
     fun File.isDescendantOf(ancestor: File) = this.getParentsAndSelfRecursive().drop(1).contains(ancestor)
+}
 
-    enum class FilePrefix {
-        EQUAL,
-        STRICT_PREFIX,
-        STRICT_SUFFIX,
-        NOT_PREFIX
+/**
+ * A filename without a path (e.g `collection.apkg`)
+ *
+ * @param fileName name of the file, before the '.'
+ * @param extensionWithDot extension of the file, with a '.'
+ */
+@ConsistentCopyVisibility
+data class FileNameAndExtension private constructor(
+    val fileName: String,
+    val extensionWithDot: String,
+) {
+    init {
+        require(extensionWithDot.startsWith('.')) { "extension must start with '.'" }
     }
 
     /**
-     * @return whether how [potentialPrefixFile] related to [fullFile] as far as prefix goes
-     * @throws FileNotFoundException if a file is not found
-     * @throws IOException If an I/O error occurs
+     * Ensures the filename is valid for [File.createTempFile], which requires `name.length() >= 3`
      */
-    fun isPrefix(potentialPrefixFile: File, fullFile: File): FilePrefix {
-        var potentialPrefixBuffer: FileInputStream? = null
-        var fullFileBuffer: FileInputStream? = null
-        try {
-            potentialPrefixBuffer = FileInputStream(potentialPrefixFile)
-            fullFileBuffer = FileInputStream(fullFile)
-            while (true) {
-                val prefixContent = potentialPrefixBuffer.read()
-                val fullFileContent = fullFileBuffer.read()
-                val prefixFileEnded = prefixContent == -1
-                val fullFileEnded = fullFileContent == -1
-                if (prefixFileEnded && fullFileEnded) {
-                    return FilePrefix.EQUAL
-                }
-                if (prefixFileEnded) {
-                    return FilePrefix.STRICT_PREFIX
-                }
-                if (fullFileEnded) {
-                    return FilePrefix.STRICT_SUFFIX
-                }
-                if (prefixContent != fullFileContent) {
-                    return FilePrefix.NOT_PREFIX
-                }
+    fun renameForCreateTempFile(): FileNameAndExtension = if (fileName.length >= 3) this else this.copy(fileName = "$fileName-name")
+
+    /**
+     * Returns a [FileNameAndExtension] with a custom extension
+     */
+    fun replaceExtension(extension: String): FileNameAndExtension {
+        val withDot = if (extension.startsWith(".")) extension else ".$extension"
+        return copy(extensionWithDot = withDot)
+    }
+
+    override fun toString() = "$fileName$extensionWithDot"
+
+    companion object {
+        /**
+         * @return a valid [FileNameAndExtension]. `null` if [fileName] does not contain '.'
+         */
+        fun fromString(fileName: String): FileNameAndExtension? {
+            val index = fileName.lastIndexOf(".")
+            return if (index < 1) {
+                null
+            } else {
+                FileNameAndExtension(
+                    fileName = fileName.substring(0, index),
+                    extensionWithDot = fileName.substring(index),
+                )
             }
-        } finally {
-            potentialPrefixBuffer?.close()
-            fullFileBuffer?.close()
         }
     }
 }

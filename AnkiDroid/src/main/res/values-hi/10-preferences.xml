@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">कारण %d से अधिक कार्ड</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">वाइब्रेट</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">पलक लाइट</string>
-    <string name="timeout_answer_text" maxLength="41">स्वचालित उत्तर प्रदर्शन</string>
-    <string name="timeout_answer_summ2">उपयोगकर्ता इनपुट के बिना स्वचालित रूप से उत्तर दिखाएं। डेक विकल्पों से कॉन्फ़िगर करें.</string>
     <string name="select_locale_title">भाषा चुनें</string>
     <string name="software_render" maxLength="41">कार्ड हार्डवेयर रेंडर अक्षम करें</string>
     <string name="software_render_summ">हार्डवेयर रेंडर तेज़ है लेकिन इसमें समस्याएँ हो सकती हैं, विशेष रूप से Android 8/8.1 पर।  यदि आप कार्ड समीक्षा उपयोगकर्ता इंटरफ़ेस के कुछ हिस्सों को नहीं देख पा रहे हैं, तो इस सेटिंग को आज़माएँ।</string>
@@ -171,7 +169,7 @@
     <string name="show_large_answer_buttons" maxLength="41">बड़े उत्तर बटन दिखाएं</string>
     <string name="show_large_answer_buttons_summ">२ पंक्तियों में उत्तर बटन दिखाएं</string>
     <string name="show_top_bar" maxLength="41">ऊपरी बार दिखाएं</string>
-    <string name="show_top_bar_summ">शीर्ष बार में कार्ड की संख्या, ध्वज और चिह्न दिखाएं</string>
+    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">शेष दिखाएं</string>
     <string name="show_progress_summ">शेष कार्ड गणना दिखाएं</string>
     <string name="show_eta" maxLength="41">ईटीए दिखाएँ</string>
@@ -221,7 +219,7 @@
     <string name="keyboard">कीबोर्ड</string>
     <string name="bluetooth">ब्लूटूथ</string>
     <string name="answer_buttons" maxLength="41">उत्तर बटन</string>
-    <string name="card" maxLength="41">कार्ड</string>
+    <string name="card" maxLength="41" comment="Generic term to refer to a card">कार्ड</string>
     <string name="note" maxLength="41">टिप्पणी</string>
     <string name="navigation" maxLength="41">नेविगेशन</string>
     <string name="media" maxLength="41">मिडिया</string>
@@ -232,9 +230,9 @@
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">सामान्य</string>
     <string name="deck_conf_reminders" maxLength="41">रिमाइंडर्स</string>
     <string name="deck_conf_cram_filter" maxLength="41">फ़िल्टर</string>
-    <string name="deck_conf_cram_search" maxLength="41">खोज</string>
+    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">खोज</string>
     <string name="deck_conf_cram_limit" maxLength="41">करने के लिए सीमा</string>
-    <string name="deck_conf_cram_order" maxLength="41">द्वारा चयनित कार्ड</string>
+    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">पुनः शेड्यूल करें</string>
     <string name="deck_conf_cram_reschedule_summ">इस डेक में मेरे जवाब के आधार पर कार्ड पुनर्निर्धारित</string>
     <string name="deck_conf_cram_filter_2_check">दूसरा फ़िल्टर सक्षम करें</string>
@@ -267,20 +265,21 @@
     <string name="axis_picker_move_joystick">जॉयस्टिक/मोशन कंट्रोलर को स्थानांतरित करें</string>
     <string name="user_actions" maxLength="41">उपयोगकर्ता क्रियाएं</string>
     <string name="user_actions_summary" maxLength="41">समीक्षा स्क्रीन से जावास्क्रिप्ट ट्रिगर करें</string>
-    <string name="user_action_1" maxLength="41">उपयोगकर्ता क्रिया 1</string>
-    <string name="user_action_2" maxLength="41">उपयोगकर्ता क्रिया 2</string>
-    <string name="user_action_3" maxLength="41">उपयोगकर्ता क्रिया 3</string>
-    <string name="user_action_4" maxLength="41">उपयोगकर्ता क्रिया 4</string>
-    <string name="user_action_5" maxLength="41">उपयोगकर्ता क्रिया 5</string>
-    <string name="user_action_6" maxLength="41">उपयोगकर्ता क्रिया 6</string>
-    <string name="user_action_7" maxLength="41">उपयोगकर्ता क्रिया 7</string>
-    <string name="user_action_8" maxLength="41">उपयोगकर्ता क्रिया 8</string>
-    <string name="user_action_9" maxLength="41">उपयोगकर्ता क्रिया 9</string>
+    <string name="user_action_1" maxLength="28">उपयोगकर्ता क्रिया 1</string>
+    <string name="user_action_2" maxLength="28">उपयोगकर्ता क्रिया 2</string>
+    <string name="user_action_3" maxLength="28">उपयोगकर्ता क्रिया 3</string>
+    <string name="user_action_4" maxLength="28">उपयोगकर्ता क्रिया 4</string>
+    <string name="user_action_5" maxLength="28">उपयोगकर्ता क्रिया 5</string>
+    <string name="user_action_6" maxLength="28">उपयोगकर्ता क्रिया 6</string>
+    <string name="user_action_7" maxLength="28">उपयोगकर्ता क्रिया 7</string>
+    <string name="user_action_8" maxLength="28">उपयोगकर्ता क्रिया 8</string>
+    <string name="user_action_9" maxLength="28">उपयोगकर्ता क्रिया 9</string>
+    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">कार्ड साइड चुनें</string>
     <string name="card_side_question">प्रश्न</string>
     <string name="card_side_answer">उत्तर</string>
-    <string name="card_side_both">प्रश्न और उत्तर</string>
+    <string name="card_side_both" maxLength="28">प्रश्न और उत्तर</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">प्र: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">उ: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -357,4 +356,10 @@
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
     <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
     <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
+    <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
+    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <!--Keyboard shortcuts dialog-->
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
 </resources>

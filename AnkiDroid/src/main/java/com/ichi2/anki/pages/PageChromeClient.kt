@@ -34,7 +34,7 @@ open class PageChromeClient : WebChromeClient() {
         view: WebView,
         url: String?,
         message: String?,
-        result: JsResult?
+        result: JsResult?,
     ): Boolean {
         try {
             AlertDialog.Builder(view.context).show {
@@ -60,7 +60,7 @@ open class PageChromeClient : WebChromeClient() {
         view: WebView,
         url: String?,
         message: String?,
-        result: JsResult?
+        result: JsResult?,
     ): Boolean {
         try {
             AlertDialog.Builder(view.context).show {
@@ -70,7 +70,7 @@ open class PageChromeClient : WebChromeClient() {
                 cancelable(false)
             }
         } catch (e: WindowManager.BadTokenException) {
-            Timber.w("onJsConfirm", e)
+            Timber.w(e, "onJsConfirm")
             return false // unhandled - shown in WebView
         }
         return true

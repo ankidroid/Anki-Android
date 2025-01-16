@@ -28,7 +28,10 @@ object AndroidUiUtils {
      * @param view The EditText which requires the focus to be set.
      * @param window The window where the view is present.
      */
-    fun setFocusAndOpenKeyboard(view: View, window: Window) {
+    fun setFocusAndOpenKeyboard(
+        view: View,
+        window: Window,
+    ) {
         view.requestFocus()
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
     }
@@ -38,7 +41,10 @@ object AndroidUiUtils {
      * @param view The View which requires the focus to be set (typically an EditText).
      * @param runnable The Optional Runnable that will be executed at the end.
      */
-    fun setFocusAndOpenKeyboard(view: View, runnable: Runnable? = null) {
+    fun setFocusAndOpenKeyboard(
+        view: View,
+        runnable: Runnable? = null,
+    ) {
         //  Required on some Android 9, 10 devices to show keyboard: https://stackoverflow.com/a/7784904
         view.postDelayed({
             view.requestFocus()

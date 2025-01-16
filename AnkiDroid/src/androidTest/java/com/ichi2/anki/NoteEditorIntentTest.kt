@@ -42,9 +42,10 @@ class NoteEditorIntentTest : InstrumentedTest() {
     var runtimePermissionRule: TestRule? = GrantStoragePermission.instance
 
     @get:Rule
-    var activityRuleIntent: ActivityScenarioRule<SingleFragmentActivity>? = ActivityScenarioRule(
-        noteEditorTextIntent
-    )
+    var activityRuleIntent: ActivityScenarioRule<SingleFragmentActivity>? =
+        ActivityScenarioRule(
+            noteEditorTextIntent,
+        )
 
     @Test
     @Flaky(OS.ALL, "Issue 15707 - java.lang.ArrayIndexOutOfBoundsException: length=0; index=0")
@@ -58,15 +59,16 @@ class NoteEditorIntentTest : InstrumentedTest() {
             val editor = activity.getEditor()
             currentFieldStrings = editor.currentFieldStrings[0]
         }
-        MatcherAssert.assertThat(currentFieldStrings!![0], Matchers.equalTo("sample text"))
+        MatcherAssert.assertThat(currentFieldStrings!!, Matchers.equalTo("sample text"))
     }
 
     @Test
     fun intentLaunchedWithNonImageIntent() {
-        val intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            type = TEXT_PLAIN
-        }
+        val intent =
+            Intent().apply {
+                action = Intent.ACTION_SEND
+                type = TEXT_PLAIN
+            }
         assertFalse(intentLaunchedWithImage(intent))
     }
 

@@ -16,8 +16,10 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.Ease
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.ext.addNote
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.notNullValue
@@ -46,7 +48,7 @@ class AbstractSchedTest : JvmTest() {
         val card = sched.card
         assertThat(sched.newCount(), equalTo(10))
         assertThat(sched.counts().new, equalTo(10))
-        sched.answerCard(card!!, 3)
+        sched.answerCard(card!!, Ease.GOOD)
         sched.card
         col.undo()
         assertThat(sched.newCount(), equalTo(10))
@@ -60,44 +62,44 @@ class AbstractSchedTest : JvmTest() {
         col.config.set("collapseTime", 20 * 60)
         val sched = col.sched
 
-        addNoteUsingBasicModel("foo", "bar")
+        addBasicNote("foo", "bar")
 
         var card = sched.card
         assertNotNull(card)
         assertEquals(Counts(1, 0, 0), sched.counts())
 
-        sched.answerCard(card, 3)
+        sched.answerCard(card, Ease.GOOD)
 
         card = sched.card
         assertNotNull(card)
         assertEquals(
             Counts(0, 1, 0),
-            sched.counts()
+            sched.counts(),
         )
 
-        sched.answerCard(card, 3)
+        sched.answerCard(card, Ease.GOOD)
 
         card = sched.card
         assertNotNull(card)
         assertEquals(
             Counts(0, 1, 0),
-            sched.counts()
+            sched.counts(),
         )
 
         assertNotNull(card)
 
         assertEquals(
             Counts(0, 1, 0),
-            sched.counts()
+            sched.counts(),
         )
 
         card = sched.card!!
-        sched.answerCard(card, 3)
+        sched.answerCard(card, Ease.GOOD)
         card = sched.card
         assertNotNull(card)
         assertEquals(
             Counts(0, 1, 0),
-            sched.counts()
+            sched.counts(),
         )
         assertNotNull(card)
     }

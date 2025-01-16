@@ -26,7 +26,7 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">ノートタイプを管理</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">ノートタイプを管理</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">フィールドを管理</string>
     <!--Toasts-->
     <string name="toast_last_model">残り1つのノートタイプは削除できません</string>
@@ -51,15 +51,15 @@
     <string name="model_field_editor_language_hint_dialog_success_result">%s をキーボード言語に設定しました</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">フィールドを編集</string>
-    <string name="model_field_editor_add">フィールドを追加</string>
+    <string name="model_field_editor_add" maxLength="28">フィールドを追加</string>
     <string name="model_field_editor_delete">削除</string>
     <string name="model_field_editor_rename">名前を変更</string>
     <string name="model_field_editor_language_hint">キーボード言語を設定</string>
     <string name="model_field_editor_reposition_menu">配置順序を変更</string>
     <string name="model_field_editor_reposition">何番目にこのフィールドを配置しますか？ (%1$d～%2$d)</string>
-    <string name="model_field_editor_toggle_sticky">ノート連続追加時に直前の入力内容を保持する</string>
+    <string name="model_field_editor_toggle_sticky">ノート連続追加時に直前の入力内容を保持</string>
     <string name="model_field_editor_changing">フィールドを更新</string>
-    <string name="model_field_editor_sort_field">ブラウザでのソートフィールド（見出し）にする</string>
+    <string name="model_field_editor_sort_field">ブラウザでのソートフィールド（見出し・並べ替え用項目）に指定</string>
     <!--Warnings-->
     <string name="model_delete_warning">このノートタイプを削除します。本当によろしいですか？</string>
     <string name="field_delete_warning">このフィールドを削除します。本当によろしいですか？</string>
@@ -79,5 +79,5 @@
     <string name="model_manager_deck_override_added_message">「%2$s」を「%1$s」のデフォルトデッキに指定しました</string>
     <string name="model_manager_deck_override_removed_message">「%s」のデフォルトデッキの指定を解除しました</string>
     <string name="deck_override_explanation">「%s」のカードを追加した際に追加先とするデッキを選択してください（ノート追加画面でのデッキ選択を上書きします）</string>
-    <string name="deck_picker_dialog_filter_decks">デッキ名検索</string>
+    <string name="deck_picker_dialog_filter_decks" maxLength="28">デッキ名検索</string>
 </resources>

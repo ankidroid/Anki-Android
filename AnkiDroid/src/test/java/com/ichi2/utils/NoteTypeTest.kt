@@ -30,9 +30,9 @@ import junit.framework.TestCase.assertEquals
 import kotlin.test.Test
 
 // link to a method in `NoteType.kt` for navigation as it contains no classes
+
 /** Test of [NoteType][templates] */
 class NoteTypeTest {
-
     private val noteType = """
         {
           "type":1,
@@ -103,10 +103,12 @@ const val BASIC_MODEL_NAME = "Basic"
  * @return the new model
  */
 fun Collection.createBasicModel(name: String = BASIC_MODEL_NAME): NotetypeJson {
-    val m = BackendUtils.from_json_bytes(
-        getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC)
-    ).apply { set("name", name) }
-    addNotetypeLegacy(BackendUtils.to_json_bytes(m))
+    val noteType =
+        BackendUtils
+            .fromJsonBytes(
+                getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC),
+            ).apply { set("name", name) }
+    addNotetypeLegacy(BackendUtils.toJsonBytes(noteType))
     return notetypes.byName(name)!!
 }
 
@@ -116,10 +118,11 @@ fun Collection.createBasicModel(name: String = BASIC_MODEL_NAME): NotetypeJson {
  * @see createBasicModel
  */
 fun Collection.createBasicTypingModel(name: String): NotetypeJson {
-    val m = createBasicModel(name)
-    val t = m.getJSONArray("tmpls").getJSONObject(0)
-    t.put("qfmt", "{{Front}}\n\n{{type:Back}}")
-    t.put("afmt", "{{Front}}\n\n<hr id=answer>\n\n{{type:Back}}")
-    notetypes.save(m)
-    return m
+    val noteType = createBasicModel(name)
+    noteType.tmpls[0].apply {
+        qfmt = "{{Front}}\n\n{{type:Back}}"
+        afmt = "{{Front}}\n\n<hr id=answer>\n\n{{type:Back}}"
+    }
+    notetypes.save(noteType)
+    return noteType
 }

@@ -54,28 +54,27 @@
         <item quantity="other">%d یادداشت نمایش داده شده</item>
     </plurals>
     <string name="card_browser_all_decks">همه دسته ها</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">حذف کارت</item>
-        <item quantity="other">حذف کارت ها</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">حذف یادداشت</item>
         <item quantity="other">حذف یادداشت‌ها</item>
     </plurals>
-    <string name="card_browser_change_deck">تغییر دسته</string>
+    <string name="card_browser_change_deck" maxLength="28">تغییر دسته</string>
     <string name="delete_card_title">حذف یادداشت</string>
-    <string name="card_browser_show_marked">فیلتر علامتگذاری شد</string>
-    <string name="card_browser_show_suspended">فیلتر معلق شد</string>
-    <string name="card_browser_search_by_tag">فیلتر بر اساس برچسب</string>
-    <string name="card_browser_search_by_flag">فیلتر بر اساس پرچم</string>
-    <string name="card_browser_list_my_searches">جستجو های من</string>
-    <string name="card_browser_list_my_searches_save">ذخیره جستجو</string>
+    <string name="card_browser_show_marked" maxLength="28">فیلتر علامتگذاری شد</string>
+    <string name="card_browser_show_suspended" maxLength="28">فیلتر معلق شد</string>
+    <string name="card_browser_search_by_tag" maxLength="28">فیلتر بر اساس برچسب</string>
+    <string name="card_browser_search_by_flag" maxLength="28">فیلتر بر اساس پرچم</string>
+    <string name="card_browser_list_my_searches" maxLength="28">جستجو های من</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">ذخیره جستجو</string>
     <string name="card_browser_list_my_searches_title">انتخاب جستجوی ذخیره شده</string>
     <string name="card_browser_list_my_searches_new_name">نام گذاری جستجوی فعلی</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">شما نمی توانید جستجو را بدون نام ذخیره کنید</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">نام وجود دارد</string>
+    <string name="no_note_to_edit">هیچ یادداشتی برای ویرایش ندلرید</string>
     <string name="card_browser_list_my_searches_remove_content">%1$s حذف شود؟</string>
-    <string name="card_browser_change_display_order">تغییر تنظیم صفحه نمایش</string>
+    <string name="card_browser_change_display_order" maxLength="28">تغییر تنظیم صفحه نمایش</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">جست و جو</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">جست و جو</string>
     <string name="card_browser_change_display_order_title">تغییر تنظیم صفحه نمایش</string>
     <string name="card_details_tags">برچسب ها</string>
     <string-array name="card_browser_order_labels">
@@ -85,16 +84,13 @@
         <item>بر اساس زمان ویرایش یادداشت</item>
         <item>بر اساس زمان ویرایش کارت</item>
         <item>بر اساس موعد زمانی</item>
-        <item>بر اساس مدت</item>
+        <item>بر اساس فاصله</item>
         <item>بر اساس سهولت</item>
-        <item>به وسیله مرورها</item>
+        <item>بر اساس مرورها</item>
         <item>بر اساس فاصله زمانی</item>
     </string-array>
-    <string name="card_browser_select_all">انتخاب همه</string>
-    <string name="card_browser_select_none">انتخاب هیچکدام</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(جدید)</string>
-    <string name="card_browser_due_filtered_card">(فیلتر شده)</string>
-    <string name="card_browser_interval_learning_card">(یادگیری)</string>
+    <string name="card_browser_select_all" maxLength="28">انتخاب همه</string>
+    <string name="card_browser_select_none" maxLength="28">انتخاب هیچکدام</string>
     <string name="card_browser_no_cards_in_deck">در دستۀ «%s» هیچ کارتی یافت نشد</string>
     <string name="card_browser_search_all_decks">جستجو در تمام دسته‌ها</string>
     <string name="card_browser_unknown_deck_name">ناشناخته</string>
@@ -112,4 +108,7 @@
         <item quantity="one">%d کارت حذف شده</item>
         <item quantity="other">%d کارت حذف شده.</item>
     </plurals>
+    <!--Keyboard shortcuts dialog-->
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">ویرایش برچسب گفتوگو ها</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">نمایش گفتوگو</string>
 </resources>

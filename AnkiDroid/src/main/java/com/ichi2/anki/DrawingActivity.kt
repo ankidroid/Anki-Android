@@ -62,8 +62,8 @@ class DrawingActivity : AnkiActivity() {
             whiteboardEditItem,
             ContextCompat.getColorStateList(
                 this,
-                R.color.white
-            )
+                R.color.white,
+            ),
         )
 
         // undo button

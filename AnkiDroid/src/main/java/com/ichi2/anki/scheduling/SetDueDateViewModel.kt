@@ -44,19 +44,42 @@ class SetDueDateViewModel : ViewModel() {
     /** The cards to change the due date of */
     lateinit var cardIds: List<CardId>
 
-    /** The number of cards which will be affected */
-    // primarily used for plurals
+    /** Whether the Free Spaced Repetition Scheduler is enabled */
+    // initialized in init()
+    private var fsrsEnabled: Boolean = false
+        set(value) {
+            field = value
+            Timber.d("fsrsEnabled : %b", value)
+            if (value) {
+                Timber.d("updateIntervalToMatchDueDate forced to true: FSRS is enabled")
+                this.updateIntervalToMatchDueDate = true
+            }
+        }
+
+    /** Whether the user can set [updateIntervalToMatchDueDate] */
+    val canSetUpdateIntervalToMatchDueDate
+        // this only makes sense in SM-2, where the due date does not directly impact the next
+        // interval calculation. In FSRS, the current date is taken into account
+        // so ivl should match due date for simplicity
+        get() = !fsrsEnabled
+
+    /**
+     * The number of cards which will be affected
+     *
+     * Primarily used for plurals
+     */
     val cardCount
         get() = cardIds.size
 
     /** The number of days in the future if we are on [Tab.SINGLE_DAY] */
     var nextSingleDayDueDate: NumberOfDaysInFuture? = null
         set(value) {
-            field = if (value != null && value >= 0) {
-                value
-            } else {
-                null
-            }
+            field =
+                if (value != null && value >= 0) {
+                    value
+                } else {
+                    null
+                }
             Timber.d("update SINGLE_DAY to %s", field)
             refreshIsValid()
         }
@@ -71,15 +94,30 @@ class SetDueDateViewModel : ViewModel() {
             refreshIsValid()
         }
 
-    /** If `true`, the interval of the card is updated to match the calculated due date */
+    /**
+     * If `true`, the interval of the card is updated to match the calculated due date
+     *
+     * This is only supported when using SM-2. In FSRS, there's no reason for ivl != due date,
+     * as the date when a card is seen affects the scheduling.
+     *
+     * @throws UnsupportedOperationException if unset when FSRS is enabled
+     */
     var updateIntervalToMatchDueDate: Boolean = false
+        get() = if (fsrsEnabled) true else field
         set(value) {
             Timber.d("updateIntervalToMatchDueDate: %b", value)
+            if (fsrsEnabled && !value) {
+                throw UnsupportedOperationException("due date must match interval if using FSRS")
+            }
             field = value
         }
 
-    fun init(cardIds: LongArray) {
+    fun init(
+        cardIds: LongArray,
+        fsrsEnabled: Boolean,
+    ) {
         this.cardIds = cardIds.toList()
+        this.fsrsEnabled = fsrsEnabled
     }
 
     fun setNextDateRangeStart(value: Int?) {
@@ -95,18 +133,20 @@ class SetDueDateViewModel : ViewModel() {
     }
 
     private fun refreshIsValid() {
-        val isValid = when (currentTab) {
-            Tab.SINGLE_DAY -> nextSingleDayDueDate.let { it != null && it >= 0 }
-            Tab.DATE_RANGE -> dateRange.isValid()
-        }
+        val isValid =
+            when (currentTab) {
+                Tab.SINGLE_DAY -> nextSingleDayDueDate.let { it != null && it >= 0 }
+                Tab.DATE_RANGE -> dateRange.isValid()
+            }
         isValidFlow.update { isValid }
     }
 
     fun calculateDaysParameter(): SetDueDateDays? {
-        val dateRange = when (currentTab) {
-            Tab.SINGLE_DAY -> nextSingleDayDueDate?.let { "$it" }
-            Tab.DATE_RANGE -> dateRange.toDaysParameter()
-        } ?: return null
+        val dateRange =
+            when (currentTab) {
+                Tab.SINGLE_DAY -> nextSingleDayDueDate?.let { "$it" }
+                Tab.DATE_RANGE -> dateRange.toDaysParameter()
+            } ?: return null
 
         // add a "!" suffix if necessary
         val param = if (this.updateIntervalToMatchDueDate) "$dateRange!" else dateRange
@@ -117,25 +157,29 @@ class SetDueDateViewModel : ViewModel() {
      * Updates the due date of [cardIds] based on the current state.
      * @return The number of cards affected, or `null` if an error occurred
      */
-    fun updateDueDateAsync() = viewModelScope.async {
-        val days = calculateDaysParameter() ?: return@async null
-        // TODO: Provide a config parameter - we can use this to set a 'last used value' in the UI
-        // when the screen is opened
-        undoableOp { sched.setDueDate(cardIds, days) }
-        return@async cardIds.size
-    }
+    fun updateDueDateAsync() =
+        viewModelScope.async {
+            val days = calculateDaysParameter() ?: return@async null
+            // TODO: Provide a config parameter - we can use this to set a 'last used value' in the UI
+            // when the screen is opened
+            undoableOp { sched.setDueDate(cardIds, days) }
+            return@async cardIds.size
+        }
 
-    enum class Tab(val position: Int, @DrawableRes val icon: Int) {
+    enum class Tab(
+        val position: Int,
+        @DrawableRes val icon: Int,
+    ) {
         /** Set the due date to a single day */
         SINGLE_DAY(0, R.drawable.calendar_single_day),
 
         /** Sets the due date randomly between a range of days */
-        DATE_RANGE(1, R.drawable.calendar_date_range)
+        DATE_RANGE(1, R.drawable.calendar_date_range),
     }
 
     class DateRange(
         var start: NumberOfDaysInFuture? = null,
-        var end: NumberOfDaysInFuture? = null
+        var end: NumberOfDaysInFuture? = null,
     ) {
         fun isValid(): Boolean {
             val start = start ?: return false

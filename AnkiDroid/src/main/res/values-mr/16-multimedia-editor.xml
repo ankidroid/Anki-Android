@@ -44,21 +44,11 @@
     <string name="multimedia_editor_popup_audio_clip">ऑडिओ क्लिप जोडा</string>
     <string name="multimedia_editor_popup_video_clip">व्हिडिओ क्लिप जोडा</string>
     <string name="multimedia_editor_popup_audio">ऑडिओ रेकॉर्ड करा</string>
-    <string name="multimedia_editor_popup_text">प्रगत संपादक</string>
     <string name="multimedia_editor_popup_cloze">क्लोज हटविणे</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">मजकूर</string>
-    <string name="multimedia_editor_field_editing_image">चित्रे</string>
     <string name="multimedia_editor_field_editing_audio">ऑडिओ रेकॉर्डिंग</string>
-    <string name="multimedia_editor_field_editing_audio_clip">ऑडिओ क्लिप</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">पूर्ण झाले</string>
-    <!-- Text field editing -->
-    <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_clear">साफ</string>
-    <string name="multimedia_editor_text_field_editing_clone">पासून क्लोन</string>
-    <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">कडून घेणें</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
@@ -66,28 +56,21 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">गॅलरी</string>
     <string name="multimedia_editor_image_field_editing_photo">कॅमेरा</string>
-    <string name="multimedia_editor_import_audio">ऑडिओ</string>
-    <string name="multimedia_editor_import_video">व्हिडिओ</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">काहीतरी चूक झाली</string>
-    <string name="multimedia_editor_svg_preview">SVGs पूर्वावलोकनासाठी उपलब्ध नाहीत</string>
     <string name="multimedia_editor_png_paste_error">क्लिपबोर्ड प्रतिमा png मध्ये रूपांतरित करताना त्रुटी: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s फील्डमध्ये मल्टीमीडिया सामग्री जोडा</string>
-    <string name="multimedia_editor_attach_media">मीडिया संलग्न करा</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">रेकॉर्डिंग अयशस्वी</string>
     <string name="multimedia_editor_audio_view_playing_failed">खेळणे अयशस्वी झाले</string>
     <string name="multimedia_editor_audio_view_create_failed">रेकॉर्डर टूल बार तयार करण्यात अक्षम</string>
-    <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">संपादन फील्ड</string>
     <!-- Crop function-->
     <string name="crop_image">आपण ही प्रतिमा क्रॉप करू इच्छिता?</string>
-    <string name="crop_button">प्रतिमा क्रॉप करा</string>
-    <string name="save_dialog_content">वर्तमान प्रतिमेचा आकार %s MB आहे. डीफॉल्ट प्रतिमेची आकार मर्यादा 1MB आहे. आपण ते क्रॉप करू इच्छिता?</string>
+    <string name="crop_button" maxLength="28">प्रतिमा क्रॉप करा</string>
+    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"प्रतिमा निवडा अयशस्वी, कृपया पुन्हा प्रयत्न करा"</string>
-    <string name="activity_result_unexpected">अॅपने एक अनपेक्षित मूल्य परत केले. आपल्याला भिन्न अ‍ॅप वापरण्याची आवश्यकता असू शकते</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">फील्ड सामग्री</string>
-    <string name="reselect">Reselect</string>
+    <string name="reselect" maxLength="28">Reselect</string>
 </resources>

@@ -29,8 +29,8 @@ abstract class AsyncDialogFragment : AnalyticsDialogFragment() {
     abstract val notificationTitle: String
     open val dialogHandlerMessage: DialogHandlerMessage? get() = null
 
-    protected fun res(): Resources {
-        return try {
+    protected fun res(): Resources =
+        try {
             resources
         } catch (e: IllegalStateException) {
             // Fragment SyncErrorDialog not attached to a context.
@@ -42,5 +42,4 @@ abstract class AsyncDialogFragment : AnalyticsDialogFragment() {
             Timber.w(e, "resources failure. Returning AnkiDroidApp resources as fallback.")
             AnkiDroidApp.appResources
         }
-    }
 }

@@ -44,21 +44,11 @@
     <string name="multimedia_editor_popup_audio_clip">Přidat zvukový klip</string>
     <string name="multimedia_editor_popup_video_clip">Přidat video klip</string>
     <string name="multimedia_editor_popup_audio">Pořídit zvukový záznam</string>
-    <string name="multimedia_editor_popup_text">Pokročilý editor</string>
     <string name="multimedia_editor_popup_cloze">Doplňovačka</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Text</string>
-    <string name="multimedia_editor_field_editing_image">Obrázek</string>
     <string name="multimedia_editor_field_editing_audio">Záznam zvuku</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Zvukový klip</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Hotovo</string>
-    <!-- Text field editing -->
-    <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_clear">Vymazat</string>
-    <string name="multimedia_editor_text_field_editing_clone">Klonovat z</string>
-    <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">Vzít z</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
@@ -66,28 +56,21 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Galerie</string>
     <string name="multimedia_editor_image_field_editing_photo">Fotoaparát</string>
-    <string name="multimedia_editor_import_audio">Zvuk</string>
-    <string name="multimedia_editor_import_video">Video</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Něco se pokazilo</string>
-    <string name="multimedia_editor_svg_preview">Náhled pro SVG není dostupný</string>
     <string name="multimedia_editor_png_paste_error">Chyba při převodu obrázku ve schránce na png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Připojit multimediální obsah k poli %1$s</string>
-    <string name="multimedia_editor_attach_media">Připojit multimédia</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Nahrávání selhalo</string>
     <string name="multimedia_editor_audio_view_playing_failed">Přehrávání selhalo</string>
     <string name="multimedia_editor_audio_view_create_failed">Nelze vytvořit nástrojovou lištu pro nahrávání</string>
-    <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Editační pole</string>
     <!-- Crop function-->
     <string name="crop_image">Chcete oříznout tento obrázek?</string>
-    <string name="crop_button">Oříznout obrázek</string>
-    <string name="save_dialog_content">Aktuální velikost obrázku je %s MB. Výchozí limit velikosti obrázku je 1 MB. Chcete jej oříznout?</string>
+    <string name="crop_button" maxLength="28">Oříznout obrázek</string>
+    <string name="save_dialog_content">Aktuální velikost obrázku je %s MB. Výchozí limit velikosti obrázku je 1 MB. Chcete jej zkomprimovat?</string>
     <string name="select_image_failed">"Výběr obrázku selhal, zkuste to prosím znovu"</string>
-    <string name="activity_result_unexpected">Aplikace vrátila neočekávanou hodnotu. Možná budete muset použít jinou aplikaci</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Obsah pole</string>
-    <string name="reselect">Reselect</string>
+    <string name="reselect" maxLength="28">Znovu vybrat</string>
 </resources>

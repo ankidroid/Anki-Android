@@ -52,26 +52,26 @@
         <item quantity="other">顯示了 %d 條筆記</item>
     </plurals>
     <string name="card_browser_all_decks">所有牌組</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="other">Delete cards</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="other">Delete notes</item>
+        <item quantity="other">刪除筆記</item>
     </plurals>
-    <string name="card_browser_change_deck">變更牌組</string>
+    <string name="card_browser_change_deck" maxLength="28">變更牌組</string>
     <string name="delete_card_title">刪除筆記？</string>
-    <string name="card_browser_show_marked">篩選有標記的卡片</string>
-    <string name="card_browser_show_suspended">篩選出擱置的卡片</string>
-    <string name="card_browser_search_by_tag">按標籤篩選</string>
-    <string name="card_browser_search_by_flag">按標記篩選</string>
-    <string name="card_browser_list_my_searches">我的搜尋</string>
-    <string name="card_browser_list_my_searches_save">儲存搜尋</string>
+    <string name="card_browser_show_marked" maxLength="28">篩選有標記的卡片</string>
+    <string name="card_browser_show_suspended" maxLength="28">篩選出擱置的卡片</string>
+    <string name="card_browser_search_by_tag" maxLength="28">按標籤篩選</string>
+    <string name="card_browser_search_by_flag" maxLength="28">按標記篩選</string>
+    <string name="card_browser_list_my_searches" maxLength="28">我的搜尋</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">儲存搜尋</string>
     <string name="card_browser_list_my_searches_title">選擇一個已儲存的搜尋</string>
     <string name="card_browser_list_my_searches_new_name">目前搜尋的名稱</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">你不能儲存沒有名稱的搜尋</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">名稱已存在</string>
+    <string name="no_note_to_edit">沒有可編輯的筆記</string>
     <string name="card_browser_list_my_searches_remove_content">刪除「%1$s」嗎？</string>
-    <string name="card_browser_change_display_order">更改顯示順序</string>
+    <string name="card_browser_change_display_order" maxLength="28">更改顯示順序</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">選擇顯示順序</string>
     <string name="card_details_tags">標籤</string>
     <string-array name="card_browser_order_labels">
@@ -86,16 +86,13 @@
         <item>依複習次數</item>
         <item>依忘記次數</item>
     </string-array>
-    <string name="card_browser_select_all">全選</string>
-    <string name="card_browser_select_none">全不選</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(新增)</string>
-    <string name="card_browser_due_filtered_card">(已過濾)</string>
-    <string name="card_browser_interval_learning_card">(學習中)</string>
+    <string name="card_browser_select_all" maxLength="28">全選</string>
+    <string name="card_browser_select_none" maxLength="28">全不選</string>
     <string name="card_browser_no_cards_in_deck">牌組 ‘%s’ 中未找到任何卡片</string>
     <string name="card_browser_search_all_decks">搜尋所有牌組</string>
     <string name="card_browser_unknown_deck_name">未知</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">截斷內容</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">今天是 \'0 %1$s\'，明天是 \'1 %2$s\'，等等&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="other">匯出卡片</item>
     </plurals>
@@ -105,4 +102,7 @@
     <plurals name="card_browser_cards_deleted">
         <item quantity="other">%d 卡片已刪除</item>
     </plurals>
+    <!--Keyboard shortcuts dialog-->
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
 </resources>

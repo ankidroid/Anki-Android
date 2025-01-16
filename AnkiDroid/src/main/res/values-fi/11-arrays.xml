@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">x-large</string>
     <string name="html_size_code_xx_large">xx-large</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Vastaa uudelleen</string>
-    <string name="answer_hard">Vastaa \"vaikea\"</string>
-    <string name="answer_good">Vastaa \"hyvä\"</string>
-    <string name="answer_easy">Vastaa \"helppo\"</string>
-    <string name="gesture_play">Toista media</string>
-    <string name="gesture_abort_learning">Keskeytä oppiminen</string>
-    <string name="gesture_flag_red">Punainen lippu päälle/pois</string>
-    <string name="gesture_flag_orange">Oranssi lippu päälle/pois</string>
-    <string name="gesture_flag_green">Vihreä lippu päälle/pois</string>
-    <string name="gesture_flag_blue">Sininen lippu päälle/pois</string>
-    <string name="gesture_flag_pink">Pinkki lippu päälle/pois</string>
-    <string name="gesture_flag_turquoise">Turkoosi lippu päälle/pois</string>
-    <string name="gesture_flag_purple">Violetti lippu päälle/pois</string>
-    <string name="gesture_flag_remove">Poista lippu</string>
-    <string name="gesture_page_up">Sivu ylös</string>
-    <string name="gesture_page_down">Sivu alas</string>
-    <string name="gesture_abort_sync">Keskeytä oppiminen ja synkronoi</string>
-    <string name="gesture_toggle_whiteboard">Kirjoitustaulu käyttöön/pois käytöstä</string>
-    <string name="gesture_show_hint">Näytä vihje</string>
-    <string name="gesture_show_all_hints">Näytä kaikki vihjeet</string>
-    <string name="record_voice">Nauhoita ääntä</string>
-    <string name="replay_voice">Toista ääni uudelleen</string>
-    <string name="save_voice">Save Recording</string>
+    <string name="answer_again" maxLength="41">Vastaa uudelleen</string>
+    <string name="answer_hard" maxLength="41">Vastaa \"vaikea\"</string>
+    <string name="answer_good" maxLength="41">Vastaa \"hyvä\"</string>
+    <string name="answer_easy" maxLength="41">Vastaa \"helppo\"</string>
+    <string name="gesture_play" maxLength="41">Toista media</string>
+    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_flag_red" maxLength="41">Punainen lippu päälle/pois</string>
+    <string name="gesture_flag_orange" maxLength="41">Oranssi lippu päälle/pois</string>
+    <string name="gesture_flag_green" maxLength="41">Vihreä lippu päälle/pois</string>
+    <string name="gesture_flag_blue" maxLength="41">Sininen lippu päälle/pois</string>
+    <string name="gesture_flag_pink" maxLength="41">Pinkki lippu päälle/pois</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Turkoosi lippu päälle/pois</string>
+    <string name="gesture_flag_purple" maxLength="41">Violetti lippu päälle/pois</string>
+    <string name="gesture_flag_remove" maxLength="41">Poista lippu</string>
+    <string name="gesture_page_up" maxLength="41">Sivu ylös</string>
+    <string name="gesture_page_down" maxLength="41">Sivu alas</string>
+    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Kirjoitustaulu käyttöön/pois käytöstä</string>
+    <string name="gesture_show_hint" maxLength="41">Näytä vihje</string>
+    <string name="gesture_show_all_hints" maxLength="41">Näytä kaikki vihjeet</string>
+    <string name="record_voice" maxLength="41">Nauhoita ääntä</string>
+    <string name="replay_voice" maxLength="41">Toista ääni uudelleen</string>
+    <string name="save_voice" maxLength="41">Save Recording</string>
 </resources>

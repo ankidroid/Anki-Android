@@ -69,17 +69,17 @@
     <string name="deckpreferences_title">Agordoj por XXX</string>
     <string name="sync_title">Samtempigo</string>
     <string name="sync_log_uploading_message">Plena samtempigo al la servilo</string>
-    <string name="sync_database_acknowledge">Kolekto estas sinkronigita</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
-    <string name="sync_corrupt_database">Via datumbazo estas difektita. Bonvolu ripari ĝin antaŭ reprovi samtempigi.\n\n Legu %s por informoj pri kiel ripari datumbazon.</string>
+    <string name="sync_database_acknowledge">Kolekto estas samtempigita</string>
+    <string name="col_synced_media_in_background">Kolekto estas samtempigita. Aŭdvidaĵoj estas samtempigataj fone.</string>
+    <string name="sync_corrupt_database">Via datumbazo estas difektita. Riparu ĝin antaŭ ol reprovi samtempigi.\n\n Legu %s por informoj pri kiel ripari datumbazon.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Loka</string>
     <string name="sync_sanity_remote">Fora</string>
-    <string name="one_way_sync_title">One-way sync</string>
-    <string name="one_way_sync_confirmation">One way sync requested</string>
+    <string name="one_way_sync_title" maxLength="41">Unudirekta samtempigo</string>
+    <string name="one_way_sync_confirmation">Unudirekta samtempigo planita</string>
     <string name="full_sync_confirmation">La petita ŝanĝo postulos plenan alŝuton de la datumbazo dum la sekva samtempigado de via kolekto. Se vi havas ripetojn aŭ aliajn ŝanĝojn atendantajn ĉe alia aparato, kiuj jam ne estas samtempigitajn tie ĉi, ili perdiĝos. Ĉu pluigi?</string>
-    <string name="full_sync_confirmation_upgrade">Pro la eraro en antaŭe instalita versio de AnkiDroid, estas konsilinde devigi plenan samtempigadon.</string>
+    <string name="full_sync_confirmation_upgrade">Pro la eraro en la antaŭe instalita versio de AnkiDroid, estas konsilinde devigi plenan samtempigadon.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
+    <string name="sync_menu_title_one_way_sync">Samtempigo (unudirekta)</string>
     <string name="sync_menu_title_no_account">Samtempigo (ensaluto)</string>
 </resources>

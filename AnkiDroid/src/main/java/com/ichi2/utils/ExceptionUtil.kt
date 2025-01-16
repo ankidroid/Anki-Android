@@ -24,14 +24,14 @@ import java.io.PrintWriter
 import java.io.StringWriter
 
 object ExceptionUtil {
+    @CheckResult
+    fun getExceptionMessage(e: Throwable?): String = getExceptionMessage(e, "\n")
 
     @CheckResult
-    fun getExceptionMessage(e: Throwable?): String {
-        return getExceptionMessage(e, "\n")
-    }
-
-    @CheckResult
-    fun getExceptionMessage(e: Throwable?, separator: String?): String {
+    fun getExceptionMessage(
+        e: Throwable?,
+        separator: String?,
+    ): String {
         val ret = StringBuilder()
         var cause: Throwable? = e
         while (cause != null) {
@@ -46,16 +46,6 @@ object ExceptionUtil {
         return ret.toString()
     }
 
-    /** Whether the exception is, or contains a cause of a given type  */
-    @KotlinCleanup("convert to containsCause<T>(ex)")
-    fun <T> containsCause(ex: Throwable, clazz: Class<T>): Boolean {
-        if (clazz.isInstance(ex)) {
-            return true
-        }
-        val cause = ex.cause ?: return false
-        return containsCause(cause, clazz)
-    }
-
     fun getFullStackTrace(ex: Throwable): String {
         val sw = StringWriter()
         ex.printStackTrace(PrintWriter(sw))
@@ -63,7 +53,11 @@ object ExceptionUtil {
     }
 
     /** Executes a function, and logs the exception to ACRA and shows a toast if an issue occurs */
-    fun executeSafe(context: Context, origin: String, runnable: (() -> Unit)) {
+    fun executeSafe(
+        context: Context,
+        origin: String,
+        runnable: (() -> Unit),
+    ) {
         try {
             runnable.invoke()
         } catch (e: Exception) {
@@ -71,7 +65,7 @@ object ExceptionUtil {
             showThemedToast(
                 context,
                 context.getString(R.string.multimedia_editor_something_wrong),
-                true
+                true,
             )
         }
     }

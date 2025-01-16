@@ -94,6 +94,7 @@
     <attr name="learnCountColor" format="color"/>
     <attr name="reviewCountColor" format="color"/>
     <attr name="zeroCountColor" format="color"/>
+    <attr name="buryCountColor" format="color"/>
     <!-- Reviewer button backgrounds -->
     <attr name="answerButtonBackground" format="color"/>
     <attr name="againButtonBackground" format="color"/>
@@ -124,6 +125,7 @@
     <attr name="alternativeBackgroundColor" format="color"/>
     <!-- Browser colors -->
     <attr name="suspendedColor" format="color"/>
+    <attr name="buriedColor" format="color"/>
     <attr name="selectedColor" format="color"/>
     <attr name="markedColor" format="color"/>
     <!-- Note editor colors -->
@@ -171,6 +173,7 @@
          The latter is set by colorPrimary, but theme overlay can't use it,
          as it itself overrides colorPrimary, which is used by the view directly. -->
     <attr name="tabLayoutBackgroundColor" format="color"/>
+    <attr name="tabActiveIconColor" format="color"/>
 
     <attr name="checkMediaListBackground" format="color" />
     <attr name="checkMediaListForeground" format="color" />

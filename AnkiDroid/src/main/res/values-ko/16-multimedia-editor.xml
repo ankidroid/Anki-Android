@@ -42,23 +42,13 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">이미지 추가</string>
     <string name="multimedia_editor_popup_audio_clip">오디오 클립 추가</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_video_clip">비디오 클립 추가</string>
     <string name="multimedia_editor_popup_audio">오디오 녹음</string>
-    <string name="multimedia_editor_popup_text">고급 편집기</string>
     <string name="multimedia_editor_popup_cloze">빈칸 만들기</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">텍스트</string>
-    <string name="multimedia_editor_field_editing_image">이미지</string>
     <string name="multimedia_editor_field_editing_audio">오디오 녹음</string>
-    <string name="multimedia_editor_field_editing_audio_clip">오디오 클립</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">완료</string>
-    <!-- Text field editing -->
-    <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_clear">지우기</string>
-    <string name="multimedia_editor_text_field_editing_clone">다음에서 복제</string>
-    <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">다음으로부터 받기</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
@@ -66,28 +56,21 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">갤러리</string>
     <string name="multimedia_editor_image_field_editing_photo">카메라</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
-    <string name="multimedia_editor_import_video">Video</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">무언가가 잘못되었습니다</string>
-    <string name="multimedia_editor_svg_preview">SVG는 미리볼 수 없습니다</string>
     <string name="multimedia_editor_png_paste_error">클립보드 이미지의 png 변환 오류: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s 영역에 멀티미디어 항목 첨부</string>
-    <string name="multimedia_editor_attach_media">미디어 첨부</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">녹음 실패</string>
     <string name="multimedia_editor_audio_view_playing_failed">재생 실패</string>
     <string name="multimedia_editor_audio_view_create_failed">레코더 툴바를 생성할 수 없습니다</string>
-    <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">편집 필드</string>
     <!-- Crop function-->
     <string name="crop_image">이 이미지를 자르시겠습니까?</string>
-    <string name="crop_button">이미지 자르기</string>
-    <string name="save_dialog_content">현재 이미지 용량은 %sMB입니다. 기본 이미지 용량 제한은 1MB입니다. 이미지를 자르시겠습니까?</string>
+    <string name="crop_button" maxLength="28">이미지 자르기</string>
+    <string name="save_dialog_content">현재의 이미지의 크기는 %sMB 입니다. 기본 이미지 크기의 한도는 1MB입니다. 이미지를 압축하시겠습니까?</string>
     <string name="select_image_failed">"이미지 선택 실패, 재시도하세요"</string>
-    <string name="activity_result_unexpected">앱이 예상치 못한 값을 리턴했습니다. 다른 앱을 사용해 주세요</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">필드 내용</string>
-    <string name="reselect">Reselect</string>
+    <string name="reselect" maxLength="28">재선택</string>
 </resources>

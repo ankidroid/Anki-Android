@@ -16,9 +16,14 @@
 
 package com.ichi2.utils
 
+import android.app.Activity
+import android.content.Context
 import android.graphics.Rect
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.view.OnReceiveContentListener
+import androidx.draganddrop.DropHelper
+import com.ichi2.anki.scheduling.dpToPx
 
 /** @see View.performClick */
 fun View.performClickIfEnabled() {
@@ -41,4 +46,78 @@ fun View.rawHitTest(event: MotionEvent): Boolean {
     rect.bottom += location[1]
 
     return rect.contains(event.rawX.toInt(), event.rawY.toInt())
+}
+
+/**
+ * If possible, configures a [View] for drag and drop operations, including highlighting that
+ * indicates the view is a drop target. Sets a listener that enables the view to handle dropped data.
+ *
+ * @see DropHelper.configureView
+ */
+fun View.configureView(
+    activity: Activity,
+    mimeTypes: Array<String>,
+    options: DropHelper.Options,
+    onReceiveContentListener: OnReceiveContentListener,
+) {
+    DropHelper.configureView(
+        activity,
+        this,
+        mimeTypes,
+        options,
+        onReceiveContentListener,
+    )
+}
+
+/**
+ * Sets the relative padding for all dimensions of the view
+ *
+ * The view may add on the space required to display the scrollbars,
+ * depending on the style and visibility of the scrollbars.
+ * So the values returned from `getPadding` calls
+ * may be different from the values set in this call.
+ */
+fun View.setPaddingRelative(px: Int) = setPaddingRelative(px, px, px, px)
+
+/**
+ * Sets the relative padding for all dimensions of the view
+ *
+ * The view may add on the space required to display the scrollbars,
+ * depending on the style and visibility of the scrollbars.
+ * So the values returned from `getPadding` calls
+ * may be different from the values set in this call.
+ */
+@Suppress("unused")
+fun View.setPaddingRelative(dp: Dp) = setPaddingRelative(dp.toPx(context))
+
+/**
+ * Sets the relative padding
+ *
+ * The view may add on the space required to display the scrollbars,
+ * depending on the style and visibility of the scrollbars.
+ * So the values returned from `getPadding` calls
+ * may be different from the values set in this call.
+ */
+// Since we're in Kotlin, this now allows named arguments!
+@Suppress("unused")
+fun View.setPaddingRelative(
+    start: Dp,
+    top: Dp,
+    end: Dp,
+    bottom: Dp,
+) = setPaddingRelative(start.toPx(context), top.toPx(context), end.toPx(context), bottom.toPx(context))
+
+/** Returns a [Dp] instance equal to this [Int] number of display pixels. */
+val Int.dp
+    get() = Dp(dp = this.toFloat())
+
+/**
+ * Helper for 'display pixels' to 'pixels' conversions
+ */
+@JvmInline
+value class Dp(
+    val dp: Float,
+) {
+    // TODO: improve once we have context parameters
+    fun toPx(context: Context) = dp.dpToPx(context)
 }

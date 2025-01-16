@@ -70,12 +70,12 @@
     <string name="sync_title">同期</string>
     <string name="sync_log_uploading_message">この端末側のコレクションによる完全同期が完了しました</string>
     <string name="sync_database_acknowledge">コレクションの同期が完了しました</string>
-    <string name="col_synced_media_in_background">コレクションの同期が完了しました。メディアの同期はバックグラウンドで進行します。</string>
+    <string name="col_synced_media_in_background">コレクションの同期が完了しました。\nメディアの同期はバックグラウンドで進行します。</string>
     <string name="sync_corrupt_database">データベースが破損しています。同期を再試行する前にデータベースを修復してください。修復に関する情報は %s を参照してください。</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">ローカル</string>
     <string name="sync_sanity_remote">クラウド</string>
-    <string name="one_way_sync_title">一方向同期</string>
+    <string name="one_way_sync_title" maxLength="41">一方向同期</string>
     <string name="one_way_sync_confirmation">一方向同期がリクエストされました</string>
     <string name="full_sync_confirmation">要求した変更を行うには、次回のコレクションの同期の際にデータベースの完全なアップロードが必要です。他の端末で学習やその他の変更を行ってまだ同期が済んでいない場合、それらの変更は失われます。処理を続けますか？</string>
     <string name="full_sync_confirmation_upgrade">以前のバージョンのバグの修正を反映させるため、完全同期をおすすめします。</string>

@@ -19,7 +19,6 @@ import android.view.KeyEvent
 import androidx.annotation.VisibleForTesting
 
 object KeyUtils {
-
     @VisibleForTesting
     fun isDigit(event: KeyEvent): Boolean {
         val unicodeChar = event.getUnicodeChar(0)

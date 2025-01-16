@@ -60,16 +60,24 @@ object BackgroundImage {
         data object OK : FileSizeResult
 
         /** Large files can cause OutOfMemoryError */
-        data class FileTooLarge(val currentMB: Long, val maxMB: Long) : FileSizeResult
+        data class FileTooLarge(
+            val currentMB: Long,
+            val maxMB: Long,
+        ) : FileSizeResult
 
         /** Large bitmaps cause uncatchable: RuntimeException("Canvas: trying to draw too large(Xbytes) bitmap.") */
-        data class UncompressedBitmapTooLarge(val width: Long, val height: Long) : FileSizeResult
+        data class UncompressedBitmapTooLarge(
+            val width: Long,
+            val height: Long,
+        ) : FileSizeResult
     }
 
-    context (AppearanceSettingsFragment)
-    fun validateBackgroundImageFileSize(selectedImage: Uri): FileSizeResult {
+    fun validateBackgroundImageFileSize(
+        target: AppearanceSettingsFragment,
+        selectedImage: Uri,
+    ): FileSizeResult {
         val filePathColumn = arrayOf(MediaStore.MediaColumns.SIZE, MediaStore.MediaColumns.WIDTH, MediaStore.MediaColumns.HEIGHT)
-        requireContext().contentResolver.query(selectedImage, filePathColumn, null, null, null).use { cursor ->
+        target.requireContext().contentResolver.query(selectedImage, filePathColumn, null, null, null).use { cursor ->
             cursor!!.moveToFirst()
             val fileSizeInMB = cursor.getLong(0) / (1024 * 1024)
             if (fileSizeInMB >= 10) {
@@ -88,21 +96,27 @@ object BackgroundImage {
         }
     }
 
-    context (AppearanceSettingsFragment)
-    fun import(selectedImage: Uri) {
-        val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(requireContext())
+    fun import(
+        target: AppearanceSettingsFragment,
+        selectedImage: Uri,
+    ) {
+        val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(target.requireContext())
         val imageName = "DeckPickerBackground.png"
         val destFile = File(currentAnkiDroidDirectory, imageName)
-        (requireContext().contentResolver.openInputStream(selectedImage) as FileInputStream).channel.use { sourceChannel ->
+        (target.requireContext().contentResolver.openInputStream(selectedImage) as FileInputStream).channel.use { sourceChannel ->
             FileOutputStream(destFile).channel.use { destChannel ->
                 destChannel.transferFrom(sourceChannel, 0, sourceChannel.size())
-                showSnackbar(R.string.background_image_applied)
+                target.showSnackbar(R.string.background_image_applied)
             }
         }
         this.enabled = true
     }
 
-    data class Size(val width: Int, val height: Int)
+    data class Size(
+        val width: Int,
+        val height: Int,
+    )
+
     fun getBackgroundImageDimensions(context: Context): Size {
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context)
         val imageName = "DeckPickerBackground.png"

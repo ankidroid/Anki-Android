@@ -26,6 +26,7 @@
         <item name="actionModeBackground">@color/theme_black_primary_dark</item>
         <!-- Tab layout -->
         <item name="tabLayoutBackgroundColor">@color/theme_black_primary_dark</item>
+        <item name="tabActiveIconColor">@color/material_blue_500</item>
         <!-- Deck list colors and divider -->
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
         <item name="currentDeckBackgroundColor">@color/theme_black_row_current</item>
@@ -37,6 +38,7 @@
         <item name="newCountColor">@color/material_blue_700</item>
         <item name="learnCountColor">@color/material_red_400</item>
         <item name="reviewCountColor">@color/material_green_400</item>
+        <item name="buryCountColor">@color/disabled_gray_dark</item>
         <item name="zeroCountColor">#202020</item>
         <!-- Reviewer colors -->
         <item name="showAnswerColor">@color/theme_black_primary</item>
@@ -101,10 +103,6 @@
         <!-- ProgressDialog-->
         <item name="dialogBackground">@color/theme_black_primary_light</item>
         <item name="progressDialogButtonTextColor">@color/material_light_blue_400</item>
-
-        <!-- AlertDialogTheme-->
-        <item name="alertDialogTheme">@style/AlertDialogStyle</item>
-
     </style>
 
     <style name="SnackbarTextStyleBlack" parent="@style/Widget.MaterialComponents.Snackbar.TextView">

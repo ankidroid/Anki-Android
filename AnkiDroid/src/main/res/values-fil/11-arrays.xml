@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">sobrang laki</string>
     <string name="html_size_code_xx_large">pinakamalaki</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Sagot - muli</string>
-    <string name="answer_hard">Sagot - mahirap</string>
-    <string name="answer_good">Sagot - mabuti</string>
-    <string name="answer_easy">Sagot - madali</string>
-    <string name="gesture_play">I-play ang media</string>
-    <string name="gesture_abort_learning">Abort sa pag-aaral</string>
-    <string name="gesture_flag_red">Maglagay ng Pulang Watawat</string>
-    <string name="gesture_flag_orange">Maglagay ng Kahel na Watawat</string>
-    <string name="gesture_flag_green">Maglagay ng Berdeng Watawat</string>
-    <string name="gesture_flag_blue">Maglagay ng Asul na Watawat</string>
-    <string name="gesture_flag_pink">Maglagay ng Rosas na Watawat</string>
-    <string name="gesture_flag_turquoise">Maglagay ng Turkesa na Watawat</string>
-    <string name="gesture_flag_purple">Maglagay ng Ube na Watawat</string>
-    <string name="gesture_flag_remove">Tanggalin ang Watawat</string>
-    <string name="gesture_page_up">Itaas ang Pahina</string>
-    <string name="gesture_page_down">Ibaba ang Pahina</string>
-    <string name="gesture_abort_sync">Iudlot Ang Pag-Aaral at Pag-Sync</string>
-    <string name="gesture_toggle_whiteboard">Paganahin ang Puting Pisara</string>
-    <string name="gesture_show_hint">Ipakita Ang Hint</string>
-    <string name="gesture_show_all_hints">Ipakita Ang Lahat ng Hint</string>
-    <string name="record_voice">I-rekord Ang Boses</string>
-    <string name="replay_voice">I-play Muli Ang Boses</string>
-    <string name="save_voice">I-save Ang Recording</string>
+    <string name="answer_again" maxLength="41">Sagot - muli</string>
+    <string name="answer_hard" maxLength="41">Sagot - mahirap</string>
+    <string name="answer_good" maxLength="41">Sagot - mabuti</string>
+    <string name="answer_easy" maxLength="41">Sagot - madali</string>
+    <string name="gesture_play" maxLength="41">I-play ang media</string>
+    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_flag_red" maxLength="41">Maglagay ng Pulang Watawat</string>
+    <string name="gesture_flag_orange" maxLength="41">Maglagay ng Kahel na Watawat</string>
+    <string name="gesture_flag_green" maxLength="41">Maglagay ng Berdeng Watawat</string>
+    <string name="gesture_flag_blue" maxLength="41">Maglagay ng Asul na Watawat</string>
+    <string name="gesture_flag_pink" maxLength="41">Maglagay ng Rosas na Watawat</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Maglagay ng Turkesa na Watawat</string>
+    <string name="gesture_flag_purple" maxLength="41">Maglagay ng Ube na Watawat</string>
+    <string name="gesture_flag_remove" maxLength="41">Tanggalin ang Watawat</string>
+    <string name="gesture_page_up" maxLength="41">Itaas ang Pahina</string>
+    <string name="gesture_page_down" maxLength="41">Ibaba ang Pahina</string>
+    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Paganahin ang Puting Pisara</string>
+    <string name="gesture_show_hint" maxLength="41">Ipakita Ang Hint</string>
+    <string name="gesture_show_all_hints" maxLength="41">Ipakita Ang Lahat ng Hint</string>
+    <string name="record_voice" maxLength="41">I-rekord Ang Boses</string>
+    <string name="replay_voice" maxLength="41">I-play Muli Ang Boses</string>
+    <string name="save_voice" maxLength="41">I-save Ang Recording</string>
 </resources>

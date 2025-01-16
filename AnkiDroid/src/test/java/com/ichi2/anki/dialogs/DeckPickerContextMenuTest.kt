@@ -20,6 +20,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
+import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.FragmentScenario.Companion.launch
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -31,14 +32,18 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.testutils.BackupManagerTestUtilities.setupSpaceForBackup
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import timber.log.Timber
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class DeckPickerContextMenuTest {
+    private val scenariosForCleanup = ArrayList<FragmentScenario<*>>()
+
     @Before
     fun before() {
         val context = ApplicationProvider.getApplicationContext<AnkiDroidApp>()
@@ -46,16 +51,27 @@ class DeckPickerContextMenuTest {
         setupSpaceForBackup(context)
     }
 
+    @After
+    fun after() {
+        for (scenario in scenariosForCleanup) {
+            try {
+                scenario.close()
+            } catch (e: Exception) {
+                Timber.e(e, "ignored")
+            }
+        }
+    }
+
     @Test
     fun ensure_cannot_be_instantiated_without_expected_arguments() {
         // fails on deck id missing from arguments
-        assertFailsWith<AssertionError> { startContextMenuWithMissingArgument("id") }
+        assertFailsWith<IllegalArgumentException> { startContextMenuWithMissingArgument("id") }
         // fails on deck name missing from arguments
-        assertFailsWith<AssertionError> { startContextMenuWithMissingArgument("name") }
+        assertFailsWith<IllegalArgumentException> { startContextMenuWithMissingArgument("name") }
         // fails on deck dynamic status missing from arguments
-        assertFailsWith<AssertionError> { startContextMenuWithMissingArgument("dynamic") }
+        assertFailsWith<IllegalArgumentException> { startContextMenuWithMissingArgument("dynamic") }
         // fails on deck having buried status missing from arguments
-        assertFailsWith<AssertionError> { startContextMenuWithMissingArgument("hasBuried") }
+        assertFailsWith<IllegalArgumentException> { startContextMenuWithMissingArgument("hasBuried") }
     }
 
     /**
@@ -66,30 +82,27 @@ class DeckPickerContextMenuTest {
      * bundle. See source code for [DeckPickerContextMenu] for options meaning.
      */
     private fun startContextMenuWithMissingArgument(excluded: String) {
-        val arguments = Bundle().apply {
-            if (excluded != "id") {
-                DeckPickerContextMenu.ARG_DECK_ID to 1000L
+        val arguments =
+            Bundle().apply {
+                if (excluded != "id") {
+                    DeckPickerContextMenu.ARG_DECK_ID to 1000L
+                }
+                if (excluded != "name") {
+                    DeckPickerContextMenu.ARG_DECK_NAME to "Deck"
+                }
+                if (excluded != "dynamic") {
+                    DeckPickerContextMenu.ARG_DECK_IS_DYN to false
+                }
+                if (excluded != "hasBuried") {
+                    DeckPickerContextMenu.ARG_DECK_HAS_BURIED_IN_DECK to false
+                }
             }
-            if (excluded != "name") {
-                DeckPickerContextMenu.ARG_DECK_NAME to "Deck"
-            }
-            if (excluded != "dynamic") {
-                DeckPickerContextMenu.ARG_DECK_IS_DYN to false
-            }
-            if (excluded != "hasBuried") {
-                DeckPickerContextMenu.ARG_DECK_HAS_BURIED_IN_DECK to false
-            }
-        }
-        launch(DeckPickerContextMenu::class.java, arguments, R.style.Theme_Light)
+        launch(arguments)
     }
 
     @Test
     fun `Shows standard options`() {
-        launch(
-            DeckPickerContextMenu::class.java,
-            withArguments(),
-            R.style.Theme_Light
-        ).onFragment { fragment ->
+        launch(withArguments()).onFragment { fragment ->
             fragment.assertOptionPresent(R.string.menu_add)
             fragment.assertOptionPresent(R.string.browse_cards)
             fragment.assertOptionPresent(R.string.rename_deck)
@@ -104,7 +117,7 @@ class DeckPickerContextMenuTest {
         val optionTitle = getString(optionStringRes)
         assertTrue(
             foundOptions().contains(optionTitle),
-            "'$optionTitle' should be present"
+            "'$optionTitle' should be present",
         )
     }
 
@@ -112,64 +125,53 @@ class DeckPickerContextMenuTest {
     fun `DELETE_DECK is the last option in the menu(issue 10283)`() {
         // "Delete deck" was previously close to "Custom study" which caused misclicks.
         // This is less likely at the bottom of the list
-        launch(
-            DeckPickerContextMenu::class.java,
-            withArguments(),
-            R.style.Theme_Light
-        ).onFragment { fragment ->
+        launch(withArguments()).onFragment { fragment ->
             MatcherAssert.assertThat(
                 "'Delete deck' should be last item in the menu",
                 fragment.foundOptions().last(),
-                equalTo(fragment.getString(R.string.contextmenu_deckpicker_delete_deck))
+                equalTo(fragment.getString(R.string.contextmenu_deckpicker_delete_deck)),
             )
         }
     }
 
     @Test
     fun `Shows options to empty and rebuild when deck is dynamic`() {
-        launch(
-            DeckPickerContextMenu::class.java,
-            withArguments(isDynamic = true),
-            R.style.Theme_Light
-        ).onFragment { fragment ->
+        launch(withArguments(isDynamic = true)).onFragment { fragment ->
             assertTrue(
                 fragment.foundOptions().contains(fragment.getString(R.string.empty_cram_label)),
-                "'Empty' should be present when deck is dynamic"
+                "'Empty' should be present when deck is dynamic",
             )
             assertTrue(
                 fragment.foundOptions().contains(fragment.getString(R.string.rebuild_cram_label)),
-                "'Rebuild' should be present when deck is dynamic"
+                "'Rebuild' should be present when deck is dynamic",
             )
         }
     }
 
     @Test
     fun `Shows option to create subdeck when deck is not dynamic`() {
-        launch(
-            DeckPickerContextMenu::class.java,
-            withArguments(),
-            R.style.Theme_Light
-        ).onFragment { fragment ->
+        launch(withArguments()).onFragment { fragment ->
             assertTrue(
                 fragment.foundOptions().contains(fragment.getString(R.string.create_subdeck)),
-                "'Create subdeck' should be present when deck is not dynamic"
+                "'Create subdeck' should be present when deck is not dynamic",
             )
         }
     }
 
     @Test
     fun `Shows option to unbury if deck has buried cards`() {
-        launch(
-            DeckPickerContextMenu::class.java,
-            withArguments(hasBuriedCards = true),
-            R.style.Theme_Light
-        ).onFragment { fragment ->
+        launch(withArguments(hasBuriedCards = true)).onFragment { fragment ->
             assertTrue(
                 fragment.foundOptions().contains(fragment.getString(R.string.unbury)),
-                "'Unbury' should be present when deck has buried cards"
+                "'Unbury' should be present when deck has buried cards",
             )
         }
     }
+
+    private fun launch(arguments: Bundle) =
+        launch(DeckPickerContextMenu::class.java, arguments, R.style.Theme_Light).also {
+            scenariosForCleanup.add(it)
+        }
 
     private fun DeckPickerContextMenu.foundOptions(): List<String> {
         val foundOptions = mutableListOf<String>()
@@ -184,11 +186,11 @@ class DeckPickerContextMenuTest {
         deckId: DeckId = 1000L,
         deckName: String = "Deck 1",
         isDynamic: Boolean = false,
-        hasBuriedCards: Boolean = false
+        hasBuriedCards: Boolean = false,
     ) = bundleOf(
         DeckPickerContextMenu.ARG_DECK_ID to deckId,
         DeckPickerContextMenu.ARG_DECK_NAME to deckName,
         DeckPickerContextMenu.ARG_DECK_IS_DYN to isDynamic,
-        DeckPickerContextMenu.ARG_DECK_HAS_BURIED_IN_DECK to hasBuriedCards
+        DeckPickerContextMenu.ARG_DECK_HAS_BURIED_IN_DECK to hasBuriedCards,
     )
 }

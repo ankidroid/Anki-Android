@@ -55,21 +55,21 @@
     <string name="edit_occlusions">画像穴埋め問題を編集</string>
     <string name="tag_name">タグ名</string>
     <string name="add_new_filter_tags">タグフィルター / 新規タグ追加</string>
-    <string name="add_tag">タグを追加</string>
-    <string name="check_all_tags">すべて選択 / 選択をすべて解除</string>
-    <string name="filter_tags">フィルター (前方一致検索)</string>
+    <string name="add_tag" maxLength="28">タグを追加</string>
+    <string name="check_all_tags" maxLength="28">すべて選択 / 選択をすべて解除</string>
+    <string name="filter_tags" maxLength="28">フィルター (前方一致検索)</string>
     <string name="no_tags">まだタグが一つも作成されていません</string>
     <string name="updated_version">バージョン%sにアップデートしました</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">ホワイトボードの内容を保存</string>
-    <string name="enable_stylus">スタイラスモードをオン</string>
+    <string name="save_whiteboard" maxLength="28">ホワイトボードの内容を保存</string>
+    <string name="enable_stylus" maxLength="28">スタイラスモードをオン</string>
     <string name="disable_stylus">スタイラスモードをオフ</string>
-    <string name="enable_whiteboard">ホワイトボード機能をオン</string>
+    <string name="enable_whiteboard" maxLength="28">ホワイトボード機能をオン</string>
     <string name="disable_whiteboard">ホワイトボード機能をオフ</string>
     <string name="show_whiteboard">ホワイトボードを表示</string>
-    <string name="hide_whiteboard">ホワイトボードを隠す</string>
-    <string name="clear_whiteboard">ホワイトボードの内容を消去</string>
-    <string name="replay_audio">音声を再生</string>
+    <string name="hide_whiteboard" maxLength="28">ホワイトボードを隠す</string>
+    <string name="clear_whiteboard" maxLength="28">ホワイトボードの内容を消去</string>
+    <string name="replay_audio" maxLength="28">音声を再生</string>
     <string name="leech_suspend_notification">このカードに \"leech\"  (苦戦、忘却多発) というタグを付け、学習を休止しました</string>
     <string name="leech_notification">このカードに \"leech\" (苦戦、忘却多発) というタグを付けました</string>
     <string name="webview_crash_unknown">原因不明のエラー</string>
@@ -80,24 +80,23 @@
     <string name="webview_crash_fatal">重大なエラー: WebViewレンダラーがクラッシュしました。原因: %s</string>
     <string name="webview_crash_loop_dialog_title">システムのWebViewのレンダリング失敗</string>
     <string name="webview_crash_loop_dialog_content">AndroidシステムのWebViewがカード \'%1$s\' のレンダリングに失敗しました。\n %2$s</string>
-    <string name="filter_by_flags">フラグ</string>
+    <string name="filter_by_flags" maxLength="41">フラグ</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">今日の新規カード上限を変更</string>
-    <string name="custom_study_increase_review_limit">今日の復習カード上限を変更</string>
-    <string name="custom_study_review_forgotten">間違えたカードを再学習</string>
-    <string name="custom_study_review_ahead">復習カードを予習</string>
-    <string name="custom_study_random_selection">カードをランダムに選んで学習</string>
-    <string name="custom_study_preview_new">新規カードを予習</string>
     <string name="custom_study_limit_tags">タグで抽出して学習</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="other">+%d 今日は非表示</item>
+    </plurals>
+    <string name="studyoptions_total_new_label">新規（未学習）総数</string>
+    <string name="studyoptions_total_label">デッキ内総数</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">ノートを編集</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">ノートを編集</string>
     <string name="discard">破棄</string>
     <string name="note_editor_no_cards_created">カードが作成されていません。他のフィールドにも入力してください。</string>
     <string name="note_editor_no_cards_created_all_fields">現在のノートタイプではカードを生成できませんでした。\n別のノートタイプを選択するか、「カード」をタップしてフィールドを挿入してください。</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">穴埋め問題箇所を示す文字列は、穴埋め問題型のノートタイプでのみ機能します</string>
     <string name="saving_facts">ノートを保存しています</string>
     <string name="saving_model">ノートタイプを保存しています</string>
-    <string name="save">保存</string>
+    <string name="save" maxLength="28">保存</string>
     <string name="close">閉じる</string>
     <string name="select">選択</string>
     <string name="field_remapping">%1$s (\'%2$s\'から)</string>
@@ -113,19 +112,18 @@
         <item quantity="other">%1$d分</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid カード</string>
-    <string name="note_editor_copy_note">ノートを複製</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">導入順序を変更</string>
-    <string name="card_editor_reset_card">新規カードにリセット</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">スケジュールを変更</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">プレビュー</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Markdown形式でコピー</string>
+    <string name="note_editor_copy_note" maxLength="28">ノートを複製</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">位置（新規カード番号）を変更</string>
+    <string name="card_editor_reset_card" maxLength="28">新規カードにリセット</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">スケジュールを変更</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">プレビュー</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Markdown形式でコピー</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d / %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">名前を変更</string>
-    <string name="checks_action">チェック</string>
-    <string name="check_db">データベースをチェック</string>
-    <string name="check_media">メディアをチェック</string>
-    <string name="empty_cards">白紙カードをチェック</string>
-    <string name="empty_card_warning">このカードは白紙カード（表側に表示する内容がないカード）です。このような白紙カードを一括削除するには、デッキリスト画面のメニューから「白紙カードをチェック」を選択してください。</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">名前を変更</string>
+    <string name="checks_action" maxLength="28">チェック</string>
+    <string name="check_db" maxLength="28">データベースをチェック</string>
+    <string name="check_media" maxLength="28">メディアをチェック</string>
+    <string name="empty_cards" maxLength="28">白紙カードをチェック</string>
     <string name="unknown_type_field_warning">タイピングして答えを入力: 不明なフィールド %s</string>
     <string name="delete_deck">デッキを削除しています&#8230;</string>
     <string name="info_rate">AnkiDroidを評価</string>
@@ -159,12 +157,11 @@
     <string name="export_choice_share">共有</string>
     <string name="export_choice_save_to">保存先を選択</string>
     <string name="export_saving_exported_collection">エクスポートしたファイルを保存しています&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">オプション</string>
-    <string name="menu__deck_options">デッキオプション</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">オプション</string>
+    <string name="menu__deck_options" maxLength="28">デッキオプション</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">学習オプション</string>
-    <string name="select_tts">読み上げ用の言語を選択</string>
-    <string name="custom_study">カスタム学習</string>
-    <string name="more_options">その他</string>
+    <string name="select_tts" maxLength="28">読み上げ用の言語を選択</string>
+    <string name="custom_study" maxLength="28">カスタム学習</string>
     <string name="dyn_deck_desc">これは標準のスケジュールから外れて学習する特別なデッキです。 復習が終わったカードは自動的に元のデッキに戻ります。 このデッキを削除すると、残りのカードもすべて元のデッキに戻ります。</string>
     <string name="steps_error">習得ステップには1以上の数字を入力してください</string>
     <string name="steps_min_error">少なくとも 1 つの習得ステップが必要です</string>
@@ -184,17 +181,17 @@
     <string name="web_page_error">ページ読み込みエラー: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">デッキリスト画面の背景</string>
-    <string name="choose_an_image">画像を選択</string>
+    <string name="background_image_title" maxLength="41">デッキリスト画面の背景</string>
+    <string name="choose_an_image" maxLength="41">画像を選択</string>
     <string name="remove_background_image">背景画像を削除しますか？</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">既定値に戻す</string>
+    <string name="restore_default" maxLength="28">既定値に戻す</string>
     <string name="reviewer_tts_cloze_spoken_replacement">空白</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">ホワイトボード画像の保存に失敗しました。 %s</string>
     <string name="white_board_image_saved">ホワイトボードの画像を \"%s\" に保存しました</string>
-    <string name="title_whiteboard_pen_color">ホワイトボードペンの色を選択</string>
-    <string name="title_whiteboard_editor">ホワイトボードエディタ</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">ホワイトボードペンの色を選択</string>
+    <string name="title_whiteboard_editor" maxLength="28">ホワイトボードエディタ</string>
     <string name="user_is_a_robot">自動テストが検出されました。人間による操作の場合は、AnkiDroidサポートにお問い合わせください。</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">このカードはサポートされない機能を使用しています。開発者 %1$sに連絡するか、Wikiで確認してください。 %2$s</string>
@@ -209,13 +206,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">カードコンテンツエラー: ’%s’ の読み込みに失敗しました</string>
     <!-- Deck Picker -->
-    <string name="search_decks">デッキ名を検索</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">移行の進行状況を表示</string>
+    <string name="search_decks" maxLength="28">デッキ名を検索</string>
     <string name="ankidroid_init_failed_webview_title">重大なエラー</string>
     <string name="ankidroid_init_failed_webview">AnkiDroidはAndroidシステムのWebViewに依存していますが、このWebViewが現在使用できません。この状況は、システムがアップデートプログラムをインストールしている場合に発生する可能性があります。数分後に再試行してください。\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">フォントサイズ</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">ツールバーを表示</string>
+    <string name="menu_font_size" maxLength="28">フォントサイズ</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ツールバーを表示</string>
     <string name="format_insert_bold">太字</string>
     <string name="format_insert_italic">斜体</string>
     <string name="format_insert_underline">下線</string>
@@ -230,13 +226,15 @@
     <string name="edit_toolbar_item">アイテムを編集</string>
     <string name="toolbar_item_explain_edit_or_remove">選択した文字列の前後に挿入するHTMLをそれぞれ入力してください\n\n作成したツールバーアイテムを編集または削除したい場合は、そのアイテムのボタンを長押ししてください</string>
     <string name="remove_toolbar_item">このツールバーアイテムを削除しますか？</string>
-    <string name="note_editor_paste_too_large">画像が大きすぎるため貼り付けできません。手動で画像を挿入してください</string>
+    <string name="note_editor_image_too_large">画像が大きすぎます。手動で画像を挿入してください</string>
+    <string name="note_editor_video_too_large">動画ファイルが大きすぎます。手動で動画を挿入してください</string>
+    <string name="note_editor_audio_too_large">音声ファイルが大きすぎます。手動で音声を挿入してください</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Androidのバックアップが進行中です。もう一度やり直してください</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroidのショートカットを追加するには、iManagerでの許可が必要な場合があります。</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">ホーム画面へのショートカットの追加が許可されませんでした</string>
     <string name="create_shortcut_error">ショートカット追加のエラー: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">英語入力の際に文頭を大文字</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">ツールバーをスクロール表示</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">英語入力の際に文頭を大文字</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">ツールバーをスクロール表示</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -259,7 +257,7 @@
     <string name="check_network">ネットワーク接続を確認してください</string>
     <string name="search_using_deck_name">デッキ名で検索</string>
     <string name="external_storage_unavailable">ダウンロードが中止されました。この外部ストレージは利用できません。</string>
-    <string name="home">ホーム</string>
+    <string name="home" maxLength="28">ホーム</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">カードを今日は非表示にしました。</string>
@@ -268,16 +266,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">フィールド「%s」の内容を固定する</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">ストレージ移行</string>
     <string name="scoped_storage_learn_more">詳細</string>
-    <string name="scoped_storage_postpone">後で</string>
-    <string name="scoped_storage_migrate">移行</string>
     <string name="search_card_js_api_no_results">検索対象が見つかりませんでした</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">Android10のセキュリティポリシーに準拠するためには、AnkiDroidのストレージを移行（AnkiDroidのデータをアプリ専用の新しい保存場所へ移動）する必要があります。\n\n移行を行うと、メディアの同期が従来より短時間で行えるようになります。&lt;br&gt;&lt;br&gt;移行処理中は、同期機能の使用や、一部の設定の変更ができなくなります。移行処理を開始する前に、万一のデータ損失に備え、メディアを含めての同期を実行します。&lt;br&gt;&lt;br&gt;移行処理中もAnkiDroidを使用可能です。また、移行処理中にAnkiDroidの画面を閉じても問題ありません。</string>
-    <string name="start_migration_progress_message">ストレージの移行を開始します。AnkiDroidの使用はまもなく再開できます。</string>
-    <string name="migration_part_1_done_resume">AnkiDroidの使用を再開できます。
-\nストレージの移行はバックグラウンドで続行されます。</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s は有効なJavaScriptアドオンパッケージではありません</string>
     <string name="could_not_create_dir">%s というディレクトリを作成できませんでした</string>
@@ -307,14 +297,8 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">カード</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ノート</string>
     <string name="toggle_cards_notes">カード /ノート の切り替え</string>
-    <string name="toggle_browser_mode_help">カードブラウザのリスト画面で、カードとノート、どちらのリストを表示するかを切り替えます</string>
     <string name="truncate_content_help">リスト画面において、カードまたはノートの内容の表示を１件につき３行までに制限します</string>
     <string name="browser_options_dialog_heading">ブラウザ オプション</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        ストレージ移行中はこの機能は利用できません
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">タップしてストレージ移行を開始</string>
-    <string name="media_sync_required_title">メディアの同期が必要です</string>
-    <string name="media_sync_unavailable_message">メディアの同期が設定で無効になっています。続行する前に、まだ同期していないメディアを同期することによってバックアップをとってください</string>
     <string name="audio_saved">録音を保存しました</string>
     <string name="deleting_selected_notes">選択したノートを削除しています</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        読み上げる音声をタップ 
@@ -338,9 +322,30 @@
     <plurals name="unbury_cards_feedback">
         <item quantity="other">%d枚のカードの「今日は非表示」を解除しました</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">並べ替える</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">並べ替える</string>
     <string name="start_recording">録音</string>
     <string name="stop_recording">停止</string>
     <string name="play_recording">再生</string>
     <string name="next_recording">次へ</string>
+    <!--  AlertDialog in the deleteCardTemplate  -->
+    <string name="orphan_note_title">カードタイプを削除できません</string>
+    <string name="orphan_note_message">このカードタイプを削除すると、カードが無いノートが生じます。</string>
+    <string name="voice_not_supported">読み上げ音声がサポートされていません。別の音声を試すか、音声エンジンをインストールしてください。</string>
+    <!--Keyboard shortcuts dialog-->
+    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">キーボードショートカットを表示</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">デッキリスト</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">デッキを削除（確認なし）</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">ノート編集画面</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">デッキを選択</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">ノートタイプを選択</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">タグを編集</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">カードテンプレートエディタ</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">表面テンプレートを編集</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">裏面テンプレートを編集</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">スタイルを編集</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">テンプレートをMarkdowin形式でコピー</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">カードブラウザ用の表示設定を編集</string>
+    <string name="show_shortcuts_message">キーボードショートカットを表示するには [Alt]+[K] を押してください</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">ユーザーアクション %s はこのノートタイプに設定されていません。設定してください</string>
+    <string name="directory_inaccessible_info">アクセスを回復する方法の詳細を %s で確認するか、設定画面に移動してコレクションフォルダを更新してください。</string>
 </resources>

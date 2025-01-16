@@ -19,13 +19,12 @@ package com.ichi2.anki.ui.windows.permissions
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
-import com.ichi2.anki.dialogs.DatabaseErrorDialog.UninstallListItem
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.UninstallListItem.Companion.createNoStorageList
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.listItemsAndMessage
 import com.ichi2.utils.show
@@ -46,15 +45,19 @@ import timber.log.Timber
 object AndroidPermanentlyRevokedPermissionsDialog {
     @SuppressLint("CheckResult")
     fun show(context: AnkiActivity) {
-        val listItemData = StoragePermanentlyRevokedOptions.createList()
+        val listItemData = createNoStorageList()
 
-        val message = context.getString(
-            R.string.directory_revoked_after_inactivity,
-            "WRITE_EXTERNAL_STORAGE",
-            getCurrentAnkiDroidDirectory(context)
-        )
+        val message =
+            context.getString(
+                R.string.directory_revoked_after_inactivity,
+                "WRITE_EXTERNAL_STORAGE",
+                getCurrentAnkiDroidDirectory(context),
+            )
         AlertDialog.Builder(context).show {
-            listItemsAndMessage(message = message, listItemData.map { context.getString(it.stringRes) }) { dialog: DialogInterface, index: Int ->
+            listItemsAndMessage(
+                message = message,
+                listItemData.map { context.getString(it.stringRes) },
+            ) { dialog: DialogInterface, index: Int ->
                 val listItem = listItemData[index]
                 listItem.onClick(context)
                 if (listItem.dismissesDialog) {
@@ -65,31 +68,11 @@ object AndroidPermanentlyRevokedPermissionsDialog {
         }
     }
 
-    private fun getCurrentAnkiDroidDirectory(context: Context): String = try {
-        CollectionHelper.getCurrentAnkiDroidDirectory(context)
-    } catch (e: Exception) {
-        Timber.w(e)
-        context.getString(R.string.card_browser_unknown_deck_name)
-    }
-
-    /**
-     * List items, copied from [UninstallListItem]
-     * Aside from 'Restore from AnkiWeb': we're unable to access the Deck Picker to sync
-     * and would also have no folder to restore to
-     */
-    private class StoragePermanentlyRevokedOptions(@StringRes val stringRes: Int, val dismissesDialog: Boolean, val onClick: (AnkiActivity) -> Unit) {
-        companion object {
-            fun createList(): List<StoragePermanentlyRevokedOptions> {
-                return UninstallListItem.createList()
-                    .filter { it != UninstallListItem.RESTORE_FROM_ANKIWEB }
-                    .map { listItem ->
-                        StoragePermanentlyRevokedOptions(
-                            stringRes = listItem.stringRes,
-                            dismissesDialog = listItem.dismissesDialog,
-                            onClick = listItem.onClick
-                        )
-                    }
-            }
+    private fun getCurrentAnkiDroidDirectory(context: Context): String =
+        try {
+            CollectionHelper.getCurrentAnkiDroidDirectory(context)
+        } catch (e: Exception) {
+            Timber.w(e)
+            context.getString(R.string.card_browser_unknown_deck_name)
         }
-    }
 }

@@ -21,4 +21,22 @@
         android:key="@string/hide_answer_buttons_key"
         android:title="@string/hide_answer_buttons"
         />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:key="@string/hide_hard_and_easy_key"
+        android:title="@string/hide_hard_and_easy"
+        />
+
+    <Preference
+        android:title="Menu actions"
+        android:key="@string/reviewer_menu_settings_key" />
+
+    <ListPreference
+        android:defaultValue="@string/reviewer_frame_style_card_value"
+        android:entries="@array/reviewer_frame_style_entries"
+        android:entryValues="@array/reviewer_frame_style_values"
+        android:key="@string/reviewer_frame_style_key"
+        android:title="@string/reviewer_frame_style"
+        app:useSimpleSummaryProvider="true"/>
 </androidx.preference.PreferenceScreen>

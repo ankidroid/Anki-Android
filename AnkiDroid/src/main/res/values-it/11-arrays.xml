@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">x-grande</string>
     <string name="html_size_code_xx_large">xx-grande</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Rispondi \"ripeti\"</string>
-    <string name="answer_hard">Rispondi \"difficile\"</string>
-    <string name="answer_good">Rispondi \"normale\"</string>
-    <string name="answer_easy">Rispondi \"facile\"</string>
-    <string name="gesture_play">Riproduci media</string>
-    <string name="gesture_abort_learning">Interrompi l\'apprendimento</string>
-    <string name="gesture_flag_red">Attiva/disattiva contrassegno rosso</string>
-    <string name="gesture_flag_orange">Attiva/disattiva contrassegno aracione</string>
-    <string name="gesture_flag_green">Attiva/disattiva contrassegno verde</string>
-    <string name="gesture_flag_blue">Attiva/disattiva contrassegno blu</string>
-    <string name="gesture_flag_pink">Attiva/Disattiva contrassegno rosa</string>
-    <string name="gesture_flag_turquoise">Attiva/Disattiva contrassegno turchese</string>
-    <string name="gesture_flag_purple">Attiva/disattiva contrassegno viola</string>
-    <string name="gesture_flag_remove">Rimuovi il contrassegno</string>
-    <string name="gesture_page_up">Vai su</string>
-    <string name="gesture_page_down">Vai giù</string>
-    <string name="gesture_abort_sync">Interrompi Apprendimento e Sincronizzazione</string>
-    <string name="gesture_toggle_whiteboard">Attiva/Disattiva la lavagna</string>
-    <string name="gesture_show_hint">Mostra suggerimento</string>
-    <string name="gesture_show_all_hints">Mostra tutti i suggerimenti</string>
-    <string name="record_voice">Registra la voce</string>
-    <string name="replay_voice">Riproduci la voce</string>
-    <string name="save_voice">Salva registrazione</string>
+    <string name="answer_again" maxLength="41">Rispondi \"ripeti\"</string>
+    <string name="answer_hard" maxLength="41">Rispondi \"difficile\"</string>
+    <string name="answer_good" maxLength="41">Rispondi \"normale\"</string>
+    <string name="answer_easy" maxLength="41">Rispondi \"facile\"</string>
+    <string name="gesture_play" maxLength="41">Riproduci media</string>
+    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_flag_red" maxLength="41">Attiva/disattiva contrassegno rosso</string>
+    <string name="gesture_flag_orange" maxLength="41">Attiva/disattiva contrassegno aracione</string>
+    <string name="gesture_flag_green" maxLength="41">Attiva/disattiva contrassegno verde</string>
+    <string name="gesture_flag_blue" maxLength="41">Attiva/disattiva contrassegno blu</string>
+    <string name="gesture_flag_pink" maxLength="41">Attiva/Disattiva contrassegno rosa</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Attiva/Disattiva contrassegno turchese</string>
+    <string name="gesture_flag_purple" maxLength="41">Attiva/disattiva contrassegno viola</string>
+    <string name="gesture_flag_remove" maxLength="41">Rimuovi il contrassegno</string>
+    <string name="gesture_page_up" maxLength="41">Vai su</string>
+    <string name="gesture_page_down" maxLength="41">Vai giù</string>
+    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Attiva/Disattiva la lavagna</string>
+    <string name="gesture_show_hint" maxLength="41">Mostra suggerimento</string>
+    <string name="gesture_show_all_hints" maxLength="41">Mostra tutti i suggerimenti</string>
+    <string name="record_voice" maxLength="41">Registra la voce</string>
+    <string name="replay_voice" maxLength="41">Riproduci la voce</string>
+    <string name="save_voice" maxLength="41">Salva registrazione</string>
 </resources>

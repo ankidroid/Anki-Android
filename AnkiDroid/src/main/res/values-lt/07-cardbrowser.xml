@@ -58,32 +58,29 @@
         <item quantity="other">%d notes shown</item>
     </plurals>
     <string name="card_browser_all_decks">Visi rinkiniai</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="few">Delete cards</item>
-        <item quantity="many">Delete cards</item>
-        <item quantity="other">Delete cards</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">Delete note</item>
         <item quantity="few">Delete notes</item>
         <item quantity="many">Delete notes</item>
         <item quantity="other">Delete notes</item>
     </plurals>
-    <string name="card_browser_change_deck">Keisti rinkinį</string>
+    <string name="card_browser_change_deck" maxLength="28">Keisti rinkinį</string>
     <string name="delete_card_title">Ar norite užrašą ištrinti?</string>
-    <string name="card_browser_show_marked">Rodyti pažymėtas</string>
-    <string name="card_browser_show_suspended">Rodyti atidėtas</string>
-    <string name="card_browser_search_by_tag">Rodyti pagal žymą</string>
-    <string name="card_browser_search_by_flag">Filtruoti pagal vėliavą</string>
-    <string name="card_browser_list_my_searches">Mano paieškos</string>
-    <string name="card_browser_list_my_searches_save">Išsaugoti paieška</string>
+    <string name="card_browser_show_marked" maxLength="28">Rodyti pažymėtas</string>
+    <string name="card_browser_show_suspended" maxLength="28">Rodyti atidėtas</string>
+    <string name="card_browser_search_by_tag" maxLength="28">Rodyti pagal žymą</string>
+    <string name="card_browser_search_by_flag" maxLength="28">Filtruoti pagal vėliavą</string>
+    <string name="card_browser_list_my_searches" maxLength="28">Mano paieškos</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">Išsaugoti paieška</string>
     <string name="card_browser_list_my_searches_title">Pasirinkite įrašytą paiešką</string>
     <string name="card_browser_list_my_searches_new_name">Dabartinės ieškos pavadinimas</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Paieškos negalite išsaugoti be pavadinimo</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Pavadinimas egzistuoja</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Ar norite ištrinti „%1$s“?</string>
-    <string name="card_browser_change_display_order">Keisti rodymo tvarką</string>
+    <string name="card_browser_change_display_order" maxLength="28">Keisti rodymo tvarką</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">Pasirinkite rodymo tvarką</string>
     <string name="card_details_tags">Žymos</string>
     <string-array name="card_browser_order_labels">
@@ -98,11 +95,8 @@
         <item>Pagal peržiūras</item>
         <item>Pagal dažniausiai užmirštamas</item>
     </string-array>
-    <string name="card_browser_select_all">Viską pažymėti</string>
-    <string name="card_browser_select_none">Nieko nežymėti</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nauja)</string>
-    <string name="card_browser_due_filtered_card">(filtered)</string>
-    <string name="card_browser_interval_learning_card">(learning)</string>
+    <string name="card_browser_select_all" maxLength="28">Viską pažymėti</string>
+    <string name="card_browser_select_none" maxLength="28">Nieko nežymėti</string>
     <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
     <string name="card_browser_search_all_decks">Search all decks</string>
     <string name="card_browser_unknown_deck_name">Unknown</string>
@@ -126,4 +120,7 @@
         <item quantity="many">%d cards deleted</item>
         <item quantity="other">%d cards deleted</item>
     </plurals>
+    <!--Keyboard shortcuts dialog-->
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
 </resources>

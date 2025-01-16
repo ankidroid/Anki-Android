@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">ಮುಂಭಾಗ</string>
-    <string name="back_field_name">ಹಿಂದೆ</string>
+    <string name="front_field_name" maxLength="28">ಮುಂಭಾಗ</string>
+    <string name="back_field_name" maxLength="28">ಹಿಂದೆ</string>
 </resources>

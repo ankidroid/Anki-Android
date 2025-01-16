@@ -45,16 +45,13 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks">डेक</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">कार्ड ब्राउझर</string>
-    <string name="statistics">सांख्यिकी</string>
-    <string name="settings">सेटिंग्ज</string>
-    <string name="help">सहायता</string>
+    <string name="decks" maxLength="28">डेक</string>
+    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">कार्ड ब्राउझर</string>
+    <string name="statistics" maxLength="28">सांख्यिकी</string>
+    <string name="settings" maxLength="28">सेटिंग्ज</string>
+    <string name="help" maxLength="28">सहायता</string>
     <string name="drawing">चित्र कथा</string>
     <string name="send_feedback">अभिप्राय पाठवा</string>
-    <string name="studyoptions_due_today">आज शेवटचा दिवस:</string>
-    <string name="studyoptions_new_total">एकुण नविन कार्ड:</string>
-    <string name="studyoptions_total_cards">एकुण कार्ड:</string>
     <string name="studyoptions_start">अभ्यास शुरू करा</string>
     <!-- DeckPicker.kt -->
     <string name="expand">विस्तृत करा</string>
@@ -68,50 +65,50 @@
         <item quantity="other">%1$d तास %2$d बाकी</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d दिवस %2$d बाकी</item>
-        <item quantity="other">%1$d दिवस %2$d बाकी</item>
+        <item quantity="one">%1$d day %2$dh left</item>
+        <item quantity="other">%1$d days %2$dh left</item>
     </plurals>
     <string name="no_cards_placeholder_title">संग्रह रिक्त आहे</string>
     <string name="no_cards_placeholder_description">कार्ड जोडण्यास प्रारंभ करण्यासाठी + चिन्हाचा उपयोग करा.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">उत्तर टाइप करा</string>
-    <string name="show_answer">उत्तर दाखवा</string>
+    <string name="show_answer" maxLength="41">उत्तर दाखवा</string>
     <string name="hide_answer">उत्तर लपवा</string>
-    <string name="ease_button_again">पुन्हा</string>
-    <string name="ease_button_hard">कठीण</string>
-    <string name="ease_button_good">चांगले</string>
+    <string name="ease_button_again" maxLength="41">पुन्हा</string>
+    <string name="ease_button_hard" maxLength="41">कठीण</string>
+    <string name="ease_button_good" maxLength="41">चांगले</string>
     <string name="ease_button_easy">सोपे</string>
-    <string name="menu_import">आयात करा</string>
-    <string name="undo">पूर्ववत् करा</string>
-    <string name="redo">पुन्हा करा</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">स्ट्रोक पूर्ववत करा</string>
+    <string name="menu_import" maxLength="28">आयात करा</string>
+    <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">पूर्ववत् करा</string>
+    <string name="redo" maxLength="28">पुन्हा करा</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">स्ट्रोक पूर्ववत करा</string>
     <string name="move_all_to_deck">सर्व डेकम्धे पाठवा</string>
-    <string name="unbury">अनबरी</string>
-    <string name="rename_deck">डेक पुनर्नामित करा</string>
+    <string name="unbury" maxLength="28">अनबरी</string>
+    <string name="rename_deck" maxLength="28">डेक पुनर्नामित करा</string>
     <string name="create_shortcut">शॉर्टकट तयार करा</string>
     <string name="browse_cards">Browse cards</string>
     <string name="edit_deck_description" comment="edit the deck description">वर्णन संपादित करा</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">जोडा</string>
-    <string name="menu_add_note">नोंदी जोडा</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">जोडा</string>
+    <string name="menu_add_note" maxLength="28">नोंदी जोडा</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">खाते समक्रमित करा</string>
-    <string name="menu_dismiss_note">लपवा / हटवा</string>
-    <string name="menu_bury_card">बरी कार्ड</string>
-    <string name="menu_bury_note">बरी नोट</string>
-    <string name="menu_suspend_card">निलंबन कार्ड</string>
-    <string name="menu_suspend_note">निलंबित नोट</string>
-    <string name="menu_bury">दफन</string>
-    <string name="menu_suspend"> निलंबित करा</string>
-    <string name="menu_delete_note">टीप हटवा</string>
-    <string name="menu_flag">झेंडा</string>
+    <string name="menu_dismiss_note" maxLength="41">लपवा / हटवा</string>
+    <string name="menu_bury_card" maxLength="28">बरी कार्ड</string>
+    <string name="menu_bury_note" maxLength="28">बरी नोट</string>
+    <string name="menu_suspend_card" maxLength="28">निलंबन कार्ड</string>
+    <string name="menu_suspend_note" maxLength="28">निलंबित नोट</string>
+    <string name="menu_bury" maxLength="28">दफन</string>
+    <string name="menu_suspend" maxLength="28"> निलंबित करा</string>
+    <string name="menu_delete_note" maxLength="28">टीप हटवा</string>
+    <string name="menu_flag" maxLength="41">झेंडा</string>
     <string name="rename_flag">ध्वजांचे नाव बदला</string>
-    <string name="menu_flag_card">फ्लॅग कार्ड</string>
-    <string name="menu_edit_tags">टॅग संपादित करा</string>
+    <string name="menu_flag_card" maxLength="28">फ्लॅग कार्ड</string>
+    <string name="menu_edit_tags" maxLength="28">टॅग संपादित करा</string>
     <string name="delete_note_message">खरोखर ही टीप आणि त्याची सर्व कार्ड हटवायची?\n%s</string>
-    <string name="menu_search">%1$s मध्ये पहा</string>
-    <string name="menu_mark_note">चिन्हांकित करा</string>
+    <string name="menu_search" maxLength="28">%1$s मध्ये पहा</string>
+    <string name="menu_mark_note" maxLength="28">चिन्हांकित करा</string>
     <string name="menu_unmark_note">अचिन्हांची नोंद</string>
-    <string name="menu_enable_voice_playback">व्हॉइस प्लेबॅक सक्षम करा</string>
+    <string name="menu_enable_voice_playback" maxLength="28">व्हॉइस प्लेबॅक सक्षम करा</string>
     <string name="menu_disable_voice_playback">व्हॉइस प्लेबॅक अक्षम करा</string>
     <string name="new_deck">डेक तयार करा</string>
     <string name="new_dynamic_deck">फिल्टर केलेले डेक तयार करा</string>
@@ -122,38 +119,37 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">कृपया सुरू ठेवण्यासाठी अंकीड्रोइडला ‘स्टोरेज’ परवानगी द्या</string>
     <string name="rebuild_filtered_deck">फिल्टर केलेले डेक पुन्हा तयार करीत आहे &#8230;</string>
-    <string name="rebuild_cram_label">पुन्हा तयार करा</string>
-    <string name="empty_cram_label">रिक्त</string>
+    <string name="rebuild_cram_label" maxLength="28">पुन्हा तयार करा</string>
+    <string name="empty_cram_label" maxLength="28">रिक्त</string>
     <string name="create_subdeck">सबडेक तयार करा</string>
     <string name="empty_filtered_deck">फिल्टर केलेले डेक रिक्त करत आहे&#8230;</string>
     <string name="custom_study_deck_name">सानुकूल अभ्यास सत्र</string>
     <string name="custom_study_deck_exists">आधी अस्तित्त्वात असलेल्या सानुकूल स्टडी डेकचे नाव बदला</string>
     <string name="search_deck" comment="Deck search for selecting it">डेक शोध</string>
     <string name="empty_deck">हा डेक रिक्त आहे</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">डेक शोध</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">डेक शोध</string>
     <string name="invalid_deck_name">अवैध डेक नाव</string>
-    <string name="studyoptions_congrats_finished">अभिनंदन! तुम्ही आतासाठी पूर्ण केले आहे.</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">डेक आतासाठी पूर्ण झाले आहे! %s</string>
     <string name="studyoptions_no_cards_due">अद्याप कोणतीही कार्ड शिल्लक नाही</string>
     <string name="sd_card_not_mounted">डिव्हाइस संचयन आरोहित नाही</string>
-    <string name="button_sync" comment="Text of the sync button">समक्रमित करा</string>
-    <string name="button_upgrade" comment="Text of the sync button">स्कोप्ड स्टोरेजवर स्थलांतरित करा</string>
+    <string name="button_sync" comment="Text of the sync button" maxLength="28">समक्रमित करा</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">आपण संकालन रद्द करू इच्छिता?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">संकालन सुरू ठेवा</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">संकालन रद्द केले</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">रद्द करीत आहे&#8230; \n यास काही वेळ लागू शकेल.</string>
     <string name="syncing_media">मीडिया सिंक करत आहे</string>
-    <string name="export_deck">निर्यात डेक</string>
+    <string name="export_deck" maxLength="28">निर्यात डेक</string>
     <string name="export_collection">निर्यात संग्रह</string>
     <string name="nothing">काही नाही</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">कार्ड प्रकार</string>
     <string name="card_template_editor_front">समोरचा टेम्पलेट</string>
     <string name="card_template_editor_back">मागील टेम्पलेट</string>
-    <string name="card_template_editor_styling">स्टाईलिंग</string>
-    <string name="card_template_editor_menu_card_browser_appearance">कार्ड ब्राउझर स्वरूप</string>
-    <string name="card_template_editor_deck_override">डेक ओव्हरराइड</string>
-    <string name="card_template_editor_insert_field">फील्ड घाला</string>
+    <string name="card_template_editor_styling" maxLength="28">स्टाईलिंग</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">कार्ड ब्राउझर स्वरूप</string>
+    <string name="card_template_editor_deck_override" maxLength="28">डेक ओव्हरराइड</string>
+    <string name="card_template_editor_insert_field" maxLength="28">फील्ड घाला</string>
     <string name="card_template_editor_select_field">फील्ड निवडा</string>
     <string name="card_template_editor_cant_delete">कमीतकमी एक कार्ड प्रकार आवश्यक आहे</string>
     <plurals name="card_template_editor_confirm_add">
@@ -164,13 +160,12 @@
         <item quantity="one">“%2$s” कार्ड प्रकार आणि त्याचे %1$d कार्ड हटवायचे?</item>
         <item quantity="other">“%2$s” कार्ड प्रकार आणि त्याची %1$d कार्ड हटवायची?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">हा कार्ड प्रकार हटविल्यामुळे एक किंवा अधिक नोट्स हटविल्या जाऊ शकतात. कृपया प्रथम एक नवीन कार्ड प्रकार तयार करा आणि जतन करा.</string>
     <string name="card_template_editor_save_error">कार्ड टेम्पलेट बदल जतन करण्यात अक्षम:%s</string>
     <string name="template_for_current_card_deleted">वर्तमान कार्डासाठी कार्ड प्रकार हटविला गेला.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">ब्राउझर देखावा</string>
     <!-- card Info -->
-    <string name="card_info_title">कार्ड माहिती</string>
+    <string name="card_info_title" maxLength="28">कार्ड माहिती</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid डेटाबेस वाचा आणि लिहा</string>
     <string name="read_write_permission_description">विद्यमान नोट्स, कार्डे, नोट्स प्रकार आणि डेकमध्ये प्रवेश करा तसेच नवीन तयार करा</string>
@@ -185,54 +180,8 @@
     <string name="sync_conflict_local_confirm_new">AnkiWeb वरील तुमचा संग्रह AnkiDroid वरील तुमच्या संग्रहाने बदलायचा?</string>
     <string name="sync_conflict_title_new">संग्रहाला  निवडा ठेवण्यासाठी </string>
     <string name="sync_conflict_replace_title">संग्रह पून्हास्तित करा</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d कार्ड (0 देय)</item>
-        <item quantity="other">%1$d कार्ड (0 देय)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">फाइलवर लिहू किंवा तयार करू शकत नाही %s</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"एकाधिक त्रुटी, सर्वात अलीकडील: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">प्रगतीशिवाय अनेक सलग त्रुटी, सर्वात अलीकडील:%s</string>
-    <!-- Scoped storage migration -->
-    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">डेटाबेस फाइल्स स्थलांतरित करणे</string>
-    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">कॉपी करत आहे&#8230;</string>
-    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">स्थलांतरित माध्यम</string>
-    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">हस्तांतरण आकार मोजत आहे&#8230;</string>
-    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">%2$s पैकी %1$s हलवले</string>
-    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">स्थलांतर यशस्वी</string>
-    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        तुमचा डेटा यशस्वीरित्या स्थलांतरित झाला आहे.
-        AnkiDroid पुन्हा पूर्णपणे कार्यरत आहे आणि आपण समक्रमित करू शकता.
-        \n
-        \nलक्षात घ्या की तुमचा संग्रह आता एका फोल्डरमध्ये आहे जो अॅप अनइंस्टॉल करताना काढला जातो.
-        कृपया नियमितपणे सिंक करून किंवा बॅकअप एक्सपोर्ट करून तुमचा डेटा सुरक्षित असल्याची खात्री करा
-    </string>
-    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">स्थलांतर अयशस्वी</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[डेटाबेस फायली कॉपी करणे त्रुटीसह अयशस्वी झाले: %1$s.
-        <br><br>
-        बदल परत केले गेले.
-        <br><br>
-        कृपया स्थलांतर पुन्हा चालवण्याचा प्रयत्न करा.
-        समस्येचे निराकरण करण्यासाठी, तुम्हाला काही डिस्क जागा मोकळी करणे आवश्यक आहे,
-        किंवा तुमचा संग्रह ठेवणारे काढता येण्याजोगे स्टोरेज पुन्हा कनेक्ट करा.
-        <br><br>
-        <a href="%2$s">अधिक जाणून घ्या आणि मदत मिळवा</a>]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Moving media files is paused after having failed with the error: %1$s.
-        <br><br>
-        The changes were <i>not</i> reverted.
-        While no data should’ve been lost,
-        the media files might be split between the old and the new folder.
-        <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
-        <br><br>
-        <a href="%2$s">Learn more and get help</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        त्रुटीसह अयशस्वी झाल्यानंतर स्टोरेज स्थलांतरास विराम दिला आहे:%1$s.
-        <br><br>
-        <a href="%2$s">अधिक जाणून घ्या आणि मदत मिळवा</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">स्थलांतर पुन्हा सुरू करा</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">अगम्य संग्रह</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Play Store धोरणातील बदलामुळे AnkiDroid अनइंस्टॉल केल्यानंतर आम्ही तुमच्या संग्रहात प्रवेश करू शकत नाही \n\n तुमचा डेटा सुरक्षित आहे आणि तो पुनर्संचयित केला जाऊ शकतो. ते \n%s वर स्थित आहे \n\n पुनर्संचयित करण्यासाठी खालील पर्याय निवडा:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">अँड्रॉइडने ॲप निष्क्रिय केल्यामुळे AnkiDroid वरून %1$s परवानगी काढून टाकली आहे.\n\nतुमचा डेटा सुरक्षित आहे आणि तो रिस्टोअर केला जाऊ शकतो. ते\n%2$s\n\n येथे स्थित आहे पुनर्संचयित करण्यासाठी खालील पर्याय निवडा:</string>

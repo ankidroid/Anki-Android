@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">x-મોટા</string>
     <string name="html_size_code_xx_large">xx-મોટા</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">સખત જવાબ આપો</string>
-    <string name="answer_good">સરસ જવાબ આપો</string>
-    <string name="answer_easy">Answer easy</string>
-    <string name="gesture_play">મીડિયા ચલાવો</string>
-    <string name="gesture_abort_learning">Abort learning</string>
-    <string name="gesture_flag_red">લાલ ધ્વજને ટૉગલ કરો</string>
-    <string name="gesture_flag_orange">નારંગી ધ્વજને ટૉગલ કરો</string>
-    <string name="gesture_flag_green">લીલો ધ્વજ ટૉગલ કરો</string>
-    <string name="gesture_flag_blue">વાદળી ધ્વજ ટૉગલ કરો</string>
-    <string name="gesture_flag_pink">ગુલાબી ધ્વજને ટૉગલ કરો</string>
-    <string name="gesture_flag_turquoise">પીરોજ ધ્વજને ટૉગલ કરો</string>
-    <string name="gesture_flag_purple">જાંબલી ધ્વજને ટૉગલ કરો</string>
-    <string name="gesture_flag_remove">ધ્વજ દૂર કરો</string>
-    <string name="gesture_page_up">પાનું ઉપર</string>
-    <string name="gesture_page_down">Page Down</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
-    <string name="gesture_toggle_whiteboard">વ્હાઇટબોર્ડ ટૉગલ કરો</string>
-    <string name="gesture_show_hint">સંકેત બતાવો</string>
-    <string name="gesture_show_all_hints">બધા સંકેતો બતાવો</string>
-    <string name="record_voice">અવાજ રેકોર્ડ કરો</string>
-    <string name="replay_voice">અવાજ ફરી ચલાવો</string>
-    <string name="save_voice">રેકોર્ડિંગ સાચવો</string>
+    <string name="answer_again" maxLength="41">Answer again</string>
+    <string name="answer_hard" maxLength="41">સખત જવાબ આપો</string>
+    <string name="answer_good" maxLength="41">સરસ જવાબ આપો</string>
+    <string name="answer_easy" maxLength="41">Answer easy</string>
+    <string name="gesture_play" maxLength="41">મીડિયા ચલાવો</string>
+    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_flag_red" maxLength="41">લાલ ધ્વજને ટૉગલ કરો</string>
+    <string name="gesture_flag_orange" maxLength="41">નારંગી ધ્વજને ટૉગલ કરો</string>
+    <string name="gesture_flag_green" maxLength="41">લીલો ધ્વજ ટૉગલ કરો</string>
+    <string name="gesture_flag_blue" maxLength="41">વાદળી ધ્વજ ટૉગલ કરો</string>
+    <string name="gesture_flag_pink" maxLength="41">ગુલાબી ધ્વજને ટૉગલ કરો</string>
+    <string name="gesture_flag_turquoise" maxLength="41">પીરોજ ધ્વજને ટૉગલ કરો</string>
+    <string name="gesture_flag_purple" maxLength="41">જાંબલી ધ્વજને ટૉગલ કરો</string>
+    <string name="gesture_flag_remove" maxLength="41">ધ્વજ દૂર કરો</string>
+    <string name="gesture_page_up" maxLength="41">પાનું ઉપર</string>
+    <string name="gesture_page_down" maxLength="41">Page Down</string>
+    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">વ્હાઇટબોર્ડ ટૉગલ કરો</string>
+    <string name="gesture_show_hint" maxLength="41">સંકેત બતાવો</string>
+    <string name="gesture_show_all_hints" maxLength="41">બધા સંકેતો બતાવો</string>
+    <string name="record_voice" maxLength="41">અવાજ રેકોર્ડ કરો</string>
+    <string name="replay_voice" maxLength="41">અવાજ ફરી ચલાવો</string>
+    <string name="save_voice" maxLength="41">રેકોર્ડિંગ સાચવો</string>
 </resources>

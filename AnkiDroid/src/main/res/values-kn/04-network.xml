@@ -75,7 +75,7 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">ಸ್ಥಳೀಯ</string>
     <string name="sync_sanity_remote">ರಿಮೋಟ್</string>
-    <string name="one_way_sync_title">ಒನ್ ವೇ ಸಿಂಕ್</string>
+    <string name="one_way_sync_title" maxLength="41">ಒನ್ ವೇ ಸಿಂಕ್</string>
     <string name="one_way_sync_confirmation">ಒಂದು ರೀತಿಯಲ್ಲಿ ಸಿಂಕ್ ಮಾಡಲು ವಿನಂತಿಸಲಾಗಿದೆ</string>
     <string name="full_sync_confirmation">ನೀವು ಮುಂದೆ ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯನ್ನು ಸಿಂಕ್ರೊನೈಸ್ ಮಾಡಿದಾಗ ವಿನಂತಿಸಿದ ಬದಲಾವಣೆಗೆ ಡೇಟಾಬೇಸ್‌ನ ಪೂರ್ಣ ಅಪ್‌ಲೋಡ್ ಅಗತ್ಯವಿರುತ್ತದೆ. ಇಲ್ಲಿ ಇನ್ನೂ ಸಿಂಕ್ ಮಾಡದಿರುವ ಮತ್ತೊಂದು ಸಾಧನದಲ್ಲಿ ವಿಮರ್ಶೆಗಳು ಅಥವಾ ಇತರ ಬದಲಾವಣೆಗಳಿಗಾಗಿ ನೀವು ಕಾಯುತ್ತಿದ್ದರೆ, ಅವುಗಳು ಕಳೆದುಹೋಗುತ್ತವೆ. ಮುಂದುವರಿಸುವುದೇ?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid ನ ಹಿಂದೆ ಸ್ಥಾಪಿಸಲಾದ ಆವೃತ್ತಿಯಲ್ಲಿನ ದೋಷದಿಂದಾಗಿ, ಪೂರ್ಣ ಸಿಂಕ್ ಅನ್ನು ಒತ್ತಾಯಿಸಲು ಶಿಫಾರಸು ಮಾಡಲಾಗಿದೆ.</string>

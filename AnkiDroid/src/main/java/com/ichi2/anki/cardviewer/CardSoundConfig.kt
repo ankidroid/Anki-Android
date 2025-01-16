@@ -31,20 +31,26 @@ import timber.log.Timber
  * `false`: only replay the answer
  * @param autoplay deck option: "Don't play audio automatically"
  */
-class CardSoundConfig(val replayQuestion: Boolean, val autoplay: Boolean, val deckId: DeckId) {
+class CardSoundConfig(
+    val replayQuestion: Boolean,
+    val autoplay: Boolean,
+    val deckId: DeckId,
+) {
     // PERF: technically, we can go further with options groups
     @CheckResult
     fun appliesTo(card: Card): Boolean = CardUtils.getDeckIdForCard(card) == deckId
 
     companion object {
-        context(Collection)
         @CheckResult
-        fun create(card: Card): CardSoundConfig {
+        fun create(
+            col: Collection,
+            card: Card,
+        ): CardSoundConfig {
             Timber.v("start loading SoundConfig")
 
-            val autoPlay = card.autoplay(this@Collection)
+            val autoPlay = card.autoplay(col)
 
-            val replayQuestion: Boolean = card.replayQuestionAudioOnAnswerSide(this@Collection)
+            val replayQuestion: Boolean = card.replayQuestionAudioOnAnswerSide(col)
 
             return CardSoundConfig(replayQuestion, autoPlay, card.did).apply {
                 Timber.d("loaded SoundConfig: %s", this)

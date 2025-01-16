@@ -45,69 +45,69 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Open drawer</string>
-    <string name="drawer_close">Close drawer</string>
+    <string name="drawer_open">ਦਰਾਜ਼ ਖੋਲ੍ਹੋ</string>
+    <string name="drawer_close">ਦਰਾਜ਼ ਬੰਦ ਕਰੋ</string>
     <string name="CardEditorCardDeck">ਕਾਰਡ ਡੈੱਕ:</string>
     <string name="CardEditorNoteDeck">ਡੈੱਕ:</string>
     <string name="CardEditorModel">ਕਿਸਮ:</string>
     <string name="CardEditorTags">ਟੈਗਸ: %1$s</string>
     <string name="CardEditorCards">ਕਾਰਡ: %1$s</string>
-    <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="edit_occlusions">ਮੌਕਿਆਂ ਦਾ ਸੰਪਾਦਨ ਕਰੋ</string>
     <string name="tag_name">ਟੈਗ ਨਾਮ</string>
     <string name="add_new_filter_tags">ਟੈਗ ਜੋੜੋ/ਫਿਲਟਰ ਕਰੋ</string>
-    <string name="add_tag">ਟੈਗ ਸ਼ਾਮਲ ਕਰੋ</string>
-    <string name="check_all_tags">ਸਾਰੇ ਟੈਗਾਂ ਨੂੰ ਚੈੱਕ/ਅਨਚੈਕ ਕਰੋ</string>
-    <string name="filter_tags">ਫਿਲਟਰ ਟੈਗ</string>
-    <string name="no_tags">You haven’t added any tags yet</string>
-    <string name="updated_version">Updated to version %s</string>
+    <string name="add_tag" maxLength="28">ਟੈਗ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="check_all_tags" maxLength="28">ਸਾਰੇ ਟੈਗਾਂ ਨੂੰ ਚੈੱਕ/ਅਨਚੈਕ ਕਰੋ</string>
+    <string name="filter_tags" maxLength="28">ਫਿਲਟਰ ਟੈਗ</string>
+    <string name="no_tags">ਤੁਸੀਂ ਅਜੇ ਤੱਕ ਕੋਈ ਵੀ ਟੈਗ ਸ਼ਾਮਲ ਨਹੀਂ ਕੀਤੇ ਹਨ</string>
+    <string name="updated_version">ਸੰਸਕਰਣ %s ਵਿੱਚ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Save whiteboard</string>
-    <string name="enable_stylus">Enable stylus writing</string>
+    <string name="save_whiteboard" maxLength="28">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰੋ</string>
+    <string name="enable_stylus" maxLength="28">ਸਟਾਈਲਸ ਲਿਖਣ ਨੂੰ ਸਮਰੱਥ ਬਣਾਓ</string>
     <string name="disable_stylus">Disable stylus writing</string>
-    <string name="enable_whiteboard">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਸਮਰੱਥ ਬਣਾਓ</string>
+    <string name="enable_whiteboard" maxLength="28">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਸਮਰੱਥ ਬਣਾਓ</string>
     <string name="disable_whiteboard">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਅਯੋਗ ਕਰੋ</string>
     <string name="show_whiteboard">ਵ੍ਹਾਈਟਬੋਰਡ ਦਿਖਾਓ</string>
-    <string name="hide_whiteboard">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਲੁਕਾਓ</string>
-    <string name="clear_whiteboard">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਸਾਫ਼ ਕਰੋ</string>
-    <string name="replay_audio">ਆਡੀਓ ਨੂੰ ਦੁਬਾਰਾ ਚਲਾਓ</string>
-    <string name="leech_suspend_notification">Card marked as leech and suspended</string>
-    <string name="leech_notification">Card marked as leech</string>
+    <string name="hide_whiteboard" maxLength="28">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਲੁਕਾਓ</string>
+    <string name="clear_whiteboard" maxLength="28">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਸਾਫ਼ ਕਰੋ</string>
+    <string name="replay_audio" maxLength="28">ਆਡੀਓ ਨੂੰ ਦੁਬਾਰਾ ਚਲਾਓ</string>
+    <string name="leech_suspend_notification">ਕਾਰਡ ਨੂੰ ਲੀਚ ਕੀਤੇ ਅਤੇ ਮੁਅੱਤਲ ਵਜੋਂ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਗਿਆ ਸੀ</string>
+    <string name="leech_notification">ਲੀਚ ਵਜੋਂ ਚਿੰਨ੍ਹਿਤ ਕਾਰਡ</string>
     <string name="webview_crash_unknown">Unknown error</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
+    <string name="webview_crash_unknwon_detailed">ਇਹ WebView ਵਿੱਚ ਇੱਕ ਅੰਦਰੂਨੀ ਗੜਬੜ ਕਾਰਨ ਹੋਇਆ ਸੀ</string>
+    <string name="webview_crash_oom">ਯਾਦਦਾਸ਼ਤ ਤੋਂ ਬਾਹਰ</string>
+    <string name="webview_crash_oom_details">WebView ਸਿਸਟਮ ਦੁਆਰਾ ਬੰਦ ਕੀਤਾ ਗਿਆ ਸੀ। ਇਹ ਆਮ ਤੌਰ \'ਤੇ ਉਦੋਂ ਵਾਪਰਦਾ ਹੈ ਜਦੋਂ ਐਪਲੀਕੇਸ਼ਨ ਦੀ ਮੈਮੋਰੀ ਖਤਮ ਹੋ ਜਾਂਦੀ ਹੈ, ਅਕਸਰ ਵੱਡੇ ਫੌਂਟਾਂ ਜਾਂ ਮੀਡੀਆ ਦੇ ਕਾਰਨ।</string>
+    <string name="webview_crash_nonfatal">WebView ਰੈਂਡਰਰ ਕ੍ਰੈਸ਼ ਹੋ ਗਿਆ। ਕਾਰਨ: %s</string>
+    <string name="webview_crash_fatal">ਘਾਤਕ ਗੜਬੜ: WebView ਰੈਂਡਰਰ ਕ੍ਰੈਸ਼ ਹੋ ਗਿਆ। ਕਾਰਨ: %s</string>
+    <string name="webview_crash_loop_dialog_title">ਸਿਸਟਮ WebView ਰੈਂਡਰਿੰਗ ਅਸਫਲਤਾ</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="filter_by_flags" maxLength="41">Flags</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
-    <string name="custom_study_review_forgotten">Review forgotten cards</string>
-    <string name="custom_study_review_ahead">Review ahead</string>
-    <string name="custom_study_random_selection">Study a random selection of cards</string>
-    <string name="custom_study_preview_new">Preview new cards</string>
     <string name="custom_study_limit_tags">Limit to particular tags</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d ਦਫ਼ਨਾਇਆ ਗਿਆ</item>
+        <item quantity="other">+%d ਦਫ਼ਨਾਇਆ ਗਿਆ</item>
+    </plurals>
+    <string name="studyoptions_total_new_label">ਕੁੱਲ ਨਵੇਂ ਕਾਰਡ</string>
+    <string name="studyoptions_total_label">ਕੁੱਲ ਕਾਰਡ</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Edit note</string>
-    <string name="discard">Discard</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">ਨੋਟਸ ਦਾ ਸੰਪਾਦਨ ਕਰੋ</string>
+    <string name="discard">ਰੱਦ ਕਰੋ</string>
+    <string name="note_editor_no_cards_created">ਕੋਈ ਕਾਰਡ ਨਹੀਂ ਬਣਾਏ ਗਏ ਹਨ। ਕਿਰਪਾ ਕਰਕੇ ਹੋਰ ਖੇਤਰ ਭਰੋ</string>
+    <string name="note_editor_no_cards_created_all_fields">ਮੌਜੂਦਾ ਨੋਟ ਕਿਸਮ ਨੇ ਇੱਕ ਕਾਰਡ ਨਹੀਂ ਬਣਾਇਆ ਹੈ।\nਕਿਰਪਾ ਕਰਕੇ ਨੋਟ ਦੀ ਕੋਈ ਹੋਰ ਕਿਸਮ ਚੁਣੋ, ਜਾਂ \'ਕਾਰਡ\' \'ਤੇ ਕਲਿੱਕ ਕਰੋ ਅਤੇ ਇੱਕ ਫੀਲਡ ਬਦਲ ਸ਼ਾਮਲ ਕਰੋ।</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">ਨੋਟ ਸੰਭਾਲ ਰਿਹਾ ਹੈ</string>
-    <string name="saving_model">Saving note type</string>
-    <string name="save">ਬਚਾਓ</string>
+    <string name="saving_model">ਨੋਟ ਦੀ ਕਿਸਮ ਸੁਰੱਖਿਅਤ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ</string>
+    <string name="save" maxLength="28">ਬਚਾਓ</string>
     <string name="close">ਬੰਦ ਕਰ ਦਿਓ</string>
     <string name="select">ਚੁਣੋ</string>
-    <string name="field_remapping">%1$s (from “%2$s”)</string>
-    <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="field_remapping">%1$s (“%2$s” ਤੋਂ)</string>
+    <string name="confirm_map_cards_to_nothing">ਕਿਸੇ ਵੀ ਕਾਰਡ ਨੂੰ ਕੁਝ ਵੀ ਨਹੀਂ ਨਾਲ ਮੈਪ ਕੀਤਾ ਜਾਵੇਗਾ ਮਿਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ। ਜੇਕਰ ਕਿਸੇ ਨੋਟ ਵਿੱਚ ਕੋਈ ਕਾਰਡ ਨਹੀਂ ਬਚਿਆ ਹੈ, ਤਾਂ ਇਹ ਗੁੰਮ ਹੋ ਜਾਵੇਗਾ। ਕੀ ਤੁਸੀਂ ਯਕੀਨੀ ਤੌਰ \'ਤੇ ਜਾਰੀ ਰੱਖਣਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
+    <string name="missing_note_type">ਕੋਈ ਨੋਟ ਕਿਸਮ ਨਹੀਂ ਮਿਲੀ</string>
     <!-- Timebox -->
-    <string name="timebox_reached_title">Timebox reached</string>
+    <string name="timebox_reached_title">ਟਾਈਮਬਾਕਸ ਪਹੁੰਚ ਗਿਆ</string>
     <plurals name="timebox_reached">
-        <item quantity="one">%1$d card studied in %2$s</item>
-        <item quantity="other">%1$d cards studied in %2$s</item>
+        <item quantity="one">%2$s ਵਿੱਚ %1$d ਕਾਰਡ ਦਾ ਅਧਿਐਨ ਕੀਤਾ ਗਿਆ</item>
+        <item quantity="other">%2$s ਵਿੱਚ %1$d ਕਾਰਡਾਂ ਦਾ ਅਧਿਐਨ ਕੀਤਾ ਗਿਆ</item>
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
@@ -115,42 +115,41 @@
         <item quantity="other">%1$d ਮਿੰਟ</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid ਕਾਰਡ</string>
-    <string name="note_editor_copy_note">ਨੋਟ ਕਾਪੀ ਕਰੋ</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Reposition</string>
-    <string name="card_editor_reset_card">Reset progress</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Preview</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">ਨਾਮ ਬਦਲੋ</string>
-    <string name="checks_action">ਚੈਕ</string>
-    <string name="check_db">ਡਾਟਾਬੇਸ ਦੀ ਜਾਂਚ ਕਰੋ</string>
-    <string name="check_media">ਮੀਡੀਆ ਦੀ ਜਾਂਚ ਕਰੋ</string>
-    <string name="empty_cards">ਖਾਲੀ ਕਾਰਡ</string>
-    <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
-    <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
-    <string name="delete_deck">Deleting deck&#8230;</string>
-    <string name="info_rate">Rate AnkiDroid</string>
-    <string name="import_title">Importing</string>
-    <string name="import_preparing_file">Preparing file for import&#8230;</string>
+    <string name="note_editor_copy_note" maxLength="28">ਨੋਟ ਕਾਪੀ ਕਰੋ</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Reposition</string>
+    <string name="card_editor_reset_card" maxLength="28">ਪ੍ਰਗਤੀ ਨੂੰ ਰੀਸੈਟ ਕਰੋ</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">ਮੁੜ ਤਹਿ ਕਰੋ</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Preview</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">ਮਾਰਕਡਾਊਨ ਵਜੋਂ ਕਾਪੀ ਕਰੋ</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d ਵਿੱਚੋਂ %1$d</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">ਨਾਮ ਬਦਲੋ</string>
+    <string name="checks_action" maxLength="28">ਚੈਕ</string>
+    <string name="check_db" maxLength="28">ਡਾਟਾਬੇਸ ਦੀ ਜਾਂਚ ਕਰੋ</string>
+    <string name="check_media" maxLength="28">ਮੀਡੀਆ ਦੀ ਜਾਂਚ ਕਰੋ</string>
+    <string name="empty_cards" maxLength="28">ਖਾਲੀ ਕਾਰਡ</string>
+    <string name="unknown_type_field_warning">ਜਵਾਬ ਟਾਈਪ ਕਰੋ: ਅਗਿਆਤ ਖੇਤਰ %s</string>
+    <string name="delete_deck">ਡੈੱਕ ਨੂੰ ਮਿਟਾਇਆ ਜਾ ਰਿਹਾ ਹੈ&#8230;</string>
+    <string name="info_rate">AnkiDroid ਨੂੰ ਰੇਟ ਕਰੋ</string>
+    <string name="import_title">ਆਯਾਤ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
+    <string name="import_preparing_file">ਆਯਾਤ ਲਈ ਫ਼ਾਈਲ ਤਿਆਰ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ਸ਼ਾਮਲ ਕਰੋ</string>
-    <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
+    <string name="import_message_replace_confirm">ਇਹ ਤੁਹਾਡੇ ਮੌਜੂਦਾ ਸੰਗ੍ਰਹਿ ਨੂੰ ਮਿਟਾ ਦੇਵੇਗਾ ਅਤੇ ਇਸਨੂੰ %s ਫਾਈਲ ਦੇ ਡੇਟਾ ਨਾਲ ਬਦਲ ਦੇਵੇਗਾ</string>
     <string name="import_dialog_message_add">ਕੀ ਸੰਗ੍ਰਹਿ ਵਿੱਚ \"%s\" ਨੂੰ ਜੋੜਨਾ ਹੈ? ਇਸ ਵਿੱਚ ਲੰਮਾ ਸਮਾਂ ਲੱਗ ਸਕਦਾ ਹੈ</string>
     <string name="import_log_no_apkg">ਇਹ ਇੱਕ ਵੈਧ ਸੰਖਿਆਤਮਕ ਪੈਕੇਜ ਫਾਈਲ ਨਹੀਂ ਹੈ</string>
     <string name="import_title_error" comment="Title of error dialog">ਗਲਤੀ</string>
     <string name="import_error_handle_exception">ਫ਼ਾਈਲ ਨੂੰ ਆਯਾਤ ਕਰਨ ਵਿੱਚ ਅਸਫਲ\n\n%s</string>
-    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
+    <string name="import_error_not_apkg_extension">ਫਾਈਲ ਨਾਮ \"%s\" ਵਿੱਚ .apkg ਜਾਂ .colpkg ਐਕਸਟੈਂਸ਼ਨ ਨਹੀਂ ਹੈ</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
-    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
-    <string name="export_ready_title">Export ready</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving&#8230;</string>
+    <string name="import_error_copy_to_cache">ਫਾਈਲ ਕੈਸ਼ ਕਰਨ ਵਿੱਚ ਅਸਫਲ (ਸੰਭਵ ਤੌਰ \'ਤੇ ਸਟੋਰੇਜ ਸਪੇਸ ਤੋਂ ਬਾਹਰ)</string>
+    <string name="import_interrupted">ਆਯਾਤ ਵਿੱਚ ਰੁਕਾਵਟ: AnkiDroid ਬੰਦ ਸੀ</string>
+    <string name="export_preparation_in_progress">ਬਰਾਮਦ ਦੀ ਤਿਆਰੀ&#8230;</string>
+    <string name="export_ready_title">ਨਿਰਯਾਤ ਤਿਆਰ ਹੈ</string>
+    <string name="export_send_no_handlers">apkk ਨੂੰ ਸੰਭਾਲਣ ਲਈ ਕੋਈ ਐਪਲੀਕੇਸ਼ਨ ਉਪਲਬਧ ਨਹੀਂ ਹੈ। ਰੱਖਿਅਤ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ&#8230;</string>
     <string name="export_save_apkg_successful">Successfully saved Anki package</string>
-    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
-    <string name="export_share_title">Send Anki package using</string>
-    <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
+    <string name="export_save_apkg_unsuccessful">ਸੰਖਿਆਤਮਕ ਪੈਕੇਜ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰਨ ਵਿੱਚ ਅਸਫਲ</string>
+    <string name="export_share_title">ਵਰਤ ਕੇ Anki ਪੈਕੇਜ ਭੇਜੋ</string>
+    <string name="export_email_subject">AnkiDroid ਐਕਸਪੋਰਟ ਫਲੈਸ਼ਕਾਰਡਸ: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
         This is an Anki flashcards deck sent from AnkiDroid[1].
@@ -161,85 +160,85 @@
     <string name="export_choice_share">ਇਹ ਸਾਂਝਾ ਕਰੀਏ</string>
     <string name="export_choice_save_to">ਵਿੱਚ ਸੁਰੱਖਿਅਤ ਕਰੋ</string>
     <string name="export_saving_exported_collection">ਨਿਰਯਾਤ ਕੀਤੀ ਫਾਈਲ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ਵਿਕਲਪ</string>
-    <string name="menu__deck_options">ਡੈੱਕ ਵਿਕਲਪ</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">ਵਿਕਲਪ</string>
+    <string name="menu__deck_options" maxLength="28">ਡੈੱਕ ਵਿਕਲਪ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ਅਧਿਐਨ ਦੇ ਵਿਕਲਪ</string>
-    <string name="select_tts">TTS ਭਾਸ਼ਾ ਸੈੱਟ ਕਰੋ</string>
-    <string name="custom_study">ਕਸਟਮ ਅਧਿਐਨ</string>
-    <string name="more_options">More</string>
-    <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
-    <string name="steps_error">Steps must be numbers greater than 0</string>
-    <string name="steps_min_error">At least one step is required</string>
-    <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
-    <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
+    <string name="select_tts" maxLength="28">TTS ਭਾਸ਼ਾ ਸੈੱਟ ਕਰੋ</string>
+    <string name="custom_study" maxLength="28">ਕਸਟਮ ਅਧਿਐਨ</string>
+    <string name="dyn_deck_desc">ਇਹ ਆਮ ਅਨੁਸੂਚੀ ਤੋਂ ਬਾਹਰ ਅਧਿਐਨ ਕਰਨ ਲਈ ਇੱਕ ਵਿਸ਼ੇਸ਼ ਡੈੱਕ ਹੈ। ਤੁਹਾਡੇ ਦੁਆਰਾ ਉਹਨਾਂ ਦੀ ਸਮੀਖਿਆ ਕਰਨ ਤੋਂ ਬਾਅਦ ਕਾਰਡ ਆਪਣੇ ਆਪ ਉਹਨਾਂ ਦੇ ਅਸਲ ਡੈੱਕ \'ਤੇ ਵਾਪਸ ਆ ਜਾਣਗੇ। ਡੈੱਕ ਸੂਚੀ ਵਿੱਚੋਂ ਇਸ ਡੈੱਕ ਨੂੰ ਮਿਟਾਉਣ ਨਾਲ ਬਾਕੀ ਸਾਰੇ ਕਾਰਡ ਉਹਨਾਂ ਦੇ ਅਸਲ ਡੈੱਕ \'ਤੇ ਵਾਪਸ ਆ ਜਾਣਗੇ।</string>
+    <string name="steps_error">ਕਦਮਾਂ ਦੀ ਗਿਣਤੀ 0 ਤੋਂ ਵੱਧ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ</string>
+    <string name="steps_min_error">ਘੱਟੋ-ਘੱਟ ਇੱਕ ਕਦਮ ਦੀ ਲੋੜ ਹੈ</string>
+    <string name="tag_editor_add_feedback">\"%1$s\" ਨੂੰ ਜੋੜਨ ਦੀ ਪੁਸ਼ਟੀ ਕਰਨ ਲਈ \"%2$s\" ਨੂੰ ਛੋਹਵੋ।</string>
+    <string name="tag_editor_add_feedback_existing">ਮੌਜੂਦਾ ਟੈਗ “%1$s” ਚੁਣਿਆ ਗਿਆ</string>
     <!-- Time spans -->
-    <string name="reminder_title">Do not forget to study today!</string>
+    <string name="reminder_title">ਅੱਜ ਦਾ ਅਧਿਐਨ ਕਰਨਾ ਨਾ ਭੁੱਲੋ!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d card to review in %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="one">%1$s ਵਿੱਚ ਸਮੀਖਿਆ ਕਰਨ ਲਈ %2$d ਕਾਰਡ</item>
+        <item quantity="other">%1$s ਵਿੱਚ ਸਮੀਖਿਆ ਕਰਨ ਲਈ %2$d ਕਾਰਡ</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
-    <string name="apk_share_error">Error sharing apkg file</string>
+    <string name="apk_share_error">apkk ਫਾਈਲ ਨੂੰ ਸਾਂਝਾ ਕਰਨ ਵਿੱਚ ਤਰੁੱਟੀ</string>
     <!-- Import and export v2 feedback -->
-    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="activity_start_failed">ਸਿਸਟਮ ਵਿੱਚ ਕੋਈ ਐਪ ਸਥਾਪਤ ਨਹੀਂ ਹੈ ਜੋ ਇਹ ਕਾਰਵਾਈ ਕਰ ਸਕੇ।</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[ਕੈਮਰੇ ਦੀਆਂ ਤਸਵੀਰਾਂ ਵੱਡੀਆਂ ਹੋ ਸਕਦੀਆਂ ਹਨ। ਤੁਸੀਂ ਮੀਡੀਆ ਡਾਇਰੈਕਟਰੀ ਵਿੱਚ ਚਿੱਤਰਾਂ ਨੂੰ ਸੰਕੁਚਿਤ ਅਤੇ ਮੁੜ ਆਕਾਰ ਦੇਣਾ ਚਾਹ ਸਕਦੇ ਹੋ]]></string>
+    <string name="no_browser_msg">ਲਿੰਕ ਖੋਲ੍ਹਣ ਲਈ ਕੋਈ ਬ੍ਰਾਊਜ਼ਰ ਨਹੀਂ ਮਿਲਿਆ: %s</string>
+    <string name="web_page_error">ਪੰਨਾ ਲੋਡ ਕਰਨ ਵਿੱਚ ਤਰੁੱਟੀ: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">ਪਿਛੋਕੜ</string>
-    <string name="choose_an_image">ਚਿੱਤਰ ਨੂੰ ਚੁਣੋ</string>
+    <string name="background_image_title" maxLength="41">ਪਿਛੋਕੜ</string>
+    <string name="choose_an_image" maxLength="41">ਚਿੱਤਰ ਨੂੰ ਚੁਣੋ</string>
     <string name="remove_background_image">ਕੀ ਪਿਛੋਕੜ ਨੂੰ ਹਟਾਉਣਾ ਹੈ?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">ਡਿਫੌਲਟ ਰੀਸਟੋਰ ਕਰੋ</string>
+    <string name="restore_default" maxLength="28">ਡਿਫੌਲਟ ਰੀਸਟੋਰ ਕਰੋ</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ਖਾਲੀ</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">ਵ੍ਹਾਈਟਬੋਰਡ ਚਿੱਤਰ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰਨ ਵਿੱਚ ਅਸਫਲ। %s</string>
     <string name="white_board_image_saved">ਵ੍ਹਾਈਟਬੋਰਡ ਚਿੱਤਰ %s ਵਿੱਚ ਸੁਰੱਖਿਅਤ ਕੀਤਾ ਗਿਆ</string>
-    <string name="title_whiteboard_pen_color">ਵ੍ਹਾਈਟਬੋਰਡ ਪੈੱਨ ਦਾ ਰੰਗ</string>
-    <string name="title_whiteboard_editor">ਵ੍ਹਾਈਟਬੋਰਡ ਸੰਪਾਦਕ</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">ਵ੍ਹਾਈਟਬੋਰਡ ਪੈੱਨ ਦਾ ਰੰਗ</string>
+    <string name="title_whiteboard_editor" maxLength="28">ਵ੍ਹਾਈਟਬੋਰਡ ਸੰਪਾਦਕ</string>
+    <string name="user_is_a_robot">ਖੋਜਿਆ ਆਟੋਮੈਟਿਕ ਟੈਸਟ. ਜੇਕਰ ਤੁਸੀਂ ਮਨੁੱਖ ਹੋ, ਤਾਂ AnkiDroid ਸਹਾਇਤਾ ਨਾਲ ਸੰਪਰਕ ਕਰੋ</string>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="api_version_developer_contact">ਇਹ ਕਾਰਡ ਅਸਮਰਥਿਤ AnkiDroid ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਦੀ ਵਰਤੋਂ ਕਰਦਾ ਹੈ। ਡਿਵੈਲਪਰ %1$s ਨਾਲ ਸੰਪਰਕ ਕਰੋ, ਜਾਂ ਵਿਕੀ ਦੇਖੋ। %2$s</string>
+    <string name="invalid_json_data">ਕਾਰਡ ਨੇ ਅਵੈਧ ਡੇਟਾ ਪ੍ਰਦਾਨ ਕੀਤਾ। %s</string>
+    <string name="valid_js_api_version">ਅਵੈਧ AnkiDroid JS API ਸੰਸਕਰਣ। ਡਿਵੈਲਪਰ %s ਨਾਲ ਸੰਪਰਕ ਕਰੋ, ਜਾਂ ਵਿਕੀ ਵੇਖੋ</string>
+    <string name="update_js_api_version">AnkiDroid JS API ਅੱਪਡੇਟ ਉਪਲਬਧ ਹੈ। ਡਿਵੈਲਪਰ %s ਨਾਲ ਸੰਪਰਕ ਕਰੋ, ਜਾਂ ਵਿਕੀ ਵੇਖੋ</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">ਦੇਖੋ</string>
+    <string name="anki_js_error_code">(ਗਲਤੀ ਕੋਡ: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">ਕਲਿੱਪਬੋਰਡ \'ਤੇ ਕਾਪੀ ਕੀਤਾ ਗਿਆ</string>
+    <string name="about_ankidroid_error_copy_debug_info">ਡੀਬੱਗ ਜਾਣਕਾਰੀ ਨੂੰ ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕਰਨ ਵਿੱਚ ਤਰੁੱਟੀ</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
+    <string name="card_viewer_could_not_find_image">ਕਾਰਡ ਸਮੱਗਰੀ ਅਸ਼ੁੱਧੀ: \'%s\' ਲੋਡ ਕਰਨ ਵਿੱਚ ਅਸਫਲ</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Search decks</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="search_decks" maxLength="28">ਖੋਜ ਡੈੱਕ</string>
+    <string name="ankidroid_init_failed_webview_title">ਘਾਤਕ ਗਲਤੀ</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid ਸਿਸਟਮ WebView \'ਤੇ ਨਿਰਭਰ ਕਰਦਾ ਹੈ ਜੋ ਕਿ ਉਪਲਬਧ ਨਹੀਂ ਹੈ। ਇਹ ਉਦੋਂ ਹੋ ਸਕਦਾ ਹੈ ਜੇਕਰ ਸਿਸਟਮ ਅੱਪਡੇਟ ਸਥਾਪਤ ਕਰ ਰਿਹਾ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਕੁਝ ਮਿੰਟਾਂ ਵਿੱਚ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Font size</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show toolbar</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
-    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
+    <string name="menu_font_size" maxLength="28">ਫੌਂਟ ਦਾ ਆਕਾਰ</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ਟੂਲਬਾਰ ਦਿਖਾਓ</string>
+    <string name="format_insert_bold">ਬੋਲਡ ਵਜੋਂ ਫਾਰਮੈਟ ਕਰੋ</string>
+    <string name="format_insert_italic">ਇਟਾਲਿਕ ਵਜੋਂ ਫਾਰਮੈਟ ਕਰੋ</string>
+    <string name="format_insert_underline">ਅੰਡਰਲਾਈਨ ਵਜੋਂ ਫਾਰਮੈਟ ਕਰੋ</string>
+    <string name="insert_horizontal_line">ਹਰੀਜੱਟਲ ਲਾਈਨ ਪਾਓ</string>
+    <string name="insert_heading">ਸਿਰਲੇਖ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="format_font_size">ਫੌਂਟ ਦਾ ਆਕਾਰ ਬਦਲੋ</string>
+    <string name="insert_mathjax">ਮੈਥਜੈਕਸ ਸਮੀਕਰਨ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="note_editor_toolbar_icon">ਬਟਨ ਟੈਕਸਟ</string>
+    <string name="before_text">ਚੋਣ ਤੋਂ ਪਹਿਲਾਂ HTML</string>
+    <string name="after_text">ਚੋਣ ਤੋਂ ਬਾਅਦ HTML</string>
+    <string name="add_toolbar_item">ਇੱਕ ਟੂਲਬਾਰ ਆਈਟਮ ਬਣਾਓ</string>
+    <string name="edit_toolbar_item">ਟੂਲਬਾਰ ਆਈਟਮ ਦਾ ਸੰਪਾਦਨ ਕਰੋ</string>
+    <string name="toolbar_item_explain_edit_or_remove">ਚੁਣੇ ਗਏ ਟੈਕਸਟ ਤੋਂ ਪਹਿਲਾਂ ਅਤੇ ਬਾਅਦ ਵਿੱਚ ਸੰਮਿਲਿਤ ਕਰਨ ਲਈ HTML ਦਾਖਲ ਕਰੋ\n\nਟੂਲਬਾਰ ਆਈਟਮ ਨੂੰ ਸੰਪਾਦਿਤ ਕਰਨ ਜਾਂ ਹਟਾਉਣ ਲਈ ਦੇਰ ਤੱਕ ਦਬਾਓ</string>
+    <string name="remove_toolbar_item">ਕੀ ਟੂਲਬਾਰ ਆਈਟਮ ਨੂੰ ਹਟਾਉਣਾ ਹੈ?</string>
+    <string name="note_editor_image_too_large">ਚਿੱਤਰ ਬਹੁਤ ਵੱਡਾ ਹੈ, ਕਿਰਪਾ ਕਰਕੇ ਚਿੱਤਰ ਨੂੰ ਹੱਥੀਂ ਪਾਓ</string>
+    <string name="note_editor_video_too_large">ਵੀਡੀਓ ਫਾਈਲ ਬਹੁਤ ਵੱਡੀ ਹੈ, ਕਿਰਪਾ ਕਰਕੇ ਹੱਥੀਂ ਵੀਡੀਓ ਪਾਓ</string>
+    <string name="note_editor_audio_too_large">ਆਡੀਓ ਫ਼ਾਈਲ ਬਹੁਤ ਵੱਡੀ ਹੈ, ਕਿਰਪਾ ਕਰਕੇ ਆਡੀਓ ਨੂੰ ਹੱਥੀਂ ਪਾਓ</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android ਬੈਕਅੱਪ ਜਾਰੀ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">ਤੁਹਾਨੂੰ AnkiDroid ਨੂੰ ਸ਼ਾਰਟਕੱਟ ਜੋੜਨ ਦੀ ਇਜਾਜ਼ਤ ਦੇਣ ਲਈ iManager ਦੀ ਵਰਤੋਂ ਕਰਨ ਦੀ ਲੋੜ ਹੋ ਸਕਦੀ ਹੈ</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">ਤੁਹਾਡੀ ਹੋਮ ਸਕ੍ਰੀਨ AnkiDroid ਨੂੰ ਸ਼ਾਰਟਕੱਟ ਜੋੜਨ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਦਿੰਦੀ</string>
+    <string name="create_shortcut_error">ਸ਼ਾਰਟਕੱਟ ਜੋੜਨ ਵਿੱਚ ਤਰੁੱਟੀ: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">ਵਾਕਾਂ ਨੂੰ ਵੱਡਾ ਕਰੋ</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">ਸਕ੍ਰੋਲ ਟੂਲਬਾਰ</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -253,97 +252,100 @@
     <string name="download_deck">ਡੇਕ ਨੂੰ ਡਾਊਨਲੋਡ ਕਰੋ</string>
     <string name="try_again">ਫਿਰ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
     <string name="cancel_download">ਡਾਊਨਲੋਡ ਰੱਦ ਕਰੋ</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
+    <string name="cancel_download_question_title">ਕੀ ਡਾਊਨਲੋਡ ਰੱਦ ਕਰਨਾ ਹੈ?</string>
     <string name="downloading_file">%s ਨੂੰ ਡਾਊਨਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
     <string name="import_deck">ਡੈੱਕ ਆਯਾਤ ਕਰੋ</string>
     <string name="something_wrong">ਕੁਝ ਗਲਤ ਹੋ ਗਿਆ, ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
-    <string name="home">Home</string>
+    <string name="download_failed">ਡਾਊਨਲੋਡ ਅਸਫਲ ਰਿਹਾ</string>
+    <string name="deck_download_progress_message">ਜਦੋਂ ਡਾਊਨਲੋਡ ਚੱਲ ਰਿਹਾ ਹੋਵੇ ਤਾਂ ਤੁਸੀਂ ਹੋਰ ਐਪਸ ਦੀ ਵਰਤੋਂ ਕਰ ਸਕਦੇ ਹੋ</string>
+    <string name="check_network">ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ ਨੈੱਟਵਰਕ ਕਨੈਕਸ਼ਨ ਦੀ ਜਾਂਚ ਕਰੋ</string>
+    <string name="search_using_deck_name">ਡੇਕ ਨਾਮ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਖੋਜ ਕਰੋ</string>
+    <string name="external_storage_unavailable">ਡਾਊਨਲੋਡ ਅਧੂਰਾ ਛੱਡਿਆ ਗਿਆ, ਕੋਈ ਬਾਹਰੀ ਸਟੋਰੇਜ ਉਪਲਬਧ ਨਹੀਂ ਹੈ</string>
+    <string name="home" maxLength="28">ਘਰ</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">ਕਾਰਡ ਦੱਬਿਆ ਗਿਆ।</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="one">%d ਕਾਰਡ ਮੁਅੱਤਲ ਕੀਤਾ ਗਿਆ।</item>
+        <item quantity="other">%d ਕਾਰਡ ਮੁਅੱਤਲ ਕੀਤੇ ਗਏ।</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
-    <string name="scoped_storage_postpone">Postpone</string>
-    <string name="scoped_storage_migrate">Migrate</string>
+    <string name="note_editor_toggle_sticky">ਖੇਤਰ %s ਨੂੰ ਸਟਿੱਕੀ ਬਣਾਓ</string>
+    <string name="scoped_storage_learn_more">ਜਿਆਦਾ ਜਾਣੋ</string>
     <string name="search_card_js_api_no_results">ਖੋਜ ਨੇ ਕੋਈ ਨਤੀਜਾ ਨਹੀਂ ਦਿੱਤਾ</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
-    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
-    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
-\nStorage migration will continue in the background.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
+    <string name="not_valid_js_addon_package">%s ਇੱਕ ਵੈਧ JavaScript ਐਡ-ਆਨ ਪੈਕੇਜ ਨਹੀਂ ਹੈ</string>
+    <string name="could_not_create_dir">ਡਾਇਰੈਕਟਰੀ %s ਬਣਾਈ ਨਹੀਂ ਜਾ ਸਕੀ</string>
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="file_extract_exceeds_storage_space">ਫਾਈਲ ਐਬਸਟਰੈਕਟ ਸਟੋਰੇਜ ਸਪੇਸ ਤੋਂ ਵੱਧ ਹੈ</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">ਟੈਗ \'%s\' ਦਾ ਵਿਸਤਾਰ ਕਰੋ</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
-    <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <string name="field_editor_model_not_available">ਸੰਗ੍ਰਹਿ ਤੱਕ ਪਹੁੰਚ ਕਰਨ ਵਿੱਚ ਅਸਫਲ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ!</string>
+    <string name="cd_manage_notetypes_add">ਇੱਕ ਨਵੀਂ ਨੋਟ ਕਿਸਮ ਸ਼ਾਮਲ ਕਰੋ</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Study less</string>
-    <string name="intro_ankidroid_tagline_two">Remember more</string>
-    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
-    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="intro_ankidroid_tagline_two">ਹੋਰ ਯਾਦ ਰੱਖੋ</string>
+    <string name="intro_short_ankidroid_explanation">ਅੰਕੀ ਦਾ ਕਾਰਡ ਸ਼ਡਿਊਲਰ ਤੁਹਾਡੀਆਂ ਸਭ ਤੋਂ ਕਮਜ਼ੋਰ ਯਾਦਾਂ ਨੂੰ ਮਜ਼ਬੂਤ ​​ਕਰਕੇ ਅਤੇ ਤੁਹਾਡੀਆਂ ਸਭ ਤੋਂ ਮਜ਼ਬੂਤ ​​ਯਾਦਾਂ ਨੂੰ ਸੁਰੱਖਿਅਤ ਰੱਖ ਕੇ ਸਮਾਂ ਬਚਾਉਂਦਾ ਹੈ।</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">ਸ਼ੁਰੂ ਕਰੋ</string>
+    <string name="intro_sync_from_ankiweb">AnkiWeb ਤੋਂ ਸਿੰਕ ਕਰੋ</string>
     <!-- IntentHandler -->
-    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
-    <string name="already_logged_in">Already logged in</string>
+    <string name="app_not_initialized_new">AnkiDroid ਨੂੰ ਅਜੇ ਲਾਂਚ ਨਹੀਂ ਕੀਤਾ ਗਿਆ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ AnkiDroid ਖੋਲ੍ਹੋ ਅਤੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
+    <string name="already_logged_in">ਪਹਿਲਾਂ ਹੀ ਲੌਗ ਇਨ ਹੈ</string>
     <!-- Deck Creation -->
-    <string name="deck_created">Deck created</string>
-    <string name="deck_renamed">Deck renamed</string>
+    <string name="deck_created">ਡੇਕ ਬਣਾਇਆ ਗਿਆ ਸੀ</string>
+    <string name="deck_renamed">ਡੇਕ ਦਾ ਨਾਮ ਬਦਲਿਆ ਗਿਆ</string>
     <!-- Deck Deletion -->
-    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
+    <string name="deck_shortcut_doesnt_exist">ਡੈੱਕ ਮਿਟਾਇਆ ਗਿਆ। ਕਿਰਪਾ ਕਰਕੇ ਸ਼ਾਰਟਕੱਟ ਹਟਾਓ</string>
     <!-- Browser Options Dialog -->
-    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
-    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
-    <string name="toggle_cards_notes">Toggle Cards/Notes</string>
-    <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
-    <string name="browser_options_dialog_heading">Browser Options</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
-    <string name="media_sync_required_title">Media Sync Required</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
-    <string name="audio_saved">Recording saved</string>
-    <string name="deleting_selected_notes">Deleting selected notes</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
-    </string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use
-    </string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway
-    </string>
-    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Text to speech error (%s)</string>
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">ਕਾਰਡ</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ਨੋਟਸ</string>
+    <string name="toggle_cards_notes">ਕਾਰਡ/ਨੋਟਸ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
+    <string name="truncate_content_help">ਸਮੱਗਰੀ ਦੀਆਂ ਸਿਰਫ਼ ਪਹਿਲੀਆਂ 3 ਲਾਈਨਾਂ ਦਿਖਾਉਣ ਲਈ ਬ੍ਰਾਊਜ਼ਰ ਦੀ ਹਰੇਕ ਕਤਾਰ ਦੀ ਉਚਾਈ ਨੂੰ ਛੋਟਾ ਕਰੋ</string>
+    <string name="browser_options_dialog_heading">Browser options</string>
+    <string name="audio_saved">ਰਿਕਾਰਡਿੰਗ ਸੁਰੱਖਿਅਤ ਕੀਤੀ ਗਈ</string>
+    <string name="deleting_selected_notes">ਚੁਣੇ ਗਏ ਨੋਟਸ ਮਿਟਾਓ</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">ਸੁਣਨ ਲਈ ਇੱਕ ਅਵਾਜ਼ \'ਤੇ ਟੈਪ ਕਰੋ</string>
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">ਅਵਾਜ਼ ਵਰਤਣ ਤੋਂ ਪਹਿਲਾਂ ਇੰਸਟਾਲ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ</string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">ਕਿਸੇ ਵੀ ਤਰ੍ਹਾਂ ਵਰਤੋ</string>
+    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">ਟੈਕਸਟ ਤੋਂ ਸਪੀਚ ਗਲਤੀ (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">ਇੰਟਰਨੇਟ</string>
     <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">ਇੰਸਟਾਲ ਕਰੋ</string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Failed to open text to speech settings
-    </string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">ਟੈਕਸਟ ਟੂ ਸਪੀਚ ਸੈਟਿੰਗਾਂ ਨੂੰ ਖੋਲ੍ਹਣ ਵਿੱਚ ਅਸਫਲ</string>
     <string name="shared_decks_login_required">ਕਿਰਪਾ ਕਰਕੇ ਹੋਰ ਡੇਕ ਡਾਊਨਲੋਡ ਕਰਨ ਲਈ ਲੌਗ ਇਨ ਕਰੋ</string>
     <string name="deck_description_field_hint">ਵਰਣਨ</string>
     <string name="failed_to_copy">ਕਾਪੀ ਕਰਨਾ ਅਸਫਲ ਰਿਹਾ</string>
     <string name="card_browser_unavailable_when_notes_mode">\'ਨੋਟਸ\' ਮੋਡ ਵਿੱਚ ਉਪਲਬਧ ਨਹੀਂ ਹੈ</string>
     <plurals name="unbury_cards_feedback">
-        <item quantity="one">%d card unburied</item>
-        <item quantity="other">%d cards unburied</item>
+        <item quantity="one">%d ਕਾਰਡ ਹਸਤਾਖਰਿਤ ਨਹੀਂ ਕੀਤਾ ਗਿਆ</item>
+        <item quantity="other">%d ਕਾਰਡ ਅਣਦਫਨ ਕੀਤੇ ਗਏ</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Reposition</string>
     <string name="start_recording">ਰਿਕਾਰਡ</string>
     <string name="stop_recording">ਪਕੜਨਾ</string>
     <string name="play_recording">ਖੇਡੋ</string>
     <string name="next_recording">ਅਗਲਾ</string>
+    <!--  AlertDialog in the deleteCardTemplate  -->
+    <string name="orphan_note_title">ਕਾਰਡ ਦੀ ਕਿਸਮ ਨੂੰ ਮਿਟਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ</string>
+    <string name="orphan_note_message">ਇਸ ਕਾਰਡ ਦੀ ਕਿਸਮ ਨੂੰ ਮਿਟਾਉਣ ਨਾਲ ਕੁਝ ਨੋਟ ਬਿਨਾਂ ਕਿਸੇ ਕਾਰਡ ਦੇ ਰਹਿ ਜਾਣਗੇ।</string>
+    <string name="voice_not_supported">ਵੌਇਸ ਸਮਰਥਿਤ ਨਹੀਂ ਹੈ। ਕੋਈ ਹੋਰ ਅਜ਼ਮਾਓ ਜਾਂ ਇੱਕ ਵੌਇਸ ਇੰਜਣ ਸਥਾਪਤ ਕਰੋ।</string>
+    <!--Keyboard shortcuts dialog-->
+    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">ਕੀਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਡਾਇਲਾਗ ਦਿਖਾਓ</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">ਡੈੱਕ ਚੋਣਕਾਰ</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">ਅਪ੍ਰਮਾਣਿਤ ਡੇਕ ਮਿਟਾਓ</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">ਨੋਟ ਸੰਪਾਦਕ</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">ਡੇਕ ਦੀ ਚੋਣ ਕਰੋ</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">ਨੋਟ ਦੀ ਕਿਸਮ ਚੁਣੋ</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">ਟੈਗ ਸੰਪਾਦਕ</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">ਕਾਰਡ ਟੈਮਪਲੇਟ ਸੰਪਾਦਕ</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">ਸਾਹਮਣੇ ਵਾਲੇ ਟੈਂਪਲੇਟ ਨੂੰ ਸੰਪਾਦਿਤ ਕਰੋ</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">ਪਿਛਲੇ ਟੈਂਪਲੇਟ ਨੂੰ ਸੰਪਾਦਿਤ ਕਰੋ</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">ਸਟਾਈਲ ਦਾ ਸੰਪਾਦਨ ਕਰੋ</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">ਟੈਂਪਲੇਟ ਨੂੰ ਮਾਰਕਡਾਊਨ ਵਜੋਂ ਕਾਪੀ ਕਰੋ</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">ਬ੍ਰਾਊਜ਼ਰ ਦੀ ਦਿੱਖ ਨੂੰ ਸੰਪਾਦਿਤ ਕਰੋ</string>
+    <string name="show_shortcuts_message">ਕੀਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਦਿਖਾਉਣ ਲਈ Alt+K ਦਬਾਓ</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">ਇਸ ਨੋਟ ਕਿਸਮ ਵਿੱਚ ਉਪਭੋਗਤਾ ਕਾਰਵਾਈ %s ਸੈੱਟ ਨਹੀਂ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਇਸਨੂੰ ਕੌਂਫਿਗਰ ਕਰੋ</string>
+    <string name="directory_inaccessible_info">ਇੱਥੇ %s ਪਹੁੰਚ ਨੂੰ ਕਿਵੇਂ ਬਹਾਲ ਕਰਨਾ ਹੈ ਬਾਰੇ ਹੋਰ ਜਾਣੋ ਜਾਂ ਸੰਗ੍ਰਹਿ ਫੋਲਡਰ ਨੂੰ ਅੱਪਡੇਟ ਕਰਨ ਲਈ ਸੈਟਿੰਗਾਂ \'ਤੇ ਜਾਓ।</string>
 </resources>

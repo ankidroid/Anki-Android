@@ -27,13 +27,12 @@
             >
 
             <ImageView
-                android:id="@+id/ankidroid_logo"
-                android:layout_width="200dp"
-                app:srcCompat="@drawable/ankidroid_logo"
-                android:layout_marginBottom="0dp"
+                android:id="@+id/login_logo"
+                android:layout_width="339dp"
+                android:layout_height="223dp"
                 android:layout_gravity="center"
-                android:layout_height="200dp"
-                />
+                android:layout_marginBottom="0dp"
+                app:srcCompat="@drawable/logged_in_logo" />
 
             <com.ichi2.ui.FixedTextView
                 android:layout_width="wrap_content"

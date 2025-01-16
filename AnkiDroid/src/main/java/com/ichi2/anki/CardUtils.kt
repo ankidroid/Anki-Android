@@ -13,7 +13,10 @@ object CardUtils {
     /**
      * @return List of corresponding notes without duplicates, even if the input list has multiple cards of the same note.
      */
-    fun getNotes(col: Collection, cards: kotlin.collections.Collection<Card>): Set<Note> {
+    fun getNotes(
+        col: Collection,
+        cards: kotlin.collections.Collection<Card>,
+    ): Set<Note> {
         val notes: MutableSet<Note> = hashSetInit(cards.size)
         for (card in cards) {
             notes.add(card.note(col))

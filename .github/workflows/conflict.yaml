@@ -1,4 +1,4 @@
-name: Conflict Scan
+name: 🛠️ Conflict Scan
 
 on:
   push:
@@ -104,7 +104,16 @@ jobs:
                                 // if PR has no conflicts, remove the label
                                 if (pullRequestData.data.labels.find(label => label.name === 'Has Conflicts')) {
                                     console.log(`Removing 'Has Conflicts' label from PR #${prNumber}`);
-                                    await removeLabel(['Has Conflicts'], prNumber);
+                                    try {
+                                        await removeLabel(['Has Conflicts'], prNumber);
+                                    } catch(err) {
+                                        if (err.status === 404) {
+                                            console.warn("(Has Conflicts) label no longer found when trying to remove it");
+                                        } else {
+                                            console.log("Unexpected error while removing (Has Conflicts) label: " + err);
+                                            throw err;
+                                        }
+                                    }
                                 }
                             }
                         }

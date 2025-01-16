@@ -23,17 +23,20 @@ import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 
-/** Allows selecting between [CardSide.QUESTION], [CardSide.ANSWER] or [CardSide.BOTH0] */
+/** Allows selecting between [CardSide.QUESTION], [CardSide.ANSWER] or [CardSide.BOTH] */
 class CardSideSelectionDialog {
-
     companion object {
         @SuppressLint("CheckResult")
-        fun displayInstance(ctx: Context, callback: (c: CardSide) -> Unit) {
-            val items = listOf(
-                R.string.card_side_both,
-                R.string.card_side_question,
-                R.string.card_side_answer
-            )
+        fun displayInstance(
+            ctx: Context,
+            callback: (c: CardSide) -> Unit,
+        ) {
+            val items =
+                listOf(
+                    R.string.card_side_both,
+                    R.string.card_side_question,
+                    R.string.card_side_answer,
+                )
 
             AlertDialog.Builder(ctx).show {
                 title(R.string.card_side_selection_title)

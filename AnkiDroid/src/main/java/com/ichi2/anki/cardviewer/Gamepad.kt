@@ -29,7 +29,10 @@ import android.webkit.WebView
  * * `false` if [keyCode] is NOT a gamepad button
  * * `webView.onKeyUp(keyCode, keyEvent)` otherwise
  */
-fun WebView?.handledGamepadKeyUp(keyCode: Int, keyEvent: KeyEvent): Boolean {
+fun WebView?.handledGamepadKeyUp(
+    keyCode: Int,
+    keyEvent: KeyEvent,
+): Boolean {
     if (this == null) return false
     if (!KeyEvent.isGamepadButton(keyCode)) return false
     return this.onKeyUp(keyCode, keyEvent)
@@ -45,7 +48,10 @@ fun WebView?.handledGamepadKeyUp(keyCode: Int, keyEvent: KeyEvent): Boolean {
  * * `false` if [keyCode] is NOT a gamepad button
  * * `webView.onKeyDown(keyCode, keyEvent)` otherwise
  */
-fun WebView?.handledGamepadKeyDown(keyCode: Int, keyEvent: KeyEvent): Boolean {
+fun WebView?.handledGamepadKeyDown(
+    keyCode: Int,
+    keyEvent: KeyEvent,
+): Boolean {
     if (this == null) return false
     if (!KeyEvent.isGamepadButton(keyCode)) return false
     return this.onKeyDown(keyCode, keyEvent)

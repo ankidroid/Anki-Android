@@ -34,15 +34,14 @@ import java.io.IOException
  * Base WebViewClient to be used on [PageFragment]
  */
 open class PageWebViewClient : WebViewClient() {
-
     /** Wait for the provided promise to complete before showing the WebView */
     open val promiseToWaitFor: String? = null
 
-    var onPageFinishedCallback: OnPageFinishedCallback? = null
+    val onPageFinishedCallbacks: MutableList<OnPageFinishedCallback> = mutableListOf()
 
     override fun shouldInterceptRequest(
         view: WebView,
-        request: WebResourceRequest
+        request: WebResourceRequest,
     ): WebResourceResponse? {
         val path = request.url.path
         if (request.method != "GET" || path == null) return null
@@ -50,13 +49,14 @@ open class PageWebViewClient : WebViewClient() {
             return WebResourceResponse("image/x-icon", null, ByteArrayInputStream(byteArrayOf()))
         }
 
-        val assetPath = if (path.startsWith("/_app/")) {
-            "backend/sveltekit/app/${path.substring(6)}"
-        } else if (isSvelteKitPage(path.substring(1))) {
-            "backend/sveltekit/index.html"
-        } else {
-            return null
-        }
+        val assetPath =
+            if (path.startsWith("/_app/")) {
+                "backend/sveltekit/app/${path.substring(6)}"
+            } else if (isSvelteKitPage(path.substring(1))) {
+                "backend/sveltekit/index.html"
+            } else {
+                return null
+            }
 
         try {
             val mimeType = guessMimeType(assetPath)
@@ -72,28 +72,37 @@ open class PageWebViewClient : WebViewClient() {
         return null
     }
 
-    override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+    override fun onPageStarted(
+        view: WebView?,
+        url: String?,
+        favicon: Bitmap?,
+    ) {
         super.onPageStarted(view, url, favicon)
         view?.let { webView ->
             val bgColor = MaterialColors.getColor(webView, android.R.attr.colorBackground).toRGBHex()
             webView.evaluateAfterDOMContentLoaded(
                 """document.body.style.setProperty("background-color", "$bgColor", "important");
-                    console.log("Background color set");"""
+                    console.log("Background color set");""",
             )
         }
     }
 
-    override fun onPageFinished(view: WebView?, url: String?) {
+    override fun onPageFinished(
+        view: WebView?,
+        url: String?,
+    ) {
         super.onPageFinished(view, url)
         if (view == null) return
-        onPageFinishedCallback?.onPageFinished(view)
+        onPageFinishedCallbacks.map { callback -> callback.onPageFinished(view) }
         if (promiseToWaitFor == null) {
             /** [PageFragment.webView] is invisible by default to avoid flashes while
              * the page is loaded, and can be made visible again after it finishes loading */
             Timber.v("displaying WebView")
             view.isVisible = true
         } else {
-            view.evaluateJavascript("""$promiseToWaitFor.then(() => { console.log("page-fully-loaded:"); window.location.href = "page-fully-loaded:" } )""") {
+            view.evaluateJavascript(
+                """$promiseToWaitFor.then(() => { console.log("page-fully-loaded:"); window.location.href = "page-fully-loaded:" } )""",
+            ) {
                 Timber.v("waiting for '$promiseToWaitFor' before displaying WebView")
             }
         }
@@ -108,7 +117,10 @@ open class PageWebViewClient : WebViewClient() {
         return super.shouldOverrideUrlLoading(view, url)
     }
 
-    override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+    override fun shouldOverrideUrlLoading(
+        view: WebView?,
+        request: WebResourceRequest?,
+    ): Boolean {
         if (view == null || request == null) return super.shouldOverrideUrlLoading(view, request)
         if (handleUrl(view, request.url.toString())) {
             return true
@@ -116,7 +128,10 @@ open class PageWebViewClient : WebViewClient() {
         return super.shouldOverrideUrlLoading(view, request)
     }
 
-    private fun handleUrl(view: WebView, url: String): Boolean {
+    private fun handleUrl(
+        view: WebView,
+        url: String,
+    ): Boolean {
         if (url == "page-fully-loaded:") {
             Timber.v("displaying WebView after '$promiseToWaitFor' executed")
             view.isVisible = true
@@ -137,24 +152,28 @@ fun isSvelteKitPage(path: String): Boolean {
         "import-anki-package",
         "import-csv",
         "import-page",
-        "image-occlusion" -> true
+        "image-occlusion",
+        -> true
         else -> false
     }
 }
 
-fun WebView.evaluateAfterDOMContentLoaded(script: String, resultCallback: ValueCallback<String>? = null) {
+fun WebView.evaluateAfterDOMContentLoaded(
+    script: String,
+    resultCallback: ValueCallback<String>? = null,
+) {
     evaluateJavascript(
         """
-                var codeToRun = function() { 
-                    $script
-                }
-                
-                if (document.readyState === "loading") {
-                  document.addEventListener("DOMContentLoaded", codeToRun);
-                } else {
-                  codeToRun();
-                }
+        var codeToRun = function() { 
+            $script
+        }
+        
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", codeToRun);
+        } else {
+          codeToRun();
+        }
         """.trimIndent(),
-        resultCallback
+        resultCallback,
     )
 }

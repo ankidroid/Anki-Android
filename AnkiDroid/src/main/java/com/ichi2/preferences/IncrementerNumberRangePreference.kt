@@ -31,7 +31,6 @@ import com.ichi2.utils.KotlinCleanup
 @KotlinCleanup("_editText")
 class IncrementerNumberRangePreference : NumberRangePreference {
     private val linearLayout = LinearLayout(context)
-    private val _editText = editText // Get default EditText from parent
     private val incrementButton = Button(context)
     private val decrementButton = Button(context)
     private var lastValidEntry = 0
@@ -50,7 +49,7 @@ class IncrementerNumberRangePreference : NumberRangePreference {
 
     override fun onCreateDialogView(): View {
         linearLayout.addView(decrementButton)
-        linearLayout.addView(_editText)
+        linearLayout.addView(editText)
         linearLayout.addView(incrementButton)
         return linearLayout
     }
@@ -59,7 +58,7 @@ class IncrementerNumberRangePreference : NumberRangePreference {
         super.onDialogClosed(positiveResult)
 
         // Need to remove Views explicitly otherwise the app crashes when the setting is accessed again
-        // Remove mEditText, mIncrementButton, mDecrementButton before removing mLinearLayout
+        // Remove editText, incrementButton, decrementButton before removing linearLayout
         linearLayout.removeAllViews()
         val parent = linearLayout.parent as ViewGroup
         parent.removeView(linearLayout)
@@ -76,30 +75,33 @@ class IncrementerNumberRangePreference : NumberRangePreference {
      * Sets orientation for [.mLinearLayout].
      *
      *
-     * Sets [.mEditText] width and gravity.
+     * Sets [editText] width and gravity.
      */
     private fun initialize() {
-        // Layout parameters for mEditText
-        val editTextParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            3.0f
-        )
-        // Layout parameters for mIncrementButton and mDecrementButton
-        val buttonParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            1.0f
-        )
-        lastValidEntry = try {
-            _editText.text.toString().toInt()
-        } catch (nfe: NumberFormatException) {
-            // This should not be possible but just in case, recover with a valid minimum from superclass
-            min
-        }
-        _editText.layoutParams = editTextParams
-        // Centre text inside mEditText
-        _editText.gravity = Gravity.CENTER_HORIZONTAL
+        // Layout parameters for editText
+        val editTextParams =
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                3.0f,
+            )
+        // Layout parameters for incrementButton and decrementButton
+        val buttonParams =
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1.0f,
+            )
+        lastValidEntry =
+            try {
+                editText.text.toString().toInt()
+            } catch (nfe: NumberFormatException) {
+                // This should not be possible but just in case, recover with a valid minimum from superclass
+                min
+            }
+        editText.layoutParams = editTextParams
+        // Centre text inside editText
+        editText.gravity = Gravity.CENTER_HORIZONTAL
         incrementButton.setText(R.string.plus_sign)
         decrementButton.setText(R.string.minus_sign)
         incrementButton.layoutParams = buttonParams
@@ -110,21 +112,22 @@ class IncrementerNumberRangePreference : NumberRangePreference {
     }
 
     /**
-     * Increments/Decrements the value of [.mEditText] by 1 based on the parameter value.
+     * Increments/Decrements the value of [editText] by 1 based on the parameter value.
      *
      * @param isIncrement Indicator for whether to increase or decrease the value.
      */
     private fun updateEditText(isIncrement: Boolean) {
-        var value: Int = try {
-            _editText.text.toString().toInt()
-        } catch (e: NumberFormatException) {
-            // If the user entered a non-number then incremented, restore to a good value
-            lastValidEntry
-        }
+        var value: Int =
+            try {
+                editText.text.toString().toInt()
+            } catch (e: NumberFormatException) {
+                // If the user entered a non-number then incremented, restore to a good value
+                lastValidEntry
+            }
         value = if (isIncrement) value + 1 else value - 1
         // Make sure value is within range
         lastValidEntry = super.getValidatedRangeFromInt(value)
-        _editText.setText(lastValidEntry.toString())
-        _editText.setSelection(_editText.text.length)
+        editText.setText(lastValidEntry.toString())
+        editText.setSelection(editText.text.length)
     }
 }

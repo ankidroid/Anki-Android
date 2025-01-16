@@ -22,7 +22,6 @@ import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import java.lang.RuntimeException
-import kotlin.Throws
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.javaField
 
@@ -32,9 +31,7 @@ import kotlin.reflect.jvm.javaField
  * inner class is non-parameterized and will run only once.
  */
 @RunWith(Enclosed::class)
-@KotlinCleanup("auto IDE lint")
 @KotlinCleanup("remove JavaField accessors and check for annotations on the property")
-@KotlinCleanup("Remove @Throws")
 object AnalyticsConstantsTest {
     private val listOfConstantFields: MutableList<String> = ArrayList()
 
@@ -74,28 +71,34 @@ object AnalyticsConstantsTest {
 
     internal val analyticsConstantFields
         get() =
-            UsageAnalytics.Actions::class.memberProperties
+            UsageAnalytics.Actions::class
+                .memberProperties
                 .filter { x -> x.javaField!!.getAnnotation(AnalyticsConstant::class.java) != null }
                 .also { list -> assertThat(list.size, not(equalTo(0))) }
 
     @RunWith(Parameterized::class)
-    class AnalyticsConstantsFieldValuesTest(private val analyticsString: String) {
+    class AnalyticsConstantsFieldValuesTest(
+        private val analyticsString: String,
+    ) {
         /**
          * The message here means that the string being checked cannot be found in Actions class.
          * If encountered with this message, re-check the list present here and constants in Actions class, to resolve
          * the test failure.
          */
         @Test
-        @Throws(IllegalAccessException::class)
         fun checkAnalyticsString() {
             Assert.assertEquals(
-                "Re-check if you renamed any string in the analytics string constants of Actions class or AnalyticsConstantsTest.listOfConstantFields. If so, revert them as those string constants must not change as they are compared in analytics.",
+                """Re-check if you renamed any string in the analytics string constants of 
+                    |Actions class or AnalyticsConstantsTest.listOfConstantFields. 
+                    |If so, revert them as those string constants must not change as they are 
+                    |compared in analytics.
+                    |
+                """.trimMargin(),
                 analyticsString,
-                getStringFromReflection(analyticsString)
+                getStringFromReflection(analyticsString),
             )
         }
 
-        @Throws(IllegalAccessException::class)
         fun getStringFromReflection(analyticsStringToBeChecked: String): String? {
             for (value in analyticsConstantFields) {
                 val reflectedValue = value.get(UsageAnalytics.Actions)
@@ -109,9 +112,7 @@ object AnalyticsConstantsTest {
         companion object {
             @JvmStatic // required for Parameters
             @Parameterized.Parameters
-            fun addAnalyticsConstants(): List<String> {
-                return listOfConstantFields
-            }
+            fun addAnalyticsConstants(): List<String> = listOfConstantFields
         }
     }
 
@@ -120,15 +121,27 @@ object AnalyticsConstantsTest {
         fun fieldSizeEqualsListOfConstantFields() {
             if (fieldSize > listOfConstantFields.size) {
                 Assert.assertEquals(
-                    "Add the newly added analytics constant to AnalyticsConstantsTest.listOfConstantFields. NOTE: Constants should not be renamed as we cannot compare these in analytics.",
+                    """Add the newly added analytics constant to 
+                        |AnalyticsConstantsTest.listOfConstantFields. 
+                        |NOTE: Constants 
+                        |should not be renamed as we cannot compare these 
+                        |in analytics.
+                        |
+                    """.trimMargin(),
                     listOfConstantFields.size,
-                    fieldSize
+                    fieldSize,
                 )
             } else if (fieldSize < listOfConstantFields.size) {
                 Assert.assertEquals(
-                    "If a constant is removed, it should be removed from AnalyticsConstantsTest.listOfConstantFields. NOTE: Constants should not be renamed as we cannot compare these in analytics.",
+                    """If a constant is removed, it should be removed from 
+                        |AnalyticsConstantsT
+                        |est.listOfConstantFields. 
+                        |NOTE: Constants should not be renamed as we cannot compare 
+                        |these in analytics.
+                        |
+                    """.trimMargin(),
                     listOfConstantFields.size,
-                    fieldSize
+                    fieldSize,
                 )
             } else {
                 Assert.assertEquals(listOfConstantFields.size, fieldSize)
@@ -136,21 +149,27 @@ object AnalyticsConstantsTest {
         }
 
         /**
-         * This test is used to check whether all the string constants of Actions are annotated with @AnalyticsConstant.
-         * If not, then a runtime exception is thrown.
+         * This test is used to check whether all the string constants of Actions are
+         * annotated with [`@AnalyticsConstant`][AnalyticsConstant].
+         * If not, then a [RuntimeException] is thrown.
          */
         @Test
         fun fieldAnnotatedOrNot() {
             for (value in getProperties()) {
                 if (value.getAnnotation(AnalyticsConstant::class.java) == null && !value.isSynthetic) {
-                    throw RuntimeException("All the fields in Actions class must be annotated with @AnalyticsConstant. It seems " + value.name + " is not annotated.")
+                    throw RuntimeException(
+                        "All the fields in Actions class must be annotated " +
+                            "with @AnalyticsConstant. It seems " + value.name + " is not annotated.",
+                    )
                 }
             }
         }
 
-        private fun getProperties() = UsageAnalytics.Actions::class.memberProperties
-            .mapNotNull { it.javaField }
-            .also { list -> assertThat("fields should not be empty", list.size, not(equalTo(0))) }
+        private fun getProperties() =
+            UsageAnalytics.Actions::class
+                .memberProperties
+                .mapNotNull { it.javaField }
+                .also { list -> assertThat("fields should not be empty", list.size, not(equalTo(0))) }
 
         companion object {
             /**

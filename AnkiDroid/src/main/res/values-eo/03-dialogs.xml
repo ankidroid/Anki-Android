@@ -46,14 +46,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Ĉu kontroli datumbazon?</string>
     <string name="check_db_warning">Tio ĉi povas okupi multan tempon</string>
-    <string name="contextmenu_deckpicker_delete_deck">Forigi kartaron</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Forigi kartaron</string>
     <string name="delete_deck_title">Ĉu forigi kartaron?</string>
-    <string name="no_tts_available_message">Neniu parol-sintezilo disponebla</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Ĉu forigi ĉiujn kartojn el %1$s? Ĝi enhavas %2$d karton</item>
+        <item quantity="other">Ĉu forigi ĉiujn kartojn el %1$s? Ĝi enhavas %2$d kartojn</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Ĉu forigi la filtritan kartaron %s kaj movi ĉiujn ĝiajn kartojn reen al iliaj originalaj kartaroj?</string>
+    <string name="no_tts_available_message">Neniu parolsintezilo disponebla</string>
     <string name="tts_no_tts">Ne paroli</string>
     <string name="unused_strings">\n\nNeuzataj dosieroj:\n</string>
     <string name="reposition_card_dialog_title">Repozicii novan karton</string>
-    <string name="reposition_card_dialog_message">Komenca pozicio:</string>
-    <string name="reposition_card_not_new_error">Nur novaj kartoj povas esti repoziciita</string>
+    <string name="reposition_card_not_new_error">Nur novaj kartoj povas esti repoziciitaj</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d karto estas repoziciita</item>
         <item quantity="other">%d kartoj estas repoziciitaj</item>
@@ -64,21 +68,17 @@
         <item quantity="other">%d kartoj estas nuligitaj</item>
     </plurals>
     <string name="answering_error_title">Eraro pri datumbazo</string>
-    <string name="answering_error_message">Fiaskis skribi al la kolekto. La datumbazo povas esti difektita aŭ eble mankas spaco en la konservejo.\n\nSe tio ĉi okazos pli ofte, provu kontroli la datumbazon, ripari la kolekton aŭ restarigi ĝin el sekurkopio. Frapetu “agordojn” por fari tion.\nAŭ tio ĉi povas esti eraro en AnkiDroid, do bonvolu raporti ĝin por ke ni povu ĝin ripari.</string>
+    <string name="answering_error_message">Malsukcesis skribi al la kolekto. La datumbazo povas esti difektita aŭ eble mankas spaco en la konservejo.\n\nSe tio ĉi okazos pli ofte, provu kontroli la datumbazon, ripari la kolekton aŭ restarigi ĝin el sekurkopio. Frapetu “agordojn” por fari tion.\nAŭ tio ĉi povas esti eraro en AnkiDroid, do bonvolu raporti ĝin por ke ni povu ĝin ripari.</string>
     <string name="answering_error_report">Raporti eraron</string>
     <string name="storage_full_message">Ne estas sufiĉe da libera konserva spaco por  malfermi AnkiDroid. Liberigi iom da spaco por pluigi.</string>
-    <string name="repair_deck_dialog">Ĉu vi certe volas ripari la datumbazon?\n\nAntaŭ komenci, kopio estos kreita en subdosierujo “%s”.</string>
+    <string name="repair_deck_dialog">Ĉu vi certe volas ripari la datumbazon?\n\nAntaŭ ol komenci, kopio estos kreita en subdosierujo “%s”.</string>
     <string name="intent_aedict_empty">La ĉefa kategorio estas malplena</string>
     <string name="intent_aedict_category">Por aldoni kartojn al AnkiDroid, forigu ĉiujn kategoriojn de kajero kaj aldonu unu nomitan «default»</string>
-    <string name="custom_study_new_total_new">Novaj kartoj en kartaro: %d</string>
-    <string name="custom_study_rev_total_rev">Lernendaj ripetoj en kartaro: %d</string>
     <string name="custom_study_new_extend">(Mal)pliigi (“-3”) hodiaŭan limigon de novaj kartoj je</string>
     <string name="custom_study_rev_extend">(Mal)pliigi (“-3”) hodiaŭan limigon de kartoj por ripeti je</string>
     <string name="custom_study_forgotten">Ripeti kartojn forgesitajn dum tiom da antaŭaj tagoj:</string>
     <string name="custom_study_ahead">Anticipe ripeti kartojn je tiom da tagoj:</string>
-    <string name="custom_study_random">Elekti tiom da hazardaj kartoj el la kartaro:</string>
     <string name="custom_study_preview">Antaŭrigardi novajn kartojn aldonitajn dum tiom da antaŭaj tagoj:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Ne povis rekrei kartaron por propra lernado</string>
     <string name="storage_full_title">Konservejo plena</string>
     <string name="storage_almost_full_title">Konservejo preskaŭ plena</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Mankas spaco</string>
@@ -96,16 +96,16 @@
     <string name="dialog_continue">Pluigi</string>
     <string name="dialog_processing">Traktado&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Krei</string>
-    <string name="dialog_positive_delete">Forigi</string>
+    <string name="dialog_positive_delete" maxLength="28">Forigi</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Malaktivigi</string>
     <string name="dialog_positive_overwrite">Anstataŭigi</string>
     <string name="dialog_positive_repair">Ripari</string>
     <string name="dialog_positive_replace">Anstataŭigi</string>
     <string name="dialog_collection_path_not_dir">La difinita dosier-indiko estas malĝusta</string>
-    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
-    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
-    <string name="dialog_updated_custom_certificate">Certificate updated</string>
+    <string name="dialog_invalid_custom_certificate">La eneigita teksto ne estas ĝusta atestilo X509 en la PEM-formo</string>
+    <string name="dialog_invalid_custom_certificate_title">Eraro dum pritrakti atestilon</string>
+    <string name="dialog_updated_custom_certificate">Ĝisdatigis atestilon</string>
     <!-- Media checking -->
     <string name="check_media_title">Ĉu kontroli aŭdvidaĵojn?</string>
     <string name="check_media_warning">Tio ĉi povas okupi multan tempon por grandaj aŭdvidaĵaj kolektoj</string>
@@ -130,19 +130,16 @@
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Serĉado de malplenaj kartoj&#8230;</string>
     <string name="empty_cards_count">Kartoj por forigi: %d</string>
-    <string name="empty_cards_deleted">Forigis kartojn: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Ne povis akiri permeson al la mikrofono.</string>
-    <string name="multimedia_editor_camera_permission_refused">Ne povis akiri permeson al la fotilo. Iuj eblaĵoj ne eblos.</string>
     <string name="multimedia_editor_failed">Fiaskis malfermi redaktilon de plurmedioj</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permeso al registri sonon rifuzita</string>
-    <string name="mutimedia_editor_assertion_failed">Nekonata eraro okazis dum montri la altnivelan redaktilon</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid aktualigita</string>
     <string name="integrity_check_startup_content">AnkiDroid estis aktualigita. Tiu ĉi aktualigo liveras riparojn al eblaj problemoj pri datumbazo, estas konsilinde kontroli la datumbazon nun.</string>
     <string name="integrity_check_continue_anyway">Pluigi malgraŭ tio</string>
-    <string name="integrity_check_insufficient_space">Kontrolado de datumbazo uzos multon da provizora memoro.\n\nEstas tre konsilinde por ke vi havu almenaŭ %s da libera spaco en via aparato antaŭ pluigi.</string>
+    <string name="integrity_check_insufficient_space">Kontrolado de datumbazo uzos multon da provizora memoro.\n\nEstas tre konsilinde por ke vi havu almenaŭ %s da libera spaco en via aparato antaŭ ol pluigi.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nLibera spaco: %s.</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
@@ -159,17 +156,15 @@
     <string name="no_image_selected">Neniu bildo elektita</string>
     <string name="error_selecting_image">Eraro dum elekti bildon. Legu la manlibron de uzanto. %s</string>
     <string name="error_deleting_image">Eraro dum forigi bildon</string>
-    <string name="failed_to_apply_background_image">Fiaskis apliki fonan bildon %s</string>
+    <string name="failed_to_apply_background_image">Malsukcesis apliki fonan bildon %s</string>
     <string name="background_image_too_large">Fono por elektilo de kartaro estas tro granda</string>
     <string name="image_max_size_allowed">Maksimuma permesata grando de bildo estas %d MB</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_dimensions_too_large">Dimensioj de la bildo estas tro grandaj (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Mankas permeso al konservejo. Donu permeson al konservejo kaj sekve reprovu.</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Ne povis ekigi kart‑foliumilon</string>
     <!-- Boot Service -->
-    <string name="boot_service_failed_to_schedule_notifications">Fiaskis plani memorigaĵojn</string>
+    <string name="boot_service_failed_to_schedule_notifications">Malsukcesis plani memorigaĵojn</string>
     <string name="boot_service_too_many_notifications">Tro multe da memorigaĵoj planitaj. Iuj ne aperos</string>
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">Difini lingvon</string>
@@ -183,7 +178,7 @@
     <string name="help_item_mailing_list">Dissendolisto</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Raporti eraron</string>
-    <string name="help_title_support_ankidroid">Subteni AnkiDroid</string>
+    <string name="help_title_support_ankidroid" maxLength="28">Subteni AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Donaci</string>
     <string name="help_item_support_develop_ankidroid">Programi</string>
     <string name="help_item_support_rate_ankidroid">Taksi</string>
@@ -200,13 +195,13 @@
     <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb: kondiĉoj de uzado</string>
     <string name="help_title_send_exception">Sendi raporton pri problemo</string>
     <string name="help_dialog_exception_report_debounce">Raporto sendita</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">Raporto estas sendita!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Aŭtomata samtempigo povas startigi post %d sekundo</item>
         <item quantity="other">Aŭtomata samtempigo povas startigi post %d sekundoj</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
+    <string name="metered_sync_data_warning">Via interret-provizanto povas enkasigi monon por transsendi datumojn</string>
     <string name="deck_picker_new">Nombro de novaj hodiaŭaj kartoj por montri en tiu ĉi kartaro.</string>
     <string name="deck_picker_rev">Nombro de hodiaŭaj lernendaj kartoj en tiu ĉi kartaro.</string>
     <string name="deck_picker_lrn">Nombro de lernataj kortoj en tiu ĉi kartaro.</string>
@@ -221,41 +216,49 @@
     <string name="cannot_create_subdeck_for_all_decks">Vi ne povas krei subkartaron por ĉiuj kartaroj</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">Sekurkopiu vian kolekton</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Sekurkopio</string>
+    <string name="backup_collection_message">Dum kelka tempo vi ne faris sekurkopion de via kolekto. Vi devas fari tion ĉi nun por ne perdi viajn datumojn</string>
+    <string name="button_backup" maxLength="41">Sekurkopii</string>
     <string name="button_disable_reminder">Malaktivi memorigaĵon</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Poste</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
-    </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
-    </string>
-    <string name="deck_already_exists">Deck already exists</string>
-    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Ne montri denove</string>
+    <string name="dismiss_backup_warning_title">Averto pri perdi datumojn</string>
+    <string name="dismiss_backup_warning_new_user">Pro privatecaj ŝanĝoj en la operaciumo Android, viaj datumoj kaj aŭtomataj sekurkopioj estos forigitaj el via telefono, se la aplikaĵo estos malinstalita</string>
+    <string name="dismiss_backup_warning_upgrade">Pro privatecaj ŝanĝoj en la operaciumo Android, viaj datumoj kaj aŭtomataj sekurkopioj estos nealireblaj, se la aplikaĵo estos malinstalita</string>
+    <string name="deck_already_exists">Kartaro jam ekzistas</string>
+    <string name="empty_deck_name">Nomo de kartaro ne estu malplena</string>
+    <string name="create_deck_numeric_hint">Se vi havas problemojn pri karta ordigo (ekzemple “10” troviĝas antaŭ “2”), renomu “2” al “02”</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Agordi intertempon al la sama valoro</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in</item>
-        <item quantity="other">Show cards in</item>
+        <item quantity="one">Montri karton post</item>
+        <item quantity="other">Montri kartojn post</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in range</item>
-        <item quantity="other">Show cards in range</item>
+        <item quantity="one">Montri karton post</item>
+        <item quantity="other">Montri kartojn post</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="one">day</item>
+        <item quantity="one">tago</item>
         <item quantity="other">tagoj</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">De post</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">ekde</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Ĝis</string>
     <!-- Instant Note Editor -->
-    <string name="cloze_note_required">Cloze Type Note Required</string>
-    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="cloze_note_required">Nototipo “truteksto” estas postulata</string>
+    <string name="cloze_not_found_message">Ne trovis nototipon “truteksto”, malfermu la not-redaktilon kaj reprovu post aldoni la nototipon “truteksto”.</string>
     <string name="open">Malfermi</string>
-    <string name="change_cloze_number">Change cloze number</string>
-    <string name="cloze_number">Cloze number:</string>
+    <string name="change_cloze_number">Ŝanĝi numeron de truteksto</string>
+    <string name="cloze_number">Numero de truteksto:</string>
+    <string name="change_editor_mode">Ŝanĝi reĝimon de redaktilo</string>
+    <string name="open_note_editor">Malfermi not-redaktilon</string>
+    <string name="change_cloze_mode">Ŝanĝi reĝimon de truteksto</string>
     <!-- Outdated WebView dialog -->
-    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
+    <string name="webview_update_message">La operaciuma WebView estas neĝisdata. Kelkaj trajtoj povas ne funkcii ĝuste. Ĝisdatigu ĝin.\n\nInstalita versio: %1$d\nMinimuma postulata versio: %2$d</string>
+    <string name="compress">Densigi</string>
+    <!-- Tts playback error dialog -->
+    <string name="tts_error_dialog_title">Lingvo nesubtenata</string>
+    <string name="tts_error_dialog_reason_text">La lingvo <b>%2$s</b> ne estas subtenata de la parolsintezilo <b>%1$s</b>.</string>
+    <string name="tts_error_dialog_change_button_text">Ŝanĝi</string>
+    <string name="tts_error_dialog_supported_voices_button_text">Agordi</string>
 </resources>

@@ -20,6 +20,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.ext.addNote
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -62,13 +63,14 @@ class DecksTest : JvmTest() {
         assertTrue(names.contains("foo::bar"))
         assertFalse(names.contains("hello::world"))
         // create another col
-        /* TODO: do we want to follow upstream here ?
+
+        /* TODO: do we want to follow upstream here ?
          // automatically adjusted if a duplicate name
          decks.rename(decks.get(id), "FOO");
          names =  decks.allSortedNames();
          assertThat(names, containsString("FOO+"));
+         */
 
-          */
         // when renaming, the children should be renamed too
         addDeck("one::two::three")
         id = addDeck("one")
@@ -85,13 +87,13 @@ class DecksTest : JvmTest() {
         assertThrows(BackendDeckIsFilteredException::class.java) {
             col.decks.rename(
                 child,
-                "filtered::child"
+                "filtered::child",
             )
         }
         assertThrows(BackendDeckIsFilteredException::class.java) {
             col.decks.rename(
                 child,
-                "FILTERED::child"
+                "FILTERED::child",
             )
         }
     }
@@ -152,7 +154,7 @@ class DecksTest : JvmTest() {
         addDeck("test", setAsSelected = true)
         assertDoesNotThrow("curDeck should be saved as a long. A deck id.") {
             col.config.get<DeckId>(
-                CURRENT_DECK
+                CURRENT_DECK,
             )
         }
     }
@@ -170,15 +172,47 @@ class DecksTest : JvmTest() {
         assertThat(filtered.isFiltered, equalTo(true))
     }
 
-    companion object {
-        // Used in other class to populate decks.
-        @Suppress("SpellCheckingInspection")
-        val TEST_DECKS = arrayOf(
-            "scxipjiyozczaaczoawo",
-            "cmxieunwoogyxsctnjmv::abcdefgh::ZYXW",
-            "cmxieunwoogyxsctnjmv::INSBGDS",
-            "::foobar", // Addition test for issue #11026
-            "A::"
-        )
+    @Test
+    fun testCardCount() {
+        val decks = col.decks
+        var addedNoteCount = 0
+
+        fun addNote(did: DeckId): NoteId {
+            val note =
+                col.newNote().apply {
+                    setItem("Front", (++addedNoteCount).toString())
+                    notetype.put("did", did)
+                }
+            col.addNote(note)
+            return note.id
+        }
+
+        val parentDid = addDeck("Deck").also { did -> addNote(did) }
+        val childDid = addDeck("Deck::Subdeck").also { did -> addNote(did) }
+
+        val noteToMakeDynamic: NoteId
+        val deckWithNoChildren =
+            addDeck("DeckWithTwo").also { did ->
+                addNote(did)
+                addNote(did)
+                noteToMakeDynamic = addNote(did)
+            }
+        val filteredDeck = addDynamicDeck("filtered", search = "nid:$noteToMakeDynamic")
+
+        assertThat("all decks", decks.cardCount(parentDid, childDid, deckWithNoChildren, includeSubdecks = false), equalTo(5))
+        assertThat("all decks with subdecks", decks.cardCount(parentDid, childDid, deckWithNoChildren, includeSubdecks = true), equalTo(5))
+
+        assertThat("top level decks, no children", decks.cardCount(parentDid, deckWithNoChildren, includeSubdecks = false), equalTo(4))
+        assertThat("top level decks, with children", decks.cardCount(parentDid, deckWithNoChildren, includeSubdecks = true), equalTo(5))
+
+        assertThat("parent deck, no children", decks.cardCount(parentDid, includeSubdecks = false), equalTo(1))
+        assertThat("parent deck, with children", decks.cardCount(parentDid, includeSubdecks = true), equalTo(2))
+
+        assertThat("single deck, multiple cards, no children", decks.cardCount(deckWithNoChildren, includeSubdecks = false), equalTo(3))
+        assertThat("single deck, multiple cards, with children", decks.cardCount(deckWithNoChildren, includeSubdecks = true), equalTo(3))
+
+        assertThat("filtered deck", decks.cardCount(filteredDeck, includeSubdecks = false), equalTo(1))
+
+        assertThat("filtered and home deck", decks.cardCount(deckWithNoChildren, filteredDeck, includeSubdecks = false), equalTo(3))
     }
 }

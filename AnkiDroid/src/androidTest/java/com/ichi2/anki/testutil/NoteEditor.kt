@@ -28,9 +28,7 @@ import java.util.concurrent.atomic.AtomicReference
  * @throws Throwable if any exception is thrown during the execution of the block.
  */
 @Throws(Throwable::class)
-fun ActivityScenario<SingleFragmentActivity>.onNoteEditor(
-    block: (NoteEditor) -> Unit
-) {
+fun ActivityScenario<SingleFragmentActivity>.onNoteEditor(block: (NoteEditor) -> Unit) {
     val wrapped = AtomicReference<Throwable?>(null)
     this.onActivity { activity: SingleFragmentActivity ->
         try {
@@ -52,6 +50,4 @@ fun ActivityScenario<SingleFragmentActivity>.onNoteEditor(
 /**
  * Extension function for SingleFragmentActivity to find the NoteEditor fragment
  */
-fun SingleFragmentActivity.getEditor(): NoteEditor {
-    return supportFragmentManager.findFragmentById(R.id.fragment_container) as NoteEditor
-}
+fun SingleFragmentActivity.getEditor(): NoteEditor = supportFragmentManager.findFragmentById(R.id.fragment_container) as NoteEditor

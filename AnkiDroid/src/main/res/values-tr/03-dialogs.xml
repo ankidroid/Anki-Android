@@ -44,15 +44,19 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Veritabanı kontrol edilsin mi?</string>
+    <string name="check_db_title">Veritabanını denetle?</string>
     <string name="check_db_warning">Bu uzun sürebilir</string>
-    <string name="contextmenu_deckpicker_delete_deck">Desteyi sil</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Desteyi sil</string>
     <string name="delete_deck_title">Deste silinsin mi?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">%1$s destesindeki bütün kartlar silinsin mi? İçinde %2$d kart var</item>
+        <item quantity="other">%1$s destesindeki bütün kartlar silinsin mi? İçinde %2$d kart var</item>
+    </plurals>
+    <string name="delete_cram_deck_message">%s filtreli destesi silinip bütün kartlar orjinal destelerine gönderilsin mi?</string>
     <string name="no_tts_available_message">Mevcut metin okuma dili yok</string>
     <string name="tts_no_tts">Konuşma</string>
     <string name="unused_strings">\n\nKullanılmayan dosyalar:\n</string>
     <string name="reposition_card_dialog_title">Yeni kartın yerini değiştir</string>
-    <string name="reposition_card_dialog_message">Başlangıç konumu:</string>
     <string name="reposition_card_not_new_error">Yalnızca yeni kartların yeri değiştirilebilir</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d kartın yeri değiştirildi</item>
@@ -70,15 +74,11 @@
     <string name="repair_deck_dialog">Veritabanını onarmayı gerçekten denemek istiyor musunuz?\n\nGirişime başlamadan önce, \"%s\" altklasöründe bir kopya oluşturulacak.</string>
     <string name="intent_aedict_empty">\"Varsayılan\" kategorisi boş</string>
     <string name="intent_aedict_category">AnkiDroid\'e kart eklemek için bütün Not Defteri kategorilerini kaldırın veya \"default\" isminde bir tane ekleyin</string>
-    <string name="custom_study_new_total_new">Destede yeni kart: %d</string>
-    <string name="custom_study_rev_total_rev">Destede çalışma sırası gelmiş kart: %d</string>
     <string name="custom_study_new_extend">Bugünün yeni kart sınırını şu kadar arttırın/azaltın (“-3”) </string>
     <string name="custom_study_rev_extend">Bugünün gözden geçirme sınırını şu kadar arttırın/azaltın (“-3”)</string>
     <string name="custom_study_forgotten">Son x gündeki unutulan kartları izle:</string>
     <string name="custom_study_ahead">X günleri önce izle:</string>
-    <string name="custom_study_random">X kartları rastgele desteden seç:</string>
     <string name="custom_study_preview">Son x günlerdeki eklenen yeni kartları önizle:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Özel çalışma destesi yeniden oluşturulamadı</string>
     <string name="storage_full_title">Depolama alanı dolu</string>
     <string name="storage_almost_full_title">Depolama alanı nerdeyse dolu</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Hiç alan yok</string>
@@ -96,7 +96,7 @@
     <string name="dialog_continue">Devam Et</string>
     <string name="dialog_processing">İşlem yapılıyor&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Oluştur</string>
-    <string name="dialog_positive_delete">Sil</string>
+    <string name="dialog_positive_delete" maxLength="28">Sil</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Devredışı Bırak</string>
     <string name="dialog_positive_overwrite">Üzerine Yaz</string>
@@ -130,14 +130,11 @@
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Boş kartlar aranıyor&#8230;</string>
     <string name="empty_cards_count">Silinecek kartlar %d</string>
-    <string name="empty_cards_deleted">Silinen kartlar: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Mikrofon izni alınamadı.</string>
-    <string name="multimedia_editor_camera_permission_refused">Kamera izni alınamadı. İşlevsellik devre dışı bırakıldı.</string>
     <string name="multimedia_editor_failed">Multimedya Düzenleyiciyi açma başarısız oldu</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Ses kayıt izni reddedildi</string>
-    <string name="mutimedia_editor_assertion_failed">Gelişmiş Düzenleyici görüntülenirken bilinmeyen bir hata oluştu</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Güncellendi</string>
     <string name="integrity_check_startup_content">AnkiDroid yükseltildi. Bu yükseltme, olası veritabanı sorunları için düzeltmeleri içerir ve veritabanını şimdi kontrol etmenizi öneririz.</string>
@@ -166,8 +163,6 @@
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Gerekli depolama izni eksik. Lütfen depolama izni verin ve ardından işleminizi yeniden deneyin.</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Kart Tarayıcısı Görünümü yüklenemedi</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Hatırlatıcılar planlanamadı</string>
     <string name="boot_service_too_many_notifications">Çok fazla hatırlatıcı planlandı. Bazıları görünmeyecek</string>
@@ -183,7 +178,7 @@
     <string name="help_item_mailing_list">E-Posta Listesi</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Hata Bildir</string>
-    <string name="help_title_support_ankidroid">AnkiDroid\'i destekle</string>
+    <string name="help_title_support_ankidroid" maxLength="28">AnkiDroid\'i destekle</string>
     <string name="help_item_support_opencollective_donate">Bağış</string>
     <string name="help_item_support_develop_ankidroid">Geliştirme</string>
     <string name="help_item_support_rate_ankidroid">Dğerlendirme</string>
@@ -222,7 +217,7 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">Koleksiyonunuzu yedekleyin</string>
     <string name="backup_collection_message">Koleksiyonunuzu bir süredir yedeklemediniz. Veri kaybını önlemek için bunu şimdi yapmalısınız</string>
-    <string name="button_backup">Yedekle</string>
+    <string name="button_backup" maxLength="41">Yedekle</string>
     <string name="button_disable_reminder">Hatırlatmayı kapat</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Daha sonra</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Tekrar gösterme</string>
@@ -232,6 +227,7 @@
     <string name="dismiss_backup_warning_upgrade">        Android gizlilik değişikliklerinden dolayı, uygulama kaldırılırsa veriniz ve otomatik yedekleriniz erişilemez hâle gelecek
     </string>
     <string name="deck_already_exists">Deste hâlihazırda var</string>
+    <string name="empty_deck_name">Deste adı boş olamaz</string>
     <string name="create_deck_numeric_hint">Deste sıralamanızda sorun olursa (örn. \"10\"un \"2\"den önce gelmesi), \"2\" yerine \"02\" yazın</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Aralığı aynı değere ayarla</string>
@@ -256,6 +252,15 @@
     <string name="open">Aç</string>
     <string name="change_cloze_number">Boşluk numarasını değiştir</string>
     <string name="cloze_number">Boşluk numarası:</string>
+    <string name="change_editor_mode">Düzenleyici modunu değiştir</string>
+    <string name="open_note_editor">Not düzenleyiciyi aç</string>
+    <string name="change_cloze_mode">Boşluk modunu değiştir</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">Sistem WebView\'su güncel değil. Bazı özellikler doğru çalışmayacak. Lütfen güncelleyin.\n\nYüklü sürüm: %1$d\nGereken en düşük sürüm: %2$d</string>
+    <string name="compress">Sıkıştır</string>
+    <!-- Tts playback error dialog -->
+    <string name="tts_error_dialog_title">Dil desteklenmiyor</string>
+    <string name="tts_error_dialog_reason_text"><b>%1$s</b> metin okuma motoru şu dili desteklemiyor: <b>%2$s</b></string>
+    <string name="tts_error_dialog_change_button_text">Motor değiştir</string>
+    <string name="tts_error_dialog_supported_voices_button_text">Ses seçenekleri</string>
 </resources>

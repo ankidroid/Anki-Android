@@ -55,21 +55,21 @@
     <string name="edit_occlusions">编辑闭合</string>
     <string name="tag_name">标签</string>
     <string name="add_new_filter_tags">添加/过滤标签</string>
-    <string name="add_tag">添加标签</string>
-    <string name="check_all_tags">选中/取消所有标签</string>
-    <string name="filter_tags">过滤标签</string>
+    <string name="add_tag" maxLength="28">添加标签</string>
+    <string name="check_all_tags" maxLength="28">选中/取消所有标签</string>
+    <string name="filter_tags" maxLength="28">过滤标签</string>
     <string name="no_tags">你还没有添加任何标签。</string>
     <string name="updated_version">更新到 %s 版本</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">保存白板</string>
-    <string name="enable_stylus">启用光笔模式</string>
+    <string name="save_whiteboard" maxLength="28">保存白板</string>
+    <string name="enable_stylus" maxLength="28">启用光笔模式</string>
     <string name="disable_stylus">禁用光笔模式</string>
-    <string name="enable_whiteboard">启用白板</string>
+    <string name="enable_whiteboard" maxLength="28">启用白板</string>
     <string name="disable_whiteboard">禁用白板</string>
     <string name="show_whiteboard">显示白板</string>
-    <string name="hide_whiteboard">隐藏白板</string>
-    <string name="clear_whiteboard">清空白板</string>
-    <string name="replay_audio">重新播放</string>
+    <string name="hide_whiteboard" maxLength="28">隐藏白板</string>
+    <string name="clear_whiteboard" maxLength="28">清空白板</string>
+    <string name="replay_audio" maxLength="28">重新播放</string>
     <string name="leech_suspend_notification">卡片被标记为「记忆难点」并暂停复习</string>
     <string name="leech_notification">卡片被标记为「记忆难点」</string>
     <string name="webview_crash_unknown">未知错误</string>
@@ -80,24 +80,23 @@
     <string name="webview_crash_fatal">严重错误：WebView 渲染器崩溃。原因：%s</string>
     <string name="webview_crash_loop_dialog_title">系统 WebView 渲染失败</string>
     <string name="webview_crash_loop_dialog_content">系统 WebView 渲染卡片 “%1$s” 失败。\n %2$s</string>
-    <string name="filter_by_flags">旗标</string>
+    <string name="filter_by_flags" maxLength="41">旗标</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">修改今天的新卡片数量限制</string>
-    <string name="custom_study_increase_review_limit">修改今天的复习卡片数量限制</string>
-    <string name="custom_study_review_forgotten">复习忘记的卡片</string>
-    <string name="custom_study_review_ahead">提前复习</string>
-    <string name="custom_study_random_selection">学习随机选择的卡片</string>
-    <string name="custom_study_preview_new">预览新卡片</string>
     <string name="custom_study_limit_tags">仅限于特定标签</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="other">+%d 被隐藏</item>
+    </plurals>
+    <string name="studyoptions_total_new_label">新卡片总数：</string>
+    <string name="studyoptions_total_label">卡片总数</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">编辑笔记</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">编辑笔记</string>
     <string name="discard">丢弃</string>
     <string name="note_editor_no_cards_created">没有已创建的卡片。请填写更多字段</string>
     <string name="note_editor_no_cards_created_all_fields">当前笔记模板没有生成任何卡片。\n请选择另一个笔记模板，或点击「卡片」并添加一个字段替换</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">填空题只能在填空题笔记模板上使用</string>
     <string name="saving_facts">保存笔记</string>
     <string name="saving_model">保存笔记模板</string>
-    <string name="save">保存</string>
+    <string name="save" maxLength="28">保存</string>
     <string name="close">关闭</string>
     <string name="select">选择</string>
     <string name="field_remapping">%1$s（来自「%2$s」）</string>
@@ -113,19 +112,18 @@
         <item quantity="other">%1$d 分钟</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid卡片</string>
-    <string name="note_editor_copy_note">复制笔记</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">更改位置</string>
-    <string name="card_editor_reset_card">重设学习进度</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">重新安排</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">预览</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">以 Markdown 格式复制</string>
+    <string name="note_editor_copy_note" maxLength="28">复制笔记</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">更改位置</string>
+    <string name="card_editor_reset_card" maxLength="28">重设学习进度</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">重新安排</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">预览</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">以 Markdown 格式复制</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d 中的 %1$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">重命名</string>
-    <string name="checks_action">检查</string>
-    <string name="check_db">检查数据库</string>
-    <string name="check_media">检查媒体</string>
-    <string name="empty_cards">空白卡片</string>
-    <string name="empty_card_warning">这张卡片是空的。请使用牌组列表界面右上角菜单中的「空白卡片」选项来查找空白卡片。</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">重命名</string>
+    <string name="checks_action" maxLength="28">检查</string>
+    <string name="check_db" maxLength="28">检查数据库</string>
+    <string name="check_media" maxLength="28">检查媒体</string>
+    <string name="empty_cards" maxLength="28">空白卡片</string>
     <string name="unknown_type_field_warning">输入答案：未知字段 %s</string>
     <string name="delete_deck">删除牌组\n请稍等&#8230;&#8230;</string>
     <string name="info_rate">给 AnkiDroid 评分</string>
@@ -159,12 +157,11 @@
     <string name="export_choice_share">分享</string>
     <string name="export_choice_save_to">保存至</string>
     <string name="export_saving_exported_collection">正在保存导出文件&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">选项</string>
-    <string name="menu__deck_options">牌组选项</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">选项</string>
+    <string name="menu__deck_options" maxLength="28">牌组选项</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">学习选项</string>
-    <string name="select_tts">设置 TTS 语言</string>
-    <string name="custom_study">自定义学习</string>
-    <string name="more_options">更多</string>
+    <string name="select_tts" maxLength="28">设置 TTS 语言</string>
+    <string name="custom_study" maxLength="28">自定义学习</string>
     <string name="dyn_deck_desc">这是一个在计划外学习的特殊牌组，卡片在复习后会自动返回原来的牌组。\n在牌组列表中删除此牌组也将会把所有卡片都移回原来的牌组。</string>
     <string name="steps_error">间隔必须是大于 0 的数字</string>
     <string name="steps_min_error">至少需要一个间隔</string>
@@ -184,17 +181,17 @@
     <string name="web_page_error">加载页面出错：%s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">背景</string>
-    <string name="choose_an_image">选择图片</string>
+    <string name="background_image_title" maxLength="41">背景</string>
+    <string name="choose_an_image" maxLength="41">选择图片</string>
     <string name="remove_background_image">去除背景</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">恢复初始设置</string>
+    <string name="restore_default" maxLength="28">恢复初始设置</string>
     <string name="reviewer_tts_cloze_spoken_replacement">空白</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">保存白板图像失败。 %s</string>
     <string name="white_board_image_saved">白板图像已保存到 %s</string>
-    <string name="title_whiteboard_pen_color">白板笔颜色</string>
-    <string name="title_whiteboard_editor">白板编辑器</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">白板笔颜色</string>
+    <string name="title_whiteboard_editor" maxLength="28">白板编辑器</string>
     <string name="user_is_a_robot">检测到自动测试。如果您是真人，请联系 AnkiDroid 支持</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">此卡片使用不受支持的 AnkiDroid 功能。请联系开发者 %1$s，或查看维基。%2$s</string>
@@ -209,13 +206,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">卡片内容错误：加载「%s」失败</string>
     <!-- Deck Picker -->
-    <string name="search_decks">搜索牌组</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">显示迁移进度</string>
+    <string name="search_decks" maxLength="28">搜索牌组</string>
     <string name="ankidroid_init_failed_webview_title">严重错误</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid 依赖的系统 WebView 不可用。如果系统正在安装更新，可能会发生这种情况。请几分钟后再试。\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">字体大小</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">显示工具栏</string>
+    <string name="menu_font_size" maxLength="28">字体大小</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">显示工具栏</string>
     <string name="format_insert_bold">粗体格式</string>
     <string name="format_insert_italic">斜体格式</string>
     <string name="format_insert_underline">下划线格式</string>
@@ -230,13 +226,15 @@
     <string name="edit_toolbar_item">编辑工具栏项</string>
     <string name="toolbar_item_explain_edit_or_remove">输入要在选定文本之前和之后插入的 HTML\n\n 长按工具栏项目来编辑或删除它</string>
     <string name="remove_toolbar_item">删除工具栏项目？</string>
-    <string name="note_editor_paste_too_large">图片太大，无法粘贴，请手动插入图像</string>
+    <string name="note_editor_image_too_large">图片过大，请手动插入图像</string>
+    <string name="note_editor_video_too_large">视频文件太大，请手动插入视频</string>
+    <string name="note_editor_audio_too_large">音频文件太大，请手动插入音频</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        正在进行 Android 备份。请重试</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">请使用 iManager 来允许 AnkiDroid 添加快捷方式</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">您的主屏幕不允许 AnkiDroid 添加快捷方式</string>
     <string name="create_shortcut_error">添加快捷方式时出错：%s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">大写句子</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">滚动工具栏</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">大写句子</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">滚动工具栏</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -259,7 +257,7 @@
     <string name="check_network">请检查您的网络连接。</string>
     <string name="search_using_deck_name">使用牌组名称搜索</string>
     <string name="external_storage_unavailable">下载中止，外部存储不可用</string>
-    <string name="home">主页</string>
+    <string name="home" maxLength="28">主页</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">已搁置卡片</string>
@@ -268,16 +266,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">固定字段 %s</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">存储迁移</string>
     <string name="scoped_storage_learn_more">了解更多</string>
-    <string name="scoped_storage_postpone">推迟</string>
-    <string name="scoped_storage_migrate">迁移</string>
     <string name="search_card_js_api_no_results">搜索未返回任何结果</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid 需要迁移其存储空间以遵守 Android 10 安全政策。\n\n这将提高媒体同步性能。&lt;br&gt;&lt;br&gt;迁移过程中，您将无法同步，一些设置将被禁用。 迁移开始前为了保护您的数据安全，将会发生媒体同步。&lt;br&gt;&lt;br&gt;在此过程中使用或关闭 AnkiDroid 是安全的。</string>
-    <string name="start_migration_progress_message">开始存储迁移。不久后您就可以继续使用 AnkiDroid。</string>
-    <string name="migration_part_1_done_resume">您可以继续使用 AnkiDroid 了。
-\n存储迁移将在后台继续。</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s 不是一个有效的 JavaScript 附加组件包</string>
     <string name="could_not_create_dir">无法创建目录 %s</string>
@@ -307,14 +297,8 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">卡片</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">笔记</string>
     <string name="toggle_cards_notes">切换卡片/笔记</string>
-    <string name="toggle_browser_mode_help">在浏览器中切换显示卡片或笔记</string>
     <string name="truncate_content_help">截断浏览器每行高度并仅显示内容前三行</string>
     <string name="browser_options_dialog_heading">浏览器选项</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        此功能在存储迁移期间不可用
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">轻按开始存储迁移</string>
-    <string name="media_sync_required_title">需要进行媒体同步</string>
-    <string name="media_sync_unavailable_message">媒体同步在设置中被禁用。请同步并备份任何尚未同步的媒体，然后继续</string>
     <string name="audio_saved">录音已保存</string>
     <string name="deleting_selected_notes">删除选定笔记</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        轻按声音来聆听
@@ -338,9 +322,30 @@
     <plurals name="unbury_cards_feedback">
         <item quantity="other">取消遮盖了 %d 张卡片</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">更改位置</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">更改位置</string>
     <string name="start_recording">录制</string>
     <string name="stop_recording">停止</string>
     <string name="play_recording">播放</string>
     <string name="next_recording">下一个录音</string>
+    <!--  AlertDialog in the deleteCardTemplate  -->
+    <string name="orphan_note_title">无法删除卡片类型</string>
+    <string name="orphan_note_message">删除此卡片类型将留使一些附注没有任何卡片。</string>
+    <string name="voice_not_supported">语音不支持。请尝试另一个或安装一个语音引擎。</string>
+    <!--Keyboard shortcuts dialog-->
+    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">显示键盘快捷键对话框</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">牌组选择器</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">不经确认删除牌组</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">笔记编辑器</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">选择牌组</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">选择笔记类型</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">标签编辑器</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">卡片模板编辑器</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">编辑正面模板</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">编辑背面模板</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">编辑样式</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">将模板复制为Markdown</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">编辑浏览器外观</string>
+    <string name="show_shortcuts_message">按 Alt+K 显示键盘快捷键</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">此笔记类型中未设置用户操作 %s。请配置它</string>
+    <string name="directory_inaccessible_info">在此 %s 了解如何恢复访问的更多信息或转到设置更新牌组集文件夹</string>
 </resources>

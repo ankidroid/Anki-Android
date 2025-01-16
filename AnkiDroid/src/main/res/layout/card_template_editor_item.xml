@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         style="@style/BottomNavigationViewStyle"
-        android:background="?attr/appBarColor"
+        android:background="?attr/alternativeBackgroundColor"
         app:menu="@menu/card_template_editor_navigation_bar_menu"
         />
 

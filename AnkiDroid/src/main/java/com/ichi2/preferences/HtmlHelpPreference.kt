@@ -40,24 +40,30 @@ import com.ichi2.anki.R
  *
  *     <string name="format_string"><![CDATA[<b>Hello, %s</b>]]></string>
  */
-class HtmlHelpPreference(context: Context, attrs: AttributeSet?) : Preference(context, attrs) {
+class HtmlHelpPreference(
+    context: Context,
+    attrs: AttributeSet?,
+) : Preference(context, attrs) {
     init {
         isSelectable = false
         isPersistent = false
     }
 
-    private val substitutions = context.usingStyledAttributes(attrs, R.styleable.HtmlHelpPreference) {
-        arrayOf(
-            getString(R.styleable.HtmlHelpPreference_substitution1),
-            getString(R.styleable.HtmlHelpPreference_substitution2),
-            getString(R.styleable.HtmlHelpPreference_substitution3)
-        )
-    }
+    private val substitutions =
+        context.usingStyledAttributes(attrs, R.styleable.HtmlHelpPreference) {
+            arrayOf(
+                getString(R.styleable.HtmlHelpPreference_substitution1),
+                getString(R.styleable.HtmlHelpPreference_substitution2),
+                getString(R.styleable.HtmlHelpPreference_substitution3),
+            )
+        }
 
-    override fun getSummary() = super.getSummary()
-        .toString()
-        .format(*substitutions)
-        .parseAsHtml()
+    override fun getSummary() =
+        super
+            .getSummary()
+            .toString()
+            .format(*substitutions)
+            .parseAsHtml()
 
     override fun onBindViewHolder(holder: PreferenceViewHolder) {
         super.onBindViewHolder(holder)

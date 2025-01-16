@@ -28,14 +28,11 @@ import java.util.function.Consumer
 class OnGestureListener(
     private val view: View,
     private val gestureMapper: GestureMapper,
-    private val consumer: Consumer<Gesture>
+    private val consumer: Consumer<Gesture>,
 ) : GestureDetector.SimpleOnGestureListener() {
-
     fun getTapGestureMode() = gestureMapper.tapGestureMode
 
-    override fun onDown(e: MotionEvent): Boolean {
-        return true
-    }
+    override fun onDown(e: MotionEvent): Boolean = true
 
     override fun onDoubleTap(e: MotionEvent): Boolean {
         consumer.accept(Gesture.DOUBLE_TAP)
@@ -50,20 +47,21 @@ class OnGestureListener(
         e1: MotionEvent?,
         e2: MotionEvent,
         velocityX: Float,
-        velocityY: Float
+        velocityY: Float,
     ): Boolean {
         if (e1 != null) {
             val dx = e2.x - e1.x
             val dy = e2.y - e1.y
-            val gesture = gestureMapper.gesture(
-                dx,
-                dy,
-                velocityX,
-                velocityY,
-                isSelecting = false,
-                isXScrolling = false,
-                isYScrolling = false
-            )
+            val gesture =
+                gestureMapper.gesture(
+                    dx,
+                    dy,
+                    velocityX,
+                    velocityY,
+                    isSelecting = false,
+                    isXScrolling = false,
+                    isYScrolling = false,
+                )
             if (gesture != null) {
                 consumer.accept(gesture)
             }
@@ -86,7 +84,10 @@ class OnGestureListener(
     }
 
     companion object {
-        fun createInstance(view: View, consumer: Consumer<Gesture>): OnGestureListener {
+        fun createInstance(
+            view: View,
+            consumer: Consumer<Gesture>,
+        ): OnGestureListener {
             val gestureMapper = GestureMapper()
             gestureMapper.init(view.context.sharedPrefs())
             return OnGestureListener(view, gestureMapper, consumer)

@@ -46,13 +46,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">ડેટાબેઝ તપાસો?</string>
     <string name="check_db_warning">આમાં ઘણો સમય લાગી શકે છે</string>
-    <string name="contextmenu_deckpicker_delete_deck">ડેક કાઢી નાખો</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">ડેક કાઢી નાખો</string>
     <string name="delete_deck_title">ડેક કાઢી નાખીએ?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">%1$s இல் உள்ள அனைத்து கார்டுகளையும் நீக்கவா? இதில் %2$d கார்டுகள் உள்ளன</item>
+        <item quantity="other">%1$s இல் உள்ள அனைத்து கார்டுகளையும் நீக்கவா? இதில் %2$d கார்டுகள் உள்ளன</item>
+    </plurals>
+    <string name="delete_cram_deck_message">வடிகட்டப்பட்ட %s டெக்கை அகற்றிவிட்டு, எல்லா கார்டுகளையும் அவற்றின் அசல் டெக்குகளுக்குத் திருப்பிவிடவா?</string>
     <string name="no_tts_available_message">કોઈ ટેક્સ્ટ-ટુ-સ્પીચ ભાષા ઉપલબ્ધ નથી</string>
     <string name="tts_no_tts">બોલશો નહીં</string>
     <string name="unused_strings">\n\nન વપરાયેલ ફાઇલો:\n</string>
     <string name="reposition_card_dialog_title">નવું કાર્ડ રિપોઝિશન કરો</string>
-    <string name="reposition_card_dialog_message">પ્રારંભ સ્થિતિ:</string>
     <string name="reposition_card_not_new_error">ફક્ત નવા કાર્ડને જ સ્થાનાંતરિત કરી શકાય છે</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d કાર્ડ રિપોઝિશન કર્યું</item>
@@ -70,15 +74,11 @@
     <string name="repair_deck_dialog">શું તમે ખરેખર ડેટાબેઝને રિપેર કરવાનો પ્રયાસ કરવા માંગો છો?\n\nપ્રયાસ શરૂ કરતા પહેલા, સબફોલ્ડર “%s” માં એક નકલ બનાવવામાં આવશે.</string>
     <string name="intent_aedict_empty">કેટેગરી \"ડિફોલ્ટ\" ખાલી છે</string>
     <string name="intent_aedict_category">AnkiDroid માં કાર્ડ ઉમેરવા માટે નોટપેડની બધી કેટેગરી દૂર કરો અથવા \"ડિફોલ્ટ\" નામની એક ઉમેરો</string>
-    <string name="custom_study_new_total_new">ડેકમાં નવા કાર્ડ્સ: %d</string>
-    <string name="custom_study_rev_total_rev">ડેકમાં રિવ્યૂ બાકી છે: %d</string>
     <string name="custom_study_new_extend">આજની નવી કાર્ડ મર્યાદામાં વધારો/ઘટાડો (“-3”).</string>
     <string name="custom_study_rev_extend">આજની સમીક્ષા મર્યાદામાં વધારો/ઘટાડો (“-3”).</string>
     <string name="custom_study_forgotten">છેલ્લા x દિવસમાં ભૂલી ગયેલા કાર્ડની સમીક્ષા કરો:</string>
     <string name="custom_study_ahead">x દિવસ આગળ સમીક્ષા કરો:</string>
-    <string name="custom_study_random">ડેકમાંથી રેન્ડમલી x કાર્ડ્સ પસંદ કરો:</string>
     <string name="custom_study_preview">છેલ્લા x દિવસમાં ઉમેરાયેલા નવા કાર્ડ્સનું પૂર્વાવલોકન કરો:</string>
-    <string name="custom_study_rebuild_deck_corrupt">વૈવિધ્યપૂર્ણ અભ્યાસ ડેક ફરીથી બનાવી શકાયું નથી</string>
     <string name="storage_full_title">સ્ટોરેજ ભરાઈ ગયું</string>
     <string name="storage_almost_full_title">સ્ટોરેજ લગભગ ભરાઈ ગયું છે</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">જગ્યા નથી</string>
@@ -96,7 +96,7 @@
     <string name="dialog_continue">ચાલુ રાખો</string>
     <string name="dialog_processing">પ્રક્રિયા&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">બનાવો</string>
-    <string name="dialog_positive_delete">કાઢી નાખો</string>
+    <string name="dialog_positive_delete" maxLength="28">કાઢી નાખો</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">અક્ષમ કરો</string>
     <string name="dialog_positive_overwrite">ઓવરરાઇટ કરો</string>
@@ -130,14 +130,11 @@
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">ખાલી કાર્ડ શોધી રહ્યાં છીએ&#8230;</string>
     <string name="empty_cards_count">કાઢી નાખવાના કાર્ડ્સ: %d</string>
-    <string name="empty_cards_deleted">કાર્ડ કાઢી નાખ્યા: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">માઇક્રોફોનની પરવાનગી મેળવી શકાઈ નથી.</string>
-    <string name="multimedia_editor_camera_permission_refused">કેમેરાની પરવાનગી મેળવી શકાઈ નથી. કાર્યક્ષમતા અક્ષમ કરવામાં આવી છે.</string>
     <string name="multimedia_editor_failed">મલ્ટીમીડિયા એડિટર ખોલવામાં નિષ્ફળ</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ઑડિયો રેકોર્ડિંગની પરવાનગી નકારી</string>
-    <string name="mutimedia_editor_assertion_failed">એડવાન્સ્ડ એડિટર પ્રદર્શિત કરતી વખતે એક અજાણી ભૂલ આવી</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid અપગ્રેડ કર્યું</string>
     <string name="integrity_check_startup_content">AnkiDroid ને અપગ્રેડ કરવામાં આવ્યું છે. આ અપગ્રેડમાં સંભવિત ડેટાબેઝ સમસ્યાઓ માટેના ફિક્સેસનો સમાવેશ થાય છે, અને અમે તમને હમણાં જ ડેટાબેઝ ચેક કરવા માટે સલાહ આપીએ છીએ.</string>
@@ -166,8 +163,6 @@
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">જરૂરી સંગ્રહ પરવાનગી ખૂટે છે. કૃપા કરીને સ્ટોરેજની પરવાનગી આપો પછી તમારી ક્રિયાનો ફરી પ્રયાસ કરો.</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">કાર્ડ બ્રાઉઝર દેખાવ લોડ કરી શકાયો નથી</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">રીમાઇન્ડર્સ શેડ્યૂલ કરવામાં નિષ્ફળ</string>
     <string name="boot_service_too_many_notifications">ઘણા રીમાઇન્ડર્સ સુનિશ્ચિત થયેલ છે. કેટલાક દેખાશે નહીં</string>
@@ -183,7 +178,7 @@
     <string name="help_item_mailing_list">ટપાલ યાદી</string>
     <string name="help_item_reddit">રેડિટ</string>
     <string name="help_item_report_bug">બગની જાણ કરો</string>
-    <string name="help_title_support_ankidroid">AnkiDroid ને સપોર્ટ કરો</string>
+    <string name="help_title_support_ankidroid" maxLength="28">AnkiDroid ને સપોર્ટ કરો</string>
     <string name="help_item_support_opencollective_donate">દાન કરો</string>
     <string name="help_item_support_develop_ankidroid">વિકાસ</string>
     <string name="help_item_support_rate_ankidroid">દર</string>
@@ -191,7 +186,7 @@
     <string name="multimedia_editor_trans_translate">અનુવાદ કરો</string>
     <string name="help_title_community">સમુદાય</string>
     <string name="help_item_anki_forums">Anki ફોરમ્સ</string>
-    <string name="help_item_discord">વિખવાદ</string>
+    <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">ફેસબુક</string>
     <string name="help_item_twitter">Twitter</string>
     <string name="help_title_privacy">પ્રીવસી</string>
@@ -222,7 +217,7 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">તમારા સંગ્રહનો બેકઅપ લો</string>
     <string name="backup_collection_message">તમે થોડા સમયથી તમારા સંગ્રહનું બેકઅપ લીધું નથી. ડેટા નુકશાન અટકાવવા માટે તમારે આ હવે કરવું જોઈએ</string>
-    <string name="button_backup">બેકઅપ</string>
+    <string name="button_backup" maxLength="41">બેકઅપ</string>
     <string name="button_disable_reminder">રીમાઇન્ડર્સ અક્ષમ કરો</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">પાછળથી</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">ફરી બતાવશો નહીં</string>
@@ -232,6 +227,7 @@
     <string name="dismiss_backup_warning_upgrade">        એન્ડ્રોઇડ ગોપનીયતા ફેરફારોને કારણે, જો એપ્લિકેશન અનઇન્સ્ટોલ કરવામાં આવે તો તમારો ડેટા અને સ્વચાલિત બેકઅપ અગમ્ય હશે
     </string>
     <string name="deck_already_exists">ડેક પહેલેથી જ અસ્તિત્વમાં છે</string>
+    <string name="empty_deck_name">Deck name cannot be empty</string>
     <string name="create_deck_numeric_hint">જો તમને ડેક ઓર્ડરિંગ સમસ્યાઓ છે (દા.ત. \'10\' \'2\' પહેલાં દેખાય છે), તો \'2\' ને \'02\' સાથે બદલો</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">અંતરાલને સમાન મૂલ્ય પર સેટ કરો</string>
@@ -256,6 +252,15 @@
     <string name="open">ખુલ્લા</string>
     <string name="change_cloze_number">કલમ નંબર બદલો</string>
     <string name="cloze_number">બંધ નંબર:</string>
+    <string name="change_editor_mode">எடிட்டர் பயன்முறையை மாற்றவும்</string>
+    <string name="open_note_editor">குறிப்பு எடிட்டரைத் திறக்கவும்</string>
+    <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">WebView સિસ્ટમ જૂની છે. કેટલીક સુવિધાઓ યોગ્ય રીતે કામ કરશે નહીં. કૃપા કરીને તેને અપડેટ કરો.\n\nઇન્સ્ટોલ કરેલ સંસ્કરણ: %1$d\nન્યૂનતમ આવશ્યક સંસ્કરણ: %2$d</string>
+    <string name="compress">Compress</string>
+    <!-- Tts playback error dialog -->
+    <string name="tts_error_dialog_title">மொழி ஆதரிக்கப்படவில்லை</string>
+    <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
+    <string name="tts_error_dialog_change_button_text">Change engine</string>
+    <string name="tts_error_dialog_supported_voices_button_text">குரல் விருப்பங்கள்</string>
 </resources>

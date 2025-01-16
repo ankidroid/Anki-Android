@@ -27,17 +27,22 @@ import java.lang.Exception
 
 object IntentUtil {
     @JvmStatic // (fixable) required due to structure of unit tests
-    fun canOpenIntent(context: Context, intent: Intent): Boolean {
-        return try {
+    fun canOpenIntent(
+        context: Context,
+        intent: Intent,
+    ): Boolean =
+        try {
             val packageManager = context.packageManager
             intent.resolveActivity(packageManager) != null
         } catch (e: Exception) {
             Timber.w(e)
             false
         }
-    }
 
-    fun tryOpenIntent(activity: AnkiActivity, intent: Intent) {
+    fun tryOpenIntent(
+        activity: AnkiActivity,
+        intent: Intent,
+    ) {
         try {
             if (canOpenIntent(activity, intent)) {
                 activity.startActivity(intent)
@@ -52,12 +57,11 @@ object IntentUtil {
         }
     }
 
-    fun Intent.resolveMimeType(): String? {
-        return if (type == null) {
+    fun Intent.resolveMimeType(): String? =
+        if (type == null) {
             val extension = MimeTypeMap.getFileExtensionFromUrl(data.toString())
             MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
         } else {
             type
         }
-    }
 }

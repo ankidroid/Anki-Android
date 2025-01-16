@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">Backup ikke gemt. Ikke nok plads tilbage på dit lager. Nedjustér omfanget af backuppen eller fjern nogle andre filer.</string>
     <string name="storage_warning">Mindre end %d MB lagerplads tilbage. \nFrigør plads for at undgå tab af data.</string>
-    <string name="backup_restore">Gendan fra sikkerhedskopi</string>
+    <string name="backup_restore" maxLength="28">Gendan fra sikkerhedskopi</string>
     <string name="backup_new_collection">Ny samling</string>
     <string name="backup_del_collection">Slet samling og opret en ny</string>
     <string name="backup_del_collection_question">Delete the collection and create a new one? This will drop all your learning progress and delete all cards.</string>

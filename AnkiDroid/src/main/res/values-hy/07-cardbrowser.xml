@@ -54,28 +54,27 @@
         <item quantity="other">%d գրառում է ցուցադրված</item>
     </plurals>
     <string name="card_browser_all_decks">Բոլոր կապուկները</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">Ջնջել քարտը</item>
-        <item quantity="other">Ջնջել քարտը</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">Ջնջել գրառումը</item>
         <item quantity="other">Ջնջել գրառումները</item>
     </plurals>
-    <string name="card_browser_change_deck">Փոխել կապուկը</string>
+    <string name="card_browser_change_deck" maxLength="28">Փոխել կապուկը</string>
     <string name="delete_card_title">Ջնջե՞լ գրառումը:</string>
-    <string name="card_browser_show_marked">Զտել նշվածները</string>
-    <string name="card_browser_show_suspended">Ցուցադրել հեռացվածները</string>
-    <string name="card_browser_search_by_tag">Զտել ըստ պիտակի</string>
-    <string name="card_browser_search_by_flag">Զտել ըստ դրոշի</string>
-    <string name="card_browser_list_my_searches">Իմ որոնումները</string>
-    <string name="card_browser_list_my_searches_save">Պահպանել որոնումը</string>
+    <string name="card_browser_show_marked" maxLength="28">Զտել նշվածները</string>
+    <string name="card_browser_show_suspended" maxLength="28">Ցուցադրել հեռացվածները</string>
+    <string name="card_browser_search_by_tag" maxLength="28">Զտել ըստ պիտակի</string>
+    <string name="card_browser_search_by_flag" maxLength="28">Զտել ըստ դրոշի</string>
+    <string name="card_browser_list_my_searches" maxLength="28">Իմ որոնումները</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">Պահպանել որոնումը</string>
     <string name="card_browser_list_my_searches_title">Ընտրեք պահպանված որոնում</string>
     <string name="card_browser_list_my_searches_new_name">Որոնման անվանումը</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Որոնումը չի կարելի պահպանել առանց անվանման</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Անվանումը արդեն կա</string>
+    <string name="no_note_to_edit">Չկա խմբագրվելիք գրառում</string>
     <string name="card_browser_list_my_searches_remove_content">Ջնջե՞լ «%1$s»</string>
-    <string name="card_browser_change_display_order">Փոխել ցուցադրման հերթականությունը</string>
+    <string name="card_browser_change_display_order" maxLength="28">Փոխել ցուցադրման հերթականությունը</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Որոնել</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Որոնել</string>
     <string name="card_browser_change_display_order_title">Ընտրեք ցուցադրման հերթականությունը</string>
     <string name="card_details_tags">Պիտակներ</string>
     <string-array name="card_browser_order_labels">
@@ -90,11 +89,8 @@
         <item>Ըստ վերանայումների</item>
         <item>Ըստ մոռացված լինելու</item>
     </string-array>
-    <string name="card_browser_select_all">Նշել բոլորը</string>
-    <string name="card_browser_select_none">Ոչինչ չնշել</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(նոր)</string>
-    <string name="card_browser_due_filtered_card">(զտված)</string>
-    <string name="card_browser_interval_learning_card">(սովորելու)</string>
+    <string name="card_browser_select_all" maxLength="28">Նշել բոլորը</string>
+    <string name="card_browser_select_none" maxLength="28">Ոչինչ չնշել</string>
     <string name="card_browser_no_cards_in_deck">%s-ում ոչ մի քարտ չի գտնվել</string>
     <string name="card_browser_search_all_decks">Որոնել բոլոր կապուկներում</string>
     <string name="card_browser_unknown_deck_name">Անհայտ</string>
@@ -112,4 +108,7 @@
         <item quantity="one">Ջնջվեց %d քարտ</item>
         <item quantity="other">Ջնջվեց %d քարտ</item>
     </plurals>
+    <!--Keyboard shortcuts dialog-->
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Պիտակների խմբագրման դիալոգ</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Ցուցադրել հերթականության դիալոգը</string>
 </resources>

@@ -52,26 +52,26 @@
         <item quantity="other">显示了 %d 条笔记</item>
     </plurals>
     <string name="card_browser_all_decks">所有牌组</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="other">删除卡片</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="other">删除笔记</item>
     </plurals>
-    <string name="card_browser_change_deck">更换牌组</string>
+    <string name="card_browser_change_deck" maxLength="28">更换牌组</string>
     <string name="delete_card_title">确认删除笔记？</string>
-    <string name="card_browser_show_marked">筛选已标记卡牌</string>
-    <string name="card_browser_show_suspended">筛选已暂停卡牌</string>
-    <string name="card_browser_search_by_tag">按标签筛选</string>
-    <string name="card_browser_search_by_flag">按旗标筛选</string>
-    <string name="card_browser_list_my_searches">我的搜索</string>
-    <string name="card_browser_list_my_searches_save">保存搜索结果</string>
+    <string name="card_browser_show_marked" maxLength="28">筛选已标记卡牌</string>
+    <string name="card_browser_show_suspended" maxLength="28">筛选已暂停卡牌</string>
+    <string name="card_browser_search_by_tag" maxLength="28">按标签筛选</string>
+    <string name="card_browser_search_by_flag" maxLength="28">按旗标筛选</string>
+    <string name="card_browser_list_my_searches" maxLength="28">我的搜索</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">保存搜索结果</string>
     <string name="card_browser_list_my_searches_title">选择一个已保存的搜索结果</string>
     <string name="card_browser_list_my_searches_new_name">当前搜索的名称</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">没有输入名称时不能保存搜索结果</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">名称已存在</string>
+    <string name="no_note_to_edit">没有可编辑的附注</string>
     <string name="card_browser_list_my_searches_remove_content">确认删除「%1$s」？</string>
-    <string name="card_browser_change_display_order">改变排序方式</string>
+    <string name="card_browser_change_display_order" maxLength="28">改变排序方式</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">搜索</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">搜索</string>
     <string name="card_browser_change_display_order_title">排序方式</string>
     <string name="card_details_tags">标签</string>
     <string-array name="card_browser_order_labels">
@@ -86,11 +86,8 @@
         <item>按复习时间排序</item>
         <item>按遗忘次数排序</item>
     </string-array>
-    <string name="card_browser_select_all">全选</string>
-    <string name="card_browser_select_none">取消全选</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">（新卡片）</string>
-    <string name="card_browser_due_filtered_card">（已筛选）</string>
-    <string name="card_browser_interval_learning_card">（学习中的卡片）</string>
+    <string name="card_browser_select_all" maxLength="28">全选</string>
+    <string name="card_browser_select_none" maxLength="28">取消全选</string>
     <string name="card_browser_no_cards_in_deck">未在牌组「%s」中找到卡片</string>
     <string name="card_browser_search_all_decks">搜索全部牌组</string>
     <string name="card_browser_unknown_deck_name">未知</string>
@@ -105,4 +102,7 @@
     <plurals name="card_browser_cards_deleted">
         <item quantity="other">%d 张卡片已删除</item>
     </plurals>
+    <!--Keyboard shortcuts dialog-->
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">编辑标签对话框</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">显示排序对话框</string>
 </resources>

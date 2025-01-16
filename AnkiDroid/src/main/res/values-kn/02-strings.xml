@@ -55,21 +55,21 @@
     <string name="edit_occlusions">ಮುಚ್ಚುವಿಕೆಯನ್ನು ಸಂಪಾದಿಸಿ</string>
     <string name="tag_name">ಟ್ಯಾಗ್ ಹೆಸರು</string>
     <string name="add_new_filter_tags">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಸೇರಿಸಿ / ಫಿಲ್ಟರ್ ಮಾಡಿ</string>
-    <string name="add_tag">ಟ್ಯಾಗ್ ಸೇರಿಸಿ</string>
-    <string name="check_all_tags">ಎಲ್ಲಾ ಟ್ಯಾಗ್‌ಗಳನ್ನು ಪರಿಶೀಲಿಸಿ / ಗುರುತಿಸಬೇಡಿ</string>
-    <string name="filter_tags">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಫಿಲ್ಟರ್ ಮಾಡಿ</string>
+    <string name="add_tag" maxLength="28">ಟ್ಯಾಗ್ ಸೇರಿಸಿ</string>
+    <string name="check_all_tags" maxLength="28">ಎಲ್ಲಾ ಟ್ಯಾಗ್‌ಗಳನ್ನು ಪರಿಶೀಲಿಸಿ / ಗುರುತಿಸಬೇಡಿ</string>
+    <string name="filter_tags" maxLength="28">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಫಿಲ್ಟರ್ ಮಾಡಿ</string>
     <string name="no_tags">ನೀವು ಇನ್ನೂ ಯಾವುದೇ ಟ್ಯಾಗ್‌ಗಳನ್ನು ಸೇರಿಸಿಲ್ಲ</string>
     <string name="updated_version">ಆವೃತ್ತಿ%s ಗೆ ನವೀಕರಿಸಲಾಗಿದೆ</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">ವೈಟ್‌ಬೋರ್ಡ್ ಉಳಿಸಿ</string>
-    <string name="enable_stylus">ಸ್ಟೈಲಸ್ ಬರವಣಿಗೆಯನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
+    <string name="save_whiteboard" maxLength="28">ವೈಟ್‌ಬೋರ್ಡ್ ಉಳಿಸಿ</string>
+    <string name="enable_stylus" maxLength="28">ಸ್ಟೈಲಸ್ ಬರವಣಿಗೆಯನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="disable_stylus">ಸ್ಟೈಲಸ್ ಬರವಣಿಗೆಯನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>
-    <string name="enable_whiteboard">ವೈಟ್‌ಬೋರ್ಡ್ ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
+    <string name="enable_whiteboard" maxLength="28">ವೈಟ್‌ಬೋರ್ಡ್ ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="disable_whiteboard">ವೈಟ್‌ಬೋರ್ಡ್ ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="show_whiteboard">ವೈಟ್‌ಬೋರ್ಡ್‌ ತೋರಿಸಿ</string>
-    <string name="hide_whiteboard">ವೈಟ್‌ಬೋರ್ಡ್ ಮರೆಮಾಡಿ</string>
-    <string name="clear_whiteboard">ವೈಟ್‌ಬೋರ್ಡ್ ತೆರವುಗೊಳಿಸಿ</string>
-    <string name="replay_audio">ಆಡಿಯೊವನ್ನು ರಿಪ್ಲೇ ಮಾಡಿ</string>
+    <string name="hide_whiteboard" maxLength="28">ವೈಟ್‌ಬೋರ್ಡ್ ಮರೆಮಾಡಿ</string>
+    <string name="clear_whiteboard" maxLength="28">ವೈಟ್‌ಬೋರ್ಡ್ ತೆರವುಗೊಳಿಸಿ</string>
+    <string name="replay_audio" maxLength="28">ಆಡಿಯೊವನ್ನು ರಿಪ್ಲೇ ಮಾಡಿ</string>
     <string name="leech_suspend_notification">ಕಾರ್ಡ್ ಅನ್ನು ಲೀಚ್ ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ ಮತ್ತು ಅಮಾನತುಗೊಳಿಸಲಾಗಿದೆ </string>
     <string name="leech_notification">ಕಾರ್ಡ್ ಅನ್ನು ಲೀಚ್ ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ</string>
     <string name="webview_crash_unknown">ಅಜ್ಞಾತ ದೋಷ</string>
@@ -80,24 +80,24 @@
     <string name="webview_crash_fatal">ಮಾರಕ ದೋಷ: ವೆಬ್‌ವೀಕ್ಷಣೆ ರೆಂಡರರ್ ಕ್ರ್ಯಾಶ್ ಆಗಿದೆ. ಕಾರಣ:%s</string>
     <string name="webview_crash_loop_dialog_title">ಸಿಸ್ಟಮ್ ವೆಬ್‌ವೀಕ್ಷಣೆ ರೆಂಡರಿಂಗ್ ವಿಫಲತೆ</string>
     <string name="webview_crash_loop_dialog_content">\'%1$s\' ಕಾರ್ಡ್ ಅನ್ನು ನಿರೂಪಿಸಲು ಸಿಸ್ಟಮ್ ವೆಬ್‌ವೀಕ್ಷಣೆ ವಿಫಲವಾಗಿದೆ.\n %2$s</string>
-    <string name="filter_by_flags">ಧ್ವಜಗಳು</string>
+    <string name="filter_by_flags" maxLength="41">ಧ್ವಜಗಳು</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">ಇಂದಿನ ಹೊಸ ಕಾರ್ಡ್ ಮಿತಿಯನ್ನು ಮಾರ್ಪಡಿಸಿ</string>
-    <string name="custom_study_increase_review_limit">ಇಂದಿನ ವಿಮರ್ಶೆ ಕಾರ್ಡ್ ಮಿತಿಯನ್ನು ಮಾರ್ಪಡಿಸಿ</string>
-    <string name="custom_study_review_forgotten">ಮರೆತುಹೋದ ಕಾರ್ಡ್‌ಗಳನ್ನು ಪರಿಶೀಲಿಸಿ</string>
-    <string name="custom_study_review_ahead">ಮುಂದೆ ಪರಿಶೀಲಿಸಿ</string>
-    <string name="custom_study_random_selection">ಕಾರ್ಡ್‌ಗಳ ಯಾದೃಚ್ selection ಿಕ ಆಯ್ಕೆಯನ್ನು ಅಧ್ಯಯನ ಮಾಡಿ</string>
-    <string name="custom_study_preview_new">ಹೊಸ ಕಾರ್ಡ್‌ಗಳನ್ನು ಪೂರ್ವವೀಕ್ಷಣೆ ಮಾಡಿ</string>
     <string name="custom_study_limit_tags">ನಿರ್ದಿಷ್ಟ ಟ್ಯಾಗ್‌ಗಳಿಗೆ ಮಿತಿಗೊಳಿಸಿ</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">ಟಿಪ್ಪಣಿಯನ್ನು ಮಾರ್ಪಡಿಸಿ</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">ಟಿಪ್ಪಣಿಯನ್ನು ಮಾರ್ಪಡಿಸಿ</string>
     <string name="discard">ಧ್ವಜಗಳು</string>
     <string name="note_editor_no_cards_created">ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳನ್ನು ರಚಿಸಲಾಗಿಲ್ಲ. ದಯವಿಟ್ಟು ಹೆಚ್ಚಿನ ಕ್ಷೇತ್ರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ</string>
     <string name="note_editor_no_cards_created_all_fields">ಪ್ರಸ್ತುತ ಟಿಪ್ಪಣಿ ಪ್ರಕಾರವು ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳನ್ನು ಉತ್ಪಾದಿಸಲಿಲ್ಲ. ದಯವಿಟ್ಟು \n ದಯವಿಟ್ಟು ಮತ್ತೊಂದು ಟಿಪ್ಪಣಿ ಪ್ರಕಾರವನ್ನು ಆರಿಸಿ, ಅಥವಾ ‘ಕಾರ್ಡ್‌ಗಳು’ ಕ್ಲಿಕ್ ಮಾಡಿ ಮತ್ತು ಕ್ಷೇತ್ರ ಪರ್ಯಾಯವನ್ನು ಸೇರಿಸಿ</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">ಕ್ಲೋಜ್ ಅಳಿಸುವಿಕೆಗಳು ಕ್ಲೋಜ್ ಟಿಪ್ಪಣಿ ಪ್ರಕಾರದಲ್ಲಿ ಮಾತ್ರ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತವೆ</string>
     <string name="saving_facts">ಟಿಪ್ಪಣಿ ಉಳಿಸಲಾಗುತ್ತಿದೆ</string>
     <string name="saving_model">ಟಿಪ್ಪಣಿ ಪ್ರಕಾರವನ್ನು ಉಳಿಸಲಾಗುತ್ತಿದೆ</string>
-    <string name="save">ಉಳಿಸಿ</string>
+    <string name="save" maxLength="28">ಉಳಿಸಿ</string>
     <string name="close">ಹತ್ತಿರ</string>
     <string name="select">ಆರಿಸಿ</string>
     <string name="field_remapping">%1$s (“%2$s” ನಿಂದ)</string>
@@ -115,19 +115,18 @@
         <item quantity="other">%1$d ನಿಮಿಷಗಳು</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">ಆಂಕಿಡ್ರಾಯ್ಡ್ ಕಾರ್ಡ್</string>
-    <string name="note_editor_copy_note">ಟಿಪ್ಪಣಿ ನಕಲಿಸಿ</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">ಮರುಸ್ಥಾಪನೆ</string>
-    <string name="card_editor_reset_card">ಪ್ರಗತಿಯನ್ನು ಮರುಹೊಂದಿಸಿ</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">ಮರುಹೊಂದಿಸಿ</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">ಮುನ್ನೋಟ</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">ಮಾರ್ಕ್‌ಡೌನ್‌ನಂತೆ ನಕಲಿಸಿ</string>
+    <string name="note_editor_copy_note" maxLength="28">ಟಿಪ್ಪಣಿ ನಕಲಿಸಿ</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">ಮರುಸ್ಥಾಪನೆ</string>
+    <string name="card_editor_reset_card" maxLength="28">ಪ್ರಗತಿಯನ್ನು ಮರುಹೊಂದಿಸಿ</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">ಮರುಹೊಂದಿಸಿ</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">ಮುನ್ನೋಟ</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">ಮಾರ್ಕ್‌ಡೌನ್‌ನಂತೆ ನಕಲಿಸಿ</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d ರಲ್ಲಿ %1$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">ಮರುಹೆಸರಿಸಿ</string>
-    <string name="checks_action">ಪರಿಶೀಲಿಸಿ</string>
-    <string name="check_db">ಡೇಟಾಬೇಸ್ ಪರಿಶೀಲಿಸಿ</string>
-    <string name="check_media">ಮಾಧ್ಯಮವನ್ನು ಪರಿಶೀಲಿಸಿ</string>
-    <string name="empty_cards">ಖಾಲಿ ಕಾರ್ಡ್‌ಗಳು</string>
-    <string name="empty_card_warning">ಈ ಕಾರ್ಡ್ ಖಾಲಿಯಾಗಿದೆ. ಡೆಕ್ ಪಟ್ಟಿ ಪರದೆಯಲ್ಲಿರುವ ಮೆನುವಿನಿಂದ “ಖಾಲಿ ಕಾರ್ಡ್‌ಗಳು” ಆಯ್ಕೆಯನ್ನು ಬಳಸಿ.</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">ಮರುಹೆಸರಿಸಿ</string>
+    <string name="checks_action" maxLength="28">ಪರಿಶೀಲಿಸಿ</string>
+    <string name="check_db" maxLength="28">ಡೇಟಾಬೇಸ್ ಪರಿಶೀಲಿಸಿ</string>
+    <string name="check_media" maxLength="28">ಮಾಧ್ಯಮವನ್ನು ಪರಿಶೀಲಿಸಿ</string>
+    <string name="empty_cards" maxLength="28">ಖಾಲಿ ಕಾರ್ಡ್‌ಗಳು</string>
     <string name="unknown_type_field_warning">ಉತ್ತರವನ್ನು ಟೈಪ್ ಮಾಡಿ: ಅಜ್ಞಾತ ಕ್ಷೇತ್ರ %s</string>
     <string name="delete_deck">ಡೆಕ್ ಅಳಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="info_rate">ಆಂಕಿಡ್ರಾಯ್ಡ್ ಅನ್ನು ರೇಟ್ ಮಾಡಿ</string>
@@ -161,12 +160,11 @@
     <string name="export_choice_share">ಹಂಚಿರಿ</string>
     <string name="export_choice_save_to">ಗೆ ಉಳಿಸಿ</string>
     <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ಆಯ್ಕೆಗಳು</string>
-    <string name="menu__deck_options">ಡೆಕ್ ಆಯ್ಕೆಗಳು</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">ಆಯ್ಕೆಗಳು</string>
+    <string name="menu__deck_options" maxLength="28">ಡೆಕ್ ಆಯ್ಕೆಗಳು</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ಅಧ್ಯಯನ ಆಯ್ಕೆಗಳು</string>
-    <string name="select_tts">TTS ಭಾಷೆಯನ್ನು ಹೊಂದಿಸಿ</string>
-    <string name="custom_study">ಕಸ್ಟಮ್ ಅಧ್ಯಯನ</string>
-    <string name="more_options">ಹೆಚ್ಚು</string>
+    <string name="select_tts" maxLength="28">TTS ಭಾಷೆಯನ್ನು ಹೊಂದಿಸಿ</string>
+    <string name="custom_study" maxLength="28">ಕಸ್ಟಮ್ ಅಧ್ಯಯನ</string>
     <string name="dyn_deck_desc">ಸಾಮಾನ್ಯ ವೇಳಾಪಟ್ಟಿಯ ಹೊರಗೆ ಅಧ್ಯಯನ ಮಾಡಲು ಇದು ವಿಶೇಷ ಡೆಕ್ ಆಗಿದೆ. ನೀವು ಅವುಗಳನ್ನು ಪರಿಶೀಲಿಸಿದ ನಂತರ ಕಾರ್ಡ್‌ಗಳನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಅವುಗಳ ಮೂಲ ಡೆಕ್‌ಗಳಿಗೆ ಹಿಂತಿರುಗಿಸಲಾಗುತ್ತದೆ. ಡೆಕ್ ಪಟ್ಟಿಯಿಂದ ಈ ಡೆಕ್ ಅನ್ನು ಅಳಿಸುವುದರಿಂದ ಉಳಿದ ಎಲ್ಲಾ ಕಾರ್ಡ್‌ಗಳನ್ನು ಅವುಗಳ ಮೂಲ ಡೆಕ್‌ಗೆ ಹಿಂತಿರುಗಿಸುತ್ತದೆ.</string>
     <string name="steps_error">ಹಂತಗಳು 0 ಕ್ಕಿಂತ ಹೆಚ್ಚಿನ ಸಂಖ್ಯೆಯಾಗಿರಬೇಕು</string>
     <string name="steps_min_error">ಕನಿಷ್ಠ ಒಂದು ಹೆಜ್ಜೆ ಅಗತ್ಯವಿದೆ</string>
@@ -187,17 +185,17 @@
     <string name="web_page_error">ಪುಟವನ್ನು ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ದೋಷ:%s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">ಹಿನ್ನೆಲೆ</string>
-    <string name="choose_an_image">ಚಿತ್ರವನ್ನು ಆರಿಸಿ</string>
+    <string name="background_image_title" maxLength="41">ಹಿನ್ನೆಲೆ</string>
+    <string name="choose_an_image" maxLength="41">ಚಿತ್ರವನ್ನು ಆರಿಸಿ</string>
     <string name="remove_background_image">ಹಿನ್ನೆಲೆ ತೆಗೆದುಹಾಕುವುದೇ?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">ಡೀಫಾಲ್ಟ್ ಅನ್ನು ಮರುಸ್ಥಾಪಿಸಿ</string>
+    <string name="restore_default" maxLength="28">ಡೀಫಾಲ್ಟ್ ಅನ್ನು ಮರುಸ್ಥಾಪಿಸಿ</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ಖಾಲಿ</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">ವೈಟ್‌ಬೋರ್ಡ್ ಚಿತ್ರವನ್ನು ಉಳಿಸುವಲ್ಲಿ ವಿಫಲವಾಗಿದೆ. %s</string>
     <string name="white_board_image_saved">ವೈಟ್‌ಬೋರ್ಡ್ ಚಿತ್ರವನ್ನು%s ಗೆ ಉಳಿಸಲಾಗಿದೆ</string>
-    <string name="title_whiteboard_pen_color">ವೈಟ್‌ಬೋರ್ಡ್ ಪೆನ್ ಬಣ್ಣ</string>
-    <string name="title_whiteboard_editor">ವೈಟ್‌ಬೋರ್ಡ್ ಸಂಪಾದಕ</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">ವೈಟ್‌ಬೋರ್ಡ್ ಪೆನ್ ಬಣ್ಣ</string>
+    <string name="title_whiteboard_editor" maxLength="28">ವೈಟ್‌ಬೋರ್ಡ್ ಸಂಪಾದಕ</string>
     <string name="user_is_a_robot">ಸ್ವಯಂಚಾಲಿತ ಪರೀಕ್ಷೆ ಪತ್ತೆಯಾಗಿದೆ. ನೀವು ಮನುಷ್ಯರಾಗಿದ್ದರೆ, ಆಂಕಿಡ್ರಾಯ್ಡ್ ಬೆಂಬಲವನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">ಈ ಕಾರ್ಡ್ ಬೆಂಬಲಿಸದ ಆಂಕಿಡ್ರಾಯ್ಡ್ ವೈಶಿಷ್ಟ್ಯಗಳನ್ನು ಬಳಸುತ್ತದೆ. ಡೆವಲಪರ್ %1$s ಅನ್ನು ಸಂಪರ್ಕಿಸಿ, ಅಥವಾ ವಿಕಿಯನ್ನು ವೀಕ್ಷಿಸಿ. %2$s</string>
@@ -212,13 +210,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ಕಾರ್ಡ್ ವಿಷಯ ದೋಷ: ‘%s’ ಲೋಡ್ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ</string>
     <!-- Deck Picker -->
-    <string name="search_decks">ಹುಡುಕಾಟ ಡೆಕ್‌ಗಳು</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">ವಲಸೆಯ ಪ್ರಗತಿಯನ್ನು ತೋರಿಸಿ</string>
+    <string name="search_decks" maxLength="28">ಹುಡುಕಾಟ ಡೆಕ್‌ಗಳು</string>
     <string name="ankidroid_init_failed_webview_title">ಗಂಭೀರವಾದ ತಪ್ಪು</string>
     <string name="ankidroid_init_failed_webview">ಆಂಕಿಡ್ರಾಯ್ಡ್ ಸಿಸ್ಟಮ್ ವೆಬ್‌ವೀಕ್ಷಣೆಯನ್ನು ಅವಲಂಬಿಸಿದೆ, ಅದು ಲಭ್ಯವಿಲ್ಲ. ಸಿಸ್ಟಮ್ ನವೀಕರಣಗಳನ್ನು ಸ್ಥಾಪಿಸುತ್ತಿದ್ದರೆ ಇದು ಸಂಭವಿಸಬಹುದು. ದಯವಿಟ್ಟು ಕೆಲವು ನಿಮಿಷಗಳಲ್ಲಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ. \n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">ಫಾಂಟ್ ಗಾತ್ರ</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">ಉಪಕರಣಪಟ್ಟಿ ಪ್ರದರ್ಶಿಸಿ</string>
+    <string name="menu_font_size" maxLength="28">ಫಾಂಟ್ ಗಾತ್ರ</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ಉಪಕರಣಪಟ್ಟಿ ಪ್ರದರ್ಶಿಸಿ</string>
     <string name="format_insert_bold">ದಪ್ಪವಾಗಿ ಫಾರ್ಮ್ಯಾಟ್ ಮಾಡಿ</string>
     <string name="format_insert_italic">ಇಟಾಲಿಕ್ ಆಗಿ ಫಾರ್ಮ್ಯಾಟ್ ಮಾಡಿ</string>
     <string name="format_insert_underline">ಅಂಡರ್ಲೈನ್ ​​ಆಗಿ ಫಾರ್ಮ್ಯಾಟ್ ಮಾಡಿ</string>
@@ -233,13 +230,15 @@
     <string name="edit_toolbar_item">ಪರಿಕರಪಟ್ಟಿ ಐಟಂ ಅನ್ನು ಸಂಪಾದಿಸಿ</string>
     <string name="toolbar_item_explain_edit_or_remove">ಆಯ್ಕೆಮಾಡಿದ ಪಠ್ಯದ ಮೊದಲು ಮತ್ತು ನಂತರ ಸೇರಿಸಲು HTML ಅನ್ನು ನಮೂದಿಸಿ\n\nಎಡಿಟ್ ಮಾಡಲು ಅಥವಾ ತೆಗೆದುಹಾಕಲು ಟೂಲ್‌ಬಾರ್ ಐಟಂ ಅನ್ನು ದೀರ್ಘವಾಗಿ ಒತ್ತಿರಿ</string>
     <string name="remove_toolbar_item">ಟೂಲ್‌ಬಾರ್ ಐಟಂ ಅನ್ನು ತೆಗೆದುಹಾಕುವುದೇ?</string>
-    <string name="note_editor_paste_too_large">ಚಿತ್ರ ಅಂಟಿಸಲು ತುಂಬಾ ದೊಡ್ಡದಾಗಿದೆ, ದಯವಿಟ್ಟು ಚಿತ್ರವನ್ನು ಹಸ್ತಚಾಲಿತವಾಗಿ ಸೇರಿಸಿ</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android ಬ್ಯಾಕಪ್ ಪ್ರಗತಿಯಲ್ಲಿದೆ. ದಯವಿಟ್ಟು ಪುನಃ ಪ್ರಯತ್ನಿಸಿ</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">ಶಾರ್ಟ್‌ಕಟ್‌ಗಳನ್ನು ಸೇರಿಸಲು AnkiDroid ಅನ್ನು ಅನುಮತಿಸಲು ನೀವು iManager ಅನ್ನು ಬಳಸಬೇಕಾಗಬಹುದು</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">ಶಾರ್ಟ್‌ಕಟ್‌ಗಳನ್ನು ಸೇರಿಸಲು ನಿಮ್ಮ ಮುಖಪುಟವು ಆಂಕಿಡ್ರಾಯ್ಡ್‌ಗೆ ಅನುಮತಿಸುವುದಿಲ್ಲ</string>
     <string name="create_shortcut_error">ಶಾರ್ಟ್‌ಕಟ್ ಸೇರಿಸುವಲ್ಲಿ ದೋಷ:%s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">ವಾಕ್ಯಗಳನ್ನು ದೊಡ್ಡಕ್ಷರಗೊಳಿಸಿ</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">ಸ್ಕ್ರಾಲ್ ಟೂಲ್ಬಾರ್</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">ವಾಕ್ಯಗಳನ್ನು ದೊಡ್ಡಕ್ಷರಗೊಳಿಸಿ</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">ಸ್ಕ್ರಾಲ್ ಟೂಲ್ಬಾರ್</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -262,7 +261,7 @@
     <string name="check_network">ದಯವಿಟ್ಟು ನಿಮ್ಮ ನೆಟ್‌ವರ್ಕ್ ಸಂಪರ್ಕವನ್ನು ಪರಿಶೀಲಿಸಿ</string>
     <string name="search_using_deck_name">ಡೆಕ್ ಹೆಸರನ್ನು ಬಳಸಿ ಹುಡುಕಿ</string>
     <string name="external_storage_unavailable">ಡೌನ್‌ಲೋಡ್ ನಿಲ್ಲಿಸಲಾಗಿದೆ, ಯಾವುದೇ ಬಾಹ್ಯ ಸಂಗ್ರಹಣೆ ಲಭ್ಯವಿಲ್ಲ</string>
-    <string name="home">ಮನೆ</string>
+    <string name="home" maxLength="28">ಮನೆ</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">ಕಾರ್ಡ್ ಅನ್ನು ಸಮಾಧಿ ಮಾಡಲಾಗಿದೆ.</string>
@@ -272,16 +271,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">%s ಕ್ಷೇತ್ರವನ್ನು ಅಂಟದಂತೆ ಮಾಡಿ</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">ಶೇಖರಣಾ ಸ್ಥಳಾಂತರ</string>
     <string name="scoped_storage_learn_more">ಇನ್ನಷ್ಟು ತಿಳಿಯಿರಿ</string>
-    <string name="scoped_storage_postpone">ಮುಂದೂಡಿ</string>
-    <string name="scoped_storage_migrate">ವಲಸೆ</string>
     <string name="search_card_js_api_no_results">ಹುಡುಕಾಟವು ಯಾವುದೇ ಫಲಿತಾಂಶಗಳನ್ನು ನೀಡಲಿಲ್ಲ</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">Android 10 ಭದ್ರತಾ ನೀತಿಯನ್ನು ಅನುಸರಿಸಲು AnkiDroid ತನ್ನ ಸಂಗ್ರಹಣೆಯನ್ನು ಸ್ಥಳಾಂತರಿಸುವ ಅಗತ್ಯವಿದೆ.\n\nಇದು ಮಾಧ್ಯಮ ಸಿಂಕ್ ಕಾರ್ಯಕ್ಷಮತೆಯನ್ನು ಸುಧಾರಿಸುತ್ತದೆ.&lt;br&gt;&lt;br&gt;ವಲಸೆಯ ಸಮಯದಲ್ಲಿ ನೀವು ಸಿಂಕ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗುವುದಿಲ್ಲ ಮತ್ತು ಕೆಲವು ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲಾಗುತ್ತದೆ. ನಿಮ್ಮ ಡೇಟಾವನ್ನು ಸುರಕ್ಷಿತವಾಗಿರಿಸಲು ವಲಸೆ ಪ್ರಾರಂಭವಾಗುವ ಮೊದಲು ಮಾಧ್ಯಮ ಸಿಂಕ್ ಸಂಭವಿಸುತ್ತದೆ.&lt;br&gt;&lt;br&gt;ಈ ಪ್ರಕ್ರಿಯೆಯಲ್ಲಿ AnkiDroid ಅನ್ನು ಬಳಸುವುದು ಅಥವಾ ಮುಚ್ಚುವುದು ಸುರಕ್ಷಿತವಾಗಿದೆ.</string>
-    <string name="start_migration_progress_message">ಶೇಖರಣಾ ಸ್ಥಳಾಂತರವನ್ನು ಪ್ರಾರಂಭಿಸಲಾಗುತ್ತಿದೆ. ನೀವು ಶೀಘ್ರದಲ್ಲೇ AnkiDroid ಬಳಸಿಕೊಂಡು ಪುನರಾರಂಭಿಸಬಹುದು.</string>
-    <string name="migration_part_1_done_resume">ನೀವು AnkiDroid ಬಳಸಿಕೊಂಡು ಪುನರಾರಂಭಿಸಬಹುದು.
-\n ಶೇಖರಣಾ ಸ್ಥಳಾಂತರವು ಹಿನ್ನೆಲೆಯಲ್ಲಿ ಮುಂದುವರಿಯುತ್ತದೆ.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s ಮಾನ್ಯವಾದ JavaScript addon ಪ್ಯಾಕೇಜ್ ಅಲ್ಲ</string>
     <string name="could_not_create_dir">ಡೈರೆಕ್ಟರಿ %s ಅನ್ನು ರಚಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ</string>
@@ -311,13 +302,8 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">ಕಾರ್ಡ್‌ಗಳು</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ಟಿಪ್ಪಣಿಗಳು</string>
     <string name="toggle_cards_notes">ಕಾರ್ಡ್‌ಗಳು/ನೋಟುಗಳನ್ನು ಟಾಗಲ್ ಮಾಡಿ</string>
-    <string name="toggle_browser_mode_help">ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಕಾರ್ಡ್‌ಗಳು ಅಥವಾ ಟಿಪ್ಪಣಿಗಳನ್ನು ತೋರಿಸುವುದನ್ನು ಟಾಗಲ್ ಮಾಡಿ</string>
     <string name="truncate_content_help">ವಿಷಯದ ಮೊದಲ 3 ಸಾಲುಗಳನ್ನು ಮಾತ್ರ ತೋರಿಸಲು ಬ್ರೌಸರ್‌ನ ಪ್ರತಿ ಸಾಲಿನ ಎತ್ತರವನ್ನು ಟ್ರಿಮ್ ಮಾಡಿ</string>
-    <string name="browser_options_dialog_heading">ಬ್ರೌಸರ್ ಆಯ್ಕೆಗಳು</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">ಶೇಖರಣಾ ಸ್ಥಳಾಂತರದ ಸಮಯದಲ್ಲಿ ಈ ಕಾರ್ಯವು ಲಭ್ಯವಿರುವುದಿಲ್ಲ</string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">ಸಂಗ್ರಹಣೆ ವರ್ಗಾವಣೆಯನ್ನು ಪ್ರಾರಂಭಿಸಲು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
-    <string name="media_sync_required_title">ಮಾಧ್ಯಮ ಸಿಂಕ್ ಅಗತ್ಯವಿದೆ</string>
-    <string name="media_sync_unavailable_message">ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಮಾಧ್ಯಮ ಸಿಂಕ್ ಅನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ. ಮುಂದುವರಿಯುವ ಮೊದಲು ಯಾವುದೇ ಸಿಂಕ್ ಮಾಡದ ಮಾಧ್ಯಮವನ್ನು ದಯವಿಟ್ಟು ಸಿಂಕ್ ಮಾಡಿ ಮತ್ತು ಬ್ಯಾಕಪ್ ಮಾಡಿ</string>
+    <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">ರೆಕಾರ್ಡಿಂಗ್ ಅನ್ನು ಉಳಿಸಲಾಗಿದೆ</string>
     <string name="deleting_selected_notes">ಆಯ್ದ ಟಿಪ್ಪಣಿಗಳನ್ನು ಅಳಿಸಲಾಗುತ್ತಿದೆ</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">ಕೇಳಲು ಧ್ವನಿಯನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
@@ -336,9 +322,30 @@
         <item quantity="one">%d ಕಾರ್ಡ್ ಅನ್ನು ಸಮಾಧಿ ಮಾಡಲಾಗಿಲ್ಲ</item>
         <item quantity="other">%d ಕಾರ್ಡ್‌ಗಳನ್ನು ಸಮಾಧಿ ಮಾಡಲಾಗಿಲ್ಲ</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">ಪುನಃಸ್ಥಾಪನೆ</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">ಪುನಃಸ್ಥಾಪನೆ</string>
     <string name="start_recording">ರೆಕಾರ್ಡ್ ಮಾಡಿ</string>
     <string name="stop_recording">ನಿಲ್ಲಿಸು</string>
     <string name="play_recording">ಪ್ಲೇ ಮಾಡಿ</string>
     <string name="next_recording">ಮುಂದೆ</string>
+    <!--  AlertDialog in the deleteCardTemplate  -->
+    <string name="orphan_note_title">Cannot Delete Card Type</string>
+    <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
+    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
+    <!--Keyboard shortcuts dialog-->
+    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
+    <string name="show_shortcuts_message">Press Alt+K to show keyboard shortcuts</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
+    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
 </resources>

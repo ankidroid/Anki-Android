@@ -152,8 +152,6 @@
     <string name="notification_minimum_cards_due">Více než %d karet ke zkoušení</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrace</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blikající světlo</string>
-    <string name="timeout_answer_text" maxLength="41">Automatické zobrazení odpovědi</string>
-    <string name="timeout_answer_summ2">Automaticky zobrazit odpověď bez zásahu uživatele. Konfiguruje se v nastavení balíčku.</string>
     <string name="select_locale_title">Vyberte jazyk</string>
     <string name="software_render" maxLength="41">Zakázat hardwarové vykreslování karty</string>
     <string name="software_render_summ">Hardwarové vykreslování je rychlejší, ale může způsobovat problémy, konkrétně na Android 8/8.1. Pokud nevidíte části uživatelského rozhraní pro opakování karet, zkuste toto nastavení</string>
@@ -173,7 +171,7 @@
     <string name="show_large_answer_buttons" maxLength="41">Zobrazit velká tlačítka odpovědí</string>
     <string name="show_large_answer_buttons_summ">Zobrazit tlačítka odpovědí ve dvou řadách</string>
     <string name="show_top_bar" maxLength="41">Zobrazit horní lištu</string>
-    <string name="show_top_bar_summ">Zobrazit počty karet, příznak a označení v horní liště</string>
+    <string name="show_top_bar_summary">Zobrazit počty karet, čas odpovědi, příznak a označení v horní liště</string>
     <string name="show_progress" maxLength="41">Zobrazit zbývající</string>
     <string name="show_progress_summ">Zobrazit zbývající počet karet</string>
     <string name="show_eta" maxLength="41">Zobrazit ETA</string>
@@ -228,7 +226,7 @@
     <string name="keyboard">Klávesnice</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="answer_buttons" maxLength="41">Tlačítka odpovědí</string>
-    <string name="card" maxLength="41">Karta</string>
+    <string name="card" maxLength="41" comment="Generic term to refer to a card">Karta</string>
     <string name="note" maxLength="41">Poznámka</string>
     <string name="navigation" maxLength="41">Navigace</string>
     <string name="media" maxLength="41">Multimédia</string>
@@ -239,9 +237,9 @@
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Obecné</string>
     <string name="deck_conf_reminders" maxLength="41">Upomínky</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtr</string>
-    <string name="deck_conf_cram_search" maxLength="41">Hledat</string>
+    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Hledat</string>
     <string name="deck_conf_cram_limit" maxLength="41">Omezit na</string>
-    <string name="deck_conf_cram_order" maxLength="41">karty vybrané podle</string>
+    <string name="deck_conf_cram_order" maxLength="41">Karty vybrány podle</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Přeplánovat</string>
     <string name="deck_conf_cram_reschedule_summ">Přeplánovat karty podle mých odpovědí v tomto balíčku</string>
     <string name="deck_conf_cram_filter_2_check">Povolit druhý filtr</string>
@@ -274,20 +272,21 @@
     <string name="axis_picker_move_joystick">Pohnout joystickem / ovladačem pohybu</string>
     <string name="user_actions" maxLength="41">Akce uživatele</string>
     <string name="user_actions_summary" maxLength="41">Spustit JavaScript z obrazovky opakování</string>
-    <string name="user_action_1" maxLength="41">Akce uživatele 1</string>
-    <string name="user_action_2" maxLength="41">Akce uživatele 2</string>
-    <string name="user_action_3" maxLength="41">Akce uživatele 3</string>
-    <string name="user_action_4" maxLength="41">Akce uživatele 4</string>
-    <string name="user_action_5" maxLength="41">Akce uživatele 5</string>
-    <string name="user_action_6" maxLength="41">Akce uživatele 6</string>
-    <string name="user_action_7" maxLength="41">Akce uživatele 7</string>
-    <string name="user_action_8" maxLength="41">Akce uživatele 8</string>
-    <string name="user_action_9" maxLength="41">Akce uživatele 9</string>
+    <string name="user_action_1" maxLength="28">Akce uživatele 1</string>
+    <string name="user_action_2" maxLength="28">Akce uživatele 2</string>
+    <string name="user_action_3" maxLength="28">Akce uživatele 3</string>
+    <string name="user_action_4" maxLength="28">Akce uživatele 4</string>
+    <string name="user_action_5" maxLength="28">Akce uživatele 5</string>
+    <string name="user_action_6" maxLength="28">Akce uživatele 6</string>
+    <string name="user_action_7" maxLength="28">Akce uživatele 7</string>
+    <string name="user_action_8" maxLength="28">Akce uživatele 8</string>
+    <string name="user_action_9" maxLength="28">Akce uživatele 9</string>
+    <string name="toggle_auto_advance" maxLength="41">Přepnout automatický posun</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Vybrat stranu karty</string>
     <string name="card_side_question">Otázka</string>
     <string name="card_side_answer">Odpověď</string>
-    <string name="card_side_both">Otázka a odpověď</string>
+    <string name="card_side_both" maxLength="28">Otázka a odpověď</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Ot: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">Od: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -372,4 +371,10 @@
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Všechny</string>
     <string name="ignore_display_cutout" maxLength="41">Ignorovat výřez displeje</string>
     <string name="hide_answer_buttons" maxLength="41">Skrýt tlačítka odpovědí</string>
+    <string name="hide_hard_and_easy" maxLength="41">Skrýt tlačítka „Těžké“ a „Snadné“</string>
+    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <!--Keyboard shortcuts dialog-->
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
 </resources>

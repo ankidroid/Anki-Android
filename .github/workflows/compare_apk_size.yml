@@ -4,12 +4,12 @@ on:
   workflow_dispatch:
     inputs:
       prNumber:
-        description: "Number of PR to calculate sizes for"
+        description: "You want to measure the impact of PR number:"
         required: true
         type: number
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.inputs.prNumber }}
   cancel-in-progress: true
 
 
@@ -43,16 +43,15 @@ jobs:
         shell: bash
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4
         timeout-minutes: 5
         with:
           cache-read-only: true
-          gradle-home-cache-cleanup: true
 
       - name: Checkout PR
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
           ref: 'refs/pull/${{ github.event.inputs.prNumber }}/head'
 
       - name: Assemble PR APK
@@ -67,10 +66,10 @@ jobs:
       - name: Get PR APK size
         run: echo NEWSIZE=`ls -lrt AnkiDroid/build/outputs/apk/play/release/AnkiDroid-play-arm64-v8a-release.apk | awk '{print $5}'` >> $GITHUB_ENV
 
-      - uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 1
+      - name: Checkout Baseline for PR
+        # we want to checkout the base for this PR on main, not just main - as main moves over time
+        # and we want to know the isolated affect of this PR regardless of when the workflow executes
+        run: git checkout `git merge-base origin/main HEAD`
 
       - name: Assemble Baseline APK
         # This makes sure we fetch gradle network resources with a retry
@@ -105,8 +104,8 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: prNumber,
-                body: `Old APK size: ${oldSize}
-                      New APK size: ${newSize}`
+                body: `${oldSize.toLocaleString()}: Old APK size
+                      ${newSize.toLocaleString()}: New APK size`
               })
             }
             await addComment(prNumber, process.env.OLDSIZE, process.env.NEWSIZE);

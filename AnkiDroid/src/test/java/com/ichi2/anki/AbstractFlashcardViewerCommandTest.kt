@@ -33,10 +33,10 @@ import org.hamcrest.Matchers.notNullValue
 import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mockito.doAnswer
 import org.mockito.Mockito.mock
 import org.mockito.invocation.InvocationOnMock
+import org.mockito.kotlin.anyOrNull
 import org.mockito.kotlin.whenever
 import org.robolectric.Robolectric
 
@@ -48,7 +48,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         viewer.executeCommand(TOGGLE_FLAG_RED)
         viewer.executeCommand(TOGGLE_FLAG_RED)
 
-        assertThat(viewer.lastFlag, equalTo(Flag.NONE.code))
+        assertThat(viewer.lastFlag, equalTo(Flag.NONE))
     }
 
     @Test
@@ -57,7 +57,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(UNSET_FLAG)
 
-        assertThat(viewer.lastFlag, equalTo(Flag.NONE.code))
+        assertThat(viewer.lastFlag, equalTo(Flag.NONE))
     }
 
     @Test
@@ -67,7 +67,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         viewer.executeCommand(UNSET_FLAG)
         viewer.executeCommand(UNSET_FLAG)
 
-        assertThat(viewer.lastFlag, equalTo(Flag.NONE.code))
+        assertThat(viewer.lastFlag, equalTo(Flag.NONE))
     }
 
     @Test
@@ -77,7 +77,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         viewer.executeCommand(TOGGLE_FLAG_RED)
         viewer.executeCommand(TOGGLE_FLAG_BLUE)
 
-        assertThat(viewer.lastFlag, equalTo(Flag.BLUE.code))
+        assertThat(viewer.lastFlag, equalTo(Flag.BLUE))
     }
 
     @Test
@@ -87,7 +87,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         viewer.executeCommand(TOGGLE_FLAG_RED)
         viewer.executeCommand(UNSET_FLAG)
 
-        assertThat(viewer.lastFlag, equalTo(Flag.NONE.code))
+        assertThat(viewer.lastFlag, equalTo(Flag.NONE))
     }
 
     @Test
@@ -96,7 +96,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(TOGGLE_FLAG_RED)
 
-        assertThat(viewer.lastFlag, equalTo(Flag.RED.code))
+        assertThat(viewer.lastFlag, equalTo(Flag.RED))
     }
 
     @Test
@@ -105,7 +105,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(TOGGLE_FLAG_ORANGE)
 
-        assertThat(viewer.lastFlag, equalTo(Flag.ORANGE.code))
+        assertThat(viewer.lastFlag, equalTo(Flag.ORANGE))
     }
 
     companion object {
@@ -151,7 +151,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(TOGGLE_FLAG_GREEN)
 
-        assertThat(viewer.lastFlag, equalTo(Flag.GREEN.code))
+        assertThat(viewer.lastFlag, equalTo(Flag.GREEN))
     }
 
     @Test
@@ -160,7 +160,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(TOGGLE_FLAG_BLUE)
 
-        assertThat(viewer.lastFlag, equalTo(Flag.BLUE.code))
+        assertThat(viewer.lastFlag, equalTo(Flag.BLUE))
     }
 
     @Test
@@ -169,7 +169,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(TOGGLE_FLAG_PINK)
 
-        assertThat(viewer.lastFlag, equalTo(Flag.PINK.code))
+        assertThat(viewer.lastFlag, equalTo(Flag.PINK))
     }
 
     @Test
@@ -178,7 +178,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(TOGGLE_FLAG_TURQUOISE)
 
-        assertThat(viewer.lastFlag, equalTo(Flag.TURQUOISE.code))
+        assertThat(viewer.lastFlag, equalTo(Flag.TURQUOISE))
     }
 
     @Test
@@ -187,7 +187,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         viewer.executeCommand(TOGGLE_FLAG_PURPLE)
 
-        assertThat(viewer.lastFlag, equalTo(Flag.PURPLE.code))
+        assertThat(viewer.lastFlag, equalTo(Flag.PURPLE))
     }
 
     @Test
@@ -207,26 +207,27 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         viewer.executeCommand(command)
         viewer.executeCommand(command)
 
-        assertThat(command.toString(), viewer.lastFlag, equalTo(Flag.NONE.code))
+        assertThat(command.toString(), viewer.lastFlag, equalTo(Flag.NONE))
     }
 
-    private fun createViewer(): CommandTestCardViewer {
-        return CommandTestCardViewer(cardWith(Flag.NONE.code))
-    }
+    private fun createViewer(): CommandTestCardViewer = CommandTestCardViewer(cardWith(Flag.NONE))
 
-    private fun cardWith(@Suppress("SameParameterValue") flag: Int): Card {
+    private fun cardWith(
+        @Suppress("SameParameterValue") flag: Flag,
+    ): Card {
         val c = mock(Card::class.java)
-        val flags = intArrayOf(flag)
+        val flags = arrayOf<Flag>(flag)
         whenever(c.userFlag()).then { flags[0] }
         doAnswer { invocation: InvocationOnMock ->
             flags[0] = invocation.getArgument(0)
-            null
-        }.whenever(c).setUserFlag(anyInt())
+        }.whenever(c).setUserFlag(anyOrNull())
         return c
     }
 
-    private class CommandTestCardViewer(private var currentCardOverride: Card?) : Reviewer() {
-        var lastFlag = 0
+    private class CommandTestCardViewer(
+        private var currentCardOverride: Card?,
+    ) : Reviewer() {
+        var lastFlag = Flag.NONE
             private set
 
         override var currentCard: Card?
@@ -240,9 +241,12 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
             // intentionally blank
         }
 
-        override fun onFlag(card: Card?, flag: Flag) {
-            lastFlag = flag.code
-            currentCard!!.setUserFlag(flag.code)
+        override fun onFlag(
+            card: Card?,
+            flag: Flag,
+        ) {
+            lastFlag = flag
+            currentCard!!.setUserFlag(flag)
         }
     }
 }

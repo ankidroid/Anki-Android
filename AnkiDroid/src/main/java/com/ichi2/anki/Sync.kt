@@ -19,7 +19,6 @@ package com.ichi2.anki
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.res.Resources
 import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
@@ -30,13 +29,13 @@ import anki.sync.syncAuth
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.anki.servicelayer.ScopedStorageService
+import com.ichi2.anki.settings.PrefKey
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.worker.SyncMediaWorker
-import com.ichi2.async.AsyncOperation
+import com.ichi2.libanki.ChangeManager.notifySubscribersAllValuesChanged
 import com.ichi2.libanki.createBackup
 import com.ichi2.libanki.fullUploadOrDownload
 import com.ichi2.libanki.syncCollection
@@ -57,8 +56,6 @@ import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
 
 object SyncPreferences {
-    const val HKEY = "hkey"
-    const val USERNAME = "username"
     const val CURRENT_SYNC_URI = "currentSyncUri"
     const val CUSTOM_SYNC_URI = "syncBaseUrl"
     const val CUSTOM_SYNC_ENABLED = CUSTOM_SYNC_URI + VersatileTextWithASwitchPreference.SWITCH_SUFFIX
@@ -70,10 +67,13 @@ object SyncPreferences {
 
 enum class ConflictResolution {
     FULL_DOWNLOAD,
-    FULL_UPLOAD;
+    FULL_UPLOAD,
 }
 
-data class SyncCompletion(val isSuccess: Boolean)
+data class SyncCompletion(
+    val isSuccess: Boolean,
+)
+
 interface SyncCompletionListener {
     fun onMediaSyncCompleted(data: SyncCompletion)
 }
@@ -85,11 +85,10 @@ fun DeckPicker.syncAuth(): SyncAuth? {
     val currentSyncCertificate = preferences.getString(SyncPreferences.CUSTOM_SYNC_CERTIFICATE, "") ?: ""
     CollectionManager.updateCustomCertificate(currentSyncCertificate)
 
-    val hkey = preferences.getString(SyncPreferences.HKEY, null)
     val resolvedEndpoint = getEndpoint(this)
-    return hkey?.let {
+    return Prefs.hkey?.let {
         syncAuth {
-            this.hkey = hkey
+            this.hkey = it
             if (resolvedEndpoint != null) {
                 this.endpoint = resolvedEndpoint
             }
@@ -100,16 +99,17 @@ fun DeckPicker.syncAuth(): SyncAuth? {
 fun getEndpoint(context: Context): String? {
     val preferences = context.sharedPrefs()
     val currentEndpoint = preferences.getString(SyncPreferences.CURRENT_SYNC_URI, null)
-    val customEndpoint = if (preferences.getBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, false)) {
-        preferences.getString(SyncPreferences.CUSTOM_SYNC_URI, null)
-    } else {
-        null
-    }
+    val customEndpoint =
+        if (preferences.getBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, false)) {
+            preferences.getString(SyncPreferences.CUSTOM_SYNC_URI, null)
+        } else {
+            null
+        }
     return currentEndpoint ?: customEndpoint
 }
 
-fun customSyncBase(preferences: SharedPreferences): String? {
-    return if (preferences.getBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, false)) {
+fun customSyncBase(preferences: SharedPreferences): String? =
+    if (preferences.getBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, false)) {
         val uri = preferences.getString(SyncPreferences.CUSTOM_SYNC_URI, null)
         if (uri.isNullOrEmpty()) {
             null
@@ -119,13 +119,12 @@ fun customSyncBase(preferences: SharedPreferences): String? {
     } else {
         null
     }
-}
 
 suspend fun syncLogout(context: Context) {
     val preferences = context.sharedPrefs()
     preferences.edit {
-        remove(SyncPreferences.HKEY)
-        remove(SyncPreferences.USERNAME)
+        remove(PrefKey.HKEY)
+        remove(PrefKey.USERNAME)
         remove(SyncPreferences.CURRENT_SYNC_URI)
         remove(SyncPreferences.HOSTNUM)
     }
@@ -139,16 +138,13 @@ suspend fun syncLogout(context: Context) {
  * Returning true does not guarantee that the user actually synced recently,
  * or even that the ankiweb account is still valid.
  */
-fun isLoggedIn() =
-    AnkiDroidApp.instance.sharedPrefs().getString(SyncPreferences.HKEY, "")!!.isNotEmpty()
+fun isLoggedIn(): Boolean = !Prefs.hkey.isNullOrEmpty()
 
 fun millisecondsSinceLastSync(preferences: SharedPreferences) = TimeManager.time.intTimeMS() - preferences.getLong("lastSyncTime", 0)
 
-fun canSync(context: Context) = !ScopedStorageService.mediaMigrationIsInProgress(context)
-
 fun DeckPicker.handleNewSync(
     conflict: ConflictResolution?,
-    syncMedia: Boolean
+    syncMedia: Boolean,
 ) {
     val auth = this.syncAuth() ?: return
     val deckPicker = this
@@ -163,47 +159,53 @@ fun DeckPicker.handleNewSync(
             }
         } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
             // auth failed; log out
-            updateLogin(baseContext, "", "")
+            updateLogin("", "")
             throw exc
         }
-        withCol { notetypes._clear_cache() }
+        withCol { notetypes.clearCache() }
+        notifySubscribersAllValuesChanged(deckPicker)
         setLastSyncTimeToNow()
         refreshState()
     }
 }
 
-fun MyAccount.handleNewLogin(username: String, password: String, resultLauncher: ActivityResultLauncher<String>) {
+fun MyAccount.handleNewLogin(
+    username: String,
+    password: String,
+    resultLauncher: ActivityResultLauncher<String>,
+) {
     val endpoint = getEndpoint(this)
     launchCatchingTask {
-        val auth = try {
-            withProgress(
-                extractProgress = {
-                    text = getString(R.string.sign_in)
-                },
-                onCancel = ::cancelSync
-            ) {
-                withCol {
-                    syncLogin(username, password, endpoint)
+        val auth =
+            try {
+                withProgress(
+                    extractProgress = {
+                        text = getString(R.string.sign_in)
+                    },
+                    onCancel = ::cancelSync,
+                ) {
+                    withCol {
+                        syncLogin(username, password, endpoint)
+                    }
                 }
+            } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
+                // auth failed; clear out login details
+                updateLogin("", "")
+                throw exc
             }
-        } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
-            // auth failed; clear out login details
-            updateLogin(baseContext, "", "")
-            throw exc
-        }
-        updateLogin(baseContext, username, auth.hkey)
+        updateLogin(username, auth.hkey)
         setResult(RESULT_OK)
         MyAccount.checkNotificationPermission(this@handleNewLogin, resultLauncher)
         finish()
     }
 }
 
-private fun updateLogin(context: Context, username: String, hkey: String?) {
-    val preferences = context.sharedPrefs()
-    preferences.edit {
-        putString(SyncPreferences.USERNAME, username)
-        putString(SyncPreferences.HKEY, hkey)
-    }
+private fun updateLogin(
+    username: String,
+    hkey: String,
+) {
+    Prefs.username = username
+    Prefs.hkey = hkey
 }
 
 fun cancelSync(backend: Backend) {
@@ -214,31 +216,44 @@ fun cancelSync(backend: Backend) {
 private suspend fun handleNormalSync(
     deckPicker: DeckPicker,
     auth: SyncAuth,
-    syncMedia: Boolean
+    syncMedia: Boolean,
 ) {
+    Timber.i("Sync: Normal collection sync")
     var auth2 = auth
-    val output = deckPicker.withProgress(
-        extractProgress = {
-            if (progress.hasNormalSync()) {
-                text = progress.normalSync.run { "$added\n$removed" }
+    val output =
+        deckPicker.withProgress(
+            extractProgress = {
+                if (progress.hasNormalSync()) {
+                    text = progress.normalSync.run { "$added\n$removed" }
+                }
+            },
+            onCancel = ::cancelSync,
+            manualCancelButton = R.string.dialog_cancel,
+        ) {
+            withCol {
+                syncCollection(auth2, media = false) // media is synced by SyncMediaWorker
             }
-        },
-        onCancel = ::cancelSync,
-        manualCancelButton = R.string.dialog_cancel
-    ) {
-        withCol {
-            syncCollection(auth2, media = false) // media is synced by SyncMediaWorker
         }
-    }
 
     if (output.hasNewEndpoint()) {
+        Timber.i("sync endpoint updated")
         deckPicker.sharedPrefs().edit {
             putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)
         }
-        auth2 = syncAuth { this.hkey = auth.hkey; endpoint = output.newEndpoint }
+        auth2 =
+            syncAuth {
+                this.hkey = auth.hkey
+                endpoint = output.newEndpoint
+            }
     }
-    val mediaUsn = if (syncMedia) { output.serverMediaUsn } else { null }
+    val mediaUsn =
+        if (syncMedia) {
+            output.serverMediaUsn
+        } else {
+            null
+        }
 
+    Timber.i("sync result: ${output.required}")
     when (output.required) {
         // a successful sync returns this value
         SyncCollectionResponse.ChangesRequired.NO_CHANGES -> {
@@ -262,41 +277,42 @@ private suspend fun handleNormalSync(
 
         SyncCollectionResponse.ChangesRequired.FULL_SYNC -> {
             deckPicker.mediaUsnOnConflict = mediaUsn
-            deckPicker.showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CONFLICT_RESOLUTION)
+            deckPicker.showSyncErrorDialog(SyncErrorDialog.Type.DIALOG_SYNC_CONFLICT_RESOLUTION)
         }
 
         SyncCollectionResponse.ChangesRequired.NORMAL_SYNC,
         SyncCollectionResponse.ChangesRequired.UNRECOGNIZED,
-        null -> {
+        null,
+        -> {
             TODO("should never happen")
         }
     }
 }
 
-private fun fullDownloadProgress(title: String): ProgressContext.() -> Unit {
-    return {
+private fun fullDownloadProgress(title: String): ProgressContext.() -> Unit =
+    {
         if (progress.hasFullSync()) {
             text = title
             amount = progress.fullSync.run { Pair(transferred, total) }
         }
     }
-}
 
 private suspend fun handleDownload(
     deckPicker: DeckPicker,
     auth: SyncAuth,
-    mediaUsn: Int?
+    mediaUsn: Int?,
 ) {
+    Timber.i("Sync: Full collection download requested")
     deckPicker.withProgress(
         extractProgress = fullDownloadProgress(TR.syncDownloadingFromAnkiweb()),
-        onCancel = ::cancelSync
+        onCancel = ::cancelSync,
     ) {
         withCol {
             try {
                 createBackup(
                     BackupManager.getBackupDirectoryFromCollection(path),
                     force = true,
-                    waitForCompletion = true
+                    waitForCompletion = true,
                 )
                 close(downgrade = false, forFullSync = true)
                 fullUploadOrDownload(auth, upload = false, serverUsn = mediaUsn)
@@ -317,11 +333,12 @@ private suspend fun handleDownload(
 private suspend fun handleUpload(
     deckPicker: DeckPicker,
     auth: SyncAuth,
-    mediaUsn: Int?
+    mediaUsn: Int?,
 ) {
+    Timber.i("Sync: Full collection upload requested")
     deckPicker.withProgress(
         extractProgress = fullDownloadProgress(TR.syncUploadingToAnkiweb()),
-        onCancel = ::cancelSync
+        onCancel = ::cancelSync,
     ) {
         withCol {
             close(downgrade = false, forFullSync = true)
@@ -359,24 +376,24 @@ fun DeckPicker.shouldFetchMedia(preferences: SharedPreferences): Boolean {
         (shouldFetchMedia == onlyIfUnmetered && !NetworkUtils.isActiveNetworkMetered())
 }
 
-suspend fun monitorMediaSync(
-    deckPicker: DeckPicker
-) {
+suspend fun monitorMediaSync(deckPicker: DeckPicker) {
     val backend = CollectionManager.getBackend()
     val scope = CoroutineScope(Dispatchers.IO)
+    var isAborted = false
 
-    val dialog = withContext(Dispatchers.Main) {
-        AlertDialog.Builder(deckPicker)
-            .setTitle(TR.syncMediaLogTitle())
-            .setMessage("")
-            .setPositiveButton(R.string.dialog_continue) { _, _ ->
-                scope.cancel()
-            }
-            .setNegativeButton(TR.syncAbortButton()) { _, _ ->
-                cancelMediaSync(backend)
-            }
-            .show()
-    }
+    val dialog =
+        withContext(Dispatchers.Main) {
+            AlertDialog
+                .Builder(deckPicker)
+                .setTitle(TR.syncMediaLogTitle())
+                .setMessage("")
+                .setPositiveButton(R.string.dialog_continue) { _, _ ->
+                    scope.cancel()
+                }.setNegativeButton(TR.syncAbortButton()) { _, _ ->
+                    isAborted = true
+                    cancelMediaSync(backend)
+                }.show()
+        }
 
     fun showMessage(msg: String) = deckPicker.showSnackbar(msg, Snackbar.LENGTH_SHORT)
 
@@ -392,7 +409,7 @@ suspend fun monitorMediaSync(
                 dialog.setMessage(text)
                 delay(100)
             }
-            showMessage(TR.syncMediaComplete())
+            showMessage(if (isAborted) TR.syncMediaAborted() else TR.syncMediaComplete())
         } catch (_: BackendInterruptedException) {
             showMessage(TR.syncMediaAborted())
         } catch (_: CancellationException) {
@@ -406,38 +423,19 @@ suspend fun monitorMediaSync(
 }
 
 /**
- * Called from [DeckPicker.onMediaSyncCompleted] -> [DeckPicker.migrate] if the app is backgrounded
- */
-class MigrateStorageOnSyncSuccess(res: Resources) : AsyncOperation() {
-    override val notificationMessage = res.getString(R.string.storage_migration_sync_notification)
-    override val notificationTitle = res.getString(R.string.sync_database_acknowledge)
-
-    override val handlerMessage: DialogHandlerMessage
-        get() = MigrateOnSyncSuccessHandler()
-
-    class MigrateOnSyncSuccessHandler : DialogHandlerMessage(
-        which = WhichDialogHandler.MSG_MIGRATE_ON_SYNC_SUCCESS,
-        analyticName = "SyncSuccessHandler"
-    ) {
-        override fun handleAsyncMessage(deckPicker: DeckPicker) {
-            deckPicker.migrate()
-        }
-
-        override fun toMessage() = emptyMessage(this.what)
-    }
-}
-
-/**
  * Show a simple snackbar message or notification if the activity is not in foreground
  * @param messageResource String resource for message
  */
-fun DeckPicker.showSyncLogMessage(@StringRes messageResource: Int, syncMessage: String?) {
+fun DeckPicker.showSyncLogMessage(
+    @StringRes messageResource: Int,
+    syncMessage: String?,
+) {
     if (activityPaused) {
         val res = AnkiDroidApp.appResources
         showSimpleNotification(
             res.getString(R.string.app_name),
             res.getString(messageResource),
-            Channel.SYNC
+            Channel.SYNC,
         )
     } else {
         if (syncMessage.isNullOrEmpty()) {
@@ -455,13 +453,16 @@ fun Context.setLastSyncTimeToNow() {
     }
 }
 
-fun joinSyncMessages(dialogMessage: String?, syncMessage: String?): String? {
+fun joinSyncMessages(
+    dialogMessage: String?,
+    syncMessage: String?,
+): String? {
     // If both strings have text, separate them by a new line, otherwise return whichever has text
     return if (!dialogMessage.isNullOrEmpty() && !syncMessage.isNullOrEmpty()) {
         """
-     $dialogMessage
-     
-     $syncMessage
+        $dialogMessage
+        
+        $syncMessage
         """.trimIndent()
     } else if (!dialogMessage.isNullOrEmpty()) {
         dialogMessage

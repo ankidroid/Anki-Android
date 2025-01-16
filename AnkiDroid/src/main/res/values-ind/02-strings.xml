@@ -55,21 +55,21 @@
     <string name="edit_occlusions">Sunting Oklusi</string>
     <string name="tag_name">Nama tag</string>
     <string name="add_new_filter_tags">Tambah/Filter tag</string>
-    <string name="add_tag">Tambah tag</string>
-    <string name="check_all_tags">Centang / hapus centang semua tag</string>
-    <string name="filter_tags">Filter tag</string>
+    <string name="add_tag" maxLength="28">Tambah tag</string>
+    <string name="check_all_tags" maxLength="28">Centang / hapus centang semua tag</string>
+    <string name="filter_tags" maxLength="28">Filter tag</string>
     <string name="no_tags">Anda belum menambahkan tag apa pun</string>
     <string name="updated_version">Diperbarui ke versi %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Simpan whiteboard</string>
-    <string name="enable_stylus">Aktifkan mode stylus</string>
+    <string name="save_whiteboard" maxLength="28">Simpan whiteboard</string>
+    <string name="enable_stylus" maxLength="28">Aktifkan mode stylus</string>
     <string name="disable_stylus">Nonaktifkan mode stylus</string>
-    <string name="enable_whiteboard">Nyalakan whiteboard</string>
+    <string name="enable_whiteboard" maxLength="28">Nyalakan whiteboard</string>
     <string name="disable_whiteboard">Nonaktifkan whiteboard</string>
     <string name="show_whiteboard">Tampilkan whiteboard</string>
-    <string name="hide_whiteboard">Sembunyikan whiteboard</string>
-    <string name="clear_whiteboard">Bersihkan whiteboard</string>
-    <string name="replay_audio">Putar ulang audio</string>
+    <string name="hide_whiteboard" maxLength="28">Sembunyikan whiteboard</string>
+    <string name="clear_whiteboard" maxLength="28">Bersihkan whiteboard</string>
+    <string name="replay_audio" maxLength="28">Putar ulang audio</string>
     <string name="leech_suspend_notification">Kartu ditandai sebagai lintah dan ditunda</string>
     <string name="leech_notification">Kartu ditandai sebagai lintah</string>
     <string name="webview_crash_unknown">Galat Tidak Diketahui</string>
@@ -80,24 +80,23 @@
     <string name="webview_crash_fatal">Galat Fatal: Perender WebView mogok. Sebab: %s</string>
     <string name="webview_crash_loop_dialog_title">Sistem WebView Gagal Merender</string>
     <string name="webview_crash_loop_dialog_content">Sistem WebView gagal merender kartu \'%1$s\'.\n %2$s</string>
-    <string name="filter_by_flags">Bendera</string>
+    <string name="filter_by_flags" maxLength="41">Bendera</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Ubah batas kartu baru hari ini</string>
-    <string name="custom_study_increase_review_limit">Ubah batas ulasan kartu hari ini</string>
-    <string name="custom_study_review_forgotten">Ulas kartu yang terlupakan</string>
-    <string name="custom_study_review_ahead">Ulas lebih dulu</string>
-    <string name="custom_study_random_selection">Pelajari kartu yang dipilih secara acak</string>
-    <string name="custom_study_preview_new">Pratinjau kartu baru</string>
     <string name="custom_study_limit_tags">Batasi ke tag tertentu</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="other">+%d buried</item>
+    </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Edit catatan</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">Edit catatan</string>
     <string name="discard">Buang</string>
     <string name="note_editor_no_cards_created">Tidak ada kartu yang dibuat. Harap isi semua bidang teks</string>
     <string name="note_editor_no_cards_created_all_fields">Tipe catatan sekarang tidak menghasilkan kartu apapun.\nHarap memilih jenis catatan lain, atau pilih \'Kartu\' dan tambahkan bidang teks pengganti</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Kosongan Kloza hanya bekerja pada tipe catatan Kloza</string>
     <string name="saving_facts">Menyimpan catatan</string>
     <string name="saving_model">Menyimpan tipe catatan</string>
-    <string name="save">Simpan</string>
+    <string name="save" maxLength="28">Simpan</string>
     <string name="close">Tutup</string>
     <string name="select">Pilih</string>
     <string name="field_remapping">%1$s (dari “%2$s”)</string>
@@ -113,19 +112,18 @@
         <item quantity="other">%1$d menit</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Kartu AnkiDroid</string>
-    <string name="note_editor_copy_note">Salin Catatan</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Pindah posisi</string>
-    <string name="card_editor_reset_card">Reset kemajuan</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Jadwalkan ulang</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Pratinjau</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Salin sebagai Markdown</string>
+    <string name="note_editor_copy_note" maxLength="28">Salin Catatan</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Pindah posisi</string>
+    <string name="card_editor_reset_card" maxLength="28">Reset kemajuan</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Jadwalkan ulang</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Pratinjau</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Salin sebagai Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d dari %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Ubah nama</string>
-    <string name="checks_action">Periksa</string>
-    <string name="check_db">Periksa basisdata</string>
-    <string name="check_media">Periksa media</string>
-    <string name="empty_cards">Kartu kosong</string>
-    <string name="empty_card_warning">Kartu ini kosong. Gunakan opsi \"Kosongkan kartu\" dari menu di halaman daftar dek.</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Ubah nama</string>
+    <string name="checks_action" maxLength="28">Periksa</string>
+    <string name="check_db" maxLength="28">Periksa basisdata</string>
+    <string name="check_media" maxLength="28">Periksa media</string>
+    <string name="empty_cards" maxLength="28">Kartu kosong</string>
     <string name="unknown_type_field_warning">Ketik jawaban: bidang %s tidak diketahui</string>
     <string name="delete_deck">Menghapus dek&#8230;</string>
     <string name="info_rate">Beri AnkiDroid rating</string>
@@ -159,12 +157,11 @@
     <string name="export_choice_share">Bagikan</string>
     <string name="export_choice_save_to">Simpan ke</string>
     <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opsi</string>
-    <string name="menu__deck_options">Opsi dek</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Opsi</string>
+    <string name="menu__deck_options" maxLength="28">Opsi dek</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Pilihan belajar</string>
-    <string name="select_tts">Tetapkan bahasa TTS</string>
-    <string name="custom_study">Belajar kustom</string>
-    <string name="more_options">Lainnya</string>
+    <string name="select_tts" maxLength="28">Tetapkan bahasa TTS</string>
+    <string name="custom_study" maxLength="28">Belajar kustom</string>
     <string name="dyn_deck_desc">Ini adalah dek khusus untuk belajar di luar jadwal normal. Kartu akan otomatis dikembalikan ke dek aslinya setelah Anda mengulasnya. Menghapus dek ini dari daftar dek akan mengembalikan semua kartu yang tersisa ke dek aslinya.</string>
     <string name="steps_error">Langkah-langkah harus lebih besar dari 0</string>
     <string name="steps_min_error">Setidaknya satu langkah diperlukan</string>
@@ -184,17 +181,17 @@
     <string name="web_page_error">Gagal memuat halaman: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Latar belakang</string>
-    <string name="choose_an_image">Pilih gambar</string>
+    <string name="background_image_title" maxLength="41">Latar belakang</string>
+    <string name="choose_an_image" maxLength="41">Pilih gambar</string>
     <string name="remove_background_image">Hapus latar belakang?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Kembalikan ke baku</string>
+    <string name="restore_default" maxLength="28">Kembalikan ke baku</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Kosong</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Gagal menyimpan gambar di whiteboard. %s</string>
     <string name="white_board_image_saved">Gambar whiteboard disimpan ke %s</string>
-    <string name="title_whiteboard_pen_color">Warna pena whiteboard</string>
-    <string name="title_whiteboard_editor">Editor papan tulis</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">Warna pena whiteboard</string>
+    <string name="title_whiteboard_editor" maxLength="28">Editor papan tulis</string>
     <string name="user_is_a_robot">Tes otomatis terdeteksi. Jika kamu manusia, kontak dukungan AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Kartu ini menggunakan fitur yang tidak didukung AnkiDroid. Kontak pengembang %1$s, atau kunjungi wiki. %2$s</string>
@@ -209,13 +206,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Isi Kartu Gagal: Gagal memuat \'%s\'</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Cari dek</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Tampilkan progress migrasi</string>
+    <string name="search_decks" maxLength="28">Cari dek</string>
     <string name="ankidroid_init_failed_webview_title">Kegagalan fatal</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid membutuhkan System Webview yang sekarang sedang tidak ada. Hal ini dapat terjadi karena sistem sedang meng-install pembaruan. Mohon mencoba lagi dalam beberapa menit.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Ukuran font</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Tampilkan toolbar</string>
+    <string name="menu_font_size" maxLength="28">Ukuran font</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Tampilkan toolbar</string>
     <string name="format_insert_bold">Atur sebagai bold</string>
     <string name="format_insert_italic">Atur sebagai italic</string>
     <string name="format_insert_underline">Atur sebagai garis bawah</string>
@@ -230,13 +226,15 @@
     <string name="edit_toolbar_item">Ubah Item Toolbar</string>
     <string name="toolbar_item_explain_edit_or_remove">Masukkan HTML untuk dimasukkan sebelum dan sesudah teks\n\n yang telah dipilih. Tekan toolbar item beberapa saat untuk mencopotnya.</string>
     <string name="remove_toolbar_item">Copot Item Toolbar?</string>
-    <string name="note_editor_paste_too_large">Gambar ini terlalu besar untuk ditempel, mohon masukkan gambar secara manual.</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Pencadangan android sedang dalam proses. Mohon coba lagi.</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Anda mungkin perlu menggunakan iManager untuk memperbolehkan AnkiDroid menambah pintasan</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Layar utama Anda tidak memperbolehkan AnkiDroid untuk menambah pintasan</string>
     <string name="create_shortcut_error">Gagal menambah shortcut: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Mengkapitalkan kalimat-kalimat</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Gulir bilah alat</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Mengkapitalkan kalimat-kalimat</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Gulir bilah alat</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -259,7 +257,7 @@
     <string name="check_network">Harap periksa koneksi jaringan Anda</string>
     <string name="search_using_deck_name">Cari berdasarkan nama dek</string>
     <string name="external_storage_unavailable">Unduhan dibatalkan, penyimpanan eksternal tidak tersedia</string>
-    <string name="home">Beranda</string>
+    <string name="home" maxLength="28">Beranda</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Kartu disimpan.</string>
@@ -268,16 +266,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Buat kolom %s menempel</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Migrasi penyimpanan</string>
     <string name="scoped_storage_learn_more">Pelajari Lebih Lanjut</string>
-    <string name="scoped_storage_postpone">Tunda</string>
-    <string name="scoped_storage_migrate">Migrasi</string>
     <string name="search_card_js_api_no_results">Tidak menemukan hasil dari pencarian</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid perlu memigrasikan penyimpanannya untuk mematuhi kebijakan keamanan Android 10.\n\nHal ini akan meningkatkan kinerja sinkronisasi media.&lt;br&gt;&lt;br&gt;Selama migrasi, Anda tidak akan dapat melakukan sinkronisasi dan beberapa pengaturan akan dinonaktifkan. Sinkronisasi media akan dilakukan sebelum migrasi dimulai untuk menjaga keamanan data Anda.&lt;br&gt;&lt;br&gt;Anda dapat menggunakan atau menutup AnkiDroid dengan aman selama proses ini berjalan.</string>
-    <string name="start_migration_progress_message">Memulai migrasi penyimpanan. Anda akan dapat melanjutkan menggunakan AnkiDroid setelah ini.</string>
-    <string name="migration_part_1_done_resume">Anda dapat melanjutkan penggunaan AnkiDroid.
-\nMigrasi penyimpanan akan dilanjutkan di latar belakang.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s bukan merupakan paket pengaya JavaScript yang valid</string>
     <string name="could_not_create_dir">Tidak dapat membuat direktori %s</string>
@@ -307,14 +297,8 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kartu</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Catatan</string>
     <string name="toggle_cards_notes">Ubah antara Kartu/Catatan</string>
-    <string name="toggle_browser_mode_help">Saklar Penampilan kartu atau catatan dalam peramban</string>
     <string name="truncate_content_help">Kurangi ketinggian setiap baris dari Peramban untuk hanya menampilkan 3 baris pertama dari konten</string>
-    <string name="browser_options_dialog_heading">Opsi Peramban</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Fungsi ini tidak tersedia saat migrasi penyimpanan
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Ketuk untuk memulai migrasi penyimpanan</string>
-    <string name="media_sync_required_title">Sinkronisasi Media Diperlukan</string>
-    <string name="media_sync_unavailable_message">Sinkronisasi media dinonaktifkan dalam pengaturan. Silakan sinkronisasikan dan cadangkan media apa pun yang belum disinkron sebelum melanjutkan</string>
+    <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">Rekaman disimpan</string>
     <string name="deleting_selected_notes">Menghapus catatan yang dipilih</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Ketuk sebuah suara untuk didengarkan
@@ -338,9 +322,30 @@
     <plurals name="unbury_cards_feedback">
         <item quantity="other">%d cards unburied</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Pindah posisi</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Pindah posisi</string>
     <string name="start_recording">Mulai rekam</string>
     <string name="stop_recording">Selesai rekam</string>
     <string name="play_recording">Mainkan</string>
     <string name="next_recording">Berikutnya</string>
+    <!--  AlertDialog in the deleteCardTemplate  -->
+    <string name="orphan_note_title">Cannot Delete Card Type</string>
+    <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
+    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
+    <!--Keyboard shortcuts dialog-->
+    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
+    <string name="show_shortcuts_message">Press Alt+K to show keyboard shortcuts</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
+    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
 </resources>

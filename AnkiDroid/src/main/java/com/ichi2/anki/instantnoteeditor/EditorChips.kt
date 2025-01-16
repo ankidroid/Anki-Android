@@ -28,6 +28,7 @@ import com.google.android.material.chip.ChipGroup
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.IntegerDialog
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.annotations.NeedsTest
 import timber.log.Timber
 
@@ -39,22 +40,26 @@ import timber.log.Timber
  * handle the creation and updating of cloze deletions.
  */
 // TODO: single chars have more margin in chip
-fun AnkiActivity.setupChipGroup(viewModel: InstantEditorViewModel, clozeChipGroup: ChipGroup) {
+fun AnkiActivity.setupChipGroup(
+    viewModel: InstantEditorViewModel,
+    clozeChipGroup: ChipGroup,
+) {
     Timber.d("Setting up chip group view")
     clozeChipGroup.removeAllViews()
 
     val words = viewModel.getWordsFromFieldText()
 
-    val chipsData = words.map { word ->
-        val clozeNumber = viewModel.getWordClozeNumber(word)
+    val chipsData =
+        words.map { word ->
+            val clozeNumber = viewModel.getWordClozeNumber(word)
 
-        ChipData(
-            word,
-            Chip(clozeChipGroup.context),
-            createBadgeDrawable(this),
-            clozeNumber
-        )
-    }
+            ChipData(
+                word,
+                Chip(clozeChipGroup.context),
+                createBadgeDrawable(this),
+                clozeNumber,
+            )
+        }
 
     chipsData.forEach { data ->
         val chip = data.chip
@@ -106,7 +111,7 @@ private fun updateChipData(
     data: ChipData,
     newWord: String,
     chipsData: List<ChipData>,
-    viewModel: InstantEditorViewModel
+    viewModel: InstantEditorViewModel,
 ) {
     data.word = newWord
     val newClozeNumber = viewModel.getWordClozeNumber(newWord)
@@ -122,19 +127,23 @@ private fun updateChipData(
  * @param clozeNumber The current cloze number.
  * @param newClozeNumber A lambda function to be invoked with the new cloze number when the user confirms the change.
  */
-private fun AnkiActivity.displayUpdateClozeNumberDialog(clozeNumber: Int, newClozeNumber: (Int) -> Unit) {
-    val repositionDialog = IntegerDialog().apply {
-        setArgs(
-            title = this@displayUpdateClozeNumberDialog.getString(R.string.change_cloze_number),
-            prompt = this@displayUpdateClozeNumberDialog.getString(R.string.cloze_number),
-            digits = 2,
-            defaultValue = clozeNumber.toString()
-        )
-        setCallbackRunnable {
-            newClozeNumber(it)
+private fun AnkiActivity.displayUpdateClozeNumberDialog(
+    clozeNumber: Int,
+    newClozeNumber: (Int) -> Unit,
+) {
+    val repositionDialog =
+        IntegerDialog().apply {
+            setArgs(
+                title = this@displayUpdateClozeNumberDialog.getString(R.string.change_cloze_number),
+                prompt = this@displayUpdateClozeNumberDialog.getString(R.string.cloze_number),
+                digits = 2,
+                defaultValue = clozeNumber.toString(),
+            )
+            setCallbackRunnable {
+                newClozeNumber(it)
+            }
         }
-    }
-    this.showDialogFragment(repositionDialog)
+    showDialogFragment(repositionDialog)
 }
 
 private fun updateChipAndBadge(data: ChipData) {
@@ -160,14 +169,13 @@ private fun updateChipAndBadge(data: ChipData) {
  * @param context The context used to create the BadgeDrawable.
  * @return A configured BadgeDrawable instance.
  */
-private fun createBadgeDrawable(context: Context): BadgeDrawable {
-    return BadgeDrawable.create(context).apply {
+private fun createBadgeDrawable(context: Context): BadgeDrawable =
+    BadgeDrawable.create(context).apply {
         badgeGravity = BadgeDrawable.TOP_END
         verticalPadding = 0
         horizontalPadding = 0
         verticalOffset = 50
     }
-}
 
 /**
  * Attaches or detaches a BadgeDrawable to/from a view based on visibility.
@@ -180,7 +188,11 @@ private fun createBadgeDrawable(context: Context): BadgeDrawable {
  * @param visible A boolean indicating whether the BadgeDrawable should be attached (true) or detached (false).
  */
 @OptIn(ExperimentalBadgeUtils::class)
-private fun updateBadgeVisibilityOnView(view: View, badgeDrawable: BadgeDrawable, visible: Boolean) {
+private fun updateBadgeVisibilityOnView(
+    view: View,
+    badgeDrawable: BadgeDrawable,
+    visible: Boolean,
+) {
     view.post {
         if (visible) {
             BadgeUtils.attachBadgeDrawable(badgeDrawable, view, null)
@@ -203,5 +215,5 @@ private data class ChipData(
     var word: String,
     val chip: Chip,
     val badgeDrawable: BadgeDrawable,
-    var clozeNumber: Int?
+    var clozeNumber: Int?,
 )

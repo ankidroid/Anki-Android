@@ -23,18 +23,16 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 
 class AddNoteWidget : AnalyticsWidgetProvider() {
-
     override fun performUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray,
-        usageAnalytics: UsageAnalytics
+        usageAnalytics: UsageAnalytics,
     ) {
         updateWidgets(context, appWidgetManager, appWidgetIds)
     }
 
     companion object {
-
         /**
          * Updates the widgets displayed in the provided context using the given AppWidgetManager
          * and widget IDs, setting up an intent to open the NoteEditor with the caller as the deck picker.
@@ -46,7 +44,7 @@ class AddNoteWidget : AnalyticsWidgetProvider() {
         fun updateWidgets(
             context: Context,
             appWidgetManager: AppWidgetManager,
-            appWidgetIds: IntArray
+            appWidgetIds: IntArray,
         ) {
             val remoteViews = RemoteViews(context.packageName, R.layout.widget_add_note)
             val intent = NoteEditorLauncher.AddNote().getIntent(context)

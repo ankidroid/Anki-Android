@@ -41,6 +41,7 @@
         <item name="actionModeBackground">?attr/colorPrimary</item>
         <!-- Tab layout -->
         <item name="tabLayoutBackgroundColor">?attr/colorPrimary</item>
+        <item name="tabActiveIconColor">@color/white</item>
         <!-- Deck list colors and divider -->
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
         <item name="currentDeckBackgroundColor">#ececec</item>
@@ -52,6 +53,7 @@
         <item name="newCountColor">@color/material_indigo_700</item>
         <item name="learnCountColor">@color/material_red_700</item>
         <item name="reviewCountColor">@color/material_green_700</item>
+        <item name="buryCountColor">@color/disabled_gray_light</item>
         <item name="zeroCountColor">#1f000000</item>
         <!-- Reviewer colors -->
         <item name="againButtonBackground">@color/material_red_700</item>
@@ -77,9 +79,10 @@
         <item name="goodButtonRippleRef">@drawable/footer_button_ripple</item>
         <item name="easyButtonRippleRef">@drawable/footer_button_ripple</item>
         <!-- Card Browser Colors -->
-        <item name="cardBrowserDivider">?attr/dividerHorizontal</item>
+        <item name="cardBrowserDivider">#CCCCCC</item>
         <!-- Browser colors -->
         <item name="suspendedColor">#FFFFB2</item>
+        <item name="buriedColor">#FFCE7C</item>
         <item name="selectedColor">#FFFFBB99</item>
         <item name="markedColor">#D9B2E9</item>
         <!-- Note editor colors -->
@@ -99,8 +102,6 @@
         <item name="navDrawerImage">@drawable/nav_drawer_logo</item>
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
-        <item name="dialogCornerRadius">@dimen/dialog_corner_radius</item>
-        <item name="android:dialogCornerRadius" tools:targetApi="p">@dimen/dialog_corner_radius</item>
         <item name="textAllCaps">false</item>
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_light_blue_500</item>
@@ -129,6 +130,7 @@
         <item name="switchPreferenceCompatStyle">@style/Preference.SwitchPreferenceCompat.Material3</item>
         <item name="sliderStyle">@style/SliderStyle</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.AnkiDroid</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.AnkiDroid.AlertDialog</item>
 
         <!-- ProgressDialog-->
         <item name="dialogBackground">@color/white</item>
@@ -137,6 +139,8 @@
         <item name="checkMediaListForeground">@color/material_grey_700</item>
         <item name="progressDialogButtonTextColor">@color/material_light_blue_500</item>
         <item name="tabStyle">@style/Widget.MaterialComponents.TabLayout</item>
+
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
     </style>
 
     <style name="Theme_Light" parent="Base.Theme.Light"/>

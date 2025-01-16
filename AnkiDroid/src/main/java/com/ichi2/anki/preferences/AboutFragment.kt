@@ -34,7 +34,8 @@ import com.ichi2.anki.Info
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.servicelayer.DebugInfoService
-import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.showThemedToast
 import com.ichi2.utils.IntentUtil
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import com.ichi2.utils.copyToClipboard
@@ -46,12 +47,20 @@ import java.util.Date
 import java.util.Locale
 import net.ankiweb.rsdroid.BuildConfig as BackendBuildConfig
 
-class AboutFragment : Fragment(R.layout.about_layout) {
+class AboutFragment :
+    Fragment(R.layout.about_layout),
+    TitleProvider {
+    override val title: CharSequence
+        get() = getString(R.string.pref_cat_about_title)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         // Version date
-        val apkBuildDate = SimpleDateFormat(DateFormat.getBestDateTimePattern(Locale.getDefault(), "d MMM yyyy"))
-            .format(Date(BuildConfig.BUILD_TIME))
+        val apkBuildDate =
+            SimpleDateFormat(DateFormat.getBestDateTimePattern(Locale.getDefault(), "d MMM yyyy"))
+                .format(Date(BuildConfig.BUILD_TIME))
         view.findViewById<TextView>(R.id.about_build_date).text = apkBuildDate
 
         // Version text
@@ -62,9 +71,13 @@ class AboutFragment : Fragment(R.layout.about_layout) {
         view.findViewById<TextView>(R.id.about_backend).text =
             "(anki " + BackendBuildConfig.ANKI_DESKTOP_VERSION + " / " + BackendBuildConfig.ANKI_COMMIT_HASH.subSequence(0, 8) + ")"
 
+        // FSRS version text
+        view.findViewById<TextView>(R.id.about_fsrs).text = "(FSRS ${BackendBuildConfig.FSRS_VERSION})"
+
         // Logo secret
-        view.findViewById<ImageView>(R.id.about_app_logo)
-            .setOnClickListener(DevOptionsSecretClickListener(requireActivity() as Preferences))
+        view
+            .findViewById<ImageView>(R.id.about_app_logo)
+            .setOnClickListener(DevOptionsSecretClickListener(this))
 
         // Contributors text
         val contributorsLink = getString(R.string.link_contributors)
@@ -97,9 +110,10 @@ class AboutFragment : Fragment(R.layout.about_layout) {
 
         // Open changelog button
         view.findViewById<Button>(R.id.about_open_changelog).setOnClickListener {
-            val openChangelogIntent = Intent(requireContext(), Info::class.java).apply {
-                putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION)
-            }
+            val openChangelogIntent =
+                Intent(requireContext(), Info::class.java).apply {
+                    putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION)
+                }
             startActivity(openChangelogIntent)
         }
 
@@ -109,22 +123,18 @@ class AboutFragment : Fragment(R.layout.about_layout) {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        requireActivity().setTitle(R.string.pref_cat_about_title)
-    }
-
     /**
      * Copies debug info (from [DebugInfoService.getDebugInfo]) to the clipboard
      */
     private fun copyDebugInfo() {
         launchCatchingTask {
-            val debugInfo = withContext(Dispatchers.IO) {
-                DebugInfoService.getDebugInfo(requireContext())
-            }
+            val debugInfo =
+                withContext(Dispatchers.IO) {
+                    DebugInfoService.getDebugInfo(requireContext())
+                }
             requireContext().copyToClipboard(
                 debugInfo,
-                failureMessageId = R.string.about_ankidroid_error_copy_debug_info
+                failureMessageId = R.string.about_ankidroid_error_copy_debug_info,
             )
         }
     }
@@ -133,12 +143,14 @@ class AboutFragment : Fragment(R.layout.about_layout) {
      * Click listener which enables developer options on release builds
      * if the user clicks it a minimum number of times
      */
-    private class DevOptionsSecretClickListener(val preferencesActivity: Preferences) : View.OnClickListener {
+    private class DevOptionsSecretClickListener(
+        val fragment: Fragment,
+    ) : View.OnClickListener {
         private var clickCount = 0
         private val clickLimit = 6
 
         override fun onClick(view: View) {
-            if (DevOptionsFragment.isEnabled(view.context)) {
+            if (Prefs.isDevOptionsEnabled) {
                 return
             }
             if (++clickCount == clickLimit) {
@@ -154,20 +166,16 @@ class AboutFragment : Fragment(R.layout.about_layout) {
                 setTitle(R.string.dev_options_enabled_pref)
                 setIcon(R.drawable.ic_warning)
                 setMessage(R.string.dev_options_warning)
-                setPositiveButton(R.string.dialog_ok) { _, _ -> enableDevOptions() }
+                setPositiveButton(R.string.dialog_ok) { _, _ -> enableDevOptions(context) }
                 setNegativeButton(R.string.dialog_cancel) { _, _ -> clickCount = 0 }
                 setCancelable(false)
             }
         }
 
-        /**
-         * Enables developer options for the user and shows it on [HeaderFragment]
-         */
-        fun enableDevOptions() {
-            preferencesActivity.setDevOptionsEnabled(true)
-            preferencesActivity.showSnackbar(R.string.dev_options_enabled_msg) {
-                setAction(R.string.undo) { preferencesActivity.setDevOptionsEnabled(false) }
-            }
+        fun enableDevOptions(context: Context) {
+            Prefs.isDevOptionsEnabled = true
+            fragment.requireActivity().recreate()
+            showThemedToast(context, R.string.dev_options_enabled_msg, shortLength = true)
         }
     }
 }

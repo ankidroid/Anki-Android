@@ -16,7 +16,7 @@
 
 package com.ichi2.anki.ui.internationalization
 
-import android.app.Activity
+import android.content.Context
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 
@@ -29,18 +29,17 @@ import androidx.fragment.app.Fragment
  * "Toggle Suspend".toSentenceCase(R.string.sentence_toggle_suspend) // "Toggle suspend"
  * ```
  */
-context (Activity)
-fun String.toSentenceCase(@StringRes resId: Int): String {
-    val resString = getString(resId)
+fun String.toSentenceCase(
+    context: Context,
+    @StringRes resId: Int,
+): String {
+    val resString = context.getString(resId)
     // lowercase both for the comparison: sentence case doesn't mean all words are lowercase
     if (this.lowercase() == resString.lowercase()) return resString
     return this
 }
 
-context (Fragment)
-fun String.toSentenceCase(@StringRes resId: Int): String {
-    val resString = getString(resId)
-    // lowercase both for the comparison: sentence case doesn't mean all words are lowercase
-    if (this.lowercase() == resString.lowercase()) return resString
-    return this
-}
+fun String.toSentenceCase(
+    fragment: Fragment,
+    @StringRes resId: Int,
+): String = toSentenceCase(fragment.requireContext(), resId)

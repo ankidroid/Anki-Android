@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Predná strana</string>
-    <string name="back_field_name">Zadná strana</string>
+    <string name="front_field_name" maxLength="28">Predná strana</string>
+    <string name="back_field_name" maxLength="28">Zadná strana</string>
 </resources>

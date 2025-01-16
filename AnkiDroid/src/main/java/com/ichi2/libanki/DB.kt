@@ -32,7 +32,6 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
-import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
 /**
@@ -43,7 +42,9 @@ import timber.log.Timber
  */
 @KotlinCleanup("Improve documentation")
 @WorkerThread
-class DB(val database: SupportSQLiteDatabase) {
+class DB(
+    val database: SupportSQLiteDatabase,
+) {
     var mod = false
 
     /**
@@ -58,7 +59,9 @@ class DB(val database: SupportSQLiteDatabase) {
      *
      * Note: this does not apply when using the Rust backend (ie for Collection)
      */
-    class SupportSQLiteOpenHelperCallback(version: Int) : AnkiSupportSQLiteDatabase.DefaultDbCallback(version) {
+    class SupportSQLiteOpenHelperCallback(
+        version: Int,
+    ) : AnkiSupportSQLiteDatabase.DefaultDbCallback(version) {
         /** Send error message when corruption is encountered. We don't call super() as we don't accidentally
          * want to opt-in to the standard Android behaviour of removing the corrupted file, but as we're
          * inheriting from DefaultDbCallback which does not call super either, it would be technically safe
@@ -68,7 +71,7 @@ class DB(val database: SupportSQLiteDatabase) {
             sendExceptionReport(
                 RuntimeException("Database corrupted"),
                 "DB.MyDbErrorHandler.onCorruption",
-                "Db has been corrupted: " + db.path
+                "Db has been corrupted: " + db.path,
             )
             Timber.i("closeCollection: %s", "Database corrupted")
             CollectionManager.closeCollectionBlocking()
@@ -91,9 +94,10 @@ class DB(val database: SupportSQLiteDatabase) {
     }
 
     // Allows to avoid using new Object[]
-    fun query(@Language("SQL") query: String, vararg selectionArgs: Any): Cursor {
-        return database.query(query, selectionArgs)
-    }
+    fun query(
+        query: String,
+        vararg selectionArgs: Any,
+    ): Cursor = database.query(query, selectionArgs)
 
     /**
      * Convenience method for querying the database for a single integer result.
@@ -101,7 +105,10 @@ class DB(val database: SupportSQLiteDatabase) {
      * @param query The raw SQL query to use.
      * @return The integer result of the query.
      */
-    fun queryScalar(@Language("SQL") query: String, vararg selectionArgs: Any): Int {
+    fun queryScalar(
+        query: String,
+        vararg selectionArgs: Any,
+    ): Int {
         val scalar: Int
         database.query(query, selectionArgs).use { cursor ->
             if (!cursor.moveToNext()) {
@@ -113,7 +120,10 @@ class DB(val database: SupportSQLiteDatabase) {
     }
 
     @Throws(SQLException::class)
-    fun queryString(@Language("SQL") query: String, vararg bindArgs: Any): String {
+    fun queryString(
+        query: String,
+        vararg bindArgs: Any,
+    ): String {
         database.query(query, bindArgs).use { cursor ->
             if (!cursor.moveToNext()) {
                 throw SQLException("No result for query: $query")
@@ -122,7 +132,10 @@ class DB(val database: SupportSQLiteDatabase) {
         }
     }
 
-    fun queryLongScalar(@Language("SQL") query: String, vararg bindArgs: Any): Long {
+    fun queryLongScalar(
+        query: String,
+        vararg bindArgs: Any,
+    ): Long {
         var scalar: Long
         database.query(query, bindArgs).use { cursor ->
             if (!cursor.moveToNext()) {
@@ -139,7 +152,10 @@ class DB(val database: SupportSQLiteDatabase) {
      * @param query The SQL query statement.
      * @return An ArrayList with the contents of the specified column.
      */
-    fun queryLongList(@Language("SQL") query: String, vararg bindArgs: Any): ArrayList<Long> {
+    fun queryLongList(
+        query: String,
+        vararg bindArgs: Any,
+    ): ArrayList<Long> {
         val results = ArrayList<Long>()
         database.query(query, bindArgs).use { cursor ->
             while (cursor.moveToNext()) {
@@ -155,7 +171,10 @@ class DB(val database: SupportSQLiteDatabase) {
      * @param query The SQL query statement.
      * @return An ArrayList with the contents of the specified column.
      */
-    fun queryStringList(@Language("SQL") query: String, vararg bindArgs: Any): ArrayList<String> {
+    fun queryStringList(
+        query: String,
+        vararg bindArgs: Any,
+    ): ArrayList<String> {
         val results = ArrayList<String>()
         database.query(query, bindArgs).use { cursor ->
             while (cursor.moveToNext()) {
@@ -165,7 +184,10 @@ class DB(val database: SupportSQLiteDatabase) {
         return results
     }
 
-    fun execute(@Language("SQL") sql: String, vararg `object`: Any?) {
+    fun execute(
+        sql: String,
+        vararg `object`: Any?,
+    ) {
         val s = sql.trim { it <= ' ' }.lowercase()
         // mark modified?
         for (mo in MOD_SQL_STATEMENTS) {
@@ -182,7 +204,7 @@ class DB(val database: SupportSQLiteDatabase) {
      * not contain any non-statement-terminating semicolons.
      */
     @KotlinCleanup("""Use Kotlin string. Change split so that there is no empty string after last ";".""")
-    fun executeScript(@Language("SQL") sql: String) {
+    fun executeScript(sql: String) {
         val queries = java.lang.String(sql).split(";")
         for (query in queries) {
             database.execSQL(query)
@@ -194,15 +216,14 @@ class DB(val database: SupportSQLiteDatabase) {
         table: String,
         values: ContentValues,
         whereClause: String? = null,
-        whereArgs: Array<String>? = null
-    ): Int {
-        return database.update(table, SQLiteDatabase.CONFLICT_NONE, values, whereClause, whereArgs)
-    }
+        whereArgs: Array<String>? = null,
+    ): Int = database.update(table, SQLiteDatabase.CONFLICT_NONE, values, whereClause, whereArgs)
 
     /** insert must always be called via DB in order to mark the db as changed  */
-    fun insert(table: String, values: ContentValues): Long {
-        return database.insert(table, SQLiteDatabase.CONFLICT_NONE, values)
-    }
+    fun insert(
+        table: String,
+        values: ContentValues,
+    ): Long = database.insert(table, SQLiteDatabase.CONFLICT_NONE, values)
 
     /**
      * @return The full path to this database file.
@@ -216,12 +237,16 @@ class DB(val database: SupportSQLiteDatabase) {
         /**
          * Open a connection using the system framework.
          */
-        fun withAndroidFramework(context: Context, path: String): DB {
-            val db = AnkiSupportSQLiteDatabase.withFramework(
-                context,
-                path,
-                SupportSQLiteOpenHelperCallback(1)
-            )
+        fun withAndroidFramework(
+            context: Context,
+            path: String,
+        ): DB {
+            val db =
+                AnkiSupportSQLiteDatabase.withFramework(
+                    context,
+                    path,
+                    SupportSQLiteOpenHelperCallback(1),
+                )
             db.disableWriteAheadLogging()
             db.query("PRAGMA synchronous = 2")
             return DB(db)
@@ -231,8 +256,6 @@ class DB(val database: SupportSQLiteDatabase) {
          * Wrap a Rust backend connection (which provides an SQL interface).
          * Caller is responsible for opening&closing the database.
          */
-        fun withRustBackend(backend: Backend): DB {
-            return DB(AnkiSupportSQLiteDatabase.withRustBackend(backend))
-        }
+        fun withRustBackend(backend: Backend): DB = DB(AnkiSupportSQLiteDatabase.withRustBackend(backend))
     }
 }

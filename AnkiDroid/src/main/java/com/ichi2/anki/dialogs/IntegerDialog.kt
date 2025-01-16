@@ -31,12 +31,19 @@ import java.util.function.Consumer
 // TODO: Pass optional validation condition i.e. Positive button not enabled if condition is true
 open class IntegerDialog : AnalyticsDialogFragment() {
     private var consumer: Consumer<Int>? = null
+
     fun setCallbackRunnable(consumer: Consumer<Int>?) {
         this.consumer = consumer
     }
 
     /** use named arguments with this method for clarity */
-    fun setArgs(title: String?, prompt: String?, digits: Int, content: String? = null, defaultValue: String? = null) {
+    fun setArgs(
+        title: String,
+        prompt: String?,
+        digits: Int,
+        content: String? = null,
+        defaultValue: String? = null,
+    ) {
         val args = Bundle()
         args.putString("title", title)
         args.putString("prompt", prompt)
@@ -48,21 +55,23 @@ open class IntegerDialog : AnalyticsDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         super.onCreateDialog(savedInstanceState)
-        return AlertDialog.Builder(requireActivity()).show {
-            title(text = requireArguments().getString("title")!!)
-            positiveButton(R.string.dialog_ok)
-            negativeButton(R.string.dialog_cancel)
-            setMessage(requireArguments().getString("content"))
-            setView(R.layout.dialog_generic_text_input)
-        }.input(
-            hint = requireArguments().getString("prompt"),
-            inputType = InputType.TYPE_CLASS_NUMBER,
-            maxLength = requireArguments().getInt("digits"),
-            prefill = requireArguments().getString("defaultValue"),
-            displayKeyboard = true
-        ) { _, text: CharSequence ->
-            consumer!!.accept(text.toString().toInt())
-            dismiss()
-        }
+        return AlertDialog
+            .Builder(requireActivity())
+            .show {
+                title(text = requireArguments().getString("title"))
+                positiveButton(R.string.dialog_ok)
+                negativeButton(R.string.dialog_cancel)
+                setMessage(requireArguments().getString("content"))
+                setView(R.layout.dialog_generic_text_input)
+            }.input(
+                hint = requireArguments().getString("prompt"),
+                inputType = InputType.TYPE_CLASS_NUMBER,
+                maxLength = requireArguments().getInt("digits"),
+                prefill = requireArguments().getString("defaultValue"),
+                displayKeyboard = true,
+            ) { _, text: CharSequence ->
+                consumer!!.accept(text.toString().toInt())
+                dismiss()
+            }
     }
 }

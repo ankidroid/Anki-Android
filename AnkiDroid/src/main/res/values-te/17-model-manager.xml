@@ -26,7 +26,7 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">గమనిక రకాలను నిర్వహించండి</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">గమనిక రకాలను నిర్వహించండి</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">ఫీల్డ్లను నిర్వహించండి</string>
     <!--Toasts-->
     <string name="toast_last_model">మీరు మీ చివరి గమనిక రకాన్ని తొలగించలేరు</string>
@@ -53,7 +53,7 @@
     <string name="model_field_editor_language_hint_dialog_success_result">భాష సూచనను %sకి సెట్ చేయండి</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">ఫీల్డ్లను సవరించండి</string>
-    <string name="model_field_editor_add">ఫీల్డ్ను జోడించండి</string>
+    <string name="model_field_editor_add" maxLength="28">ఫీల్డ్ను జోడించండి</string>
     <string name="model_field_editor_delete">ఫీల్డ్ను తొలగించు</string>
     <string name="model_field_editor_rename">ఫీల్డ్ పేరు మార్చండి</string>
     <string name="model_field_editor_language_hint">కీబోర్డ్ భాష సూచనను సెట్ చేయండి</string>
@@ -81,5 +81,5 @@
     <string name="model_manager_deck_override_added_message">\'%1$s\' డిఫాల్ట్ డెక్‌ని \'%2$s\'కి సెట్ చేయండి</string>
     <string name="model_manager_deck_override_removed_message">\'%s\' కోసం డిఫాల్ట్ డెక్ తీసివేయబడింది</string>
     <string name="deck_override_explanation">కొత్త \'%s\' కార్డ్‌లను ఉంచడానికి డెక్‌ను ఎంచుకోండి</string>
-    <string name="deck_picker_dialog_filter_decks">ఫిల్టర్ డెక్స్</string>
+    <string name="deck_picker_dialog_filter_decks" maxLength="28">ఫిల్టర్ డెక్స్</string>
 </resources>

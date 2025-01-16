@@ -1,4 +1,4 @@
-name: Emulator Tests
+name: 🛠️ Emulator Tests
 
 on:
   workflow_dispatch:
@@ -40,6 +40,17 @@ jobs:
         # This is useful for benchmarking, do 0, 1, 2, etc (up to 256 max job-per-matrix limit) for averages
         iteration: [0]
     steps:
+      - name: Free Disk Space (Ubuntu)
+        uses: insightsengineering/disk-space-reclaimer@v1
+        with:
+          tools-cache: false
+          android: false
+          dotnet: true
+          haskell: false
+          large-packages: false
+          swap-storage: false
+          docker-images: false
+
       - name: Test Credential Prep
         run: |
           echo "KSTOREPWD=$STOREPASS" >> $GITHUB_ENV
@@ -66,14 +77,13 @@ jobs:
           java-version: "21"  # also change jitpack.yml
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4
         timeout-minutes: 5
         with:
           # Only write to the cache for builds on the 'main' branches, stops branches evicting main cache
           # Builds on other branches will only read from main branch cache writes
           # Comment this and the with: above out for performance testing on a branch
           cache-read-only: ${{ github.ref != 'refs/heads/main' }}
-          gradle-home-cache-cleanup: true
 
         # This appears to be 'Cache Size: ~1230 MB (1290026823 B)' based on watching action logs
         # Repo limit is 10GB; branch caches are independent; branches may read default branch cache.
@@ -184,6 +194,7 @@ jobs:
           name: ${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-${{matrix.first-boot-delay}}-${{matrix.iteration}}-adb_video
           path: video.webm
 
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v5
         with:
           verbose: true
+          fail_ci_if_error: ${{ github.repository == 'ankidroid/Anki-Android' }} # optional (default = false)

@@ -46,13 +46,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Base de dades de verificació</string>
     <string name="check_db_warning">Això pot trigar molt de temps</string>
-    <string name="contextmenu_deckpicker_delete_deck">Suprimeix el paquet</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Suprimeix el paquet</string>
     <string name="delete_deck_title">Suprimeix el paquet</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">No hi ha idiomes de síntesi de veu disponibles</string>
     <string name="tts_no_tts">No parlis</string>
     <string name="unused_strings">\n\Fitxers no usats:\n</string>
     <string name="reposition_card_dialog_title">Recol·locar carta nova</string>
-    <string name="reposition_card_dialog_message">Posició inicial</string>
     <string name="reposition_card_not_new_error">Solament es poden recol·locar les cartes noves</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d carta recol·locada</item>
@@ -70,15 +74,11 @@
     <string name="repair_deck_dialog">Realment voleu intentar reparar la base de dades? \n\nAbans de començar, es desarà una còpia a la carpeta \'%s\'.</string>
     <string name="intent_aedict_empty">La categoria \'per omissió\' és buida</string>
     <string name="intent_aedict_category">Per afegir fitxes d\'AnkiDroid treieu totes les categories del bloc de notes o afegiu-ne una anomenada \'per omissió\'</string>
-    <string name="custom_study_new_total_new">Noves cartes al paquet: %d</string>
-    <string name="custom_study_rev_total_rev">Revisions vençudes al paquet: %d</string>
     <string name="custom_study_new_extend">Augmenta/disminueix (\"-3\") el límit d\'avui de noves cartes a</string>
     <string name="custom_study_rev_extend">Augmenta/disminueix (\"-3\") el límit d\'avui de revisions a</string>
     <string name="custom_study_forgotten">Revisa les fitxes oblidades en els darrers x dies:</string>
     <string name="custom_study_ahead">Revisió de x dies endavant:</string>
-    <string name="custom_study_random">Tria aleatòriament x fitxes del paquet:</string>
     <string name="custom_study_preview">Mostra les fitxes noves afegides en els últims x dies:</string>
-    <string name="custom_study_rebuild_deck_corrupt">No s\'ha pogut reconstruir el paquet d\'estudi personalitzat</string>
     <string name="storage_full_title">No queda espai al disc</string>
     <string name="storage_almost_full_title">El disc està gairebé ple</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Sense espai</string>
@@ -96,7 +96,7 @@
     <string name="dialog_continue">Continuar</string>
     <string name="dialog_processing">En procés &#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Crear</string>
-    <string name="dialog_positive_delete">Eliminar</string>
+    <string name="dialog_positive_delete" maxLength="28">Eliminar</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Desactiva</string>
     <string name="dialog_positive_overwrite">Sobreescriure</string>
@@ -130,14 +130,11 @@
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Trobar targetes buides&#8230;</string>
     <string name="empty_cards_count">Targetes per eliminar: %d</string>
-    <string name="empty_cards_deleted">Targetes eliminades: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">No s\'ha pogut obtenir permís per usar el micròfon.</string>
-    <string name="multimedia_editor_camera_permission_refused">No s\'ha pogut obtenir permís per usar la càmera. S\'ha desactivat la funcionalitat.</string>
     <string name="multimedia_editor_failed">No s\'ha pogut obrir l\'editor multimèdia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">S\'ha denegat el permís de gravació d\'àudio</string>
-    <string name="mutimedia_editor_assertion_failed">S\'ha produït un error desconegut al mostrar l\'editor avançat</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">S\'ha actualitzat l\'Ankidroid</string>
     <string name="integrity_check_startup_content">AnkiDroid s\'ha actualitzat. Aquesta actualització inclou solucions per a possibles problemes de bases de dades i us recomanem que executeu ara la comprovació de la base de dades.</string>
@@ -166,8 +163,6 @@
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Falta el permís d\'emmagatzematge necessari. Si us plau, concediu permís d\'emmagatzematge i torneu a intentar l\'acció.</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">No s\'ha pogut carregar l\'aspecte del navegador de cartes</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">No s\'han pogut planificar els recordatoris</string>
     <string name="boot_service_too_many_notifications">Hi ha massa recordatoris planificats. Alguns no apareixeran</string>
@@ -183,7 +178,7 @@
     <string name="help_item_mailing_list">Llista de correu</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Informa d\'un error</string>
-    <string name="help_title_support_ankidroid">Suporteu AnkiDroid</string>
+    <string name="help_title_support_ankidroid" maxLength="28">Suporteu AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Donar</string>
     <string name="help_item_support_develop_ankidroid">Desenvolupar</string>
     <string name="help_item_support_rate_ankidroid">Valorar</string>
@@ -222,7 +217,7 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">Còpia de seguretat de la vostra col·lecció</string>
     <string name="backup_collection_message">Fa temps que no feu una còpia de seguretat de la col·lecció. Hauríeu de fer-ho ara per evitar la pèrdua de dades</string>
-    <string name="button_backup">Còpia de seguretat</string>
+    <string name="button_backup" maxLength="41">Còpia de seguretat</string>
     <string name="button_disable_reminder">Desactiva el recordatori</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Més endavant</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">No ho mostris més</string>
@@ -232,6 +227,7 @@
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
     </string>
     <string name="deck_already_exists">Deck already exists</string>
+    <string name="empty_deck_name">Deck name cannot be empty</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
@@ -256,6 +252,15 @@
     <string name="open">Open</string>
     <string name="change_cloze_number">Change cloze number</string>
     <string name="cloze_number">Cloze number:</string>
+    <string name="change_editor_mode">Change editor mode</string>
+    <string name="open_note_editor">Open note editor</string>
+    <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
+    <string name="compress">Compress</string>
+    <!-- Tts playback error dialog -->
+    <string name="tts_error_dialog_title">Language not supported</string>
+    <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
+    <string name="tts_error_dialog_change_button_text">Change engine</string>
+    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
 </resources>

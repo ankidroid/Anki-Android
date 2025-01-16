@@ -45,16 +45,13 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks">Mazos</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Explorador de tarjetas</string>
-    <string name="statistics">Estadísticas</string>
-    <string name="settings">Configuración</string>
-    <string name="help">Ayuda</string>
+    <string name="decks" maxLength="28">Mazos</string>
+    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">Explorador de tarjetas</string>
+    <string name="statistics" maxLength="28">Estadísticas</string>
+    <string name="settings" maxLength="28">Configuración</string>
+    <string name="help" maxLength="28">Ayuda</string>
     <string name="drawing">Dibujo</string>
     <string name="send_feedback">Enviar comentarios</string>
-    <string name="studyoptions_due_today">Programadas para hoy:</string>
-    <string name="studyoptions_new_total">Tarjetas nuevas totales:</string>
-    <string name="studyoptions_total_cards">Tarjetas totales:</string>
     <string name="studyoptions_start">Estudiar</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Desplegar</string>
@@ -68,51 +65,51 @@
         <item quantity="other">%1$d horas %2$d restante</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d día %2$d restante</item>
-        <item quantity="other">%1$d días %2$d restante</item>
+        <item quantity="one">%1$d día %2$dh restante</item>
+        <item quantity="other">%1$d días %2$dh restantes</item>
     </plurals>
     <string name="no_cards_placeholder_title">La colección está vacía</string>
     <string name="no_cards_placeholder_description">Empieza añadiendo tarjetas usando el ícono +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Escribir respuesta</string>
-    <string name="show_answer">Mostrar respuesta</string>
+    <string name="show_answer" maxLength="41">Mostrar respuesta</string>
     <string name="hide_answer">Ocultar respuesta</string>
-    <string name="ease_button_again">Otra vez</string>
-    <string name="ease_button_hard">Difícil</string>
-    <string name="ease_button_good">Bien</string>
+    <string name="ease_button_again" maxLength="41">Otra vez</string>
+    <string name="ease_button_hard" maxLength="41">Difícil</string>
+    <string name="ease_button_good" maxLength="41">Bien</string>
     <string name="ease_button_easy">Fácil</string>
-    <string name="menu_import">Importar</string>
-    <string name="undo">Deshacer</string>
-    <string name="redo">Rehacer</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Deshacer trazo</string>
+    <string name="menu_import" maxLength="28">Importar</string>
+    <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Deshacer</string>
+    <string name="redo" maxLength="28">Rehacer</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Deshacer trazo</string>
     <string name="move_all_to_deck">Mover todo al mazo</string>
-    <string name="unbury">Desenterrar</string>
-    <string name="rename_deck">Renombrar mazo</string>
+    <string name="unbury" maxLength="28">Desenterrar</string>
+    <string name="rename_deck" maxLength="28">Renombrar mazo</string>
     <string name="create_shortcut">Crear acceso directo</string>
     <string name="browse_cards">Buscar cartas</string>
     <string name="edit_deck_description" comment="edit the deck description">Editar descripción</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Añadir</string>
-    <string name="menu_add_note">Añadir nota</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">Añadir</string>
+    <string name="menu_add_note" maxLength="28">Añadir nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Cuenta de sincronización</string>
-    <string name="menu_dismiss_note">Ocultar / eliminar</string>
-    <string name="menu_bury_card">Enterrar tarjeta</string>
-    <string name="menu_bury_note">Enterrar nota</string>
-    <string name="menu_suspend_card">Suspender tarjeta</string>
-    <string name="menu_suspend_note">Suspender nota</string>
-    <string name="menu_bury">Enterrar</string>
-    <string name="menu_suspend">Suspender</string>
-    <string name="menu_delete_note">Eliminar nota</string>
-    <string name="menu_flag">Marca</string>
-    <string name="rename_flag">Rename flags</string>
-    <string name="menu_flag_card">Marcar tarjeta</string>
-    <string name="menu_edit_tags">Editar etiquetas</string>
+    <string name="menu_dismiss_note" maxLength="41">Ocultar / eliminar</string>
+    <string name="menu_bury_card" maxLength="28">Enterrar tarjeta</string>
+    <string name="menu_bury_note" maxLength="28">Enterrar nota</string>
+    <string name="menu_suspend_card" maxLength="28">Suspender tarjeta</string>
+    <string name="menu_suspend_note" maxLength="28">Suspender nota</string>
+    <string name="menu_bury" maxLength="28">Enterrar</string>
+    <string name="menu_suspend" maxLength="28">Suspender</string>
+    <string name="menu_delete_note" maxLength="28">Eliminar nota</string>
+    <string name="menu_flag" maxLength="41">Marca</string>
+    <string name="rename_flag">Renombrar banderas</string>
+    <string name="menu_flag_card" maxLength="28">Marcar tarjeta</string>
+    <string name="menu_edit_tags" maxLength="28">Editar etiquetas</string>
     <string name="delete_note_message">¿Realmente deseas eliminar esta nota y todas sus tarjetas?\n%s</string>
-    <string name="menu_search">Búsqueda en %1$s</string>
-    <string name="menu_mark_note">Marcar nota</string>
+    <string name="menu_search" maxLength="28">Búsqueda en %1$s</string>
+    <string name="menu_mark_note" maxLength="28">Marcar nota</string>
     <string name="menu_unmark_note">Desmarcar nota</string>
-    <string name="menu_enable_voice_playback">Enable voice playback</string>
-    <string name="menu_disable_voice_playback">Disable voice playback</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Activar reproducción de voz</string>
+    <string name="menu_disable_voice_playback">Desactivar reproducción de voz</string>
     <string name="new_deck">Crear mazo</string>
     <string name="new_dynamic_deck">Crear mazo filtrado</string>
     <string name="directory_inaccessible">El directorio AnkiDroid es inaccesible</string>
@@ -122,38 +119,37 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Por favor, concede a AnkiDroid el permiso de \'Almacenamiento\' para continuar</string>
     <string name="rebuild_filtered_deck">Reconstruyendo mazo filtrado&#8230;</string>
-    <string name="rebuild_cram_label">Reconstruir</string>
-    <string name="empty_cram_label">Vaciar</string>
+    <string name="rebuild_cram_label" maxLength="28">Reconstruir</string>
+    <string name="empty_cram_label" maxLength="28">Vaciar</string>
     <string name="create_subdeck">Crear submazo</string>
     <string name="empty_filtered_deck">Vaciando mazo filtrado&#8230;</string>
     <string name="custom_study_deck_name">Sesión de estudio personalizado</string>
     <string name="custom_study_deck_exists">Renombra el mazo de estudio personalizado primero</string>
     <string name="search_deck" comment="Deck search for selecting it">Buscar Mazos</string>
     <string name="empty_deck">Este mazo está vacío</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Búsqueda de Mazo</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Búsqueda de Mazo</string>
     <string name="invalid_deck_name">Nombre de mazo no válido</string>
-    <string name="studyoptions_congrats_finished">¡Enhorabuena! Has finalizado por ahora.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">¡El mazo ha terminado por ahora! %s</string>
     <string name="studyoptions_no_cards_due">Todavía no hay ninguna tarjeta pendiente.</string>
     <string name="sd_card_not_mounted">Almacenamiento del dispositivo no montado</string>
-    <string name="button_sync" comment="Text of the sync button">Sincronizar</string>
-    <string name="button_upgrade" comment="Text of the sync button">Migrar al almacenamiento de alcance.</string>
+    <string name="button_sync" comment="Text of the sync button" maxLength="28">Sincronizar</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">¿Desea cancelar la sincronización?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Continuar la sincronización</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sincronización cancelada</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelando&#8230;\nEsto puede tardar un poco.</string>
     <string name="syncing_media">Sincronizando archivos multimedia</string>
-    <string name="export_deck">Exportar mazo</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_deck" maxLength="28">Exportar mazo</string>
+    <string name="export_collection">Exportar colección</string>
     <string name="nothing">Nada</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Tipos de tarjeta</string>
     <string name="card_template_editor_front">Plantilla del anverso</string>
     <string name="card_template_editor_back">Plantilla del reverso</string>
-    <string name="card_template_editor_styling">Estilo</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Apariencia del Navegador de Tarjetas</string>
-    <string name="card_template_editor_deck_override">Anulación de mazo</string>
-    <string name="card_template_editor_insert_field">Insertar campo</string>
+    <string name="card_template_editor_styling" maxLength="28">Estilo</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Apariencia del Navegador de Tarjetas</string>
+    <string name="card_template_editor_deck_override" maxLength="28">Anulación de mazo</string>
+    <string name="card_template_editor_insert_field" maxLength="28">Insertar campo</string>
     <string name="card_template_editor_select_field">Seleccionar campo</string>
     <string name="card_template_editor_cant_delete">Se requiere al menos un tipo de tarjeta</string>
     <plurals name="card_template_editor_confirm_add">
@@ -164,13 +160,12 @@
         <item quantity="one">¿Eliminar el tipo de tarjeta \'%2$s\' y su %1$d tarjeta?</item>
         <item quantity="other">¿Eliminar el tipo de tarjeta \'%2$s\' y sus %1$d tarjetas?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">Eliminar este tipo de tarjeta podría causar que una o más notas se eliminen. Por favor, crea un nuevo tipo de tarjeta primero.</string>
     <string name="card_template_editor_save_error">No se pueden guardar los cambios de plantilla de tarjeta: %s</string>
     <string name="template_for_current_card_deleted">El tipo de tarjeta para la tarjeta actual fue eliminado.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Apariencia del navegador</string>
     <!-- card Info -->
-    <string name="card_info_title">Información de la tarjeta</string>
+    <string name="card_info_title" maxLength="28">Información de la tarjeta</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Leer y escribir en la base de datos de AnkiDroid</string>
     <string name="read_write_permission_description">acceder a notas, tarjetas, tipo de notas, y mazos existentes, así como crear otros nuevos</string>
@@ -185,52 +180,8 @@
     <string name="sync_conflict_local_confirm_new">¿Reemplazar tu colección en AnkiWeb con tu colección de AnkiDroid?</string>
     <string name="sync_conflict_title_new">Selecciona la colección a mantener</string>
     <string name="sync_conflict_replace_title">Reemplazar colección</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d tarjeta (0 pendiente)</item>
-        <item quantity="other">%1$d tarjetas (0 pendiente)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Múltiples errores, más reciente: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Múltiples errores consecutivos sin progreso, más reciente: %s</string>
-    <!-- Scoped storage migration -->
-    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrando archivos de base de datos</string>
-    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Copiando&#8230;</string>
-    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrando medios</string>
-    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Calculando el tamaño de transferencia&#8230;</string>
-    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Movido %1$s de %2$s</string>
-    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Migración exitosa</string>
-    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Se han migrado sus datos con éxito
-        AnkiDroid es completamente funcional de nuevo y ya puede sincronizar.
-        \n
-        \nTenga en cuenta que ahora su colección se encuentra en una carpeta que se eliminará al desinstalar la aplicación.
-        Por favor, mantenga sus datos seguros sincronizando o exportando copias de seguridad de forma regular.
-    </string>
-    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Migración fallida</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[La copia de los datos falló debido al error: %1$s.
-<br><br>
-. Los cambios fueron revertidos.
-<br><br>
-. Por favor, intente de nuevo la migración.
-. Para resolver el problema, puede que necesites liberar espacio en el disco o re-inserte la memoria extraíble.
-<br><br>
-<a href="%2$s">Obtenga más información y ayuda</a>]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        El traslado de archivos multimedia se detiene después de haber fallado con el error: %1$s.
-        <br><br>
-        Los cambios <i>no</i> fueron revertidos.
-        Aunque no debería haberse perdido ningún dato, 
-        los archivos multimedia podrían estar divididos entre la carpeta antigua y la nueva.
-        <br><br>
-        Por favor, intente volver a ejecutar la migración.
-        Para resolver el problema, puede que necesites liberar algo de espacio en disco,
-        o volver a conectar el almacenamiento extraíble que contiene tu colección.
-        <br><br>
-        <a href="%2$s">Aprende más y consigue ayuda</a>
-            ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        La migración del almacenamiento ha sido pausada debido al error: %1$s.
-        <br><br>
-        <a href="%2$s">Más información y ayuda</a>]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">Reanudar migración</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Colección inaccesible</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">No podemos acceder a tu colección después de desinstalar AnkiDroid debido a un cambio en la política de Play Store\n\nTus datos están seguros y pueden ser restaurados. Están ubicados en\n%s\n\nSelecciona una opción debajo para restaurar:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android ha eliminado el permiso %1$s de AnkiDroid debido a la inactividad de la aplicación.\n\nTus datos están seguros y pueden ser restaurados. Está ubicado en\n%2$s\n\nSeleccione una de las opciones siguientes para restaurar:</string>

@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Framside</string>
-    <string name="back_field_name">Bakside</string>
+    <string name="front_field_name" maxLength="28">Framside</string>
+    <string name="back_field_name" maxLength="28">Bakside</string>
 </resources>

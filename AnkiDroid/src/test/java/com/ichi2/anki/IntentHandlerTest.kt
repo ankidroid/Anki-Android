@@ -102,7 +102,12 @@ class IntentHandlerTest {
         testIntentType("content://valid", "text/comma-separated-values", LaunchType.TEXT_IMPORT, Intent.ACTION_SEND)
     }
 
-    private fun testIntentType(data: String, type: String, expected: LaunchType, action: String = Intent.ACTION_VIEW) {
+    private fun testIntentType(
+        data: String,
+        type: String,
+        expected: LaunchType,
+        action: String = Intent.ACTION_VIEW,
+    ) {
         val intent = Intent(action)
         intent.setDataAndType(Uri.parse(data), type)
         val actual = getLaunchType(intent)

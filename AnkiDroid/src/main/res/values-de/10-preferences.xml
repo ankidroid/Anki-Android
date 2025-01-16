@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">Mehr als %d Karten fällig</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrieren</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blinken</string>
-    <string name="timeout_answer_text" maxLength="41">Antwort automatisch anzeigen</string>
-    <string name="timeout_answer_summ2">Lösung automatisch ohne Eingabe anzeigen. Konfiguriere in den Stapeleinstellungen.</string>
     <string name="select_locale_title">Sprache wählen</string>
     <string name="software_render" maxLength="41">Karten-Hardware-Rendering deaktivieren</string>
     <string name="software_render_summ">Hardware-Rendering ist schneller, kann aber Probleme haben, insbesondere auf Android 8/8.1. Wenn Sie Teile der Benutzeroberfläche der Karte nicht sehen können, versuchen Sie diese Einstellung.</string>
@@ -171,7 +169,7 @@
     <string name="show_large_answer_buttons" maxLength="41">Große Antwortschaltflächen anzeigen</string>
     <string name="show_large_answer_buttons_summ">Antwortschaltfläche in 2 Zeilen anzeigen</string>
     <string name="show_top_bar" maxLength="41">Obere Leiste anzeigen</string>
-    <string name="show_top_bar_summ">Kartenanzahl, Flagge und Markierung in oberer Leiste anzeigen</string>
+    <string name="show_top_bar_summary">Kartenzähler, Antwort-Timer, Flagge und Markierung in der oberen Leiste anzeigen</string>
     <string name="show_progress" maxLength="41">Fällige anzeigen</string>
     <string name="show_progress_summ">Verbleibende Anzahl der Karten anzeigen</string>
     <string name="show_eta" maxLength="41">Ankunftszeit anzeigen</string>
@@ -204,7 +202,7 @@
     <string name="accessibility" maxLength="41">Bedienungshilfen</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Zwischenablage-Bilder als PNG einfügen</string>
-    <string name="paste_as_png_summary">Standardmäßig fügt Anki Bilder in der Zwischenablage als JPG-Dateien ein, um Speicherplatz zu sparen. Sie können diese Option verwenden, um stattdessen PNG-Bilder einzufügen.</string>
+    <string name="paste_as_png_summary">Standardmäßig fügt Anki Bilder in der Zwischenablage als JPG-Dateien ein, um Speicherplatz zu sparen. Sie können diese Einstellung verwenden, um stattdessen PNG-Bilder einzufügen.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Zweimal Zurück drücken, um zurückzugehen</string>
     <string name="exit_via_double_tap_back_summ">Um zu vermeiden, dass Sie den Rezensenten oder die App versehentlich verlassen</string>
     <!-- Allow all files in media imports -->
@@ -224,7 +222,7 @@
     <string name="keyboard">Tastatur</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="answer_buttons" maxLength="41">Antwortknöpfe</string>
-    <string name="card" maxLength="41">Karte</string>
+    <string name="card" maxLength="41" comment="Generic term to refer to a card">Karte</string>
     <string name="note" maxLength="41">Notiz</string>
     <string name="navigation" maxLength="41">Navigation</string>
     <string name="media" maxLength="41">Medien</string>
@@ -235,7 +233,7 @@
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Allgemein</string>
     <string name="deck_conf_reminders" maxLength="41">Erinnerungen</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filter</string>
-    <string name="deck_conf_cram_search" maxLength="41">Suchen</string>
+    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Suchen</string>
     <string name="deck_conf_cram_limit" maxLength="41">Beschränken auf</string>
     <string name="deck_conf_cram_order" maxLength="41">Karten ausgewählt nach</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Neu planen</string>
@@ -270,20 +268,21 @@
     <string name="axis_picker_move_joystick">Joystick/Motion Controller bewegen</string>
     <string name="user_actions" maxLength="41">Benutzerdefinierte Aktionen</string>
     <string name="user_actions_summary" maxLength="41">JavaScript vom Bewertungsbildschirm auslösen</string>
-    <string name="user_action_1" maxLength="41">Benutzerdefinierte Aktion 1</string>
-    <string name="user_action_2" maxLength="41">Benutzerdefinierte Aktion 2</string>
-    <string name="user_action_3" maxLength="41">Benutzerdefinierte Aktion 3</string>
-    <string name="user_action_4" maxLength="41">Benutzerdefinierte Aktion 4</string>
-    <string name="user_action_5" maxLength="41">Benutzerdefinierte Aktion 5</string>
-    <string name="user_action_6" maxLength="41">Benutzerdefinierte Aktion 6</string>
-    <string name="user_action_7" maxLength="41">Benutzerdefinierte Aktion 7</string>
-    <string name="user_action_8" maxLength="41">Benutzerdefinierte Aktion 8</string>
-    <string name="user_action_9" maxLength="41">Benutzerdefinierte Aktion 9</string>
+    <string name="user_action_1" maxLength="28">Benutzerdefinierte Aktion 1</string>
+    <string name="user_action_2" maxLength="28">Benutzerdefinierte Aktion 2</string>
+    <string name="user_action_3" maxLength="28">Benutzerdefinierte Aktion 3</string>
+    <string name="user_action_4" maxLength="28">Benutzerdefinierte Aktion 4</string>
+    <string name="user_action_5" maxLength="28">Benutzerdefinierte Aktion 5</string>
+    <string name="user_action_6" maxLength="28">Benutzerdefinierte Aktion 6</string>
+    <string name="user_action_7" maxLength="28">Benutzerdefinierte Aktion 7</string>
+    <string name="user_action_8" maxLength="28">Benutzerdefinierte Aktion 8</string>
+    <string name="user_action_9" maxLength="28">Benutzerdefinierte Aktion 9</string>
+    <string name="toggle_auto_advance" maxLength="41">Automatisches Weiterblättern umschalten</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Kartenseite auswählen</string>
     <string name="card_side_question">Frage</string>
     <string name="card_side_answer">Antwort</string>
-    <string name="card_side_both">Frage &amp; Antwort</string>
+    <string name="card_side_both" maxLength="28">Frage &amp; Antwort</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">F: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -295,21 +294,23 @@
     <string name="readtext_deprecation_warn">AnkiDroid hat einen besseren TTS-Mechanismus eingeführt, der mit anderen Anki-Clients kompatibel ist und mehr Stimmen und Verbesserungen bei der Sprachwiedergabe enthält!\n\nBitte aktualisieren Sie so bald wie möglich, da diese Einstellung bald entfernt wird</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Bitte upgraden Sie auf das neue Text-zu-Sprache-Format</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Entwickleroptionen</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Entwickleroptionen aktivieren</string>
+    <string name="pref_cat_dev_options" maxLength="41">Entwicklermodus</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Entwicklermodus aktivieren</string>
     <string name="disable_dev_options">Entwicklermodus deaktivieren</string>
-    <string name="dev_options_warning">Bevor Sie die Entwickleroptionen aktivieren, beachten Sie bitte, dass Sie damit die App oder Ihre Sammlung beschädigen können. /n/nBeachten Sie außerdem, dass diese Optionen für die meisten Benutzer nicht geeignet sind und deshalb nicht übersetzt werden und sind daher nur auf Englisch verfügbar sind.</string>
+    <string name="dev_options_warning">        Bevor Sie den Entwicklermodus aktivieren, beachten Sie bitte, dass Sie damit die App oder Ihre Sammlung beschädigen können.\n\nBeachten Sie außerdem, dass diese Einstellungen für die meisten Benutzer nicht geeignet sind und deshalb nicht übersetzt werden und daher nur auf Englisch verfügbar sind.
+    </string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[AnkiDroid erstellt regelmäßig Sicherungskopien deiner Sammlung.
-        Wenn die Backups mehr als zwei Tage alt sind,
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid erstellt regelmäßig Sicherungskopien deiner Sammlung.
+        Wenn die Sicherungskopien mehr als zwei Tage alt sind,
         fängt AnkiDroid an, einige von ihnen zu löschen, um Speicherplatz freizugeben.
         <br><br>
-        Beachten Sie, dass Mediendateien nicht gesichert werden.
+        Beachten Sie, dass von Mediendateien keine Sicherungskopien gemacht werden.
         Um sicher zu gehen, synchronisieren Sie bitte regelmäßig Ihre Sammlung oder sichern Sie Exporte davon.
         <br><br>
-        Sie können Ihre Sammlung im Decklistenmenü aus einem Backup wiederherstellen und exportieren]]></string>
+        Im Menü der Stapelliste können Sie Ihre Sammlung exportieren oder von einer Sicherungskopie aus wiederherstellen.
+    ]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Min. zwischen automatischen Sicherungen</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">Täglich Sicherungen aufbewahren</string>
     <string name="pref__weekly_backups_to_keep__title" maxLength="41">Wöchentliche Sicherungen aufbewahren</string>
@@ -320,15 +321,15 @@
     <string name="pref__manage_space__screen_title">Speicherplatz verwalten</string>
     <!-- TextWidgetPreference widget text -->
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Fehler</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Kalku-\nlieren&#8230;</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Kalku-\nlieren &#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
         <item quantity="one">%1$d Datei\n%2$s</item>
         <item quantity="other">%1$d Dateien\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Löschen von nicht verwendeten Medien Dateien</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Löschen von nicht verwendeten Mediendateien</string>
     <string name="pref__delete_unused_media_files__summary">Löschen von Bildern und anderen Medien, die nicht mit _ vorangestellt sind und nicht bei Anmerkungen verwiesen sind</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Löschen von nicht verwendeten Medien Dateien</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Löschen von nicht verwendeten Mediendateien</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Sicherungen löschen</string>
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Sicherungen löschen</string>
@@ -355,14 +356,20 @@
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Keine Sammlung</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Fehler</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Rufe ab&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Berechnen&#8230;</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Rufe ab &#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Berechnen &#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Sammlung ist nicht vorhanden</string>
-    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
-    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">None</string>
-    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Status bar</string>
-    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigation bar</string>
-    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
-    <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
-    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Systemleisten ausblenden</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">Keine</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Statusleiste</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigationsleiste</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Alles</string>
+    <string name="ignore_display_cutout" maxLength="41">Bildschirmausschnitt ignorieren</string>
+    <string name="hide_answer_buttons" maxLength="41">Antwortschaltflächen ausblenden</string>
+    <string name="hide_hard_and_easy" maxLength="41">‘Schwer’- und ‘Leicht’-Tasten ausblenden</string>
+    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <!--Keyboard shortcuts dialog-->
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Einstellungen öffnen</string>
 </resources>

@@ -15,16 +15,20 @@
  */
 package com.ichi2.anki.preferences
 
-import android.content.Context
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.edit
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
+import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
+import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.OnboardingUtils
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.withProgress
@@ -63,6 +67,10 @@ class DevOptionsFragment : SettingsFragment() {
         }
         // Make it possible to test crash reporting
         requirePreference<Preference>(R.string.pref_trigger_crash_key).setOnPreferenceClickListener {
+            // If we don't delete the limiter data, our test crash may not go through,
+            // but we are triggering it very much on purpose, we want to see the crash in ACRA
+            this.context?.let { c -> CrashReportService.deleteACRALimiterData(c) }
+
             Timber.w("Crash triggered on purpose from advanced preferences in debug mode")
             throw RuntimeException("This is a test crash")
         }
@@ -82,14 +90,32 @@ class DevOptionsFragment : SettingsFragment() {
             launchCatchingTask { CollectionManager.withCol { Thread.sleep(1000 * 86400) } }
             false
         }
-        // Reset onboarding
-        requirePreference<Preference>(R.string.pref_reset_onboarding_key).setOnPreferenceClickListener {
-            OnboardingUtils.reset(requireContext())
+        // Make it possible to test crash reporting
+        requirePreference<Preference>(R.string.pref_set_database_path_debug_key).setOnPreferenceClickListener {
+            AlertDialog.Builder(requireContext()).show {
+                setTitle("Warning!")
+                setMessage(
+                    "This will most likely make it so that you cannot access your collection. " +
+                        "It will be very difficult to recover your data.",
+                )
+                setPositiveButton(R.string.dialog_ok) { _, _ ->
+                    Timber.w("Setting collection path to /storage/emulated/0/AnkiDroid")
+                    AnkiDroidApp.sharedPrefs().edit {
+                        putString(
+                            CollectionHelper.PREF_COLLECTION_PATH,
+                            "/storage/emulated/0/AnkiDroid",
+                        )
+                    }
+                }
+                setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+            }
             false
         }
 
-        val sizePreference = requirePreference<IncrementerNumberRangePreferenceCompat>(getString(R.string.pref_fill_collection_size_file_key))
-        val numberOfFilePreference = requirePreference<IncrementerNumberRangePreferenceCompat>(getString(R.string.pref_fill_collection_number_file_key))
+        val sizePreference =
+            requirePreference<IncrementerNumberRangePreferenceCompat>(getString(R.string.pref_fill_collection_size_file_key))
+        val numberOfFilePreference =
+            requirePreference<IncrementerNumberRangePreferenceCompat>(getString(R.string.pref_fill_collection_number_file_key))
 
         /*
          * Create fake media section
@@ -99,7 +125,11 @@ class DevOptionsFragment : SettingsFragment() {
             val numberOfFiles = numberOfFilePreference.getValue()
             AlertDialog.Builder(requireContext()).show {
                 setTitle("Warning!")
-                setMessage("You'll add $numberOfFiles files with no meaningful content, potentially overriding existing files. Do not do it on a collection you care about.")
+                setMessage(
+                    "You'll add $numberOfFiles files with no meaningful content, " +
+                        "potentially overriding existing files. " +
+                        "Do not do it on a collection you care about.",
+                )
                 setPositiveButton("OK") { _, _ ->
                     generateFiles(sizeOfFiles, numberOfFiles)
                 }
@@ -109,15 +139,19 @@ class DevOptionsFragment : SettingsFragment() {
         }
     }
 
-    private fun generateFiles(size: Int, numberOfFiles: Int) {
+    private fun generateFiles(
+        size: Int,
+        numberOfFiles: Int,
+    ) {
         Timber.d("numberOf files: $numberOfFiles, size: $size")
         launchCatchingTask {
             withProgress("Generating $numberOfFiles files of size $size bytes") {
                 val suffix = ".$size"
                 for (i in 1..numberOfFiles) {
-                    val f = withContext(Dispatchers.IO) {
-                        File.createTempFile("00$i", suffix)
-                    }
+                    val f =
+                        withContext(Dispatchers.IO) {
+                            File.createTempFile("00$i", suffix)
+                        }
                     f.appendBytes(ByteArray(size))
 
                     CollectionManager.withCol {
@@ -139,29 +173,11 @@ class DevOptionsFragment : SettingsFragment() {
         AlertDialog.Builder(requireContext()).show {
             setTitle(R.string.disable_dev_options)
             setPositiveButton(R.string.dialog_ok) { _, _ ->
-                disableDevOptions()
+                Prefs.isDevOptionsEnabled = false
+                parentFragmentManager.popBackStack()
+                ActivityCompat.recreate(requireActivity())
             }
             setNegativeButton(R.string.dialog_cancel) { _, _ -> }
-        }
-    }
-
-    /**
-     * Destroys the fragment and hides developer options on [HeaderFragment]
-     */
-    private fun disableDevOptions() {
-        (requireActivity() as Preferences).setDevOptionsEnabled(false)
-        parentFragmentManager.popBackStack()
-    }
-
-    companion object {
-        /**
-         * @return whether developer options should be shown to the user.
-         * True in case [BuildConfig.DEBUG] is true
-         * or if the user has enabled it with the secret on [com.ichi2.anki.preferences.AboutFragment]
-         */
-        fun isEnabled(context: Context): Boolean {
-            return BuildConfig.DEBUG || context.sharedPrefs()
-                .getBoolean(context.getString(R.string.dev_options_enabled_by_user_key), false)
         }
     }
 }

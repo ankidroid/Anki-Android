@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">pli granda</string>
     <string name="html_size_code_xx_large">plej granda</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
-    <string name="gesture_play">Ludi aŭdvidaĵon</string>
-    <string name="gesture_abort_learning">Ĉesi lernadon</string>
-    <string name="gesture_flag_red">Baskuli ruĝan flagon</string>
-    <string name="gesture_flag_orange">Baskuli oranĝkoloran flagon</string>
-    <string name="gesture_flag_green">Baskuli verdan flagon</string>
-    <string name="gesture_flag_blue">Baskuli bluan flagon</string>
-    <string name="gesture_flag_pink">Baskuli rozkoloran flagon</string>
-    <string name="gesture_flag_turquoise">Baskuli turkisan flagon</string>
-    <string name="gesture_flag_purple">Baskuli violkoloran flagon</string>
-    <string name="gesture_flag_remove">Forigi flagon</string>
-    <string name="gesture_page_up">Paĝo supren</string>
-    <string name="gesture_page_down">Paĝo suben</string>
-    <string name="gesture_abort_sync">Pri lernado kaj samtempigo</string>
-    <string name="gesture_toggle_whiteboard">Baskuli skribtabulon</string>
-    <string name="gesture_show_hint">Montri konsilon</string>
-    <string name="gesture_show_all_hints">Montri ĉiujn konsilojn</string>
-    <string name="record_voice">Registri voĉon</string>
-    <string name="replay_voice">Ludi voĉon</string>
-    <string name="save_voice">Save Recording</string>
+    <string name="answer_again" maxLength="41">Respondi “denove”</string>
+    <string name="answer_hard" maxLength="41">Respondi “malfacile”</string>
+    <string name="answer_good" maxLength="41">Respondi “facile”</string>
+    <string name="answer_easy" maxLength="41">Respondi “facilege”</string>
+    <string name="gesture_play" maxLength="41">Ludi aŭdvidaĵon</string>
+    <string name="gesture_abort_learning" maxLength="41">Fermi lernadan ekranon</string>
+    <string name="gesture_flag_red" maxLength="41">Baskuli ruĝan flagon</string>
+    <string name="gesture_flag_orange" maxLength="41">Baskuli oranĝkoloran flagon</string>
+    <string name="gesture_flag_green" maxLength="41">Baskuli verdan flagon</string>
+    <string name="gesture_flag_blue" maxLength="41">Baskuli bluan flagon</string>
+    <string name="gesture_flag_pink" maxLength="41">Baskuli rozkoloran flagon</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Baskuli turkisan flagon</string>
+    <string name="gesture_flag_purple" maxLength="41">Baskuli violkoloran flagon</string>
+    <string name="gesture_flag_remove" maxLength="41">Forigi flagon</string>
+    <string name="gesture_page_up" maxLength="41">Paĝo supren</string>
+    <string name="gesture_page_down" maxLength="41">Paĝo suben</string>
+    <string name="gesture_abort_sync" maxLength="41">Fermi lernadan ekranon kaj samtempigi</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Baskuli skribtabulon</string>
+    <string name="gesture_show_hint" maxLength="41">Montri konsilon</string>
+    <string name="gesture_show_all_hints" maxLength="41">Montri ĉiujn konsilojn</string>
+    <string name="record_voice" maxLength="41">Registri voĉon</string>
+    <string name="replay_voice" maxLength="41">Ludi voĉon</string>
+    <string name="save_voice" maxLength="41">Konservi sonaĵon</string>
 </resources>

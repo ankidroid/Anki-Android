@@ -67,19 +67,19 @@ enum class AnswerButtons {
      *
      * In Review mode, easy adds additional bonuses to the interval and increases the ease by 15%
      */
-    EASY;
+    EASY,
 
-    fun toViewerCommand(): ViewerCommand {
-        return when (this) {
+    ;
+
+    fun toViewerCommand(): ViewerCommand =
+        when (this) {
             AGAIN -> ViewerCommand.FLIP_OR_ANSWER_EASE1
             HARD -> ViewerCommand.FLIP_OR_ANSWER_EASE2
             GOOD -> ViewerCommand.FLIP_OR_ANSWER_EASE3
             EASY -> ViewerCommand.FLIP_OR_ANSWER_EASE4
         }
-    }
 
     companion object {
-
         fun getBackgroundColors(ctx: AnkiActivity): IntArray {
             val backgroundIds: IntArray =
                 if (ctx.animationEnabled()) {
@@ -87,29 +87,28 @@ enum class AnswerButtons {
                         R.attr.againButtonRippleRef,
                         R.attr.hardButtonRippleRef,
                         R.attr.goodButtonRippleRef,
-                        R.attr.easyButtonRippleRef
+                        R.attr.easyButtonRippleRef,
                     )
                 } else {
                     intArrayOf(
                         R.attr.againButtonRef,
                         R.attr.hardButtonRef,
                         R.attr.goodButtonRef,
-                        R.attr.easyButtonRef
+                        R.attr.easyButtonRef,
                     )
                 }
             return Themes.getResFromAttr(ctx, backgroundIds)
         }
 
-        fun getTextColors(ctx: Context): IntArray {
-            return Themes.getColorFromAttr(
+        fun getTextColors(ctx: Context): IntArray =
+            Themes.getColorsFromAttrs(
                 ctx,
                 intArrayOf(
                     R.attr.againButtonTextColor,
                     R.attr.hardButtonTextColor,
                     R.attr.goodButtonTextColor,
-                    R.attr.easyButtonTextColor
-                )
+                    R.attr.easyButtonTextColor,
+                ),
             )
-        }
     }
 }

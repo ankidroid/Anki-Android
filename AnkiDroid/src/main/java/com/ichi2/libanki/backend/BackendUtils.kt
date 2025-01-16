@@ -19,18 +19,16 @@
 package com.ichi2.libanki.backend
 
 import com.google.protobuf.ByteString
+import com.ichi2.libanki.utils.LibAnkiAlias
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONArray
 import org.json.JSONObject
 
 object BackendUtils {
-    fun from_json_bytes(json: ByteString): JSONObject {
-        return JSONObject(json.toStringUtf8())
-    }
+    @LibAnkiAlias("from_json_bytes")
+    fun fromJsonBytes(json: ByteString): JSONObject = JSONObject(json.toStringUtf8())
 
-    fun jsonToArray(json: ByteString): JSONArray {
-        return JSONArray(json.toStringUtf8())
-    }
+    fun jsonToArray(json: ByteString): JSONArray = JSONArray(json.toStringUtf8())
 
     @RustCleanup("Confirm edge cases")
     fun toByteString(conf: Any?): ByteString {
@@ -39,5 +37,6 @@ object BackendUtils {
     }
 
     @RustCleanup("Confirm edge cases")
-    fun to_json_bytes(json: Any?): ByteString = toByteString(json)
+    @LibAnkiAlias("to_json_bytes")
+    fun toJsonBytes(json: Any?): ByteString = toByteString(json)
 }

@@ -15,53 +15,63 @@
  */
 package com.ichi2.anki
 
+import android.content.ClipDescription
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.annotation.CheckResult
 import com.ichi2.anki.multimediacard.fields.ImageField
+import com.ichi2.anki.multimediacard.fields.MediaClipField
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.exception.EmptyMediaException
+import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.ContentResolverUtil.getFileName
-import com.ichi2.utils.FileUtil.getFileNameAndExtension
+import com.ichi2.utils.FileNameAndExtension
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
+import java.lang.IllegalStateException
 
 /**
  * RegisterMediaForWebView is used for registering media in temp path,
  * this class is required in summer note class for paste image event and in visual editor activity for importing media,
  * (extracted code to avoid duplication of code).
  */
-class MediaRegistration(private val context: Context) {
+class MediaRegistration(
+    private val context: Context,
+) {
     // Use the same HTML if the same image is pasted multiple times.
-    private val pastedImageCache = HashMap<String, String?>()
+    private val pastedMediaCache = HashMap<String, String?>()
 
     /**
-     * Loads an image into the collection.media directory and returns a HTML reference
+     * Loads media into the collection.media directory and returns a HTML reference
      * @param uri The uri of the image to load
      * @return HTML referring to the loaded image
      */
     @Throws(IOException::class)
-    fun loadImageIntoCollection(uri: Uri): String? {
-        val fileName: String
+    fun loadMediaIntoCollection(
+        uri: Uri,
+        description: ClipDescription,
+    ): String? {
         val filename = getFileName(context.contentResolver, uri)
         val fd = openInputStreamWithURI(uri)
-        val fileNameAndExtension = getFileNameAndExtension(filename)
-        fileName = if (checkFilename(fileNameAndExtension!!)) {
-            "${fileNameAndExtension.key}-name"
-        } else {
-            fileNameAndExtension.key
-        }
+        val (fileName, fileExtensionWithDot) =
+            FileNameAndExtension
+                .fromString(filename)
+                ?.renameForCreateTempFile()
+                ?: throw IllegalStateException("Unable to determine valid filename")
         var clipCopy: File
         var bytesWritten: Long
+        val isImage = ClipboardUtil.hasImage(description)
+        val isVideo = ClipboardUtil.hasVideo(description)
+
         openInputStreamWithURI(uri).use { copyFd ->
             // no conversion to jpg in cases of gif and jpg and if png image with alpha channel
-            if (shouldConvertToJPG(fileNameAndExtension.value, copyFd)) {
+            if (shouldConvertToJPG(fileExtensionWithDot, copyFd, isImage)) {
                 clipCopy = File.createTempFile(fileName, ".jpg")
                 bytesWritten = CompatHelper.compat.copyFile(fd, clipCopy.absolutePath)
                 // return null if jpg conversion false.
@@ -69,7 +79,7 @@ class MediaRegistration(private val context: Context) {
                     return null
                 }
             } else {
-                clipCopy = File.createTempFile(fileName, fileNameAndExtension.value)
+                clipCopy = File.createTempFile(fileName, fileExtensionWithDot)
                 bytesWritten = CompatHelper.compat.copyFile(fd, clipCopy.absolutePath)
             }
         }
@@ -81,20 +91,31 @@ class MediaRegistration(private val context: Context) {
         Timber.d("File was %d bytes", bytesWritten)
         if (bytesWritten > MEDIA_MAX_SIZE) {
             Timber.w("File was too large: %d bytes", bytesWritten)
-            showThemedToast(context, context.getString(R.string.note_editor_paste_too_large), false)
+            val message =
+                if (isImage) {
+                    context.getString(R.string.note_editor_image_too_large)
+                } else if (isVideo) {
+                    context.getString(R.string.note_editor_video_too_large)
+                } else {
+                    context.getString(R.string.note_editor_audio_too_large)
+                }
+            showThemedToast(context, message, false)
             File(tempFilePath).delete()
             return null
         }
-        val field = ImageField()
+        val field =
+            if (isImage) {
+                ImageField()
+            } else {
+                MediaClipField()
+            }
         field.hasTemporaryMedia = true
-        field.extraImagePathRef = tempFilePath
+        field.mediaPath = tempFilePath
         return field.formattedValue
     }
 
     @Throws(FileNotFoundException::class)
-    private fun openInputStreamWithURI(uri: Uri): InputStream {
-        return context.contentResolver.openInputStream(uri)!!
-    }
+    private fun openInputStreamWithURI(uri: Uri): InputStream = context.contentResolver.openInputStream(uri)!!
 
     private fun convertToJPG(file: File): Boolean {
         val bm = BitmapFactory.decodeFile(file.absolutePath)
@@ -112,7 +133,17 @@ class MediaRegistration(private val context: Context) {
         return true // successful conversion to jpg.
     }
 
-    private fun shouldConvertToJPG(fileNameExtension: String, fileStream: InputStream): Boolean {
+    private fun shouldConvertToJPG(
+        fileNameExtension: String,
+        fileStream: InputStream,
+        isImage: Boolean,
+    ): Boolean {
+        if (!isImage) {
+            return false
+        }
+        if (".svg" == fileNameExtension) {
+            return false
+        }
         if (".jpg" == fileNameExtension) {
             return false // we are already a jpg, no conversion
         }
@@ -125,17 +156,16 @@ class MediaRegistration(private val context: Context) {
         return true
     }
 
-    private fun checkFilename(fileNameAndExtension: Map.Entry<String, String>): Boolean {
-        return fileNameAndExtension.key.length <= 3
-    }
-
-    fun onImagePaste(uri: Uri): String? {
-        return try {
+    fun onPaste(
+        uri: Uri,
+        description: ClipDescription,
+    ): String? =
+        try {
             // check if cache already holds registered file or not
-            if (!pastedImageCache.containsKey(uri.toString())) {
-                pastedImageCache[uri.toString()] = loadImageIntoCollection(uri)
+            if (!pastedMediaCache.containsKey(uri.toString())) {
+                pastedMediaCache[uri.toString()] = loadMediaIntoCollection(uri, description)
             }
-            pastedImageCache[uri.toString()]
+            pastedMediaCache[uri.toString()]
         } catch (ex: NullPointerException) {
             // Tested under FB Messenger and GMail, both apps do nothing if this occurs.
             // This typically works if the user copies again - don't know the exact cause
@@ -143,28 +173,27 @@ class MediaRegistration(private val context: Context) {
             //  java.lang.SecurityException: Permission Denial: opening provider
             //  org.chromium.chrome.browser.util.ChromeFileProvider from ProcessRecord{80125c 11262:com.ichi2.anki/u0a455}
             //  (pid=11262, uid=10455) that is not exported from UID 10057
-            Timber.w(ex, "Failed to paste image")
+            Timber.w(ex, "Failed to paste media")
             null
         } catch (ex: SecurityException) {
-            Timber.w(ex, "Failed to paste image")
+            Timber.w(ex, "Failed to paste media")
             null
         } catch (e: Exception) {
             // NOTE: This is happy path coding which works on Android 9.
             CrashReportService.sendExceptionReport("File is invalid issue:8880", "RegisterMediaForWebView:onImagePaste URI of file:$uri")
-            Timber.w(e, "Failed to paste image")
+            Timber.w(e, "Failed to paste media")
             showThemedToast(context, context.getString(R.string.multimedia_editor_something_wrong), false)
             null
         }
-    }
 
     @CheckResult
-    fun registerMediaForWebView(imagePath: String?): Boolean {
-        if (imagePath == null) {
+    fun registerMediaForWebView(mediaPath: String?): Boolean {
+        if (mediaPath == null) {
             // Nothing to register - continue with execution.
             return true
         }
-        Timber.i("Adding media to collection: %s", imagePath)
-        val f = File(imagePath)
+        Timber.i("Adding media to collection: %s", mediaPath)
+        val f = File(mediaPath)
         return try {
             CollectionManager.getColUnsafe().media.addFile(f)
             true

@@ -20,10 +20,13 @@ import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.GestureMapper
 import com.ichi2.anki.reviewer.MappableBinding
 
-class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
+class GestureProcessor(
+    private val processor: ViewerCommand.CommandProcessor?,
+) {
     companion object {
         const val PREF_KEY = "gestures"
     }
+
     private var gestureDoubleTap: ViewerCommand? = null
     private var gestureLongclick: ViewerCommand? = null
     private var gestureSwipeUp: ViewerCommand? = null
@@ -84,35 +87,42 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
         }
     }
 
-    fun onTap(height: Int, width: Int, posX: Float, posY: Float): Boolean? {
+    fun onTap(
+        height: Int,
+        width: Int,
+        posX: Float,
+        posY: Float,
+    ): Boolean? {
         val gesture = gestureMapper.gesture(height, width, posX, posY) ?: return false
         return execute(gesture)
     }
 
-    fun onDoubleTap(): Boolean? {
-        return execute(Gesture.DOUBLE_TAP)
-    }
+    fun onDoubleTap(): Boolean? = execute(Gesture.DOUBLE_TAP)
 
-    fun onLongTap(): Boolean? {
-        return execute(Gesture.LONG_TAP)
-    }
+    fun onLongTap(): Boolean? = execute(Gesture.LONG_TAP)
 
-    fun onFling(dx: Float, dy: Float, velocityX: Float, velocityY: Float, isSelecting: Boolean, isXScrolling: Boolean, isYScrolling: Boolean): Boolean? {
+    fun onFling(
+        dx: Float,
+        dy: Float,
+        velocityX: Float,
+        velocityY: Float,
+        isSelecting: Boolean,
+        isXScrolling: Boolean,
+        isYScrolling: Boolean,
+    ): Boolean? {
         val gesture = gestureMapper.gesture(dx, dy, velocityX, velocityY, isSelecting, isXScrolling, isYScrolling)
         return execute(gesture)
     }
 
-    fun onShake(): Boolean? {
-        return execute(Gesture.SHAKE)
-    }
+    fun onShake(): Boolean? = execute(Gesture.SHAKE)
 
     private fun execute(gesture: Gesture?): Boolean? {
-        val command = mapGestureToCommand(gesture) ?: return false
+        val command = gesture?.let { mapGestureToCommand(it) } ?: return false
         return processor?.executeCommand(command, gesture)
     }
 
-    private fun mapGestureToCommand(gesture: Gesture?): ViewerCommand? {
-        return when (gesture) {
+    private fun mapGestureToCommand(gesture: Gesture): ViewerCommand? =
+        when (gesture) {
             Gesture.SWIPE_UP -> gestureSwipeUp
             Gesture.SWIPE_DOWN -> gestureSwipeDown
             Gesture.SWIPE_LEFT -> gestureSwipeLeft
@@ -129,9 +139,7 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
             Gesture.DOUBLE_TAP -> gestureDoubleTap
             Gesture.LONG_TAP -> gestureLongclick
             Gesture.SHAKE -> gestureShake
-            else -> null
         }
-    }
 
     /**
      * Whether one of the provided gestures is bound

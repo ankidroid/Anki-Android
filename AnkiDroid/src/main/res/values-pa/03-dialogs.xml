@@ -46,44 +46,44 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">ਡੇਟਾਬੇਸ ਦੀ ਜਾਂਚ ਕਰੋ?</string>
     <string name="check_db_warning">ਇਸ ਵਿੱਚ ਲੰਮਾ ਸਮਾਂ ਲੱਗ ਸਕਦਾ ਹੈ</string>
-    <string name="contextmenu_deckpicker_delete_deck">ਡੇਕ ਨੂੰ ਸਾਫ਼ ਕਰੋ</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">ਡੇਕ ਨੂੰ ਸਾਫ਼ ਕਰੋ</string>
     <string name="delete_deck_title">ਡੈੱਕ ਨੂੰ ਮਿਟਾਉਣਾ ਹੈ?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">ਕੀ %1$s ਦੇ ਸਾਰੇ ਕਾਰਡ ਮਿਟਾਉਣੇ ਹਨ? ਇਸ ਵਿੱਚ %2$d ਕਾਰਡ ਹਨ</item>
+        <item quantity="other">ਕੀ %1$s ਦੇ ਸਾਰੇ ਕਾਰਡ ਮਿਟਾਉਣੇ ਹਨ? ਇਸ ਵਿੱਚ %2$d ਕਾਰਡ ਹਨ</item>
+    </plurals>
+    <string name="delete_cram_deck_message">ਫਿਲਟਰ ਕੀਤੇ ਡੈੱਕ %s ਨੂੰ ਮਿਟਾਉਣਾ ਹੈ ਅਤੇ ਸਾਰੇ ਕਾਰਡਾਂ ਨੂੰ ਉਹਨਾਂ ਦੇ ਅਸਲ ਡੈੱਕ \'ਤੇ ਵਾਪਸ ਕਰਨਾ ਹੈ?</string>
     <string name="no_tts_available_message">ਕੋਈ ਟੈਕਸਟ-ਟੂ-ਸਪੀਚ ਭਾਸ਼ਾ ਉਪਲਬਧ ਨਹੀਂ ਹੈ</string>
     <string name="tts_no_tts">ਨਾ ਬੋਲੋ</string>
     <string name="unused_strings">\n\nਅਣਵਰਤੀਆਂ ਫਾਈਲਾਂ:\n</string>
-    <string name="reposition_card_dialog_title">Reposition new card</string>
-    <string name="reposition_card_dialog_message">Start position:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_dialog_title">ਨਵਾਂ ਕਾਰਡ ਬਦਲੋ</string>
+    <string name="reposition_card_not_new_error">ਸਿਰਫ਼ ਨਵੇਂ ਕਾਰਡਾਂ ਨੂੰ ਹੀ ਮੁੜ-ਸਥਾਪਿਤ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="one">%d ਕਾਰਡ ਮੁੜ-ਸਥਾਪਤ ਕੀਤਾ ਗਿਆ</item>
+        <item quantity="other">%d ਕਾਰਡ ਮੁੜ-ਸਥਾਪਤ ਕੀਤੇ ਗਏ</item>
     </plurals>
-    <string name="reset_card_dialog_title">Reset card progress</string>
+    <string name="reset_card_dialog_title">ਕਾਰਡ ਦੀ ਪ੍ਰਗਤੀ ਨੂੰ ਰੀਸੈਟ ਕਰੋ</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="one">%d ਕਾਰਡ ਰੀਸੈੱਟ</item>
+        <item quantity="other">%d ਕਾਰਡ ਰੀਸੈੱਟ</item>
     </plurals>
-    <string name="answering_error_title">Database error</string>
+    <string name="answering_error_title">ਡਾਟਾਬੇਸ ਗਲਤੀ</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
-    <string name="answering_error_report">Report error</string>
+    <string name="answering_error_report">ਇੱਕ ਬੱਗ ਦੀ ਰਿਪੋਰਟ ਕਰੋ</string>
     <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
-    <string name="intent_aedict_empty">Category “default” is empty</string>
+    <string name="intent_aedict_empty">ਸ਼੍ਰੇਣੀ \"ਡਿਫਾਲਟ\" ਖਾਲੀ ਹੈ</string>
     <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
-    <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
-    <string name="custom_study_ahead">Review ahead by x days:</string>
-    <string name="custom_study_random">Select x cards randomly from the deck:</string>
-    <string name="custom_study_preview">Preview new cards added in the last x days:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
-    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
-    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
-    <string name="restore_backup_title">Restore backup?</string>
+    <string name="custom_study_new_extend">ਅੱਜ ਦੀ ਨਵੀਂ ਕਾਰਡ ਸੀਮਾ ਵਧਾਓ/ਘਟਾਓ (“-3”)</string>
+    <string name="custom_study_rev_extend">ਅੱਜ ਦੀ ਸਮੀਖਿਆ ਸੀਮਾ ਵਧਾਓ/ਘਟਾਓ (“-3”)</string>
+    <string name="custom_study_forgotten">ਅੱਜ ਦੀ ਸਮੀਖਿਆ ਸੀਮਾ ਵਧਾਓ/ਘਟਾਓ (“-3”)</string>
+    <string name="custom_study_ahead">x ਦਿਨ ਅੱਗੇ ਦੀ ਸਮੀਖਿਆ ਕਰੋ:</string>
+    <string name="custom_study_preview">ਪਿਛਲੇ x ਦਿਨਾਂ ਵਿੱਚ ਸ਼ਾਮਲ ਕੀਤੇ ਗਏ ਨਵੇਂ ਕਾਰਡਾਂ ਦੀ ਸੰਖੇਪ ਜਾਣਕਾਰੀ:</string>
+    <string name="storage_full_title">ਸਟੋਰੇਜ ਭਰੀ ਹੋਈ ਹੈ</string>
+    <string name="storage_almost_full_title">ਸਟੋਰੇਜ ਲਗਭਗ ਭਰੀ ਹੋਈ ਹੈ</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ਕੋਈ ਥਾਂ ਨਹੀਂ</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid ਨੂੰ ਜਾਰੀ ਰੱਖਣ ਲਈ %s ਖਾਲੀ ਸਟੋਰੇਜ ਸਪੇਸ ਦੀ ਲੋੜ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਕੁਝ ਥਾਂ ਖਾਲੀ ਕਰੋ</string>
+    <string name="restore_backup_title">ਕੀ ਤੁਸੀਂ ਬੈਕਅੱਪ ਰੀਸਟੋਰ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
     <string name="restore_backup_choose_another">ਕੋਈ ਹੋਰ ਚੁਣੋ</string>
     <string name="dialog_cancel">ਰੱਦ ਕਰੋ</string>
@@ -94,144 +94,140 @@
     <string name="dialog_keep">ਰੱਖੋ</string>
     <string name="dialog_remove">ਹਟਾਓ</string>
     <string name="dialog_continue">ਜਾਰੀ ਰੱਖੋ</string>
-    <string name="dialog_processing">Processing&#8230;</string>
+    <string name="dialog_processing">ਪ੍ਰਕਿਰਿਆ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ਬਣਾਓ</string>
-    <string name="dialog_positive_delete">ਮਿਟਾਓ</string>
+    <string name="dialog_positive_delete" maxLength="28">ਮਿਟਾਓ</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">ਕਰਨ ਲਈ ਅਸਮਰੱਥ</string>
     <string name="dialog_positive_overwrite">ਓਵਰਰਾਈਟ ਕਰੋ</string>
     <string name="dialog_positive_repair">ਮੁਰੰਮਤ</string>
-    <string name="dialog_positive_replace">Replace</string>
-    <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
+    <string name="dialog_positive_replace">ਤਬਦੀਲੀ</string>
+    <string name="dialog_collection_path_not_dir">ਨਿਰਦਿਸ਼ਟ ਮਾਰਗ ਇੱਕ ਵੈਧ ਡਾਇਰੈਕਟਰੀ ਨਹੀਂ ਸੀ ਨਿਰਦਿਸ਼ਟ ਮਾਰਗ ਇੱਕ ਵੈਧ ਡਾਇਰੈਕਟਰੀ ਨਹੀਂ ਸੀ</string>
     <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
-    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
-    <string name="dialog_updated_custom_certificate">Certificate updated</string>
+    <string name="dialog_invalid_custom_certificate_title">ਸਰਟੀਫਿਕੇਟ ਪਾਰਸ ਕਰਨ ਵਿੱਚ ਤਰੁੱਟੀ</string>
+    <string name="dialog_updated_custom_certificate">ਸਰਟੀਫਿਕੇਟ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ</string>
     <!-- Media checking -->
-    <string name="check_media_title">Check media?</string>
-    <string name="check_media_warning">This may take a long time with large media collections</string>
+    <string name="check_media_title">ਕੀ ਮੀਡੀਆ ਦੀ ਜਾਂਚ ਕਰਨੀ ਹੈ?</string>
+    <string name="check_media_warning">ਵੱਡੇ ਮੀਡੀਆ ਸੰਗ੍ਰਹਿ ਦੇ ਨਾਲ ਇਸ ਵਿੱਚ ਲੰਮਾ ਸਮਾਂ ਲੱਗ ਸਕਦਾ ਹੈ</string>
     <string name="check_media_message">Checking media&#8230;</string>
-    <string name="check_media_acknowledge">Media checked</string>
-    <string name="check_media_invalid">Files with invalid encoding: %d</string>
-    <string name="check_media_unused">Files in media folder but not used by any cards: %d</string>
-    <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
-    <string name="check_media_no_unused_missing">No unused or missing files found</string>
-    <string name="check_media_db_updated">Media database rebuilt</string>
-    <string name="check_media_delete_unused">Delete unused</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="check_media_acknowledge">ਮੀਡੀਆ ਦੀ ਜਾਂਚ ਕੀਤੀ ਗਈ</string>
+    <string name="check_media_invalid">ਗਲਤ ਏਨਕੋਡਿੰਗ ਵਾਲੀਆਂ ਫਾਈਲਾਂ: %d</string>
+    <string name="check_media_unused">ਮੀਡੀਆ ਫੋਲਡਰ ਵਿੱਚ ਫਾਈਲਾਂ ਪਰ ਕਿਸੇ ਵੀ ਕਾਰਡ ਦੁਆਰਾ ਨਹੀਂ ਵਰਤੀਆਂ ਗਈਆਂ: %d</string>
+    <string name="check_media_nohave">ਫਾਈਲਾਂ ਕਾਰਡਾਂ \'ਤੇ ਵਰਤੀਆਂ ਗਈਆਂ ਪਰ ਮੀਡੀਆ ਫੋਲਡਰ ਵਿੱਚ ਨਹੀਂ: %d</string>
+    <string name="check_media_no_unused_missing">ਕੋਈ ਅਣਵਰਤੀਆਂ ਜਾਂ ਗੁੰਮ ਹੋਈਆਂ ਫਾਈਲਾਂ ਨਹੀਂ ਲੱਭੀਆਂ</string>
+    <string name="check_media_db_updated">ਮੀਡੀਆ ਡਾਟਾਬੇਸ ਦੁਬਾਰਾ ਬਣਾਇਆ ਗਿਆ</string>
+    <string name="check_media_delete_unused">ਨਾ ਵਰਤੇ ਗਏ ਨੂੰ ਮਿਟਾਓ</string>
+    <string name="delete_media_message">ਮੀਡੀਆ ਨੂੰ ਮਿਟਾਇਆ ਜਾ ਰਿਹਾ ਹੈ&#8230;</string>
+    <string name="delete_media_result_title">ਮਿਟਾਉਣ ਦਾ ਨਤੀਜਾ</string>
     <plurals name="delete_media_result_message">
-        <item quantity="one">%d file deleted</item>
-        <item quantity="other">%d files deleted</item>
+        <item quantity="one">%d ਫ਼ਾਈਲ ਮਿਟਾਈ ਗਈ</item>
+        <item quantity="other">%d ਫ਼ਾਈਲਾਂ ਮਿਟਾਈਆਂ ਗਈਆਂ</item>
     </plurals>
     <!-- Tags Dialog Options -->
-    <string name="tags_dialog_option_all_cards">All cards</string>
-    <string name="tags_dialog_option_new_cards">New</string>
-    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
+    <string name="tags_dialog_option_all_cards">ਸਾਰੇ ਕਾਰਡ</string>
+    <string name="tags_dialog_option_new_cards">ਨਵਾਂ</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">ਬਕਾਇਆ</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">ਖਾਲੀ ਕਾਰਡ ਲੱਭੇ ਜਾ ਰਹੇ ਹਨ&#8230;</string>
     <string name="empty_cards_count">ਮਿਟਾਉਣ ਲਈ ਕਾਰਡ: %d</string>
-    <string name="empty_cards_deleted">ਕਾਰਡ ਮਿਟਾਏ ਗਏ: %d</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
-    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <string name="multimedia_editor_audio_permission_refused">ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਮਿਲ ਸਕੀ।</string>
+    <string name="multimedia_editor_failed">ਮਲਟੀਮੀਡੀਆ ਸੰਪਾਦਕ ਨੂੰ ਖੋਲ੍ਹਣ ਵਿੱਚ ਅਸਫਲ</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
-    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
+    <string name="multimedia_editor_audio_permission_denied">ਆਡੀਓ ਰਿਕਾਰਡਿੰਗ ਦੀ ਇਜਾਜ਼ਤ ਅਸਵੀਕਾਰ ਕੀਤੀ ਗਈ</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
-    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
+    <string name="integrity_check_startup_title">AnkiDroid ਅੱਪਗਰੇਡ ਕੀਤਾ ਗਿਆ</string>
+    <string name="integrity_check_startup_content">AnkiDroid ਨੂੰ ਅੱਪਗ੍ਰੇਡ ਕੀਤਾ ਗਿਆ ਹੈ। ਇਸ ਅੱਪਗਰੇਡ ਵਿੱਚ ਸੰਭਾਵਿਤ ਡਾਟਾਬੇਸ ਸਮੱਸਿਆਵਾਂ ਲਈ ਫਿਕਸ ਸ਼ਾਮਲ ਹਨ, ਅਤੇ ਅਸੀਂ ਸਿਫ਼ਾਰਿਸ਼ ਕਰਦੇ ਹਾਂ ਕਿ ਤੁਸੀਂ ਹੁਣੇ ਡਾਟਾਬੇਸ ਦੀ ਜਾਂਚ ਕਰੋ।</string>
+    <string name="integrity_check_continue_anyway">ਕਿਸੇ ਵੀ ਤਰ੍ਹਾਂ ਜਾਰੀ ਰੱਖੋ</string>
+    <string name="integrity_check_insufficient_space">ਚੈੱਕ ਡੇਟਾਬੇਸ ਵੱਡੀ ਮਾਤਰਾ ਵਿੱਚ ਅਸਥਾਈ ਸਟੋਰੇਜ ਦੀ ਵਰਤੋਂ ਕਰਦਾ ਹੈ।\n\nਇਹ ਜ਼ੋਰਦਾਰ ਸਿਫ਼ਾਰਸ਼ ਕੀਤੀ ਜਾਂਦੀ ਹੈ ਕਿ ਜਾਰੀ ਰੱਖਣ ਤੋਂ ਪਹਿਲਾਂ ਤੁਹਾਡੇ ਕੋਲ ਆਪਣੀ ਡਿਵਾਈਸ \'ਤੇ ਘੱਟੋ-ਘੱਟ %s ਖਾਲੀ ਥਾਂ ਹੈ।</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nਤੁਹਾਡੇ ਕੋਲ ਇਸ ਵੇਲੇ %s ਮੁਫ਼ਤ ਹੈ।</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
-    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
+    <string name="card_viewer_url_decode_error">ਕਾਰਡ ਤੋਂ ਡਾਟਾ ਡੀਕੋਡ ਕਰਨ ਵਿੱਚ ਤਰੁੱਟੀ</string>
     <!-- Deck Options -->
     <!-- Database Errors-->
-    <string name="database_locked_title">Database Locked</string>
-    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
+    <string name="database_locked_title">ਡਾਟਾਬੇਸ ਲਾਕ ਕੀਤਾ</string>
+    <string name="database_locked_summary">AnkiDroid ਡੇਟਾਬੇਸ ਕਿਸੇ ਹੋਰ ਐਪਲੀਕੇਸ਼ਨ ਦੁਆਰਾ ਵਰਤੋਂ ਵਿੱਚ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਦੂਜੀ ਐਪਲੀਕੇਸ਼ਨ ਨੂੰ ਬੰਦ ਕਰੋ ਅਤੇ ਫਿਰ AnkiDroid ਨੂੰ ਦੁਬਾਰਾ ਖੋਲ੍ਹੋ।</string>
+    <string name="incompatible_database_version_title">ਅਸੰਗਤ ਡਾਟਾਬੇਸ ਸੰਸਕਰਣ</string>
     <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">Background image applied</string>
-    <string name="background_image_removed">Background image removed</string>
-    <string name="no_image_selected">No image selected</string>
-    <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
-    <string name="error_deleting_image">Error deleting image</string>
-    <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
-    <string name="background_image_too_large">Deck Picker background too large</string>
-    <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="background_image_applied">ਬੈਕਗ੍ਰਾਊਂਡ ਚਿੱਤਰ ਲਾਗੂ ਕੀਤਾ ਗਿਆ</string>
+    <string name="background_image_removed">ਬੈਕਗ੍ਰਾਊਂਡ ਚਿੱਤਰ ਹਟਾਇਆ ਗਿਆ</string>
+    <string name="no_image_selected">ਕੋਈ ਚਿੱਤਰ ਨਹੀਂ ਚੁਣਿਆ ਗਿਆ</string>
+    <string name="error_selecting_image">ਚਿੱਤਰ ਚੁਣਨ ਵਿੱਚ ਤਰੁੱਟੀ। ਕਿਰਪਾ ਕਰਕੇ ਮੈਨੂਅਲ ਵੇਖੋ। %s</string>
+    <string name="error_deleting_image">ਚਿੱਤਰ ਨੂੰ ਮਿਟਾਉਣ ਵਿੱਚ ਤਰੁੱਟੀ</string>
+    <string name="failed_to_apply_background_image">ਪਿਛੋਕੜ ਚਿੱਤਰ %s ਨੂੰ ਲਾਗੂ ਕਰਨ ਵਿੱਚ ਅਸਫਲ</string>
+    <string name="background_image_too_large">ਡੈੱਕ ਚੋਣ ਦੀ ਪਿੱਠਭੂਮੀ ਬਹੁਤ ਵੱਡੀ ਹੈ</string>
+    <string name="image_max_size_allowed">ਅਧਿਕਤਮ ਚਿੱਤਰ ਦਾ ਆਕਾਰ %d MB ਹੈ</string>
+    <string name="image_dimensions_too_large">ਚਿੱਤਰ ਦੇ ਮਾਪ ਬਹੁਤ ਵੱਡੇ ਹਨ (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
-    <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <string name="intent_handler_failed_no_storage_permission">ਲੋੜੀਂਦੀ ਸਟੋਰੇਜ ਅਨੁਮਤੀ ਮੌਜੂਦ ਨਹੀਂ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਸਟੋਰੇਜ ਦੀ ਇਜਾਜ਼ਤ ਦਿਓ ਫਿਰ ਆਪਣੀ ਕਾਰਵਾਈ ਦੀ ਮੁੜ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
     <!-- Boot Service -->
-    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
-    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <string name="boot_service_failed_to_schedule_notifications">ਰੀਮਾਈਂਡਰ ਨਿਯਤ ਕਰਨ ਵਿੱਚ ਅਸਫਲ</string>
+    <string name="boot_service_too_many_notifications">ਬਹੁਤ ਸਾਰੇ ਰੀਮਾਈਂਡਰ ਨਿਯਤ ਕੀਤੇ ਗਏ ਹਨ। ਕੁਝ ਦਿਖਾਈ ਨਹੀਂ ਦੇਣਗੇ</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
+    <string name="locale_selection_dialog_title_new">ਭਾਸ਼ਾ ਸੈੱਟ ਕਰੋ</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
-    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_title_using_ankidroid">AnkiDroid ਦੀ ਵਰਤੋਂ ਕਰਨਾ</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid ਮੈਨੂਅਲ</string>
+    <string name="help_item_anki_manual">ਅੰਕੀ ਮੈਨੁਅਲ</string>
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Get Help</string>
+    <string name="help_title_get_help">ਮਦਦ ਪ੍ਰਾਪਤ ਕਰੋ</string>
     <string name="help_item_mailing_list">ਮੇਲਿੰਗ ਸੂਚੀ</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a Bug</string>
-    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
+    <string name="help_item_report_bug">ਇੱਕ ਬੱਗ ਦੀ ਰਿਪੋਰਟ ਕਰੋ</string>
+    <string name="help_title_support_ankidroid" maxLength="28">AnkiDroid ਦਾ ਸਮਰਥਨ ਕਰੋ</string>
     <string name="help_item_support_opencollective_donate">ਦਾਨ ਕਰੋ</string>
-    <string name="help_item_support_develop_ankidroid">Develop</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
-    <string name="help_item_support_other_ankidroid">Other</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
-    <string name="help_title_community">Community</string>
-    <string name="help_item_anki_forums">Anki Forums</string>
-    <string name="help_item_discord">Discord</string>
-    <string name="help_item_facebook">Facebook</string>
-    <string name="help_item_twitter">Twitter</string>
-    <string name="help_title_privacy">Privacy</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
-    <string name="help_title_send_exception">Send troubleshooting report</string>
-    <string name="help_dialog_exception_report_debounce">Report already submitted</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_item_support_develop_ankidroid">ਵਿਕਾਸ</string>
+    <string name="help_item_support_rate_ankidroid">ਦਰ</string>
+    <string name="help_item_support_other_ankidroid">ਹੋਰ</string>
+    <string name="multimedia_editor_trans_translate">ਅਨੁਵਾਦ ਕਰੋ</string>
+    <string name="help_title_community">ਭਾਈਚਾਰਾ</string>
+    <string name="help_item_anki_forums">ਅੰਕੀ ਫੋਰਮ</string>
+    <string name="help_item_discord">ਵਿਵਾਦ</string>
+    <string name="help_item_facebook">ਫੇਸਬੁੱਕ</string>
+    <string name="help_item_twitter">ਟਵਿੱਟਰ</string>
+    <string name="help_title_privacy">ਗੋਪਨੀਯਤਾ</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid ਗੋਪਨੀਯਤਾ ਨੀਤੀ</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb ਗੋਪਨੀਯਤਾ ਨੀਤੀ</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb ਨਿਯਮ ਅਤੇ ਸ਼ਰਤਾਂ</string>
+    <string name="help_title_send_exception">ਸਮੱਸਿਆ ਨਿਪਟਾਰਾ ਰਿਪੋਰਟ ਭੇਜੋ</string>
+    <string name="help_dialog_exception_report_debounce">ਰਿਪੋਰਟ ਪਹਿਲਾਂ ਹੀ ਸੌਂਪੀ ਜਾ ਚੁੱਕੀ ਹੈ</string>
+    <string name="help_dialog_exception_report_sent">ਰਿਪੋਰਟ ਭੇਜੀ ਗਈ!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">An automatic sync may be triggered in %d second</item>
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one">ਇੱਕ ਆਟੋਮੈਟਿਕ ਸਿੰਕ %d ਸਕਿੰਟਾਂ ਵਿੱਚ ਸ਼ੁਰੂ ਹੋ ਸਕਦਾ ਹੈ</item>
+        <item quantity="other">ਇੱਕ ਆਟੋਮੈਟਿਕ ਸਿੰਕ %d ਸਕਿੰਟਾਂ ਵਿੱਚ ਸ਼ੁਰੂ ਹੋ ਸਕਦਾ ਹੈ</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
-    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="metered_sync_data_warning">ਤੁਹਾਡਾ ਇੰਟਰਨੈੱਟ ਪ੍ਰਦਾਤਾ ਡਾਟਾ ਵਰਤੋਂ ਲਈ ਖਰਚਾ ਲੈ ਸਕਦਾ ਹੈ</string>
+    <string name="deck_picker_new">ਅੱਜ ਇਸ ਡੈੱਕ ਵਿੱਚ ਦੇਖਣ ਲਈ ਨਵੇਂ ਕਾਰਡਾਂ ਦੀ ਸੰਖਿਆ।</string>
+    <string name="deck_picker_rev">ਅੱਜ ਇਸ ਡੈੱਕ ਵਿੱਚ ਬਕਾਇਆ ਕਾਰਡਾਂ ਦੀ ਗਿਣਤੀ।</string>
+    <string name="deck_picker_lrn">ਇਸ ਡੈੱਕ ਵਿੱਚ ਸਿੱਖਣ ਵਿੱਚ ਕਾਰਡਾਂ ਦੀ ਗਿਣਤੀ।</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="deck_picker_counts">ਅੱਜ ਦੇਖਣ ਲਈ ਕਾਰਡਾਂ ਦੀ ਗਿਣਤੀ ਦੇ ਨਾਲ ਡੈੱਕ ਓਵਰਵਿਊ ਪੰਨਾ ਖੋਲ੍ਹੋ।</string>
+    <string name="import_deck_package">ਡੈੱਕ ਪੈਕੇਜ (.apkg)</string>
+    <string name="import_collection_package">ਸੰਗ੍ਰਹਿ ਪੈਕੇਜ (.colpkg)</string>
+    <string name="import_csv">ਟੈਕਸਟ ਫ਼ਾਈਲ (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">ਤੁਸੀਂ ਸਾਰੇ ਡੈੱਕਾਂ ਲਈ ਸਬਡੈਕਸ ਨਹੀਂ ਬਣਾ ਸਕਦੇ ਹੋ</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
+    <string name="backup_your_collection">ਆਪਣੇ ਸੰਗ੍ਰਹਿ ਦਾ ਬੈਕਅੱਪ ਲਓ</string>
+    <string name="backup_collection_message">ਤੁਸੀਂ ਕੁਝ ਸਮੇਂ ਤੋਂ ਆਪਣੇ ਸੰਗ੍ਰਹਿ ਦਾ ਬੈਕਅੱਪ ਨਹੀਂ ਲਿਆ ਹੈ। ਤੁਹਾਨੂੰ ਡੇਟਾ ਦੇ ਨੁਕਸਾਨ ਨੂੰ ਰੋਕਣ ਲਈ ਹੁਣੇ ਅਜਿਹਾ ਕਰਨਾ ਚਾਹੀਦਾ ਹੈ</string>
+    <string name="button_backup" maxLength="41">ਬੈਕਅੱਪ</string>
     <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">ਬਾਅਦ ਵਿੱਚ</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">ਦੁਬਾਰਾ ਨਾ ਦਿਖਾਓ</string>
+    <string name="dismiss_backup_warning_title">ਡਾਟਾ ਖਰਾਬ ਹੋਣ ਦੀ ਚੇਤਾਵਨੀ</string>
     <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
     </string>
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
     </string>
     <string name="deck_already_exists">ਡੇਕ ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ</string>
+    <string name="empty_deck_name">ਡੈੱਕ ਦਾ ਨਾਮ ਖਾਲੀ ਨਹੀਂ ਹੋ ਸਕਦਾ ਹੈ</string>
     <string name="create_deck_numeric_hint">ਜੇਕਰ ਤੁਹਾਡੇ ਕੋਲ ਡੈੱਕ ਆਰਡਰਿੰਗ ਸਮੱਸਿਆਵਾਂ ਹਨ (ਜਿਵੇਂ ਕਿ \'10\' \'2\' ਤੋਂ ਪਹਿਲਾਂ ਦਿਖਾਈ ਦਿੰਦਾ ਹੈ), \'2\' ਨੂੰ \'02\' ਨਾਲ ਬਦਲੋ</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">ਅੰਤਰਾਲ ਨੂੰ ਉਸੇ ਮੁੱਲ \'ਤੇ ਸੈੱਟ ਕਰੋ</string>
@@ -251,11 +247,20 @@
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">ਤੋਂ</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">ਨੂੰ</string>
     <!-- Instant Note Editor -->
-    <string name="cloze_note_required">Cloze Type Note Required</string>
+    <string name="cloze_note_required">ਬੰਦ ਕਿਸਮ ਦੇ ਨੋਟਸ ਦੀ ਲੋੜ ਹੈ</string>
     <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
-    <string name="open">Open</string>
+    <string name="open">ਖੋਲ੍ਹੋ</string>
     <string name="change_cloze_number">Change cloze number</string>
     <string name="cloze_number">Cloze number:</string>
+    <string name="change_editor_mode">ਸੰਪਾਦਕ ਮੋਡ ਬਦਲੋ</string>
+    <string name="open_note_editor">ਨੋਟ ਐਡੀਟਰ ਖੋਲ੍ਹੋ</string>
+    <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
-    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
+    <string name="webview_update_message">ਸਿਸਟਮ WebView ਪੁਰਾਣਾ ਹੈ। ਕੁਝ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਸਹੀ ਢੰਗ ਨਾਲ ਕੰਮ ਨਹੀਂ ਕਰਨਗੀਆਂ। ਕਿਰਪਾ ਕਰਕੇ ਇਸਨੂੰ ਅੱਪਡੇਟ ਕਰੋ।\n\nਸਥਾਪਿਤ ਸੰਸਕਰਣ: %1$d\nਘੱਟੋ-ਘੱਟ ਲੋੜੀਂਦਾ ਸੰਸਕਰਣ: %2$d</string>
+    <string name="compress">ਸੰਕੁਚਿਤ ਕਰੋ</string>
+    <!-- Tts playback error dialog -->
+    <string name="tts_error_dialog_title">ਭਾਸ਼ਾ ਸਮਰਥਿਤ ਨਹੀਂ ਹੈ</string>
+    <string name="tts_error_dialog_reason_text">ਟੈਕਸਟ ਟੂ ਸਪੀਚ ਇੰਜਣ <b>%1$s</b> ਅੱਗੇ ਦਿੱਤੀ ਭਾਸ਼ਾ ਦਾ ਸਮਰਥਨ ਨਹੀਂ ਕਰਦਾ ਹੈ: <b>%2$s</b></string>
+    <string name="tts_error_dialog_change_button_text">ਇੰਜਣ ਬਦਲੋ</string>
+    <string name="tts_error_dialog_supported_voices_button_text">ਵੌਇਸ ਵਿਕਲਪ</string>
 </resources>

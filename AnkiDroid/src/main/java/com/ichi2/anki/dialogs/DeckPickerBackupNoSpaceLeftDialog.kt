@@ -33,20 +33,20 @@ class DeckPickerBackupNoSpaceLeftDialog : AnalyticsDialogFragment() {
         super.onCreate(savedInstanceState)
         val res = resources
         val space = BackupManager.getFreeDiscSpace(CollectionHelper.getCollectionPath(requireActivity()))
-        return AlertDialog.Builder(requireContext()).create {
-            title(R.string.storage_almost_full_title)
-            message(text = res.getString(R.string.storage_warning, space / 1024 / 1024))
-            positiveButton(R.string.dialog_ok) {
-                (activity as DeckPicker).finish()
+        return AlertDialog
+            .Builder(requireContext())
+            .create {
+                title(R.string.storage_almost_full_title)
+                message(text = res.getString(R.string.storage_warning, space / 1024 / 1024))
+                positiveButton(R.string.dialog_ok) {
+                    (activity as DeckPicker).finish()
+                }
+            }.apply {
+                setCanceledOnTouchOutside(false)
             }
-        }.apply {
-            setCanceledOnTouchOutside(false)
-        }
     }
 
     companion object {
-        fun newInstance(): DeckPickerBackupNoSpaceLeftDialog {
-            return DeckPickerBackupNoSpaceLeftDialog()
-        }
+        fun newInstance(): DeckPickerBackupNoSpaceLeftDialog = DeckPickerBackupNoSpaceLeftDialog()
     }
 }

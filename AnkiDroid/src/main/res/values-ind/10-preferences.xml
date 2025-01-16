@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">Lebih dari %d kartu jatuh tempo</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Getar</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Berkedip</string>
-    <string name="timeout_answer_text" maxLength="41">Otomatis tampilkan jawaban</string>
-    <string name="timeout_answer_summ2">Tampilkan jawaban secara otomatis tanpa masukan pengguna. Atur dari opsi dek.</string>
     <string name="select_locale_title">Pilih bahasa</string>
     <string name="software_render" maxLength="41">Matikan perangkat keras pe-render kartu</string>
     <string name="software_render_summ">Render menggunakan perangkat keras lebih cepat namun dapat mengakibatkan masalah, terutama pada Android 8/8.1. Jika Anda tidak dapat melihat bagian peninjauan kartu dari antarmuka pengguna, coba pengaturan berikut ini.</string>
@@ -171,7 +169,7 @@
     <string name="show_large_answer_buttons" maxLength="41">Tunjukkan tombol jawaban berukuran besar</string>
     <string name="show_large_answer_buttons_summ">Tunjukkan tombol jawaban dalam 2 baris</string>
     <string name="show_top_bar" maxLength="41">Tampilkan bar atas</string>
-    <string name="show_top_bar_summ">Tampilkan jumlah kartu, bendera dan tanda di bilah atas</string>
+    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Tampilkan kartu yang tersisa</string>
     <string name="show_progress_summ">Tampilkan jumlah kartu yang tersisa</string>
     <string name="show_eta" maxLength="41">Tampilkan perkiraan waktu</string>
@@ -223,7 +221,7 @@
     <string name="keyboard">Papan ketik</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="answer_buttons" maxLength="41">Tombol jawaban</string>
-    <string name="card" maxLength="41">Kartu</string>
+    <string name="card" maxLength="41" comment="Generic term to refer to a card">Kartu</string>
     <string name="note" maxLength="41">Catatan</string>
     <string name="navigation" maxLength="41">Navigasi</string>
     <string name="media" maxLength="41">Media</string>
@@ -234,9 +232,9 @@
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Umum</string>
     <string name="deck_conf_reminders" maxLength="41">Pengingat</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filter</string>
-    <string name="deck_conf_cram_search" maxLength="41">Cari</string>
+    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Cari</string>
     <string name="deck_conf_cram_limit" maxLength="41">Batasi ke</string>
-    <string name="deck_conf_cram_order" maxLength="41">kartu dipilih menurut </string>
+    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Jadwalkan ulang</string>
     <string name="deck_conf_cram_reschedule_summ">Jadwalkan ulang kartu berdasarkan jawabanku di dek ini</string>
     <string name="deck_conf_cram_filter_2_check">Aktifkan filter kedua</string>
@@ -269,20 +267,21 @@
     <string name="axis_picker_move_joystick">Gerakkan pengendali joystick/gerakan</string>
     <string name="user_actions" maxLength="41">Tindakan pengguna</string>
     <string name="user_actions_summary" maxLength="41">Picu JavaScript dari layar peninjauan</string>
-    <string name="user_action_1" maxLength="41">Tindakan pengguna 1</string>
-    <string name="user_action_2" maxLength="41">Tindakan pengguna 2</string>
-    <string name="user_action_3" maxLength="41">Tindakan pengguna 3</string>
-    <string name="user_action_4" maxLength="41">Tindakan pengguna 4</string>
-    <string name="user_action_5" maxLength="41">Tindakan pengguna 5</string>
-    <string name="user_action_6" maxLength="41">Tindakan pengguna 6</string>
-    <string name="user_action_7" maxLength="41">Tindakan pengguna 7</string>
-    <string name="user_action_8" maxLength="41">Tindakan pengguna 8</string>
-    <string name="user_action_9" maxLength="41">Tindakan pengguna 9</string>
+    <string name="user_action_1" maxLength="28">Tindakan pengguna 1</string>
+    <string name="user_action_2" maxLength="28">Tindakan pengguna 2</string>
+    <string name="user_action_3" maxLength="28">Tindakan pengguna 3</string>
+    <string name="user_action_4" maxLength="28">Tindakan pengguna 4</string>
+    <string name="user_action_5" maxLength="28">Tindakan pengguna 5</string>
+    <string name="user_action_6" maxLength="28">Tindakan pengguna 6</string>
+    <string name="user_action_7" maxLength="28">Tindakan pengguna 7</string>
+    <string name="user_action_8" maxLength="28">Tindakan pengguna 8</string>
+    <string name="user_action_9" maxLength="28">Tindakan pengguna 9</string>
+    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Pilih sisi kartu</string>
     <string name="card_side_question">Pertanyaan</string>
     <string name="card_side_answer">Jawaban</string>
-    <string name="card_side_both">Pertanyaan &amp; Jawaban</string>
+    <string name="card_side_both" maxLength="28">Pertanyaan &amp; Jawaban</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">T: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">J: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -365,4 +364,10 @@
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
     <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
     <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
+    <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
+    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <!--Keyboard shortcuts dialog-->
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
 </resources>

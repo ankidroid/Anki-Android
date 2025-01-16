@@ -66,7 +66,7 @@ class StudyOptionsFragmentTest {
         assertEquals("aa", result.toString())
     }
 
-    /* Begin #5188 - newlines weren't displayed  */
+    // Begin #5188 - newlines weren't displayed
     @Test // This was originally correct
     fun brIsDisplayedAsNewline() {
         val result = formatDescription("a<br/>a")
@@ -84,5 +84,5 @@ class StudyOptionsFragmentTest {
         val result = formatDescription("a\na")
         assertEquals("a\na", result.toString())
     }
-    /* end #5188 */
+    // end #5188
 }

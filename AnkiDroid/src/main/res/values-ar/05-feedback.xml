@@ -46,7 +46,7 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">نمط الإبلاغ عن الأخطاء</string>
+    <string name="error_reporting_choice" maxLength="41">نمط الإبلاغ عن الأخطاء</string>
     <string name="feedback_disclaimer">تنويه: لا نقوم بجمع أي معلومات شخصية عنك مثل عنوان البريد الإلكتروني الخاص بك أو رقم هاتفك أو IMEI الخاص بهاتفك. نقوم فقط بجمع بعض المعلومات عن الجهاز مثل الشركة المصنعة والطراز ونسخة الأندرويد الخاص بجهازك، فضلا عن طبيعة تقارير الخطأ نفسها والخطوات التي أدت إلى حدوثها.</string>
     <string name="feedback_title">آراء واقتراحات حول أنكيدرويد</string>
     <string name="feedback_default_text">أدخل ملاحظاتك أو معلومات حول طبيعة أي أخطاء تبلغ عنها.</string>
