@@ -280,6 +280,9 @@ class NoteEditor :
     // Use the same HTML if the same image is pasted multiple times.
     private var pastedImageCache: HashMap<String, String> = HashMap()
 
+    // Indicate if from InstantEditor
+    private var isFromInstantEditor: Boolean = false
+
     // save field index as key and text as value when toggle sticky clicked in Field Edit Text
     private var toggleStickyText: HashMap<Int, String?> = HashMap()
 
@@ -683,6 +686,7 @@ class NoteEditor :
                     return
                 }
                 addNote = true
+                isFromInstantEditor = true
             }
             // image occlusion is handled at the end of this method, grep: CALLER_IMG_OCCLUSION
             // we need to have loaded the current note type
@@ -768,6 +772,11 @@ class NoteEditor :
         val getTextFromSearchView = requireArguments().getString(EXTRA_TEXT_FROM_SEARCH_VIEW)
         setDid(editorNote)
         setNote(editorNote, FieldChangeType.onActivityCreation(shouldReplaceNewlines()))
+        if (isFromInstantEditor) {
+            // setting notetype to cloze type if from Instant Editor
+            val notetype = col.notetypes.all().first { it.isCloze }
+            changeNoteType(notetype.id)
+        }
         if (addNote) {
             noteTypeSpinner!!.onItemSelectedListener = SetNoteTypeListener()
             mainToolbar.setTitle(R.string.menu_add)
