@@ -18,7 +18,6 @@ package com.ichi2.anki.android.back
 
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import androidx.activity.OnBackPressedCallback
-import androidx.annotation.StringRes
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
@@ -37,14 +36,12 @@ import timber.log.Timber
  * @see Prefs.exitViaDoubleTapBack
  */
 // TODO: Convert this to a class when context parameters are usable
-fun AnkiActivity.exitViaDoubleTapBackCallback(
-    @StringRes stringRes: Int,
-): OnBackPressedCallback =
+fun AnkiActivity.exitViaDoubleTapBackCallback(): OnBackPressedCallback =
     object : OnBackPressedCallback(enabled = Prefs.exitViaDoubleTapBack) {
         lateinit var strongListenerReference: OnSharedPreferenceChangeListener
 
         override fun handleOnBackPressed() {
-            showSnackbar(stringRes, Snackbar.LENGTH_SHORT)
+            showSnackbar(R.string.back_pressed_once, Snackbar.LENGTH_SHORT)
             this.isEnabled = false
             HandlerUtils.executeFunctionWithDelay(Consts.SHORT_TOAST_DURATION) {
                 this.isEnabled = true

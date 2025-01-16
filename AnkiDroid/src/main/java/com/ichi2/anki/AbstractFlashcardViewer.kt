@@ -572,7 +572,7 @@ abstract class AbstractFlashcardViewer :
 
     override fun setupBackPressedCallbacks() {
         onBackPressedDispatcher.addCallback(this, defaultOnBackCallback)
-        onBackPressedDispatcher.addCallback(this, exitViaDoubleTapBackCallback(R.string.back_pressed_once_reviewer))
+        onBackPressedDispatcher.addCallback(this, exitViaDoubleTapBackCallback())
         super.setupBackPressedCallbacks()
     }
 
