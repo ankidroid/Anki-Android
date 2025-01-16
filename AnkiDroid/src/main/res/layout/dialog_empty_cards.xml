@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~  Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
+  ~
+  ~  This program is free software; you can redistribute it and/or modify it under
+  ~  the terms of the GNU General Public License as published by the Free Software
+  ~  Foundation; either version 3 of the License, or (at your option) any later
+  ~  version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  ~  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License along with
+  ~  this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/side_margin"
+    android:paddingEnd="@dimen/side_margin"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--Dialog Message-->
+    <com.ichi2.ui.FixedTextView
+        android:id="@+id/dialog_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingStart="8dp"
+        android:paddingBottom="8dp"
+        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+        tools:text="Cards to delete: 123"/>
+
+
+    <CheckBox
+        android:id="@+id/empty_cards_preserve_notes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        tools:text="Keep notes with no valid cards"
+        />
+
+</LinearLayout>

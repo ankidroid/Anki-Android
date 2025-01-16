@@ -26,9 +26,13 @@ import com.ichi2.anki.DeckPicker
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.emptyCids
 import com.ichi2.libanki.undoableOp
+import com.ichi2.libanki.utils.extend
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
+import java.io.Serializable
+import anki.card_rendering.EmptyCardsReport as BackendEmptyCardsReport
 
 /** @see [DeckPicker] */
 class DeckPickerViewModel : ViewModel() {
@@ -80,18 +84,36 @@ class DeckPickerViewModel : ViewModel() {
             deleteDeck(targetDeckId).join()
         }
 
-    /** Returns a list of cards to be passed to [deleteEmptyCards] (after user confirmation) */
-    suspend fun findEmptyCards() = EmptyCards(withCol { emptyCids() })
+    /**
+     * Returns an [EmptyCardsReport] to be passed to [deleteEmptyCards] (after user confirmation)
+     * */
+    suspend fun findEmptyCards() = EmptyCardsReport(withCol { getEmptyCards() })
 
     /**
-     * Removes the provided list of cards from the collection.
-     * @param emptyCards Cards to be deleted, result of [findEmptyCards]
+     * Removes cards in [report] from the collection.
+     *
+     * @param report Cards to be deleted, result of [findEmptyCards]
+     * @param preserveNotes If `true`, and a note in [report] would be removed,
+     * retain the first card
      */
-    fun deleteEmptyCards(emptyCards: EmptyCards) =
-        viewModelScope.launch {
-            val result = undoableOp { removeCardsAndOrphanedNotes(emptyCards) }
-            emptyCardsNotification.emit(EmptyCardsResult(cardsDeleted = result.count))
+    fun deleteEmptyCards(
+        report: EmptyCardsReport,
+        preserveNotes: Boolean,
+    ) = viewModelScope.launch {
+        // https://github.com/ankitects/anki/blob/39e293b27d36318e00131fd10144755eec8d1922/qt/aqt/emptycards.py#L98-L109
+        val toDelete = mutableListOf<CardId>()
+
+        for (note in report.innerReport.notesList) {
+            if (preserveNotes && note.willDeleteNote) {
+                // leave first card
+                toDelete.extend(note.cardIdsList.drop(1))
+            } else {
+                toDelete.extend(note.cardIdsList)
+            }
         }
+        val result = undoableOp { removeCardsAndOrphanedNotes(toDelete) }
+        emptyCardsNotification.emit(EmptyCardsResult(cardsDeleted = result.count))
+    }
 }
 
 /** Result of [DeckPickerViewModel.deleteDeck] */
@@ -114,10 +136,10 @@ data class DeckDeletionResult(
 /**
  * Result of [DeckPickerViewModel.findEmptyCards], used in [DeckPickerViewModel.deleteEmptyCards]
  */
-@JvmInline
-value class EmptyCards(
-    val cards: List<CardId>,
-) : List<CardId> by cards
+class EmptyCardsReport(
+    val innerReport: BackendEmptyCardsReport,
+) : List<CardId> by innerReport.emptyCids(),
+    Serializable
 
 /** Result of [DeckPickerViewModel.deleteEmptyCards] */
 data class EmptyCardsResult(

@@ -65,6 +65,7 @@ import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
+import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.core.util.component1
 import androidx.core.util.component2
@@ -108,6 +109,7 @@ import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.DeckDeletionResult
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
+import com.ichi2.anki.deckpicker.EmptyCardsReport
 import com.ichi2.anki.deckpicker.EmptyCardsResult
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
@@ -123,6 +125,7 @@ import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceLeftDialog
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialog
+import com.ichi2.anki.dialogs.EmptyCardsDialog
 import com.ichi2.anki.dialogs.ImportDialog.ImportDialogListener
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ApkgImportResultLauncherProvider
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.CsvImportResultLauncherProvider
@@ -155,6 +158,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.widgets.DeckAdapter
@@ -195,6 +199,7 @@ import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
+import com.ichi2.utils.requireBoolean
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import com.ichi2.widget.WidgetStatus
@@ -593,6 +598,18 @@ open class DeckPicker :
                         fragment!!.refreshInterface()
                     }
                     updateDeckList()
+                }
+            }
+        }
+
+        supportFragmentManager.setFragmentResultListener(EmptyCardsDialog.REQUEST_KEY, this) { _, bundle ->
+            val report = BundleCompat.getSerializable(bundle, EmptyCardsDialog.RESULT_REPORT_KEY, EmptyCardsReport::class.java)!!
+            val keepNotes = bundle.requireBoolean(EmptyCardsDialog.RESULT_KEEP_NOTES_KEY)
+
+            Timber.i("Handling Empty Cards request. %d cards, keepNotes: %b", report.size, keepNotes)
+            launchCatchingTask {
+                withProgress(TR.emptyCardsDeleting()) {
+                    viewModel.deleteEmptyCards(report, keepNotes).join()
                 }
             }
         }
@@ -2505,26 +2522,19 @@ open class DeckPicker :
 
     private fun handleEmptyCards() {
         launchCatchingTask {
-            val emptyCards =
+            val emptyCardsReport =
                 withProgress(R.string.emtpy_cards_finding) {
                     viewModel.findEmptyCards()
                 }
-            AlertDialog.Builder(this@DeckPicker).show {
-                setTitle(TR.emptyCardsWindowTitle())
-                if (emptyCards.isEmpty()) {
+            if (emptyCardsReport.isEmpty()) {
+                AlertDialog.Builder(this@DeckPicker).show {
+                    setTitle(TR.emptyCardsWindowTitle().toSentenceCase(context, R.string.sentence_empty_cards))
                     setMessage(TR.emptyCardsNotFound())
                     setPositiveButton(R.string.dialog_ok) { _, _ -> }
-                } else {
-                    setMessage(getString(R.string.empty_cards_count, emptyCards.size))
-                    setPositiveButton(R.string.dialog_positive_delete) { _, _ ->
-                        launchCatchingTask {
-                            withProgress(TR.emptyCardsDeleting()) {
-                                viewModel.deleteEmptyCards(emptyCards).join()
-                            }
-                        }
-                    }
-                    setNegativeButton(R.string.dialog_cancel) { _, _ -> }
                 }
+            } else {
+                val emptyCardsDialog = EmptyCardsDialog.createInstance(emptyCardsReport)
+                showDialogFragment(emptyCardsDialog)
             }
         }
     }
