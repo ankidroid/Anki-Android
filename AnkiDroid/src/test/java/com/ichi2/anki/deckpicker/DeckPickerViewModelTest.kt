@@ -119,6 +119,21 @@ class DeckPickerViewModelTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun `empty filtered - undoable`() {
+        runTest {
+            val filteredDeckId = moveAllCardsToFilteredDeck()
+
+            // ChangeManager assert
+            ensureOpsExecuted(1) {
+                viewModel.emptyFilteredDeck(filteredDeckId).join()
+            }
+
+            // backend assert
+            assertThat("col undo status", col.undoStatus().undo, equalTo("Empty"))
+        }
+    }
+
     @CheckResult
     private suspend fun createEmptyCards(): List<CardId> {
         addNoteUsingNoteTypeName("Cloze", "{{c1::Hello}} {{c2::World}}", "").apply {
