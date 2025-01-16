@@ -56,6 +56,7 @@ class PrefsTest {
         assertThat(setting, equalTo("newValue"))
     }
 
+    // FIXME delegated properties aren't being parsed
     @Test
     fun `getters and setters use the same key`() {
         val settingsSpy = spy(Prefs)

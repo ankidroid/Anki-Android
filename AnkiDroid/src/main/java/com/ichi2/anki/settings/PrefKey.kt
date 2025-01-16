@@ -23,6 +23,9 @@ object PrefKey {
 
     // **************************************** Reviewer **************************************** //
     const val FRAME_STYLE = "reviewerFrameStyle"
+    const val HIDE_SYSTEM_BARS = "hideSystemBars"
+    const val IGNORE_DISPLAY_CUTOUT = "ignoreDisplayCutout"
+    const val AUTO_FOCUS_TYPE_ANSWER = "autoFocusTypeInAnswer"
 
     // ************************************** Accessibility ************************************* //
     const val ANSWER_BUTTON_SIZE = "answerButtonSize"
