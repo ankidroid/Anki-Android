@@ -25,8 +25,6 @@ import androidx.fragment.app.commit
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
-import com.ichi2.utils.ExtendedFragmentFactory
 import com.ichi2.utils.FragmentFactoryUtils
 import timber.log.Timber
 import kotlin.reflect.KClass
@@ -46,12 +44,6 @@ open class SingleFragmentActivity : AnkiActivity() {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-
-        // This page *may* host the CustomStudyDialog (CongratsPage)
-        // CustomStudyDialog requires a custom factory install during lifecycle or it can
-        // crash during lifecycle resume after background kill
-        val customStudyDialogFactory = CustomStudyDialogFactory { this.getColUnsafe }
-        customStudyDialogFactory.attachToActivity<ExtendedFragmentFactory>(this)
 
         super.onCreate(savedInstanceState)
         if (!ensureStoragePermissions()) {

@@ -49,7 +49,6 @@ import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.Utils
-import com.ichi2.utils.FragmentFactoryUtils.instantiate
 import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -256,10 +255,8 @@ class StudyOptionsFragment :
      * Show the context menu for the custom study options
      */
     private fun showCustomStudyContextMenu() {
-        val activity = requireActivity()
-        val contextMenu = instantiate(activity, CustomStudyDialog::class.java)
-        contextMenu.withArguments(col!!.decks.selected())
-        activity.showDialogFragment(contextMenu)
+        val dialog = CustomStudyDialog.createInstance(deckId = col!!.decks.selected())
+        requireActivity().showDialogFragment(dialog)
     }
 
     override fun onMenuItemSelected(item: MenuItem): Boolean {

@@ -26,10 +26,8 @@ import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.ui.RtlCompliantActionProvider
-import com.ichi2.utils.ExtendedFragmentFactory
 import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.launch
 
@@ -43,8 +41,6 @@ class StudyOptionsActivity :
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-        val customStudyDialogFactory = CustomStudyDialogFactory { this.getColUnsafe }
-        customStudyDialogFactory.attachToActivity<ExtendedFragmentFactory>(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.studyoptions)
         enableToolbar().apply { title = "" }

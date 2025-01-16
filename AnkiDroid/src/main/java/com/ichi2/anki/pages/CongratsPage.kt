@@ -28,7 +28,6 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
 import com.google.android.material.appbar.MaterialToolbar
-import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
@@ -137,12 +136,10 @@ class CongratsPage :
     }
 
     private fun onStudyMore() {
-        val col = CollectionManager.getColUnsafe()
-        val dialogFragment =
-            CustomStudyDialog(CollectionManager.getColUnsafe()).withArguments(
-                col.decks.selected(),
-            )
-        dialogFragment.show(childFragmentManager, null)
+        launchCatchingTask {
+            val customStudy = CustomStudyDialog.createInstance(deckId = withCol { decks.selected() })
+            customStudy.show(childFragmentManager, null)
+        }
     }
 
     companion object {

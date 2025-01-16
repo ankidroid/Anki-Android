@@ -27,13 +27,13 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.scheduler.CustomStudyDefaultsResponse
 import anki.scheduler.customStudyDefaultsResponse
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.Companion.toDomainModel
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
@@ -50,7 +50,6 @@ import org.intellij.lang.annotations.Language
 import org.json.JSONObject
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.kotlin.mock
 import org.robolectric.annotation.Config
 import kotlin.test.assertNotNull
 
@@ -138,7 +137,7 @@ class CustomStudyDialogTest : RobolectricTest() {
         // ensure 'newExtendByValue' is used by our UI
         withCustomStudyFragment(
             args = argumentsDisplayingSubscreen(ContextMenuOption.EXTEND_NEW),
-        ) { dialogFragment: CustomStudyDialog ->
+        ) {
             onSubscreenEditText()
                 .check(matches(withText(newExtendByValue.toString())))
         }
@@ -148,11 +147,9 @@ class CustomStudyDialogTest : RobolectricTest() {
     @Config(qualifiers = "en")
     fun `'increase new limit' is shown when there are new cards`() {
         val studyDefaults = customStudyDefaultsResponse { availableNew = 1 }
+        CollectionManager.setColForTests(mockCollectionWithSchedulerReturning(studyDefaults))
 
-        withCustomStudyFragment(
-            args = argumentsDisplayingMainScreen(),
-            factory = dialogFactory(col = mockCollectionWithSchedulerReturning(studyDefaults)),
-        ) { dialogFragment: CustomStudyDialog ->
+        withCustomStudyFragment(args = argumentsDisplayingMainScreen()) {
             onView(withText(TR.customStudyIncreaseTodaysNewCardLimit()))
                 .inRoot(isDialog())
                 .check(matches(isEnabled()))
@@ -163,11 +160,9 @@ class CustomStudyDialogTest : RobolectricTest() {
     @Config(qualifiers = "en")
     fun `'increase new limit' is not shown when there are no new cards`() {
         val studyDefaults = customStudyDefaultsResponse { availableNew = 0 }
+        CollectionManager.setColForTests(mockCollectionWithSchedulerReturning(studyDefaults))
 
-        withCustomStudyFragment(
-            args = argumentsDisplayingMainScreen(),
-            factory = dialogFactory(col = mockCollectionWithSchedulerReturning(studyDefaults)),
-        ) { dialogFragment: CustomStudyDialog ->
+        withCustomStudyFragment(args = argumentsDisplayingMainScreen()) {
             onView(withText(TR.customStudyIncreaseTodaysNewCardLimit()))
                 .inRoot(isDialog())
                 .check(matches(not(isEnabled())))
@@ -178,11 +173,9 @@ class CustomStudyDialogTest : RobolectricTest() {
     @Config(qualifiers = "en")
     fun `'increase review limit' is shown when there are new cards`() {
         val studyDefaults = customStudyDefaultsResponse { availableReview = 1 }
+        CollectionManager.setColForTests(mockCollectionWithSchedulerReturning(studyDefaults))
 
-        withCustomStudyFragment(
-            args = argumentsDisplayingMainScreen(),
-            factory = dialogFactory(col = mockCollectionWithSchedulerReturning(studyDefaults)),
-        ) { dialogFragment: CustomStudyDialog ->
+        withCustomStudyFragment(args = argumentsDisplayingMainScreen()) {
             onView(withText(TR.customStudyIncreaseTodaysReviewCardLimit()))
                 .inRoot(isDialog())
                 .check(matches(isEnabled()))
@@ -193,11 +186,9 @@ class CustomStudyDialogTest : RobolectricTest() {
     @Config(qualifiers = "en")
     fun `'increase review limit' is not shown when there are no new cards`() {
         val studyDefaults = customStudyDefaultsResponse { availableReview = 0 }
+        CollectionManager.setColForTests(mockCollectionWithSchedulerReturning(studyDefaults))
 
-        withCustomStudyFragment(
-            args = argumentsDisplayingMainScreen(),
-            factory = dialogFactory(col = mockCollectionWithSchedulerReturning(studyDefaults)),
-        ) { dialogFragment: CustomStudyDialog ->
+        withCustomStudyFragment(args = argumentsDisplayingMainScreen()) {
             onView(withText(TR.customStudyIncreaseTodaysReviewCardLimit()))
                 .inRoot(isDialog())
                 .check(matches(not(isEnabled())))
@@ -209,10 +200,9 @@ class CustomStudyDialogTest : RobolectricTest() {
      */
     private fun withCustomStudyFragment(
         args: Bundle,
-        factory: CustomStudyDialogFactory = dialogFactory(),
         block: (CustomStudyDialog) -> Unit,
     ) {
-        AnkiFragmentScenario.launch(CustomStudyDialog::class.java, args, factory).use { scenario ->
+        AnkiFragmentScenario.launch(CustomStudyDialog::class.java, args).use { scenario ->
             scenario.onFragment { dialogFragment: CustomStudyDialog ->
                 block(dialogFragment)
             }
@@ -227,28 +217,21 @@ class CustomStudyDialogTest : RobolectricTest() {
                 }
         }
 
-    private fun dialogFactory(col: Collection? = null) = CustomStudyDialogFactory { col ?: this.col }
-
-    private fun argumentsDisplayingMainScreen() =
-        CustomStudyDialog(mock())
-            .displayingMainScreen()
-            .requireArguments()
-
-    @Suppress("SameParameterValue")
     private fun argumentsDisplayingSubscreen(subscreen: ContextMenuOption) =
-        CustomStudyDialog(mock())
-            .displayingSubscreen(subscreen)
-            .requireArguments()
-
-    private fun CustomStudyDialog.displayingSubscreen(subscreen: ContextMenuOption) =
-        withArguments(
-            did = Consts.DEFAULT_DECK_ID,
-            contextMenuAttribute = subscreen,
+        requireNotNull(
+            CustomStudyDialog
+                .createInstance(
+                    deckId = Consts.DEFAULT_DECK_ID,
+                    contextMenuAttribute = subscreen,
+                ).arguments,
         )
 
-    private fun CustomStudyDialog.displayingMainScreen() =
-        withArguments(
-            did = Consts.DEFAULT_DECK_ID,
+    private fun argumentsDisplayingMainScreen() =
+        requireNotNull(
+            CustomStudyDialog
+                .createInstance(
+                    deckId = Consts.DEFAULT_DECK_ID,
+                ).arguments,
         )
 
     private fun onSubscreenEditText() =
