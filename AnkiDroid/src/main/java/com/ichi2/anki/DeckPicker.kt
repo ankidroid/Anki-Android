@@ -2662,7 +2662,7 @@ open class DeckPicker :
         changes: OpChanges,
         handler: Any?,
     ) {
-        if (changes.studyQueues && handler !== this) {
+        if (changes.studyQueues && handler !== this && handler !== viewModel) {
             invalidateOptionsMenu()
             if (!activityPaused) {
                 // No need to update while the activity is paused, because `onResume` calls `refreshState` that calls `updateDeckList`.

@@ -449,9 +449,7 @@ open class Scheduler(
     /** Remove all cards from a dynamic deck
      * @param did The deck to empty. 0 means current deck.
      */
-    open fun emptyDyn(did: DeckId) {
-        col.backend.emptyFilteredDeck(did)
-    }
+    open fun emptyDyn(did: DeckId) = col.backend.emptyFilteredDeck(did)
 
     fun deckDueTree(): DeckNode = deckTree(true)
 

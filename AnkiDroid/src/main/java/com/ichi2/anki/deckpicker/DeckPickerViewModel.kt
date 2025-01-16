@@ -102,12 +102,11 @@ class DeckPickerViewModel : ViewModel() {
         }
 
     // TODO: move withProgress to the ViewModel, so we don't return 'Job'
-    // TODO: undoableOp { } on emptyDyn
     fun emptyFilteredDeck(deckId: DeckId): Job =
         viewModelScope.launch {
             Timber.i("empty filtered deck %s", deckId)
             withCol { decks.select(deckId) }
-            withCol { sched.emptyDyn(decks.selected()) }
+            undoableOp { sched.emptyDyn(decks.selected()) }
             flowOfDeckCountsChanged.emit(Unit)
         }
 }
