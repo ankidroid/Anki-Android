@@ -99,7 +99,7 @@ else
     classDir += "Debug"
 
 // Our merge report task
-def testReport = tasks.register('jacocoTestReport', JacocoReport) {
+tasks.register('jacocoTestReport', JacocoReport) {
     def htmlOutDir = project.layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
 
     doLast {
@@ -120,14 +120,12 @@ def testReport = tasks.register('jacocoTestReport', JacocoReport) {
             '**/*.exec',
             '**/*.ec'
     ])
-}
-testReport.configure {
     dependsOn('testPlayDebugUnitTest')
     dependsOn("connectedPlay${rootProject.androidTestVariantName}AndroidTest")
 }
 
 // A unit-test only report task
-def unitTestReport = tasks.register('jacocoUnitTestReport', JacocoReport) {
+tasks.register('jacocoUnitTestReport', JacocoReport) {
     def htmlOutDir = layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
 
     doLast {
@@ -148,11 +146,11 @@ def unitTestReport = tasks.register('jacocoUnitTestReport', JacocoReport) {
             '**/*.exec'
 
     ])
+    dependsOn('testPlayDebugUnitTest')
 }
-unitTestReport.configure { dependsOn('testPlayDebugUnitTest') }
 
 // A connected android tests only report task
-def androidTestReport = tasks.register('jacocoAndroidTestReport', JacocoReport) {
+tasks.register('jacocoAndroidTestReport', JacocoReport) {
     def htmlOutDir = layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
 
     doLast {
@@ -172,9 +170,8 @@ def androidTestReport = tasks.register('jacocoAndroidTestReport', JacocoReport) 
     executionData.from = fileTree(dir: project.layout.buildDirectory, includes: [
             '**/*.ec'
     ])
+    dependsOn("connectedPlay${rootProject.androidTestVariantName}AndroidTest")
 }
-
-androidTestReport.configure { dependsOn("connectedPlay${rootProject.androidTestVariantName}AndroidTest") }
 
 // Issue 16640 - some emulators run, but register zero coverage
 tasks.register('assertNonzeroAndroidTestCoverage') {
