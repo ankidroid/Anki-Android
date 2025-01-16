@@ -86,7 +86,7 @@ object PreferenceTestUtils {
         @XmlRes xml: Int,
     ): List<Fragment> {
         val fragments = getFragmentsFromXml(context, xml).toMutableList()
-        for (fragment in fragments.filterIsInstance<SettingsFragment>()) {
+        for (fragment in fragments.filterIsInstance<PreferenceXmlSource>()) {
             fragments.addAll(getFragmentsFromXmlRecursively(context, fragment.preferenceResource))
         }
         return fragments.toList()
@@ -98,7 +98,7 @@ object PreferenceTestUtils {
         return fragments.distinctBy { it::class } // and remove any repeated fragments
     }
 
-    private fun attrValueToString(
+    fun attrValueToString(
         value: String,
         context: Context,
     ): String =
@@ -115,7 +115,7 @@ object PreferenceTestUtils {
 
     fun getAllPreferenceKeys(context: Context): Set<String> =
         getAllPreferencesFragments(context)
-            .filterIsInstance<SettingsFragment>()
+            .filterIsInstance<PreferenceXmlSource>()
             .map { it.preferenceResource }
             .flatMapTo(hashSetOf()) { getKeysFromXml(context, it) }
 
@@ -125,4 +125,6 @@ object PreferenceTestUtils {
         keys.remove("appBarButtonsScreen")
         return keys
     }
+
+    fun getDevOptionsKeys(context: Context): Set<String> = getKeysFromXml(context, R.xml.preferences_dev_options).toSet()
 }

@@ -29,6 +29,7 @@ import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.compat.CompatHelper
@@ -59,8 +60,7 @@ class HeaderFragment :
         }
 
         requirePreference<Preference>(R.string.pref_dev_options_screen_key)
-            .isVisible = DevOptionsFragment.isEnabled(requireContext())
-
+            .isVisible = Prefs.isDevOptionsEnabled
         configureSearchBar(
             requireActivity() as AppCompatActivity,
             requirePreference<SearchPreference>(R.string.search_preference_key).searchConfiguration,
@@ -141,7 +141,7 @@ class HeaderFragment :
             // so they should be searchable based on the same conditions
 
             /** From [HeaderFragment.onCreatePreferences] */
-            if (DevOptionsFragment.isEnabled(activity)) {
+            if (Prefs.isDevOptionsEnabled) {
                 searchConfiguration.index(R.xml.preferences_dev_options)
                 /** From [DevOptionsFragment.initSubscreen] */
                 if (BuildConfig.DEBUG) {

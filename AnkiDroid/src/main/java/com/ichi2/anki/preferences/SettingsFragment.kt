@@ -34,11 +34,12 @@ abstract class SettingsFragment :
     PreferenceFragmentCompat(),
     OnPreferenceTreeClickListener,
     SharedPreferences.OnSharedPreferenceChangeListener,
-    TitleProvider {
+    TitleProvider,
+    PreferenceXmlSource {
     /** @return The XML file which defines the preferences displayed by this PreferenceFragment
      */
     @get:XmlRes
-    abstract val preferenceResource: Int
+    abstract override val preferenceResource: Int
 
     override val title: CharSequence
         get() = preferenceManager?.preferenceScreen?.title ?: ""
@@ -155,4 +156,9 @@ abstract class SettingsFragment :
                 else -> null
             }
     }
+}
+
+interface PreferenceXmlSource {
+    @get:XmlRes
+    val preferenceResource: Int
 }

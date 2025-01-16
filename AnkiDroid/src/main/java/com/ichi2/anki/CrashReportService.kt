@@ -30,6 +30,7 @@ import com.ichi2.anki.exception.ManuallyReportedException
 import com.ichi2.anki.exception.UserSubmittedException
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ThrowableFilterService
+import com.ichi2.anki.settings.PrefKey
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.WebViewDebugging.setDataDirectorySuffix
 import org.acra.ACRA
@@ -92,7 +93,7 @@ object CrashReportService {
         val builder =
             CoreConfigurationBuilder()
                 .withBuildConfigClass(com.ichi2.anki.BuildConfig::class.java) // AnkiDroid BuildConfig - Acrarium#319
-                .withExcludeMatchingSharedPreferencesKeys("username", "hkey")
+                .withExcludeMatchingSharedPreferencesKeys(PrefKey.USERNAME, "hkey")
                 .withSharedPreferencesName("acra")
                 .withReportContent(
                     ReportField.REPORT_ID,

@@ -30,6 +30,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.settings.PrefKey
 import com.ichi2.utils.DisplayUtils
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.WebViewDebugging.hasSetDataDirectory
@@ -488,7 +489,7 @@ object UsageAnalytics {
             "doubleTapTimeInterval", // Double tap time interval (milliseconds)
             // ******************************** Sync ***************************************************
             "syncFetchMedia", // Fetch media on sync
-            "automaticSyncMode", // Automatic synchronization
+            PrefKey.AUTO_SYNC, // Automatic synchronization
             "showSyncStatusBadge", // Display synchronization status
             "allowMetered", // Allow sync on metered connections
             "one_way_sync", // One-way sync
@@ -569,7 +570,7 @@ object UsageAnalytics {
             // ******************************** Accessibility ******************************************
             "cardZoom",
             "imageZoom",
-            "answerButtonSize",
+            PrefKey.ANSWER_BUTTON_SIZE,
             "showLargeAnswerButtons",
             "relativeCardBrowserFontSize",
             "showCardAnswerButtonTime",

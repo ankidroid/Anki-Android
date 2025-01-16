@@ -28,7 +28,7 @@ import org.robolectric.Robolectric
 import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
-class SettingsSearchBarTest : RobolectricTest() {
+class PrefsSearchBarTest : RobolectricTest() {
     @Test
     @Suppress("UNCHECKED_CAST")
     fun `All indexed XML resIDs lead to the correct fragments on getFragmentFromXmlRes`() {

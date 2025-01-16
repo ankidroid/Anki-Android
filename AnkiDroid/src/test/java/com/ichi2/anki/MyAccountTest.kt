@@ -21,14 +21,22 @@ import android.content.Intent
 import android.widget.Button
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.android.material.textfield.TextInputEditText
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.ui.TextInputEditField
 import junit.framework.TestCase.assertFalse
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class MyAccountTest : RobolectricTest() {
+    @Before
+    fun setup() {
+        Prefs.username = ""
+        Prefs.hkey = ""
+    }
+
     @Test
     fun testLoginEmailPasswordProvided() {
         val myAccount =

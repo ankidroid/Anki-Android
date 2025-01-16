@@ -25,7 +25,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.edit
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.AnkiActivity
@@ -35,6 +34,7 @@ import com.ichi2.anki.Info
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.servicelayer.DebugInfoService
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.utils.IntentUtil
 import com.ichi2.utils.VersionUtils.pkgVersionName
@@ -150,7 +150,7 @@ class AboutFragment :
         private val clickLimit = 6
 
         override fun onClick(view: View) {
-            if (DevOptionsFragment.isEnabled(view.context)) {
+            if (Prefs.isDevOptionsEnabled) {
                 return
             }
             if (++clickCount == clickLimit) {
@@ -173,9 +173,7 @@ class AboutFragment :
         }
 
         fun enableDevOptions(context: Context) {
-            context.sharedPrefs().edit {
-                putBoolean(context.getString(R.string.dev_options_enabled_by_user_key), true)
-            }
+            Prefs.isDevOptionsEnabled = true
             fragment.requireActivity().recreate()
             showThemedToast(context, R.string.dev_options_enabled_msg, shortLength = true)
         }
