@@ -27,8 +27,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import androidx.annotation.IdRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.ThemeUtils
 import androidx.core.view.isVisible
@@ -41,6 +43,7 @@ import com.ichi2.anki.utils.android.darkenColor
 import com.ichi2.anki.utils.android.lightenColorAbsolute
 import com.ichi2.anki.utils.ext.findViewById
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.utils.removeChildren
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
 import kotlin.math.abs
@@ -72,9 +75,41 @@ class BrowserMultiColumnAdapter(
         holder: View,
     ) : RecyclerView.ViewHolder(holder) {
         var id: CardOrNoteId? = null
+        private val mainView = findViewById<LinearLayout>(R.id.card_item_browser)
         private val checkBoxView = findViewById<CheckBox>(R.id.card_checkbox)
-        private val firstColumnView = findViewById<TextView>(R.id.card_sfld)
-        private val secondColumnView = findViewById<TextView>(R.id.card_column2)
+
+        val columnViews = mutableListOf<TextView>()
+
+        var numberOfColumns: Int = 0
+            set(value) {
+                if (field == value) return
+                field = value
+                // remove the past set of columns
+                mainView.removeChildren { it !is CheckBox }
+                columnViews.clear()
+
+                val layoutInflater = LayoutInflater.from(mainView.context)
+
+                // inflates and returns the inflated view
+                fun inflate(
+                    @IdRes id: Int,
+                ) = layoutInflater.inflate(id, mainView, false).apply {
+                    mainView.addView(this)
+                }
+
+                // recreate the columns and the dividers
+                (1..value).map { index ->
+                    inflate(R.layout.browse_column_cell).apply {
+                        columnViews.add(this as TextView)
+                    }
+
+                    if (index <= value) {
+                        inflate(R.layout.browse_column_divider)
+                    }
+                }
+
+                columnViews.forEach { it.setupTextSize() }
+            }
 
         init {
             this.itemView.setOnClickListener {
@@ -96,22 +131,7 @@ class BrowserMultiColumnAdapter(
                     onTap(id)
                 }
             }
-
-            firstColumnView.setupTextSize()
-            secondColumnView.setupTextSize()
         }
-
-        var firstColumn: CharSequence?
-            get() = firstColumnView.text
-            set(value) {
-                firstColumnView.text = value
-            }
-
-        var secondColumn: CharSequence?
-            get() = secondColumnView.text
-            set(value) {
-                secondColumnView.text = value
-            }
 
         fun setInMultiSelect(inMultiSelect: Boolean) {
             checkBoxView.isVisible = inMultiSelect
@@ -150,13 +170,11 @@ class BrowserMultiColumnAdapter(
         }
 
         fun setIsTruncated(truncated: Boolean) {
-            firstColumnView.setIsTruncated(truncated)
-            secondColumnView.setIsTruncated(truncated)
+            columnViews.forEach { it.setIsTruncated(truncated) }
         }
 
         fun setIsDeleted(isDeleted: Boolean) {
-            firstColumnView.setStrikeThrough(isDeleted)
-            secondColumnView.setStrikeThrough(isDeleted)
+            columnViews.forEach { it.setStrikeThrough(isDeleted) }
         }
 
         private fun TextView.setIsTruncated(isTruncated: Boolean) {
@@ -226,14 +244,16 @@ class BrowserMultiColumnAdapter(
                     input = row.getCells(columnIndex).text,
                     showMediaFilenames = viewModel.showMediaFilenames,
                 )
-            holder.firstColumn = renderColumn(0)
-            holder.secondColumn = renderColumn(1)
+            holder.numberOfColumns = row.cellsCount
+
+            for (i in 0 until row.cellsCount) {
+                holder.columnViews[i].text = renderColumn(i)
+            }
             holder.setIsSelected(isSelected)
             holder.setColor(backendColorToColor(row.color))
             holder.setIsDeleted(false)
         } catch (e: BackendException) {
-            holder.firstColumn = e.localizedMessage
-            holder.secondColumn = e.localizedMessage
+            holder.columnViews.forEach { it.text = e.localizedMessage }
             // deleted rows cannot be selected
             holder.setColor(backendColorToColor(Color.UNRECOGNIZED))
             // deleted rows may not be selected

@@ -222,6 +222,12 @@
         <item name="materialAlertDialogBodyTextStyle">@style/AnkiDroid.AlertDialog.Body.Text</item>
     </style>
 
+    <style name="ThemeOverlay.AnkiDroid.AlertDialog.FullScreen" parent="ThemeOverlay.AnkiDroid.AlertDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowBackground">?android:attr/colorBackground</item>
+    </style>
+
     <style name="AnkiDroid.AlertDialog.Body.Text" parent="MaterialAlertDialog.Material3.Body.Text">
         <!-- The default style uses onSurfaceVariant, which isn't defined yet -->
         <item name="android:textColor">?android:attr/textColor</item>
@@ -246,5 +252,4 @@
     <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
         <item name="android:navigationBarColor" tools:ignore="NewApi">@android:color/transparent</item>
     </style>
-
 </resources>
