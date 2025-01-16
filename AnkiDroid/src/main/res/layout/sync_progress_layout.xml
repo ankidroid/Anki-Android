@@ -8,8 +8,8 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/button"
-        android:layout_width="@dimen/touch_target"
-        android:layout_height="@dimen/touch_target"
+        android:layout_width="?minTouchTargetSize"
+        android:layout_height="?minTouchTargetSize"
         app:srcCompat="@drawable/ic_sync"
         style="@android:style/Widget.ActionButton"
         android:tooltipText="@string/button_sync"
