@@ -133,7 +133,6 @@ import com.ichi2.anki.dialogs.SyncErrorDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.SyncErrorDialog.SyncErrorDialogListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.export.ExportDialogsFactory
@@ -177,7 +176,6 @@ import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.ClipboardUtil.IMPORT_MIME_TYPES
-import com.ichi2.utils.FragmentFactoryUtils
 import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.ImportUtils.ImportResult
@@ -329,7 +327,6 @@ open class DeckPicker :
 
     private var toolbarSearchItem: MenuItem? = null
     private var toolbarSearchView: AccessibleSearchView? = null
-    private lateinit var customStudyDialogFactory: CustomStudyDialogFactory
 
     override val permissionScreenLauncher = recreateActivityResultLauncher()
 
@@ -476,7 +473,6 @@ open class DeckPicker :
             return
         }
         exportingDelegate = ActivityExportingDelegate(this) { getColUnsafe }
-        customStudyDialogFactory = CustomStudyDialogFactory { getColUnsafe }.attachToActivity(this)
 
         // Then set theme and content view
         super.onCreate(savedInstanceState)
@@ -585,10 +581,12 @@ open class DeckPicker :
         supportFragmentManager.setFragmentResultListener(CustomStudyAction.REQUEST_KEY, this) { requestKey, bundle ->
             when (CustomStudyAction.fromBundle(bundle)) {
                 CustomStudyAction.CUSTOM_STUDY_SESSION -> {
+                    Timber.d("Custom study created")
                     updateDeckList()
                     openStudyOptions(false)
                 }
                 CustomStudyAction.EXTEND_STUDY_LIMITS -> {
+                    Timber.d("Study limits updated")
                     if (fragmented) {
                         fragment!!.refreshInterface()
                     }
@@ -694,9 +692,7 @@ open class DeckPicker :
             }
             DeckPickerContextMenuOption.CUSTOM_STUDY -> {
                 Timber.i("ContextMenu: Custom study option selected")
-                val d = FragmentFactoryUtils.instantiate(this, CustomStudyDialog::class.java)
-                d.withArguments(deckId)
-                showDialogFragment(d)
+                showDialogFragment(CustomStudyDialog.createInstance(deckId))
             }
             DeckPickerContextMenuOption.CREATE_SHORTCUT -> {
                 Timber.i("ContextMenu: Create icon for a deck")
