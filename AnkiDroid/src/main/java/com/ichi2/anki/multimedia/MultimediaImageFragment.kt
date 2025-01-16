@@ -547,7 +547,9 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         // Get the WebView and set it visible
         view?.findViewById<WebView>(R.id.multimedia_webview)?.apply {
             visibility = View.VISIBLE
-
+            settings.apply {
+                allowFileAccess = true
+            }
             // Load image based on its MIME type
             // SVGs require special handling due to their XML-based format and rendering complexities.
             // Raster images (e.g., JPG, PNG) can be rendered directly using an <img> tag in HTML.
