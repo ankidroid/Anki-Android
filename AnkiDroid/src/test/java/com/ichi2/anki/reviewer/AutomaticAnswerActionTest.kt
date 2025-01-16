@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.reviewer
 
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.AutomaticAnswerAction.ANSWER_AGAIN
@@ -24,6 +25,7 @@ import com.ichi2.anki.reviewer.AutomaticAnswerAction.ANSWER_HARD
 import com.ichi2.anki.reviewer.AutomaticAnswerAction.BURY_CARD
 import com.ichi2.anki.reviewer.AutomaticAnswerAction.Companion.fromConfigValue
 import com.ichi2.anki.reviewer.AutomaticAnswerAction.SHOW_REMINDER
+import com.ichi2.testutils.JvmTest
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
@@ -31,7 +33,7 @@ import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 
-class AutomaticAnswerActionTest {
+class AutomaticAnswerActionTest : JvmTest() {
     @Test
     fun fromPreferenceValue() {
         assertThat(fromConfigValue(0), equalTo(BURY_CARD))
@@ -60,7 +62,7 @@ class AutomaticAnswerActionTest {
                 on { executeCommand(captor.capture()) } doReturn true
             }
 
-        action.execute(mock)
+        action.execute(mock, TR.studyingAnswerTimeElapsed())
 
         assertThat(captor.firstValue, equalTo(expectedCommand))
     }
