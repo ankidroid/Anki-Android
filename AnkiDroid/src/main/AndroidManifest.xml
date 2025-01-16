@@ -99,6 +99,7 @@
         android:resizeableActivity="true"
         android:supportsRtl="true"
         android:theme="@style/Theme_Light"
+        android:enableOnBackInvokedCallback="true"
         android:manageSpaceActivity="com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity"
         >
         <!-- Probably because of a bug on the framework,
