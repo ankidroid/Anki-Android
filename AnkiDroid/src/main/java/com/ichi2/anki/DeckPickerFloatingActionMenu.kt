@@ -55,11 +55,14 @@ class DeckPickerFloatingActionMenu(
 
     var isFABOpen = false
 
+    var toggleListener: FloatingActionBarToggleListener? = null
+
     @Suppress("unused")
     val isFragmented: Boolean
         get() = studyOptionsFrame != null
 
     private fun showFloatingActionMenu() {
+        toggleListener?.onBeginToggle(isOpening = true)
         deckPicker.activeSnackBar?.dismiss()
         linearLayout.alpha = 0.5f
         studyOptionsFrame?.let { it.alpha = 0.5f }
@@ -141,6 +144,7 @@ class DeckPickerFloatingActionMenu(
      * want to show any type of rise and shrink animation for the FAB so we put the value `false` for the parameter.
      */
     fun closeFloatingActionMenu(applyRiseAndShrinkAnimation: Boolean) {
+        toggleListener?.onBeginToggle(isOpening = false)
         if (applyRiseAndShrinkAnimation) {
             linearLayout.alpha = 1f
             studyOptionsFrame?.let { it.alpha = 1f }
@@ -422,5 +426,10 @@ class DeckPickerFloatingActionMenu(
      */
     private fun addNote() {
         deckPicker.addNote()
+    }
+
+    fun interface FloatingActionBarToggleListener {
+        /** Triggered when the drawer is starting to open/close */
+        fun onBeginToggle(isOpening: Boolean)
     }
 }
