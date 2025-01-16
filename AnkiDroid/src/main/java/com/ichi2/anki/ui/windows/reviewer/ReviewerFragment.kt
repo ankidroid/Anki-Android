@@ -238,7 +238,7 @@ class ReviewerFragment :
                     }
                 }
             }
-        val autoFocusTypeAnswer = sharedPrefs().getBoolean(getString(R.string.type_in_answer_focus_key), true)
+        val autoFocusTypeAnswer = Prefs.autoFocusTypeAnswer
         viewModel.typeAnswerFlow.collectIn(lifecycleScope) { typeInAnswer ->
             typeAnswerEditText.text = null
             if (typeInAnswer == null) {
