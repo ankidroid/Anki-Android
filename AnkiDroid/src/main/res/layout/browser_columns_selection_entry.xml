@@ -66,8 +66,8 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/button_toggle_column"
-        android:layout_width="@dimen/touch_target"
-        android:layout_height="@dimen/touch_target"
+        android:layout_width="?minTouchTargetSize"
+        android:layout_height="?minTouchTargetSize"
         style="@android:style/Widget.ActionButton"
         android:padding="8dp"
         tools:srcCompat="@drawable/ic_add"

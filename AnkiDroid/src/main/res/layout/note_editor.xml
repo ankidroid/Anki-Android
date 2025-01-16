@@ -48,7 +48,7 @@
                     <Spinner
                         android:id="@+id/note_type_spinner"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/touch_target"
+                        android:layout_height="?minTouchTargetSize"
                         />
                 </LinearLayout>
 
