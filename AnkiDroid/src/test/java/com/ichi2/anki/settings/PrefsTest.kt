@@ -15,31 +15,37 @@
  */
 package com.ichi2.anki.settings
 
+import android.content.SharedPreferences
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
 import com.ichi2.anki.AnkiDroidApp
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mockito.anyBoolean
 import org.mockito.Mockito.anyString
 import org.mockito.Mockito.doAnswer
 import org.mockito.Mockito.spy
+import org.mockito.kotlin.anyOrNull
 import org.mockito.kotlin.whenever
 import kotlin.reflect.KMutableProperty
 import kotlin.reflect.KVisibility
 import kotlin.reflect.full.memberProperties
 
-class PrefsTest {
-    @BeforeEach
-    fun setup() {
-        AnkiDroidApp.sharedPreferencesTestingOverride =
-            SPMockBuilder().createSharedPreferences()
+class PrefsTest : OnSharedPreferenceChangeListener {
+    private var lastSetKey: String? = null
+
+    override fun onSharedPreferenceChanged(
+        sharedPreferences: SharedPreferences?,
+        key: String?,
+    ) {
+        lastSetKey = key
     }
 
     @Test
     fun `booleanSetting getter and setter work`() {
+        AnkiDroidApp.sharedPreferencesTestingOverride = SPMockBuilder().createSharedPreferences()
         var setting by Prefs.booleanPref("boolKey", false)
         assertThat(setting, equalTo(false))
 
@@ -49,6 +55,7 @@ class PrefsTest {
 
     @Test
     fun `stringSetting getter and setter work`() {
+        AnkiDroidApp.sharedPreferencesTestingOverride = SPMockBuilder().createSharedPreferences()
         var setting by Prefs.stringPref("stringKey", "defaultValue")
         assertThat(setting, equalTo("defaultValue"))
 
@@ -58,34 +65,33 @@ class PrefsTest {
 
     @Test
     fun `getters and setters use the same key`() {
-        val settingsSpy = spy(Prefs)
-        var key = ""
+        val sharedPrefsSpy = spy(SPMockBuilder().createSharedPreferences())
+        AnkiDroidApp.sharedPreferencesTestingOverride = sharedPrefsSpy
 
+        var getterKey = ""
         doAnswer { invocation ->
-            key = invocation.arguments[0] as String
+            getterKey = invocation.arguments[0] as String
             invocation.callRealMethod()
         }.run {
-            whenever(settingsSpy).getBoolean(anyString(), anyBoolean())
-            whenever(settingsSpy).putBoolean(anyString(), anyBoolean())
-            whenever(settingsSpy).getString(anyString(), anyString())
-            whenever(settingsSpy).putString(anyString(), anyString())
-            whenever(settingsSpy).getInt(anyString(), anyInt())
+            whenever(sharedPrefsSpy).getBoolean(anyString(), anyBoolean())
+            whenever(sharedPrefsSpy).getString(anyString(), anyOrNull())
+            whenever(sharedPrefsSpy).getInt(anyString(), anyInt())
         }
 
+        sharedPrefsSpy.registerOnSharedPreferenceChangeListener(this)
         for (property in Prefs::class.memberProperties) {
             if (property.visibility != KVisibility.PUBLIC || property !is KMutableProperty<*>) continue
 
-            property.getter.call(settingsSpy)
-            val getterKey = key
+            property.getter.call(Prefs)
 
             when (property.returnType.classifier) {
-                Boolean::class -> property.setter.call(settingsSpy, false)
-                String::class -> property.setter.call(settingsSpy, "foo")
+                Boolean::class -> property.setter.call(Prefs, false)
+                String::class -> property.setter.call(Prefs, "foo")
                 else -> continue
             }
-            val setterKey = key
 
-            assertThat("The getter and setter of '${property.name}' use the same key", getterKey, equalTo(setterKey))
+            assertThat("The getter and setter of '${property.name}' use the same key", getterKey, equalTo(lastSetKey))
         }
+        sharedPrefsSpy.unregisterOnSharedPreferenceChangeListener(this)
     }
 }

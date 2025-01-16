@@ -22,11 +22,9 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.preferences.PreferenceTestUtils
 import com.ichi2.anki.preferences.PreferenceTestUtils.getAttrsFromXml
 import com.ichi2.anki.preferences.SettingsFragment
-import com.ichi2.anki.settings.enums.PrefEnum
 import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyInt
@@ -34,6 +32,7 @@ import org.mockito.Mockito.anyBoolean
 import org.mockito.Mockito.anyString
 import org.mockito.Mockito.doAnswer
 import org.mockito.Mockito.spy
+import org.mockito.kotlin.anyOrNull
 import org.mockito.kotlin.whenever
 import org.robolectric.annotation.Config
 import kotlin.reflect.KVisibility
@@ -42,36 +41,24 @@ import kotlin.reflect.full.memberProperties
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
 class PrefsRobolectricTest : RobolectricTest() {
-    @Before
-    fun setup() {
-        AnkiDroidApp.sharedPreferencesTestingOverride =
-            SPMockBuilder().createSharedPreferences()
-    }
-
     private fun getKeysAndDefaultValues(): MutableMap<String, Any?> {
-        val settingsSpy = spy(Prefs)
+        val spy = spy(SPMockBuilder().createSharedPreferences())
+        AnkiDroidApp.sharedPreferencesTestingOverride = spy
         val keysAndDefaultValues: MutableMap<String, Any?> = mutableMapOf()
-        var key = ""
 
         doAnswer { invocation ->
-            key = invocation.arguments[0] as String
-            keysAndDefaultValues[key] = null
+            val key = invocation.arguments[0] as String
+            keysAndDefaultValues[key] = invocation.arguments[1]
             invocation.callRealMethod()
         }.run {
-            whenever(settingsSpy).getBoolean(anyString(), anyBoolean())
-            whenever(settingsSpy).getString(anyString(), anyString())
-            whenever(settingsSpy).getInt(anyString(), anyInt())
+            whenever(spy).getBoolean(anyString(), anyBoolean())
+            whenever(spy).getString(anyString(), anyOrNull())
+            whenever(spy).getInt(anyString(), anyInt())
         }
 
         for (property in Prefs::class.memberProperties) {
             if (property.visibility != KVisibility.PUBLIC) continue
-            val defaultValue = property.getter.call(settingsSpy)
-            keysAndDefaultValues[key] =
-                if (defaultValue is PrefEnum) {
-                    defaultValue.entryValue
-                } else {
-                    defaultValue
-                }
+            property.getter.call(Prefs)
         }
         return keysAndDefaultValues
     }

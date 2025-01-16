@@ -582,7 +582,7 @@ object UsageAnalytics {
             "useInputTag", // Type answer into the card
             "disableExtendedTextUi", // Disable Single-Field Edit Mode
             "noteEditorNewlineReplace", // Replace newlines with HTML
-            "autoFocusTypeInAnswer", // Focus ‘type in answer’
+            PrefKey.AUTO_FOCUS_TYPE_ANSWER, // Focus ‘type in answer’
             "mediaImportAllowAllFiles", // Allow all files in media imports
             "providerEnabled", // Enable AnkiDroid API
             // ******************************** App bar buttons ****************************************
