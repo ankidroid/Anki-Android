@@ -26,6 +26,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -72,6 +73,14 @@ abstract class NavigationDrawerActivity :
      * runnable that will be executed after the drawer has been closed.
      */
     private var pendingRunnable: Runnable? = null
+
+    private val drawerBackCallback =
+        object : OnBackPressedCallback(enabled = false) {
+            override fun handleOnBackPressed() {
+                Timber.d("drawerBackCallback")
+                closeDrawer()
+            }
+        }
 
     override fun setContentView(
         @LayoutRes layoutResID: Int,
@@ -141,13 +150,7 @@ abstract class NavigationDrawerActivity :
             // Decide which action to take when the navigation button is tapped.
             toolbar.setNavigationOnClickListener { onNavigationPressed() }
         }
-        val drawerBackCallback =
-            object : OnBackPressedCallback(isDrawerOpen) {
-                override fun handleOnBackPressed() {
-                    closeDrawer()
-                }
-            }
-        onBackPressedDispatcher.addCallback(drawerBackCallback)
+        setupBackPressedCallbacks()
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
         drawerToggle =
@@ -188,6 +191,17 @@ abstract class NavigationDrawerActivity :
         enablePostShortcut(this)
         val intent = Intent("com.ichi2.widget.UPDATE_WIDGET").setClassName("com.ichi2.widget", "WidgetPermissionReceiver")
         this.sendBroadcast(intent)
+    }
+
+    /**
+     * A method which allows control of the ordering of adding the [OnBackPressedCallback]
+     * for the drawer.
+     *
+     * Typically, call super after initialization code, so the drawer takes priority
+     */
+    @CallSuper
+    protected open fun setupBackPressedCallbacks() {
+        onBackPressedDispatcher.addCallback(this, drawerBackCallback)
     }
 
     /**

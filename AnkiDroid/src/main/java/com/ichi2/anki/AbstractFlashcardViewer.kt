@@ -64,6 +64,7 @@ import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
@@ -82,6 +83,7 @@ import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AbstractFlashcardViewer.Signal.Companion.toSignal
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
 import com.ichi2.anki.cardviewer.AndroidCardRenderContext
 import com.ichi2.anki.cardviewer.AndroidCardRenderContext.Companion.createInstance
 import com.ichi2.anki.cardviewer.CardMediaPlayer
@@ -135,7 +137,6 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.Sound.getAvTag
@@ -147,7 +148,6 @@ import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.ClipboardUtil.getText
-import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
 import com.ichi2.utils.HandlerUtils.newHandler
 import com.ichi2.utils.HashUtil.hashSetInit
 import com.ichi2.utils.Stopwatch
@@ -292,9 +292,6 @@ abstract class AbstractFlashcardViewer :
     /** Lock to allow thread-safe regeneration of mCard  */
     private val cardLock: ReadWriteLock = ReentrantReadWriteLock()
 
-    /** Preference: Whether the user wants press back twice to return to the main screen"  */
-    private var exitViaDoubleTapBack = false
-
     @VisibleForTesting
     val onRenderProcessGoneDelegate = OnRenderProcessGoneDelegate(this)
     protected val tts = TTS()
@@ -340,6 +337,14 @@ abstract class AbstractFlashcardViewer :
                 }
             },
         )
+
+    private val defaultOnBackCallback =
+        object : OnBackPressedCallback(enabled = true) {
+            override fun handleOnBackPressed() {
+                // TODO: This should be improved now we're using callbacks
+                closeReviewer(RESULT_DEFAULT)
+            }
+        }
 
     protected inner class FlashCardViewerResultCallback(
         private val callback: (result: ActivityResult, reloadRequired: Boolean) -> Unit = { _, _ -> },
@@ -565,6 +570,12 @@ abstract class AbstractFlashcardViewer :
         TtsVoicesFieldFilter.ensureApplied()
     }
 
+    override fun setupBackPressedCallbacks() {
+        onBackPressedDispatcher.addCallback(this, defaultOnBackCallback)
+        onBackPressedDispatcher.addCallback(this, exitViaDoubleTapBackCallback(R.string.back_pressed_once_reviewer))
+        super.setupBackPressedCallbacks()
+    }
+
     protected open fun getContentViewAttr(fullscreenMode: FullScreenMode): Int = R.layout.reviewer
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
@@ -653,25 +664,6 @@ abstract class AbstractFlashcardViewer :
         destroyWebView(webView) // OK to do without a lock
         if (this::cardMediaPlayer.isInitialized) {
             cardMediaPlayer.close()
-        }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (isDrawerOpen) {
-            @Suppress("DEPRECATION")
-            super.onBackPressed()
-        } else {
-            Timber.i("Back key pressed")
-            if (!exitViaDoubleTapBack || backButtonPressedToReturn) {
-                closeReviewer(RESULT_DEFAULT)
-            } else {
-                showSnackbar(R.string.back_pressed_once_reviewer, Snackbar.LENGTH_SHORT)
-            }
-            backButtonPressedToReturn = true
-            executeFunctionWithDelay(Consts.SHORT_TOAST_DURATION) {
-                backButtonPressedToReturn = false
-            }
         }
     }
 
@@ -1234,7 +1226,6 @@ abstract class AbstractFlashcardViewer :
         largeAnswerButtons = preferences.getBoolean("showLargeAnswerButtons", false)
         doubleTapTimeInterval =
             preferences.getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL)
-        exitViaDoubleTapBack = preferences.getBoolean("exitViaDoubleTapBack", false)
         gesturesEnabled = preferences.getBoolean(GestureProcessor.PREF_KEY, false)
         if (gesturesEnabled) {
             gestureProcessor.init(preferences)
