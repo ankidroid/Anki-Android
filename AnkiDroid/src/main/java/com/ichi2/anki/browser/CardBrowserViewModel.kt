@@ -333,7 +333,7 @@ class CardBrowserViewModel(
         }
     }
 
-    private suspend fun setupColumns(cardsOrNotes: CardsOrNotes) {
+    suspend fun setupColumns(cardsOrNotes: CardsOrNotes) {
         Timber.d("loading columns columns for %s mode", cardsOrNotes)
         val columns = BrowserColumnCollection.load(sharedPrefs(), cardsOrNotes)
         flowOfColumn1.update { columns.columns[0] }

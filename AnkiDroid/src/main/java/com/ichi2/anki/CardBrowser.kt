@@ -571,6 +571,7 @@ open class CardBrowser :
                 adapter.addAll(viewModel.column2Candidates.map { it.getLabel(cardsOrNotes) })
             }
         }
+        viewModel.flowOfInitCompleted.launchCollectionInLifecycleScope(::initCompletedChanged)
         viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         viewModel.flowOfSearchQueryExpanded.launchCollectionInLifecycleScope(::onSearchQueryExpanded)
         viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
@@ -582,7 +583,6 @@ open class CardBrowser :
         viewModel.flowOfIsInMultiSelectMode.launchCollectionInLifecycleScope(::isInMultiSelectModeChanged)
         viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
-        viewModel.flowOfInitCompleted.launchCollectionInLifecycleScope(::initCompletedChanged)
         viewModel.flowOfCardsOrNotes.launchCollectionInLifecycleScope(::cardsOrNotesChanged)
     }
 
@@ -891,6 +891,12 @@ open class CardBrowser :
 
     override fun onResume() {
         super.onResume()
+        lifecycleScope.launch {
+            // Reinitialize active browser columns when returning to this screen.
+            // Ensures the card browser displays the correct columns and data after a language change or configuration update.
+            val cardsOrNotes = viewModel.cardsOrNotes
+            viewModel.setupColumns(cardsOrNotes)
+        }
         selectNavigationItem(R.id.nav_browser)
     }
 
