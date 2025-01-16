@@ -94,6 +94,7 @@ import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.FrameStyle
+import com.ichi2.anki.settings.enums.HideSystemBars
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
@@ -452,9 +453,8 @@ class ReviewerFragment :
     }
 
     private fun setupImmersiveMode(view: View) {
-        val hideSystemBarsSetting = HideSystemBars.from(requireContext())
         val barsToHide =
-            when (hideSystemBarsSetting) {
+            when (Prefs.hideSystemBars) {
                 HideSystemBars.NONE -> return
                 HideSystemBars.STATUS_BAR -> WindowInsetsCompat.Type.statusBars()
                 HideSystemBars.NAVIGATION_BAR -> WindowInsetsCompat.Type.navigationBars()

@@ -20,6 +20,7 @@ import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.settings.enums.FrameStyle
+import com.ichi2.anki.settings.enums.HideSystemBars
 import com.ichi2.anki.settings.enums.PrefEnum
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
@@ -131,6 +132,9 @@ object Prefs {
 
     val frameStyle: FrameStyle
         get() = getEnum(PrefKey.FRAME_STYLE, FrameStyle.CARD)
+
+    val hideSystemBars: HideSystemBars
+        get() = getEnum(PrefKey.HIDE_SYSTEM_BARS, HideSystemBars.NONE)
 
     // ************************************** Accessibility ************************************* //
 
