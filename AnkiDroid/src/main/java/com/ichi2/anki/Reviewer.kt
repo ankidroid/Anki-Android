@@ -236,6 +236,7 @@ open class Reviewer :
     override fun onPause() {
         answerTimer.pause()
         super.onPause()
+        saveCurrentCardAndState()
     }
 
     override fun onResume() {
@@ -247,6 +248,7 @@ open class Reviewer :
         if (typeAnswer?.autoFocusEditText() == true) {
             answerField?.focusWithKeyboard()
         }
+        restoreCurrentCardAndState()
     }
 
     override fun onDestroy() {
@@ -1677,5 +1679,27 @@ open class Reviewer :
             } else {
                 Intent(context, Reviewer::class.java)
             }
+    }
+
+    override fun saveCurrentCardAndState() {
+        val state = queueState ?: return
+        val card = currentCard ?: return
+        val sharedPreferences = getSharedPreferences("ReviewerState", Context.MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            putLong("currentCardId", card.id)
+            putString("currentQueueState", state.toJson())
+            apply()
+        }
+    }
+
+    override fun restoreCurrentCardAndState() {
+        val sharedPreferences = getSharedPreferences("ReviewerState", Context.MODE_PRIVATE)
+        val cardId = sharedPreferences.getLong("currentCardId", -1)
+        val stateJson = sharedPreferences.getString("currentQueueState", null) ?: return
+        val state = CurrentQueueState.fromJson(stateJson)
+        if (cardId != -1L && state != null) {
+            currentCard = getColUnsafe.getCard(cardId)
+            queueState = state
+        }
     }
 }
