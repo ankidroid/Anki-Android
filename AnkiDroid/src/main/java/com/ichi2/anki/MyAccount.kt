@@ -37,7 +37,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.pages.RemoveAccountFragment
-import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.removeFragmentFromContainer
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.ui.TextInputEditField
@@ -73,7 +73,7 @@ open class MyAccount : AnkiActivity() {
     open fun switchToState(newState: Int) {
         when (newState) {
             STATE_LOGGED_IN -> {
-                val username = baseContext.sharedPrefs().getString("username", "")
+                val username = Prefs.username
                 usernameLoggedIn.text = username
                 toolbar =
                     loggedIntoMyAccountView.findViewById<Toolbar?>(R.id.toolbar)?.also { toolbar ->

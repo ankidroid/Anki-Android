@@ -31,6 +31,8 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.settings.PrefKey
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.libanki.ChangeManager.notifySubscribersAllValuesChanged
@@ -54,8 +56,6 @@ import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
 
 object SyncPreferences {
-    const val HKEY = "hkey"
-    const val USERNAME = "username"
     const val CURRENT_SYNC_URI = "currentSyncUri"
     const val CUSTOM_SYNC_URI = "syncBaseUrl"
     const val CUSTOM_SYNC_ENABLED = CUSTOM_SYNC_URI + VersatileTextWithASwitchPreference.SWITCH_SUFFIX
@@ -85,11 +85,10 @@ fun DeckPicker.syncAuth(): SyncAuth? {
     val currentSyncCertificate = preferences.getString(SyncPreferences.CUSTOM_SYNC_CERTIFICATE, "") ?: ""
     CollectionManager.updateCustomCertificate(currentSyncCertificate)
 
-    val hkey = preferences.getString(SyncPreferences.HKEY, null)
     val resolvedEndpoint = getEndpoint(this)
-    return hkey?.let {
+    return Prefs.hkey?.let {
         syncAuth {
-            this.hkey = hkey
+            this.hkey = it
             if (resolvedEndpoint != null) {
                 this.endpoint = resolvedEndpoint
             }
@@ -124,8 +123,8 @@ fun customSyncBase(preferences: SharedPreferences): String? =
 suspend fun syncLogout(context: Context) {
     val preferences = context.sharedPrefs()
     preferences.edit {
-        remove(SyncPreferences.HKEY)
-        remove(SyncPreferences.USERNAME)
+        remove(PrefKey.HKEY)
+        remove(PrefKey.USERNAME)
         remove(SyncPreferences.CURRENT_SYNC_URI)
         remove(SyncPreferences.HOSTNUM)
     }
@@ -139,11 +138,7 @@ suspend fun syncLogout(context: Context) {
  * Returning true does not guarantee that the user actually synced recently,
  * or even that the ankiweb account is still valid.
  */
-fun isLoggedIn() =
-    AnkiDroidApp.instance
-        .sharedPrefs()
-        .getString(SyncPreferences.HKEY, "")!!
-        .isNotEmpty()
+fun isLoggedIn(): Boolean = !Prefs.hkey.isNullOrEmpty()
 
 fun millisecondsSinceLastSync(preferences: SharedPreferences) = TimeManager.time.intTimeMS() - preferences.getLong("lastSyncTime", 0)
 
@@ -164,7 +159,7 @@ fun DeckPicker.handleNewSync(
             }
         } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
             // auth failed; log out
-            updateLogin(baseContext, "", "")
+            updateLogin("", "")
             throw exc
         }
         withCol { notetypes.clearCache() }
@@ -195,10 +190,10 @@ fun MyAccount.handleNewLogin(
                 }
             } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
                 // auth failed; clear out login details
-                updateLogin(baseContext, "", "")
+                updateLogin("", "")
                 throw exc
             }
-        updateLogin(baseContext, username, auth.hkey)
+        updateLogin(username, auth.hkey)
         setResult(RESULT_OK)
         MyAccount.checkNotificationPermission(this@handleNewLogin, resultLauncher)
         finish()
@@ -206,15 +201,11 @@ fun MyAccount.handleNewLogin(
 }
 
 private fun updateLogin(
-    context: Context,
     username: String,
-    hkey: String?,
+    hkey: String,
 ) {
-    val preferences = context.sharedPrefs()
-    preferences.edit {
-        putString(SyncPreferences.USERNAME, username)
-        putString(SyncPreferences.HKEY, hkey)
-    }
+    Prefs.username = username
+    Prefs.hkey = hkey
 }
 
 fun cancelSync(backend: Backend) {

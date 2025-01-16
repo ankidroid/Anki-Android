@@ -29,8 +29,7 @@ import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class PreferencesAnalyticsTest : RobolectricTest() {
-    private val devOptionsKeys =
-        PreferenceTestUtils.getKeysFromXml(targetContext, R.xml.preferences_dev_options).toSet()
+    private val devOptionsKeys = PreferenceTestUtils.getDevOptionsKeys(targetContext)
 
     /** All preference keys besides dev options */
     private val allKeys =
@@ -80,6 +79,13 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             "syncBaseUrl",
             "language",
             "customSyncCertificate",
+            // Experimental settings
+            "reviewerMenuSettings",
+            "hideAnswerButtons",
+            "hideHardAndEasy",
+            "reviewerFrameStyle",
+            "hideSystemBars",
+            "ignoreDisplayCutout",
         )
 
     @Test

@@ -28,12 +28,16 @@ import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment
  * Not a `SettingsFragment` to avoid boilerplate and sending analytics reports,
  * since this is just a temporary screen while the new reviewer is being developed.
  */
-class ReviewerOptionsFragment : PreferenceFragmentCompat() {
+class ReviewerOptionsFragment :
+    PreferenceFragmentCompat(),
+    PreferenceXmlSource {
+    override val preferenceResource: Int = R.xml.preferences_reviewer
+
     override fun onCreatePreferences(
         savedInstanceState: Bundle?,
         rootKey: String?,
     ) {
-        addPreferencesFromResource(R.xml.preferences_reviewer)
+        addPreferencesFromResource(preferenceResource)
 
         // TODO launch the fragment inside PreferencesFragment instead of using a new activity.
         // An activity is being currently used because the preferences screens are shown below the

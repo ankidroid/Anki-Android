@@ -92,6 +92,8 @@ import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_8
 import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_9
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
+import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
@@ -331,7 +333,7 @@ class ReviewerFragment :
             easyButton.isVisible = false
         }
 
-        val buttonsHeight = prefs.getInt("answerButtonSize", 100)
+        val buttonsHeight = Prefs.answerButtonsSize
         if (buttonsHeight != 100) {
             buttonsAreaLayout.post {
                 buttonsAreaLayout.updateLayoutParams {
@@ -486,9 +488,7 @@ class ReviewerFragment :
     }
 
     private fun setupFrame(view: View) {
-        val frameStyleKey = getString(R.string.reviewer_frame_style_key)
-        val boxValue = getString(R.string.reviewer_frame_style_box_value)
-        if (sharedPrefs().getString(frameStyleKey, null) == boxValue) {
+        if (Prefs.frameStyle == FrameStyle.BOX) {
             view.findViewById<MaterialCardView>(R.id.webview_container).apply {
                 setMargins(0)
                 cardElevation = 0F

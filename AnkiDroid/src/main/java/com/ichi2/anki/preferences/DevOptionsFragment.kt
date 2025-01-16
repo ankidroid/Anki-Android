@@ -15,8 +15,8 @@
  */
 package com.ichi2.anki.preferences
 
-import android.content.Context
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.core.content.edit
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
@@ -28,6 +28,7 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.withProgress
@@ -172,34 +173,11 @@ class DevOptionsFragment : SettingsFragment() {
         AlertDialog.Builder(requireContext()).show {
             setTitle(R.string.disable_dev_options)
             setPositiveButton(R.string.dialog_ok) { _, _ ->
-                disableDevOptions()
+                Prefs.isDevOptionsEnabled = false
+                parentFragmentManager.popBackStack()
+                ActivityCompat.recreate(requireActivity())
             }
             setNegativeButton(R.string.dialog_cancel) { _, _ -> }
         }
-    }
-
-    /**
-     * Destroys the fragment and hides developer options on [HeaderFragment]
-     */
-    private fun disableDevOptions() {
-        // Update the "devOptionsEnabledByUser" pref value
-        AnkiDroidApp.sharedPrefs().edit {
-            putBoolean(getString(R.string.dev_options_enabled_by_user_key), false)
-        }
-        parentFragmentManager.popBackStack()
-        requireActivity().recreate()
-    }
-
-    companion object {
-        /**
-         * @return whether developer options should be shown to the user.
-         * True in case [BuildConfig.DEBUG] is true
-         * or if the user has enabled it with the secret on [com.ichi2.anki.preferences.AboutFragment]
-         */
-        fun isEnabled(context: Context): Boolean =
-            BuildConfig.DEBUG ||
-                context
-                    .sharedPrefs()
-                    .getBoolean(context.getString(R.string.dev_options_enabled_by_user_key), false)
     }
 }
