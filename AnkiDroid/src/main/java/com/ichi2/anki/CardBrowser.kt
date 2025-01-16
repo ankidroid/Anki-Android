@@ -32,6 +32,7 @@ import android.widget.ArrayAdapter
 import android.widget.BaseAdapter
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.CheckResult
@@ -310,6 +311,14 @@ open class CardBrowser :
             }
         }
 
+    private val multiSelectOnBackPressedCallback =
+        object : OnBackPressedCallback(enabled = false) {
+            override fun handleOnBackPressed() {
+                Timber.i("back pressed - exiting multiselect")
+                viewModel.endMultiSelectMode()
+            }
+        }
+
     @MainThread
     @NeedsTest("search bar is set after selecting a saved search as first action")
     private fun searchForQuery(query: String) {
@@ -364,6 +373,16 @@ open class CardBrowser :
         if (!ensureStoragePermissions()) {
             return
         }
+
+        // set the default result
+        setResult(
+            RESULT_OK,
+            Intent().apply {
+                // Add reload flag to result intent so that schedule reset when returning to note editor
+                putExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, reloadRequired)
+            },
+        )
+
         val launchOptions = intent?.toCardBrowserLaunchOptions() // must be called after super.onCreate()
         // must be called once we have an accessible collection
         viewModel = createViewModel(launchOptions)
@@ -417,6 +436,11 @@ open class CardBrowser :
 
         setupFlows()
         registerOnForgetHandler { viewModel.queryAllSelectedCardIds() }
+    }
+
+    override fun setupBackPressedCallbacks() {
+        this.onBackPressedDispatcher.addCallback(this, multiSelectOnBackPressedCallback)
+        super.setupBackPressedCallbacks()
     }
 
     fun notifyDataSetChanged() {
@@ -481,12 +505,14 @@ open class CardBrowser :
                 // show title and hide spinner
                 actionBarTitle.visibility = View.VISIBLE
                 deckSpinnerSelection.setSpinnerVisibility(View.GONE)
+                multiSelectOnBackPressedCallback.isEnabled = true
             } else {
                 Timber.d("end multiselect mode")
                 // update adapter to remove check boxes
                 notifyDataSetChanged()
                 deckSpinnerSelection.setSpinnerVisibility(View.VISIBLE)
                 actionBarTitle.visibility = View.GONE
+                multiSelectOnBackPressedCallback.isEnabled = false
             }
             // reload the actionbar using the multi-select mode actionbar
             invalidateOptionsMenu()
@@ -863,22 +889,6 @@ open class CardBrowser :
         super.onStop()
         if (!isFinishing) {
             updateInBackground(this)
-        }
-    }
-
-    @Deprecated("Deprecated in Java")
-    @Suppress("DEPRECATION")
-    override fun onBackPressed() {
-        when {
-            isDrawerOpen -> super.onBackPressed()
-            viewModel.isInMultiSelectMode -> viewModel.endMultiSelectMode()
-            else -> {
-                Timber.i("Back key pressed")
-                val data = Intent()
-                // Add reload flag to result intent so that schedule reset when returning to note editor
-                data.putExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, reloadRequired)
-                closeCardBrowser(RESULT_OK, data)
-            }
         }
     }
 
