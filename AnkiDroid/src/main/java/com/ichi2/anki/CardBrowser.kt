@@ -338,6 +338,7 @@ open class CardBrowser :
         launchCatchingTask {
             if (viewModel.isInMultiSelectMode) {
                 viewModel.toggleRowSelection(id)
+                viewModel.saveScrollingState(id)
             } else {
                 val cardId = viewModel.queryDataForCardEdit(id)
                 openNoteEditorForCard(cardId)
@@ -350,6 +351,7 @@ open class CardBrowser :
         if (viewModel.isInMultiSelectMode && viewModel.lastSelectedId != null) {
             viewModel.selectRowsBetween(viewModel.lastSelectedId!!, id)
         } else {
+            viewModel.saveScrollingState(id)
             viewModel.toggleRowSelection(id)
         }
     }
@@ -481,12 +483,14 @@ open class CardBrowser :
                 // show title and hide spinner
                 actionBarTitle.visibility = View.VISIBLE
                 deckSpinnerSelection.setSpinnerVisibility(View.GONE)
+                autoScrollTo(viewModel.lastSelectedPosition)
             } else {
                 Timber.d("end multiselect mode")
                 // update adapter to remove check boxes
                 notifyDataSetChanged()
                 deckSpinnerSelection.setSpinnerVisibility(View.VISIBLE)
                 actionBarTitle.visibility = View.GONE
+                autoScrollTo(viewModel.lastSelectedPosition)
             }
             // reload the actionbar using the multi-select mode actionbar
             invalidateOptionsMenu()
@@ -1902,6 +1906,10 @@ open class CardBrowser :
             context: Context,
             viewModel: CardBrowserViewModel,
         ): Intent = NoteEditorLauncher.AddNoteFromCardBrowser(viewModel).getIntent(context)
+    }
+
+    private fun autoScrollTo(newPosition: Int) {
+        (cardsListView.layoutManager as LinearLayoutManager).scrollToPosition(newPosition)
     }
 }
 
