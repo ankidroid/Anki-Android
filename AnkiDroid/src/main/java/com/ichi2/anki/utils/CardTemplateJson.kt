@@ -18,61 +18,42 @@
 package com.ichi2.anki.utils
 
 import com.ichi2.libanki.DeckId
-import com.ichi2.utils.deepClonedInto
-import org.intellij.lang.annotations.Language
+import com.ichi2.utils.JSONObjectHolder
 import org.json.JSONObject
 
-class CardTemplateJson : JSONObject {
-    /**
-     * Creates a new empty model object
-     */
-    constructor() : super()
-
-    /**
-     * Creates a copy from [JSONObject] and use it as a string
-     *
-     * This function will perform deepCopy on the passed object
-     *
-     * @see CardTemplateJson.from
-     */
-    constructor(json: JSONObject) : super() {
-        json.deepClonedInto(this)
-    }
-
-    /**
-     * Creates a model object form json string
-     */
-    constructor(
-        @Language("json") json: String,
-    ) : super(json)
-
+@JvmInline
+value class CardTemplateJson(
+    override val jsonObject: JSONObject,
+) : JSONObjectHolder {
     val name: String
-        get() = getString("name")
+        get() = jsonObject.getString("name")
 
     val ord: Int
-        get() = getInt("ord")
+        get() = jsonObject.getInt("ord")
 
     val qfmt: String
-        get() = getString("qfmt")
+        get() = jsonObject.getString("qfmt")
 
     val afmt: String
-        get() = getString("afmt")
+        get() = jsonObject.getString("afmt")
 
     val bqfmt: String
-        get() = getString("bqfmt")
+        get() = jsonObject.getString("bqfmt")
 
     val bafmt: String
-        get() = getString("bafmt")
+        get() = jsonObject.getString("bafmt")
 
     val did: DeckId?
-        get() = if (isNull("did")) null else getLong("did")
+        get() = if (jsonObject.isNull("did")) null else jsonObject.getLong("did")
 
     val bfont: String
-        get() = getString("bfont")
+        get() = jsonObject.getString("bfont")
 
     val bsize: Int
-        get() = getInt("bsize")
+        get() = jsonObject.getInt("bsize")
 
     val id: Long
-        get() = getLong("id")
+        get() = jsonObject.getLong("id")
+
+    override fun toString(): String = jsonObject.toString()
 }
