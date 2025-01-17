@@ -24,12 +24,12 @@ import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.AnswerButtons.AGAIN
 import com.ichi2.anki.reviewer.AnswerButtons.GOOD
 import com.ichi2.anki.reviewer.AnswerButtons.HARD
+import com.ichi2.anki.reviewer.AutomaticAnswerAction.Companion.answerAction
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.utils.ext.secondsToShowAnswer
-import com.ichi2.anki.utils.ext.secondsToShowQuestion
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckConfig
+import com.ichi2.libanki.DeckConfig.Companion.ANSWER_ACTION
 import com.ichi2.libanki.DeckId
 import com.ichi2.utils.HandlerUtils
 import timber.log.Timber
@@ -271,24 +271,14 @@ class AutomaticAnswerSettings(
             selectedDid: DeckId,
         ): AutomaticAnswerSettings {
             val conf = col.decks.configDictForDeckId(selectedDid)
-            val action = getAction(conf)
-
             return AutomaticAnswerSettings(
-                answerAction = action,
+                answerAction = conf.answerAction,
                 secondsToShowQuestionFor = conf.secondsToShowQuestion,
                 secondsToShowAnswerFor = conf.secondsToShowAnswer,
             )
         }
 
         fun createInstance(col: Collection): AutomaticAnswerSettings = queryOptions(col, col.decks.selected())
-
-        private fun getAction(conf: DeckConfig): AutomaticAnswerAction =
-            try {
-                val value: Int = conf.optInt(AutomaticAnswerAction.CONFIG_KEY)
-                AutomaticAnswerAction.fromConfigValue(value)
-            } catch (e: Exception) {
-                AutomaticAnswerAction.BURY_CARD
-            }
     }
 }
 
@@ -297,7 +287,7 @@ class AutomaticAnswerSettings(
  * Executed when answering a card (showing the question).
  */
 enum class AutomaticAnswerAction(
-    private val configValue: Int,
+    val configValue: Int,
 ) {
     /** Default: least invasive action */
     BURY_CARD(0),
@@ -328,14 +318,20 @@ enum class AutomaticAnswerAction(
         }
 
     companion object {
-        /**
-         * An integer representing the action when Automatic Answer flips a card from answer to question
-         *
-         * @see AutomaticAnswerAction
-         */
-        const val CONFIG_KEY = "answerAction"
-
         /** convert from [anki.deck_config.DeckConfig.Config.AnswerAction] to the enum */
         fun fromConfigValue(i: Int): AutomaticAnswerAction = entries.firstOrNull { it.configValue == i } ?: BURY_CARD
+
+        var DeckConfig.answerAction: AutomaticAnswerAction
+            get() =
+                try {
+                    AutomaticAnswerAction.fromConfigValue(jsonObject.optInt(ANSWER_ACTION))
+                } catch (_: Exception) {
+                    AutomaticAnswerAction.BURY_CARD
+                }
+
+            @VisibleForTesting(VisibleForTesting.NONE)
+            set(value) {
+                jsonObject.put(ANSWER_ACTION, value.configValue)
+            }
     }
 }

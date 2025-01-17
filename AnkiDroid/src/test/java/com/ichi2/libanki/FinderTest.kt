@@ -78,7 +78,7 @@ class FinderTest : JvmTest() {
 
     private fun enableBurySiblings() {
         val config = col.decks.allConfig()[0]
-        config.getJSONObject("new").put("bury", true)
+        config.new.bury = true
         col.decks.save(config)
     }
 

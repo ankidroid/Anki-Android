@@ -29,7 +29,6 @@ import com.ichi2.testutils.BackendEmulatingOpenConflict
 import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.testutils.DbUtils
 import com.ichi2.testutils.grantWritePermissions
-import com.ichi2.testutils.libanki.buryNewSiblings
 import com.ichi2.testutils.revokeWritePermissions
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.ResourceLoader
@@ -177,7 +176,7 @@ class DeckPickerTest : RobolectricTest() {
         val sched = col.sched
         val dconf = col.decks.getConfig(1)
         assertNotNull(dconf)
-        dconf.getJSONObject("new").put("perDay", 10)
+        dconf.new.perDay = 10
         col.decks.save(dconf)
         for (i in 0..10) {
             addBasicNote("Which card is this ?", i.toString())
@@ -697,7 +696,7 @@ class DeckPickerTest : RobolectricTest() {
         // one empty deck to be initially selected, one with cards to check 'unbury' status
         val emptyDeck = addDeck("No Cards")
         val deckWithCards = addDeck("With Cards")
-        updateDeckConfig(deckWithCards) { buryNewSiblings = true }
+        updateDeckConfig(deckWithCards) { new.bury = true }
 
         // Add a note with 2 cards in deck "With Cards", one of these cards is to be buried
         col.notetypes.byName("Basic (and reversed card)")!!.also { noteType ->

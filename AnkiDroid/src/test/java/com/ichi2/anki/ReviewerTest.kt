@@ -38,6 +38,7 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.ActionButtonStatus
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardType
+import com.ichi2.libanki.Consts
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.QueueType
@@ -200,9 +201,9 @@ class ReviewerTest : RobolectricTest() {
     fun testMultipleCards() =
         runTest {
             addNoteWithThreeCards()
-            val nw = col.decks.configDictForDeckId(1).getJSONObject("new")
+            val new = defaultDeckConfig.new
             val time = collectionTime
-            nw.put("delays", JSONArray(intArrayOf(1, 10, 60, 120)))
+            new.delays = JSONArray(intArrayOf(1, 10, 60, 120))
 
             waitForAsyncTasksToComplete()
 
@@ -230,9 +231,9 @@ class ReviewerTest : RobolectricTest() {
     @Flaky(OS.ALL, "java.lang.AssertionError: Expected: \"2\" but: was \"1\"")
     fun testLrnQueueAfterUndo() =
         runTest {
-            val nw = col.decks.configDictForDeckId(1).getJSONObject("new")
+            val new = defaultDeckConfig.new
             val time = TimeManager.time as MockTime
-            nw.put("delays", JSONArray(intArrayOf(1, 10, 60, 120)))
+            new.delays = JSONArray(intArrayOf(1, 10, 60, 120))
 
             val cards =
                 arrayOf(
@@ -515,6 +516,9 @@ class ReviewerTest : RobolectricTest() {
             due = 0
         }
     }
+
+    private val defaultDeckConfig
+        get() = col.decks.configDictForDeckId(Consts.DEFAULT_DECK_ID)
 
     private class ReviewerForMenuItems : Reviewer() {
         var menu: Menu? = null

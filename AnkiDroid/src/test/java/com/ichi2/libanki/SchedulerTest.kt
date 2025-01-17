@@ -57,8 +57,7 @@ open class SchedulerTest : JvmTest() {
         addBasicNote("Hello", "World")
         col.decks
             .allConfig()[0]
-            .getJSONObject("new")
-            .put("delays", JSONArray(listOf(0.01, 10)))
+            .new.delays = JSONArray(listOf(0.01, 10))
         val c = col.sched.card
         MatcherAssert.assertThat(c, Matchers.notNullValue())
         col.sched.answerCard(c!!, Ease.AGAIN)
@@ -139,12 +138,12 @@ open class SchedulerTest : JvmTest() {
         Assert.assertEquals(1, c.did)
         // limit the parent to 10 cards, meaning we get 10 in total
         val conf1 = col.decks.configDictForDeckId(1)
-        conf1.getJSONObject("new").put("perDay", 10)
+        conf1.new.perDay = 10
         col.decks.save(conf1)
         Assert.assertEquals(10, col.sched.newCount().toLong())
         // if we limit child to 4, we should get 9
         val conf2 = col.decks.configDictForDeckId(deck2)
-        conf2.getJSONObject("new").put("perDay", 4)
+        conf2.new.perDay = 4
         col.decks.save(conf2)
         Assert.assertEquals(9, col.sched.newCount().toLong())
     }
@@ -157,11 +156,11 @@ open class SchedulerTest : JvmTest() {
         col.addNote(note)
         val c = col.sched.card!!
         val conf = col.sched.cardConf(c)
-        conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(1.0, 2.0, 3.0, 4.0, 5.0)))
+        conf.new.delays = JSONArray(doubleArrayOf(1.0, 2.0, 3.0, 4.0, 5.0))
         col.decks.save(conf)
         col.sched.answerCard(c, Ease.HARD)
         // should handle gracefully
-        conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(1.0)))
+        conf.new.delays = JSONArray(doubleArrayOf(1.0))
         col.decks.save(conf)
         col.sched.answerCard(c, Ease.HARD)
     }
@@ -192,7 +191,7 @@ open class SchedulerTest : JvmTest() {
         val c = col.sched.card!!
         assertNotNull(c)
         val conf = col.sched.cardConf(c)
-        conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(0.5, 3.0, 10.0)))
+        conf.new.delays = JSONArray(doubleArrayOf(0.5, 3.0, 10.0))
         col.decks.save(conf)
         // fail it
         col.sched.answerCard(c, Ease.AGAIN)
@@ -299,7 +298,7 @@ open class SchedulerTest : JvmTest() {
             }
         col.updateCard(c, skipUndoEntry = true)
         val conf = col.decks.configDictForDeckId(1)
-        conf.getJSONObject("lapse").put("delays", JSONArray(doubleArrayOf()))
+        conf.lapse.delays = JSONArray(doubleArrayOf())
         col.decks.save(conf)
 
         // fail the card
@@ -346,7 +345,7 @@ open class SchedulerTest : JvmTest() {
         col.addNote(note)
         var c = col.sched.card!!
         var conf = col.sched.cardConf(c)
-        conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(1.0, 10.0, 1440.0, 2880.0)))
+        conf.new.delays = JSONArray(doubleArrayOf(1.0, 10.0, 1440.0, 2880.0))
         col.decks.save(conf)
         // pass it
         col.sched.answerCard(c, Ease.GOOD)
@@ -384,7 +383,7 @@ open class SchedulerTest : JvmTest() {
         c.update { due = 0 }
         Assert.assertEquals(Counts(0, 0, 1), col.sched.counts())
         conf = col.sched.cardConf(c)
-        conf.getJSONObject("lapse").put("delays", JSONArray(doubleArrayOf(1440.0)))
+        conf.lapse.delays = JSONArray(doubleArrayOf(1440.0))
         col.decks.save(conf)
         c = col.sched.card!!
         col.sched.answerCard(c, Ease.AGAIN)
@@ -453,7 +452,7 @@ open class SchedulerTest : JvmTest() {
         // leech handling
         // //////////////////////////////////////////////////////////////////////////////////////////////////
         val conf = col.decks.getConfig(1)
-        conf.getJSONObject("lapse").put("leechAction", LEECH_SUSPEND)
+        conf.lapse.leechAction = LEECH_SUSPEND
         col.decks.save(conf)
         cardcopy.clone().update { lapses = 7 }
         /* todo hook
@@ -514,7 +513,7 @@ open class SchedulerTest : JvmTest() {
 
         // if hard factor is <= 1, then hard may not increase
         val conf = col.decks.configDictForDeckId(1)
-        conf.getJSONObject("rev").put("hardFactor", 1)
+        conf.rev.hardFactor = 1
         col.decks.save(conf)
         Assert.assertEquals(
             "1d",
@@ -569,8 +568,8 @@ open class SchedulerTest : JvmTest() {
         note.setItem("Back", "two")
         col.addNote(note)
         val conf = col.decks.configDictForDeckId(1)
-        conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(0.5, 3.0, 10.0)))
-        conf.getJSONObject("lapse").put("delays", JSONArray(doubleArrayOf(1.0, 5.0, 9.0)))
+        conf.new.delays = JSONArray(doubleArrayOf(0.5, 3.0, 10.0))
+        conf.lapse.delays = JSONArray(doubleArrayOf(1.0, 5.0, 9.0))
         col.decks.save(conf)
         val c = col.sched.card!!
         // new cards
@@ -616,7 +615,7 @@ open class SchedulerTest : JvmTest() {
         // failing it should put it at 60s
         Assert.assertEquals(60, col.sched.nextIvl(c, Ease.AGAIN))
         // or 1 day if relearn is false
-        conf.getJSONObject("lapse").put("delays", JSONArray(doubleArrayOf()))
+        conf.lapse.delays = JSONArray(doubleArrayOf())
         col.decks.save(conf)
         Assert.assertEquals(SECONDS_PER_DAY, col.sched.nextIvl(c, Ease.AGAIN))
         // (* 100 1.2 SECONDS_PER_DAY)10368000.0
@@ -802,7 +801,7 @@ open class SchedulerTest : JvmTest() {
         // fail the card outside filtered deck
         val c = col.sched.card!!
         val conf = col.sched.cardConf(c)
-        conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(1.0, 10.0, 61.0)))
+        conf.new.delays = JSONArray(doubleArrayOf(1.0, 10.0, 61.0))
         col.decks.save(conf)
         col.sched.answerCard(c, Ease.AGAIN)
         Assert.assertEquals(QueueType.Lrn, c.queue)
@@ -1245,8 +1244,7 @@ open class SchedulerTest : JvmTest() {
         col.sched.answerCard(c, Ease.AGAIN)
         col.sched
             .cardConf(c)
-            .getJSONObject("lapse")
-            .put("delays", JSONArray(doubleArrayOf()))
+            .lapse.delays = JSONArray(doubleArrayOf())
         col.sched.answerCard(c, Ease.AGAIN)
     }
 
@@ -1269,7 +1267,7 @@ open class SchedulerTest : JvmTest() {
                 startTimer()
             }
         val conf = col.sched.cardConf(c)
-        conf.getJSONObject("lapse").put("mult", 0.5)
+        conf.lapse.mult = 0.5
         col.decks.save(conf)
         c = col.sched.card!!
         col.sched.answerCard(c, Ease.AGAIN)

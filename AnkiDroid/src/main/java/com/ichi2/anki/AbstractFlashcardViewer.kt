@@ -1317,7 +1317,7 @@ abstract class AbstractFlashcardViewer :
 
     private suspend fun automaticAnswerShouldWaitForAudio(): Boolean =
         withCol {
-            decks.configDictForDeckId(currentCard!!.did).optBoolean("waitForAudio", true)
+            decks.configDictForDeckId(currentCard!!.did).waitForAudio
         }
 
     internal inner class ReadTextListener : ReadText.ReadTextListener {

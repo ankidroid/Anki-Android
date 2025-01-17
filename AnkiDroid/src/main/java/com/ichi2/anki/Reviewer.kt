@@ -1338,7 +1338,7 @@ open class Reviewer :
     override fun restoreCollectionPreferences(col: Collection) {
         super.restoreCollectionPreferences(col)
         showRemainingCardCount = col.config.get("dueCounts") ?: true
-        stopTimerOnAnswer = col.decks.configDictForDeckId(col.decks.current().id).getBoolean("stopTimerOnAnswer")
+        stopTimerOnAnswer = col.decks.configDictForDeckId(col.decks.current().id).stopTimerOnAnswer
     }
 
     override fun onSingleTap(): Boolean {
