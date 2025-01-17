@@ -18,12 +18,11 @@ package com.ichi2.anki.dialogs
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.content.DialogInterface
 import android.net.Uri
 import android.os.Bundle
 import android.os.Message
 import android.os.Parcelable
-import android.view.KeyEvent
+import androidx.activity.addCallback
 import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
@@ -269,15 +268,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                             }
                         }
                 }
-                alertDialog
-                    .setOnKeyListener { _: DialogInterface?, keyCode: Int, _: KeyEvent? ->
-                        if (keyCode == KeyEvent.KEYCODE_BACK) {
-                            Timber.i("DIALOG_RESTORE_BACKUP caught hardware back button")
-                            requireActivity().dismissAllDialogFragments()
-                            return@setOnKeyListener true
-                        }
-                        false
-                    }.create()
+                alertDialog.create()
             }
             DIALOG_NEW_COLLECTION -> {
                 // Allow user to create a new empty collection
@@ -399,6 +390,22 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     }
                     cancelable(false)
                 }
+            }
+        }
+    }
+
+    override fun setupDialog(
+        dialog: Dialog,
+        style: Int,
+    ) {
+        super.setupDialog(dialog, style)
+
+        if (requireDialogType() == DIALOG_RESTORE_BACKUP) {
+            // we don't want to go back to DIALOG_CONFIRM_RESTORE_BACKUP if back is pressed
+            // instead, close all dialogs and return to the DeckPicker
+            (dialog as AlertDialog).onBackPressedDispatcher.addCallback(this, true) {
+                Timber.i("DIALOG_RESTORE_BACKUP caught hardware back button")
+                requireActivity().dismissAllDialogFragments()
             }
         }
     }
