@@ -18,6 +18,7 @@ package com.ichi2.anki.utils
 import android.content.Context
 import android.media.MediaPlayer
 import android.os.Handler
+import android.view.View
 import com.ichi2.anki.R
 import com.ichi2.anki.common.time.Time
 import java.text.SimpleDateFormat
@@ -99,6 +100,14 @@ fun Handler.postDelayed(
     runnable: Runnable,
     delay: Duration,
 ) = this.postDelayed(runnable, delay.inWholeMilliseconds)
+
+/** @see View.postDelayed */
+fun View.postDelayed(
+    action: Runnable,
+    delay: Duration,
+) {
+    postDelayed(action, delay.inWholeMilliseconds)
+}
 
 /** Gets the current playback position */
 val MediaPlayer.elapsed get() = this.currentPosition.milliseconds

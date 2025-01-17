@@ -32,15 +32,27 @@
             android:visibility="gone"
             />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/card_browser_list"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?android:attr/colorBackground"
-            android:overScrollFooter="@color/transparent"
-            android:drawSelectorOnTop="true"
-            tools:listitem="@layout/card_item_browser"
-            />
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/card_browser_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollFooter="@color/transparent"
+                android:dividerHeight="0.5dp"
+                android:drawSelectorOnTop="true"
+                />
+
+            <com.ichi2.anki.ui.RecyclerFastScroller
+                android:id="@+id/browser_scroller"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                />
+
+        </RelativeLayout>
 
     </LinearLayout>
 
