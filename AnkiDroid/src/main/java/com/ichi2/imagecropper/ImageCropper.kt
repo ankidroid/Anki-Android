@@ -19,8 +19,10 @@ package com.ichi2.imagecropper
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Rect
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.Menu
@@ -34,6 +36,7 @@ import androidx.fragment.app.Fragment
 import com.canhub.cropper.CropImageView
 import com.ichi2.anki.R
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.utils.ContentResolverUtil
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 
@@ -88,7 +91,13 @@ class ImageCropper :
         when (menuItem.itemId) {
             com.canhub.cropper.R.id.crop_image_menu_crop -> {
                 Timber.d("Crop image clicked")
-                cropImageView.croppedImageAsync()
+                val imageFormat = cropImageView.imageUri?.let { getImageCompressFormat(it) }
+                Timber.d("Compress format: $imageFormat")
+                if (imageFormat != null) {
+                    cropImageView.croppedImageAsync(
+                        saveCompressFormat = imageFormat,
+                    )
+                }
                 true
             }
 
@@ -113,6 +122,34 @@ class ImageCropper :
 
             else -> false
         }
+
+    private fun getImageCompressFormat(uri: Uri): Bitmap.CompressFormat {
+        Timber.d("Original image URI: $uri")
+
+        val fileExtension =
+            try {
+                ContentResolverUtil.getFileName(requireContext().contentResolver, uri).substringAfterLast('.')
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to retrieve file extension from URI")
+                null
+            }
+
+        return when (fileExtension?.lowercase()) {
+            "png" -> Bitmap.CompressFormat.PNG
+            "jpeg", "jpg" -> Bitmap.CompressFormat.JPEG
+            "webp" -> {
+                if (Build.VERSION.SDK_INT >= 30) {
+                    Bitmap.CompressFormat.WEBP_LOSSLESS
+                } else {
+                    Bitmap.CompressFormat.WEBP
+                }
+            }
+            else -> {
+                Timber.w("Unknown image format: $fileExtension. Defaulting to JPEG.")
+                Bitmap.CompressFormat.JPEG
+            }
+        }
+    }
 
     private fun onSetImageUriComplete(
         @Suppress("UNUSED_PARAMETER") view: CropImageView,
