@@ -99,6 +99,7 @@ import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.scheduling.registerOnForgetHandler
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.BasicItemSelectedListener
+import com.ichi2.anki.ui.attachFastScroller
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.getCurrentDialogFragment
 import com.ichi2.anki.utils.ext.ifNotZero
@@ -373,7 +374,10 @@ open class CardBrowser :
         // initialize the lateinit variables
         // Load reference to action bar title
         actionBarTitle = findViewById(R.id.toolbar_title)
-        cardsListView = findViewById(R.id.card_browser_list)
+        cardsListView =
+            findViewById<RecyclerView?>(R.id.card_browser_list).apply {
+                attachFastScroller(R.id.browser_scroller)
+            }
         DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
             setDrawable(ContextCompat.getDrawable(this@CardBrowser, R.drawable.browser_divider)!!)
             cardsListView.addItemDecoration(this)
