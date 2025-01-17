@@ -521,10 +521,17 @@ class CardBrowserViewModel(
     /**
      * Updates the backend with a new collection of columns
      *
+     * @param columns the new columns to use
+     * @param cardsOrNotes the mode to update columns for. If this is the active mode, then flows
+     *  will be updated with the new columns
+     *
      * @return Whether the operation was successful (a valid list was provided, and it was a change)
      */
     @CheckResult
-    fun updateActiveColumns(columns: List<CardBrowserColumn>): Boolean {
+    fun updateActiveColumns(
+        columns: List<CardBrowserColumn>,
+        cardsOrNotes: CardsOrNotes,
+    ): Boolean {
         if (columns.isEmpty()) {
             Timber.d("updateColumns: no columns")
             return false
@@ -904,8 +911,13 @@ class CardBrowserViewModel(
      * (1): An ordered list of columns which is displayed to the user
      * (2): A list of columns which are available to display to the user
      */
-    suspend fun previewColumnHeadings(): Pair<List<ColumnWithSample>, List<ColumnWithSample>> {
-        val currentColumns = activeColumns
+    suspend fun previewColumnHeadings(cardsOrNotes: CardsOrNotes): Pair<List<ColumnWithSample>, List<ColumnWithSample>> {
+        val currentColumns =
+            when {
+                // if we match, use the loaded the columns
+                cardsOrNotes == this.cardsOrNotes -> activeColumns
+                else -> BrowserColumnCollection.load(sharedPrefs(), cardsOrNotes).columns
+            }
 
         val columnsWithSample = ColumnWithSample.loadSample(cards.firstOrNull(), cardsOrNotes)
 
