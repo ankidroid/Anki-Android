@@ -243,12 +243,12 @@ class CardMediaPlayerTest : JvmTest() {
 
         if (replayQuestion != null) {
             updateDeckConfig(CardUtils.getDeckIdForCard(card)) {
-                put("replayq", replayQuestion)
+                replayq = replayQuestion
             }
         }
         if (autoplay != null) {
             updateDeckConfig(CardUtils.getDeckIdForCard(card)) {
-                put("autoplay", autoplay)
+                this.autoplay = autoplay
             }
         }
 

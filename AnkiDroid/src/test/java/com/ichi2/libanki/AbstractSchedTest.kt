@@ -36,7 +36,7 @@ class AbstractSchedTest : JvmTest() {
         val sched = col.sched
         val dconf = col.decks.getConfig(1)
         assertThat(dconf, notNullValue())
-        dconf.getJSONObject("new").put("perDay", 10)
+        dconf.new.perDay = 10
         col.decks.save(dconf)
         for (i in 0..19) {
             val note = col.newNote()
@@ -57,7 +57,7 @@ class AbstractSchedTest : JvmTest() {
     @Test
     fun undoAndRedo() {
         val conf = col.decks.configDictForDeckId(1)
-        conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(1.0, 3.0, 5.0, 10.0)))
+        conf.new.delays = JSONArray(doubleArrayOf(1.0, 3.0, 5.0, 10.0))
         col.decks.save(conf)
         col.config.set("collapseTime", 20 * 60)
         val sched = col.sched

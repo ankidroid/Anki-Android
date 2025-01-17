@@ -18,6 +18,7 @@ package com.ichi2.anki.ui.windows.reviewer.autoadvance
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.launchCatchingIO
+import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.ui.windows.reviewer.ReviewerViewModel
 import com.ichi2.libanki.Card
 import kotlinx.coroutines.Job
@@ -97,11 +98,11 @@ class AutoAdvance(
             viewModel.launchCatchingIO {
                 delay(durationToShowAnswerFor())
                 when (answerAction()) {
-                    AnswerAction.BURY_CARD -> viewModel.buryCard()
-                    AnswerAction.ANSWER_AGAIN -> viewModel.answerAgain()
-                    AnswerAction.ANSWER_HARD -> viewModel.answerHard()
-                    AnswerAction.ANSWER_GOOD -> viewModel.answerGood()
-                    AnswerAction.SHOW_REMINDER -> showReminder(TR.studyingAnswerTimeElapsed())
+                    AutomaticAnswerAction.BURY_CARD -> viewModel.buryCard()
+                    AutomaticAnswerAction.ANSWER_AGAIN -> viewModel.answerAgain()
+                    AutomaticAnswerAction.ANSWER_HARD -> viewModel.answerHard()
+                    AutomaticAnswerAction.ANSWER_GOOD -> viewModel.answerGood()
+                    AutomaticAnswerAction.SHOW_REMINDER -> showReminder(TR.studyingAnswerTimeElapsed())
                 }
             }
     }

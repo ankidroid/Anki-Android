@@ -234,7 +234,7 @@ open class Card : Cloneable {
     @LibAnkiAlias("time_limit")
     fun timeLimit(col: Collection): Int {
         val conf = col.decks.configDictForDeckId(currentDeckId())
-        return conf.getInt("maxTaken") * 1000
+        return conf.maxTaken * 1000
     }
 
     /*
@@ -273,18 +273,15 @@ open class Card : Cloneable {
 
     @LibAnkiAlias("should_show_timer")
     fun shouldShowTimer(col: Collection): Boolean {
-        val options = col.decks.configDictForDeckId(currentDeckId())
-        return DeckConfig.parseTimerOpt(options, true)
+        val conf = col.decks.configDictForDeckId(currentDeckId())
+        return conf.timer
     }
 
     @LibAnkiAlias("replay_question_audio_on_answer_side")
-    fun replayQuestionAudioOnAnswerSide(col: Collection): Boolean {
-        val conf = col.decks.configDictForDeckId(currentDeckId())
-        return conf.optBoolean("replayq", true)
-    }
+    fun replayQuestionAudioOnAnswerSide(col: Collection) = col.decks.configDictForDeckId(currentDeckId()).replayq
 
     @LibAnkiAlias("autoplay")
-    fun autoplay(col: Collection): Boolean = col.decks.configDictForDeckId(currentDeckId()).getBoolean("autoplay")
+    fun autoplay(col: Collection): Boolean = col.decks.configDictForDeckId(currentDeckId()).autoplay
 
     @NotInLibAnki
     public override fun clone(): Card =

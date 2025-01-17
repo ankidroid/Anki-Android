@@ -16,8 +16,9 @@
 package com.ichi2.anki.ui.windows.reviewer.autoadvance
 
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.utils.ext.secondsToShowAnswer
-import com.ichi2.anki.utils.ext.secondsToShowQuestion
+import com.ichi2.anki.reviewer.AutomaticAnswerAction
+import com.ichi2.anki.reviewer.AutomaticAnswerAction.Companion.answerAction
+import com.ichi2.anki.ui.windows.reviewer.autoadvance.QuestionAction.Companion.questionAction
 import com.ichi2.libanki.DeckId
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
@@ -25,7 +26,7 @@ import kotlin.time.toDuration
 
 data class AutoAdvanceSettings(
     val questionAction: QuestionAction,
-    val answerAction: AnswerAction,
+    val answerAction: AutomaticAnswerAction,
     val durationToShowQuestionFor: Duration,
     val durationToShowAnswerFor: Duration,
     val waitForAudio: Boolean,
@@ -33,16 +34,13 @@ data class AutoAdvanceSettings(
     companion object {
         suspend fun createInstance(deckId: DeckId): AutoAdvanceSettings {
             val config = withCol { decks.configDictForDeckId(deckId) }
-            val questionAction = QuestionAction.from(config)
-            val answerAction = AnswerAction.from(config)
-            val waitForAudio = config.optBoolean("waitForAudio", true)
 
             return AutoAdvanceSettings(
-                questionAction = questionAction,
-                answerAction = answerAction,
+                questionAction = config.questionAction,
+                answerAction = config.answerAction,
                 durationToShowQuestionFor = config.secondsToShowQuestion.toDuration(DurationUnit.SECONDS),
                 durationToShowAnswerFor = config.secondsToShowAnswer.toDuration(DurationUnit.SECONDS),
-                waitForAudio = waitForAudio,
+                waitForAudio = config.waitForAudio,
             )
         }
     }

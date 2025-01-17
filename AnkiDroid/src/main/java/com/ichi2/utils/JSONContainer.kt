@@ -16,6 +16,7 @@
  */
 package com.ichi2.utils
 
+import androidx.annotation.VisibleForTesting
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.append
 import com.ichi2.libanki.utils.index
@@ -26,7 +27,7 @@ import org.json.JSONObject
 
 @NotInLibAnki
 interface JSONObjectHolder {
-    val jsonObject: JSONObject
+    @VisibleForTesting val jsonObject: JSONObject
 }
 
 @NotInLibAnki

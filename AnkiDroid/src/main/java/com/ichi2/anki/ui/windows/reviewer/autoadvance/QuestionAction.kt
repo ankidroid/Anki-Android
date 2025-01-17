@@ -16,18 +16,19 @@
 package com.ichi2.anki.ui.windows.reviewer.autoadvance
 
 import com.ichi2.libanki.DeckConfig
+import com.ichi2.libanki.DeckConfig.Companion.QUESTION_ACTION
 
 enum class QuestionAction(
-    val configValue: Int,
+    val code: Int,
 ) {
     SHOW_ANSWER(0),
     SHOW_REMINDER(1),
     ;
 
     companion object {
-        fun from(config: DeckConfig): QuestionAction {
-            val value = config.optInt("questionAction")
-            return entries.firstOrNull { it.configValue == value } ?: SHOW_ANSWER
-        }
+        fun from(code: Int): QuestionAction = entries.firstOrNull { it.code == code } ?: SHOW_ANSWER
+
+        val DeckConfig.questionAction: QuestionAction
+            get() = QuestionAction.from(jsonObject.optInt(QUESTION_ACTION))
     }
 }
