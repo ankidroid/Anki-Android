@@ -41,8 +41,6 @@
             android:layout_height="match_parent"
             android:overScrollFooter="@color/transparent"
             android:dividerHeight="0.5dp"
-            android:clipToPadding="false"
-            android:paddingBottom="72dp"
             android:drawSelectorOnTop="true"
             />
 
