@@ -41,13 +41,20 @@ class BrowserOptionsDialog : AppCompatDialogFragment() {
 
     private val viewModel: CardBrowserViewModel by activityViewModels()
 
+    /** The unsaved value of [CardsOrNotes] */
+    private val dialogCardsOrNotes: CardsOrNotes
+        get() {
+            @IdRes val selectedButtonId =
+                dialogView.findViewById<RadioGroup>(R.id.select_browser_mode).checkedRadioButtonId
+            return when (selectedButtonId) {
+                R.id.select_cards_mode -> CardsOrNotes.CARDS
+                else -> CardsOrNotes.NOTES
+            }
+        }
+
     private val positiveButtonClick = { _: DialogInterface, _: Int ->
-        @IdRes val selectedButtonId =
-            dialogView.findViewById<RadioGroup>(R.id.select_browser_mode).checkedRadioButtonId
-        val newCardsOrNotes =
-            if (selectedButtonId == R.id.select_cards_mode) CardsOrNotes.CARDS else CardsOrNotes.NOTES
-        if (cardsOrNotes != newCardsOrNotes) {
-            viewModel.setCardsOrNotes(newCardsOrNotes)
+        if (cardsOrNotes != dialogCardsOrNotes) {
+            viewModel.setCardsOrNotes(dialogCardsOrNotes)
         }
         val newTruncate = dialogView.findViewById<CheckBox>(R.id.truncate_checkbox).isChecked
 
@@ -111,7 +118,7 @@ class BrowserOptionsDialog : AppCompatDialogFragment() {
 
     /** Opens [BrowserColumnSelectionFragment] for the current selection of [CardsOrNotes] */
     private fun openColumnManager() {
-        val dialog = BrowserColumnSelectionFragment()
+        val dialog = BrowserColumnSelectionFragment.createInstance(viewModel.cardsOrNotes)
         dialog.show(requireActivity().supportFragmentManager, null)
     }
 
