@@ -247,6 +247,7 @@ class CustomStudyDialog(
      * Build an input dialog that is used to get a parameter related to custom study from the user
      * @param contextMenuOption the option of the dialog
      */
+    @NeedsTest("17757: fragment not dismissed before result is output")
     private fun buildInputDialog(contextMenuOption: ContextMenuOption): AlertDialog {
         /*
             TODO: Try to change to a standard input dialog (currently the thing holding us back is having the extra
@@ -275,21 +276,45 @@ class CustomStudyDialog(
             }
 
         // Set material dialog parameters
+        @Suppress("RedundantValueArgument") // click = null
         val dialog =
             AlertDialog
                 .Builder(requireActivity())
                 .customView(view = v, paddingStart = 64, paddingEnd = 64, paddingTop = 32, paddingBottom = 32)
-                .positiveButton(R.string.dialog_ok) {
-                    // Get the value selected by user
-                    val n =
-                        editText.textAsIntOrNull() ?: return@positiveButton Unit.also {
-                            Timber.w("Non-numeric user input was provided")
-                            Timber.d("value: %s", editText.text.toString())
-                        }
-                    requireActivity().launchCatchingTask { customStudy(contextMenuOption, n) }
-                }.negativeButton(R.string.dialog_cancel) {
+                .positiveButton(R.string.dialog_ok, click = null)
+                .negativeButton(R.string.dialog_cancel) {
                     requireActivity().dismissAllDialogFragments()
-                }.create() // Added .create() because we wanted to access alertDialog positive button enable state
+                }.create()
+
+        var allowSubmit = true
+        // we set the listener here so 'ok' doesn't immediately close the dialog.
+        // if it did, we would not have had time to execute the method, and would not be
+        // able to output a fragment result
+        dialog.setOnShowListener {
+            dialog.positiveButton.setOnClickListener {
+                // prevent race conditions
+                if (!allowSubmit) return@setOnClickListener
+                allowSubmit = false
+
+                // Get the value selected by user
+                val n =
+                    editText.textAsIntOrNull() ?: run {
+                        Timber.w("Non-numeric user input was provided")
+                        Timber.d("value: %s", editText.text.toString())
+                        allowSubmit = true
+                        return@setOnClickListener
+                    }
+
+                requireActivity().launchCatchingTask {
+                    try {
+                        customStudy(contextMenuOption, n)
+                    } finally {
+                        requireActivity().dismissAllDialogFragments()
+                    }
+                }
+            }
+        }
+
         editText.doAfterTextChanged {
             dialog.positiveButton.isEnabled = editText.textAsIntOrNull() != null
         }
@@ -318,21 +343,17 @@ class CustomStudyDialog(
                 }
             }
 
-        try {
-            undoableOp {
-                collection.sched.customStudy(request)
-            }
-            val action =
-                when (contextMenuOption) {
-                    EXTEND_NEW, EXTEND_REV -> CustomStudyAction.EXTEND_STUDY_LIMITS
-                    STUDY_FORGOT, STUDY_AHEAD, STUDY_PREVIEW -> CustomStudyAction.CUSTOM_STUDY_SESSION
-                    STUDY_TAGS -> TODO("This branch has not been covered before")
-                }
-
-            setFragmentResult(CustomStudyAction.REQUEST_KEY, bundleOf(CustomStudyAction.BUNDLE_KEY to action.ordinal))
-        } finally {
-            requireActivity().dismissAllDialogFragments()
+        undoableOp {
+            collection.sched.customStudy(request)
         }
+        val action =
+            when (contextMenuOption) {
+                EXTEND_NEW, EXTEND_REV -> CustomStudyAction.EXTEND_STUDY_LIMITS
+                STUDY_FORGOT, STUDY_AHEAD, STUDY_PREVIEW -> CustomStudyAction.CUSTOM_STUDY_SESSION
+                STUDY_TAGS -> TODO("This branch has not been covered before")
+            }
+
+        setFragmentResult(CustomStudyAction.REQUEST_KEY, bundleOf(CustomStudyAction.BUNDLE_KEY to action.ordinal))
 
         // save the default values (not in upstream)
         when (contextMenuOption) {
