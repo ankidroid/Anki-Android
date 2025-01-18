@@ -147,7 +147,7 @@ class Notetypes(
     /** Get current model.*/
     @RustCleanup("Should use defaultsForAdding() instead")
     fun current(forDeck: Boolean = true): NotetypeJson {
-        var noteType = get(col.decks.current().noteTypeId)
+        var noteType = get((col.decks.current() as? RegularDeck)?.noteTypeId)
         if (!forDeck || noteType == null) {
             noteType = get(col.config.get("curModel") ?: 1L)
         }

@@ -38,8 +38,8 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.
 import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Consts
-import com.ichi2.anki.libanki.Deck
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.FilteredDeck
 import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.testutils.AnkiFragmentScenario
 import com.ichi2.testutils.isJsonHolderEqual
@@ -81,7 +81,7 @@ class CustomStudyDialogTest : RobolectricTest() {
             // Putting in the Strings value that AnkiDroid currently don't allow to configure.
             // Using setters when possible.
             val expected =
-                Deck(
+                FilteredDeck(
                     """
                 {
                     "lrnToday": [0, 0],
@@ -103,7 +103,7 @@ class CustomStudyDialogTest : RobolectricTest() {
                     previewHardSecs = 600
                     previewGoodSecs = 0
                     resched = false
-                    terms = JSONArray(listOf(Deck.Term("is:new added:1 deck:Default", 99999, 5).array))
+                    terms = JSONArray(listOf(FilteredDeck.Term("is:new added:1 deck:Default", 99999, 5).array))
                 }
             assertThat(expected, isJsonHolderEqual(customStudy))
         }

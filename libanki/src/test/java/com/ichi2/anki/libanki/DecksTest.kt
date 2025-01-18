@@ -164,9 +164,9 @@ class DecksTest : InMemoryAnkiTest() {
         val filtered = decks.getLegacy(filteredId)!!
         val deckId = addDeck("deck")
         val deck = decks.getLegacy(deckId)!!
-        assertThat(deck.isNormal, equalTo(true))
+        assertThat(deck.isRegular, equalTo(true))
         assertThat(deck.isFiltered, equalTo(false))
-        assertThat(filtered.isNormal, equalTo(false))
+        assertThat(filtered.isRegular, equalTo(false))
         assertThat(filtered.isFiltered, equalTo(true))
     }
 

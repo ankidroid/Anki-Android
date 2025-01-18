@@ -35,8 +35,9 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.ext.stringIterable
 import com.ichi2.anki.libanki.Collection
-import com.ichi2.anki.libanki.Deck
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.FilteredDeck
+import com.ichi2.anki.libanki.FilteredDeck.Term
 import com.ichi2.anki.libanki.toDisplayString
 import com.ichi2.preferences.StepsPreference.Companion.convertFromJSON
 import com.ichi2.preferences.StepsPreference.Companion.convertToJSON
@@ -54,6 +55,8 @@ class FilteredDeckOptions :
     AppCompatPreferenceActivity<FilteredDeckOptions.DeckPreferenceHack>(),
     SharedPreferences.OnSharedPreferenceChangeListener {
     private var allowCommit = true
+    val filteredDeck: FilteredDeck
+        get() = super.deck as FilteredDeck
 
     // TODO: not anymore used in libanki?
     private val dynExamples =
@@ -70,21 +73,21 @@ class FilteredDeckOptions :
 
     inner class DeckPreferenceHack : AppCompatPreferenceActivity<FilteredDeckOptions.DeckPreferenceHack>.AbstractPreferenceHack() {
         val hasSecondFilter: Boolean
-            get() = deck.secondFilter != null
+            get() = filteredDeck.secondFilter != null
 
         override fun cacheValues() {
             Timber.d("cacheValues()")
-            deck.firstFilter.apply {
+            filteredDeck.firstFilter.apply {
                 values["search"] = search
                 values["limit"] = limit.toString()
                 values["order"] = order.toString()
             }
-            deck.secondFilter?.apply {
+            filteredDeck.secondFilter?.apply {
                 values["search_2"] = search
                 values["limit_2"] = limit.toString()
                 values["order_2"] = order.toString()
             }
-            val delays = deck.delays
+            val delays = filteredDeck.delays
             if (delays != null) {
                 values["steps"] = convertFromJSON(delays)
                 values["stepsOn"] = java.lang.Boolean.toString(true)
@@ -92,10 +95,10 @@ class FilteredDeckOptions :
                 values["steps"] = "1 10"
                 values["stepsOn"] = java.lang.Boolean.toString(false)
             }
-            values["resched"] = java.lang.Boolean.toString(deck.resched)
-            values["previewAgainSecs"] = deck.previewAgainSecs.toString()
-            values["previewHardSecs"] = deck.previewHardSecs.toString()
-            values["previewGoodSecs"] = deck.previewGoodSecs.toString()
+            values["resched"] = java.lang.Boolean.toString(filteredDeck.resched)
+            values["previewAgainSecs"] = filteredDeck.previewAgainSecs.toString()
+            values["previewHardSecs"] = filteredDeck.previewHardSecs.toString()
+            values["previewGoodSecs"] = filteredDeck.previewGoodSecs.toString()
         }
 
         inner class Editor : AppCompatPreferenceActivity<DeckPreferenceHack>.AbstractPreferenceHack.Editor() {
@@ -103,7 +106,7 @@ class FilteredDeckOptions :
                 Timber.d("commit() changes back to database")
                 for ((key, value) in update.valueSet()) {
                     Timber.i("Change value for key '%s': %s", key, value)
-                    deck.secondFilter?.apply {
+                    filteredDeck.secondFilter?.apply {
                         when (key) {
                             "search_2" -> {
                                 search = value as String
@@ -118,40 +121,40 @@ class FilteredDeckOptions :
                     }
                     when (key) {
                         "search" -> {
-                            deck.firstFilter.search = value as String
+                            filteredDeck.firstFilter.search = value as String
                         }
 
                         "limit" -> {
-                            deck.firstFilter.limit = (value as String).toInt()
+                            filteredDeck.firstFilter.limit = value as Int
                         }
                         "order" -> {
-                            deck.firstFilter.order = (value as String).toInt()
+                            filteredDeck.firstFilter.order = (value as String).toInt()
                         }
                         "resched" -> {
-                            deck.resched = value as Boolean
+                            filteredDeck.resched = value as Boolean
                         }
                         "previewAgainSecs" -> {
-                            deck.previewAgainSecs = value as Int
+                            filteredDeck.previewAgainSecs = value as Int
                         }
                         "previewHardSecs" -> {
-                            deck.previewHardSecs = value as Int
+                            filteredDeck.previewHardSecs = value as Int
                         }
                         "previewGoodSecs" -> {
-                            deck.previewGoodSecs = value as Int
+                            filteredDeck.previewGoodSecs = value as Int
                         }
                         "stepsOn" -> {
                             val on = value as Boolean
                             if (on) {
                                 val steps = convertToJSON(values["steps"]!!)
                                 if (steps!!.length() > 0) {
-                                    deck.delays = steps
+                                    filteredDeck.delays = steps
                                 }
                             } else {
-                                deck.delays = null
+                                filteredDeck.delays = null
                             }
                         }
                         "steps" -> {
-                            deck.delays = convertToJSON((value as String))
+                            filteredDeck.delays = convertToJSON((value as String))
                         }
                         "preset" -> {
                             val i: Int = (value as String).toInt()
@@ -177,9 +180,9 @@ class FilteredDeckOptions :
                     }
                 }
 
-                // save deck
+                // save `filteredDeck`
                 try {
-                    col.decks.save(deck)
+                    col.decks.save(filteredDeck)
                 } catch (e: RuntimeException) {
                     Timber.e(e, "RuntimeException on saving deck")
                     CrashReportService.sendExceptionReport(e, "FilteredDeckOptionsSaveDeck")
@@ -223,7 +226,7 @@ class FilteredDeckOptions :
             null
         } ?: col.decks.current()
         registerExternalStorageListener()
-        if (deck.isNormal) {
+        if (deck.isRegular) {
             Timber.w("Deck is not a dyn deck")
             finish()
             return
@@ -245,7 +248,7 @@ class FilteredDeckOptions :
         if (title.contains("XXX")) {
             title =
                 try {
-                    title.replace("XXX", deck.name)
+                    title.replace("XXX", filteredDeck.name)
                 } catch (e: JSONException) {
                     Timber.w(e)
                     title.replace("XXX", "???")
@@ -289,7 +292,7 @@ class FilteredDeckOptions :
         if (prefChanged) {
             // Rebuild the filtered deck if a setting has changed
             try {
-                col.sched.rebuildDyn(deck.id)
+                col.sched.rebuildDyn(filteredDeck.id)
             } catch (e: JSONException) {
                 Timber.e(e)
             }
@@ -370,14 +373,14 @@ class FilteredDeckOptions :
                     return@OnPreferenceChangeListener true
                 }
                 if (!newValue) {
-                    deck.secondFilter = null
+                    filteredDeck.secondFilter = null
                     secondFilter.isEnabled = false
                 } else {
                     secondFilter.isEnabled = true
                     /**Link to the defaults used in AnkiDesktop
                      * <https://github.com/ankitects/anki/blob/1b15069b248a8f86f9bd4b3c66a9bfeab8dfb2b8/qt/aqt/filtered_deck.py#L148-L149>
                      */
-                    deck.secondFilter = Deck.Term("", 20, 5)
+                    filteredDeck.secondFilter = Term("", 20, 5)
                     val newOrderPrefSecond = findPreference("order_2") as ListPreference
                     newOrderPrefSecond.value = CardSelectionOrder.ADDED.number.toString()
                 }

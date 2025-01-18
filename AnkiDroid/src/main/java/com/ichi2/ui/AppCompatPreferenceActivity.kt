@@ -87,7 +87,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
     // Instead we use a backing field.
     // We can't use `_deck` as this is only allowed for public properties.
     private var deckBackupField: Deck? = null
-    protected var deck: Deck
+    protected open var deck: Deck
         get() = deckBackupField!!
         set(value) {
             deckBackupField = value

@@ -166,7 +166,7 @@ class Decks(
     @LibAnkiAlias("get_legacy")
     fun getLegacy(did: DeckId): Deck? =
         try {
-            Deck(BackendUtils.fromJsonBytes(col.backend.getDeckLegacy(did)))
+            Deck.factory(BackendUtils.fromJsonBytes(col.backend.getDeckLegacy(did)))
         } catch (ex: BackendNotFoundException) {
             null
         }
@@ -190,18 +190,22 @@ class Decks(
 
     @LibAnkiAlias("new_deck_legacy")
     private fun newDeckLegacy(filtered: Boolean) =
-        Deck(BackendUtils.fromJsonBytes(col.backend.newDeckLegacy(filtered))).apply {
-            if (filtered) {
-                // until migrating to the dedicated method for creating filtered decks,
-                // we need to ensure the default config matches legacy expectations
-                firstFilter.apply {
-                    search = ""
-                    order = 0
-                }
-                secondFilter = null
-                browserCollapsed = false
-                collapsed = false
+        Deck.factory(BackendUtils.fromJsonBytes(col.backend.newDeckLegacy(filtered))).apply {
+            if (this.isRegular) {
+                return@apply
             }
+            require(this is FilteredDeck) {
+                "The deck $this does not satisfies `isRegular` but is not a FilteredDeck. That should be impossible."
+            }
+            // until migrating to the dedicated method for creating filtered decks,
+            // we need to ensure the default config matches legacy expectations
+            firstFilter.apply {
+                search = ""
+                order = 0
+            }
+            secondFilter = null
+            browserCollapsed = false
+            collapsed = false
         }
 
     @RustCleanup("implement and make public")
@@ -279,7 +283,7 @@ class Decks(
         default: Boolean = true,
     ): Deck? =
         try {
-            Deck(BackendUtils.fromJsonBytes(col.backend.getDeckLegacy(did)))
+            Deck.factory(BackendUtils.fromJsonBytes(col.backend.getDeckLegacy(did)))
         } catch (ex: BackendNotFoundException) {
             null
         }
@@ -369,7 +373,7 @@ class Decks(
     /** Falls back on default config if deck or config missing */
     @LibAnkiAlias("config_dict_for_deck_id")
     fun configDictForDeckId(did: DeckId): DeckConfig {
-        val conf = getLegacy(did)?.conf ?: 1
+        val conf = (getLegacy(did) as? RegularDeck?)?.conf ?: 1
         return DeckConfig(BackendUtils.fromJsonBytes(col.backend.getDeckConfigLegacy(conf)))
     }
 
@@ -407,7 +411,7 @@ class Decks(
 
     @LibAnkiAlias("set_config_id_for_deck_dict")
     fun setConfigIdForDeckDict(
-        grp: Deck,
+        grp: RegularDeck,
         id: DeckConfigId,
     ) {
         grp.conf = id

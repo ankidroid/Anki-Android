@@ -13,68 +13,25 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.ichi2.anki.libanki
+package com.ichi2.libanki
 
-import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
+import com.ichi2.anki.libanki.FilteredDeck
+import com.ichi2.anki.libanki.FilteredDeck.Term
+import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.assertFalse
 import org.json.JSONArray
 import org.junit.Test
+import org.junit.jupiter.api.assertInstanceOf
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class DeckTest : InMemoryAnkiTest() {
-    val d = Deck.factory("""{"dyn": 0}""")
+class FilteredDeckTest : JvmTest() {
+    val d = FilteredDeck("{}")
 
     @Test
-    fun testFiltered() {
-        // `dyn` can't be set by the front-end anymore.
-        val d = Deck.factory("""{"dyn" :1}""")
-        assertTrue(d.isFiltered)
-        assertFalse(d.isRegular, "This deck should not be normal")
-    }
-
-    @Test
-    fun testNormal() {
-        val d = Deck.factory("""{"dyn" :0}""")
-        assertTrue(d.isRegular)
-        assertFalse(d.isFiltered, "this deck should not be filtered")
-    }
-
-    @Test
-    fun testName() {
-        val name = "foo"
-        d.name = name
-        assertEquals(name, d.name)
-    }
-
-    @Test
-    fun testBrowserCollapsed() {
-        d.browserCollapsed = true
-        assertTrue(d.browserCollapsed)
-        d.browserCollapsed = false
-        assertFalse(d.browserCollapsed, "browser should be collapsed")
-    }
-
-    @Test
-    fun testCollapsed() {
-        d.collapsed = true
-        assertTrue(d.collapsed)
-        d.collapsed = false
-        assertFalse(d.collapsed, "deck should be collapsed")
-    }
-
-    @Test
-    fun testId() {
-        val id = 42L
-        d.id = id
-        assertEquals(id, d.id)
-    }
-
-    @Test
-    fun testDescription() {
-        val description = "foo"
-        d.description = description
-        assertEquals(description, d.description)
+    fun testFactory() {
+        val d = Deck.factory("""{"dyn": 1}""")
+        assertInstanceOf<FilteredDeck>(d)
     }
 
     @Test
@@ -108,5 +65,64 @@ class DeckTest : InMemoryAnkiTest() {
         assertEquals(d.delays, delays)
         d.delays = null
         assertEquals(d.delays, null)
+    }
+
+    @Test
+    fun testEmpty() {
+        val d = FilteredDeck("{empty: 4}")
+        d.removeEmpty()
+        // The property empty can be edited but never read in the frontend.
+        assertFalse("Empty should be removed", d.jsonObject.has("empty"))
+    }
+
+    val search = "search"
+    val limit = 7
+    val order = 42
+    val t = Term(search, limit, order)
+
+    val search2 = "search2"
+    val limit2 = 7
+    val order2 = 44
+    val t2 = Term(search2, limit2, order2)
+
+    @Test
+    fun testSearch() {
+        val expectedSearch = "expectedSearch"
+        t.search = expectedSearch
+        assertEquals(expectedSearch, t.search)
+    }
+
+    @Test
+    fun testLimit() {
+        val expectedLimit = 7
+        t.limit = expectedLimit
+        assertEquals(expectedLimit, t.limit)
+    }
+
+    @Test
+    fun testOrder() {
+        val expectedOrder = 7
+        t.order = expectedOrder
+        assertEquals(expectedOrder, t.order)
+    }
+
+    @Test
+    fun testFirstFilter() {
+        // All decks are expected to have at least one term.
+        val d = FilteredDeck("""{"terms": [$t]}""")
+        val firstFilter = d.firstFilter
+        assertEquals(firstFilter.search, search)
+        assertEquals(firstFilter.limit, limit)
+        assertEquals(firstFilter.order, order)
+    }
+
+    @Test
+    fun testSecondFilter() {
+        val d = FilteredDeck("""{"terms": [$t]}""")
+        assertEquals(null, d.secondFilter)
+        d.secondFilter = t2
+        assertEquals(t2, d.secondFilter)
+        d.secondFilter = null
+        assertEquals(null, d.secondFilter)
     }
 }
