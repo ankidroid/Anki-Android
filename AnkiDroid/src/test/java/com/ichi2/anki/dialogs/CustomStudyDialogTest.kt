@@ -38,8 +38,8 @@ import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
-import com.ichi2.libanki.Deck
-import com.ichi2.libanki.Deck.Term
+import com.ichi2.libanki.FilteredDeck
+import com.ichi2.libanki.FilteredDeck.Term
 import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.testutils.AnkiFragmentScenario
 import com.ichi2.testutils.isJsonHolderEqual
@@ -80,7 +80,7 @@ class CustomStudyDialogTest : RobolectricTest() {
             // Putting in the Strings value that AnkiDroid currently don't allow to configure.
             // Using setters when possible.
             val expected =
-                Deck(
+                FilteredDeck(
                     """
                 {
                     "lrnToday": [0, 0],

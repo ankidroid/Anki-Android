@@ -17,20 +17,25 @@
 package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
-import com.ichi2.anki.utils.ext.getLongOrNull
 import com.ichi2.utils.JSONObjectHolder
 import org.json.JSONArray
 import org.json.JSONObject
 import org.json.JSONObject.NULL
 
-@JvmInline
-value class Deck(
-    @VisibleForTesting override val jsonObject: JSONObject,
-) : JSONObjectHolder {
-    /**
-     * Creates a deck object form a json string
-     */
-    constructor(json: String) : this(JSONObject(json))
+/**
+ * Represents a deck. Use [factory] in order to create either a [FilteredDeck] or a [RegularDeck].
+ */
+interface Deck : JSONObjectHolder {
+    companion object {
+        fun isFiltered(jsonObject: JSONObject) = jsonObject.getInt("dyn") != 0
+
+        /**
+         * Those two factories returns either a [FilteredDeck] or a [RegularDeck] encapsulating the input, depending on the value of [isFiltered].
+         */
+        fun factory(jsonObject: JSONObject): Deck = if (isFiltered(jsonObject)) FilteredDeck(jsonObject) else RegularDeck(jsonObject)
+
+        fun factory(jsonObject: String) = factory(JSONObject(jsonObject))
+    }
 
     /**
      * Whether this deck is a filtered deck.
@@ -46,7 +51,7 @@ value class Deck(
     /**
      * Whether this deck is a normal deck. That is, not a filtered deck.
      */
-    var isNormal: Boolean
+    var isRegular: Boolean
         get() = !isFiltered
 
         @VisibleForTesting
@@ -93,30 +98,12 @@ value class Deck(
         }
 
     /**
-     * The id of the deck option.
-     */
-    var conf: DeckConfigId
-        get() {
-            val value = jsonObject.optLong("conf")
-            return if (value > 0) value else 1
-        }
-        set(value) {
-            jsonObject.put("conf", value)
-        }
-
-    /**
      * A string explaining what can be found in this deck.
      */
     var description: String
         get() = jsonObject.optString("desc")
         set(value) {
             jsonObject.put("desc", value)
-        }
-
-    var noteTypeId: NoteTypeId?
-        get() = jsonObject.getLongOrNull("mid")
-        set(value) {
-            jsonObject.put("mid", value)
         }
 
     var resched: Boolean
@@ -135,6 +122,7 @@ value class Deck(
         set(value) {
             jsonObject.put("previewHardSecs", value)
         }
+
     var previewGoodSecs: Int
         get() = jsonObject.getInt("previewGoodSecs")
         set(value) {
@@ -160,73 +148,4 @@ value class Deck(
     fun removeEmpty() {
         jsonObject.remove("empty")
     }
-
-    /**
-     * The options configuring which cards are shown in a filtered deck.
-     * See https://docs.ankiweb.net/filtered-decks.html
-     */
-    @JvmInline
-    value class Term(
-        val array: JSONArray,
-    ) {
-        constructor(search: String, limit: Int, order: Int) : this(JSONArray(listOf(search, limit, order))) {}
-
-        /**
-         Only cards satisfying this search query are shown.
-         */
-        var search: String
-            get() = array.getString(0)
-            set(value) {
-                array.put(0, value)
-            }
-
-        /**
-         * At most this number of cards are shown.
-         */
-        var limit: Int
-            get() = array.getInt(1)
-            set(value) {
-                array.put(1, value)
-            }
-
-        /**
-         * The order in which cards are shown. See https://docs.ankiweb.net/filtered-decks.html#order.
-         */
-        var order: Int
-            get() = array.getInt(2)
-            set(value) {
-                array.put(2, value)
-            }
-
-        override fun toString(): String = array.toString()
-    }
-
-    /**
-     * The options deciding which cards are shown in a filtered deck.
-     */
-    val firstFilter: Term
-        get() = Term(terms.getJSONArray(0))
-
-    /**
-     * A second option to add more cards to the filtered deck.
-     */
-    var secondFilter: Term?
-        get() = terms.optJSONArray(1)?.let { Term(it) }
-        set(value) {
-            if (value == null) {
-                terms.remove(1)
-            } else {
-                terms.put(1, value?.array)
-            }
-        }
-
-    /**
-     * The array of filters. Only for filtered decks.
-     */
-    @VisibleForTesting
-    var terms: JSONArray
-        get() = jsonObject.getJSONArray("terms")
-        set(value) {
-            jsonObject.put("terms", value)
-        }
 }

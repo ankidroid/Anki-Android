@@ -158,6 +158,7 @@ import com.ichi2.libanki.NoteTypeId
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
+import com.ichi2.libanki.RegularDeck
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.undoableOp
 import com.ichi2.themes.Themes
@@ -2667,7 +2668,7 @@ class NoteEditor :
         }
 
         getColUnsafe.notetypes.setCurrent(noteType)
-        val currentDeck = getColUnsafe.decks.current()
+        val currentDeck = getColUnsafe.decks.current() as RegularDeck
         currentDeck.noteTypeId = newId
         getColUnsafe.decks.save(currentDeck)
 
