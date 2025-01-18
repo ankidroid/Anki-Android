@@ -129,7 +129,7 @@ open class SchedulerTest : InMemoryAnkiTest() {
         }
         // give the child deck a different configuration
         val c2 = col.decks.addConfigReturningId("new conf")
-        col.decks.setConfigIdForDeckDict(col.decks.getLegacy(deck2)!!, c2)
+        col.decks.setConfigIdForDeckDict(col.decks.getLegacy(deck2)!! as RegularDeck, c2)
         // both confs have defaulted to a limit of 20
         Assert.assertEquals(20, col.sched.newCount().toLong())
         // first card we get comes from parent

@@ -26,6 +26,7 @@ import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardType
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
+import com.ichi2.anki.libanki.FilteredDeck
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.libanki.NotetypeJson
@@ -977,7 +978,7 @@ class ContentProviderTest : InstrumentedTest() {
         // Move the card into a filtered deck so due is replaced and the original due is kept in oDue.
         val filteredDeckId = col.decks.newFiltered("Raw due filtered deck")
         testDeckIds.add(filteredDeckId)
-        val filteredDeck = checkNotNull(col.decks.getLegacy(filteredDeckId))
+        val filteredDeck = checkNotNull(col.decks.getLegacy(filteredDeckId)) as FilteredDeck
         filteredDeck.firstFilter.search = "cid:${card.id}"
         col.decks.save(filteredDeck)
         col.sched.rebuildFilteredDeck(filteredDeckId)

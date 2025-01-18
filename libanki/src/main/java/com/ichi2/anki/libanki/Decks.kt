@@ -175,7 +175,7 @@ class Decks(
     @LibAnkiAlias("get_legacy")
     fun getLegacy(did: DeckId): Deck? =
         try {
-            Deck(BackendUtils.fromJsonBytes(col.backend.getDeckLegacy(did)))
+            Deck.factory(BackendUtils.fromJsonBytes(col.backend.getDeckLegacy(did)))
         } catch (ex: BackendNotFoundException) {
             null
         }
@@ -188,7 +188,7 @@ class Decks(
         BackendUtils
             .fromJsonBytes(col.backend.getAllDecksLegacy())
             .jsonObjectIterable()
-            .map { Deck(it) }
+            .map { Deck.factory(it) }
             .toList()
 
     /** Return a new normal deck. It must be added with [addDeck] after a name assigned. */
@@ -201,18 +201,22 @@ class Decks(
     @LibAnkiAlias("new_deck_legacy")
     @RustCleanup("doesn't match upstream")
     private fun newDeckLegacy(filtered: Boolean) =
-        Deck(BackendUtils.fromJsonBytes(col.backend.newDeckLegacy(filtered))).apply {
-            if (filtered) {
-                // until migrating to the dedicated method for creating filtered decks,
-                // we need to ensure the default config matches legacy expectations
-                firstFilter.apply {
-                    search = ""
-                    order = 0
-                }
-                secondFilter = null
-                browserCollapsed = false
-                collapsed = false
+        Deck.factory(BackendUtils.fromJsonBytes(col.backend.newDeckLegacy(filtered))).apply {
+            if (this.isRegular) {
+                return@apply
             }
+            require(this is FilteredDeck) {
+                "The deck $this does not satisfies `isRegular` but is not a FilteredDeck. That should be impossible."
+            }
+            // until migrating to the dedicated method for creating filtered decks,
+            // we need to ensure the default config matches legacy expectations
+            firstFilter.apply {
+                search = ""
+                order = 0
+            }
+            secondFilter = null
+            browserCollapsed = false
+            collapsed = false
         }
 
     @LibAnkiAlias("deck_tree")
@@ -403,7 +407,7 @@ class Decks(
     @RustCleanup("does not match upstream")
     @CheckResult
     fun configDictForDeckId(did: DeckId): DeckConfig {
-        val conf = getLegacy(did)?.conf ?: 1
+        val conf = (getLegacy(did) as? RegularDeck?)?.conf ?: 1
         return DeckConfig(BackendUtils.fromJsonBytes(col.backend.getDeckConfigLegacy(conf)))
     }
 
@@ -465,7 +469,7 @@ class Decks(
 
     @LibAnkiAlias("set_config_id_for_deck_dict")
     fun setConfigIdForDeckDict(
-        deck: Deck,
+        deck: RegularDeck,
         id: DeckConfigId,
     ) {
         deck.conf = id
