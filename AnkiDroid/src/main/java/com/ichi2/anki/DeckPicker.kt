@@ -1923,6 +1923,17 @@ open class DeckPicker :
         }
     }
 
+    override fun tagMissing(missingMediaNotes: List<Long>?) {
+        if (missingMediaNotes == null) return
+
+        Timber.d("DeckPicker:: Adding missing media tag")
+        launchCatchingTask {
+            withCol {
+                tags.bulkAdd(missingMediaNotes, TR.mediaCheckMissingMediaTag())
+            }
+        }
+    }
+
     open fun handleDbError() {
         Timber.i("Displaying Database Error")
         showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_LOAD_FAILED)
