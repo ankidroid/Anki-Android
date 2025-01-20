@@ -582,17 +582,45 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
      */
     private fun WebView.loadImage(imageUri: Uri) {
         Timber.i("Loading non-SVG image using WebView")
-        val imagePath = imageUri.toString()
-        val htmlData =
-            """
-            <html>
-                <body style="margin:0;padding:0;">
-                    <img src="$imagePath" style="width:100%;height:auto;" />
-                </body>
-            </html>
-            """.trimIndent()
 
-        loadDataWithBaseURL(null, htmlData, "text/html", "UTF-8", null)
+        try {
+            val internalFile = internalizeUri(imageUri)?.takeIf { it.exists() }
+            if (internalFile == null) {
+                Timber.w(
+                    "loadImage() unable to internalize image from Uri %s",
+                    imageUri,
+                )
+                showSomethingWentWrong()
+                return
+            }
+
+            val contentUri = getContentUriFromFile(internalFile)
+            if (contentUri == null) {
+                Timber.w("Failed to get content URI for the image.")
+                showSomethingWentWrong()
+                return
+            }
+
+            val htmlData =
+                """
+                <html>
+                    <body style="margin:0;padding:0;">
+                        <img src="$contentUri" style="width:100%;height:auto;" />
+                    </body>
+                </html>
+                """.trimIndent()
+
+            loadDataWithBaseURL(null, htmlData, "text/html", "UTF-8", null)
+        } catch (e: Exception) {
+            Timber.e(e, "Error loading image in WebView")
+            showSomethingWentWrong()
+        }
+    }
+
+    private fun getContentUriFromFile(file: File): Uri? {
+        val context = context ?: return null
+        val authority = context.applicationContext.packageName + ".apkgfileprovider"
+        return FileProvider.getUriForFile(context, authority, file)
     }
 
     /** Shows an error image along with an error text **/
