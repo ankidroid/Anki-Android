@@ -21,6 +21,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.onAttachedToWindow2
@@ -246,6 +247,41 @@ fun Fragment.showSnackbar(
         baseSnackbarBuilder?.invoke(this)
         snackbarBuilder?.invoke(this)
         Timber.d("displayed snackbar: '%s'", text)
+    }
+}
+
+/**
+ * Show a snackbar.
+ *
+ * You can create snackbars by calling `showSnackbar` on either an activity or a view.
+ * As `CoordinatorLayout` is responsible for proper placement and animation of snackbars,
+ *
+ * Any additional configuration can be done in the configuration block, e.g.
+ *
+ *     showSnackbar(text) {
+ *         addCallback(callback)
+ *     }
+ *
+ * @receiver A [DialogFragment], ideally where the [root view][DialogFragment.getView] has been
+ *  initialized
+ * @param text Text to show, can be formatted.
+ * @param duration Optional. For how long to show the snackbar. Can be one of:
+ *     [Snackbar.LENGTH_SHORT], [Snackbar.LENGTH_LONG] (default), [Snackbar.LENGTH_INDEFINITE],
+ *     or exact duration in milliseconds.
+ * @param snackbarBuilder Optional. A configuration block with the [Snackbar] as `this`.
+ */
+fun DialogFragment.showSnackbar(
+    text: CharSequence,
+    duration: Int = Snackbar.LENGTH_LONG,
+    snackbarBuilder: SnackbarBuilder? = null,
+) {
+    val baseSnackbarBuilder = (this as? BaseSnackbarBuilderProvider)?.baseSnackbarBuilder
+    view?.showSnackbar(text, duration) {
+        baseSnackbarBuilder?.invoke(this)
+        snackbarBuilder?.invoke(this)
+        Timber.d("displayed snackbar: '%s'", text)
+    } ?: run {
+        requireActivity().showSnackbar(text, duration, snackbarBuilder)
     }
 }
 
