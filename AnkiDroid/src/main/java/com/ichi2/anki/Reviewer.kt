@@ -54,7 +54,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import anki.frontend.SetSchedulingStatesRequest
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
@@ -818,14 +817,7 @@ open class Reviewer :
             }
             val whiteboardIcon = ContextCompat.getDrawable(applicationContext, R.drawable.ic_gesture_white)!!.mutate()
             val stylusIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_stylus)!!.mutate()
-            val whiteboardColorPaletteIcon =
-                VectorDrawableCompat
-                    .create(
-                        resources,
-                        R.drawable.ic_color_lens_white_24dp,
-                        this.theme,
-                    )!!
-                    .mutate()
+            val whiteboardColorPaletteIcon = ContextCompat.getDrawable(applicationContext, R.drawable.ic_color_lens_white_24dp)!!.mutate()
             if (showWhiteboard) {
                 whiteboardIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                 hideWhiteboardIcon.icon = whiteboardIcon
