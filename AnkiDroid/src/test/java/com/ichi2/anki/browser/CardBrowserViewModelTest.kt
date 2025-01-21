@@ -997,6 +997,20 @@ class CardBrowserViewModelTest : JvmTest() {
         }
     }
 
+    @Suppress("SpellCheckingInspection") // German
+    @Test
+    fun `columns headings - language change`() =
+        runViewModelTest {
+            fun firstHeading() = flowOfColumnHeadings.value.first().label
+
+            assertThat("English", firstHeading(), equalTo("Sort Field"))
+
+            col.reopenWithLanguage("de")
+            onReinit()
+
+            assertThat("German", firstHeading(), equalTo("Sortierfeld"))
+        }
+
     private fun assertDate(str: String?) {
         // 2025-01-09 @ 18:06
         assertNotNull(str)

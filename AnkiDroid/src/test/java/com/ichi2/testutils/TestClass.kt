@@ -16,6 +16,7 @@
 
 package com.ichi2.testutils
 
+import androidx.appcompat.app.AppCompatDelegate
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.isCollectionEmpty
@@ -32,6 +33,7 @@ import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.utils.set
 import com.ichi2.testutils.ext.addNote
+import com.ichi2.utils.LanguageUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
@@ -191,6 +193,20 @@ interface TestClass {
     /** Ensures [isCollectionEmpty] returns `false` */
     fun ensureNonEmptyCollection() {
         addNotes(1)
+    }
+
+    /**
+     * Closes and reopens the backend using the provided [language], typically for
+     * [CollectionManager.TR] calls
+     *
+     * This does not set the [application locales][AppCompatDelegate.setApplicationLocales]
+     *
+     * @param language tag in the form: `de` or `zh-CN`
+     */
+    suspend fun Collection.reopenWithLanguage(language: String) {
+        LanguageUtil.setDefaultBackendLanguages(language)
+        CollectionManager.discardBackend()
+        CollectionManager.getColUnsafe()
     }
 
     fun selectDefaultDeck() {
