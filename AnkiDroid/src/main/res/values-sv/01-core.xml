@@ -65,8 +65,8 @@
         <item quantity="other">%1$d timmar %2$d kvar</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">%1$d dag %2$d timmar kvar</item>
+        <item quantity="other">%1$d dagar %2$d timmar kvar</item>
     </plurals>
     <string name="no_cards_placeholder_title">Samlingen är tom</string>
     <string name="no_cards_placeholder_description">Börja lägga till kort\nmed + knappen</string>
@@ -108,8 +108,8 @@
     <string name="menu_search" maxLength="28">Sökning i %1$s</string>
     <string name="menu_mark_note" maxLength="28">Markera not</string>
     <string name="menu_unmark_note">Avmarkera not</string>
-    <string name="menu_enable_voice_playback" maxLength="28">Enable voice playback</string>
-    <string name="menu_disable_voice_playback">Disable voice playback</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Aktivera röstuppspelning</string>
+    <string name="menu_disable_voice_playback">Avaktivera röstuppspelning</string>
     <string name="new_deck">Skapa kortlek</string>
     <string name="new_dynamic_deck">Skapa filtrerad kortlek</string>
     <string name="directory_inaccessible">AnkiDroid-mappen är inte tillgänglig</string>
@@ -129,7 +129,7 @@
     <string name="empty_deck">Den här kortleken är tom</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Kortlekssökning</string>
     <string name="invalid_deck_name">Ogiltigt kortleksnamn</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
+    <string name="studyoptions_congrats_finished">Grattis! Du har blivit klar för idag.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Kortlek är klar för stunden! %s</string>
     <string name="studyoptions_no_cards_due">Inga kort i kö.</string>
     <string name="sd_card_not_mounted">Lagringsenhet ej monterad</string>
@@ -199,5 +199,5 @@
     <string name="image_occlusion">Bildövertäckning</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Ta bort konto</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Omedelbart kort</string>
 </resources>
