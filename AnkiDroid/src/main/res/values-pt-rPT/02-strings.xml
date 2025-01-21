@@ -303,7 +303,7 @@
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notas</string>
     <string name="toggle_cards_notes">Alternar entre Fichas e Notas</string>
     <string name="truncate_content_help">Mostrar apenas as primeiras três linhas de conteúdo, de cada uma das linhas do explorador.</string>
-    <string name="browser_options_dialog_heading">Browser options</string>
+    <string name="browser_options_dialog_heading">Opções de Explorador</string>
     <string name="audio_saved">Gravação guardada</string>
     <string name="deleting_selected_notes">Apagar as notas selecionadas</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Toque numa voz para a ouvir
@@ -350,7 +350,7 @@
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Editar modelo do verso</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Editar estilo do modelo</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copiar modelo no formato markdown</string>
-    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Editar a aparência do navegador</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Editar a aparência do explorador</string>
     <string name="show_shortcuts_message">Pressione Alt+K para ver os atalhos de teclado</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">A acção %s não foi definida para este tipo de nota. Por favor configure-o.</string>
     <string name="directory_inaccessible_info">Descubra mais sobre como restaurar o acesso aqui %s, ou vá às definições para actualizar a pasta das colecções.</string>

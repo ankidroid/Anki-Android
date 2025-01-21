@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">Svara bra</string>
     <string name="answer_easy" maxLength="41">Svara lätt</string>
     <string name="gesture_play" maxLength="41">Spela upp media</string>
-    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_abort_learning" maxLength="41">Stäng granskning</string>
     <string name="gesture_flag_red" maxLength="41">Växla Röd flagga</string>
     <string name="gesture_flag_orange" maxLength="41">Växla Orange flagga</string>
     <string name="gesture_flag_green" maxLength="41">Växla Grön flagga</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">Ta bort flagga</string>
     <string name="gesture_page_up" maxLength="41">Sida upp</string>
     <string name="gesture_page_down" maxLength="41">Sida ner</string>
-    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_abort_sync" maxLength="41">Stäng granskning och Synkronisera</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Växla Whiteboard</string>
     <string name="gesture_show_hint" maxLength="41">Visa ledtråd</string>
     <string name="gesture_show_all_hints" maxLength="41">Visa alla ledtrådar</string>

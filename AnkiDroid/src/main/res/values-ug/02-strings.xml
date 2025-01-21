@@ -249,7 +249,7 @@
     <string name="back_pressed_once_reviewer">قايت يەنە چېكىلسە قايتىدۇ</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">تەستە چۈشۈر</string>
+    <string name="download_deck">دەستە چۈشۈر</string>
     <string name="try_again">قايتا سىنا</string>
     <string name="cancel_download">چۈشۈرۈشتىن ۋاز كەچ</string>
     <string name="cancel_download_question_title">چۈشۈرۈشتىن ۋاز كېچەمدۇ؟</string>

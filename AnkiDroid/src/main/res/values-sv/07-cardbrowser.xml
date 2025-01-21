@@ -70,11 +70,11 @@
     <string name="card_browser_list_my_searches_new_name">Namn på aktuell sökning</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Du kan inte spara en sökning utan ett namn</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Namnet finns</string>
-    <string name="no_note_to_edit">No note to edit</string>
+    <string name="no_note_to_edit">Ingen not att ändra</string>
     <string name="card_browser_list_my_searches_remove_content">Ta bort ”%1$s”?</string>
     <string name="card_browser_change_display_order" maxLength="28">Ändra visningsordning</string>
-    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Sök</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Sök</string>
     <string name="card_browser_change_display_order_title">Välj visningsordning</string>
     <string name="card_details_tags">Etiketter</string>
     <string-array name="card_browser_order_labels">
@@ -95,7 +95,7 @@
     <string name="card_browser_search_all_decks">Sök i alla kortlekar</string>
     <string name="card_browser_unknown_deck_name">Okänd</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Trunkera innehåll</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Idag är \'0 %1$s\', imorgon är \'1 %2$s\', etc&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Exportera kort</item>
         <item quantity="other">Exportera kort</item>
@@ -109,6 +109,6 @@
         <item quantity="other">%d kort raderade</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Ändra tagg dialogruta</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Visa ordnings dialogruta</string>
 </resources>
