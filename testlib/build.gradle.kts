@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.hamcrest.library)
     implementation(libs.junit.jupiter)
     implementation(libs.androidx.test.junit)
+    implementation(libs.kotlin.test)
     testImplementation(libs.junit.vintage.engine)
     testImplementation(libs.androidx.test.rules)
     testRuntimeOnly(libs.junit.platform.launcher)
