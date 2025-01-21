@@ -18,6 +18,7 @@ package com.ichi2.utils
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Rect
 import android.view.MotionEvent
 import android.view.View
@@ -121,3 +122,7 @@ value class Dp(
     // TODO: improve once we have context parameters
     fun toPx(context: Context) = dp.dpToPx(context)
 }
+
+fun View.isRtl() = isRtl(resources)
+
+fun isRtl(res: Resources): Boolean = res.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
