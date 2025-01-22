@@ -91,13 +91,18 @@ class FlagAdapter(
         }
 
         holder.saveButton.setOnClickListener {
-            val updatedTextName = holder.flagNameEdit.text.toString()
+            val updatedTextName =
+                holder.flagNameEdit.text
+                    .toString()
+                    .ifEmpty { flagItem.title }
             holder.flagNameViewLayout.visibility = View.VISIBLE
             holder.flagNameEditLayout.visibility = View.GONE
             val updatedFlagItem = flagItem.copy(title = updatedTextName)
             val updatedDataset = currentList.toMutableList()
-            lifecycleScope.launch {
-                flagItem.renameTo(updatedTextName)
+            if (updatedFlagItem.title != flagItem.title) {
+                lifecycleScope.launch {
+                    flagItem.renameTo(updatedTextName)
+                }
             }
             updatedFlagItem.isInEditMode = false
             updatedDataset[position] = updatedFlagItem
