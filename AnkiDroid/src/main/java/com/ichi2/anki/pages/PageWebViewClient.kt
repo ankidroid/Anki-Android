@@ -21,6 +21,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.annotation.VisibleForTesting
 import androidx.core.view.isVisible
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.OnPageFinishedCallback
@@ -38,6 +39,9 @@ open class PageWebViewClient : WebViewClient() {
     open val promiseToWaitFor: String? = null
 
     val onPageFinishedCallbacks: MutableList<OnPageFinishedCallback> = mutableListOf()
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    var callbacksExecuted: Boolean = false
 
     override fun shouldInterceptRequest(
         view: WebView,
@@ -94,6 +98,7 @@ open class PageWebViewClient : WebViewClient() {
         super.onPageFinished(view, url)
         if (view == null) return
         onPageFinishedCallbacks.map { callback -> callback.onPageFinished(view) }
+        callbacksExecuted = true
         if (promiseToWaitFor == null) {
             /** [PageFragment.webView] is invisible by default to avoid flashes while
              * the page is loaded, and can be made visible again after it finishes loading */

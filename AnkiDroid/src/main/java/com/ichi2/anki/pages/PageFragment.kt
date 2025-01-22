@@ -25,6 +25,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
+import androidx.annotation.VisibleForTesting
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
@@ -45,6 +46,9 @@ open class PageFragment(
     PostRequestHandler {
     lateinit var webView: WebView
     private val server = AnkiServer(this).also { it.start() }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    lateinit var pageWebViewClient: PageWebViewClient
 
     /**
      * Override this to set a custom [WebViewClient] to the page.
@@ -93,7 +97,7 @@ open class PageFragment(
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        val pageWebViewClient = onCreateWebViewClient(savedInstanceState)
+        pageWebViewClient = onCreateWebViewClient(savedInstanceState)
         webView =
             view.findViewById<WebView>(R.id.webview).apply {
                 with(settings) {
