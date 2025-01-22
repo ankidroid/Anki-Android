@@ -51,15 +51,6 @@ class AsyncDialogFragmentsTest {
     }
 
     @Test
-    fun `MediaCheckDialog does not require context`() {
-        for (dialogType in MediaCheckDialog.Type.entries) {
-            val instance = MediaCheckDialog.newInstance(dialogType)
-            assertDoesNotThrow("$dialogType message required a context") { instance.notificationMessage }
-            assertDoesNotThrow("$dialogType title required a context") { instance.notificationTitle }
-        }
-    }
-
-    @Test
     fun `ImportDialog does not require context`() {
         for (dialogType in ImportDialog.Type.entries) {
             val instance = ImportDialog.newInstance(dialogType, "path")
