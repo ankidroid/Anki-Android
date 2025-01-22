@@ -21,14 +21,17 @@ package com.ichi2.anki.preferences
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.XmlRes
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.bytehamster.lib.preferencesearch.SearchConfiguration
@@ -37,11 +40,24 @@ import com.bytehamster.lib.preferencesearch.SearchPreferenceResultListener
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.appbar.MaterialToolbar
+import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.isWindowCompact
+import com.ichi2.anki.utils.openUrl
+import com.ichi2.anki.withProgress
+import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.FragmentFactoryUtils
+import com.ichi2.utils.message
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.neutralButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
@@ -100,23 +116,20 @@ class PreferencesFragment :
         caller: PreferenceFragmentCompat,
         pref: Preference,
     ): Boolean {
-        // avoid reopening the same fragment if already active
-        val currentFragment =
-            childFragmentManager.findFragmentById(R.id.settings_container)
-                ?: return true
-        if (pref.fragment == currentFragment::class.jvmName) return true
-
-        val fragment =
-            childFragmentManager.fragmentFactory.instantiate(
-                requireActivity().classLoader,
-                pref.fragment ?: return true,
-            )
-        fragment.arguments = pref.extras
-        childFragmentManager.commit {
-            replace(R.id.settings_container, fragment, fragment::class.jvmName)
-            setOpenTransition(this)
-            addToBackStack(null)
+        // Checks if the user needs to upgrade the scheduler before opening Reviewing
+        if (pref.fragment == ReviewingSettingsFragment::class.jvmName) {
+            lifecycleScope.launch {
+                val needsUpgrade = withCol { ((config.get("schedVer") ?: 1L) == 1L) }
+                if (needsUpgrade) {
+                    promptUserToUpdateSchedulerFromPreferences()
+                    return@launch
+                } else {
+                    navigateToFragment(pref)
+                }
+            }
+            return true
         }
+        navigateToFragment(pref)
         return true
     }
 
@@ -132,6 +145,44 @@ class PreferencesFragment :
 
         Timber.i("Highlighting key '%s' on %s", result.key, fragment)
         result.highlight(fragment as PreferenceFragmentCompat)
+    }
+
+    private fun navigateToFragment(pref: Preference) {
+        // avoid reopening the same fragment if already active
+        val currentFragment =
+            childFragmentManager.findFragmentById(R.id.settings_container)
+                ?: return
+        if (pref.fragment == currentFragment::class.jvmName) return
+
+        val fragment =
+            childFragmentManager.fragmentFactory.instantiate(
+                requireActivity().classLoader,
+                pref.fragment ?: return,
+            )
+        fragment.arguments = pref.extras
+        childFragmentManager.commit {
+            replace(R.id.settings_container, fragment, fragment::class.jvmName)
+            setOpenTransition(this)
+            addToBackStack(null)
+        }
+    }
+
+    private fun promptUserToUpdateSchedulerFromPreferences() {
+        AlertDialog.Builder(requireContext()).show {
+            message(text = TR.schedulingUpdateRequired())
+            positiveButton(R.string.dialog_ok) {
+                launchCatchingTask {
+                    withProgress { withCol { sched.upgradeToV2() } }
+                    showThemedToast(requireContext(), TR.schedulingUpdateDone(), false)
+                }
+            }
+            negativeButton(R.string.dialog_cancel)
+            if (AdaptionUtil.hasWebBrowser(requireContext())) {
+                neutralButton(text = TR.schedulingUpdateMoreInfoButton()) {
+                    requireContext().openUrl(Uri.parse("https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating"))
+                }
+            }
+        }
     }
 
     private fun setFragmentTitleOnToolbar(fragment: Fragment) {
