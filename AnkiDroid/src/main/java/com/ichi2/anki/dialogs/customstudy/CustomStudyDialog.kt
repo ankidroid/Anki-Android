@@ -368,14 +368,16 @@ class CustomStudyDialog :
             }
             sb.append("(").append(arr.joinToString(" or ")).append(")")
         }
-        launchCatchingTask {
-            createTagsCustomStudySession(
-                arrayOf(
-                    sb.toString(),
-                    Consts.DYN_MAX_SIZE,
-                    Consts.DYN_RANDOM,
-                ),
-            )
+        activity?.launchCatchingTask {
+            withProgress {
+                createTagsCustomStudySession(
+                    arrayOf(
+                        sb.toString(),
+                        Consts.DYN_MAX_SIZE,
+                        Consts.DYN_RANDOM,
+                    ),
+                )
+            }
         }
     }
 
@@ -471,23 +473,16 @@ class CustomStudyDialog :
         Timber.i("Rebuilding Custom Study Deck")
         // PERF: Should be in background
         withCol { decks.save(dyn) }
-        // launch this in the activity scope, rather than the fragment scope
-        requireActivity().launchCatchingTask { rebuildDynamicDeck() }
+        Timber.d("Rebuilding dynamic deck...")
+        withCol { sched.rebuildDyn(decks.selected()) }
+        setFragmentResult(
+            CustomStudyAction.REQUEST_KEY,
+            bundleOf(
+                CustomStudyAction.BUNDLE_KEY to CustomStudyAction.CUSTOM_STUDY_SESSION.ordinal,
+            ),
+        )
         // Hide the dialogs (required due to a DeckPicker issue)
         requireActivity().dismissAllDialogFragments()
-    }
-
-    private suspend fun rebuildDynamicDeck() {
-        Timber.d("rebuildDynamicDeck()")
-        withProgress {
-            withCol { sched.rebuildDyn(decks.selected()) }
-            setFragmentResult(
-                CustomStudyAction.REQUEST_KEY,
-                bundleOf(
-                    CustomStudyAction.BUNDLE_KEY to CustomStudyAction.CUSTOM_STUDY_SESSION.ordinal,
-                ),
-            )
-        }
     }
 
     /**
