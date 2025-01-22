@@ -151,6 +151,13 @@ abstract class InstrumentedTest {
         }
     }
 
+    @DuplicatedCode("This should be refactored into a shared library later")
+    fun Card.update(block: Card.() -> Unit): Card {
+        block(this)
+        col.updateCard(this)
+        return this
+    }
+
     @DuplicatedCode("This is copied from RobolectricTest. This will be refactored into a shared library later")
     protected fun Card.moveToReviewQueue() {
         this.queue = QueueType.Rev
