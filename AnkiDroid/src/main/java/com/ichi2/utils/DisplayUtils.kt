@@ -17,18 +17,38 @@
 package com.ichi2.utils
 
 import android.content.Context
+import android.graphics.Insets
 import android.graphics.Point
+import android.os.Build
 import android.view.Window
+import android.view.WindowInsets
 import android.view.WindowManager
+import android.view.WindowMetrics
 import com.ichi2.anki.AnkiDroidApp
 import kotlin.math.roundToInt
 
 object DisplayUtils {
     @Suppress("DEPRECATION") // #9333: defaultDisplay & getSize
     fun getDisplayDimensions(wm: WindowManager): Point {
-        val display = wm.defaultDisplay
         val point = Point()
-        display.getSize(point)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val windowMetrics: WindowMetrics = wm.currentWindowMetrics
+            val bounds = windowMetrics.bounds
+            val windowInsets: WindowInsets = windowMetrics.getWindowInsets()
+            val insets: Insets =
+                windowInsets.getInsetsIgnoringVisibility(
+                    WindowInsets.Type.navigationBars()
+                        or WindowInsets.Type.displayCutout(),
+                )
+
+            val insetsWidth: Int = insets.right + insets.left
+            val insetsHeight: Int = insets.top + insets.bottom
+            point.x = bounds.width() - (insetsWidth)
+            point.y = bounds.height() - (insetsHeight)
+        } else {
+            val display = wm.defaultDisplay
+            display.getSize(point)
+        }
         return point
     }
 
