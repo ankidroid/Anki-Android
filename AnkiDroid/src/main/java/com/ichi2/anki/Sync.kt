@@ -31,7 +31,6 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.anki.settings.PrefKey
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.worker.SyncMediaWorker
@@ -123,8 +122,8 @@ fun customSyncBase(preferences: SharedPreferences): String? =
 suspend fun syncLogout(context: Context) {
     val preferences = context.sharedPrefs()
     preferences.edit {
-        remove(PrefKey.HKEY)
-        remove(PrefKey.USERNAME)
+        remove("hkey")
+        remove("username")
         remove(SyncPreferences.CURRENT_SYNC_URI)
         remove(SyncPreferences.HOSTNUM)
     }

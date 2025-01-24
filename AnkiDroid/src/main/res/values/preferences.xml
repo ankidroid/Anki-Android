@@ -24,6 +24,8 @@
     <string name="sync_status_badge_key">showSyncStatusBadge</string>
     <string name="metered_sync_key">allowMetered</string>
     <string name="custom_sync_server_key">custom_sync_server_link</string>
+    <string name="hkey_key">hkey</string>
+    <string name="username_key">username</string>
     <!-- Backup -->
     <string name="pref_backup_limits_screen_key">backupLimitsScreen</string>
     <!-- Appearance -->
