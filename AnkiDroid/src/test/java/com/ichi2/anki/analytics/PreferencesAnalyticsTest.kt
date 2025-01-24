@@ -18,16 +18,18 @@ package com.ichi2.anki.analytics
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.analytics.UsageAnalytics.preferencesWhoseChangesShouldBeReported
 import com.ichi2.anki.preferences.PreferenceTestUtils
 import com.ichi2.anki.preferences.SettingsFragment
+import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
+@Config(application = EmptyApplication::class)
 class PreferencesAnalyticsTest : RobolectricTest() {
     private val devOptionsKeys = PreferenceTestUtils.getDevOptionsKeys(targetContext)
 
@@ -37,60 +39,62 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             .getAllPreferenceKeys(targetContext)
             .subtract(devOptionsKeys)
 
+    private val reportableKeys = UsageAnalytics.reportablePrefKeys.toStringResourceSet()
+
     /** Keys of preferences that shouldn't be reported */
-    private val excludedPrefs =
+    private val excludedPrefs: Set<String> =
         setOf(
             // Share feature usage: analytics are only reported if this is enabled :)
-            "analytics_opt_in",
+            R.string.analytics_opt_in_key, // analytics_opt_in
             // Screens: don't have a value
-            "generalScreen",
-            "reviewingScreen",
-            "syncScreen",
-            "notificationsScreen",
-            "controlsScreen",
-            "accessibilityScreen",
-            "customSyncServerScreen",
-            "appBarButtonsScreen",
-            "pref_screen_advanced",
-            "backupsScreen",
-            "backups_help",
+            R.string.pref_general_screen_key, // generalScreen
+            R.string.pref_reviewing_screen_key, // reviewingScreen
+            R.string.pref_sync_screen_key, // syncScreen
+            R.string.pref_notifications_screen_key, // notificationsScreen
+            R.string.pref_controls_screen_key, // controlsScreen
+            R.string.pref_accessibility_screen_key, // accessibilityScreen
+            R.string.pref_custom_sync_server_screen_key, // customSyncServerScreen
+            R.string.pref_app_bar_buttons_screen_key, // appBarButtonsScreen
+            R.string.pref_advanced_screen_key, // pref_screen_advanced
+            R.string.pref_backups_screen_key, // backupsScreen
+            R.string.pref_backups_help_key, // backups_help
             // Categories: don't have a value
-            "appearance_preference_group",
-            "category_plugins",
-            "category_workarounds",
-            "userActionsControls",
+            R.string.pref_appearance_screen_key, // appearance_preference_group
+            R.string.pref_cat_plugins_key, // category_plugins
+            R.string.pref_cat_workarounds_key, // category_workarounds
+            R.string.user_actions_controls_category_key, // userActionsControls
             // Preferences that only click: don't have a value
-            "tts",
-            "resetLanguages",
+            R.string.tts_key, // tts
+            R.string.pref_reset_languages_key, // resetLanguages
             // Opens App Bar buttons fragment
-            "custom_buttons_link",
+            R.string.custom_buttons_link_preference, // custom_buttons_link
             // Opens Custom sync server fragment
-            "custom_sync_server_link",
-            "thirdpartyapps_link",
+            R.string.custom_sync_server_key, // custom_sync_server_link
+            R.string.thirdparty_apps_key, // thirdpartyapps_link
             // will be reworked in the future
             // Notify when
-            "minimumCardsDueForNotification",
+            R.string.pref_notifications_minimum_cards_due_key, // minimumCardsDueForNotification
             // Vibrate
-            "widgetVibrate",
+            R.string.pref_notifications_vibrate_key, // widgetVibrate
             // Blink light
-            "widgetBlink",
+            R.string.pref_notifications_blink_key, // widgetBlink
             // potential personal data
-            "syncAccount",
-            "syncBaseUrl",
-            "language",
-            "customSyncCertificate",
+            R.string.sync_account_key, // syncAccount
+            R.string.custom_sync_server_collection_url_key, // syncBaseUrl
+            R.string.pref_language_key, // language
+            R.string.custom_sync_certificate_key, // customSyncCertificate
             // Experimental settings
-            "reviewerMenuSettings",
-            "hideAnswerButtons",
-            "hideHardAndEasy",
-            "reviewerFrameStyle",
-            "hideSystemBars",
-            "ignoreDisplayCutout",
-        )
+            R.string.reviewer_menu_settings_key, // reviewerMenuSettings
+            R.string.hide_answer_buttons_key, // hideAnswerButtons
+            R.string.hide_hard_and_easy_key, // hideHardAndEasy
+            R.string.reviewer_frame_style_key, // reviewerFrameStyle
+            R.string.hide_system_bars_key, // hideSystemBars
+            R.string.ignore_display_cutout_key, // ignoreDisplayCutout
+        ).toStringResourceSet()
 
     @Test
     fun `The include and excluded prefs lists don't share elements`() {
-        val intersection = preferencesWhoseChangesShouldBeReported.intersect(excludedPrefs)
+        val intersection = reportableKeys.intersect(excludedPrefs)
         assertThat(
             "The include and exclude prefs list shouldn't share elements: $intersection",
             intersection.isEmpty(),
@@ -102,21 +106,21 @@ class PreferencesAnalyticsTest : RobolectricTest() {
         val keysNotInAList =
             allKeys
                 .subtract(excludedPrefs)
-                .subtract(preferencesWhoseChangesShouldBeReported)
+                .subtract(reportableKeys)
 
         assertThat(
             "All preference keys must be included in either the" +
-                " `preferencesWhoseChangesShouldBeReported` or the `excludedPrefs` list" +
+                " `reportableKeys` or the `excludedPrefs` list" +
                 ": $keysNotInAList",
             keysNotInAList.isEmpty(),
         )
     }
 
     @Test
-    fun `preferencesWhoseChangesShouldBeReported list does not have extra keys`() {
-        val extraKeys = preferencesWhoseChangesShouldBeReported.subtract(allKeys)
+    fun `reportableKeys list does not have extra keys`() {
+        val extraKeys = reportableKeys.subtract(allKeys)
         assertThat(
-            "preferencesWhoseChangesShouldBeReported should not have" +
+            "reportableKeys should not have" +
                 " elements that aren't in the preference keys" +
                 ": $extraKeys",
             extraKeys.isEmpty(),
@@ -136,10 +140,10 @@ class PreferencesAnalyticsTest : RobolectricTest() {
     @Test
     fun `Dev options changes must not be reported`() {
         val devOptionsKeys = PreferenceTestUtils.getKeysFromXml(targetContext, R.xml.preferences_dev_options)
-        val devOptionsAtReportList = preferencesWhoseChangesShouldBeReported.intersect(devOptionsKeys.toSet())
+        val devOptionsAtReportList = reportableKeys.intersect(devOptionsKeys.toSet())
 
         assertThat(
-            "dev options keys must not be in the `preferencesWhoseChangesShouldBeReported` list" +
+            "dev options keys must not be in the `reportableKeys` list" +
                 ": $devOptionsAtReportList",
             devOptionsAtReportList.isEmpty(),
         )
@@ -153,4 +157,9 @@ class PreferencesAnalyticsTest : RobolectricTest() {
         )
         assertNull(SettingsFragment.getPreferenceReportableValue("foo"))
     }
+
+    private fun Set<Int>.toStringResourceSet(): Set<String> =
+        this.mapTo(mutableSetOf()) { resId ->
+            targetContext.getString(resId)
+        }
 }
