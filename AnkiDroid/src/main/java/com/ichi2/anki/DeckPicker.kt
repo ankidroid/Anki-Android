@@ -694,7 +694,7 @@ open class DeckPicker :
 
             try {
                 // Intent is nullable because `clip.getItemAt(0).intent` always returns null
-                ImportUtils.FileImporter().handleContentProviderFile(this, uri)
+                ImportUtils.FileImporter().handleContentProviderFile(this, uri, Intent().setData(uri))
                 onResume()
             } catch (e: Exception) {
                 Timber.w(e)
