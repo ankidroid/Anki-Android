@@ -241,6 +241,8 @@
                 <data android:mimeType="application/octet-stream"/>
                 <data android:mimeType="text/tab-separated-values"/>
                 <data android:mimeType="text/comma-separated-values"/>
+                <data android:mimeType="text/csv"/>
+                <data android:mimeType="text/tsv"/>
             </intent-filter>
 
             <!-- Keep it separate as when sharing image AnkiDroid would be shown with Image Occlusion label -->

@@ -96,10 +96,14 @@ class IntentHandlerTest {
     fun textImportIntentReturnsTextImport() {
         testIntentType("content://valid", "text/tab-separated-values", LaunchType.TEXT_IMPORT)
         testIntentType("content://valid", "text/comma-separated-values", LaunchType.TEXT_IMPORT)
+        testIntentType("content://valid", "text/csv", LaunchType.TEXT_IMPORT)
+        testIntentType("content://valid", "text/tsv", LaunchType.TEXT_IMPORT)
 
         // Test for ACTION_SEND
         testIntentType("content://valid", "text/tab-separated-values", LaunchType.TEXT_IMPORT, Intent.ACTION_SEND)
         testIntentType("content://valid", "text/comma-separated-values", LaunchType.TEXT_IMPORT, Intent.ACTION_SEND)
+        testIntentType("content://valid", "text/csv", LaunchType.TEXT_IMPORT, Intent.ACTION_SEND)
+        testIntentType("content://valid", "text/tsv", LaunchType.TEXT_IMPORT, Intent.ACTION_SEND)
     }
 
     private fun testIntentType(
