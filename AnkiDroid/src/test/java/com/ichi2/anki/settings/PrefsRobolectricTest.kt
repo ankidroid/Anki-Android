@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.settings
 
+import android.content.res.Resources
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
 import com.ichi2.anki.AnkiDroidApp
@@ -23,6 +24,10 @@ import com.ichi2.anki.preferences.PreferenceTestUtils
 import com.ichi2.anki.preferences.PreferenceTestUtils.getAttrsFromXml
 import com.ichi2.anki.preferences.SettingsFragment
 import com.ichi2.testutils.EmptyApplication
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.unmockkObject
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
@@ -46,6 +51,10 @@ class PrefsRobolectricTest : RobolectricTest() {
         AnkiDroidApp.sharedPreferencesTestingOverride = spy
         val keysAndDefaultValues: MutableMap<String, Any?> = mutableMapOf()
 
+        val mockResources = mockk<Resources>()
+        every { mockResources.getString(any()) } answers { invocation.args[0].toString() }
+        mockkObject(Prefs)
+        every { Prefs.resources } returns mockResources
         doAnswer { invocation ->
             val key = invocation.arguments[0] as String
             keysAndDefaultValues[key] = invocation.arguments[1]
@@ -60,6 +69,7 @@ class PrefsRobolectricTest : RobolectricTest() {
             if (property.visibility != KVisibility.PUBLIC) continue
             property.getter.call(Prefs)
         }
+        unmockkObject(Prefs)
         return keysAndDefaultValues
     }
 

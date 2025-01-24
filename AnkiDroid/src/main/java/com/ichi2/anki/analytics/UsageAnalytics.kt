@@ -30,7 +30,6 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.anki.settings.PrefKey
 import com.ichi2.utils.DisplayUtils
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.WebViewDebugging.hasSetDataDirectory
@@ -489,7 +488,7 @@ object UsageAnalytics {
             "doubleTapTimeInterval", // Double tap time interval (milliseconds)
             // ******************************** Sync ***************************************************
             "syncFetchMedia", // Fetch media on sync
-            PrefKey.AUTO_SYNC, // Automatic synchronization
+            "automaticSyncMode", // Automatic synchronization
             "showSyncStatusBadge", // Display synchronization status
             "allowMetered", // Allow sync on metered connections
             "one_way_sync", // One-way sync
@@ -570,7 +569,7 @@ object UsageAnalytics {
             // ******************************** Accessibility ******************************************
             "cardZoom",
             "imageZoom",
-            PrefKey.ANSWER_BUTTON_SIZE,
+            "answerButtonSize",
             "showLargeAnswerButtons",
             "relativeCardBrowserFontSize",
             "showCardAnswerButtonTime",
@@ -582,7 +581,7 @@ object UsageAnalytics {
             "useInputTag", // Type answer into the card
             "disableExtendedTextUi", // Disable Single-Field Edit Mode
             "noteEditorNewlineReplace", // Replace newlines with HTML
-            PrefKey.AUTO_FOCUS_TYPE_ANSWER, // Focus ‘type in answer’
+            "autoFocusTypeInAnswer", // Focus ‘type in answer’
             "mediaImportAllowAllFiles", // Allow all files in media imports
             "providerEnabled", // Enable AnkiDroid API
             // ******************************** App bar buttons ****************************************

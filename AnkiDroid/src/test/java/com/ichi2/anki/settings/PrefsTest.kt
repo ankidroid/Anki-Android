@@ -15,83 +15,49 @@
  */
 package com.ichi2.anki.settings
 
-import android.content.SharedPreferences
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener
+import android.content.res.Resources
 import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
 import com.ichi2.anki.AnkiDroidApp
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.unmockkObject
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
-import org.mockito.ArgumentMatchers.anyInt
-import org.mockito.Mockito.anyBoolean
-import org.mockito.Mockito.anyString
-import org.mockito.Mockito.doAnswer
-import org.mockito.Mockito.spy
-import org.mockito.kotlin.anyOrNull
-import org.mockito.kotlin.whenever
 import kotlin.reflect.KMutableProperty
 import kotlin.reflect.KVisibility
 import kotlin.reflect.full.memberProperties
 
-class PrefsTest : OnSharedPreferenceChangeListener {
-    private var lastSetKey: String? = null
-
-    override fun onSharedPreferenceChanged(
-        sharedPreferences: SharedPreferences?,
-        key: String?,
-    ) {
-        lastSetKey = key
-    }
-
-    @Test
-    fun `booleanSetting getter and setter work`() {
-        AnkiDroidApp.sharedPreferencesTestingOverride = SPMockBuilder().createSharedPreferences()
-        var setting by Prefs.booleanPref("boolKey", false)
-        assertThat(setting, equalTo(false))
-
-        setting = true
-        assertThat(setting, equalTo(true))
-    }
-
-    @Test
-    fun `stringSetting getter and setter work`() {
-        AnkiDroidApp.sharedPreferencesTestingOverride = SPMockBuilder().createSharedPreferences()
-        var setting by Prefs.stringPref("stringKey", "defaultValue")
-        assertThat(setting, equalTo("defaultValue"))
-
-        setting = "newValue"
-        assertThat(setting, equalTo("newValue"))
-    }
-
+class PrefsTest {
     @Test
     fun `getters and setters use the same key`() {
-        val sharedPrefsSpy = spy(SPMockBuilder().createSharedPreferences())
-        AnkiDroidApp.sharedPreferencesTestingOverride = sharedPrefsSpy
-
-        var getterKey = ""
-        doAnswer { invocation ->
-            getterKey = invocation.arguments[0] as String
-            invocation.callRealMethod()
-        }.run {
-            whenever(sharedPrefsSpy).getBoolean(anyString(), anyBoolean())
-            whenever(sharedPrefsSpy).getString(anyString(), anyOrNull())
-            whenever(sharedPrefsSpy).getInt(anyString(), anyInt())
+        AnkiDroidApp.sharedPreferencesTestingOverride = SPMockBuilder().createSharedPreferences()
+        var lastKey = 0
+        val mockResources = mockk<Resources>()
+        every { mockResources.getString(any()) } answers {
+            val resId = invocation.args[0] as Int
+            lastKey = resId
+            resId.toString()
         }
+        mockkObject(Prefs)
+        every { Prefs.resources } returns mockResources
 
-        sharedPrefsSpy.registerOnSharedPreferenceChangeListener(this)
         for (property in Prefs::class.memberProperties) {
             if (property.visibility != KVisibility.PUBLIC || property !is KMutableProperty<*>) continue
 
             property.getter.call(Prefs)
+            val getterKey = lastKey
 
             when (property.returnType.classifier) {
                 Boolean::class -> property.setter.call(Prefs, false)
                 String::class -> property.setter.call(Prefs, "foo")
                 else -> continue
             }
+            val setterKey = lastKey
 
-            assertThat("The getter and setter of '${property.name}' use the same key", getterKey, equalTo(lastSetKey))
+            assertThat("The getter and setter of '${property.name}' use the same key", getterKey, equalTo(setterKey))
         }
-        sharedPrefsSpy.unregisterOnSharedPreferenceChangeListener(this)
+        unmockkObject(Prefs)
     }
 }

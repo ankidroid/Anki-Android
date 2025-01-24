@@ -15,10 +15,12 @@
  */
 package com.ichi2.anki.settings
 
+import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
+import com.ichi2.anki.R
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.settings.enums.HideSystemBars
 import com.ichi2.anki.settings.enums.PrefEnum
@@ -31,46 +33,54 @@ object Prefs {
     private val sharedPrefs get() = AnkiDroidApp.sharedPrefs()
 
     @VisibleForTesting
+    val resources get() = AnkiDroidApp.appResources
+
+    @VisibleForTesting
+    fun key(
+        @StringRes resId: Int,
+    ): String = resources.getString(resId)
+
+    @VisibleForTesting
     fun getBoolean(
-        key: String,
+        @StringRes keyResId: Int,
         defValue: Boolean,
-    ): Boolean = sharedPrefs.getBoolean(key, defValue)
+    ): Boolean = sharedPrefs.getBoolean(key(keyResId), defValue)
 
     @VisibleForTesting
     fun putBoolean(
-        key: String,
+        @StringRes keyResId: Int,
         value: Boolean,
     ) {
-        sharedPrefs.edit { putBoolean(key, value) }
+        sharedPrefs.edit { putBoolean(key(keyResId), value) }
     }
 
     @VisibleForTesting
     fun getString(
-        key: String,
+        @StringRes keyResId: Int,
         defValue: String?,
-    ): String? = sharedPrefs.getString(key, defValue)
+    ): String? = sharedPrefs.getString(key(keyResId), defValue)
 
     @VisibleForTesting
     fun putString(
-        key: String,
+        @StringRes keyResId: Int,
         value: String?,
     ) {
-        sharedPrefs.edit { putString(key, value) }
+        sharedPrefs.edit { putString(key(keyResId), value) }
     }
 
     @VisibleForTesting
     fun getInt(
-        key: String,
+        @StringRes keyResId: Int,
         defValue: Int,
-    ): Int = sharedPrefs.getInt(key, defValue)
+    ): Int = sharedPrefs.getInt(key(keyResId), defValue)
 
     @VisibleForTesting
     fun <E> getEnum(
-        key: String,
+        @StringRes keyResId: Int,
         defaultValue: E,
     ): E where E : Enum<E>, E : PrefEnum {
         val enumClass = defaultValue.javaClass
-        val stringValue = getString(key, defaultValue.entryValue)
+        val stringValue = getString(keyResId, defaultValue.entryValue)
         return enumClass.enumConstants?.firstOrNull {
             it.entryValue == stringValue
         } ?: defaultValue
@@ -80,43 +90,62 @@ object Prefs {
 
     @VisibleForTesting
     fun booleanPref(
-        key: String,
+        @StringRes keyResId: Int,
         defaultValue: Boolean,
     ): ReadWriteProperty<Any?, Boolean> =
         object : ReadWriteProperty<Any?, Boolean> {
             override fun getValue(
                 thisRef: Any?,
                 property: KProperty<*>,
-            ): Boolean = getBoolean(key, defaultValue)
+            ): Boolean = getBoolean(keyResId, defaultValue)
 
             override fun setValue(
                 thisRef: Any?,
                 property: KProperty<*>,
                 value: Boolean,
             ) {
-                putBoolean(key, value)
+                putBoolean(keyResId, value)
             }
         }
 
     @VisibleForTesting
     fun stringPref(
-        key: String,
+        @StringRes keyResId: Int,
         defaultValue: String? = null,
     ): ReadWriteProperty<Any?, String?> =
         object : ReadWriteProperty<Any?, String?> {
             override fun getValue(
                 thisRef: Any?,
                 property: KProperty<*>,
-            ): String? = getString(key, defaultValue) ?: defaultValue
+            ): String? = getString(keyResId, defaultValue) ?: defaultValue
 
             override fun setValue(
                 thisRef: Any?,
                 property: KProperty<*>,
                 value: String?,
             ) {
-                putString(key, value)
+                putString(keyResId, value)
             }
         }
+
+    @VisibleForTesting
+    class StringPref(
+        @StringRes private val keyResId: Int,
+        private val defaultValue: String? = null,
+    ) : ReadWriteProperty<Any?, String?> {
+        override fun getValue(
+            thisRef: Any?,
+            property: KProperty<*>,
+        ): String? = getString(keyResId, defaultValue) ?: defaultValue
+
+        override fun setValue(
+            thisRef: Any?,
+            property: KProperty<*>,
+            value: String?,
+        ) {
+            putString(keyResId, value)
+        }
+    }
 
     // ****************************************************************************************** //
     // **************************************** Settings **************************************** //
@@ -124,25 +153,25 @@ object Prefs {
 
     // ****************************************** Sync ****************************************** //
 
-    val isAutoSyncEnabled by booleanPref(PrefKey.AUTO_SYNC, false)
-    var username by stringPref(PrefKey.USERNAME)
-    var hkey by stringPref(PrefKey.HKEY)
+    val isAutoSyncEnabled by booleanPref(R.string.automatic_sync_choice_key, false)
+    var username by stringPref(R.string.username_key)
+    var hkey by stringPref(R.string.hkey_key)
 
     // **************************************** Reviewer **************************************** //
 
-    val ignoreDisplayCutout by booleanPref(PrefKey.IGNORE_DISPLAY_CUTOUT, false)
-    val autoFocusTypeAnswer by booleanPref(PrefKey.AUTO_FOCUS_TYPE_ANSWER, true)
+    val ignoreDisplayCutout by booleanPref(R.string.ignore_display_cutout_key, false)
+    val autoFocusTypeAnswer by booleanPref(R.string.type_in_answer_focus_key, true)
 
     val frameStyle: FrameStyle
-        get() = getEnum(PrefKey.FRAME_STYLE, FrameStyle.CARD)
+        get() = getEnum(R.string.reviewer_frame_style_key, FrameStyle.CARD)
 
     val hideSystemBars: HideSystemBars
-        get() = getEnum(PrefKey.HIDE_SYSTEM_BARS, HideSystemBars.NONE)
+        get() = getEnum(R.string.hide_system_bars_key, HideSystemBars.NONE)
 
     // ************************************** Accessibility ************************************* //
 
     val answerButtonsSize: Int
-        get() = getInt(PrefKey.ANSWER_BUTTON_SIZE, 100)
+        get() = getInt(R.string.answer_button_size_preference, 100)
 
     // ************************************* Developer options ********************************** //
 
@@ -152,6 +181,6 @@ object Prefs {
      * or if the user has enabled it with the secret on [com.ichi2.anki.preferences.AboutFragment]
      */
     var isDevOptionsEnabled: Boolean
-        get() = getBoolean(PrefKey.DEV_OPTIONS_ENABLED, false) || BuildConfig.DEBUG
-        set(value) = putBoolean(PrefKey.DEV_OPTIONS_ENABLED, value)
+        get() = getBoolean(R.string.dev_options_enabled_by_user_key, false) || BuildConfig.DEBUG
+        set(value) = putBoolean(R.string.dev_options_enabled_by_user_key, value)
 }
