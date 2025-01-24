@@ -139,6 +139,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                 dueCardsCount = counts[0]
                 // The cached estimated reviewing time.
                 val eta = counts[1]
+                val etaIcon: String = "⏱"
                 if (dueCardsCount <= 0) {
                     if (dueCardsCount == 0) {
                         updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.VISIBLE)
@@ -156,7 +157,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                     } else {
                         updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE)
                         if (Build.VERSION.SDK_INT >= 31) {
-                            updateViews.setTextViewText(R.id.widget_eta, "⏱ $eta")
+                            updateViews.setTextViewText(R.id.widget_eta, "$etaIcon$eta")
                         } else {
                             updateViews.setTextViewText(R.id.widget_eta, "$eta")
                         }
@@ -179,7 +180,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                     updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)
                 } else {
                     updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE)
-                    updateViews.setTextViewText(R.id.widget_eta, eta.toString())
+                    updateViews.setTextViewText(R.id.widget_eta, "$etaIcon$eta")
                     updateViews.setContentDescription(
                         R.id.widget_eta,
                         context.resources.getQuantityString(R.plurals.widget_eta, eta, eta),
