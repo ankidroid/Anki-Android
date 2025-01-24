@@ -103,6 +103,7 @@ class ImportFileSelectionFragment : DialogFragment() {
                                     "text/comma-separated-values",
                                     "text/csv",
                                     "text/tab-separated-values",
+                                    "text/tsv",
                                 ),
                         ),
                     )

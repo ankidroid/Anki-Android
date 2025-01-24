@@ -299,6 +299,14 @@ class IntentHandler : AbstractIntentHandler() {
         private const val CLIPBOARD_INTENT = "com.ichi2.anki.COPY_DEBUG_INFO"
         private const val CLIPBOARD_INTENT_EXTRA_DATA = "clip_data"
 
+        private val textMimeTypes =
+            setOf(
+                "text/tab-separated-values",
+                "text/tsv",
+                "text/comma-separated-values",
+                "text/csv",
+            )
+
         private fun isValidViewIntent(intent: Intent): Boolean {
             // Negating a negative because we want to call specific attention to the fact that it's invalid
             // #6312 - Smart Launcher provided an empty ACTION_VIEW, no point in importing here.
@@ -333,8 +341,7 @@ class IntentHandler : AbstractIntentHandler() {
                 val mimeType = intent.resolveMimeType()
                 when {
                     mimeType?.startsWith("image/") == true -> LaunchType.IMAGE_IMPORT
-                    mimeType == "text/tab-separated-values" ||
-                        mimeType == "text/comma-separated-values" -> LaunchType.TEXT_IMPORT
+                    textMimeTypes.contains(mimeType) -> LaunchType.TEXT_IMPORT
                     else -> LaunchType.FILE_IMPORT
                 }
             } else if ("com.ichi2.anki.DO_SYNC" == action) {
