@@ -228,6 +228,31 @@
                     android:pathPattern=".*\\.csv"
                     android:scheme="file"
                     />
+                <!-- text files -->
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern=".*\\.txt"
+                    android:scheme="http"
+                    />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern=".*\\.txt"
+                    android:scheme="https"
+                    />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern=".*\\.txt"
+                    android:scheme="content"
+                    />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern=".*\\.txt"
+                    android:scheme="file"
+                    />
             </intent-filter>
             <!-- MIME type matcher for .apkg files coming from providers like gmail which hide the file extension -->
             <intent-filter>
@@ -244,6 +269,7 @@
                 <data android:mimeType="text/comma-separated-values"/>
                 <data android:mimeType="text/csv"/>
                 <data android:mimeType="text/tsv"/>
+                <data android:mimeType="text/plain"/>
             </intent-filter>
 
             <!-- Keep it separate as when sharing image AnkiDroid would be shown with Image Occlusion label -->
