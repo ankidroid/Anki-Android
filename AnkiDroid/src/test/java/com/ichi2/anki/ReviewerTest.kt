@@ -237,7 +237,7 @@ class ReviewerTest : RobolectricTest() {
 
             val cards =
                 arrayOf(
-                    addRevBasicNoteDueToday("1", "bar").firstCard(),
+                    addBasicNote("1", "bar").firstCard(),
                     addBasicNote("2", "bar").firstCard(),
                     addBasicNote("3", "bar").firstCard(),
                 )
