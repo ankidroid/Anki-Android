@@ -246,7 +246,6 @@
     <string name="invalid_email">Skriv in en giltig e-postadress</string>
     <string name="password_empty">Lösenord krävs</string>
     <string name="back_pressed_once">Tryck på bakåt igen för att avsluta</string>
-    <string name="back_pressed_once_reviewer">Tryck på bakåt igen för att återvända</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Hämta kortlek</string>

@@ -246,7 +246,6 @@
     <string name="invalid_email">لطفا یک آدرس ایمیل معتبر وارد کنید</string>
     <string name="password_empty">رمز عبور لازم است</string>
     <string name="back_pressed_once">برای خروج، دکمه بازگشت را مجددا فشار دهید</string>
-    <string name="back_pressed_once_reviewer">برای بازگشت، دکمه بازگشت را مجددا فشار دهید</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">دانلود دسته</string>

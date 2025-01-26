@@ -246,7 +246,6 @@
     <string name="invalid_email">Εισάγετε ένα έγκυρο email</string>
     <string name="password_empty">Απαιτείται κωδικός πρόσβασης</string>
     <string name="back_pressed_once">Πιέστε το πίσω ξανά για έξοδο</string>
-    <string name="back_pressed_once_reviewer">Πιέστε το πίσω ξανά για επιστροφή</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Λήψη τράπουλας</string>

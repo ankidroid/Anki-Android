@@ -246,7 +246,6 @@
     <string name="invalid_email">Insira um e-mail válido</string>
     <string name="password_empty">Senha é necessária</string>
     <string name="back_pressed_once">Pressione voltar novamente para sair</string>
-    <string name="back_pressed_once_reviewer">Pressione voltar novamente para sair</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Baixar baralho</string>

@@ -246,7 +246,6 @@
     <string name="invalid_email">একটি বৈধ ইমেল লিখুন</string>
     <string name="password_empty">পাসওয়ার্ড প্রয়োজন</string>
     <string name="back_pressed_once">প্রস্থান করতে আবার ফিরে টিপুন</string>
-    <string name="back_pressed_once_reviewer">ফিরে আসতে আবার টিপুন</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">ডেক ডাউনলোড করুন</string>

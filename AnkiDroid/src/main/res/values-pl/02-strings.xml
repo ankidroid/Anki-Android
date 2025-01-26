@@ -254,7 +254,6 @@
     <string name="invalid_email">Wpisz poprawny adres e-mail</string>
     <string name="password_empty">Hasło jest wymagane</string>
     <string name="back_pressed_once">Naciśnij ponownie, aby wyjść</string>
-    <string name="back_pressed_once_reviewer">Naciśnij ponownie przycisk wstecz by powrócić</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Pobierz talię</string>

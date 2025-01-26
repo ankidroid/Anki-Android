@@ -246,7 +246,6 @@
     <string name="invalid_email">Enter a valid email</string>
     <string name="password_empty">Заавал нууц үг шаардлагатай</string>
     <string name="back_pressed_once">Гарахын тулд дахиад буцах товчоо дарна уу</string>
-    <string name="back_pressed_once_reviewer">Press back again to return</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Багцыг татаж авах</string>

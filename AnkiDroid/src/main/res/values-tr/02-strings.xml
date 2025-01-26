@@ -246,7 +246,6 @@
     <string name="invalid_email">Geçerli bir e-posta girin</string>
     <string name="password_empty">Parola gereklidir</string>
     <string name="back_pressed_once">Çıkmak için tekrar geriye basın</string>
-    <string name="back_pressed_once_reviewer">Dönmek için tekrar geriye basın</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Deste indir</string>

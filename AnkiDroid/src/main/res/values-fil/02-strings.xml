@@ -246,7 +246,6 @@
     <string name="invalid_email">Maglagay ng wastong email</string>
     <string name="password_empty">Kinakailangan ang password</string>
     <string name="back_pressed_once">Pindutin muli ang \'back\' upang umalis</string>
-    <string name="back_pressed_once_reviewer">Pindutin muli ang \'back\' upang makablik</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">I-download ang deck</string>

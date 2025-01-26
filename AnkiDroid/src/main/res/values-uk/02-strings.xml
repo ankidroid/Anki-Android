@@ -254,7 +254,6 @@
     <string name="invalid_email">Введіть правильну адресу електронної пошти</string>
     <string name="password_empty">Поле «Пароль» обов\'язкове до заповнення</string>
     <string name="back_pressed_once">Натисніть ще раз, щоб вийти</string>
-    <string name="back_pressed_once_reviewer">Натисніть \"Назад\" ще раз, щоб повернутись</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Завантажити колоду</string>

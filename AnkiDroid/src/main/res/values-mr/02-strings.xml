@@ -246,7 +246,6 @@
     <string name="invalid_email">एक वैध ईमेल प्रविष्ट करा</string>
     <string name="password_empty">संकेतशब्द आवश्यक आहे</string>
     <string name="back_pressed_once">बाहेर पडण्यासाठी पुन्हा परत दाबा</string>
-    <string name="back_pressed_once_reviewer">परत येण्यासाठी पुन्हा दाबा</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">डेक डाउनलोड करा</string>

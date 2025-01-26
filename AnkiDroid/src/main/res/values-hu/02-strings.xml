@@ -246,7 +246,6 @@
     <string name="invalid_email">Enter a valid email</string>
     <string name="password_empty">Jelszó kötelező</string>
     <string name="back_pressed_once">Kilépéshez érintsd meg újra a vissza gombot</string>
-    <string name="back_pressed_once_reviewer">Visszatéréshez nyomd meg újra a Vissza gombot</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Pakli letöltése</string>

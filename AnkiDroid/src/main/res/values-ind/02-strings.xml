@@ -242,7 +242,6 @@
     <string name="invalid_email">Masukkan surel yang valid</string>
     <string name="password_empty">Kata Sandi diperlukan</string>
     <string name="back_pressed_once">Mohon tekan sekali lagi untuk keluar</string>
-    <string name="back_pressed_once_reviewer">Mohon tekan sekali lagi untuk kembali</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Unduh dek</string>

@@ -246,7 +246,6 @@
     <string name="invalid_email">Voer \'n geldige e-posadres in</string>
     <string name="password_empty">Wagwoord word vereis</string>
     <string name="back_pressed_once">Druk weer terug om af te sluit</string>
-    <string name="back_pressed_once_reviewer">Druk weer terug om terug te keer</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Laai pak af</string>
