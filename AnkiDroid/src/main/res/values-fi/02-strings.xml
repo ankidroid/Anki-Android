@@ -246,7 +246,6 @@
     <string name="invalid_email">Enter a valid email</string>
     <string name="password_empty">Salasana vaaditaan</string>
     <string name="back_pressed_once">Poistu painamalla \"takaisin\" uudestaan</string>
-    <string name="back_pressed_once_reviewer">Palaa painamalla \"takaisin\" uudestaan</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Lataa pakka</string>

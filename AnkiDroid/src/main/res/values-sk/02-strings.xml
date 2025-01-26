@@ -254,7 +254,6 @@
     <string name="invalid_email">Zadajte platný e-mail</string>
     <string name="password_empty">Vyžaduje sa heslo</string>
     <string name="back_pressed_once">Stlačte znovu späť na opustenie</string>
-    <string name="back_pressed_once_reviewer">Stlačte znovu späť na návrat</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Stiahnuť balíček</string>

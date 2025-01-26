@@ -262,7 +262,6 @@
     <string name="invalid_email">أدخل بريدًا إلكترونيًا صالحًا</string>
     <string name="password_empty">تلزم كلمة مرور</string>
     <string name="back_pressed_once">اضغط رجوع مجدداً للخروج</string>
-    <string name="back_pressed_once_reviewer">اضغط رجوع مجددًا للعودة</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">تنزيل الرزمة</string>

@@ -247,7 +247,6 @@
     <string name="invalid_email">ایک درست ای میل درج کریں</string>
     <string name="password_empty">پاس ورڈ درکار ہے</string>
     <string name="back_pressed_once">باہر نکلنے کے لیے دوبارہ دبائیں۔</string>
-    <string name="back_pressed_once_reviewer">واپس آنے کے لیے دوبارہ دبائیں</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">ڈیک ڈاؤن لوڈ کریں۔</string>

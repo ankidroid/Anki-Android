@@ -246,7 +246,6 @@
     <string name="invalid_email">ಮಾನ್ಯವಾದ ಇಮೇಲ್ ಅನ್ನು ನಮೂದಿಸಿ</string>
     <string name="password_empty">ಗುಪ್ತಪದದ ಅಗತ್ಯವಿದೆ</string>
     <string name="back_pressed_once">ನಿರ್ಗಮಿಸಲು ಮತ್ತೆ ಒತ್ತಿರಿ</string>
-    <string name="back_pressed_once_reviewer">ಹಿಂತಿರುಗಲು ಮತ್ತೆ ಹಿಂದಕ್ಕೆ ಒತ್ತಿರಿ</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">ಡೆಕ್ ಅನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ</string>

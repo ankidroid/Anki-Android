@@ -242,7 +242,6 @@
     <string name="invalid_email">Nhập email hợp lệ</string>
     <string name="password_empty">Bắt buộc có mật khẩu</string>
     <string name="back_pressed_once">Bấm trở lại một lần nữa để thoát</string>
-    <string name="back_pressed_once_reviewer">Nhấn lại lần nữa để quay lại</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Tải bộ thẻ xuống</string>

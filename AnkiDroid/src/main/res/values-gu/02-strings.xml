@@ -246,7 +246,6 @@
     <string name="invalid_email">માન્ય ઇમેઇલ દાખલ કરો</string>
     <string name="password_empty">પાસવર્ડ અનિવાર્ય છે</string>
     <string name="back_pressed_once">બહાર નીકળવા માટે ફરીથી પાછા દબાવો</string>
-    <string name="back_pressed_once_reviewer">પાછા આવવા માટે ફરીથી પાછા દબાવો</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">ડેક ડાઉનલોડ કરો</string>

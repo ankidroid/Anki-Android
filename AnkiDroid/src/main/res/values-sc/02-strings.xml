@@ -249,7 +249,6 @@
     <string name="invalid_email">Inserta un\'indiritzu de posta vàlidu</string>
     <string name="password_empty">Sa crae est netzessària</string>
     <string name="back_pressed_once">Incarca torra in segus pro essire</string>
-    <string name="back_pressed_once_reviewer">Incarca torra in segus pro torrare</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Iscàrriga su matzu</string>

@@ -246,7 +246,6 @@
     <string name="invalid_email">சரியான மின்னஞ்சலை உள்ளிடவும்</string>
     <string name="password_empty">கடவுச்சொல் தேவைப்படுகிறது</string>
     <string name="back_pressed_once">பின்பொத்தானை_அழுத்தி_வெளியேறு</string>
-    <string name="back_pressed_once_reviewer">திரும்ப மீண்டும் அழுத்தவும்</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">டவுன்லோட் டெக்</string>

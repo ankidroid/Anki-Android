@@ -245,7 +245,6 @@ Context | Request Context    [1]</string>
     <string name="invalid_email">유효한 이메일을 입력하세요.</string>
     <string name="password_empty">비밀번호를 입력하십시오</string>
     <string name="back_pressed_once">뒤로 가기 버튼을 한 번 더 눌러 종료합니다</string>
-    <string name="back_pressed_once_reviewer">Press back again to return</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">덱 다운로드</string>

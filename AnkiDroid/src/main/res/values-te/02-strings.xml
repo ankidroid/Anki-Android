@@ -246,7 +246,6 @@
     <string name="invalid_email">చెల్లుబాటు అయ్యే ఇమెయిల్ను నమోదు చేయండి</string>
     <string name="password_empty">పాస్‌వర్డ్ అవసరం</string>
     <string name="back_pressed_once">నిష్క్రమించడానికి మళ్లీ వెనుకకు నొక్కండి</string>
-    <string name="back_pressed_once_reviewer">తిరిగి రావడానికి మళ్లీ వెనుకకు నొక్కండి</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">డౌన్‌లోడ్ డెక్</string>
