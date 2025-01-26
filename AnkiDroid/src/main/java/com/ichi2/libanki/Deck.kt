@@ -16,57 +16,120 @@
 
 package com.ichi2.libanki
 
-import com.ichi2.utils.deepClonedInto
+import com.ichi2.utils.JSONObjectHolder
+import org.json.JSONArray
 import org.json.JSONObject
+import org.json.JSONObject.NULL
 
-class Deck : JSONObject {
-    /**
-     * Creates a copy from [JSONObject] and use it as a string
-     *
-     * This function will perform deepCopy on the passed object
-     *
-     * If you want to create a Deck without deepCopy
-     * @see Deck.from
-     */
-    constructor(json: JSONObject) : super() {
-        json.deepClonedInto(this)
+interface Deck : JSONObjectHolder {
+    companion object {
+        fun isFiltered(jsonObject: JSONObject) = jsonObject.getInt("dyn") != 0
+
+        fun factory(jsonObject: JSONObject): Deck = if (isFiltered(jsonObject)) FilteredDeck(jsonObject) else NormalDeck(jsonObject)
+
+        fun factory(jsonObject: String) = factory(JSONObject(jsonObject))
     }
 
     /**
-     * Creates a deck object form a json string
+     * Whether this deck is a filtered deck.
      */
-    constructor(json: String) : super(json)
-
     val isFiltered: Boolean
-        get() = getInt("dyn") != 0
+        get() = jsonObject.getInt("dyn") != 0
 
+    /**
+     * Whether this deck is a normal deck. That is, not a filtered deck.
+     */
     val isNormal: Boolean
         get() = !isFiltered
 
+    /**
+     * The name of the deck. Mutable. If you want a way to persistently represents this deck, use [id] instead.
+     */
     var name: String
-        get() = getString("name")
+        get() = jsonObject.getString("name")
         set(value) {
-            put("name", value)
+            jsonObject.put("name", value)
         }
 
+    /**
+     * If this deck as subdecks, whether those subdecks should be collapsed in the desktop card browser.
+     * Not used in ankidroid at the moment.
+     */
+    var browserCollapsed: Boolean
+        get() = jsonObject.getBoolean("browserCollapsed")
+        set(value) {
+            jsonObject.put("browserCollapsed", value)
+        }
+
+    /**
+     * If this deck as subdecks, whether those subdecks should be collapsed in the deck picker.
+     */
     var collapsed: Boolean
-        get() = getBoolean("collapsed")
+        get() = jsonObject.getBoolean("collapsed")
         set(value) {
-            put("collapsed", value)
+            jsonObject.put("collapsed", value)
         }
 
+    /**
+     * The id of the deck. Should be globally unique
+     * (created as a timestamp, very small chance of collision between two different decks from different users)
+     */
     var id: DeckId
-        get() = getLong("id")
+        get() = jsonObject.getLong("id")
         set(value) {
-            put("id", value)
+            jsonObject.put("id", value)
         }
 
-    var conf: Long
-        get() {
-            val value = optLong("conf")
-            return if (value > 0) value else 1
-        }
+    /**
+     * A string explaining what can be found in this deck.
+     */
+    var description: String
+        get() = jsonObject.optString("desc")
         set(value) {
-            put("conf", value)
+            jsonObject.put("desc", value)
         }
+
+    var resched: Boolean
+        get() = jsonObject.getBoolean("resched")
+        set(value) {
+            jsonObject.put("resched", value)
+        }
+
+    var previewAgainSecs: String
+        get() = jsonObject.getString("previewAgainSecs")
+        set(value) {
+            jsonObject.put("previewAgainSecs", value)
+        }
+
+    var previewHardSecs: String
+        get() = jsonObject.getString("previewHardSecs")
+        set(value) {
+            jsonObject.put("previewHardSecs", value)
+        }
+
+    var previewGoodSecs: String
+        get() = jsonObject.getString("previewGoodSecs")
+        set(value) {
+            jsonObject.put("previewGoodSecs", value)
+        }
+
+    /**
+     * An array of string. The i-th string correspond to the number of second/minute/hour or day for the i-th learning steps.
+     * See https://docs.ankiweb.net/deck-options.html#learning-steps
+     */
+    var delays: JSONArray?
+        get() = jsonObject.optJSONArray("delays")
+        set(value) {
+            val value =
+                if (value == null) {
+                    NULL
+                } else {
+                    value
+                }
+            jsonObject.put("delays", value)
+        }
+
+    fun removeEmpty() {
+        jsonObject.remove("empty")
+    }
 }

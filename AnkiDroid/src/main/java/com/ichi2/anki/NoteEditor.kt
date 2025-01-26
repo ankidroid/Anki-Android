@@ -148,6 +148,7 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Field
 import com.ichi2.libanki.Fields
+import com.ichi2.libanki.NormalDeck
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.Note.ClozeUtils
 import com.ichi2.libanki.NoteTypeId
@@ -2648,8 +2649,8 @@ class NoteEditor :
         }
 
         getColUnsafe.notetypes.setCurrent(model)
-        val currentDeck = getColUnsafe.decks.current()
-        currentDeck.put("mid", newId)
+        val currentDeck = getColUnsafe.decks.current() as NormalDeck
+        currentDeck.noteTypeId = newId
         getColUnsafe.decks.save(currentDeck)
 
         // Update deck
