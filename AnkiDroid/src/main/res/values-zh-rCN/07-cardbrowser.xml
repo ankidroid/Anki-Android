@@ -106,10 +106,10 @@
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">编辑标签对话框</string>
     <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">显示排序对话框</string>
     <!-- Manage columns dialog -->
-    <string name="browse_manage_columns_main_heading">Columns</string>
-    <string name="browse_manage_columns">Manage columns</string>
-    <string name="user_active_columns">Active</string>
-    <string name="user_potential_columns">Available</string>
-    <string name="include_column">Include column</string>
-    <string name="exclude_column">Exclude column</string>
+    <string name="browse_manage_columns_main_heading">列</string>
+    <string name="browse_manage_columns">管理列</string>
+    <string name="user_active_columns">活动</string>
+    <string name="user_potential_columns">可用</string>
+    <string name="include_column">包含列</string>
+    <string name="exclude_column">排除列</string>
 </resources>

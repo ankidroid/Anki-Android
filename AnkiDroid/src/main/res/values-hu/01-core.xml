@@ -57,16 +57,16 @@
     <string name="expand">Nagyítás</string>
     <string name="collapse">Összecsukás</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
+        <item quantity="one">%d perc van hátra</item>
         <item quantity="other">%d perc van hátra</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="one">%1$d óra %2$d maradt</item>
         <item quantity="other">%1$d óra %2$d maradt</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">%1$d nap %2$d óra van hátra</item>
+        <item quantity="other">%1$d nap %2$d óra van hátra</item>
     </plurals>
     <string name="no_cards_placeholder_title">Üres gyűjtemény</string>
     <string name="no_cards_placeholder_description">Adj hozzá kártyákat\na + ikon használatával</string>
@@ -138,7 +138,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Szinkronizálás folytatása</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Szinkronizálás megszakítva</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Visszavonás&#8230;\nEz eltarthat egy darabig.</string>
-    <string name="syncing_media">Syncing media</string>
+    <string name="syncing_media">Média szinkronizálása</string>
     <string name="export_deck" maxLength="28">Pakli exportálása</string>
     <string name="export_collection">Export collection</string>
     <string name="nothing">Semmi</string>
