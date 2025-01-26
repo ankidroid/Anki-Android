@@ -130,6 +130,17 @@ Object.keys(jsApiList).forEach(method => {
     }
     if (method === "ankiSetNoteTags") {
         AnkiDroidJS.prototype[method] = async function (noteId, tags) {
+            let hasSpaces = false;
+            for (let i = 0; i < tags.length; i++) {
+                tags[i] = tags[i].trim();
+                if (tags[i].includes(" ") || tags[i].includes("\u3000")) {
+                    tags[i] = tags[i].replace(" ", "_").replace("\u3000", "_");
+                    hasSpaces = true;
+                }
+            }
+            if (hasSpaces) {
+                console.warn("Tags with spaces will have them converted to underscores.");
+            }
             const endpoint = jsApiList[method];
             const data = JSON.stringify({ noteId, tags });
             return await this.handleRequest(endpoint, data);

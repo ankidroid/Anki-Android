@@ -206,6 +206,7 @@ open class AnkiDroidJsAPI(
      * @param returnDefaultValues `true` if default values should be returned (if non-[Reviewer])
      * @return
      */
+    @NeedsTest("setNoteTags: Test that tags are set for all edge cases")
     open suspend fun handleJsApiRequest(
         methodName: String,
         bytes: ByteArray,
