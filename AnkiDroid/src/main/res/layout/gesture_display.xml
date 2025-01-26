@@ -25,15 +25,18 @@
     <ImageView
         android:id="@+id/top_left"
         style="@style/binding_gesture_tap_button"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintVertical_bias="0.047"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/top_center"
         style="@style/binding_gesture_tap_button"
-        android:layout_marginTop="16dp"
+        app:layout_constraintVertical_bias="0.047"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,17 +44,22 @@
     <ImageView
         android:id="@+id/top_right"
         style="@style/binding_gesture_tap_button"
-        app:layout_constraintEnd_toEndOf="@+id/right"
-        app:layout_constraintTop_toTopOf="@+id/top_center" />
+        app:layout_constraintHorizontal_bias="0.953"
+        app:layout_constraintVertical_bias="0.047"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <ImageView
         android:id="@+id/left"
         style="@style/binding_gesture_tap_button"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/center"
@@ -64,33 +72,40 @@
     <ImageView
         android:id="@+id/right"
         style="@style/binding_gesture_tap_button"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.953"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/bottom_left"
-        android:layout_marginBottom="16dp"
         style="@style/binding_gesture_tap_button"
+        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintVertical_bias="0.953"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/left" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/bottom_center"
         style="@style/binding_gesture_tap_button"
-        android:layout_marginBottom="16dp"
+        app:layout_constraintVertical_bias="0.953"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/bottom_right"
         style="@style/binding_gesture_tap_button"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        app:layout_constraintHorizontal_bias="0.953"
+        app:layout_constraintVertical_bias="0.953"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/swipe_select"

@@ -241,6 +241,13 @@ interface TestClass {
         col.decks.save(deckConfig)
     }
 
+    /** Helper method to update a note */
+    fun Note.update(block: Note.() -> Unit): Note {
+        block(this)
+        col.updateNote(this)
+        return this
+    }
+
     /** Helper method to all cards of a note */
     fun Note.updateCards(update: Card.() -> Unit): Note {
         cards().forEach { it.update(update) }

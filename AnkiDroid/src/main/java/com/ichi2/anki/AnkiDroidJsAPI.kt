@@ -206,6 +206,7 @@ open class AnkiDroidJsAPI(
      * @param returnDefaultValues `true` if default values should be returned (if non-[Reviewer])
      * @return
      */
+    @NeedsTest("setNoteTags: Test that tags are set for all edge cases")
     open suspend fun handleJsApiRequest(
         methodName: String,
         bytes: ByteArray,
@@ -383,7 +384,12 @@ open class AnkiDroidJsAPI(
                 val tags = jsonObject.getJSONArray("tags")
                 withCol {
                     fun Note.setTagsFromList(tagList: List<String>) {
-                        val tagsAsString = this@withCol.tags.join(tagList)
+                        val sanitizedTags = tagList.map { it.trim() }
+                        val spaces = "\\s|\u3000".toRegex()
+                        if (sanitizedTags.any { it.contains(spaces) }) {
+                            throw IllegalArgumentException("Tags cannot contain spaces")
+                        }
+                        val tagsAsString = this@withCol.tags.join(sanitizedTags)
                         setTagsFromStr(this@withCol, tagsAsString)
                     }
 
