@@ -101,5 +101,5 @@
     <string name="gesture_show_all_hints" maxLength="41">Tippek megjelenítése</string>
     <string name="record_voice" maxLength="41">Felvétel</string>
     <string name="replay_voice" maxLength="41">Visszajátszás</string>
-    <string name="save_voice" maxLength="41">Save Recording</string>
+    <string name="save_voice" maxLength="41">Felvétel mentése</string>
 </resources>
