@@ -305,6 +305,7 @@ class IntentHandler : AbstractIntentHandler() {
                 "text/tsv",
                 "text/comma-separated-values",
                 "text/csv",
+                "text/plain",
             )
 
         private fun isValidViewIntent(intent: Intent): Boolean {
