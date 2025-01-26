@@ -335,7 +335,10 @@ open class AnkiDroidApp :
          *
          * This replicates the manner which `lifecycleScope`/`viewModelScope` is exposed in Android
          */
-        val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+        // lazy init required due to kotlinx-coroutines-test 1.10.0:
+        // Main was accessed when the platform dispatcher was absent and the test dispatcher
+        // was unset
+        val applicationScope by lazy { CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate) }
 
         /**
          * A [SharedPreferencesProvider] which does not require [onCreate] when run from tests

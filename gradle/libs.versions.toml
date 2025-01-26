@@ -18,9 +18,9 @@ ktlint = '1.5.0'
 #
 # Old changelogs - See 'Table of Contents' in sidebar
 # https://developer.android.com/build/releases/past-releases
-androidGradlePlugin = "8.7.3"
+androidGradlePlugin = "8.8.0"
 # https://developer.android.com/jetpack/androidx/releases/activity
-androidxActivity = "1.9.3"
+androidxActivity = "1.10.0"
 # https://developer.android.com/jetpack/androidx/releases/annotation
 androidxAnnotation = "1.9.1"
 # https://developer.android.com/jetpack/androidx/releases/appcompat
@@ -40,11 +40,11 @@ androidxFragmentKtx = "1.8.5"
 # https://developer.android.com/jetpack/androidx/releases/media
 androidxMedia = "1.7.0"
 # https://developer.android.com/jetpack/androidx/releases/media3
-androidxMedia3 = "1.5.0"
+androidxMedia3 = "1.5.1"
 # https://developer.android.com/jetpack/androidx/releases/preference
 androidxPreferenceKtx = "1.2.1"
 # https://developer.android.com/jetpack/androidx/releases/recyclerview
-androidxRecyclerview = "1.3.2"
+androidxRecyclerview = "1.4.0"
 # https://developer.android.com/jetpack/androidx/releases/sqlite
 androidxSqlite = "2.4.0"
 # https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout
@@ -71,36 +71,35 @@ commonsCompress = "1.27.1"
 commonsExec = "1.4.0"
 # https://commons.apache.org/proper/commons-io/changes-report.html
 commonsIo = "2.18.0"
-coroutines = '1.9.0'
-desugar-jdk-libs-nio = "2.1.3"
+coroutines = '1.10.1'
+desugar-jdk-libs-nio = "2.1.4"
 drawer = "1.0.3"
-dokka = "1.9.20"
 espresso = '3.6.1'
 mikehardyGoogleAnalyticsJava7 = "2.0.13"
 hamcrest = "3.0"
 imageCropper = "4.6.0"
 javaSemver = "0.10.2"
-jetbrainsAnnotations = "26.0.1"
-json = "20240303"
+jetbrainsAnnotations = "26.0.2"
+json = "20250107"
 jsoup = "1.18.3"
 androidTestJunit = "1.2.1"
 junitJupiter = "5.11.4"
 junitPlatformLauncher = "1.11.4"
 # https://github.com/JetBrains/kotlin/releases/
 kotlin = '2.1.0'
-kotlinxSerializationJson = "1.7.3"
+kotlinxSerializationJson = "1.8.0"
 ktlintGradlePlugin = "12.1.2"
 leakcanaryAndroid = "2.14"
-lint = '31.7.3'
+lint = '31.8.0'
 material = "1.12.0"
 materialTapTargetPrompt = "3.3.2"
 mockitoInline = "5.2.0"
 mockitoKotlin = "5.4.0"
-mockk = "1.13.13"
+mockk = "1.13.16"
 nanohttpd = "2.3.1"
 okhttp = "4.12.0"
 # https://github.com/protocolbuffers/protobuf/releases
-protobufKotlinLite = "4.29.1"
+protobufKotlinLite = "4.29.3"
 # ../AnkiDroid/robolectricDownload.gradle may need changes - read instructions in that file
 robolectric = "4.14.1"
 searchpreference = "2.5.1"
@@ -217,7 +216,6 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 
-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 ktlint-gradle-plugin = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintGradlePlugin" }
 
 
