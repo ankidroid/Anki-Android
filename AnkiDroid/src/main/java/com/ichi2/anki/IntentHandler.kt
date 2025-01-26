@@ -334,7 +334,8 @@ class IntentHandler : AbstractIntentHandler() {
                 when {
                     mimeType?.startsWith("image/") == true -> LaunchType.IMAGE_IMPORT
                     mimeType == "text/tab-separated-values" ||
-                        mimeType == "text/comma-separated-values" -> LaunchType.TEXT_IMPORT
+                        mimeType == "text/comma-separated-values" ||
+                        mimeType == "text/plain" -> LaunchType.TEXT_IMPORT
                     else -> LaunchType.FILE_IMPORT
                 }
             } else if ("com.ichi2.anki.DO_SYNC" == action) {
