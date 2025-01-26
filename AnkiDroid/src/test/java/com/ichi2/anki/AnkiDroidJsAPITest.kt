@@ -28,6 +28,7 @@ import com.ichi2.utils.BASIC_MODEL_NAME
 import net.ankiweb.rsdroid.withoutUnicodeIsolation
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
+import org.json.JSONArray
 import org.json.JSONObject
 import org.junit.Ignore
 import org.junit.Test
@@ -418,6 +419,31 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             assertEquals(CardType.New, cardAfterReset.type, "Card type after reset")
         }
 
+    @Test
+    fun ankiGetNoteTagsTest() =
+        runTest {
+            val n =
+                addBasicNote("Front", "Back").update {
+                    tags = mutableListOf("tag1", "tag2", "tag3")
+                }
+
+            val reviewer: Reviewer = startReviewer()
+            waitForAsyncTasksToComplete()
+
+            val jsapi = reviewer.jsApi
+
+            // test get tags for note
+            val expectedTags = n.tags
+            val response = getDataFromRequest("getNoteTags", jsapi, jsonObjectOf("noteId" to n.id))
+            val jsonResponse = JSONObject(response)
+            val actualTags = JSONArray(jsonResponse.getString("value"))
+
+            assertEquals(expectedTags.size, actualTags.length())
+            for (i in 0 until actualTags.length()) {
+                assertEquals(expectedTags[i], actualTags.getString(i))
+            }
+        }
+
     companion object {
         fun jsApiContract(data: String = ""): ByteArray =
             JSONObject()
@@ -451,5 +477,21 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             jsAPI
                 .handleJsApiRequest(methodName, jsApiContract(apiData), false)
                 .decodeToString()
+
+        suspend fun getDataFromRequest(
+            methodName: String,
+            jsAPI: AnkiDroidJsAPI,
+            apiData: JSONObject,
+        ): String =
+            jsAPI
+                .handleJsApiRequest(methodName, jsApiContract(apiData.toString()), false)
+                .decodeToString()
     }
 }
+
+private fun jsonObjectOf(vararg pairs: Pair<String, Any>): JSONObject =
+    JSONObject().apply {
+        for ((key, value) in pairs) {
+            put(key, value)
+        }
+    }
