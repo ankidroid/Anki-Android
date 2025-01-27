@@ -123,6 +123,8 @@ val uiMethods =
             }
         },
         "computeFsrsParams" to { bytes -> lifecycleScope.async { computeFsrsParams(bytes) } },
+        "deckOptionsReady" to { bytes -> lifecycleScope.async { deckOptionsReady(bytes) } },
+        "deckOptionsRequireClose" to { bytes -> lifecycleScope.async { deckOptionsRequireClose(bytes) } },
     )
 
 suspend fun FragmentActivity?.handleUiPostRequest(
