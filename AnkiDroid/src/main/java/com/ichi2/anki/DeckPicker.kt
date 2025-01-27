@@ -42,6 +42,7 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewPropertyAnimator
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -59,7 +60,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.widget.TooltipCompat
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
 import androidx.core.content.edit
@@ -2261,11 +2261,9 @@ open class DeckPicker :
             val fabLinearLayout = findViewById<LinearLayout>(R.id.fabLinearLayout)
             // Adjust bottom margin of fabLinearLayout based on reviewSummaryTextView height
             reviewSummaryTextView.doOnLayout {
-                if (reviewSummaryTextView.lineCount > 1) {
-                    val layoutParams = fabLinearLayout.layoutParams as CoordinatorLayout.LayoutParams
-                    layoutParams.setMargins(0, 0, 0, reviewSummaryTextView.height / 2)
-                    fabLinearLayout.layoutParams = layoutParams
-                }
+                val layoutParams = fabLinearLayout.layoutParams as ViewGroup.MarginLayoutParams
+                layoutParams.setMargins(0, 0, 0, reviewSummaryTextView.height / 2)
+                fabLinearLayout.layoutParams = layoutParams
             }
         }
         Timber.d("Startup - Deck List UI Completed")
