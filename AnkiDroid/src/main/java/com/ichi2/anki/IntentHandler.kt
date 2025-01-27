@@ -32,6 +32,7 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
+import com.ichi2.anki.utils.MimeTypeUtils
 import com.ichi2.anki.worker.SyncWorker
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
@@ -299,14 +300,7 @@ class IntentHandler : AbstractIntentHandler() {
         private const val CLIPBOARD_INTENT = "com.ichi2.anki.COPY_DEBUG_INFO"
         private const val CLIPBOARD_INTENT_EXTRA_DATA = "clip_data"
 
-        private val textMimeTypes =
-            setOf(
-                "text/tab-separated-values",
-                "text/tsv",
-                "text/comma-separated-values",
-                "text/csv",
-                "text/plain",
-            )
+        private val textMimeTypes = MimeTypeUtils.CSV_TSV_MIME_TYPES
 
         private fun isValidViewIntent(intent: Intent): Boolean {
             // Negating a negative because we want to call specific attention to the fact that it's invalid
