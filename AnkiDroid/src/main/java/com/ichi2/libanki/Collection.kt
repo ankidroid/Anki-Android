@@ -409,6 +409,9 @@ class Collection(
         matchCase: Boolean = false,
     ): OpChangesWithCount = backend.findAndReplace(nids, search, replacement, regex, matchCase, field ?: "")
 
+    @LibAnkiAlias("field_names_for_note_ids")
+    fun fieldNamesForNoteIds(nids: List<Long>): List<String> = backend.fieldNamesForNotes(nids)
+
     // Browser Table
 
     @LibAnkiAlias("all_browser_columns")
