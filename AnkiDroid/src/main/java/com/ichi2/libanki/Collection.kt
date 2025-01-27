@@ -53,7 +53,6 @@ import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.Backend
-import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import timber.log.Timber
 import java.io.File
@@ -397,15 +396,14 @@ class Collection(
     }
 
     @LibAnkiAlias("find_and_replace")
-    @RustCleanup("Calling code should handle returned OpChanges")
     fun findReplace(
         nids: List<Long>,
-        src: String,
-        dst: String,
+        search: String,
+        replacement: String,
         regex: Boolean = false,
         field: String? = null,
-        fold: Boolean = true,
-    ): Int = backend.findAndReplace(nids, src, dst, regex, !fold, field ?: "").count
+        matchCase: Boolean = false,
+    ): OpChangesWithCount = backend.findAndReplace(nids, search, replacement, regex, matchCase, field ?: "")
 
     // Browser Table
 
