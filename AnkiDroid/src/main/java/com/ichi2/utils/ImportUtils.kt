@@ -33,6 +33,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.ImportDialog
+import com.ichi2.anki.onSelectedCsvForImport
 import com.ichi2.anki.showImportDialog
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
@@ -98,6 +99,11 @@ object ImportUtils {
 
     fun isFileAValidDeck(fileName: String): Boolean =
         FileImporter.hasExtension(fileName, "apkg") || FileImporter.hasExtension(fileName, "colpkg")
+
+    fun isFileValidTextOrDataFile(fileName: String): Boolean =
+        FileImporter.hasExtension(fileName, "txt") ||
+            FileImporter.hasExtension(fileName, "csv") ||
+            FileImporter.hasExtension(fileName, "tsv")
 
     @SuppressWarnings("WeakerAccess")
     open class FileImporter {
@@ -200,7 +206,10 @@ object ImportUtils {
                 }
             }
             val tempOutDir: String
-            if (!isValidPackageName(filename)) {
+            if (isFileValidTextOrDataFile(filename)) {
+                (context as Activity).onSelectedCsvForImport(intent!!)
+                return ImportResult.fromSuccess()
+            } else if (!isValidPackageName(filename)) {
                 return if (isAnkiDatabase(filename)) {
                     // .anki2 files aren't supported by Anki Desktop, we should eventually support them, because we can
                     // but for now, show a "nice" error.
@@ -242,6 +251,7 @@ object ImportUtils {
             return when {
                 isDeckPackage(fileName) -> true
                 isCollectionPackage(fileName) -> true
+                isFileValidTextOrDataFile(fileName.toString()) -> true
                 else -> false
             }
         }
