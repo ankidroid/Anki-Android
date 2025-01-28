@@ -94,10 +94,10 @@ class FlagAdapter(
             val updatedTextName = holder.flagNameEdit.text.toString()
             holder.flagNameViewLayout.visibility = View.VISIBLE
             holder.flagNameEditLayout.visibility = View.GONE
-            val updatedFlagItem = flagItem.copy(title = updatedTextName)
+            val updatedFlagItem = flagItem.copy(title = updatedTextName.ifEmpty { flagItem.title })
             val updatedDataset = currentList.toMutableList()
             lifecycleScope.launch {
-                flagItem.renameTo(updatedTextName)
+                flagItem.renameTo(updatedTextName.ifEmpty { flagItem.title })
             }
             updatedFlagItem.isInEditMode = false
             updatedDataset[position] = updatedFlagItem
