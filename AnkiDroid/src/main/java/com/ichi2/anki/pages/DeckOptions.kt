@@ -18,10 +18,12 @@ package com.ichi2.anki.pages
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChanges
 import anki.collection.Progress
@@ -136,6 +138,15 @@ class DeckOptions : PageFragment() {
         }
     }
 
+    /** @see onWebViewReady */
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        pageLoadingIndicator.isVisible = true
+        super.onViewCreated(view, savedInstanceState)
+    }
+
     override fun onWebViewCreated(webView: WebView) {
         // addJavascriptInterface needs to happen before loadUrl
         webView.addJavascriptInterface(ModalJavaScriptInterfaceListener(), "ankidroid")
@@ -151,6 +162,11 @@ class DeckOptions : PageFragment() {
 
         return object : PageWebViewClient() {
             private val ankiManualHostRegex = Regex("^docs\\.ankiweb\\.net\$")
+
+            /** @see onWebViewReady */
+            override fun onShowWebView(webView: WebView) {
+                // no-op: handled in onVebViewReady
+            }
 
             override fun shouldOverrideUrlLoading(
                 view: WebView?,
@@ -205,7 +221,8 @@ class DeckOptions : PageFragment() {
 
     fun onWebViewReady() {
         Timber.d("WebView ready to receive input")
-        // TODO: handle this
+        webView.isVisible = true
+        pageLoadingIndicator.isVisible = false
     }
 
     companion object {

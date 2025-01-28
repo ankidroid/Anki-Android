@@ -34,9 +34,6 @@ import java.io.IOException
  * Base WebViewClient to be used on [PageFragment]
  */
 open class PageWebViewClient : WebViewClient() {
-    /** Wait for the provided promise to complete before showing the WebView */
-    open val promiseToWaitFor: String? = null
-
     val onPageFinishedCallbacks: MutableList<OnPageFinishedCallback> = mutableListOf()
 
     override fun shouldInterceptRequest(
@@ -87,6 +84,17 @@ open class PageWebViewClient : WebViewClient() {
         }
     }
 
+    /**
+     * Shows the WebView after the page is loaded
+     *
+     * This may be overridden if additional 'screen ready' logic is provided by the backend
+     * @see DeckOptions
+     */
+    open fun onShowWebView(webView: WebView) {
+        Timber.v("Displaying WebView")
+        webView.isVisible = true
+    }
+
     override fun onPageFinished(
         view: WebView?,
         url: String?,
@@ -94,50 +102,9 @@ open class PageWebViewClient : WebViewClient() {
         super.onPageFinished(view, url)
         if (view == null) return
         onPageFinishedCallbacks.map { callback -> callback.onPageFinished(view) }
-        if (promiseToWaitFor == null) {
-            /** [PageFragment.webView] is invisible by default to avoid flashes while
-             * the page is loaded, and can be made visible again after it finishes loading */
-            Timber.v("displaying WebView")
-            view.isVisible = true
-        } else {
-            view.evaluateJavascript(
-                """$promiseToWaitFor.then(() => { console.log("page-fully-loaded:"); window.location.href = "page-fully-loaded:" } )""",
-            ) {
-                Timber.v("waiting for '$promiseToWaitFor' before displaying WebView")
-            }
-        }
-    }
-
-    @Suppress("DEPRECATION", "OVERRIDE_DEPRECATION") // still needed for API 23
-    override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-        if (view == null || url == null) return super.shouldOverrideUrlLoading(view, url)
-        if (handleUrl(view, url)) {
-            return true
-        }
-        return super.shouldOverrideUrlLoading(view, url)
-    }
-
-    override fun shouldOverrideUrlLoading(
-        view: WebView?,
-        request: WebResourceRequest?,
-    ): Boolean {
-        if (view == null || request == null) return super.shouldOverrideUrlLoading(view, request)
-        if (handleUrl(view, request.url.toString())) {
-            return true
-        }
-        return super.shouldOverrideUrlLoading(view, request)
-    }
-
-    private fun handleUrl(
-        view: WebView,
-        url: String,
-    ): Boolean {
-        if (url == "page-fully-loaded:") {
-            Timber.v("displaying WebView after '$promiseToWaitFor' executed")
-            view.isVisible = true
-            return true
-        }
-        return false
+        /** [PageFragment.webView] is invisible by default to avoid flashes while
+         * the page is loaded, and can be made visible again after it finishes loading */
+        onShowWebView(view)
     }
 }
 
