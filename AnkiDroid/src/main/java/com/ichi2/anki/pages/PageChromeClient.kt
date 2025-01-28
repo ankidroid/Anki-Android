@@ -36,6 +36,7 @@ open class PageChromeClient : WebChromeClient() {
         message: String?,
         result: JsResult?,
     ): Boolean {
+        Timber.d("Displaying alert() dialog")
         try {
             AlertDialog.Builder(view.context).show {
                 message?.let { message(text = message) }
@@ -62,6 +63,7 @@ open class PageChromeClient : WebChromeClient() {
         message: String?,
         result: JsResult?,
     ): Boolean {
+        Timber.d("Displaying confirm() dialog")
         try {
             AlertDialog.Builder(view.context).show {
                 message?.let { message(text = message) }
