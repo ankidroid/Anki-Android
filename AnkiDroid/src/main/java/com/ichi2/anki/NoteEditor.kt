@@ -232,7 +232,6 @@ class NoteEditor :
     private var reloadRequired = false
 
     private var fieldsLayoutContainer: LinearLayout? = null
-    private var mediaRegistration: MediaRegistration? = null
     private var tagsDialogFactory: TagsDialogFactory? = null
     private var tagsButton: AppCompatButton? = null
     private var cardsButton: AppCompatButton? = null
@@ -395,7 +394,10 @@ class NoteEditor :
 
             for (uri in clip.items().map { it.uri }) {
                 try {
-                    onPaste(view as EditText, uri, description)
+                    lifecycleScope.launch {
+                        val pasteAsPng = shouldPasteAsPng()
+                        onPaste(view as EditText, uri, description, pasteAsPng)
+                    }
                 } catch (e: Exception) {
                     Timber.w(e)
                     CrashReportService.sendExceptionReport(e, "NoteEditor::onReceiveContent")
@@ -486,7 +488,6 @@ class NoteEditor :
     // ----------------------------------------------------------------------------
     override fun onCreate(savedInstanceState: Bundle?) {
         tagsDialogFactory = TagsDialogFactory(this).attachToFragmentManager<TagsDialogFactory>(parentFragmentManager)
-        mediaRegistration = MediaRegistration(requireContext())
         super.onCreate(savedInstanceState)
         fieldState.setInstanceState(savedInstanceState)
         val intent = requireActivity().intent
@@ -1685,6 +1686,9 @@ class NoteEditor :
         return note
     }
 
+    /** Determines whether pasted images should be handled as PNG format. **/
+    private suspend fun shouldPasteAsPng() = withCol { config.getBool(ConfigKey.Bool.PASTE_IMAGES_AS_PNG) }
+
     val currentFields: Fields
         get() = editorNote!!.notetype.flds
 
@@ -1731,12 +1735,16 @@ class NoteEditor :
             val editLineView = editLines[i]
             customViewIds.add(editLineView.id)
             val newEditText = editLineView.editText
-            newEditText.setPasteListener { editText: EditText?, uri: Uri?, description: ClipDescription? ->
-                onPaste(
-                    editText!!,
-                    uri!!,
-                    description!!,
-                )
+            lifecycleScope.launch {
+                val pasteAsPng = shouldPasteAsPng()
+                newEditText.setPasteListener { editText: EditText?, uri: Uri?, description: ClipDescription? ->
+                    onPaste(
+                        editText!!,
+                        uri!!,
+                        description!!,
+                        pasteAsPng,
+                    )
+                }
             }
             editLineView.configureView(
                 requireActivity(),
@@ -2010,10 +2018,42 @@ class NoteEditor :
         editText: EditText,
         uri: Uri,
         description: ClipDescription,
+        pasteAsPng: Boolean,
     ): Boolean {
-        val mediaTag = mediaRegistration!!.onPaste(uri, description) ?: return false
+        val mediaTag =
+            MediaRegistration.onPaste(
+                requireContext(),
+                uri,
+                description,
+                pasteAsPng,
+                showError = ::handleMediaError,
+            ) ?: return false
+
         insertStringInField(editText, mediaTag)
         return true
+    }
+
+    private fun handleMediaError(
+        errorType: MediaRegistration.MediaError,
+        message: String?,
+    ) {
+        when (errorType) {
+            MediaRegistration.MediaError.GENERIC_ERROR -> {
+                showSnackbar(getString(R.string.multimedia_editor_something_wrong))
+            }
+            MediaRegistration.MediaError.CONVERSION_ERROR -> {
+                showSnackbar(getString(R.string.multimedia_editor_png_paste_error, message ?: ""))
+            }
+            MediaRegistration.MediaError.IMAGE_TOO_LARGE -> {
+                showSnackbar(getString(R.string.note_editor_image_too_large))
+            }
+            MediaRegistration.MediaError.VIDEO_TO_LARGE -> {
+                showSnackbar(getString(R.string.note_editor_video_too_large))
+            }
+            MediaRegistration.MediaError.AUDIO_TOO_LARGE -> {
+                showSnackbar(getString(R.string.note_editor_audio_too_large))
+            }
+        }
     }
 
     @NeedsTest("If a field is sticky after synchronization, the toggleStickyButton should be activated.")

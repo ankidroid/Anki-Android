@@ -37,15 +37,79 @@ import java.io.InputStream
 import java.lang.IllegalStateException
 
 /**
- * RegisterMediaForWebView is used for registering media in temp path,
- * this class is required in summer note class for paste image event and in visual editor activity for importing media,
- * (extracted code to avoid duplication of code).
+ * Utility class for media registration and handling errors during media paste actions.
  */
-class MediaRegistration(
-    private val context: Context,
-) {
-    // Use the same HTML if the same image is pasted multiple times.
-    private val pastedMediaCache = HashMap<String, String?>()
+object MediaRegistration {
+    /**
+     * Represents different types of media errors.
+     */
+    enum class MediaError {
+        GENERIC_ERROR,
+        CONVERSION_ERROR,
+        IMAGE_TOO_LARGE,
+        VIDEO_TO_LARGE,
+        AUDIO_TOO_LARGE,
+    }
+
+    private const val MEDIA_MAX_SIZE = 5 * 1000 * 1000
+
+    /**
+     * Handles the paste action for media.
+     *
+     * @param context The application context.
+     * @param uri The URI of the media to be pasted.
+     * @param description The description of the clipboard content.
+     * @param pasteAsPng A flag indicating whether to convert the media to PNG format.
+     * @param showError A callback function for displaying error messages based on media error type.
+     * @return A string reference to the media if successfully processed, or null if an error occurred.
+     */
+    fun onPaste(
+        context: Context,
+        uri: Uri,
+        description: ClipDescription,
+        pasteAsPng: Boolean,
+        showError: (type: MediaError, message: String?) -> Unit,
+    ): String? =
+        try {
+            loadMediaIntoCollection(context, uri, description, pasteAsPng, showError)
+        } catch (ex: NullPointerException) {
+            // Tested under FB Messenger and GMail, both apps do nothing if this occurs.
+            // This typically works if the user copies again - don't know the exact cause
+
+            //  java.lang.SecurityException: Permission Denial: opening provider
+            //  org.chromium.chrome.browser.util.ChromeFileProvider from ProcessRecord{80125c 11262:com.ichi2.anki/u0a455}
+            //  (pid=11262, uid=10455) that is not exported from UID 10057
+            Timber.w(ex, "Failed to paste media")
+            showError(MediaError.GENERIC_ERROR, null)
+            null
+        } catch (ex: SecurityException) {
+            Timber.w(ex, "Failed to paste media")
+            showError(MediaError.GENERIC_ERROR, null)
+            null
+        } catch (e: Exception) {
+            // NOTE: This is happy path coding which works on Android 9.
+            CrashReportService.sendExceptionReport("File is invalid issue:8880", "RegisterMediaForWebView:onImagePaste URI of file:$uri")
+            Timber.w(e, "Failed to paste media")
+            showError(MediaError.GENERIC_ERROR, null)
+            null
+        }
+
+    fun checkMediaSize(
+        bytesWritten: Long,
+        isImage: Boolean,
+        isVideo: Boolean,
+        showError: (type: MediaError, message: String?) -> Unit,
+    ): Boolean {
+        if (bytesWritten > MEDIA_MAX_SIZE) {
+            when {
+                isImage -> showError(MediaError.IMAGE_TOO_LARGE, null)
+                isVideo -> showError(MediaError.VIDEO_TO_LARGE, null)
+                else -> showError(MediaError.AUDIO_TOO_LARGE, null)
+            }
+            return false
+        }
+        return true
+    }
 
     /**
      * Loads media into the collection.media directory and returns a HTML reference
@@ -54,11 +118,14 @@ class MediaRegistration(
      */
     @Throws(IOException::class)
     fun loadMediaIntoCollection(
+        context: Context,
         uri: Uri,
         description: ClipDescription,
+        pasteAsPng: Boolean,
+        showError: (type: MediaError, message: String?) -> Unit,
     ): String? {
         val filename = getFileName(context.contentResolver, uri)
-        val fd = openInputStreamWithURI(uri)
+        val fd = openInputStreamWithURI(context, uri)
         val (fileName, fileExtensionWithDot) =
             FileNameAndExtension
                 .fromString(filename)
@@ -69,13 +136,11 @@ class MediaRegistration(
         val isImage = ClipboardUtil.hasImage(description)
         val isVideo = ClipboardUtil.hasVideo(description)
 
-        openInputStreamWithURI(uri).use { copyFd ->
-            // no conversion to jpg in cases of gif and jpg and if png image with alpha channel
-            if (shouldConvertToJPG(fileExtensionWithDot, copyFd, isImage)) {
-                clipCopy = File.createTempFile(fileName, ".jpg")
+        openInputStreamWithURI(context, uri).use { _ ->
+            if (pasteAsPng) {
+                clipCopy = File.createTempFile(fileName, ".png")
                 bytesWritten = CompatHelper.compat.copyFile(fd, clipCopy.absolutePath)
-                // return null if jpg conversion false.
-                if (!convertToJPG(clipCopy)) {
+                if (!convertToPNG(clipCopy, showError)) {
                     return null
                 }
             } else {
@@ -89,102 +154,43 @@ class MediaRegistration(
             return null
         }
         Timber.d("File was %d bytes", bytesWritten)
-        if (bytesWritten > MEDIA_MAX_SIZE) {
-            Timber.w("File was too large: %d bytes", bytesWritten)
-            val message =
-                if (isImage) {
-                    context.getString(R.string.note_editor_image_too_large)
-                } else if (isVideo) {
-                    context.getString(R.string.note_editor_video_too_large)
-                } else {
-                    context.getString(R.string.note_editor_audio_too_large)
-                }
-            showThemedToast(context, message, false)
+
+        if (!checkMediaSize(bytesWritten, isImage, isVideo, showError)) {
             File(tempFilePath).delete()
             return null
         }
-        val field =
-            if (isImage) {
-                ImageField()
-            } else {
-                MediaClipField()
-            }
+
+        val field = if (isImage) ImageField() else MediaClipField()
+
         field.hasTemporaryMedia = true
         field.mediaPath = tempFilePath
         return field.formattedValue
     }
 
     @Throws(FileNotFoundException::class)
-    private fun openInputStreamWithURI(uri: Uri): InputStream = context.contentResolver.openInputStream(uri)!!
+    private fun openInputStreamWithURI(
+        context: Context,
+        uri: Uri,
+    ): InputStream = context.contentResolver.openInputStream(uri)!!
 
-    private fun convertToJPG(file: File): Boolean {
+    private fun convertToPNG(
+        file: File,
+        showError: (type: MediaError, message: String?) -> Unit,
+    ): Boolean {
         val bm = BitmapFactory.decodeFile(file.absolutePath)
         try {
             FileOutputStream(file.absolutePath).use { outStream ->
-                bm.compress(Bitmap.CompressFormat.JPEG, 100, outStream)
+                bm.compress(Bitmap.CompressFormat.PNG, 100, outStream)
                 outStream.flush()
             }
         } catch (e: IOException) {
             Timber.w("MediaRegistration : Unable to convert file to png format")
             CrashReportService.sendExceptionReport(e, "Unable to convert file to png format")
-            showThemedToast(context, context.resources.getString(R.string.multimedia_editor_png_paste_error, e.message), true)
+            showError(MediaError.CONVERSION_ERROR, e.message)
             return false
-        }
-        return true // successful conversion to jpg.
-    }
-
-    private fun shouldConvertToJPG(
-        fileNameExtension: String,
-        fileStream: InputStream,
-        isImage: Boolean,
-    ): Boolean {
-        if (!isImage) {
-            return false
-        }
-        if (".svg" == fileNameExtension) {
-            return false
-        }
-        if (".jpg" == fileNameExtension) {
-            return false // we are already a jpg, no conversion
-        }
-        if (".gif" == fileNameExtension) {
-            return false // gifs may have animation, conversion would ruin them
-        }
-        if (".png" == fileNameExtension && doesInputStreamContainTransparency(fileStream)) {
-            return false // pngs with transparency would be ruined by conversion
         }
         return true
     }
-
-    fun onPaste(
-        uri: Uri,
-        description: ClipDescription,
-    ): String? =
-        try {
-            // check if cache already holds registered file or not
-            if (!pastedMediaCache.containsKey(uri.toString())) {
-                pastedMediaCache[uri.toString()] = loadMediaIntoCollection(uri, description)
-            }
-            pastedMediaCache[uri.toString()]
-        } catch (ex: NullPointerException) {
-            // Tested under FB Messenger and GMail, both apps do nothing if this occurs.
-            // This typically works if the user copies again - don't know the exact cause
-
-            //  java.lang.SecurityException: Permission Denial: opening provider
-            //  org.chromium.chrome.browser.util.ChromeFileProvider from ProcessRecord{80125c 11262:com.ichi2.anki/u0a455}
-            //  (pid=11262, uid=10455) that is not exported from UID 10057
-            Timber.w(ex, "Failed to paste media")
-            null
-        } catch (ex: SecurityException) {
-            Timber.w(ex, "Failed to paste media")
-            null
-        } catch (e: Exception) {
-            // NOTE: This is happy path coding which works on Android 9.
-            CrashReportService.sendExceptionReport("File is invalid issue:8880", "RegisterMediaForWebView:onImagePaste URI of file:$uri")
-            Timber.w(e, "Failed to paste media")
-            showThemedToast(context, context.getString(R.string.multimedia_editor_something_wrong), false)
-            null
-        }
 
     @CheckResult
     fun registerMediaForWebView(mediaPath: String?): Boolean {
@@ -203,35 +209,6 @@ class MediaRegistration(
         } catch (e: EmptyMediaException) {
             Timber.w(e, "Failed to add file")
             false
-        }
-    }
-
-    companion object {
-        private const val MEDIA_MAX_SIZE = 5 * 1000 * 1000
-        private const val COLOR_GREY = 0
-        private const val COLOR_TRUE = 2
-        private const val COLOR_INDEX = 3
-        private const val COLOR_GREY_ALPHA = 4
-        private const val COLOR_TRUE_ALPHA = 6
-
-        /**
-         * given an inputStream of a file,
-         * returns true if found that it has transparency (in its header)
-         * code: https://stackoverflow.com/a/31311718/14148406
-         */
-        private fun doesInputStreamContainTransparency(inputStream: InputStream): Boolean {
-            try {
-                // skip: png signature,header chunk declaration,width,height,bitDepth :
-                inputStream.skip((12 + 4 + 4 + 4 + 1).toLong())
-                when (inputStream.read()) {
-                    COLOR_GREY_ALPHA, COLOR_TRUE_ALPHA -> return true
-                    COLOR_INDEX, COLOR_GREY, COLOR_TRUE -> return false
-                }
-                return true
-            } catch (e: Exception) {
-                Timber.w(e, "Failed to check transparency of inputStream")
-            }
-            return false
         }
     }
 }
