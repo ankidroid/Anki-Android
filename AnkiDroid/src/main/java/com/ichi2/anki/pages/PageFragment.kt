@@ -28,6 +28,7 @@ import androidx.annotation.LayoutRes
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.themes.Themes
@@ -45,6 +46,15 @@ open class PageFragment(
     PostRequestHandler {
     lateinit var webView: WebView
     private val server = AnkiServer(this).also { it.start() }
+
+    /**
+     * A loading indicator for the page. May be shown before the WebView is loaded to
+     * stop flickering
+     *
+     * @exception IllegalStateException if accessed before [onViewCreated]
+     */
+    val pageLoadingIndicator: CircularProgressIndicator
+        get() = requireView().findViewById(R.id.page_loading)
 
     /**
      * Override this to set a custom [WebViewClient] to the page.
