@@ -18,4 +18,6 @@ package com.ichi2.anki.reviewer
 
 interface ReviewerUi {
     val isDisplayingAnswer: Boolean
+    fun saveCurrentCardState()
+    fun restoreCurrentCardState()
 }
