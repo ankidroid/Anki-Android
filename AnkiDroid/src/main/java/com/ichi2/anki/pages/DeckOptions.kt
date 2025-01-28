@@ -22,6 +22,8 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.CheckResult
+import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChanges
 import anki.collection.Progress
@@ -45,11 +47,20 @@ import timber.log.Timber
 
 @NeedsTest("15130: pressing back: icon + button should return to options if the manual is open")
 class DeckOptions : PageFragment() {
+    // it is difficult to test for fragment closing due to launching a task in [actuallyClose]
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    var isClosingFragment: Boolean = false
+        set(value) {
+            field = value
+            Timber.v("isClosingFragment: %b", value)
+        }
+
     /**
      * Callback enabled when the manual is opened in the deck options.
      * It requests the webview to go back to the Deck Options.
      */
-    private val onBackFromManual =
+    @VisibleForTesting
+    val onBackFromManual =
         object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
                 Timber.v("webView: navigating back")
@@ -90,7 +101,7 @@ class DeckOptions : PageFragment() {
      */
     private fun actuallyClose() {
         onBackFromDeckOptions.isEnabled = false
-        Timber.v("webView: navigating back")
+        isClosingFragment = true
         launchCatchingTask {
             // Required to be in a task to ensure the callback is disabled.
             requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -224,6 +235,7 @@ class DeckOptions : PageFragment() {
     }
 
     companion object {
+        @CheckResult
         fun getIntent(
             context: Context,
             deckId: DeckId,
