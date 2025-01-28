@@ -91,8 +91,12 @@ open class SingleFragmentActivity : AnkiActivity() {
         }
     }
 
+    /** Reference to the hosted fragment */
+    val fragment
+        get() = supportFragmentManager.findFragmentByTag(FRAGMENT_TAG)
+
     override val shortcuts: ShortcutGroup?
-        get() = (supportFragmentManager.findFragmentByTag(FRAGMENT_TAG) as? ShortcutGroupProvider)?.shortcuts
+        get() = (fragment as? ShortcutGroupProvider)?.shortcuts
 
     companion object {
         const val FRAGMENT_NAME_EXTRA = "fragmentName"
