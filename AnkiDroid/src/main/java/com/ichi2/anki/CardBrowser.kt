@@ -67,6 +67,16 @@ import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Initializing
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Searching
 import com.ichi2.anki.browser.CardOrNoteId
 import com.ichi2.anki.browser.ColumnHeading
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ALL_FIELDS_AS_FIELD
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_FIELD
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_MATCH_CASE
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_ONLY_SELECTED_NOTES
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_REGEX
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_REPLACEMENT
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_SEARCH
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.REQUEST_FIND_AND_REPLACE
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.TAGS_AS_FIELD
 import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
@@ -98,6 +108,7 @@ import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
@@ -443,6 +454,37 @@ open class CardBrowser :
 
         setupFlows()
         registerOnForgetHandler { viewModel.queryAllSelectedCardIds() }
+
+        supportFragmentManager.setFragmentResultListener(REQUEST_FIND_AND_REPLACE, this) { _, bundle ->
+            launchCatchingTask {
+                val targetField = bundle.getString(ARG_FIELD) ?: return@launchCatchingTask
+                val search = bundle.getString(ARG_SEARCH) ?: return@launchCatchingTask
+                val replacement = bundle.getString(ARG_REPLACEMENT) ?: return@launchCatchingTask
+                val onlyOnSelectedNotes = bundle.getBoolean(ARG_ONLY_SELECTED_NOTES, true)
+                val matchCase = bundle.getBoolean(ARG_MATCH_CASE, false)
+                val regex = bundle.getBoolean(ARG_REGEX, false)
+                withProgress {
+                    // TODO pass the selection as the user saw it in the dialog to avoid running "find
+                    //  and replace" on a different selection
+                    val noteIds =
+                        if (onlyOnSelectedNotes) viewModel.queryAllSelectedNoteIds() else emptyList()
+
+                    val count =
+                        if (targetField == TAGS_AS_FIELD) {
+                            undoableOp {
+                                tags.findAndReplace(noteIds, search, replacement, regex, matchCase)
+                            }.count
+                        } else {
+                            val field =
+                                if (targetField == ALL_FIELDS_AS_FIELD) null else targetField
+                            undoableOp {
+                                findReplace(noteIds, search, replacement, regex, field, matchCase)
+                            }.count
+                        }
+                    showSnackbar(TR.browsingNotesUpdated(count))
+                }
+            }
+        }
     }
 
     override fun setupBackPressedCallbacks() {
@@ -674,6 +716,11 @@ open class CardBrowser :
                 }
             }
             KeyEvent.KEYCODE_F -> {
+                if (event.isCtrlPressed && event.isAltPressed) {
+                    Timber.i("CTRL+ALT+F - Find and replace")
+                    showFindAndReplaceDialog()
+                    return true
+                }
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+F - Find notes")
                     searchItem?.expandActionView()
@@ -956,6 +1003,11 @@ open class CardBrowser :
         actionBarMenu?.findItem(R.id.action_reschedule_cards)?.title =
             TR.actionsSetDueDate().toSentenceCase(this, R.string.sentence_set_due_date)
 
+        val isFindReplaceEnabled = sharedPrefs().getBoolean(getString(R.string.pref_browser_find_replace), false)
+        menu.findItem(R.id.action_find_replace)?.apply {
+            isVisible = isFindReplaceEnabled
+            title = TR.browsingFindAndReplace().toSentenceCase(this@CardBrowser, R.string.sentence_find_and_replace)
+        }
         previewItem = menu.findItem(R.id.action_preview)
         onSelectionChanged()
         updatePreviewMenuItem()
@@ -1224,6 +1276,9 @@ open class CardBrowser :
             R.id.action_create_filtered_deck -> {
                 showCreateFilteredDeckDialog()
             }
+            R.id.action_find_replace -> {
+                showFindAndReplaceDialog()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -1254,6 +1309,11 @@ open class CardBrowser :
      */
     private fun searchForMarkedNotes() {
         launchCatchingTask { viewModel.searchForMarkedNotes() }
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun showFindAndReplaceDialog() {
+        FindAndReplaceDialogFragment().show(supportFragmentManager, FindAndReplaceDialogFragment.TAG)
     }
 
     private fun changeDisplayOrder() {
