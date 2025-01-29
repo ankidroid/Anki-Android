@@ -97,4 +97,6 @@
     <string name="user_potential_columns">Available</string>
     <string name="include_column">Include column</string>
     <string name="exclude_column">Exclude column</string>
+
+    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
 </resources>
