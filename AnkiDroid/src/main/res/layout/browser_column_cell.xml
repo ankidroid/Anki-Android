@@ -18,7 +18,7 @@
     android:layout_width="0dp"
     android:layout_height="match_parent"
     android:layout_weight="1"
-    android:paddingStart="4dp"
+    android:paddingStart="8dp"
     android:paddingVertical="1dp"
     android:layout_gravity="top"
 />

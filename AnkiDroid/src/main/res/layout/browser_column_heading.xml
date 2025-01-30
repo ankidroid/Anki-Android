@@ -17,9 +17,10 @@
 <com.ichi2.ui.FixedTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="0dp"
     android:layout_height="match_parent"
+    android:minHeight="?minTouchTargetSize"
     android:layout_weight="1"
     android:textFontWeight="700"
-    android:paddingStart="4dp"
+    android:paddingStart="8dp"
     android:textAppearance="@style/TextAppearance.AppCompat.Widget.TextView.SpinnerItem"
-    android:layout_gravity="center_vertical"
+    android:gravity="center_vertical"
 />
