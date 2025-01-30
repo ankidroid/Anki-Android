@@ -22,11 +22,8 @@ import androidx.annotation.CheckResult
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
-import com.ichi2.anki.reviewer.Binding.AxisButtonBinding
 import com.ichi2.anki.reviewer.Binding.GestureInput
 import com.ichi2.anki.reviewer.Binding.KeyBinding
-import com.ichi2.anki.reviewer.Binding.KeyCode
-import com.ichi2.anki.reviewer.Binding.UnicodeCharacter
 import com.ichi2.utils.hash
 import timber.log.Timber
 import java.util.Objects
@@ -47,48 +44,14 @@ class MappableBinding(
         if (other == null) return false
 
         val otherBinding = (other as MappableBinding).binding
-        val bindingEquals =
-            when {
-                binding is KeyCode && otherBinding is KeyCode -> binding.keycode == otherBinding.keycode && modifierEquals(otherBinding)
-                binding is UnicodeCharacter && otherBinding is UnicodeCharacter -> {
-                    binding.unicodeCharacter == otherBinding.unicodeCharacter &&
-                        modifierEquals(otherBinding)
-                }
-                binding is GestureInput && otherBinding is GestureInput -> binding.gesture == otherBinding.gesture
-                binding is AxisButtonBinding && otherBinding is AxisButtonBinding -> {
-                    binding.axis == otherBinding.axis && binding.threshold == otherBinding.threshold
-                }
-                else -> false
-            }
-        if (!bindingEquals) {
+        if (binding != otherBinding) {
             return false
         }
 
         return screen.screenEquals(other.screen)
     }
 
-    override fun hashCode(): Int {
-        // don't include the modifierKeys or mSide
-        val bindingHash =
-            when (binding) {
-                is KeyCode -> binding.keycode
-                is UnicodeCharacter -> binding.unicodeCharacter
-                is GestureInput -> binding.gesture
-                is AxisButtonBinding -> hash(binding.axis.motionEventValue, binding.threshold.toInt())
-                else -> 0
-            }
-        return Objects.hash(bindingHash, screen.prefix)
-    }
-
-    private fun modifierEquals(otherBinding: KeyBinding): Boolean {
-        // equals allowing subclasses
-        val keys = otherBinding.modifierKeys
-        val thisKeys = (this.binding as KeyBinding).modifierKeys
-        if (thisKeys === keys) return true
-        return thisKeys.semiStructuralEquals(keys)
-
-        // allow subclasses to work - a subclass which overrides shiftMatches will return true on one of the tests
-    }
+    override fun hashCode(): Int = Objects.hash(binding, screen.prefix)
 
     fun toDisplayString(context: Context): String = screen.toDisplayString(context, binding)
 
