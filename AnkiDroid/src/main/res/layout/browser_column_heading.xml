@@ -16,10 +16,11 @@
 
 <com.ichi2.ui.FixedTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="0dp"
-    android:layout_height="match_parent"
+    android:layout_height="48dp"
     android:layout_weight="1"
     android:textFontWeight="700"
     android:paddingStart="4dp"
     android:textAppearance="@style/TextAppearance.AppCompat.Widget.TextView.SpinnerItem"
-    android:layout_gravity="center_vertical"
+    android:layout_gravity="center"
+    android:gravity="center"
 />
