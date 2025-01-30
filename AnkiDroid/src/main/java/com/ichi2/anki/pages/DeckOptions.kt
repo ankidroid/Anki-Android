@@ -46,7 +46,10 @@ import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 @NeedsTest("15130: pressing back: icon + button should return to options if the manual is open")
+@NeedsTest("17905: pressing back before the webpage is ready closes the screen")
 class DeckOptions : PageFragment() {
+    private var webViewIsReady = false
+
     /**
      * Callback enabled when the manual is opened in the deck options.
      * It requests the webview to go back to the Deck Options.
@@ -68,11 +71,16 @@ class DeckOptions : PageFragment() {
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 Timber.v("DeckOptions: requesting the webview to handle the user close request.")
-                webView.evaluateJavascript("anki.deckOptionsPendingChanges()") {
-                    // Callback is handled in the WebView:
-                    //  * A 'discard changes' dialog may be shown, using confirm()
-                    //  * if no changes, or changes discarded, `deckOptionsRequireClose` is called
-                    //    which PostRequestHandler handles and calls on this fragment
+                if (webViewIsReady) {
+                    webView.evaluateJavascript("anki.deckOptionsPendingChanges()") {
+                        // Callback is handled in the WebView:
+                        //  * A 'discard changes' dialog may be shown, using confirm()
+                        //  * if no changes, or changes discarded, `deckOptionsRequireClose` is called
+                        //    which PostRequestHandler handles and calls on this fragment
+                    }
+                } else {
+                    // The webview is not yet loaded, no change could have occurred, we can safely close it.
+                    actuallyClose()
                 }
             }
         }
@@ -221,6 +229,7 @@ class DeckOptions : PageFragment() {
 
     fun onWebViewReady() {
         Timber.d("WebView ready to receive input")
+        webViewIsReady = true
         webView.isVisible = true
         pageLoadingIndicator.isVisible = false
     }
