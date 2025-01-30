@@ -48,9 +48,9 @@ Install
     <img alt="Get it on F-Droid" height="80"
         src="docs/graphics/logos/f-droid-badge.png"></a>
 
-<a href="http://www.amazon.com/gp/product/B004L1G7T2/ref=mas_pm_ankidroid_flashcards">
-    <img alt="Get it on Amazon app store" height="80"
-        src="docs/graphics/logos/amazon-badge.png"/></a>
+<a href="http://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://github.com/ankidroid/Anki-Android">
+    <img alt="Get it on Obtainium" height="80"
+        src="https://github.com/user-attachments/assets/713d71c5-3dec-4ec4-a3f2-8d28d025a9c6"/></a>
 
 </div>
 
