@@ -16,7 +16,6 @@
 package com.ichi2.anki
 
 import android.content.ClipDescription
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -37,13 +36,9 @@ import java.io.InputStream
 import java.lang.IllegalStateException
 
 /**
- * RegisterMediaForWebView is used for registering media in temp path,
- * this class is required in summer note class for paste image event and in visual editor activity for importing media,
- * (extracted code to avoid duplication of code).
+ * Utility class for media registration and handling errors during media paste actions.
  */
-class MediaRegistration(
-    private val context: Context,
-) {
+object MediaRegistration {
     // Use the same HTML if the same image is pasted multiple times.
     private val pastedMediaCache = HashMap<String, String?>()
 
