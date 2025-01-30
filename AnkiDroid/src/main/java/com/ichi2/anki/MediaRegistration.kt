@@ -16,6 +16,7 @@
 package com.ichi2.anki
 
 import android.content.ClipDescription
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -39,6 +40,29 @@ import java.lang.IllegalStateException
  * Utility class for media registration and handling errors during media paste actions.
  */
 object MediaRegistration {
+    /**
+     * Represents different types of media errors.
+     */
+    enum class MediaError {
+        GENERIC_ERROR,
+        CONVERSION_ERROR,
+        IMAGE_TOO_LARGE,
+        VIDEO_TO_LARGE,
+        AUDIO_TOO_LARGE, ;
+
+        fun toHumanReadableString(
+            context: Context,
+            message: String,
+        ): String =
+            when (this) {
+                GENERIC_ERROR -> context.getString(R.string.multimedia_editor_something_wrong)
+                CONVERSION_ERROR -> context.getString(R.string.multimedia_editor_png_paste_error, message)
+                IMAGE_TOO_LARGE -> context.getString(R.string.note_editor_image_too_large)
+                VIDEO_TO_LARGE -> context.getString(R.string.note_editor_video_too_large)
+                AUDIO_TOO_LARGE -> context.getString(R.string.note_editor_audio_too_large)
+            }
+    }
+
     // Use the same HTML if the same image is pasted multiple times.
     private val pastedMediaCache = HashMap<String, String?>()
 
