@@ -420,24 +420,24 @@ class FinderTest : JvmTest() {
         col.addNote(note2)
         val nids = listOf(note.id, note2.id)
         // should do nothing
-        assertEquals(0, col.findReplace(nids, "abc", "123"))
+        assertEquals(0, col.findReplace(nids, "abc", "123").count)
         // global replace
-        assertEquals(2, col.findReplace(nids, "foo", "qux"))
+        assertEquals(2, col.findReplace(nids, "foo", "qux").count)
         note.load()
         assertEquals("qux", note.getItem("Front"))
         note2.load()
         assertEquals("qux", note2.getItem("Back"))
         // single field replace
-        assertEquals(1, col.findReplace(nids, "qux", "foo", field = "Front"))
+        assertEquals(1, col.findReplace(nids, "qux", "foo", field = "Front").count)
         note.load()
         assertEquals("foo", note.getItem("Front"))
         note2.load()
         assertEquals("qux", note2.getItem("Back"))
         // regex replace
-        assertEquals(0, col.findReplace(nids, "B.r", "reg"))
+        assertEquals(0, col.findReplace(nids, "B.r", "reg").count)
         note.load()
         assertNotEquals("reg", note.getItem("Back"))
-        assertEquals(1, col.findReplace(nids, "B.r", "reg", true))
+        assertEquals(1, col.findReplace(nids, "B.r", "reg", true).count)
         note.load()
         assertEquals(note.getItem("Back"), "reg")
     }

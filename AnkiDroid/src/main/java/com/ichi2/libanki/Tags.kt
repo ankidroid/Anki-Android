@@ -19,6 +19,7 @@ package com.ichi2.libanki
 
 import androidx.annotation.WorkerThread
 import anki.collection.OpChangesWithCount
+import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.join
 import java.util.AbstractSet
 
@@ -111,6 +112,22 @@ class Tags(
         tag: String,
         tags: Iterable<String>,
     ): Boolean = tags.map { it.lowercase() }.contains(tag.lowercase())
+
+    // https://github.com/ankitects/anki/blob/main/pylib/anki/tags.py#L73
+    @LibAnkiAlias("find_and_replace")
+    fun findAndReplace(
+        noteIds: List<Long>,
+        search: String,
+        replacement: String,
+        regex: Boolean,
+        matchCase: Boolean,
+    ) = col.backend.findAndReplaceTag(
+        noteIds = noteIds,
+        search = search,
+        replacement = replacement,
+        regex = regex,
+        matchCase = matchCase,
+    )
 }
 
 fun Collection.completeTagRaw(input: ByteArray): ByteArray = backend.completeTagRaw(input)
