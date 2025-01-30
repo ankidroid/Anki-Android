@@ -16,6 +16,7 @@
 package com.ichi2.anki
 
 import android.content.ClipDescription
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -35,10 +36,38 @@ import java.io.IOException
 import java.io.InputStream
 import java.lang.IllegalStateException
 
+private typealias DisplayMediaError = (MediaRegistration.MediaError) -> Unit
+
 /**
  * Utility class for media registration and handling errors during media paste actions.
  */
 object MediaRegistration {
+    /**
+     * Represents different types of media errors.
+     */
+    sealed class MediaError {
+        data object GenericError : MediaError()
+
+        class ConversionError(
+            val message: String,
+        ) : MediaError()
+
+        data object ImageTooLarge : MediaError()
+
+        data object VideoTooLarge : MediaError()
+
+        data object AudioTooLarge : MediaError()
+
+        fun toHumanReadableString(context: Context): String =
+            when (this) {
+                is GenericError -> context.getString(R.string.multimedia_editor_something_wrong)
+                is ConversionError -> context.getString(R.string.multimedia_editor_png_paste_error, message)
+                is ImageTooLarge -> context.getString(R.string.note_editor_image_too_large)
+                is VideoTooLarge -> context.getString(R.string.note_editor_video_too_large)
+                is AudioTooLarge -> context.getString(R.string.note_editor_audio_too_large)
+            }
+    }
+
     // Use the same HTML if the same image is pasted multiple times.
     private val pastedMediaCache = HashMap<String, String?>()
 
