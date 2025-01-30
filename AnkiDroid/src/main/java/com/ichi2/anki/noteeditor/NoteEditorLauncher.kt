@@ -99,12 +99,14 @@ sealed interface NoteEditorLauncher {
      */
     data class AddNoteFromCardBrowser(
         val viewModel: CardBrowserViewModel,
+        val inFragmentedActivity: Boolean = false,
     ) : NoteEditorLauncher {
         override fun toBundle(): Bundle {
             val bundle =
                 bundleOf(
                     NoteEditor.EXTRA_CALLER to NoteEditorCaller.CARDBROWSER_ADD.value,
                     NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW to viewModel.searchTerms,
+                    NoteEditor.IN_FRAGMENTED_ACTIVITY to inFragmentedActivity,
                 )
             if (viewModel.lastDeckId?.let { id -> id > 0 } == true) {
                 bundle.putLong(NoteEditor.EXTRA_DID, viewModel.lastDeckId!!)
@@ -156,12 +158,14 @@ sealed interface NoteEditorLauncher {
     data class EditCard(
         val cardId: CardId,
         val animation: ActivityTransitionAnimation.Direction,
+        val inFragmentedActivity: Boolean = false,
     ) : NoteEditorLauncher {
         override fun toBundle(): Bundle =
             bundleOf(
                 NoteEditor.EXTRA_CALLER to NoteEditorCaller.EDIT.value,
                 NoteEditor.EXTRA_CARD_ID to cardId,
                 AnkiActivity.FINISH_ANIMATION_EXTRA to animation as Parcelable,
+                NoteEditor.IN_FRAGMENTED_ACTIVITY to inFragmentedActivity,
             )
     }
 
