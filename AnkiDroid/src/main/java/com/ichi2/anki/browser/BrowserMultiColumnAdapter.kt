@@ -102,10 +102,6 @@ class BrowserMultiColumnAdapter(
                     inflate(R.layout.browser_column_cell).apply {
                         columnViews.add(this as TextView)
                     }
-
-                    if (index <= value) {
-                        inflate(R.layout.browser_column_divider)
-                    }
                 }
 
                 columnViews.forEach { it.setupTextSize() }
