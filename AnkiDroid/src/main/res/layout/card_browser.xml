@@ -18,7 +18,7 @@
         <LinearLayout
             android:id="@+id/browser_column_headings"
             android:layout_width="match_parent"
-            android:background="?attr/selectableItemBackground"
+            android:background="@drawable/browser_heading_bottom_divider"
             android:orientation="horizontal"
             android:paddingVertical="2dp"
             android:layout_height="wrap_content"
