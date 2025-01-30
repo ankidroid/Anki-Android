@@ -345,6 +345,8 @@ open class CardBrowser :
         launchCatchingTask {
             if (viewModel.isInMultiSelectMode) {
                 viewModel.toggleRowSelection(id)
+                viewModel.saveScrollingState(id)
+                viewModel.oldCardTopOffset = calculateTopOffset(viewModel.lastSelectedPosition)
             } else {
                 val cardId = viewModel.queryDataForCardEdit(id)
                 openNoteEditorForCard(cardId)
@@ -357,6 +359,8 @@ open class CardBrowser :
         if (viewModel.isInMultiSelectMode && viewModel.lastSelectedId != null) {
             viewModel.selectRowsBetween(viewModel.lastSelectedId!!, id)
         } else {
+            viewModel.saveScrollingState(id)
+            viewModel.oldCardTopOffset = calculateTopOffset(viewModel.lastSelectedPosition)
             viewModel.toggleRowSelection(id)
         }
     }
@@ -509,6 +513,7 @@ open class CardBrowser :
                 // Due to the ripple on long press, we set padding
                 browserColumnHeadings.updatePaddingRelative(start = 48.dp)
                 multiSelectOnBackPressedCallback.isEnabled = true
+                autoScrollTo(viewModel.lastSelectedPosition, viewModel.oldCardTopOffset)
             } else {
                 Timber.d("end multiselect mode")
                 // update adapter to remove check boxes
@@ -517,6 +522,7 @@ open class CardBrowser :
                 actionBarTitle.visibility = View.GONE
                 browserColumnHeadings.updatePaddingRelative(start = 0.dp)
                 multiSelectOnBackPressedCallback.isEnabled = false
+                autoScrollTo(viewModel.lastSelectedPosition, viewModel.oldCardTopOffset)
             }
             // reload the actionbar using the multi-select mode actionbar
             invalidateOptionsMenu()
@@ -1864,6 +1870,20 @@ open class CardBrowser :
             context: Context,
             viewModel: CardBrowserViewModel,
         ): Intent = NoteEditorLauncher.AddNoteFromCardBrowser(viewModel).getIntent(context)
+    }
+
+    private fun calculateTopOffset(cardPosition: Int): Int {
+        val layoutManager = cardsListView.layoutManager as LinearLayoutManager
+        val firstVisiblePosition = layoutManager.findFirstVisibleItemPosition()
+        val view = cardsListView.getChildAt(cardPosition - firstVisiblePosition)
+        return view?.top ?: 0
+    }
+
+    private fun autoScrollTo(
+        newPosition: Int,
+        offset: Int,
+    ) {
+        (cardsListView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(newPosition, offset)
     }
 }
 
