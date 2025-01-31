@@ -17,6 +17,7 @@
 
 package com.ichi2.anki.account
 
+import android.app.Activity.RESULT_OK
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
@@ -30,6 +31,7 @@ import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
@@ -37,6 +39,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.account.AccountActivity.Companion.START_FROM_DECKPICKER
 import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.getEndpoint
 import com.ichi2.anki.snackbar.showSnackbar
@@ -208,7 +211,22 @@ class LoginFragment : Fragment(R.layout.my_account) {
             viewModel.loginState.collect { state ->
                 when (state) {
                     is LoginState.Success -> {
-                        // TODO: handle logged in state
+                        val activity = requireActivity()
+                        val isForResult = arguments?.getBoolean(START_FROM_DECKPICKER) ?: false
+
+                        if (isForResult) {
+                            activity.setResult(RESULT_OK)
+                            activity.finish()
+                        } else {
+                            AccountActivity.checkNotificationPermission(requireContext(), notificationPermissionLauncher)
+
+                            val fragmentManager = activity.supportFragmentManager
+                            fragmentManager
+                                .beginTransaction()
+                                .replace(R.id.fragment_container, LoggedInFragment())
+                                .commit()
+                            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                        }
                     }
                     is LoginState.Error -> {
                         showSnackbar(text = state.exception.message.toString())
