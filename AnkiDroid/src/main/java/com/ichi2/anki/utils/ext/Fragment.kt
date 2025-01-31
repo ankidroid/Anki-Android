@@ -17,6 +17,7 @@ package com.ichi2.anki.utils.ext
 
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.view.Window
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -39,3 +40,13 @@ fun Fragment.showDialogFragment(newFragment: DialogFragment) = requireActivity()
 /** @see FragmentActivity.getWindow */
 val Fragment.window: Window
     get() = requireActivity().window
+
+/** Extension property to determine if the current device screen is considered "small". */
+val Fragment.isScreenSmall: Boolean
+    get() = (
+        (
+            requireActivity()
+                .applicationContext.resources.configuration.screenLayout
+                and Configuration.SCREENLAYOUT_SIZE_MASK
+        ) < Configuration.SCREENLAYOUT_SIZE_LARGE
+    )
