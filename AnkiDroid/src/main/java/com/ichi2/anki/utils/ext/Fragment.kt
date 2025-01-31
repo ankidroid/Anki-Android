@@ -20,7 +20,6 @@ import android.content.pm.PackageManager
 import android.view.Window
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.utils.showDialogFragmentImpl
 
@@ -39,3 +38,20 @@ fun Fragment.showDialogFragment(newFragment: DialogFragment) = requireActivity()
 /** @see FragmentActivity.getWindow */
 val Fragment.window: Window
     get() = requireActivity().window
+
+/** Breakpoint for the "Compact" width size class */
+private const val COMPACT_WIDTH_DP_MAX = 600
+
+/**
+ * Determines if the current window is considered "small" based on the "Compact" Window Size Class.
+ * This checks if the **current window width** (via screenWidthDp) is less than 600dp.
+ *
+ * @return `true` if the current window width is < 600dp, `false` otherwise.
+ *
+ * @see [Window Size Classes](https://developer.android.com/develop/ui/compose/layouts/adaptive/use-window-size-classes)
+ */
+val Fragment.isCompactWidth: Boolean
+    get() {
+        val currentWidthInDp = requireContext().resources.configuration.screenWidthDp
+        return currentWidthInDp < COMPACT_WIDTH_DP_MAX
+    }

@@ -22,7 +22,9 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import anki.sync.SyncAuth
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import com.ichi2.anki.settings.Prefs
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -74,15 +76,11 @@ class LoginViewModel : ViewModel() {
      * @param username The username entered by the user.
      * @param password The password entered by the user.
      * @param endpoint An endpoint for authentication.
-     * @param syncLogin A suspend function that performs the authentication and returns a {@link SyncAuth} object.
-     * @param updateLogin A function that updates the login credentials upon successful authentication.
      */
     fun handleLogin(
         username: String,
         password: String,
         endpoint: String?,
-        syncLogin: suspend (String, String, String?) -> SyncAuth,
-        updateLogin: (String, String) -> Unit,
     ) {
         viewModelScope.launch {
             try {
@@ -94,6 +92,23 @@ class LoginViewModel : ViewModel() {
                 _loginState.value = LoginState.Error(exc)
             }
         }
+    }
+
+    private suspend fun syncLogin(
+        username: String,
+        password: String,
+        endpoint: String?,
+    ): SyncAuth =
+        withCol {
+            syncLogin(username, password, endpoint)
+        }
+
+    private fun updateLogin(
+        username: String,
+        hkey: String,
+    ) {
+        Prefs.username = username
+        Prefs.hkey = hkey
     }
 }
 
