@@ -199,7 +199,7 @@ fun MyAccount.handleNewLogin(
     }
 }
 
-private fun updateLogin(
+fun updateLogin(
     username: String,
     hkey: String,
 ) {
