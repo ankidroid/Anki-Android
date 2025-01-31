@@ -21,6 +21,5 @@
     android:textFontWeight="700"
     android:paddingStart="4dp"
     android:textAppearance="@style/TextAppearance.AppCompat.Widget.TextView.SpinnerItem"
-    android:layout_gravity="center"
-    android:gravity="center"
+    android:gravity="center_vertical"
 />
