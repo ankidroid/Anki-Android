@@ -96,6 +96,8 @@ class InstantNoteEditorActivity :
     private lateinit var singleTapLayout: LinearLayout
     private lateinit var singleTapLayoutTitle: FixedTextView
 
+    private var isDialogShowing = false
+
     /** Gets the actual cloze field text value **/
     private val clozeFieldText: String?
         get() = viewModel.actualClozeFieldText.value
@@ -103,6 +105,7 @@ class InstantNoteEditorActivity :
     private val dialogBackCallback =
         object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
+                if (isDialogShowing) return
                 showDiscardChangesDialog()
             }
         }
@@ -600,7 +603,11 @@ class InstantNoteEditorActivity :
     }
 
     private fun showDiscardChangesDialog() {
-        DiscardChangesDialog.showDialog(this) {
+        isDialogShowing = true
+        DiscardChangesDialog.showDialog(this, isCancellable = false, negativeMethod = {
+            isDialogShowing = false
+        }) {
+            isDialogShowing = false
             Timber.i("InstantNoteEditorActivity:: OK button pressed to confirm discard changes")
             finish()
         }
