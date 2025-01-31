@@ -384,7 +384,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.ichi2.anki.MyAccount"
+            android:name="com.ichi2.anki.account.AccountActivity"
             android:label="@string/menu_my_account"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize"
