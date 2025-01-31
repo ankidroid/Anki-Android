@@ -103,7 +103,7 @@ class BrowserMultiColumnAdapter(
                         columnViews.add(this as TextView)
                     }
 
-                    if (index <= value) {
+                    if (index < value) {
                         inflate(R.layout.browser_column_divider)
                     }
                 }
