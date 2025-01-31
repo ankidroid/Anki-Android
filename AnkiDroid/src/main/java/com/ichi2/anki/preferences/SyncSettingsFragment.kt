@@ -21,6 +21,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import com.ichi2.anki.account.AccountActivity
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
@@ -61,6 +62,15 @@ class SyncSettingsFragment : SettingsFragment() {
                 false
             }
         }
+
+        requirePreference<Preference>(R.string.sync_account_key).apply {
+            setOnPreferenceClickListener {
+                val accountActivityIntent = AccountActivity.getIntent(requireContext())
+                startActivity(accountActivityIntent)
+                true
+            }
+        }
+
         // Custom sync server
         requirePreference<Preference>(R.string.custom_sync_server_key).setSummaryProvider {
             customSyncBase() ?: getString(R.string.custom_sync_server_summary_none_of_the_two_servers_used)
