@@ -28,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.launchCatchingTask
@@ -84,6 +85,12 @@ class LoggedInFragment : Fragment(R.layout.my_account_logged_in) {
     private fun logout() {
         launchCatchingTask {
             syncLogout(requireContext())
+            val fragmentManager = requireActivity().supportFragmentManager
+            fragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container, LoginFragment())
+                .commit()
+            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
     }
 
