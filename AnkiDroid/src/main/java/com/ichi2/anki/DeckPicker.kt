@@ -516,6 +516,11 @@ open class DeckPicker :
             syncOnResume = true
         }
 
+        if (intent.hasExtra(INTENT_REPORT_BUG)) {
+            Timber.i("DeckPicker::  Reporting bug, launched from shortcut")
+            ankiActivity.openUrl(Uri.parse(AnkiDroidApp.feedbackUrl))
+        }
+
         setContentView(R.layout.homescreen)
         enableToolbar()
         handleStartup()
@@ -2566,6 +2571,9 @@ open class DeckPicker :
             )
 
     companion object {
+        /** Opens the url to report bug from the ShortcutManager */
+        const val INTENT_REPORT_BUG = "reportBug"
+
         /**
          * Result codes from other activities
          */

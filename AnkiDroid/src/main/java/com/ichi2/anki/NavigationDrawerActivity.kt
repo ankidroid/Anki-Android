@@ -19,6 +19,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -33,6 +35,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
@@ -478,6 +481,29 @@ abstract class NavigationDrawerActivity :
                     .setIntent(intentAddNote)
                     .build()
 
+            // Report bug shortcut
+            val intentReportBug = Intent(context, DeckPicker::class.java)
+            intentReportBug.action = Intent.ACTION_VIEW
+            intentReportBug.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            intentReportBug.putExtra(DeckPicker.INTENT_REPORT_BUG, true)
+
+            val iconDrawable = ContextCompat.getDrawable(context, R.drawable.ic_bug_report_black_24dp)?.mutate()
+            iconDrawable?.setTint(ContextCompat.getColor(context, R.color.wb_fg_color_inv))
+
+            val bitmap = Bitmap.createBitmap(iconDrawable!!.intrinsicWidth, iconDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(bitmap)
+            iconDrawable.setBounds(0, 0, canvas.width, canvas.height)
+            iconDrawable.draw(canvas)
+
+            val reportBugShortcut =
+                ShortcutInfoCompat
+                    .Builder(context, "reportBugShortcut")
+                    .setShortLabel(context.getString(R.string.help_item_report_bug))
+                    .setLongLabel(context.getString(R.string.help_item_report_bug))
+                    .setIcon(IconCompat.createWithBitmap(bitmap))
+                    .setIntent(intentReportBug)
+                    .build()
+
             // CardBrowser Shortcut
             val intentCardBrowser = Intent(context, CardBrowser::class.java)
             intentCardBrowser.action = Intent.ACTION_VIEW
@@ -496,6 +522,7 @@ abstract class NavigationDrawerActivity :
                     reviewCardsShortcut,
                     noteEditorShortcut,
                     cardBrowserShortcut,
+                    reportBugShortcut,
                 ),
             )
         }
