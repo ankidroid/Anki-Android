@@ -32,8 +32,6 @@ import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.IntentHandler.Companion.getReviewDeckIntent
 import com.ichi2.anki.IntentHandler2
 import com.ichi2.anki.IntroductionActivity
-import com.ichi2.anki.LoginActivity
-import com.ichi2.anki.MyAccount
 import com.ichi2.anki.NoteEditorActivity
 import com.ichi2.anki.NoteTypeFieldEditor
 import com.ichi2.anki.Reviewer
@@ -77,7 +75,6 @@ object ActivityList {
             get(NoteEditorActivity::class.java),
             // Likely has unhandled intents
             get(Reviewer::class.java),
-            get(MyAccount::class.java),
             get(PreferencesActivity::class.java),
             get(FilteredDeckOptions::class.java),
             get(DrawingActivity::class.java),
@@ -86,7 +83,6 @@ object ActivityList {
             get(CardTemplateEditor::class.java) { intentForCardTemplateEditor() },
             get(CardTemplateBrowserAppearanceEditor::class.java) { intentForCardTemplateBrowserAppearanceEditor() },
             get(SharedDecksActivity::class.java),
-            get(LoginActivity::class.java),
             get(IntroductionActivity::class.java),
             get(ManageNotetypes::class.java),
             get(ManageSpaceActivity::class.java),
