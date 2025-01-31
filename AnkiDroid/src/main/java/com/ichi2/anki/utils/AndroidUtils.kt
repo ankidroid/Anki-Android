@@ -14,11 +14,14 @@
 
 package com.ichi2.anki.utils
 
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.PowerManager
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
@@ -115,3 +118,21 @@ fun Fragment.openUrl(uri: Uri) {
 fun Fragment.openUrl(
     @StringRes stringRes: Int,
 ) = openUrl(requireContext().getString(stringRes).toUri())
+
+/** Hides the soft keyboard from an Activity */
+fun Activity.hideKeyboard() {
+    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    val view = currentFocus ?: View(this)
+    imm.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+/** Hides the soft keyboard from a Fragment */
+fun Fragment.hideKeyboard() {
+    activity?.hideKeyboard()
+}
+
+/** Hides the soft keyboard from a View */
+fun View.hideKeyboard() {
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(windowToken, 0)
+}
