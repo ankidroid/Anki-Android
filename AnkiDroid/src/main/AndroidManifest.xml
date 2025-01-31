@@ -501,12 +501,6 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/download_deck"
             android:theme="@style/Theme.MaterialComponents.NoActionBar" />
-        <activity
-            android:name="com.ichi2.anki.LoginActivity"
-            android:label="@string/menu_my_account"
-            android:exported="false"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            />
 
         <activity android:name=".IntroductionActivity"
             android:exported="false"
