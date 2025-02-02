@@ -26,6 +26,8 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
+import anki.config.ConfigKey
+import anki.generic.Bool
 import anki.search.BrowserColumns
 import anki.search.BrowserRow
 import com.ichi2.anki.AnkiDroidApp
@@ -177,6 +179,10 @@ class CardBrowserViewModel(
         MutableStateFlow(sharedPrefs().getBoolean("isTruncated", false))
     val isTruncated get() = flowOfIsTruncated.value
 
+    var shouldIgnoreAccents: Boolean = false
+
+    var defaultBrowserSearch: String? = null
+
     private val _selectedRows: MutableSet<CardOrNoteId> = Collections.synchronizedSet(LinkedHashSet())
 
     // immutable accessor for _selectedRows
@@ -205,6 +211,18 @@ class CardBrowserViewModel(
 
     val lastDeckId: DeckId?
         get() = lastDeckIdRepository.lastDeckId
+
+    private fun getIgnoreAccent() =
+        viewModelScope.launch {
+            Timber.d("Viewmodel accent value:: ${withCol { config.getBool(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH) }}")
+            shouldIgnoreAccents = withCol { config.getBool(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH) }
+        }
+
+    private fun getDefaultSearchText() =
+        viewModelScope.launch {
+            val defaultText = withCol { config.getString(ConfigKey.String.DEFAULT_SEARCH_TEXT) }
+            defaultBrowserSearch = defaultText
+        }
 
     suspend fun setDeckId(deckId: DeckId) {
         Timber.i("setting deck: %d", deckId)
@@ -288,6 +306,9 @@ class CardBrowserViewModel(
     init {
         Timber.d("CardBrowserViewModel::init")
 
+        getIgnoreAccent()
+        getDefaultSearchText()
+
         var selectAllDecks = false
         when (options) {
             is CardBrowserLaunchOptions.SystemContextMenu -> {
@@ -300,7 +321,8 @@ class CardBrowserViewModel(
             is CardBrowserLaunchOptions.DeepLink -> {
                 searchTerms = options.search
             }
-            null -> {}
+            null -> {
+            }
         }
 
         performSearchFlow
@@ -451,6 +473,24 @@ class CardBrowserViewModel(
         }
         sharedPrefs().edit {
             putBoolean("isTruncated", value)
+        }
+    }
+
+    fun setIgnoreAccents(value: Boolean) {
+        Timber.d("Setting ignore accent in search to: $value")
+        viewModelScope.launch {
+            withCol { config.setBool(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH, value) }
+            shouldIgnoreAccents = value
+        }
+    }
+
+    fun setDefaultSearchText(text: String) {
+        Timber.d("Setting default search text to: $text")
+        viewModelScope.launch {
+            defaultBrowserSearch = text
+            withCol {
+                config.setString(ConfigKey.String.DEFAULT_SEARCH_TEXT, text)
+            }
         }
     }
 

@@ -97,4 +97,5 @@
     <string name="user_potential_columns">Available</string>
     <string name="include_column">Include column</string>
     <string name="exclude_column">Exclude column</string>
+    <string name="pref_cat_browsing">Browsing</string>
 </resources>

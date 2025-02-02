@@ -24,6 +24,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app1="urn:oasis:names:tc:xliff:document:1.2"
     android:title="@string/pref_cat_general"
     android:key="@string/pref_general_screen_key">
         <ListPreference
