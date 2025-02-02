@@ -47,6 +47,7 @@ import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
+import com.ichi2.anki.utils.ext.normalizeForSearch
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
@@ -85,9 +86,7 @@ import java.io.DataOutputStream
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
-import java.text.Normalizer
 import java.util.Collections
-import java.util.regex.Pattern
 import kotlin.math.max
 import kotlin.math.min
 
@@ -962,11 +961,6 @@ class CardBrowserViewModel(
     }
 
     private suspend fun shouldIgnoreAccents() = withCol { config.getBool(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH) }
-
-    private fun String.normalizeForSearch(): String {
-        val normalized = Normalizer.normalize(this, Normalizer.Form.NFD)
-        return Pattern.compile("\\p{InCombiningDiacriticalMarks}+").matcher(normalized).replaceAll("")
-    }
 
     /**
      * @see com.ichi2.anki.searchForRows
