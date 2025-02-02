@@ -27,7 +27,6 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import anki.config.ConfigKey
-import anki.generic.Bool
 import anki.search.BrowserColumns
 import anki.search.BrowserRow
 import com.ichi2.anki.AnkiDroidApp
@@ -86,7 +85,9 @@ import java.io.DataOutputStream
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.text.Normalizer
 import java.util.Collections
+import java.util.regex.Pattern
 import kotlin.math.max
 import kotlin.math.min
 
@@ -321,7 +322,21 @@ class CardBrowserViewModel(
             is CardBrowserLaunchOptions.DeepLink -> {
                 searchTerms = options.search
             }
-            null -> {
+            null -> {}
+        }
+
+        viewModelScope.launch {
+            // Ensure intent-based search takes priority
+            if (searchTerms.isEmpty()) {
+                val searchText: String =
+                    withCol {
+                        config.getString(ConfigKey.String.DEFAULT_SEARCH_TEXT)
+                    }
+
+                Timber.d("Default search term text: $searchText")
+                if (searchText.isNotEmpty()) {
+                    searchTerms = searchText
+                }
             }
         }
 
@@ -935,8 +950,22 @@ class CardBrowserViewModel(
             Timber.d("skipping duplicate search: forceRefresh is false")
             return
         }
-        searchTerms = searchQuery
-        launchSearchForCards()
+        viewModelScope.launch {
+            searchTerms =
+                if (shouldIgnoreAccents()) {
+                    searchQuery.normalizeForSearch()
+                } else {
+                    searchQuery
+                }
+            launchSearchForCards()
+        }
+    }
+
+    private suspend fun shouldIgnoreAccents() = withCol { config.getBool(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH) }
+
+    private fun String.normalizeForSearch(): String {
+        val normalized = Normalizer.normalize(this, Normalizer.Form.NFD)
+        return Pattern.compile("\\p{InCombiningDiacriticalMarks}+").matcher(normalized).replaceAll("")
     }
 
     /**

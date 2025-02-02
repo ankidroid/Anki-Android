@@ -382,6 +382,7 @@ open class CardBrowser :
         )
 
         val launchOptions = intent?.toCardBrowserLaunchOptions() // must be called after super.onCreate()
+
         // must be called once we have an accessible collection
         viewModel = createViewModel(launchOptions)
 
