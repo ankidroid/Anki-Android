@@ -14,6 +14,7 @@
 
 package com.ichi2.anki.utils
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -28,6 +29,7 @@ import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.copyToClipboard
+import timber.log.Timber
 
 /**
  * Acquire a wake lock and release it after running [block].
@@ -73,7 +75,16 @@ fun Context.openUrl(uri: Uri) {
         }
         return
     }
-    startActivity(Intent(Intent.ACTION_VIEW, uri))
+    try {
+        startActivity(Intent(Intent.ACTION_VIEW, uri))
+    } catch (ex: Exception) {
+        Timber.w("No app found to handle opening an external url from ${this::class.java.name}")
+        if (this is FragmentActivity) {
+            showSnackbar(R.string.activity_start_failed)
+        } else {
+            showThemedToast(this, R.string.activity_start_failed, false)
+        }
+    }
 }
 
 // necessary for Fragments that are BaseSnackbarBuilderProvider to work correctly
@@ -82,7 +93,12 @@ fun Fragment.openUrl(uri: Uri) {
         showSnackbar(getString(R.string.no_browser_msg, uri.toString()))
         return
     }
-    startActivity(Intent(Intent.ACTION_VIEW, uri))
+    try {
+        startActivity(Intent(Intent.ACTION_VIEW, uri))
+    } catch (ex: ActivityNotFoundException) {
+        Timber.w("No app found to handle opening an external url from ${Fragment::class.java.name}")
+        showSnackbar(R.string.activity_start_failed)
+    }
 }
 
 fun Fragment.openUrl(
