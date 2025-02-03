@@ -15,6 +15,7 @@
 package com.ichi2.compat.customtabs
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.net.Uri
 import android.os.Bundle
 import androidx.annotation.CheckResult
@@ -23,6 +24,8 @@ import androidx.browser.customtabs.CustomTabsClient
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsServiceConnection
 import androidx.browser.customtabs.CustomTabsSession
+import com.ichi2.anki.R
+import com.ichi2.anki.snackbar.showSnackbar
 import timber.log.Timber
 
 /**
@@ -171,7 +174,12 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
                 }
             } else {
                 customTabsIntent.intent.setPackage(packageName)
-                customTabsIntent.launchUrl(activity, uri)
+                try {
+                    customTabsIntent.launchUrl(activity, uri)
+                } catch (ex: ActivityNotFoundException) {
+                    Timber.w("No app found to handle opening an external url from CustomTabsActivityHelper")
+                    activity.showSnackbar(R.string.activity_start_failed)
+                }
             }
         }
 
