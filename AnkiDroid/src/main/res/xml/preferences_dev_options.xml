@@ -89,6 +89,10 @@
             android:key="@string/new_reviewer_options_key"
             android:dependency="@string/new_reviewer_pref_key"
             android:fragment="com.ichi2.anki.preferences.ReviewerOptionsFragment"/>
-
+        <!-- TODO ===== EXTRACT RELATED STRINGS FOR TRANSLATION BEFORE RELEASE ===== -->
+        <SwitchPreferenceCompat
+            android:title="Show addons screen"
+            android:key="@string/new_addons_screen_pref_key"
+            android:defaultValue="false"/>
     </com.ichi2.anki.preferences.ExtendedPreferenceCategory>
 </PreferenceScreen>
