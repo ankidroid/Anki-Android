@@ -59,6 +59,7 @@ import com.ichi2.anki.model.SortType.SORT_FIELD
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.setFlagFilterSync
 import com.ichi2.anki.utils.ext.ifNotZero
+import com.ichi2.anki.utils.ext.normalizeForSearch
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Note
@@ -81,8 +82,11 @@ import org.hamcrest.Matchers.hasSize
 import org.hamcrest.Matchers.lessThan
 import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.nullValue
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.jupiter.api.assertInstanceOf
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.runner.RunWith
 import timber.log.Timber
 import java.io.File
@@ -551,6 +555,21 @@ class CardBrowserViewModelTest : JvmTest() {
                 assertAllSuspended("none suspended: suspend all")
             }
         }
+
+    @ParameterizedTest
+    @CsvSource(
+        "café Ábaco naïve résumé, cafe Abaco naive resume",
+        "élégant déjà vu, elegant deja vu",
+        "hello world, hello world",
+        "'', ''",
+        "1234!@# café, 1234!@# cafe",
+    )
+    fun `test normalizeForSearch`(
+        input: String,
+        expected: String,
+    ) {
+        assertEquals(expected, input.normalizeForSearch())
+    }
 
     @Test
     fun `suspend - notes - no selection`() =

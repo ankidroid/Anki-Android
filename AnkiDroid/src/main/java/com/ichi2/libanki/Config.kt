@@ -20,7 +20,6 @@ import anki.config.ConfigKey
 import com.google.protobuf.kotlin.toByteStringUtf8
 import com.ichi2.libanki.utils.NotInLibAnki
 import kotlinx.serialization.SerializationException
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
@@ -64,6 +63,15 @@ class Config(
         value: Boolean,
     ) {
         backend.setConfigBool(key, value, false)
+    }
+
+    fun getString(key: ConfigKey.String): String = backend.getConfigString(key)
+
+    fun setString(
+        key: ConfigKey.String,
+        value: String,
+    ) {
+        backend.setConfigString(key, value, false)
     }
 
     @NotInLibAnki

@@ -26,6 +26,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
+import anki.config.ConfigKey
 import anki.search.BrowserColumns
 import anki.search.BrowserRow
 import com.ichi2.anki.AnkiDroidApp
@@ -46,6 +47,7 @@ import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
+import com.ichi2.anki.utils.ext.normalizeForSearch
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
@@ -177,6 +179,10 @@ class CardBrowserViewModel(
         MutableStateFlow(sharedPrefs().getBoolean("isTruncated", false))
     val isTruncated get() = flowOfIsTruncated.value
 
+    var shouldIgnoreAccents: Boolean = false
+
+    var defaultBrowserSearch: String? = null
+
     private val _selectedRows: MutableSet<CardOrNoteId> = Collections.synchronizedSet(LinkedHashSet())
 
     // immutable accessor for _selectedRows
@@ -205,6 +211,18 @@ class CardBrowserViewModel(
 
     val lastDeckId: DeckId?
         get() = lastDeckIdRepository.lastDeckId
+
+    private fun getIgnoreAccent() =
+        viewModelScope.launch {
+            Timber.d("Viewmodel accent value:: ${withCol { config.getBool(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH) }}")
+            shouldIgnoreAccents = withCol { config.getBool(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH) }
+        }
+
+    private fun getDefaultSearchText() =
+        viewModelScope.launch {
+            val defaultText = withCol { config.getString(ConfigKey.String.DEFAULT_SEARCH_TEXT) }
+            defaultBrowserSearch = defaultText
+        }
 
     suspend fun setDeckId(deckId: DeckId) {
         Timber.i("setting deck: %d", deckId)
@@ -288,6 +306,9 @@ class CardBrowserViewModel(
     init {
         Timber.d("CardBrowserViewModel::init")
 
+        getIgnoreAccent()
+        getDefaultSearchText()
+
         var selectAllDecks = false
         when (options) {
             is CardBrowserLaunchOptions.SystemContextMenu -> {
@@ -301,6 +322,21 @@ class CardBrowserViewModel(
                 searchTerms = options.search
             }
             null -> {}
+        }
+
+        viewModelScope.launch {
+            // Ensure intent-based search takes priority
+            if (searchTerms.isEmpty()) {
+                val searchText: String =
+                    withCol {
+                        config.getString(ConfigKey.String.DEFAULT_SEARCH_TEXT)
+                    }
+
+                Timber.d("Default search term text: $searchText")
+                if (searchText.isNotEmpty()) {
+                    searchTerms = searchText
+                }
+            }
         }
 
         performSearchFlow
@@ -451,6 +487,24 @@ class CardBrowserViewModel(
         }
         sharedPrefs().edit {
             putBoolean("isTruncated", value)
+        }
+    }
+
+    fun setIgnoreAccents(value: Boolean) {
+        Timber.d("Setting ignore accent in search to: $value")
+        viewModelScope.launch {
+            withCol { config.setBool(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH, value) }
+            shouldIgnoreAccents = value
+        }
+    }
+
+    fun setDefaultSearchText(text: String) {
+        Timber.d("Setting default search text to: $text")
+        viewModelScope.launch {
+            defaultBrowserSearch = text
+            withCol {
+                config.setString(ConfigKey.String.DEFAULT_SEARCH_TEXT, text)
+            }
         }
     }
 
@@ -895,9 +949,18 @@ class CardBrowserViewModel(
             Timber.d("skipping duplicate search: forceRefresh is false")
             return
         }
-        searchTerms = searchQuery
-        launchSearchForCards()
+        viewModelScope.launch {
+            searchTerms =
+                if (shouldIgnoreAccents()) {
+                    searchQuery.normalizeForSearch()
+                } else {
+                    searchQuery
+                }
+            launchSearchForCards()
+        }
     }
+
+    private suspend fun shouldIgnoreAccents() = withCol { config.getBool(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH) }
 
     /**
      * @see com.ichi2.anki.searchForRows
