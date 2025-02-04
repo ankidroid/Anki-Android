@@ -30,6 +30,7 @@ import android.view.SubMenu
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.BaseAdapter
 import android.widget.Spinner
 import android.widget.TextView
@@ -42,6 +43,8 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.ThemeUtils
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -174,7 +177,6 @@ open class CardBrowser :
     private var mySearchesItem: MenuItem? = null
     private var previewItem: MenuItem? = null
     private var undoSnackbar: Snackbar? = null
-
     private lateinit var exportingDelegate: ActivityExportingDelegate
 
     // card that was clicked (not marked)
@@ -575,6 +577,19 @@ open class CardBrowser :
         viewModel.flowOfColumnHeadings.launchCollectionInLifecycleScope(::onColumnNamesChanged)
     }
 
+    fun isKeyboardVisible(view: View?): Boolean =
+        view?.let {
+            ViewCompat.getRootWindowInsets(it)?.isVisible(WindowInsetsCompat.Type.ime())
+        } ?: false
+
+    private fun hideKeyboard() {
+        Timber.d("hideKeyboard()")
+        searchView?.let { view ->
+            val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            imm?.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
+
     // Finish initializing the activity after the collection has been correctly loaded
     override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
@@ -892,6 +907,13 @@ open class CardBrowser :
                     }
 
                     override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+                        if (item.actionView == searchView) {
+                            if (isKeyboardVisible(searchView)) {
+                                Timber.d("keyboard is visible, hiding it")
+                                hideKeyboard()
+                                return false
+                            }
+                        }
                         viewModel.setSearchQueryExpanded(false)
                         // SearchView doesn't support empty queries so we always reset the search when collapsing
                         searchView!!.setQuery("", false)
