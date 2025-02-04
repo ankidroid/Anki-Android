@@ -22,6 +22,8 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.Menu
@@ -174,7 +176,7 @@ open class CardBrowser :
     private var mySearchesItem: MenuItem? = null
     private var previewItem: MenuItem? = null
     private var undoSnackbar: Snackbar? = null
-
+    private var isCardBrowserReloaded: Boolean = false
     private lateinit var exportingDelegate: ActivityExportingDelegate
 
     // card that was clicked (not marked)
@@ -468,6 +470,13 @@ open class CardBrowser :
             Timber.d("query expansion changed: %b", searchQueryExpanded)
             if (searchQueryExpanded) {
                 searchItem?.expandActionView()
+                if (isCardBrowserReloaded) {
+                    // clear focus after the search view is expanded, so that the keyboard doesn't pop up
+                    Handler(Looper.getMainLooper()).post {
+                        searchView?.clearFocus()
+                    }
+                    isCardBrowserReloaded = false
+                }
             } else {
                 searchItem?.collapseActionView()
                 // invalidate options menu so that disappeared icons would appear again
@@ -815,6 +824,7 @@ open class CardBrowser :
         onEditCardActivityResult.launch(intent)
         // #6432 - FIXME - onCreateOptionsMenu crashes if receiving an activity result from edit card when in multiselect
         viewModel.endMultiSelectMode()
+        isCardBrowserReloaded = true
     }
 
     /**
