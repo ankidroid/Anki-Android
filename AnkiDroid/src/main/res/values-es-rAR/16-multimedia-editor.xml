@@ -59,7 +59,7 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Algo salió mal</string>
-    <string name="multimedia_editor_png_paste_error">Error al convertir la imagen del portapapeles a png: %s</string>
+    <string name="multimedia_editor_png_paste_error">Error al convertir la imagen del portapapeles a PNG: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Agregar contenido multimedia al campo %1$s</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
@@ -69,8 +69,8 @@
     <!-- Crop function-->
     <string name="crop_image">¿Quieres recortar esta imagen?</string>
     <string name="crop_button" maxLength="28">Recortar imagen</string>
-    <string name="save_dialog_content">El tamaño actual de la imagen es %sMB. El límite de tamaño de imagen por defecto es 1MB. ¿Deseas comprimirla?</string>
-    <string name="select_image_failed">"Error al seleccionar la imagen. Vuelve a intentarlo"</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Contenidos del campo</string>
+    <string name="save_dialog_content">El tamaño actual de la imagen es %sMB. El límite de tamaño de imagen por defecto es 1MB. ¿Querés comprimirla?</string>
+    <string name="select_image_failed">"Error al seleccionar la imagen. Intentalo de nuevo"</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Contenidos de Campo</string>
     <string name="reselect" maxLength="28">Seleccionar de nuevo</string>
 </resources>

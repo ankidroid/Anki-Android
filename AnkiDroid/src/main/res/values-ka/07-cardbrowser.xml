@@ -73,8 +73,8 @@
     <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">„%1$s“ წაიშალოს?</string>
     <string name="card_browser_change_display_order" maxLength="28">ჩვენების თანმიმდევრობის შეცვლა</string>
-    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">ძებნა</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">ძებნა</string>
     <string name="card_browser_change_display_order_title">ჩვენების თანმიმდევრობის არჩევა</string>
     <string name="card_details_tags">იარლიყები</string>
     <string-array name="card_browser_order_labels">
@@ -112,10 +112,10 @@
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
     <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
     <!-- Manage columns dialog -->
-    <string name="browse_manage_columns_main_heading">Columns</string>
-    <string name="browse_manage_columns">Manage columns</string>
-    <string name="user_active_columns">Active</string>
-    <string name="user_potential_columns">Available</string>
-    <string name="include_column">Include column</string>
-    <string name="exclude_column">Exclude column</string>
+    <string name="browse_manage_columns_main_heading">სვეტები</string>
+    <string name="browse_manage_columns">სვეტების მართვა</string>
+    <string name="user_active_columns">აქტიური</string>
+    <string name="user_potential_columns">ხელმისაწვდომი</string>
+    <string name="include_column">სვეტის გამოყენება</string>
+    <string name="exclude_column">სვეტის არგამოყენება</string>
 </resources>

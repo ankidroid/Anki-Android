@@ -61,12 +61,12 @@
         <item quantity="other">%d minuuttia jäljellä</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d tunti %2$d jäljellä</item>
+        <item quantity="other">%1$d tuntia %2$d jäljellä</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">%1$d päivä %2$d tunti(a) jäljellä</item>
+        <item quantity="other">%1$d päivää %2$d tunti(a) jäljellä</item>
     </plurals>
     <string name="no_cards_placeholder_title">Kokoelma on tyhjä</string>
     <string name="no_cards_placeholder_description">Aloita korttien lisääminen\nkäyttäen + kuvaketta</string>
@@ -88,7 +88,7 @@
     <string name="rename_deck" maxLength="28">Nimeä pakka uudelleen</string>
     <string name="create_shortcut">Luo pikakuvake</string>
     <string name="browse_cards">Selaa kortteja</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">Muuta kuvausta</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">Lisää</string>
     <string name="menu_add_note" maxLength="28">Lisää merkintä</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synkronoi tili</string>
@@ -101,15 +101,15 @@
     <string name="menu_suspend" maxLength="28">Keskeytä</string>
     <string name="menu_delete_note" maxLength="28">Poista merkintä</string>
     <string name="menu_flag" maxLength="41">Lippu</string>
-    <string name="rename_flag">Rename flags</string>
+    <string name="rename_flag">Nimeä liput uudelleen</string>
     <string name="menu_flag_card" maxLength="28">Lisää lippu</string>
     <string name="menu_edit_tags" maxLength="28">Muokkaa tageja</string>
     <string name="delete_note_message">Haluatko varmasti poistaa tämän merkinnän ja kaikki sen kortit?\n%s</string>
     <string name="menu_search" maxLength="28">Haku %1$s</string>
     <string name="menu_mark_note" maxLength="28">Merkitse merkintä</string>
     <string name="menu_unmark_note">Poista merkintä</string>
-    <string name="menu_enable_voice_playback" maxLength="28">Enable voice playback</string>
-    <string name="menu_disable_voice_playback">Disable voice playback</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Ota äänten toisto käyttöön</string>
+    <string name="menu_disable_voice_playback">Poista äänten toisto käytöstä</string>
     <string name="new_deck">Uusi pakka</string>
     <string name="new_dynamic_deck">Uusi suodatettu pakka</string>
     <string name="directory_inaccessible">AnkiDroidin hakemisto ei ole käytettävissä</string>
@@ -129,8 +129,8 @@
     <string name="empty_deck">Tämä pakka on tyhjä</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Hae pakkaa</string>
     <string name="invalid_deck_name">Virheellinen pakan nimi</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
+    <string name="studyoptions_congrats_finished">Onnittelut! Homma hoidettu tämän päivän osalta.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Pakka on nyt valmis! %s</string>
     <string name="studyoptions_no_cards_due">Kortteja ei tarvitse vielä kerrata</string>
     <string name="sd_card_not_mounted">Laitteen tallennustilaa ei ole kiinnitetty</string>
     <string name="button_sync" comment="Text of the sync button" maxLength="28">Synkronoi</string>
@@ -138,9 +138,9 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Jatka synkronointia</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synkronointi peruutettu</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Peruutetaan&#8230;\nTämä voi kestää jonkin aikaa.</string>
-    <string name="syncing_media">Syncing media</string>
+    <string name="syncing_media">Synkronoidaan mediaa</string>
     <string name="export_deck" maxLength="28">Vie pakka</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_collection">Vie kokoelma</string>
     <string name="nothing">Ei mitään</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Korttityyppi</string>
@@ -184,7 +184,7 @@
     <string name="error__etc__cannot_write_to_or_create_file">Tiedostoon %s kirjoittaminen tai sen luominen epäonnistui</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Kokoelma ei ole saavutettavissa</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Emme pääse käsiksi kokoelmiisi sen jälkeen, kun AnkiDroid on poistettu Play Storen käytäntöjen muutoksen vuoksi\n\nTietosi ovat turvassa ja ne voidaan palauttaa. Ne sijaitsevat polussa\n%s\n\n\nPalauta valitsemalla alla olevista vaihtoehdoista:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android on poistanut AnkiDroidin %1$s -käyttöoikeuden koska sovellusta ei ole käytetty.\n\nTietosi ovat turvassa ja ne voidaan palauttaa. Sijainti:\n%2$s\n\nValitse vaihtoehto alla palauttaaksesi:</string>
     <string name="restore_data_from_ankiweb">Palauta AnkiWebistä (suositellaan)</string>
     <string name="install_non_play_store_ankidroid_recommended">Palauta kansion käyttöoikeus (suositellaan)</string>
     <string name="install_non_play_store_ankidroid">Palauta kansion käyttöoikeus (edistyneille käyttäjille)</string>
@@ -196,8 +196,8 @@
     <string name="storage_access_title">Tallennustilan käyttöoikeus</string>
     <string name="storage_access_summary">Tallentaa kokoelmasi turvalliseen paikkaan, jota ei poisteta, jos sovellus poistetaan.</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Pääsy kaikkiin tiedostoihin</string>
-    <string name="image_occlusion">Image Occlusion</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="image_occlusion">Kuvien peitto</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Poista tili</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Pikakortti</string>
 </resources>

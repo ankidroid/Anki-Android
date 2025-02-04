@@ -84,11 +84,11 @@
     <!-- Custom study options -->
     <string name="custom_study_limit_tags">კონკრეტულ იარლიყებზე შეზღუდვა</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="one">+%d დღეისათვის დამალულია</item>
+        <item quantity="other">+%d დღეისათვის დამალულია</item>
     </plurals>
-    <string name="studyoptions_total_new_label">Total new cards</string>
-    <string name="studyoptions_total_label">Total cards</string>
+    <string name="studyoptions_total_new_label">ახალი ბარათები ჯამში</string>
+    <string name="studyoptions_total_label">ბარათები ჯამში</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">შენიშვნის რედაქტირება</string>
     <string name="discard">წაშლა</string>
@@ -131,7 +131,7 @@
     <string name="delete_deck">იშლება დასტა&#8230;</string>
     <string name="info_rate">შეაფასეთ AnkiDroid</string>
     <string name="import_title">იმპორტირება</string>
-    <string name="import_preparing_file">Preparing file for import&#8230;</string>
+    <string name="import_preparing_file">ფაილის მომზადება იმპორტისთვის&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">დამატება</string>
     <string name="import_message_replace_confirm">არსებული კოლექცია წაიშლება და ჩანაცვლდება არჩეული ფაილის მონაცემებით %s</string>
     <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
@@ -302,7 +302,7 @@
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">შენიშვნები</string>
     <string name="toggle_cards_notes">ბარათების/შენიშვნების ნახვა/დამალვა</string>
     <string name="truncate_content_help">ბარათების საძიებოს თითო მწკრივის სიმაღლის ისე დამოკლება, რომ მხოლოდ შიგთავსის პირველი 3 სტრიქონი აჩვენოს</string>
-    <string name="browser_options_dialog_heading">Browser options</string>
+    <string name="browser_options_dialog_heading">ბარათების საძიებოს პარამეტრები</string>
     <string name="audio_saved">ჩანაწერი შენახულია</string>
     <string name="deleting_selected_notes">მონიშნული შენიშვნების წაშლა</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        მოსასმენად შეეხეთ ხმას
@@ -337,17 +337,17 @@
     <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
     <!--Keyboard shortcuts dialog-->
     <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">დასტის ამრჩეველი</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
-    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
-    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
-    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
-    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
-    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">შენიშვნების რედაქტორი</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">დასტის არჩევა</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">შენიშვნის ტიპის არჩევა</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">იარლიყების რედაქტორი</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">ბარათის შაბლონის რედაქტორი</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">წინა მხარის შაბლონის რედაქტირება</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">უკანა მხარის შაბლონის რედაქტირება</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">სტილის რედაქტირება</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">შაბლონის კოპირება markdown-ად</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
     <string name="show_shortcuts_message">Press Alt+K to show keyboard shortcuts</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>

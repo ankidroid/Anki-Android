@@ -64,22 +64,22 @@
     <string name="log_out">Kirjaudu ulos</string>
     <string name="reset_password">Nollaa salasanasi</string>
     <string name="lost_mail_instructions">Unohditko sähköpostiosoitteesi?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="sign_in">Kirjaudutaan</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Kohteen XXX asetukset</string>
     <string name="sync_title">Synkronointi</string>
     <string name="sync_log_uploading_message">Täysi synkronointi tästä laitteesta</string>
     <string name="sync_database_acknowledge">Kokoelma synkronoitu</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
+    <string name="col_synced_media_in_background">Kokoelma synkronoitu. Mediaa synkronoidaan taustalla.</string>
     <string name="sync_corrupt_database">Tietokanta on vioittunut. Korjaa se, ennen kuin yrität synkronoida uudelleen.\n\nKatso %s saadaksesi lisätietoja tietokannan korjaamisesta.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Paikallinen</string>
     <string name="sync_sanity_remote">Etä</string>
-    <string name="one_way_sync_title" maxLength="41">One-way sync</string>
-    <string name="one_way_sync_confirmation">One way sync requested</string>
+    <string name="one_way_sync_title" maxLength="41">Yksisuuntainen synkronointi</string>
+    <string name="one_way_sync_confirmation">Yksisuuntaista synkronointia pyydetty</string>
     <string name="full_sync_confirmation">Pyytämäsi muutos vaatii tietokannan täyden lähetyksen AnkiWebiin kun synkronoit kokoelmasi seuraavan kerran. Jos sinulla on kertauksia tai muita muutoksia odottamassa toisessa laitteessa, jota ei ole vielä synkronoitu tänne, nämä synkronoimattomat tiedot katoavat. Haluatko jatkaa?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroidin edellisessä versiossa olleen bugin takia, täydellinen syknronointi on suositeltavaa.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
+    <string name="sync_menu_title_one_way_sync">Synkronoi (yksisuuntaisesti)</string>
     <string name="sync_menu_title_no_account">Synkronointi (vaatii kirjautumisen)</string>
 </resources>

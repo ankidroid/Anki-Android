@@ -312,7 +312,7 @@
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Записи</string>
     <string name="toggle_cards_notes">Карточки — записи</string>
     <string name="truncate_content_help">Показывать в списке только первые 3 строки</string>
-    <string name="browser_options_dialog_heading">Browser options</string>
+    <string name="browser_options_dialog_heading">Параметры списка карточек</string>
     <string name="audio_saved">Запись сохранена </string>
     <string name="deleting_selected_notes">Выбранные записи удаляются</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Нажмите на голосе, чтобы послушать
@@ -345,16 +345,16 @@
     <string name="voice_not_supported">Этот голос не поддерживается. Попробуйте другой или установите голосовой движок.</string>
     <!--Keyboard shortcuts dialog-->
     <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Показать диалог сочетаний клавиш</string>
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Выборщик колоды</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Выбор колоды</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Удалить колоду без подтверждения</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Редактор заметок</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Редактор записей</string>
     <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Выбрать колоду</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Выбрать тип записи</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Редактор меток</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Редактор шаблонов карточек</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Изменить шаблон лицевой стороны</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Изменить шаблон оборота</string>
-    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Редактировать стилизирование</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Править стиль</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Копировать шаблон как markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Изменить вид браузера</string>
     <string name="show_shortcuts_message">Нажмите Alt+K, чтобы показать сочетания клавиш</string>

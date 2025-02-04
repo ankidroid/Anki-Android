@@ -47,10 +47,10 @@
     <!-- generic strings -->
     <string name="disabled">Deshabilitado</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="one">%d min</item>
-        <item quantity="other">%d mins</item>
+        <item quantity="one">%d minuto</item>
+        <item quantity="other">%d minutos</item>
     </plurals>
-    <string name="pref_milliseconds">%s ms</string>
+    <string name="pref_milliseconds">%s milisegundos</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">Sin resultados</string>
     <!-- preferences.xml categories-->
@@ -58,7 +58,7 @@
     <string name="pref_cat_studying" maxLength="41">Estudiando</string>
     <string name="pref_cat_system_wide" maxLength="41">Todo el sistema</string>
     <string name="pref_cat_reviewing" maxLength="41">Repasando</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sincronización</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sincronizar</string>
     <string name="pref_cat_scheduling" maxLength="41">Programación</string>
     <string name="pref_cat_whiteboard" maxLength="41">Pizarra</string>
     <string name="pref_cat_appearance" maxLength="41">Apariencia</string>
@@ -98,7 +98,7 @@
     <string name="gestures_corner_touch" maxLength="41">Toque de 9 puntos</string>
     <string name="gestures_corner_touch_summary">Permitir gestos táctiles en las esquinas de pantalla</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Panel de navegación a pantalla completa</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">Abrir el cajón de navegación cuando se desliza a la derecha desde cualquier lugar de la pantalla</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Abrir el panel de navegación cuando se desliza a la derecha desde cualquier lugar de la pantalla</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">Ninguno</string>
     <string name="gestures_swipe_up" maxLength="41">Deslizar hacia arriba</string>
     <string name="gestures_swipe_down" maxLength="41">Deslizar hacia abajo</string>
@@ -115,9 +115,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Tocar el centro</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Tocar abajo a la izquierda</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Tocar abajo a la derecha</string>
-    <string name="gestures_shake" maxLength="41">Agitar el dispositivo</string>
-    <string name="card_browser_enable_external_context_menu">Menú ‘%s’</string>
-    <string name="card_browser_enable_external_context_menu_summary">Habilita globalmente el menú contextual ‘%s</string>
+    <string name="gestures_shake" maxLength="41">Sacudir dispositivo</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menú </string>
+    <string name="card_browser_enable_external_context_menu_summary">Habilitar globalmente el menú contextual ‘%s</string>
     <string name="double_scrolling_gap" maxLength="41">Doble desplazamiento</string>
     <string name="double_scrolling_gap_summ">Doblar la distancia de desplazamiento con e-Reader</string>
     <string name="swipe_sensitivity" maxLength="41">Sensibilidad de deslizado</string>
@@ -137,7 +137,7 @@
     <string name="metered_sync_title" maxLength="41">Permitir sincronización en conexiones medidas</string>
     <string name="metered_sync_summary">Si está deshabilitado, serás avisado si intentas sincronizar con una conexión medida</string>
     <string name="backup_limits_frequency">Frecuencia</string>
-    <string name="backup_limits_lifetime">Tiempo de vida</string>
+    <string name="backup_limits_lifetime">Duración</string>
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Tema del día</string>
     <string name="night_theme" maxLength="41">Tema nocturno</string>
@@ -151,7 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrar</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Luz parpadeante</string>
     <string name="select_locale_title">Seleccionar idioma</string>
-    <string name="software_render" maxLength="41">Deshabilitar el procesamiento de hardware de la tarjeta</string>
+    <string name="software_render" maxLength="41">Desactivar el hardware de la tarjeta</string>
     <string name="software_render_summ">El procesamiento de hardware es más rápido, pero puede tener problemas, específicamente en Android 8/8.1. Si no puede ver partes de la interfaz de usuario de la tarjeta, prueba esta opción.</string>
     <string name="safe_display" maxLength="41">Modo de visualización segura</string>
     <string name="safe_display_summ">Desactiva todas las animaciones y utiliza un método más seguro para presentar las tarjetas. Los dspositivos de tinta electrónica (e-ink) podrían requerir esta opción.</string>
@@ -160,10 +160,10 @@
     <string name="disable_extended_text_ui_summ">Permite el menú contextual \'huecos\' cuando está en modo horizontal.</string>
     <string name="vertical_centering" maxLength="41">Alinear al centro</string>
     <string name="vertical_centering_summ">Centra verticalmente el contenido de las tarjetas</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Intervalo de tiempo de doble toque (ms)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Intervalo de tiempo de doble toque (milisegundos)</string>
     <string name="pref_double_tap_time_interval_summary">Un segundo toque de los botones de respuesta será ignorado si este tiempo no ha transcurrido. Esto previene doble toque accidental.</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Tiempo de pulsación larga para mostrar respuesta</string>
-    <string name="pref_show_answer_long_press_time_summary">Tiempo mínimo de pulsación antes de que el botón Mostrar Respuesta registre un toque.</string>
+    <string name="pref_show_answer_long_press_time_summary">Tiempo mínimo de presión antes de que el botón mostrar respuesta registre un toque.</string>
     <string name="show_estimates" maxLength="41">Mostar el botón tiempo</string>
     <string name="show_estimates_summ">Mostrar el tiempo para el próximo repaso encima de los botones de respuesta</string>
     <string name="show_large_answer_buttons" maxLength="41">Mostrar botones de respuestas grandes</string>
@@ -172,14 +172,14 @@
     <string name="show_top_bar_summary">Mostrar recuento de cartas, temporizador de respuesta, bandera y marca en la barra superior</string>
     <string name="show_progress" maxLength="41">Mostar restantes</string>
     <string name="show_progress_summ">Mostrar contador de tarjetas restantes</string>
-    <string name="show_eta" maxLength="41">Mostrar tiempo restante</string>
+    <string name="show_eta" maxLength="41">Mostrar ETA</string>
     <string name="show_eta_summ">Mostrar tiempo restante</string>
     <string name="use_current" maxLength="41">Mazo para nuevas tarjetas</string>
     <string name="learn_cutoff" maxLength="41">Aprender antes del límite</string>
     <string name="time_limit" maxLength="41">Límite de tiempo para Timebox</string>
-    <string name="day_offset_with_description" maxLength="41">Comienzo del día siguiente (0 es medianoche, 23 es 11PM)</string>
+    <string name="day_offset_with_description" maxLength="41">Comienzo del siguiente día</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d hora después de medianoche</item>
+        <item quantity="one">%d hour past midnight</item>
         <item quantity="other">%d horas después de medianoche</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Mantener la pantalla encendida</string>
@@ -282,7 +282,7 @@
     <string name="card_side_selection_title">Selecciona el lado de la tarjeta</string>
     <string name="card_side_question">Pregunta</string>
     <string name="card_side_answer">Respuesta</string>
-    <string name="card_side_both" maxLength="28">Preguntas y respuestas</string>
+    <string name="card_side_both" maxLength="28">Pregunta &amp; Respuesta</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">P: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">R: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -291,7 +291,7 @@
     <string name="bindings_already_bound">Ya vinculado a %s</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
-    <string name="readtext_deprecation_warn">¡AnkiDroid ha introducido un mecanismo texto a voz mejor que es compatible con otros clientes Anki y que incluye más voces y mejoras de reproducción de idioma!\n\nPor favor actualice lo antes posible, ya que pronto se quitará esta configuración.</string>
+    <string name="readtext_deprecation_warn">¡AnkiDroid ha introducido un mecanismo de texto a voz mejor que es compatible con otros clientes Anki y que incluye más voces y mejoras de reproducción de idioma!\n\nPor favor actualice lo antes posible, ya que pronto se quitará esta configuración.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Por favor actualice al formato de texto a voz nuevo.</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Opciones de desarrollador</string>
@@ -303,9 +303,9 @@
          #################################### Backup options ###################################
          ####################################################################################### -->
     <string name="pref__backups_help__summary"><![CDATA[AnkiDroid crea copias de seguridad de tu colección periódicamente.
-Si las copias tienen más de dos días de edad,
+Si las copias tienen más de dos días de antugüedad,
 AnkiDroid empezará a eliminar algunas de ellas para liberar espacio de almacenamiento.
-<br><br>
+ <br><br>
 Ten en cuenta que los archivos multimedia no son respaldados.
 Para estar seguro, por favor sincroniza tu colección periódicamente o crea copias de seguridad de su exportación.
 <br><br>
@@ -317,12 +317,12 @@ Puedes restaurar una colección desde una copia de seguridad en el menú de la l
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
-    <string name="pref__manage_space__screen_title">Administrar espacio</string>
+    <string name="pref__manage_space__screen_title">Gestionar espacio</string>
     <!-- TextWidgetPreference widget text -->
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Error</string>
     <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlando&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
-        <item quantity="one">%1$d archivo\n%2$s</item>
+        <item quantity="one">%1$d file\n%2$s</item>
         <item quantity="other">%1$d archivos\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
@@ -346,7 +346,7 @@ Puedes restaurar una colección desde una copia de seguridad en el menú de la l
     <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">¿Estás seguro de que quieres eliminar todos los datos? Esto incluye tu colección, archivos multimedia, copias de seguridad y preferencias.\n\nTen en cuenta: esta acción cerrará la ventana.</string>
     <!-- Delete app data -->
     <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Eliminar datos de la aplicación</string>
-    <string name="pref__delete_app_data__summary">Eliminar los ajustos y otros datos de la aplicación</string>
+    <string name="pref__delete_app_data__summary">Eliminar los ajustes y otros datos de la aplicación</string>
     <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Eliminar datos de la aplicación</string>
     <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">¿Estás seguro de que quieres eliminar los datos de la aplicación? Esto incluye tus preferencias y otros datos.\n\nTen en cuenta: esta acción cerrará la ventana.</string>
     <!-- #######################################################################################

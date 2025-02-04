@@ -45,8 +45,8 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">פתיחת מגירה</string>
-    <string name="drawer_close">סגירת מגירה</string>
+    <string name="drawer_open">פתיחת תפריט</string>
+    <string name="drawer_close">סגירת תפריט</string>
     <string name="CardEditorCardDeck">חפיסת כרטיסים:‏</string>
     <string name="CardEditorNoteDeck">חפיסה:‏</string>
     <string name="CardEditorModel">סוג:</string>
@@ -85,9 +85,9 @@
     <string name="custom_study_limit_tags">הגבל לתיוג ספציפי</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d קבור</item>
-        <item quantity="two">+%d buried</item>
-        <item quantity="many">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="two">+%d קבורים</item>
+        <item quantity="many">+%d קבורים</item>
+        <item quantity="other">+%d קבורים</item>
     </plurals>
     <string name="studyoptions_total_new_label">סה\"כ קלפים חדשים</string>
     <string name="studyoptions_total_label">סה\"כ קלפים</string>
@@ -312,7 +312,7 @@
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">פתקים</string>
     <string name="toggle_cards_notes">החלף כרטיסים/פתקים</string>
     <string name="truncate_content_help">חתוך את הגובה של כל שורה בדפדפן כדי להציג רק 3 שורות תוכן ראשונות</string>
-    <string name="browser_options_dialog_heading">Browser options</string>
+    <string name="browser_options_dialog_heading">אפשרויות דפדפן</string>
     <string name="audio_saved">ההקלטה נשמרה</string>
     <string name="deleting_selected_notes">מחיקת הערות שנבחרו</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">הקש על קול כדי להאזין</string>

@@ -94,7 +94,7 @@
     <string name="rename_deck" maxLength="28">Переименовать колоду</string>
     <string name="create_shortcut">Создать ярлык</string>
     <string name="browse_cards">Показать список</string>
-    <string name="edit_deck_description" comment="edit the deck description">Редактировать описание</string>
+    <string name="edit_deck_description" comment="edit the deck description">Изменить описание</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">Добавить</string>
     <string name="menu_add_note" maxLength="28">Добавить запись</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Учётная запись синхронизации</string>
@@ -135,7 +135,7 @@
     <string name="empty_deck">Эта колода пуста</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Поиск колоды</string>
     <string name="invalid_deck_name">Недопустимое название колоды</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
+    <string name="studyoptions_congrats_finished">Ура! На сегодня всё.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Колода закончилась! %s</string>
     <string name="studyoptions_no_cards_due">Нет карточек на сегодня</string>
     <string name="sd_card_not_mounted">Карта памяти не установлена</string>

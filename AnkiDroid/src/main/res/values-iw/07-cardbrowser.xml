@@ -124,10 +124,10 @@
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">תיבת דו-שיח עריכת תגים</string>
     <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">הצג תיבת הזמנה</string>
     <!-- Manage columns dialog -->
-    <string name="browse_manage_columns_main_heading">Columns</string>
-    <string name="browse_manage_columns">Manage columns</string>
-    <string name="user_active_columns">Active</string>
-    <string name="user_potential_columns">Available</string>
-    <string name="include_column">Include column</string>
-    <string name="exclude_column">Exclude column</string>
+    <string name="browse_manage_columns_main_heading">עמודות</string>
+    <string name="browse_manage_columns">ניהול עמודות</string>
+    <string name="user_active_columns">פָּעִיל</string>
+    <string name="user_potential_columns">זמין</string>
+    <string name="include_column">כלול עמודה</string>
+    <string name="exclude_column">אל תכלול עמודה</string>
 </resources>

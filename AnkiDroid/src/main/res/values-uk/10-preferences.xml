@@ -233,7 +233,7 @@
     <string name="media" maxLength="41">Медіафайли</string>
     <string name="misc" maxLength="41">Різне</string>
     <!-- studyoptions -->
-    <string name="studyoptions_limit_select_tags">Оберіть позначки</string>
+    <string name="studyoptions_limit_select_tags">Оберіть теги</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Загальні</string>
     <string name="deck_conf_reminders" maxLength="41">Нагадування</string>
@@ -374,9 +374,9 @@
     <string name="ignore_display_cutout" maxLength="41">Ігнорувати виріз дисплею</string>
     <string name="hide_answer_buttons" maxLength="41">Приховати кнопки відповіді</string>
     <string name="hide_hard_and_easy" maxLength="41">Приховати кнопки \'Важко\' і \'Легко\'</string>
-    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <string name="reviewer_frame_style" maxLength="41">Стиль рамки</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Картка</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Квадратна</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Відкрити налаштування</string>
 </resources>

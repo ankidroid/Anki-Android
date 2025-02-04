@@ -60,18 +60,18 @@
         <item quantity="other">%d minuuttia jäljellä</item>
     </plurals>
     <string name="widget_add_note_button">Lisää uusi AnkiDroid muistiinpano</string>
-    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">Deck Picker</string>
-    <string name="card_analysis_extra_widget_description">Card Analysis</string>
+    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">Pakan valitsija</string>
+    <string name="card_analysis_extra_widget_description">Korttien analyysi</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
-    <string name="select_decks_title" comment="Title for Deck Selection Dialog">Select decks</string>
-    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Select a deck</string>
-    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Select decks to display in the widget. Select decks with the + icon.</string>
-    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Deck removed</string>
-    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">This deck is already selected</string>
+    <string name="select_decks_title" comment="Title for Deck Selection Dialog">Valitse pakat</string>
+    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Valitse pakka</string>
+    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Valitse pakat, jotka näytetään widgetissä. Käytä + kuvaketta valitsemiseen.</string>
+    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Pakka poistettu</string>
+    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">Tämä pakka on jo valittu</string>
     <plurals name="deck_limit_reached">
-        <item quantity="one">You can select up to %d deck.</item>
-        <item quantity="other">You can select up to %d decks.</item>
+        <item quantity="one">Voit valita enintään %d pakan.</item>
+        <item quantity="other">Voit valita enintään %d pakkaa.</item>
     </plurals>
-    <string name="empty_widget_state" comment="To denote the widget is empty">Missing deck. Tap to reconfigure.</string>
-    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Collection is empty, use app to add decks then reconfigure</string>
+    <string name="empty_widget_state" comment="To denote the widget is empty">Pakka puuttuu. Määritä uudelleen painamalla tästä.</string>
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Kokoelma on tyhjä. Käytä sovellusta pakkojen lisäämiseen ja määritä widget sitten uudelleen.</string>
 </resources>

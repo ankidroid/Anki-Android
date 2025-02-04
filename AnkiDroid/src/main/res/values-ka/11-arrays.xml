@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">პასუხი: კარგი</string>
     <string name="answer_easy" maxLength="41">პასუხი: მარტივი</string>
     <string name="gesture_play" maxLength="41">მედიაფაილების დაკვრა</string>
-    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_abort_learning" maxLength="41">გადამხედველის დახურვა</string>
     <string name="gesture_flag_red" maxLength="41">წითელი დროშის მიმაგრება/მოძრობა</string>
     <string name="gesture_flag_orange" maxLength="41">სტაფილოსფერი დროშის მიმაგრება/მოძრობა</string>
     <string name="gesture_flag_green" maxLength="41">მწვანე დროშის მიმაგრება/მოძრობა</string>

@@ -82,7 +82,7 @@
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Пошук</string>
     <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Пошук</string>
     <string name="card_browser_change_display_order_title">Вибрати порядок відображення</string>
-    <string name="card_details_tags">Позначки</string>
+    <string name="card_details_tags">Теги</string>
     <string-array name="card_browser_order_labels">
         <item>Без сортування (швидше)</item>
         <item>За полем сортування </item>
@@ -124,10 +124,10 @@
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Редагувати діалогове вікно тегів</string>
     <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Показати діалогове вікно порядку</string>
     <!-- Manage columns dialog -->
-    <string name="browse_manage_columns_main_heading">Columns</string>
-    <string name="browse_manage_columns">Manage columns</string>
-    <string name="user_active_columns">Active</string>
-    <string name="user_potential_columns">Available</string>
-    <string name="include_column">Include column</string>
-    <string name="exclude_column">Exclude column</string>
+    <string name="browse_manage_columns_main_heading">Стовпці</string>
+    <string name="browse_manage_columns">Налаштувати стовпці</string>
+    <string name="user_active_columns">Активні</string>
+    <string name="user_potential_columns">Доступні</string>
+    <string name="include_column">Включити стовпець</string>
+    <string name="exclude_column">Виключити стовпець</string>
 </resources>

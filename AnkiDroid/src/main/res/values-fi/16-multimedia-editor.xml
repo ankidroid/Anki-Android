@@ -69,8 +69,8 @@
     <!-- Crop function-->
     <string name="crop_image">Haluatko rajata kuvan?</string>
     <string name="crop_button" maxLength="28">Rajaa kuva</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
+    <string name="save_dialog_content">Kuvan nykyinen koko on %s Mt. Kuvan kokorajoitus on oletusarvoisesti 1 Mt. Haluatko käyttää pakkausta kuvan pienentämiseksi?</string>
     <string name="select_image_failed">"Kuvan valitseminen epäonnistui – yritä uudelleen"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Kentän sisältö</string>
-    <string name="reselect" maxLength="28">Reselect</string>
+    <string name="reselect" maxLength="28">Valitse uudelleen</string>
 </resources>

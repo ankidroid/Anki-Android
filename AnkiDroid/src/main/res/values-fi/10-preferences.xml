@@ -162,18 +162,18 @@
     <string name="vertical_centering_summ">Keskitä korttien sisältö pystysuunnassa</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Kaksoisnapautuksen aikaväli (millisekuntia)</string>
     <string name="pref_double_tap_time_interval_summary">Toista vastauspainikkeiden napauttamista ei oteta huomioon, jos näin kauan ei ole kulunut. Tämä estää vahingossa tapahtuvat kaksoisnapautukset</string>
-    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
-    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Näytä vastaus: pitkän painalluksen aika</string>
+    <string name="pref_show_answer_long_press_time_summary">Vähimmäispainallusaika, jonka jälkeen \"Näytä vastaus\" -painike rekisteröi kosketuksen.</string>
     <string name="show_estimates" maxLength="41">Näytä aika painikkeissa</string>
     <string name="show_estimates_summ">Näytä seuraava kertausaika vastauspainikkeissa</string>
     <string name="show_large_answer_buttons" maxLength="41">Näytä suuret vastauspainikkeet</string>
     <string name="show_large_answer_buttons_summ">Näytä vastauspainikkeet kahdella rivillä</string>
     <string name="show_top_bar" maxLength="41">Näytä yläpalkki</string>
-    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
+    <string name="show_top_bar_summary">Näytä korttien lukumäärät, vastausaika, lippu ja merkinnät yläpalkissa.</string>
     <string name="show_progress" maxLength="41">Näytä jäljelläoleva</string>
     <string name="show_progress_summ">Näytä jäljelläolevien korttien määrä</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">Näytä ETA</string>
+    <string name="show_eta_summ">Näytä jäljellä oleva aika</string>
     <string name="use_current" maxLength="41">Pakka uusille korteille</string>
     <string name="learn_cutoff" maxLength="41">Ennalta oppimisen aikaraja</string>
     <string name="time_limit" maxLength="41">Edistymisen näyttämisen aikaväli</string>
@@ -198,7 +198,7 @@
     <string name="thirdparty_apps_summary">Listaa sovellukset jotka käyttävät AnkiDroid API:ta, kuten kansioita ja työkaluja.</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Kertaaminen</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="show_deck_title" maxLength="41">Näytä pakan otsikko</string>
     <string name="accessibility" maxLength="41">Esteettömyys</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Liitä leikepöydän kuvat PNG:nä</string>
@@ -217,7 +217,7 @@
         <a href="%s">Lue lisää</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Synkronointiosoite</string>
-    <string name="custom_sync_certificate_title" maxLength="41">Custom root certificate (PEM)</string>
+    <string name="custom_sync_certificate_title" maxLength="41">Oma root-sertifikaatti (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Näppäimistö</string>
     <string name="bluetooth">Bluetooth</string>
@@ -235,13 +235,13 @@
     <string name="deck_conf_cram_filter" maxLength="41">Suodatin</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Haku</string>
     <string name="deck_conf_cram_limit" maxLength="41">Rajoita</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
+    <string name="deck_conf_cram_order" maxLength="41">Valitse kortit käyttäen sääntöä</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Aikatauluta uudelleen</string>
     <string name="deck_conf_cram_reschedule_summ">Aikatauluta kortit tämän pakan vastausten perusteella</string>
     <string name="deck_conf_cram_filter_2_check">Ota käyttöön toinen suodatin</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Määritä mukautetut oppimisaskeleet</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Esikatselujen viiveet</string>
+    <string name="deck_conf_cram_preview_delays_summ">Viivästykset ovat sekunneissa. 0 palauttaa kortin alkuperäiseen pakkaan.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Auta parantamaan AnkiDroidia!</string>
     <string name="analytics_title" maxLength="41">Jaa tietoja käyttämistäsi ominaisuuksista</string>
@@ -266,18 +266,18 @@
     <string name="key_picker_default_press_key">Paina näppäintä</string>
     <string name="binding_add_axis">Lisää peliohjain tai liikeohjain</string>
     <string name="axis_picker_move_joystick">Liikuta peli- tai liikeohjainta</string>
-    <string name="user_actions" maxLength="41">User actions</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="28">User action 1</string>
-    <string name="user_action_2" maxLength="28">User action 2</string>
-    <string name="user_action_3" maxLength="28">User action 3</string>
-    <string name="user_action_4" maxLength="28">User action 4</string>
-    <string name="user_action_5" maxLength="28">User action 5</string>
-    <string name="user_action_6" maxLength="28">User action 6</string>
-    <string name="user_action_7" maxLength="28">User action 7</string>
-    <string name="user_action_8" maxLength="28">User action 8</string>
-    <string name="user_action_9" maxLength="28">User action 9</string>
-    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
+    <string name="user_actions" maxLength="41">Käyttäjän toimet</string>
+    <string name="user_actions_summary" maxLength="41">Käynnistä JavaScript kertausnäkymästä</string>
+    <string name="user_action_1" maxLength="28">Käyttäjän toimi 1</string>
+    <string name="user_action_2" maxLength="28">Käyttäjän toimi 2</string>
+    <string name="user_action_3" maxLength="28">Käyttäjän toimi 3</string>
+    <string name="user_action_4" maxLength="28">Käyttäjän toimi 4</string>
+    <string name="user_action_5" maxLength="28">Käyttäjän toimi 5</string>
+    <string name="user_action_6" maxLength="28">Käyttäjän toimi 6</string>
+    <string name="user_action_7" maxLength="28">Käyttäjän toimi 7</string>
+    <string name="user_action_8" maxLength="28">Käyttäjän toimi 8</string>
+    <string name="user_action_9" maxLength="28">Käyttäjän toimi 9</string>
+    <string name="toggle_auto_advance" maxLength="41">Automaattinen eteneminen päälle/pois</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Valitse kortin puoli</string>
     <string name="card_side_question">Kysymys</string>
@@ -291,8 +291,8 @@
     <string name="bindings_already_bound">Jo käytössä kohteessa \"%s\"</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Kokeellinen</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Please upgrade to the new text to speech format</string>
+    <string name="readtext_deprecation_warn">AnkiDroid on ottanut käyttöön paremman TTS-mekanismin, joka on yhteensopiva muiden Anki-ohjelmien kanssa ja sisältää enemmän ääniä ja parannuksia kielentoistoon!\n\nPäivitä mahdollisimman pian, sillä tämä asetus poistetaan pian.</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Päivitä uuteen tekstistä puheeksi -formaattiin</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Kehittäjän asetukset</string>
     <string name="dev_options_enabled_pref" maxLength="41">Ota kehittäjän asetukset käyttöön</string>
@@ -359,17 +359,17 @@
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Haetaan&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Lasketaan&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Kokoelmaa ei ole olemassa</string>
-    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
-    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">None</string>
-    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Status bar</string>
-    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigation bar</string>
-    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
-    <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
-    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
-    <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
-    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Piilota järjestelmäpalkit</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">Ei mitään</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Tilapalkki</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigointipalkki</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Kaikki</string>
+    <string name="ignore_display_cutout" maxLength="41">Älä huomioi näytön lovea</string>
+    <string name="hide_answer_buttons" maxLength="41">Piilota vastauspainikkeet</string>
+    <string name="hide_hard_and_easy" maxLength="41">Piilota ”Vaikea” ja ”Helppo” painikkeet</string>
+    <string name="reviewer_frame_style" maxLength="41">Kehyksen tyyli</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Kortti</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Laatikko</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Avaa asetukset</string>
 </resources>
