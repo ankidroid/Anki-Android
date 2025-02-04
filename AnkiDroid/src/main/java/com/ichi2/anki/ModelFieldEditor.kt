@@ -29,6 +29,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.snackbar.Snackbar
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog
@@ -45,6 +46,8 @@ import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.customView
+import com.ichi2.utils.getInputField
+import com.ichi2.utils.input
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
@@ -339,56 +342,66 @@ class ModelFieldEditor :
         }
     }
 
-    /*
-     * Allows the user to select a number less than the number of fields in the current model to
-     * reposition the current field to
-     * Processing time is scales with number of items
+    /**
+     * Displays a dialog to allow the user to reposition a field within a list.
      */
     private fun repositionFieldDialog() {
-        fieldNameInput = FixedEditText(this).apply { focusWithKeyboard() }
-        fieldNameInput?.let { fieldNameInput ->
-            fieldNameInput.setRawInputType(InputType.TYPE_CLASS_NUMBER)
-            AlertDialog.Builder(this).show {
-                customView(view = fieldNameInput, paddingStart = 64, paddingEnd = 64, paddingTop = 32)
-                title(text = String.format(resources.getString(R.string.model_field_editor_reposition), 1, fieldsLabels.size))
-                positiveButton(R.string.dialog_ok) {
-                    val newPosition = fieldNameInput.text.toString()
-                    val pos: Int =
-                        try {
-                            newPosition.toInt()
-                        } catch (n: NumberFormatException) {
-                            Timber.w(n)
-                            fieldNameInput.error = resources.getString(R.string.toast_out_of_range)
-                            return@positiveButton
-                        }
-                    if (pos < 1 || pos > fieldsLabels.size) {
-                        fieldNameInput.error = resources.getString(R.string.toast_out_of_range)
-                    } else {
-                        // Input is valid, now attempt to modify
-                        try {
-                            getColUnsafe.modSchema()
-                            repositionField(pos - 1)
-                        } catch (e: ConfirmModSchemaException) {
-                            e.log()
+        /**
+         * Shows an input dialog for selecting a new position.
+         *
+         * @param numberOfTemplates The total number of available positions.
+         * @param result A lambda function that receives the validated new position as an integer.
+         */
+        fun showDialog(
+            numberOfTemplates: Int,
+            result: (Int) -> Unit,
+        ) {
+            AlertDialog
+                .Builder(this)
+                .show {
+                    positiveButton(R.string.dialog_ok) {
+                        val input = (it as AlertDialog).getInputField()
+                        result(input.text.toString().toInt())
+                    }
+                    negativeButton(R.string.dialog_cancel)
+                    setMessage(TR.fieldsNewPosition1(numberOfTemplates))
+                    setView(R.layout.dialog_generic_text_input)
+                }.input(
+                    prefill = (currentPos + 1).toString(),
+                    inputType = InputType.TYPE_CLASS_NUMBER,
+                    displayKeyboard = true,
+                    waitForPositiveButton = false,
+                ) { dialog, text: CharSequence ->
+                    val number = text.toString().toIntOrNull()
+                    dialog.positiveButton.isEnabled = number != null && number in 1..numberOfTemplates
+                }
+        }
 
-                            // Handle mod schema confirmation
-                            val c = ConfirmationDialog()
-                            c.setArgs(resources.getString(R.string.full_sync_confirmation))
-                            val confirm =
-                                Runnable {
-                                    try {
-                                        getColUnsafe.modSchemaNoCheck()
-                                        repositionField(pos - 1)
-                                    } catch (e1: JSONException) {
-                                        throw RuntimeException(e1)
-                                    }
-                                }
-                            c.setConfirm(confirm)
-                            this@ModelFieldEditor.showDialogFragment(c)
+        // handle repositioning
+        showDialog(fieldsLabels.size) { newPosition ->
+            if (newPosition == currentPos + 1) return@showDialog
+
+            Timber.i("Repositioning field from %d to %d", currentPos, newPosition)
+            try {
+                getColUnsafe.modSchema()
+                repositionField(newPosition - 1)
+            } catch (e: ConfirmModSchemaException) {
+                e.log()
+
+                // Handle mod schema confirmation
+                val c = ConfirmationDialog()
+                c.setArgs(resources.getString(R.string.full_sync_confirmation))
+                val confirm =
+                    Runnable {
+                        try {
+                            getColUnsafe.modSchemaNoCheck()
+                            repositionField(newPosition - 1)
+                        } catch (e1: JSONException) {
+                            throw RuntimeException(e1)
                         }
                     }
-                }
-                negativeButton(R.string.dialog_cancel)
+                c.setConfirm(confirm)
+                this@ModelFieldEditor.showDialogFragment(c)
             }
         }
     }
