@@ -100,17 +100,10 @@ class InstantNoteEditorActivity :
     private val clozeFieldText: String?
         get() = viewModel.actualClozeFieldText.value
 
-//    private val dialogBackCallback =
-//        object : OnBackPressedCallback(false) {
-//            override fun handleOnBackPressed() {
-//                showDiscardChangesDialog()
-//            }
-//        }
-
     private var isDialogVisible = false
 
     private val dialogBackCallback =
-        object : OnBackPressedCallback(true) { // Initially enabled
+        object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (!isDialogVisible) {
                     isDialogVisible = true
