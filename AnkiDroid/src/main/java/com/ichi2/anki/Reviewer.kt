@@ -53,11 +53,13 @@ import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import anki.frontend.SetSchedulingStatesRequest
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Whiteboard.Companion.createInstance
 import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
@@ -969,7 +971,13 @@ open class Reviewer :
     override fun automaticShowQuestion(action: AutomaticAnswerAction) {
         // explicitly do not call super
         if (easeButton1!!.canPerformClick) {
-            action.execute(this)
+            action.execute(this, TR.studyingAnswerTimeElapsed())
+        }
+    }
+
+    override fun automaticShowAnswer(action: AutomaticAnswerAction) {
+        if (flipCardLayout!!.isVisible) {
+            action.execute(this, TR.studyingQuestionTimeElapsed())
         }
     }
 
