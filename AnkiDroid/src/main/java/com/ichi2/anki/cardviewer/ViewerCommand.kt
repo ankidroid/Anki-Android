@@ -17,6 +17,7 @@ package com.ichi2.anki.cardviewer
 
 import android.content.SharedPreferences
 import android.view.KeyEvent
+import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.Binding.Companion.unicode
@@ -89,19 +90,6 @@ enum class ViewerCommand {
     val preferenceKey: String
         get() = "binding_$name"
 
-    fun addBinding(
-        preferences: SharedPreferences,
-        binding: MappableBinding,
-    ) {
-        val addAtStart: (MutableList<MappableBinding>, MappableBinding) -> Boolean = { collection, element ->
-            // reorder the elements, moving the added binding to the first position
-            collection.remove(element)
-            collection.add(0, element)
-            true
-        }
-        addBindingInternal(preferences, binding, addAtStart)
-    }
-
     fun addBindingAtEnd(
         preferences: SharedPreferences,
         binding: MappableBinding,
@@ -118,7 +106,8 @@ enum class ViewerCommand {
         addBindingInternal(preferences, binding, addAtEnd)
     }
 
-    private fun addBindingInternal(
+    @VisibleForTesting
+    fun addBindingInternal(
         preferences: SharedPreferences,
         binding: MappableBinding,
         performAdd: (MutableList<MappableBinding>, MappableBinding) -> Boolean,

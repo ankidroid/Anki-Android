@@ -45,6 +45,7 @@ import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.Binding.ModifierKeys
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.ReviewerBinding
+import com.ichi2.anki.utils.ext.addBinding
 import com.ichi2.libanki.Card
 import kotlinx.coroutines.Job
 import org.hamcrest.MatcherAssert.assertThat

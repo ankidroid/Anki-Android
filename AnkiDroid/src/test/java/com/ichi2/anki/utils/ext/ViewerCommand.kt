@@ -1,0 +1,33 @@
+/*
+ *  Copyright (c) 2025 Brayan Oliveira <brayandso.dev@gmail.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 3 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package com.ichi2.anki.utils.ext
+
+import android.content.SharedPreferences
+import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.reviewer.MappableBinding
+
+fun ViewerCommand.addBinding(
+    preferences: SharedPreferences,
+    binding: MappableBinding,
+) {
+    val addAtStart: (MutableList<MappableBinding>, MappableBinding) -> Boolean = { collection, element ->
+        // reorder the elements, moving the added binding to the first position
+        collection.remove(element)
+        collection.add(0, element)
+        true
+    }
+    addBindingInternal(preferences, binding, addAtStart)
+}
