@@ -22,6 +22,7 @@ import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.reviewer.MappableBinding.Companion.fromPreference
 import com.ichi2.compat.CompatHelper
 import timber.log.Timber
 
@@ -114,8 +115,13 @@ class MotionEventHandler(
 
         private fun getAxisButtonBindings(context: Context) =
             sequence {
-                for ((command, bindings) in MappableBinding.allMappings(context.sharedPrefs())) {
-                    for (binding in bindings.map { it.binding }.filterIsInstance<Binding.AxisButtonBinding>()) {
+                for ((command, bindings) in ViewerCommand.entries
+                    .map {
+                        Pair(it, fromPreference(context.sharedPrefs(), it))
+                    }) {
+                    for (binding in bindings
+                        .map { it.binding }
+                        .filterIsInstance<Binding.AxisButtonBinding>()) {
                         yield(SingleAxisDetector(command, binding))
                     }
                 }
