@@ -93,7 +93,7 @@ abstract class SettingsFragment :
             (preference as? DialogFragmentProvider)?.makeDialogFragment()
                 ?: return super.onDisplayPreferenceDialog(preference)
         Timber.d("displaying custom preference: ${dialogFragment::class.simpleName}")
-        dialogFragment.arguments = bundleOf("key" to preference.key)
+        dialogFragment.arguments = bundleOf(PREF_DIALOG_KEY to preference.key)
         dialogFragment.setTargetFragment(this, 0)
         dialogFragment.show(parentFragmentManager, "androidx.preference.PreferenceFragment.DIALOG")
     }
@@ -128,6 +128,8 @@ abstract class SettingsFragment :
     }
 
     companion object {
+        const val PREF_DIALOG_KEY = "key"
+
         /**
          * Converts a preference value to a numeric number that
          * can be reported to analytics, since analytics events only accept
