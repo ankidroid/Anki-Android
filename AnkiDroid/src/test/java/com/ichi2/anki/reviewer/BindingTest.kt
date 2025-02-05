@@ -25,6 +25,8 @@ import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import kotlin.reflect.KFunction1
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class BindingTest {
     @Test
@@ -66,6 +68,21 @@ class BindingTest {
     fun testUnknownToString() {
         // This seems sensible - serialising an unknown will mean that nothing is saved.
         assertThat(Binding.unknown().toString(), equalTo(""))
+    }
+
+    @Test
+    fun testModifierKeysEquality() {
+        val one = Binding.AppDefinedModifierKeys.allowShift()
+        val two = Binding.ModifierKeys(shift = true, ctrl = false, alt = false)
+
+        assertTrue(one.shiftMatches(true))
+        assertTrue(one.shiftMatches(false))
+
+        assertTrue(two.shiftMatches(true))
+        assertFalse(two.shiftMatches(false))
+
+        assertEquals(one, two)
+        assertEquals(one.hashCode(), two.hashCode())
     }
 
     private fun testModifierKeys(
