@@ -1,5 +1,6 @@
 /*
  *  Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
+ *  Copyright (c) 2025 Brayan Oliveira <brayandso.dev@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -13,49 +14,49 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.ichi2.preferences
 
-import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
+import android.os.Bundle
+import android.text.TextUtils
 import android.util.AttributeSet
+import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
-import androidx.preference.ListPreference
+import androidx.core.view.isVisible
+import androidx.fragment.app.DialogFragment
+import androidx.preference.DialogPreference
+import androidx.preference.PreferenceFragmentCompat
 import com.ichi2.anki.R
-import com.ichi2.anki.cardviewer.GestureProcessor
-import com.ichi2.anki.cardviewer.ViewerCommand
-import com.ichi2.anki.dialogs.CardSideSelectionDialog
 import com.ichi2.anki.dialogs.GestureSelectionDialogUtils
 import com.ichi2.anki.dialogs.GestureSelectionDialogUtils.onGestureChanged
 import com.ichi2.anki.dialogs.KeySelectionDialogUtils
 import com.ichi2.anki.dialogs.WarningDisplay
-import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.anki.reviewer.CardSide
+import com.ichi2.anki.preferences.SettingsFragment
+import com.ichi2.anki.preferences.allPreferences
+import com.ichi2.anki.preferences.requirePreference
+import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
-import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.showThemedToast
 import com.ichi2.ui.AxisPicker
 import com.ichi2.ui.KeyPicker
+import com.ichi2.utils.create
 import com.ichi2.utils.customView
-import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
-import com.ichi2.utils.title
 
 /**
  * A preference which allows mapping of inputs to actions (example: keys -> commands)
  *
- * This is implemented as a List, the elements allow the user to either add, or
- * remove previously mapped keys
- *
- * Future:
- * * Allow mapping gestures here
- * * Allow maps other than the reviewer
+ * The user is allowed to either add or remove previously mapped keys
  */
-class ControlPreference : ListPreference {
+open class ControlPreference :
+    DialogPreference,
+    DialogFragmentProvider {
     @Suppress("unused")
     constructor(
         context: Context,
@@ -73,222 +74,207 @@ class ControlPreference : ListPreference {
     @Suppress("unused")
     constructor(context: Context) : super(context)
 
-    private fun refreshEntries() {
-        val entryTitles: MutableList<CharSequence> = ArrayList()
-        val entryIndices: MutableList<Int> = ArrayList()
-        // negative indices are "add"
-        entryTitles.add(context.getString(R.string.binding_add_key))
-        entryIndices.add(ADD_KEY_INDEX)
-        // Add a joystick/motion controller
-        entryTitles.add(context.getString(R.string.binding_add_axis))
-        entryIndices.add(ADD_AXIS_INDEX)
-        // Put "Add gesture" option if gestures are enabled
-        if (context.sharedPrefs().getBoolean(GestureProcessor.PREF_KEY, false)) {
-            entryTitles.add(context.getString(R.string.binding_add_gesture))
-            entryIndices.add(ADD_GESTURE_INDEX)
-        }
-        // 0 and above are "delete" actions for already mapped preferences
-        for ((i, binding) in MappableBinding.fromPreferenceString(value).withIndex()) {
-            entryTitles.add(context.getString(R.string.binding_remove_binding, binding.toDisplayString(context)))
-            entryIndices.add(i)
-        }
-        entries = entryTitles.toTypedArray()
-        entryValues = entryIndices.map { it.toString() }.toTypedArray()
-    }
+    open fun getMappableBindings(): List<MappableBinding> = MappableBinding.fromPreferenceString(value)
 
-    override fun onClick() {
-        refreshEntries()
-        super.onClick()
-    }
+    protected open fun onKeySelected(binding: Binding): Unit = addBinding(binding)
 
-    /** The summary that appears on the preference */
-    override fun getSummary(): CharSequence =
-        MappableBinding
-            .fromPreferenceString(value)
-            .joinToString(", ") { it.toDisplayString(context) }
+    protected open fun onAxisSelected(binding: Binding): Unit = addBinding(binding)
 
-    /** Called when an element is selected in the ListView */
-    @SuppressLint("CheckResult")
-    override fun callChangeListener(newValue: Any?): Boolean {
-        when (val index: Int = (newValue as String).toInt()) {
-            ADD_GESTURE_INDEX -> {
-                val actionName = title
-                AlertDialog.Builder(context).show {
-                    title(text = actionName.toString())
+    open val areGesturesEnabled: Boolean = false
 
-                    val gesturePicker = GestureSelectionDialogUtils.getGesturePicker(context)
+    protected open fun onGestureSelected(binding: Binding) = Unit
 
-                    positiveButton(R.string.dialog_ok) {
-                        val gesture = gesturePicker.getGesture() ?: return@positiveButton
-                        val mappableBinding = ReviewerBinding.fromGesture(gesture)
-                        if (bindingIsUsedOnAnotherCommand(mappableBinding)) {
-                            showDialogToReplaceBinding(mappableBinding, context.getString(R.string.binding_replace_gesture), it)
-                        } else {
-                            addBinding(mappableBinding)
-                            it.dismiss()
-                        }
-                    }
-                    negativeButton(R.string.dialog_cancel) { it.dismiss() }
-                    customView(view = gesturePicker)
-
-                    gesturePicker.onGestureChanged { gesture ->
-                        warnIfBindingIsUsed(ReviewerBinding.fromGesture(gesture), gesturePicker)
-                    }
-                }
-            }
-            ADD_KEY_INDEX -> {
-                val actionName = title
-                AlertDialog.Builder(context).show {
-                    val keyPicker: KeyPicker = KeyPicker.inflate(context)
-                    customView(view = keyPicker.rootLayout)
-                    title(text = actionName.toString())
-
-                    // When the user presses a key
-                    keyPicker.setBindingChangedListener { binding ->
-                        val mappableBinding =
-                            ReviewerBinding(binding, CardSide.BOTH)
-                        warnIfBindingIsUsed(mappableBinding, keyPicker)
-                    }
-
-                    positiveButton(R.string.dialog_ok) {
-                        val binding = keyPicker.getBinding() ?: return@positiveButton
-                        // Use CardSide.BOTH as placeholder just to check if binding exists
-                        CardSideSelectionDialog.displayInstance(context) { side ->
-                            val mappableBinding = ReviewerBinding(binding, side)
-                            if (bindingIsUsedOnAnotherCommand(mappableBinding)) {
-                                showDialogToReplaceBinding(mappableBinding, context.getString(R.string.binding_replace_key), it)
-                            } else {
-                                addBinding(mappableBinding)
-                                it.dismiss()
-                            }
-                        }
-                    }
-                    negativeButton(R.string.dialog_cancel) { it.dismiss() }
-
-                    keyPicker.setKeycodeValidation(KeySelectionDialogUtils.disallowModifierKeyCodes())
-                }
-            }
-            ADD_AXIS_INDEX -> displayAddAxisDialog()
-            else -> {
-                val bindings: MutableList<MappableBinding> = MappableBinding.fromPreferenceString(value)
-                bindings.removeAt(index)
-                value = bindings.toPreferenceString()
-            }
-        }
-        // don't persist the value
-        return false
-    }
-
-    @SuppressLint("CheckResult") // noAutoDismiss
-    private fun displayAddAxisDialog() {
-        val actionName = title
-        val axisPicker: AxisPicker = AxisPicker.inflate(context)
-        val dialog =
-            AlertDialog
-                .Builder(context)
-                .customView(view = axisPicker.rootLayout)
-                .title(text = actionName.toString())
-                .negativeButton(R.string.dialog_cancel) { it.dismiss() }
-                .create()
-
-        axisPicker.setBindingChangedListener { binding ->
-            showToastIfBindingIsUsed(ReviewerBinding(binding, CardSide.BOTH))
-            // Use CardSide.BOTH as placeholder just to check if binding exists
-            CardSideSelectionDialog.displayInstance(context) { side ->
-                val mappableBinding = ReviewerBinding(binding, side)
-                if (bindingIsUsedOnAnotherCommand(mappableBinding)) {
-                    showDialogToReplaceBinding(mappableBinding, context.getString(R.string.binding_replace_key), dialog)
-                } else {
-                    addBinding(mappableBinding)
-                    dialog.dismiss()
-                }
-            }
-        }
-
-        dialog.show()
-    }
-
-    /**
-     * Return if another command uses
-     */
-    private fun bindingIsUsedOnAnotherCommand(binding: MappableBinding): Boolean = getCommandWithBindingExceptThis(binding) != null
-
-    private fun warnIfBindingIsUsed(
-        binding: MappableBinding,
-        warningDisplay: WarningDisplay,
-    ) {
-        getCommandWithBindingExceptThis(binding)?.let {
-            val name = context.getString(it.resourceId)
-            val warning = context.getString(R.string.bindings_already_bound, name)
+    /** @return whether the binding is used in another action */
+    open fun warnIfUsed(
+        binding: Binding,
+        warningDisplay: WarningDisplay?,
+    ): Boolean {
+        val bindingPreference = getPreferenceAssignedTo(binding)
+        if (bindingPreference == null || bindingPreference == this) return false
+        val actionTitle = bindingPreference.title ?: ""
+        val warning = context.getString(R.string.bindings_already_bound, actionTitle)
+        if (warningDisplay != null) {
             warningDisplay.setWarning(warning)
-        } ?: warningDisplay.clearWarning()
+        } else {
+            showThemedToast(context, warning, true)
+        }
+        return true
     }
 
-    /** Displays a warning to the user if the provided binding couldn't be used */
-    private fun showToastIfBindingIsUsed(binding: MappableBinding) {
-        val bindingCommand =
-            getCommandWithBindingExceptThis(binding)
-                ?: return
+    var value: String?
+        get() = getPersistedString(null)
+        set(value) {
+            if (!TextUtils.equals(getPersistedString(null), value)) {
+                persistString(value)
+                notifyChanged()
+            }
+        }
 
-        val commandName = context.getString(bindingCommand.resourceId)
-        val text = context.getString(R.string.bindings_already_bound, commandName)
-        showThemedToast(context, text, true)
+    override fun getSummary(): CharSequence = getMappableBindings().joinToString(", ") { it.toDisplayString(context) }
+
+    override fun makeDialogFragment(): DialogFragment = ControlPreferenceDialogFragment()
+
+    fun showGesturePickerDialog() {
+        AlertDialog.Builder(context).show {
+            setTitle(title)
+            setIcon(icon)
+            val gesturePicker = GestureSelectionDialogUtils.getGesturePicker(context)
+            positiveButton(R.string.dialog_ok) {
+                val gesture = gesturePicker.getGesture() ?: return@positiveButton
+                val binding = Binding.GestureInput(gesture)
+                onGestureSelected(binding)
+                it.dismiss()
+            }
+            negativeButton(R.string.dialog_cancel) { it.dismiss() }
+            customView(view = gesturePicker)
+            gesturePicker.onGestureChanged { gesture ->
+                warnIfUsedOrClearWarning(Binding.GestureInput(gesture), gesturePicker)
+            }
+        }
     }
 
-    /** @return command where the binding is mapped excluding the current command */
-    private fun getCommandWithBindingExceptThis(binding: MappableBinding): ViewerCommand? =
-        MappableBinding
-            .allMappings(context.sharedPrefs())
-            // filter to the commands which have a binding matching this one except this
-            .firstOrNull { x -> x.second.any { cmdBinding -> cmdBinding == binding } && x.first.preferenceKey != key }
-            ?.first
+    fun showKeyPickerDialog() {
+        AlertDialog.Builder(context).show {
+            val keyPicker: KeyPicker = KeyPicker.inflate(context)
+            customView(view = keyPicker.rootLayout)
+            setTitle(title)
+            setIcon(icon)
 
-    private fun addBinding(binding: MappableBinding) {
-        val bindings = MappableBinding.fromPreferenceString(value)
-        // by removing the binding, we ensure it's now at the start of the list
+            // When the user presses a key
+            keyPicker.setBindingChangedListener { binding ->
+                warnIfUsedOrClearWarning(binding, keyPicker)
+            }
+            positiveButton(R.string.dialog_ok) {
+                val binding = keyPicker.getBinding() ?: return@positiveButton
+                onKeySelected(binding)
+                it.dismiss()
+            }
+            negativeButton(R.string.dialog_cancel) { it.dismiss() }
+            keyPicker.setKeycodeValidation(KeySelectionDialogUtils.disallowModifierKeyCodes())
+        }
+    }
+
+    fun showAddAxisDialog() {
+        val axisPicker =
+            AxisPicker.inflate(context).apply {
+                setBindingChangedListener { binding ->
+                    warnIfUsedOrClearWarning(binding, warningDisplay = null)
+                    onAxisSelected(binding)
+                }
+            }
+        AlertDialog.Builder(context).show {
+            customView(view = axisPicker.rootLayout)
+            setTitle(title)
+            setIcon(icon)
+            negativeButton(R.string.dialog_cancel) { it.dismiss() }
+        }
+    }
+
+    private fun warnIfUsedOrClearWarning(
+        binding: Binding,
+        warningDisplay: WarningDisplay?,
+    ) {
+        if (!warnIfUsed(binding, warningDisplay)) {
+            warningDisplay?.clearWarning()
+        }
+    }
+
+    fun removeMappableBinding(binding: MappableBinding) {
+        val bindings = getMappableBindings().toMutableList()
         bindings.remove(binding)
-        bindings.add(0, binding)
+        value = bindings.toPreferenceString()
+    }
+
+    private fun addBinding(binding: Binding) {
+        val newBinding = MappableBinding(binding)
+        getPreferenceAssignedTo(binding)?.removeMappableBinding(newBinding)
+        val bindings = getMappableBindings().toMutableList()
+        bindings.add(newBinding)
         value = bindings.toPreferenceString()
     }
 
     /**
-     * Remove binding from all control preferences other than this one
+     * Checks if any other [ControlPreference] in the `preferenceScreen`
+     * has the given [binding] assigned to.
      */
-    private fun clearBinding(binding: MappableBinding) {
-        for (command in ViewerCommand.entries) {
-            val commandPreference =
-                preferenceManager.findPreference<ControlPreference>(command.preferenceKey)
-                    ?: continue
-            val bindings = MappableBinding.fromPreferenceString(commandPreference.value)
+    protected fun getPreferenceAssignedTo(binding: Binding): ControlPreference? {
+        for (pref in preferenceManager.preferenceScreen.allPreferences()) {
+            if (pref !is ControlPreference) continue
+            val bindings = pref.getMappableBindings().map { it.binding }
             if (binding in bindings) {
-                bindings.remove(binding)
-                commandPreference.value = bindings.toPreferenceString()
+                return pref
             }
         }
+        return null
+    }
+}
+
+class ControlPreferenceDialogFragment : DialogFragment() {
+    private lateinit var preference: ControlPreference
+
+    @Suppress("DEPRECATION") // targetFragment
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val key =
+            requireNotNull(requireArguments().getString(SettingsFragment.PREF_DIALOG_KEY)) {
+                "ControlPreferenceDialogFragment must have a 'key' argument leading to its preference"
+            }
+        preference = (targetFragment as PreferenceFragmentCompat).requirePreference(key)
     }
 
-    private fun showDialogToReplaceBinding(
-        binding: MappableBinding,
-        title: String,
-        parentDialog: DialogInterface,
-    ) {
-        val commandName = context.getString(getCommandWithBindingExceptThis(binding)!!.resourceId)
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val view = requireActivity().layoutInflater.inflate(R.layout.control_preference, null)
 
-        AlertDialog.Builder(context).show {
-            title(text = title)
-            message(text = context.getString(R.string.bindings_already_bound, commandName))
-            positiveButton(R.string.dialog_positive_replace) {
-                clearBinding(binding)
-                addBinding(binding)
-                parentDialog.dismiss()
-            }
+        setupAddBindingDialogs(view)
+        setupRemoveControlEntries(view)
+
+        return AlertDialog.Builder(requireContext()).create {
+            setTitle(preference.title)
+            setIcon(preference.icon)
+            customView(view, paddingTop = 24)
             negativeButton(R.string.dialog_cancel)
         }
     }
 
-    companion object {
-        private const val ADD_AXIS_INDEX = -3
-        private const val ADD_KEY_INDEX = -2
-        private const val ADD_GESTURE_INDEX = -1
+    private fun setupAddBindingDialogs(view: View) {
+        view.findViewById<View>(R.id.add_gesture).apply {
+            setOnClickListener {
+                preference.showGesturePickerDialog()
+                dismiss()
+            }
+            isVisible = preference.areGesturesEnabled
+        }
+
+        view.findViewById<View>(R.id.add_key).setOnClickListener {
+            preference.showKeyPickerDialog()
+            dismiss()
+        }
+
+        view.findViewById<View>(R.id.add_axis).setOnClickListener {
+            preference.showAddAxisDialog()
+            dismiss()
+        }
+    }
+
+    private fun setupRemoveControlEntries(view: View) {
+        val bindings = preference.getMappableBindings().toMutableList()
+        val listView = view.findViewById<ListView>(R.id.list_view)
+        if (bindings.isEmpty()) {
+            listView.isVisible = false
+            return
+        }
+        val titles =
+            bindings.map {
+                getString(R.string.binding_remove_binding, it.toDisplayString(requireContext()))
+            }
+        listView.apply {
+            adapter = ArrayAdapter(requireContext(), R.layout.control_preference_list_item, titles)
+            setOnItemClickListener { _, _, index, _ ->
+                bindings.removeAt(index)
+                preference.value = bindings.toPreferenceString()
+                dismiss()
+            }
+        }
     }
 }
