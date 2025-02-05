@@ -44,7 +44,7 @@ import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.Binding.ModifierKeys
 import com.ichi2.anki.reviewer.CardSide
-import com.ichi2.anki.reviewer.MappableBinding
+import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.libanki.Card
 import kotlinx.coroutines.Job
 import org.hamcrest.MatcherAssert.assertThat
@@ -182,7 +182,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     fun pressingZShouldUndoIfAvailable() {
         ViewerCommand.UNDO.addBinding(
             sharedPrefs(),
-            MappableBinding(keyCode(KEYCODE_Z, ModifierKeys.none()), MappableBinding.Screen.Reviewer(CardSide.BOTH)),
+            ReviewerBinding(keyCode(KEYCODE_Z, ModifierKeys.none()), CardSide.BOTH),
         )
         val underTest = KeyboardInputTestReviewer.displayingAnswer().withUndoAvailable(true)
         underTest.handleAndroidKeyPress(KEYCODE_Z)
@@ -193,7 +193,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     fun pressingZShouldNotUndoIfNotAvailable() {
         ViewerCommand.UNDO.addBinding(
             sharedPrefs(),
-            MappableBinding(keyCode(KEYCODE_Z, ModifierKeys.none()), MappableBinding.Screen.Reviewer(CardSide.BOTH)),
+            ReviewerBinding(keyCode(KEYCODE_Z, ModifierKeys.none()), CardSide.BOTH),
         )
         val underTest = KeyboardInputTestReviewer.displayingAnswer().withUndoAvailable(false)
         underTest.handleUnicodeKeyPress('z')

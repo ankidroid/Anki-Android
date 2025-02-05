@@ -22,7 +22,7 @@ import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
-import com.ichi2.anki.reviewer.MappableBinding.Screen.Reviewer
+import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.Companion.UPGRADE_VERSION_PREF_KEY
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeGesturesToControls
 import org.hamcrest.CoreMatchers.equalTo
@@ -88,7 +88,7 @@ class UpgradeGesturesToControlsTest(
         val binding = fromPreference.first()
 
         assertThat("should be a key binding", binding.isKey, equalTo(true))
-        assertThat("binding should match", binding, equalTo(MappableBinding(keyCode(testData.keyCode), Reviewer(CardSide.BOTH))))
+        assertThat("binding should match", binding, equalTo(ReviewerBinding(keyCode(testData.keyCode), CardSide.BOTH)))
     }
 
     @Test
@@ -203,8 +203,8 @@ class UpgradeGesturesToControlsTest(
         val oldCommandPreferenceStrings: HashMap<ViewerCommand, String> =
             hashMapOf(*UpgradeGesturesToControls().oldCommandValues.map { Pair(it.value, it.key.toString()) }.toTypedArray())
 
-        private val volume_up_binding = MappableBinding(keyCode(KEYCODE_VOLUME_UP), Reviewer(CardSide.BOTH))
-        private val volume_down_binding = MappableBinding(keyCode(KEYCODE_VOLUME_DOWN), Reviewer(CardSide.BOTH))
+        private val volume_up_binding = ReviewerBinding(keyCode(KEYCODE_VOLUME_UP), CardSide.BOTH)
+        private val volume_down_binding = ReviewerBinding(keyCode(KEYCODE_VOLUME_DOWN), CardSide.BOTH)
 
         @JvmStatic
         @ParameterizedRobolectricTestRunner.Parameters(name = "{index}: isValid({0})={1}")
