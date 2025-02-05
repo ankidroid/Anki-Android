@@ -186,7 +186,7 @@ sealed interface Binding {
 
         override fun equals(other: Any?): Boolean = other is ModifierKeys && semiStructuralEquals(other)
 
-        override fun hashCode(): Int = Objects.hash(ctrl, alt, shift, shiftMatches(true), shiftMatches(false))
+        override fun hashCode(): Int = Objects.hash(ctrl, alt, shiftMatches(true))
 
         companion object {
             fun none(): ModifierKeys = ModifierKeys(shift = false, ctrl = false, alt = false)
@@ -213,7 +213,7 @@ sealed interface Binding {
     }
 
     /** Modifier keys which cannot be defined by a binding  */
-    private class AppDefinedModifierKeys private constructor() : ModifierKeys(false, false, false) {
+    class AppDefinedModifierKeys private constructor() : ModifierKeys(false, false, false) {
         override fun shiftMatches(shiftPressed: Boolean): Boolean = true
 
         companion object {
