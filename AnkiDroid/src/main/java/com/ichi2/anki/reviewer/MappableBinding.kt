@@ -92,12 +92,5 @@ open class MappableBinding(
             val value = prefs.getString(command.preferenceKey, null) ?: return command.defaultValue.toMutableList()
             return fromPreferenceString(value)
         }
-
-        @CheckResult
-        fun allMappings(prefs: SharedPreferences): MutableList<Pair<ViewerCommand, MutableList<MappableBinding>>> =
-            ViewerCommand.entries
-                .map {
-                    Pair(it, fromPreference(prefs, it))
-                }.toMutableList()
     }
 }
