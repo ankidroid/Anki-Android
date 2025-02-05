@@ -33,7 +33,7 @@ import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.setPreference
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
-import com.ichi2.anki.reviewer.MappableBinding.Screen
+import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
 import com.ichi2.testutils.common.Flaky
@@ -316,9 +316,7 @@ class ReviewerNoParamTest : RobolectricTest() {
         val prefs = targetContext.sharedPrefs()
         ViewerCommand.FLIP_OR_ANSWER_EASE1.addBinding(
             prefs,
-            MappableBinding.fromGesture(gesture) {
-                Screen.Reviewer(it)
-            },
+            ReviewerBinding.fromGesture(gesture),
         )
     }
 

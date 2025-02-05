@@ -54,5 +54,5 @@ class MappableBindingTest {
     @Suppress("SameParameterValue")
     private fun unicodeCharacter(char: Char) = fromBinding(BindingTest.unicodeCharacter(char))
 
-    private fun fromBinding(binding: Binding): Any = MappableBinding(binding, MappableBinding.Screen.Reviewer(CardSide.BOTH))
+    private fun fromBinding(binding: Binding): Any = ReviewerBinding(binding, CardSide.BOTH)
 }

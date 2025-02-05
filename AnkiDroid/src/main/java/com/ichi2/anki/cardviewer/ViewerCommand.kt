@@ -28,7 +28,7 @@ import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.fromPreference
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
-import com.ichi2.anki.reviewer.MappableBinding.Screen
+import com.ichi2.anki.reviewer.ReviewerBinding
 
 /** Abstraction: Discuss moving many of these to 'Reviewer'  */
 enum class ViewerCommand(
@@ -137,17 +137,6 @@ enum class ViewerCommand(
     // If we use the serialised format, then this adds additional coupling to the properties.
     val defaultValue: List<MappableBinding>
         get() {
-            // all of the default commands are currently for the Reviewer
-            fun keyCode(
-                keycode: Int,
-                side: CardSide,
-                modifierKeys: ModifierKeys = ModifierKeys.none(),
-            ) = keyCode(keycode, Screen.Reviewer(side), modifierKeys)
-
-            fun unicode(
-                c: Char,
-                side: CardSide,
-            ) = unicode(c, Screen.Reviewer(side))
             return when (this) {
                 FLIP_OR_ANSWER_EASE1 ->
                     listOf(
@@ -256,14 +245,14 @@ enum class ViewerCommand(
 
     private fun keyCode(
         keycode: Int,
-        screen: Screen,
+        side: CardSide,
         keys: ModifierKeys = ModifierKeys.none(),
-    ): MappableBinding = MappableBinding(keyCode(keys, keycode), screen)
+    ): ReviewerBinding = ReviewerBinding(keyCode(keys, keycode), side)
 
     private fun unicode(
         c: Char,
-        screen: Screen,
-    ): MappableBinding = MappableBinding(unicode(c), screen)
+        side: CardSide,
+    ): ReviewerBinding = ReviewerBinding(unicode(c), side)
 
     fun interface CommandProcessor {
         /**

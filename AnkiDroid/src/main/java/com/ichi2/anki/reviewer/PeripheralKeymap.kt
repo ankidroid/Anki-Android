@@ -24,7 +24,6 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.Binding.Companion.possibleKeyBindings
 import com.ichi2.anki.reviewer.CardSide.Companion.fromAnswer
 import com.ichi2.anki.reviewer.MappableBinding.Companion.fromPreference
-import com.ichi2.anki.reviewer.MappableBinding.Screen
 
 /** Accepts peripheral input, mapping via various keybinding strategies,
  * and converting them to commands for the Reviewer.  */
@@ -32,7 +31,7 @@ class PeripheralKeymap(
     reviewerUi: ReviewerUi,
     commandProcessor: ViewerCommand.CommandProcessor,
 ) {
-    private val keyMap: KeyMap = KeyMap(commandProcessor, reviewerUi) { Screen.Reviewer(it) }
+    private val keyMap: KeyMap = KeyMap(commandProcessor, reviewerUi)
     private var hasSetup = false
 
     fun setup() {
@@ -53,7 +52,7 @@ class PeripheralKeymap(
     ) {
         val bindings =
             fromPreference(preferences, command)
-                .filter { it.screen is Screen.Reviewer }
+                .filterIsInstance<ReviewerBinding>()
         for (b in bindings) {
             if (!b.isKey) {
                 continue
@@ -81,7 +80,6 @@ class PeripheralKeymap(
     class KeyMap(
         private val processor: ViewerCommand.CommandProcessor,
         private val reviewerUI: ReviewerUi,
-        private val screenBuilder: (CardSide) -> Screen,
     ) {
         val bindingMap = HashMap<MappableBinding, ViewerCommand>()
 
@@ -94,7 +92,7 @@ class PeripheralKeymap(
             val bindings = possibleKeyBindings(event!!)
             val side = fromAnswer(reviewerUI.isDisplayingAnswer)
             for (b in bindings) {
-                val binding = MappableBinding(b, screenBuilder(side))
+                val binding = ReviewerBinding(b, side)
                 val command = bindingMap[binding] ?: continue
                 ret = ret or processor.executeCommand(command, fromGesture = null)
             }

@@ -22,7 +22,7 @@ import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
-import com.ichi2.anki.reviewer.MappableBinding.Screen.Reviewer
+import com.ichi2.anki.reviewer.ReviewerBinding
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -49,11 +49,11 @@ class BindingPreferenceTest {
 
     private fun getSampleBindings(): List<MappableBinding> =
         listOf(
-            MappableBinding(Binding.unicode('a'), Reviewer(CardSide.BOTH)),
-            MappableBinding(Binding.unicode(' '), Reviewer(CardSide.ANSWER)),
+            ReviewerBinding(Binding.unicode('a'), CardSide.BOTH),
+            ReviewerBinding(Binding.unicode(' '), CardSide.ANSWER),
             // this one is important: ensure that "|" as a unicode char can't be used
-            MappableBinding(Binding.unicode(Binding.FORBIDDEN_UNICODE_CHAR), Reviewer(CardSide.QUESTION)),
-            MappableBinding(Binding.gesture(Gesture.LONG_TAP), Reviewer(CardSide.BOTH)),
-            MappableBinding(Binding.keyCode(12), Reviewer(CardSide.BOTH)),
+            ReviewerBinding(Binding.unicode(Binding.FORBIDDEN_UNICODE_CHAR), CardSide.QUESTION),
+            ReviewerBinding(Binding.gesture(Gesture.LONG_TAP), CardSide.BOTH),
+            ReviewerBinding(Binding.keyCode(12), CardSide.BOTH),
         )
 }

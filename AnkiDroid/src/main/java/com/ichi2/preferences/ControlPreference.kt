@@ -33,10 +33,8 @@ import com.ichi2.anki.dialogs.WarningDisplay
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
-import com.ichi2.anki.reviewer.MappableBinding.Companion.fromGesture
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
-import com.ichi2.anki.reviewer.MappableBinding.Screen
-import com.ichi2.anki.reviewer.screenBuilder
+import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.showThemedToast
 import com.ichi2.ui.AxisPicker
 import com.ichi2.ui.KeyPicker
@@ -74,9 +72,6 @@ class ControlPreference : ListPreference {
 
     @Suppress("unused")
     constructor(context: Context) : super(context)
-
-    val screenBuilder: (CardSide) -> Screen
-        get() = ViewerCommand.fromPreferenceKey(key).screenBuilder
 
     private fun refreshEntries() {
         val entryTitles: MutableList<CharSequence> = ArrayList()
@@ -125,11 +120,7 @@ class ControlPreference : ListPreference {
 
                     positiveButton(R.string.dialog_ok) {
                         val gesture = gesturePicker.getGesture() ?: return@positiveButton
-                        val mappableBinding =
-                            fromGesture(
-                                gesture,
-                                screenBuilder,
-                            )
+                        val mappableBinding = ReviewerBinding.fromGesture(gesture)
                         if (bindingIsUsedOnAnotherCommand(mappableBinding)) {
                             showDialogToReplaceBinding(mappableBinding, context.getString(R.string.binding_replace_gesture), it)
                         } else {
@@ -141,7 +132,7 @@ class ControlPreference : ListPreference {
                     customView(view = gesturePicker)
 
                     gesturePicker.onGestureChanged { gesture ->
-                        warnIfBindingIsUsed(fromGesture(gesture, screenBuilder), gesturePicker)
+                        warnIfBindingIsUsed(ReviewerBinding.fromGesture(gesture), gesturePicker)
                     }
                 }
             }
@@ -155,10 +146,7 @@ class ControlPreference : ListPreference {
                     // When the user presses a key
                     keyPicker.setBindingChangedListener { binding ->
                         val mappableBinding =
-                            MappableBinding(
-                                binding,
-                                screenBuilder(CardSide.BOTH),
-                            )
+                            ReviewerBinding(binding, CardSide.BOTH)
                         warnIfBindingIsUsed(mappableBinding, keyPicker)
                     }
 
@@ -166,7 +154,7 @@ class ControlPreference : ListPreference {
                         val binding = keyPicker.getBinding() ?: return@positiveButton
                         // Use CardSide.BOTH as placeholder just to check if binding exists
                         CardSideSelectionDialog.displayInstance(context) { side ->
-                            val mappableBinding = MappableBinding(binding, screenBuilder(side))
+                            val mappableBinding = ReviewerBinding(binding, side)
                             if (bindingIsUsedOnAnotherCommand(mappableBinding)) {
                                 showDialogToReplaceBinding(mappableBinding, context.getString(R.string.binding_replace_key), it)
                             } else {
@@ -204,10 +192,10 @@ class ControlPreference : ListPreference {
                 .create()
 
         axisPicker.setBindingChangedListener { binding ->
-            showToastIfBindingIsUsed(MappableBinding(binding, screenBuilder(CardSide.BOTH)))
+            showToastIfBindingIsUsed(ReviewerBinding(binding, CardSide.BOTH))
             // Use CardSide.BOTH as placeholder just to check if binding exists
             CardSideSelectionDialog.displayInstance(context) { side ->
-                val mappableBinding = MappableBinding(binding, screenBuilder(side))
+                val mappableBinding = ReviewerBinding(binding, side)
                 if (bindingIsUsedOnAnotherCommand(mappableBinding)) {
                     showDialogToReplaceBinding(mappableBinding, context.getString(R.string.binding_replace_key), dialog)
                 } else {
