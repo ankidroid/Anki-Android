@@ -338,11 +338,27 @@ object PreferenceUpgradeService {
                 upgradeGestureToBinding(preferences, "gestureTapLeft", Gesture.TAP_LEFT)
                 upgradeGestureToBinding(preferences, "gestureTapCenter", Gesture.TAP_CENTER)
                 upgradeGestureToBinding(preferences, "gestureTapRight", Gesture.TAP_RIGHT)
-                upgradeGestureToBinding(preferences, "gestureTapBottomLeft", Gesture.TAP_BOTTOM_LEFT)
+                upgradeGestureToBinding(
+                    preferences,
+                    "gestureTapBottomLeft",
+                    Gesture.TAP_BOTTOM_LEFT,
+                )
                 upgradeGestureToBinding(preferences, "gestureTapBottom", Gesture.TAP_BOTTOM)
-                upgradeGestureToBinding(preferences, "gestureTapBottomRight", Gesture.TAP_BOTTOM_RIGHT)
-                upgradeVolumeGestureToBinding(preferences, "gestureVolumeUp", KeyEvent.KEYCODE_VOLUME_UP)
-                upgradeVolumeGestureToBinding(preferences, "gestureVolumeDown", KeyEvent.KEYCODE_VOLUME_DOWN)
+                upgradeGestureToBinding(
+                    preferences,
+                    "gestureTapBottomRight",
+                    Gesture.TAP_BOTTOM_RIGHT,
+                )
+                upgradeVolumeGestureToBinding(
+                    preferences,
+                    "gestureVolumeUp",
+                    KeyEvent.KEYCODE_VOLUME_UP,
+                )
+                upgradeVolumeGestureToBinding(
+                    preferences,
+                    "gestureVolumeDown",
+                    KeyEvent.KEYCODE_VOLUME_DOWN,
+                )
             }
 
             private fun upgradeVolumeGestureToBinding(
@@ -400,7 +416,17 @@ object PreferenceUpgradeService {
 
                 // add to the binding_COMMANDNAME preference
                 val mappableBinding = ReviewerBinding(binding, CardSide.BOTH)
-                command.addBindingAtEnd(preferences, mappableBinding)
+                val addAtEnd: (MutableList<MappableBinding>, MappableBinding) -> Boolean =
+                    { collection, element ->
+                        // do not reorder the elements
+                        if (collection.contains(element)) {
+                            false
+                        } else {
+                            collection.add(element)
+                            true
+                        }
+                    }
+                command.addBindingInternal(preferences, mappableBinding, addAtEnd)
             }
         }
 
