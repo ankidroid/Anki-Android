@@ -15,9 +15,7 @@
  */
 package com.ichi2.anki.cardviewer
 
-import android.content.SharedPreferences
 import android.view.KeyEvent
-import androidx.core.content.edit
 import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.Binding.Companion.unicode
 import com.ichi2.anki.reviewer.Binding.ModifierKeys
@@ -25,8 +23,6 @@ import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
-import com.ichi2.anki.reviewer.MappableBinding.Companion.fromPreference
-import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.reviewer.ReviewerBinding
 
 /** Abstraction: Discuss moving many of these to 'Reviewer'  */
@@ -84,17 +80,6 @@ enum class ViewerCommand {
 
     val preferenceKey: String
         get() = "binding_$name"
-
-    fun addBindingInternal(
-        preferences: SharedPreferences,
-        binding: MappableBinding,
-        performAdd: (MutableList<MappableBinding>, MappableBinding) -> Boolean,
-    ) {
-        val bindings: MutableList<MappableBinding> = fromPreference(preferences, this)
-        performAdd(bindings, binding)
-        val newValue: String = bindings.toPreferenceString()
-        preferences.edit { putString(preferenceKey, newValue) }
-    }
 
     // If we use the serialised format, then this adds additional coupling to the properties.
     val defaultValue: List<MappableBinding>
