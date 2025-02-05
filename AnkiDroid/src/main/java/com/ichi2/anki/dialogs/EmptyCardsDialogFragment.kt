@@ -17,12 +17,25 @@
 
 package com.ichi2.anki.dialogs
 
+import android.app.Activity
 import android.app.Dialog
+import android.content.Intent
+import android.content.res.Configuration
+import android.content.res.Configuration.ORIENTATION_LANDSCAPE
+import android.graphics.Insets
+import android.os.Build
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.View
+import android.view.WindowInsets.Type.displayCutout
+import android.view.WindowInsets.Type.navigationBars
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -30,6 +43,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import anki.card_rendering.EmptyCardsReport
+import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
@@ -59,10 +73,32 @@ class EmptyCardsDialogFragment : DialogFragment() {
         get() = dialog?.findViewById(R.id.text)
     private val emptyCardsResultsContainer: View?
         get() = dialog?.findViewById(R.id.empty_cards_results_container)
-    private val emptyCardsResultsMessage: TextView?
-        get() = dialog?.findViewById(R.id.empty_cards_results_message)
+    private val emptyReportMessage: TextView?
+        get() = dialog?.findViewById(R.id.empty_report_label)
     private val keepNotesWithNoValidCards: CheckBox?
         get() = dialog?.findViewById(R.id.preserve_notes)
+    private val reportWebView: WebView?
+        get() = dialog?.findViewById(R.id.report)
+
+    // TODO handle WebViewClient.onRenderProcessGone()
+    private val customWebViewClient =
+        object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                request: WebResourceRequest?,
+            ): Boolean {
+                val searchQuery = request?.url?.toString()
+                return if (searchQuery != null && searchQuery.startsWith("nid:")) {
+                    val browserSearchIntent = Intent(requireContext(), CardBrowser::class.java)
+                    browserSearchIntent.putExtra("search_query", searchQuery)
+                    browserSearchIntent.putExtra("all_decks", true)
+                    startActivity(browserSearchIntent)
+                    true
+                } else {
+                    super.shouldOverrideUrlLoading(view, request)
+                }
+            }
+        }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         bindToState()
@@ -70,6 +106,7 @@ class EmptyCardsDialogFragment : DialogFragment() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_empty_cards, null)
         dialogView.findViewById<CheckBox>(R.id.preserve_notes)?.text =
             TR.emptyCardsPreserveNotesCheckbox()
+        dialogView.findViewById<WebView>(R.id.report).webViewClient = customWebViewClient
 
         return AlertDialog
             .Builder(requireContext())
@@ -122,20 +159,26 @@ class EmptyCardsDialogFragment : DialogFragment() {
                             loadingContainer?.isVisible = false
                             val emptyCards = state.emptyCardsReport.emptyCids()
                             if (emptyCards.isEmpty()) {
-                                emptyCardsResultsMessage?.text = TR.emptyCardsNotFound()
+                                emptyReportMessage?.text = TR.emptyCardsNotFound()
+                                emptyReportMessage?.isVisible = true
                                 // nothing to delete so also hide the preserve notes check box
                                 keepNotesWithNoValidCards?.isVisible = false
                                 (dialog as? AlertDialog)?.positiveButton?.text =
                                     getString(R.string.dialog_ok)
                             } else {
+                                reportWebView?.updateWebViewHeight()
+                                reportWebView?.loadData(
+                                    state.emptyCardsReport.asActionableReport(),
+                                    "text/html",
+                                    null,
+                                )
                                 keepNotesWithNoValidCards?.isVisible = true
-                                emptyCardsResultsMessage?.text =
-                                    getString(R.string.empty_cards_count, emptyCards.size)
+                                emptyReportMessage?.isVisible = false
                                 (dialog as? AlertDialog)?.positiveButton?.text =
                                     getString(R.string.dialog_positive_delete)
+                                emptyCardsResultsContainer?.isVisible = true
                             }
                             (dialog as? AlertDialog)?.positiveButton?.isEnabled = true
-                            emptyCardsResultsContainer?.isVisible = true
                         }
 
                         is EmptyCardsSearchFailure -> {
@@ -152,6 +195,58 @@ class EmptyCardsDialogFragment : DialogFragment() {
                 }
             }
         }
+    }
+
+    /**
+     * Replaces the anki format [anki:nid:#nid](ex: [anki:nid:234783924354]) with "nid:#id"(
+     * ex. nid:234783924354) to be used as a query text in [CardBrowser].
+     */
+    // https://github.com/ankitects/anki/blob/de7a693465ca302e457a4767c7f213c76478f0ee/qt/aqt/emptycards.py#L56-L60
+    private fun EmptyCardsReport.asActionableReport(): String {
+        @Suppress("RegExpRedundantEscape")
+        return Regex("\\[anki:nid:(\\d+)\\]")
+            .replace(
+                report,
+                "<a href=\"nid:$1\">$1</a>",
+            )
+    }
+
+    /**
+     * The [WebView] doesn't properly fit the allocated space in the dialog so this method manually
+     * updates the [WebView]'s height to a value that fits, depending on orientation and screen size.
+     */
+    private fun WebView.updateWebViewHeight() {
+        val currentOrientation = requireContext().resources.configuration.orientation
+        val targetPercent = if (currentOrientation == ORIENTATION_LANDSCAPE) 0.25 else 0.5
+        val screenHeight =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                val windowMetrics =
+                    (context as Activity)
+                        .windowManager
+                        .currentWindowMetrics
+                val insets: Insets =
+                    windowMetrics.getWindowInsets().getInsetsIgnoringVisibility(
+                        navigationBars() or displayCutout(),
+                    )
+                windowMetrics.bounds.height() - (insets.top + insets.bottom)
+            } else {
+                val displayMetrics = DisplayMetrics()
+                @Suppress("DEPRECATION")
+                (context as Activity)
+                    .windowManager
+                    .defaultDisplay
+                    .getMetrics(displayMetrics)
+                displayMetrics.heightPixels
+            }
+        val calculatedHeight = (screenHeight * targetPercent).toInt()
+        (layoutParams as ConstraintLayout.LayoutParams).height = calculatedHeight
+        layoutParams = layoutParams
+        requestLayout()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        reportWebView?.updateWebViewHeight()
     }
 
     companion object {
