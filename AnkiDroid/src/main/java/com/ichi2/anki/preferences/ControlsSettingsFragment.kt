@@ -25,6 +25,7 @@ import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.preferences.ControlPreference
+import com.ichi2.preferences.ReviewerControlPreference
 
 class ControlsSettingsFragment : SettingsFragment() {
     override val preferenceResource: Int
@@ -39,9 +40,14 @@ class ControlsSettingsFragment : SettingsFragment() {
         // if a preference is empty, it has a value like "1/"
         preferenceScreen
             .allPreferences()
-            .filterIsInstance<ControlPreference>()
+            .filterIsInstance<ReviewerControlPreference>()
             .filter { pref -> pref.value == null }
-            .forEach { pref -> pref.value = commands[pref.key]?.defaultValue?.toPreferenceString() }
+            .forEach { pref ->
+                commands[pref.key]
+                    ?.defaultValue
+                    ?.toPreferenceString()
+                    ?.let { pref.value = it }
+            }
 
         setDynamicTitle()
 

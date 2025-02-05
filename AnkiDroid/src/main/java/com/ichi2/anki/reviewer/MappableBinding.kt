@@ -51,7 +51,7 @@ open class MappableBinding(
                 .joinToString(prefix = "1/", separator = PREF_SEPARATOR.toString())
 
         @CheckResult
-        fun fromString(s: String): MappableBinding? {
+        private fun fromString(s: String): MappableBinding? {
             if (s.isEmpty()) {
                 return null
             }
