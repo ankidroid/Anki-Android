@@ -20,7 +20,9 @@ import android.content.SharedPreferences
 import androidx.annotation.StringRes
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceGroup
 import androidx.preference.PreferenceManager
+import androidx.preference.PreferenceScreen
 
 fun SharedPreferences.get(key: String): Any? = all[key]
 
@@ -61,3 +63,18 @@ inline fun <reified T : Preference> PreferenceFragmentCompat.requirePreference(
 
 /** shorthand method to get the default [SharedPreferences] instance */
 fun Context.sharedPrefs(): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+
+fun PreferenceScreen.allPreferences(): List<Preference> {
+    val allPreferences = mutableListOf<Preference>()
+    for (i in 0 until preferenceCount) {
+        val pref = getPreference(i)
+        if (pref is PreferenceGroup) {
+            for (j in 0 until pref.preferenceCount) {
+                allPreferences.add(pref.getPreference(j))
+            }
+        } else {
+            allPreferences.add(pref)
+        }
+    }
+    return allPreferences
+}

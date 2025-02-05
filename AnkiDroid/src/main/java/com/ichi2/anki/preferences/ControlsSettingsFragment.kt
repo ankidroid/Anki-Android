@@ -37,7 +37,8 @@ class ControlsSettingsFragment : SettingsFragment() {
         val commands = ViewerCommand.entries.associateBy { it.preferenceKey }
         // set defaultValue in the prefs creation.
         // if a preference is empty, it has a value like "1/"
-        allPreferences()
+        preferenceScreen
+            .allPreferences()
             .filterIsInstance<ControlPreference>()
             .filter { pref -> pref.value == null }
             .forEach { pref -> pref.value = commands[pref.key]?.defaultValue?.toPreferenceString() }
