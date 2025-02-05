@@ -162,13 +162,9 @@ sealed interface Binding {
 
         private fun ctrlMatches(event: KeyEvent): Boolean = ctrl == event.isCtrlPressed
 
-        private fun altMatches(event: KeyEvent): Boolean = altMatches(event.isAltPressed)
+        private fun altMatches(event: KeyEvent): Boolean = alt == event.isAltPressed
 
         open fun shiftMatches(shiftPressed: Boolean): Boolean = shift == shiftPressed
-
-        fun ctrlMatches(ctrlPressed: Boolean): Boolean = ctrl == ctrlPressed
-
-        fun altMatches(altPressed: Boolean): Boolean = alt == altPressed
 
         override fun toString() =
             buildString {
