@@ -25,6 +25,7 @@ import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.Companion.UPGRADE_VERSION_PREF_KEY
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeGesturesToControls
+import com.ichi2.anki.utils.ext.addBinding
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
