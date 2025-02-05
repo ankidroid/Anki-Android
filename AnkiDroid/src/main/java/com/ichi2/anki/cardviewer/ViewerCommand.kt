@@ -82,10 +82,6 @@ enum class ViewerCommand {
     USER_ACTION_9,
     ;
 
-    companion object {
-        fun fromPreferenceKey(key: String) = entries.first { it.preferenceKey == key }
-    }
-
     val preferenceKey: String
         get() = "binding_$name"
 
