@@ -52,30 +52,42 @@
             tools:text="Processing..." />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
+    <com.ichi2.ui.FixedTextView
+        android:id="@+id/empty_report_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:layout_marginHorizontal="24dp"
+        android:visibility="gone"
+        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+        tools:text="Cards to delete: 123" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/empty_cards_results_container"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:paddingStart="@dimen/side_margin"
         android:paddingEnd="@dimen/side_margin">
 
-        <com.ichi2.ui.FixedTextView
-            android:id="@+id/empty_cards_results_message"
+        <WebView
+            android:id="@+id/report"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:paddingStart="8dp"
-            android:paddingBottom="8dp"
-            android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-            tools:text="Cards to delete: 123" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/preserve_notes"/>
 
         <CheckBox
             android:id="@+id/preserve_notes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="true"
-            tools:text="Keep notes with no valid cards" />
-    </LinearLayout>
+            tools:text="Keep notes with no valid cards"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
