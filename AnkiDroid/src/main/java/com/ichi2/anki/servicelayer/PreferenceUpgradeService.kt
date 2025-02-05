@@ -49,6 +49,7 @@ import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.MappableBinding
+import com.ichi2.anki.reviewer.MappableBinding.Companion.fromPreference
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.libanki.Consts
@@ -426,7 +427,10 @@ object PreferenceUpgradeService {
                             true
                         }
                     }
-                command.addBindingInternal(preferences, mappableBinding, addAtEnd)
+                val bindings: MutableList<MappableBinding> = fromPreference(preferences, command)
+                addAtEnd(bindings, mappableBinding)
+                val newValue: String = bindings.toPreferenceString()
+                preferences.edit { putString(command.preferenceKey, newValue) }
             }
         }
 

@@ -16,18 +16,25 @@
 package com.ichi2.anki.utils.ext
 
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.MappableBinding
+import com.ichi2.anki.reviewer.MappableBinding.Companion.fromPreference
+import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 
 fun ViewerCommand.addBinding(
     preferences: SharedPreferences,
     binding: MappableBinding,
 ) {
-    val addAtStart: (MutableList<MappableBinding>, MappableBinding) -> Boolean = { collection, element ->
-        // reorder the elements, moving the added binding to the first position
-        collection.remove(element)
-        collection.add(0, element)
-        true
-    }
-    addBindingInternal(preferences, binding, addAtStart)
+    val addAtStart: (MutableList<MappableBinding>, MappableBinding) -> Boolean =
+        { collection, element ->
+            // reorder the elements, moving the added binding to the first position
+            collection.remove(element)
+            collection.add(0, element)
+            true
+        }
+    val bindings: MutableList<MappableBinding> = fromPreference(preferences, this)
+    addAtStart(bindings, binding)
+    val newValue: String = bindings.toPreferenceString()
+    preferences.edit { putString(preferenceKey, newValue) }
 }
