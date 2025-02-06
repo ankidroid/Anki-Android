@@ -2,92 +2,90 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <LinearLayout
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_margin="8dp">
 
-        <TextView
+            <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/toggle_cards_notes"
             android:textStyle="bold"
             android:layout_marginHorizontal="16dp" />
 
-        <RadioGroup
+            <RadioGroup
             android:id="@+id/select_browser_mode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginHorizontal="16dp">
 
-            <RadioButton
+                <RadioButton
                 android:id="@+id/select_cards_mode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/show_cards" />
 
-            <RadioButton
+                <RadioButton
                 android:id="@+id/select_notes_mode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/show_notes" />
+            </RadioGroup>
+        </LinearLayout>
 
-        </RadioGroup>
-    </LinearLayout>
-
-    <LinearLayout
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_margin="8dp">
 
-        <TextView
+            <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/card_browser_truncate"
             android:textStyle="bold"
             android:layout_marginHorizontal="16dp" />
 
-        <CheckBox
+            <CheckBox
             android:id="@+id/truncate_checkbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/card_browser_truncate"
             android:layout_marginHorizontal="16dp" />
 
-        <TextView
+            <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/truncate_content_help"
             android:textColor="?android:attr/textColorSecondary"
             android:layout_marginHorizontal="16dp" />
+        </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_margin="8dp">
 
-        <com.ichi2.ui.FixedTextView
+            <com.ichi2.ui.FixedTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/browse_manage_columns_main_heading"
             android:textStyle="bold"
             android:layout_marginHorizontal="16dp" />
 
-        <!-- full width to increase touch target size on tablets -->
-        <com.google.android.material.button.MaterialButton
+            <!-- full width to increase touch target size on tablets -->
+            <com.google.android.material.button.MaterialButton
             android:id="@+id/manage_columns_button"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="match_parent"
@@ -98,23 +96,22 @@
             android:layout_marginHorizontal="16dp"
             android:singleLine="true"
             android:text="@string/browse_manage_columns" />
+        </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_margin="8dp">
 
-        <TextView
+            <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/menu_flag"
             android:textStyle="bold"
             android:layout_marginHorizontal="16dp" />
 
-        <LinearLayout
+            <LinearLayout
             android:gravity="center"
             android:minHeight="?attr/listPreferredItemHeightSmall"
             android:id="@+id/action_rename_flag"
@@ -124,20 +121,17 @@
             android:orientation="horizontal"
             android:layout_height="match_parent">
 
-            <ImageView
+                <ImageView
                 android:layout_width="wrap_content"
                 android:src="@drawable/ic_flag_transparent"
                 android:layout_height="match_parent"/>
 
-            <com.ichi2.ui.FixedTextView
+                <com.ichi2.ui.FixedTextView
                 android:layout_marginStart="4dp"
                 android:layout_width="match_parent"
                 android:text="@string/rename_flag"
                 android:layout_height="wrap_content"/>
+            </LinearLayout>
         </LinearLayout>
-
-      </LinearLayout>
-
     </LinearLayout>
-
 </ScrollView>
