@@ -26,6 +26,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
+import anki.config.ConfigKey
 import anki.search.BrowserColumns
 import anki.search.BrowserRow
 import com.ichi2.anki.AnkiDroidApp
@@ -46,6 +47,7 @@ import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
+import com.ichi2.anki.utils.ext.normalizeForSearch
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
@@ -93,6 +95,7 @@ import kotlin.math.min
 @NeedsTest("columIndex1/2 config is not not updated on init")
 @NeedsTest("13442: selected deck is not changed, as this affects the reviewer")
 @NeedsTest("search is called after launch()")
+@NeedsTest("default search text updated on init")
 class CardBrowserViewModel(
     private val lastDeckIdRepository: LastDeckIdRepository,
     private val cacheDir: File,
@@ -177,6 +180,10 @@ class CardBrowserViewModel(
         MutableStateFlow(sharedPrefs().getBoolean("isTruncated", false))
     val isTruncated get() = flowOfIsTruncated.value
 
+    var shouldIgnoreAccents: Boolean = false
+
+    var defaultBrowserSearch: String? = null
+
     private val _selectedRows: MutableSet<CardOrNoteId> = Collections.synchronizedSet(LinkedHashSet())
 
     // immutable accessor for _selectedRows
@@ -205,6 +212,12 @@ class CardBrowserViewModel(
 
     val lastDeckId: DeckId?
         get() = lastDeckIdRepository.lastDeckId
+
+    private suspend fun initDefaultSearch() =
+        withCol {
+            shouldIgnoreAccents = config.getBool(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH)
+            defaultBrowserSearch = config.getString(ConfigKey.String.DEFAULT_SEARCH_TEXT)
+        }
 
     suspend fun setDeckId(deckId: DeckId) {
         Timber.i("setting deck: %d", deckId)
@@ -325,6 +338,17 @@ class CardBrowserViewModel(
             }.launchIn(viewModelScope)
 
         viewModelScope.launch {
+            initDefaultSearch()
+            // Prioritize intent-based search
+            if (searchTerms.isEmpty()) {
+                val defaultSearchText = withCol { config.getString(ConfigKey.String.DEFAULT_SEARCH_TEXT) }
+
+                Timber.d("Default search term text: $defaultSearchText")
+                if (defaultSearchText.isNotEmpty()) {
+                    searchTerms = defaultSearchText
+                }
+            }
+
             val initialDeckId = if (selectAllDecks) ALL_DECKS_ID else getInitialDeck()
             // PERF: slightly inefficient if the source was lastDeckId
             setDeckId(initialDeckId)
@@ -451,6 +475,22 @@ class CardBrowserViewModel(
         }
         sharedPrefs().edit {
             putBoolean("isTruncated", value)
+        }
+    }
+
+    fun setIgnoreAccents(value: Boolean) {
+        Timber.d("Setting ignore accent in search to: $value")
+        viewModelScope.launch {
+            shouldIgnoreAccents = value
+            withCol { config.setBool(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH, value) }
+        }
+    }
+
+    fun setDefaultSearchText(text: String) {
+        Timber.d("Setting default search text to: $text")
+        viewModelScope.launch {
+            defaultBrowserSearch = text
+            withCol { config.setString(ConfigKey.String.DEFAULT_SEARCH_TEXT, text) }
         }
     }
 
@@ -895,8 +935,16 @@ class CardBrowserViewModel(
             Timber.d("skipping duplicate search: forceRefresh is false")
             return
         }
-        searchTerms = searchQuery
-        launchSearchForCards()
+        searchTerms =
+            if (shouldIgnoreAccents) {
+                searchQuery.normalizeForSearch()
+            } else {
+                searchQuery
+            }
+
+        viewModelScope.launch {
+            launchSearchForCards()
+        }
     }
 
     /**

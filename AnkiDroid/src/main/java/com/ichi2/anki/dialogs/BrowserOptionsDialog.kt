@@ -25,11 +25,15 @@ import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.BrowserColumnSelectionFragment
 import com.ichi2.anki.browser.CardBrowserViewModel
@@ -60,6 +64,16 @@ class BrowserOptionsDialog : AppCompatDialogFragment() {
 
         if (newTruncate != isTruncated) {
             viewModel.setTruncated(newTruncate)
+        }
+
+        val newIgnoreAccent = dialogView.findViewById<CheckBox>(R.id.ignore_accents_checkbox).isChecked
+        if (newIgnoreAccent != viewModel.shouldIgnoreAccents) {
+            viewModel.setIgnoreAccents(newIgnoreAccent)
+        }
+
+        val newSearchValue = dialogView.findViewById<TextInputEditText>(R.id.default_search_text).text?.toString() ?: ""
+        if (newSearchValue != viewModel.defaultBrowserSearch) {
+            viewModel.setDefaultSearchText(newSearchValue)
         }
     }
 
@@ -103,6 +117,20 @@ class BrowserOptionsDialog : AppCompatDialogFragment() {
 
         dialogView.findViewById<Button>(R.id.manage_columns_button).setOnClickListener {
             openColumnManager()
+        }
+
+        dialogView.findViewById<CheckBox>(R.id.ignore_accents_checkbox).apply {
+            text = TR.preferencesIgnoreAccentsInSearch()
+            isChecked = viewModel.shouldIgnoreAccents
+        }
+
+        dialogView.findViewById<TextInputLayout>(R.id.default_search_input_layout).hint = TR.preferencesDefaultSearchText()
+
+        dialogView.findViewById<TextView>(R.id.browsing_text_view).text = TR.preferencesBrowsing()
+
+        dialogView.findViewById<TextInputEditText>(R.id.default_search_text).apply {
+            hint = TR.preferencesDefaultSearchTextExample()
+            setText(viewModel.defaultBrowserSearch ?: "")
         }
 
         return MaterialAlertDialogBuilder(requireContext()).run {
