@@ -37,5 +37,6 @@ object DiscardChangesDialog {
         message(text = message)
         positiveButton(text = positiveButtonText) { positiveMethod() }
         negativeButton(text = negativeButtonText)
+        setCancelable(false) // To Avoid Cancellation By Swipe Gesture and Back Press simultaneously
     }
 }
