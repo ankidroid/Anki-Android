@@ -20,6 +20,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -51,6 +52,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
@@ -93,6 +95,10 @@ import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_8
 import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_9
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
+import com.ichi2.anki.reviewer.BindingProcessor
+import com.ichi2.anki.reviewer.CardSide
+import com.ichi2.anki.reviewer.PeripheralKeymap
+import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.settings.enums.HideSystemBars
@@ -111,7 +117,9 @@ import kotlinx.coroutines.launch
 class ReviewerFragment :
     CardViewerFragment(R.layout.reviewer2),
     BaseSnackbarBuilderProvider,
-    ActionMenuView.OnMenuItemClickListener {
+    ActionMenuView.OnMenuItemClickListener,
+    BindingProcessor<ReviewerBinding, ViewerAction>,
+    DispatchKeyEventListener {
     override val viewModel: ReviewerViewModel by viewModels {
         ReviewerViewModel.factory(CardMediaPlayer())
     }
@@ -122,6 +130,8 @@ class ReviewerFragment :
     override val baseSnackbarBuilder: SnackbarBuilder = {
         anchorView = this@ReviewerFragment.view?.findViewById(R.id.snackbar_anchor)
     }
+
+    private lateinit var keyMap: PeripheralKeymap<ReviewerBinding, ViewerAction>
 
     override fun onStop() {
         super.onStop()
@@ -135,6 +145,7 @@ class ReviewerFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        keyMap = PeripheralKeymap(sharedPrefs(), ViewerAction.entries, this)
 
         view.findViewById<AppCompatImageButton>(R.id.back_button).setOnClickListener {
             requireActivity().finish()
@@ -173,10 +184,7 @@ class ReviewerFragment :
         }
     }
 
-    // TODO
-    override fun onMenuItemClick(item: MenuItem): Boolean {
-        if (item.hasSubMenu()) return false
-        val action = ViewerAction.fromId(item.itemId)
+    private fun executeAction(action: ViewerAction): Boolean {
         when (action) {
             ADD_NOTE -> launchAddNote()
             CARD_INFO -> launchCardInfo()
@@ -259,6 +267,25 @@ class ReviewerFragment :
     private fun resetZoom() {
         webView.settings.loadWithOverviewMode = false
         webView.settings.loadWithOverviewMode = true
+    }
+
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if (event.action != KeyEvent.ACTION_DOWN) return false
+        return keyMap.onKeyDown(event)
+    }
+
+    override fun processAction(
+        action: ViewerAction,
+        binding: ReviewerBinding,
+    ): Boolean {
+        if (binding.side != CardSide.BOTH && CardSide.fromAnswer(viewModel.showingAnswer.value) != binding.side) return false
+        return executeAction(action)
+    }
+
+    override fun onMenuItemClick(item: MenuItem): Boolean {
+        if (item.hasSubMenu()) return false
+        val action = ViewerAction.fromId(item.itemId)
+        return executeAction(action)
     }
 
     private fun setupAnswerButtons(view: View) {
