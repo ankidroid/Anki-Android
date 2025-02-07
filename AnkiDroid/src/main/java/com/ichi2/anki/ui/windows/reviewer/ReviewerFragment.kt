@@ -53,46 +53,24 @@ import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DispatchKeyEventListener
-import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
+import com.ichi2.anki.pages.CardInfoDestination
+import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuView
 import com.ichi2.anki.preferences.reviewer.ViewerAction
-import com.ichi2.anki.preferences.reviewer.ViewerAction.ADD_NOTE
 import com.ichi2.anki.preferences.reviewer.ViewerAction.BURY_CARD
 import com.ichi2.anki.preferences.reviewer.ViewerAction.BURY_MENU
 import com.ichi2.anki.preferences.reviewer.ViewerAction.BURY_NOTE
-import com.ichi2.anki.preferences.reviewer.ViewerAction.CARD_INFO
-import com.ichi2.anki.preferences.reviewer.ViewerAction.DECK_OPTIONS
-import com.ichi2.anki.preferences.reviewer.ViewerAction.DELETE
-import com.ichi2.anki.preferences.reviewer.ViewerAction.EDIT
-import com.ichi2.anki.preferences.reviewer.ViewerAction.FLAG_BLUE
-import com.ichi2.anki.preferences.reviewer.ViewerAction.FLAG_GREEN
 import com.ichi2.anki.preferences.reviewer.ViewerAction.FLAG_MENU
-import com.ichi2.anki.preferences.reviewer.ViewerAction.FLAG_ORANGE
-import com.ichi2.anki.preferences.reviewer.ViewerAction.FLAG_PINK
-import com.ichi2.anki.preferences.reviewer.ViewerAction.FLAG_PURPLE
-import com.ichi2.anki.preferences.reviewer.ViewerAction.FLAG_RED
-import com.ichi2.anki.preferences.reviewer.ViewerAction.FLAG_TURQUOISE
 import com.ichi2.anki.preferences.reviewer.ViewerAction.MARK
 import com.ichi2.anki.preferences.reviewer.ViewerAction.REDO
 import com.ichi2.anki.preferences.reviewer.ViewerAction.SUSPEND_CARD
 import com.ichi2.anki.preferences.reviewer.ViewerAction.SUSPEND_MENU
 import com.ichi2.anki.preferences.reviewer.ViewerAction.SUSPEND_NOTE
-import com.ichi2.anki.preferences.reviewer.ViewerAction.TOGGLE_AUTO_ADVANCE
 import com.ichi2.anki.preferences.reviewer.ViewerAction.UNDO
-import com.ichi2.anki.preferences.reviewer.ViewerAction.UNSET_FLAG
-import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_1
-import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_2
-import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_3
-import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_4
-import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_5
-import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_6
-import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_7
-import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_8
-import com.ichi2.anki.preferences.reviewer.ViewerAction.USER_ACTION_9
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
 import com.ichi2.anki.reviewer.BindingProcessor
@@ -182,45 +160,16 @@ class ReviewerFragment :
         viewModel.showingAnswer.collectIn(lifecycleScope) {
             resetZoom()
         }
-    }
 
-    private fun executeAction(action: ViewerAction): Boolean {
-        when (action) {
-            ADD_NOTE -> launchAddNote()
-            CARD_INFO -> launchCardInfo()
-            DECK_OPTIONS -> launchDeckOptions()
-            EDIT -> launchEditNote()
-            DELETE -> viewModel.deleteNote()
-            MARK -> viewModel.toggleMark()
-            REDO -> viewModel.redo()
-            UNDO -> viewModel.undo()
-            TOGGLE_AUTO_ADVANCE -> viewModel.toggleAutoAdvance()
-            BURY_NOTE -> viewModel.buryNote()
-            BURY_CARD -> viewModel.buryCard()
-            SUSPEND_NOTE -> viewModel.suspendNote()
-            SUSPEND_CARD -> viewModel.suspendCard()
-            UNSET_FLAG -> viewModel.setFlag(Flag.NONE)
-            FLAG_RED -> viewModel.setFlag(Flag.RED)
-            FLAG_ORANGE -> viewModel.setFlag(Flag.ORANGE)
-            FLAG_BLUE -> viewModel.setFlag(Flag.BLUE)
-            FLAG_GREEN -> viewModel.setFlag(Flag.GREEN)
-            FLAG_PINK -> viewModel.setFlag(Flag.PINK)
-            FLAG_TURQUOISE -> viewModel.setFlag(Flag.TURQUOISE)
-            FLAG_PURPLE -> viewModel.setFlag(Flag.PURPLE)
-            USER_ACTION_1 -> viewModel.userAction(1)
-            USER_ACTION_2 -> viewModel.userAction(2)
-            USER_ACTION_3 -> viewModel.userAction(3)
-            USER_ACTION_4 -> viewModel.userAction(4)
-            USER_ACTION_5 -> viewModel.userAction(5)
-            USER_ACTION_6 -> viewModel.userAction(6)
-            USER_ACTION_7 -> viewModel.userAction(7)
-            USER_ACTION_8 -> viewModel.userAction(8)
-            USER_ACTION_9 -> viewModel.userAction(9)
-            SUSPEND_MENU -> viewModel.suspendCard()
-            BURY_MENU -> viewModel.buryCard()
-            FLAG_MENU -> return false
+        viewModel.destinationFlow.collectIn(lifecycleScope) { destination ->
+            val intent = destination.toIntent(requireContext())
+            when (destination) {
+                is NoteEditorLauncher.EditNoteFromPreviewer -> noteEditorLauncher.launch(intent)
+                is NoteEditorLauncher.AddNote -> noteEditorLauncher.launch(intent)
+                is DeckOptionsDestination -> deckOptionsLauncher.launch(intent)
+                is CardInfoDestination -> startActivity(intent)
+            }
         }
-        return true
     }
 
     private fun setupTypeAnswer(view: View) {
@@ -279,13 +228,15 @@ class ReviewerFragment :
         binding: ReviewerBinding,
     ): Boolean {
         if (binding.side != CardSide.BOTH && CardSide.fromAnswer(viewModel.showingAnswer.value) != binding.side) return false
-        return executeAction(action)
+        viewModel.executeAction(action)
+        return true
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
         if (item.hasSubMenu()) return false
         val action = ViewerAction.fromId(item.itemId)
-        return executeAction(action)
+        viewModel.executeAction(action)
+        return true
     }
 
     private fun setupAnswerButtons(view: View) {
@@ -538,36 +489,10 @@ class ReviewerFragment :
             }
         }
 
-    private fun launchEditNote() {
-        lifecycleScope.launch {
-            val intent = viewModel.getEditNoteDestination().toIntent(requireContext())
-            noteEditorLauncher.launch(intent)
-        }
-    }
-
-    private fun launchAddNote() {
-        val intent = NoteEditorLauncher.AddNoteFromReviewer().toIntent(requireContext())
-        noteEditorLauncher.launch(intent)
-    }
-
-    private fun launchCardInfo() {
-        lifecycleScope.launch {
-            val intent = viewModel.getCardInfoDestination().toIntent(requireContext())
-            startActivity(intent)
-        }
-    }
-
     private val deckOptionsLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             viewModel.refreshCard()
         }
-
-    private fun launchDeckOptions() {
-        lifecycleScope.launch {
-            val intent = viewModel.getDeckOptionsDestination().toIntent(requireContext())
-            deckOptionsLauncher.launch(intent)
-        }
-    }
 
     companion object {
         fun getIntent(context: Context): Intent = CardViewerActivity.getIntent(context, ReviewerFragment::class)
