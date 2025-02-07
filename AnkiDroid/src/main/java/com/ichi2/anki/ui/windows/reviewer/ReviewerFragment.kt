@@ -212,12 +212,7 @@ class ReviewerFragment :
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean = viewModel.dispatchKeyEvent(event)
 
-    override fun onMenuItemClick(item: MenuItem): Boolean {
-        if (item.hasSubMenu()) return false
-        val action = ViewerAction.fromId(item.itemId)
-        viewModel.executeAction(action)
-        return true
-    }
+    override fun onMenuItemClick(item: MenuItem): Boolean = viewModel.onMenuItemClick(item)
 
     private fun setupAnswerButtons(view: View) {
         val prefs = sharedPrefs()
