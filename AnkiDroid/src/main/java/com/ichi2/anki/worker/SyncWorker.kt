@@ -104,6 +104,9 @@ class SyncWorker(
                 setContentTitle(applicationContext.getString(R.string.sync_error))
             }
             return Result.failure()
+        } finally {
+            Timber.d("SyncWorker: cancelling notification")
+            notificationManager.cancel(NotificationId.SYNC)
         }
 
         Timber.d("SyncWorker: success")
