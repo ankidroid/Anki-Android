@@ -18,94 +18,35 @@ package com.ichi2.anki.reviewer
 
 import android.content.SharedPreferences
 import android.view.KeyEvent
-import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.Binding.Companion.possibleKeyBindings
-import com.ichi2.anki.reviewer.CardSide.Companion.fromAnswer
 
-/** Accepts peripheral input, mapping via various keybinding strategies,
- * and converting them to commands for the Reviewer.  */
-class PeripheralKeymap(
-    reviewerUi: ReviewerUi,
-    commandProcessor: ViewerCommand.CommandProcessor,
+class PeripheralKeymap<B : MappableBinding, A : MappableAction<B>>(
+    sharedPrefs: SharedPreferences,
+    actions: List<A>,
+    private val processor: BindingProcessor<B, A>,
 ) {
-    private val keyMap: KeyMap = KeyMap(commandProcessor, reviewerUi)
-    private var hasSetup = false
+    private val bindingMap = HashMap<Binding, Pair<B, A>>()
 
-    fun setup() {
-        val preferences = AnkiDroidApp.instance.sharedPrefs()
-        setup(preferences)
-    }
-
-    fun setup(preferences: SharedPreferences) {
-        for (command in ViewerCommand.entries) {
-            add(command, preferences)
-        }
-        hasSetup = true
-    }
-
-    private fun add(
-        command: ViewerCommand,
-        preferences: SharedPreferences,
-    ) {
-        val bindings =
-            ReviewerBinding
-                .fromPreference(preferences, command)
-                .filterIsInstance<ReviewerBinding>()
-        for (b in bindings) {
-            if (!b.isKey) {
-                continue
+    init {
+        for (action in actions) {
+            val mappableBindings = action.getBindings(sharedPrefs)
+            for (mappableBinding in mappableBindings) {
+                if (!mappableBinding.isKey) continue
+                bindingMap[mappableBinding.binding] = mappableBinding to action
             }
-            keyMap[b] = command
         }
     }
 
-    fun onKeyDown(
-        keyCode: Int,
-        event: KeyEvent,
-    ): Boolean =
-        if (!hasSetup || event.repeatCount > 0) {
-            false
-        } else {
-            keyMap.onKeyDown(keyCode, event)
+    fun onKeyDown(event: KeyEvent): Boolean {
+        if (event.repeatCount > 0) {
+            return false
         }
-
-    @Suppress("UNUSED_PARAMETER")
-    fun onKeyUp(
-        keyCode: Int,
-        event: KeyEvent?,
-    ): Boolean = false
-
-    class KeyMap(
-        private val processor: ViewerCommand.CommandProcessor,
-        private val reviewerUI: ReviewerUi,
-    ) {
-        val bindingMap = HashMap<MappableBinding, ViewerCommand>()
-
-        @Suppress("UNUSED_PARAMETER")
-        fun onKeyDown(
-            keyCode: Int,
-            event: KeyEvent?,
-        ): Boolean {
-            var ret = false
-            val bindings = possibleKeyBindings(event!!)
-            val side = fromAnswer(reviewerUI.isDisplayingAnswer)
-            for (b in bindings) {
-                val binding = ReviewerBinding(b, side)
-                val command = bindingMap[binding] ?: continue
-                ret = ret or processor.executeCommand(command, fromGesture = null)
-            }
-            return ret
+        val bindings = possibleKeyBindings(event)
+        for (binding in bindings) {
+            val (mappableBinding, action) = bindingMap[binding] ?: continue
+            return processor.processAction(action, mappableBinding)
         }
-
-        operator fun set(
-            key: MappableBinding,
-            value: ViewerCommand,
-        ) {
-            bindingMap[key] = value
-        }
-
-        operator fun get(key: MappableBinding): ViewerCommand? = bindingMap[key]
+        return false
     }
 }

@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.cardviewer
 
+import android.content.SharedPreferences
 import android.view.KeyEvent
 import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.Binding.Companion.unicode
@@ -22,11 +23,11 @@ import com.ichi2.anki.reviewer.Binding.ModifierKeys
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
 import com.ichi2.anki.reviewer.CardSide
-import com.ichi2.anki.reviewer.MappableBinding
+import com.ichi2.anki.reviewer.MappableAction
 import com.ichi2.anki.reviewer.ReviewerBinding
 
 /** Abstraction: Discuss moving many of these to 'Reviewer'  */
-enum class ViewerCommand {
+enum class ViewerCommand : MappableAction<ReviewerBinding> {
     SHOW_ANSWER,
     FLIP_OR_ANSWER_EASE1,
     FLIP_OR_ANSWER_EASE2,
@@ -78,11 +79,16 @@ enum class ViewerCommand {
     USER_ACTION_9,
     ;
 
-    val preferenceKey: String
+    override val preferenceKey: String
         get() = "binding_$name"
 
+    override fun getBindings(prefs: SharedPreferences): List<ReviewerBinding> {
+        val prefValue = prefs.getString(preferenceKey, null) ?: return defaultValue
+        return ReviewerBinding.fromPreferenceString(prefValue)
+    }
+
     // If we use the serialised format, then this adds additional coupling to the properties.
-    val defaultValue: List<MappableBinding>
+    val defaultValue: List<ReviewerBinding>
         get() {
             return when (this) {
                 FLIP_OR_ANSWER_EASE1 ->
