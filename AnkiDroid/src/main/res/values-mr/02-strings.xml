@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">व्हाईटबोर्ड इमेज सेव्ह करण्यात अयशस्वी. %s</string>
     <string name="white_board_image_saved">व्हाईटबोर्ड इमेज %s मध्ये सेव्ह केली</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">व्हाईटबोर्ड पेन रंग</string>
     <string name="title_whiteboard_editor" maxLength="28">व्हाईटबोर्ड संपादक</string>
     <string name="user_is_a_robot">स्वयंचलित चाचणी आढळली. आपण मनुष्य असल्यास, अँकीड्रोइड समर्थनाशी संपर्क साधा</string>
     <!-- JS api -->

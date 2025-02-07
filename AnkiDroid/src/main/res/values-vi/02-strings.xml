@@ -190,7 +190,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Không thể lưu hình ảnh bảng trắng. %s</string>
     <string name="white_board_image_saved">Hình ảnh bảng trắng được lưu vào %s</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">Bảng màu bút</string>
     <string name="title_whiteboard_editor" maxLength="28">Trình chỉnh sửa bảng trắng</string>
     <string name="user_is_a_robot">Đã phát hiện kiểm tra tự động. Nếu bạn là con người, hãy liên hệ với bộ phận hỗ trợ AnkiDroid</string>
     <!-- JS api -->

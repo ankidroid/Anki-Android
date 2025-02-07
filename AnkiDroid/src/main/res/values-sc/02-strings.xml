@@ -197,7 +197,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Sarvamentu de s\'immàgine de sa lavagna fallidu. %s</string>
     <string name="white_board_image_saved">Immàgine de sa lavagna sarvada in %s</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">Colore de pinna de sa lavagna</string>
     <string name="title_whiteboard_editor" maxLength="28">Editore de sa lavagna</string>
     <string name="user_is_a_robot">Test automàticu agatadu. Si ses un\'umanu cuntata su suportu de AnkiDroid</string>
     <!-- JS api -->

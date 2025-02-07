@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">વ્હાઇટબોર્ડ છબી સાચવવામાં નિષ્ફળ. %s</string>
     <string name="white_board_image_saved">વ્હાઇટબોર્ડ ઇમેજ %s પર સાચવી</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">વ્હાઇટબોર્ડ પેન રંગ</string>
     <string name="title_whiteboard_editor" maxLength="28">વ્હાઇટબોર્ડ એડિટર</string>
     <string name="user_is_a_robot">શોધાયેલ સ્વચાલિત પરીક્ષણ. જો તમે માનવ છો, તો AnkiDroid સપોર્ટનો સંપર્ક કરો</string>
     <!-- JS api -->

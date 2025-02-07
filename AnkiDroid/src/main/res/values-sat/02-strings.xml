@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ ᱥᱟᱱᱪᱟᱣ ᱵᱷᱩᱞ ᱾. %s </string>
     <string name="white_board_image_saved">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ %s ᱛᱮ ᱥᱟᱱᱪᱟᱣ</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ ᱠᱚᱞᱚᱢ ᱨᱚᱰ</string>
     <string name="title_whiteboard_editor" maxLength="28">ᱯᱩᱸᱰᱵᱚᱰ ᱮᱰᱤᱴᱚᱨ</string>
     <string name="user_is_a_robot">ᱟᱹᱴᱚᱢᱮᱴᱮᱰ ᱴᱮᱥᱴ ᱯᱟᱱᱛᱮ ᱚᱲᱚᱠ ᱾ ᱡᱩᱫᱤ ᱟᱢ ᱦᱚᱲ ᱠᱟᱱᱟᱢ AnkiDroid ᱥᱚᱢᱯᱚᱨᱠ ᱠᱚᱢ</string>
     <!-- JS api -->

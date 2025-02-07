@@ -210,7 +210,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">فشل حفظ صورة السبورة. %s</string>
     <string name="white_board_image_saved">تم حفظ صورة السبورة إلى %s</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">لون قلم السبورة</string>
     <string name="title_whiteboard_editor" maxLength="28">لون قلم السبورة</string>
     <string name="user_is_a_robot">تم الكشف عن اختبار تلقائي. إذا كنت بشراً، اتصل بدعم أنكيدرويد</string>
     <!-- JS api -->

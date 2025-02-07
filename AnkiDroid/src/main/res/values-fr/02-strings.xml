@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Impossible d\'enregistrer l\'image du tableau blanc. %s</string>
     <string name="white_board_image_saved">Image du tableau blanc enregistrée dans %s</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">Couleur du stylo du tableau blanc</string>
     <string name="title_whiteboard_editor" maxLength="28">Éditeur de tableau blanc</string>
     <string name="user_is_a_robot">Test automatisé détecté. Si vous êtes humain, contactez l\'assistance AnkiDroid</string>
     <!-- JS api -->

@@ -202,7 +202,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Nepodařilo se uložit obrázek tabule. %s</string>
     <string name="white_board_image_saved">Obrázek tabule uložen do %s</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">Barva pera tabule</string>
     <string name="title_whiteboard_editor" maxLength="28">Editor tabule</string>
     <string name="user_is_a_robot">Zjištěn automatizovaný test. Pokud jste člověk, kontaktujte podporu AnkiDroid</string>
     <!-- JS api -->

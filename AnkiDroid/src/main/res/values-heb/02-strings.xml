@@ -202,7 +202,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">נכשל לשמור תמונת לוח. %s</string>
     <string name="white_board_image_saved">תמונת לוח נשמרה ל %s</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">צבע עט ללוח</string>
     <string name="title_whiteboard_editor" maxLength="28">עורך לוח</string>
     <string name="user_is_a_robot">זוהה אוטומציה ממוחשבת, אם אתה אנושי, צור קשר עם תמיכת AnkiDroid</string>
     <!-- JS api -->

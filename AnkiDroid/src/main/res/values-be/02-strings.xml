@@ -202,7 +202,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Не атрымалася захаваць відарыс дошкі. %s</string>
     <string name="white_board_image_saved">Відарыс дошкі захаваны ў %s</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">Колер крэйды дошкі</string>
     <string name="title_whiteboard_editor" maxLength="28">Рэдактар дошкі</string>
     <string name="user_is_a_robot">Выяўлены аўтаматычны тэст. У выпадку, калі вы чалавек, калі ласка, напішыце ў падтрымку AnkiDroid</string>
     <!-- JS api -->

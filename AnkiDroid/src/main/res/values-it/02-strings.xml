@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Salvataggio dell\'immagine della lavagna fallito. %s</string>
     <string name="white_board_image_saved">Immagine lavagna salvata in %s</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">Colore della penna della lavagna</string>
     <string name="title_whiteboard_editor" maxLength="28">Editor di lavagna bianca</string>
     <string name="user_is_a_robot">Rilevato test automatico. Se sei umano, contatta il supporto AnkiDroid</string>
     <!-- JS api -->

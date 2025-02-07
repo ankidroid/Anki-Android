@@ -202,7 +202,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Nie udało się zapisać obrazu tablicy. %s</string>
     <string name="white_board_image_saved">Obraz tablicy zapisany w %s</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">Kolor tablicy</string>
     <string name="title_whiteboard_editor" maxLength="28">Edytor tablicy</string>
     <string name="user_is_a_robot">Wykryto automatyczny test. Jeśli jesteś człowiekiem, skontaktuj się z pomocą techniczną AnkiDroid</string>
     <!-- JS api -->

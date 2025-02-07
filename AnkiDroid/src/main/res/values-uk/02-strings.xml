@@ -202,7 +202,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Не вдалося зберегти зображення дошки. %s</string>
     <string name="white_board_image_saved">Зображення дошки збережено до %s</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">Колір пензля</string>
     <string name="title_whiteboard_editor" maxLength="28">Редактор дошки</string>
     <string name="user_is_a_robot">Виявлено автоматичний тест. Якщо Ви — людина, зверніться до підтримки AnkiDroid</string>
     <!-- JS api -->

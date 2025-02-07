@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Error al desar l\'imatge de la pissarra. %s</string>
     <string name="white_board_image_saved">Imatge de la pissara desada a %s</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">Color del llapis de la pissara</string>
     <string name="title_whiteboard_editor" maxLength="28">Editor de la pissarra </string>
     <string name="user_is_a_robot">Test automàtic detectat. Si ets un humà contacta amb el suport AnkiDroid</string>
     <!-- JS api -->

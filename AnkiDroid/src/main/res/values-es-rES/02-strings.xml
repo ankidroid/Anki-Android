@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">No se pudo guardar la imagen de pizarra. %s</string>
     <string name="white_board_image_saved">Imagen de pizarra guardada en %s</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">Color del lápiz</string>
     <string name="title_whiteboard_editor" maxLength="28">Editor de pizarra</string>
     <string name="user_is_a_robot">Prueba automatizada detectada. Si eres un humano, ponte en contacto con el soporte de AnkiDroid</string>
     <!-- JS api -->

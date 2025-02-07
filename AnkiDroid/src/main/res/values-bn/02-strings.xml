@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">হোয়াইটবোর্ড ছবি সংরক্ষণ করতে ব্যর্থ হয়েছে. %s</string>
     <string name="white_board_image_saved">হোয়াইটবোর্ড ছবি %s-এ সংরক্ষিত হয়েছে</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">হোয়াইটবোর্ড কলমের রঙ</string>
     <string name="title_whiteboard_editor" maxLength="28">হোয়াইটবোর্ড সম্পাদক</string>
     <string name="user_is_a_robot">স্বয়ংক্রিয় পরীক্ষা সনাক্ত করা হয়েছে. আপনি যদি একজন মানুষ হন তবে AnkiDroid সহায়তার সাথে যোগাযোগ করুন</string>
     <!-- JS api -->

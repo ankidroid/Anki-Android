@@ -193,7 +193,6 @@ Context | Request Context    [1]</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">화이트보드 이미지 저장에 실패했습니다. %s</string>
     <string name="white_board_image_saved">%s에 화이트보드 이미지가 저장되었습니다.</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">화이트보드 펜 색상</string>
     <string name="title_whiteboard_editor" maxLength="28">화이트보드 편집기</string>
     <string name="user_is_a_robot">자동 테스트를 감지했습니다. 만약 당신이 로봇이 아니라면 AnkiDroid 지원부에 연락하세요.</string>
     <!-- JS api -->

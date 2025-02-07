@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">వైట్‌బోర్డ్ చిత్రాన్ని సేవ్ చేయడంలో విఫలమైంది. %s</string>
     <string name="white_board_image_saved">వైట్‌బోర్డ్ చిత్రం %sకి సేవ్ చేయబడింది</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">వైట్‌బోర్డ్ పెన్ రంగు</string>
     <string name="title_whiteboard_editor" maxLength="28">వైట్‌బోర్డ్ ఎడిటర్</string>
     <string name="user_is_a_robot">స్వయంచాలక పరీక్ష కనుగొనబడింది. మీరు మానవులైతే, AnkiDroid మద్దతును సంప్రదించండి</string>
     <!-- JS api -->

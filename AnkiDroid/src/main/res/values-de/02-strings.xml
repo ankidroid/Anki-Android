@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Whiteboardbild konnte nicht gespeichert werden. %s</string>
     <string name="white_board_image_saved">Whiteboardbild in %s gespeichert</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">Stiftfarbe des Whiteboards</string>
     <string name="title_whiteboard_editor" maxLength="28">Whiteboard-Editor</string>
     <string name="user_is_a_robot">Automatischer Test erkannt. Wenn Sie ein Mensch sind, wenden Sie sich an AnkiDroid-Support</string>
     <!-- JS api -->

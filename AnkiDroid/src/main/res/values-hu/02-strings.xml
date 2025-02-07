@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">A rajztábla kép mentése sikertelen. %s</string>
     <string name="white_board_image_saved">A rajztábla kép elmentve %s-ba</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">Rajtábla tollszín </string>
     <string name="title_whiteboard_editor" maxLength="28">Rajztábla szerkesztő</string>
     <string name="user_is_a_robot">Felismert automatizált teszt. Ha te csináltad, vedd fel a kapcsolatot az AnkiDroid támogatással</string>
     <!-- JS api -->

@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">ذخیرۀ تصویر تخته سفید با مشکل مواجه شد. %s</string>
     <string name="white_board_image_saved">تصویر تخته سفید در %s ذخیره شد</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">رنگ ماژیک تخته سفید</string>
     <string name="title_whiteboard_editor" maxLength="28">ویرایشگر تخته صفید</string>
     <string name="user_is_a_robot">تست خودکار شناسایی شد. اگر شما انسان هستید، با پشتیبانی AnkiDroid ارتباط برقرار کنید</string>
     <!-- JS api -->

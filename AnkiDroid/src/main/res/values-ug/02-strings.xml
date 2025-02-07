@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">ئاق دوسكا سۈرىتىنى ساقلىيالمىدى %s</string>
     <string name="white_board_image_saved">ئاق دوسكا سۈرىتى %s غا ساقلاندى</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">ئاق دوسكا قەلەم رەڭگى</string>
     <string name="title_whiteboard_editor" maxLength="28">ئاق دوسكا تەھرىرلىگۈچ</string>
     <string name="user_is_a_robot">ئاپتوماتلاشقان سىناق بايقالدى. ئەگەر ئىنسان بولسىڭىز، AnkiDroid قوللىغۇچىلىرى بىلەن ئالاقىلىشىڭ</string>
     <!-- JS api -->

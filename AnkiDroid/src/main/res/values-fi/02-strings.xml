@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Kirjoitustaulun kuvan tallentaminen epäonnistui. %s</string>
     <string name="white_board_image_saved">Kirjoitustaulun kuva tallennettu sijaintiin %s</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">Kirjoitustaulun kynän väri</string>
     <string name="title_whiteboard_editor" maxLength="28">Valkotaulu editori</string>
     <string name="user_is_a_robot">Automaattinen testi havaittu. Jos olet ihminen, ota yhteyttä AnkiDroidin tukeen.</string>
     <!-- JS api -->

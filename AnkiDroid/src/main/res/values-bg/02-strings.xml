@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Запазването на изображението на бялата дъска не бе успешно. %s</string>
     <string name="white_board_image_saved">Изображението на бялата дъска е запазено в %s</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">Цвят на писалката за бяла дъска</string>
     <string name="title_whiteboard_editor" maxLength="28">Whiteboard editor</string>
     <string name="user_is_a_robot">Открит автоматичен тест. Ако сте човек, свържете се с екипа за поддръжка на AnkiDroid</string>
     <!-- JS api -->

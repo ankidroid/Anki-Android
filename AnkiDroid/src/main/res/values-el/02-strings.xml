@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Αποτυχία αποθήκευσης της εικόνας του πίνακα. %s</string>
     <string name="white_board_image_saved">Η εικόνα του πίνακα αποθηκεύτηκε στο %s</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">Χρώμα στυλό πίνακα</string>
     <string name="title_whiteboard_editor" maxLength="28">Επεξεργαστής πίνακα</string>
     <string name="user_is_a_robot">Εντοπίστηκε αυτοματοποιημένο τεστ. Εάν είστε άνθρωπος, επικοινωνήστε με την υποστήριξη του AnkiDroid</string>
     <!-- JS api -->

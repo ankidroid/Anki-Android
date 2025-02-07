@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">დაფის სურათი ვერ შეინახა. %s</string>
     <string name="white_board_image_saved">დაფის სურათი შეინახა %s-ში</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">დაფის მარკერის ფერი</string>
     <string name="title_whiteboard_editor" maxLength="28">დაფის რედაქტორი</string>
     <string name="user_is_a_robot">აღიქვა ავტომატიზებული ტესტი. თუკი ადამიანი ხართ, გთხოვთ, მიმართოთ AnkiDroid-ის მხარდაჭერის გუნდს</string>
     <!-- JS api -->

@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Falha ao guardar a imagem do quadro de escrita. %s</string>
     <string name="white_board_image_saved">Imagem do quadro de escrita guardado em %s</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">Cor da caneta do quadro de escrita</string>
     <string name="title_whiteboard_editor" maxLength="28">Editor do quadro de escrita</string>
     <string name="user_is_a_robot">Detectado teste automático. Se é um humano, por favor contacto o apoio do AnkiDroid.</string>
     <!-- JS api -->

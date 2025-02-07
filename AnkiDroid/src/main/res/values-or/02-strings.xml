@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">ଧଳାପଟା ଛବି ସଂରକ୍ଷଣ କରିବାରେ ବିଫଳ। %s</string>
     <string name="white_board_image_saved">ଧଳାପଟା ଛବି %sରେ ସଂରକ୍ଷିତ</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">ଧଳାପଟା କଲମ ରଙ୍ଗ</string>
     <string name="title_whiteboard_editor" maxLength="28">ଧଳାପଟା ସମ୍ପାଦକ</string>
     <string name="user_is_a_robot">ସ୍ୱଚାଳିତ ପରୀକ୍ଷା ଚିହ୍ନଟ ହୋଇଛି। ଯଦି ଆପଣ ଜଣେ ମଣିଷ, AnkiDroid ସମର୍ଥନ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ</string>
     <!-- JS api -->

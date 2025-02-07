@@ -190,7 +190,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">儲存白板圖像失敗。%s</string>
     <string name="white_board_image_saved">白板圖像儲存至%s</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">白板筆色彩</string>
     <string name="title_whiteboard_editor" maxLength="28">白板編輯器</string>
     <string name="user_is_a_robot">已偵測到自動測驗。如果您不是機器人，請聯絡AnkiDroid支援.</string>
     <!-- JS api -->

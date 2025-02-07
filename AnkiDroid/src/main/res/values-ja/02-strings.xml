@@ -190,7 +190,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">ホワイトボード画像の保存に失敗しました。 %s</string>
     <string name="white_board_image_saved">ホワイトボードの画像を \"%s\" に保存しました</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">ホワイトボードペンの色を選択</string>
     <string name="title_whiteboard_editor" maxLength="28">ホワイトボードエディタ</string>
     <string name="user_is_a_robot">自動テストが検出されました。人間による操作の場合は、AnkiDroidサポートにお問い合わせください。</string>
     <!-- JS api -->

@@ -190,7 +190,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Gagal menyimpan gambar papan putih. %s</string>
     <string name="white_board_image_saved">Gambar papan putih simpan di %s</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">Warna pen papan putih</string>
     <string name="title_whiteboard_editor" maxLength="28">Penyunting papan putih</string>
     <string name="user_is_a_robot">Ujian automatik dikesan. Jika anda manusia, hubungi sokongan AnkiDroid</string>
     <!-- JS api -->

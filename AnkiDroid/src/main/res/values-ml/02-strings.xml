@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">വൈറ്റ്ബോർഡ് ചിത്രം സംരക്ഷിക്കുന്നതിൽ പരാജയപ്പെട്ടു. %s</string>
     <string name="white_board_image_saved">വൈറ്റ്ബോർഡ് ചിത്രം %s ലേക്ക് സംരക്ഷിച്ചു</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">വൈറ്റ്ബോർഡ് പേന നിറം</string>
     <string name="title_whiteboard_editor" maxLength="28">വൈറ്റ്ബോർഡ് എഡിറ്റർ</string>
     <string name="user_is_a_robot">യാന്ത്രിക പരിശോധന കണ്ടെത്തി. നിങ്ങൾ ഒരു മനുഷ്യനാണെങ്കിൽ, അങ്കിഡ്രോയിഡ് പിന്തുണയുമായി ബന്ധപ്പെടുക</string>
     <!-- JS api -->

@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Kon nie witbordbeeld stoor nie. %s</string>
     <string name="white_board_image_saved">Witbordbeeld gestoor na %s</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">Witbordpenkleur</string>
     <string name="title_whiteboard_editor" maxLength="28">Witbordredakteur</string>
     <string name="user_is_a_robot">Geoutomatiseerde toets opgespoor. As jy \'n mens is, kontak AnkiDroid-ondersteuning.</string>
     <!-- JS api -->

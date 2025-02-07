@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">ਵ੍ਹਾਈਟਬੋਰਡ ਚਿੱਤਰ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰਨ ਵਿੱਚ ਅਸਫਲ। %s</string>
     <string name="white_board_image_saved">ਵ੍ਹਾਈਟਬੋਰਡ ਚਿੱਤਰ %s ਵਿੱਚ ਸੁਰੱਖਿਅਤ ਕੀਤਾ ਗਿਆ</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">ਵ੍ਹਾਈਟਬੋਰਡ ਪੈੱਨ ਦਾ ਰੰਗ</string>
     <string name="title_whiteboard_editor" maxLength="28">ਵ੍ਹਾਈਟਬੋਰਡ ਸੰਪਾਦਕ</string>
     <string name="user_is_a_robot">ਖੋਜਿਆ ਆਟੋਮੈਟਿਕ ਟੈਸਟ. ਜੇਕਰ ਤੁਸੀਂ ਮਨੁੱਖ ਹੋ, ਤਾਂ AnkiDroid ਸਹਾਇਤਾ ਨਾਲ ਸੰਪਰਕ ਕਰੋ</string>
     <!-- JS api -->

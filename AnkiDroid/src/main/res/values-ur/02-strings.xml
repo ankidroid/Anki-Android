@@ -195,7 +195,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">وائٹ بورڈ امیج کو محفوظ کرنے میں ناکام۔ %s</string>
     <string name="white_board_image_saved">وائٹ بورڈ کی تصویر %s میں محفوظ ہو گئی۔</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">وائٹ بورڈ قلم کا رنگ</string>
     <string name="title_whiteboard_editor" maxLength="28">وائٹ بورڈ ایڈیٹر</string>
     <string name="user_is_a_robot">خودکار ٹیسٹ کا پتہ چلا۔ اگر آپ انسان ہیں تو AnkiDroid سپورٹ سے رابطہ کریں۔</string>
     <!-- JS api -->

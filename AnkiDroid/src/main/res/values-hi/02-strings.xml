@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">श्वेतपट्ट छवि को सहेजने में विफल। %s</string>
     <string name="white_board_image_saved">श्वेतपट्ट छवि %s में सहेजी गई</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">श्वेतपट्ट के कलम का रंग</string>
     <string name="title_whiteboard_editor" maxLength="28">श्वेतपट्ट संपादक</string>
     <string name="user_is_a_robot">स्वचालित परीक्षण का पता लगाया। यदि आप एक मानव हैं, तो AnkiDroid समर्थन से संपर्क करें</string>
     <!-- JS api -->

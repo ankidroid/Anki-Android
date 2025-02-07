@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">ஒயிட்போர்டு படத்தைச் சேமிப்பதில் தோல்வி. %s</string>
     <string name="white_board_image_saved">ஒயிட்போர்டு படம் %s இல் சேமிக்கப்பட்டது</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">ஒயிட்போர்டு பேனா நிறம்</string>
     <string name="title_whiteboard_editor" maxLength="28">ஒயிட்போர்டு எடிட்டர்</string>
     <string name="user_is_a_robot">தானியங்கு சோதனை கண்டறியப்பட்டது. நீங்கள் ஒரு மனிதராக இருந்தால், AnkiDroid ஆதரவைத் தொடர்பு கொள்ளவும்</string>
     <!-- JS api -->

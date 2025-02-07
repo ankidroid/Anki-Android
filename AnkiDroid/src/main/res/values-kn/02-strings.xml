@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">ವೈಟ್‌ಬೋರ್ಡ್ ಚಿತ್ರವನ್ನು ಉಳಿಸುವಲ್ಲಿ ವಿಫಲವಾಗಿದೆ. %s</string>
     <string name="white_board_image_saved">ವೈಟ್‌ಬೋರ್ಡ್ ಚಿತ್ರವನ್ನು%s ಗೆ ಉಳಿಸಲಾಗಿದೆ</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">ವೈಟ್‌ಬೋರ್ಡ್ ಪೆನ್ ಬಣ್ಣ</string>
     <string name="title_whiteboard_editor" maxLength="28">ವೈಟ್‌ಬೋರ್ಡ್ ಸಂಪಾದಕ</string>
     <string name="user_is_a_robot">ಸ್ವಯಂಚಾಲಿತ ಪರೀಕ್ಷೆ ಪತ್ತೆಯಾಗಿದೆ. ನೀವು ಮನುಷ್ಯರಾಗಿದ್ದರೆ, ಆಂಕಿಡ್ರಾಯ್ಡ್ ಬೆಂಬಲವನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
     <!-- JS api -->

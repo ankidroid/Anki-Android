@@ -194,7 +194,6 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Bigo sa pag-save ng litrato ng puting pisara. %s</string>
     <string name="white_board_image_saved">Isinave ang litrato ng puting pisara sa %s</string>
-    <string name="title_whiteboard_pen_color" maxLength="41">Kulay ng pen sa puting pisara</string>
     <string name="title_whiteboard_editor" maxLength="28">Editor ng puting pisara</string>
     <string name="user_is_a_robot">Natumbukan ang isang awtomatikong pagte-test. Kung ikaw ay isang tao, mangyaring kontakin ang AnkiDroid support.</string>
     <!-- JS api -->
