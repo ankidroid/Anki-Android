@@ -207,7 +207,7 @@ class NoteEditorTest : RobolectricTest() {
     @Test
     fun verifyStartupAndCloseWithNoCollectionDoesNotCrash() {
         enableNullCollection()
-        val intent = NoteEditorLauncher.AddNote().getIntent(targetContext)
+        val intent = NoteEditorLauncher.AddNote().toIntent(targetContext)
         ActivityScenario.launchActivityForResult<SingleFragmentActivity>(intent).use { scenario ->
             scenario.onNoteEditor { noteEditor ->
                 noteEditor.requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -220,7 +220,7 @@ class NoteEditorTest : RobolectricTest() {
 
     @Test
     fun testHandleMultimediaActionsDisplaysBottomSheet() {
-        val intent = NoteEditorLauncher.AddNote().getIntent(targetContext)
+        val intent = NoteEditorLauncher.AddNote().toIntent(targetContext)
         ActivityScenario.launchActivityForResult<SingleFragmentActivity>(intent).use { scenario ->
             scenario.onNoteEditor { noteEditor ->
                 noteEditor.showMultimediaBottomSheet()
@@ -576,7 +576,7 @@ class NoteEditorTest : RobolectricTest() {
         val activity =
             startActivityNormallyOpenCollectionWithIntent(
                 SingleFragmentActivity::class.java,
-                NoteEditorLauncher.PassArguments(arguments).getIntent(targetContext, action),
+                NoteEditorLauncher.PassArguments(arguments).toIntent(targetContext, action),
             )
         return activity.getEditor()
     }

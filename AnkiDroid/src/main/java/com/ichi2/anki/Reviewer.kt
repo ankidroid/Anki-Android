@@ -699,7 +699,7 @@ open class Reviewer :
     fun addNote(fromGesture: Gesture? = null) {
         val animation = getAnimationTransitionFromGesture(fromGesture)
         val inverseAnimation = getInverseTransition(animation)
-        val intent = NoteEditorLauncher.AddNoteFromReviewer(inverseAnimation).getIntent(this)
+        val intent = NoteEditorLauncher.AddNoteFromReviewer(inverseAnimation).toIntent(this)
         addNoteLauncher.launch(intent)
     }
 

@@ -28,13 +28,16 @@ import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.NoteEditor.Companion.NoteEditorCaller
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.browser.CardBrowserViewModel
+import com.ichi2.anki.utils.Destination
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.DeckId
 
 /**
  * Defines various configurations for opening the NoteEditor fragment with specific data or actions.
  */
-sealed interface NoteEditorLauncher {
+sealed interface NoteEditorLauncher : Destination {
+    override fun toIntent(context: Context): Intent = toIntent(context, action = null)
+
     /**
      * Generates an intent to open the NoteEditor fragment with the configured parameters.
      *
@@ -42,7 +45,7 @@ sealed interface NoteEditorLauncher {
      * @param action Optional action string for the intent.
      * @return Intent configured to launch the NoteEditor fragment.
      */
-    fun getIntent(
+    fun toIntent(
         context: Context,
         action: String? = null,
     ) = SingleFragmentActivity.getIntent(context, NoteEditor::class, toBundle(), action)

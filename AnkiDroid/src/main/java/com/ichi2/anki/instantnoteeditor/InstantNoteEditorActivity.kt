@@ -189,7 +189,7 @@ class InstantNoteEditorActivity :
 
     private fun openNoteEditor() {
         val sharedText = clozeEditTextField.text.toString()
-        val noteEditorIntent = NoteEditorLauncher.AddInstantNote(sharedText).getIntent(this)
+        val noteEditorIntent = NoteEditorLauncher.AddInstantNote(sharedText).toIntent(this)
         startActivity(noteEditorIntent)
         finish()
     }

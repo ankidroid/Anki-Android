@@ -75,6 +75,6 @@ class NoteEditorIntentTest : InstrumentedTest() {
     private val noteEditorTextIntent: Intent
         get() {
             val bundle = bundleOf(Intent.EXTRA_TEXT to "sample text")
-            return NoteEditorLauncher.PassArguments(bundle).getIntent(testContext, Intent.ACTION_SEND)
+            return NoteEditorLauncher.PassArguments(bundle).toIntent(testContext, Intent.ACTION_SEND)
         }
 }
