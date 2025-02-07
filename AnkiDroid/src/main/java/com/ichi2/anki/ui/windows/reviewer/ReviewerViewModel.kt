@@ -17,6 +17,7 @@ package com.ichi2.anki.ui.windows.reviewer
 
 import android.text.style.RelativeSizeSpan
 import android.view.KeyEvent
+import android.view.MenuItem
 import androidx.core.text.buildSpannedString
 import androidx.core.text.inSpans
 import androidx.lifecycle.ViewModelProvider
@@ -478,7 +479,7 @@ class ReviewerViewModel(
         answerButtonsNextTimeFlow.emit(nextTimes)
     }
 
-    fun executeAction(action: ViewerAction) {
+    private fun executeAction(action: ViewerAction) {
         launchCatchingIO {
             when (action) {
                 ViewerAction.ADD_NOTE -> emitAddNoteDestination()
@@ -523,6 +524,13 @@ class ReviewerViewModel(
         binding: ReviewerBinding,
     ): Boolean {
         if (binding.side != CardSide.BOTH && CardSide.fromAnswer(showingAnswer.value) != binding.side) return false
+        executeAction(action)
+        return true
+    }
+
+    fun onMenuItemClick(item: MenuItem): Boolean {
+        if (item.hasSubMenu()) return false
+        val action = ViewerAction.fromId(item.itemId)
         executeAction(action)
         return true
     }
