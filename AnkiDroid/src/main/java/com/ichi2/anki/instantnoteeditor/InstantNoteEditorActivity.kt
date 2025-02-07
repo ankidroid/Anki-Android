@@ -87,6 +87,8 @@ class InstantNoteEditorActivity :
     private val editMode: EditMode
         get() = viewModel.editorMode.value
 
+    private val updatedTextKey = "updatedText"
+
     private lateinit var editModeButton: MaterialButton
 
     private var editFieldsLayout: LinearLayout? = null
@@ -128,7 +130,10 @@ class InstantNoteEditorActivity :
             return
         }
 
-        handleSharedText(intent)
+        viewModel.setClozeFieldText(
+            savedInstanceState?.getString(updatedTextKey) ?: getSharedIntentText(intent),
+        )
+
         setupErrorListeners()
         prepareEditorDialog()
     }
@@ -180,12 +185,8 @@ class InstantNoteEditorActivity :
             }
     }
 
-    /** Handles the shared text received through an Intent. **/
-    private fun handleSharedText(receivedIntent: Intent) {
-        val sharedText = receivedIntent.getStringExtra(Intent.EXTRA_TEXT) ?: return
-        Timber.d("Setting cloze field text to $sharedText")
-        viewModel.setClozeFieldText(sharedText)
-    }
+    /** Gets the shared text received through an Intent. **/
+    private fun getSharedIntentText(receivedIntent: Intent): String? = receivedIntent.getStringExtra(Intent.EXTRA_TEXT)
 
     private fun openNoteEditor() {
         val sharedText = clozeEditTextField.text.toString()
@@ -249,6 +250,11 @@ class InstantNoteEditorActivity :
         dialogView.rootView.userClickOutsideDialog(
             exclude = instantAlertDialog.findViewById(R.id.instant_add_editor_root)!!,
         )
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (intentTextChanged()) outState.putString(updatedTextKey, clozeFieldText)
     }
 
     @KotlinCleanup("notetypeJson -> non-null")
