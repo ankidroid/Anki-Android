@@ -140,6 +140,21 @@
     <string name="user_action_8_key">binding_USER_ACTION_8</string>
     <string name="user_action_9_key">binding_USER_ACTION_9</string>
     <string name="toggle_auto_advance_command_key">binding_TOGGLE_AUTO_ADVANCE</string>
+    <!-- Previewer controls -->
+    <string name="previewer_next_key">previewer_NEXT</string>
+    <string name="previewer_back_key">previewer_BACK</string>
+    <string name="previewer_mark_key">previewer_MARK</string>
+    <string name="previewer_edit_key">previewer_EDIT</string>
+    <string name="previewer_replay_audio_key">previewer_REPLAY_AUDIO</string>
+    <string name="previewer_backside_only_action_key">previewer_BACKSIDE_ONLY</string>
+    <string name="previewer_flag_red_key">previewer_TOGGLE_FLAG_RED</string>
+    <string name="previewer_flag_orange_key">previewer_TOGGLE_FLAG_ORANGE</string>
+    <string name="previewer_flag_green_key">previewer_TOGGLE_FLAG_GREEN</string>
+    <string name="previewer_flag_blue_key">previewer_TOGGLE_FLAG_BLUE</string>
+    <string name="previewer_flag_pink_key">previewer_TOGGLE_FLAG_PINK</string>
+    <string name="previewer_flag_turquoise_key">previewer_TOGGLE_FLAG_TURQUOISE</string>
+    <string name="previewer_flag_purple_key">previewer_TOGGLE_FLAG_PURPLE</string>
+    <string name="previewer_unset_flag_key">previewer_UNSET_FLAG</string>
     <!-- Accessibility -->
     <string name="pref_accessibility_screen_key">accessibilityScreen</string>
     <string name="card_zoom_preference">cardZoom</string>
