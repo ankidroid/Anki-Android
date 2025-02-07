@@ -68,21 +68,24 @@ open class MappableBinding(
             }
         }
 
+        /**
+         * @param string preference value containing mapped bindings
+         * @return a list with each individual binding substring
+         */
+        @CheckResult
+        fun getPreferenceSubstrings(string: String): List<String> {
+            if (string.isEmpty()) return emptyList()
+            if (!string.startsWith(VERSION_PREFIX)) {
+                Timber.w("cannot handle version of string %s", string)
+                return emptyList()
+            }
+            return string.substring(VERSION_PREFIX.length).split(PREF_SEPARATOR).filter { it.isNotEmpty() }
+        }
+
         @CheckResult
         fun fromPreferenceString(string: String?): MutableList<MappableBinding> {
             if (string.isNullOrEmpty()) return ArrayList()
-            try {
-                val version = string.takeWhile { x -> x != '/' }
-                val remainder = string.substring(version.length + 1) // skip the /
-                if (version != "1") {
-                    Timber.w("cannot handle version '$version'")
-                    return ArrayList()
-                }
-                return remainder.split(PREF_SEPARATOR).mapNotNull { fromString(it) }.toMutableList()
-            } catch (e: Exception) {
-                Timber.w(e, "Failed to deserialize preference")
-                return ArrayList()
-            }
+            return getPreferenceSubstrings(string).mapNotNull { fromString(it) }.toMutableList()
         }
 
         @CheckResult
