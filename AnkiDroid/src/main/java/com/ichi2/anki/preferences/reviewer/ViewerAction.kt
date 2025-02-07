@@ -94,6 +94,8 @@ enum class ViewerAction(
     FLIP_OR_ANSWER_EASE2,
     FLIP_OR_ANSWER_EASE3,
     FLIP_OR_ANSWER_EASE4,
+    SHOW_HINT,
+    SHOW_ALL_HINTS,
     ;
 
     override val preferenceKey: String get() = "binding_$name"
@@ -115,6 +117,8 @@ enum class ViewerAction(
             SUSPEND_NOTE -> listOf(unicode('!'))
             SUSPEND_CARD -> listOf(unicode('@'))
             TOGGLE_AUTO_ADVANCE -> listOf(keycode(KeyEvent.KEYCODE_A, shift()))
+            SHOW_HINT -> listOf(keycode(KeyEvent.KEYCODE_H))
+            SHOW_ALL_HINTS -> listOf(keycode(KeyEvent.KEYCODE_G))
             FLIP_OR_ANSWER_EASE1 ->
                 listOf(
                     keycode(KeyEvent.KEYCODE_BUTTON_Y),
