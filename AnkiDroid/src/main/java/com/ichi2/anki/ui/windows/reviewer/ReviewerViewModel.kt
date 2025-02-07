@@ -479,6 +479,14 @@ class ReviewerViewModel(
         answerButtonsNextTimeFlow.emit(nextTimes)
     }
 
+    private fun flipOrAnswer(ease: Ease) {
+        if (showingAnswer.value) {
+            answerCard(ease)
+        } else {
+            onShowAnswer()
+        }
+    }
+
     private fun executeAction(action: ViewerAction) {
         launchCatchingIO {
             when (action) {
@@ -503,6 +511,11 @@ class ReviewerViewModel(
                 ViewerAction.FLAG_PINK -> setFlag(Flag.PINK)
                 ViewerAction.FLAG_TURQUOISE -> setFlag(Flag.TURQUOISE)
                 ViewerAction.FLAG_PURPLE -> setFlag(Flag.PURPLE)
+                ViewerAction.SHOW_ANSWER -> if (!showingAnswer.value) onShowAnswer()
+                ViewerAction.FLIP_OR_ANSWER_EASE1 -> flipOrAnswer(Ease.AGAIN)
+                ViewerAction.FLIP_OR_ANSWER_EASE2 -> flipOrAnswer(Ease.HARD)
+                ViewerAction.FLIP_OR_ANSWER_EASE3 -> flipOrAnswer(Ease.GOOD)
+                ViewerAction.FLIP_OR_ANSWER_EASE4 -> flipOrAnswer(Ease.EASY)
                 ViewerAction.USER_ACTION_1 -> userAction(1)
                 ViewerAction.USER_ACTION_2 -> userAction(2)
                 ViewerAction.USER_ACTION_3 -> userAction(3)
