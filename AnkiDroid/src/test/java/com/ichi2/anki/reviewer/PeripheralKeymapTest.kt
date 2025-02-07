@@ -30,8 +30,8 @@ class PeripheralKeymapTest {
     fun flagAndAnswerDoNotConflict() {
         val processed: MutableList<ViewerCommand> = ArrayList()
 
-        val peripheralKeymap = PeripheralKeymap(MockReviewerUi()) { e: ViewerCommand, _ -> processed.add(e) }
-        peripheralKeymap.setup(SPMockBuilder().createSharedPreferences())
+        val sharedPrefs = SPMockBuilder().createSharedPreferences()
+        val peripheralKeymap = PeripheralKeymap(sharedPrefs, ViewerCommand.entries) { e: ViewerCommand, _ -> processed.add(e) }
         val event = mock(KeyEvent::class.java)
         whenever(event.unicodeChar).thenReturn(0)
         whenever(event.isCtrlPressed).thenReturn(true)
@@ -40,14 +40,9 @@ class PeripheralKeymapTest {
 
         assertThat(event.unicodeChar.toChar(), equalTo('\u0000'))
         assertThat(event.getUnicodeChar(0).toChar(), equalTo('1'))
-        peripheralKeymap.onKeyDown(KeyEvent.KEYCODE_1, event)
+        peripheralKeymap.onKeyDown(event)
 
         assertThat<List<ViewerCommand>>(processed, hasSize(1))
         assertThat(processed[0], equalTo(ViewerCommand.TOGGLE_FLAG_RED))
-    }
-
-    private class MockReviewerUi : ReviewerUi {
-        override val isDisplayingAnswer: Boolean
-            get() = false
     }
 }
