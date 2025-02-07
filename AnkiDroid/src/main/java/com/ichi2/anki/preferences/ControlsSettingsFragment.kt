@@ -16,41 +16,36 @@
 package com.ichi2.anki.preferences
 
 import android.content.res.Configuration
+import android.os.Bundle
+import android.view.View
 import androidx.annotation.StringRes
+import androidx.annotation.XmlRes
 import androidx.preference.Preference
+import androidx.preference.children
+import com.google.android.material.tabs.TabLayout
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.reviewer.MappableAction
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.preferences.ControlPreference
-import com.ichi2.preferences.ReviewerControlPreference
+import timber.log.Timber
 
-class ControlsSettingsFragment : SettingsFragment() {
+class ControlsSettingsFragment :
+    SettingsFragment(),
+    TabLayout.OnTabSelectedListener {
     override val preferenceResource: Int
         get() = R.xml.preferences_controls
     override val analyticsScreenNameConstant: String
         get() = "prefs.controls"
 
-    @NeedsTest("Keys and titles in the XML layout are the same of the ViewerCommands")
     override fun initSubscreen() {
-        val commands = ViewerCommand.entries.associateBy { it.preferenceKey }
-        // set defaultValue in the prefs creation.
-        // if a preference is empty, it has a value like "1/"
-        preferenceScreen
-            .allPreferences()
-            .filterIsInstance<ReviewerControlPreference>()
-            .filter { pref -> pref.value == null }
-            .forEach { pref ->
-                commands[pref.key]
-                    ?.defaultValue
-                    ?.toPreferenceString()
-                    ?.let { pref.value = it }
-            }
-
-        setDynamicTitle()
-
+        requirePreference<Preference>(R.string.pref_controls_tab_layout_key).setViewId(R.id.tab_layout)
+        val initialScreen = ControlPreferenceScreen.entries.first()
+        addPreferencesFromResource(initialScreen.xmlRes)
         // TODO replace the preference with something dismissible. This is meant only to improve
         //  the discoverability of the system shortcut for the shortcuts dialog.
         requirePreference<Preference>(R.string.pref_keyboard_shortcuts_key).apply {
@@ -60,7 +55,54 @@ class ControlsSettingsFragment : SettingsFragment() {
                 true
             }
         }
+        setControlPreferencesDefaultValues(initialScreen)
+        setDynamicTitle()
     }
+
+    private fun setControlPreferencesDefaultValues(screen: ControlPreferenceScreen) {
+        val commands = screen.getActions().associateBy { it.preferenceKey }
+        val prefs = sharedPrefs()
+        preferenceScreen
+            .allPreferences()
+            .filterIsInstance<ControlPreference>()
+            .filter { pref -> pref.value == null }
+            .forEach { pref -> commands[pref.key]?.getBindings(prefs)?.toPreferenceString()?.let { pref.value = it } }
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+
+        listView.post {
+            val tabLayout = listView.findViewById<TabLayout>(R.id.tab_layout)
+            for (screen in ControlPreferenceScreen.entries) {
+                val tab = tabLayout.newTab().setText(screen.titleRes)
+                tabLayout.addTab(tab)
+            }
+            tabLayout.addOnTabSelectedListener(this)
+        }
+    }
+
+    override fun onTabSelected(tab: TabLayout.Tab) {
+        val screen = ControlPreferenceScreen.entries[tab.position]
+        Timber.v("Selected tab %d - %s", tab.position, screen.name)
+        addPreferencesFromResource(screen.xmlRes)
+        setControlPreferencesDefaultValues(screen)
+        setDynamicTitle()
+    }
+
+    @NeedsTest("General category is kept and the other elements are removed")
+    override fun onTabUnselected(tab: TabLayout.Tab?) {
+        val preferences = preferenceScreen.children.toList()
+        // 0 is the `General` category, which should be kept
+        for (pref in preferences.subList(1, preferences.size)) {
+            preferenceScreen.removePreference(pref)
+        }
+    }
+
+    override fun onTabReselected(tab: TabLayout.Tab?) = Unit
 
     private fun setDynamicTitle() {
         findPreference<ControlPreference>(getString(R.string.reschedule_command_key))?.let {
@@ -103,4 +145,17 @@ class ControlsSettingsFragment : SettingsFragment() {
     private fun String.toSentenceCase(
         @StringRes resId: Int,
     ): String = this.toSentenceCase(this@ControlsSettingsFragment, resId)
+}
+
+enum class ControlPreferenceScreen(
+    @XmlRes val xmlRes: Int,
+    @StringRes val titleRes: Int,
+) {
+    REVIEWER(R.xml.preferences_reviewer_controls, R.string.pref_controls_reviews_tab),
+    ;
+
+    fun getActions(): List<MappableAction<*>> =
+        when (this) {
+            REVIEWER -> ViewerCommand.entries
+        }
 }
