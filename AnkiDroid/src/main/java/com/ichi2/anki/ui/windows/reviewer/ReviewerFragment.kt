@@ -73,10 +73,7 @@ import com.ichi2.anki.preferences.reviewer.ViewerAction.SUSPEND_NOTE
 import com.ichi2.anki.preferences.reviewer.ViewerAction.UNDO
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
-import com.ichi2.anki.reviewer.BindingProcessor
-import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.PeripheralKeymap
-import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.settings.enums.HideSystemBars
@@ -90,16 +87,14 @@ import com.ichi2.anki.utils.ext.removeSubMenu
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.window
 import com.ichi2.libanki.sched.Counts
-import kotlinx.coroutines.launch
 
 class ReviewerFragment :
     CardViewerFragment(R.layout.reviewer2),
     BaseSnackbarBuilderProvider,
     ActionMenuView.OnMenuItemClickListener,
-    BindingProcessor<ReviewerBinding, ViewerAction>,
     DispatchKeyEventListener {
     override val viewModel: ReviewerViewModel by viewModels {
-        ReviewerViewModel.factory(CardMediaPlayer())
+        ReviewerViewModel.factory(CardMediaPlayer(), PeripheralKeymap(sharedPrefs(), ViewerAction.entries))
     }
 
     override val webView: WebView
@@ -108,8 +103,6 @@ class ReviewerFragment :
     override val baseSnackbarBuilder: SnackbarBuilder = {
         anchorView = this@ReviewerFragment.view?.findViewById(R.id.snackbar_anchor)
     }
-
-    private lateinit var keyMap: PeripheralKeymap<ReviewerBinding, ViewerAction>
 
     override fun onStop() {
         super.onStop()
@@ -123,7 +116,6 @@ class ReviewerFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        keyMap = PeripheralKeymap(sharedPrefs(), ViewerAction.entries, this)
 
         view.findViewById<AppCompatImageButton>(R.id.back_button).setOnClickListener {
             requireActivity().finish()
@@ -218,19 +210,7 @@ class ReviewerFragment :
         webView.settings.loadWithOverviewMode = true
     }
 
-    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        if (event.action != KeyEvent.ACTION_DOWN) return false
-        return keyMap.onKeyDown(event)
-    }
-
-    override fun processAction(
-        action: ViewerAction,
-        binding: ReviewerBinding,
-    ): Boolean {
-        if (binding.side != CardSide.BOTH && CardSide.fromAnswer(viewModel.showingAnswer.value) != binding.side) return false
-        viewModel.executeAction(action)
-        return true
-    }
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean = viewModel.dispatchKeyEvent(event)
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
         if (item.hasSubMenu()) return false
