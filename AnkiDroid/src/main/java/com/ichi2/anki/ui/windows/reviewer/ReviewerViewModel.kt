@@ -516,6 +516,8 @@ class ReviewerViewModel(
                 ViewerAction.FLIP_OR_ANSWER_EASE2 -> flipOrAnswer(Ease.HARD)
                 ViewerAction.FLIP_OR_ANSWER_EASE3 -> flipOrAnswer(Ease.GOOD)
                 ViewerAction.FLIP_OR_ANSWER_EASE4 -> flipOrAnswer(Ease.EASY)
+                ViewerAction.SHOW_HINT -> eval.emit("ankidroid.showHint()")
+                ViewerAction.SHOW_ALL_HINTS -> eval.emit("ankidroid.showAllHints()")
                 ViewerAction.USER_ACTION_1 -> userAction(1)
                 ViewerAction.USER_ACTION_2 -> userAction(2)
                 ViewerAction.USER_ACTION_3 -> userAction(3)

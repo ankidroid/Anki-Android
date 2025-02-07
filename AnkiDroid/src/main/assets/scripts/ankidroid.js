@@ -13,3 +13,11 @@ globalThis.ankidroid.userAction = function (number) {
         alert(e);
     }
 };
+
+globalThis.ankidroid.showHint = function () {
+    document.querySelector("a.hint:not([style*='display: none'])")?.click();
+};
+
+globalThis.ankidroid.showAllHints = function () {
+    document.querySelectorAll("a.hint").forEach(el => el.click());
+};
