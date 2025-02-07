@@ -29,7 +29,7 @@ import com.ichi2.anki.reviewer.Binding.Companion.possibleKeyBindings
 class PeripheralKeymap<B : MappableBinding, A : MappableAction<B>>(
     sharedPrefs: SharedPreferences,
     actions: List<A>,
-    private val processor: BindingProcessor<B, A>,
+    private var processor: BindingProcessor<B, A>? = null,
 ) {
     private val bindingMap = HashMap<Binding, List<Pair<A, B>>>()
 
@@ -48,6 +48,10 @@ class PeripheralKeymap<B : MappableBinding, A : MappableAction<B>>(
         }
     }
 
+    fun setProcessor(processor: BindingProcessor<B, A>) {
+        this.processor = processor
+    }
+
     fun onKeyDown(event: KeyEvent): Boolean {
         if (event.repeatCount > 0) {
             return false
@@ -56,7 +60,7 @@ class PeripheralKeymap<B : MappableBinding, A : MappableAction<B>>(
         for (binding in bindings) {
             val actionAndMappableBindings = bindingMap[binding] ?: continue
             for ((action, mappableBinding) in actionAndMappableBindings) {
-                if (processor.processAction(action, mappableBinding)) return true
+                if (processor?.processAction(action, mappableBinding) == true) return true
             }
         }
         return false

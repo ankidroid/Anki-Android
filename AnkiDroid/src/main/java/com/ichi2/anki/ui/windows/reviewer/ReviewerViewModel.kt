@@ -16,6 +16,7 @@
 package com.ichi2.anki.ui.windows.reviewer
 
 import android.text.style.RelativeSizeSpan
+import android.view.KeyEvent
 import androidx.core.text.buildSpannedString
 import androidx.core.text.inSpans
 import androidx.lifecycle.ViewModelProvider
@@ -39,7 +40,10 @@ import com.ichi2.anki.preferences.getShowIntervalOnButtons
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerViewModel
 import com.ichi2.anki.previewer.TypeAnswer
+import com.ichi2.anki.reviewer.BindingProcessor
 import com.ichi2.anki.reviewer.CardSide
+import com.ichi2.anki.reviewer.PeripheralKeymap
+import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.isBuryNoteAvailable
@@ -63,8 +67,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 class ReviewerViewModel(
     cardMediaPlayer: CardMediaPlayer,
+    private val keyMap: PeripheralKeymap<ReviewerBinding, ViewerAction>,
 ) : CardViewerViewModel(cardMediaPlayer),
-    ChangeManager.Subscriber {
+    ChangeManager.Subscriber,
+    BindingProcessor<ReviewerBinding, ViewerAction> {
     private var queueState: Deferred<CurrentQueueState?> =
         asyncIO {
             // this assumes that the Reviewer won't be launched if there isn't a queueState
@@ -114,6 +120,7 @@ class ReviewerViewModel(
         }
 
     init {
+        keyMap.setProcessor(this)
         ChangeManager.subscribe(this)
         launchCatchingIO {
             updateUndoAndRedoLabels()
@@ -179,6 +186,11 @@ class ReviewerViewModel(
     fun answerGood() = answerCard(Ease.GOOD)
 
     fun answerEasy() = answerCard(Ease.EASY)
+
+    fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if (event.action != KeyEvent.ACTION_DOWN) return false
+        return keyMap.onKeyDown(event)
+    }
 
     private suspend fun toggleMark() {
         val card = currentCard.await()
@@ -506,6 +518,15 @@ class ReviewerViewModel(
         }
     }
 
+    override fun processAction(
+        action: ViewerAction,
+        binding: ReviewerBinding,
+    ): Boolean {
+        if (binding.side != CardSide.BOTH && CardSide.fromAnswer(showingAnswer.value) != binding.side) return false
+        executeAction(action)
+        return true
+    }
+
     override fun opExecuted(
         changes: OpChanges,
         handler: Any?,
@@ -514,10 +535,13 @@ class ReviewerViewModel(
     }
 
     companion object {
-        fun factory(soundPlayer: CardMediaPlayer): ViewModelProvider.Factory =
+        fun factory(
+            soundPlayer: CardMediaPlayer,
+            keyMap: PeripheralKeymap<ReviewerBinding, ViewerAction>,
+        ): ViewModelProvider.Factory =
             viewModelFactory {
                 initializer {
-                    ReviewerViewModel(soundPlayer)
+                    ReviewerViewModel(soundPlayer, keyMap)
                 }
             }
 
