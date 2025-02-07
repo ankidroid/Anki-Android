@@ -25,6 +25,7 @@ import androidx.fragment.app.commit
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
+import com.ichi2.themes.setTransparentStatusBar
 import com.ichi2.utils.FragmentFactoryUtils
 import timber.log.Timber
 import kotlin.reflect.KClass
@@ -50,6 +51,7 @@ open class SingleFragmentActivity : AnkiActivity() {
             return
         }
         setContentView(R.layout.single_fragment_activity)
+        setTransparentStatusBar()
 
         // avoid recreating the fragment on configuration changes
         // the fragment should handle state restoration

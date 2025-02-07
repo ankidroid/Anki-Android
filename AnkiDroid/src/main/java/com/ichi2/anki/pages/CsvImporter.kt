@@ -18,14 +18,12 @@ package com.ichi2.anki.pages
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.webkit.WebView
 import androidx.activity.OnBackPressedCallback
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.hideShowButtonCss
-import com.ichi2.themes.setTransparentStatusBar
 
 /**
  * Anki page used to import text/csv files
@@ -44,14 +42,6 @@ class CsvImporter : PageFragment() {
         super.onCreate(savedInstanceState)
         requireActivity().onBackPressedDispatcher.addCallback(this, backCallback)
         return CsvImporterWebViewClient(backCallback)
-    }
-
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?,
-    ) {
-        super.onViewCreated(view, savedInstanceState)
-        requireActivity().setTransparentStatusBar()
     }
 
     inner class CsvImporterWebViewClient(

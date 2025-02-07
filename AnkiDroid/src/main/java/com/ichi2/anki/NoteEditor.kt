@@ -71,6 +71,7 @@ import androidx.core.util.component1
 import androidx.core.util.component2
 import androidx.core.view.MenuProvider
 import androidx.core.view.OnReceiveContentListener
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.draganddrop.DropHelper
 import androidx.fragment.app.Fragment
@@ -134,6 +135,7 @@ import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.anki.utils.ext.window
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
@@ -516,6 +518,7 @@ class NoteEditor :
         view: View,
         savedInstanceState: Bundle?,
     ) {
+        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = false
         @Suppress("deprecation", "API35 properly handle edge-to-edge")
         requireActivity().window.statusBarColor = Themes.getColorFromAttr(requireContext(), R.attr.appBarColor)
         super.onViewCreated(view, savedInstanceState)

@@ -37,7 +37,6 @@ import com.ichi2.anki.utils.getTimestamp
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.DeckNameId
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.themes.setTransparentStatusBar
 import com.ichi2.utils.BundleUtils.getNullableLong
 
 class Statistics :
@@ -54,7 +53,6 @@ class Statistics :
         super.onViewCreated(view, savedInstanceState)
         webView.isNestedScrollingEnabled = true
 
-        requireActivity().setTransparentStatusBar()
         spinner = view.findViewById(R.id.deck_selector)
         view
             .findViewById<AppBarLayout>(R.id.app_bar)

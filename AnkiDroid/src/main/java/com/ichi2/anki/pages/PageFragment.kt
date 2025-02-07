@@ -32,7 +32,6 @@ import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.themes.Themes
-import com.ichi2.themes.setTransparentStatusBar
 import timber.log.Timber
 import kotlin.reflect.KClass
 
@@ -118,7 +117,6 @@ open class PageFragment(
         setupBridgeCommand(pageWebViewClient)
         onWebViewCreated(webView)
 
-        requireActivity().setTransparentStatusBar()
         val arguments = requireArguments()
         val path = requireNotNull(arguments.getString(PATH_ARG_KEY)) { "'$PATH_ARG_KEY' missing" }
         val title = arguments.getString(TITLE_ARG_KEY)
