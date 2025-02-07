@@ -75,10 +75,10 @@
     <string name="type_answer_hint">enigu respondon</string>
     <string name="show_answer" maxLength="41">Montri respondon</string>
     <string name="hide_answer">Kaŝi respondon</string>
-    <string name="ease_button_again" maxLength="41">denove</string>
-    <string name="ease_button_hard" maxLength="41">malfacile</string>
-    <string name="ease_button_good" maxLength="41">facile</string>
-    <string name="ease_button_easy">facilege</string>
+    <string name="ease_button_again" maxLength="41">Denove</string>
+    <string name="ease_button_hard" maxLength="41">Malfacila</string>
+    <string name="ease_button_good" maxLength="41">Bona</string>
+    <string name="ease_button_easy">Facila</string>
     <string name="menu_import" maxLength="28">Enporti</string>
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Malfari</string>
     <string name="redo" maxLength="28">Refari</string>
@@ -91,7 +91,7 @@
     <string name="edit_deck_description" comment="edit the deck description">Redakti priskribon</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">Aldoni</string>
     <string name="menu_add_note" maxLength="28">Aldoni noton</string>
-    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Samtempigi konton</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Samtempigi la konton</string>
     <string name="menu_dismiss_note" maxLength="41">Kaŝi / forigi</string>
     <string name="menu_bury_card" maxLength="28">Kaŝi karton por tago</string>
     <string name="menu_bury_note" maxLength="28">Kaŝi noton por tago</string>
@@ -109,10 +109,10 @@
     <string name="menu_mark_note" maxLength="28">Marki noton</string>
     <string name="menu_unmark_note">Malmarki noton</string>
     <string name="menu_enable_voice_playback" maxLength="28">Aktivigi ludadon de voĉo</string>
-    <string name="menu_disable_voice_playback">Malaktivigi ludadon de voĉo</string>
+    <string name="menu_disable_voice_playback">Malebligi la ludadon de la voĉoj</string>
     <string name="new_deck">Krei kartaron</string>
     <string name="new_dynamic_deck">Krei filtritan kartaron</string>
-    <string name="directory_inaccessible">Dosierujo de AnkiDroid estas nealirebla</string>
+    <string name="directory_inaccessible">La dosierujo de AnkiDroid estas nealirebla</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
@@ -129,21 +129,21 @@
     <string name="empty_deck">Tiu ĉi kartaro estas malplena</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Serĉi kartaron</string>
     <string name="invalid_deck_name">Malĝusta nomo por kartaro</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
+    <string name="studyoptions_congrats_finished">Gratulon! Vi finis la hodiaŭan.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">La kartaro estas ripetita! %s</string>
     <string name="studyoptions_no_cards_due">Neniu karto por ripeti</string>
     <string name="sd_card_not_mounted">Aparata konservejo ne muntita</string>
-    <string name="button_sync" comment="Text of the sync button" maxLength="28">Samtempigi</string>
-    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Ĉu vi volas ĉesigi samtempigadon?</string>
-    <string name="continue_sync" tools:ignore="UnusedResources">Pluigi samtempigadon</string>
-    <string name="sync_cancelled" tools:ignore="UnusedResources">Samtempigado nuligita</string>
+    <string name="button_sync" comment="Text of the sync button" maxLength="28">Samhavigi</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Ĉu vi volas nuligi samtempigon?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">Pluigi samhavigadon</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">Samtempigo nuligita</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Nuligado&#8230;\nTio ĉi povas okupi iom da tempo.</string>
-    <string name="syncing_media">Samtempigado de aŭdvidaĵoj</string>
+    <string name="syncing_media">Samhavigado de la vidaŭdaĵoj</string>
     <string name="export_deck" maxLength="28">Elporti kartaron</string>
     <string name="export_collection">Elporti kolekton</string>
     <string name="nothing">Nenio</string>
     <!-- Card template editor -->
-    <string name="title_activity_template_editor">Tipo de karto</string>
+    <string name="title_activity_template_editor">Tipo de kartoj</string>
     <string name="card_template_editor_front">Ŝablono fronta</string>
     <string name="card_template_editor_back">Ŝablono dorsa</string>
     <string name="card_template_editor_styling" maxLength="28">Stilo</string>
@@ -160,14 +160,14 @@
         <item quantity="one">Ĉu forigi la kart-tipon “%2$s” kaj ĝian %1$d karton?</item>
         <item quantity="other">Ĉu forigi la kart-tipon “%2$s” kaj ĝiajn %1$d kartojn?</item>
     </plurals>
-    <string name="card_template_editor_save_error">Malsukcesis konservi ŝanĝojn al ŝablono de karto: %s</string>
-    <string name="template_for_current_card_deleted">La speco de karto por la nuna karto estis forigita.</string>
+    <string name="card_template_editor_save_error">Malsukcesis konservi la ŝanĝojn al la ŝablono de karto: %s</string>
+    <string name="template_for_current_card_deleted">La tipo de karto por la nuna karto estas forigita.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Aspekto de foliumilo</string>
+    <string name="card_template_browser_appearance_title">Aspekto de la foliumilo</string>
     <!-- card Info -->
-    <string name="card_info_title" maxLength="28">Informoj pri karto</string>
+    <string name="card_info_title" maxLength="28">Informoj pri la karto</string>
     <!-- Permissions -->
-    <string name="read_write_permission_label">Legi kaj skribi al datumbazo de AnkiDroid</string>
+    <string name="read_write_permission_label">Legi kaj skribi al la datumbazo de AnkiDroid</string>
     <string name="read_write_permission_description">aliri ekzistajn notojn, kartojn, tipojn de notoj kaj kartarojn kaj krei novajn</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kart-foliumilo</string>
@@ -181,20 +181,20 @@
     <string name="sync_conflict_title_new">Elektu kolekton por konservi</string>
     <string name="sync_conflict_replace_title">Anstataŭigi kolekton</string>
     <!-- Generic errors -->
-    <string name="error__etc__cannot_write_to_or_create_file">Ne povas skribi aĭ krei la dosieron %s</string>
+    <string name="error__etc__cannot_write_to_or_create_file">Ne povas skribi aŭ krei la dosieron %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Kolekto nealirebla</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Pro ŝanĝi politikon en la vendejo Play Store, AnkiDroid ne povis aliri vian kolekton post malinstali.\n\nViaj datumoj estas sekuraj kaj povas esti restarigitaj. Ili troviĝas en la dosierujo:\n%s\n\nElektu ion el la suba listo por restarigi viajn datumojn:</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Pro la ŝanĝiĝo de la politiko de la vendejo Play Store, AnkiDroid ne povas aliri vian kolekton post malinstali.\n\nViaj datumoj estas sekuraj kaj povas esti restarigitaj. Ili troviĝas en la dosierujo:\n%s\n\nElektu ion el la suba listo por restarigi viajn datumojn:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android senigis la aplikaĵon AnkiDroid je la permeso %1$s pro longa malaktiveco.\n\nViaj datumoj estas sekuraj kaj povas esti restarigitaj. Ili troviĝas en la dosierujo:\n%2$s\n\nElektu ion el la suba listo por restarigi viajn datumojn.</string>
-    <string name="restore_data_from_ankiweb">restarigi el AnkiWeb (konsilinda)</string>
+    <string name="restore_data_from_ankiweb">Restarigi el AnkiWeb (konsilinda)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restarigi aliron al dosierujo (konsilinda)</string>
     <string name="install_non_play_store_ankidroid">restarigi aliron al dosierujo (altnivela)</string>
-    <string name="restore_data_from_backup">restarigi el sekurkopio .colpkg (altnivela)</string>
+    <string name="restore_data_from_backup">Restarigi el sekurkopio .colpkg (altnivela)</string>
     <string name="create_new_collection">Krei novan kolekton</string>
     <string name="new_unsafe_collection">La nova kolekto estos forigita el via telefono, se vi malinstalos AnkiDroid</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid postulas kelkajn permesojn por funkcii</string>
     <string name="storage_access_title">Aliro al konservejo</string>
-    <string name="storage_access_summary">por konservi vian kolekton en sekura loko, kiu ne estos forviŝita post malinstali la aplikaĵon AnkiDroid</string>
+    <string name="storage_access_summary">Konservu vian kolekton en sekura loko, kiu ne estos forviŝita kiam malinstali la aplikaĵon</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Aliro al ĉiuj dosieroj</string>
     <string name="image_occlusion">Bildtruo</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Forigi konton</string>

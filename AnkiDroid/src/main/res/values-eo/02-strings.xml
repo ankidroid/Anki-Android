@@ -122,7 +122,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Antaŭrigardi</string>
     <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Kopii kiel Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d el %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Alinomi</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Renomi</string>
     <string name="checks_action" maxLength="28">Kontroli</string>
     <string name="check_db" maxLength="28">Kontroli datumbazon</string>
     <string name="check_media" maxLength="28">Kontroli aŭdvidaĵojn</string>
@@ -134,7 +134,7 @@
     <string name="import_preparing_file">Preparado de dosiero por enporti&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Aldoni</string>
     <string name="import_message_replace_confirm">Tio ĉi forigos vian ekzistan kolekton kaj anstataŭigos ĝin per datumoj de dosiero %s</string>
-    <string name="import_dialog_message_add">Ĉu aldoni “%s” al kolekto? Tio ĉi povas okupi multan tempon.</string>
+    <string name="import_dialog_message_add">Ĉu aldoni “%s” al la kolekto? Tio ĉi povas okupi multan tempon</string>
     <string name="import_log_no_apkg">Tio ĉi ne estas valida dosiero Anki-pakaĵo</string>
     <string name="import_title_error" comment="Title of error dialog">Eraro</string>
     <string name="import_error_handle_exception">Malsukcesis enporti la dosieron\n\n%s</string>

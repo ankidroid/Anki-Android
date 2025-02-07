@@ -65,7 +65,7 @@
         <item quantity="other">%1$d oras %2$d ang natititra</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
+        <item quantity="one">%1$d araw at %2$d oras na lang ang natitira</item>
         <item quantity="other">%1$d days %2$dh left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Walang laman ang koleksyon</string>
@@ -101,7 +101,7 @@
     <string name="menu_suspend" maxLength="28">Suspindihin</string>
     <string name="menu_delete_note" maxLength="28">Burahin ang tala</string>
     <string name="menu_flag" maxLength="41">Watawat</string>
-    <string name="rename_flag">Rename flags</string>
+    <string name="rename_flag">Pangalanan ulit ang mga flag</string>
     <string name="menu_flag_card" maxLength="28">Lagyan ng watawat ang card</string>
     <string name="menu_edit_tags" maxLength="28">Baguhin ang mga tag</string>
     <string name="delete_note_message">Talaga bang gusto mong burahin ang talang ito at pati na rin ang lahat ngmga kard?\n%s</string>
@@ -130,7 +130,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Maghanap ng Deck</string>
     <string name="invalid_deck_name">Hindi wasto ang pangalan ng deck</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Tapos na ang deck sa ngayon! %s</string>
     <string name="studyoptions_no_cards_due">Wala pang card na nakatakda</string>
     <string name="sd_card_not_mounted">Ang device storage ay hindi naka-mount</string>
     <string name="button_sync" comment="Text of the sync button" maxLength="28">I-sync</string>
