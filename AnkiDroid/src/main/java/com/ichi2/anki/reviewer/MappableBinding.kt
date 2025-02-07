@@ -17,6 +17,7 @@
 package com.ichi2.anki.reviewer
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import com.ichi2.anki.reviewer.Binding.KeyBinding
 import com.ichi2.utils.hash
@@ -72,4 +73,23 @@ open class MappableBinding(
             }
         }
     }
+}
+
+/**
+ * Action that can be triggered through a [Binding], like a gesture or a key press.
+ *
+ * The bindings can be configured with a [MappableBinding] ([B]) in
+ * the settings, by changing the preference with the corresponding [preferenceKey].
+ */
+interface MappableAction<B : MappableBinding> {
+    val preferenceKey: String
+
+    fun getBindings(prefs: SharedPreferences): List<B>
+}
+
+fun interface BindingProcessor<B : MappableBinding, A : MappableAction<B>> {
+    fun processAction(
+        action: A,
+        binding: B,
+    ): Boolean
 }
