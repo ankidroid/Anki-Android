@@ -19,8 +19,8 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.MappableBinding
-import com.ichi2.anki.reviewer.MappableBinding.Companion.fromPreference
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
+import com.ichi2.anki.reviewer.ReviewerBinding
 
 fun ViewerCommand.addBinding(
     preferences: SharedPreferences,
@@ -33,7 +33,7 @@ fun ViewerCommand.addBinding(
             collection.add(0, element)
             true
         }
-    val bindings: MutableList<MappableBinding> = fromPreference(preferences, this)
+    val bindings: MutableList<MappableBinding> = ReviewerBinding.fromPreference(preferences, this)
     addAtStart(bindings, binding)
     val newValue: String = bindings.toPreferenceString()
     preferences.edit { putString(preferenceKey, newValue) }

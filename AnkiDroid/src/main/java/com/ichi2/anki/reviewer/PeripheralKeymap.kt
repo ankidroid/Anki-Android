@@ -23,7 +23,6 @@ import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.Binding.Companion.possibleKeyBindings
 import com.ichi2.anki.reviewer.CardSide.Companion.fromAnswer
-import com.ichi2.anki.reviewer.MappableBinding.Companion.fromPreference
 
 /** Accepts peripheral input, mapping via various keybinding strategies,
  * and converting them to commands for the Reviewer.  */
@@ -51,7 +50,8 @@ class PeripheralKeymap(
         preferences: SharedPreferences,
     ) {
         val bindings =
-            fromPreference(preferences, command)
+            ReviewerBinding
+                .fromPreference(preferences, command)
                 .filterIsInstance<ReviewerBinding>()
         for (b in bindings) {
             if (!b.isKey) {

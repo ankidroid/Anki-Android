@@ -16,9 +16,11 @@
 package com.ichi2.anki.reviewer
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.cardviewer.ViewerCommand
 import java.util.Objects
 
 class ReviewerBinding(
@@ -97,5 +99,14 @@ class ReviewerBinding(
 
         @CheckResult
         fun fromGesture(gesture: Gesture): ReviewerBinding = ReviewerBinding(Binding.GestureInput(gesture), CardSide.BOTH)
+
+        @CheckResult
+        fun fromPreference(
+            prefs: SharedPreferences,
+            command: ViewerCommand,
+        ): MutableList<MappableBinding> {
+            val value = prefs.getString(command.preferenceKey, null) ?: return command.defaultValue.toMutableList()
+            return fromPreferenceString(value).toMutableList()
+        }
     }
 }

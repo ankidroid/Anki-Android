@@ -17,9 +17,7 @@
 package com.ichi2.anki.reviewer
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.annotation.CheckResult
-import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.Binding.KeyBinding
 import com.ichi2.utils.hash
 import timber.log.Timber
@@ -72,15 +70,6 @@ open class MappableBinding(
                 val binding = Binding.fromString(it)
                 MappableBinding(binding)
             }
-        }
-
-        @CheckResult
-        fun fromPreference(
-            prefs: SharedPreferences,
-            command: ViewerCommand,
-        ): MutableList<MappableBinding> {
-            val value = prefs.getString(command.preferenceKey, null) ?: return command.defaultValue.toMutableList()
-            return ReviewerBinding.fromPreferenceString(value).toMutableList()
         }
     }
 }
