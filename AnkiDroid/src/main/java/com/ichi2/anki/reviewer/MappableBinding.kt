@@ -43,12 +43,13 @@ open class MappableBinding(
 
     companion object {
         const val PREF_SEPARATOR = '|'
+        private const val VERSION_PREFIX = "1/"
 
         @CheckResult
         fun List<MappableBinding>.toPreferenceString(): String =
             this
                 .mapNotNull { it.toPreferenceString() }
-                .joinToString(prefix = "1/", separator = PREF_SEPARATOR.toString())
+                .joinToString(prefix = VERSION_PREFIX, separator = PREF_SEPARATOR.toString())
 
         @CheckResult
         private fun fromString(s: String): MappableBinding? {
