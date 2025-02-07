@@ -84,7 +84,8 @@ class InstantNoteEditorActivity :
 
     private var dialogView: View? = null
 
-    private var editMode = EditMode.ADVANCED
+    private val editMode: EditMode
+        get() = viewModel.editorMode.value
 
     private lateinit var editModeButton: MaterialButton
 
@@ -217,6 +218,8 @@ class InstantNoteEditorActivity :
             editFieldsLayout?.addView(editField)
         }
 
+        setLayoutVisibility()
+
         instantAlertDialog =
             AlertDialog.Builder(this).show {
                 setView(dialogView)
@@ -304,10 +307,9 @@ class InstantNoteEditorActivity :
         editModeButton.setOnClickListener {
             viewModel.setClozeFieldText(textBox.text.toString())
             when (editMode) {
-                EditMode.SINGLE_TAP -> {
+                EditMode.ADVANCED -> {
                     hideKeyboard()
                     textBox.setText(clozeFieldText)
-                    editMode = EditMode.ADVANCED
                     viewModel.setEditorMode(EditMode.SINGLE_TAP)
                     editModeButton.setIconResource(R.drawable.ic_mode_edit_white)
 
@@ -318,14 +320,26 @@ class InstantNoteEditorActivity :
                     viewModel.setClozeFieldText(textBox.text.toString())
                 }
 
-                EditMode.ADVANCED -> {
-                    viewModel.setEditorMode(EditMode.ADVANCED)
+                EditMode.SINGLE_TAP -> {
                     editModeButton.setIconResource(R.drawable.ic_touch)
-                    editMode = EditMode.SINGLE_TAP
+                    viewModel.setEditorMode(EditMode.ADVANCED)
 
                     singleTapLayout.visibility = View.GONE
                     editFieldsLayout?.visibility = View.VISIBLE
                 }
+            }
+        }
+    }
+
+    private fun setLayoutVisibility() {
+        when (editMode) {
+            EditMode.SINGLE_TAP -> {
+                singleTapLayout.visibility = View.VISIBLE
+                editFieldsLayout?.visibility = View.GONE
+            }
+            EditMode.ADVANCED -> {
+                singleTapLayout.visibility = View.GONE
+                editFieldsLayout?.visibility = View.VISIBLE
             }
         }
     }
