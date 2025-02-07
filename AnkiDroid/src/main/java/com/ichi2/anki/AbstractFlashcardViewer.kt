@@ -803,7 +803,7 @@ abstract class AbstractFlashcardViewer :
             return
         }
         val animation = fromGesture.toAnimationTransition().invert()
-        val editCardIntent = NoteEditorLauncher.EditCard(currentCard!!.id, animation).getIntent(this)
+        val editCardIntent = NoteEditorLauncher.EditCard(currentCard!!.id, animation).toIntent(this)
         editCurrentCardLauncher.launch(editCardIntent)
     }
 

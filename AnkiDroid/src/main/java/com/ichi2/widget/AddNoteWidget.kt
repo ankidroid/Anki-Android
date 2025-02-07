@@ -47,7 +47,7 @@ class AddNoteWidget : AnalyticsWidgetProvider() {
             appWidgetIds: IntArray,
         ) {
             val remoteViews = RemoteViews(context.packageName, R.layout.widget_add_note)
-            val intent = NoteEditorLauncher.AddNote().getIntent(context)
+            val intent = NoteEditorLauncher.AddNote().toIntent(context)
             val pendingIntent = PendingIntentCompat.getActivity(context, 0, intent, 0, false)
             remoteViews.setOnClickPendingIntent(R.id.widget_add_note_button, pendingIntent)
             appWidgetManager.updateAppWidget(appWidgetIds, remoteViews)

@@ -42,6 +42,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.anki.utils.TIME_HOUR
 import com.ichi2.anki.utils.TIME_MINUTE
@@ -97,7 +98,7 @@ class CongratsPage :
         viewModel.deckOptionsDestination
             .flowWithLifecycle(lifecycle)
             .onEach { destination ->
-                val intent = destination.getIntent(requireContext())
+                val intent = destination.toIntent(requireContext())
                 startActivity(intent, null)
             }.launchIn(lifecycleScope)
 
@@ -233,8 +234,8 @@ class CongratsViewModel :
 class DeckOptionsDestination(
     private val deckId: DeckId,
     private val isFiltered: Boolean,
-) {
-    fun getIntent(context: Context): Intent =
+) : Destination {
+    override fun toIntent(context: Context): Intent =
         if (isFiltered) {
             Intent(context, FilteredDeckOptions::class.java)
         } else {

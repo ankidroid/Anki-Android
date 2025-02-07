@@ -27,5 +27,5 @@ import com.ichi2.anki.noteeditor.NoteEditorLauncher
 class ImageOcclusionIntentBuilder(
     private val context: Context,
 ) {
-    fun buildIntent(imageUri: Uri?): Intent = NoteEditorLauncher.ImageOcclusion(imageUri).getIntent(context)
+    fun buildIntent(imageUri: Uri?): Intent = NoteEditorLauncher.ImageOcclusion(imageUri).toIntent(context)
 }

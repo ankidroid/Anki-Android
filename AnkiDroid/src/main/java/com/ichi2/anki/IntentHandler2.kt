@@ -39,11 +39,11 @@ class IntentHandler2 : AbstractIntentHandler() {
         if (intent.extras == null) {
             Timber.w("Intent unexpectedly has no extras. Notifying user, defaulting to add note.")
             showThemedToast(this, getString(R.string.something_wrong), false)
-            startActivity(NoteEditorLauncher.AddNote().getIntent(this))
+            startActivity(NoteEditorLauncher.AddNote().toIntent(this))
             finish()
         } else {
             val noteEditorIntent =
-                NoteEditorLauncher.PassArguments(intent.extras!!).getIntent(this, intent.action)
+                NoteEditorLauncher.PassArguments(intent.extras!!).toIntent(this, intent.action)
             noteEditorIntent.setDataAndType(intent.data, intent.type)
             startActivity(noteEditorIntent)
             finish()

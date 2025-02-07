@@ -52,7 +52,7 @@ abstract class NoteEditorTest protected constructor() {
 
     private val noteEditorIntent: Intent
         get() {
-            return NoteEditorLauncher.AddNote().getIntent(targetContext)
+            return NoteEditorLauncher.AddNote().toIntent(targetContext)
         }
 
     @Before

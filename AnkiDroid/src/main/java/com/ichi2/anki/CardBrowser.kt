@@ -811,7 +811,7 @@ open class CardBrowser :
     @NeedsTest("I/O edits are saved")
     private fun openNoteEditorForCard(cardId: CardId) {
         currentCardId = cardId
-        val intent = NoteEditorLauncher.EditCard(currentCardId, Direction.DEFAULT).getIntent(this)
+        val intent = NoteEditorLauncher.EditCard(currentCardId, Direction.DEFAULT).toIntent(this)
         onEditCardActivityResult.launch(intent)
         // #6432 - FIXME - onCreateOptionsMenu crashes if receiving an activity result from edit card when in multiselect
         viewModel.endMultiSelectMode()
@@ -1863,7 +1863,7 @@ open class CardBrowser :
         fun createAddNoteIntent(
             context: Context,
             viewModel: CardBrowserViewModel,
-        ): Intent = NoteEditorLauncher.AddNoteFromCardBrowser(viewModel).getIntent(context)
+        ): Intent = NoteEditorLauncher.AddNoteFromCardBrowser(viewModel).toIntent(context)
     }
 }
 

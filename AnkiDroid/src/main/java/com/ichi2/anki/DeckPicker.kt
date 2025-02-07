@@ -1604,7 +1604,7 @@ open class DeckPicker :
     }
 
     fun addNote() {
-        val intent = NoteEditorLauncher.AddNote().getIntent(this)
+        val intent = NoteEditorLauncher.AddNote().toIntent(this)
         startActivity(intent)
     }
 

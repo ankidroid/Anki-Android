@@ -1491,7 +1491,7 @@ class NoteEditor :
         arguments: NoteEditorLauncher,
         intentEnricher: Consumer<Bundle>,
     ) {
-        val intent = arguments.getIntent(requireContext())
+        val intent = arguments.toIntent(requireContext())
         val bundle = arguments.toBundle()
         // Mutate event with additional properties
         intentEnricher.accept(bundle)
