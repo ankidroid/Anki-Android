@@ -45,8 +45,8 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Montri tirmenuon</string>
-    <string name="drawer_close">Kaŝi tirmenuon</string>
+    <string name="drawer_open">Malfermi la tirmenuon</string>
+    <string name="drawer_close">Fermi la tirmenuon</string>
     <string name="CardEditorCardDeck">Kartaro:</string>
     <string name="CardEditorNoteDeck">Kartaro:</string>
     <string name="CardEditorModel">Tipo:</string>
