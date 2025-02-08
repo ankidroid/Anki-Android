@@ -33,7 +33,6 @@
     <string name="toast_last_field">Typy notatek muszą mieć co najmniej jedno pole</string>
     <string name="toast_empty_name">Musisz wprowadzić nazwę</string>
     <string name="toast_duplicate_field">Nazwa pola już zajęta</string>
-    <string name="toast_out_of_range">Musisz wprowadzić prawidłową wartość</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="one">%d typ notatki dostępny</item>
@@ -62,7 +61,6 @@
     <string name="model_field_editor_rename">Zmień nazwę pola</string>
     <string name="model_field_editor_language_hint">Ustaw podpowiedź języka klawiatury</string>
     <string name="model_field_editor_reposition_menu">Zmień pozycję pola</string>
-    <string name="model_field_editor_reposition">Zmień pozycję pola (wprowadź wartość %1$d–%2$d)</string>
     <string name="model_field_editor_toggle_sticky">Zapamiętaj ostatni wpis podczas dodawania</string>
     <string name="model_field_editor_changing">Aktualizowanie pól</string>
     <string name="model_field_editor_sort_field">Sortuj według tego pola</string>

@@ -33,7 +33,6 @@
     <string name="toast_last_field">Typy poznámok musia mať aspoň jedno pole</string>
     <string name="toast_empty_name">Musíte zadať názov</string>
     <string name="toast_duplicate_field">Názov poľa sa už používa</string>
-    <string name="toast_out_of_range">Musíte zadať platnú hodnotu</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="one">%d typ poznámok k dispozícii</item>
@@ -62,7 +61,6 @@
     <string name="model_field_editor_rename">Premenovať pole</string>
     <string name="model_field_editor_language_hint">Nastaviť jazykový tip klávesnice</string>
     <string name="model_field_editor_reposition_menu">Premiestniť pole</string>
-    <string name="model_field_editor_reposition">Premiestniť pole (zadajte hodnotu %1$d–%2$d)</string>
     <string name="model_field_editor_toggle_sticky">Zapamätať posledný vstupný údaj pri pridávaní</string>
     <string name="model_field_editor_changing">Aktualizácia polí</string>
     <string name="model_field_editor_sort_field">Usporiadať podľa tohto poľa</string>

@@ -33,7 +33,6 @@
     <string name="toast_last_field">筆記類型至少需要包含一個字段</string>
     <string name="toast_empty_name">您必須輸入一個名稱</string>
     <string name="toast_duplicate_field">名稱已被其他字段使用</string>
-    <string name="toast_out_of_range">您必須輸入一個有效的值</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="other">%d個筆記類型可用</item>
@@ -56,7 +55,6 @@
     <string name="model_field_editor_rename">重新命名欄位</string>
     <string name="model_field_editor_language_hint">選擇鍵盤提示語言</string>
     <string name="model_field_editor_reposition_menu">修改字段位置</string>
-    <string name="model_field_editor_reposition">修改字段位置 (輸入%1$d~%2$d的數值)</string>
     <string name="model_field_editor_toggle_sticky">新增時記住最後輸入</string>
     <string name="model_field_editor_changing">更新欄位</string>
     <string name="model_field_editor_sort_field">按此字段排序</string>

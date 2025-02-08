@@ -33,7 +33,6 @@
     <string name="toast_last_field">يجب أن تحتوي أنواع الملحوظات على حقل واحد على الأقل</string>
     <string name="toast_empty_name">عليك إدخال اسم</string>
     <string name="toast_duplicate_field">اسم الحقل مستخدم بالفعل</string>
-    <string name="toast_out_of_range">عليك إدخال قيمة صالحة</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="zero">يتوفر %d نوع ملحوظة</item>
@@ -66,7 +65,6 @@
     <string name="model_field_editor_rename">تغيير اسم الحقل</string>
     <string name="model_field_editor_language_hint">تعيين تلميح لغة لوحة المفاتيح</string>
     <string name="model_field_editor_reposition_menu">تغيير موضع الحقل</string>
-    <string name="model_field_editor_reposition">تغيير موضع الحقل (أدخل قيمة %1$d–%2$d)</string>
     <string name="model_field_editor_toggle_sticky">تذكّر المدخلات الأخيرة عند الإضافة</string>
     <string name="model_field_editor_changing">يجري تحديث الحقول</string>
     <string name="model_field_editor_sort_field">فرز حسب هذا الحقل</string>

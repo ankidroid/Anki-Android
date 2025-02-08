@@ -33,7 +33,6 @@
     <string name="toast_last_field">Not türlerinin en az bir alanı olmak zorundadır</string>
     <string name="toast_empty_name">İsim girmeniz gerekiyor</string>
     <string name="toast_duplicate_field">Alan ismi zaten kullanılıyor</string>
-    <string name="toast_out_of_range">Geçerli bir değer girmeniz gerekiyor</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="one">%d not türü mevcut</item>
@@ -58,7 +57,6 @@
     <string name="model_field_editor_rename">Alanı yeniden adlandır</string>
     <string name="model_field_editor_language_hint">Klavye dili ipucunu ayarla</string>
     <string name="model_field_editor_reposition_menu">Alanın yerini değiştir</string>
-    <string name="model_field_editor_reposition">Alanın yerini değiştir (%1$d–%2$d arası bir değer girin)</string>
     <string name="model_field_editor_toggle_sticky">Eklerken son girişi hatırla</string>
     <string name="model_field_editor_changing">Alanlar güncelleniyor</string>
     <string name="model_field_editor_sort_field">Bu alana göre sırala</string>

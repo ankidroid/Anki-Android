@@ -33,7 +33,6 @@
     <string name="toast_last_field">노트 유형은 최소한 하나의 필드가 필요합니다.</string>
     <string name="toast_empty_name">이름을 입력하셔야 합니다.</string>
     <string name="toast_duplicate_field">필드 이름이 이미 사용 중 입니다.</string>
-    <string name="toast_out_of_range">올바른 값을 입력해야만 합니다</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="other">%d 노트 유형 사용 가능</item>
@@ -56,7 +55,6 @@
     <string name="model_field_editor_rename">필드 이름 변경</string>
     <string name="model_field_editor_language_hint">키보드 언어 힌트 설정</string>
     <string name="model_field_editor_reposition_menu">필드 재배치</string>
-    <string name="model_field_editor_reposition">필드 재배치 (%1$d–%2$d 값을 입력하세요)</string>
     <string name="model_field_editor_toggle_sticky">추가할 때 마지막 입력을 기억하기</string>
     <string name="model_field_editor_changing">필드 업데이트 중</string>
     <string name="model_field_editor_sort_field">이 필드로 정렬</string>

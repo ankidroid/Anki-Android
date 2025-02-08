@@ -33,7 +33,6 @@
     <string name="toast_last_field">ಟಿಪ್ಪಣಿ ಪ್ರಕಾರಗಳು ಕನಿಷ್ಠ ಒಂದು ಕ್ಷೇತ್ರವನ್ನು ಹೊಂದಿರಬೇಕು</string>
     <string name="toast_empty_name">ನೀವು ಹೆಸರನ್ನು ನಮೂದಿಸಬೇಕು</string>
     <string name="toast_duplicate_field">ಕ್ಷೇತ್ರದ ಹೆಸರನ್ನು ಈಗಾಗಲೇ ಬಳಸಲಾಗಿದೆ</string>
-    <string name="toast_out_of_range">ನೀವು ಮಾನ್ಯವಾದ ಮೌಲ್ಯವನ್ನು ನಮೂದಿಸಬೇಕು</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="one">%d ಟಿಪ್ಪಣಿ ಪ್ರಕಾರ ಲಭ್ಯವಿದೆ</item>
@@ -58,7 +57,6 @@
     <string name="model_field_editor_rename">ಕ್ಷೇತ್ರವನ್ನು ಮರುಹೆಸರಿಸಿ</string>
     <string name="model_field_editor_language_hint">ಕೀಬೋರ್ಡ್ ಭಾಷೆಯ ಸುಳಿವನ್ನು ಹೊಂದಿಸಿ</string>
     <string name="model_field_editor_reposition_menu">ಮರುಸ್ಥಾಪನೆ ಕ್ಷೇತ್ರ</string>
-    <string name="model_field_editor_reposition">ಮರುಸ್ಥಾನ ಕ್ಷೇತ್ರ (ಮೌಲ್ಯವನ್ನು ನಮೂದಿಸಿ %1$d–%2$d)</string>
     <string name="model_field_editor_toggle_sticky">ಸೇರಿಸುವಾಗ ಕೊನೆಯ ಇನ್‌ಪುಟ್ ಅನ್ನು ನೆನಪಿಡಿ</string>
     <string name="model_field_editor_changing">ಕ್ಷೇತ್ರಗಳನ್ನು ನವೀಕರಿಸಲಾಗುತ್ತಿದೆ</string>
     <string name="model_field_editor_sort_field">ಈ ಕ್ಷೇತ್ರದಿಂದ ವಿಂಗಡಿಸಿ</string>

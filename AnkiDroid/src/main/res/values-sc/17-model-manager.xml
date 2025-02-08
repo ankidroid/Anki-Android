@@ -33,7 +33,6 @@
     <string name="toast_last_field">Sas castas de notas depent tènnere a su nessi unu campu</string>
     <string name="toast_empty_name">Depes insertare unu nùmene</string>
     <string name="toast_duplicate_field">Nùmene de su campu giai impreadu</string>
-    <string name="toast_out_of_range">Depes insertare unu valore vàlidu</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="one">%d casta de nota a disponimentu</item>
@@ -58,7 +57,6 @@
     <string name="model_field_editor_rename">Muda su campu de nùmene</string>
     <string name="model_field_editor_language_hint">Imposta s\'impòsitu de limba de su tecladu</string>
     <string name="model_field_editor_reposition_menu">Torra a positzionare su campu</string>
-    <string name="model_field_editor_reposition">Torra a positzionare su campu (inserta unu valore %1$d–%2$d)</string>
     <string name="model_field_editor_toggle_sticky">Ammenta s\'ùrtima intrada cando annanghes</string>
     <string name="model_field_editor_changing">Atualizatzione de sos campos</string>
     <string name="model_field_editor_sort_field">Òrdina sighende custu campu</string>

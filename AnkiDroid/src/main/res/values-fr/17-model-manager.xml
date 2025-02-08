@@ -33,7 +33,6 @@
     <string name="toast_last_field">Les types de note doivent avoir au moins un champ</string>
     <string name="toast_empty_name">Vous devez entrer un nom</string>
     <string name="toast_duplicate_field">Le nom du champ est déjà utilisé</string>
-    <string name="toast_out_of_range">Vous devez entrer une valeur valide</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="one">%d type de note disponible</item>
@@ -58,7 +57,6 @@
     <string name="model_field_editor_rename">Renommer le champ</string>
     <string name="model_field_editor_language_hint">Définir la suggestion de langue du clavier</string>
     <string name="model_field_editor_reposition_menu">Repositionner le champ</string>
-    <string name="model_field_editor_reposition">Repositionner le champ (entrez une valeur %1$d–%2$d)</string>
     <string name="model_field_editor_toggle_sticky">Se souvenir de la dernière entrée lors de l\'ajout</string>
     <string name="model_field_editor_changing">Mise à jour des champs</string>
     <string name="model_field_editor_sort_field">Trier par ce champ</string>

@@ -33,7 +33,6 @@
     <string name="toast_last_field">В типе записей должно быть хотя бы одно поле</string>
     <string name="toast_empty_name">Введите имя</string>
     <string name="toast_duplicate_field">Имя поля уже используется</string>
-    <string name="toast_out_of_range">Введите допустимое значение</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="one">Доступен %d тип карточек</item>
@@ -62,7 +61,6 @@
     <string name="model_field_editor_rename">Переименовать поле</string>
     <string name="model_field_editor_language_hint">Задать язык подсказок клавиатуры</string>
     <string name="model_field_editor_reposition_menu">Переместить поле</string>
-    <string name="model_field_editor_reposition">Переместить поле (введите значение %1$d–%2$d)</string>
     <string name="model_field_editor_toggle_sticky">При добавлении запоминать последний ввод</string>
     <string name="model_field_editor_changing">Поля обновляются</string>
     <string name="model_field_editor_sort_field">Сортировать по этому полю</string>

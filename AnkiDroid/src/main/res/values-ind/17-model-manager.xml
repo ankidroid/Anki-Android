@@ -33,7 +33,6 @@
     <string name="toast_last_field">Tipe catatan harus memiliki setidaknya satu kolom</string>
     <string name="toast_empty_name">Kamu harus memasukkan nama</string>
     <string name="toast_duplicate_field">Nama kolom sudah digunakan</string>
-    <string name="toast_out_of_range">Kamu harus memasukkan nilai yang valid</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="other">%d tipe catatan tersedia</item>
@@ -56,7 +55,6 @@
     <string name="model_field_editor_rename">Ubah nama kolom</string>
     <string name="model_field_editor_language_hint">Atur petunjuk bahasa papan tik</string>
     <string name="model_field_editor_reposition_menu">Pindah posisi bidang</string>
-    <string name="model_field_editor_reposition">Pindah posisi bidang (masukkan nilai %1$d-%2$d)</string>
     <string name="model_field_editor_toggle_sticky">Ingat masukan terakhir saat menambahkan</string>
     <string name="model_field_editor_changing">Memperbarui kolom</string>
     <string name="model_field_editor_sort_field">Urutkan menurut kolom ini</string>

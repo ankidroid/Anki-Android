@@ -33,7 +33,6 @@
     <string name="toast_last_field">Vrste zapiskov morajo imeti vsaj eno polje</string>
     <string name="toast_empty_name">Vnesti morate ime</string>
     <string name="toast_duplicate_field">Ime polja je že uporabljeno</string>
-    <string name="toast_out_of_range">Vnesti morate veljavno vrednost</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="one">Na voljo je %d vrsta zapiskov</item>
@@ -62,7 +61,6 @@
     <string name="model_field_editor_rename">Preimenuj polje</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Prestavi polje</string>
-    <string name="model_field_editor_reposition">Prestavi polje (vnesite vrednost %1$d - %2$d)</string>
     <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">Posodabljanje polj</string>
     <string name="model_field_editor_sort_field">Razvrsti po temu polju</string>

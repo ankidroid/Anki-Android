@@ -137,7 +137,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Numatytos</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Ieškomos tuščios kortelės&#8230;</string>
-    <string name="empty_cards_count">Trinti paruoštos kortelės: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
     <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>

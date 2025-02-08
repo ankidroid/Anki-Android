@@ -33,7 +33,6 @@
     <string name="toast_last_field">Notattyper må ha minst ett felt</string>
     <string name="toast_empty_name">Du må angi et navn</string>
     <string name="toast_duplicate_field">Feltnavn allerede brukt</string>
-    <string name="toast_out_of_range">Du må angi en gyldig verdi</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="one">%d notattype tilgjengelig</item>
@@ -58,7 +57,6 @@
     <string name="model_field_editor_rename">Gjev felt nytt namn</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Flytt felt</string>
-    <string name="model_field_editor_reposition">Reposition field (enter a value %1$d–%2$d)</string>
     <string name="model_field_editor_toggle_sticky">Husk siste inndata når du legger til</string>
     <string name="model_field_editor_changing">Oppdaterer felt</string>
     <string name="model_field_editor_sort_field">Sorter etter dette feltet</string>

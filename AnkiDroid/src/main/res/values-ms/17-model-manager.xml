@@ -33,7 +33,6 @@
     <string name="toast_last_field">Jenis nota hendaklah mengandungi sekurang-kurangnya satu medan</string>
     <string name="toast_empty_name">Anda hendaklah masukkan nama</string>
     <string name="toast_duplicate_field">Nama medan sudah digunakan</string>
-    <string name="toast_out_of_range">Anda hendaklah masukkan nilai sah</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="other">%d jenis nota tersedia</item>
@@ -56,7 +55,6 @@
     <string name="model_field_editor_rename">Nama semula medan</string>
     <string name="model_field_editor_language_hint">Tetapkan petunjuk bahasa papan kekunci</string>
     <string name="model_field_editor_reposition_menu">Alih posisi medan</string>
-    <string name="model_field_editor_reposition">Alih posisi medan (masukkan nilai %1$d–%2$d)</string>
     <string name="model_field_editor_toggle_sticky">Ingat input terakhir apabila menambah</string>
     <string name="model_field_editor_changing">Mengemas kini medan</string>
     <string name="model_field_editor_sort_field">Susun ikut medan ini</string>

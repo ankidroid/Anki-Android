@@ -33,7 +33,6 @@
     <string name="toast_last_field">टीप प्रकारात कमीतकमी एक फील्ड असणे आवश्यक आहे</string>
     <string name="toast_empty_name">आपण नाव प्रविष्ट केलेच पाहिजे</string>
     <string name="toast_duplicate_field">फील्ड नाव आधीपासून वापरलेले आहे</string>
-    <string name="toast_out_of_range">आपण एक वैध मूल्य प्रविष्ट करणे आवश्यक आहे</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="one">%d टीप प्रकार उपलब्ध</item>
@@ -58,7 +57,6 @@
     <string name="model_field_editor_rename">फील्ड पुनर्नामित करा</string>
     <string name="model_field_editor_language_hint">कीबोर्ड भाषेचा संकेत सेट करा</string>
     <string name="model_field_editor_reposition_menu">स्थान फील्ड</string>
-    <string name="model_field_editor_reposition">स्थान फील्ड (%1$d–%2$d मूल्य प्रविष्ट करा)</string>
     <string name="model_field_editor_toggle_sticky">जोडताना शेवटचे इनपुट लक्षात ठेवा</string>
     <string name="model_field_editor_changing">फील्ड अद्यतनित करीत आहे</string>
     <string name="model_field_editor_sort_field">या फील्डनुसार क्रमवारी लावा</string>

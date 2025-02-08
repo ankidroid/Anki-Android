@@ -33,7 +33,6 @@
     <string name="toast_last_field">შენიშვნის ტიპს უნდა ჰქონდეს ერთი ველი მაინც</string>
     <string name="toast_empty_name">უნდა შეიყვანოთ სახელი</string>
     <string name="toast_duplicate_field">ველის სახელი უკვე გამოყენებულია</string>
-    <string name="toast_out_of_range">გთხოვთ, შეიყვანოთ მოქმედი რიცხვი</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="one">ხელმისაწვდომია %d შენიშვნის ტიპი</item>
@@ -58,7 +57,6 @@
     <string name="model_field_editor_rename">ველის სახელის შეცვლა</string>
     <string name="model_field_editor_language_hint">კლავიატურის ენის მინიშნების დაყენება</string>
     <string name="model_field_editor_reposition_menu">ველის გადაადგილება</string>
-    <string name="model_field_editor_reposition">ველის გადაადგილება (შეიყვანეთ რიცხვი %1$d–%2$d)</string>
     <string name="model_field_editor_toggle_sticky">დამატებისას ბოლოს შეყვანილის დამახსოვრება</string>
     <string name="model_field_editor_changing">ველების განახლება</string>
     <string name="model_field_editor_sort_field">ამ ველის მიხედვით დახარისხება</string>

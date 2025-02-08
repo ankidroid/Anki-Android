@@ -33,7 +33,6 @@
     <string name="toast_last_field">Nottyper måste ha åtminstone ett fält</string>
     <string name="toast_empty_name">Du måste ange ett namn</string>
     <string name="toast_duplicate_field">Fältnamnet används redan</string>
-    <string name="toast_out_of_range">Du måste ange ett giltigt värde</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="one">%d nottyp tillgänglig</item>
@@ -58,7 +57,6 @@
     <string name="model_field_editor_rename">Byt namn på fält</string>
     <string name="model_field_editor_language_hint">Ange tips på tangentbordsspråk</string>
     <string name="model_field_editor_reposition_menu">Flytta fält</string>
-    <string name="model_field_editor_reposition">Flytta fält (ange ett värde %1$d–%2$d)</string>
     <string name="model_field_editor_toggle_sticky">Kom ihåg senaste inmatning när du lägger till</string>
     <string name="model_field_editor_changing">Uppdaterar fält</string>
     <string name="model_field_editor_sort_field">Sortera efter detta fält</string>

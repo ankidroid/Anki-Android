@@ -33,7 +33,6 @@
     <string name="toast_last_field">Malleissa on oltava vähintään yksi kenttä</string>
     <string name="toast_empty_name">Sinun tulee syöttää nimi</string>
     <string name="toast_duplicate_field">Kentän nimi on jo käytössä</string>
-    <string name="toast_out_of_range">Anna kelvollinen arvo</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="one">%d malli saatavilla</item>
@@ -58,7 +57,6 @@
     <string name="model_field_editor_rename">Uudelleennimeä kenttä</string>
     <string name="model_field_editor_language_hint">Aseta näppäimistön kielen vihje</string>
     <string name="model_field_editor_reposition_menu">Uudelleensijoita kenttä</string>
-    <string name="model_field_editor_reposition">Uudelleensijoita kenttä (syötä arvo %1$d-%2$d)</string>
     <string name="model_field_editor_toggle_sticky">Muista aiempi syöte lisättäessä</string>
     <string name="model_field_editor_changing">Päivitetään kenttiä</string>
     <string name="model_field_editor_sort_field">Järjestä tämän kentän mukaan</string>

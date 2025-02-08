@@ -33,7 +33,6 @@
     <string name="toast_last_field">Các loại ghi chú phải có ít nhất một trường</string>
     <string name="toast_empty_name">Bạn phải nhập tên</string>
     <string name="toast_duplicate_field">Tên trường đã được sử dụng</string>
-    <string name="toast_out_of_range">Bạn phải nhập một giá trị hợp lệ</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="other">%d loại ghi chú có sẵn</item>
@@ -56,7 +55,6 @@
     <string name="model_field_editor_rename">Đổi tên trường</string>
     <string name="model_field_editor_language_hint">Đặt gợi ý ngôn ngữ bàn phím</string>
     <string name="model_field_editor_reposition_menu">Định vị lại trường</string>
-    <string name="model_field_editor_reposition">Đặt lại vị trí trường (nhập giá trị %1$d–%2$d)</string>
     <string name="model_field_editor_toggle_sticky">Nhớ quá trình nhập liệu cùng khi thêm</string>
     <string name="model_field_editor_changing">Cập nhật các trường</string>
     <string name="model_field_editor_sort_field">Sắp xếp theo trường này</string>

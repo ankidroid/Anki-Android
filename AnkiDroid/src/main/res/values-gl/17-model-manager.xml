@@ -33,7 +33,6 @@
     <string name="toast_last_field">Os tipos de notas deben ter polo menos un campo</string>
     <string name="toast_empty_name">Tes de inserir un nome</string>
     <string name="toast_duplicate_field">O nome do campo xa está en uso</string>
-    <string name="toast_out_of_range">Tes de inserir un valor válido</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="one">%d tipo de nota dispoñible</item>
@@ -58,7 +57,6 @@
     <string name="model_field_editor_rename">Renomear o campo</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Campo de reposición</string>
-    <string name="model_field_editor_reposition">Campo de reposición (insire un valor entre %1$d-%2$d)</string>
     <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">Actualizando campos</string>
     <string name="model_field_editor_sort_field">Ordenar por este campo</string>

@@ -130,7 +130,6 @@ Mga file na may di-wastong pag-encode:%d</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Nakatakda</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Paghahanap ng mga walang laman na kard&#8230;</string>
-    <string name="empty_cards_count">Mga kard na tatanggalin:%d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Nabigong makakuha ng permiso na gamitin ang mikropono.</string>
     <string name="multimedia_editor_failed">Bigong buksan ang Multimedia Editor</string>

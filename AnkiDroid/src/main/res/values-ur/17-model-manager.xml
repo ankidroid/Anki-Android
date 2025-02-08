@@ -33,7 +33,6 @@
     <string name="toast_last_field">نوٹ کی قسم میں کم از کم ایک فیلڈ ہونا ضروری ہے</string>
     <string name="toast_empty_name">آپ نام ضرور درج کریں۔</string>
     <string name="toast_duplicate_field">فیلڈ کا نام پہلے ہی استعمال کیا گیا ہے</string>
-    <string name="toast_out_of_range">آپ کو ایک درست قدر درج کرنی ہوگی</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="one">%d نوٹ کی قسم دستیاب ہے۔</item>
@@ -58,7 +57,6 @@
     <string name="model_field_editor_rename">فیلڈ کا نام تبدیل کریں۔</string>
     <string name="model_field_editor_language_hint">کی بورڈ کی زبان کا اشارہ سیٹ کریں</string>
     <string name="model_field_editor_reposition_menu">ریپوزیشن فیلڈ</string>
-    <string name="model_field_editor_reposition">Reposition field (enter a value %1$d–%2$d)</string>
     <string name="model_field_editor_toggle_sticky">شامل کرتے وقت آخری ان پٹ یاد رکھیں</string>
     <string name="model_field_editor_changing">فیلڈز کو اپ ڈیٹ کرنا</string>
     <string name="model_field_editor_sort_field">اس فیلڈ کے مطابق ترتیب دیں۔</string>

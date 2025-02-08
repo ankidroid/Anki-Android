@@ -33,7 +33,6 @@
     <string name="toast_last_field">Els tipus de notes han de tenir almenys un camp</string>
     <string name="toast_empty_name">Heu d\'introduir un nom</string>
     <string name="toast_duplicate_field">El nom del camp ja existeix</string>
-    <string name="toast_out_of_range">Heu d\'introduir un valor vàlid</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="one">%d tipus de notes disponibles</item>
@@ -58,7 +57,6 @@
     <string name="model_field_editor_rename">Canviar el nom del camp</string>
     <string name="model_field_editor_language_hint">Estableix consell d\'idioma del teclat</string>
     <string name="model_field_editor_reposition_menu">Camp de repós</string>
-    <string name="model_field_editor_reposition">Camp de repós (entri un valor %1$d-%2$d)</string>
     <string name="model_field_editor_toggle_sticky">Recordeu la darrera entrada al afegir</string>
     <string name="model_field_editor_changing">Actualitzant els camps</string>
     <string name="model_field_editor_sort_field">Ordena per aquest camp</string>
