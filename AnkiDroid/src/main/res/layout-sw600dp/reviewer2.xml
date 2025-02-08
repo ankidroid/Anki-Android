@@ -12,73 +12,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="6dp"
         >
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/back_button"
-            style="?actionButtonStyle"
-            android:layout_width="?minTouchTargetSize"
-            android:layout_height="?actionBarSize"
-            android:src="?attr/homeAsUpIndicator"
-            android:layout_marginStart="4dp"
-            android:contentDescription="@string/abc_action_bar_up_description"
-            android:tooltipText="@string/abc_action_bar_up_description"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/webview_container"
-            />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/new_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="?attr/newCountColor"
-            android:paddingEnd="4dp"
-            app:layout_constraintTop_toTopOf="@id/back_button"
-            app:layout_constraintBottom_toBottomOf="@id/back_button"
-            app:layout_constraintStart_toEndOf="@id/back_button"
-            app:layout_constraintEnd_toStartOf="@id/lrn_count"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            tools:text="127"
-            />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/lrn_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="?attr/learnCountColor"
-            android:paddingHorizontal="4dp"
-            app:layout_constraintTop_toTopOf="@id/back_button"
-            app:layout_constraintBottom_toBottomOf="@id/back_button"
-            app:layout_constraintStart_toEndOf="@id/new_count"
-            app:layout_constraintEnd_toStartOf="@id/rev_count"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            tools:text="381"
-            />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/rev_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="?attr/reviewCountColor"
-            android:paddingStart="4dp"
-            app:layout_constraintTop_toTopOf="@id/back_button"
-            app:layout_constraintBottom_toBottomOf="@id/back_button"
-            app:layout_constraintStart_toEndOf="@id/lrn_count"
-            tools:text="954"
-            />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/webview_container"
             style="@style/CardView.ViewerStyle"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="6dp"
             android:layout_marginHorizontal="@dimen/reviewer_side_margin"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/back_button"
-            app:layout_constraintBottom_toTopOf="@id/type_answer_container">
+            app:layout_constraintBottom_toTopOf="@id/type_answer_container"
+            app:layout_constraintTop_toTopOf="parent">
 
             <WebView
                 android:id="@+id/webview"
@@ -93,10 +39,10 @@
             style="@style/CardView.ViewerStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            app:layout_constraintTop_toBottomOf="@id/webview_container"
-            app:layout_constraintBottom_toTopOf="@id/answer_buttons"
+            android:layout_marginBottom="6dp"
             android:layout_marginHorizontal="@dimen/reviewer_side_margin"
+            app:layout_constraintTop_toBottomOf="@id/webview_container"
+            app:layout_constraintBottom_toTopOf="@id/bottom_bar"
             android:visibility="gone"
             tools:visibility="visible">
 
@@ -118,30 +64,105 @@
             </com.google.android.material.textfield.TextInputLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_answer_buttons_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="156dp" />
+
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/bottom_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="top"
+            app:constraint_referenced_ids="answer_buttons, back_button, reviewer_menu_view"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/back_button"
+            style="?actionButtonStyle"
+            android:layout_width="?minTouchTargetSize"
+            android:layout_height="?minTouchTargetSize"
+            android:src="?attr/homeAsUpIndicator"
+            android:layout_marginStart="@dimen/reviewer_side_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="@string/abc_action_bar_up_description"
+            android:tooltipText="@string/abc_action_bar_up_description"
+            app:layout_constraintTop_toBottomOf="@id/bottom_bar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/new_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/newCountColor"
+            android:paddingEnd="4dp"
+            android:textSize="16sp"
+            app:layout_constraintTop_toTopOf="@id/back_button"
+            app:layout_constraintBottom_toBottomOf="@id/back_button"
+            app:layout_constraintStart_toEndOf="@id/back_button"
+            app:layout_constraintEnd_toStartOf="@id/lrn_count"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            tools:text="127"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/lrn_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/learnCountColor"
+            android:paddingHorizontal="4dp"
+            android:textSize="16sp"
+            app:layout_constraintTop_toTopOf="@id/back_button"
+            app:layout_constraintBottom_toBottomOf="@id/back_button"
+            app:layout_constraintStart_toEndOf="@id/new_count"
+            app:layout_constraintEnd_toStartOf="@id/rev_count"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            tools:text="381"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/rev_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/reviewCountColor"
+            android:paddingStart="4dp"
+            android:textSize="16sp"
+            app:layout_constraintTop_toTopOf="@id/back_button"
+            app:layout_constraintBottom_toBottomOf="@id/back_button"
+            app:layout_constraintStart_toEndOf="@id/lrn_count"
+            app:layout_constraintEnd_toStartOf="@id/guideline_answer_buttons_start"
+            tools:text="954"
+            />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/show_answer"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:minHeight="?actionBarSize"
             android:text="@string/show_answer"
             android:textSize="@dimen/reviewer_answer_button_textSize"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/answer_buttons"
             app:layout_constraintStart_toStartOf="@id/answer_buttons"
             app:layout_constraintTop_toTopOf="@id/answer_buttons"
-            tools:visibility="gone"
+            tools:visibility="invisible"
             />
 
         <LinearLayout
             android:id="@+id/answer_buttons"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:minHeight="?minTouchTargetSize"
             android:visibility="invisible"
+            android:minHeight="?minTouchTargetSize"
             android:layout_marginHorizontal="@dimen/reviewer_side_margin"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/type_answer_container"
+            app:layout_constraintStart_toStartOf="@id/guideline_answer_buttons_start"
+            app:layout_constraintEnd_toStartOf="@id/reviewer_menu_view"
+            app:layout_constraintTop_toBottomOf="@id/bottom_bar"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:visibility="visible"
             >
@@ -151,7 +172,6 @@
                 style="@style/AnswerButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/answer_button_margin_horizontal"
                 android:backgroundTint="@color/again_button_bg"
                 android:text="@string/ease_button_again"
                 android:textColor="@color/again_button_text"
@@ -163,7 +183,7 @@
                 style="@style/AnswerButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/answer_button_margin_horizontal"
+                android:layout_marginStart="@dimen/answer_button_margin_horizontal"
                 android:backgroundTint="@color/hard_button_bg"
                 android:text="@string/ease_button_hard"
                 android:textColor="@color/hard_button_text"
@@ -175,7 +195,7 @@
                 style="@style/AnswerButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/answer_button_margin_horizontal"
+                android:layout_marginStart="@dimen/answer_button_margin_horizontal"
                 android:backgroundTint="@color/good_button_bg"
                 android:text="@string/ease_button_good"
                 android:textColor="@color/good_button_text"
@@ -187,7 +207,7 @@
                 style="@style/AnswerButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/answer_button_margin_horizontal"
+                android:layout_marginStart="@dimen/answer_button_margin_horizontal"
                 android:backgroundTint="@color/easy_button_bg"
                 android:text="@string/ease_button_easy"
                 android:textColor="@color/easy_button_text"
@@ -197,13 +217,13 @@
 
         <com.ichi2.anki.preferences.reviewer.ReviewerMenuView
             android:id="@+id/reviewer_menu_view"
-            android:layout_width="0dp"
-            android:layout_height="?actionBarSize"
-            app:layout_constraintStart_toEndOf="@id/rev_count"
+            android:layout_width="wrap_content"
+            android:layout_height="?minTouchTargetSize"
+            app:layout_constraintWidth_max="144dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/back_button"
-            app:layout_constraintBottom_toBottomOf="@id/back_button"
-            android:layout_marginStart="12dp"
+            app:layout_constraintTop_toBottomOf="@id/bottom_bar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="@dimen/reviewer_side_margin"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

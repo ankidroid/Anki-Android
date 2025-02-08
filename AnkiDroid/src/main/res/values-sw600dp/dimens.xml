@@ -5,4 +5,7 @@
     <dimen name="deck_picker_left_padding_small">16dp</dimen>
     <dimen name="deck_picker_left_padding">24dp</dimen>
     <dimen name="deck_picker_right_padding">12dp</dimen>
+    <dimen name="reviewer_side_margin">12dp</dimen>
+    <dimen name="reviewer_answer_button_textSize">18sp</dimen>
+    <dimen name="answer_button_margin_horizontal">6dp</dimen>
 </resources>

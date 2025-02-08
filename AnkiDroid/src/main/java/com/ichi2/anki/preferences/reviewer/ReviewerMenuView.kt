@@ -26,6 +26,7 @@ import android.widget.LinearLayout
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuItemImpl
 import androidx.appcompat.widget.ActionMenuView
+import androidx.core.view.size
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.Flag
@@ -68,6 +69,8 @@ class ReviewerMenuView
             frontMenu.clear()
             overflowMenu.clear()
         }
+
+        fun isEmpty() = frontMenu.size == 0 && overflowMenu.size == 0
 
         fun findItem(id: Int): MenuItemImpl? = (frontMenu.findItem(id) ?: overflowMenu.findItem(id)) as? MenuItemImpl
 
