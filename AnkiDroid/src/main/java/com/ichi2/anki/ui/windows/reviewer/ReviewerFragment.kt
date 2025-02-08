@@ -23,6 +23,7 @@ import android.text.style.UnderlineSpan
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup.MarginLayoutParams
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
@@ -104,7 +105,6 @@ import com.ichi2.anki.utils.ext.menu
 import com.ichi2.anki.utils.ext.removeSubMenu
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.window
-import com.ichi2.anki.utils.setMargins
 import com.ichi2.libanki.sched.Counts
 import kotlinx.coroutines.launch
 
@@ -490,7 +490,10 @@ class ReviewerFragment :
     private fun setupFrame(view: View) {
         if (Prefs.frameStyle == FrameStyle.BOX) {
             view.findViewById<MaterialCardView>(R.id.webview_container).apply {
-                setMargins(0)
+                updateLayoutParams<MarginLayoutParams> {
+                    leftMargin = 0
+                    rightMargin = 0
+                }
                 cardElevation = 0F
                 shapeAppearanceModel = ShapeAppearanceModel() // Remove corners
             }

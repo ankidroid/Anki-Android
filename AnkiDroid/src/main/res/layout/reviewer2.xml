@@ -121,7 +121,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?minTouchTargetSize"
-            android:layout_marginTop="2dp"
             android:layout_marginHorizontal="@dimen/reviewer_side_margin"
             >
 
