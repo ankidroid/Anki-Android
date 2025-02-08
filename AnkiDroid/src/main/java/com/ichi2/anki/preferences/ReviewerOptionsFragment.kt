@@ -16,11 +16,15 @@
 package com.ichi2.anki.preferences
 
 import android.os.Bundle
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment
+import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.settings.enums.HideSystemBars
 
 /**
  * Developer options to test some of the new reviewer settings and features
@@ -50,6 +54,15 @@ class ReviewerOptionsFragment :
             val intent = SingleFragmentActivity.getIntent(requireContext(), ReviewerMenuSettingsFragment::class)
             startActivity(intent)
             true
+        }
+
+        val ignoreDisplayCutout =
+            requirePreference<SwitchPreferenceCompat>(R.string.ignore_display_cutout_key).apply {
+                isEnabled = Prefs.hideSystemBars != HideSystemBars.NONE
+            }
+
+        requirePreference<ListPreference>(R.string.hide_system_bars_key).setOnPreferenceChangeListener { value ->
+            ignoreDisplayCutout.isEnabled = value != HideSystemBars.NONE.entryValue
         }
     }
 }
