@@ -100,12 +100,12 @@ class InstantNoteEditorActivity :
     private val clozeFieldText: String?
         get() = viewModel.actualClozeFieldText.value
 
-    private var isDialogVisible = false // Created a New Flag To Handle Double Pop up of Discard Dialog
+    private var isDialogVisible = false
 
     private val dialogBackCallback =
         object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
-                if (!isDialogVisible) { // Show Discard Dialog only when it is not Visible to avoid Duplication
+                if (!isDialogVisible) {
                     showDiscardChangesDialog()
                 }
             }
@@ -606,13 +606,12 @@ class InstantNoteEditorActivity :
     private fun showDiscardChangesDialog() {
         DiscardChangesDialog
             .showDialog(this) {
-                Timber.i("InstantNoteEditorActivity:: OK button pressed to confirm discard changes")
+                Timber.d("InstantNoteEditorActivity:: OK button pressed to confirm discard changes")
                 finish()
             }.setOnDismissListener {
-                // Used Dismiss Listener to Update the Value of Flag each time the Dialog is Dismissed
                 isDialogVisible = false
             }
-        isDialogVisible = true // Updating Flag as Dialog is Visible
+        isDialogVisible = true
     }
 
     private fun convertSelectedTextToCloze(
