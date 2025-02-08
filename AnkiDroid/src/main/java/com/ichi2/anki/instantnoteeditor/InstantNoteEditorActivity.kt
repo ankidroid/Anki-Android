@@ -608,8 +608,11 @@ class InstantNoteEditorActivity :
             .showDialog(this) {
                 Timber.d("InstantNoteEditorActivity:: OK button pressed to confirm discard changes")
                 finish()
-            }.setOnDismissListener {
-                isDialogVisible = false
+            }.apply {
+                setCancelable(false)
+                setOnDismissListener {
+                    isDialogVisible = false
+                }
             }
         isDialogVisible = true
     }
