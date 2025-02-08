@@ -27,12 +27,13 @@ import android.view.ViewGroup.MarginLayoutParams
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
-import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.appcompat.view.menu.SubMenuBuilder
 import androidx.appcompat.widget.ActionMenuView
+import androidx.appcompat.widget.AppCompatImageButton
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.getSystemService
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -43,7 +44,6 @@ import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.shape.ShapeAppearanceModel
@@ -125,7 +125,7 @@ class ReviewerFragment :
             if (typeAnswerContainer?.isVisible == true) {
                 typeAnswerContainer
             } else {
-                this@ReviewerFragment.view?.findViewById(R.id.buttons_area)
+                this@ReviewerFragment.view?.findViewById(R.id.answer_buttons)
             }
     }
 
@@ -142,8 +142,8 @@ class ReviewerFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
-            setNavigationOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
+        view.findViewById<AppCompatImageButton>(R.id.back_button).setOnClickListener {
+            requireActivity().finish()
         }
 
         setupImmersiveMode(view)
@@ -172,6 +172,10 @@ class ReviewerFragment :
             webView.evaluateJavascript(eval) {
                 viewModel.onStateMutationCallback()
             }
+        }
+
+        viewModel.showingAnswer.collectIn(lifecycleScope) {
+            resetZoom()
         }
     }
 
@@ -265,10 +269,13 @@ class ReviewerFragment :
 
     private fun setupAnswerButtons(view: View) {
         val prefs = sharedPrefs()
-        val hideAnswerButtons = prefs.getBoolean(getString(R.string.hide_answer_buttons_key), false)
-        val buttonsAreaLayout = view.findViewById<FrameLayout>(R.id.buttons_area)
-        if (hideAnswerButtons) {
-            buttonsAreaLayout.isVisible = false
+        val answerButtonsLayout = view.findViewById<LinearLayout>(R.id.answer_buttons)
+        if (prefs.getBoolean(getString(R.string.hide_answer_buttons_key), false)) {
+            // Expand the menu if there is no answer buttons in big screens
+            view.findViewById<ReviewerMenuView>(R.id.reviewer_menu_view).updateLayoutParams<ConstraintLayout.LayoutParams> {
+                matchConstraintMaxWidth = 0
+            }
+            answerButtonsLayout.isVisible = false
             return
         }
 
@@ -314,19 +321,15 @@ class ReviewerFragment :
                     viewModel.onShowAnswer(typedAnswer = typedAnswer)
                 }
             }
-        val answerButtonsLayout = view.findViewById<LinearLayout>(R.id.answer_buttons)
 
-        // TODO add some kind of feedback/animation after tapping show answer or the answer buttons
-        viewModel.showingAnswer.collectLatestIn(lifecycleScope) { shouldShowAnswer ->
-            // use INVISIBLE instead of GONE to keep the same button height
-            if (shouldShowAnswer) {
+        viewModel.showingAnswer.collectLatestIn(lifecycleScope) { isAnswerShown ->
+            if (isAnswerShown) {
                 showAnswerButton.visibility = View.INVISIBLE
                 answerButtonsLayout.visibility = View.VISIBLE
             } else {
                 showAnswerButton.visibility = View.VISIBLE
                 answerButtonsLayout.visibility = View.INVISIBLE
             }
-            resetZoom()
         }
 
         if (prefs.getBoolean(getString(R.string.hide_hard_and_easy_key), false)) {
@@ -336,9 +339,9 @@ class ReviewerFragment :
 
         val buttonsHeight = Prefs.answerButtonsSize
         if (buttonsHeight != 100) {
-            buttonsAreaLayout.post {
-                buttonsAreaLayout.updateLayoutParams {
-                    height = buttonsAreaLayout.measuredHeight * buttonsHeight / 100
+            answerButtonsLayout.post {
+                answerButtonsLayout.updateLayoutParams {
+                    height = answerButtonsLayout.measuredHeight * buttonsHeight / 100
                 }
             }
         }
@@ -410,6 +413,10 @@ class ReviewerFragment :
 
     private fun setupMenu(view: View) {
         val menu = view.findViewById<ReviewerMenuView>(R.id.reviewer_menu_view)
+        if (menu.isEmpty()) {
+            menu.isVisible = false
+            return
+        }
         menu.setOnMenuItemClickListener(this)
 
         viewModel.flagFlow
@@ -491,6 +498,7 @@ class ReviewerFragment :
         if (Prefs.frameStyle == FrameStyle.BOX) {
             view.findViewById<MaterialCardView>(R.id.webview_container).apply {
                 updateLayoutParams<MarginLayoutParams> {
+                    topMargin = 0
                     leftMargin = 0
                     rightMargin = 0
                 }

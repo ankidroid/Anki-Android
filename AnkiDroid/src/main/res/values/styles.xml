@@ -32,6 +32,7 @@
     <style name="AnswerButton" parent="Widget.Material3.Button">
         <item name="android:padding">0dp</item>
         <item name="cornerRadius">12dp</item>
+        <item name="android:textSize">@dimen/reviewer_answer_button_textSize</item>
     </style>
 
     <!--  Material Design-style persistent footer button -->
