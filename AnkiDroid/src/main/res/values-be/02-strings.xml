@@ -344,7 +344,6 @@
     <string name="orphan_note_message">Выдаленне гэтага тыпу карткі пакіне некаторыя нататкі без ніводнай карткі.</string>
     <string name="voice_not_supported">Падтрымка голасу адсутнічае. Паспрабуйце іншы рухавік голасу або пераўсталюйце бягучы.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Паказаць дыялогавае акно з камбінацыямі клавіш</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Выбар калоды</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Выдаліць калоду без пацвярджэння</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Рэдактар запісу</string>
@@ -357,7 +356,6 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Рэдагаваць стыль</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Капіяваць стыль як разметку</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Рэдагаваць выгляд браўзера</string>
-    <string name="show_shortcuts_message">Націсніце Alt+K, каб убачыць спалучэнні клавіш</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
     <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
 </resources>

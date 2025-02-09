@@ -97,6 +97,7 @@
     <string name="gestures_summ">ऐसे जवाब और संपादन कार्ड के रूप में कार्रवाई करने के लिए इशारों निरुपित ।</string>
     <string name="gestures_corner_touch" maxLength="41">९-बिंदु स्पर्श</string>
     <string name="gestures_corner_touch_summary">स्क्रीन कोनों में स्पर्श इशारों की अनुमति दें</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">फुल स्क्रीन नेविगेशन दराज</string>
     <string name="gestures_fullscreen_nav_drawer_summary">स्क्रीन पर कहीं से भी स्वाइप किए जाने पर नेविगेशन दराज खोलें</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">कोई नहीं </string>

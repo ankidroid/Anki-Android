@@ -336,7 +336,6 @@
     <string name="orphan_note_message">Apagar este tipo de ficha implica deixar algumas notas sem fichas.</string>
     <string name="voice_not_supported">Voz não suportada. Tente outra ou instale um motor de voz.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Mostrar janela com os atalhos de teclado</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Ecrã de Selecção de Baralhos</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Eliminar baralho sem confirmação</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Editor de Notas</string>
@@ -349,7 +348,6 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Editar estilo do modelo</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copiar modelo no formato markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Editar a aparência do explorador</string>
-    <string name="show_shortcuts_message">Pressione Alt+K para ver os atalhos de teclado</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">A acção %s não foi definida para este tipo de nota. Por favor configure-o.</string>
     <string name="directory_inaccessible_info">Descubra mais sobre como restaurar o acesso aqui %s, ou vá às definições para actualizar a pasta das colecções.</string>
 </resources>

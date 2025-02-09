@@ -336,7 +336,6 @@
     <string name="orphan_note_message">Deletar essa categoria de cartão deixará algumas notas sem cartão</string>
     <string name="voice_not_supported">Voz não suportada. Tente outra ou instale um mecanismo de voz.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Mostrar diálogo de atalhos de teclado</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Selecionador de baralho</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Deletar baralho sem confirmação</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Editor de Notas</string>
@@ -349,7 +348,6 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Editar estilo</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copiar o modelo como markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Editar aparência do navegador</string>
-    <string name="show_shortcuts_message">Pressione Alt+K para mostrar atalhos de teclado</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">A ação do usuário %s não está definida neste tipo de nota. Por favor, configure-a</string>
     <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
 </resources>

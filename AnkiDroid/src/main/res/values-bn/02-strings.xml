@@ -330,7 +330,6 @@
     <string name="orphan_note_message">এই কার্ডের ধরন মুছে ফেলার ফলে কোনো কার্ড ছাড়াই কিছু নোট চলে যাবে।</string>
     <string name="voice_not_supported">ভয়েস সমর্থিত নয়। অন্য একটি চেষ্টা করুন বা একটি ভয়েস ইঞ্জিন ইনস্টল করুন৷</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">কীবোর্ড শর্টকাট ডায়ালগ দেখান</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">ডেক পিকার</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">নিশ্চিতকরণ ছাড়াই ডেক মুছুন</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">নোট সম্পাদক</string>
@@ -343,7 +342,6 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">স্টাইলিং সম্পাদনা করুন</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">টেমপ্লেটটিকে মার্কডাউন হিসাবে অনুলিপি করুন</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">ব্রাউজারের চেহারা সম্পাদনা করুন</string>
-    <string name="show_shortcuts_message">কীবোর্ড শর্টকাট দেখাতে Alt+K টিপুন</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">এই নোটের প্রকারে ব্যবহারকারীর ক্রিয়া %s সেট নেই। এটি কনফিগার করুন</string>
     <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
 </resources>

@@ -97,6 +97,7 @@
     <string name="gestures_summ">جاۋاب ۋە كارتا تەھرىرلەشكە ئوخشاش مەشغۇلاتقا قول ئىشارىتى بەلگىلەيدۇ.</string>
     <string name="gestures_corner_touch" maxLength="41">9 نۇقتا سەزگۈچ</string>
     <string name="gestures_corner_touch_summary">ئېكران بۇلۇڭلىرى تېگىشىش قول ئىشارىتىگە يول قويىدۇ</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">پۈتۈن ئېكران يولباشچى تارتمىسى</string>
     <string name="gestures_fullscreen_nav_drawer_summary">ئېكراننىڭ خالىغان يېرىدىن ئوڭغا سۈرۈلسە يولباشچى تارتمىسىنى ئاچىدۇ</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">يوق</string>

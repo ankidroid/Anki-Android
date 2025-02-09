@@ -336,7 +336,6 @@
     <string name="orphan_note_message">حذف این نوع کارت باعث بی کارت شدن بعضی یادداشت ها می شود</string>
     <string name="voice_not_supported">صدای انتخاب شده همایت شده نیست. یکی دیگر را انتخاب کنید یا یک موتور صدا نصب کنید.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">نمایش کادر محاوره‌ای میانبرهای کیبرد</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">انتخاب کننده دسته</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">دسته را بدون تایید حذف کن</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">ویرایشگر یادداشت</string>
@@ -349,7 +348,6 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">ویرایش طراحی</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">ویرایش قالب به عنوان مارک‌داون</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">ویرایش ظاهر مرورگر</string>
-    <string name="show_shortcuts_message">برای نمایش میانبر های کیبرد دکمه های Alt+K را  فشار دهید</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">عمل کاربر %s در این نوع کارت تنظیم نشده است. لطفاً آن را پیکربندی کنید.</string>
     <string name="directory_inaccessible_info">برای کسب اطلاعات بیشتر در مورد نحوه بازیابی دسترسی اینجا %s را ببینید یا به تنظیمات بروید تا پوشه مجموعه را به‌روزرسانی کنید.</string>
 </resources>

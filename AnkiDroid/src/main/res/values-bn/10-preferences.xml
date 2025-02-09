@@ -98,6 +98,7 @@
     <string name="gestures_summ">উত্তর দেওয়া এবং কার্ড সম্পাদনা করার মতো কাজে অঙ্গভঙ্গি বরাদ্দ করুন।</string>
     <string name="gestures_corner_touch" maxLength="41">9-পয়েন্ট স্পর্শ</string>
     <string name="gestures_corner_touch_summary">স্ক্রিনের কোণে স্পর্শ অঙ্গভঙ্গির অনুমতি দিন</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">ফুল স্ক্রিন নেভিগেশন ড্রয়ার</string>
     <string name="gestures_fullscreen_nav_drawer_summary">স্ক্রিনের যেকোনো জায়গা থেকে ডানদিকে সোয়াইপ করলে নেভিগেশন ড্রয়ার খুলে যায়</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">তাদের কেউ না</string>

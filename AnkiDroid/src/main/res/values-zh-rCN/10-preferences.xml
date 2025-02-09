@@ -96,6 +96,7 @@
     <string name="gestures_summ">为回答或编辑卡片等动作指定手势。</string>
     <string name="gestures_corner_touch" maxLength="41">9 点触摸</string>
     <string name="gestures_corner_touch_summary">允许屏幕边缘的触摸手势</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">全屏导航抽屉</string>
     <string name="gestures_fullscreen_nav_drawer_summary">从屏幕上的任何地方向右滑动时打开导航抽屉</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">无</string>

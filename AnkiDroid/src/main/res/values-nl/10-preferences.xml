@@ -97,6 +97,7 @@
     <string name="gestures_summ">Bewegingen toewijzen aan acties zoals het beantwoorden en bewerken van kaarten.</string>
     <string name="gestures_corner_touch" maxLength="41">9-punts aanraakscherm</string>
     <string name="gestures_corner_touch_summary">Aanraakgebaren in schermhoeken toestaan</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Volledig scherm navigatiebalk</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Open navigatiescherm wanneer je overal en op het scherm naar rechts veegt</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">Geen</string>

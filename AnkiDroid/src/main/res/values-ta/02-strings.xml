@@ -336,7 +336,6 @@
     <string name="orphan_note_message">இந்தக் கார்டு வகையை நீக்கினால் சில குறிப்புகள் கார்டு இல்லாமல் இருக்கும்.</string>
     <string name="voice_not_supported">குரல் ஆதரிக்கப்படவில்லை. வேறொன்றை முயற்சிக்கவும் அல்லது குரல் இயந்திரத்தை நிறுவவும்.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">விசைப்பலகை குறுக்குவழிகள் உரையாடலைக் காட்டு</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">டெக் பிக்கர்</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">உறுதிப்படுத்தல் இல்லாமல் டெக்கை நீக்கு</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">குறிப்பு எடிட்டர்</string>
@@ -349,7 +348,6 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">ஸ்டைலிங் திருத்தவும்</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">டெம்ப்ளேட்டை மார்க் டவுனாக நகலெடுக்கவும்</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">உலாவியின் தோற்றத்தைத் திருத்தவும்</string>
-    <string name="show_shortcuts_message">விசைப்பலகை குறுக்குவழிகளைக் காட்ட Alt+K ஐ அழுத்தவும்</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">இந்த நோட்டிப்பில் பயனர் செயல் %s அமைக்கப்படவில்லை. தயவுசெய்து அதை உள்ளமைக்கவும்</string>
     <string name="directory_inaccessible_info">அணுகலை எவ்வாறு மீட்டெடுப்பது என்பது பற்றி இங்கே %s இல் மேலும் அறிக அல்லது சேகரிப்பு கோப்புறையைப் புதுப்பிக்க அமைப்புகளுக்குச் செல்லவும்.</string>
 </resources>

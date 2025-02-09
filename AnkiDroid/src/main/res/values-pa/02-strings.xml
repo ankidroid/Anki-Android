@@ -330,7 +330,6 @@
     <string name="orphan_note_message">ਇਸ ਕਾਰਡ ਦੀ ਕਿਸਮ ਨੂੰ ਮਿਟਾਉਣ ਨਾਲ ਕੁਝ ਨੋਟ ਬਿਨਾਂ ਕਿਸੇ ਕਾਰਡ ਦੇ ਰਹਿ ਜਾਣਗੇ।</string>
     <string name="voice_not_supported">ਵੌਇਸ ਸਮਰਥਿਤ ਨਹੀਂ ਹੈ। ਕੋਈ ਹੋਰ ਅਜ਼ਮਾਓ ਜਾਂ ਇੱਕ ਵੌਇਸ ਇੰਜਣ ਸਥਾਪਤ ਕਰੋ।</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">ਕੀਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਡਾਇਲਾਗ ਦਿਖਾਓ</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">ਡੈੱਕ ਚੋਣਕਾਰ</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">ਅਪ੍ਰਮਾਣਿਤ ਡੇਕ ਮਿਟਾਓ</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">ਨੋਟ ਸੰਪਾਦਕ</string>
@@ -343,7 +342,6 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">ਸਟਾਈਲ ਦਾ ਸੰਪਾਦਨ ਕਰੋ</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">ਟੈਂਪਲੇਟ ਨੂੰ ਮਾਰਕਡਾਊਨ ਵਜੋਂ ਕਾਪੀ ਕਰੋ</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">ਬ੍ਰਾਊਜ਼ਰ ਦੀ ਦਿੱਖ ਨੂੰ ਸੰਪਾਦਿਤ ਕਰੋ</string>
-    <string name="show_shortcuts_message">ਕੀਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਦਿਖਾਉਣ ਲਈ Alt+K ਦਬਾਓ</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">ਇਸ ਨੋਟ ਕਿਸਮ ਵਿੱਚ ਉਪਭੋਗਤਾ ਕਾਰਵਾਈ %s ਸੈੱਟ ਨਹੀਂ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਇਸਨੂੰ ਕੌਂਫਿਗਰ ਕਰੋ</string>
     <string name="directory_inaccessible_info">ਇੱਥੇ %s ਪਹੁੰਚ ਨੂੰ ਕਿਵੇਂ ਬਹਾਲ ਕਰਨਾ ਹੈ ਬਾਰੇ ਹੋਰ ਜਾਣੋ ਜਾਂ ਸੰਗ੍ਰਹਿ ਫੋਲਡਰ ਨੂੰ ਅੱਪਡੇਟ ਕਰਨ ਲਈ ਸੈਟਿੰਗਾਂ \'ਤੇ ਜਾਓ।</string>
 </resources>

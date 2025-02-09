@@ -99,6 +99,7 @@
     <string name="gestures_summ">Prideliť gestá k akciám ako sú odpoveď či editovanie kartičiek.</string>
     <string name="gestures_corner_touch" maxLength="41">9-bodový dotyk</string>
     <string name="gestures_corner_touch_summary">Povoliť dotykové gestá v rohoch obrazovky</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Navigačné menu v režime celej obrazovky</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Otvoriť navigačné menu, keď sa tiahne doprava kdekoľvek na obrazovke</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">Žiadne</string>

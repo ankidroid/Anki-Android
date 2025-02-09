@@ -99,6 +99,7 @@
     <string name="gestures_summ">Přiřazení gest akcím, jako je odpovídání a úprava karet</string>
     <string name="gestures_corner_touch" maxLength="41">Devítibodový dotyk</string>
     <string name="gestures_corner_touch_summary">Povolí dotyková gesta v rozích obrazovky</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Navigační menu v režimu celé obrazovky</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Otevřít navigační menu, když se táhne doprava kdekoliv na obrazovce</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">Žádné</string>

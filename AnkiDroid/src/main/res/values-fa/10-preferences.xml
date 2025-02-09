@@ -97,6 +97,7 @@
     <string name="gestures_summ">استفاده از حرکات و ضربات لمسی برای انجام کارهایی مثل پاسخ دادن و ویرایش کارت‌ها.</string>
     <string name="gestures_corner_touch" maxLength="41">لمس صفحه 9 قسمت</string>
     <string name="gestures_corner_touch_summary">اجازه بده برای حرکات لمس در گوشه های صفحه</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">کشوی جهت‌یابی در کل صفحه</string>
     <string name="gestures_fullscreen_nav_drawer_summary">کشو ی جهت یابی را باز کن وقتی صفحه را به سمت راست می کشم</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">هیچ کدام</string>

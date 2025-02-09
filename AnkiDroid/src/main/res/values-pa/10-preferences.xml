@@ -97,6 +97,7 @@
     <string name="gestures_summ">ਜਵਾਬ ਦੇਣ ਅਤੇ ਕਾਰਡਾਂ ਨੂੰ ਸੰਪਾਦਿਤ ਕਰਨ ਵਰਗੀਆਂ ਕਾਰਵਾਈਆਂ ਲਈ ਸੰਕੇਤ ਦਿਓ।</string>
     <string name="gestures_corner_touch" maxLength="41">9-ਪੁਆਇੰਟ ਟੱਚ</string>
     <string name="gestures_corner_touch_summary">ਸਕਰੀਨ ਕੋਨਿਆਂ ਵਿੱਚ ਛੋਹਣ ਦੇ ਇਸ਼ਾਰਿਆਂ ਦੀ ਆਗਿਆ ਦਿਓ</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">ਪੂਰੀ ਸਕ੍ਰੀਨ ਨੈਵੀਗੇਸ਼ਨ ਦਰਾਜ਼</string>
     <string name="gestures_fullscreen_nav_drawer_summary">ਸਕ੍ਰੀਨ \'ਤੇ ਕਿਤੇ ਵੀ ਸਵਾਈਪ ਕਰਨ \'ਤੇ ਨੈਵੀਗੇਸ਼ਨ ਦਰਾਜ਼ ਖੋਲ੍ਹੋ</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">ਕੋਈ ਨਹੀਂ</string>

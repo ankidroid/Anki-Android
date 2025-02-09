@@ -337,7 +337,6 @@
     <string name="orphan_note_message">اس کارڈ کی قسم کو حذف کرنے سے کچھ نوٹ بغیر کسی کارڈ کے رہ جائیں گے۔</string>
     <string name="voice_not_supported">آواز تعاون یافتہ نہیں ہے۔ دوسرا آزمائیں یا صوتی انجن انسٹال کریں۔</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">کی بورڈ شارٹ کٹ ڈائیلاگ دکھائیں۔</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">ڈیک چننے والا</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">تصدیق کے بغیر ڈیک کو حذف کریں۔</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">نوٹ ایڈیٹر</string>
@@ -350,7 +349,6 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">اسٹائل میں ترمیم کریں</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">ٹیمپلیٹ کو بطور مارک ڈاؤن کاپی کریں</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">براؤزر کی ظاہری شکل میں ترمیم کریں</string>
-    <string name="show_shortcuts_message">کی بورڈ شارٹ کٹ دکھانے کے لیے Alt+K دبائیں</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">صارف کی کارروائی %s اس نوٹ ٹائپ میں سیٹ نہیں ہے۔ براہ کرم اسے ترتیب دیں</string>
     <string name="directory_inaccessible_info">یہاں %s تک رسائی کو بحال کرنے کے بارے میں مزید جانیں یا کلیکشن فولڈر کو اپ ڈیٹ کرنے کے لیے سیٹنگز پر جائیں۔</string>
 </resources>

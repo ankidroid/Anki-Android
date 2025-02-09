@@ -97,6 +97,7 @@
     <string name="gestures_summ">Liitä eleitä toimintoihin, kuten vastaamiseen ja korttien muokkaamiseen.</string>
     <string name="gestures_corner_touch" maxLength="41">9 pisteen kosketus</string>
     <string name="gestures_corner_touch_summary">Käytä kosketuseleitä näytön kulmissa</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Koko näytön navigointivalikko</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Avaa navigointivalikko pyyhkäisemällä oikealle mistä tahansa näytöllä</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">Ei mitään</string>

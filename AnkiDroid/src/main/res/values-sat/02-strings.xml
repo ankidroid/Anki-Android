@@ -336,7 +336,6 @@
     <string name="orphan_note_message">ᱱᱚᱶᱟ ᱠᱟᱨᱰ ᱨᱮᱱᱟᱜ ᱛᱟᱹᱞᱠᱟᱹ ᱵᱚᱫᱚᱞ ᱞᱮᱠᱷᱟᱱ ᱠᱟᱨᱰ ᱵᱟᱹᱱᱩᱜ ᱟᱠᱟᱱ ᱟᱭᱢᱟ ᱱᱳᱴᱥ ᱠᱚ ᱵᱚᱫᱚᱞᱚᱜ-ᱟ᱾</string>
     <string name="voice_not_supported">ᱨᱚᱲ ᱵᱟᱭ ᱥᱚᱦᱚᱫ ᱟᱠᱟᱱᱟ ᱮᱴᱟᱜ ᱢᱤᱫᱴᱟᱹᱝ ᱥᱮ ᱟᱲᱟᱝ ᱮᱱᱮᱡ ᱥᱮᱞᱮᱫᱽ ᱢᱮ ᱾</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">ᱠᱤᱯᱤᱴᱚᱰ ᱥᱟᱠᱚᱨᱰ ᱠᱚᱰ ᱰᱟᱭᱞᱳᱜᱽ ᱵᱚᱫᱚᱞ</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">ᱰᱮᱠ ᱯᱤᱠᱥᱚᱨ</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">ᱥᱟᱹᱠᱷᱭᱟᱹᱛ ᱵᱟᱹᱱᱩᱜ ᱠᱷᱟᱱ ᱰᱮᱠ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">ᱱᱳᱴᱥ ᱮᱰᱤᱴᱚᱨ</string>
@@ -349,7 +348,6 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">ᱥᱟᱯᱲᱟᱣ ᱥᱟᱠᱟᱢ</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">ᱢᱟᱨᱠᱰᱟᱩᱱ ᱞᱮᱠᱟᱛᱮ ᱠᱳᱯᱤ ᱢᱮᱴᱟᱤᱞ</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">ᱵᱽᱨᱟᱩᱡᱚᱨ ᱨᱮᱱᱟᱜ ᱧᱮᱞ ᱥᱟᱯᱲᱟᱣ</string>
-    <string name="show_shortcuts_message">ᱠᱤᱵᱚᱨᱰ ᱥᱠᱚᱨᱴᱚᱠ ᱠᱚ ᱧᱮᱞ ᱞᱟᱹᱜᱤᱫ Alt+K ᱚᱞ ᱢᱮ</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">ᱱᱚᱶᱟ ᱱᱳᱴᱤᱯ ᱨᱮ ᱵᱮᱵᱷᱟᱨᱤᱭᱟᱹ ᱠᱟᱹᱢᱤ %s ᱫᱚ ᱵᱟᱝ ᱥᱮᱴᱮᱨ ᱟᱠᱟᱱᱟ. ᱱᱚᱶᱟ ᱞᱤᱱ ᱢᱮ</string>
     <string name="directory_inaccessible_info">%s ᱨᱮ ᱥᱮᱴᱮᱨᱚᱜ ᱨᱮᱱᱟᱜ ᱵᱟᱹᱲᱛᱤ ᱵᱟᱰᱟᱭ ᱞᱟᱹᱜᱤᱫ ᱥᱮᱴᱮᱨᱚᱜ ᱨᱮ ᱥᱮᱴᱮᱨᱚᱜ ᱢᱮ ᱟᱨ ᱥᱮᱞᱮᱫ ᱯᱟᱹᱴᱷᱩᱣᱟᱹ ᱠᱚᱢᱯᱩᱴᱚᱨ ᱨᱮ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
 </resources>

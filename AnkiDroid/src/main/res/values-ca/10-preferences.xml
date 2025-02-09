@@ -97,6 +97,7 @@
     <string name="gestures_summ">Assignar gestos a accions com cartes de resposta i d\'edició.</string>
     <string name="gestures_corner_touch" maxLength="41">Tacte de 9 punts</string>
     <string name="gestures_corner_touch_summary">Permet gestos tàctils a les cantonades de la pantalla</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Carpeta de navegació a pantalla completa</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Obriu la carpeta de navegació quan llisqueu a la dreta des de qualsevol lloc de la pantalla</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">Cap</string>

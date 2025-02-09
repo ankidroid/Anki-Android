@@ -336,7 +336,6 @@
     <string name="orphan_note_message">Supprimer ce type de carte laissera certaines notes sans cartes.</string>
     <string name="voice_not_supported">Voix non prise en charge. Essayez une autre ou installez un moteur vocal.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Afficher la boîte de dialogue des raccourcis clavier</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Sélecteur de paquet</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Supprimer le paquet sans confirmation</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Éditeur de notes</string>
@@ -349,7 +348,6 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Modifier le style</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copier le modèle en markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Modifier l’apparence du navigateur</string>
-    <string name="show_shortcuts_message">Appuyez sur Alt+K pour afficher les raccourcis clavier</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">L’action utilisateur %s n’est pas définie dans ce type de note. Veuillez la configurer.</string>
     <string name="directory_inaccessible_info">En savoir plus sur la restauration de l’accès ici %s ou allez dans les paramètres pour mettre à jour le dossier de collection.</string>
 </resources>

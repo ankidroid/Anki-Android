@@ -97,6 +97,7 @@
     <string name="gestures_summ">కార్డులకు సమాధానం ఇవ్వడం మరియు సవరించడం వంటి చర్యలకు సంజ్ఞలను కేటాయించండి.</string>
     <string name="gestures_corner_touch" maxLength="41">9-పాయింట్ టచ్</string>
     <string name="gestures_corner_touch_summary">స్క్రీన్ మూలల్లో టచ్ సంజ్ఞలను అనుమతించండి</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">పూర్తి స్క్రీన్ నావిగేషన్ డ్రాయర్</string>
     <string name="gestures_fullscreen_nav_drawer_summary">స్క్రీన్‌పై ఎక్కడి నుండైనా కుడివైపుకు స్వైప్ చేస్తున్నప్పుడు నావిగేషన్ డ్రాయర్‌ను తెరవండి</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">ఏదీ లేదు</string>

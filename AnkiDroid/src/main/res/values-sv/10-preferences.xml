@@ -97,6 +97,7 @@
     <string name="gestures_summ">Koppla gester till handlingar, som t ex att svara på eller redigera kort.</string>
     <string name="gestures_corner_touch" maxLength="41">9-punkters pekning</string>
     <string name="gestures_corner_touch_summary">Tillåt tryckgester i skärmhörnen</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Fullskärm navigationsmeny</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Öppna navigationsmeny när du swipar höger var som helst på skärmen</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">Ingen</string>

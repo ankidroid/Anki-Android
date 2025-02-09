@@ -96,6 +96,7 @@
     <string name="gestures_summ">Tetapkan gerak isyarat kepada tindakan seperti jawab dan sunting kad.</string>
     <string name="gestures_corner_touch" maxLength="41">Sentuhan 9 titik</string>
     <string name="gestures_corner_touch_summary">Benarkan gerak isyarat sentuh pada penghujung skrin</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Laci navigasi skrin penuh</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Buka laci navigasi apabila dileretkan ke kanan dari mana-mana pada skrin</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">Tiada</string>

@@ -342,7 +342,6 @@
     <string name="orphan_note_message">מחיקת סוג כרטיס זה תשאיר כמה הערות ללא כרטיס.</string>
     <string name="voice_not_supported">קול אינו נתמך. נסה אחר או התקן מנוע קול.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">הצג חלון קיצורי מקלדת</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">בוחר החפיסה</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">מחק את החפיסה ללא אישור</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">עורך הערות</string>
@@ -355,7 +354,6 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">ערוך סגנון</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">העתק תבנית כסימון</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">ערוך את מראה הדפדפן</string>
-    <string name="show_shortcuts_message">הקש Alt+K כדי להציג קיצורי מקשים</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">פעולת המשתמש %s לא מוגדרת בסוג הערה זה. אנא הגדר אותו</string>
     <string name="directory_inaccessible_info">למד עוד על איך לשחזר גישה כאן %s או עבור להגדרות כדי לעדכן את תיקיית האוסף.</string>
 </resources>

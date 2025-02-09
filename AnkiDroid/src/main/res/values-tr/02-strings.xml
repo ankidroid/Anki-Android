@@ -336,7 +336,6 @@
     <string name="orphan_note_message">Bu kart türünü silmek bazı notları kartsız bırakacak.</string>
     <string name="voice_not_supported">Seslendirme desteklenmiyor. Başka bir seslendirme motoru deneyin ya da bir tane yükleyin.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Klavye kısayolları diyaloğunu göster</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deste Seçici</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Desteyi onay sormadan sil</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Not Düzenleyici</string>
@@ -349,7 +348,6 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Stili düzenle</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Şablonu markdown olarak kopyala</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Tarayıcı görünümünü düzenle</string>
-    <string name="show_shortcuts_message">Klavye kısayollarını göstermek için Alt+K\'ye basın</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">%s kullanıcı eylemi bu not türünde belirlenmemiş. Lütfen eylemi ayarlayın</string>
     <string name="directory_inaccessible_info">Erişimin nasıl yeniden sağlanıldığına dair daha fazlasını burda %s öğrenin ya da koleksiyon klasörünü değiştirmek için ayarlara gidin.</string>
 </resources>

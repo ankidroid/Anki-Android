@@ -343,7 +343,6 @@
     <string name="orphan_note_message">Удаление этого типа карточек оставит некоторые записи без карточек.</string>
     <string name="voice_not_supported">Этот голос не поддерживается. Попробуйте другой или установите голосовой движок.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Показать диалог сочетаний клавиш</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Выбор колоды</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Удалить колоду без подтверждения</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Редактор записей</string>
@@ -356,7 +355,6 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Править стиль</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Копировать шаблон как markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Изменить вид браузера</string>
-    <string name="show_shortcuts_message">Нажмите Alt+K, чтобы показать сочетания клавиш</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">В этом блокноте не задано действие пользователя %s. Пожалуйста, настройте его</string>
     <string name="directory_inaccessible_info">Узнайте больше о том, как восстановить доступ здесь %s или перейдите к настройкам для обновления папки коллекции.</string>
 </resources>

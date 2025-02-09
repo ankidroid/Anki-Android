@@ -333,7 +333,6 @@
     <string name="orphan_note_message">इस कार्ड प्रकार को हटाने से कुछ नोट बिना किसी कार्ड के रह जाएंगे।</string>
     <string name="voice_not_supported">आवाज़ समर्थित नहीं है. दूसरा प्रयास करें या ध्वनि इंजन स्थापित करें।</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">कुंजीपटल शॉर्टकट संवाद दिखाएँ</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">डेक पिकर</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">पुष्टि के बिना डेक हटाएँ</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">नोट संपादक</string>
@@ -346,7 +345,6 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">स्टाइल संपादित करें</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">टेम्पलेट को मार्कडाउन के रूप में कॉपी करें</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">ब्राउज़र स्वरूप संपादित करें</string>
-    <string name="show_shortcuts_message">कीबोर्ड शॉर्टकट दिखाने के लिए Alt+K दबाएँ</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">इस नोटटाइप में उपयोगकर्ता कार्रवाई %s सेट नहीं है. कृपया इसे कॉन्फ़िगर करें</string>
     <string name="directory_inaccessible_info">यहां %s तक पहुंच बहाल करने के तरीके के बारे में और जानें या संग्रह फ़ोल्डर को अपडेट करने के लिए सेटिंग्स पर जाएं।</string>
 </resources>

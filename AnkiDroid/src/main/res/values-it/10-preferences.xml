@@ -97,6 +97,7 @@
     <string name="gestures_summ">Assegna gesti alle azioni come rispondere e modificare carte.</string>
     <string name="gestures_corner_touch" maxLength="41">tocco a 9 punti</string>
     <string name="gestures_corner_touch_summary">Consenti i gesti touch negli angoli dello schermo</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Pannello di navigazione a schermo intero</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Apri il pannello di navigazione quando scorri a destra da qualsiasi punto dello schermo</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">Nessuno</string>

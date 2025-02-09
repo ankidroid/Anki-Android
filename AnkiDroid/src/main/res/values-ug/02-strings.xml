@@ -336,7 +336,6 @@
     <string name="orphan_note_message">بۇ كارتا تۈرى ئۆچۈرۈلسە بەزى كارتىسىز خاتىرە قېپقالىدۇ.</string>
     <string name="voice_not_supported">ئاۋازنى قوللىمايدۇ. باشقا بىرىنى سىناڭ ياكى ئاۋاز موتورىدىن بىرنى ئورنىتىڭ.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">ھەرپتاختا قىسقا يولىنى كۆرسەت</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">دەستە تاللىغۇچ</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">دەستىنى سورىمايلا ئۆچۈرىدۇ</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">خاتىرە تەھرىرلىگۈچ</string>
@@ -349,7 +348,6 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">ئۇسلۇب تەھرىر</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">قېلىپنى Markdown سۈپىتىدە كۆچۈر</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">كارتا كۆرگۈچ كۆرۈنۈشىنى تەھرىرلەيدۇ</string>
-    <string name="show_shortcuts_message">Alt+K بېسىلسا ھەرپتاختا تېزلەتمىسىنى كۆرسىتىدۇ</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">%s  ئىشلەتكۈچى مەشغۇلاتى خاتىرە تۈرىدە تەڭشەلمىگەن. سەپلەڭ</string>
     <string name="directory_inaccessible_info">بۇ جاي %s دىكى زىيارەتنى قانداق ئەسلىگە كەلتۈرۈش ياكى تەڭشەككە يۆتكىلىپ توپلام قىسقۇچىنى يېڭىلاش ھەققىدىكى تەپسىلاتنى كۆرۈڭ.</string>
 </resources>

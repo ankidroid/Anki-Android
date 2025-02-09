@@ -97,6 +97,7 @@
     <string name="gestures_summ">കാർഡുകൾക്ക് ഉത്തരം നൽകൽ, എഡിറ്റുചെയ്യൽ എന്നിവ പോലുള്ള പ്രവർത്തനങ്ങൾക്ക് ആംഗ്യങ്ങൾ നൽകുക.</string>
     <string name="gestures_corner_touch" maxLength="41">9-പോയിൻ്റ് ടച്ച്</string>
     <string name="gestures_corner_touch_summary">സ്‌ക്രീൻ കോണുകളിൽ ടച്ച് സവിശേഷതകൾ അനുവദിക്കുക</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">പൂർണ്ണ സ്‌ക്രീൻ നാവിഗേഷൻ ഡ്രോയർ</string>
     <string name="gestures_fullscreen_nav_drawer_summary">സ്ക്രീനിൽ എവിടെനിന്നും വലത്തേക്ക് സ്വൈപ്പ് ചെയ്യുമ്പോൾ നാവിഗേഷൻ ഡ്രോയർ തുറക്കുക</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">ഒന്നുമില്ല</string>

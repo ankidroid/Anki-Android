@@ -96,6 +96,7 @@
     <string name="gestures_summ">응답 및 카드 편집 등의 작업에 제스쳐 할당</string>
     <string name="gestures_corner_touch" maxLength="41">9점 터치</string>
     <string name="gestures_corner_touch_summary">화면 모서리의 터치 제스쳐 허용</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">전체화면 탐색 서랍</string>
     <string name="gestures_fullscreen_nav_drawer_summary">화면 어디에서나 오른쪽으로 스와이프하여 탐색 서랍 열기</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">없음</string>

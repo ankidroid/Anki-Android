@@ -333,7 +333,6 @@ Context | Request Context    [1]</string>
     <string name="orphan_note_message">이 카드 유형을 삭제하면 카드 없이 일부 메모만 남습니다</string>
     <string name="voice_not_supported">음성을 지원하지 않습니다. 다른 것으로 시도하거나 음성 엔진을 설치하세요.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">키보드 단축키 안내 보이기</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">덱 선택</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">확인 없이 덱 삭제</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">노트 편집기</string>
@@ -346,7 +345,6 @@ Context | Request Context    [1]</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">스타일 편집</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">마크다운으로 템플릿 복사</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">브라우저 외관 편집</string>
-    <string name="show_shortcuts_message">키보드 단축키를 보려면 Alt + K를 누르세요.</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">이 노트 유형에는 사용자 행동 %s이(가) 설정되어 있지 않습니다. 설정을 확인해 주세요.</string>
     <string name="directory_inaccessible_info">여기에서 액세스를 복원하는 방법에 대해 자세히 알아보세요 %s 또는 설정으로 이동하여 컬렉션 폴더를 업데이트하세요.</string>
 </resources>

@@ -336,7 +336,6 @@
     <string name="orphan_note_message">Die verwydering van hierdie kaarttipe sal sommige notas sonder enige kaarte laat.</string>
     <string name="voice_not_supported">Stem word nie ondersteun nie. Probeer \'n ander of installeer \'n stem-enjin</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Wys sleutelbordkortpaaie dialoog</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Pak-Selektor</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Verwyder dek sonder bevestiging</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">NotaRedakteur</string>
@@ -349,7 +348,6 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Wysig stilering</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Kopieer sjabloon as markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Wysig kaartblaaier voorkoms</string>
-    <string name="show_shortcuts_message">Druk Alt+K om sleutelbordkortpaaie te wys</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">Gebruikerhandeling %s is nie in hierdie notatipe gestel nie. Stel dit asseblief op</string>
     <string name="directory_inaccessible_info">Lees meer oor hoe om toegang hier te herstel %s of gaan na instellings om versameling vouer op te dateer.</string>
 </resources>

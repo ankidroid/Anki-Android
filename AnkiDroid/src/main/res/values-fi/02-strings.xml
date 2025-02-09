@@ -333,7 +333,6 @@
     <string name="orphan_note_message">Tämän korttityypin poistaminen jättää joitakin muistiinpanoja ilman kortteja.</string>
     <string name="voice_not_supported">Ääntä ei tueta. Kokeile toista tai asenna äänimoottori.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Näytä näppäinoikoteiden valintaikkuna</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Pakan valitsija</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Poista pakka ilman vahvistusta</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Muistiinpanoeditori</string>
@@ -346,7 +345,6 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Muokkaa tyyliä</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Kopioi mallipohja Markdownina</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Muokkaa selaimen ulkoasua</string>
-    <string name="show_shortcuts_message">Paina Alt+K näyttääksesi näppäinoikotiet</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">Käyttäjän toimea %s ei ole määritetty tässä muistiinpanotyypissä. Määritä se</string>
     <string name="directory_inaccessible_info">Lue lisää siitä, miten palauttaa pääsy tänne (%s) tai siirry asetuksiin vaihtaaksesi kokoelmakansiota</string>
 </resources>

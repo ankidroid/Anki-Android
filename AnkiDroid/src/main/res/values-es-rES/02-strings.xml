@@ -335,7 +335,6 @@
     <string name="orphan_note_message">Eliminar este tipo de tarjeta dejará algunas notas sin ninguna tarjeta.</string>
     <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Mostrar diálogo de atajos de teclado</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Selector de Mazos</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Eliminar mazo sin confirmación</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Editor de Notas</string>
@@ -348,7 +347,6 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Editar estilo</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copiar plantilla como markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Editar apariencia del navegador</string>
-    <string name="show_shortcuts_message">Presiona Alt+K para mostrar los atajos del teclado</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">La acción del usuario %s no está establecida en este tipo de notas. Por favor, configúrala</string>
     <string name="directory_inaccessible_info">Obtén más información sobre cómo restaurar el acceso aquí %s o ve a la configuración para actualizar la carpeta de colección.</string>
 </resources>

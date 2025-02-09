@@ -330,7 +330,6 @@
     <string name="orphan_note_message">ഈ കാർഡ് തരം ഇല്ലാതാക്കുന്നത് ചില കുറിപ്പുകൾ കാർഡുകളില്ലാതെ അവശേഷിക്കും.</string>
     <string name="voice_not_supported">ശബ്ദം പിന്തുണയ്ക്കുന്നില്ല. മറ്റൊന്ന് പരീക്ഷിക്കുക അല്ലെങ്കിൽ ഒരു വോയ്‌സ് എഞ്ചിൻ ഇൻസ്റ്റാൾ ചെയ്യുക.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">ഡെക്ക് പിക്കർ</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">സ്ഥിരീകരണമില്ലാതെ ഡെക്ക് ഇല്ലാതാക്കുക</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">കുറിപ്പ് എഡിറ്റർ</string>
@@ -343,7 +342,6 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">ബ്രൗസർ രൂപം എഡിറ്റ് ചെയ്യുക</string>
-    <string name="show_shortcuts_message">കീബോർഡ് കുറുക്കുവഴികൾ കാണിക്കാൻ Alt+K അമർത്തുക</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">ഈ കുറിപ്പ് തരത്തിൽ ഉപയോക്തൃ പ്രവർത്തനം %s സജ്ജീകരിച്ചിട്ടില്ല. ദയവായി അത് കോൺഫിഗർ ചെയ്യുക</string>
     <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
 </resources>

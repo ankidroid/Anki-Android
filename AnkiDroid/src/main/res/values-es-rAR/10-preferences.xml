@@ -97,6 +97,7 @@
     <string name="gestures_summ">Asignar gestos a acciones tales como contestar o editar tarjetas.</string>
     <string name="gestures_corner_touch" maxLength="41">Toque de 9 puntos</string>
     <string name="gestures_corner_touch_summary">Permitir gestos táctiles en las esquinas de pantalla</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Panel de navegación a pantalla completa</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Abrir el panel de navegación cuando se desliza a la derecha desde cualquier lugar de la pantalla</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">Ninguno</string>

@@ -97,6 +97,7 @@
     <string name="gestures_summ">उत्तर देणे आणि संपादन कार्ड यासारख्या क्रियांना जेश्चर नियुक्त करा.</string>
     <string name="gestures_corner_touch" maxLength="41">9-बिंदू स्पर्श</string>
     <string name="gestures_corner_touch_summary">स्क्रीन कोपर्यात स्पर्श जेश्चरला अनुमती द्या</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">पूर्ण स्क्रीन नेव्हिगेशन ड्रॉवर</string>
     <string name="gestures_fullscreen_nav_drawer_summary">स्क्रीनवर कुठूनही थेट स्वाइप करून नेव्हिगेशन ड्रॉवर उघडा</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">काहीही नाही</string>
