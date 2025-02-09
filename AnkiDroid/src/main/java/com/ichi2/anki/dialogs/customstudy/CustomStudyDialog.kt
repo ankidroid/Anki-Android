@@ -25,6 +25,7 @@ import android.os.Parcelable
 import android.util.TypedValue
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.FrameLayout
@@ -56,20 +57,17 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.ST
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_PREVIEW
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_TAGS
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.Companion.toDomainModel
-import com.ichi2.anki.dialogs.tags.TagsDialog
-import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.dialogs.customstudy.TagLimitFragment.Companion.KEY_EXCLUDED_TAGS
+import com.ichi2.anki.dialogs.customstudy.TagLimitFragment.Companion.KEY_INCLUDED_TAGS
+import com.ichi2.anki.dialogs.customstudy.TagLimitFragment.Companion.REQUEST_CUSTOM_STUDY_TAGS
 import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.libanki.Consts
-import com.ichi2.libanki.Consts.DynPriority
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.undoableOp
@@ -85,29 +83,23 @@ import com.ichi2.utils.textAsIntOrNull
 import com.ichi2.utils.title
 import kotlinx.coroutines.runBlocking
 import kotlinx.parcelize.Parcelize
-import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
-import org.json.JSONObject
 import timber.log.Timber
 
 /**
  * Implements custom studying either by:
- * 1. modifying the limits of the current selected deck for when the user has reached the daily deck limits and wishes to study more
+ * 1. modifying the limits of the current selected deck for when the user has reached the daily
+ *    deck limits and wishes to study more
  * 2. creating a filtered "Custom study deck" where a user can study outside the typical schedule
  *
  *
  * ## UI
  * [CustomStudyDialog] represents either:
- * * A [main menu][buildContextMenu], offering [methods of custom study][ContextMenuOption]:
+ * * A [main menu][buildContextMenu], offering [methods of custom study][ContextMenuOption]
  * * An [input dialog][buildInputDialog] to input additional constraints for a [ContextMenuOption]
- *   * Example: changing the number of new cards
+ *    * Example: changing the number of new cards
  *
- * #### Not Implemented
- * Anki Desktop contains the following items which are not yet implemented
- * * Study by card state or tags
- *   * New cards only
- *   * Due cards only
- *   * All review cards in random order
- *   * All cards in random order (don't reschedule)
+ * Note: when studying by tags the input dialog will also display a state selector and on user
+ * action will show one extra dialog(for actual tag selection, see [TagLimitFragment])
  *
  * ## Nomenclature
  * Filtered decks were previously known as 'dynamic' decks, and before that: 'cram' decks
@@ -119,11 +111,12 @@ import timber.log.Timber
  * * [com.ichi2.libanki.sched.Scheduler.customStudy]
  *     * [sched.proto: CustomStudyRequest](https://github.com/search?q=repo%3Aankitects%2Fanki+CustomStudyRequest+language%3A%22Protocol+Buffer%22&type=code&l=Protocol+Buffer)
  * * [https://github.com/ankitects/anki/blob/main/qt/aqt/customstudy.py](https://github.com/ankitects/anki/blob/main/qt/aqt/customstudy.py)
+ * * [https://github.com/ankitects/anki/blob/main/qt/aqt/taglimit](https://github.com/ankitects/anki/blob/main/qt/aqt/taglimit.py)
+ *
+ * @see TagLimitFragment
  */
 @KotlinCleanup("remove 'runBlocking' calls'")
-class CustomStudyDialog :
-    AnalyticsDialogFragment(),
-    TagsDialogListener {
+class CustomStudyDialog : AnalyticsDialogFragment() {
     /** ID of the [Deck] which this dialog was created for */
     private val dialogDeckId: DeckId
         get() = requireArguments().getLong(ARG_DID)
@@ -135,12 +128,39 @@ class CustomStudyDialog :
     private val selectedSubDialog: ContextMenuOption?
         get() = requireArguments().getNullableInt(ARG_SUB_DIALOG_ID)?.let { ContextMenuOption.entries[it] }
 
+    private val selectedStatePosition: Int
+        get() =
+            dialog
+                ?.findViewById<Spinner>(R.id.cards_state_selector)
+                ?.selectedItemPosition ?: AdapterView.INVALID_POSITION
+    private val userInputValue: Int?
+        get() =
+            dialog
+                ?.findViewById<EditText>(R.id.custom_study_details_edittext2)
+                ?.textAsIntOrNull()
+
     /** @see CustomStudyDefaults */
     private lateinit var defaults: CustomStudyDefaults
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        registerFragmentResultReceiver()
+        parentFragmentManager.setFragmentResultListener(REQUEST_CUSTOM_STUDY_TAGS, this) { _, bundle ->
+            val tagsToInclude = bundle.getStringArrayList(KEY_INCLUDED_TAGS) ?: emptyList<String>()
+            val tagsToExclude = bundle.getStringArrayList(KEY_EXCLUDED_TAGS) ?: emptyList<String>()
+            val option = selectedSubDialog ?: return@setFragmentResultListener
+            if (selectedStatePosition == AdapterView.INVALID_POSITION) return@setFragmentResultListener
+            val kind = CustomStudyCardState.entries[selectedStatePosition].kind
+            val cardsAmount = userInputValue ?: 100 // the default value
+            requireActivity().launchCatchingTask {
+                withProgress {
+                    try {
+                        customStudy(option, cardsAmount, kind, tagsToInclude, tagsToExclude)
+                    } finally {
+                        requireActivity().dismissAllDialogFragments()
+                    }
+                }
+            }
+        }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -159,38 +179,13 @@ class CustomStudyDialog :
     }
 
     /**
-     * Handles selecting an item from the main menu of the dialog
+     * Continues the custom study process by showing an input dialog where the user can enter an
+     * amount specific to that type of custom study(eg. cards, days etc).
      */
-    private fun onMenuItemSelected(item: ContextMenuOption) =
-        launchCatchingTask {
-            when (item) {
-                STUDY_TAGS -> {
-            /*
-             * This is a special Dialog for CUSTOM STUDY, where instead of only collecting a
-             * number, it is necessary to collect a list of tags. This case handles the creation
-             * of that Dialog.
-             */
-                    val dialogFragment =
-                        TagsDialog().withArguments(
-                            context = requireContext(),
-                            type = TagsDialog.DialogType.CUSTOM_STUDY_TAGS,
-                            checkedTags = ArrayList(),
-                            allTags = ArrayList(withCol { tags.byDeck(dialogDeckId) }),
-                        )
-                    requireActivity().showDialogFragment(dialogFragment)
-                }
-                EXTEND_NEW,
-                EXTEND_REV,
-                STUDY_FORGOT,
-                STUDY_AHEAD,
-                STUDY_PREVIEW,
-                -> {
-                    // User asked for a standard custom study option
-                    val dialog: CustomStudyDialog = createInstance(dialogDeckId, item)
-                    requireActivity().showDialogFragment(dialog)
-                }
-            }
-        }
+    private fun onMenuItemSelected(item: ContextMenuOption) {
+        val dialog: CustomStudyDialog = createInstance(dialogDeckId, item)
+        requireActivity().showDialogFragment(dialog)
+    }
 
     private fun buildContextMenu(): AlertDialog {
         val customMenuView = ScrollView(requireContext())
@@ -286,11 +281,18 @@ class CustomStudyDialog :
 
         // Set material dialog parameters
         @Suppress("RedundantValueArgument") // click = null
+        val horizontalPadding = 32.dp.toPx(requireContext())
+        val verticalPadding = 16.dp.toPx(requireContext())
         val dialog =
             AlertDialog
                 .Builder(requireActivity())
-                .customView(view = v, paddingStart = 64, paddingEnd = 64, paddingTop = 32, paddingBottom = 32)
-                .positiveButton(text = positiveBtnLabel, click = null)
+                .customView(
+                    view = v,
+                    paddingStart = horizontalPadding,
+                    paddingEnd = horizontalPadding,
+                    paddingTop = verticalPadding,
+                    paddingBottom = verticalPadding,
+                ).positiveButton(text = positiveBtnLabel, click = null)
                 .negativeButton(R.string.dialog_cancel) {
                     requireActivity().dismissAllDialogFragments()
                 }.create()
@@ -313,12 +315,21 @@ class CustomStudyDialog :
                         allowSubmit = true
                         return@setOnClickListener
                     }
-
+                if (contextMenuOption == STUDY_TAGS) {
+                    // mark allowSubmit as true because, if the user cancels TagLimitFragment, when
+                    // we come back we wouldn't be able to trigger again TagLimitFragment
+                    allowSubmit = true
+                    val tagsSelectionDialog = TagLimitFragment.newInstance(dialogDeckId)
+                    tagsSelectionDialog.show(parentFragmentManager, TagLimitFragment.TAG)
+                    return@setOnClickListener
+                }
                 requireActivity().launchCatchingTask {
-                    try {
-                        customStudy(contextMenuOption, n)
-                    } finally {
-                        requireActivity().dismissAllDialogFragments()
+                    withProgress {
+                        try {
+                            customStudy(contextMenuOption, n)
+                        } finally {
+                            requireActivity().dismissAllDialogFragments()
+                        }
                     }
                 }
             }
@@ -333,6 +344,8 @@ class CustomStudyDialog :
         return dialog
     }
 
+    // TODO cram kind and the included/excluded tags lists are only relevant for STUDY_TAGS and
+    //  should be included in the option to not leak in the method's api
     private suspend fun customStudy(
         contextMenuOption: ContextMenuOption,
         userEntry: Int,
@@ -385,37 +398,6 @@ class CustomStudyDialog :
         }
     }
 
-    /**
-     * Gathers the final selection of tags and type of cards,
-     * Generates the search screen for the custom study deck.
-     */
-    @NeedsTest("14537: limit to particular tags")
-    override fun onSelectedTags(
-        selectedTags: List<String>,
-        indeterminateTags: List<String>,
-        stateFilter: CardStateFilter,
-    ) {
-        val sb = StringBuilder(stateFilter.toSearch)
-        val arr: MutableList<String?> = ArrayList(selectedTags.size)
-        if (selectedTags.isNotEmpty()) {
-            for (tag in selectedTags) {
-                arr.add("tag:\"$tag\"")
-            }
-            sb.append("(").append(arr.joinToString(" or ")).append(")")
-        }
-        activity?.launchCatchingTask {
-            withProgress {
-                createTagsCustomStudySession(
-                    arrayOf(
-                        sb.toString(),
-                        Consts.DYN_MAX_SIZE,
-                        Consts.DYN_RANDOM,
-                    ),
-                )
-            }
-        }
-    }
-
     /** Line 1 of the number entry dialog */
     private val text1: String
         get() =
@@ -455,69 +437,12 @@ class CustomStudyDialog :
                 STUDY_FORGOT -> prefs.getInt("forgottenDays", 1).toString()
                 STUDY_AHEAD -> prefs.getInt("aheadDays", 1).toString()
                 STUDY_PREVIEW -> prefs.getInt("previewDays", 1).toString()
+                // currently(as of Anki 25.02) not upstream
                 STUDY_TAGS -> prefs.getInt("amountOfCards", 100).toString()
                 null,
                 -> ""
             }
         }
-
-    /**
-     * Create a custom study session
-     * @param terms search terms
-     */
-    private suspend fun createTagsCustomStudySession(terms: Array<Any>) {
-        val dyn: Deck
-
-        val deckToStudyName = withCol { decks.name(dialogDeckId) }
-        val customStudyDeck = resources.getString(R.string.custom_study_deck_name)
-        val cur = withCol { decks.byName(customStudyDeck) }
-        if (cur != null) {
-            Timber.i("Found deck: '%s'", customStudyDeck)
-            if (cur.isNormal) {
-                Timber.w("Deck: '%s' was non-dynamic", customStudyDeck)
-                showThemedToast(requireContext(), getString(R.string.custom_study_deck_exists), true)
-                return
-            } else {
-                Timber.i("Emptying dynamic deck '%s' for custom study", customStudyDeck)
-                // safe to empty
-                withCol { sched.emptyDyn(cur.getLong("id")) }
-                // reuse; don't delete as it may have children
-                dyn = cur
-                withCol { decks.select(cur.getLong("id")) }
-            }
-        } else {
-            Timber.i("Creating Dynamic Deck '%s' for custom study", customStudyDeck)
-            dyn =
-                try {
-                    withCol { decks.get(decks.newFiltered(customStudyDeck))!! }
-                } catch (ex: BackendDeckIsFilteredException) {
-                    showThemedToast(requireActivity(), ex.localizedMessage ?: ex.message ?: "", true)
-                    return
-                }
-        }
-        // and then set various options
-        dyn.put("delays", JSONObject.NULL)
-        val ar = dyn.getJSONArray("terms")
-        ar.getJSONArray(0).put(0, """deck:"$deckToStudyName" ${terms[0]}""")
-        ar.getJSONArray(0).put(1, terms[1])
-        @DynPriority val priority = terms[2] as Int
-        ar.getJSONArray(0).put(2, priority)
-        dyn.put("resched", true)
-        // Rebuild the filtered deck
-        Timber.i("Rebuilding Custom Study Deck")
-        // PERF: Should be in background
-        withCol { decks.save(dyn) }
-        Timber.d("Rebuilding dynamic deck...")
-        withCol { sched.rebuildDyn(decks.selected()) }
-        setFragmentResult(
-            CustomStudyAction.REQUEST_KEY,
-            bundleOf(
-                CustomStudyAction.BUNDLE_KEY to CustomStudyAction.CUSTOM_STUDY_SESSION.ordinal,
-            ),
-        )
-        // Hide the dialogs (required due to a DeckPicker issue)
-        requireActivity().dismissAllDialogFragments()
-    }
 
     /**
      * Represents actions for managing custom study sessions and extending study limits.
@@ -563,7 +488,7 @@ class CustomStudyDialog :
         STUDY_PREVIEW({ TR.customStudyPreviewNewCards() }),
 
         /** Limit to particular tags */
-        STUDY_TAGS({ getString(R.string.custom_study_limit_tags) }),
+        STUDY_TAGS({ TR.customStudyStudyByCardStateOrTag() }),
     }
 
     @Parcelize
