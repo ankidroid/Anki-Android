@@ -82,11 +82,11 @@
     <string name="card_browser_list_my_searches_new_name">اسم عبارة البحث الحالية</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">لا يمكنك حفظ عبارة بحث بدون اسم</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">الاسم موجود</string>
-    <string name="no_note_to_edit">No note to edit</string>
+    <string name="no_note_to_edit">لا يوجد ملحوظات لتعديلها </string>
     <string name="card_browser_list_my_searches_remove_content">هل تريد حذف “%1$s”؟</string>
     <string name="card_browser_change_display_order" maxLength="28">تغيير ترتيب العرض</string>
-    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">بحث</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">بحث</string>
     <string name="card_browser_change_display_order_title">اختر ترتيب العرض</string>
     <string name="card_details_tags">وسوم</string>
     <string-array name="card_browser_order_labels">
@@ -134,12 +134,12 @@
     </plurals>
     <!--Keyboard shortcuts dialog-->
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">إظهار مربع حوار الطلب</string>
     <!-- Manage columns dialog -->
-    <string name="browse_manage_columns_main_heading">Columns</string>
-    <string name="browse_manage_columns">Manage columns</string>
-    <string name="user_active_columns">Active</string>
-    <string name="user_potential_columns">Available</string>
-    <string name="include_column">Include column</string>
-    <string name="exclude_column">Exclude column</string>
+    <string name="browse_manage_columns_main_heading">أعمدة </string>
+    <string name="browse_manage_columns">إدارة الأعمدة</string>
+    <string name="user_active_columns">فعال</string>
+    <string name="user_potential_columns">متوفر </string>
+    <string name="include_column">إضافة عمود</string>
+    <string name="exclude_column">استخراج عمود</string>
 </resources>
