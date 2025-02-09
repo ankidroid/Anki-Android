@@ -96,6 +96,7 @@ enum class ViewerAction(
     FLIP_OR_ANSWER_EASE4,
     SHOW_HINT,
     SHOW_ALL_HINTS,
+    EXIT,
     ;
 
     override val preferenceKey: String get() = "binding_$name"
@@ -151,6 +152,7 @@ enum class ViewerAction(
             SHOW_ANSWER,
             DELETE,
             CARD_INFO,
+            EXIT,
             USER_ACTION_1,
             USER_ACTION_2,
             USER_ACTION_3,
