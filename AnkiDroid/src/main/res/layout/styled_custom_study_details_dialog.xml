@@ -56,8 +56,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dip"
-        android:layout_marginLeft="4dip"
-        android:layout_marginRight="4dip"
         android:layout_weight="1"
         android:gravity="start|bottom"
         android:inputType="number"
