@@ -74,11 +74,11 @@
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="zero">%1$d days %2$dh left</item>
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="two">%1$d days %2$dh left</item>
+        <item quantity="one">تبقى يوماً %1$d و %2$d ساعة</item>
+        <item quantity="two">تبقى يومين %1$d و %2$d ساعة</item>
         <item quantity="few">%1$d days %2$dh left</item>
         <item quantity="many">%1$d days %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="other">تبقى %1$d يومًا و %2$d ساعة</item>
     </plurals>
     <string name="no_cards_placeholder_title">المجموعة فارغة</string>
     <string name="no_cards_placeholder_description">ابدأ بإضافة البطاقات\nباستخدام أيقونة +.</string>
@@ -141,7 +141,7 @@
     <string name="empty_deck">هذه الرزمة فارغة</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">بحث عن رزمة</string>
     <string name="invalid_deck_name">اسم رزمة غير صالح</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
+    <string name="studyoptions_congrats_finished">مبروك! لقد أتممت مهامك لهذا اليوم.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">انتهت حصتك المحددة من الرزمة  %s</string>
     <string name="studyoptions_no_cards_due">لا توجد بطاقات مستحقة بعد</string>
     <string name="sd_card_not_mounted">لا توجد وحدة تخزين خارجية</string>
