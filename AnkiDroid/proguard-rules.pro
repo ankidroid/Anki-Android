@@ -28,6 +28,7 @@
 -keep class * extends com.google.protobuf.GeneratedMessageLite { *; }
 -keep class androidx.core.app.ActivityCompat$* { *; }
 -keep class androidx.concurrent.futures.** { *; }
+-keep class androidx.appcompat.view.menu.MenuItemImpl { *; } # .utils.ext.MenuItemImpl
 
 # Ignore unused packages
 -dontwarn javax.naming.**
