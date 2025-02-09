@@ -100,14 +100,14 @@ class InstantNoteEditorActivity :
     private val clozeFieldText: String?
         get() = viewModel.actualClozeFieldText.value
 
-    private var isDialogVisible = false
-
+    private var discardDialog: AlertDialog? = null
     private val dialogBackCallback =
         object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
-                if (!isDialogVisible) {
-                    showDiscardChangesDialog()
+                if (discardDialog?.isShowing == true) {
+                    return
                 }
+                showDiscardChangesDialog()
             }
         }
 
@@ -604,17 +604,14 @@ class InstantNoteEditorActivity :
     }
 
     private fun showDiscardChangesDialog() {
-        DiscardChangesDialog
-            .showDialog(this) {
-                Timber.d("InstantNoteEditorActivity:: OK button pressed to confirm discard changes")
-                finish()
-            }.apply {
-                setCancelable(false)
-                setOnDismissListener {
-                    isDialogVisible = false
+        discardDialog =
+            DiscardChangesDialog
+                .showDialog(this) {
+                    Timber.d("InstantNoteEditorActivity:: OK button pressed to confirm discard changes")
+                    finish()
+                }.apply {
+                    setCancelable(false)
                 }
-            }
-        isDialogVisible = true
     }
 
     private fun convertSelectedTextToCloze(
