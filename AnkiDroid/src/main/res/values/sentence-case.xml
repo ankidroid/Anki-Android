@@ -44,4 +44,6 @@ undoActionUndone()
     <string name="sentence_empty_cards">Empty cards</string>
     <string name="tag_missing">Tag missing</string>
     <string name="sentence_reposition_new_cards">Reposition new cards</string>
+    <string name="sentence_choose_tags">Choose tags</string>
+
 </resources>
