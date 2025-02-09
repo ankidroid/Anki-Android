@@ -21,21 +21,27 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.res.Resources
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.TypedValue
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.ScrollView
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.setFragmentResult
 import anki.scheduler.CustomStudyDefaultsResponse
+import anki.scheduler.CustomStudyRequest.Cram.CramKind
+import anki.scheduler.copy
 import anki.scheduler.customStudyRequest
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -78,6 +84,7 @@ import com.ichi2.utils.setPaddingRelative
 import com.ichi2.utils.textAsIntOrNull
 import com.ichi2.utils.title
 import kotlinx.coroutines.runBlocking
+import kotlinx.parcelize.Parcelize
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import org.json.JSONObject
 import timber.log.Timber
@@ -248,6 +255,17 @@ class CustomStudyDialog :
         v.findViewById<TextView>(R.id.custom_study_details_text2).apply {
             text = text2
         }
+        v.findViewById<Spinner>(R.id.cards_state_selector).apply {
+            isVisible = contextMenuOption == STUDY_TAGS
+            adapter =
+                ArrayAdapter(
+                    requireContext(),
+                    android.R.layout.simple_spinner_item,
+                    CustomStudyCardState.entries.map { it.labelProducer() },
+                ).apply {
+                    setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                }
+        }
         val editText =
             v.findViewById<EditText>(R.id.custom_study_details_edittext2).apply {
                 setText(defaultValue)
@@ -259,6 +277,12 @@ class CustomStudyDialog :
                     inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
                 }
             }
+        val positiveBtnLabel =
+            if (contextMenuOption == STUDY_TAGS) {
+                TR.customStudyChooseTags().toSentenceCase(requireContext(), R.string.sentence_choose_tags)
+            } else {
+                getString(R.string.dialog_ok)
+            }
 
         // Set material dialog parameters
         @Suppress("RedundantValueArgument") // click = null
@@ -266,7 +290,7 @@ class CustomStudyDialog :
             AlertDialog
                 .Builder(requireActivity())
                 .customView(view = v, paddingStart = 64, paddingEnd = 64, paddingTop = 32, paddingBottom = 32)
-                .positiveButton(R.string.dialog_ok, click = null)
+                .positiveButton(text = positiveBtnLabel, click = null)
                 .negativeButton(R.string.dialog_cancel) {
                     requireActivity().dismissAllDialogFragments()
                 }.create()
@@ -312,6 +336,9 @@ class CustomStudyDialog :
     private suspend fun customStudy(
         contextMenuOption: ContextMenuOption,
         userEntry: Int,
+        cramKind: CramKind = CramKind.CRAM_KIND_NEW,
+        tagsSelectedForInclude: List<String> = emptyList(),
+        tagsSelectedForExclude: List<String> = emptyList(),
     ) {
         Timber.i("Custom study: $contextMenuOption; input = $userEntry")
 
@@ -324,7 +351,16 @@ class CustomStudyDialog :
                     STUDY_FORGOT -> forgotDays = userEntry
                     STUDY_AHEAD -> reviewAheadDays = userEntry
                     STUDY_PREVIEW -> previewDays = userEntry
-                    STUDY_TAGS -> TODO("This branch has not been covered before")
+                    STUDY_TAGS -> {
+                        // https://github.com/ankitects/anki/blob/acaeee91fa853e4a7a78dcddbb832d009ec3529a/qt/aqt/customstudy.py#L169-L177
+                        cram =
+                            cram.copy {
+                                kind = cramKind
+                                cardLimit = userEntry
+                                tagsToInclude.addAll(tagsSelectedForInclude)
+                                tagsToExclude.addAll(tagsSelectedForExclude)
+                            }
+                    }
                 }
             }
 
@@ -332,8 +368,7 @@ class CustomStudyDialog :
         val action =
             when (contextMenuOption) {
                 EXTEND_NEW, EXTEND_REV -> CustomStudyAction.EXTEND_STUDY_LIMITS
-                STUDY_FORGOT, STUDY_AHEAD, STUDY_PREVIEW -> CustomStudyAction.CUSTOM_STUDY_SESSION
-                STUDY_TAGS -> TODO("This branch has not been covered before")
+                STUDY_FORGOT, STUDY_AHEAD, STUDY_PREVIEW, STUDY_TAGS -> CustomStudyAction.CUSTOM_STUDY_SESSION
             }
 
         setFragmentResult(CustomStudyAction.REQUEST_KEY, bundleOf(CustomStudyAction.BUNDLE_KEY to action.ordinal))
@@ -346,7 +381,7 @@ class CustomStudyDialog :
             EXTEND_NEW, EXTEND_REV -> {
                 // Nothing to do in ankidroid. The default value is provided by the backend.
             }
-            STUDY_TAGS -> TODO("This branch has not been covered before")
+            STUDY_TAGS -> sharedPrefs().edit { putInt("amountOfCards", userEntry) }
         }
     }
 
@@ -405,9 +440,8 @@ class CustomStudyDialog :
                 STUDY_FORGOT -> res.getString(R.string.custom_study_forgotten)
                 STUDY_AHEAD -> res.getString(R.string.custom_study_ahead)
                 STUDY_PREVIEW -> res.getString(R.string.custom_study_preview)
-                STUDY_TAGS,
-                null,
-                -> ""
+                STUDY_TAGS -> res.getString(R.string.custom_study_tags)
+                null -> ""
             }
         }
 
@@ -421,7 +455,7 @@ class CustomStudyDialog :
                 STUDY_FORGOT -> prefs.getInt("forgottenDays", 1).toString()
                 STUDY_AHEAD -> prefs.getInt("aheadDays", 1).toString()
                 STUDY_PREVIEW -> prefs.getInt("previewDays", 1).toString()
-                STUDY_TAGS,
+                STUDY_TAGS -> prefs.getInt("amountOfCards", 100).toString()
                 null,
                 -> ""
             }
@@ -530,6 +564,17 @@ class CustomStudyDialog :
 
         /** Limit to particular tags */
         STUDY_TAGS({ getString(R.string.custom_study_limit_tags) }),
+    }
+
+    @Parcelize
+    enum class CustomStudyCardState(
+        val labelProducer: () -> String,
+        val kind: CramKind,
+    ) : Parcelable {
+        NewCardsOnly({ TR.customStudyNewCardsOnly() }, CramKind.CRAM_KIND_NEW),
+        DueCardsOnly({ TR.customStudyDueCardsOnly() }, CramKind.CRAM_KIND_DUE),
+        ReviewCardsRandom({ TR.customStudyAllReviewCardsInRandomOrder() }, CramKind.CRAM_KIND_REVIEW),
+        AllCardsRandom({ TR.customStudyAllCardsInRandomOrderDont() }, CramKind.CRAM_KIND_ALL),
     }
 
     /**

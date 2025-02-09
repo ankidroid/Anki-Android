@@ -63,4 +63,10 @@
         android:inputType="number"
         android:text="1"
         tools:ignore="HardcodedText"/>
+
+    <Spinner
+        android:id="@+id/cards_state_selector"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>
