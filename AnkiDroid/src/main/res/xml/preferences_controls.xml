@@ -20,7 +20,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:title="@string/pref_cat_controls"
-    android:key="@string/pref_controls_screen_key">
+    android:key="@string/pref_controls_screen_key"
+    tools:context=".preferences.ControlsSettingsFragment">
 
     <SwitchPreferenceCompat
         android:defaultValue="false"
@@ -48,7 +49,13 @@
         android:defaultValue="100"
         android:valueFrom="20"
         android:valueTo="180"
-        app:displayValue="true"/>
+        app:displayValue="true" />
+
+    <Preference
+        android:key="@string/pref_keyboard_shortcuts_key"
+        android:title="@string/show_keyboard_shortcuts"
+        android:icon="@drawable/ic_keyboard"
+        />
 
     <PreferenceCategory android:title="@string/answer_buttons">
         <com.ichi2.preferences.ControlPreference

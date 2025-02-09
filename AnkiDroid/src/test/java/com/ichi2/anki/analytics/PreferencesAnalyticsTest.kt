@@ -66,6 +66,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             // Preferences that only click: don't have a value
             R.string.tts_key, // tts
             R.string.pref_reset_languages_key, // resetLanguages
+            R.string.pref_keyboard_shortcuts_key, // showKeyboardShortcuts
             // Opens App Bar buttons fragment
             R.string.custom_buttons_link_preference, // custom_buttons_link
             // Opens Custom sync server fragment

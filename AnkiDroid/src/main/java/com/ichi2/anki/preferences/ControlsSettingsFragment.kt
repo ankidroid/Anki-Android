@@ -15,7 +15,9 @@
  */
 package com.ichi2.anki.preferences
 
+import android.content.res.Configuration
 import androidx.annotation.StringRes
+import androidx.preference.Preference
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.ViewerCommand
@@ -41,6 +43,16 @@ class ControlsSettingsFragment : SettingsFragment() {
             .forEach { pref -> pref.value = commands[pref.key]?.defaultValue?.toPreferenceString() }
 
         setDynamicTitle()
+
+        // TODO replace the preference with something dismissible. This is meant only to improve
+        //  the discoverability of the system shortcut for the shortcuts dialog.
+        requirePreference<Preference>(R.string.pref_keyboard_shortcuts_key).apply {
+            isVisible = resources.configuration.keyboard == Configuration.KEYBOARD_QWERTY
+            setOnPreferenceClickListener {
+                requireActivity().requestShowKeyboardShortcuts()
+                true
+            }
+        }
     }
 
     private fun setDynamicTitle() {
