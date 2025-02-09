@@ -25,6 +25,8 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import anki.collection.OpChanges
 import anki.frontend.SetSchedulingStatesRequest
+import com.ichi2.anki.AbstractFlashcardViewer
+import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Ease
@@ -81,7 +83,7 @@ class ReviewerViewModel(
         asyncIO {
             queueState.await()!!.topCard
         }
-    var isQueueFinishedFlow = MutableSharedFlow<Boolean>()
+    var finishResultFlow = MutableSharedFlow<Int>()
     val isMarkedFlow = MutableStateFlow(false)
     val flagFlow = MutableStateFlow(Flag.NONE)
     val actionFeedbackFlow = MutableSharedFlow<String>()
@@ -436,7 +438,7 @@ class ReviewerViewModel(
             }
         val state = queueState.await()
         if (state == null) {
-            isQueueFinishedFlow.emit(true)
+            finishResultFlow.emit(RESULT_NO_MORE_CARDS)
             return
         }
 
@@ -518,6 +520,7 @@ class ReviewerViewModel(
                 ViewerAction.FLIP_OR_ANSWER_EASE4 -> flipOrAnswer(Ease.EASY)
                 ViewerAction.SHOW_HINT -> eval.emit("ankidroid.showHint()")
                 ViewerAction.SHOW_ALL_HINTS -> eval.emit("ankidroid.showAllHints()")
+                ViewerAction.EXIT -> finishResultFlow.emit(AbstractFlashcardViewer.RESULT_DEFAULT)
                 ViewerAction.USER_ACTION_1 -> userAction(1)
                 ViewerAction.USER_ACTION_2 -> userAction(2)
                 ViewerAction.USER_ACTION_3 -> userAction(3)

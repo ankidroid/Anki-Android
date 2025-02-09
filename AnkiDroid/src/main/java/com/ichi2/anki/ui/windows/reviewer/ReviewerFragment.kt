@@ -50,7 +50,6 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
-import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.NoteEditor
@@ -134,12 +133,10 @@ class ReviewerFragment :
                 showSnackbar(message, duration = 500)
             }
 
-        viewModel.isQueueFinishedFlow.collectIn(lifecycleScope) { isQueueFinished ->
-            if (isQueueFinished) {
-                requireActivity().run {
-                    setResult(RESULT_NO_MORE_CARDS)
-                    finish()
-                }
+        viewModel.finishResultFlow.collectIn(lifecycleScope) { result ->
+            requireActivity().run {
+                setResult(result)
+                finish()
             }
         }
 
