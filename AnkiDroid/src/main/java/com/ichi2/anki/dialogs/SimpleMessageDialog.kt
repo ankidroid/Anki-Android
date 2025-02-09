@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.dialogs
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
@@ -24,6 +23,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.anki.utils.getIntentWithClearTopAndNewTask
 import com.ichi2.utils.create
 
 class SimpleMessageDialog : AsyncDialogFragment() {
@@ -45,8 +45,7 @@ class SimpleMessageDialog : AsyncDialogFragment() {
     fun FragmentActivity.dismissSimpleMessageDialog(reload: Boolean) {
         dismissAllDialogFragments()
         if (reload) {
-            val deckPicker = Intent(this, DeckPicker::class.java)
-            deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            val deckPicker = getIntentWithClearTopAndNewTask(DeckPicker::class.java)
             startActivity(deckPicker)
         }
     }

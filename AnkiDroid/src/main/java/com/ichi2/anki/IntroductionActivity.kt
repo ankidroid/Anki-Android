@@ -27,6 +27,7 @@ import com.ichi2.anki.introduction.SetupCollectionFragment
 import com.ichi2.anki.introduction.SetupCollectionFragment.CollectionSetupOption
 import com.ichi2.anki.introduction.SetupCollectionFragment.Companion.handleCollectionSetupOption
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.utils.getIntentWithClearTopAndNewTask
 import com.ichi2.annotations.NeedsTest
 import timber.log.Timber
 
@@ -74,12 +75,14 @@ class IntroductionActivity : AnkiActivity() {
     private fun startDeckPicker(result: Int = RESULT_START_NEW) {
         Timber.i("Opening deck picker, login: %b", result == RESULT_SYNC_PROFILE)
         this.sharedPrefs().edit { putBoolean(INTRODUCTION_SLIDES_SHOWN, true) }
-        val deckPicker = Intent(this, DeckPicker::class.java)
-        deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-        if (result == RESULT_SYNC_PROFILE) {
-            deckPicker.putExtra(DeckPicker.INTENT_SYNC_FROM_LOGIN, true)
-        }
-
+        val deckPicker =
+            getIntentWithClearTopAndNewTask(
+                DeckPicker::class.java,
+            ) {
+                if (result == RESULT_SYNC_PROFILE) {
+                    putExtra(DeckPicker.INTENT_SYNC_FROM_LOGIN, true)
+                }
+            }
         startActivity(deckPicker)
         finish()
     }

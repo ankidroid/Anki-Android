@@ -27,6 +27,7 @@ import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.utils.getIntentWithNewTaskAndClearTask
 import com.ichi2.widget.WidgetStatus
 import timber.log.Timber
 
@@ -77,9 +78,7 @@ class NotificationService : BroadcastReceiver() {
                     builder.setLights(Color.BLUE, 1000, 1000)
                 }
                 // Creates an explicit intent for an Activity in your app
-                val resultIntent = Intent(context, DeckPicker::class.java)
-                resultIntent.flags =
-                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                val resultIntent = context.getIntentWithNewTaskAndClearTask(DeckPicker::class.java)
                 val resultPendingIntent =
                     PendingIntentCompat.getActivity(
                         context,

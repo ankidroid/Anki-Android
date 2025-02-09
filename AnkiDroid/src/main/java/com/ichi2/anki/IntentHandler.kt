@@ -32,6 +32,7 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
+import com.ichi2.anki.utils.getIntentWithClearTop
 import com.ichi2.anki.worker.SyncWorker
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
@@ -155,9 +156,12 @@ class IntentHandler : AbstractIntentHandler() {
             if (sharedPrefs().getBoolean("newReviewer", false)) {
                 ReviewerFragment.getIntent(this)
             } else {
-                Intent(this, Reviewer::class.java).apply {
-                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                }
+//                Intent(this, Reviewer::class.java).apply {
+//                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                }
+                getIntentWithClearTop(
+                    Reviewer::class.java,
+                )
             }
         CollectionManager.getColUnsafe().decks.select(deckId)
         // Clean the stack out under the reviewer to avoid any incorrect activities / dialogs /

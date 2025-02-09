@@ -17,13 +17,13 @@
 package com.ichi2.anki.dialogs
 
 import android.app.Activity
-import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentManager
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.TtsVoices
+import com.ichi2.anki.utils.getImplicitIntentWithNewTask
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.libanki.TTSTag
 import com.ichi2.utils.show
@@ -55,7 +55,7 @@ object TtsPlaybackErrorDialog {
         try {
             Timber.i("Opening TextToSpeech engine settings to change the engine")
             activity.startActivity(
-                Intent("com.android.settings.TTS_SETTINGS").apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK },
+                getImplicitIntentWithNewTask("com.android.settings.TTS_SETTINGS"),
             )
         } catch (e: Exception) {
             CrashReportService.sendExceptionReport(e, e.localizedMessage)
