@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2025 Ashish Yadav <mailtoashish693@gmail.com>
+  ~
+  ~ This program is free software; you can redistribute it and/or modify it under
+  ~ the terms of the GNU General Public License as published by the Free Software
+  ~ Foundation; either version 3 of the License, or (at your option) any later
+  ~ version.
+  ~
+  ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  ~ FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+  ~ details.
+  ~
+  ~ You should have received a copy of the GNU General Public License along with
+  ~ this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+    <RelativeLayout
+        android:id="@+id/logged_in_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:foregroundGravity="center">
+
+        <include layout="@layout/toolbar" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolbar"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:id="@+id/logged_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="15dp"
+                >
+
+                <com.ichi2.ui.FixedTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/logged_as"
+                    android:textSize="@dimen/title_textsize"
+                    android:layout_margin="@dimen/content_vertical_padding"/>
+
+                <com.ichi2.ui.FixedTextView
+                    android:id="@+id/username_logged_in"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/title_textsize"
+                    android:textStyle="bold"
+                    android:layout_margin="@dimen/content_vertical_padding"
+                    tools:text="user@example.com"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/logout_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="200dp"
+                    android:layout_gravity="center"
+                    android:text="@string/log_out"
+                    android:layout_margin="@dimen/content_vertical_padding"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/remove_account_button"
+                    app:backgroundTint="@color/material_red_500"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="200dp"
+                    android:layout_gravity="center"
+                    android:text="@string/remove_account"
+                    android:layout_margin="@dimen/content_vertical_padding"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/privacy_policy_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:textSize="@dimen/abc_text_size_button_material"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:padding="3dp"
+                    android:layout_gravity="center"
+                    android:singleLine="true"
+                    android:text="@string/help_title_privacy" />
+
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+    <!-- opens a WebView for 'remove account', replaces the layout above -->
+    <FrameLayout
+        android:id="@+id/remove_account_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        tools:context=".pages.RemoveAccountFragment"
+        />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
