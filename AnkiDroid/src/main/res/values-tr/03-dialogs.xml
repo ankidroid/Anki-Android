@@ -55,7 +55,6 @@
     <string name="delete_cram_deck_message">%s filtreli destesi silinip bütün kartlar orjinal destelerine gönderilsin mi?</string>
     <string name="no_tts_available_message">Mevcut metin okuma dili yok</string>
     <string name="tts_no_tts">Konuşma</string>
-    <string name="unused_strings">\n\nKullanılmayan dosyalar:\n</string>
     <string name="reposition_card_dialog_title">Yeni kartın yerini değiştir</string>
     <string name="reposition_card_not_new_error">Yalnızca yeni kartların yeri değiştirilebilir</string>
     <plurals name="reposition_card_dialog_acknowledge">
@@ -112,10 +111,7 @@
     <string name="check_media_message">Medya kontrol ediliyor&#8230;</string>
     <string name="check_media_acknowledge">Medya kontrol edildi</string>
     <string name="check_media_invalid">Geçersiz kodlamalı dosyalar: %d</string>
-    <string name="check_media_unused">Medya klasöründe olup hiçbir kartta kullanılmayan dosyalar: %d</string>
-    <string name="check_media_nohave">Kartlarda kullanılıp medya klasöründe olmayan dosyalar: %d</string>
     <string name="check_media_no_unused_missing">Kullanılmayan veya eksik dosya bulunmuyor.</string>
-    <string name="check_media_db_updated">Medya veritabanı yeniden oluşturuldu.</string>
     <string name="check_media_delete_unused">Kullanılmayanları sil</string>
     <string name="delete_media_message">Medya siliniyor&#8230;</string>
     <string name="delete_media_result_title">Silme sonuçları</string>

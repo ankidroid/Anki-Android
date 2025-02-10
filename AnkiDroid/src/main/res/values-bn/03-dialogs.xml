@@ -55,7 +55,6 @@
     <string name="delete_cram_deck_message">ফিল্টার করা ডেক %s মুছে ফেলবেন এবং সমস্ত কার্ড তাদের আসল ডেকে ফিরিয়ে দেবেন?</string>
     <string name="no_tts_available_message">কোনও টেক্সট টু স্পিচ ভাষা উপলব্ধ নেই</string>
     <string name="tts_no_tts">নিশ্চুপ</string>
-    <string name="unused_strings">\n\nঅব্যবহৃত ফাইলসমূহ:\n</string>
     <string name="reposition_card_dialog_title">নতুন কার্ড এর ক্রম পরিবর্তন</string>
     <string name="reposition_card_not_new_error">শুধু মাত্র নতুন কার্ড এর ক্রম বদলানো যাবে</string>
     <plurals name="reposition_card_dialog_acknowledge">
@@ -112,10 +111,7 @@
     <string name="check_media_message">মিডিয়া পরীক্ষা করা হচ্ছে&#8230;</string>
     <string name="check_media_acknowledge">মিডিয়া চেক করা হয়েছে</string>
     <string name="check_media_invalid">অবৈধ এনকোডিং সহ ফাইল: %d</string>
-    <string name="check_media_unused">মিডিয়া ফোল্ডারে ফাইল করুন কিন্তু কোনো কার্ড ব্যবহার হচ্ছে না: %d</string>
-    <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
     <string name="check_media_no_unused_missing">কোন অব্যবহৃত বা অনুপস্থিত ফাইল খুঁজে পাওয়া যায়নি</string>
-    <string name="check_media_db_updated">মিডিয়া ডাটাবেস পুনর্নির্মাণ</string>
     <string name="check_media_delete_unused">অব্যবহৃত মুছুন</string>
     <string name="delete_media_message">মিডিয়া মুছে ফেলা হচ্ছে&#8230;</string>
     <string name="delete_media_result_title">মুছে ফেলার ফলাফল</string>

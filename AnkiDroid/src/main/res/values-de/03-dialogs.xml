@@ -55,7 +55,6 @@
     <string name="delete_cram_deck_message">Gefilterten Stapel „%s“ löschen und alle Karten zurück in ihre ursprünglichen Stapel senden?</string>
     <string name="no_tts_available_message">Keine Vorlesesprache verfügbar</string>
     <string name="tts_no_tts">Nicht vorlesen</string>
-    <string name="unused_strings">\n\nUnbenutzte Dateien:\n</string>
     <string name="reposition_card_dialog_title">Position der neuen Karte ändern</string>
     <string name="reposition_card_not_new_error">Die Position kann nur für neue Karten geändert werden</string>
     <plurals name="reposition_card_dialog_acknowledge">
@@ -112,10 +111,7 @@
     <string name="check_media_message">Medien werden überprüft &#8230;</string>
     <string name="check_media_acknowledge">Medien überprüft</string>
     <string name="check_media_invalid">Dateien mit ungültiger Codierung: %d</string>
-    <string name="check_media_unused">Dateien im Medienordner, die von keiner Karte genutzt werden: %d</string>
-    <string name="check_media_nohave">Von Karten genutzte Dateien, die im Medienordner fehlen: %d</string>
     <string name="check_media_no_unused_missing">Keine unbenutzten oder fehlenden Dateien gefunden.</string>
-    <string name="check_media_db_updated">Mediendatenbank neu aufgebaut</string>
     <string name="check_media_delete_unused">Ungenutzte löschen</string>
     <string name="delete_media_message">Medien werden gelöscht &#8230;</string>
     <string name="delete_media_result_title">Löschergebnis</string>

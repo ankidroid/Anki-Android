@@ -55,7 +55,6 @@
     <string name="delete_cram_deck_message">Διαγράψτε τη φιλτραρισμένη τράπουλα %s και στείλτε όλες τις κάρτες πίσω στις αρχικές τους τράπουλες;</string>
     <string name="no_tts_available_message">Δεν είναι διαθέσιμη η μετατροπής κειμένου σε ομιλία</string>
     <string name="tts_no_tts">Σίγαση</string>
-    <string name="unused_strings">\n\nΑχρησιμοποίητα αρχεία:\n</string>
     <string name="reposition_card_dialog_title">Επανατοποθέτηση νέας κάρτας</string>
     <string name="reposition_card_not_new_error">Μόνο νέες κάρτες μπορούν να επανατοποθετηθούν</string>
     <plurals name="reposition_card_dialog_acknowledge">
@@ -112,10 +111,7 @@
     <string name="check_media_message">Έλεγχος πολυμέσων&#8230;</string>
     <string name="check_media_acknowledge">Τα πολυμέσα ελέγχθηκαν</string>
     <string name="check_media_invalid">Αρχεία με μη έγκυρη κωδικοποίηση: %d</string>
-    <string name="check_media_unused">Αρχεία στο φάκελο πολυμέσων που όμως δεν χρησιμοποιούνται από οποιαδήποτε κάρτα: %d</string>
-    <string name="check_media_nohave">Αρχεία που χρησιμοποιούνται σε κάρτες αλλά όχι στο φάκελο πολυμέσων: %d</string>
     <string name="check_media_no_unused_missing">Δεν βρέθηκαν αχρησιμοποίητα ή ελλείποντα αρχεία</string>
-    <string name="check_media_db_updated">H βάση δεδομένων πολυμέσων ανακατασκευάστηκε</string>
     <string name="check_media_delete_unused">Διαγραφή αχρησιμοποίητων</string>
     <string name="delete_media_message">Διαγραφή πολυμέσων&#8230;</string>
     <string name="delete_media_result_title">Αποτέλεσμα διαγραφής</string>

@@ -55,7 +55,6 @@
     <string name="delete_cram_deck_message">फ़िल्टर किए गए डेक %s को हटाएं और सभी कार्डों को उनके मूल डेक पर वापस भेजें?</string>
     <string name="no_tts_available_message">कोई लेख-से-बोली भाषा उपलब्ध नहीं</string>
     <string name="tts_no_tts">बात न करें</string>
-    <string name="unused_strings">\n\nअप्रयुक्त फाइलें:\n</string>
     <string name="reposition_card_dialog_title">नया कार्ड पुन: प्रस्तुत करें</string>
     <string name="reposition_card_not_new_error">केवल नए कार्डों को बदला जा सकता है</string>
     <plurals name="reposition_card_dialog_acknowledge">
@@ -112,10 +111,7 @@
     <string name="check_media_message">मीडिया जांच कर रहा है.. ।</string>
     <string name="check_media_acknowledge">मीडिया जांचा गया</string>
     <string name="check_media_invalid">अमांय एंकोडिंग वाली फ़ाइलें: %d</string>
-    <string name="check_media_unused">मीडिया फ़ोल्डर में फ़ाइलें लेकिन किसी भी कार्ड द्वारा उपयोग नहीं: %d</string>
-    <string name="check_media_nohave">कार्ड पर उपयोग की गई फ़ाइलें मीडिया फ़ोल्डर में नहीं: %d</string>
     <string name="check_media_no_unused_missing">कोई अनुपयोगी या गुम फ़ाइलें नहीं मिलीं</string>
-    <string name="check_media_db_updated">मीडिया डेटाबेस पुन</string>
     <string name="check_media_delete_unused">अप्रयुक्त हटाएं</string>
     <string name="delete_media_message">मीडिया हटा रहा है&#8230;</string>
     <string name="delete_media_result_title">विलोपन का परिणाम</string>

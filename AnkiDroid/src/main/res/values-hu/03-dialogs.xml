@@ -55,7 +55,6 @@
     <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">Nincs rendelkezésre álló szövegfelolvasási nyelv</string>
     <string name="tts_no_tts">Ne beszélj</string>
-    <string name="unused_strings">\n\bNem használt fájlok:\n</string>
     <string name="reposition_card_dialog_title">Helyezze át az új kártyát</string>
     <string name="reposition_card_not_new_error">Csak az új kártyákat lehet áthelyezni</string>
     <plurals name="reposition_card_dialog_acknowledge">
@@ -112,10 +111,7 @@
     <string name="check_media_message">Média ellenőrzése&#8230;</string>
     <string name="check_media_acknowledge">Média ellenőrizve</string>
     <string name="check_media_invalid">Érvénytelen kódolású fájlok: %d</string>
-    <string name="check_media_unused">Fájlok a média mappában, használaton kívül: %d</string>
-    <string name="check_media_nohave">Fájlok kártyákon, de mappából hiányozva: %d</string>
     <string name="check_media_no_unused_missing">Nincs haszálaton kívüli, vagy hiányzó fájl.</string>
-    <string name="check_media_db_updated">Média adatbázis újraépült.</string>
     <string name="check_media_delete_unused">Használaton kívüliek törlése</string>
     <string name="delete_media_message">Média törlése&#8230;</string>
     <string name="delete_media_result_title">Törlés eredménye</string>

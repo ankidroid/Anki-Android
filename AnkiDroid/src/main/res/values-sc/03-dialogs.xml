@@ -55,7 +55,6 @@
     <string name="delete_cram_deck_message">Iscantzellare su matzu filtradu %s e torrare a imbiare totu sas cartas a sos matzos originale issoro?</string>
     <string name="no_tts_available_message">Non b\'est a disponimentu peruna limba de sìntesi vocale</string>
     <string name="tts_no_tts">Non chistiones</string>
-    <string name="unused_strings">\n\nDocumentos no impreados:\n</string>
     <string name="reposition_card_dialog_title">Torra a positzionare sa carta noa</string>
     <string name="reposition_card_not_new_error">Petzi sas cartas noas si podent torrare a positzionare</string>
     <plurals name="reposition_card_dialog_acknowledge">
@@ -117,10 +116,7 @@
     <string name="check_media_message">Vetifichende sos mèdios&#8230;</string>
     <string name="check_media_acknowledge">Mèdios verificados</string>
     <string name="check_media_invalid">Documentos cun una codìfica non vàlida: %d</string>
-    <string name="check_media_unused">Documentos in sa cartella de sos mèdios ma chi non benint impreados dae peruna carta: %d</string>
-    <string name="check_media_nohave">Documentos impreados in sas cartas ma chi mancant in sa cartella de sos mèdios: %d</string>
     <string name="check_media_no_unused_missing">Perunu documentu no impreadu o chi manchet agatadu</string>
-    <string name="check_media_db_updated">Base de datos multimediales torrada a fraigare</string>
     <string name="check_media_delete_unused">Iscantzella sos no impreados</string>
     <string name="delete_media_message">Iscantzellende mèdios&#8230;</string>
     <string name="delete_media_result_title">Resurtadu de s\'iscantzelladura</string>

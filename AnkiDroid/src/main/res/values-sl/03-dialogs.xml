@@ -57,7 +57,6 @@
     <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">Noben jezik pretvorbe besedila v govor ni na voljo</string>
     <string name="tts_no_tts">Bodite tiho</string>
-    <string name="unused_strings">\n\nNeuporabljene datoteke:\n</string>
     <string name="reposition_card_dialog_title">Prestavi novo kartico</string>
     <string name="reposition_card_not_new_error">Prerazporedite lahko samo nove kartice.</string>
     <plurals name="reposition_card_dialog_acknowledge">
@@ -118,10 +117,7 @@
     <string name="check_media_message">Preverjanje predstavnosti &#8230;</string>
     <string name="check_media_acknowledge">Predstavnost preverjena</string>
     <string name="check_media_invalid">Datoteke z neveljavnim kodiranjem: %d</string>
-    <string name="check_media_unused">Datoteke v mapi predstavnosti, vendar jih ne uporablja nobena kartica: %d</string>
-    <string name="check_media_nohave">Datoteke uporabljene na karticah, vendar se ne nahajajo v mapi predstavnosti: %d</string>
     <string name="check_media_no_unused_missing">Neuporabljenih ali manjkajočih datotek ni bilo mogoče najti</string>
-    <string name="check_media_db_updated">Pod. zbirka predstavnosti izgrajena</string>
     <string name="check_media_delete_unused">Izbriši neuporabljeno</string>
     <string name="delete_media_message">Deleting media&#8230;</string>
     <string name="delete_media_result_title">Deletion result</string>
