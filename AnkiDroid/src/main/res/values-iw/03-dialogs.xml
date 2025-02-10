@@ -57,7 +57,6 @@
     <string name="delete_cram_deck_message">למחוק את החפיסה %s המסוננת ולשלוח את כל הקלפים בחזרה לחפיסות המקוריות שלהם?</string>
     <string name="no_tts_available_message">אין שום שפת לכתוב-אל-דיבור זמין</string>
     <string name="tts_no_tts">אל תדבר.‏</string>
-    <string name="unused_strings">\n\nקבצים שאינם בשימוש:\n</string>
     <string name="reposition_card_dialog_title">שינוי מיקום כרטיס חדש</string>
     <string name="reposition_card_not_new_error">ניתן לשנות מיקום לכרטיסים חדשים בלבד</string>
     <plurals name="reposition_card_dialog_acknowledge">
@@ -119,10 +118,7 @@
     <string name="check_media_message">קבצי המדיה בבדיקה&#8230;</string>
     <string name="check_media_acknowledge">קבצי המדיה נבדקו</string>
     <string name="check_media_invalid">קבצים בקידוד תקול: %d</string>
-    <string name="check_media_unused">קבצים שנמצאים בספריית המדיה אבל אינם בשימוש על ידי אף קלף: %d</string>
-    <string name="check_media_nohave">קבצים בשימוש קלפים שאינם בתיקיית המדיה: %d</string>
     <string name="check_media_no_unused_missing">לא נמצאו קבצים חסרים או שאינם בשימוש</string>
-    <string name="check_media_db_updated">מסד נתוני המדיה נבנה מחדש</string>
     <string name="check_media_delete_unused">מחיקת כאלו שאינם בשימוש</string>
     <string name="delete_media_message">המדיה נמחקת&#8230;</string>
     <string name="delete_media_result_title">תוצאת מחיקה</string>

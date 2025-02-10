@@ -55,7 +55,6 @@
     <string name="delete_cram_deck_message">Poistetaanko suodatettu pakka \'%1$s\'? Kaikki kortit lähetetään niiden alkuperäisiin pakkoihin.</string>
     <string name="no_tts_available_message">Yhtään puhesyntetisaattorin tukemaa kieltä ei ole käytettävissä</string>
     <string name="tts_no_tts">Ei puhetta</string>
-    <string name="unused_strings">\n\nKäyttämättömät tiedostot:\n</string>
     <string name="reposition_card_dialog_title">Siirrä uusi kortti</string>
     <string name="reposition_card_not_new_error">Ainoastaan uudet kortit voidaan siirtää</string>
     <plurals name="reposition_card_dialog_acknowledge">
@@ -112,10 +111,7 @@
     <string name="check_media_message">Tarkistetaan mediaa&#8230;</string>
     <string name="check_media_acknowledge">Media tarkistettu</string>
     <string name="check_media_invalid">%d tiedostoa virheellisellä koodauksella</string>
-    <string name="check_media_unused">%d käyttämätöntä tiedostoa mediakansiossa</string>
-    <string name="check_media_nohave">%d tiedostoa, joita käytetään korteissa, mutta jotka eivät ole mediakansiossa</string>
     <string name="check_media_no_unused_missing">Käyttämättömiä tai puuttuvia tiedostoja ei löytynyt.</string>
-    <string name="check_media_db_updated">Mediatietokanta rakennettiin uudelleen.</string>
     <string name="check_media_delete_unused">Poista käyttämättömät</string>
     <string name="delete_media_message">Poistetaan mediaa&#8230;</string>
     <string name="delete_media_result_title">Poiston tulos</string>

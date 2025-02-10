@@ -54,7 +54,6 @@
     <string name="delete_cram_deck_message">删除筛选过的牌组 %s 并将所有卡片发回原牌组？</string>
     <string name="no_tts_available_message">没有可用的文字转语音（TTS）语言</string>
     <string name="tts_no_tts">不要朗读</string>
-    <string name="unused_strings">\n\n未使用的文件：\n</string>
     <string name="reposition_card_dialog_title">更改新卡位置</string>
     <string name="reposition_card_not_new_error">只有新卡牌可被更改位置</string>
     <plurals name="reposition_card_dialog_acknowledge">
@@ -109,10 +108,7 @@
     <string name="check_media_message">正在检查媒体文件&#8230;</string>
     <string name="check_media_acknowledge">媒体文件检查完毕</string>
     <string name="check_media_invalid">编码无效的文件：%d</string>
-    <string name="check_media_unused">存在于媒体文件夹中但未被用于任何卡牌的文件：%d</string>
-    <string name="check_media_nohave">被用于一些卡牌，但不存在于媒体文件夹中的文件：%d</string>
     <string name="check_media_no_unused_missing">没有发现未使用或缺失的文件</string>
-    <string name="check_media_db_updated">媒体数据库已重建</string>
     <string name="check_media_delete_unused">删除未使用的文件</string>
     <string name="delete_media_message">正在删除媒体&#8230;</string>
     <string name="delete_media_result_title">填空结果</string>

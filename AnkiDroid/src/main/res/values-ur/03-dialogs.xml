@@ -55,7 +55,6 @@
     <string name="delete_cram_deck_message">فلٹر شدہ ڈیک %s کو حذف کریں اور تمام کارڈز کو ان کے اصل ڈیک پر واپس بھیجیں؟</string>
     <string name="no_tts_available_message">متن سے تقریر کی کوئی زبان دستیاب نہیں ہے۔</string>
     <string name="tts_no_tts">مت بولو</string>
-    <string name="unused_strings">\n\nغیر استعمال شدہ فائلیں:\n</string>
     <string name="reposition_card_dialog_title">نئے کارڈ کی جگہ</string>
     <string name="reposition_card_not_new_error">صرف نئے کارڈز کی جگہ تبدیل کی جا سکتی ہے۔</string>
     <plurals name="reposition_card_dialog_acknowledge">
@@ -112,10 +111,7 @@
     <string name="check_media_message">میڈیا کو چیک کیا جا رہا ہے&#8230;</string>
     <string name="check_media_acknowledge">میڈیا چیک کیا</string>
     <string name="check_media_invalid">غلط انکوڈنگ والی فائلیں: %d</string>
-    <string name="check_media_unused">فائلیں میڈیا فولڈر میں ہیں لیکن کسی بھی کارڈ کے ذریعے استعمال نہیں کی گئی: %d</string>
-    <string name="check_media_nohave">کارڈز پر استعمال ہونے والی فائلیں لیکن میڈیا فولڈر میں نہیں: %d</string>
     <string name="check_media_no_unused_missing">کوئی غیر استعمال شدہ یا گم شدہ فائلیں نہیں ملی</string>
-    <string name="check_media_db_updated">میڈیا ڈیٹا بیس کو دوبارہ بنایا گیا</string>
     <string name="check_media_delete_unused">غیر استعمال شدہ کو حذف کریں</string>
     <string name="delete_media_message">میڈیا کو حذف کیا جا رہا ہے&#8230;</string>
     <string name="delete_media_result_title">حذف کرنے کا نتیجہ</string>

@@ -55,7 +55,6 @@
     <string name="delete_cram_deck_message">ਫਿਲਟਰ ਕੀਤੇ ਡੈੱਕ %s ਨੂੰ ਮਿਟਾਉਣਾ ਹੈ ਅਤੇ ਸਾਰੇ ਕਾਰਡਾਂ ਨੂੰ ਉਹਨਾਂ ਦੇ ਅਸਲ ਡੈੱਕ \'ਤੇ ਵਾਪਸ ਕਰਨਾ ਹੈ?</string>
     <string name="no_tts_available_message">ਕੋਈ ਟੈਕਸਟ-ਟੂ-ਸਪੀਚ ਭਾਸ਼ਾ ਉਪਲਬਧ ਨਹੀਂ ਹੈ</string>
     <string name="tts_no_tts">ਨਾ ਬੋਲੋ</string>
-    <string name="unused_strings">\n\nਅਣਵਰਤੀਆਂ ਫਾਈਲਾਂ:\n</string>
     <string name="reposition_card_dialog_title">ਨਵਾਂ ਕਾਰਡ ਬਦਲੋ</string>
     <string name="reposition_card_not_new_error">ਸਿਰਫ਼ ਨਵੇਂ ਕਾਰਡਾਂ ਨੂੰ ਹੀ ਮੁੜ-ਸਥਾਪਿਤ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ</string>
     <plurals name="reposition_card_dialog_acknowledge">
@@ -112,10 +111,7 @@
     <string name="check_media_message">Checking media&#8230;</string>
     <string name="check_media_acknowledge">ਮੀਡੀਆ ਦੀ ਜਾਂਚ ਕੀਤੀ ਗਈ</string>
     <string name="check_media_invalid">ਗਲਤ ਏਨਕੋਡਿੰਗ ਵਾਲੀਆਂ ਫਾਈਲਾਂ: %d</string>
-    <string name="check_media_unused">ਮੀਡੀਆ ਫੋਲਡਰ ਵਿੱਚ ਫਾਈਲਾਂ ਪਰ ਕਿਸੇ ਵੀ ਕਾਰਡ ਦੁਆਰਾ ਨਹੀਂ ਵਰਤੀਆਂ ਗਈਆਂ: %d</string>
-    <string name="check_media_nohave">ਫਾਈਲਾਂ ਕਾਰਡਾਂ \'ਤੇ ਵਰਤੀਆਂ ਗਈਆਂ ਪਰ ਮੀਡੀਆ ਫੋਲਡਰ ਵਿੱਚ ਨਹੀਂ: %d</string>
     <string name="check_media_no_unused_missing">ਕੋਈ ਅਣਵਰਤੀਆਂ ਜਾਂ ਗੁੰਮ ਹੋਈਆਂ ਫਾਈਲਾਂ ਨਹੀਂ ਲੱਭੀਆਂ</string>
-    <string name="check_media_db_updated">ਮੀਡੀਆ ਡਾਟਾਬੇਸ ਦੁਬਾਰਾ ਬਣਾਇਆ ਗਿਆ</string>
     <string name="check_media_delete_unused">ਨਾ ਵਰਤੇ ਗਏ ਨੂੰ ਮਿਟਾਓ</string>
     <string name="delete_media_message">ਮੀਡੀਆ ਨੂੰ ਮਿਟਾਇਆ ਜਾ ਰਿਹਾ ਹੈ&#8230;</string>
     <string name="delete_media_result_title">ਮਿਟਾਉਣ ਦਾ ਨਤੀਜਾ</string>

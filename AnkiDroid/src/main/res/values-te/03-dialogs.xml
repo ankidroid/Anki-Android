@@ -55,7 +55,6 @@
     <string name="delete_cram_deck_message">ఫిల్టర్ చేసిన డెక్ %sని తొలగించి, అన్ని కార్డ్‌లను వాటి అసలు డెక్‌లకు తిరిగి పంపాలా?</string>
     <string name="no_tts_available_message">టెక్స్ట్-టు-స్పీచ్ లాంగ్వేజ్ అందుబాటులో లేదు</string>
     <string name="tts_no_tts">మాట్లాడకండి</string>
-    <string name="unused_strings">\n\nఉపయోగించని ఫైళ్లు:\n</string>
     <string name="reposition_card_dialog_title">కొత్త కార్డును భర్తీ చేయండి</string>
     <string name="reposition_card_not_new_error">కొత్త కార్డ్‌లను మాత్రమే రీపోజిషన్ చేయవచ్చు</string>
     <plurals name="reposition_card_dialog_acknowledge">
@@ -112,10 +111,7 @@
     <string name="check_media_message">మీడియాను తనిఖీ చేస్తోంది&#8230;</string>
     <string name="check_media_acknowledge">మీడియా తనిఖీ చేయబడింది</string>
     <string name="check_media_invalid">చెల్లని ఎన్కోడింగ్ ఫైల్లు: %d</string>
-    <string name="check_media_unused">మీడియా ఫోల్డర్లోని ఫైళ్ళు కానీ ఏ కార్డులు ఉపయోగించరు: %d</string>
-    <string name="check_media_nohave">మీడియా ఫోల్డర్లో కానీ కార్డులలో ఉపయోగించబడే ఫైళ్ళు: %d</string>
     <string name="check_media_no_unused_missing">ఉపయోగించని లేదా తప్పిపోయిన ఫైల్లు కనుగొనబడలేదు</string>
-    <string name="check_media_db_updated">మీడియా డేటాబేస్ పునర్నిర్మించబడింది</string>
     <string name="check_media_delete_unused">ఉపయోగించనిది తొలగించండి</string>
     <string name="delete_media_message">మీడియాను తీసివేస్తోంది&#8230;</string>
     <string name="delete_media_result_title">తొలగింపు ఫలితం</string>

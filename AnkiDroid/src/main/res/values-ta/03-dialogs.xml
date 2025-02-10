@@ -55,7 +55,6 @@
     <string name="delete_cram_deck_message">வடிகட்டப்பட்ட டெக்கை %sஐ நீக்கி, எல்லா கார்டுகளையும் அவற்றின் அசல் டெக்குகளுக்கு அனுப்பவா?</string>
     <string name="no_tts_available_message">உரையிலிருந்து பேச்சு மொழி இல்லை</string>
     <string name="tts_no_tts">பேசாதே</string>
-    <string name="unused_strings">\n\nபயன்படுத்தப்படாத கோப்புகள்:\n</string>
     <string name="reposition_card_dialog_title">புதிய அட்டையை மாற்றவும்</string>
     <string name="reposition_card_not_new_error">புதிய அட்டைகளை மட்டுமே இடமாற்றம் செய்ய முடியும்</string>
     <plurals name="reposition_card_dialog_acknowledge">
@@ -112,10 +111,7 @@
     <string name="check_media_message">மீடியாவைச் சரிபார்க்கிறது&#8230;</string>
     <string name="check_media_acknowledge">மீடியா சோதனை செய்தது</string>
     <string name="check_media_invalid">தவறான குறியாக்கம் கொண்ட கோப்புகள்: %d</string>
-    <string name="check_media_unused">மீடியா கோப்புறையில் உள்ள கோப்புகள் ஆனால் எந்தக் கார்டுகளாலும் பயன்படுத்தப்படவில்லை: %d</string>
-    <string name="check_media_nohave">கார்டுகளில் பயன்படுத்தப்படும் கோப்புகள் ஆனால் மீடியா கோப்புறையில் இல்லை: %d</string>
     <string name="check_media_no_unused_missing">பயன்படுத்தப்படாத அல்லது விடுபட்ட கோப்புகள் எதுவும் இல்லை</string>
-    <string name="check_media_db_updated">மீடியா தரவுத்தளம் மீண்டும் கட்டமைக்கப்பட்டது</string>
     <string name="check_media_delete_unused">பயன்படுத்தப்படாததை நீக்கு</string>
     <string name="delete_media_message">மீடியாவை நீக்குகிறது&#8230;</string>
     <string name="delete_media_result_title">நீக்குதல் முடிவு</string>

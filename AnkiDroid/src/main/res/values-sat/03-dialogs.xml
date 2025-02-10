@@ -55,7 +55,6 @@
     <string name="delete_cram_deck_message">ᱯᱷᱤᱞᱴᱟᱨ ᱟᱠᱟᱫ ᱰᱮᱠ %s ᱵᱚᱫᱚᱞ ᱢᱮ ᱟᱨ ᱡᱚᱛᱚ ᱠᱟᱨᱰ ᱟᱠᱚᱣᱟᱜ ᱚᱨᱡᱤᱱᱤᱭᱟᱞ ᱰᱮᱠ ᱨᱮ ᱵᱚᱫᱚᱞ ᱢᱮ?</string>
     <string name="no_tts_available_message">text-to-speech ᱯᱟᱹᱨᱥᱤ ᱵᱟᱱᱩᱜᱼᱟ ᱾</string>
     <string name="tts_no_tts">ᱟᱞᱚᱢ ᱨᱚᱲᱟ</string>
-    <string name="unused_strings">\n\nUnused ᱯᱟᱹᱤᱞ:\n</string>
     <string name="reposition_card_dialog_title">ᱱᱟᱶᱟ ᱠᱟᱰ ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱯᱮ</string>
     <string name="reposition_card_not_new_error">ᱠᱷᱟᱹᱞᱤ ᱱᱟᱶᱟ ᱠᱟᱰ ᱜᱮ ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱫᱟᱲᱮᱭᱟᱜᱟᱢ</string>
     <plurals name="reposition_card_dialog_acknowledge">
@@ -112,10 +111,7 @@
     <string name="check_media_message">ᱢᱮᱰᱤᱭᱟ ᱧᱮᱞ ᱵᱤᱰᱟᱣᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="check_media_acknowledge">ᱢᱮᱰᱤᱭᱟ ᱧᱮᱞᱮᱱᱟ</string>
     <string name="check_media_invalid">ᱨᱚᱫ ᱨᱮ ᱵᱟᱲ ᱫᱟᱱᱟᱲ ᱪᱤᱱᱦᱟ: %d</string>
-    <string name="check_media_unused">ᱨᱮᱫ ᱫᱚ ᱢᱮᱰᱤᱭᱟ ᱯᱚᱴᱚᱢ ᱨᱮ ᱢᱮᱱᱟᱜᱟ ᱦᱮᱞᱮ ᱚᱠᱟ ᱠᱟᱰ ᱨᱮ ᱵᱟᱭ ᱵᱮᱵᱽᱷᱟᱨ ᱠᱟᱱᱟ: %d</string>
-    <string name="check_media_nohave">ᱨᱮᱫ ᱠᱟᱰ ᱨᱮ ᱢᱮᱱᱟᱜᱼᱟ ᱦᱮᱞᱮ ᱢᱮᱰᱤᱭᱟ ᱯᱚᱴᱚᱢ ᱨᱮ ᱵᱟᱹᱱᱩᱜᱼᱟ: %d</string>
     <string name="check_media_no_unused_missing">ᱵᱟᱝ ᱵᱮᱵᱦᱟᱨᱟᱜ ᱨᱮᱫ ᱵᱟᱭ ᱧᱟᱢᱞᱮᱱᱟ</string>
-    <string name="check_media_db_updated">ᱢᱮᱰᱤᱭᱟ ᱥᱟᱫᱠᱷᱤᱭᱟᱽ ᱵᱟᱹᱭᱥᱟᱹᱣ ᱫᱩᱦᱲᱟᱛᱮᱭᱟᱨ</string>
     <string name="check_media_delete_unused">ᱵᱟᱝ ᱵᱮᱵᱷᱟᱨ ᱚᱠ ᱜᱮᱫ ᱜᱤᱰᱤ ᱢᱮ</string>
     <string name="delete_media_message">ᱢᱤᱰᱤᱭᱟ ᱜᱮᱫ ᱜᱤᱰᱤᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="delete_media_result_title">ᱜᱮᱫ ᱜᱤᱰᱤ‌ ᱛᱮᱞᱟ</string>
