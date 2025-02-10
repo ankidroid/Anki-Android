@@ -42,5 +42,6 @@ undoActionUndone()
     <string name="sentence_gesture_toggle_whiteboard">Toggle whiteboard</string>
     <string name="sentence_custom_study">Custom study</string>
     <string name="sentence_empty_cards">Empty cards</string>
+    <string name="tag_missing">Tag missing</string>
 
 </resources>

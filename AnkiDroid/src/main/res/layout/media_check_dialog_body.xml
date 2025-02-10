@@ -16,7 +16,7 @@
   -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingEnd="25dp"
     android:paddingStart="25dp">
@@ -35,8 +35,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:background="?attr/checkMediaListBackground"
-        android:gravity="center"
-        android:maxLines="7"
         android:minHeight="48dp"
         android:minWidth="48dp"
         android:paddingBottom="5dp"
