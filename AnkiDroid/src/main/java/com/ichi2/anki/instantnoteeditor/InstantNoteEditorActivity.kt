@@ -162,7 +162,6 @@ class InstantNoteEditorActivity :
         }
 
     /** Setup the deck spinner and custom editor dialog layout **/
-    // TODO: subscribe to the flow of deckId to change the control value
     private fun showEditorDialog() {
         showDialog()
         deckSpinnerSelection =
