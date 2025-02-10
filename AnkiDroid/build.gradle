@@ -97,6 +97,10 @@ android {
     }
     signingConfigs {
         release {
+            storeFile file(MYAPP_STORE_FILE)
+            storePassword MYAPP_STORE_PASSWORD
+            keyAlias MYAPP_KEY_ALIAS
+            keyPassword MYAPP_KEY_PASSWORD
             storeFile file(System.getenv("KEYSTOREPATH") ?: "${homePath}/src/android-keystore")
             storePassword System.getenv("KEYSTOREPWD") ?: System.getenv("KSTOREPWD")
             keyAlias System.getenv("KEYALIAS") ?: "nrkeystorealias"
@@ -105,6 +109,7 @@ android {
     }
     buildTypes {
         named('debug') {
+            signingConfig signingConfigs.release
             versionNameSuffix "-debug"
             debuggable true
             applicationIdSuffix ".debug"
