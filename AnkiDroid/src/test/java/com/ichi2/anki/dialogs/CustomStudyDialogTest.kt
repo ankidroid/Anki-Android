@@ -81,22 +81,22 @@ class CustomStudyDialogTest : RobolectricTest() {
             val expected =
                 """
                 {
-                    "browserCollapsed": false,
-                    "collapsed": false,
+                    "browserCollapsed": true,
+                    "collapsed": true,
                     "delays": null,
                     "desc": "",
                     "dyn": 1,
                     "lrnToday": [0, 0],
                     "newToday": [0, 0],
-                    "previewDelay": 0,
+                    "previewDelay": 10,
                     "previewAgainSecs": 60,
                     "previewHardSecs": 600,
                     "previewGoodSecs": 0,
-                    "resched": true,
+                    "resched": false,
                     "revToday": [0, 0],
                     "separate": true,
                     "terms": [
-                        ["deck:\"Default\" prop:due<=1", 99999, 6]
+                        ["is:new added:1 deck:Default", 99999, 5]
                     ],
                     "timeToday": [0, 0],
                     "usn": -1

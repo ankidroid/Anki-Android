@@ -29,15 +29,17 @@ private fun matchesJsonValue(
     expectedValue: JSONObject,
     actualValue: JSONObject,
 ): Boolean {
-    val expectedMap = expectedValue.keys().asSequence().associateWith { actualValue[it] }
-
-    val itemKeys = actualValue.keys().asSequence().toList()
-    val differentKeys =
-        itemKeys
-            .associateWith { actualValue[it] }
-            .filter { expectedMap[it.key].toString() != it.value.toString() }
-
-    return differentKeys.isEmpty() && expectedMap.size == itemKeys.size
+    // Checks the objects have the same keys
+    if (expectedValue.keys().asSequence().toSet() != actualValue.keys().asSequence().toSet()) {
+        return false
+    }
+    // And that each key have the same associated values in both object.
+    for (key in expectedValue.keys()) {
+        if (expectedValue[key] != actualValue[key]) {
+            return false
+        }
+    }
+    return true
 }
 
 // TODO: This doesn't describe the inputs in the correct order
