@@ -483,7 +483,7 @@ class Collection(
 
     fun startTimebox() {
         startTime = TimeManager.time.intTime()
-        startReps = sched.reps
+        startReps = sched.numberOfAnswersRecorded
     }
 
     data class TimeboxReached(
@@ -503,7 +503,7 @@ class Collection(
         return if (elapsed > limit) {
             TimeboxReached(
                 limit,
-                sched.reps - startReps,
+                sched.numberOfAnswersRecorded - startReps,
             ).also {
                 startTimebox()
             }
