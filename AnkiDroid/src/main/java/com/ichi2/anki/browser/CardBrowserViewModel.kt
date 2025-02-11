@@ -727,6 +727,7 @@ class CardBrowserViewModel(
     /**
      * Obtains data to be displayed to the user then sent to [repositionSelectedRows]
      */
+    @NeedsTest("verify behavior for repositioning with 'Randomize order'")
     suspend fun prepareToRepositionCards(): RepositionCardsRequest {
         val selectedCardIds = queryAllSelectedCardIds()
         // Only new cards may be repositioned (If any non-new found show error dialog and return false)
@@ -737,17 +738,22 @@ class CardBrowserViewModel(
         // query obtained from Anki Desktop
         // https://github.com/ankitects/anki/blob/1fb1cbbf85c48a54c05cb4442b1b424a529cac60/qt/aqt/operations/scheduling.py#L117
         try {
-            val (min, max) =
-                withCol {
-                    db.query("select min(due), max(due) from cards where type=? and odid=0", CardType.New.code).use {
-                        it.moveToNext()
-                        return@withCol Pair(max(0, it.getInt(0)), it.getInt(1))
-                    }
-                }
-            return RepositionData(
-                min = min,
-                max = max,
-            )
+            return withCol {
+                val (min, max) =
+                    db
+                        .query("select min(due), max(due) from cards where type=? and odid=0", CardType.New.code)
+                        .use {
+                            it.moveToNext()
+                            Pair(max(0, it.getInt(0)), it.getInt(1))
+                        }
+                val defaults = sched.repositionDefaults()
+                RepositionData(
+                    min = min,
+                    max = max,
+                    random = defaults.random,
+                    shift = defaults.shift,
+                )
+            }
         } catch (e: Exception) {
             // TODO: Remove this once we've verified no production errors
             Timber.w(e, "getting min/max position")
@@ -763,11 +769,16 @@ class CardBrowserViewModel(
      * @see [com.ichi2.libanki.sched.Scheduler.sortCards]
      * @return the number of cards which were repositioned
      */
-    suspend fun repositionSelectedRows(position: Int): Int {
+    suspend fun repositionSelectedRows(
+        position: Int,
+        step: Int,
+        shuffle: Boolean,
+        shift: Boolean,
+    ): Int {
         val ids = queryAllSelectedCardIds()
         Timber.d("repositioning %d cards to %d", ids.size, position)
         return undoableOp {
-            sched.sortCards(cids = ids, position, step = 1, shuffle = false, shift = true)
+            sched.sortCards(cids = ids, position, step = step, shuffle = shuffle, shift = shift)
         }.count
     }
 
@@ -1149,6 +1160,8 @@ sealed class RepositionCardsRequest {
     class RepositionData(
         val min: Int?,
         val max: Int?,
+        val random: Boolean = false,
+        val shift: Boolean = false,
     ) : RepositionCardsRequest() {
         val queueTop: Int?
         val queueBottom: Int?

@@ -30,13 +30,7 @@
     <string name="no_tts_available_message">No text-to-speech language available</string>
     <string name="tts_no_tts">Don’t speak</string>
 
-    <string name="reposition_card_dialog_title">Reposition new card</string>
     <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
-
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
-    </plurals>
     <string name="reset_card_dialog_title">Reset card progress</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d card reset</item>

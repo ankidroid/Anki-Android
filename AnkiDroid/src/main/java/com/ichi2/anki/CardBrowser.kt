@@ -68,6 +68,8 @@ import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Searching
 import com.ichi2.anki.browser.CardOrNoteId
 import com.ichi2.anki.browser.ColumnHeading
 import com.ichi2.anki.browser.PreviewerIdsFile
+import com.ichi2.anki.browser.RepositionCardFragment
+import com.ichi2.anki.browser.RepositionCardFragment.Companion.REQUEST_REPOSITION_NEW_CARDS
 import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.SaveSearchResult
@@ -83,7 +85,6 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
-import com.ichi2.anki.dialogs.IntegerDialog
 import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
@@ -447,6 +448,14 @@ open class CardBrowser :
 
         setupFlows()
         registerOnForgetHandler { viewModel.queryAllSelectedCardIds() }
+        supportFragmentManager.setFragmentResultListener(REQUEST_REPOSITION_NEW_CARDS, this) { _, bundle ->
+            repositionCardsNoValidation(
+                position = bundle.getInt(RepositionCardFragment.ARG_POSITION),
+                step = bundle.getInt(RepositionCardFragment.ARG_STEP),
+                shuffle = bundle.getBoolean(RepositionCardFragment.ARG_RANDOM),
+                shift = bundle.getBoolean(RepositionCardFragment.ARG_SHIFT),
+            )
+        }
     }
 
     override fun setupBackPressedCallbacks() {
@@ -1311,19 +1320,19 @@ open class CardBrowser :
                     return@launchCatchingTask
                 }
                 is RepositionData -> {
-                    // TODO: This dialog is missing:
-                    // Randomize order
-                    // Shift position of existing cards
+                    val top = repositionCardsResult.queueTop
+                    val bottom = repositionCardsResult.queueBottom
+                    if (top == null || bottom == null) {
+                        showSnackbar(R.string.something_wrong)
+                        return@launchCatchingTask
+                    }
                     val repositionDialog =
-                        IntegerDialog().apply {
-                            setArgs(
-                                title = this@CardBrowser.getString(R.string.reposition_card_dialog_title),
-                                prompt = TR.browsingStartPosition(),
-                                content = repositionCardsResult.toHumanReadableContent(),
-                                digits = 5,
-                            )
-                            setCallbackRunnable(::repositionCardsNoValidation)
-                        }
+                        RepositionCardFragment.newInstance(
+                            queueTop = top,
+                            queueBottom = bottom,
+                            random = repositionCardsResult.random,
+                            shift = repositionCardsResult.shift,
+                        )
                     showDialogFragment(repositionDialog)
                 }
             }
@@ -1370,18 +1379,26 @@ open class CardBrowser :
     }
 
     @VisibleForTesting
-    fun repositionCardsNoValidation(position: Int) =
-        launchCatchingTask {
-            val count = withProgress { viewModel.repositionSelectedRows(position) }
-            showSnackbar(
-                resources.getQuantityString(
-                    R.plurals.reposition_card_dialog_acknowledge,
-                    count,
-                    count,
-                ),
-                Snackbar.LENGTH_SHORT,
-            )
-        }
+    fun repositionCardsNoValidation(
+        position: Int,
+        step: Int,
+        shuffle: Boolean,
+        shift: Boolean,
+    ) = launchCatchingTask {
+        val count =
+            withProgress {
+                viewModel.repositionSelectedRows(
+                    position = position,
+                    step = step,
+                    shuffle = shuffle,
+                    shift = shift,
+                )
+            }
+        showSnackbar(
+            TR.browsingChangedNewPosition(count),
+            Snackbar.LENGTH_SHORT,
+        )
+    }
 
     private fun onPreview() {
         launchCatchingTask {

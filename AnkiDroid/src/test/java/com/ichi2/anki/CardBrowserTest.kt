@@ -558,7 +558,7 @@ class CardBrowserTest : RobolectricTest() {
                 startsWith("New #\u20681\u2069"),
             )
 
-            b.viewModel.repositionSelectedRows(2)
+            b.viewModel.repositionSelectedRows(2, 1, shuffle = false, shift = false)
 
             assertThat(
                 "Position of checked card after reposition",
@@ -566,6 +566,90 @@ class CardBrowserTest : RobolectricTest() {
                 equalTo("New #\u20682\u2069"),
             )
         }
+
+    @Test
+    fun `reposition without shift has expected outcome`() =
+        runTest {
+            val browser = getBrowserWithNotes(5)
+            // without shifting when repositioning we end up with the same due if there's already a
+            // card with that value
+            // see https://docs.ankiweb.net/browsing.html#cards
+            browser.assertRepositionOutcomeFor(
+                selectedBrowserPosition = 3,
+                currentDuePosition = 4,
+                targetDuePosition = 1,
+                expectedCardsDuePositions = listOf(1, 2, 3, 1, 5),
+                shift = false,
+            )
+            browser.viewModel.selectNone()
+            // same due because we don't shift
+            browser.assertRepositionOutcomeFor(
+                selectedBrowserPosition = 4,
+                currentDuePosition = 5,
+                targetDuePosition = 1,
+                expectedCardsDuePositions = listOf(1, 2, 3, 1, 1),
+                shift = false,
+            )
+        }
+
+    @Test
+    fun `reposition with shift has expected outcome`() =
+        runTest {
+            val browser = getBrowserWithNotes(5)
+            browser.assertRepositionOutcomeFor(
+                selectedBrowserPosition = 4,
+                currentDuePosition = 5,
+                targetDuePosition = 2,
+                expectedCardsDuePositions = listOf(1, 3, 4, 5, 2),
+                shift = true,
+            )
+            browser.viewModel.selectNone()
+            // dues are shifted for new repositioning with shift
+            browser.assertRepositionOutcomeFor(
+                selectedBrowserPosition = 3,
+                currentDuePosition = 5,
+                targetDuePosition = 1,
+                expectedCardsDuePositions = listOf(2, 4, 5, 1, 3),
+                shift = true,
+            )
+        }
+
+    private suspend fun CardBrowser.assertRepositionOutcomeFor(
+        selectedBrowserPosition: Int,
+        currentDuePosition: Int,
+        targetDuePosition: Int,
+        expectedCardsDuePositions: List<Int>,
+        shift: Boolean,
+    ) {
+        selectRowsWithPositions(selectedBrowserPosition)
+        val card = getCheckedCard(this)
+
+        assertThat(
+            "Unexpected due for currently selected card",
+            card.getColumnHeaderText(CardBrowserColumn.DUE),
+            startsWith("New #\u2068$currentDuePosition\u2069"),
+        )
+
+        viewModel.repositionSelectedRows(targetDuePosition, 1, shuffle = false, shift = shift)
+        // with shift, moving to a position will not result in the same due as the cards with
+        // that position will be shifted
+        viewModel.cards.forEachIndexed { index, entry ->
+            assertThat(
+                "Unexpected due position at index: $index",
+                getDueHeaderText(entry.cardOrNoteId),
+                startsWith("New #\u2068${expectedCardsDuePositions[index]}\u2069"),
+            )
+        }
+    }
+
+    private fun getDueHeaderText(cardOrNoteId: Long): String? {
+        // There's currently a minimum of 2 columns
+        col.backend.setActiveBrowserColumns(listOf(CardBrowserColumn.DUE.ankiColumnKey, "answer"))
+        return col
+            .browserRowForId(cardOrNoteId)
+            .getCells(0)
+            .text
+    }
 
     @Test
     @Config(qualifiers = "en")
@@ -625,7 +709,7 @@ class CardBrowserTest : RobolectricTest() {
                 equalTo("1"),
             )
 
-            b.repositionCardsNoValidation(2)
+            b.repositionCardsNoValidation(2, 1, shuffle = false, shift = false)
 
             assertThat(
                 "Position of checked card after reposition",

@@ -33,6 +33,7 @@ import anki.scheduler.CongratsInfoResponse
 import anki.scheduler.CustomStudyDefaultsResponse
 import anki.scheduler.CustomStudyRequest
 import anki.scheduler.QueuedCards
+import anki.scheduler.RepositionDefaultsResponse
 import anki.scheduler.SchedTimingTodayResponse
 import anki.scheduler.SchedulingContext
 import anki.scheduler.SchedulingState
@@ -483,6 +484,9 @@ open class Scheduler(
 
     @CheckResult
     fun customStudyDefaults(deckId: DeckId): CustomStudyDefaultsResponse = col.backend.customStudyDefaults(deckId)
+
+    @CheckResult
+    fun repositionDefaults(): RepositionDefaultsResponse = col.backend.repositionDefaults()
 
     /**
      * @return Number of new card in current deck and its descendants. Capped at [REPORT_LIMIT]
