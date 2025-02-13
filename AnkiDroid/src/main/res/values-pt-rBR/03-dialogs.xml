@@ -50,9 +50,9 @@
     <string name="delete_deck_title">Excluir baralho?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Excluir todas as cartas em %1$s? Ele contém %2$d cartão</item>
-        <item quantity="other">Excluir todas as cartas em %1$s? Ele contém %2$d cartões</item>
+        <item quantity="other">Excluir todos os cartões em %1$s? Ele contém %2$d cartões</item>
     </plurals>
-    <string name="delete_cram_deck_message">Excluir baralho filtrado %s e enviar todas as cartas de volta para seus baralhos originais?</string>
+    <string name="delete_cram_deck_message">Excluir baralho filtrado %s e enviar todos os cartões de volta para seus baralhos originais?</string>
     <string name="no_tts_available_message">Nenhum idioma de texto para fala disponível</string>
     <string name="tts_no_tts">Não fale</string>
     <string name="reposition_card_dialog_title">Reposicionar novo cartão</string>
@@ -124,7 +124,7 @@
     <string name="tags_dialog_option_new_cards">Novos</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Pendentes</string>
     <!-- Empty cards -->
-    <string name="emtpy_cards_finding">Buscando cards vazios&#8230;</string>
+    <string name="emtpy_cards_finding">Buscando cartões vazios&#8230;</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Não foi possível obter permissão de microfone.</string>
     <string name="multimedia_editor_failed">Falha ao abrir o Editor de Multimídia</string>
