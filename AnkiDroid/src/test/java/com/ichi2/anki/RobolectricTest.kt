@@ -397,6 +397,7 @@ open class RobolectricTest :
 
     internal inline fun <reified T : Activity?> startRegularActivity(): T = startRegularActivity(null)
 
+
     internal inline fun <reified T : Activity?> startRegularActivity(i: Intent? = null): T =
         startActivityNormallyOpenCollectionWithIntent(T::class.java, i)
 
