@@ -19,6 +19,8 @@
 
 package com.ichi2.anki
 
+import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.CheckBoxPreference
@@ -35,6 +37,7 @@ import com.ichi2.libanki.Deck.Companion.PREVIEW_AGAIN_SECS
 import com.ichi2.libanki.Deck.Companion.PREVIEW_GOOD_SECS
 import com.ichi2.libanki.Deck.Companion.PREVIEW_HARD_SECS
 import com.ichi2.libanki.Deck.Companion.RESCHED
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.FilteredDeck
 import com.ichi2.libanki.FilteredDeck.Term
 import com.ichi2.preferences.StepsPreference.Companion.convertFromJSON
@@ -53,6 +56,8 @@ class FilteredDeckOptions :
     val filteredDeck: FilteredDeck
         get() = super.deck as FilteredDeck
 
+    lateinit var secondFilterSign: CheckBoxPreference
+
     companion object {
         const val SEARCH = "search"
         const val LIMIT = "limit"
@@ -63,6 +68,14 @@ class FilteredDeckOptions :
         const val STEPS = "steps"
         const val STEPS_ON = "stepsOn"
         const val PRESET = "preset"
+
+        fun createIntent(
+            context: Context,
+            did: DeckId,
+        ): Intent =
+            Intent(context, FilteredDeckOptions::class.java).apply {
+                putExtra("did", did)
+            }
     }
 
     // TODO: not anymore used in libanki?
@@ -130,9 +143,8 @@ class FilteredDeckOptions :
                         SEARCH -> {
                             filteredDeck.firstFilter.search = value as String
                         }
-
                         LIMIT -> {
-                            filteredDeck.firstFilter.limit = value as Int
+                            filteredDeck.firstFilter.limit = (value as String).toInt()
                         }
                         ORDER -> {
                             filteredDeck.firstFilter.order = (value as String).toInt()
@@ -161,7 +173,7 @@ class FilteredDeckOptions :
                             }
                         }
                         STEPS -> {
-                            filteredDeck.delays = convertToJSON((value as String))
+                            filteredDeck.delays = convertToJSON(value as String)
                         }
                         PRESET -> {
                             val i: Int = (value as String).toInt()
@@ -230,8 +242,10 @@ class FilteredDeckOptions :
         deck = if (extras?.containsKey("did") == true) {
             col.decks.get(extras.getLong("did"))
         } else {
+            Timber.d("no deckId supplied. Using current deck")
             null
         } ?: col.decks.current()
+        Timber.i("opened for deck %d", deck.id)
         registerExternalStorageListener()
         if (deck.isRegular) {
             Timber.w("Deck is not a dyn deck")
@@ -360,7 +374,7 @@ class FilteredDeckOptions :
 
     @Suppress("deprecation")
     private fun setupSecondFilterListener() {
-        val secondFilterSign = findPreference("filterSecond") as CheckBoxPreference
+        secondFilterSign = findPreference("filterSecond") as CheckBoxPreference
         val secondFilter = findPreference("secondFilter") as PreferenceCategory
         if (pref.hasSecondFilter) {
             secondFilter.isEnabled = true
