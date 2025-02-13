@@ -18,7 +18,7 @@ ktlint = '1.5.0'
 #
 # Old changelogs - See 'Table of Contents' in sidebar
 # https://developer.android.com/build/releases/past-releases
-androidGradlePlugin = "8.8.0"
+androidGradlePlugin = "8.8.1"
 # https://developer.android.com/jetpack/androidx/releases/activity
 androidxActivity = "1.10.0"
 # https://developer.android.com/jetpack/androidx/releases/annotation
@@ -36,7 +36,7 @@ androidxDragAndDrop = "1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/exifinterface
 androidxExifinterface = "1.3.7"
 # https://developer.android.com/jetpack/androidx/releases/fragment
-androidxFragmentKtx = "1.8.5"
+androidxFragmentKtx = "1.8.6"
 # https://developer.android.com/jetpack/androidx/releases/media
 androidxMedia = "1.7.0"
 # https://developer.android.com/jetpack/androidx/releases/media3
@@ -88,7 +88,7 @@ kotlin = '2.1.10'
 kotlinxSerializationJson = "1.8.0"
 ktlintGradlePlugin = "12.1.2"
 leakcanaryAndroid = "2.14"
-lint = '31.8.0'
+lint = '31.8.1'
 material = "1.12.0"
 materialTapTargetPrompt = "3.3.2"
 mockitoInline = "5.2.0"
