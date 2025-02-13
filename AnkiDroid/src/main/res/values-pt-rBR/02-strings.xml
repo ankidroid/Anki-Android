@@ -84,7 +84,7 @@
     <!-- Custom study options -->
     <string name="custom_study_limit_tags">Limitar a tags específicas</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d enterrado</item>
+        <item quantity="one">+%d oculto</item>
         <item quantity="other">+%d buried</item>
     </plurals>
     <string name="studyoptions_total_new_label">Total new cards</string>

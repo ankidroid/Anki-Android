@@ -97,7 +97,7 @@
     <string name="gestures_summ">Asignar gestos a acciones tales como contestar o editar tarjetas.</string>
     <string name="gestures_corner_touch" maxLength="41">Toque de 9 puntos</string>
     <string name="gestures_corner_touch_summary">Permitir gestos táctiles en las esquinas de pantalla</string>
-    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Mostrar atajos del teclado</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Panel de navegación a pantalla completa</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Abrir el panel de navegación cuando se desliza a la derecha desde cualquier lugar de la pantalla</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">Ninguno</string>
@@ -367,9 +367,9 @@ Puedes restaurar una colección desde una copia de seguridad en el menú de la l
     <string name="ignore_display_cutout" maxLength="41">Ignorar el recorte de la pantalla</string>
     <string name="hide_answer_buttons" maxLength="41">Ocultar botones de respuesta</string>
     <string name="hide_hard_and_easy" maxLength="41">Ocultar los botones \"Difícil\" y \"Fácil\"</string>
-    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <string name="reviewer_frame_style" maxLength="41">Estilo del marco</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Tarjeta</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Caja</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Abrir la configuración</string>
 </resources>

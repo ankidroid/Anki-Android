@@ -112,10 +112,10 @@
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Editar diálogo de etiquetas</string>
     <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Mostrar diálogo de orden</string>
     <!-- Manage columns dialog -->
-    <string name="browse_manage_columns_main_heading">Columns</string>
-    <string name="browse_manage_columns">Manage columns</string>
-    <string name="user_active_columns">Active</string>
-    <string name="user_potential_columns">Available</string>
-    <string name="include_column">Include column</string>
-    <string name="exclude_column">Exclude column</string>
+    <string name="browse_manage_columns_main_heading">Columnas</string>
+    <string name="browse_manage_columns">Administrar columnas</string>
+    <string name="user_active_columns">Activas</string>
+    <string name="user_potential_columns">Disponibles</string>
+    <string name="include_column">Incluir columna</string>
+    <string name="exclude_column">Excluir columna</string>
 </resources>

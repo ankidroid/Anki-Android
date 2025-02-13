@@ -129,7 +129,7 @@
     <string name="empty_deck">Este mazo está vacío</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Búsqueda de Mazo</string>
     <string name="invalid_deck_name">Nombre de mazo inválido</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
+    <string name="studyoptions_congrats_finished">¡Felicitaciones! Has finalizado por hoy.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">¡El mazo ha terminado por ahora! %s</string>
     <string name="studyoptions_no_cards_due">Aún no hay tarjetas programadas.</string>
     <string name="sd_card_not_mounted">El almacenamiento del dispositivo no se encuentra montado</string>
@@ -181,9 +181,9 @@
     <string name="sync_conflict_title_new">Seleccionar colección a mantener</string>
     <string name="sync_conflict_replace_title">Reemplazar colección</string>
     <!-- Generic errors -->
-    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <string name="error__etc__cannot_write_to_or_create_file">No se puede editar o crear el archivo %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Colección inaccesible</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">No podemos acceder a tu colección después de desinstalar AnkiDroid debido a un cambio en la política de Play Store\n\nTus datos están seguros y pueden ser restaurados. Están ubicados en\n%s\n\nSelecciona una opción debajo para restaurar:</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">No podemos acceder a tu colección después de desinstalar AnkiDroid debido a un cambio en la política de la Play Store\n\nTus datos están seguros y pueden ser restaurados. Están ubicados en\n%s\n\nSelecciona una opción para restaurar:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android ha eliminado el permiso %1$s de AnkiDroid debido a la inactividad de la aplicación.\n\nTus datos están seguros y pueden ser restaurados. Está ubicado en\n%2$s\n\nSeleccione una de las opciones siguientes para restaurar:</string>
     <string name="restore_data_from_ankiweb">Restaurar desde AnkiWeb (recomendado)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restaurar acceso a la carpeta (recomendado)</string>
@@ -199,5 +199,5 @@
     <string name="image_occlusion">Imagen oculta</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Quitar cuenta</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Tarjeta instantánea</string>
 </resources>

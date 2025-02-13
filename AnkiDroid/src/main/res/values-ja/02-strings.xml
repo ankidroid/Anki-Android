@@ -57,7 +57,7 @@
     <string name="add_new_filter_tags">タグフィルター / 新規タグ追加</string>
     <string name="add_tag" maxLength="28">タグを追加</string>
     <string name="check_all_tags" maxLength="28">すべて選択 / 選択をすべて解除</string>
-    <string name="filter_tags" maxLength="28">フィルター (前方一致検索)</string>
+    <string name="filter_tags" maxLength="28">タグを検索</string>
     <string name="no_tags">まだタグが一つも作成されていません</string>
     <string name="updated_version">バージョン%sにアップデートしました</string>
     <!-- Reviewer.kt -->

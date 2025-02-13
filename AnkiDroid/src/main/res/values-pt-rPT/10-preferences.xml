@@ -97,7 +97,7 @@
     <string name="gestures_summ">Atribuir gestos a ações tais como responder e editar fichas.</string>
     <string name="gestures_corner_touch" maxLength="41">Toque de 9 pontos</string>
     <string name="gestures_corner_touch_summary">Permitir gestos de toque nos cantos da tela</string>
-    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Mostrar teclas de atalho do teclado</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Painel de navegação no ecrã completo</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Abrir painel de navegação quando desliza para a direita de qualquer ponto do ecrã</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">Nenhum</string>
