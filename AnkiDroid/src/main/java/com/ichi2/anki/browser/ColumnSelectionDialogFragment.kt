@@ -15,73 +15,70 @@
  */
 package com.ichi2.anki.browser
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.os.BundleCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
+import com.ichi2.anki.R
+import com.ichi2.utils.create
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class ColumnSelectionDialogFragment : DialogFragment() {
     private val viewModel: CardBrowserViewModel by activityViewModels()
-    private var selectedColumn: ColumnWithSample? = null
+    private val columnToReplace: ColumnWithSample
+        get() =
+            requireNotNull(
+                BundleCompat.getParcelable(requireArguments(), "selected_column", ColumnWithSample::class.java),
+            )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        selectedColumn =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                requireArguments().getParcelable("selected_column", ColumnWithSample::class.java)
-            } else {
-                @Suppress("DEPRECATION")
-                requireArguments().getParcelable("selected_column")
-            }
-
         viewModel.fetchAvailableColumns(viewModel.cardsOrNotes)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
-
-        val dialogBuilder = AlertDialog.Builder(requireActivity())
         val listView = ListView(requireContext())
 
-        val adapter = object : ArrayAdapter<ColumnWithSample>(
-            requireContext(),
-            android.R.layout.simple_list_item_2,
-            android.R.id.text1,
-            mutableListOf()
-        ) {
-            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val context = parent.context
-                val view = convertView ?: LayoutInflater.from(context)
-                    .inflate(android.R.layout.simple_list_item_2, parent, false)
+        val adapter =
+            object : ArrayAdapter<ColumnWithSample>(
+                requireContext(),
+                R.layout.item_column_selection,
+                mutableListOf(),
+            ) {
+                override fun getView(
+                    position: Int,
+                    convertView: View?,
+                    parent: ViewGroup,
+                ): View {
+                    val view =
+                        convertView ?: LayoutInflater
+                            .from(context)
+                            .inflate(R.layout.item_column_selection, parent, false)
 
-                val column = getItem(position)
+                    val column = getItem(position)
 
-                // Column Label
-                view.findViewById<TextView>(android.R.id.text1).apply {
-                    text = column?.label ?: "No Columns Available"
-                    textSize = 16f
-                    setTypeface(null, android.graphics.Typeface.BOLD)
-                    setTextColor(context.getColor(android.R.color.black))
+                    // Column Label
+                    view.findViewById<TextView>(R.id.column_title).text =
+                        column?.label ?: "No Columns Available"
+
+                    // Column Example Value
+                    view.findViewById<TextView>(R.id.column_example).text =
+                        if (column?.sampleValue.isNullOrBlank()) "-" else column?.sampleValue
+
+                    return view
                 }
-                // Column SampleValue
-                view.findViewById<TextView>(android.R.id.text2).apply {
-                    text = if (column?.sampleValue.isNullOrBlank()) "-" else column?.sampleValue
-                    textSize = 12f
-                    setTextColor(context.getColor(android.R.color.black))
-                    ellipsize = android.text.TextUtils.TruncateAt.END
-                    maxLines = 1
-                }
-
-                return view
             }
-
-        }
 
         listView.adapter = adapter
 
@@ -95,39 +92,54 @@ class ColumnSelectionDialogFragment : DialogFragment() {
             }
 
             if (selected != null) {
-                viewModel.updateSelectedColumn(selectedColumn, selected)
+                viewModel.updateSelectedColumn(columnToReplace, selected)
                 dismissAllowingStateLoss()
             }
         }
 
         // Observe availableColumns and update ListView dynamically
-        viewModel.availableColumns.observe(this) { availableColumns ->
-            Timber.d("Updating dialog with available columns")
-            adapter.clear()
+        lifecycleScope.launch {
+            viewModel.availableColumns.collectLatest { availableColumns ->
+                Timber.d("Updating dialog with available columns")
+                adapter.clear()
 
-            if (availableColumns.isEmpty()) {
-                Timber.e("No available columns found")
-                adapter.add(ColumnWithSample("No Columns Available", CardBrowserColumn.QUESTION, null)) // Show placeholder
-            } else {
-                adapter.addAll(availableColumns)
+                if (availableColumns.isEmpty()) {
+                    Timber.e("No available columns found")
+                    adapter.add(ColumnWithSample("No Columns Available", CardBrowserColumn.QUESTION, null))
+                } else {
+                    adapter.addAll(availableColumns)
+                }
+
+                adapter.notifyDataSetChanged()
             }
-
-            adapter.notifyDataSetChanged()
         }
 
-        return dialogBuilder
-            .setTitle(selectedColumn?.label ?: "Default")
-            .setView(listView)
-            .setNegativeButton(android.R.string.cancel) { _, _ -> dismissAllowingStateLoss() }
-            .create()
+        return AlertDialog.Builder(requireActivity()).create {
+            setTitle(("Change: " + columnToReplace.label) ?: "Default")
+            setView(listView)
+            setNegativeButton(android.R.string.cancel) { _, _ -> dismissAllowingStateLoss() }
+        }
     }
 
     companion object {
         fun newInstance(selectedColumn: ColumnWithSample): ColumnSelectionDialogFragment =
             ColumnSelectionDialogFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable("selected_column", selectedColumn)
-                }
+                arguments =
+                    Bundle().apply {
+                        putParcelable("selected_column", selectedColumn)
+                    }
             }
+
+        fun CardBrowserViewModel.updateSelectedColumn(
+            selectedColumn: ColumnWithSample,
+            newColumn: ColumnWithSample,
+        ) = viewModelScope.launch {
+            val replacementKey = selectedColumn.columnType.ankiColumnKey
+            val replacements =
+                activeColumns.toMutableList().apply {
+                    replaceAll { if (it.ankiColumnKey == replacementKey) newColumn.columnType else it }
+                }
+            updateActiveColumns(replacements, cardsOrNotes)
+        }
     }
 }
