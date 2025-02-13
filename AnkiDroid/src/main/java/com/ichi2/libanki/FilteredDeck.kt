@@ -26,6 +26,10 @@ import org.json.JSONObject
 value class FilteredDeck(
     override val jsonObject: JSONObject,
 ) : Deck {
+    companion object {
+        const val TERMS = "terms"
+    }
+
     constructor(jsonObject: String) : this(JSONObject(jsonObject))
 
     /**
@@ -83,7 +87,7 @@ value class FilteredDeck(
             if (value == null) {
                 terms.remove(1)
             } else {
-                terms.put(1, value?.array)
+                terms.put(1, value.array)
             }
         }
 
@@ -92,8 +96,8 @@ value class FilteredDeck(
      */
     @VisibleForTesting
     var terms: JSONArray
-        get() = jsonObject.getJSONArray("terms")
+        get() = jsonObject.getJSONArray(TERMS)
         set(value) {
-            jsonObject.put("terms", value)
+            jsonObject.put(TERMS, value)
         }
 }

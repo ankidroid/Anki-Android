@@ -27,7 +27,20 @@ import org.json.JSONObject.NULL
  */
 interface Deck : JSONObjectHolder {
     companion object {
-        fun isFiltered(jsonObject: JSONObject) = jsonObject.getInt("dyn") != 0
+        const val DYN = "dyn"
+        const val NAME = "name"
+        const val BROWSER_COLLAPSED = "browserCollapsed"
+        const val COLLAPSED = "collapsed"
+        const val ID = "id"
+        const val DESCRIPTION = "desc"
+        const val RESCHED = "resched"
+        const val PREVIEW_AGAIN_SECS = "previewAgainSecs"
+        const val PREVIEW_HARD_SECS = "previewHardSecs"
+        const val PREVIEW_GOOD_SECS = "previewGoodSecs"
+        const val DELAYS = "delays"
+        const val EMPTY = "empty"
+
+        fun isFiltered(jsonObject: JSONObject) = jsonObject.getInt(DYN) != 0
 
         /**
          * Those two factories returns either a [FilteredDeck] or a [RegularDeck] encapsulating the input, depending on the value of [isFiltered].
@@ -41,11 +54,11 @@ interface Deck : JSONObjectHolder {
      * Whether this deck is a filtered deck.
      */
     var isFiltered: Boolean
-        get() = jsonObject.getInt("dyn") != 0
+        get() = jsonObject.getInt(DYN) != 0
 
         @VisibleForTesting
         set(value) {
-            jsonObject.put("dyn", if (value) 1 else 0)
+            jsonObject.put(DYN, if (value) 1 else 0)
         }
 
     /**
@@ -73,18 +86,18 @@ interface Deck : JSONObjectHolder {
      * Not used in ankidroid at the moment.
      */
     var browserCollapsed: Boolean
-        get() = jsonObject.getBoolean("browserCollapsed")
+        get() = jsonObject.getBoolean(BROWSER_COLLAPSED)
         set(value) {
-            jsonObject.put("browserCollapsed", value)
+            jsonObject.put(BROWSER_COLLAPSED, value)
         }
 
     /**
      * If this deck as subdecks, whether those subdecks should be collapsed in the deck picker.
      */
     var collapsed: Boolean
-        get() = jsonObject.getBoolean("collapsed")
+        get() = jsonObject.getBoolean(COLLAPSED)
         set(value) {
-            jsonObject.put("collapsed", value)
+            jsonObject.put(COLLAPSED, value)
         }
 
     /**
@@ -101,32 +114,32 @@ interface Deck : JSONObjectHolder {
      * A string explaining what can be found in this deck.
      */
     var description: String
-        get() = jsonObject.optString("desc")
+        get() = jsonObject.optString(DESCRIPTION)
         set(value) {
-            jsonObject.put("desc", value)
+            jsonObject.put(DESCRIPTION, value)
         }
 
     var resched: Boolean
-        get() = jsonObject.getBoolean("resched")
+        get() = jsonObject.getBoolean(RESCHED)
         set(value) {
-            jsonObject.put("resched", value)
+            jsonObject.put(RESCHED, value)
         }
 
     var previewAgainSecs: Int
-        get() = jsonObject.getInt("previewAgainSecs")
+        get() = jsonObject.getInt(PREVIEW_AGAIN_SECS)
         set(value) {
-            jsonObject.put("previewAgainSecs", value)
+            jsonObject.put(PREVIEW_AGAIN_SECS, value)
         }
     var previewHardSecs: Int
-        get() = jsonObject.getInt("previewHardSecs")
+        get() = jsonObject.getInt(PREVIEW_HARD_SECS)
         set(value) {
-            jsonObject.put("previewHardSecs", value)
+            jsonObject.put(PREVIEW_HARD_SECS, value)
         }
 
     var previewGoodSecs: Int
-        get() = jsonObject.getInt("previewGoodSecs")
+        get() = jsonObject.getInt(PREVIEW_GOOD_SECS)
         set(value) {
-            jsonObject.put("previewGoodSecs", value)
+            jsonObject.put(PREVIEW_GOOD_SECS, value)
         }
 
     /**
@@ -134,7 +147,7 @@ interface Deck : JSONObjectHolder {
      * See https://docs.ankiweb.net/deck-options.html#learning-steps
      */
     var delays: JSONArray?
-        get() = jsonObject.optJSONArray("delays")
+        get() = jsonObject.optJSONArray(DELAYS)
         set(value) {
             val value =
                 if (value == null) {
@@ -142,10 +155,10 @@ interface Deck : JSONObjectHolder {
                 } else {
                     value
                 }
-            jsonObject.put("delays", value)
+            jsonObject.put(DELAYS, value)
         }
 
     fun removeEmpty() {
-        jsonObject.remove("empty")
+        jsonObject.remove(EMPTY)
     }
 }

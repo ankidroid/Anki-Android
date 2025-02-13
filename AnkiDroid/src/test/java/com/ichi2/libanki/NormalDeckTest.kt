@@ -15,13 +15,14 @@
  ****************************************************************************************/
 package com.ichi2.libanki
 
+import com.ichi2.libanki.Deck.Companion.DYN
 import com.ichi2.testutils.JvmTest
 import org.junit.Test
 import org.junit.jupiter.api.assertInstanceOf
 import kotlin.test.assertEquals
 
 class NormalDeckTest : JvmTest() {
-    val d = RegularDeck("""{"dyn": 1}""")
+    val d = RegularDeck("""{$DYN: 1}""")
 
     @Test
     fun testConfId() {
@@ -39,7 +40,7 @@ class NormalDeckTest : JvmTest() {
 
     @Test
     fun testFactory() {
-        val d = Deck.factory("""{"dyn": 1}""")
+        val d = Deck.factory("""{$DYN: 1}""")
         assertInstanceOf<FilteredDeck>(d)
     }
 }
