@@ -1603,8 +1603,8 @@ open class DeckPicker :
         dismissAllDialogFragments()
     }
 
-    fun addNote() {
-        val intent = NoteEditorLauncher.AddNote().toIntent(this)
+    fun addNote(did: DeckId? = null) {
+        val intent = NoteEditorLauncher.AddNote(did).toIntent(this)
         startActivity(intent)
     }
 
@@ -2137,7 +2137,7 @@ open class DeckPicker :
     ) {
         fun showEmptyDeckSnackbar() =
             showSnackbar(R.string.empty_deck) {
-                setAction(R.string.menu_add) { addNote() }
+                setAction(R.string.menu_add) { addNote(did) }
             }
 
         /** Check if we need to update the fragment or update the deck list */
