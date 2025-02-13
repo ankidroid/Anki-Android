@@ -100,4 +100,6 @@ value class FilteredDeck(
         set(value) {
             jsonObject.put(TERMS, value)
         }
+
+    override fun toString(): String = jsonObject.toString()
 }
