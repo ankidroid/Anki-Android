@@ -62,13 +62,13 @@ class FilteredDeckOptions :
     private val dynExamples =
         arrayOf(
             null,
-            "{'search'=\"is:new\", 'resched'=False, 'steps'=\"1\", 'order'=5}",
-            "{'search'=\"added:1\", 'resched'=False, 'steps'=\"1\", 'order'=5}",
-            "{'search'=\"rated:1:1\", 'order'=4}",
-            "{'search'=\"prop:due<=2\", 'order'=6}",
-            "{'search'=\"is:due tag:TAG\", 'order'=6}",
-            "{'search'=\"is:due\", 'order'=3}",
-            "{'search'=\"\", 'steps'=\"1 10 20\", 'order'=0}",
+            """{'search'="is:new", 'resched'=False, 'steps'="1", 'order'=5}""",
+            """{'search'="added:1", 'resched'=False, 'steps'="1", 'order'=5}""",
+            """{'search'="rated:1:1", 'order'=4}""",
+            """{'search'="prop:due<=2", 'order'=6}""",
+            """{'search'="is:due tag:TAG", 'order'=6}""",
+            """{'search'="is:due", 'order'=3}""",
+            """{'search'="", 'steps'="1 10 20", 'order'=0}""",
         )
 
     inner class DeckPreferenceHack : AppCompatPreferenceActivity<FilteredDeckOptions.DeckPreferenceHack>.AbstractPreferenceHack() {
