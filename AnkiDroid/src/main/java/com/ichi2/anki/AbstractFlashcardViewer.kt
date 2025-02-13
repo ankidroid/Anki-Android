@@ -87,6 +87,7 @@ import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
 import com.ichi2.anki.cardviewer.AndroidCardRenderContext
 import com.ichi2.anki.cardviewer.AndroidCardRenderContext.Companion.createInstance
 import com.ichi2.anki.cardviewer.CardMediaPlayer
+import com.ichi2.anki.cardviewer.CardSoundConfig
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.GestureProcessor
 import com.ichi2.anki.cardviewer.JavascriptEvaluator
@@ -1306,10 +1307,13 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    private suspend fun automaticAnswerShouldWaitForAudio(): Boolean =
-        withCol {
-            decks.configDictForDeckId(currentCard!!.did).waitForAudio
-        }
+    suspend fun automaticAnswerShouldWaitForAudio(): Boolean = withCol {
+        val card = currentCard ?: return@withCol false  // Prevents null crash
+        val waitForAudio = decks.configDictForDeckId(card.did).waitForAudio
+        val soundConfig = CardSoundConfig.create(this, card)  // Fetch autoplay setting
+
+        return@withCol waitForAudio && soundConfig.autoplay  //  Only wait if autoplay is enabled
+    }
 
     internal inner class ReadTextListener : ReadText.ReadTextListener {
         override fun onDone(playedSide: CardSide?) {
