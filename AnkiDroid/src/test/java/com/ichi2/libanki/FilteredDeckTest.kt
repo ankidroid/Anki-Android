@@ -15,6 +15,9 @@
  ****************************************************************************************/
 package com.ichi2.libanki
 
+import com.ichi2.libanki.Deck.Companion.DYN
+import com.ichi2.libanki.Deck.Companion.EMPTY
+import com.ichi2.libanki.FilteredDeck.Companion.TERMS
 import com.ichi2.libanki.FilteredDeck.Term
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.assertFalse
@@ -29,7 +32,7 @@ class FilteredDeckTest : JvmTest() {
 
     @Test
     fun testFactory() {
-        val d = Deck.factory("""{"dyn": 1}""")
+        val d = Deck.factory("""{$DYN: 1}""")
         assertInstanceOf<FilteredDeck>(d)
     }
 
@@ -71,7 +74,7 @@ class FilteredDeckTest : JvmTest() {
         val d = FilteredDeck("{empty: 4}")
         d.removeEmpty()
         // The property empty can be edited but never read in the frontend.
-        assertFalse("Empty should be removed", d.jsonObject.has("empty"))
+        assertFalse("Empty should be removed", d.jsonObject.has(EMPTY))
     }
 
     val search = "search"
@@ -108,7 +111,7 @@ class FilteredDeckTest : JvmTest() {
     @Test
     fun testFirstFilter() {
         // All decks are expected to have at least one term.
-        val d = FilteredDeck("""{"terms": [$t]}""")
+        val d = FilteredDeck("""{"$TERMS": [$t]}""")
         val firstFilter = d.firstFilter
         assertEquals(firstFilter.search, search)
         assertEquals(firstFilter.limit, limit)
@@ -117,7 +120,7 @@ class FilteredDeckTest : JvmTest() {
 
     @Test
     fun testSecondFilter() {
-        val d = FilteredDeck("""{"terms": [$t]}""")
+        val d = FilteredDeck("""{"$TERMS": [$t]}""")
         assertEquals(null, d.secondFilter)
         d.secondFilter = t2
         assertEquals(t2, d.secondFilter)

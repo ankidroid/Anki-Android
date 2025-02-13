@@ -30,6 +30,11 @@ value class RegularDeck(
     @VisibleForTesting override val jsonObject: JSONObject,
 ) : JSONObjectHolder,
     Deck {
+    companion object {
+        const val CONF = "conf"
+        const val MID = "mid"
+    }
+
     /**
      * Creates a deck object form a json string
      */
@@ -40,16 +45,16 @@ value class RegularDeck(
      */
     var conf: DeckConfigId
         get() {
-            val value = jsonObject.optLong("conf")
+            val value = jsonObject.optLong(CONF)
             return if (value > 0) value else 1
         }
         set(value) {
-            jsonObject.put("conf", value)
+            jsonObject.put(CONF, value)
         }
 
     var noteTypeId: NoteTypeId?
-        get() = jsonObject.getLongOrNull("mid")
+        get() = jsonObject.getLongOrNull(MID)
         set(value) {
-            jsonObject.put("mid", value)
+            jsonObject.put(MID, value)
         }
 }

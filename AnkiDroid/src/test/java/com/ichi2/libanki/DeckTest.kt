@@ -15,6 +15,7 @@
  ****************************************************************************************/
 package com.ichi2.libanki
 
+import com.ichi2.libanki.Deck.Companion.DYN
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.assertFalse
 import org.json.JSONArray
@@ -23,19 +24,19 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class DeckTest : JvmTest() {
-    val d = Deck.factory("""{"dyn": 0}""")
+    val d = Deck.factory("""{$DYN: 0}""")
 
     @Test
     fun testFiltered() {
         // `dyn` can't be set by the front-end anymore.
-        val d = Deck.factory("""{"dyn" :1}""")
+        val d = Deck.factory("""{$DYN :1}""")
         assertTrue(d.isFiltered)
         assertFalse("This deck should not be normal", d.isRegular)
     }
 
     @Test
     fun testNormal() {
-        val d = Deck.factory("""{"dyn" :0}""")
+        val d = Deck.factory("""{$DYN :0}""")
         assertTrue(d.isRegular)
         assertFalse("this deck should not be filtered", d.isFiltered)
     }
