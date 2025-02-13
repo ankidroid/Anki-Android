@@ -58,6 +58,8 @@ class FilteredDeckOptions :
     val filteredDeck: FilteredDeck
         get() = super.deck as FilteredDeck
 
+    lateinit var secondFilterSign: CheckBoxPreference
+
     // TODO: not anymore used in libanki?
     private val dynExamples =
         arrayOf(
@@ -123,9 +125,8 @@ class FilteredDeckOptions :
                         "search" -> {
                             filteredDeck.firstFilter.search = value as String
                         }
-
                         "limit" -> {
-                            filteredDeck.firstFilter.limit = value as Int
+                            filteredDeck.firstFilter.limit = (value as String).toInt()
                         }
                         "order" -> {
                             filteredDeck.firstFilter.order = (value as String).toInt()
@@ -154,7 +155,7 @@ class FilteredDeckOptions :
                             }
                         }
                         "steps" -> {
-                            filteredDeck.delays = convertToJSON((value as String))
+                            filteredDeck.delays = convertToJSON(value as String)
                         }
                         "preset" -> {
                             val i: Int = (value as String).toInt()
@@ -223,8 +224,10 @@ class FilteredDeckOptions :
         deck = if (extras != null && extras.containsKey(EXTRAS_DECK_ID)) {
             col.decks.getLegacy(extras.getLong(EXTRAS_DECK_ID))
         } else {
+            Timber.d("no deckId supplied. Using current deck")
             null
         } ?: col.decks.current()
+        Timber.i("opened for deck %d", deck.id)
         registerExternalStorageListener()
         if (deck.isRegular) {
             Timber.w("Deck is not a dyn deck")
@@ -361,7 +364,7 @@ class FilteredDeckOptions :
 
     @Suppress("deprecation")
     private fun setupSecondFilterListener() {
-        val secondFilterSign = findPreference("filterSecond") as CheckBoxPreference
+        secondFilterSign = findPreference("filterSecond") as CheckBoxPreference
         val secondFilter = findPreference("secondFilter") as PreferenceCategory
         if (pref.hasSecondFilter) {
             secondFilter.isEnabled = true
@@ -416,5 +419,23 @@ class FilteredDeckOptions :
             deckId?.let { putExtra(EXTRAS_DECK_ID, it) }
             searchTerms?.let { putExtra(EXTRAS_SEARCH, it) }
         }
+
+        const val SEARCH = "search"
+        const val LIMIT = "limit"
+        const val ORDER = "order"
+        const val SEARCH_2 = "search_2"
+        const val LIMIT_2 = "limit_2"
+        const val ORDER_2 = "order_2"
+        const val STEPS = "steps"
+        const val STEPS_ON = "stepsOn"
+        const val PRESET = "preset"
+
+        fun createIntent(
+            context: Context,
+            did: DeckId,
+        ): Intent =
+            Intent(context, FilteredDeckOptions::class.java).apply {
+                putExtra("did", did)
+            }
     }
 }

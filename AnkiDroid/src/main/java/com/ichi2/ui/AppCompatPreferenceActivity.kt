@@ -36,6 +36,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.window.OnBackInvokedDispatcher.PRIORITY_OVERLAY
 import androidx.annotation.LayoutRes
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
@@ -81,7 +82,9 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
     private lateinit var unmountReceiver: BroadcastReceiver
     protected lateinit var col: Collection
         private set
-    protected lateinit var pref: PreferenceHack
+
+    @VisibleForTesting
+    internal lateinit var pref: PreferenceHack
 
     // value class can't be lateinit.
     // Instead we use a backing field.
