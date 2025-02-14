@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">ফিল্টার করা ডেক %s মুছে ফেলবেন এবং সমস্ত কার্ড তাদের আসল ডেকে ফিরিয়ে দেবেন?</string>
     <string name="no_tts_available_message">কোনও টেক্সট টু স্পিচ ভাষা উপলব্ধ নেই</string>
     <string name="tts_no_tts">নিশ্চুপ</string>
-    <string name="reposition_card_dialog_title">নতুন কার্ড এর ক্রম পরিবর্তন</string>
     <string name="reposition_card_not_new_error">শুধু মাত্র নতুন কার্ড এর ক্রম বদলানো যাবে</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d টি কার্ড পুনঃস্থাপিত</item>
-        <item quantity="other">%d টি কার্ড পুনঃস্থাপিত</item>
-    </plurals>
     <string name="reset_card_dialog_title">অগ্ৰগতি মুছে ফেলুন</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d টি কার্ড রিসেট হয়েছে</item>

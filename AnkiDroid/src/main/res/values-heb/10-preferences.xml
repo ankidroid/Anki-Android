@@ -265,9 +265,7 @@
     <string name="donate_description"><![CDATA[אתה יכול לתמוך בפיתוח של AnkiDroid על ידי <a href=\"%1$s\">תרומה</a>. כל סכום מוערך מאוד.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">הוסף מחווה</string>
-    <string name="binding_replace_gesture">החלף מחווה</string>
     <string name="binding_add_key">הוסף כפתור</string>
-    <string name="binding_replace_key">החלף כפתור</string>
     <string name="key_picker_default_press_key">לחץ על כפתור</string>
     <string name="binding_add_axis">הוסף ג\'ויסטיק/בקר תנועה</string>
     <string name="axis_picker_move_joystick">הזז ג\'ויסטיק/בקר תנועה</string>

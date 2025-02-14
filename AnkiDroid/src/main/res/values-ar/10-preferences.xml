@@ -269,9 +269,7 @@
     <string name="donate_description"><![CDATA[تستطيع دعم تطوير أنكيدرويد من خلال <a href=\"%1$s\">التبرع</a>. نقدّر أي كمية.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">إضافة إيماءة</string>
-    <string name="binding_replace_gesture">استبدال الإيماء</string>
     <string name="binding_add_key">إضافة مفتاح</string>
-    <string name="binding_replace_key">استبدال المفتاح</string>
     <string name="key_picker_default_press_key">ضغط مفتاح</string>
     <string name="binding_add_axis">إضافة وحدة عصا التحكم أو جهاز التحرك/حركة</string>
     <string name="axis_picker_move_joystick">نقل وحدة عصا التحكم أو جهاز التحرك/حركة</string>

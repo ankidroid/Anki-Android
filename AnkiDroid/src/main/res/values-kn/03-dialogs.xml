@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">ಫಿಲ್ಟರ್ ಮಾಡಿದ ಡೆಕ್ %s ಅನ್ನು ಅಳಿಸಿ ಮತ್ತು ಎಲ್ಲಾ ಕಾರ್ಡ್‌ಗಳನ್ನು ಅವುಗಳ ಮೂಲ ಡೆಕ್‌ಗಳಿಗೆ ಹಿಂತಿರುಗಿಸುವುದೇ?</string>
     <string name="no_tts_available_message">ಯಾವುದೇ ಪಠ್ಯದಿಂದ ಭಾಷಣಕ್ಕೆ ಭಾಷೆ ಲಭ್ಯವಿಲ್ಲ</string>
     <string name="tts_no_tts">ಮಾತನಾಡಬೇಡ</string>
-    <string name="reposition_card_dialog_title">ಹೊಸ ಕಾರ್ಡ್ ಅನ್ನು ಮರುಸೇರಿಸಿ</string>
     <string name="reposition_card_not_new_error">ಹೊಸ ಕಾರ್ಡ್‌ಗಳನ್ನು ಮಾತ್ರ ಮರುಸ್ಥಾಪಿಸಬಹುದು</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d ಕಾರ್ಡ್ ಅನ್ನು ಮರುಸ್ಥಾನಗೊಳಿಸಲಾಗಿದೆ</item>
-        <item quantity="other">%d ಕಾರ್ಡ್‌ಗಳನ್ನು ಮರುಸ್ಥಾನಗೊಳಿಸಲಾಗಿದೆ</item>
-    </plurals>
     <string name="reset_card_dialog_title">ಕಾರ್ಡ್ ಪ್ರಗತಿಯನ್ನು ಮರುಹೊಂದಿಸಿ</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d ಕಾರ್ಡ್ ಅನ್ನು ಮರುಹೊಂದಿಸಿ</item>

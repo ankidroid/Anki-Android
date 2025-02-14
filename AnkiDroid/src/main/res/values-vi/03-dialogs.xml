@@ -54,11 +54,7 @@
     <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">Không có ngôn ngữ chuyển-văn-bản-thành-lời</string>
     <string name="tts_no_tts">Đừng phát âm</string>
-    <string name="reposition_card_dialog_title">Đặt lại vị trí thẻ mới</string>
     <string name="reposition_card_not_new_error">Chỉ thẻ mới có thể được định vị lại</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="other">%d thẻ được định vị lại</item>
-    </plurals>
     <string name="reset_card_dialog_title">Đặt lại tiến trình thẻ</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="other">đặt lại thẻ %d</item>

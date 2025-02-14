@@ -57,14 +57,7 @@
     <string name="delete_cram_deck_message">Czy na pewno chcesz usunąć filtrowaną talię %s i przenieść wszystkie karty do ich oryginalnych talii?</string>
     <string name="no_tts_available_message">Brak dostępnego języka zamiany tekstu na mowę</string>
     <string name="tts_no_tts">Nie mów</string>
-    <string name="reposition_card_dialog_title">Przestawianie nowej karty</string>
     <string name="reposition_card_not_new_error">Tylko nowe karty mogą być przestawione</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d karta przestawiona</item>
-        <item quantity="few">%d karty przestawione</item>
-        <item quantity="many">%d kart przestawiono</item>
-        <item quantity="other">%d kart przestawiono</item>
-    </plurals>
     <string name="reset_card_dialog_title">Reset postępu karty</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d karta zresetowana</item>

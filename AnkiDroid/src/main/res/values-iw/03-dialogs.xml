@@ -57,14 +57,7 @@
     <string name="delete_cram_deck_message">למחוק את החפיסה %s המסוננת ולשלוח את כל הקלפים בחזרה לחפיסות המקוריות שלהם?</string>
     <string name="no_tts_available_message">אין שום שפת לכתוב-אל-דיבור זמין</string>
     <string name="tts_no_tts">אל תדבר.‏</string>
-    <string name="reposition_card_dialog_title">שינוי מיקום כרטיס חדש</string>
     <string name="reposition_card_not_new_error">ניתן לשנות מיקום לכרטיסים חדשים בלבד</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">כרטיס %d הושם מחדש</item>
-        <item quantity="two">%d כרטיסים הושמו מחדש</item>
-        <item quantity="many">%d כרטיסים הושמו מחדש</item>
-        <item quantity="other">%d כרטיסים הושמו מחדש</item>
-    </plurals>
     <string name="reset_card_dialog_title">איפוס התקדמות הכרטיס</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">כרטיס אחד אופס</item>

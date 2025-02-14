@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">ᱯᱷᱤᱞᱴᱟᱨ ᱟᱠᱟᱫ ᱰᱮᱠ %s ᱵᱚᱫᱚᱞ ᱢᱮ ᱟᱨ ᱡᱚᱛᱚ ᱠᱟᱨᱰ ᱟᱠᱚᱣᱟᱜ ᱚᱨᱡᱤᱱᱤᱭᱟᱞ ᱰᱮᱠ ᱨᱮ ᱵᱚᱫᱚᱞ ᱢᱮ?</string>
     <string name="no_tts_available_message">text-to-speech ᱯᱟᱹᱨᱥᱤ ᱵᱟᱱᱩᱜᱼᱟ ᱾</string>
     <string name="tts_no_tts">ᱟᱞᱚᱢ ᱨᱚᱲᱟ</string>
-    <string name="reposition_card_dialog_title">ᱱᱟᱶᱟ ᱠᱟᱰ ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱯᱮ</string>
     <string name="reposition_card_not_new_error">ᱠᱷᱟᱹᱞᱤ ᱱᱟᱶᱟ ᱠᱟᱰ ᱜᱮ ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱫᱟᱲᱮᱭᱟᱜᱟᱢ</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d ᱠᱟᱰ ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱮᱱᱟ</item>
-        <item quantity="other">%d ᱠᱟᱰ ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱮᱱᱟ</item>
-    </plurals>
     <string name="reset_card_dialog_title">ᱠᱟᱰ ᱨᱤᱥᱮᱴ ᱯᱨᱚᱜᱨᱮᱥᱚᱜ ᱠᱟᱱᱟ</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d ᱠᱟᱰ ᱨᱤᱥᱮᱴ</item>

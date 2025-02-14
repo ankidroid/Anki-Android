@@ -262,9 +262,7 @@
     <string name="donate_description"><![CDATA[Pode apoiar o desenvolvimento do AnkiDroid ao <a href=\"%1$s\">doar</a>. Ficamos muito gratos independentemente do valor.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Adicionar gesto</string>
-    <string name="binding_replace_gesture">Substituir gesto</string>
     <string name="binding_add_key">Adicionar tecla</string>
-    <string name="binding_replace_key">Substituir tecla</string>
     <string name="key_picker_default_press_key">Pressione uma tecla</string>
     <string name="binding_add_axis">Adicionar um \"joystick\"/comando de movimento</string>
     <string name="axis_picker_move_joystick">Mover um \"joystick\"/comando de movimento</string>

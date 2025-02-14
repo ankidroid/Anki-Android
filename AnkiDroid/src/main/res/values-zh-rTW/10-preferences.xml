@@ -259,9 +259,7 @@
     <string name="donate_description"><![CDATA[您可以通過<a href=\"%1$s\">捐贈</a>支持AnkiDroid的開發。 我們感謝任何數額的捐贈。]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">新增手勢</string>
-    <string name="binding_replace_gesture">替換手勢</string>
     <string name="binding_add_key">新增按鍵</string>
-    <string name="binding_replace_key">替換按鍵</string>
     <string name="key_picker_default_press_key">按一個按鍵</string>
     <string name="binding_add_axis">新增搖桿/運動控制器</string>
     <string name="axis_picker_move_joystick">移動搖桿/運動控制器</string>

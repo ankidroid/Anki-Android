@@ -57,14 +57,7 @@
     <string name="delete_cram_deck_message">Выдаліць фільтраваную калоду %s і адправіць усе карткі назад у іх арыгінальныя калоды?</string>
     <string name="no_tts_available_message">Сінтэз маўлення недаступны</string>
     <string name="tts_no_tts">Не прамаўляць</string>
-    <string name="reposition_card_dialog_title">Перамясціць новую картку</string>
     <string name="reposition_card_not_new_error">Толькі новыя карткі могуць быць перамешчаныя</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">Перамешчана %d картка</item>
-        <item quantity="few">Перамешчаны %d карткі</item>
-        <item quantity="many">Перамешчаны %d картак</item>
-        <item quantity="other">Перамешчаны %d картак</item>
-    </plurals>
     <string name="reset_card_dialog_title">Скінуць дасягненні па картцы</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">Скінута %d картка</item>

@@ -261,9 +261,7 @@
     <string name="donate_description"><![CDATA[Du kan stödja AnkiDroids utveckling genom att <a href=\"%1$s\">donera</a>. Alla donationer uppskattas enormt!]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Lägg till gest</string>
-    <string name="binding_replace_gesture">Ersätt gest</string>
     <string name="binding_add_key">Lägg till knapp</string>
-    <string name="binding_replace_key">Ersätt knapp</string>
     <string name="key_picker_default_press_key">Tryck på en knapp</string>
     <string name="binding_add_axis">Lägg till joystick/rörelsekänslig handkontroll</string>
     <string name="axis_picker_move_joystick">Manövrera en joystick/rörelsekänslig handkontroll</string>

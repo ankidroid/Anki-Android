@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">ਫਿਲਟਰ ਕੀਤੇ ਡੈੱਕ %s ਨੂੰ ਮਿਟਾਉਣਾ ਹੈ ਅਤੇ ਸਾਰੇ ਕਾਰਡਾਂ ਨੂੰ ਉਹਨਾਂ ਦੇ ਅਸਲ ਡੈੱਕ \'ਤੇ ਵਾਪਸ ਕਰਨਾ ਹੈ?</string>
     <string name="no_tts_available_message">ਕੋਈ ਟੈਕਸਟ-ਟੂ-ਸਪੀਚ ਭਾਸ਼ਾ ਉਪਲਬਧ ਨਹੀਂ ਹੈ</string>
     <string name="tts_no_tts">ਨਾ ਬੋਲੋ</string>
-    <string name="reposition_card_dialog_title">ਨਵਾਂ ਕਾਰਡ ਬਦਲੋ</string>
     <string name="reposition_card_not_new_error">ਸਿਰਫ਼ ਨਵੇਂ ਕਾਰਡਾਂ ਨੂੰ ਹੀ ਮੁੜ-ਸਥਾਪਿਤ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d ਕਾਰਡ ਮੁੜ-ਸਥਾਪਤ ਕੀਤਾ ਗਿਆ</item>
-        <item quantity="other">%d ਕਾਰਡ ਮੁੜ-ਸਥਾਪਤ ਕੀਤੇ ਗਏ</item>
-    </plurals>
     <string name="reset_card_dialog_title">ਕਾਰਡ ਦੀ ਪ੍ਰਗਤੀ ਨੂੰ ਰੀਸੈਟ ਕਰੋ</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d ਕਾਰਡ ਰੀਸੈੱਟ</item>

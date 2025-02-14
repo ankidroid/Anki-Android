@@ -261,9 +261,7 @@
     <string name="donate_description"><![CDATA[ᱟᱢ <a href=\"%1$s\">ᱫᱚᱦᱚᱭ ᱠᱟᱛᱮ</a> AnkiDroid ᱨᱮᱭᱟᱜ ᱩᱛᱷᱱᱟᱹᱣ ᱨᱮ ᱜᱚᱲᱚ ᱮᱢ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ ᱾ ᱡᱟᱦᱟᱸᱱ ᱮᱢᱟᱱ ᱜᱮ ᱟᱹᱰᱤ ᱟᱞᱜᱟ ᱛᱮᱭ ᱢᱟᱱᱟᱣ ᱵᱟᱛᱟᱣᱜᱼᱟ ᱾]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">ᱤᱥᱟᱨᱟ ᱡᱚᱲᱟᱣ</string>
-    <string name="binding_replace_gesture">ᱪᱤᱱᱦᱟᱹ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="binding_add_key">Key ᱡᱚᱲᱟᱣ</string>
-    <string name="binding_replace_key">ᱪᱷᱟᱸᱪ ᱫᱚᱦᱚᱭ ᱢᱮ</string>
     <string name="key_picker_default_press_key">ᱢᱤᱫ key ᱚᱛᱟᱭ ᱢᱮ</string>
     <string name="binding_add_axis">ᱡᱚᱭᱥᱴᱤᱠ/ᱢᱳᱥᱚᱱ ᱠᱚᱱᱴᱨᱚᱞᱟᱨ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
     <string name="axis_picker_move_joystick">ᱡᱚᱭᱥᱴᱤᱠ/ᱢᱳᱥᱚᱱ ᱠᱚᱱᱴᱨᱚᱞᱟᱨ ᱥᱮᱞᱮᱫ ᱢᱮ</string>

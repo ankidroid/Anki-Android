@@ -57,14 +57,7 @@
     <string name="delete_cram_deck_message">Удалить отфильтрованную колоду %s и отправить все карточки обратно в оригинальные колоды?</string>
     <string name="no_tts_available_message">Синтез речи недоступен</string>
     <string name="tts_no_tts">Не произносить</string>
-    <string name="reposition_card_dialog_title">Переместить новую карточку</string>
     <string name="reposition_card_not_new_error">Можно переместить только новые карточки</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d карточка перемещена</item>
-        <item quantity="few">%d карточки перемещена</item>
-        <item quantity="many">%d карточек перемещены</item>
-        <item quantity="other">%d карточек перемещены</item>
-    </plurals>
     <string name="reset_card_dialog_title">Сбросить состояние карточек</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d карточка сброшена</item>

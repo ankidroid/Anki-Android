@@ -59,16 +59,7 @@
     <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">لا يتوفر دعم تحويل النص إلى كلام لأي لغة</string>
     <string name="tts_no_tts">لا تنطق</string>
-    <string name="reposition_card_dialog_title">تغيير موضع البطاقة الجديدة</string>
     <string name="reposition_card_not_new_error">يمكن تغيير موضع البطاقات الجديدة فقط</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="zero">تم تغيير موضع %d بطاقة</item>
-        <item quantity="one">تم تغيير موضع %d بطاقة</item>
-        <item quantity="two">تم تغيير موضع %d بطاقة</item>
-        <item quantity="few">تم تغيير موضع %d بطاقات</item>
-        <item quantity="many">تم تغيير موضع %d بطاقة</item>
-        <item quantity="other">تم تغيير موضع %d بطاقة</item>
-    </plurals>
     <string name="reset_card_dialog_title">تصفير تقدم البطاقة</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="zero">تم تصفير %d بطاقة</item>

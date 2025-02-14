@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">سۈزۈلگەن دەستە %s نى ئۆچۈرۈپ، ھەممە كارتىنى ئەسلىدىكى دەستىگە قايتۇرامدۇ؟</string>
     <string name="no_tts_available_message">بۇ تىلدا ئىشلەتكىلى بولىدىغان تېكىستتىن ئاۋازغا موتورى يوق</string>
     <string name="tts_no_tts">سۆزلىمە</string>
-    <string name="reposition_card_dialog_title">يېڭى كارتىنى قايتا تەرتىپلە</string>
     <string name="reposition_card_not_new_error">پەقەت يېڭى كارتىنىڭ ئورنىنىلا يۆتكىگىلى بولىدۇ</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d كارتىنىڭ ئورنى يۆتكەلدى</item>
-        <item quantity="other">%d كارتىنىڭ ئورنى يۆتكەلدى</item>
-    </plurals>
     <string name="reset_card_dialog_title">كارتا ئىلگىرىلەش جەريانىنى ئەسلىگە قايتۇر</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d كارتا ئەسلىگە قايتۇرۇلدى</item>

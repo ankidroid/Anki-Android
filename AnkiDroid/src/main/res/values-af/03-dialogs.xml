@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">Verwyder gefilterde pak %s en stuur alle kaarte terug na hul oorspronklike pakke?</string>
     <string name="no_tts_available_message">Geen teks-na-spraak taal beskikbaar nie</string>
     <string name="tts_no_tts">Moet nie praat nie</string>
-    <string name="reposition_card_dialog_title">Herposisioneer nuwe kaart</string>
     <string name="reposition_card_not_new_error">Slegs nuwe kaarte kan herposisioneer word</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d kaart herposisioneer</item>
-        <item quantity="other">%d kaarte herposisioneer</item>
-    </plurals>
     <string name="reset_card_dialog_title">Herstel kaart vordering</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d kaart herstel</item>

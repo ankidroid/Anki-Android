@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">Excluir baralho filtrado %s e enviar todos os cartões de volta para seus baralhos originais?</string>
     <string name="no_tts_available_message">Nenhum idioma de texto para fala disponível</string>
     <string name="tts_no_tts">Não fale</string>
-    <string name="reposition_card_dialog_title">Reposicionar novo cartão</string>
     <string name="reposition_card_not_new_error">Apenas novos cartões podem ser reposicionados</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d cartão reposicionado</item>
-        <item quantity="other">%d cards reposicionados</item>
-    </plurals>
     <string name="reset_card_dialog_title">Redefinir progresso do cartão</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d resetar cartão</item>

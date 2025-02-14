@@ -54,11 +54,7 @@
     <string name="delete_cram_deck_message">필터링된 덱 %s을(를) 삭제하고 모든 카드를 원래 덱으로 돌려보낼까요?</string>
     <string name="no_tts_available_message">문장 읽어주기 기능(TTS)을 사용할 수 없음</string>
     <string name="tts_no_tts">무음</string>
-    <string name="reposition_card_dialog_title">새 카드 위치 변경</string>
     <string name="reposition_card_not_new_error">새 카드만 순서를 조정할 수 있습니다.</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="other">%d개의 카드를 옮겼습니다.</item>
-    </plurals>
     <string name="reset_card_dialog_title">카드 학습 진행 재설정</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="other">%d개의 카드를 초기화했습니다.</item>

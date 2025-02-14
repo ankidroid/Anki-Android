@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">Διαγράψτε τη φιλτραρισμένη τράπουλα %s και στείλτε όλες τις κάρτες πίσω στις αρχικές τους τράπουλες;</string>
     <string name="no_tts_available_message">Δεν είναι διαθέσιμη η μετατροπής κειμένου σε ομιλία</string>
     <string name="tts_no_tts">Σίγαση</string>
-    <string name="reposition_card_dialog_title">Επανατοποθέτηση νέας κάρτας</string>
     <string name="reposition_card_not_new_error">Μόνο νέες κάρτες μπορούν να επανατοποθετηθούν</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">Επανατοποθετήθηκε %d κάρτα</item>
-        <item quantity="other">Επανατοποθετήθηκαν %d κάρτες</item>
-    </plurals>
     <string name="reset_card_dialog_title">Επαναφορά προόδου κάρτας</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d card reset</item>

@@ -257,9 +257,7 @@
     <string name="donate_description"><![CDATA[Vi povas subteni evoluigon de AnkiDroid per <a href=\"%1$s\">donaci monon</a>. Ĉiu monsumo estas dankinda.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Aldoni geston</string>
-    <string name="binding_replace_gesture">Anstataŭigi geston</string>
     <string name="binding_add_key">Aldoni klavon</string>
-    <string name="binding_replace_key">Anstataŭigi klavon</string>
     <string name="key_picker_default_press_key">Premu klavon</string>
     <string name="binding_add_axis">Asigni ludstirilon</string>
     <string name="axis_picker_move_joystick">Movu per ludstirilo</string>

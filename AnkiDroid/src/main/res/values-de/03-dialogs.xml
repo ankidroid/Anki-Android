@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">Gefilterten Stapel „%s“ löschen und alle Karten zurück in ihre ursprünglichen Stapel senden?</string>
     <string name="no_tts_available_message">Keine Vorlesesprache verfügbar</string>
     <string name="tts_no_tts">Nicht vorlesen</string>
-    <string name="reposition_card_dialog_title">Position der neuen Karte ändern</string>
     <string name="reposition_card_not_new_error">Die Position kann nur für neue Karten geändert werden</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d Karte neu positioniert</item>
-        <item quantity="other">%d Karten neu positioniert</item>
-    </plurals>
     <string name="reset_card_dialog_title">Lernfortschritt zurücksetzen</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d Karte zurücksetzen</item>

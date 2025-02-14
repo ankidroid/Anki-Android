@@ -261,9 +261,7 @@
     <string name="donate_description"><![CDATA[<a href=\"%1$s\">സംഭാവന ചെയ്യുന്നതിലൂടെ</a> നിങ്ങൾക്ക് AnkiDroid വികസനത്തെ പിന്തുണയ്ക്കാം. ഏത് തുകയും ആഴത്തിൽ വിലമതിക്കുന്നു.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">ആംഗ്യം ചേർക്കുക</string>
-    <string name="binding_replace_gesture">ആംഗ്യം മാറ്റിസ്ഥാപിക്കുക</string>
     <string name="binding_add_key">കീ ചേർക്കുക</string>
-    <string name="binding_replace_key">കീ മാറ്റിസ്ഥാപിക്കുക</string>
     <string name="key_picker_default_press_key">ഒരു കീ അമർത്തുക</string>
     <string name="binding_add_axis">ഒരു ജോയിസ്റ്റിക്ക്/മോഷൻ കൺട്രോളർ ചേർക്കുക</string>
     <string name="axis_picker_move_joystick">ഒരു ജോയിസ്റ്റിക്ക്/മോഷൻ കൺട്രോളർ നീക്കുക</string>

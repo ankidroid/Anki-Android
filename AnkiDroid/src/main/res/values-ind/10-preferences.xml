@@ -260,9 +260,7 @@
     <string name="donate_description"><![CDATA[Anda dapat mendukung pengembangan AnkiDroid dengan <a href=\"%1$s\">berdonasi</a>. Berapa pun jumlahnya akan sangat kami hargai.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Tambahkan gestur</string>
-    <string name="binding_replace_gesture">Ganti gestur</string>
     <string name="binding_add_key">Tambahkan tombol</string>
-    <string name="binding_replace_key">Ganti tombol</string>
     <string name="key_picker_default_press_key">Tekan tombol</string>
     <string name="binding_add_axis">Tambahkan pengendali joystick/gerakan</string>
     <string name="axis_picker_move_joystick">Gerakkan pengendali joystick/gerakan</string>

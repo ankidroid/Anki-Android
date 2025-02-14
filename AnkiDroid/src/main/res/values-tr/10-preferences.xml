@@ -261,9 +261,7 @@
     <string name="donate_description"><![CDATA[AnkiDroid\'in geliştirilmesine <a href=\"%1$s\">bağış yaparak</a> destek olabilirsiniz. Miktarı ne olursa olsun içten teşekkürlerimizi kazanırsınız.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Hareket ekle</string>
-    <string name="binding_replace_gesture">El hareketini değiştir</string>
     <string name="binding_add_key">Anahtar ekle</string>
-    <string name="binding_replace_key">Tuşu değiştir</string>
     <string name="key_picker_default_press_key">Bir tuşa basın</string>
     <string name="binding_add_axis">Joystick/hareket kumandası ekle</string>
     <string name="axis_picker_move_joystick">Bir joystick/hareket kumandasını hareket ettir</string>

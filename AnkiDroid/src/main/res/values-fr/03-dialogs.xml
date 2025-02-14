@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">Supprimer le paquet filtré %s et renvoyer toutes les cartes dans leurs paquets d’origine?</string>
     <string name="no_tts_available_message">Aucun langage de synthèse vocale disponible</string>
     <string name="tts_no_tts">Ne pas parler</string>
-    <string name="reposition_card_dialog_title">Repositionner la nouvelle carte</string>
     <string name="reposition_card_not_new_error">Seules les nouvelles cartes peuvent être repositionnées</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d carte repositionnée</item>
-        <item quantity="other">%d cartes repositionnées</item>
-    </plurals>
     <string name="reset_card_dialog_title">Réinitialiser les progrès de la carte</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d carte réinitialisée</item>

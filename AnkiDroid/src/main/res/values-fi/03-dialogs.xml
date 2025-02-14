@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">Poistetaanko suodatettu pakka \'%1$s\'? Kaikki kortit lähetetään niiden alkuperäisiin pakkoihin.</string>
     <string name="no_tts_available_message">Yhtään puhesyntetisaattorin tukemaa kieltä ei ole käytettävissä</string>
     <string name="tts_no_tts">Ei puhetta</string>
-    <string name="reposition_card_dialog_title">Siirrä uusi kortti</string>
     <string name="reposition_card_not_new_error">Ainoastaan uudet kortit voidaan siirtää</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d kortti siirretty</item>
-        <item quantity="other">%d korttia siirretty</item>
-    </plurals>
     <string name="reset_card_dialog_title">Nollaa kortin edistyminen</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d alusta kortti</item>

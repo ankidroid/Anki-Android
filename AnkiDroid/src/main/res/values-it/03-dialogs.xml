@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">Nessuna lingua per la sintesi vocale disponibile</string>
     <string name="tts_no_tts">Non parlare</string>
-    <string name="reposition_card_dialog_title">Riposiziona nuova carta</string>
     <string name="reposition_card_not_new_error">Solo le nuove carte possono essere riposizionate</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d carta riposizionata</item>
-        <item quantity="other">%d carte riposizionate</item>
-    </plurals>
     <string name="reset_card_dialog_title">Reimposta progresso carta</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d carta resettata</item>

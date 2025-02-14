@@ -261,9 +261,7 @@
     <string name="donate_description"><![CDATA[Podes suportare s\'isvilupu de AnkiDroid <a href=\"%1$s\">cun una donatzione</a>. Cale si siat tantu est apretziadu meda.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Annanghe unu gestu</string>
-    <string name="binding_replace_gesture">Sostitui su gestu</string>
     <string name="binding_add_key">Annanghe una tecla</string>
-    <string name="binding_replace_key">Sostitui sa tecla</string>
     <string name="key_picker_default_press_key">Incarca una tecla</string>
     <string name="binding_add_axis">Annanghe unu joystick/controllore de movimentu</string>
     <string name="axis_picker_move_joystick">Move unu joystick/controllore de movimentu</string>
