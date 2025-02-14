@@ -21,18 +21,18 @@ import com.ichi2.anki.dialogs.utils.title
 import com.ichi2.anki.exception.UnknownDatabaseVersionException
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.BackendEmulatingOpenConflict
 import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.testutils.DbUtils
+import com.ichi2.testutils.common.Flaky
+import com.ichi2.testutils.common.OS
 import com.ichi2.testutils.grantWritePermissions
 import com.ichi2.testutils.revokeWritePermissions
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.ResourceLoader
-import org.apache.commons.exec.OS
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.equalTo
@@ -492,6 +492,7 @@ class DeckPickerTest : RobolectricTest() {
         }
 
     @Test
+    @Flaky(OS.WINDOWS)
     fun `ContextMenu unburied cards when selecting UNBURY`() =
         runTest {
             startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
@@ -543,11 +544,8 @@ class DeckPickerTest : RobolectricTest() {
 
     @Test
     @RunInBackground
-    @NeedsTest("fix this on Windows")
+    @Flaky(OS.WINDOWS)
     fun version16CollectionOpens() {
-        if (OS.isFamilyWindows()) {
-            assumeTrue("test is flaky on Windows", false)
-        }
         try {
             setupColV16()
             InitialActivityWithConflictTest.setupForValid(targetContext)
