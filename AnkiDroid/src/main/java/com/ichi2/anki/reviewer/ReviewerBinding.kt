@@ -72,16 +72,27 @@ class ReviewerBinding(
         private const val ANSWER_SUFFIX = '1'
         private const val QUESTION_AND_ANSWER_SUFFIX = '2'
 
-        fun fromString(s: String): MappableBinding {
-            val binding = s.substring(0, s.length - 1)
-            val b = Binding.fromString(binding)
-            val side =
-                when (s[s.length - 1]) {
-                    QUESTION_SUFFIX -> CardSide.QUESTION
-                    ANSWER_SUFFIX -> CardSide.ANSWER
-                    else -> CardSide.BOTH
-                }
-            return ReviewerBinding(b, side)
+        fun fromPreferenceString(prefString: String?): List<ReviewerBinding> {
+            if (prefString.isNullOrEmpty()) return emptyList()
+
+            fun fromString(string: String): ReviewerBinding? {
+                if (string.isEmpty()) return null
+                val bindingString =
+                    StringBuilder(string)
+                        .substring(0, string.length - 1)
+                        .removePrefix(PREFIX.toString())
+                val binding = Binding.fromString(bindingString)
+                val side =
+                    when (string.last()) {
+                        QUESTION_SUFFIX -> CardSide.QUESTION
+                        ANSWER_SUFFIX -> CardSide.ANSWER
+                        else -> CardSide.BOTH
+                    }
+                return ReviewerBinding(binding, side)
+            }
+
+            val strings = getPreferenceSubstrings(prefString)
+            return strings.mapNotNull { fromString(it) }
         }
 
         @CheckResult
