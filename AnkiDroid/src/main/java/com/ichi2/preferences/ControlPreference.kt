@@ -19,7 +19,6 @@ package com.ichi2.preferences
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ArrayAdapter
@@ -45,6 +44,7 @@ import com.ichi2.ui.AxisPicker
 import com.ichi2.ui.KeyPicker
 import com.ichi2.utils.create
 import com.ichi2.utils.customView
+import com.ichi2.utils.dp
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
@@ -89,8 +89,8 @@ open class ControlPreference :
         binding: Binding,
         warningDisplay: WarningDisplay?,
     ): Boolean {
-        val bindingPreference = getPreferenceAssignedTo(binding)
-        if (bindingPreference == null || bindingPreference == this) return false
+        val bindingPreference = getPreferenceAssignedTo(binding) ?: return false
+        if (bindingPreference == this) return false
         val actionTitle = bindingPreference.title ?: ""
         val warning = context.getString(R.string.bindings_already_bound, actionTitle)
         if (warningDisplay != null) {
@@ -104,7 +104,7 @@ open class ControlPreference :
     var value: String?
         get() = getPersistedString(null)
         set(value) {
-            if (!TextUtils.equals(getPersistedString(null), value)) {
+            if (value != getPersistedString(null)) {
                 persistString(value)
                 notifyChanged()
             }
@@ -232,7 +232,7 @@ class ControlPreferenceDialogFragment : DialogFragment() {
         return AlertDialog.Builder(requireContext()).create {
             setTitle(preference.title)
             setIcon(preference.icon)
-            customView(view, paddingTop = 24)
+            customView(view, paddingTop = 16.dp.toPx(context))
             negativeButton(R.string.dialog_cancel)
         }
     }
