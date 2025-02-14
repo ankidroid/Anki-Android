@@ -70,14 +70,21 @@
         android:paddingStart="@dimen/side_margin"
         android:paddingEnd="@dimen/side_margin">
 
-        <WebView
-            android:id="@+id/report"
+        <ScrollView
+            android:id="@+id/reportScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/preserve_notes"/>
+            android:layout_marginTop="8dp"
+            android:paddingHorizontal="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/preserve_notes">
+            <TextView
+                android:id="@+id/report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </ScrollView>
 
         <CheckBox
             android:id="@+id/preserve_notes"
@@ -86,6 +93,7 @@
             android:checked="true"
             tools:text="Keep notes with no valid cards"
             android:layout_marginTop="8dp"
+            android:padding="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
