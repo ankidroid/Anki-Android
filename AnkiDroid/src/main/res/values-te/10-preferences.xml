@@ -260,9 +260,7 @@
     <string name="donate_description"><![CDATA[మీరు <a href=\"%1$s\">దానం చేయడం</a> ద్వారా AnkiDroid అభివృద్ధికి మద్దతు ఇవ్వవచ్చు. ఏదైనా మొత్తం లోతుగా ప్రశంసించబడుతుంది.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">సంజ్ఞను జోడించండి</string>
-    <string name="binding_replace_gesture">సంజ్ఞను భర్తీ చేయండి</string>
     <string name="binding_add_key">ఒక కీని జోడించండి</string>
-    <string name="binding_replace_key">కీని భర్తీ చేయండి</string>
     <string name="key_picker_default_press_key">ఒక కీని నొక్కండి</string>
     <string name="binding_add_axis">జాయ్‌స్టిక్/మోషన్ కంట్రోలర్‌ను జోడించండి</string>
     <string name="axis_picker_move_joystick">జాయ్‌స్టిక్/మోషన్ కంట్రోలర్‌ను తరలించండి</string>

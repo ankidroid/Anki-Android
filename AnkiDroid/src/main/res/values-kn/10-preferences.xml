@@ -260,9 +260,7 @@
     <string name="donate_description"><![CDATA[<a href=\"%1$s\">ದಾನ ಮಾಡುವ ಮೂಲಕ</a> ನೀವು AnkiDroid ಅಭಿವೃದ್ಧಿಯನ್ನು ಬೆಂಬಲಿಸಬಹುದು. ಯಾವುದೇ ಮೊತ್ತವನ್ನು ಆಳವಾಗಿ ಪ್ರಶಂಸಿಸಲಾಗುತ್ತದೆ.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">ಗೆಸ್ಚರ್ ಸೇರಿಸಿ</string>
-    <string name="binding_replace_gesture">ಗೆಸ್ಚರ್ ಬದಲಾಯಿಸಿ</string>
     <string name="binding_add_key">ಕೀ ಸೇರಿಸಿ</string>
-    <string name="binding_replace_key">ಕೀಲಿಯನ್ನು ಬದಲಾಯಿಸಿ</string>
     <string name="key_picker_default_press_key">ಒಂದು ಕೀಲಿಯನ್ನು ಒತ್ತಿರಿ</string>
     <string name="binding_add_axis">ಜಾಯ್ಸ್ಟಿಕ್/ಚಲನೆಯ ನಿಯಂತ್ರಕವನ್ನು ಸರಿಸಿ</string>
     <string name="axis_picker_move_joystick">ಜಾಯ್ಸ್ಟಿಕ್/ಚಲನೆಯ ನಿಯಂತ್ರಕವನ್ನು ಸರಿಸಿ</string>

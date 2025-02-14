@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">ఫిల్టర్ చేసిన డెక్ %sని తొలగించి, అన్ని కార్డ్‌లను వాటి అసలు డెక్‌లకు తిరిగి పంపాలా?</string>
     <string name="no_tts_available_message">టెక్స్ట్-టు-స్పీచ్ లాంగ్వేజ్ అందుబాటులో లేదు</string>
     <string name="tts_no_tts">మాట్లాడకండి</string>
-    <string name="reposition_card_dialog_title">కొత్త కార్డును భర్తీ చేయండి</string>
     <string name="reposition_card_not_new_error">కొత్త కార్డ్‌లను మాత్రమే రీపోజిషన్ చేయవచ్చు</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d కార్డ్ రీపోజిషన్ చేయబడింది</item>
-        <item quantity="other">%d కార్డ్‌లు రీపోజిషన్ చేయబడ్డాయి</item>
-    </plurals>
     <string name="reset_card_dialog_title">కార్డ్ పురోగతిని రీసెట్ చేయండి</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d కార్డ్ రీసెట్</item>

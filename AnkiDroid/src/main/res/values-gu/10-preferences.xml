@@ -261,9 +261,7 @@
     <string name="donate_description"><![CDATA[તમે <a href=\"%1$s\">દાન</a> કરીને AnkiDroid ના વિકાસને સમર્થન આપી શકો છો. કોઈપણ રકમની ખૂબ પ્રશંસા કરવામાં આવે છે.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">હાવભાવ ઉમેરો</string>
-    <string name="binding_replace_gesture">હાવભાવ બદલો</string>
     <string name="binding_add_key">કી ઉમેરો</string>
-    <string name="binding_replace_key">કી બદલો</string>
     <string name="key_picker_default_press_key">એક કી દબાવો</string>
     <string name="binding_add_axis">જોયસ્ટિક/મોશન કંટ્રોલર ઉમેરો</string>
     <string name="axis_picker_move_joystick">જોયસ્ટીક/મોશન કંટ્રોલર ખસેડો</string>

@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">Verwijder gefilterd deck %s en plaats alle kaarten terug in hun oorspronkelijke decks?</string>
     <string name="no_tts_available_message">Geen tekst-naar-spraak taal beschikbaar</string>
     <string name="tts_no_tts">Niet spreken</string>
-    <string name="reposition_card_dialog_title">Nieuwe kaart verplaatsen</string>
     <string name="reposition_card_not_new_error">Alleen nieuwe kaarten kunnen verplaatst worden</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d kaart verplaatst</item>
-        <item quantity="other">%d kaarten verplaatst</item>
-    </plurals>
     <string name="reset_card_dialog_title">Herstel leervoortgang</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d kaart gereset</item>

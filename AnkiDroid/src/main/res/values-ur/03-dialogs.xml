@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">فلٹر شدہ ڈیک %s کو حذف کریں اور تمام کارڈز کو ان کے اصل ڈیک پر واپس بھیجیں؟</string>
     <string name="no_tts_available_message">متن سے تقریر کی کوئی زبان دستیاب نہیں ہے۔</string>
     <string name="tts_no_tts">مت بولو</string>
-    <string name="reposition_card_dialog_title">نئے کارڈ کی جگہ</string>
     <string name="reposition_card_not_new_error">صرف نئے کارڈز کی جگہ تبدیل کی جا سکتی ہے۔</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d کارڈ دوبارہ ترتیب دیا گیا۔</item>
-        <item quantity="other">%d کارڈز کی جگہ بدل دی گئی۔</item>
-    </plurals>
     <string name="reset_card_dialog_title">کارڈ کی پیشرفت کو دوبارہ ترتیب دیں۔</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d کارڈ ری سیٹ</item>

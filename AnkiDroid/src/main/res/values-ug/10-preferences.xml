@@ -262,9 +262,7 @@
     <string name="donate_description"><![CDATA[سىز AnkiDroid ئىجادىيىتىگە <a href=\"%1$s\">ئىئانە</a> قىلىش ئارقىلىق قوللىيالايسىز. ھەر قانداق مىقداردىكى ئىئانە چوڭقۇر ئالقىشلىنىدۇ.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">قول ئىشارەت قوش</string>
-    <string name="binding_replace_gesture">قول ئىشارەتنى ئالماشتۇر</string>
     <string name="binding_add_key">توپچە قوش</string>
-    <string name="binding_replace_key">توپچە ئالماشتۇر</string>
     <string name="key_picker_default_press_key">توپچە باس</string>
     <string name="binding_add_axis">ئويۇن تىزگىنىكى/ھەرىكەت تىزگىنلىگۈچ قوشىدۇ</string>
     <string name="axis_picker_move_joystick">ئويۇن تىزگىنىكى/ھەرىكەت تىزگىنلىگۈچ يۆتكەيدۇ</string>

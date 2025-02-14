@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">வடிகட்டப்பட்ட டெக்கை %sஐ நீக்கி, எல்லா கார்டுகளையும் அவற்றின் அசல் டெக்குகளுக்கு அனுப்பவா?</string>
     <string name="no_tts_available_message">உரையிலிருந்து பேச்சு மொழி இல்லை</string>
     <string name="tts_no_tts">பேசாதே</string>
-    <string name="reposition_card_dialog_title">புதிய அட்டையை மாற்றவும்</string>
     <string name="reposition_card_not_new_error">புதிய அட்டைகளை மட்டுமே இடமாற்றம் செய்ய முடியும்</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d கார்டு மாற்றப்பட்டது</item>
-        <item quantity="other">%d கார்டுகள் இடமாற்றம் செய்யப்பட்டன</item>
-    </plurals>
     <string name="reset_card_dialog_title">அட்டையின் முன்னேற்றத்தை மீட்டமைக்கவும்</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d அட்டை மீட்டமைப்பு</item>

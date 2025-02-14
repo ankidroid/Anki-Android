@@ -261,9 +261,7 @@
     <string name="donate_description"><![CDATA[நீங்கள் <a href=\"%1$s\">நன்கொடை அளிப்பதன் மூலம்</a> AnkiDroid இன் வளர்ச்சியை ஆதரிக்கலாம். எந்தத் தொகையும் ஆழமாகப் பாராட்டப்படுகிறது.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">சைகையைச் சேர்க்கவும்</string>
-    <string name="binding_replace_gesture">சைகையை மாற்றவும்</string>
     <string name="binding_add_key">விசையைச் சேர்க்கவும்</string>
-    <string name="binding_replace_key">விசையை மாற்றவும்</string>
     <string name="key_picker_default_press_key">ஒரு விசையை அழுத்தவும்</string>
     <string name="binding_add_axis">கடைசி ஒத்திசைவு 10 க்கும் அதிகமாக இருந்தால், தொடக்க/வெளியேறும்போது பயன்பாடு தானாகவே ஒத்திசைக்கப்படும்</string>
     <string name="axis_picker_move_joystick">கடைசி ஒத்திசைவு 10 க்கும் அதிகமாக இருந்தால், தொடக்க/வெளியேறும்போது பயன்பாடு தானாகவே ஒத்திசைக்கப்படும்</string>

@@ -57,14 +57,7 @@
     <string name="delete_cram_deck_message">Видалити фільтровану колоду %s і повернути всі картки до оригінальних колод?</string>
     <string name="no_tts_available_message">Відсутня мова для перетворення тексту в мовлення</string>
     <string name="tts_no_tts">Не говорити</string>
-    <string name="reposition_card_dialog_title">Перемістити нову картку</string>
     <string name="reposition_card_not_new_error">Можна перемістити тільки нові картки</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d картку переміщено</item>
-        <item quantity="few">%d картки переміщено</item>
-        <item quantity="many">%d карток переміщено</item>
-        <item quantity="other">%d карток переміщено</item>
-    </plurals>
     <string name="reset_card_dialog_title">Скинути прогрес картки</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d картку скинуто</item>

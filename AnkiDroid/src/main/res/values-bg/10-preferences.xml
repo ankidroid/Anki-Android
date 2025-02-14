@@ -261,9 +261,7 @@
     <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Добавяне на жест</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">Добавяне на клавиш</string>
-    <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Натиснете клавиш</string>
     <string name="binding_add_axis">Add joystick/motion controller</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>

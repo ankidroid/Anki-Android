@@ -54,11 +54,7 @@
     <string name="delete_cram_deck_message">刪除篩選過的牌組 %s 並將所有卡片發回原牌組？</string>
     <string name="no_tts_available_message">沒有可用的朗讀語言</string>
     <string name="tts_no_tts">不要發音</string>
-    <string name="reposition_card_dialog_title">變更新卡片位置</string>
     <string name="reposition_card_not_new_error">只有新卡片可以變更位置</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="other">%d 卡片已變更位置</item>
-    </plurals>
     <string name="reset_card_dialog_title">重置卡片進度</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="other">%d 卡片已重設</item>

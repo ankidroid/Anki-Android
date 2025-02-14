@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">Iscantzellare su matzu filtradu %s e torrare a imbiare totu sas cartas a sos matzos originale issoro?</string>
     <string name="no_tts_available_message">Non b\'est a disponimentu peruna limba de sìntesi vocale</string>
     <string name="tts_no_tts">Non chistiones</string>
-    <string name="reposition_card_dialog_title">Torra a positzionare sa carta noa</string>
     <string name="reposition_card_not_new_error">Petzi sas cartas noas si podent torrare a positzionare</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d carta torrada a positzionare</item>
-        <item quantity="other">%d cartas torradas a positzionare</item>
-    </plurals>
     <string name="reset_card_dialog_title">Reseta su progressu de sa carta</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d carta resetada</item>

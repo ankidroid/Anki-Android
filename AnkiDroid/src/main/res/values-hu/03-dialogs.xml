@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">Nincs rendelkezésre álló szövegfelolvasási nyelv</string>
     <string name="tts_no_tts">Ne beszélj</string>
-    <string name="reposition_card_dialog_title">Helyezze át az új kártyát</string>
     <string name="reposition_card_not_new_error">Csak az új kártyákat lehet áthelyezni</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d kártya áthelyezve</item>
-        <item quantity="other">%d kártyák áthelyezve</item>
-    </plurals>
     <string name="reset_card_dialog_title">Kártya folyamatát alaphelyzetbe</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d kártya visszaállítva</item>

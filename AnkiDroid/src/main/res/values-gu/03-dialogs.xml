@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">வடிகட்டப்பட்ட %s டெக்கை அகற்றிவிட்டு, எல்லா கார்டுகளையும் அவற்றின் அசல் டெக்குகளுக்குத் திருப்பிவிடவா?</string>
     <string name="no_tts_available_message">કોઈ ટેક્સ્ટ-ટુ-સ્પીચ ભાષા ઉપલબ્ધ નથી</string>
     <string name="tts_no_tts">બોલશો નહીં</string>
-    <string name="reposition_card_dialog_title">નવું કાર્ડ રિપોઝિશન કરો</string>
     <string name="reposition_card_not_new_error">ફક્ત નવા કાર્ડને જ સ્થાનાંતરિત કરી શકાય છે</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d કાર્ડ રિપોઝિશન કર્યું</item>
-        <item quantity="other">%d કાર્ડ રિપોઝિશન કર્યું</item>
-    </plurals>
     <string name="reset_card_dialog_title">કાર્ડની પ્રગતિ રીસેટ કરો</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d કાર્ડ રીસેટ</item>

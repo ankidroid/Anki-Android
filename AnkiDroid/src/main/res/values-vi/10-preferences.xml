@@ -258,9 +258,7 @@
     <string name="donate_description"><![CDATA[Bạn có thể hỗ trợ sự phát triển của AnkiDroid bằng cách <a href=\"%1$s\">quyên góp</a>. Bất kỳ số tiền nào cũng được đánh giá cao.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Add gesture</string>
-    <string name="binding_replace_gesture">Thay thế cử chỉ</string>
     <string name="binding_add_key">Add key</string>
-    <string name="binding_replace_key">Thay thế khoá</string>
     <string name="key_picker_default_press_key">Press a key</string>
     <string name="binding_add_axis">Thêm cần điều khiển/bộ điều khiển chuyển động</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>

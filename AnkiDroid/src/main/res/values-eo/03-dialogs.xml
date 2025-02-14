@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">Ĉu forigi la filtritan kartaron %s kaj movi ĉiujn ĝiajn kartojn reen al iliaj originalaj kartaroj?</string>
     <string name="no_tts_available_message">Neniu parolsintezilo disponebla</string>
     <string name="tts_no_tts">Ne paroli</string>
-    <string name="reposition_card_dialog_title">Repozicii novan karton</string>
     <string name="reposition_card_not_new_error">Nur novaj kartoj povas esti repoziciitaj</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d karto estas repoziciita</item>
-        <item quantity="other">%d kartoj estas repoziciitaj</item>
-    </plurals>
     <string name="reset_card_dialog_title">Nuligi progreson de karto</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d karto estas nuligita</item>

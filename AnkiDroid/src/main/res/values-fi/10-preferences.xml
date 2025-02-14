@@ -261,9 +261,7 @@
     <string name="donate_description"><![CDATA[Voit tukea AnkiDroid\:n kehitystä <a href=\"%1$s\">lahjoittamalla</a>. Mikä tahansa summa on erittäin tervetullut.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Lisää kosketusele</string>
-    <string name="binding_replace_gesture">Korvaa kosketusele</string>
     <string name="binding_add_key">Lisää näppäin</string>
-    <string name="binding_replace_key">Korvaa näppäin</string>
     <string name="key_picker_default_press_key">Paina näppäintä</string>
     <string name="binding_add_axis">Lisää peliohjain tai liikeohjain</string>
     <string name="axis_picker_move_joystick">Liikuta peli- tai liikeohjainta</string>

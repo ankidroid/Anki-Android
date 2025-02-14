@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">%s filtreli destesi silinip bütün kartlar orjinal destelerine gönderilsin mi?</string>
     <string name="no_tts_available_message">Mevcut metin okuma dili yok</string>
     <string name="tts_no_tts">Konuşma</string>
-    <string name="reposition_card_dialog_title">Yeni kartın yerini değiştir</string>
     <string name="reposition_card_not_new_error">Yalnızca yeni kartların yeri değiştirilebilir</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d kartın yeri değiştirildi</item>
-        <item quantity="other">%d kartın yeri değiştirildi</item>
-    </plurals>
     <string name="reset_card_dialog_title">Kart ilerlemesini sıfırla</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d kart sıfırlandı</item>

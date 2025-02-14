@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">آبا می خواهید دسته فیلتر شده %s را حذف کنید و همه کارت ها را به دسته اصلیشان بفرستید؟</string>
     <string name="no_tts_available_message">زبان متن به گفتار در دسترس نیست</string>
     <string name="tts_no_tts">حرف نزن</string>
-    <string name="reposition_card_dialog_title">تغییر مکان کارت جدید</string>
     <string name="reposition_card_not_new_error">فقط کارت‌های جدید می‌توانند جابه‌جا شوند</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d کارت جابه‌جا شد</item>
-        <item quantity="other">%d کارت جابه‌جا شدند</item>
-    </plurals>
     <string name="reset_card_dialog_title">بازنشانی پیشرفت کارت</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d کارت تنظیم مجدد شد</item>

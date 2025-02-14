@@ -261,9 +261,7 @@
     <string name="donate_description"><![CDATA[U kunt de ontwikkeling van AnkiDroid steunen door te <a href="%1$s">doneren</a>. Elk bedrag wordt zeer op prijs gesteld.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Gebaar toevoegen</string>
-    <string name="binding_replace_gesture">Gebaar vervangen</string>
     <string name="binding_add_key">Sleutel toevoegen</string>
-    <string name="binding_replace_key">Vervang sleutel</string>
     <string name="key_picker_default_press_key">Druk op een toets</string>
     <string name="binding_add_axis">Joystick/bewegingscontroller toevoegen</string>
     <string name="axis_picker_move_joystick">Joystick/bewegingscontroller bewegen</string>

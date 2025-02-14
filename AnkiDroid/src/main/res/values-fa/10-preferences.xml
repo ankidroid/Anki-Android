@@ -261,9 +261,7 @@
     <string name="donate_description"><![CDATA[شما میتوانید توسعه AnkiDroid را همایت کنید با <a href=\"%1$s\">اهدای پول</a>. هر مقداری ما را بی نهایت خوشحال میکند.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">حرکت لمس اضافه کن</string>
-    <string name="binding_replace_gesture">حرکت لمس با جایگذین کن</string>
     <string name="binding_add_key">کلید اضافه کن</string>
-    <string name="binding_replace_key">کلید را جایگذین کن</string>
     <string name="key_picker_default_press_key">یک کلید را انتخاب کنید</string>
     <string name="binding_add_axis">اضافه کردن اهرمک/تنظیم کننده حرکات</string>
     <string name="axis_picker_move_joystick">یک اهرمک/تنظیم کننده حرکات را حرکت دهید</string>

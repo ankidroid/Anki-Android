@@ -265,9 +265,7 @@
     <string name="donate_description"><![CDATA[Můžete podpořit vývoj AnkiDroidu <a href=\"%1$s\">finančními příspěvky</a>. Jakékoliv částky si hluboce vážíme.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Přidat gesto</string>
-    <string name="binding_replace_gesture">Nahradit gesto</string>
     <string name="binding_add_key">Přidat klávesu</string>
-    <string name="binding_replace_key">Nahradit klávesu</string>
     <string name="key_picker_default_press_key">Stiskněte tlačítko</string>
     <string name="binding_add_axis">Přidat joystick / ovladač pohybu</string>
     <string name="axis_picker_move_joystick">Pohnout joystickem / ovladačem pohybu</string>

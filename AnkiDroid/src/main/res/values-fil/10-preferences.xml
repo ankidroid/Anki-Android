@@ -262,9 +262,7 @@
     <string name="donate_description"><![CDATA[Maaari mong suportahan ang pag-develop sa AnkiDroid sa pamamagitan ng <a href=\"%1$s\">paghahandog</a>. Lubos naming ipinapasalamat ang anumang halaga.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Magdagdag ng gesture</string>
-    <string name="binding_replace_gesture">Palitan ang gesture</string>
     <string name="binding_add_key">Magdagdag ng key</string>
-    <string name="binding_replace_key">Palitan ang key</string>
     <string name="key_picker_default_press_key">Pindutin ang key</string>
     <string name="binding_add_axis">Magdagdag ng joystick/motion controller</string>
     <string name="axis_picker_move_joystick">Igalaw ang joystick/motion controller</string>

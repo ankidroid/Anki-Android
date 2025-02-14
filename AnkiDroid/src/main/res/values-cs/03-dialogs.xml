@@ -57,14 +57,7 @@
     <string name="delete_cram_deck_message">Vymazat filtrovaný balíček %s a poslat všechny karty zpět do jejich původních balíčků?</string>
     <string name="no_tts_available_message">Není dostupný žádný jazyk převodu textu na řeč</string>
     <string name="tts_no_tts">Nemluv</string>
-    <string name="reposition_card_dialog_title">Změnit pořadí nové karty</string>
     <string name="reposition_card_not_new_error">Změnit pořadí lze pouze u nových karet</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d karta přesunuta</item>
-        <item quantity="few">%d karty přesunuty</item>
-        <item quantity="many">%d karty přesunuto</item>
-        <item quantity="other">%d karet přesunuto</item>
-    </plurals>
     <string name="reset_card_dialog_title">Obnovit proces učení karty</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d karta obnovena</item>

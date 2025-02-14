@@ -54,11 +54,7 @@
     <string name="delete_cram_deck_message">フィルターデッキ「%s」を削除し、すべてのカードを元のデッキに戻しますか？</string>
     <string name="no_tts_available_message">テキスト読み上げ可能な言語がありません</string>
     <string name="tts_no_tts">発声なし</string>
-    <string name="reposition_card_dialog_title">位置（新規カード番号）を変更</string>
     <string name="reposition_card_not_new_error">位置（新規カード番号）の変更は、新規カード以外には行えません。</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="other">%d枚のカードの位置（新規カード番号）を変更しました</item>
-    </plurals>
     <string name="reset_card_dialog_title">カードの学習進度をリセット</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="other">%d枚のカードの学習履歴をリセットしました</item>

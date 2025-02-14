@@ -55,12 +55,7 @@
     <string name="delete_cram_deck_message">Apagar baralho filtrado %s e devolver fichas aos seus baralhos originais?</string>
     <string name="no_tts_available_message">Nenhuma língua disponível para o sistema de conversão de texto para fala</string>
     <string name="tts_no_tts">Não falar</string>
-    <string name="reposition_card_dialog_title">Reposicionar a nova ficha</string>
     <string name="reposition_card_not_new_error">Apenas novas fichas podem ser reposicionadas.</string>
-    <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d ficha reposicionada</item>
-        <item quantity="other">%d fichas reposicionadas</item>
-    </plurals>
     <string name="reset_card_dialog_title">Reiniciar progresso da ficha</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d ficha reinicializada</item>
