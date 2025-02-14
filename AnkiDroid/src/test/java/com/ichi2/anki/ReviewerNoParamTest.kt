@@ -301,8 +301,7 @@ class ReviewerNoParamTest : RobolectricTest() {
             for (mappableBinding in MappableBinding.fromPreference(prefs, command)) {
                 val gestureBinding = mappableBinding.binding as? Binding.GestureInput? ?: continue
                 if (gestureBinding.gesture in gestures) {
-                    val bindings: MutableList<MappableBinding> =
-                        MappableBinding.fromPreferenceString(command.preferenceKey)
+                    val bindings = ReviewerBinding.fromPreferenceString(command.preferenceKey).toMutableList()
                     bindings.remove(mappableBinding)
                     prefs.edit {
                         putString(command.preferenceKey, bindings.toPreferenceString())

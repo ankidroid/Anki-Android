@@ -33,7 +33,7 @@ class BindingPreferenceTest {
     fun serialization_deserialization_returns_same_result() {
         val str = getSampleBindings().toPreferenceString()
 
-        val again = MappableBinding.fromPreferenceString(str)
+        val again = ReviewerBinding.fromPreferenceString(str)
 
         assertEquals(str, again.toPreferenceString())
     }
