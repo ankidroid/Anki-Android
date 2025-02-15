@@ -67,8 +67,6 @@ colorpicker = "1.2.0"
 commonsCollections4 = "4.4"
 # https://commons.apache.org/proper/commons-compress/changes-report.html
 commonsCompress = "1.27.1"
-# https://commons.apache.org/proper/commons-exec/changes-report.html
-commonsExec = "1.4.0"
 # https://commons.apache.org/proper/commons-io/changes-report.html
 commonsIo = "2.18.0"
 coroutines = '1.10.1'
@@ -182,7 +180,6 @@ androidx-test-runner = { module = "androidx.test:runner", version.ref = "android
 androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidxTest" }
 androidx-test-core = { module = "androidx.test:core", version.ref = "androidxTest" }
 androidx-work-testing = { module = "androidx.work:work-testing", version.ref = "androidxWork" }
-commons-exec = { module = "org.apache.commons:commons-exec", version.ref = "commonsExec" }
 hamcrest = { module = "org.hamcrest:hamcrest", version.ref = "hamcrest" }
 hamcrest-library = { module = "org.hamcrest:hamcrest-library", version.ref = "hamcrest" }
 ivanshafran-shared-preferences-mock = { module = "io.github.ivanshafran:shared-preferences-mock", version.ref = "sharedPreferencesMock" }
