@@ -24,13 +24,13 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.R
 import com.ichi2.utils.create
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -41,11 +41,6 @@ class ColumnSelectionDialogFragment : DialogFragment() {
             requireNotNull(
                 BundleCompat.getParcelable(requireArguments(), "selected_column", ColumnWithSample::class.java),
             )
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.fetchAvailableColumns(viewModel.cardsOrNotes)
-    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         val listView = ListView(requireContext())
@@ -68,11 +63,9 @@ class ColumnSelectionDialogFragment : DialogFragment() {
 
                     val column = getItem(position)
 
-                    // Column Label
                     view.findViewById<TextView>(R.id.column_title).text =
-                        column?.label ?: "No Columns Available"
+                        column?.label ?: getString(R.string.no_columns_available)
 
-                    // Column Example Value
                     view.findViewById<TextView>(R.id.column_example).text =
                         if (column?.sampleValue.isNullOrBlank()) "-" else column?.sampleValue
 
@@ -82,52 +75,37 @@ class ColumnSelectionDialogFragment : DialogFragment() {
 
         listView.adapter = adapter
 
-        // Handle column selection from the list
-        listView.setOnItemClickListener { _, _, position, _ ->
-            val selected = adapter.getItem(position)
-
-            if (selected?.label == "No Columns Available") {
-                Timber.e("Ignoring then click when there is not Columns Available")
-                return@setOnItemClickListener
-            }
-
-            if (selected != null) {
-                viewModel.updateSelectedColumn(columnToReplace, selected)
-                dismissAllowingStateLoss()
-            }
+        // Fetch columns
+        lifecycleScope.launch {
+            val availableColumns = viewModel.fetchAvailableColumns(viewModel.cardsOrNotes, getString(R.string.no_columns_available))
+            adapter.clear()
+            adapter.addAll(availableColumns)
+            adapter.notifyDataSetChanged()
         }
 
-        // Observe availableColumns and update ListView dynamically
-        lifecycleScope.launch {
-            viewModel.availableColumns.collectLatest { availableColumns ->
-                Timber.d("Updating dialog with available columns")
-                adapter.clear()
-
-                if (availableColumns.isEmpty()) {
-                    Timber.e("No available columns found")
-                    adapter.add(ColumnWithSample("No Columns Available", CardBrowserColumn.QUESTION, null))
-                } else {
-                    adapter.addAll(availableColumns)
-                }
-
-                adapter.notifyDataSetChanged()
+        listView.setOnItemClickListener { _, _, position, _ ->
+            val selected = adapter.getItem(position)
+            if (selected == null || selected.label == getString(R.string.no_columns_available)) {
+                Timber.d("Ignoring click on 'No Columns Available'")
+                return@setOnItemClickListener
             }
+            viewModel.updateSelectedColumn(columnToReplace, selected)
+            dismissAllowingStateLoss()
         }
 
         return AlertDialog.Builder(requireActivity()).create {
-            setTitle(("Change: " + columnToReplace.label) ?: "Default")
+            setTitle(getString(R.string.change) + ": ${columnToReplace.label}")
             setView(listView)
             setNegativeButton(android.R.string.cancel) { _, _ -> dismissAllowingStateLoss() }
         }
     }
 
     companion object {
+        private const val SELECTED_COLUMN = "selected_column"
+
         fun newInstance(selectedColumn: ColumnWithSample): ColumnSelectionDialogFragment =
             ColumnSelectionDialogFragment().apply {
-                arguments =
-                    Bundle().apply {
-                        putParcelable("selected_column", selectedColumn)
-                    }
+                arguments = bundleOf(SELECTED_COLUMN to selectedColumn)
             }
 
         fun CardBrowserViewModel.updateSelectedColumn(
