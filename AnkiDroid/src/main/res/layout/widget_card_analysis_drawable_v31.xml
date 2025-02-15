@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/widget_card_analysis_rounded_inner_background"
         android:orientation="horizontal"
-        android:padding="20dp">
+        android:padding="16dp">
 
         <TextView
             android:layout_width="0dp"
@@ -52,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="20dp"
+        android:padding="15dp"
         android:paddingBottom="5dp"
         android:text="@string/deck1Name_deck_picker_widget"
         android:textColor="?android:attr/textColorPrimary"

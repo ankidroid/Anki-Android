@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/widget_card_analysis_rounded_inner_background"
         android:orientation="horizontal"
-        android:padding="20dp">
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/deckNew_card_analysis_widget"
@@ -67,9 +67,9 @@
         android:id="@+id/deckNameCardAnalysis"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="64dp"
         android:gravity="center"
-        android:padding="20dp"
+        android:padding="15dp"
         android:paddingBottom="5dp"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="24sp"
