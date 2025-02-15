@@ -18,6 +18,12 @@
         ankidroid:actionProviderClass="com.ichi2.ui.RtlCompliantActionProvider"
         ankidroid:showAsAction="always"/>
     <item
+        android:id="@+id/action_toggle_eraser"
+        android:icon="@drawable/ic_eraser"
+        android:title="@string/enable_eraser"
+        android:visible="false"
+        ankidroid:showAsAction="always"/>
+    <item
         android:id="@+id/action_clear_whiteboard"
         android:title="@string/clear_whiteboard"
         android:icon="@drawable/ic_clear_white"
