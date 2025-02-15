@@ -23,7 +23,6 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import anki.collection.OpChanges
 import anki.frontend.SetSchedulingStatesRequest
-import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Ease
@@ -72,7 +71,6 @@ class ReviewerViewModel(
             queueState.await()!!.topCard
         }
     var isQueueFinishedFlow = MutableSharedFlow<Boolean>()
-    var flashcardViewer: AbstractFlashcardViewer? = null
     val isMarkedFlow = MutableStateFlow(false)
     val flagFlow = MutableStateFlow(Flag.NONE)
     val actionFeedbackFlow = MutableSharedFlow<String>()
@@ -511,8 +509,4 @@ class ReviewerViewModel(
                 title
             }
     }
-    suspend fun shouldWaitForAudio(): Boolean {
-        return flashcardViewer?.automaticAnswerShouldWaitForAudio() ?: false
-    }
-
 }

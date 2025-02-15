@@ -1307,13 +1307,13 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    suspend fun automaticAnswerShouldWaitForAudio(): Boolean = withCol {
-        val card = currentCard ?: return@withCol false  // Prevents null crash
-        val waitForAudio = decks.configDictForDeckId(card.did).waitForAudio
-        val soundConfig = CardSoundConfig.create(this, card)  // Fetch autoplay setting
-
-        return@withCol waitForAudio && soundConfig.autoplay  //  Only wait if autoplay is enabled
-    }
+    private suspend fun automaticAnswerShouldWaitForAudio(): Boolean =
+        withCol {
+            val card = currentCard ?: return@withCol false // Prevents null crash
+            val waitForAudio = decks.configDictForDeckId(card.did).waitForAudio
+            val soundConfig = CardSoundConfig.create(this, card) // Fetch autoplay setting
+            return@withCol waitForAudio && soundConfig.autoplay //  Only wait if autoplay is enabled
+        }
 
     internal inner class ReadTextListener : ReadText.ReadTextListener {
         override fun onDone(playedSide: CardSide?) {

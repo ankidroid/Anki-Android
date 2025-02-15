@@ -61,9 +61,7 @@ class AutoAdvance(
 
     private suspend fun answerAction() = settings.await().answerAction
 
-    suspend fun shouldWaitForAudio(): Boolean {
-        return viewModel.shouldWaitForAudio()
-    }
+    suspend fun shouldWaitForAudio() = settings.await().waitForAudio
 
     fun cancelQuestionAndAnswerActionJobs() {
         questionActionJob?.cancel()
