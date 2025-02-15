@@ -441,7 +441,6 @@ dependencies {
     testImplementation libs.kotlin.test.junit5
     testImplementation libs.kotlinx.coroutines.test
     testImplementation libs.mockk
-    testImplementation libs.commons.exec // obtaining the OS
     testImplementation libs.androidx.fragment.testing
     // in a JvmTest we need org.json.JSONObject to not be mocked
     testImplementation libs.json
