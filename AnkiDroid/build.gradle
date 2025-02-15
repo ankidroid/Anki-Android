@@ -97,10 +97,18 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file("${rootDir}/tools/fallback-release-keystore.jks")
-            storePassword "Test@123"
-            keyAlias "my-key"
-            keyPassword "Test@123"
+            def keystorePath = System.getenv("KEYSTOREPATH")
+            if (keystorePath != null && !keystorePath.trim().isEmpty()) {
+                storeFile file(keystorePath)
+                storePassword System.getenv("KEYSTOREPWD") ?: System.getenv("KSTOREPWD")
+                keyAlias System.getenv("KEYALIAS")
+                keyPassword System.getenv("KEYPWD")
+            } else {
+                storeFile file("${rootDir}/tools/fallback-release-keystore.jks")
+                storePassword "Test@123"
+                keyAlias "my-key"
+                keyPassword "Test@123"
+            }
         }
     }
     buildTypes {
