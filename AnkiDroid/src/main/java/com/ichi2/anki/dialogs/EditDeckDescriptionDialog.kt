@@ -32,6 +32,7 @@ import com.ichi2.anki.utils.ext.description
 import com.ichi2.anki.utils.ext.update
 import com.ichi2.libanki.DeckId
 import com.ichi2.themes.Themes
+import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
 import timber.log.Timber
 
 /**
@@ -79,6 +80,7 @@ class EditDeckDescriptionDialog : DialogFragment() {
                 }.also { toolbar ->
                     launchCatchingTask { toolbar.title = withCol { decks.get(deckId)!!.name } }
                 }
+            setFocusAndOpenKeyboard(deckDescriptionInput) { deckDescriptionInput.setSelection(deckDescriptionInput.text!!.length) }
         }
     }
 
