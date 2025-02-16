@@ -81,6 +81,7 @@ import com.drakeet.drawer.FullDraggableContainer
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AbstractFlashcardViewer.Signal.Companion.toSignal
+import com.ichi2.anki.CollectionHelper.getMediaDirectory
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
@@ -273,8 +274,6 @@ abstract class AbstractFlashcardViewer :
 
     /** Handle joysticks/pedals */
     protected lateinit var motionEventHandler: MotionEventHandler
-
-    val server = AnkiServer(this).also { it.start() }
 
     @get:VisibleForTesting
     var cardContent: String? = null
@@ -1549,7 +1548,7 @@ abstract class AbstractFlashcardViewer :
         if (card != null) {
             card.settings.mediaPlaybackRequiresUserGesture = !cardMediaPlayer.config.autoplay
             card.loadDataWithBaseURL(
-                server.baseUrl(),
+                getMediaBaseUrl(getMediaDirectory(AnkiDroidApp.instance).path),
                 content,
                 "text/html",
                 null,
