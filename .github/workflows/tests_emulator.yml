@@ -21,12 +21,6 @@ jobs:
     env:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       TEST_RELEASE_BUILD: true
-      # could be better, '/home/runner' should be '~/' but neither that nor '$HOME' worked
-      STOREFILEDIR: /home/runner/src
-      STOREFILE: android-keystore
-      STOREPASS: testpass
-      KEYPASS: testpass
-      KEYALIAS: nrkeystorealias
     strategy:
       fail-fast: false
       matrix:
@@ -50,15 +44,6 @@ jobs:
           large-packages: false
           swap-storage: false
           docker-images: false
-
-      - name: Test Credential Prep
-        run: |
-          echo "KSTOREPWD=$STOREPASS" >> $GITHUB_ENV
-          echo "KEYPWD=$KEYPASS" >> $GITHUB_ENV
-          mkdir $STOREFILEDIR
-          cd $STOREFILEDIR
-          echo y | keytool -genkeypair -dname "cn=AnkiDroid, ou=ankidroid, o=AnkiDroid, c=US" -alias $KEYALIAS -keypass $KEYPASS -keystore "$STOREFILE" -storepass $STOREPASS -keyalg RSA -validity 20000
-        shell: bash
 
       - uses: actions/checkout@v4
         with:
