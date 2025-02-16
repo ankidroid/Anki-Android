@@ -1309,10 +1309,10 @@ abstract class AbstractFlashcardViewer :
 
     private suspend fun automaticAnswerShouldWaitForAudio(): Boolean =
         withCol {
-            val card = currentCard ?: return@withCol false // Prevents null crash
+            val card = currentCard ?: return@withCol false
             val waitForAudio = decks.configDictForDeckId(card.did).waitForAudio
-            val soundConfig = CardSoundConfig.create(this, card) // Fetch autoplay setting
-            return@withCol waitForAudio && soundConfig.autoplay //  Only wait if autoplay is enabled
+            val soundConfig = CardSoundConfig.create(this, card)
+            return@withCol waitForAudio && soundConfig.autoplay
         }
 
     internal inner class ReadTextListener : ReadText.ReadTextListener {
