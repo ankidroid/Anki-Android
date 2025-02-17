@@ -7,4 +7,13 @@
     <color name="flag_pink">#A70D64</color>
     <color name="flag_turquoise">#138072</color>
     <color name="flag_purple">#6320A0</color>
+
+    <color name="again_button_bg">#1AB71C1C</color> <!-- Material red 900 with 10% alpha -->
+    <color name="again_button_text">@color/material_red_200</color>
+    <color name="hard_button_bg">#1AE65100</color> <!-- Material orange 900 with 10% alpha -->
+    <color name="hard_button_text">@color/material_orange_200</color>
+    <color name="good_button_bg">#1A2E7D32</color> <!-- Material green 800 with 10% alpha -->
+    <color name="good_button_text">@color/material_light_green_200</color>
+    <color name="easy_button_bg">#1A0277BD</color> <!-- Material light blue 800 with 10% alpha -->
+    <color name="easy_button_text">@color/material_light_blue_A100</color>
 </resources>
