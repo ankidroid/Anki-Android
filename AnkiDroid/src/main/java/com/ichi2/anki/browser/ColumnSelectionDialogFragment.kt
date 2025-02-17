@@ -36,10 +36,10 @@ import timber.log.Timber
 
 class ColumnSelectionDialogFragment : DialogFragment() {
     private val viewModel: CardBrowserViewModel by activityViewModels()
-    private val columnToReplace: ColumnWithSample
+    private val columnToReplace: ColumnHeading
         get() =
             requireNotNull(
-                BundleCompat.getParcelable(requireArguments(), "selected_column", ColumnWithSample::class.java),
+                BundleCompat.getParcelable(requireArguments(), "selected_column", ColumnHeading::class.java),
             )
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
@@ -103,16 +103,16 @@ class ColumnSelectionDialogFragment : DialogFragment() {
     companion object {
         private const val SELECTED_COLUMN = "selected_column"
 
-        fun newInstance(selectedColumn: ColumnWithSample): ColumnSelectionDialogFragment =
+        fun newInstance(selectedColumn: ColumnHeading): ColumnSelectionDialogFragment =
             ColumnSelectionDialogFragment().apply {
                 arguments = bundleOf(SELECTED_COLUMN to selectedColumn)
             }
 
         fun CardBrowserViewModel.updateSelectedColumn(
-            selectedColumn: ColumnWithSample,
+            selectedColumn: ColumnHeading,
             newColumn: ColumnWithSample,
         ) = viewModelScope.launch {
-            val replacementKey = selectedColumn.columnType.ankiColumnKey
+            val replacementKey = selectedColumn.ankiColumnKey
             val replacements =
                 activeColumns.toMutableList().apply {
                     replaceAll { if (it.ankiColumnKey == replacementKey) newColumn.columnType else it }
