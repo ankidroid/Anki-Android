@@ -85,6 +85,7 @@ abstract class PermissionsFragment(
 
         // From the docs: [ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION]
         // In some cases, a matching Activity may not exist, so ensure you safeguard against this.
+        // example: not yet supported on WearOS: https://issuetracker.google.com/issues/299174252
         if (intent.resolveActivity(requireActivity().packageManager) != null) {
             Timber.i("launching ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION")
             launch(intent)
