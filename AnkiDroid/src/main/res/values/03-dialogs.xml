@@ -85,9 +85,6 @@
     <string name="check_media_title">Check media?</string>
     <string name="check_media_warning">This may take a long time with large media collections</string>
     <string name="check_media_message">Checking media…</string>
-    <string name="check_media_acknowledge">Media checked</string>
-    <string name="check_media_invalid">Files with invalid encoding: %d</string>
-    <string name="check_media_no_unused_missing">No unused or missing files found</string>
     <string name="check_media_adding_missing_tag">Adding tags…</string>
     <string name="check_media_tags_added">Tags added</string>
 
