@@ -103,7 +103,6 @@ open class Media(
         return MediaCheckResult(
             missingFileNames = out.missingList,
             unusedFileNames = out.unusedList,
-            invalidFileNames = listOf(),
             missingMediaNotes = out.missingMediaNotesList,
         )
     }
@@ -148,6 +147,5 @@ fun getCollectionMediaPath(collectionPath: String): String = collectionPath.repl
 data class MediaCheckResult(
     val missingFileNames: List<String>,
     val unusedFileNames: List<String>,
-    val invalidFileNames: List<String>,
     val missingMediaNotes: List<Long>,
 )
