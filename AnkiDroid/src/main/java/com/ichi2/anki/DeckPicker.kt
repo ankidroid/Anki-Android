@@ -131,8 +131,6 @@ import com.ichi2.anki.dialogs.EmptyCardsDialogFragment
 import com.ichi2.anki.dialogs.ImportDialog.ImportDialogListener
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ApkgImportResultLauncherProvider
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.CsvImportResultLauncherProvider
-import com.ichi2.anki.dialogs.MediaCheckDialog
-import com.ichi2.anki.dialogs.MediaCheckDialog.MediaCheckDialogListener
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.dialogs.SyncErrorDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.SyncErrorDialog.SyncErrorDialogListener
@@ -144,6 +142,7 @@ import com.ichi2.anki.export.ExportDialogsFactory
 import com.ichi2.anki.export.ExportDialogsFactoryProvider
 import com.ichi2.anki.introduction.CollectionPermissionScreenLauncher
 import com.ichi2.anki.introduction.hasCollectionStoragePermissions
+import com.ichi2.anki.mediacheck.MediaCheckFragment
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.pages.AnkiPackageImporterFragment
@@ -154,7 +153,6 @@ import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.ScopedStorageService
-import com.ichi2.anki.servicelayer.checkMedia
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
@@ -166,13 +164,11 @@ import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.anki.worker.SyncWorker
 import com.ichi2.anki.worker.UniqueWorkNames
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.async.deleteMedia
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
-import com.ichi2.libanki.MediaCheckResult
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.sched.DeckNode
 import com.ichi2.libanki.utils.TimeManager
@@ -245,7 +241,6 @@ open class DeckPicker :
     StudyOptionsListener,
     SyncErrorDialogListener,
     ImportDialogListener,
-    MediaCheckDialogListener,
     OnRequestPermissionsResultCallback,
     ChangeManager.Subscriber,
     SyncCompletionListener,
@@ -1181,7 +1176,7 @@ open class DeckPicker :
             }
             R.id.action_check_media -> {
                 Timber.i("DeckPicker:: Check media button pressed")
-                showMediaCheckDialog(MediaCheckDialog.Type.DIALOG_CONFIRM_MEDIA_CHECK)
+                showMediaCheckDialog()
                 return true
             }
             R.id.action_empty_cards -> {
@@ -1223,6 +1218,17 @@ open class DeckPicker :
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun showMediaCheckDialog() {
+        AlertDialog.Builder(this).show {
+            title(text = getString(R.string.check_media_title))
+            message(text = getString(R.string.check_media_warning))
+            positiveButton(R.string.dialog_ok) {
+                startActivity(MediaCheckFragment.getIntent(this@DeckPicker))
+            }
+            negativeButton(R.string.dialog_cancel)
         }
     }
 
@@ -1495,7 +1501,7 @@ open class DeckPicker :
             }
             KeyEvent.KEYCODE_M -> {
                 Timber.i("Check media from keypress")
-                showMediaCheckDialog(MediaCheckDialog.Type.DIALOG_CONFIRM_MEDIA_CHECK)
+                showMediaCheckDialog()
                 return true
             }
             KeyEvent.KEYCODE_E -> {
@@ -1813,17 +1819,6 @@ open class DeckPicker :
         }
     }
 
-    override fun showMediaCheckDialog(dialogType: MediaCheckDialog.Type) {
-        showAsyncDialogFragment(MediaCheckDialog.newInstance(dialogType))
-    }
-
-    override fun showMediaCheckDialog(
-        dialogType: MediaCheckDialog.Type,
-        checkList: MediaCheckResult,
-    ) {
-        showAsyncDialogFragment(MediaCheckDialog.newInstance(dialogType, checkList))
-    }
-
     /**
      * Show a specific sync error dialog
      * @param dialogType id of dialog to show
@@ -1896,43 +1891,8 @@ open class DeckPicker :
         handleDatabaseCheck()
     }
 
-    /**
-     * Schedules a background job to find missing, unused and invalid media files.
-     * Shows a progress dialog while operation is running.
-     * When check is finished a dialog box shows number of missing, unused and invalid media files.
-     *
-     * If has the storage permission, job is scheduled, otherwise storage permission is asked first.
-     */
     override fun mediaCheck() {
-        launchCatchingTask {
-            val mediaCheckResult = checkMedia()
-            showMediaCheckDialog(MediaCheckDialog.Type.DIALOG_MEDIA_CHECK_RESULTS, mediaCheckResult)
-        }
-    }
-
-    override fun deleteUnused(unused: List<String>) {
-        launchCatchingTask {
-            // Number of deleted files
-            val noOfDeletedFiles =
-                withProgress(resources.getString(R.string.delete_media_message)) {
-                    withCol { deleteMedia(this@withCol, unused) }
-                }
-            showSimpleMessageDialog(
-                title = resources.getString(R.string.delete_media_result_title),
-                message = resources.getQuantityString(R.plurals.delete_media_result_message, noOfDeletedFiles, noOfDeletedFiles),
-            )
-        }
-    }
-
-    override fun tagMissing(missingMediaNotes: List<Long>?) {
-        if (missingMediaNotes == null) return
-
-        Timber.d("DeckPicker:: Adding missing media tag")
-        launchCatchingTask {
-            withCol {
-                tags.bulkAdd(missingMediaNotes, TR.mediaCheckMissingMediaTag())
-            }
-        }
+        showMediaCheckDialog()
     }
 
     open fun handleDbError() {
