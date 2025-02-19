@@ -92,7 +92,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
                         }
 
                         setPositiveButton(
-                            TR.mediaCheckDeleteUnused().toSentenceCase(requireContext(), R.string.check_media_delete_unused),
+                            TR.mediaCheckDeleteUnused().toSentenceCase(requireContext(), R.string.sentence_check_media_delete_unused),
                         ) { _, _ ->
                             (activity as MediaCheckDialogListener?)?.deleteUnused(unused)
                             activity?.dismissAllDialogFragments()
