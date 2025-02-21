@@ -266,7 +266,7 @@ class InstantNoteEditorActivity :
         val clozeFields = viewModel.getClozeFields()
         var clozeFieldsSet = false
 
-        for (field in notetypeJson!!.flds) {
+        for (field in notetypeJson!!.fields) {
             // Inflate the existing layout
             val inflater = LayoutInflater.from(context)
             val existingLayout = inflater.inflate(R.layout.instant_editor_field_layout, null)

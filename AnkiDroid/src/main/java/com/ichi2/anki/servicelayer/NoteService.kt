@@ -56,7 +56,7 @@ object NoteService {
     fun createEmptyNote(model: NotetypeJson): MultimediaEditableNote {
         val note = MultimediaEditableNote()
         try {
-            val fieldsArray = model.flds
+            val fieldsArray = model.fields
             note.setNumFields(fieldsArray.length())
             for ((i, field) in fieldsArray.withIndex()) {
                 val uiTextField =

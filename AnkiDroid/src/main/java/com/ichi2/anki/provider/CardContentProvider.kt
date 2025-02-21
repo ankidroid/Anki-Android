@@ -947,7 +947,7 @@ class CardContentProvider : ContentProvider() {
                     try {
                         notetypes.addFieldLegacy(existingNoteType, field)
 
-                        val flds: JSONArray = existingNoteType.getJSONArray("flds")
+                        val flds = existingNoteType.fields
                         return ContentUris.withAppendedId(uri, (flds.length() - 1).toLong())
                     } catch (e: ConfirmModSchemaException) {
                         throw IllegalArgumentException("Unable to insert field: $name", e)
@@ -1064,7 +1064,7 @@ class CardContentProvider : ContentProvider() {
                     FlashCardsContract.Model.NAME -> rb.add(jsonObject!!.getString("name"))
                     FlashCardsContract.Model.FIELD_NAMES -> {
                         @KotlinCleanup("maybe jsonObject.fieldsNames. Difference: optString vs get")
-                        val flds = jsonObject!!.flds
+                        val flds = jsonObject!!.fields
                         val allFlds = arrayOfNulls<String>(flds.length())
                         var idx = 0
                         while (idx < flds.length()) {
