@@ -106,9 +106,9 @@ class NotetypeTest : JvmTest() {
         val noteType2 = col.notetypes.copy(noteType)
         assertEquals("Basic copy", noteType2.getString("name"))
         assertNotEquals(noteType2.getLong("id"), noteType.getLong("id"))
-        assertEquals(2, noteType2.flds.length())
-        assertEquals(2, noteType.flds.length())
-        assertEquals(noteType.flds.length(), noteType2.flds.length())
+        assertEquals(2, noteType2.fields.length())
+        assertEquals(2, noteType.fields.length())
+        assertEquals(noteType.fields.length(), noteType2.fields.length())
         assertEquals(1, noteType.tmpls.length())
         assertEquals(1, noteType2.tmpls.length())
         assertEquals(col.notetypes.scmhash(noteType), col.notetypes.scmhash(noteType2))
@@ -123,7 +123,7 @@ class NotetypeTest : JvmTest() {
         col.addNote(note)
         val noteType = col.notetypes.current()
         // make sure renaming a field updates the templates
-        col.notetypes.renameFieldLegacy(noteType, noteType.flds[0], "NewFront")
+        col.notetypes.renameFieldLegacy(noteType, noteType.fields[0], "NewFront")
         assertThat(noteType.tmpls[0].qfmt, containsString("{{NewFront}}"))
         val h = col.notetypes.scmhash(noteType)
         // add a field
@@ -140,11 +140,11 @@ class NotetypeTest : JvmTest() {
         )
         assertNotEquals(h, col.notetypes.scmhash(noteType))
         // rename it
-        field = noteType.flds[2]
+        field = noteType.fields[2]
         col.notetypes.renameFieldLegacy(noteType, field, "bar")
         assertEquals("", col.getNote(col.notetypes.nids(noteType)[0]).getItem("bar"))
         // delete back
-        col.notetypes.remFieldLegacy(noteType, noteType.flds[1])
+        col.notetypes.remFieldLegacy(noteType, noteType.fields[1])
         assertEquals(
             listOf("1", ""),
             col
@@ -155,7 +155,7 @@ class NotetypeTest : JvmTest() {
                 ).fields,
         )
         // move 0 -> 1
-        col.notetypes.moveFieldLegacy(noteType, noteType.flds[0], 1)
+        col.notetypes.moveFieldLegacy(noteType, noteType.fields[0], 1)
         assertEquals(
             listOf("", "1"),
             col
@@ -166,7 +166,7 @@ class NotetypeTest : JvmTest() {
                 ).fields,
         )
         // move 1 -> 0
-        col.notetypes.moveFieldLegacy(noteType, noteType.flds[1], 0)
+        col.notetypes.moveFieldLegacy(noteType, noteType.fields[1], 0)
         assertEquals(
             listOf("1", ""),
             col
@@ -192,7 +192,7 @@ class NotetypeTest : JvmTest() {
                 ).fields,
         )
         // move 2 -> 1
-        col.notetypes.moveFieldLegacy(noteType, noteType.flds[2], 1)
+        col.notetypes.moveFieldLegacy(noteType, noteType.fields[2], 1)
         assertEquals(
             listOf("1", "2", ""),
             col
@@ -203,7 +203,7 @@ class NotetypeTest : JvmTest() {
                 ).fields,
         )
         // move 0 -> 2
-        col.notetypes.moveFieldLegacy(noteType, noteType.flds[0], 2)
+        col.notetypes.moveFieldLegacy(noteType, noteType.fields[0], 2)
         assertEquals(
             listOf("2", "", "1"),
             col
@@ -214,7 +214,7 @@ class NotetypeTest : JvmTest() {
                 ).fields,
         )
         // move 0 -> 1
-        col.notetypes.moveFieldLegacy(noteType, noteType.flds[0], 1)
+        col.notetypes.moveFieldLegacy(noteType, noteType.fields[0], 1)
         assertEquals(
             listOf("", "2", "1"),
             col

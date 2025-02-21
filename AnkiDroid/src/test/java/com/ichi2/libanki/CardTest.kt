@@ -124,8 +124,8 @@ class CardTest : JvmTest() {
         val models = col.notetypes
         val model = models.byName("Basic")
         assertNotNull(model)
-        models.renameFieldLegacy(model, model.flds[0], "A")
-        models.renameFieldLegacy(model, model.flds[1], "B")
+        models.renameFieldLegacy(model, model.fields[0], "A")
+        models.renameFieldLegacy(model, model.fields[1], "B")
         val fld2 = models.newField("C")
         fld2.setOrd(null)
         models.addFieldLegacy(model, fld2)
@@ -173,8 +173,8 @@ class CardTest : JvmTest() {
         val model = models.byName("Basic")
         assertNotNull(model)
         val tmpls = model.tmpls
-        models.renameFieldLegacy(model, model.flds[0], "First")
-        models.renameFieldLegacy(model, model.flds[1], "Front")
+        models.renameFieldLegacy(model, model.fields[0], "First")
+        models.renameFieldLegacy(model, model.fields[1], "Front")
         val fld2 = models.newField("AddIfEmpty")
         fld2.name = "AddIfEmpty"
         models.addFieldLegacy(model, fld2)

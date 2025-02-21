@@ -84,7 +84,7 @@ class TypeAnswer private constructor(
                 } else {
                     fld
                 }
-            val fields = withCol { card.noteType(this).flds }
+            val fields = withCol { card.noteType(this).fields }
             val typeAnswerField = fields.firstOrNull { it.name == typeAnsFieldName } ?: return null
             val expectedAnswer = getExpectedTypeInAnswer(card, typeAnswerField)
 

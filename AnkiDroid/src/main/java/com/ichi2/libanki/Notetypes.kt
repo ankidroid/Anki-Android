@@ -211,7 +211,7 @@ class Notetypes(
     fun new(name: String): NotetypeJson {
         // caller should call save() after modifying
         val nt = newBasicNotetype()
-        nt.flds = Fields(JSONArray())
+        nt.fields = Fields(JSONArray())
         nt.tmpls = CardTemplates(JSONArray())
         nt.name = name
         return nt
@@ -324,7 +324,7 @@ class Notetypes(
     @LibAnkiAlias("new_field")
     fun newField(name: String): Field {
         val nt = newBasicNotetype()
-        val field = nt.flds[0]
+        val field = nt.fields[0]
         field.name = name
         field.setOrd(null)
         return field
@@ -336,7 +336,7 @@ class Notetypes(
         notetype: NotetypeJson,
         field: Field,
     ) {
-        notetype.flds.append(field)
+        notetype.fields.append(field)
     }
 
     /** Modifies schema. */
@@ -345,7 +345,7 @@ class Notetypes(
         notetype: NotetypeJson,
         field: Field,
     ) {
-        notetype.flds.remove(field)
+        notetype.fields.remove(field)
     }
 
     /** Modifies schema. */
@@ -355,13 +355,13 @@ class Notetypes(
         field: Field,
         idx: Int,
     ) {
-        val oldidx = notetype.flds.index(field).get()
+        val oldidx = notetype.fields.index(field).get()
         if (oldidx == idx) {
             return
         }
 
-        notetype.flds.remove(field)
-        notetype.flds.insert(idx, field)
+        notetype.fields.remove(field)
+        notetype.fields.insert(idx, field)
     }
 
     @LibAnkiAlias("rename_field")
@@ -370,7 +370,7 @@ class Notetypes(
         field: Field,
         newName: String,
     ) {
-        check(notetype.flds.contains(field)) { "Field to be renamed was not found in the notetype fields" }
+        check(notetype.fields.contains(field)) { "Field to be renamed was not found in the notetype fields" }
         field.name = newName
     }
 
@@ -380,7 +380,7 @@ class Notetypes(
         nt: NotetypeJson,
         idx: Int,
     ) {
-        require(0 <= idx && idx < len(nt.flds)) { "Selected sort field's index is not valid" }
+        require(0 <= idx && idx < len(nt.fields)) { "Selected sort field's index is not valid" }
         nt.sortf = idx
     }
 
@@ -638,7 +638,7 @@ class Notetypes(
     /** Return a hash of the schema, to see if models are compatible. */
     fun scmhash(notetype: NotetypeJson): String {
         var s = ""
-        for (f in notetype.flds) {
+        for (f in notetype.fields) {
             s += f.name
         }
         for (t in notetype.tmpls) {
@@ -707,7 +707,7 @@ class Notetypes(
 
         /** "Mapping of field name -> (ord, field).  */
         fun fieldMap(notetype: NotetypeJson): Map<String, Pair<Int, Field>> =
-            notetype.flds.associateBy({ f -> f.name }, { f -> Pair(f.ord, f) })
+            notetype.fields.associateBy({ f -> f.name }, { f -> Pair(f.ord, f) })
 
         // not in anki
         fun isModelNew(notetype: NotetypeJson): Boolean = notetype.getLong("id") == 0L
