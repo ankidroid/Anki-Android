@@ -127,7 +127,7 @@ class ModelFieldEditor :
             return
         }
         notetype = collectionModel
-        noteFields = notetype.flds
+        noteFields = notetype.fields
         fieldsLabels = notetype.fieldsNames
         fieldsListView.adapter = ArrayAdapter(this, R.layout.model_field_editor_list_item, fieldsLabels)
         fieldsListView.onItemClickListener =

@@ -59,9 +59,9 @@ class NotetypeJson : JSONObject {
     }
 
     val fieldsNames: List<String>
-        get() = flds.map { it.name }
+        get() = fields.map { it.name }
 
-    fun getField(pos: Int): Field = flds[pos]
+    fun getField(pos: Int): Field = fields[pos]
 
     /**
      * @return model did or default deck id (1) if null
@@ -98,7 +98,7 @@ class NotetypeJson : JSONObject {
         }
     }
 
-    var flds: Fields
+    var fields: Fields
         get() = Fields(getJSONArray("flds"))
         set(value) {
             put("flds", value.jsonArray)

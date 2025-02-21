@@ -340,7 +340,7 @@ class ContentProviderTest : InstrumentedTest() {
         var col = col
         var noteType: NotetypeJson? = createBasicNoteType()
         val noteTypeId = noteType!!.getLong("id")
-        val initialFieldsArr = noteType.flds
+        val initialFieldsArr = noteType.fields
         val initialFieldCount = initialFieldsArr.length()
         val noteTypeUri = ContentUris.withAppendedId(FlashCardsContract.Model.CONTENT_URI, noteTypeId)
         val insertFieldValues = ContentValues()
@@ -354,7 +354,7 @@ class ContentProviderTest : InstrumentedTest() {
         val fieldId = ContentUris.parseId(fieldUri!!)
         assertEquals("Check field id", initialFieldCount.toLong(), fieldId)
         assertNotNull("Check note type", noteType)
-        val fldsArr = noteType!!.flds
+        val fldsArr = noteType!!.fields
         assertEquals(
             "Check fields length",
             (initialFieldCount + 1),
@@ -584,9 +584,9 @@ class ContentProviderTest : InstrumentedTest() {
             assertEquals(
                 "Check field length",
                 TEST_NOTE_TYPE_FIELDS.size,
-                noteType.getJSONArray("flds").length(),
+                noteType.fields.length(),
             )
-            val fields = noteType.flds
+            val fields = noteType.fields
             for (i in 0 until fields.length()) {
                 assertEquals(
                     "Check name of fields",

@@ -1689,7 +1689,7 @@ class NoteEditor :
     }
 
     val currentFields: Fields
-        get() = editorNote!!.notetype.flds
+        get() = editorNote!!.notetype.fields
 
     @get:CheckResult
     val currentFieldStrings: Array<String?>
@@ -1717,7 +1717,7 @@ class NoteEditor :
         if (currentNotetypeIsImageOcclusion()) {
             val occlusionTag = "0"
             val imageTag = "1"
-            val fields = currentlySelectedNotetype!!.flds
+            val fields = currentlySelectedNotetype!!.fields
             for ((i, field) in fields.withIndex()) {
                 val tag = field.imageOcclusionTag
                 if (tag == occlusionTag || tag == imageTag) {

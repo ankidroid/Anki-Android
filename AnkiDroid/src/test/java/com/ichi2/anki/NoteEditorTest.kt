@@ -261,7 +261,7 @@ class NoteEditorTest : RobolectricTest() {
             val basic = makeNoteForType(NoteType.BASIC)
 
             // Enable sticky "Front" field
-            basic!!.flds[0].sticky = true
+            basic!!.fields[0].sticky = true
             val initFirstField = "Hello"
             val initSecondField = "unused"
             val newFirstField = "Hello" + FieldEditText.NEW_LINE + "World" // /r/n on Windows under Robolectric
