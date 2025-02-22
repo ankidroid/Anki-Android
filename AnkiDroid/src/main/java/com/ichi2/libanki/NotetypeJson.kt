@@ -93,6 +93,12 @@ class NotetypeJson : JSONObject {
             put("tags", value)
         }
 
+    var latexPre: String
+        get() = getString("latexPre")
+        set(value) {
+            put("latexPre", value)
+        }
+
     /**
      * @param sfld Fields of a note of this note type
      * @return The names of non-empty fields
