@@ -38,7 +38,14 @@ class Note : Cloneable {
     @get:VisibleForTesting
     var guId: String? = null
         private set
-    lateinit var notetype: NotetypeJson
+    private var _notetype: NotetypeJson? = null
+
+    // Value type can't be lateinit. Thus using a backup field.
+    var notetype: NotetypeJson
+        get() = _notetype!!
+        set(value) {
+            _notetype = value
+        }
 
     val noteTypeId: NoteTypeId
         get() = mid

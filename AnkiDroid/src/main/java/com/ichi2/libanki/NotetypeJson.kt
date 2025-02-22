@@ -21,13 +21,14 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.api.AddContentApi.Companion.DEFAULT_DECK_ID
 import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_IMAGE_OCCLUSION_VALUE
 import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_UNKNOWN_VALUE
+import com.ichi2.utils.JSONObjectHolder
 import com.ichi2.utils.ObjectWithName
-import com.ichi2.utils.deepClonedInto
+import com.ichi2.utils.deepClone
 import com.ichi2.utils.toStringList
-import org.intellij.lang.annotations.Language
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import org.json.JSONObject.NULL
 import java.util.HashSet
 
 /**
@@ -38,33 +39,19 @@ import java.util.HashSet
  * `Models.save(this, true)` should be called. However, you should do the change in batch and change only when all are d
  * one, because recomputing the list of card is an expensive operation.
  */
-class NotetypeJson :
-    JSONObject,
+@JvmInline
+value class NotetypeJson(
+    @VisibleForTesting
+    override val jsonObject: JSONObject,
+) : JSONObjectHolder,
     ObjectWithName {
-    /**
-     * Creates a new empty model object
-     */
-    constructor() : super()
-
-    /**
-     * Creates a deep copy from [JSONObject].
-     */
-    constructor(json: JSONObject) : super() {
-        json.deepClonedInto(this)
-    }
-
     /**
      * Creates a model object from json string
      */
-    constructor(
-        @Language("json") json: String,
-    ) : super(json)
+    constructor(json: String) : this(JSONObject(json))
 
     @CheckResult
-    fun deepClone(): NotetypeJson {
-        val clone = NotetypeJson()
-        return deepClonedInto(clone)
-    }
+    fun deepClone() = NotetypeJson(jsonObject.deepClone())
 
     /**
      * The list of name of fields.
@@ -78,25 +65,27 @@ class NotetypeJson :
      * @return model did or default deck id (1) if null
      */
     var did: DeckId
-        get() = if (isNull("did")) DEFAULT_DECK_ID else optLong("did", DEFAULT_DECK_ID)
+        get() = if (jsonObject.isNull("did")) DEFAULT_DECK_ID else jsonObject.optLong("did", Consts.DEFAULT_DECK_ID)
         set(value) {
-            put("did", value)
+            jsonObject.put("did", value)
         }
 
     /**
      * Associate the did to NULL. Only useful to test broken note type.
      */
     @VisibleForTesting()
-    fun removeDid() = put("did", NULL)
+    fun removeDid() = jsonObject.put("did", NULL)
 
     /**
      * The list of name of the template of this note type.
      * For cloze deletion type, there is a single name, called "cloze" (localized at time of note type creation).
      */
     val templatesNames: List<String>
-        get() = getJSONArray("tmpls").toStringList("name")
+        get() = jsonObject.getJSONArray("tmpls").toStringList("name")
+
     val isStd: Boolean
         get() = type == NoteTypeKind.Std
+
     val isCloze: Boolean
         get() = type == NoteTypeKind.Cloze
 
@@ -104,9 +93,9 @@ class NotetypeJson :
      * The css in common of all card types of this note type.
      */
     var css: String
-        get() = getString("css")
+        get() = jsonObject.getString("css")
         set(value) {
-            put("css", value)
+            jsonObject.put("css", value)
         }
 
     /**
@@ -117,9 +106,9 @@ class NotetypeJson :
      * which requires a desktop with LaTeX installed.
      */
     var latexPre: String
-        get() = getString("latexPre")
+        get() = jsonObject.getString("latexPre")
         set(value) {
-            put("latexPre", value)
+            jsonObject.put("latexPre", value)
         }
 
     /**
@@ -127,9 +116,9 @@ class NotetypeJson :
      * @see latexPre to understand context.
      */
     var latexPost: String
-        get() = getString("latexPost")
+        get() = jsonObject.getString("latexPost")
         set(value) {
-            put("latexPost", value)
+            jsonObject.put("latexPost", value)
         }
 
     /**
@@ -150,8 +139,8 @@ class NotetypeJson :
      * Update the dictionary with the provided key/value pairs, overwriting existing keys
      */
     fun update(updateFrom: NotetypeJson) {
-        for (k in updateFrom.keys()) {
-            put(k, updateFrom[k])
+        for (k in updateFrom.jsonObject.keys()) {
+            jsonObject.put(k, updateFrom.jsonObject[k])
         }
     }
 
@@ -159,9 +148,9 @@ class NotetypeJson :
      * The array of fields of this note type.
      */
     var fields: Fields
-        get() = Fields(getJSONArray("flds"))
+        get() = Fields(jsonObject.getJSONArray("flds"))
         set(value) {
-            put("flds", value.jsonArray)
+            jsonObject.put("flds", value.jsonArray)
         }
 
     /**
@@ -169,9 +158,9 @@ class NotetypeJson :
      * For cloze deletion type, the array contain a single element that is the only cloze template of the note type.
      */
     var templates: CardTemplates
-        get() = CardTemplates(getJSONArray("tmpls"))
+        get() = CardTemplates(jsonObject.getJSONArray("tmpls"))
         set(value) {
-            put("tmpls", value.jsonArray)
+            jsonObject.put("tmpls", value.jsonArray)
         }
 
     /**
@@ -182,18 +171,18 @@ class NotetypeJson :
      * originally the same note type, even if potentially modified since.
      */
     var id: NoteTypeId
-        get() = getLong("id")
+        get() = jsonObject.getLong("id")
         set(value) {
-            put("id", value)
+            jsonObject.put("id", value)
         }
 
     /**
      * The name of the note type.
      */
     override var name: String
-        get() = getString("name")
+        get() = jsonObject.getString("name")
         set(value) {
-            put("name", value)
+            jsonObject.put("name", value)
         }
 
     /**
@@ -205,7 +194,7 @@ class NotetypeJson :
      * to reset the note type to its default value.
      */
     val originalStockKind: Int
-        get() = optInt("originalStockKind", ORIGINAL_STOCK_KIND_UNKNOWN_VALUE)
+        get() = jsonObject.optInt("originalStockKind", ORIGINAL_STOCK_KIND_UNKNOWN_VALUE)
 
     val isImageOcclusion: Boolean
         get() =
@@ -218,18 +207,18 @@ class NotetypeJson :
     /**
      * In the card browser, the field noted as "sort field" is the [sortf]-th field. */
     var sortf: Int
-        get() = getInt("sortf")
+        get() = jsonObject.getInt("sortf")
         set(value) {
-            put("sortf", value)
+            jsonObject.put("sortf", value)
         }
 
     /**
      * The type of the note type. Can be normal, cloze, or unknown.
      */
     var type: NoteTypeKind
-        get() = NoteTypeKind.fromCode(getInt("type"))
+        get() = NoteTypeKind.fromCode(jsonObject.getInt("type"))
         set(value) {
-            put("type", value.code)
+            jsonObject.put("type", value.code)
         }
 
     /**
@@ -238,9 +227,9 @@ class NotetypeJson :
      * to resolve conflict when the note type was modified locally and remotely.
      */
     var mod: Long
-        get() = getLong("mod")
+        get() = jsonObject.getLong("mod")
         set(value) {
-            put("mod", value)
+            jsonObject.put("mod", value)
         }
 
     /**
@@ -249,9 +238,9 @@ class NotetypeJson :
      * Used to know whether this value need to be synced.
      */
     var usn: Int
-        get() = getInt("usn")
+        get() = jsonObject.getInt("usn")
         set(value) {
-            put("usn", value)
+            jsonObject.put("usn", value)
         }
 
     /**
@@ -262,7 +251,7 @@ class NotetypeJson :
      * which can only be done on a computer with LaTeX installed.
      */
     val latexsvg: Boolean
-        get() = optBoolean("latexsvg", false)
+        get() = jsonObject.optBoolean("latexsvg", false)
 
     /**
      * The name of all the fields that are used as cloze in this note type.
@@ -312,10 +301,12 @@ class NotetypeJson :
             "https://forums.ankiweb.net/t/is-req-still-used-or-present/9977",
     )
     var req: JSONArray
-        get() = getJSONArray("req")
+        get() = jsonObject.getJSONArray("req")
         set(value) {
-            put("req", value)
+            jsonObject.put("req", value)
         }
+
+    override fun toString(): String = jsonObject.toString()
 
     companion object {
         /**

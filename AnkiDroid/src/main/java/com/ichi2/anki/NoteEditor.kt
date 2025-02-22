@@ -2548,7 +2548,7 @@ class NoteEditor :
             // If more than one card, and we have an existing card, underline existing card
             if (!addNote &&
                 tmpls.length() > 1 &&
-                model === editorNote!!.notetype &&
+                model.jsonObject === editorNote!!.notetype.jsonObject &&
                 currentEditedCard != null &&
                 currentEditedCard!!.template(getColUnsafe).jsonObject.optString("name") == name
             ) {
