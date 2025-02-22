@@ -17,6 +17,7 @@
 package com.ichi2.libanki
 
 import androidx.annotation.CheckResult
+import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_UNKNOWN_VALUE
 import com.ichi2.utils.deepClonedInto
 import com.ichi2.utils.toStringList
 import org.intellij.lang.annotations.Language
@@ -151,6 +152,9 @@ class NotetypeJson : JSONObject {
         set(value) {
             put("name", value)
         }
+
+    val originalStockKind: Int
+        get() = optInt("originalStockKind", ORIGINAL_STOCK_KIND_UNKNOWN_VALUE)
 
     /** Integer specifying which field is used for sorting in the browser */
     var sortf: Int

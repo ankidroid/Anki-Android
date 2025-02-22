@@ -969,7 +969,7 @@ open class CardTemplateEditor :
                         }
                     }
 
-                    val originalStockKind = tempModel.notetype.optInt("originalStockKind", ORIGINAL_STOCK_KIND_UNKNOWN_VALUE)
+                    val originalStockKind = tempModel.notetype.originalStockKind
                     if (originalStockKind != ORIGINAL_STOCK_KIND_UNKNOWN_VALUE) {
                         Timber.d("Asking to restore to original stock kind %s", originalStockKind)
                         askUser()
