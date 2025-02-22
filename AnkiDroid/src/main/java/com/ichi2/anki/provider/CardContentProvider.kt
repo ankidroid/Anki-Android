@@ -544,7 +544,7 @@ class CardContentProvider : ContentProvider() {
                         updated++
                     }
                     if (newLatexPost != null) {
-                        noteType!!.put("latexPost", newLatexPost)
+                        noteType!!.latexPost = newLatexPost
                         updated++
                     }
                     if (newLatexPre != null) {
@@ -884,7 +884,7 @@ class CardContentProvider : ContentProvider() {
                         newNoteType.put("type", type)
                     }
                     if (latexPost != null) {
-                        newNoteType.put("latexPost", latexPost)
+                        newNoteType.latexPost = latexPost
                     }
                     if (latexPre != null) {
                         newNoteType.latexPre = latexPre
@@ -1080,7 +1080,7 @@ class CardContentProvider : ContentProvider() {
                         rb.add(jsonObject!!.did)
                     FlashCardsContract.Model.SORT_FIELD_INDEX -> rb.add(jsonObject!!.getLong("sortf"))
                     FlashCardsContract.Model.TYPE -> rb.add(jsonObject!!.getLong("type"))
-                    FlashCardsContract.Model.LATEX_POST -> rb.add(jsonObject!!.getString("latexPost"))
+                    FlashCardsContract.Model.LATEX_POST -> rb.add(jsonObject!!.latexPost)
                     FlashCardsContract.Model.LATEX_PRE -> rb.add(jsonObject!!.latexPre)
                     FlashCardsContract.Model.NOTE_COUNT -> rb.add(notetypes.useCount(jsonObject!!))
                     else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
