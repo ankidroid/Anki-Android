@@ -94,6 +94,12 @@ class NotetypeJson : JSONObject {
     val isCloze: Boolean
         get() = type == NoteTypeKind.Cloze
 
+    var css: String
+        get() = getString("css")
+        set(value) {
+            put("css", value)
+        }
+
     /**
      * @param sfld Fields of a note of this note type
      * @return The names of non-empty fields
