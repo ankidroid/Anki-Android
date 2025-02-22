@@ -19,6 +19,7 @@ package com.ichi2.libanki
 import androidx.annotation.CheckResult
 import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_IMAGE_OCCLUSION_VALUE
 import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_UNKNOWN_VALUE
+import com.ichi2.utils.ObjectWithName
 import com.ichi2.utils.deepClonedInto
 import com.ichi2.utils.toStringList
 import org.intellij.lang.annotations.Language
@@ -35,7 +36,9 @@ import java.util.HashSet
  * `Models.save(this, true)` should be called. However, you should do the change in batch and change only when all are d
  * one, because recomputing the list of card is an expensive operation.
  */
-class NotetypeJson : JSONObject {
+class NotetypeJson :
+    JSONObject,
+    ObjectWithName {
     /**
      * Creates a new empty model object
      */
@@ -152,7 +155,7 @@ class NotetypeJson : JSONObject {
     val nameOrEmpty: String
         get() = optString("name")
 
-    var name: String
+    override var name: String
         get() = getString("name")
         set(value) {
             put("name", value)
