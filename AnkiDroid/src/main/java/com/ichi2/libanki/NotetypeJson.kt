@@ -215,7 +215,8 @@ class NotetypeJson :
                 false
             }
 
-    /** Integer specifying which field is used for sorting in the browser */
+    /**
+     * In the card browser, the field noted as "sort field" is the [sortf]-th field. */
     var sortf: Int
         get() = getInt("sortf")
         set(value) {
