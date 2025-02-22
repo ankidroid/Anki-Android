@@ -539,13 +539,13 @@ class NotetypeTest : JvmTest() {
     fun getDid_test() {
         val noteTypes = col.notetypes
         val basic = noteTypes.byName("Basic")
-        basic!!.put("did", 999L)
+        basic!!.did = 999L
 
         val expected = 999L
         assertEquals("getDid() should return the model did", expected, basic.did)
 
         // Check if returns default deck id (1) when did is null
-        basic.put("did", null as Int?)
+        basic.removeDid()
         val expected2 = 1L
         assertEquals(
             "getDid() should return 1 (default deck id) if model did is null",

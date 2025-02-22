@@ -279,7 +279,7 @@ class ReviewerTest : RobolectricTest() {
 
             val didAb = addDeck("A::B")
             val basic = models.byName(BASIC_MODEL_NAME)
-            basic!!.put("did", didAb)
+            basic!!.did = didAb
             addBasicNote("foo", "bar")
 
             addDeck("A", setAsSelected = true)

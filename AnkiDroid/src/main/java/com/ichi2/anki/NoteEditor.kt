@@ -145,7 +145,6 @@ import com.ichi2.imagecropper.ImageCropper.Companion.CROP_IMAGE_RESULT
 import com.ichi2.imagecropper.ImageCropperLauncher
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Field
@@ -1220,7 +1219,7 @@ class NoteEditor :
             }
             // Save deck to model
             Timber.d("setting 'last deck' of note type %s to %d", editorNote!!.notetype.name, deckId)
-            editorNote!!.notetype.put("did", deckId)
+            editorNote!!.notetype.did = deckId
             // Save tags to model
             editorNote!!.setTagsFromStr(getColUnsafe, tagsAsString(selectedTags!!))
             val tags = JSONArray()
@@ -2656,7 +2655,7 @@ class NoteEditor :
 
         // Update deck
         if (!getColUnsafe.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
-            deckId = model.optLong("did", Consts.DEFAULT_DECK_ID)
+            deckId = model.did
         }
 
         refreshNoteData(FieldChangeType.changeFieldCount(shouldReplaceNewlines()))
