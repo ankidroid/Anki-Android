@@ -71,7 +71,7 @@ class CardTemplateNotetype(
         get() = notetype.templates.length()
 
     val modelId: NoteTypeId
-        get() = notetype.getLong("id")
+        get() = notetype.id
 
     var css: String
         get() = notetype.css
