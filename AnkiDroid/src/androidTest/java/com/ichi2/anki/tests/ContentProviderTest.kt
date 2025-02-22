@@ -603,7 +603,7 @@ class ContentProviderTest : InstrumentedTest() {
             col = reopenCol()
             noteType = col.notetypes.get(noteTypeId)
             assertNotNull("Check note type", noteType)
-            assertEquals("Check css", TEST_NOTE_TYPE_CSS, noteType!!.getString("css"))
+            assertEquals("Check css", TEST_NOTE_TYPE_CSS, noteType!!.css)
             // Update each of the templates in note type (to test updating NOTE_TYPES_ID_TEMPLATES_ID Uri)
             for (i in TEST_NOTE_TYPE_CARDS.indices) {
                 cv =

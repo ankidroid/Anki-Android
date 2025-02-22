@@ -206,7 +206,7 @@ class TemplateManager {
                 answerText = aoutText,
                 questionAvTags = avTagsToNative(qout.avTagsList),
                 answerAvTags = avTagsToNative(aout.avTagsList),
-                css = noteType().getString("css"),
+                css = noteType().css,
             )
         }
 

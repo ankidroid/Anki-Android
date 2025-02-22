@@ -524,7 +524,7 @@ class CardContentProvider : ContentProvider() {
                         updated++
                     }
                     if (newCss != null) {
-                        noteType!!.put("css", newCss)
+                        noteType!!.css = newCss
                         updated++
                     }
                     if (newDid != null) {
@@ -871,7 +871,7 @@ class CardContentProvider : ContentProvider() {
                     }
                     // Add the CSS if specified
                     if (css != null) {
-                        newNoteType.put("css", css)
+                        newNoteType.css = css
                     }
                     // Add the did if specified
                     if (did != null) {
@@ -1075,7 +1075,7 @@ class CardContentProvider : ContentProvider() {
                         rb.add(Utils.joinFields(allFlds.requireNoNulls()))
                     }
                     FlashCardsContract.Model.NUM_CARDS -> rb.add(jsonObject!!.templates.length())
-                    FlashCardsContract.Model.CSS -> rb.add(jsonObject!!.getString("css"))
+                    FlashCardsContract.Model.CSS -> rb.add(jsonObject!!.css)
                     FlashCardsContract.Model.DECK_ID -> // #6378 - Anki Desktop changed schema temporarily to allow null
                         rb.add(jsonObject!!.did)
                     FlashCardsContract.Model.SORT_FIELD_INDEX -> rb.add(jsonObject!!.getLong("sortf"))
