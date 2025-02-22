@@ -546,7 +546,7 @@ open class CardTemplateEditor :
                         refreshFragmentRunnable?.let { refreshFragmentHandler.removeCallbacks(it) }
                         templateEditor.tabToCursorPosition[cardIndex] = editorEditText.selectionStart
                         when (currentEditorViewId) {
-                            R.id.styling_edit -> tempModel.updateCss(editorEditText.text.toString())
+                            R.id.styling_edit -> tempModel.css = editorEditText.text.toString()
                             R.id.back_edit -> template.afmt = editorEditText.text.toString()
                             else -> template.qfmt = editorEditText.text.toString()
                         }

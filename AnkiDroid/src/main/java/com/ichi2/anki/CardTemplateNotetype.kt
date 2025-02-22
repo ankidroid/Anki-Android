@@ -73,12 +73,11 @@ class CardTemplateNotetype(
     val modelId: NoteTypeId
         get() = notetype.getLong("id")
 
-    fun updateCss(css: String?) {
-        notetype.put("css", css)
-    }
-
-    val css: String
-        get() = notetype.getString("css")
+    var css: String
+        get() = notetype.css
+        set(value) {
+            notetype.css = value
+        }
 
     fun updateTemplate(
         ordinal: Int,
