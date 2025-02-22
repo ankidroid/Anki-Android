@@ -87,6 +87,12 @@ class NotetypeJson : JSONObject {
             put("css", value)
         }
 
+    var tags: Tags
+        get() = get("tags") as Tags
+        set(value) {
+            put("tags", value)
+        }
+
     /**
      * @param sfld Fields of a note of this note type
      * @return The names of non-empty fields
