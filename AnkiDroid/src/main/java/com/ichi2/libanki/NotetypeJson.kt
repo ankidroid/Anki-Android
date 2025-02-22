@@ -209,6 +209,9 @@ class NotetypeJson : JSONObject {
             put("sortf", value)
         }
 
+    /**
+     * The type of the note type. Can be normal, cloze, or unknown.
+     */
     var type: NoteTypeKind
         get() = NoteTypeKind.fromCode(getInt("type"))
         set(value) {
