@@ -48,9 +48,9 @@ fun saveModel(
     val oldModel = col.notetypes.get(notetype.getLong("id"))
 
     // TODO: make undoable
-    val newTemplates = notetype.tmpls
+    val newTemplates = notetype.templates
     for (change in templateChanges) {
-        val oldTemplates = oldModel!!.tmpls
+        val oldTemplates = oldModel!!.templates
         when (change[1] as CardTemplateNotetype.ChangeType) {
             CardTemplateNotetype.ChangeType.ADD -> {
                 Timber.d("doInBackgroundSaveModel() adding template %s", change[0])

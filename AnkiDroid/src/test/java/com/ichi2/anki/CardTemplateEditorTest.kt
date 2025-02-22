@@ -581,7 +581,7 @@ class CardTemplateEditorTest : RobolectricTest() {
                 },
                 getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' },
             )
-            assertEquals("Model should have 2 templates now", 2, getCurrentDatabaseModelCopy(modelName).tmpls.length())
+            assertEquals("Model should have 2 templates now", 2, getCurrentDatabaseModelCopy(modelName).templates.length())
             assertEquals("should be two cards", 2, getModelCardCount(collectionBasicModelOriginal))
         }
 
