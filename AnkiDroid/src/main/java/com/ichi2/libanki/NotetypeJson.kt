@@ -194,6 +194,9 @@ class NotetypeJson : JSONObject {
             put("usn", value)
         }
 
+    val latexsvg: Boolean
+        get() = optBoolean("latexsvg", false)
+
     /**
      * Defines the requirements for generating cards (for [standard note types][Consts.MODEL_STD])
      *
