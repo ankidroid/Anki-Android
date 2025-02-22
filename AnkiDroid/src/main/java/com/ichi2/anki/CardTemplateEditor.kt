@@ -270,7 +270,7 @@ open class CardTemplateEditor :
         // The first time the activity loads it has a model id but no edits yet, so no edited model
         // take the passed model id load it up for editing
         if (tempModel == null) {
-            tempModel = CardTemplateNotetype(NotetypeJson(col.notetypes.get(modelId).toString()))
+            tempModel = CardTemplateNotetype(col.notetypes.get(modelId)!!.deepClone())
             // Timber.d("onCollectionLoaded() model is %s", mTempModel.getModel().toString(2));
         }
         fieldNames = tempModel!!.notetype.fieldsNames

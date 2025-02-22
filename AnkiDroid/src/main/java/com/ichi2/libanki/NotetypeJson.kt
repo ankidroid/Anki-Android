@@ -17,15 +17,17 @@
 package com.ichi2.libanki
 
 import androidx.annotation.CheckResult
+import androidx.annotation.VisibleForTesting
 import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_IMAGE_OCCLUSION_VALUE
 import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_UNKNOWN_VALUE
+import com.ichi2.utils.JSONObjectHolder
 import com.ichi2.utils.ObjectWithName
-import com.ichi2.utils.deepClonedInto
+import com.ichi2.utils.deepClone
 import com.ichi2.utils.toStringList
-import org.intellij.lang.annotations.Language
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import org.json.JSONObject.NULL
 import java.util.HashSet
 
 /**
@@ -36,33 +38,19 @@ import java.util.HashSet
  * `Models.save(this, true)` should be called. However, you should do the change in batch and change only when all are d
  * one, because recomputing the list of card is an expensive operation.
  */
-class NotetypeJson :
-    JSONObject,
+@JvmInline
+value class NotetypeJson(
+    @VisibleForTesting
+    override val jsonObject: JSONObject,
+) : JSONObjectHolder,
     ObjectWithName {
-    /**
-     * Creates a new empty model object
-     */
-    constructor() : super()
-
-    /**
-     * Creates a deep copy from [JSONObject].
-     */
-    constructor(json: JSONObject) : super() {
-        json.deepClonedInto(this)
-    }
-
     /**
      * Creates a model object from json string
      */
-    constructor(
-        @Language("json") json: String,
-    ) : super(json)
+    constructor(json: String) : this(JSONObject(json))
 
     @CheckResult
-    fun deepClone(): NotetypeJson {
-        val clone = NotetypeJson()
-        return deepClonedInto(clone)
-    }
+    fun deepClone() = NotetypeJson(jsonObject.deepClone())
 
     val fieldsNames: List<String>
         get() = fields.map { it.name }
@@ -73,42 +61,44 @@ class NotetypeJson :
      * @return model did or default deck id (1) if null
      */
     var did: DeckId
-        get() = if (isNull("did")) 1L else optLong("did", Consts.DEFAULT_DECK_ID)
+        get() = if (jsonObject.isNull("did")) 1L else jsonObject.optLong("did", Consts.DEFAULT_DECK_ID)
         set(value) {
-            put("did", value)
+            jsonObject.put("did", value)
         }
 
-    fun removeDid() = put("did", NULL)
+    fun removeDid() = jsonObject.put("did", NULL)
 
     val templatesNames: List<String>
-        get() = getJSONArray("tmpls").toStringList("name")
+        get() = jsonObject.getJSONArray("tmpls").toStringList("name")
+
     val isStd: Boolean
         get() = type == NoteTypeKind.Std
+
     val isCloze: Boolean
         get() = type == NoteTypeKind.Cloze
 
     var css: String
-        get() = getString("css")
+        get() = jsonObject.getString("css")
         set(value) {
-            put("css", value)
+            jsonObject.put("css", value)
         }
 
     var tags: Tags
-        get() = get("tags") as Tags
+        get() = jsonObject.get("tags") as Tags
         set(value) {
-            put("tags", value)
+            jsonObject.put("tags", value)
         }
 
     var latexPre: String
-        get() = getString("latexPre")
+        get() = jsonObject.getString("latexPre")
         set(value) {
-            put("latexPre", value)
+            jsonObject.put("latexPre", value)
         }
 
     var latexPost: String
-        get() = getString("latexPost")
+        get() = jsonObject.getString("latexPost")
         set(value) {
-            put("latexPost", value)
+            jsonObject.put("latexPost", value)
         }
 
     /**
@@ -129,40 +119,40 @@ class NotetypeJson :
      * Update the dictionary with the provided key/value pairs, overwriting existing keys
      */
     fun update(updateFrom: NotetypeJson) {
-        for (k in updateFrom.keys()) {
-            put(k, updateFrom[k])
+        for (k in updateFrom.jsonObject.keys()) {
+            jsonObject.put(k, updateFrom.jsonObject[k])
         }
     }
 
     var fields: Fields
-        get() = Fields(getJSONArray("flds"))
+        get() = Fields(jsonObject.getJSONArray("flds"))
         set(value) {
-            put("flds", value.jsonArray)
+            jsonObject.put("flds", value.jsonArray)
         }
 
     var templates: CardTemplates
-        get() = CardTemplates(getJSONArray("tmpls"))
+        get() = CardTemplates(jsonObject.getJSONArray("tmpls"))
         set(value) {
-            put("tmpls", value.jsonArray)
+            jsonObject.put("tmpls", value.jsonArray)
         }
 
     var id: NoteTypeId
-        get() = getLong("id")
+        get() = jsonObject.getLong("id")
         set(value) {
-            put("id", value)
+            jsonObject.put("id", value)
         }
 
     val nameOrEmpty: String
-        get() = optString("name")
+        get() = jsonObject.optString("name")
 
     override var name: String
-        get() = getString("name")
+        get() = jsonObject.getString("name")
         set(value) {
-            put("name", value)
+            jsonObject.put("name", value)
         }
 
     val originalStockKind: Int
-        get() = optInt("originalStockKind", ORIGINAL_STOCK_KIND_UNKNOWN_VALUE)
+        get() = jsonObject.optInt("originalStockKind", ORIGINAL_STOCK_KIND_UNKNOWN_VALUE)
 
     /**
      * @throws JSONException if the mapping doesn't exist or cannot be coerced to an int.
@@ -177,31 +167,31 @@ class NotetypeJson :
 
     /** Integer specifying which field is used for sorting in the browser */
     var sortf: Int
-        get() = getInt("sortf")
+        get() = jsonObject.getInt("sortf")
         set(value) {
-            put("sortf", value)
+            jsonObject.put("sortf", value)
         }
 
     var type: NoteTypeKind
-        get() = NoteTypeKind.fromCode(getInt("type"))
+        get() = NoteTypeKind.fromCode(jsonObject.getInt("type"))
         set(value) {
-            put("type", value.code)
+            jsonObject.put("type", value.code)
         }
 
     var mod: Long
-        get() = getLong("mod")
+        get() = jsonObject.getLong("mod")
         set(value) {
-            put("mod", value)
+            jsonObject.put("mod", value)
         }
 
     var usn: Int
-        get() = getInt("usn")
+        get() = jsonObject.getInt("usn")
         set(value) {
-            put("usn", value)
+            jsonObject.put("usn", value)
         }
 
     val latexsvg: Boolean
-        get() = optBoolean("latexsvg", false)
+        get() = jsonObject.optBoolean("latexsvg", false)
 
     fun getAllClozeTextFields(): List<String> {
         if (!this.isCloze) {
@@ -247,10 +237,12 @@ class NotetypeJson :
             "https://forums.ankiweb.net/t/is-req-still-used-or-present/9977",
     )
     var req: JSONArray
-        get() = getJSONArray("req")
+        get() = jsonObject.getJSONArray("req")
         set(value) {
-            put("req", value)
+            jsonObject.put("req", value)
         }
+
+    override fun toString(): String = jsonObject.toString()
 
     companion object {
         /**
