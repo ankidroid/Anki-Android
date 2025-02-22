@@ -1100,7 +1100,7 @@ open class CardTemplateEditor :
         private fun getCurrentTemplate(): BackendCardTemplate? {
             val currentCardTemplateIndex = getCurrentCardTemplateIndex()
             return try {
-                templateEditor.tempModel!!.notetype.tmpls[currentCardTemplateIndex]
+                templateEditor.tempModel!!.notetype.templates[currentCardTemplateIndex]
             } catch (e: JSONException) {
                 Timber.w(e, "CardTemplateEditor::getCurrentTemplate - unexpectedly unable to fetch template? %d", currentCardTemplateIndex)
                 null
@@ -1270,7 +1270,7 @@ open class CardTemplateEditor :
             tmpl: BackendCardTemplate,
             notetype: NotetypeJson,
         ) {
-            val oldTemplates = notetype.tmpls
+            val oldTemplates = notetype.templates
             val newTemplates = CardTemplates(JSONArray())
             for (possibleMatch in oldTemplates) {
                 if (possibleMatch.ord != tmpl.ord) {
@@ -1280,7 +1280,7 @@ open class CardTemplateEditor :
                     templateEditor.tempModel!!.removeTemplate(possibleMatch.ord)
                 }
             }
-            notetype.tmpls = newTemplates
+            notetype.templates = newTemplates
             Notetypes._updateTemplOrds(notetype)
             // Make sure the fragments reinitialize, otherwise the reused ordinal causes staleness
             (templateEditor.viewPager.adapter as TemplatePagerAdapter).ordinalShift()
@@ -1295,7 +1295,7 @@ open class CardTemplateEditor :
         private fun addNewTemplate(model: NotetypeJson) {
             // Build new template
             val oldCardIndex = requireArguments().getInt(CARD_INDEX)
-            val templates = model.tmpls
+            val templates = model.templates
             val oldTemplate = templates[oldCardIndex]
             val newTemplate = Notetypes.newTemplate(newCardName(templates))
             // Set up question & answer formats

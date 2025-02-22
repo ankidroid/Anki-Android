@@ -212,7 +212,7 @@ class Notetypes(
         // caller should call save() after modifying
         val nt = newBasicNotetype()
         nt.fields = Fields(JSONArray())
-        nt.tmpls = CardTemplates(JSONArray())
+        nt.templates = CardTemplates(JSONArray())
         nt.name = name
         return nt
     }
@@ -494,7 +494,7 @@ class Notetypes(
     @LibAnkiAlias("new_template")
     fun newTemplate(name: String): CardTemplate {
         val nt = newBasicNotetype()
-        val template = nt.tmpls[0]
+        val template = nt.templates[0]
         template.name = name
         template.qfmt = ""
         template.afmt = ""
@@ -508,7 +508,7 @@ class Notetypes(
         notetype: NotetypeJson,
         template: CardTemplate,
     ) {
-        notetype.tmpls.append(template)
+        notetype.templates.append(template)
     }
 
     /** Modifies schema */
@@ -517,8 +517,8 @@ class Notetypes(
         notetype: NotetypeJson,
         template: CardTemplate,
     ) {
-        check(len(notetype.tmpls) > 1) { "Attempting to remove the last template" }
-        notetype.tmpls.remove(template)
+        check(len(notetype.templates) > 1) { "Attempting to remove the last template" }
+        notetype.templates.remove(template)
     }
 
     /** Modifies schema. */
@@ -528,13 +528,13 @@ class Notetypes(
         template: CardTemplate,
         idx: Int,
     ) {
-        val oldidx = notetype.tmpls.index(template).get()
+        val oldidx = notetype.templates.index(template).get()
         if (oldidx == idx) {
             return
         }
 
-        notetype.tmpls.remove(template)
-        notetype.tmpls.insert(idx, template)
+        notetype.templates.remove(template)
+        notetype.templates.insert(idx, template)
     }
 
     /** legacy */
@@ -641,7 +641,7 @@ class Notetypes(
         for (f in notetype.fields) {
             s += f.name
         }
-        for (t in notetype.tmpls) {
+        for (t in notetype.templates) {
             s += t.name
         }
         return checksum(s)
@@ -713,7 +713,7 @@ class Notetypes(
         fun isModelNew(notetype: NotetypeJson): Boolean = notetype.getLong("id") == 0L
 
         fun _updateTemplOrds(notetype: NotetypeJson) {
-            for ((i, template) in notetype.tmpls.withIndex()) {
+            for ((i, template) in notetype.templates.withIndex()) {
                 template.setOrd(i)
             }
         }

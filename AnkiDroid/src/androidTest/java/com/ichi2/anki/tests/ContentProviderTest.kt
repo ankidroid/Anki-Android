@@ -246,7 +246,7 @@ class ContentProviderTest : InstrumentedTest() {
         assertEquals("Check that tag was set correctly", TEST_TAG, addedNote.tags[0])
         val noteType: NotetypeJson? = col.notetypes.get(noteTypeId)
         assertNotNull("Check note type", noteType)
-        val expectedNumCards = noteType!!.tmpls.length()
+        val expectedNumCards = noteType!!.templates.length()
         assertEquals("Check that correct number of cards generated", expectedNumCards, addedNote.numberOfCards(col))
         // Now delete the note
         cr.delete(newNoteUri, null, null)
@@ -289,7 +289,7 @@ class ContentProviderTest : InstrumentedTest() {
         val noteTypeUri = ContentUris.withAppendedId(FlashCardsContract.Model.CONTENT_URI, noteTypeId)
         val testIndex =
             TEST_NOTE_TYPE_CARDS.size - 1 // choose the last one because not the same as the basic note type template
-        val expectedOrd = noteType.tmpls.length()
+        val expectedOrd = noteType.templates.length()
         val cv =
             ContentValues().apply {
                 put(FlashCardsContract.CardTemplate.NAME, TEST_NOTE_TYPE_CARDS[testIndex])
@@ -311,7 +311,7 @@ class ContentProviderTest : InstrumentedTest() {
         )
         noteType = col.notetypes.get(noteTypeId)
         assertNotNull("Check note type", noteType)
-        val template = noteType!!.tmpls[expectedOrd]
+        val template = noteType!!.templates[expectedOrd]
         assertEquals(
             "Check template JSONObject ord",
             expectedOrd,
@@ -579,7 +579,7 @@ class ContentProviderTest : InstrumentedTest() {
             assertEquals(
                 "Check templates length",
                 TEST_NOTE_TYPE_CARDS.size,
-                noteType.tmpls.length(),
+                noteType.templates.length(),
             )
             assertEquals(
                 "Check field length",
@@ -628,7 +628,7 @@ class ContentProviderTest : InstrumentedTest() {
                 col = reopenCol()
                 noteType = col.notetypes.get(noteTypeId)
                 assertNotNull("Check note type", noteType)
-                val template = noteType!!.tmpls[i]
+                val template = noteType!!.templates[i]
                 assertEquals(
                     "Check template name",
                     TEST_NOTE_TYPE_CARDS[i],
