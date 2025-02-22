@@ -25,13 +25,16 @@ import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.getStockNotetype
 import com.ichi2.libanki.utils.set
 import junit.framework.TestCase.assertEquals
+import org.json.JSONObject
 import kotlin.test.Test
 
 // link to a method in `NoteType.kt` for navigation as it contains no classes
 
 /** Test of [NoteType][templates] */
 class NoteTypeTest {
-    private val noteType = """
+    private val noteType =
+        JSONObject(
+            """
         {
           "type":1,
           "tmpls":[
@@ -49,7 +52,8 @@ class NoteTypeTest {
               }
            ]
         }
-    """
+    """,
+        )
 
     @Test
     fun testQfmtField() {
