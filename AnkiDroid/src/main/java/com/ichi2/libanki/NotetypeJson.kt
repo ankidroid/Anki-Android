@@ -149,6 +149,9 @@ class NotetypeJson : JSONObject {
             put("id", value)
         }
 
+    val nameOrEmpty: String
+        get() = optString("name")
+
     var name: String
         get() = getString("name")
         set(value) {

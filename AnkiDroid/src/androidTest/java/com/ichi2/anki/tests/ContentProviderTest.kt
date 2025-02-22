@@ -132,10 +132,12 @@ class ContentProviderTest : InstrumentedTest() {
 
     private fun createBasicNoteType(name: String = BASIC_NOTE_TYPE_NAME): NotetypeJson {
         val noteType =
-            BackendUtils
-                .fromJsonBytes(
-                    col.getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC),
-                ).apply { set("name", name) }
+            NotetypeJson(
+                BackendUtils
+                    .fromJsonBytes(
+                        col.getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC),
+                    ),
+            ).apply { this.name = name }
         col.addNotetypeLegacy(BackendUtils.toJsonBytes(noteType))
         return col.notetypes.byName(name)!!
     }
@@ -574,7 +576,7 @@ class ContentProviderTest : InstrumentedTest() {
         try {
             var noteType = col.notetypes.get(noteTypeId)
             assertNotNull("Check note type", noteType)
-            assertEquals("Check note type name", TEST_NOTE_TYPE_NAME, noteType!!.getString("name"))
+            assertEquals("Check note type name", TEST_NOTE_TYPE_NAME, noteType!!.name)
             assertEquals(
                 "Check templates length",
                 TEST_NOTE_TYPE_CARDS.size,

@@ -454,7 +454,7 @@ class ReviewerTest : RobolectricTest() {
     private fun addNoteWithThreeCards() {
         val models = col.notetypes
         var notetype: NotetypeJson = models.copy(models.current())
-        notetype.put("name", "Three")
+        notetype.name = "Three"
         models.add(notetype)
         notetype = models.byName("Three")!!
 
@@ -463,7 +463,7 @@ class ReviewerTest : RobolectricTest() {
 
         val newNote = col.newNote()
         newNote.setField(0, "Hello")
-        assertThat(newNote.notetype["name"], equalTo("Three"))
+        assertThat(newNote.notetype.name, equalTo("Three"))
 
         assertThat(col.addNote(newNote), equalTo(3))
     }

@@ -521,7 +521,7 @@ class CardContentProvider : ContentProvider() {
                 try {
                     // Update noteType name and/or css
                     if (newNoteTypeName != null) {
-                        noteType!!.put("name", newNoteTypeName)
+                        noteType!!.name = newNoteTypeName
                         updated++
                     }
                     if (newCss != null) {
@@ -1062,7 +1062,7 @@ class CardContentProvider : ContentProvider() {
             for (column in columns) {
                 when (column) {
                     FlashCardsContract.Model._ID -> rb.add(noteTypeId)
-                    FlashCardsContract.Model.NAME -> rb.add(jsonObject!!.getString("name"))
+                    FlashCardsContract.Model.NAME -> rb.add(jsonObject!!.name)
                     FlashCardsContract.Model.FIELD_NAMES -> {
                         @KotlinCleanup("maybe jsonObject.fieldsNames. Difference: optString vs get")
                         val flds = jsonObject!!.fields
