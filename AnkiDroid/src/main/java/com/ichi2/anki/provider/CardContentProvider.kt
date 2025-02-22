@@ -1056,16 +1056,16 @@ class CardContentProvider : ContentProvider() {
         rv: MatrixCursor,
         columns: Array<String>,
     ) {
-        val jsonObject = notetypes.get(noteTypeId)
+        val noteType = notetypes.get(noteTypeId)
         val rb = rv.newRow()
         try {
             for (column in columns) {
                 when (column) {
                     FlashCardsContract.Model._ID -> rb.add(noteTypeId)
-                    FlashCardsContract.Model.NAME -> rb.add(jsonObject!!.name)
+                    FlashCardsContract.Model.NAME -> rb.add(noteType!!.name)
                     FlashCardsContract.Model.FIELD_NAMES -> {
                         @KotlinCleanup("maybe jsonObject.fieldsNames. Difference: optString vs get")
-                        val flds = jsonObject!!.fields
+                        val flds = noteType!!.fields
                         val allFlds = arrayOfNulls<String>(flds.length())
                         var idx = 0
                         while (idx < flds.length()) {
@@ -1075,15 +1075,15 @@ class CardContentProvider : ContentProvider() {
                         @KotlinCleanup("remove requireNoNulls")
                         rb.add(Utils.joinFields(allFlds.requireNoNulls()))
                     }
-                    FlashCardsContract.Model.NUM_CARDS -> rb.add(jsonObject!!.templates.length())
-                    FlashCardsContract.Model.CSS -> rb.add(jsonObject!!.css)
+                    FlashCardsContract.Model.NUM_CARDS -> rb.add(noteType!!.templates.length())
+                    FlashCardsContract.Model.CSS -> rb.add(noteType!!.css)
                     FlashCardsContract.Model.DECK_ID -> // #6378 - Anki Desktop changed schema temporarily to allow null
-                        rb.add(jsonObject!!.did)
-                    FlashCardsContract.Model.SORT_FIELD_INDEX -> rb.add(jsonObject!!.getLong("sortf"))
-                    FlashCardsContract.Model.TYPE -> rb.add(jsonObject!!.type)
-                    FlashCardsContract.Model.LATEX_POST -> rb.add(jsonObject!!.latexPost)
-                    FlashCardsContract.Model.LATEX_PRE -> rb.add(jsonObject!!.latexPre)
-                    FlashCardsContract.Model.NOTE_COUNT -> rb.add(notetypes.useCount(jsonObject!!))
+                        rb.add(noteType!!.did)
+                    FlashCardsContract.Model.SORT_FIELD_INDEX -> rb.add(noteType!!.getLong("sortf"))
+                    FlashCardsContract.Model.TYPE -> rb.add(noteType!!.type)
+                    FlashCardsContract.Model.LATEX_POST -> rb.add(noteType!!.latexPost)
+                    FlashCardsContract.Model.LATEX_PRE -> rb.add(noteType!!.latexPre)
+                    FlashCardsContract.Model.NOTE_COUNT -> rb.add(notetypes.useCount(noteType!!))
                     else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
                 }
             }
