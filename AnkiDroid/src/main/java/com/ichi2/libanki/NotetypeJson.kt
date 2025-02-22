@@ -19,11 +19,13 @@ package com.ichi2.libanki
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.api.AddContentApi.Companion.DEFAULT_DECK_ID
+import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_IMAGE_OCCLUSION_VALUE
 import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_UNKNOWN_VALUE
 import com.ichi2.utils.deepClonedInto
 import com.ichi2.utils.toStringList
 import org.intellij.lang.annotations.Language
 import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
 import java.util.HashSet
 
@@ -191,6 +193,14 @@ class NotetypeJson : JSONObject {
      */
     val originalStockKind: Int
         get() = optInt("originalStockKind", ORIGINAL_STOCK_KIND_UNKNOWN_VALUE)
+
+    val isImageOcclusion: Boolean
+        get() =
+            try {
+                originalStockKind == ORIGINAL_STOCK_KIND_IMAGE_OCCLUSION_VALUE
+            } catch (_: JSONException) {
+                false
+            }
 
     /** Integer specifying which field is used for sorting in the browser */
     var sortf: Int
