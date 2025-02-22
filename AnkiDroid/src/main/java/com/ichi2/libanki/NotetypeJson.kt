@@ -230,6 +230,17 @@ class NotetypeJson : JSONObject {
         }
 
     /**
+     * -1 if the note type was modified locally since last sync.
+     * Otherwise the "usn" value provided by the remote server.
+     * Used to know whether this value need to be synced.
+     */
+    var usn: Int
+        get() = getInt("usn")
+        set(value) {
+            put("usn", value)
+        }
+
+    /**
      * Defines the requirements for generating cards (for [standard note types][Consts.MODEL_STD])
      *
      * A requirement states that either one of, or all of a set of fields must be non-empty to
