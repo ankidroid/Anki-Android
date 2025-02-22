@@ -17,6 +17,8 @@
 package com.ichi2.libanki
 
 import androidx.annotation.CheckResult
+import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.api.AddContentApi.Companion.DEFAULT_DECK_ID
 import com.ichi2.utils.deepClonedInto
 import com.ichi2.utils.toStringList
 import org.intellij.lang.annotations.Language
@@ -69,8 +71,17 @@ class NotetypeJson : JSONObject {
     /**
      * @return model did or default deck id (1) if null
      */
-    val did: DeckId
-        get() = if (isNull("did")) 1L else getLong("did")
+    var did: DeckId
+        get() = if (isNull("did")) DEFAULT_DECK_ID else optLong("did", DEFAULT_DECK_ID)
+        set(value) {
+            put("did", value)
+        }
+
+    /**
+     * Associate the did to NULL. Only useful to test broken note type.
+     */
+    @VisibleForTesting()
+    fun removeDid() = put("did", NULL)
 
     /**
      * The list of name of the template of this note type.

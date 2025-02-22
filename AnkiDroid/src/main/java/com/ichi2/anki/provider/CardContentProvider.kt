@@ -38,7 +38,6 @@ import com.ichi2.anki.utils.ext.description
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardTemplate
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
@@ -529,10 +528,11 @@ class CardContentProvider : ContentProvider() {
                         updated++
                     }
                     if (newDid != null) {
-                        if (col.decks.isFiltered(newDid.toLong())) {
+                        val newDid = newDid.toLong()
+                        if (col.decks.isFiltered(newDid)) {
                             throw IllegalArgumentException("Cannot set a filtered deck as default deck for a noteType")
                         }
-                        noteType!!.put("did", newDid)
+                        noteType!!.did = newDid
                         updated++
                     }
                     if (newSortf != null) {
@@ -875,7 +875,7 @@ class CardContentProvider : ContentProvider() {
                     }
                     // Add the did if specified
                     if (did != null) {
-                        newNoteType.put("did", did)
+                        newNoteType.did = did
                     }
                     if (sortf != null && sortf < allFields.size) {
                         newNoteType.put("sortf", sortf)
@@ -1077,7 +1077,7 @@ class CardContentProvider : ContentProvider() {
                     FlashCardsContract.Model.NUM_CARDS -> rb.add(jsonObject!!.templates.length())
                     FlashCardsContract.Model.CSS -> rb.add(jsonObject!!.getString("css"))
                     FlashCardsContract.Model.DECK_ID -> // #6378 - Anki Desktop changed schema temporarily to allow null
-                        rb.add(jsonObject!!.optLong("did", Consts.DEFAULT_DECK_ID))
+                        rb.add(jsonObject!!.did)
                     FlashCardsContract.Model.SORT_FIELD_INDEX -> rb.add(jsonObject!!.getLong("sortf"))
                     FlashCardsContract.Model.TYPE -> rb.add(jsonObject!!.getLong("type"))
                     FlashCardsContract.Model.LATEX_POST -> rb.add(jsonObject!!.getString("latexPost"))

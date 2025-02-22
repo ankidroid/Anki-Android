@@ -106,7 +106,7 @@ class CardTest : JvmTest() {
         assertEquals(1, note.cards()[0].did)
         // set the model to a new default col
         val newId = addDeck("new")
-        cloze.put("did", newId)
+        cloze.did = newId
         col.notetypes.save(cloze)
         // a newly generated card should share the first card's col
         note.setItem("Text", "{{c2::two}}")
