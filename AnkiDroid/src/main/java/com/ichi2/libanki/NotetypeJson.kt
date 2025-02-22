@@ -241,6 +241,16 @@ class NotetypeJson : JSONObject {
         }
 
     /**
+     * Whether latex must be generated as SVG. If false, it's first generated as PDF.
+     * This is used to compute the name of the image that represents a LaTeX expression
+     * used in a note in this note type.
+     * It can't be edited in AnkiDroid because that would require recompiling all LaTeX values
+     * which can only be done on a computer with LaTeX installed.
+     */
+    val latexsvg: Boolean
+        get() = optBoolean("latexsvg", false)
+
+    /**
      * Defines the requirements for generating cards (for [standard note types][Consts.MODEL_STD])
      *
      * A requirement states that either one of, or all of a set of fields must be non-empty to
