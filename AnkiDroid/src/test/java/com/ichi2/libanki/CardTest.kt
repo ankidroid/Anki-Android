@@ -50,14 +50,14 @@ class CardTest : JvmTest() {
     }
 
     @Test
-    @SuppressLint("CheckResult") // col.models.current()!!.getLong("id")
+    @SuppressLint("CheckResult") // col.models.current()!!.id
     fun test_misc_cards() {
         val note = col.newNote()
         note.setItem("Front", "1")
         note.setItem("Back", "2")
         col.addNote(note)
         val c = note.cards()[0]
-        col.notetypes.current().getLong("id")
+        col.notetypes.current().id
         assertEquals(0, c.template().ord)
     }
 

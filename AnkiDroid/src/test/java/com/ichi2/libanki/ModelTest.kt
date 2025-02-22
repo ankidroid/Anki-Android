@@ -105,7 +105,7 @@ class NotetypeTest : JvmTest() {
         val noteType = col.notetypes.current()
         val noteType2 = col.notetypes.copy(noteType)
         assertEquals("Basic copy", noteType2.name)
-        assertNotEquals(noteType2.getLong("id"), noteType.getLong("id"))
+        assertNotEquals(noteType2.id, noteType.id)
         assertEquals(2, noteType2.fields.length())
         assertEquals(2, noteType.fields.length())
         assertEquals(noteType.fields.length(), noteType2.fields.length())

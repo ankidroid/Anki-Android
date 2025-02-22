@@ -174,6 +174,13 @@ class NotetypeJson :
             put("tmpls", value.jsonArray)
         }
 
+    /**
+     * A unique identifier for this note type.
+     * The timestamp of the deck creation in millisecond.
+     * It's unique in the collection and with high probability unique everywhere.
+     * That is, if you import cards using a note type with the same id, it's almost certainly
+     * originally the same note type, even if potentially modified since.
+     */
     var id: NoteTypeId
         get() = getLong("id")
         set(value) {

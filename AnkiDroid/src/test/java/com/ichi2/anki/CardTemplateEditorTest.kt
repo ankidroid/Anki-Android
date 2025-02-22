@@ -54,7 +54,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         // Start the CardTemplateEditor with a specific model, and make sure the model starts unchanged
         val collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName)
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"))
+        intent.putExtra("modelId", collectionBasicModelOriginal.id)
         var templateEditorController =
             Robolectric
                 .buildActivity(CardTemplateEditor::class.java, intent)
@@ -174,7 +174,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         // Start the CardTemplateEditor with a specific model, and make sure the model starts unchanged
         val collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName)
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"))
+        intent.putExtra("modelId", collectionBasicModelOriginal.id)
         val templateEditorController =
             Robolectric
                 .buildActivity(CardTemplateEditor::class.java, intent)
@@ -235,7 +235,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         val modelName = "Basic"
         val collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName)
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"))
+        intent.putExtra("modelId", collectionBasicModelOriginal.id)
         val templateEditorController =
             Robolectric
                 .buildActivity(CardTemplateEditor::class.java, intent)
@@ -313,7 +313,7 @@ class CardTemplateEditorTest : RobolectricTest() {
 
             // Start the CardTemplateEditor with a specific model, and make sure the model starts unchanged
             val intent = Intent(Intent.ACTION_VIEW)
-            intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"))
+            intent.putExtra("modelId", collectionBasicModelOriginal.id)
             val templateEditorController =
                 Robolectric
                     .buildActivity(
@@ -413,7 +413,7 @@ class CardTemplateEditorTest : RobolectricTest() {
 
             // Start the CardTemplateEditor with a specific model, and make sure the model starts unchanged
             var intent = Intent(Intent.ACTION_VIEW)
-            intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"))
+            intent.putExtra("modelId", collectionBasicModelOriginal.id)
             var templateEditorController =
                 Robolectric
                     .buildActivity(
@@ -713,7 +713,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         // Start the CardTemplateEditor with a specific model, and make sure the model starts unchanged
         val collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName)
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"))
+        intent.putExtra("modelId", collectionBasicModelOriginal.id)
         val templateEditorController =
             Robolectric
                 .buildActivity(CardTemplateEditor::class.java, intent)

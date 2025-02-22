@@ -102,7 +102,7 @@ class ContentProviderTest : InstrumentedTest() {
         tearDown = true
         // Add a new basic note type that we use for testing purposes (existing note types could potentially be corrupted)
         val noteType = createBasicNoteType()
-        noteTypeId = noteType.getLong("id")
+        noteTypeId = noteType.id
         val fields = noteType.fieldsNames
         // Use the names of the fields as test values for the notes which will be added
         dummyFields = fields.toTypedArray()
@@ -282,7 +282,7 @@ class ContentProviderTest : InstrumentedTest() {
         var col = col
         // Add a new basic note type that we use for testing purposes (existing note types could potentially be corrupted)
         var noteType: NotetypeJson? = createBasicNoteType()
-        val noteTypeId = noteType!!.getLong("id")
+        val noteTypeId = noteType!!.id
         // Add the note
         val noteTypeUri = ContentUris.withAppendedId(FlashCardsContract.Model.CONTENT_URI, noteTypeId)
         val testIndex =
@@ -337,7 +337,7 @@ class ContentProviderTest : InstrumentedTest() {
         val cr = contentResolver
         var col = col
         var noteType: NotetypeJson? = createBasicNoteType()
-        val noteTypeId = noteType!!.getLong("id")
+        val noteTypeId = noteType!!.id
         val initialFieldsArr = noteType.fields
         val initialFieldCount = initialFieldsArr.length()
         val noteTypeUri = ContentUris.withAppendedId(FlashCardsContract.Model.CONTENT_URI, noteTypeId)

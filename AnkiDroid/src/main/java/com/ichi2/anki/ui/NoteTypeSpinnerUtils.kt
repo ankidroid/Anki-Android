@@ -42,5 +42,5 @@ fun setupNoteTypeSpinner(
             setDropDownViewResource(R.layout.spinner_dropdown_item_with_radio)
         }
 
-    return sortedModels.map { it.getLong("id") }
+    return sortedModels.map { it.id }
 }
