@@ -66,7 +66,7 @@ object NoteService {
                     }
                 note.setField(i, uiTextField)
             }
-            note.modelId = model.getLong("id")
+            note.modelId = model.id
         } catch (e: JSONException) {
             Timber.w(e, "Error parsing model: %s", model)
             // Return note with default/empty fields

@@ -894,7 +894,7 @@ class CardContentProvider : ContentProvider() {
                     noteTypes.add(newNoteType)
 
                     // Get the mid and return a URI
-                    val noteTypeId = newNoteType.getLong("id").toString()
+                    val noteTypeId = newNoteType.id.toString()
                     Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, noteTypeId)
                 } catch (e: JSONException) {
                     Timber.e(e, "Could not set a field of new note type %s", noteTypeName)
@@ -1201,7 +1201,7 @@ class CardContentProvider : ContentProvider() {
             for (column in columns) {
                 when (column) {
                     FlashCardsContract.CardTemplate._ID -> rb.add(id)
-                    FlashCardsContract.CardTemplate.MODEL_ID -> rb.add(notetype!!.getLong("id"))
+                    FlashCardsContract.CardTemplate.MODEL_ID -> rb.add(notetype!!.id)
                     FlashCardsContract.CardTemplate.ORD -> rb.add(tmpl.ord)
                     FlashCardsContract.CardTemplate.NAME -> rb.add(tmpl.name)
                     FlashCardsContract.CardTemplate.QUESTION_FORMAT -> rb.add(tmpl.qfmt)
@@ -1303,7 +1303,7 @@ class CardContentProvider : ContentProvider() {
         col: Collection,
     ): NoteTypeId =
         if (uri.pathSegments[1] == FlashCardsContract.Model.CURRENT_MODEL_ID) {
-            col.notetypes.current().optLong("id", -1)
+            col.notetypes.current().id
         } else {
             try {
                 uri.pathSegments[1].toLong()

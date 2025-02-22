@@ -45,7 +45,7 @@ fun saveModel(
     templateChanges: ArrayList<Array<Any>>,
 ) {
     Timber.d("doInBackgroundSaveModel")
-    val oldModel = col.notetypes.get(notetype.getLong("id"))
+    val oldModel = col.notetypes.get(notetype.id)
 
     // TODO: make undoable
     val newTemplates = notetype.templates

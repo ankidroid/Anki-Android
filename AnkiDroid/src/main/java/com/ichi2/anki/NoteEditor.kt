@@ -2502,7 +2502,7 @@ class NoteEditor :
 
     private fun setNoteTypePosition() {
         // Set current note type and deck positions in spinners
-        val position = allModelIds!!.indexOf(editorNote!!.notetype.getLong("id"))
+        val position = allModelIds!!.indexOf(editorNote!!.notetype.id)
         // set selection without firing selectionChanged event
         noteTypeSpinner!!.setSelection(position, false)
     }
@@ -2635,7 +2635,7 @@ class NoteEditor :
     }
 
     private fun changeNoteType(newId: NoteTypeId) {
-        val oldModelId = getColUnsafe.notetypes.current().getLong("id")
+        val oldModelId = getColUnsafe.notetypes.current().id
         Timber.i("Changing note type to '%d", newId)
 
         if (oldModelId == newId) {
@@ -2694,7 +2694,7 @@ class NoteEditor :
             id: Long,
         ) {
             // Get the current model
-            val noteModelId = currentEditedCard!!.noteType(getColUnsafe).getLong("id")
+            val noteModelId = currentEditedCard!!.noteType(getColUnsafe).id
             // Get new model
             val newModel = getColUnsafe.notetypes.get(allModelIds!![pos])
             if (newModel == null) {

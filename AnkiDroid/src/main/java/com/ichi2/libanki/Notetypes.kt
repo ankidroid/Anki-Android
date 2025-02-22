@@ -280,7 +280,7 @@ class Notetypes(
      */
 
     @NotInLibAnki
-    fun nids(model: NotetypeJson): List<int> = nids(model.getLong("id"))
+    fun nids(model: NotetypeJson): List<int> = nids(model.id)
 
     /** Note ids for M. */
     fun nids(ntid: int): List<int> = col.db.queryLongList("select id from notes where mid = ?", ntid)
@@ -710,7 +710,7 @@ class Notetypes(
             notetype.fields.associateBy({ f -> f.name }, { f -> Pair(f.ord, f) })
 
         // not in anki
-        fun isModelNew(notetype: NotetypeJson): Boolean = notetype.getLong("id") == 0L
+        fun isModelNew(notetype: NotetypeJson): Boolean = notetype.id == 0L
 
         fun _updateTemplOrds(notetype: NotetypeJson) {
             for ((i, template) in notetype.templates.withIndex()) {
