@@ -557,7 +557,7 @@ class InstantNoteEditorActivity :
         if (deck == null) {
             return
         }
-        viewModel.setDeckId(deck.deckId)
+        viewModel.deckId = deck.deckId
         // this is called because DeckSpinnerSelection.onDeckAdded doesn't update the list
         deckSpinnerSelection!!.initializeNoteEditorDeckSpinner(getColUnsafe, android.R.layout.simple_spinner_item)
         launchCatchingTask {
