@@ -754,7 +754,7 @@ class NoteEditor :
         // Deck Selector
         val deckTextView = requireView().findViewById<TextView>(R.id.CardEditorDeckText)
         // If edit mode and more than one card template distinguish between "Deck" and "Card deck"
-        if (!addNote && editorNote!!.notetype.tmpls.length() > 1) {
+        if (!addNote && editorNote!!.notetype.templates.length() > 1) {
             deckTextView.setText(R.string.CardEditorCardDeck)
         }
         deckSpinnerSelection =
@@ -2541,7 +2541,7 @@ class NoteEditor :
     @KotlinCleanup("make non-null")
     private fun updateCards(model: NotetypeJson?) {
         Timber.d("updateCards()")
-        val tmpls = model!!.tmpls
+        val tmpls = model!!.templates
         var cardsList = StringBuilder()
         // Build comma separated list of card names
         Timber.d("updateCards() template count is %s", tmpls.length())
@@ -2562,7 +2562,7 @@ class NoteEditor :
             }
         }
         // Make cards list red if the number of cards is being reduced
-        if (!addNote && tmpls.length() < editorNote!!.notetype.tmpls.length()) {
+        if (!addNote && tmpls.length() < editorNote!!.notetype.templates.length()) {
             cardsList = StringBuilder("<font color='red'>$cardsList</font>")
         }
         cardsButton!!.text =
@@ -2707,7 +2707,7 @@ class NoteEditor :
                 @KotlinCleanup("Check if this ever happens")
                 val tmpls =
                     try {
-                        newModel.tmpls
+                        newModel.templates
                     } catch (e: Exception) {
                         Timber.w("error in obtaining templates from model %s", allModelIds!![pos])
                         return

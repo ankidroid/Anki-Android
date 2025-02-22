@@ -282,7 +282,7 @@ class CardContentProvider : ContentProvider() {
                 val columns = projection ?: FlashCardsContract.CardTemplate.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
                 try {
-                    for ((idx, template) in currentNoteType!!.tmpls.withIndex()) {
+                    for ((idx, template) in currentNoteType!!.templates.withIndex()) {
                         addTemplateToCursor(template, currentNoteType, idx + 1, noteTypes, rv, columns)
                     }
                 } catch (e: JSONException) {
@@ -573,7 +573,7 @@ class CardContentProvider : ContentProvider() {
                 try {
                     val templateOrd = uri.lastPathSegment!!.toInt()
                     val existingNoteType = col.notetypes.get(getNoteTypeIdFromUri(uri, col))
-                    val templates = existingNoteType!!.tmpls
+                    val templates = existingNoteType!!.templates
                     val template = templates[templateOrd]
                     if (name != null) {
                         template.name = name
@@ -597,7 +597,7 @@ class CardContentProvider : ContentProvider() {
                     }
                     // Save the note type
                     templates[templateOrd] = template
-                    existingNoteType.tmpls = templates
+                    existingNoteType.templates = templates
                     col.notetypes.save(existingNoteType)
                 } catch (e: JSONException) {
                     throw IllegalArgumentException("Note type is malformed", e)
@@ -923,7 +923,7 @@ class CardContentProvider : ContentProvider() {
                             }
                         notetypes.addTemplate(existingNoteType, t)
                         notetypes.update(existingNoteType)
-                        t = existingNoteType.tmpls.last()
+                        t = existingNoteType.templates.last()
                         return ContentUris.withAppendedId(uri, t.ord.toLong())
                     } catch (e: ConfirmModSchemaException) {
                         throw IllegalArgumentException("Unable to add template without user requesting/accepting full-sync", e)
@@ -1074,7 +1074,7 @@ class CardContentProvider : ContentProvider() {
                         @KotlinCleanup("remove requireNoNulls")
                         rb.add(Utils.joinFields(allFlds.requireNoNulls()))
                     }
-                    FlashCardsContract.Model.NUM_CARDS -> rb.add(jsonObject!!.tmpls.length())
+                    FlashCardsContract.Model.NUM_CARDS -> rb.add(jsonObject!!.templates.length())
                     FlashCardsContract.Model.CSS -> rb.add(jsonObject!!.getString("css"))
                     FlashCardsContract.Model.DECK_ID -> // #6378 - Anki Desktop changed schema temporarily to allow null
                         rb.add(jsonObject!!.optLong("did", Consts.DEFAULT_DECK_ID))
@@ -1318,7 +1318,7 @@ class CardContentProvider : ContentProvider() {
     ): CardTemplate {
         val noteType: NotetypeJson? = col.notetypes.get(getNoteTypeIdFromUri(uri, col))
         val ord = uri.lastPathSegment!!.toInt()
-        return noteType!!.tmpls[ord]
+        return noteType!!.templates[ord]
     }
 
     private fun throwSecurityException(

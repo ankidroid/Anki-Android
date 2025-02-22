@@ -474,7 +474,7 @@ class ReviewerTest : RobolectricTest() {
         notetype: NotetypeJson,
         extra: String,
     ) {
-        val tmpls = notetype.tmpls
+        val tmpls = notetype.templates
         val defaultTemplate = tmpls.first()
 
         val newTemplate = defaultTemplate.deepClone()

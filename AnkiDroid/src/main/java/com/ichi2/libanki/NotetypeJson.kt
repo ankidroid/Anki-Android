@@ -71,6 +71,11 @@ class NotetypeJson : JSONObject {
      */
     val did: DeckId
         get() = if (isNull("did")) 1L else getLong("did")
+
+    /**
+     * The list of name of the template of this note type.
+     * For cloze deletion type, there is a single name, called "cloze" (localized at time of note type creation).
+     */
     val templatesNames: List<String>
         get() = getJSONArray("tmpls").toStringList("name")
     val isStd: Boolean
@@ -110,7 +115,11 @@ class NotetypeJson : JSONObject {
             put("flds", value.jsonArray)
         }
 
-    var tmpls: CardTemplates
+    /**
+     * The array of card templates of this note type.
+     * For cloze deletion type, the array contain a single element that is the only cloze template of the note type.
+     */
+    var templates: CardTemplates
         get() = CardTemplates(getJSONArray("tmpls"))
         set(value) {
             put("tmpls", value.jsonArray)

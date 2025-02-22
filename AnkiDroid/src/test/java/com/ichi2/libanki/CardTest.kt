@@ -81,7 +81,7 @@ class CardTest : JvmTest() {
         assertEquals(2, note.numberOfCards())
         // if the template is changed to remove cards, they'll be removed
         t =
-            noteType.tmpls[1].apply {
+            noteType.templates[1].apply {
                 qfmt = "{{Back}}"
             }
         noteTypes.save(noteType)
@@ -129,7 +129,7 @@ class CardTest : JvmTest() {
         val fld2 = models.newField("C")
         fld2.setOrd(null)
         models.addFieldLegacy(model, fld2)
-        model.tmpls[0].qfmt = "{{A}}{{B}}{{C}}"
+        model.templates[0].qfmt = "{{A}}{{B}}{{C}}"
         // ensure first card is always generated,
         // because at last one card is generated
         val tmpl = Notetypes.newTemplate("AND_OR")
@@ -172,7 +172,7 @@ class CardTest : JvmTest() {
         val models = col.notetypes
         val model = models.byName("Basic")
         assertNotNull(model)
-        val tmpls = model.tmpls
+        val tmpls = model.templates
         models.renameFieldLegacy(model, model.fields[0], "First")
         models.renameFieldLegacy(model, model.fields[1], "Front")
         val fld2 = models.newField("AddIfEmpty")

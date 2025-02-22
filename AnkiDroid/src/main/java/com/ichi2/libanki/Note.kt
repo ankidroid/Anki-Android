@@ -120,7 +120,7 @@ class Note : Cloneable {
                 customTemplate.deepClone()
             } else {
                 val index = if (model.isStd) ord else 0
-                model.tmpls[index]
+                model.templates[index]
             }
         // may differ in cloze case
         template.setOrd(card.ord)
