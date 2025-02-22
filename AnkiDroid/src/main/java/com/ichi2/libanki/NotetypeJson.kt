@@ -19,6 +19,7 @@ package com.ichi2.libanki
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.api.AddContentApi.Companion.DEFAULT_DECK_ID
+import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_UNKNOWN_VALUE
 import com.ichi2.utils.deepClonedInto
 import com.ichi2.utils.toStringList
 import org.intellij.lang.annotations.Language
@@ -94,6 +95,9 @@ class NotetypeJson : JSONObject {
     val isCloze: Boolean
         get() = type == NoteTypeKind.Cloze
 
+    /**
+     * The css in common of all card types of this note type.
+     */
     var css: String
         get() = getString("css")
         set(value) {
@@ -176,6 +180,17 @@ class NotetypeJson : JSONObject {
         set(value) {
             put("name", value)
         }
+
+    /**
+     * One of [anki.notetypes.StockNotetype.OriginalStockKind].
+     * Represents the note type that was modified to create the current note type.
+     * Can be unset if the note type was created by a version of anki where this value was
+     * not recorded.
+     * Can be used to check whether a note type is a image occlusion, or
+     * to reset the note type to its default value.
+     */
+    val originalStockKind: Int
+        get() = optInt("originalStockKind", ORIGINAL_STOCK_KIND_UNKNOWN_VALUE)
 
     /** Integer specifying which field is used for sorting in the browser */
     var sortf: Int

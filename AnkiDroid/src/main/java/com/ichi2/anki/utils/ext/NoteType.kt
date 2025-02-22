@@ -26,7 +26,7 @@ import org.json.JSONException
 val NotetypeJson.isImageOcclusion: Boolean
     get() =
         try {
-            getInt("originalStockKind") == ORIGINAL_STOCK_KIND_IMAGE_OCCLUSION_VALUE
+            originalStockKind == ORIGINAL_STOCK_KIND_IMAGE_OCCLUSION_VALUE
         } catch (e: JSONException) {
             false
         }
