@@ -251,6 +251,19 @@ class NotetypeJson : JSONObject {
         get() = optBoolean("latexsvg", false)
 
     /**
+     * The name of all the fields that are used as cloze in this note type.
+     * @throws IllegalStateException if this note type is note a cloze deletion type.
+     */
+    fun getAllClozeTextFields(): List<String> {
+        if (!this.isCloze) {
+            throw IllegalStateException("getAllClozeTextFields called on non-cloze template")
+        }
+
+        val questionFormat = templates.single().qfmt
+        return clozeRegex.findAll(questionFormat).map { it.groups[1]!!.value }.toList()
+    }
+
+    /**
      * Defines the requirements for generating cards (for [standard note types][Consts.MODEL_STD])
      *
      * A requirement states that either one of, or all of a set of fields must be non-empty to
@@ -289,4 +302,11 @@ class NotetypeJson : JSONObject {
         set(value) {
             put("req", value)
         }
+
+    companion object {
+        /**
+         * Regular expression pattern for extracting cloze text fields.
+         */
+        private val clozeRegex = "\\{\\{(?:.*?:)?cloze:([^}]*)\\}\\}".toRegex()
+    }
 }

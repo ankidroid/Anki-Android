@@ -18,7 +18,6 @@
 package com.ichi2.utils
 
 import anki.notetypes.StockNotetype
-import com.ichi2.anki.utils.ext.getAllClozeTextFields
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.addNotetypeLegacy
