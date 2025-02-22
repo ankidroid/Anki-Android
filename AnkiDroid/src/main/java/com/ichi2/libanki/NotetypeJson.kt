@@ -114,6 +114,16 @@ class NotetypeJson : JSONObject {
         }
 
     /**
+     * The end of the LaTeX code used in this note type.
+     * @see latexPre to understand context.
+     */
+    var latexPost: String
+        get() = getString("latexPost")
+        set(value) {
+            put("latexPost", value)
+        }
+
+    /**
      * @param sfld Fields of a note of this note type
      * @return The names of non-empty fields
      */
