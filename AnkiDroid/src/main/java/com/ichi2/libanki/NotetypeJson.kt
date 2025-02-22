@@ -101,6 +101,19 @@ class NotetypeJson : JSONObject {
         }
 
     /**
+     * The preamble for the LaTeX code used in this note type.
+     * In AnkiDroid, this can only be used by the CardContentProvider.
+     * This is voluntarily not accessible in normal AnkiDroid usage because,
+     * after each change of this value all LaTeX content must be recompiled,
+     * which requires a desktop with LaTeX installed.
+     */
+    var latexPre: String
+        get() = getString("latexPre")
+        set(value) {
+            put("latexPre", value)
+        }
+
+    /**
      * @param sfld Fields of a note of this note type
      * @return The names of non-empty fields
      */

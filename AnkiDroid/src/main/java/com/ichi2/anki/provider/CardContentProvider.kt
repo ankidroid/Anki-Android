@@ -548,7 +548,7 @@ class CardContentProvider : ContentProvider() {
                         updated++
                     }
                     if (newLatexPre != null) {
-                        noteType!!.put("latexPre", newLatexPre)
+                        noteType!!.latexPre = newLatexPre
                         updated++
                     }
                     col.notetypes.save(noteType!!)
@@ -887,7 +887,7 @@ class CardContentProvider : ContentProvider() {
                         newNoteType.put("latexPost", latexPost)
                     }
                     if (latexPre != null) {
-                        newNoteType.put("latexPre", latexPre)
+                        newNoteType.latexPre = latexPre
                     }
                     // Add the note type to collection (from this point on edits will require a full-sync)
                     noteTypes.add(newNoteType)
@@ -1081,7 +1081,7 @@ class CardContentProvider : ContentProvider() {
                     FlashCardsContract.Model.SORT_FIELD_INDEX -> rb.add(jsonObject!!.getLong("sortf"))
                     FlashCardsContract.Model.TYPE -> rb.add(jsonObject!!.getLong("type"))
                     FlashCardsContract.Model.LATEX_POST -> rb.add(jsonObject!!.getString("latexPost"))
-                    FlashCardsContract.Model.LATEX_PRE -> rb.add(jsonObject!!.getString("latexPre"))
+                    FlashCardsContract.Model.LATEX_PRE -> rb.add(jsonObject!!.latexPre)
                     FlashCardsContract.Model.NOTE_COUNT -> rb.add(notetypes.useCount(jsonObject!!))
                     else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
                 }
