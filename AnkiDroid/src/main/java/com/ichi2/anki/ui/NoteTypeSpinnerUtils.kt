@@ -29,7 +29,7 @@ fun setupNoteTypeSpinner(
     col: Collection,
 ): List<Long> {
     val sortedModels = col.notetypes.all().sortedWith(NamedJSONComparator.INSTANCE)
-    val modelNames = sortedModels.map { it.getString("name") }
+    val modelNames = sortedModels.map { it.name }
 
     noteTypeSpinner.adapter =
         ArrayAdapter(

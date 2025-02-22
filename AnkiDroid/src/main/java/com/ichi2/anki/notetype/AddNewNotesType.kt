@@ -30,6 +30,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.withProgress
+import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.addNotetype
 import com.ichi2.libanki.addNotetypeLegacy
@@ -57,10 +58,9 @@ class AddNewNotesType(
                         StockNotetype.Kind.entries
                             .filter { it != StockNotetype.Kind.UNRECOGNIZED }
                             .map {
-                                val stockNotetype = getStockNotetype(it)
                                 AddNotetypeUiModel(
                                     id = it.number.toLong(),
-                                    name = stockNotetype.get("name") as String,
+                                    name = getStockNotetype(it).name,
                                     isStandard = true,
                                 )
                             }
@@ -156,7 +156,7 @@ class AddNewNotesType(
                 val kind = StockNotetype.Kind.forNumber(selectedOption.id.toInt())
                 val updatedStandardNotetype =
                     getStockNotetype(kind).apply {
-                        set("name", newName)
+                        this.name = name
                     }
                 addNotetypeLegacy(BackendUtils.toJsonBytes(updatedStandardNotetype))
             }
