@@ -38,7 +38,6 @@ import com.ichi2.anki.NoteEditorTest.FromScreen.REVIEWER
 import com.ichi2.anki.api.AddContentApi.Companion.DEFAULT_DECK_ID
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
-import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.annotations.DuplicatedCode
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
