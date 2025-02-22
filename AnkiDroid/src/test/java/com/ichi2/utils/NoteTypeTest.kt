@@ -23,7 +23,6 @@ import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.addNotetypeLegacy
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.getStockNotetype
-import com.ichi2.libanki.utils.set
 import junit.framework.TestCase.assertEquals
 import kotlin.test.Test
 
@@ -102,7 +101,7 @@ const val BASIC_MODEL_NAME = "Basic"
  */
 fun Collection.createBasicModel(name: String = BASIC_MODEL_NAME): NotetypeJson {
     val noteType =
-        getStockNotetype(StockNotetype.Kind.KIND_BASIC).apply { set("name", name) }
+        getStockNotetype(StockNotetype.Kind.KIND_BASIC).apply { this.name = name }
     addNotetypeLegacy(BackendUtils.toJsonBytes(noteType))
     return notetypes.byName(name)!!
 }

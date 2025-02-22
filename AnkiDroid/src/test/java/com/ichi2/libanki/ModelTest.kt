@@ -104,7 +104,7 @@ class NotetypeTest : JvmTest() {
     fun test_modelCopy() {
         val noteType = col.notetypes.current()
         val noteType2 = col.notetypes.copy(noteType)
-        assertEquals("Basic copy", noteType2.getString("name"))
+        assertEquals("Basic copy", noteType2.name)
         assertNotEquals(noteType2.getLong("id"), noteType.getLong("id"))
         assertEquals(2, noteType2.fields.length())
         assertEquals(2, noteType.fields.length())
@@ -329,7 +329,7 @@ class NotetypeTest : JvmTest() {
         }
         col.notetypes.setCurrent(col.notetypes.byName("Cloze")!!)
         var note = col.newNote()
-        assertEquals("Cloze", note.notetype.getString("name"))
+        assertEquals("Cloze", note.notetype.name)
         // a cloze model with no clozes is not empty
         note.setItem("Text", "nothing")
         assertEquals(1, col.addNote(note))

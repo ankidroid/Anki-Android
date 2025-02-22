@@ -283,7 +283,7 @@ open class CardTemplateEditor :
         // Set activity title
         supportActionBar?.let {
             it.setTitle(R.string.title_activity_template_editor)
-            it.subtitle = tempModel!!.notetype.optString("name")
+            it.subtitle = tempModel!!.notetype.name
         }
         // Close collection opening dialog if needed
         Timber.i("CardTemplateEditor:: Card template editor successfully started for model id %d", modelId)

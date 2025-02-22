@@ -177,6 +177,9 @@ class NotetypeJson : JSONObject {
             put("id", value)
         }
 
+    /**
+     * The name of the note type.
+     */
     var name: String
         get() = getString("name")
         set(value) {
