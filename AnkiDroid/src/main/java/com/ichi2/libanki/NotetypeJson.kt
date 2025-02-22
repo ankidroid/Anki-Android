@@ -188,6 +188,12 @@ class NotetypeJson : JSONObject {
             put("mod", value)
         }
 
+    var usn: Int
+        get() = getInt("usn")
+        set(value) {
+            put("usn", value)
+        }
+
     /**
      * Defines the requirements for generating cards (for [standard note types][Consts.MODEL_STD])
      *

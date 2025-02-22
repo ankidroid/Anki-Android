@@ -88,7 +88,7 @@ class Notetypes(
         // causes a backup entry to be created, which invalidates the
         // v2 review history. So we manually update the usn/mtime here
         notetype.mod = TimeManager.time.intTime()
-        notetype.put("usn", col.usn())
+        notetype.usn = col.usn()
         update(notetype, preserveUsnAndMtime = true)
     }
 
