@@ -2167,7 +2167,6 @@ open class DeckPicker :
             openReviewerOrStudyOptions(selectionType)
             return
         }
-
         when (queryCompletedDeckCustomStudyAction(did)) {
             CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED,
             CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY,
@@ -2678,10 +2677,16 @@ open class DeckPicker :
             withCol { sched.hasCardsTodayAfterStudyAheadLimit() } -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
             withCol { sched.newDue() || sched.revDue() } -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
             withCol { decks.isFiltered(did) } -> CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED
-            getNodeByDid(did).children.isEmpty() &&
+            run {
+                val node = getNodeByDid(did)
                 withCol {
-                    decks.isEmpty(did)
-                } -> CompletedDeckStatus.EMPTY_REGULAR_DECK
+                    var allChildrenEmpty = true
+                    node.forEach { deckNode ->
+                        allChildrenEmpty = allChildrenEmpty && decks.isEmpty(deckNode.did)
+                    }
+                    allChildrenEmpty
+                }
+            } -> CompletedDeckStatus.EMPTY_REGULAR_DECK
             else -> CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY
         }
 
