@@ -27,7 +27,6 @@ import com.ichi2.anki.NoteFieldsCheckResult
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.checkNoteFieldsResponse
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity.DialogType
-import com.ichi2.anki.utils.ext.getAllClozeTextFields
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.Note
