@@ -219,6 +219,17 @@ class NotetypeJson : JSONObject {
         }
 
     /**
+     * Timestamp of the last time the note type was modified.
+     * sed to decide whether syncing the note type is needed and
+     * to resolve conflict when the note type was modified locally and remotely.
+     */
+    var mod: Long
+        get() = getLong("mod")
+        set(value) {
+            put("mod", value)
+        }
+
+    /**
      * Defines the requirements for generating cards (for [standard note types][Consts.MODEL_STD])
      *
      * A requirement states that either one of, or all of a set of fields must be non-empty to
