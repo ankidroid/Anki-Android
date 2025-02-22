@@ -537,7 +537,7 @@ class CardContentProvider : ContentProvider() {
                         updated++
                     }
                     if (newSortf != null) {
-                        noteType!!.put("sortf", newSortf)
+                        noteType!!.sortf = newSortf
                         updated++
                     }
                     if (newType != null) {
@@ -879,7 +879,7 @@ class CardContentProvider : ContentProvider() {
                         newNoteType.did = did
                     }
                     if (sortf != null && sortf < allFields.size) {
-                        newNoteType.put("sortf", sortf)
+                        newNoteType.sortf = sortf
                     }
                     if (type != null) {
                         newNoteType.type = type
@@ -1079,7 +1079,7 @@ class CardContentProvider : ContentProvider() {
                     FlashCardsContract.Model.CSS -> rb.add(noteType!!.css)
                     FlashCardsContract.Model.DECK_ID -> // #6378 - Anki Desktop changed schema temporarily to allow null
                         rb.add(noteType!!.did)
-                    FlashCardsContract.Model.SORT_FIELD_INDEX -> rb.add(noteType!!.getLong("sortf"))
+                    FlashCardsContract.Model.SORT_FIELD_INDEX -> rb.add(noteType!!.sortf)
                     FlashCardsContract.Model.TYPE -> rb.add(noteType!!.type)
                     FlashCardsContract.Model.LATEX_POST -> rb.add(noteType!!.latexPost)
                     FlashCardsContract.Model.LATEX_PRE -> rb.add(noteType!!.latexPre)
