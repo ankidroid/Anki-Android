@@ -44,6 +44,7 @@ import com.ichi2.libanki.Decks
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.NoteTypeId
+import com.ichi2.libanki.NoteTypeKind
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.Sound.replaceWithSoundTags
@@ -512,7 +513,7 @@ class CardContentProvider : ContentProvider() {
                     "Field names cannot be changed via provider"
                 }
                 val newSortf = values.getAsInteger(FlashCardsContract.Model.SORT_FIELD_INDEX)
-                val newType = values.getAsInteger(FlashCardsContract.Model.TYPE)
+                val newType = values.getAsInteger(FlashCardsContract.Model.TYPE)?.let(NoteTypeKind::fromCode)
                 val newLatexPost = values.getAsString(FlashCardsContract.Model.LATEX_POST)
                 val newLatexPre = values.getAsString(FlashCardsContract.Model.LATEX_PRE)
                 // Get the original note JSON
@@ -540,7 +541,7 @@ class CardContentProvider : ContentProvider() {
                         updated++
                     }
                     if (newType != null) {
-                        noteType!!.put("type", newType)
+                        noteType!!.type = newType
                         updated++
                     }
                     if (newLatexPost != null) {
@@ -836,7 +837,7 @@ class CardContentProvider : ContentProvider() {
                 val fieldNames = values.getAsString(FlashCardsContract.Model.FIELD_NAMES)
                 val numCards = values.getAsInteger(FlashCardsContract.Model.NUM_CARDS)
                 val sortf = values.getAsInteger(FlashCardsContract.Model.SORT_FIELD_INDEX)
-                val type = values.getAsInteger(FlashCardsContract.Model.TYPE)
+                val type = values.getAsInteger(FlashCardsContract.Model.TYPE)?.let(NoteTypeKind::fromCode)
                 val latexPost = values.getAsString(FlashCardsContract.Model.LATEX_POST)
                 val latexPre = values.getAsString(FlashCardsContract.Model.LATEX_PRE)
                 // Throw exception if required fields empty
@@ -881,7 +882,7 @@ class CardContentProvider : ContentProvider() {
                         newNoteType.put("sortf", sortf)
                     }
                     if (type != null) {
-                        newNoteType.put("type", type)
+                        newNoteType.type = type
                     }
                     if (latexPost != null) {
                         newNoteType.latexPost = latexPost
@@ -1079,7 +1080,7 @@ class CardContentProvider : ContentProvider() {
                     FlashCardsContract.Model.DECK_ID -> // #6378 - Anki Desktop changed schema temporarily to allow null
                         rb.add(jsonObject!!.did)
                     FlashCardsContract.Model.SORT_FIELD_INDEX -> rb.add(jsonObject!!.getLong("sortf"))
-                    FlashCardsContract.Model.TYPE -> rb.add(jsonObject!!.getLong("type"))
+                    FlashCardsContract.Model.TYPE -> rb.add(jsonObject!!.type)
                     FlashCardsContract.Model.LATEX_POST -> rb.add(jsonObject!!.latexPost)
                     FlashCardsContract.Model.LATEX_PRE -> rb.add(jsonObject!!.latexPre)
                     FlashCardsContract.Model.NOTE_COUNT -> rb.add(notetypes.useCount(jsonObject!!))
