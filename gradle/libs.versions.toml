@@ -82,7 +82,7 @@ json = "20250107"
 jsoup = "1.18.3"
 androidTestJunit = "1.2.1"
 junitJupiter = "5.11.4"
-junitPlatformLauncher = "1.11.4"
+junitPlatformLauncher = "1.12.0"
 # https://github.com/JetBrains/kotlin/releases/
 kotlin = '2.1.10'
 kotlinxSerializationJson = "1.8.0"
