@@ -1261,7 +1261,10 @@ class NoteEditor :
             // changed did? this has to be done first as remFromDyn() involves a direct write to the database
             if (currentEditedCard != null && currentEditedCard!!.currentDeckId() != deckId) {
                 reloadRequired = true
-                undoableOp { setDeck(listOf(currentEditedCard!!.id), deckId) }
+                // Obtain all card IDs for the current note
+                val allCardIds = editorNote!!.cardIds(getColUnsafe)
+                // Update the deck for every card of that note
+                undoableOp { setDeck(allCardIds, deckId) }
                 // refresh the card object to reflect the database changes from above
                 currentEditedCard!!.load(getColUnsafe)
                 // also reload the note object
