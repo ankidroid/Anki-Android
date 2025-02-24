@@ -15,11 +15,9 @@
  */
 package com.ichi2.anki.preferences.reviewer
 
-import android.content.SharedPreferences
 import android.view.MenuItem
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
-import androidx.core.content.edit
 import com.ichi2.anki.R
 
 enum class MenuDisplayType(
@@ -37,58 +35,4 @@ enum class MenuDisplayType(
 
     @VisibleForTesting
     val preferenceKey get() = "ReviewerMenuDisplayType_$name"
-
-    /**
-     * @return the configured actions for this menu display type.
-     */
-    @VisibleForTesting
-    fun getConfiguredActions(preferences: SharedPreferences): List<ViewerAction> {
-        val prefValue =
-            preferences.getString(preferenceKey, null)
-                ?: return emptyList()
-
-        val actionsNames = prefValue.split(SEPARATOR)
-        return actionsNames.mapNotNull { name ->
-            ViewerAction.entries.firstOrNull { it.name == name }
-        }
-    }
-
-    fun setPreferenceValue(
-        preferences: SharedPreferences,
-        actions: List<ViewerAction>,
-    ) {
-        val prefValue = actions.joinToString(SEPARATOR) { it.name }
-        preferences.edit { putString(preferenceKey, prefValue) }
-    }
-
-    companion object {
-        private const val SEPARATOR = ","
-
-        /**
-         * @return A list of all actions that aren't configured.
-         * Not configured items that don't have a default display type aren't included.
-         *
-         * May happen if the user hasn't configured any of the menu actions,
-         * or if a new action was implemented but not configured yet.
-         */
-        @VisibleForTesting
-        fun getAllNotConfiguredActions(prefs: SharedPreferences): List<ViewerAction> {
-            val mappedActions = MenuDisplayType.entries.flatMap { it.getConfiguredActions(prefs) }
-            return ViewerAction.entries.filter {
-                it.defaultDisplayType != null && it !in mappedActions
-            }
-        }
-
-        fun getMenuItems(
-            prefs: SharedPreferences,
-            vararg selected: MenuDisplayType = MenuDisplayType.entries.toTypedArray(),
-        ): Map<MenuDisplayType, List<ViewerAction>> {
-            val notConfiguredActions = getAllNotConfiguredActions(prefs)
-
-            return selected.toSet().associateWith { type ->
-                type.getConfiguredActions(prefs) +
-                    notConfiguredActions.filter { it.defaultDisplayType == type }
-            }
-        }
-    }
 }
