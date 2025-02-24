@@ -43,11 +43,13 @@ runKtlint () {
     if [ -s $diff_path ]; then
         git apply --ignore-whitespace $diff_path
         apply_exit_code=$?
-        if [apply_exit_code -ne 0]; then
+        if [ $apply_exit_code -ne 0 ]; then
             echo "`git apply` failed. You can find a patch of the version of the code before your `git commit` in $diff_path"
         else
             rm $diff_path
         fi
+    else
+      rm $diff_path
     fi
     unset diff_path
 
