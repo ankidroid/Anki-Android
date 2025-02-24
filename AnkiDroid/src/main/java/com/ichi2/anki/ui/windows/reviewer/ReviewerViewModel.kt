@@ -437,6 +437,11 @@ class ReviewerViewModel(
         isMarkedFlow.emit(isMarkedValue)
     }
 
+    private suspend fun updateFlagIcon() {
+        val card = currentCard.await()
+        flagFlow.emit(card.flag)
+    }
+
     private suspend fun updateCurrentCard() {
         queueState =
             asyncIO {
@@ -456,7 +461,7 @@ class ReviewerViewModel(
         showQuestion()
         loadAndPlaySounds(CardSide.QUESTION)
         updateMarkIcon()
-        flagFlow.emit(card.flag)
+        updateFlagIcon()
         canBuryNoteFlow.emit(isBuryNoteAvailable(card))
         canSuspendNoteFlow.emit(isSuspendNoteAvailable(card))
         countsFlow.emit(state.counts to state.countsIndex)
