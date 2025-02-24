@@ -15,7 +15,6 @@
  */
 package com.ichi2.anki.preferences.reviewer
 
-import android.content.SharedPreferences
 import android.view.MenuItem
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
@@ -36,50 +35,4 @@ enum class MenuDisplayType(
 
     @VisibleForTesting
     val preferenceKey get() = "ReviewerMenuDisplayType_$name"
-
-    /**
-     * @return the configured actions for this menu display type.
-     */
-    @VisibleForTesting
-    fun getConfiguredActions(preferences: SharedPreferences): List<ViewerAction> {
-        val prefValue =
-            preferences.getString(preferenceKey, null)
-                ?: return emptyList()
-
-        val actionsNames = prefValue.split(SEPARATOR)
-        return actionsNames.mapNotNull { name ->
-            ViewerAction.entries.firstOrNull { it.name == name }
-        }
-    }
-
-    companion object {
-        private const val SEPARATOR = ","
-
-        /**
-         * @return A list of all actions that aren't configured.
-         * Not configured items that don't have a default display type aren't included.
-         *
-         * May happen if the user hasn't configured any of the menu actions,
-         * or if a new action was implemented but not configured yet.
-         */
-        @VisibleForTesting
-        fun getAllNotConfiguredActions(prefs: SharedPreferences): List<ViewerAction> {
-            val mappedActions = MenuDisplayType.entries.flatMap { it.getConfiguredActions(prefs) }
-            return ViewerAction.entries.filter {
-                it.defaultDisplayType != null && it !in mappedActions
-            }
-        }
-
-        fun getMenuItems(
-            prefs: SharedPreferences,
-            vararg selected: MenuDisplayType = MenuDisplayType.entries.toTypedArray(),
-        ): Map<MenuDisplayType, List<ViewerAction>> {
-            val notConfiguredActions = getAllNotConfiguredActions(prefs)
-
-            return selected.toSet().associateWith { type ->
-                type.getConfiguredActions(prefs) +
-                    notConfiguredActions.filter { it.defaultDisplayType == type }
-            }
-        }
-    }
 }

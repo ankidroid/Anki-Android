@@ -54,7 +54,7 @@ class ReviewerMenuSettingsFragment :
     }
 
     private fun setupRecyclerView(view: View) {
-        val menuItems = MenuDisplayType.getMenuItems(sharedPrefs())
+        val menuItems = repository.getActionsByMenuDisplayTypes()
 
         fun section(displayType: MenuDisplayType): List<ReviewerMenuSettingsRecyclerItem> =
             listOf(ReviewerMenuSettingsRecyclerItem.DisplayType(displayType)) +
