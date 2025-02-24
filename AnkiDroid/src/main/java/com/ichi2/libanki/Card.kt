@@ -19,7 +19,6 @@ package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
 import anki.cards.FsrsMemoryState
-import com.ichi2.anki.Flag
 import com.ichi2.anki.utils.ext.ifZero
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
@@ -325,7 +324,7 @@ open class Card : Cloneable {
     // upstream's function returns an int between 0 and 7 (included).
     // We return an enum entry for the sake of improving the typing.
     @LibAnkiAlias("user_flag")
-    fun userFlag() = Flag.fromCode(flags and 0b111)
+    fun userFlag() = flags and 0b111
 
     /**
      * Set [flags] to [flag].
@@ -344,8 +343,8 @@ open class Card : Cloneable {
     // We take a flag for the sake of typing clarity.
     @RustCleanup("deprecated in Anki: use col.set_user_flag_for_cards() instead")
     @LibAnkiAlias("set_user_flag")
-    fun setUserFlag(flag: Flag) {
-        flags = setFlagInInt(flags, flag.code)
+    fun setUserFlag(flag: Int) {
+        flags = setFlagInInt(flags, flag)
     }
 
     @NotInLibAnki

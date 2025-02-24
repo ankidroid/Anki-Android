@@ -33,6 +33,8 @@ import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.anki.utils.ext.flag
+import com.ichi2.anki.utils.ext.setUserFlagForCards
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.undoableOp
@@ -213,7 +215,7 @@ class PreviewerViewModel(
     }
 
     private suspend fun updateFlagIcon() {
-        flag.emit(currentCard.await().userFlag())
+        flag.emit(currentCard.await().flag)
     }
 
     private suspend fun updateMarkIcon() {

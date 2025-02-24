@@ -40,7 +40,6 @@ import anki.search.BrowserRow
 import anki.search.SearchNode
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
-import com.ichi2.anki.Flag
 import com.ichi2.libanki.Utils.ids2str
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.backend.model.toProtoBuf
@@ -588,8 +587,8 @@ class Collection(
     @CheckResult
     fun setUserFlagForCards(
         cids: Iterable<Long>,
-        flag: Flag,
-    ): OpChangesWithCount = backend.setFlag(cardIds = cids, flag = flag.code)
+        flag: Int,
+    ): OpChangesWithCount = backend.setFlag(cardIds = cids, flag = flag)
 
     fun getEmptyCards(): EmptyCardsReport = backend.getEmptyCards()
 
