@@ -87,7 +87,9 @@ open class Card : Cloneable {
     var oDid: DeckId = 0
     var originalPosition: Int? = null
     private var customData: String = ""
-    private var flags = 0
+
+    @VisibleForTesting
+    var flags = 0
     private var memoryState: FsrsMemoryState? = null
     private var desiredRetention: Float? = null
 
@@ -326,16 +328,6 @@ open class Card : Cloneable {
     // We return an enum entry for the sake of improving the typing.
     @LibAnkiAlias("user_flag")
     fun userFlag() = Flag.fromCode(flags and 0b111)
-
-    /**
-     * Set [flags] to [flag].
-     * Should only be used for testing.
-     * Use [setUserFlag] instead.
-     */
-    @VisibleForTesting
-    fun setFlag(flag: Int) {
-        flags = flag
-    }
 
     /**
      * Set the first three bits of [flags] to [flag]. Don't change the other ones.

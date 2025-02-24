@@ -17,6 +17,7 @@ package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.Flag
+import com.ichi2.anki.utils.ext.setFlag
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.ext.addNote
 import org.junit.Assert.assertEquals
