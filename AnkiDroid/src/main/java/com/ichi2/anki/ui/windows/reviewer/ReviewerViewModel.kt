@@ -431,7 +431,7 @@ class ReviewerViewModel(
         cardMediaPlayer.playAllSoundsForSide(side)
     }
 
-    private suspend fun updateMarkedStatus() {
+    private suspend fun updateMarkIcon() {
         val card = currentCard.await()
         val isMarkedValue = withCol { card.note(this@withCol).hasTag(this@withCol, MARKED_TAG) }
         isMarkedFlow.emit(isMarkedValue)
@@ -455,7 +455,7 @@ class ReviewerViewModel(
         autoAdvance.onCardChange(card)
         showQuestion()
         loadAndPlaySounds(CardSide.QUESTION)
-        updateMarkedStatus()
+        updateMarkIcon()
         flagFlow.emit(card.flag)
         canBuryNoteFlow.emit(isBuryNoteAvailable(card))
         canSuspendNoteFlow.emit(isSuspendNoteAvailable(card))
