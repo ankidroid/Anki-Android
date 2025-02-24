@@ -19,7 +19,6 @@ import android.content.SharedPreferences
 import android.view.MenuItem
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
-import androidx.core.content.edit
 import com.ichi2.anki.R
 
 enum class MenuDisplayType(
@@ -51,14 +50,6 @@ enum class MenuDisplayType(
         return actionsNames.mapNotNull { name ->
             ViewerAction.entries.firstOrNull { it.name == name }
         }
-    }
-
-    fun setPreferenceValue(
-        preferences: SharedPreferences,
-        actions: List<ViewerAction>,
-    ) {
-        val prefValue = actions.joinToString(SEPARATOR) { it.name }
-        preferences.edit { putString(preferenceKey, prefValue) }
     }
 
     companion object {

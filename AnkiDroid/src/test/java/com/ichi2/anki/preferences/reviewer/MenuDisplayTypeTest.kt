@@ -42,16 +42,12 @@ class MenuDisplayTypeTest {
         assertEquals(MenuDisplayType.DISABLED.preferenceKey, "ReviewerMenuDisplayType_DISABLED")
     }
 
-    // commas can't be part of an enum object name, so they are safe as separators.
-    // This test serves as a safeguard against changes in the separator, which would need
-    // a preference upgrade
-    @Test
-    fun `setPreferenceValue stores actions as comma-separated string`() {
-        val actions = listOf(ViewerAction.UNDO, ViewerAction.REDO)
-        MenuDisplayType.ALWAYS.setPreferenceValue(prefs, actions)
-
-        val expectedValue = "UNDO,REDO"
-        assertEquals(expectedValue, prefs.getString(MenuDisplayType.ALWAYS.preferenceKey, null))
+    private fun MenuDisplayType.setPreferenceValue(
+        preferences: SharedPreferences,
+        actions: List<ViewerAction>,
+    ) {
+        val prefValue = actions.joinToString(",") { it.name }
+        preferences.edit { putString(preferenceKey, prefValue) }
     }
 
     @Test
