@@ -393,6 +393,8 @@ class ReviewerViewModel(
         Timber.v("ReviewerViewModel::showQuestion")
         super.showQuestion()
         runStateMutationHook()
+        updateMarkIcon()
+        updateFlagIcon()
         if (!autoAdvance.shouldWaitForAudio()) {
             autoAdvance.onShowQuestion()
         } // else run in onMediaGroupCompleted
@@ -486,8 +488,6 @@ class ReviewerViewModel(
         autoAdvance.onCardChange(card)
         showQuestion()
         loadAndPlayMedia(CardSide.QUESTION)
-        updateMarkIcon()
-        updateFlagIcon()
         canBuryNoteFlow.emit(isBuryNoteAvailable(card))
         canSuspendNoteFlow.emit(isSuspendNoteAvailable(card))
         countsFlow.emit(state.counts to state.countsIndex)
