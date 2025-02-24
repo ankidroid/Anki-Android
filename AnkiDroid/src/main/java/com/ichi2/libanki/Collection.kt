@@ -557,22 +557,6 @@ class Collection(
         return resp.changes
     }
 
-    /**
-     * Card Flags *****************************************************************************************************
-     */
-    fun setUserFlag(
-        flag: Flag,
-        cids: List<Long>,
-    ) {
-        db.execute(
-            "update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in ${ids2str(cids)}",
-            7,
-            flag.code,
-            usn(),
-            TimeManager.time.intTime(),
-        )
-    }
-
     lateinit var notetypes: Notetypes
         protected set
 

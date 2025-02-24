@@ -929,7 +929,7 @@ class CardBrowserViewModel(
 
     suspend fun updateSelectedCardsFlag(flag: Flag): List<CardId> {
         val idsToChange = queryAllSelectedCardIds()
-        withCol { setUserFlag(flag, cids = idsToChange) }
+        undoableOp { setUserFlagForCards(cids = idsToChange, flag = flag) }
         return idsToChange
     }
 
