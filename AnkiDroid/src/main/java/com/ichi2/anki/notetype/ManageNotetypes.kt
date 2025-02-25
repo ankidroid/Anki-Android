@@ -15,7 +15,6 @@
  ****************************************************************************************/
 package com.ichi2.anki.notetype
 
-import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
@@ -23,27 +22,24 @@ import android.os.Bundle
 import android.view.Menu
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
-import anki.notetypes.copy
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.ModelFieldEditor
 import com.ichi2.anki.R
+import com.ichi2.anki.dialogs.LoadingDialogFragment
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.userAcceptsSchemaChange
 import com.ichi2.anki.withProgress
-import com.ichi2.annotations.NeedsTest
-import com.ichi2.libanki.getNotetype
-import com.ichi2.libanki.getNotetypeNameIdUseCount
 import com.ichi2.libanki.getNotetypeNames
-import com.ichi2.libanki.removeNotetype
-import com.ichi2.libanki.updateNotetype
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.utils.getInputField
 import com.ichi2.utils.input
@@ -54,26 +50,13 @@ import com.ichi2.utils.show
 import com.ichi2.utils.title
 
 class ManageNotetypes : AnkiActivity() {
+    private val viewModel by viewModels<ManageNotetypeViewModel>()
     private lateinit var actionBar: ActionBar
     private lateinit var noteTypesList: RecyclerView
-
-    private var currentNotetypes: List<ManageNoteTypeUiModel> = emptyList()
-
-    // Store search query
-    private var searchQuery: String = ""
 
     private val notetypesAdapter: NotetypesAdapter by lazy {
         NotetypesAdapter(
             this@ManageNotetypes,
-            onShowFields = {
-                launchForChanges<ModelFieldEditor>(
-                    mapOf(
-                        "title" to it.name,
-                        "noteTypeID" to it.id,
-                    ),
-                )
-            },
-            onEditCards = { launchForChanges<CardTemplateEditor>(mapOf("modelId" to it.id)) },
             onRename = ::renameNotetype,
             onDelete = ::deleteNotetype,
         )
@@ -81,7 +64,7 @@ class ManageNotetypes : AnkiActivity() {
     private val outsideChangesLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == RESULT_OK) {
-                launchCatchingTask { runAndRefreshAfter() }
+                viewModel.refresh()
             }
         }
 
@@ -99,10 +82,48 @@ class ManageNotetypes : AnkiActivity() {
                 adapter = notetypesAdapter
             }
         findViewById<FloatingActionButton>(R.id.note_type_add).setOnClickListener {
-            val addNewNotesType = AddNewNotesType(this)
+            val addNewNotesType = AddNewNotesType(this, viewModel)
             launchCatchingTask { addNewNotesType.showAddNewNotetypeDialog() }
         }
-        launchCatchingTask { runAndRefreshAfter() } // shows the initial note types list
+        viewModel.uiState.launchCollectionInLifecycleScope { state ->
+            supportActionBar?.subtitle =
+                resources.getQuantityString(
+                    R.plurals.model_browser_types_available,
+                    state.notetypes.size,
+                    state.notetypes.size,
+                )
+            notetypesAdapter.submitList(state.notetypes)
+            handleLoadingStateIfNeeded(state.isProcessing)
+            handleNavigationIfNeeded(state.destination)
+        }
+        viewModel.refresh()
+    }
+
+    private fun handleLoadingStateIfNeeded(isProcessing: Boolean) {
+        val currentDialog =
+            (supportFragmentManager.findFragmentByTag(LoadingDialogFragment.TAG) as? DialogFragment)
+        if (isProcessing) {
+            if (currentDialog != null) return
+            // DialogFragment.show() is not fast enough in certain situation and we could end up
+            // with not "registering" the dialog although it's just about to be shown
+            LoadingDialogFragment.newInstance().showNow(
+                supportFragmentManager,
+                LoadingDialogFragment.TAG,
+            )
+        } else {
+            currentDialog?.dismiss()
+        }
+    }
+
+    private fun handleNavigationIfNeeded(destination: NotetypesDestination?) {
+        if (destination == null) return
+        when (destination) {
+            is NotetypesDestination.CardTemplateEditor ->
+                launchForChanges<CardTemplateEditor>(destination.extras)
+
+            is NotetypesDestination.Fields -> launchForChanges<ModelFieldEditor>(destination.extras)
+        }
+        viewModel.markNavigationRequestAsDone()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -119,9 +140,7 @@ class ManageNotetypes : AnkiActivity() {
                 override fun onQueryTextSubmit(query: String): Boolean = true
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    // Update the search query
-                    searchQuery = newText.orEmpty()
-                    filterNoteTypes(searchQuery)
+                    viewModel.filter(newText ?: "")
                     return true
                 }
             },
@@ -129,60 +148,32 @@ class ManageNotetypes : AnkiActivity() {
         return true
     }
 
-    /**
-     * Filters and updates the note types list based on the query
-     */
-    @NeedsTest("verify note types list still filtered by search query after rename or delete")
-    private fun filterNoteTypes(query: String) {
-        val filteredList =
-            if (query.isEmpty()) {
-                currentNotetypes
-            } else {
-                currentNotetypes.filter {
-                    it.name.lowercase().contains(query.lowercase())
-                }
-            }
-        notetypesAdapter.submitList(filteredList)
-    }
-
-    @SuppressLint("CheckResult")
-    private fun renameNotetype(manageNoteTypeUiModel: ManageNoteTypeUiModel) {
+    private fun renameNotetype(notetypeItemUiState: NotetypeItemUiState) {
         launchCatchingTask {
-            val allNotetypes = mutableListOf<AddNotetypeUiModel>()
-            allNotetypes.addAll(
-                withProgress {
-                    withCol { getNotetypeNames().map { it.toUiModel() } }
-                },
-            )
+            val allNotetypesNames =
+                viewModel.uiState.value.notetypes
+                    .map { it.name }
             val dialog =
                 AlertDialog
                     .Builder(this@ManageNotetypes)
                     .show {
                         title(R.string.rename_model)
                         positiveButton(R.string.rename) {
-                            launchCatchingTask {
-                                runAndRefreshAfter {
-                                    val initialNotetype = getNotetype(manageNoteTypeUiModel.id)
-                                    val renamedNotetype =
-                                        initialNotetype.copy {
-                                            this.name = (it as AlertDialog).getInputField().text.toString()
-                                        }
-                                    updateNotetype(renamedNotetype)
-                                }
-                            }
+                            viewModel.rename(
+                                notetypeItemUiState.id,
+                                (it as AlertDialog).getInputField().text.toString(),
+                            )
                         }
                         negativeButton(R.string.dialog_cancel)
                         setView(R.layout.dialog_generic_text_input)
                     }.input(
-                        prefill = manageNoteTypeUiModel.name,
+                        prefill = notetypeItemUiState.name,
                         waitForPositiveButton = false,
                         displayKeyboard = true,
                         callback = { dialog, text ->
                             dialog.positiveButton.isEnabled =
                                 text.isNotEmpty() &&
-                                !allNotetypes
-                                    .map { it.name }
-                                    .contains(text.toString())
+                                !allNotetypesNames.contains(text.toString())
                         },
                     )
             // start with the button disabled as dialog shows the initial name
@@ -190,7 +181,7 @@ class ManageNotetypes : AnkiActivity() {
         }
     }
 
-    private fun deleteNotetype(manageNoteTypeUiModel: ManageNoteTypeUiModel) {
+    private fun deleteNotetype(notetypeItemUiState: NotetypeItemUiState) {
         launchCatchingTask {
             val messageResourceId: Int? =
                 if (userAcceptsSchemaChange()) {
@@ -213,54 +204,24 @@ class ManageNotetypes : AnkiActivity() {
                 title(R.string.model_browser_delete)
                 message(messageResourceId)
                 positiveButton(R.string.dialog_positive_delete) {
-                    launchCatchingTask {
-                        runAndRefreshAfter { removeNotetype(manageNoteTypeUiModel.id) }
-                    }
+                    viewModel.delete(notetypeItemUiState.id)
                 }
                 negativeButton(R.string.dialog_cancel)
             }
         }
     }
 
-    /**
-     * Run the provided block on the [Collection](also displaying progress) and then refresh the list
-     * of note types to show the changes. This method expects to be called from the main thread.
-     *
-     * @param action the action to run before the notetypes refresh, if not provided simply refresh
-     */
-    suspend fun runAndRefreshAfter(action: com.ichi2.libanki.Collection.() -> Unit = {}) {
-        val updatedNotetypes =
-            withProgress {
-                withCol {
-                    action()
-                    getNotetypeNameIdUseCount().map { it.toUiModel() }
-                }
-            }
-
-        currentNotetypes = updatedNotetypes
-
-        filterNoteTypes(searchQuery)
-        actionBar.subtitle =
-            resources.getQuantityString(
-                R.plurals.model_browser_types_available,
-                updatedNotetypes.size,
-                updatedNotetypes.size,
-            )
-    }
-
     private inline fun <reified T : AnkiActivity> launchForChanges(extras: Map<String, Any>) {
         val targetIntent =
             Intent(this@ManageNotetypes, T::class.java).apply {
-                extras.forEach { toExtra(it) }
+                extras.forEach { extra ->
+                    when (extra.value) {
+                        is String -> putExtra(extra.key, extra.value as String)
+                        is Long -> putExtra(extra.key, extra.value as Long)
+                        else -> throw IllegalArgumentException("Unexpected value type: ${extra.value}")
+                    }
+                }
             }
         outsideChangesLauncher.launch(targetIntent)
-    }
-
-    private fun Intent.toExtra(newExtra: Map.Entry<String, Any>) {
-        when (newExtra.value) {
-            is String -> putExtra(newExtra.key, newExtra.value as String)
-            is Long -> putExtra(newExtra.key, newExtra.value as Long)
-            else -> throw IllegalArgumentException("Unexpected value type: ${newExtra.value}")
-        }
     }
 }
