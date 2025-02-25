@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ActionBarStyle"
-        android:background="?attr/colorPrimary"
+        android:background="?attr/appBarColor"
         app:popupTheme="@style/ActionBar.Popup"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
