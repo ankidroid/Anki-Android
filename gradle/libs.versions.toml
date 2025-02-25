@@ -70,7 +70,7 @@ commonsCompress = "1.27.1"
 # https://commons.apache.org/proper/commons-io/changes-report.html
 commonsIo = "2.18.0"
 coroutines = '1.10.1'
-desugar-jdk-libs-nio = "2.1.4"
+desugar-jdk-libs-nio = "2.1.5"
 drawer = "1.0.3"
 espresso = '3.6.1'
 mikehardyGoogleAnalyticsJava7 = "2.0.13"
