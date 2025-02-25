@@ -42,6 +42,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CheckResult
 import androidx.annotation.DrawableRes
@@ -214,6 +215,7 @@ open class Reviewer :
         if (!ensureStoragePermissions()) {
             return
         }
+        enableEdgeToEdge()
         colorPalette = findViewById(R.id.whiteboard_editor)
         answerTimer = AnswerTimer(findViewById(R.id.card_time))
         textBarNew = findViewById(R.id.new_number)
@@ -246,6 +248,8 @@ open class Reviewer :
         if (typeAnswer?.autoFocusEditText() == true) {
             answerField?.focusWithKeyboard()
         }
+
+        fullScreenHandler.sendEmptyMessageDelayed(0, INITIAL_HIDE_DELAY.toLong())
     }
 
     override fun onDestroy() {
@@ -343,9 +347,9 @@ open class Reviewer :
 
     override fun getContentViewAttr(fullscreenMode: FullScreenMode): Int =
         when (fullscreenMode) {
-            FullScreenMode.BUTTONS_ONLY -> R.layout.reviewer_fullscreen
+            FullScreenMode.BUTTONS_AND_MENU_WITH_STATUS_BAR -> R.layout.reviewer
+            FullScreenMode.BUTTONS_AND_MENU_ONLY -> R.layout.reviewer_fullscreen
             FullScreenMode.FULLSCREEN_ALL_GONE -> R.layout.reviewer_fullscreen_noanswers
-            FullScreenMode.BUTTONS_AND_MENU -> R.layout.reviewer
         }
 
     public override fun fitsSystemWindows(): Boolean = !fullscreenMode.isFullScreenReview()
@@ -1419,14 +1423,14 @@ open class Reviewer :
             val visible = flags and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION == 0
             Timber.d("System UI visibility change. Visible: %b", visible)
             if (visible) {
-                showViewWithAnimation(toolbar)
                 if (fullscreenMode == FullScreenMode.FULLSCREEN_ALL_GONE) {
+                    showViewWithAnimation(toolbar)
                     showViewWithAnimation(topbar)
                     showViewWithAnimation(answerButtons)
                 }
             } else {
-                hideViewWithAnimation(toolbar)
                 if (fullscreenMode == FullScreenMode.FULLSCREEN_ALL_GONE) {
+                    hideViewWithAnimation(toolbar)
                     hideViewWithAnimation(topbar)
                     hideViewWithAnimation(answerButtons)
                 }
