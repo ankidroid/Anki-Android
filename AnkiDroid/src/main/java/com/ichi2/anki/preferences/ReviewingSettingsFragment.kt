@@ -16,17 +16,29 @@
 package com.ichi2.anki.preferences
 
 import android.content.Context
+import android.net.Uri
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AlertDialog
 import anki.config.copy
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
+import com.ichi2.anki.showThemedToast
+import com.ichi2.anki.utils.openUrl
+import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.preferences.NumberRangePreferenceCompat
 import com.ichi2.preferences.SliderPreference
+import com.ichi2.utils.AdaptionUtil
+import com.ichi2.utils.message
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.neutralButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
 import timber.log.Timber
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
@@ -39,6 +51,18 @@ class ReviewingSettingsFragment : SettingsFragment() {
         get() = "prefs.reviewing"
 
     override fun initSubscreen() {
+        launchCatchingTask {
+            // Checks if the scheduler needs to be updated
+            val needsUpgrade = withCol { ((config.get("schedVer") ?: 1L) == 1L) }
+            if (needsUpgrade) {
+                promptUserToUpdateScheduler()
+            } else {
+                initializePreferences()
+            }
+        }
+    }
+
+    private fun initializePreferences() {
         // Learn ahead limit
         // Represents the collections pref "collapseTime": i.e.
         // if there are no card to review now, but there are learning cards remaining for today, we show those learning cards if they are due before LEARN_CUTOFF minutes
@@ -96,6 +120,24 @@ class ReviewingSettingsFragment : SettingsFragment() {
             }
         undoableOp { setPreferences(newPrefs) }
         Timber.i("Set timeLimitSecs to %d", limit.toInt(DurationUnit.SECONDS))
+    }
+
+    private fun promptUserToUpdateScheduler() {
+        AlertDialog.Builder(requireContext()).show {
+            message(text = TR.schedulingUpdateRequired())
+            positiveButton(R.string.dialog_ok) {
+                launchCatchingTask {
+                    withProgress { withCol { sched.upgradeToV2() } }
+                    showThemedToast(requireContext(), TR.schedulingUpdateDone(), false)
+                }
+            }
+            negativeButton(R.string.dialog_cancel)
+            if (AdaptionUtil.hasWebBrowser(requireContext())) {
+                neutralButton(text = TR.schedulingUpdateMoreInfoButton()) {
+                    requireContext().openUrl(Uri.parse("https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating"))
+                }
+            }
+        }
     }
 }
 
