@@ -23,6 +23,7 @@ import android.os.Bundle
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.edit
+import com.ichi2.anki.account.AccountActivity
 import com.ichi2.anki.introduction.SetupCollectionFragment
 import com.ichi2.anki.introduction.SetupCollectionFragment.CollectionSetupOption
 import com.ichi2.anki.introduction.SetupCollectionFragment.Companion.handleCollectionSetupOption
@@ -68,7 +69,8 @@ class IntroductionActivity : AnkiActivity() {
 
     private fun openLoginDialog() {
         Timber.i("Opening login screen")
-        onLoginResult.launch(Intent(this, LoginActivity::class.java))
+        val intent = AccountActivity.getIntent(this)
+        onLoginResult.launch(intent)
     }
 
     private fun startDeckPicker(result: Int = RESULT_START_NEW) {
