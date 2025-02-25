@@ -49,22 +49,22 @@
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="other">%d AnkiDroid cards due</item>
     </plurals>
-    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid small</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid តូច</string>
     <plurals name="widget_cards_due">
         <item quantity="other">%d cards due</item>
     </plurals>
     <plurals name="widget_eta">
         <item quantity="other">%d minutes remaining</item>
     </plurals>
-    <string name="widget_add_note_button">Add new AnkiDroid note</string>
+    <string name="widget_add_note_button">បន្ថែមកំណត់ត្រា AnkiDroid ថ្មី</string>
     <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">Deck Picker</string>
     <string name="card_analysis_extra_widget_description">Card Analysis</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
-    <string name="select_decks_title" comment="Title for Deck Selection Dialog">Select decks</string>
-    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Select a deck</string>
+    <string name="select_decks_title" comment="Title for Deck Selection Dialog">ជ្រើសរើសជាន់</string>
+    <string name="select_deck_title" comment="Title for Deck Selection Dialog">ជ្រើសរើសជាន់មួយ</string>
     <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Select decks to display in the widget. Select decks with the + icon.</string>
-    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Deck removed</string>
-    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">This deck is already selected</string>
+    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">ជាន់ត្រូវបានដកចេញ</string>
+    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">ជាន់នេះត្រូវបានជ្រើសរើសហើយ</string>
     <plurals name="deck_limit_reached">
         <item quantity="other">You can select up to %d decks.</item>
     </plurals>

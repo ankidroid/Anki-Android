@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">Bonne réponse</string>
     <string name="answer_easy" maxLength="41">Réponse facile</string>
     <string name="gesture_play" maxLength="41">Lire le média</string>
-    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_abort_learning" maxLength="41">Fermer l\'évaluateur</string>
     <string name="gesture_flag_red" maxLength="41">Activer/désactiver la balise rouge</string>
     <string name="gesture_flag_orange" maxLength="41">Activer/désactiver la balise orange</string>
     <string name="gesture_flag_green" maxLength="41">Activer/désactiver la balise verte</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">Retirer la balise</string>
     <string name="gesture_page_up" maxLength="41">Remonter</string>
     <string name="gesture_page_down" maxLength="41">Descendre</string>
-    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_abort_sync" maxLength="41">Fermer l\'évaluateur et la synchronisation</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Activer le tableau blanc</string>
     <string name="gesture_show_hint" maxLength="41">Afficher l\'indice</string>
     <string name="gesture_show_all_hints" maxLength="41">Afficher tous les indices</string>

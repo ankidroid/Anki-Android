@@ -50,15 +50,15 @@
     <!-- 01-core:menu_suspend_card -->
     <!-- new_order_labels -->
     <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Älteste zuerst</string>
-    <string name="cram_deck_conf_order_random">Zufällig</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Steigende Intervalle</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">abnehmenden Intervallen</string>
-    <string name="cram_deck_conf_order_most_lapsed">Meiste Fehlversuche</string>
-    <string name="cram_deck_conf_order_order_added">Reihenfolge des Hinzufügens</string>
-    <string name="cram_deck_conf_order_order_due">Fälligkeit</string>
-    <string name="cram_deck_conf_order_latest_added_first">Zuletzt hinzugefügte zuerst</string>
-    <string name="cram_deck_conf_order_relative_overdueness">relativer Überfälligkeit</string>
+    <string name="cram_deck_conf_order_oldest_seen_first">Datum der letzten Wiederholung (älteste zuerst)</string>
+    <string name="cram_deck_conf_order_random">Zufall</string>
+    <string name="cram_deck_conf_order_increasing_intervals">Intervall (aufsteigend)</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">Intervall (absteigend)</string>
+    <string name="cram_deck_conf_order_most_lapsed">Fehlversuche (häufigste zuerst)</string>
+    <string name="cram_deck_conf_order_order_added">Erstelldatum (älteste zuerst)</string>
+    <string name="cram_deck_conf_order_order_due">Fälligkeitsdatum (älteste zuerst)</string>
+    <string name="cram_deck_conf_order_latest_added_first">Erstelldatum (neueste zuerst)</string>
+    <string name="cram_deck_conf_order_relative_overdueness">Abrufbarkeit (aufsteigend)</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Aktuellen Stapel verwenden</string>
     <string name="add_to_deck_decide_by_note_type">Nach Notiztyp entscheiden</string>
