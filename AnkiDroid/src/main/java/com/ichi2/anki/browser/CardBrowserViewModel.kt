@@ -37,6 +37,8 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.Flag
 import com.ichi2.anki.PreviewerDestination
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ALL_FIELDS_AS_FIELD
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.TAGS_AS_FIELD
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.export.ExportDialogFragment.ExportType
 import com.ichi2.anki.launchCatchingIO
@@ -1033,6 +1035,32 @@ class CardBrowserViewModel(
             columnsWithSample.filter { !currentColumns.contains(it.columnType) },
         )
     }
+
+    /**
+     * Replaces occurrences of search with the new value.
+     *
+     * @return the number of affected notes
+     * @see com.ichi2.libanki.Collection.findReplace
+     * @see com.ichi2.libanki.Tags.findAndReplace
+     */
+    fun findAndReplace(result: FindReplaceResult) =
+        viewModelScope.async {
+            // TODO pass the selection as the user saw it in the dialog to avoid running "find
+            //  and replace" on a different selection
+            val noteIds = if (result.onlyOnSelectedNotes) queryAllSelectedNoteIds() else emptyList()
+
+            if (result.field == TAGS_AS_FIELD) {
+                undoableOp {
+                    tags.findAndReplace(noteIds, result.search, result.replacement, result.regex, result.matchCase)
+                }.count
+            } else {
+                val field =
+                    if (result.field == ALL_FIELDS_AS_FIELD) null else result.field
+                undoableOp {
+                    findReplace(noteIds, result.search, result.replacement, result.regex, field, result.matchCase)
+                }.count
+            }
+        }
 
     companion object {
         fun factory(

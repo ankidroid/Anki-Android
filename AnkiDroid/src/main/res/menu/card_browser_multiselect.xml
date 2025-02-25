@@ -1,6 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         ankidroid:showAsAction="never"
@@ -96,4 +97,8 @@
         ankidroid:actionProviderClass="com.ichi2.ui.RtlCompliantActionProvider"
         android:icon="@drawable/ic_undo_white"/>
 
+    <item
+        android:id="@+id/action_find_replace"
+        android:visible="false"
+        app:showAsAction="never"/>
 </menu>
