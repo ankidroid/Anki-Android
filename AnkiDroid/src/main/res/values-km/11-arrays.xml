@@ -43,14 +43,14 @@
     <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
     Now arrays are defined in constants.xml, and the strings are here -->
     <!-- error_reporting_choice_labels -->
-    <string name="error_reporting_choice_always_report">Always report</string>
-    <string name="error_reporting_choice_never_report">Never report</string>
-    <string name="error_reporting_choice_ask_user">Ask me</string>
+    <string name="error_reporting_choice_always_report">រាយការណ៍ជានិច្ច</string>
+    <string name="error_reporting_choice_never_report">កុំរាយការណ៍</string>
+    <string name="error_reporting_choice_ask_user">សួរខ្ញុំ</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
     <!-- new_order_labels -->
     <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Oldest seen first</string>
+    <string name="cram_deck_conf_order_oldest_seen_first">ឃើញអ្វីដែលចាស់បំផុតមុន</string>
     <string name="cram_deck_conf_order_random">Random</string>
     <string name="cram_deck_conf_order_increasing_intervals">Increasing intervals</string>
     <string name="cram_deck_conf_order_decreasing_intervals">Decreasing intervals</string>
@@ -60,16 +60,16 @@
     <string name="cram_deck_conf_order_latest_added_first">Latest added first</string>
     <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
     <!-- add_to_cur_labels -->
-    <string name="add_to_deck_use_current_deck">Use current deck</string>
-    <string name="add_to_deck_decide_by_note_type">Decide by note type</string>
+    <string name="add_to_deck_use_current_deck">ប្រើជាន់បច្ចុប្បន្ន</string>
+    <string name="add_to_deck_decide_by_note_type">សម្រេចដោយប្រភេទរបស់កំណត់ត្រា</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">ធ្វើតាមប្រព័ន្ធ</string>
     <!-- day_theme_labels -->
-    <string name="day_theme_light">Light</string>
+    <string name="day_theme_light">ភ្លឺ</string>
     <string name="day_theme_plain">Plain</string>
     <!-- night_theme_labels -->
-    <string name="night_theme_black">Black</string>
-    <string name="night_theme_dark">Dark</string>
+    <string name="night_theme_black">ខ្មៅ</string>
+    <string name="night_theme_dark">ងងឹត</string>
     <!-- html_size_code_labels -->
     <string name="html_size_code_xx_small">xx-small</string>
     <string name="html_size_code_x_small">x-small</string>
@@ -79,7 +79,7 @@
     <string name="html_size_code_x_large">x-large</string>
     <string name="html_size_code_xx_large">xx-large</string>
     <!-- gestures_labels -->
-    <string name="answer_again" maxLength="41">Answer again</string>
+    <string name="answer_again" maxLength="41">ឆ្លើយម្ដងទៀត</string>
     <string name="answer_hard" maxLength="41">Answer hard</string>
     <string name="answer_good" maxLength="41">Answer good</string>
     <string name="answer_easy" maxLength="41">Answer easy</string>

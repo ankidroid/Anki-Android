@@ -97,7 +97,7 @@
     <string name="gestures_summ">Atribuir gestos a ações tais como responder e editar cards.</string>
     <string name="gestures_corner_touch" maxLength="41">9 Ações de Toque </string>
     <string name="gestures_corner_touch_summary">Permitir gestos de toque nos cantos da tela</string>
-    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Exibir teclas de atalho</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Painel de navegação em tela cheia</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Abrir painel de navegação ao ser deslizado de qualquer lugar da tela</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">Nenhuma</string>
@@ -366,9 +366,9 @@
     <string name="ignore_display_cutout" maxLength="41">Ignorar recorte da tela</string>
     <string name="hide_answer_buttons" maxLength="41">Ocultar botões de resposta</string>
     <string name="hide_hard_and_easy" maxLength="41">Ocultar botões \"Difícil\" e \"Fácil\"</string>
-    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <string name="reviewer_frame_style" maxLength="41">Estilo de enquadramento</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Cartão</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Caixa</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Abrir configurações</string>
 </resources>
