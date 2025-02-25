@@ -72,6 +72,8 @@ const jsApiList = {
     ankiSttStart: "sttStart",
     ankiSttStop: "sttStop",
     ankiAddTagToNote: "addTagToNote",
+    ankiSetNoteTags: "setNoteTags",
+    ankiGetNoteTags: "getNoteTags",
 };
 
 class AnkiDroidJS {
@@ -119,8 +121,36 @@ class AnkiDroidJS {
 Object.keys(jsApiList).forEach(method => {
     if (method === "ankiAddTagToNote") {
         AnkiDroidJS.prototype[method] = async function (noteId, tag) {
+            console.warn("ankiAddTagToNote is deprecated. Use ankiSetNoteTags instead");
             const endpoint = jsApiList[method];
             const data = JSON.stringify({ noteId, tag });
+            return await this.handleRequest(endpoint, data);
+        };
+        return;
+    }
+    if (method === "ankiSetNoteTags") {
+        AnkiDroidJS.prototype[method] = async function (noteId, tags) {
+            let hasSpaces = false;
+            for (let i = 0; i < tags.length; i++) {
+                tags[i] = tags[i].trim();
+                if (tags[i].includes(" ") || tags[i].includes("\u3000")) {
+                    tags[i] = tags[i].replace(" ", "_").replace("\u3000", "_");
+                    hasSpaces = true;
+                }
+            }
+            if (hasSpaces) {
+                console.warn("Spaces in tags have been converted to underscores");
+            }
+            const endpoint = jsApiList[method];
+            const data = JSON.stringify({ noteId, tags });
+            return await this.handleRequest(endpoint, data);
+        };
+        return;
+    }
+    if (method === "ankiGetNoteTags") {
+        AnkiDroidJS.prototype[method] = async function (noteId) {
+            const endpoint = jsApiList[method];
+            const data = JSON.stringify({ noteId });
             return await this.handleRequest(endpoint, data);
         };
         return;
