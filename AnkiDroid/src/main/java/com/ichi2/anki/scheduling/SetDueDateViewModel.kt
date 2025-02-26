@@ -19,13 +19,16 @@ package com.ichi2.anki.scheduling
 import androidx.annotation.DrawableRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.libanki.CardId
+import com.ichi2.libanki.CardType
 import com.ichi2.libanki.sched.SetDueDateDays
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
@@ -33,6 +36,14 @@ import timber.log.Timber
  * @see SetDueDateDays
  */
 typealias NumberOfDaysInFuture = Int
+
+/**
+ * Represents the interval between reviews in days.
+ *
+ * - A value of `0` means the next review is due today.
+ * - Indicates the number of days until a card's next review.
+ */
+typealias ReviewIntervalDays = Int
 
 /**
  * [ViewModel] for [SetDueDateDialog]
@@ -112,12 +123,40 @@ class SetDueDateViewModel : ViewModel() {
             field = value
         }
 
+    /**
+     * The current interval of the card.
+     *
+     * The value represents the number of days.
+     * The value is not-null if exactly one card is selected, which is the only case
+     * in which the view should display the interval.
+     */
+    val currentInterval = MutableStateFlow<ReviewIntervalDays?>(null)
+
     fun init(
         cardIds: LongArray,
         fsrsEnabled: Boolean,
     ) {
         this.cardIds = cardIds.toList()
         this.fsrsEnabled = fsrsEnabled
+
+        initCurrentInterval(cardIds)
+    }
+
+    private fun initCurrentInterval(cardIds: LongArray) {
+        // Current interval cannot be shown if multiple cards are selected
+        if (cardCount > 1) {
+            return
+        }
+
+        viewModelScope.launch {
+            withCol {
+                getCard(cardIds.first()).let {
+                    // Only show interval if card is in the review state
+                    // New, learning, or relearning cards have an interval of 0 and should not display it
+                    currentInterval.value = if (it.type == CardType.Rev) it.ivl else null
+                }
+            }
+        }
     }
 
     fun setNextDateRangeStart(value: Int?) {
