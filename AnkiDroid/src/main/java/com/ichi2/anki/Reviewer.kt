@@ -248,8 +248,6 @@ open class Reviewer :
         if (typeAnswer?.autoFocusEditText() == true) {
             answerField?.focusWithKeyboard()
         }
-
-        fullScreenHandler.sendEmptyMessageDelayed(0, INITIAL_HIDE_DELAY.toLong())
     }
 
     override fun onDestroy() {
