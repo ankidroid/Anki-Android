@@ -58,6 +58,11 @@
             android:layout_height="wrap_content"
             />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/current_interval_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/change_interval"
