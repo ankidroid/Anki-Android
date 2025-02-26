@@ -171,18 +171,18 @@ class SetDueDateDialog : DialogFragment() {
                     }
                 }
 
-                findViewById<MaterialTextView>(R.id.current_interval_text)!!.also {
+                findViewById<MaterialTextView>(R.id.current_interval_text)!!.also { tv ->
                     // Current interval cannot be shown if multiple cards are selected
                     if (viewModel.cardCount == 1) {
                         val currentCard = getColUnsafe().getCard(cardIds[0])
-                        it.text =
+                        tv.text =
                             resources.getQuantityString(
                                 R.plurals.set_due_date_current_interval,
                                 currentCard.ivl,
                                 currentCard.ivl,
                             )
                     } else {
-                        it.isVisible = false
+                        tv.isVisible = false
                     }
                 }
             }
