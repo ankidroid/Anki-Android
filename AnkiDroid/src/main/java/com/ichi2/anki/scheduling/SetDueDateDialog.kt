@@ -46,7 +46,6 @@ import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.CollectionManager.getColUnsafe
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.requireAnkiActivity
@@ -171,18 +170,22 @@ class SetDueDateDialog : DialogFragment() {
                     }
                 }
 
-                findViewById<MaterialTextView>(R.id.current_interval_text)!!.also { tv ->
-                    // Current interval cannot be shown if multiple cards are selected
-                    if (viewModel.cardCount == 1) {
-                        val currentCard = getColUnsafe().getCard(cardIds[0])
-                        tv.text =
-                            resources.getQuantityString(
-                                R.plurals.set_due_date_current_interval,
-                                currentCard.ivl,
-                                currentCard.ivl,
-                            )
-                    } else {
-                        tv.isVisible = false
+                lifecycleScope.launch {
+                    viewModel.currentInterval.collect { currentInterval ->
+                        findViewById<MaterialTextView>(R.id.current_interval_text)!!.also { tv ->
+                            // Current interval is set to null when multiple cards are selected
+                            if (currentInterval != null) {
+                                tv.isVisible = true
+                                tv.text =
+                                    resources.getQuantityString(
+                                        R.plurals.set_due_date_current_interval,
+                                        currentInterval,
+                                        currentInterval,
+                                    )
+                            } else {
+                                tv.isVisible = false
+                            }
+                        }
                     }
                 }
             }
