@@ -37,7 +37,8 @@ import timber.log.Timber
  * @see Backend.setActiveBrowserColumns
  * @see BrowserConfig.activeColumnsKey
  */
-@Suppress("InvalidJavadocTag")
+
+@Suppress("Unused", "KDocUnresolvedReference")
 class BrowserColumnCollection(
     val columns: List<CardBrowserColumn>,
 ) {
