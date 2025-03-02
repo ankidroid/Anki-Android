@@ -48,7 +48,7 @@
     <string name="drawer_open">메뉴 열기</string>
     <string name="drawer_close">메뉴 닫기</string>
     <string name="CardEditorCardDeck">카드 덱:</string>
-    <string name="CardEditorNoteDeck">덱:</string>
+    <string name="CardEditorNoteDeck">덱 :</string>
     <string name="CardEditorModel">유형:</string>
     <string name="CardEditorTags">태그: %1$s</string>
     <string name="CardEditorCards">카드: %1$s</string>
@@ -61,23 +61,23 @@
     <string name="no_tags">아직 추가된 태그가 없습니다.</string>
     <string name="updated_version">버전 %s로 업데이트됨</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard" maxLength="28">화이트보드 저장</string>
+    <string name="save_whiteboard" maxLength="28">화이트보드 저장하기</string>
     <string name="enable_stylus" maxLength="28">스타일러스 쓰기 켜기</string>
     <string name="disable_stylus">스타일러스 쓰기 끄기</string>
-    <string name="enable_whiteboard" maxLength="28">화이트보드 활성화</string>
-    <string name="disable_whiteboard">화이트보드 비활성화</string>
-    <string name="show_whiteboard">화이트보드 보이기</string>
+    <string name="enable_whiteboard" maxLength="28">화이트보드 활성화하기</string>
+    <string name="disable_whiteboard">화이트보드 비활성화하기</string>
+    <string name="show_whiteboard">화이트보드 표시하기</string>
     <string name="hide_whiteboard" maxLength="28">화이트 보드 숨기기</string>
     <string name="clear_whiteboard" maxLength="28">화이트 보드 지우기</string>
     <string name="replay_audio" maxLength="28">오디오 다시 재생</string>
-    <string name="leech_suspend_notification">해당 카드에 leech 태그를 붙이고 비활성 시킴</string>
-    <string name="leech_notification">해당 카드에 leech 태그를 붙임</string>
+    <string name="leech_suspend_notification">카드에 leech 태그를 붙이고 비활성 시키기</string>
+    <string name="leech_notification">카드에 leech 태그를 붙이기</string>
     <string name="webview_crash_unknown">알 수 없는 오류</string>
     <string name="webview_crash_unknwon_detailed">WebView의 내부적인 오류입니다.</string>
     <string name="webview_crash_oom">메모리 부족</string>
     <string name="webview_crash_oom_details">WebView이 시스템에 의해 강제종료 되었습니다. 보통 용랑이 큰 사진, 음성, 글꼴 등 미디어 파일 때문에 메모리가 부족해서 이런 일이 생길 수 있습니다.</string>
     <string name="webview_crash_nonfatal">WebView 렌더러가 다음 이유 때문에 강제종료되었습니다: %s</string>
-    <string name="webview_crash_fatal">중대 오류: WebView 렌더러가 다음 이유 때문에 강제종료되었습니다: %s</string>
+    <string name="webview_crash_fatal">심각한 오류: WebView 렌더러가 다음 이유 때문에 강제종료되었습니다: %s</string>
     <string name="webview_crash_loop_dialog_title">WebView 렌더링이 실패했습니다.</string>
     <string name="webview_crash_loop_dialog_content">WebView가 \'%1$s\' 카드를 렌더링하지 못했습니다.
 %2$s</string>
@@ -88,13 +88,13 @@
         <item quantity="other">+%d 숨겨짐</item>
     </plurals>
     <string name="studyoptions_total_new_label">새 카드 수</string>
-    <string name="studyoptions_total_label">전체 카드</string>
+    <string name="studyoptions_total_label">전체 카드 수</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">노트 편집하기</string>
-    <string name="discard">삭제</string>
+    <string name="discard">삭제하기</string>
     <string name="note_editor_no_cards_created">작성된 카드가 없습니다. 먼저 필드를 입력해주십시오.</string>
     <string name="note_editor_no_cards_created_all_fields">현재의 노트 유형으로는 카드를 생성할 수 없습니다.\n먼저 다른 노트 유형을 선택하거나 \'카드\'를 눌러 대체할 필드를 생성해주십시오.</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">빈칸 뚫기는 오직 빈칸 노트 유형에서만 작동합니다.</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">빈칸 뚫기는 오직 빈칸 노트 유형(Cloze)에서만 작동합니다.</string>
     <string name="saving_facts">노트 저장 중</string>
     <string name="saving_model">노트 유형 저장 중</string>
     <string name="save" maxLength="28">저장</string>
@@ -113,7 +113,7 @@
         <item quantity="other">%1$d분</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid 카드</string>
-    <string name="note_editor_copy_note" maxLength="28">노트 복사</string>
+    <string name="note_editor_copy_note" maxLength="28">노트 복사하기</string>
     <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">위치 변경</string>
     <string name="card_editor_reset_card" maxLength="28">학습 진도 재설정</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">일정 변경</string>
@@ -131,7 +131,7 @@
     <string name="import_title">가져오는 중</string>
     <string name="import_preparing_file">불러올 파일 준비 중&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">추가</string>
-    <string name="import_message_replace_confirm">기존의 컬렉션을 삭제하고 파일 %s의 데이터로 덮어씁니다. 확실합니까?</string>
+    <string name="import_message_replace_confirm">기존의 컬렉션을 삭제하고 파일 %s의 데이터로 덮어쓰시겠습니까?</string>
     <string name="import_dialog_message_add">\"%s\" 항목을 컬렉션에 추가하시겠습니까? 시간이 오래 걸릴 수 있습니다.</string>
     <string name="import_log_no_apkg">이것은 유효한 Anki package 파일이 아닙니다。</string>
     <string name="import_title_error" comment="Title of error dialog">오류</string>
@@ -150,14 +150,14 @@
     <string name="export_email_subject">AnkiDroid로 보내진 플래시 카드: %s</string>
     <string name="export_email_text"><![CDATA[        안녕하세요!
         <br/><br/>
-       이것은 AnkiDroid에서 보낸 안키 플래시 카드입니다[1].
+       이것은 AnkiDroid에서 보낸 Anki 플래시 카드입니다[1].
         이 중에서 이용 가능한 것을 선택해 보시고[2] 쉽고 효율적으로 즐겁게 공부하세요!<br/><br/>
         [1]%1$s<br/>
         [2]%2$s
         ]]>    
  
 Context | Request Context    [1]</string>
-    <string name="export_choice_share">공유</string>
+    <string name="export_choice_share">공유하기</string>
     <string name="export_choice_save_to">저장</string>
     <string name="export_saving_exported_collection">내보낸 파일 저장 중&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">설정</string>
@@ -165,7 +165,7 @@ Context | Request Context    [1]</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">학습 옵션</string>
     <string name="select_tts" maxLength="28">TTS 언어 설정</string>
     <string name="custom_study" maxLength="28">맞춤 학습</string>
-    <string name="dyn_deck_desc">이것은 평상시 일정 이상으로 학습하기 위한 특별한 카드 묶음입니다. 카드들은 복습 후 자동으로 원래의 카드 묶음으로 돌아가게 됩니다. 카드 묶음 목록에서 이 카드 묶음을 지운다면 남아 있는 모든 카드는 원래의 카드 묶음으로 돌아가게 됩니다.</string>
+    <string name="dyn_deck_desc">이것은 평상시 일정 이상으로 학습하기 위한 특별한 카드 덱입니다. 카드들은 복습 후 자동으로 원래의 카드 덱으로 돌아가게 됩니다. 카드 덱 목록에서 이 카드 덱을 지운다면 남아 있는 모든 카드는 원래의 카드 덱으로 돌아가게 됩니다.</string>
     <string name="steps_error">단계는 0보다 커야 합니다.</string>
     <string name="steps_min_error">적어도 하나 이상의 단계가 필요합니다.</string>
     <string name="tag_editor_add_feedback">\"%1$s\" 추가를 확인하려면 \"%2$s\" 누르세요</string>
@@ -208,7 +208,7 @@ Context | Request Context    [1]</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">카드 내용 오류: \'%s\' 읽기 실패</string>
     <!-- Deck Picker -->
-    <string name="search_decks" maxLength="28">덱 검색</string>
+    <string name="search_decks" maxLength="28">덱 검색하기</string>
     <string name="ankidroid_init_failed_webview_title">심각한 오류</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid이 필요한 시스템 WebView를 사용할 수 없습니다. 이 문제는 시스템이 업데이트를 설치하는 경우 발생할 수도 있습니다. 잠시 후 다시 시도하십시오.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -246,17 +246,17 @@ Context | Request Context    [1]</string>
     <string name="back_pressed_once">뒤로 가기 버튼을 한 번 더 눌러 종료합니다</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">덱 다운로드</string>
+    <string name="download_deck">카드 덱 다운로드하기</string>
     <string name="try_again">다시 시도하세요.</string>
     <string name="cancel_download">다운로드 취소</string>
     <string name="cancel_download_question_title">다운로드를 취소하시겠습니까?</string>
     <string name="downloading_file">다운로드 중 %s</string>
-    <string name="import_deck">카드 묶음 가져오기</string>
+    <string name="import_deck">카드 덱 가져오기</string>
     <string name="something_wrong">오류가 발생했습니다. 다시 시도해 주세요.</string>
     <string name="download_failed">다운로드 실패</string>
     <string name="deck_download_progress_message">다운로드하는 동안 다른 앱을 이용하실 수 있습니다.</string>
     <string name="check_network">네트워크 연결 상태를 확인해 주세요.</string>
-    <string name="search_using_deck_name">사용 중인 카드 뭉치 이름 찾기</string>
+    <string name="search_using_deck_name">사용 중인 카드 덱 이름 찾기</string>
     <string name="external_storage_unavailable">다운로드가 중단되었습니다. 외부 저장 공간을 사용할 수 없습니다.</string>
     <string name="home" maxLength="28">홈</string>
     <!-- Reviewer actions 
@@ -290,16 +290,16 @@ Context | Request Context    [1]</string>
     <string name="app_not_initialized_new">AnkiDroid가 초기화되지 않았습니다. AnkiDroid를 열어 다시 시도해 주세요.</string>
     <string name="already_logged_in">이미 로그인되어 있습니다</string>
     <!-- Deck Creation -->
-    <string name="deck_created">생성된 뭉치</string>
-    <string name="deck_renamed">이름이 변경된 뭉치</string>
+    <string name="deck_created">생성된 덱</string>
+    <string name="deck_renamed">이름이 변경된 덱</string>
     <!-- Deck Deletion -->
-    <string name="deck_shortcut_doesnt_exist">삭제된 카드 묶음입니다. 단축키를 삭제해 주세요.</string>
+    <string name="deck_shortcut_doesnt_exist">삭제된 카드 덱입니다. 단축키를 삭제해 주세요.</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">카드</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">메모</string>
     <string name="toggle_cards_notes">카드, 메모 켜기/ 끄기</string>
     <string name="truncate_content_help">브라우저의 각 행 높이를 잘라 첫 3줄의 내용만 표시합니다.</string>
-    <string name="browser_options_dialog_heading">Browser options</string>
+    <string name="browser_options_dialog_heading">브라우저 옵션</string>
     <string name="audio_saved">녹음 파일 저장됨</string>
     <string name="deleting_selected_notes">선택한 메모 삭제 중</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        음성을 들으려면 탭하세요
@@ -316,7 +316,7 @@ Context | Request Context    [1]</string>
     </string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        문장 읽어주기 설정 열기 실패
     </string>
-    <string name="shared_decks_login_required">카드 묶음을 더 다운로드하려면 로그인해 주세요</string>
+    <string name="shared_decks_login_required">카드 덱을 더 다운로드하려면 로그인해 주세요</string>
     <string name="deck_description_field_hint">설명</string>
     <string name="failed_to_copy">복사 실패</string>
     <string name="card_browser_unavailable_when_notes_mode">\'메모\' 모드에서는 사용할 수 없습니다</string>
@@ -333,10 +333,10 @@ Context | Request Context    [1]</string>
     <string name="orphan_note_message">이 카드 유형을 삭제하면 카드 없이 일부 메모만 남습니다</string>
     <string name="voice_not_supported">음성을 지원하지 않습니다. 다른 것으로 시도하거나 음성 엔진을 설치하세요.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">덱 선택</string>
-    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">확인 없이 덱 삭제</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">덱 선택기</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">확인 없이 덱 삭제하기</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">노트 편집기</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">덱 선택</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">덱 선택하기</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">노트 유형 선택</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">태그 편집기</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">카드 템플릿 편집기</string>

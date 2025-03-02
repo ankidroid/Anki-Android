@@ -147,7 +147,7 @@
     <string name="card_template_editor_front">წინა შაბლონი</string>
     <string name="card_template_editor_back">უკანა შაბლონი</string>
     <string name="card_template_editor_styling" maxLength="28">სტილი</string>
-    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">ბარათების საძიებოს გარეგნობა</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">იერსახე ბარათების საძიებოში</string>
     <string name="card_template_editor_deck_override" maxLength="28">დასტის გადატანა</string>
     <string name="card_template_editor_insert_field" maxLength="28">ველის ჩასმა</string>
     <string name="card_template_editor_select_field">ველის არჩევა</string>
@@ -163,7 +163,7 @@
     <string name="card_template_editor_save_error">ბარათის შაბლონის შენახვა შეუძლებელია: %s</string>
     <string name="template_for_current_card_deleted">ბარათის ტიპი ამ ბარათიდან წაიშალა.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">საძიებოს გარეგნობა</string>
+    <string name="card_template_browser_appearance_title">იერსახე საძიებოში</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">ბარათის ინფო</string>
     <!-- Permissions -->

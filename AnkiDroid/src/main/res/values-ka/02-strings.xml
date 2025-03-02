@@ -134,7 +134,7 @@
     <string name="import_preparing_file">ფაილის მომზადება იმპორტისთვის&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">დამატება</string>
     <string name="import_message_replace_confirm">არსებული კოლექცია წაიშლება და ჩანაცვლდება არჩეული ფაილის მონაცემებით %s</string>
-    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
+    <string name="import_dialog_message_add">„%s“ დაემატოს კოლექციას? ამას შეიძლება გარკვეული დრო დასჭირდეს</string>
     <string name="import_log_no_apkg">ეს არ არის მოქმედი Anki-პაკეტის ფაილი</string>
     <string name="import_title_error" comment="Title of error dialog">შეცდომა</string>
     <string name="import_error_handle_exception">ფაილის იმპორტირება ვერ მოხერხდა\n\n%s</string>
@@ -229,7 +229,7 @@
     <string name="edit_toolbar_item">ხელსაწყოთა ზოლის ელემენტის რედაქტირება</string>
     <string name="toolbar_item_explain_edit_or_remove">შეიყვანეთ მონიშნული ტექსტის ორივე ბოლოს ჩასასმელი HTML-კოდი\n\nხელსაწყოთა ზოლს დიდი ხნით დააჭირეთ, რათა დაარედაქტიროთ ან წაშალოთ</string>
     <string name="remove_toolbar_item">ამოიშალოს ხელსაწყოთა ზოლის ელემენტი?</string>
-    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_image_too_large">სურათი ზედმეტად დიდია. გთხოვთ, სურათი ხელით ჩაამატოთ</string>
     <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
     <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        მიმდინარეობს Android-ის სარეზერვო ასლის შექმნა. გთხოვთ, ხელახლა სცადოთ</string>
@@ -258,7 +258,7 @@
     <string name="deck_download_progress_message">ჩამოტვირთვისას შეგიძლიათ სხვა აპლიკაციებიც გამოიყენოთ</string>
     <string name="check_network">გთხოვთ შეამოწმოთ ქსელთან კავშირი</string>
     <string name="search_using_deck_name">დასტის სახელით ძებნა</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
+    <string name="external_storage_unavailable">ჩამოტვირთვა გაუქმდა, გარე მეხსიერება ხელმიუწვდომელია</string>
     <string name="home" maxLength="28">მთავარი</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
@@ -281,11 +281,11 @@
     <string name="expand_tag">იარლიყის „%s“ გაშლა</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">კოლექციაზე წვდომა ვერ მოხერხდა. გთხოვთ ხელახლა სცადოთ!</string>
-    <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <string name="cd_manage_notetypes_add">ახალი შენიშვნის ტიპის დამატება</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">ნაკლები მეცადინეობა</string>
     <string name="intro_ankidroid_tagline_two">მეტის დამახსოვრება</string>
-    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_short_ankidroid_explanation">Anki-ს განრიგის მგეგმავი რთულად დასახსომებელი ცოდნის უკეთ დასწავლასა და ღრმა ცოდნის შენარჩუნებაში გეხმარებათ, რათა დაზოგოთ ძვირფასი დრო </string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">დაწყება</string>
     <string name="intro_sync_from_ankiweb">სინქრონიზაცია AnkiWeb-თან</string>
     <!-- IntentHandler -->
@@ -336,7 +336,7 @@
     <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
     <!--Keyboard shortcuts dialog-->
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">დასტის ამრჩეველი</string>
-    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">დასტის წაშლა დადასტურების გარეშე</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">შენიშვნების რედაქტორი</string>
     <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">დასტის არჩევა</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">შენიშვნის ტიპის არჩევა</string>
@@ -346,7 +346,7 @@
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">უკანა მხარის შაბლონის რედაქტირება</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">სტილის რედაქტირება</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">შაბლონის კოპირება markdown-ად</string>
-    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">ბარათების საძიებოს იერსახის რედაქტირება</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
     <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
 </resources>

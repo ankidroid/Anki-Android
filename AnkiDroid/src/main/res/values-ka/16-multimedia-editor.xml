@@ -69,8 +69,8 @@
     <!-- Crop function-->
     <string name="crop_image">გსურთ ამ სურათის ჩამოჭრა?</string>
     <string name="crop_button" maxLength="28">სურათის ჩამოჭრა</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
+    <string name="save_dialog_content">სურათის ზომა არის %sMB. სურათის ზომის ნაგულისხმევი ლიმიტი შეადგენს 1MB-ს. გსურთ მისი შეკუმშვა?</string>
     <string name="select_image_failed">"სურათი ვერ მოინიშნა, გთხოვთ ხელახლა სცადოთ"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">ველის შიგთავსი</string>
-    <string name="reselect" maxLength="28">Reselect</string>
+    <string name="reselect" maxLength="28">ხელახლა მონიშვნა</string>
 </resources>

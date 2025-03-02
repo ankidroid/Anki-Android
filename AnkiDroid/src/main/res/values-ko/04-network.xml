@@ -48,21 +48,21 @@
     <string name="youre_offline">현재 오프라인 상태입니다</string>
     <string name="sync_error">동기화 오류</string>
     <string name="vague_error" comment="Network error dialog title">오류</string>
-    <string name="retry">재시도</string>
-    <string name="menu_get_shared_decks">공유된 카드 묶음 얻기</string>
+    <string name="retry">재시도하기</string>
+    <string name="menu_get_shared_decks">공유된 덱 받기</string>
     <string name="connection_error_message">네트워크 오류가 발생했습니다.</string>
-    <string name="not_logged_in_title">AnkiWeb에 로그인</string>
+    <string name="not_logged_in_title">AnkiWeb에 로그인하기</string>
     <string name="login_create_account_message">클라우드 동기화 서비스를 사용하기 위해서는 제3자 계정에 로그인해야 합니다. 다음 단계에서 만들 수 있습니다.</string>
     <!-- MyAccount.kt -->
     <string name="username">이메일 주소</string>
     <string name="password">암호</string>
-    <string name="log_in">로그인</string>
+    <string name="log_in">로그인하기</string>
     <string name="sign_up_description">AnkiWeb 계정이 없으십니까? 무료입니다!</string>
     <string name="sign_up_not_affiliated">참고: AnkiWeb은 AnkiDroid와 관련이 없습니다.</string>
     <string name="sign_up">가입</string>
     <string name="logged_as">다음 사용자로 로그인 됨</string>
-    <string name="log_out">로그아웃</string>
-    <string name="reset_password">암호 재설정</string>
+    <string name="log_out">로그아웃하기</string>
+    <string name="reset_password">암호 재설정하기</string>
     <string name="lost_mail_instructions">이메일을 잊으셨나요?</string>
     <string name="sign_in">로그인 중</string>
     <!-- AndroidManifest.xml -->

@@ -97,7 +97,7 @@
     <string name="gestures_summ">ჟესტების მიბმა მოქმედებებთან, როგორებიცაა მაგალითად პასუხის გაცემა ან ბარათის რედაქტირება.</string>
     <string name="gestures_corner_touch" maxLength="41">9-წერტილიანი შეხება</string>
     <string name="gestures_corner_touch_summary">ეკრანის კუთხეებში შეხების ჟესტების დაშვება</string>
-    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">კლავიშების კომბინაციების ჩვენება</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">სრულეკრანიანი რეჟიმის ნავიგაციის პანელი</string>
     <string name="gestures_fullscreen_nav_drawer_summary">ეკრანის ნებისმიერი წერტილიდან მარჯვნივ გასმისას ნავიგაციის პანელის გახსნა</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">არცერთი</string>
@@ -120,7 +120,7 @@
     <string name="card_browser_enable_external_context_menu">„%s“-მენიუ</string>
     <string name="card_browser_enable_external_context_menu_summary">გლობალურად ამატებს „%s“ ღილაკს კონტექსტურ მენიუში (მენიუ, რომელიც ტექსტის მონიშვნისას ჩნდება)</string>
     <string name="double_scrolling_gap" maxLength="41">ორმაგი ჩამოყოლა</string>
-    <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
+    <string name="double_scrolling_gap_summ">ელ-წამკითხველებში ეკრანის აწევ-ჩამოწევის დაშორების გაორმაგება</string>
     <string name="swipe_sensitivity" maxLength="41">თითის გასმის აღქმადობა</string>
     <string name="tts" maxLength="41">ტექსტის გახმოვანება</string>
     <string name="tts_summ">ხმამაღლა კითხულობს კითხვასა და პასუხს, როცა მოცემული არაა აუდიოფაილი</string>
@@ -160,7 +160,7 @@
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">შესაძლებელს ხდის, გამოიყენოთ „გამოტოვებული ადგილის“ კონტექსტური მენიუ ჰორიზონტალურ რეჟიმში.</string>
     <string name="vertical_centering" maxLength="41">ცენტრში მოთავსება</string>
-    <string name="vertical_centering_summ">Center the content of cards vertically</string>
+    <string name="vertical_centering_summ">ბარათების შიგთავსის ვერტიკალურ ცენტრში მოთავსება</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ორმაგი შეხების შუალედის დრო (მილიწამებში)</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">შეხების საჭირო ხანგრძლივობა პასუხის საჩვენებლად</string>
@@ -257,8 +257,8 @@
     <string name="contributors_title">მონაწილეები</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">ლიცენზია</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="license_description"><![CDATA[AnkiDroid გამოშვებულია <a href=\"%1$s\">GPL-3.0</a> და <a href=\"%2$s\">AGPL-3.0</a> ლიცენზიებით. საწყისი კოდის სანახავად ეწვიეთ <a href=\"%3$s\">GitHub-ს</a>]]></string>
+    <string name="donate_description"><![CDATA[<a href=\"%1$s\">შემოწირულებით</a> შეგიძლიათ ხელი შეუწყოთ AnkiDroid-ის განვითარებას. ნებისმიერი რაოდენობის თანხას ვაფასებთ.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">ჟესტის დამატება</string>
     <string name="binding_add_key">კლავიშის დამატება</string>
@@ -276,7 +276,7 @@
     <string name="user_action_7" maxLength="28">მომხმარებლის ქმედება 7</string>
     <string name="user_action_8" maxLength="28">მომხმარებლის ქმედება 8</string>
     <string name="user_action_9" maxLength="28">მომხმარებლის ქმედება 9</string>
-    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
+    <string name="toggle_auto_advance" maxLength="41">ავტომატური გაგრძელების ჩართვა/გამორთვა</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">ბარათის გვერდის არჩევა</string>
     <string name="card_side_question">კითხვა</string>
@@ -343,7 +343,7 @@
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">ყველაფრის წაშლა</string>
     <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
     <string name="dialog__delete_everything__title" comment="Confirmation dialog title">ყველაფრის წაშლა</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">ნამდვილად გსურთ ყველა მონაცემის წაშლა? მონაცემებში შედის თქვენი კოლექცია, მედიაფაილები, სარეზერვო ასლები და ინდივიდუალურად მორგებული პარამეტრები.\n\nშენიშვნა: ამ ქმედებით მიმდინარე ფანჯარა დაიხურება.</string>
     <!-- Delete app data -->
     <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">აპლიკაციის მონაცემების წაშლა</string>
     <string name="pref__delete_app_data__summary">პარამეტრებისა და აპლიკაციის სხვა მონაცემების წაშლა</string>
@@ -358,14 +358,14 @@
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">მიმდინარეობს ამორჩევა&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">მიმდინარეობს გამოთვლა&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">კოლექცია არ არსებობს</string>
-    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">სისტემის ზოლების დამალვა</string>
     <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">არცერთი</string>
     <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">სტატუსის ზოლი</string>
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">ნავიგაციის ზოლი</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">ყველა</string>
     <string name="ignore_display_cutout" maxLength="41">ეკრანის ზედა ჭრილის უგულებელყოფა</string>
-    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
-    <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
+    <string name="hide_answer_buttons" maxLength="41">პასუხის ღილაკების დამალვა</string>
+    <string name="hide_hard_and_easy" maxLength="41">„მარტივი“ და „რთული“ ღილაკების დამალვა</string>
     <string name="reviewer_frame_style" maxLength="41">ბარათის ჩარჩოს სტილი</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">ბარათი (მრგვალი კუთხეები)</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">ყუთი (სწორი კუთხეები)</string>
