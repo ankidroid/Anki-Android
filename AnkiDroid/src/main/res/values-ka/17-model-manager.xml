@@ -68,7 +68,7 @@
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">კლონი: %1$s </string>
     <!--Browser Appearance-->
-    <string name="card_template_browser_appearance_summary">შეიყვანეთ შაბლონი, რომელსაც ბარათების საძიებო პასუხების შემოკლებული ვერსიების საჩვენებლად გამოიყენებს.\n\n\"{{Country}}ს დედაქალაქი არის:\"\nრომ ავიღოთ მაგალითად, მისი შიგთავსი შეიძლება წინა შაბლონით შემოკლდეს როგორც\n\"დედაქალაქი: {{Country}}\"</string>
+    <string name="card_template_browser_appearance_summary">შეიყვანეთ შაბლონი, რომელსაც ბარათების საძიებო პასუხების შემოკლებული ვერსიების საჩვენებლად გამოიყენებს.\n\n\"{{ქვეყანა}}-ს დედაქალაქი არის:\"\nრომ ავიღოთ მაგალითად, მისი შიგთავსი შეიძლება წინა შაბლონით შემოკლდეს როგორც\n\"დედაქალაქი: {{ქვეყანა}}\"</string>
     <string name="card_template_browser_appearance_question_format">კითხვის ფორმატი</string>
     <string name="card_template_browser_appearance_answer_format">პასუხის ფორმატი</string>
     <string name="card_template_browser_appearance_restore_default_dialog">აღდგეს ნაგულისხმევი მონაცემები?</string>

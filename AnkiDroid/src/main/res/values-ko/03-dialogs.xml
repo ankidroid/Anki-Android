@@ -46,10 +46,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">데이터베이스를 점검할까요?</string>
     <string name="check_db_warning">시간이 오래 걸릴 수 있습니다</string>
-    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">카드 묶음 삭제</string>
-    <string name="delete_deck_title">카드 묶음을 삭제할까요?</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">덱 삭제하기</string>
+    <string name="delete_deck_title">덱을 삭제할까요?</string>
     <plurals name="delete_deck_message">
-        <item quantity="other">%1$s의 모든 카드를 삭제할까요? 이는 %2$d 카드를 포함하고 있습니다</item>
+        <item quantity="other">%1$s의 모든 카드를 삭제할까요? 이는 %2$d개의 카드가 있습니다</item>
     </plurals>
     <string name="delete_cram_deck_message">필터링된 덱 %s을(를) 삭제하고 모든 카드를 원래 덱으로 돌려보낼까요?</string>
     <string name="no_tts_available_message">문장 읽어주기 기능(TTS)을 사용할 수 없음</string>
@@ -60,31 +60,31 @@
         <item quantity="other">%d개의 카드를 초기화했습니다.</item>
     </plurals>
     <string name="answering_error_title">데이터베이스 오류</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+    <string name="answering_error_message">컬렉션에 쓰는 것을 실패했습니다. 데이터베이스가 손상되었거나 디스크에 충분한 여유 공간이 없을 수 있습니다.\n\n이 문제가 자주 발생하면 데이터베이스를 점검하거나 컬렉션을 복구하거나 설정에서 백업 파일을 복원해 보세요. \n\n또는 AnkiDroid 버그일 수 있으니, 오류를 보고해 주시면 확인해 보겠습니다.</string>
     <string name="answering_error_report">오류 보고하기</string>
     <string name="storage_full_message">AnkiDroid를 열 저장 공간이 부족합니다. 계속하려면 여유 공간을 확보하세요.</string>
     <string name="repair_deck_dialog">데이터베이스를 복구하시겠습니까?\n\n 복구를 시작하기 전에 지정된 하위폴더에 복사본 파일이 저장됩니다\'%s\'.</string>
     <string name="intent_aedict_empty">\'기본값\' 카테고리가 비어 있습니다</string>
     <string name="intent_aedict_category">AnkiDroid에 카드를 추가하기 위해 모든 메모장 범주 삭제 또는 \'기본값\'으로 지정하기</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
-    <string name="custom_study_forgotten">최근 x일 내에 잊혀진 카드:</string>
+    <string name="custom_study_new_extend">오늘의 새로운 카드 제한을 (“-3”) 만큼 증가/감소시키기</string>
+    <string name="custom_study_rev_extend">오늘의 복습 제한을 (“-3”) 만큼 증가/감소시키기</string>
+    <string name="custom_study_forgotten">최근 x일 동안 잊혀진 복습 카드:</string>
     <string name="custom_study_ahead">x일 만큼 미리 복습하기:</string>
-    <string name="custom_study_preview">최근 x일 내에 추가된 카드를 미리 학습하기:</string>
+    <string name="custom_study_preview">최근 x일 내에 추가된 카드 미리 학습하기:</string>
     <string name="storage_full_title">저장 공간이 가득 찼습니다.</string>
     <string name="storage_almost_full_title">저장공간이 거의 가득 찼습니다.</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">빈 공간 없음</string>
-    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid는 계속 진행하기 위해 %s만큼의 여유 공간이 필요합니다. 공간을 조금 확보해 주세요</string>
     <string name="restore_backup_title">백업을 복원할까요?</string>
     <string name="restore_backup">컬렉션이 기존의 것으로 대체됩니다. 저장되지 않은 모든 작업은 손실됩니다.</string>
-    <string name="restore_backup_choose_another">다른 항목 선택</string>
-    <string name="dialog_cancel">취소</string>
+    <string name="restore_backup_choose_another">다른 항목 선택하기</string>
+    <string name="dialog_cancel">취소하기</string>
     <string name="dialog_ok">확인</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">확인</string>
     <string name="dialog_no">아니요</string>
     <string name="dialog_yes">예</string>
     <string name="dialog_keep">취소</string>
-    <string name="dialog_remove">제거</string>
+    <string name="dialog_remove">제거하기</string>
     <string name="dialog_continue">계속하기</string>
     <string name="dialog_processing">처리 중&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">만들기</string>

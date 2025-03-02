@@ -92,11 +92,11 @@
         <item>하단</item>
         <item>없음</item>
     </string-array>
-    <string name="gestures" maxLength="41">제스처 사용</string>
+    <string name="gestures" maxLength="41">제스처 사용하기</string>
     <string name="gestures_summ">응답 및 카드 편집 등의 작업에 제스쳐 할당</string>
     <string name="gestures_corner_touch" maxLength="41">9점 터치</string>
     <string name="gestures_corner_touch_summary">화면 모서리의 터치 제스쳐 허용</string>
-    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">키보드 단축키 보기</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">전체화면 탐색 서랍</string>
     <string name="gestures_fullscreen_nav_drawer_summary">화면 어디에서나 오른쪽으로 스와이프하여 탐색 서랍 열기</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">없음</string>
@@ -152,7 +152,7 @@
     <string name="notification_minimum_cards_due_blink" maxLength="41">LED 깜빡이기</string>
     <string name="select_locale_title">언어 선택</string>
     <string name="software_render" maxLength="41">카드 하드웨어 랜더링 비활성화</string>
-    <string name="software_render_summ">하드웨어 렌더링은 더 빠르지만 특히 Android 8/8.1에서 문제가 있을 수 있습니다.  카드 리뷰시 사용자 인터페이스의 일부가 표시되지 않으면 이 설정을 시도해 보십시오.</string>
+    <string name="software_render_summ">하드웨어 렌더링은 더 빠르지만 특히 Android 8/8.1에서 문제가 있을 수 있습니다.  카드 복습 사용자 인터페이스의 일부가 표시되지 않으면 이 설정을 시도해 보십시오.</string>
     <string name="safe_display" maxLength="41">안전한 디스플레이 모드</string>
     <string name="safe_display_summ">모든 애니메이션을 비활성화하고 더 안전한 그리기 방법을 사용합니다. 전자 잉크 기기에는 이 기능이 필요할 수 있습니다.</string>
     <string name="disable_extended_text_ui" maxLength="41">단일 필드 편집 모드 비활성화</string>
@@ -182,17 +182,17 @@
         <item quantity="other">자정 %d시간 이후</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">화면을 켜진 상태로 유지</string>
-    <string name="pref_keep_screen_on_summ">화면 꺼짐 시간 비활성화</string>
-    <string name="enable_api_title" maxLength="41">AnkiDroid API를 사용하도록 설정</string>
-    <string name="enable_api_summary">사용자의 개입 없이 다른 앱이 AnkiDroid에 연결하고 데이터를 읽고 쓸 수 있도록 허용</string>
+    <string name="pref_keep_screen_on_summ">화면 꺼짐 비활성화하기</string>
+    <string name="enable_api_title" maxLength="41">AnkiDroid API 활성화하기</string>
+    <string name="enable_api_summary">사용자의 개입 없이 다른 앱이 AnkiDroid에 연결해 데이터를 읽고 쓸 수 있도록 허용하기</string>
     <string name="custom_buttons" maxLength="41">앱 바 버튼</string>
-    <string name="custom_buttons_summary">앱 바에 어떠한 동작이 표시될 것인지 지정</string>
-    <string name="custom_buttons_setting_always_show">항상 표시</string>
-    <string name="custom_buttons_setting_if_room">공간이 있는 경우 표시</string>
-    <string name="custom_buttons_setting_menu_only">메뉴만</string>
-    <string name="reset_custom_buttons" maxLength="41">기본값으로 초기화</string>
-    <string name="reset_settings_to_default">기본값으로 초기화</string>
-    <string name="reset">초기화</string>
+    <string name="custom_buttons_summary">앱 바에 표시될 동작 지정하기</string>
+    <string name="custom_buttons_setting_always_show">항상 표시하기</string>
+    <string name="custom_buttons_setting_if_room">공간이 있는 경우 표시하기</string>
+    <string name="custom_buttons_setting_menu_only">메뉴만 표시하기</string>
+    <string name="reset_custom_buttons" maxLength="41">기본값으로 초기화하기</string>
+    <string name="reset_settings_to_default">기본값으로 초기화하기</string>
+    <string name="reset">초기화하기</string>
     <string name="thirdparty_apps_title" maxLength="41">타사 API 앱</string>
     <string name="thirdparty_apps_summary">Ankidroid API를 사용하는 어플 목록 보기 (사전, 편집기 등)</string>
     <!-- Appearance settings -->
@@ -205,13 +205,13 @@
     <string name="exit_via_double_tap_back" maxLength="41">뒤로가기 버튼 두번 눌러 돌아가기/나가기</string>
     <string name="exit_via_double_tap_back_summ">실수로 인한 학습 종료와 앱 종료 방지</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">미디어 파일 허용</string>
+    <string name="media_import_allow_all_files" maxLength="41">미디어 파일 허용하기</string>
     <string name="media_import_allow_all_files_summ">만약 안드로이드가 미디어파일을 인식하지 못한다면</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">자체 동기화 서버</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">사용되지 않음</string>
     <string name="custom_sync_server_help2"><![CDATA[AnkiWeb와 동기화하는 대신에
-자신의 서버와 동기화 할 수 있습니다.
+사용자의 서버와 동기화 할 수 있습니다.
 설정하지 않으면 기본 AnkiWeb 서버가 사용됩니다.
 <a href="%s">더 알아보기</a>]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">동기화 URL</string>
@@ -224,32 +224,32 @@
     <string name="note" maxLength="41">노트</string>
     <string name="navigation" maxLength="41">탐색</string>
     <string name="media" maxLength="41">미디어</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="misc" maxLength="41">기타</string>
     <!-- studyoptions -->
-    <string name="studyoptions_limit_select_tags">태그 선택</string>
+    <string name="studyoptions_limit_select_tags">태그 선택하기</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">일반</string>
     <string name="deck_conf_reminders" maxLength="41">알림</string>
     <string name="deck_conf_cram_filter" maxLength="41">필터</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">검색</string>
     <string name="deck_conf_cram_limit" maxLength="41">한도</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">일정변경</string>
-    <string name="deck_conf_cram_reschedule_summ">이 카드묶음에서 내 대답에 근거에 따라 재일정된 카드들</string>
-    <string name="deck_conf_cram_filter_2_check">2번째 필터 적용</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">사용자 정의 단계 정의</string>
+    <string name="deck_conf_cram_order" maxLength="41">선택된 카드</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">기한 변경하기</string>
+    <string name="deck_conf_cram_reschedule_summ">이 덱에서 내 대답에 따라 기한이 변경된 카드</string>
+    <string name="deck_conf_cram_filter_2_check">2번째 필터 적용하기</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">맞춤 단계 설정하기</string>
     <string name="deck_conf_cram_preview_delays" maxLength="41">미리보기 딜레이</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays_summ">지연 시간은 초 단위입니다. 0을 입력하면 카드를 원래 덱으로 되돌립니다.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid를 개선하는데 도움을 주세요!</string>
     <string name="analytics_title" maxLength="41">기능 사용 공유하기</string>
     <string name="analytics_summ">개발팀이 사람들이 어떤 기능을 사용하는지 볼 수 있도록 도와주어 AnkiDroid에 기여할 수 있습니다.</string>
-    <string name="note_editor_replace_newlines" maxLength="41">HTML로 신규 라인 교체</string>
+    <string name="note_editor_replace_newlines" maxLength="41">HTML로 신규 라인 교체하기</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- About -->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">업데이트 기록 열기</string>
     <string name="pref_cat_about_title" maxLength="41">About</string>
     <string name="contributors_title">기여자들</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
@@ -257,28 +257,28 @@
     <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
     <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
     <!-- Controls -->
-    <string name="binding_add_gesture">제스쳐 추가</string>
-    <string name="binding_add_key">키 추가</string>
+    <string name="binding_add_gesture">제스쳐 추가하기</string>
+    <string name="binding_add_key">키 추가하기</string>
     <string name="key_picker_default_press_key">키 누르기</string>
-    <string name="binding_add_axis">조이스틱/모션 컨트롤러 추가</string>
+    <string name="binding_add_axis">조이스틱/모션 컨트롤러 추가하기</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <string name="user_actions" maxLength="41">사용자 행동</string>
     <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
     <string name="user_action_1" maxLength="28">사용자 행동 1</string>
     <string name="user_action_2" maxLength="28">사용자 행동 2</string>
     <string name="user_action_3" maxLength="28">사용자 행동 3</string>
-    <string name="user_action_4" maxLength="28">사용자 액션 4</string>
-    <string name="user_action_5" maxLength="28">사용자 액션 5</string>
-    <string name="user_action_6" maxLength="28">사용자 액션 6</string>
-    <string name="user_action_7" maxLength="28">사용자 액션 7</string>
-    <string name="user_action_8" maxLength="28">사용자 액션 8</string>
-    <string name="user_action_9" maxLength="28">사용자 액션 9</string>
+    <string name="user_action_4" maxLength="28">사용자 행동 4</string>
+    <string name="user_action_5" maxLength="28">사용자 행동 5</string>
+    <string name="user_action_6" maxLength="28">사용자 행동 6</string>
+    <string name="user_action_7" maxLength="28">사용자 행동 7</string>
+    <string name="user_action_8" maxLength="28">사용자 행동 8</string>
+    <string name="user_action_9" maxLength="28">사용자 행동 9</string>
     <string name="toggle_auto_advance" maxLength="41">자동 넘기기 켜기/끄기</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">카드 면 선택</string>
-    <string name="card_side_question">질문</string>
+    <string name="card_side_question">문제</string>
     <string name="card_side_answer">정답</string>
-    <string name="card_side_both" maxLength="28">질문 &amp; 정답</string>
+    <string name="card_side_both" maxLength="28">문제 &amp; 정답</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -291,10 +291,9 @@
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">새로운 TTS 포맷을 위해 업데이트 해주세요.</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">개발자 옵션</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
-    <string name="disable_dev_options">Disable developer options</string>
-    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
-    </string>
+    <string name="dev_options_enabled_pref" maxLength="41">개발자 옵션 활성화하기</string>
+    <string name="disable_dev_options">개발자 옵션 비활성화하기</string>
+    <string name="dev_options_warning">개발자 옵션을 켜기 전에 유의할 점이 있습니다. 이 옵션들은 앱을 고장내거나 카드 모음을 이상하게 만들 위험성이 있습니다. 이 옵션들은 대부분의 유저에게는 사용할 필요가 없기 때문에 영어인 채로 번역되지 않았습니다.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
@@ -307,7 +306,7 @@
         <br><br>
         You can restore from a backup and export your collection in the deck list menu.
     ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">자동 백업 간격(분)</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
     <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
     <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
@@ -317,54 +316,54 @@
     <string name="pref__manage_space__screen_title">Manage space</string>
     <!-- TextWidgetPreference widget text -->
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">에러</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">계산\n중&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
         <item quantity="other">%1$d files\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">사용되지 않는 미디어 파일 삭제하기</string>
     <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">사용되지 않는 미디어 파일 삭제하기</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Delete backups</string>
-    <string name="progress__deleting_backups">Deleting backups&#8230;</string>
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">백업 삭제하기</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">백업 삭제하기</string>
+    <string name="progress__deleting_backups">백업 삭제 중&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
-    <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Delete collection</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
-    <string name="progress__deleting_collection">Deleting collection&#8230;</string>
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">컬렉션 삭제하기</string>
+    <string name="pref__delete_collection__summary">컬렉션, 미디어, 백업 삭제하기. 앱 설정은 삭제되지 않습니다</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">컬렉션 삭제하기</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">정말로 컬렉션, 미디어, 백업을 삭제하시겠습니까?\n\n참고: 이 작업을 수행하면 창이 닫힙니다</string>
+    <string name="progress__deleting_collection">컬렉션 삭제 중&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>
-    <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Delete everything</string>
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">모두 지우기</string>
+    <string name="pref__delete_everything__summary">컬렉션, 미디어, 백업, 설정 삭제하기</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">모두 지우기</string>
     <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">정말 모든 데이터를 삭제하시겠습니까? 여기에는 컬렉션, 미디어, 백업 및 환경 설정이 포함됩니다.\n\n참고: 이 작업을 수행하면 창이 닫힙니다.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">앱 데이터 삭제</string>
-    <string name="pref__delete_app_data__summary">설정 및 기타 앱 데이터 삭제</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">앱 데이터 삭제</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">정말 모든 데이터를 삭제하시겠습니까? 여기에는 환경 설정과 기타 앱 데이터가 포함됩니다.\n\n참고: 이 작업을 수행하면 창이 닫힙니다.</string>
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">앱 데이터 삭제하기</string>
+    <string name="pref__delete_app_data__summary">설정 및 기타 앱 데이터 삭제하기</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">앱 데이터 삭제하기</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">정말 모든 데이터를 삭제하시겠습니까? 여기에는 설정과 기타 앱 데이터가 포함됩니다.\n\n참고: 이 작업을 수행하면 창이 닫힙니다.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">컬렉션 없음</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">오류</string>
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
-    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
-    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">None</string>
-    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Status bar</string>
-    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigation bar</string>
-    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">계산 중&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">컬렉션이 없습니다</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">시스템 바 숨기기</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">없음</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">상태 바</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">내비게이션 바</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">전부</string>
     <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
-    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
-    <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
-    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <string name="hide_answer_buttons" maxLength="41">정답 버튼 숨기기</string>
+    <string name="hide_hard_and_easy" maxLength="41">\'어려움\', \'쉬움\' 버튼 숨기기</string>
+    <string name="reviewer_frame_style" maxLength="41">프레임 스타일</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">카드</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">상자</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">설정 열기</string>
 </resources>

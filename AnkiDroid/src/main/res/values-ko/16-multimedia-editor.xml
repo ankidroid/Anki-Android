@@ -42,7 +42,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">이미지 추가</string>
     <string name="multimedia_editor_popup_audio_clip">오디오 클립 추가</string>
-    <string name="multimedia_editor_popup_video_clip">비디오 클립 추가</string>
+    <string name="multimedia_editor_popup_video_clip">비디오 클립 추가하기</string>
     <string name="multimedia_editor_popup_audio">오디오 녹음</string>
     <string name="multimedia_editor_popup_cloze">빈칸 만들기</string>
     <!-- Field editing general -->
@@ -65,12 +65,12 @@
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">녹음 실패</string>
     <string name="multimedia_editor_audio_view_playing_failed">재생 실패</string>
-    <string name="multimedia_editor_audio_view_create_failed">레코더 툴바를 생성할 수 없습니다</string>
+    <string name="multimedia_editor_audio_view_create_failed">레코더 툴바를 생성 불가능</string>
     <!-- Crop function-->
     <string name="crop_image">이 이미지를 자르시겠습니까?</string>
     <string name="crop_button" maxLength="28">이미지 자르기</string>
     <string name="save_dialog_content">현재의 이미지의 크기는 %sMB 입니다. 기본 이미지 크기의 한도는 1MB입니다. 이미지를 압축하시겠습니까?</string>
     <string name="select_image_failed">"이미지 선택 실패, 재시도하세요"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">필드 내용</string>
-    <string name="reselect" maxLength="28">재선택</string>
+    <string name="reselect" maxLength="28">재선택하기</string>
 </resources>

@@ -99,7 +99,7 @@
     <string name="gestures_summ">Використовувати жести для таких дій, як відповідь і редагування карток.</string>
     <string name="gestures_corner_touch" maxLength="41">9-точковий дотик</string>
     <string name="gestures_corner_touch_summary">Дозволити сенсорні жести в кутах екрану</string>
-    <string name="show_keyboard_shortcuts" maxLength="41">Показати клавіатурні комбінації клавіш</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Показати комбінації клавіш клавіатури</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Повноекранна панель навігації</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Відкривати панель навігації при проведенні вправо з будь-якого місця на екрані</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">Немає</string>

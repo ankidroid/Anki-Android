@@ -95,7 +95,7 @@
     <string name="card_browser_search_all_decks">ყველა დასტაში ძებნა</string>
     <string name="card_browser_unknown_deck_name">უცნობი</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">შიგთავსის დამოკლება</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">დღევანდელი დღე არის „0 %1$s“, ხვალინდელი — „1 %2$s“ — და ა.შ.</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">ბარათის ექსპორტირება</item>
         <item quantity="other">ბარათების ექსპორტირება</item>
@@ -109,8 +109,8 @@
         <item quantity="other">%d ბარათი წაიშალა</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">იარლიყის რედაქტირების ფანჯარა</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">თანმიმდევრობის ჩვენების ფანჯარა</string>
     <!-- Manage columns dialog -->
     <string name="browse_manage_columns_main_heading">სვეტები</string>
     <string name="browse_manage_columns">სვეტების მართვა</string>
