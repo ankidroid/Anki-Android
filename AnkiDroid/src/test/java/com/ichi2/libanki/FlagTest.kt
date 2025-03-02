@@ -15,20 +15,21 @@
  */
 package com.ichi2.libanki
 
+import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.Flag
-import com.ichi2.anki.utils.ext.setFlag
+import com.ichi2.anki.utils.ext.CardExt.setFlag
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.ext.addNote
-import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class FlagTest : JvmTest() {
     /*****************
      ** Flags        *
      *****************/
+    @SuppressLint("CheckResult")
     @Test
     fun test_flags() {
         val n = col.newNote()
@@ -41,36 +42,36 @@ class FlagTest : JvmTest() {
         val origBits = 0b101 shl 3
         c.update { setFlag(origBits) }
         // no flags to start with
-        assertEquals(Flag.NONE, c.userFlag())
+        assertEquals(0, c.userFlag())
         assertEquals(1, col.findCards("flag:0").size)
         assertEquals(0, col.findCards("flag:1").size)
         // set flag 2
-        col.setUserFlag(Flag.ORANGE, listOf(c.id))
+        col.setUserFlagForCards(listOf(c.id), 2)
         c.load()
-        assertEquals(Flag.ORANGE, c.userFlag())
+        assertEquals(2, c.userFlag())
         // assertEquals(origBits, c.flags & origBits);TODO: create direct access to real flag value
         assertEquals(0, col.findCards("flag:0").size)
         assertEquals(1, col.findCards("flag:2").size)
         assertEquals(0, col.findCards("flag:3").size)
         // change to 3
-        col.setUserFlag(Flag.GREEN, listOf(c.id))
+        col.setUserFlagForCards(listOf(c.id), 3)
         c.load()
-        assertEquals(Flag.GREEN, c.userFlag())
+        assertEquals(3, c.userFlag())
         // unset
-        col.setUserFlag(Flag.NONE, listOf(c.id))
+        col.setUserFlagForCards(listOf(c.id), 0)
         c.load()
-        assertEquals(Flag.NONE, c.userFlag())
+        assertEquals(0, c.userFlag())
 
         // should work with Cards method as well
-        c.setUserFlag(Flag.ORANGE)
-        assertEquals(Flag.ORANGE, c.userFlag())
-        c.setUserFlag(Flag.GREEN)
-        assertEquals(Flag.GREEN, c.userFlag())
-        c.setUserFlag(Flag.NONE)
-        assertEquals(Flag.NONE, c.userFlag())
+        c.setUserFlag(2)
+        assertEquals(2, c.userFlag())
+        c.setUserFlag(3)
+        assertEquals(3, c.userFlag())
+        c.setUserFlag(0)
+        assertEquals(0, c.userFlag())
 
         // test new flags
-        col.setUserFlag(Flag.PURPLE, listOf(c.id))
+        col.setUserFlagForCards(listOf(c.id), 7)
         assertEquals(1, col.findCards("flag:7").size)
     }
 }
