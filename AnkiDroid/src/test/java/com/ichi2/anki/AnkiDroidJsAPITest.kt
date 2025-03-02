@@ -21,7 +21,7 @@ package com.ichi2.anki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidJsAPI.Companion.SUCCESS_KEY
 import com.ichi2.anki.AnkiDroidJsAPI.Companion.VALUE_KEY
-import com.ichi2.anki.utils.ext.setFlag
+import com.ichi2.anki.utils.ext.CardExt.setFlag
 import com.ichi2.libanki.CardType
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.BASIC_MODEL_NAME

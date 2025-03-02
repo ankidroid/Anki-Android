@@ -94,6 +94,8 @@ import com.ichi2.anki.servicelayer.NoteService.toggleMark
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
+import com.ichi2.anki.utils.ext.flag
+import com.ichi2.anki.utils.ext.setUserFlagForCards
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.navBarNeedsScrim
 import com.ichi2.anki.utils.remainingTime
@@ -256,7 +258,7 @@ open class Reviewer :
     protected val flagToDisplay: Flag
         get() {
             return FlagToDisplay(
-                currentCard!!.userFlag(),
+                currentCard!!.flag,
                 actionButtons.findMenuItem(ActionButtons.RES_FLAG)?.isActionButton ?: true,
                 prefFullscreenReview,
             ).get()
@@ -307,7 +309,7 @@ open class Reviewer :
             return
         }
         launchCatchingTask {
-            card.setUserFlag(flag)
+            card.setUserFlag(flag.code)
             undoableOp(this@Reviewer) {
                 setUserFlagForCards(listOf(card.id), flag)
             }
@@ -736,7 +738,7 @@ open class Reviewer :
         val flagIcon = menu.findItem(R.id.action_flag)
         if (flagIcon != null) {
             if (currentCard != null) {
-                val flag = currentCard!!.userFlag()
+                val flag = currentCard!!.flag
                 flagIcon.setIcon(flag.drawableRes)
                 if (flag == Flag.NONE && actionButtons.status.flagsIsOverflown()) {
                     val flagColor = ThemeUtils.getThemeAttrColor(this, android.R.attr.colorControlNormal)
@@ -1326,7 +1328,7 @@ open class Reviewer :
     }
 
     private fun toggleFlag(flag: Flag) {
-        if (currentCard!!.userFlag() == flag) {
+        if (currentCard!!.flag == flag) {
             Timber.i("Toggle flag: unsetting flag")
             onFlag(currentCard, Flag.NONE)
         } else {

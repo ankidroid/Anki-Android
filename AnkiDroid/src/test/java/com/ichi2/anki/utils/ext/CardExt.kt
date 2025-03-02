@@ -21,6 +21,8 @@ import com.ichi2.libanki.Card
  * Set flags to [flag].
  * Should only be used for testing.
  */
-fun Card.setFlag(flag: Int) {
-    flags = flag
+object CardExt {
+    fun Card.setFlag(flag: Int) {
+        flags = flag
+    }
 }
