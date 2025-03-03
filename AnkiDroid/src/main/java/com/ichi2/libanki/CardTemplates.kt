@@ -24,7 +24,7 @@ import org.json.JSONObject
 /**
  * A collection of [CardTemplate]
  *
- * @see NotetypeJson.tmpls
+ * @see NotetypeJson.templates
  */
 @JvmInline
 @NotInLibAnki
