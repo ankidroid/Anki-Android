@@ -44,6 +44,8 @@ import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.isBuryNoteAvailable
 import com.ichi2.anki.servicelayer.isSuspendNoteAvailable
 import com.ichi2.anki.ui.windows.reviewer.autoadvance.AutoAdvance
+import com.ichi2.anki.utils.ext.flag
+import com.ichi2.anki.utils.ext.setUserFlagForCards
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.redo
 import com.ichi2.libanki.sched.Counts
@@ -445,7 +447,7 @@ class ReviewerViewModel(
         showQuestion()
         loadAndPlaySounds(CardSide.QUESTION)
         updateMarkedStatus()
-        flagFlow.emit(card.userFlag())
+        flagFlow.emit(card.flag)
         canBuryNoteFlow.emit(isBuryNoteAvailable(card))
         canSuspendNoteFlow.emit(isSuspendNoteAvailable(card))
         countsFlow.emit(state.counts to state.countsIndex)
