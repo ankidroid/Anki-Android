@@ -32,7 +32,7 @@ fun AnkiActivity.exportApkgPackage(
     launchCatchingTask {
         val onProgress: ProgressContext.() -> Unit = {
             if (progress.hasExporting()) {
-                text = getString(R.string.export_preparation_in_progress)
+                text = progress.exporting
             }
         }
         withProgress(extractProgress = onProgress) {
@@ -45,28 +45,20 @@ fun AnkiActivity.exportApkgPackage(
     }
 }
 
-suspend fun AnkiActivity.exportColpkg(
-    colpkgPath: String,
-    withMedia: Boolean,
-    legacy: Boolean,
-) {
-    val onProgress: ProgressContext.() -> Unit = {
-        if (progress.hasExporting()) {
-            text = getString(R.string.export_preparation_in_progress)
-        }
-    }
-    withProgress(extractProgress = onProgress) {
-        withCol { exportCollectionPackage(colpkgPath, withMedia, legacy) }
-    }
-}
-
 fun AnkiActivity.exportCollectionPackage(
     exportPath: String,
     withMedia: Boolean,
     legacy: Boolean,
 ) {
     launchCatchingTask {
-        exportColpkg(exportPath, withMedia, legacy)
+        val onProgress: ProgressContext.() -> Unit = {
+            if (progress.hasExporting()) {
+                text = progress.exporting
+            }
+        }
+        withProgress(extractProgress = onProgress) {
+            withCol { exportCollectionPackage(exportPath, withMedia, legacy) }
+        }
         val factory =
             (this@exportCollectionPackage as ExportDialogsFactoryProvider).exportDialogsFactory()
         val dialog = factory.newExportReadyDialog().withArguments(exportPath)
@@ -86,7 +78,7 @@ fun AnkiActivity.exportSelectedNotes(
     launchCatchingTask {
         val onProgress: ProgressContext.() -> Unit = {
             if (progress.hasExporting()) {
-                text = getString(R.string.export_preparation_in_progress)
+                text = progress.exporting
             }
         }
         withProgress(extractProgress = onProgress) {
@@ -117,7 +109,7 @@ fun AnkiActivity.exportSelectedCards(
     launchCatchingTask {
         val onProgress: ProgressContext.() -> Unit = {
             if (progress.hasExporting()) {
-                text = getString(R.string.export_preparation_in_progress)
+                text = progress.exporting
             }
         }
         withProgress(extractProgress = onProgress) {
