@@ -130,6 +130,9 @@ import com.ichi2.anki.dialogs.DeckPickerNoSpaceLeftDialog
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialog
 import com.ichi2.anki.dialogs.EmptyCardsDialogFragment
+import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.KEY_EXPORT_PATH
+import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.REQUEST_EXPORT_SAVE
+import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.REQUEST_EXPORT_SHARE
 import com.ichi2.anki.dialogs.ImportDialog.ImportDialogListener
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ApkgImportResultLauncherProvider
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.CsvImportResultLauncherProvider
@@ -141,8 +144,6 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction.Companion.REQUEST_KEY
 import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportDialogFragment
-import com.ichi2.anki.export.ExportDialogsFactory
-import com.ichi2.anki.export.ExportDialogsFactoryProvider
 import com.ichi2.anki.introduction.CollectionPermissionScreenLauncher
 import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.mediacheck.MediaCheckFragment
@@ -250,8 +251,7 @@ open class DeckPicker :
     BaseSnackbarBuilderProvider,
     ApkgImportResultLauncherProvider,
     CsvImportResultLauncherProvider,
-    CollectionPermissionScreenLauncher,
-    ExportDialogsFactoryProvider {
+    CollectionPermissionScreenLauncher {
     val viewModel: DeckPickerViewModel by viewModels()
 
     // Short animation duration from system
@@ -268,7 +268,7 @@ open class DeckPicker :
     lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewLayoutManager: LinearLayoutManager
     private lateinit var deckListAdapter: DeckAdapter
-    lateinit var exportingDelegate: ActivityExportingDelegate
+    private lateinit var exportingDelegate: ActivityExportingDelegate
     private lateinit var noDecksPlaceholder: LinearLayout
     private lateinit var pullToSyncWrapper: SwipeRefreshLayout
 
@@ -627,6 +627,18 @@ open class DeckPicker :
                 bundle.getSerializableCompat<DeckPickerContextMenuOption>(DeckPickerContextMenu.CONTEXT_MENU_DECK_OPTION)
                     ?: error("Unable to retrieve selected context menu option"),
                 bundle.getLong(DeckPickerContextMenu.CONTEXT_MENU_DECK_ID, -1),
+            )
+        }
+
+        supportFragmentManager.setFragmentResultListener(REQUEST_EXPORT_SAVE, this) { _, bundle ->
+            exportingDelegate.saveExportFile(
+                bundle.getString(KEY_EXPORT_PATH) ?: error("Missing required exportPath!"),
+            )
+        }
+
+        supportFragmentManager.setFragmentResultListener(REQUEST_EXPORT_SHARE, this) { _, bundle ->
+            exportingDelegate.shareFile(
+                bundle.getString(KEY_EXPORT_PATH) ?: error("Missing required exportPath!"),
             )
         }
 
@@ -1243,8 +1255,6 @@ open class DeckPicker :
             }
         }
     }
-
-    override fun exportDialogsFactory(): ExportDialogsFactory = exportingDelegate.dialogsFactory
 
     fun exportCollection() {
         ExportDialogFragment.newInstance().show(supportFragmentManager, "exportDialog")

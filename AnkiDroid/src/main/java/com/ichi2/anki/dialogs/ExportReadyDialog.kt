@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.dialogs
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Message
 import androidx.appcompat.app.AlertDialog
@@ -29,31 +28,26 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 
-class ExportReadyDialog(
-    private val listener: ExportReadyDialogListener,
-) : AsyncDialogFragment() {
-    interface ExportReadyDialogListener {
-        fun shareFile(path: String) // path of the file to be shared
-
-        fun saveExportFile(exportPath: String)
-    }
-
+class ExportReadyDialog : AsyncDialogFragment() {
     private val exportPath
-        get() = requireArguments().getString("exportPath")!!
+        get() = requireArguments().getString(KEY_EXPORT_PATH) ?: error("Missing required argument: exportPath!")
 
-    fun withArguments(exportPath: String): ExportReadyDialog {
-        arguments = (arguments ?: bundleOf(Pair("exportPath", exportPath)))
-        return this
-    }
-
-    @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         val dialog = AlertDialog.Builder(requireActivity())
 
         dialog
             .setTitle(notificationTitle)
-            .positiveButton(R.string.export_choice_save_to) { listener.saveExportFile(exportPath) }
-            .negativeButton(R.string.export_choice_share) { listener.shareFile(exportPath) }
+            .positiveButton(R.string.export_choice_save_to) {
+                parentFragmentManager.setFragmentResult(
+                    REQUEST_EXPORT_SAVE,
+                    bundleOf(KEY_EXPORT_PATH to exportPath),
+                )
+            }.negativeButton(R.string.export_choice_share) {
+                parentFragmentManager.setFragmentResult(
+                    REQUEST_EXPORT_SHARE,
+                    bundleOf(KEY_EXPORT_PATH to exportPath),
+                )
+            }
 
         return dialog.create()
     }
@@ -84,11 +78,7 @@ class ExportReadyDialog(
                 )
                 return
             }
-            activity.showDialogFragment(
-                activity.exportingDelegate.dialogsFactory
-                    .newExportReadyDialog()
-                    .withArguments(exportPath),
-            )
+            activity.showDialogFragment(newInstance(exportPath))
         }
 
         override fun toMessage(): Message =
@@ -103,5 +93,16 @@ class ExportReadyDialog(
                 return ExportReadyDialogMessage(exportPath)
             }
         }
+    }
+
+    companion object {
+        const val REQUEST_EXPORT_SAVE = "request_export_save"
+        const val REQUEST_EXPORT_SHARE = "request_export_share"
+        const val KEY_EXPORT_PATH = "key_export_path"
+
+        fun newInstance(exportPath: String) =
+            ExportReadyDialog().apply {
+                arguments = bundleOf(KEY_EXPORT_PATH to exportPath)
+            }
     }
 }

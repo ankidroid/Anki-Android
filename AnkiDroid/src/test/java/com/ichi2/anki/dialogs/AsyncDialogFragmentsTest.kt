@@ -45,7 +45,7 @@ class AsyncDialogFragmentsTest {
 
     @Test
     fun `ExportReadyDialog does not require context`() {
-        val instance = ExportReadyDialog(emptyExportListener())
+        val instance = ExportReadyDialog()
         assertDoesNotThrow("message required a context") { instance.notificationMessage }
         assertDoesNotThrow("title required a context") { instance.notificationTitle }
     }
@@ -58,11 +58,4 @@ class AsyncDialogFragmentsTest {
             assertDoesNotThrow("$dialogType title required a context") { instance.notificationTitle }
         }
     }
-
-    private fun emptyExportListener(): ExportReadyDialog.ExportReadyDialogListener =
-        object : ExportReadyDialog.ExportReadyDialogListener {
-            override fun shareFile(path: String) { }
-
-            override fun saveExportFile(exportPath: String) { }
-        }
 }
