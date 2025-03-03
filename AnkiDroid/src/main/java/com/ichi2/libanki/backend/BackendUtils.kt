@@ -30,6 +30,8 @@ object BackendUtils {
 
     fun jsonToArray(json: ByteString): JSONArray = JSONArray(json.toStringUtf8())
 
+    fun toByteString(conf: JSONObjectHolder) = toByteString(conf.jsonObject)
+
     fun toByteString(conf: JSONObject): ByteString {
         val asString: String = conf.toString()
         return ByteString.copyFromUtf8(asString)

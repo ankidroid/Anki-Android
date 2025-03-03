@@ -71,3 +71,5 @@ class IsJsonHolderEqual(
 }
 
 fun isJsonHolderEqual(expectedValue: String) = IsJsonHolderEqual(JSONObject(expectedValue))
+
+fun isJsonHolderEqual(expectedValue: JSONObjectHolder) = IsJsonHolderEqual(expectedValue.jsonObject)
