@@ -35,12 +35,14 @@ class ReviewerMenuSettingsFragment :
     Fragment(R.layout.preferences_reviewer_menu),
     OnClearViewListener<ReviewerMenuSettingsRecyclerItem>,
     ActionMenuView.OnMenuItemClickListener {
+    private lateinit var repository: ReviewerMenuRepository
+
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-
+        repository = ReviewerMenuRepository(sharedPrefs())
         setupRecyclerView(view)
 
         view.findViewById<MaterialToolbar>(R.id.toolbar).setNavigationOnClickListener {
@@ -52,7 +54,7 @@ class ReviewerMenuSettingsFragment :
     }
 
     private fun setupRecyclerView(view: View) {
-        val menuItems = MenuDisplayType.getMenuItems(sharedPrefs())
+        val menuItems = repository.getActionsByMenuDisplayTypes()
 
         fun section(displayType: MenuDisplayType): List<ReviewerMenuSettingsRecyclerItem> =
             listOf(ReviewerMenuSettingsRecyclerItem.DisplayType(displayType)) +
@@ -95,19 +97,20 @@ class ReviewerMenuSettingsFragment :
         val menuOnlyItemsIndex = getIndex(MenuDisplayType.MENU_ONLY)
         val disabledItemsIndex = getIndex(MenuDisplayType.DISABLED)
 
-        val alwaysShowItems = getSubList(1, menuOnlyItemsIndex)
-        val menuOnlyItems = getSubList(menuOnlyItemsIndex, disabledItemsIndex)
-        val disabledItems = getSubList(disabledItemsIndex, items.lastIndex)
+        val alwaysShowActions = getSubList(1, menuOnlyItemsIndex)
+        val menuOnlyActions = getSubList(menuOnlyItemsIndex, disabledItemsIndex)
+        val disabledActions = getSubList(disabledItemsIndex, items.lastIndex)
 
-        val preferences = sharedPrefs()
-        MenuDisplayType.ALWAYS.setPreferenceValue(preferences, alwaysShowItems)
-        MenuDisplayType.MENU_ONLY.setPreferenceValue(preferences, menuOnlyItems)
-        MenuDisplayType.DISABLED.setPreferenceValue(preferences, disabledItems)
+        repository.setDisplayTypeActions(
+            alwaysShowActions = alwaysShowActions,
+            menuOnlyActions = menuOnlyActions,
+            disabledActions = disabledActions,
+        )
 
         lifecycleScope.launch {
             val menu = requireView().findViewById<ReviewerMenuView>(R.id.reviewer_menu_view)
             menu.clear()
-            menu.addActions(alwaysShowItems, menuOnlyItems)
+            menu.addActions(alwaysShowActions, menuOnlyActions)
             menu.setFlagTitles()
         }
     }
