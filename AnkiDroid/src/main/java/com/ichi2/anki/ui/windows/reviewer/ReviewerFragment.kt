@@ -120,13 +120,7 @@ class ReviewerFragment :
         get() = requireView().findViewById(R.id.webview)
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
-        val typeAnswerContainer = this@ReviewerFragment.view?.findViewById<View>(R.id.type_answer_container)
-        anchorView =
-            if (typeAnswerContainer?.isVisible == true) {
-                typeAnswerContainer
-            } else {
-                this@ReviewerFragment.view?.findViewById(R.id.answer_buttons)
-            }
+        anchorView = this@ReviewerFragment.view?.findViewById(R.id.snackbar_anchor)
     }
 
     override fun onStop() {
