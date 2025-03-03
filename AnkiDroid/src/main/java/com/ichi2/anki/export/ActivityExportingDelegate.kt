@@ -29,12 +29,9 @@ import androidx.core.content.FileProvider
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
-import com.ichi2.anki.common.time.TimeManager
-import com.ichi2.anki.dialogs.ExportReadyDialog.ExportReadyDialogListener
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.withProgress
 import com.ichi2.compat.CompatHelper
 import kotlinx.coroutines.Dispatchers
@@ -45,24 +42,14 @@ import java.io.FileOutputStream
 
 /**
  * A delegate class used in any [AnkiActivity] where the exporting feature is required.
- *
- * Must be constructed before calling [AnkiActivity.onCreate(Bundle, PersistableBundle)][AnkiActivity.onCreate],
- * to ensure the fragment factory ([dialogsFactory]) is set correctly.
- *
- * @param activity the calling activity (must implement [ExportReadyDialogListener])
-*/
+ */
 class ActivityExportingDelegate(
     private val activity: AnkiActivity,
-) : ExportReadyDialogListener {
-    val dialogsFactory: ExportDialogsFactory
+) {
     private val saveFileLauncher: ActivityResultLauncher<Intent>
     private lateinit var fileExportPath: String
 
-    fun dismissAllDialogFragments() {
-        activity.dismissAllDialogFragments()
-    }
-
-    override fun shareFile(path: String) {
+    fun shareFile(path: String) {
         // Make sure the file actually exists
         val attachment = File(path)
         if (!attachment.exists()) {
@@ -112,7 +99,7 @@ class ActivityExportingDelegate(
         }
     }
 
-    override fun saveExportFile(exportPath: String) {
+    fun saveExportFile(exportPath: String) {
         // Make sure the file actually exists
         val attachment = File(exportPath)
         if (!attachment.exists()) {
@@ -204,9 +191,6 @@ class ActivityExportingDelegate(
     }
 
     init {
-        val fragmentManager = activity.supportFragmentManager
-        dialogsFactory = ExportDialogsFactory(this).attachToActivity(activity)
-        fragmentManager.fragmentFactory = dialogsFactory
         saveFileLauncher =
             activity.registerForActivityResult(
                 ActivityResultContracts.StartActivityForResult(),

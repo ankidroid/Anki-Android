@@ -15,7 +15,7 @@ package com.ichi2.anki
 
 import anki.import_export.ExportLimit
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.export.ExportDialogsFactoryProvider
+import com.ichi2.anki.dialogs.ExportReadyDialog
 import com.ichi2.libanki.exportAnkiPackage
 import com.ichi2.libanki.exportCardsCsv
 import com.ichi2.libanki.exportCollectionPackage
@@ -38,10 +38,7 @@ fun AnkiActivity.exportApkgPackage(
         withProgress(extractProgress = onProgress) {
             withCol { exportAnkiPackage(exportPath, withScheduling, withDeckConfigs, withMedia, limit, legacy) }
         }
-        val factory =
-            (this@exportApkgPackage as ExportDialogsFactoryProvider).exportDialogsFactory()
-        val dialog = factory.newExportReadyDialog().withArguments(exportPath)
-        showAsyncDialogFragment(dialog)
+        showAsyncDialogFragment(ExportReadyDialog.newInstance(exportPath))
     }
 }
 
@@ -59,10 +56,7 @@ fun AnkiActivity.exportCollectionPackage(
         withProgress(extractProgress = onProgress) {
             withCol { exportCollectionPackage(exportPath, withMedia, legacy) }
         }
-        val factory =
-            (this@exportCollectionPackage as ExportDialogsFactoryProvider).exportDialogsFactory()
-        val dialog = factory.newExportReadyDialog().withArguments(exportPath)
-        showAsyncDialogFragment(dialog)
+        showAsyncDialogFragment(ExportReadyDialog.newInstance(exportPath))
     }
 }
 
@@ -94,10 +88,7 @@ fun AnkiActivity.exportSelectedNotes(
                 )
             }
         }
-        val factory =
-            (this@exportSelectedNotes as ExportDialogsFactoryProvider).exportDialogsFactory()
-        val dialog = factory.newExportReadyDialog().withArguments(exportPath)
-        showAsyncDialogFragment(dialog)
+        showAsyncDialogFragment(ExportReadyDialog.newInstance(exportPath))
     }
 }
 
@@ -117,9 +108,6 @@ fun AnkiActivity.exportSelectedCards(
                 exportCardsCsv(exportPath, withHtml, limit)
             }
         }
-        val factory =
-            (this@exportSelectedCards as ExportDialogsFactoryProvider).exportDialogsFactory()
-        val dialog = factory.newExportReadyDialog().withArguments(exportPath)
-        showAsyncDialogFragment(dialog)
+        showAsyncDialogFragment(ExportReadyDialog.newInstance(exportPath))
     }
 }
