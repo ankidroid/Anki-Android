@@ -1057,11 +1057,10 @@ abstract class AbstractFlashcardViewer :
         }
         performClickWithVisualFeedback(cardOrdinal)
     }
-
     // #5780 - Users could OOM the WebView Renderer. This triggers the same symptoms.
 
     @VisibleForTesting
-    @Suppress("Unused", "DEPRECATION")
+    @Suppress("unused")
     fun crashWebViewRenderer() {
         loadUrlInViewer("chrome://crash")
     }
@@ -1167,7 +1166,7 @@ abstract class AbstractFlashcardViewer :
      */
     private fun focusAnswerCompletionField() =
         runOnUiThread {
-            // This does not handle mUseInputTag (the WebView contains an input field with a tappable answer).
+            // This does not handle mUseInputTag (the WebView contains an input field with a typable answer).
             // In this case, the user can use touch to focus the field if necessary.
             if (typeAnswer?.autoFocusEditText() == true) {
                 answerField?.focusWithKeyboard()
@@ -1234,7 +1233,7 @@ abstract class AbstractFlashcardViewer :
     protected open fun restoreCollectionPreferences(col: Collection) {
         // These are preferences we pull out of the collection instead of SharedPreferences
         try {
-            showNextReviewTime = (col.config.get("estTimes") as? Boolean) == true
+            showNextReviewTime = col.config.get("estTimes") ?: true
             automaticAnswer = AutomaticAnswer.createInstance(this, col)
         } catch (ex: Exception) {
             Timber.w(ex)
@@ -1506,7 +1505,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     /**
-     * Shows the dialogue for selecting TTS for the current card and card side.
+     * Shows the dialogue for selecting TTS for the current card and cardside.
      */
     protected fun showSelectTtsDialogue() {
         if (ttsInitialized) {
@@ -2383,7 +2382,7 @@ abstract class AbstractFlashcardViewer :
 
         // Filter any links using the custom "playsound" protocol defined in Sound.java.
         // We play sounds through these links when a user taps the sound icon.
-        @NeedsTest("integration test with changeability")
+        @NeedsTest("integration test with typechangetext")
         fun filterUrl(url: String): Boolean {
             if (url.startsWith("playsound:")) {
                 launchCatchingTask {
@@ -2404,12 +2403,12 @@ abstract class AbstractFlashcardViewer :
                 }
                 return true
             }
-            if (url.startsWith("video ended:")) {
+            if (url.startsWith("videoended:")) {
                 // note: 'q:0' is provided
                 cardMediaPlayer.onVideoFinished()
                 return true
             }
-            if (url.startsWith("video pause:")) {
+            if (url.startsWith("videopause:")) {
                 // note: 'q:0' is provided
                 cardMediaPlayer.onVideoPaused()
                 return true
@@ -2425,7 +2424,7 @@ abstract class AbstractFlashcardViewer :
             if (url.startsWith("file") || url.startsWith("data:")) {
                 return false // Let the webview load files, i.e. local images.
             }
-            if (url.startsWith("type change text:")) {
+            if (url.startsWith("typechangetext:")) {
                 // Store the text the javascript has sent us…
                 typeAnswer!!.input = decodeUrl(url.replaceFirst("typechangetext:".toRegex(), ""))
                 return true
@@ -2630,7 +2629,6 @@ abstract class AbstractFlashcardViewer :
     val isDisplayingAnswer
         get() = displayAnswer
 
-    @SuppressLint("WrongThread")
     internal fun showTagsDialog() {
         val tags = ArrayList(getColUnsafe.tags.all())
         val selTags = ArrayList(currentCard!!.note(getColUnsafe).tags)
