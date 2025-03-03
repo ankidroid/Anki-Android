@@ -33,7 +33,7 @@ class FieldTest : AndroidTest {
     @Test
     fun `'tag' - null handling`() {
         val jsonObject = JSONObject()
-        var field = Field(jsonObject)
+        val field = Field(jsonObject)
 
         assertNull(field.imageOcclusionTag, message = "{ }")
 

@@ -57,7 +57,7 @@ object VersionUtils {
      */
     val pkgVersionName: String
         get() {
-            var pkgVersion = "?"
+            val pkgVersion = "?"
             val context: Context = applicationInstance ?: return pkgVersion
             try {
                 val pInfo = context.getPackageInfoCompat(context.packageName, PackageInfoFlagsCompat.EMPTY) ?: return pkgVersion
