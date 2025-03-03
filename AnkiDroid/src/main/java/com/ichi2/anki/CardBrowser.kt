@@ -91,14 +91,15 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
+import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.KEY_EXPORT_PATH
+import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.REQUEST_EXPORT_SAVE
+import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.REQUEST_EXPORT_SHARE
 import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportDialogFragment
-import com.ichi2.anki.export.ExportDialogsFactory
-import com.ichi2.anki.export.ExportDialogsFactoryProvider
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
@@ -149,8 +150,7 @@ open class CardBrowser :
     SubtitleListener,
     DeckSelectionListener,
     TagsDialogListener,
-    ChangeManager.Subscriber,
-    ExportDialogsFactoryProvider {
+    ChangeManager.Subscriber {
     override fun onDeckSelected(deck: SelectableDeck?) {
         deck?.let {
             launchCatchingTask { selectDeckAndSave(deck.deckId) }
@@ -473,6 +473,18 @@ open class CardBrowser :
                     showSnackbar(TR.browsingNotesUpdated(count))
                 }
             }
+        }
+
+        supportFragmentManager.setFragmentResultListener(REQUEST_EXPORT_SAVE, this) { _, bundle ->
+            exportingDelegate.saveExportFile(
+                bundle.getString(KEY_EXPORT_PATH) ?: error("Missing required exportPath!"),
+            )
+        }
+
+        supportFragmentManager.setFragmentResultListener(REQUEST_EXPORT_SHARE, this) { _, bundle ->
+            exportingDelegate.shareFile(
+                bundle.getString(KEY_EXPORT_PATH) ?: error("Missing required exportPath!"),
+            )
         }
     }
 
@@ -1404,8 +1416,6 @@ open class CardBrowser :
             }
         }
     }
-
-    override fun exportDialogsFactory(): ExportDialogsFactory = exportingDelegate.dialogsFactory
 
     private fun exportSelected() {
         val (type, selectedIds) = viewModel.querySelectionExportData() ?: return
