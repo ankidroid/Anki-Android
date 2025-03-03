@@ -377,7 +377,7 @@ open class CardBrowser :
             return
         }
         tagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
-        exportingDelegate = ActivityExportingDelegate(this) { getColUnsafe }
+        exportingDelegate = ActivityExportingDelegate(this)
         super.onCreate(savedInstanceState)
         if (!ensureStoragePermissions()) {
             return
