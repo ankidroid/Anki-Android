@@ -558,7 +558,7 @@ class UniqueArrayListTest {
 
         assertFalse(uniqueList.isEmpty())
         uniqueList.removeAll(
-            listOf(
+            setOf(
                 1L,
                 2L,
                 3L,
