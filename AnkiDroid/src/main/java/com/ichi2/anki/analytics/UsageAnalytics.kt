@@ -160,7 +160,7 @@ object UsageAnalytics {
             Timber.d("getOptIn() status: %s", sOptIn)
             return sOptIn
         }
-        private set(optIn) {
+        set(optIn) {
             Timber.i("setOptIn(): from %s to %s", sOptIn, optIn)
             sOptIn = optIn
             sAnalytics!!.flush()
@@ -377,6 +377,7 @@ object UsageAnalytics {
     object Actions {
         // Analytics actions used in Help Dialog
         @AnalyticsConstant
+        @Suppress("SpellCheckingInspection")
         val OPENED_HELPDIALOG = "Opened HelpDialogBox"
 
         @AnalyticsConstant
