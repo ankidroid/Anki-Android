@@ -44,6 +44,7 @@ import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.Binding.ModifierKeys
 import com.ichi2.anki.reviewer.CardSide
+import com.ichi2.anki.reviewer.PeripheralKeymap
 import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.utils.ext.addBinding
 import com.ichi2.libanki.Card
@@ -259,6 +260,9 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             displayAnswer = true
         }
 
+        override var processor: PeripheralKeymap<ReviewerBinding, ViewerCommand> =
+            PeripheralKeymap(sharedPrefs(), ViewerCommand.entries, this)
+
         override fun answerFieldIsFocused(): Boolean = focusTextField
 
         override fun displayCardAnswer() {
@@ -448,7 +452,6 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             fun displayingAnswer(): KeyboardInputTestReviewer {
                 val keyboardInputTestReviewer = KeyboardInputTestReviewer()
                 displayAnswer = true
-                keyboardInputTestReviewer.processor.setup()
                 return keyboardInputTestReviewer
             }
 
@@ -456,7 +459,6 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             fun displayingQuestion(): KeyboardInputTestReviewer {
                 val keyboardInputTestReviewer = KeyboardInputTestReviewer()
                 displayAnswer = false
-                keyboardInputTestReviewer.processor.setup()
                 return keyboardInputTestReviewer
             }
         }
