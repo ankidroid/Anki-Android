@@ -25,7 +25,7 @@ data class DeckNode(
     val node: DeckTreeNode,
     val fullDeckName: String,
     val parent: WeakReference<DeckNode>? = null,
-) {
+) : Iterable<DeckNode> {
     var collapsed = node.collapsed
     val revCount = node.reviewCount
     val newCount = node.newCount
@@ -88,6 +88,12 @@ data class DeckNode(
             child.forEach(fn)
         }
     }
+
+    override fun iterator(): Iterator<DeckNode> =
+        sequence {
+            if (node.level > 0) yield(this@DeckNode)
+            for (child in children) yieldAll(child)
+        }.iterator()
 
     /** Convert the tree into a flat list, where matching decks and the children/parents
      * are included. Decks inside collapsed decks are not considered. */
