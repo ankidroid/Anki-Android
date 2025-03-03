@@ -119,7 +119,6 @@ abstract class DialogHandlerMessage protected constructor(
                 WhichDialogHandler.MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG -> ImportUtils.CollectionImportReplace.fromMessage(message)
                 WhichDialogHandler.MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG -> ImportUtils.CollectionImportAdd.fromMessage(message)
                 WhichDialogHandler.MSG_SHOW_SYNC_ERROR_DIALOG -> SyncErrorDialog.SyncErrorDialogMessageHandler.fromMessage(message)
-                WhichDialogHandler.MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG -> MediaCheckDialog.MediaCheckCompleteDialog.fromMessage(message)
                 WhichDialogHandler.MSG_SHOW_DATABASE_ERROR_DIALOG -> DatabaseErrorDialog.ShowDatabaseErrorDialog.fromMessage(message)
                 WhichDialogHandler.MSG_SHOW_ONE_WAY_SYNC_DIALOG -> OneWaySyncDialog.fromMessage(message)
                 WhichDialogHandler.MSG_DO_SYNC -> IntentHandler.Companion.DoSync()
@@ -136,7 +135,6 @@ abstract class DialogHandlerMessage protected constructor(
         MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG(1),
         MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG(2),
         MSG_SHOW_SYNC_ERROR_DIALOG(3),
-        MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG(5),
         MSG_SHOW_DATABASE_ERROR_DIALOG(6),
         MSG_SHOW_ONE_WAY_SYNC_DIALOG(7),
         MSG_DO_SYNC(8),
