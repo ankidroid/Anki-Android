@@ -125,6 +125,7 @@ object PreferenceUpgradeService {
                     yield(ResetAnalyticsOptIn())
                     yield(RemoveNoCodeFormatting())
                     yield(UpgradeBrowserColumns())
+                    yield(RemoveLastExportedAtTime())
                 }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -666,6 +667,15 @@ object PreferenceUpgradeService {
                 @VisibleForTesting
                 internal val LEGACY_COLUMN2_KEYS =
                     arrayOf(ANSWER, CARD, DECK, NOTE_TYPE, QUESTION, TAGS, LAPSES, REVIEWS, INTERVAL, EASE, DUE, CHANGED, CREATED, EDITED)
+            }
+        }
+
+        internal class RemoveLastExportedAtTime : PreferenceUpgrade(20) {
+            override fun upgrade(preferences: SharedPreferences) {
+                preferences.edit {
+                    remove("last_successful_export_mod")
+                    remove("last_successful_export_second")
+                }
             }
         }
     }

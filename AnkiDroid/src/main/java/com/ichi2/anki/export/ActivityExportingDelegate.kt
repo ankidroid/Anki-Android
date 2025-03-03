@@ -26,27 +26,22 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ShareCompat
 import androidx.core.content.FileProvider
-import androidx.core.content.edit
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.ExportReadyDialog.ExportReadyDialogListener
 import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.withProgress
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
-import com.ichi2.libanki.Collection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
-import java.util.function.Supplier
 
 /**
  * A delegate class used in any [AnkiActivity] where the exporting feature is required.
@@ -55,11 +50,9 @@ import java.util.function.Supplier
  * to ensure the fragment factory ([dialogsFactory]) is set correctly.
  *
  * @param activity the calling activity (must implement [ExportReadyDialogListener])
- * @param collectionSupplier a predicate that supplies a collection instance
 */
 class ActivityExportingDelegate(
     private val activity: AnkiActivity,
-    private val collectionSupplier: Supplier<Collection>,
 ) : ExportReadyDialogListener {
     val dialogsFactory: ExportDialogsFactory
     private val saveFileLauncher: ActivityResultLauncher<Intent>
@@ -112,8 +105,6 @@ class ActivityExportingDelegate(
             )
         if (shareFileIntent.resolveActivity(activity.packageManager) != null) {
             activity.startActivity(shareFileIntent)
-            // TODO: find if there is a way to check whether the activity successfully shared the collection.
-            saveSuccessfulCollectionExportIfRelevant()
         } else {
             // Try to save it?
             activity.showSnackbar(R.string.export_send_no_handlers)
@@ -171,7 +162,6 @@ class ActivityExportingDelegate(
 
                 if (isSuccessful) {
                     activity.showSnackbar(R.string.export_save_apkg_successful, Snackbar.LENGTH_SHORT)
-                    saveSuccessfulCollectionExportIfRelevant()
                 } else {
                     activity.showSnackbar(R.string.export_save_apkg_unsuccessful)
                 }
@@ -228,31 +218,6 @@ class ActivityExportingDelegate(
                 }
             }
     }
-
-    /**
-     * If we exported a collection (hence [fileExportPath] ends with ".colpkg"), save in the preferences
-     * the mod of the collection and the time at which it occurred.
-     * This will allow to check whether a recent export was made, hence scoped storage migration is safe.
-     */
-    @NeedsTest("fix crash when sharing")
-    private fun saveSuccessfulCollectionExportIfRelevant() {
-        if (::fileExportPath.isInitialized && !fileExportPath.endsWith(".colpkg")) return
-        activity.sharedPrefs().edit {
-            putLong(
-                LAST_SUCCESSFUL_EXPORT_AT_SECOND_KEY,
-                TimeManager.time.intTime(),
-            )
-        }
-        val col = collectionSupplier.get()
-        activity.sharedPrefs().edit {
-            putLong(
-                LAST_SUCCESSFUL_EXPORT_AT_MOD_KEY,
-                col.mod,
-            )
-        }
-    }
 }
 
 private const val EXPORT_FILE_NAME_KEY = "export_file_name_key"
-const val LAST_SUCCESSFUL_EXPORT_AT_MOD_KEY = "last_successful_export_mod"
-const val LAST_SUCCESSFUL_EXPORT_AT_SECOND_KEY = "last_successful_export_second"

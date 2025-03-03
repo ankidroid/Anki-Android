@@ -494,7 +494,7 @@ open class DeckPicker :
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-        exportingDelegate = ActivityExportingDelegate(this) { getColUnsafe }
+        exportingDelegate = ActivityExportingDelegate(this)
 
         // Then set theme and content view
         super.onCreate(savedInstanceState)
