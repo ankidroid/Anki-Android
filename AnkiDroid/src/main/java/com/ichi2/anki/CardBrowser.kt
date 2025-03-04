@@ -67,6 +67,7 @@ import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Initializing
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Searching
 import com.ichi2.anki.browser.CardOrNoteId
 import com.ichi2.anki.browser.ColumnHeading
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment
 import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.browser.RepositionCardFragment
 import com.ichi2.anki.browser.RepositionCardFragment.Companion.REQUEST_REPOSITION_NEW_CARDS
@@ -74,6 +75,7 @@ import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
+import com.ichi2.anki.browser.registerFindReplaceHandler
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.dialogs.BrowserOptionsDialog
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog
@@ -99,6 +101,7 @@ import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
@@ -456,6 +459,18 @@ open class CardBrowser :
                 shift = bundle.getBoolean(RepositionCardFragment.ARG_SHIFT),
             )
         }
+
+        registerFindReplaceHandler { result ->
+            launchCatchingTask {
+                withProgress {
+                    val count =
+                        withProgress {
+                            viewModel.findAndReplace(result)
+                        }.await()
+                    showSnackbar(TR.browsingNotesUpdated(count))
+                }
+            }
+        }
     }
 
     override fun setupBackPressedCallbacks() {
@@ -685,6 +700,11 @@ open class CardBrowser :
                 }
             }
             KeyEvent.KEYCODE_F -> {
+                if (event.isCtrlPressed && event.isAltPressed) {
+                    Timber.i("CTRL+ALT+F - Find and replace")
+                    showFindAndReplaceDialog()
+                    return true
+                }
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+F - Find notes")
                     searchItem?.expandActionView()
@@ -967,6 +987,11 @@ open class CardBrowser :
         actionBarMenu?.findItem(R.id.action_reschedule_cards)?.title =
             TR.actionsSetDueDate().toSentenceCase(this, R.string.sentence_set_due_date)
 
+        val isFindReplaceEnabled = sharedPrefs().getBoolean(getString(R.string.pref_browser_find_replace), false)
+        menu.findItem(R.id.action_find_replace)?.apply {
+            isVisible = isFindReplaceEnabled
+            title = TR.browsingFindAndReplace().toSentenceCase(this@CardBrowser, R.string.sentence_find_and_replace)
+        }
         previewItem = menu.findItem(R.id.action_preview)
         onSelectionChanged()
         updatePreviewMenuItem()
@@ -1235,6 +1260,9 @@ open class CardBrowser :
             R.id.action_create_filtered_deck -> {
                 showCreateFilteredDeckDialog()
             }
+            R.id.action_find_replace -> {
+                showFindAndReplaceDialog()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -1265,6 +1293,11 @@ open class CardBrowser :
      */
     private fun searchForMarkedNotes() {
         launchCatchingTask { viewModel.searchForMarkedNotes() }
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun showFindAndReplaceDialog() {
+        FindAndReplaceDialogFragment().show(supportFragmentManager, FindAndReplaceDialogFragment.TAG)
     }
 
     private fun changeDisplayOrder() {

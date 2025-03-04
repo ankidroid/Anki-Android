@@ -17,8 +17,10 @@
  ****************************************************************************************/
 package com.ichi2.libanki
 
+import androidx.annotation.CheckResult
 import androidx.annotation.WorkerThread
 import anki.collection.OpChangesWithCount
+import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.join
 import java.util.AbstractSet
 
@@ -111,6 +113,28 @@ class Tags(
         tag: String,
         tags: Iterable<String>,
     ): Boolean = tags.map { it.lowercase() }.contains(tag.lowercase())
+
+    /**
+     * Replace occurrences of a search with a new value in tags.
+     * [https://github.com/ankitects/anki/blob/main/pylib/anki/tags.py#L73](https://github.com/ankitects/anki/blob/main/pylib/anki/tags.py#L73)
+     *
+     * @return An [OpChangesWithCount] representing the number of affected notes
+     */
+    @LibAnkiAlias("find_and_replace")
+    @CheckResult
+    fun findAndReplace(
+        noteIds: List<Long>,
+        search: String,
+        replacement: String,
+        regex: Boolean,
+        matchCase: Boolean,
+    ) = col.backend.findAndReplaceTag(
+        noteIds = noteIds,
+        search = search,
+        replacement = replacement,
+        regex = regex,
+        matchCase = matchCase,
+    )
 }
 
 fun Collection.completeTagRaw(input: ByteArray): ByteArray = backend.completeTagRaw(input)
