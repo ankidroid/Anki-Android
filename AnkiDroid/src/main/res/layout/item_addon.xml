@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/addon_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            tools:text="Extra statistics addon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/addon_version"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            android:textSize="@dimen/title_textsize" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/addon_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="1.0.0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/addon_title"
+            android:textColor="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/addon_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="3"
+            app:layout_constraintTop_toBottomOf="@id/addon_title"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp"
+            tools:text="This is a small description of the addon so the user can see what it does"
+            android:textColor="@color/material_grey_600"
+            android:textSize="@dimen/content_textsize" />
+        <LinearLayout
+            android:id="@+id/addon_actions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/toggle_addon"
+            app:layout_constraintTop_toBottomOf="@id/addon_description"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            android:layout_marginTop="8dp" >
+            <Button
+                android:id="@+id/addon_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="More..."
+                tools:ignore="HardcodedText" />
+
+            <Button
+                android:id="@+id/addon_remove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remove"
+                android:layout_marginStart="4dp"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/toggle_addon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/addon_actions"
+            app:layout_constraintTop_toBottomOf="@id/addon_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/material_green_500"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
