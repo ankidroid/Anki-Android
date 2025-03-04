@@ -206,5 +206,13 @@
             android:layout_marginStart="12dp"
             />
 
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/snackbar_anchor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:barrierDirection="top"
+            app:barrierAllowsGoneWidgets="false"
+            app:constraint_referenced_ids="type_answer_container, answer_buttons, show_answer"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
