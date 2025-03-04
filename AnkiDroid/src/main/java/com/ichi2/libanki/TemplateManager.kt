@@ -196,7 +196,7 @@ class TemplateManager {
             var aoutText = aout.text
 
             if (!_browser) {
-                val svg = noteType.optBoolean("latexsvg", false)
+                val svg = noteType.latexsvg
                 qoutText = LaTeX.mungeQA(qout.text, col, svg)
                 aoutText = LaTeX.mungeQA(aout.text, col, svg)
             }
@@ -206,7 +206,7 @@ class TemplateManager {
                 answerText = aoutText,
                 questionAvTags = avTagsToNative(qout.avTagsList),
                 answerAvTags = avTagsToNative(aout.avTagsList),
-                css = noteType().getString("css"),
+                css = noteType().css,
             )
         }
 
