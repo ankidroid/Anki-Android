@@ -100,7 +100,7 @@ open class Media(
     // FIXME: this also provides trash count, but UI can not handle it yet
     fun check(): MediaCheckResult {
         val out = col.backend.checkMedia()
-        return MediaCheckResult(out.missingList, out.unusedList, listOf(), out.missingMediaNotesList)
+        return MediaCheckResult(out.missingList, out.unusedList, out.missingMediaNotesList)
     }
 
     /**
@@ -143,6 +143,5 @@ fun getCollectionMediaPath(collectionPath: String): String = collectionPath.repl
 data class MediaCheckResult(
     val missingFileNames: List<String>,
     val unusedFileNames: List<String>,
-    val invalidFileNames: List<String>,
     val missingMediaNotes: List<Long>,
 )
