@@ -52,6 +52,7 @@ class ReviewerMenuView
         attrs: AttributeSet? = null,
         defStyleAttr: Int = 0,
     ) : LinearLayout(context, attrs, defStyleAttr) {
+        private val repository = ReviewerMenuRepository(context.sharedPrefs())
         private val frontMenu: Menu
         private val overflowMenu: Menu
 
@@ -125,7 +126,7 @@ class ReviewerMenuView
         }
 
         private fun setupMenus() {
-            val menuItems = MenuDisplayType.getMenuItems(context.sharedPrefs(), MenuDisplayType.ALWAYS, MenuDisplayType.MENU_ONLY)
+            val menuItems = repository.getActionsByMenuDisplayTypes(MenuDisplayType.ALWAYS, MenuDisplayType.MENU_ONLY)
             addActions(menuItems.getValue(MenuDisplayType.ALWAYS), menuItems.getValue(MenuDisplayType.MENU_ONLY))
             // wait until attached to a fragment or activity to launch the coroutine to setup flags
             viewTreeObserver.addOnGlobalLayoutListener(
