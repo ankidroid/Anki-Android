@@ -48,8 +48,7 @@
     <FrameLayout
         android:id="@+id/answer_options_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/ease_buttons"
