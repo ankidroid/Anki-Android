@@ -108,22 +108,22 @@
     <color name="note_editor_selected_item_text">#000000</color>
 
     <!-- For Card background in Card Browser -->
-    <color name="flag_red">#FF4747</color>
-    <color name="flag_orange">#FFB647</color>
-    <color name="flag_green">#6FF06F</color>
-    <color name="flag_blue">#5289FF</color>
-    <color name="flag_pink">#FF99F1</color>
-    <color name="flag_turquoise">#85FFEF</color>
-    <color name="flag_purple">#C398EC</color>
+    <color name="flag_red">#FFB0B0</color>
+    <color name="flag_orange">#FFD7B6</color>
+    <color name="flag_green">#A3FFC5</color>
+    <color name="flag_blue">#AFCDFF</color>
+    <color name="flag_pink">#FDF2FF</color>
+    <color name="flag_turquoise">#75FFEE</color>
+    <color name="flag_purple">#E6CBFF</color>
 
     <!-- For flag icons -->
-    <color name="flag_reviewer_red">#ff0000</color>
-    <color name="flag_reviewer_orange">#ff9800</color>
-    <color name="flag_reviewer_green">#057A05</color>
-    <color name="flag_reviewer_blue">#ff1976d2</color>
-    <color name="flag_reviewer_pink">#FF82EE</color>
-    <color name="flag_reviewer_turquoise">#00D1B5</color>
-    <color name="flag_reviewer_purple">#9649DD</color>
+    <color name="flag_reviewer_red">#EF4444</color>
+    <color name="flag_reviewer_orange">#FB923C</color>
+    <color name="flag_reviewer_green">#4ADE80</color>
+    <color name="flag_reviewer_blue">#3B82F6</color>
+    <color name="flag_reviewer_pink">#E879F9</color>
+    <color name="flag_reviewer_turquoise">#2DD4BF</color>
+    <color name="flag_reviewer_purple">#A855F7</color>
 
     <color name="badge_error">#f45000</color>
     <color name="badge_warning">#ff5e13</color>

@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources,DuplicateCrowdInStrings">
-    <color name="flag_red">#D32525</color>
-    <color name="flag_orange">#BB7A17</color>
-    <color name="flag_green">#057A05</color>
-    <color name="flag_blue">#1A4FC2</color>
-    <color name="flag_pink">#A70D64</color>
-    <color name="flag_turquoise">#138072</color>
-    <color name="flag_purple">#6320A0</color>
+    <!--    For Card background in Card browser-->
+    <color name="flag_red">#A54B4B</color>
+    <color name="flag_orange">#A97C4D</color>
+    <color name="flag_green">#599F73</color>
+    <color name="flag_blue">#406EA7</color>
+    <color name="flag_pink">#A072A8</color>
+    <color name="flag_turquoise">#3F9C8D</color>
+    <color name="flag_purple">#8058A8</color>
+
+    <!--    For flag icons-->
+    <color name="flag_reviewer_red">#F87171</color>
+    <color name="flag_reviewer_orange">#FDBA74</color>
+    <color name="flag_reviewer_green">#86EFAC</color>
+    <color name="flag_reviewer_blue">#60A5FA</color>
+    <color name="flag_reviewer_pink">#F0ABFC</color>
+    <color name="flag_reviewer_turquoise">#5EEAD4</color>
+    <color name="flag_reviewer_purple">#C084FC</color>
 
     <color name="again_button_bg">#1AB71C1C</color> <!-- Material red 900 with 10% alpha -->
     <color name="again_button_text">@color/material_red_200</color>
