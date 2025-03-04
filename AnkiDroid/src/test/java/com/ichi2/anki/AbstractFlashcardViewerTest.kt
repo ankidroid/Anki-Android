@@ -25,6 +25,7 @@ import com.ichi2.anki.reviewer.AutomaticAnswer
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.AutomaticAnswerSettings
 import com.ichi2.anki.servicelayer.LanguageHintService
+import com.ichi2.anki.ui.windows.reviewer.autoadvance.QuestionAction
 import com.ichi2.libanki.undoableOp
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.common.Flaky
@@ -285,7 +286,8 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         runTest {
             val controller = getViewerController(addCard = true, startedWithShortcut = false)
             val viewer = controller.get()
-            viewer.automaticAnswer = AutomaticAnswer(viewer, AutomaticAnswerSettings(AutomaticAnswerAction.BURY_CARD, 5.0, 5.0))
+            viewer.automaticAnswer =
+                AutomaticAnswer(viewer, AutomaticAnswerSettings(AutomaticAnswerAction.BURY_CARD, QuestionAction.SHOW_ANSWER, 5.0, 5.0))
             viewer.executeCommand(ViewerCommand.SHOW_ANSWER)
             assertThat("messages after flipping card", viewer.hasAutomaticAnswerQueued(), equalTo(true))
             controller.pause()
