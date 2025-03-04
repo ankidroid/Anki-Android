@@ -478,8 +478,7 @@ open class Reviewer :
             }
             R.id.action_hide_whiteboard -> { // toggle whiteboard visibility
                 Timber.i("Reviewer:: Whiteboard visibility set to %b", !showWhiteboard)
-                setWhiteboardVisibility(!showWhiteboard)
-                refreshActionBar()
+                toggleWhiteboardVisibility()
             }
             R.id.action_toggle_stylus -> { // toggle stylus mode
                 Timber.i("Reviewer:: Stylus set to %b", !toggleStylus)
@@ -536,6 +535,13 @@ open class Reviewer :
             colorPalette.visibility = View.GONE
         }
         refreshActionBar()
+    }
+
+    public override fun toggleWhiteboardVisibility() {
+        if (whiteboard != null) {
+            setWhiteboardVisibility(!showWhiteboard)
+            refreshActionBar()
+        }
     }
 
     public override fun clearWhiteboard() {
