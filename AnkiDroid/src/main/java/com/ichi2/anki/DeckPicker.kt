@@ -1340,7 +1340,13 @@ open class DeckPicker :
         }
     }
 
-    private suspend fun automaticSync(runInBackground: Boolean = false) {
+    /**
+     * Performs a sync if the conditions are met, e.g. user is logged in, there are changes,
+     * and auto sync is enabled.
+     * @param runInBackground whether the sync should be performed in the background or not
+     * @return whether a sync was performed or not.
+     */
+    private suspend fun automaticSync(runInBackground: Boolean = false): Boolean {
         /**
          * @return whether there are collection changes to be sync.
          *
@@ -1383,7 +1389,7 @@ open class DeckPicker :
             !areThereChangesToSync() -> {
                 Timber.d("autoSync: no collection changes to sync. Syncing media if set")
                 if (shouldFetchMedia(sharedPrefs())) {
-                    val auth = syncAuth() ?: return
+                    val auth = syncAuth() ?: return false
                     SyncMediaWorker.start(this, auth)
                 }
                 setLastSyncTimeToNow()
@@ -1391,14 +1397,16 @@ open class DeckPicker :
             else -> {
                 if (runInBackground) {
                     Timber.i("autoSync: starting background")
-                    val auth = syncAuth() ?: return
+                    val auth = syncAuth() ?: return false
                     SyncWorker.start(this, auth, shouldFetchMedia(sharedPrefs()))
                 } else {
                     Timber.i("autoSync: starting foreground")
                     sync()
                 }
+                return true
             }
         }
+        return false
     }
 
     override fun onKeyUp(
@@ -1563,10 +1571,6 @@ open class DeckPicker :
      * Automatic sync
      */
     private fun onFinishedStartup() {
-        launchCatchingTask {
-            BackupPromptDialog.showIfAvailable(this@DeckPicker)
-        }
-
         // Force a one-way sync if flag was set in upgrade path, asking the user to confirm if necessary
         if (recommendOneWaySync) {
             recommendOneWaySync = false
@@ -1587,9 +1591,12 @@ open class DeckPicker :
 
                 dialogHandler.sendMessage(OneWaySyncDialog(message).toMessage())
             }
-        }
-        launchCatchingTask {
-            automaticSync()
+        } else {
+            launchCatchingTask {
+                if (!automaticSync()) {
+                    BackupPromptDialog.showIfAvailable(this@DeckPicker)
+                }
+            }
         }
     }
 
