@@ -67,6 +67,7 @@ import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Initializing
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Searching
 import com.ichi2.anki.browser.CardOrNoteId
 import com.ichi2.anki.browser.ColumnHeading
+import com.ichi2.anki.browser.ColumnSelectionDialogFragment
 import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.browser.RepositionCardFragment
 import com.ichi2.anki.browser.RepositionCardFragment.Companion.REQUEST_REPOSITION_NEW_CARDS
@@ -561,22 +562,66 @@ open class CardBrowser :
             }
         }
 
-        fun onColumnNamesChanged(columnCollection: List<ColumnHeading>) {
-            Timber.d("column names changed")
-            // reset headings
-            browserColumnHeadings.removeAllViews()
+        // Opens the column selection dialog for the given selected column.
+        fun showColumnSelectionDialog(selectedColumn: ColumnHeading) {
+            Timber.d("Opening column selection dialog for: ${selectedColumn.label}")
 
-            // set up the new columns
-            val layoutInflater = LayoutInflater.from(browserColumnHeadings.context)
-            for (column in columnCollection) {
-                Timber.d("setting up column %s", column)
-                layoutInflater.inflate(R.layout.browser_column_heading, browserColumnHeadings, false).apply {
-                    browserColumnHeadings.addView(this)
-                    (this as TextView).text = column.label
-                }
+            val dialog = ColumnSelectionDialogFragment.newInstance(selectedColumn)
+
+            if (!supportFragmentManager.isStateSaved) {
+                dialog.show(supportFragmentManager, "ColumnSelectionDialog")
+            } else {
+                supportFragmentManager
+                    .beginTransaction()
+                    .add(dialog, "ColumnSelectionDialog")
+                    .commitAllowingStateLoss()
+                Timber.d("Using commitAllowingStateLoss() to show the dialog")
             }
         }
 
+        fun onColumnNamesChanged(columnCollection: List<ColumnHeading>) {
+            Timber.d("Column names changed, updating UI")
+
+            if (columnCollection.isEmpty()) {
+                Timber.w("No columns available to display")
+                return
+            }
+
+            browserColumnHeadings.removeAllViews() // Reset UI
+
+            val layoutInflater = LayoutInflater.from(browserColumnHeadings.context)
+
+            for (column in columnCollection) {
+                Timber.d("Setting up column: ${column.label}")
+
+                val columnView =
+                    layoutInflater.inflate(
+                        R.layout.browser_column_heading,
+                        browserColumnHeadings,
+                        false,
+                    ) as TextView
+
+                columnView.text = column.label
+
+                // Single tap opens column selection dialog
+                columnView.setOnClickListener { view ->
+                    view.isEnabled = false // Prevent multiple clicks
+                    Timber.d("Clicked column: ${column.label}")
+                    showColumnSelectionDialog(column)
+                    view.postDelayed({ view.isEnabled = true }, 500) // Enable after debounce delay
+                }
+
+                // Long press opens the BrowserColumnSelectionFragment
+                columnView.setOnLongClickListener {
+                    Timber.d("Long press on column: ${column.label} - opening column selection options")
+                    val dialog = BrowserColumnSelectionFragment.createInstance(viewModel.cardsOrNotes)
+                    dialog.show(supportFragmentManager, null)
+                    true
+                }
+
+                browserColumnHeadings.addView(columnView)
+            }
+        }
         viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         viewModel.flowOfSearchQueryExpanded.launchCollectionInLifecycleScope(::onSearchQueryExpanded)
         viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
