@@ -26,6 +26,7 @@ import com.ichi2.anki.cardviewer.ViewerCommand.TOGGLE_FLAG_RED
 import com.ichi2.anki.cardviewer.ViewerCommand.TOGGLE_FLAG_TURQUOISE
 import com.ichi2.anki.cardviewer.ViewerCommand.UNSET_FLAG
 import com.ichi2.anki.cardviewer.ViewerRefresh
+import com.ichi2.anki.utils.ext.flag
 import com.ichi2.libanki.Card
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -216,8 +217,8 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         @Suppress("SameParameterValue") flag: Flag,
     ): Card {
         val c = mock(Card::class.java)
-        val flags = arrayOf<Flag>(flag)
-        whenever(c.userFlag()).then { flags[0] }
+        val flags = arrayOf(flag.code)
+        whenever(c.flag).then { flags[0] }
         doAnswer { invocation: InvocationOnMock ->
             flags[0] = invocation.getArgument(0)
         }.whenever(c).setUserFlag(anyOrNull())
@@ -246,7 +247,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
             flag: Flag,
         ) {
             lastFlag = flag
-            currentCard!!.setUserFlag(flag)
+            currentCard!!.setUserFlag(flag.code)
         }
     }
 }
