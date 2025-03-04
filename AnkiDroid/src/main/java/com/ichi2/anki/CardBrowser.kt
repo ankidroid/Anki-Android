@@ -92,14 +92,10 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
-import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.KEY_EXPORT_PATH
-import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.REQUEST_EXPORT_SAVE
-import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.REQUEST_EXPORT_SHARE
 import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
-import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
@@ -183,7 +179,6 @@ open class CardBrowser :
     private var mySearchesItem: MenuItem? = null
     private var previewItem: MenuItem? = null
     private var undoSnackbar: Snackbar? = null
-    private lateinit var exportingDelegate: ActivityExportingDelegate
 
     // card that was clicked (not marked)
     override var currentCardId
@@ -378,7 +373,6 @@ open class CardBrowser :
             return
         }
         tagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
-        exportingDelegate = ActivityExportingDelegate(this)
         super.onCreate(savedInstanceState)
         if (!ensureStoragePermissions()) {
             return
@@ -434,8 +428,6 @@ open class CardBrowser :
 
         startLoadingCollection()
 
-        exportingDelegate.onRestoreInstanceState(savedInstanceState)
-
         // Selected cards aren't restored on activity recreation,
         // so it is necessary to dismiss the change deck dialog
         getCurrentDialogFragment<DeckSelectionDialog>()?.let { dialogFragment ->
@@ -466,18 +458,6 @@ open class CardBrowser :
                     showSnackbar(TR.browsingNotesUpdated(count))
                 }
             }
-        }
-
-        supportFragmentManager.setFragmentResultListener(REQUEST_EXPORT_SAVE, this) { _, bundle ->
-            exportingDelegate.saveExportFile(
-                bundle.getString(KEY_EXPORT_PATH) ?: error("Missing required exportPath!"),
-            )
-        }
-
-        supportFragmentManager.setFragmentResultListener(REQUEST_EXPORT_SHARE, this) { _, bundle ->
-            exportingDelegate.shareFile(
-                bundle.getString(KEY_EXPORT_PATH) ?: error("Missing required exportPath!"),
-            )
         }
     }
 
@@ -1667,7 +1647,6 @@ open class CardBrowser :
     public override fun onSaveInstanceState(outState: Bundle) {
         // Save current search terms
         outState.putString("mSearchTerms", viewModel.searchTerms)
-        exportingDelegate.onSaveInstanceState(outState)
         super.onSaveInstanceState(outState)
     }
 
