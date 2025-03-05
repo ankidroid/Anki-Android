@@ -53,9 +53,11 @@ class PreferencesFragment :
     private val onBackPressedCallback =
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (resources.isWindowCompact() && childFragmentManager.backStackEntryCount > 0) {
+                if ( childFragmentManager.backStackEntryCount > 0) {
                     childFragmentManager.popBackStack()
-                } else {
+                }else if(parentFragmentManager.backStackEntryCount>0){
+                    parentFragmentManager.popBackStack()
+                }else {
                     requireActivity().finish()
                 }
             }
@@ -69,7 +71,7 @@ class PreferencesFragment :
             .findViewById<MaterialToolbar>(R.id.toolbar)
             .setNavigationOnClickListener { onBackPressedCallback.handleOnBackPressed() }
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
+        requireActivity().onBackPressedDispatcher.addCallback( onBackPressedCallback)
 
         // Load initial subscreen if activity is being first created
         if (savedInstanceState == null) {
