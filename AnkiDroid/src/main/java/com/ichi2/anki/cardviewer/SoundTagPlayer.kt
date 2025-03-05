@@ -23,6 +23,7 @@ import android.media.MediaPlayer
 import android.net.Uri
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import androidx.core.net.toUri
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
 import com.ichi2.anki.AnkiDroidApp
@@ -109,12 +110,12 @@ class SoundTagPlayer(
                     continuation.resume(Unit)
                 }
             }
-            val tagUri = Uri.parse(tag.filename)
+            val tagUri = tag.filename.toUri()
             val soundUri =
                 if (tagUri.scheme != null) {
                     tagUri
                 } else {
-                    Uri.parse(soundUriBase + Uri.encode(tag.filename))
+                    (soundUriBase + Uri.encode(tag.filename)).toUri()
                 }
             setAudioAttributes(music)
             setOnErrorListener { mp, what, extra ->

@@ -16,6 +16,7 @@
 
 package com.ichi2.compat
 
+import android.annotation.SuppressLint
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.createTransientFile
@@ -38,6 +39,7 @@ class CompatDeleteFileTest(
     @Suppress("unused") private val unitTestDescription: String,
 ) {
     companion object {
+        @SuppressLint("NewApi")
         @JvmStatic // required for Parameters
         @Parameterized.Parameters(name = "{1}")
         fun data(): Iterable<Array<Any>> =

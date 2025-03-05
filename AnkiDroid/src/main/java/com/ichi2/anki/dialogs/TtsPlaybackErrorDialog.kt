@@ -18,8 +18,8 @@ package com.ichi2.anki.dialogs
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AlertDialog
+import androidx.core.net.toUri
 import androidx.fragment.app.FragmentManager
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
@@ -45,7 +45,7 @@ object TtsPlaybackErrorDialog {
                     activity.getString(R.string.tts_error_dialog_supported_voices_button_text),
                 ) { _, _ -> showVoicesDialog(fragmentManager) }
                 setNeutralButton(context.getString(R.string.help)) { _, _ ->
-                    activity.openUrl(Uri.parse(context.getString(R.string.link_faq_tts)))
+                    activity.openUrl(context.getString(R.string.link_faq_tts).toUri())
                 }
             }
         }

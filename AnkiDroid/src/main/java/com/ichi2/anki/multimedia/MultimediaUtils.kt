@@ -25,6 +25,7 @@ import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import androidx.core.content.ContentResolverCompat
+import androidx.core.net.toUri
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.utils.getTimestamp
 import com.ichi2.libanki.utils.TimeManager
@@ -109,7 +110,7 @@ object MultimediaUtils {
                             docId.toLongOrNull() != null -> {
                                 val contentUri =
                                     ContentUris.withAppendedId(
-                                        Uri.parse("content://downloads/public_downloads"),
+                                        "content://downloads/public_downloads".toUri(),
                                         docId.toLong(),
                                     )
                                 getImageNameFromContentResolver(context, contentUri, null)

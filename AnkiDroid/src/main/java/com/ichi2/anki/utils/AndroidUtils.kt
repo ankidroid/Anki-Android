@@ -21,6 +21,7 @@ import android.net.Uri
 import android.os.PowerManager
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.ichi2.anki.AnkiDroidApp
@@ -103,4 +104,4 @@ fun Fragment.openUrl(uri: Uri) {
 
 fun Fragment.openUrl(
     @StringRes stringRes: Int,
-) = openUrl(Uri.parse(requireContext().getString(stringRes)))
+) = openUrl(requireContext().getString(stringRes).toUri())

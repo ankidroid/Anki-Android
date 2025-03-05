@@ -15,6 +15,7 @@
  ****************************************************************************************/
 package com.ichi2.compat
 
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -44,6 +45,7 @@ import java.io.Serializable
  */
 class CompatHelper private constructor() {
     // Note: Needs ": Compat" or the type system assumes `Compat21`
+    @SuppressLint("NewApi")
     private val compatValue: Compat =
         when {
             sdkVersion >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> CompatV34()
