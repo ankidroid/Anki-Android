@@ -25,6 +25,7 @@
 
 package com.ichi2.anki
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -32,7 +33,6 @@ import android.content.SharedPreferences
 import android.database.SQLException
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Message
@@ -66,6 +66,7 @@ import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
+import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.core.util.component1
 import androidx.core.util.component2
@@ -524,7 +525,7 @@ open class DeckPicker :
         // check, if tablet layout
         studyoptionsFrame = findViewById(R.id.studyoptions_fragment)
         // set protected variable from NavigationDrawerActivity
-        fragmented = studyoptionsFrame != null && studyoptionsFrame!!.visibility == View.VISIBLE
+        fragmented = studyoptionsFrame != null && studyoptionsFrame!!.isVisible
 
         // Open StudyOptionsFragment if in fragmented mode
         if (fragmented && !startupError) {
@@ -1772,6 +1773,7 @@ open class DeckPicker :
         showDialogFragment(DeckPickerAnalyticsOptInDialog.newInstance())
     }
 
+    @SuppressLint("UseKtx") // keep SharedPreferences.edit() instead of edit {} fot tests
     fun getPreviousVersion(
         preferences: SharedPreferences,
         current: Long,
@@ -2123,7 +2125,7 @@ open class DeckPicker :
             negativeButton(R.string.dialog_cancel)
             if (AdaptionUtil.hasWebBrowser(this@DeckPicker)) {
                 neutralButton(text = TR.schedulingUpdateMoreInfoButton()) {
-                    this@DeckPicker.openUrl(Uri.parse("https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating"))
+                    this@DeckPicker.openUrl("https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating".toUri())
                 }
             }
         }
@@ -2301,8 +2303,8 @@ open class DeckPicker :
                     8f,
                     resources.displayMetrics,
                 )
-            val decksListShown = deckPickerContent.visibility == View.VISIBLE
-            val placeholderShown = noDecksPlaceholder.visibility == View.VISIBLE
+            val decksListShown = deckPickerContent.isVisible
+            val placeholderShown = noDecksPlaceholder.isVisible
             if (isEmpty) {
                 if (decksListShown) {
                     fadeOut(deckPickerContent, shortAnimDuration, translation)

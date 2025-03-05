@@ -23,7 +23,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Insets
 import android.graphics.Paint
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.util.AttributeSet
@@ -43,7 +42,10 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.core.graphics.createBitmap
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.children
+import androidx.core.view.isVisible
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.NoteEditor
@@ -308,14 +310,14 @@ class Toolbar : FrameLayout {
     fun createDrawableForString(text: String): Drawable {
         val baseline = -stringPaint!!.ascent()
         val size = (baseline + stringPaint!!.descent() + 0.5f).toInt()
-        val image = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+        val image = createBitmap(size, size, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(image)
         canvas.drawText(text, size / 2f, baseline, stringPaint!!)
-        return BitmapDrawable(resources, image)
+        return image.toDrawable(resources)
     }
 
     /** Returns the number of top-level children of [layout] that are visible */
-    private fun getVisibleItemCount(layout: LinearLayout): Int = ViewGroupUtils.getAllChildren(layout).count { it.visibility == VISIBLE }
+    private fun getVisibleItemCount(layout: LinearLayout): Int = ViewGroupUtils.getAllChildren(layout).count { it.isVisible }
 
     private fun addViewToToolbar(button: AppCompatImageButton) {
         val expectedWidth = getVisibleItemCount(toolbar) * convertDpToPixel(48F, context)

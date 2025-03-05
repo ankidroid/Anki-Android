@@ -15,7 +15,6 @@
  */
 package com.ichi2.compat
 
-import android.annotation.TargetApi
 import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
@@ -24,12 +23,13 @@ import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Size
+import androidx.annotation.RequiresApi
 import com.ichi2.libanki.utils.TimeManager
 import java.io.File
 import java.io.IOException
 
 /** Implementation of [Compat] for SDK level 29  */
-@TargetApi(29)
+@RequiresApi(29)
 open class CompatV29 : CompatV26() {
     override fun hasVideoThumbnail(path: String): Boolean? {
         return try {

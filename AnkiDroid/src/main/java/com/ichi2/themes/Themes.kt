@@ -22,9 +22,10 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.withStyledAttributes
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.color.MaterialColors
@@ -107,15 +108,18 @@ object Themes {
         return getResFromAttr(context, attrs)[0]
     }
 
+    /**
+     * NOTE: dangerous function, it mutates the input array and returns it!
+     */
     fun getResFromAttr(
         context: Context,
         attrs: IntArray,
     ): IntArray {
-        val ta = context.obtainStyledAttributes(attrs)
-        for (i in attrs.indices) {
-            attrs[i] = ta.getResourceId(i, 0)
+        context.withStyledAttributes(attrs = attrs) {
+            for (i in attrs.indices) {
+                attrs[i] = getResourceId(i, 0)
+            }
         }
-        ta.recycle()
         return attrs
     }
 
@@ -123,6 +127,9 @@ object Themes {
     @ColorInt
     fun getColorFromAttr(context: Context, attr: Int): Int = MaterialColors.getColor(context, attr, 0)
 
+    /**
+     * NOTE: dangerous function, it mutates the input array and returns it!
+     */
     @JvmStatic // tests failed when removing, maybe try later
     @ColorInt
     fun getColorsFromAttrs(context: Context, attrs: IntArray): IntArray {
@@ -151,5 +158,5 @@ fun FragmentActivity.setTransparentStatusBar() {
 }
 
 fun FragmentActivity.setTransparentBackground() {
-    window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    window.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
 }

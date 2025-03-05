@@ -18,7 +18,6 @@ package com.ichi2.anki.dialogs
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.net.Uri
 import android.os.Bundle
 import android.os.Message
 import android.os.Parcelable
@@ -27,6 +26,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.net.toUri
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
@@ -450,7 +450,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             R.string.install_non_play_store_ankidroid_recommended,
             dismissesDialog = false,
             {
-                val restoreUi = Uri.parse(it.getString(R.string.link_install_non_play_store_install))
+                val restoreUi = it.getString(R.string.link_install_non_play_store_install).toUri()
                 it.openUrl(restoreUi)
             },
         ),
@@ -458,7 +458,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             R.string.install_non_play_store_ankidroid,
             dismissesDialog = false,
             {
-                val restoreUi = Uri.parse(it.getString(R.string.link_install_non_play_store_install))
+                val restoreUi = it.getString(R.string.link_install_non_play_store_install).toUri()
                 it.openUrl(restoreUi)
             },
         ),
@@ -489,7 +489,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             R.string.help_title_get_help,
             dismissesDialog = false,
             {
-                it.openUrl(Uri.parse(it.getString(R.string.link_forum)))
+                it.openUrl(it.getString(R.string.link_forum).toUri())
             },
         ),
         RECREATE_COLLECTION(
