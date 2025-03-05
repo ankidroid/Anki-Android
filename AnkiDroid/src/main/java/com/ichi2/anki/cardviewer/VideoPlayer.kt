@@ -16,7 +16,7 @@
 
 package com.ichi2.anki.cardviewer
 
-import android.text.TextUtils
+import androidx.core.text.htmlEncode
 import com.ichi2.libanki.AvRef
 import com.ichi2.libanki.SoundOrVideoTag
 import kotlinx.coroutines.CancellableContinuation
@@ -57,7 +57,7 @@ class VideoPlayer(
             
                     for (i = 0; i < videos.length; i++) {
                        var video = videos[i];
-                       if (video.attributes['data-file'].value == "${TextUtils.htmlEncode(fileNameToFind)}") {
+                       if (video.attributes['data-file'].value == "${fileNameToFind.htmlEncode()}") {
                            console.log("playing video: " + video.attributes['data-play'].value);
                            video.play();
                            break;

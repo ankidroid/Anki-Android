@@ -23,7 +23,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Resources
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -31,6 +30,7 @@ import android.system.Os
 import android.webkit.CookieManager
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
+import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.work.Configuration
@@ -434,7 +434,7 @@ open class AnkiDroidApp :
         fun getMarketIntent(context: Context): Intent {
             val uri =
                 context.getString(if (CompatHelper.isKindle) R.string.link_market_kindle else R.string.link_market)
-            val parsed = Uri.parse(uri)
+            val parsed = uri.toUri()
             return Intent(Intent.ACTION_VIEW, parsed)
         } // TODO actually this can be done by translating "link_help" string for each language when the App is
 

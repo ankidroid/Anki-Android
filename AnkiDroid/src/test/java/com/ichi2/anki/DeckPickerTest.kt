@@ -1,6 +1,7 @@
 // noinspection MissingCopyrightHeader #8659
 package com.ichi2.anki
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -82,6 +83,7 @@ class DeckPickerTest : RobolectricTest() {
     }
 
     @Test
+    @SuppressLint("UseKtx")
     fun getPreviousVersionUpgradeFrom201to292() {
         val newVersion = 20900302 // 2.9.2
         val preferences = mock(SharedPreferences::class.java)
@@ -107,6 +109,7 @@ class DeckPickerTest : RobolectricTest() {
     }
 
     @Test
+    @SuppressLint("UseKtx")
     fun getPreviousVersionUpgradeFrom202to292() {
         val newVersion: Long = 20900302 // 2.9.2
         val preferences = mock(SharedPreferences::class.java)
@@ -131,6 +134,7 @@ class DeckPickerTest : RobolectricTest() {
     }
 
     @Test
+    @SuppressLint("UseKtx")
     fun getPreviousVersionUpgradeFrom281to291() {
         val prevVersion = 20800301 // 2.8.1
         val newVersion: Long = 20900301 // 2.9.1
@@ -287,9 +291,7 @@ class DeckPickerTest : RobolectricTest() {
             // We don't show it if the user is new.
             targetContext
                 .sharedPrefs()
-                .edit()
-                .putString("lastVersion", "0.1")
-                .apply()
+                .edit { putString("lastVersion", "0.1") }
             val d =
                 super.startActivityNormallyOpenCollectionWithIntent(
                     DeckPickerEx::class.java,

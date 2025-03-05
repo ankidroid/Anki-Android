@@ -17,7 +17,7 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import androidx.core.net.toUri
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.IntentHandler.Companion.getLaunchType
 import com.ichi2.anki.IntentHandler.LaunchType
@@ -34,12 +34,12 @@ class IntentHandlerTest {
     // higher-level tests at a later date when we better extract dependencies
     @Test
     fun viewIntentReturnsView() {
-        var intent = Intent(Intent.ACTION_VIEW, Uri.parse("content://invalid"))
+        var intent = Intent(Intent.ACTION_VIEW, "content://invalid".toUri())
         var expected = getLaunchType(intent)
 
         assertThat(expected, equalTo(LaunchType.FILE_IMPORT))
 
-        intent = Intent(Intent.ACTION_SEND, Uri.parse("content://invalid"))
+        intent = Intent(Intent.ACTION_SEND, "content://invalid".toUri())
         expected = getLaunchType(intent)
 
         assertThat(expected, equalTo(LaunchType.FILE_IMPORT))
@@ -78,13 +78,13 @@ class IntentHandlerTest {
 
         for (mimeType in mimeTypes) {
             var intent = Intent(Intent.ACTION_VIEW)
-            intent.setDataAndType(Uri.parse("content://valid"), mimeType)
+            intent.setDataAndType("content://valid".toUri(), mimeType)
             var expected = getLaunchType(intent)
 
             assertThat(expected, equalTo(LaunchType.IMAGE_IMPORT))
 
             intent = Intent(Intent.ACTION_SEND)
-            intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("content://valid"))
+            intent.putExtra(Intent.EXTRA_STREAM, "content://valid".toUri())
             intent.type = mimeType
             expected = getLaunchType(intent)
 
@@ -113,7 +113,7 @@ class IntentHandlerTest {
         action: String = Intent.ACTION_VIEW,
     ) {
         val intent = Intent(action)
-        intent.setDataAndType(Uri.parse(data), type)
+        intent.setDataAndType(data.toUri(), type)
         val actual = getLaunchType(intent)
         assertThat(actual, equalTo(expected))
     }

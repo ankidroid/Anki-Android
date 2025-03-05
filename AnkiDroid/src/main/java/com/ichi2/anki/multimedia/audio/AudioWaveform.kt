@@ -22,6 +22,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.content.withStyledAttributes
 import com.ichi2.anki.R
 
 // TODO : Middle blue line should move left->mid https://github.com/ankidroid/Anki-Android/pull/14591#issuecomment-1791037102
@@ -64,7 +65,8 @@ class AudioWaveform(
     /** Gap between each spike **/
     private var d = 4f
 
-    private val displayVerticalLine: Boolean
+    // Intended to be `val` but declared a `var` instead to allow initialization from the init {} block
+    private var displayVerticalLine: Boolean = true
 
     /**
      * If the vertical line is displayed, the waveform is drawn up to the line
@@ -79,10 +81,10 @@ class AudioWaveform(
                 .toInt()
 
     init {
-        val customAttrs = context.obtainStyledAttributes(attrs, R.styleable.AudioWaveform, 0, 0)
-        displayVerticalLine = customAttrs.getBoolean(R.styleable.AudioWaveform_display_vertical_line, true)
-        backgroundPaint.color = customAttrs.getColor(R.styleable.AudioWaveform_android_background, backgroundPaint.color)
-        customAttrs.recycle()
+        context.withStyledAttributes(attrs, R.styleable.AudioWaveform, 0, 0) {
+            displayVerticalLine = getBoolean(R.styleable.AudioWaveform_display_vertical_line, true)
+            backgroundPaint.color = getColor(R.styleable.AudioWaveform_android_background, backgroundPaint.color)
+        }
     }
 
     fun addAmplitude(amp: Float) {

@@ -22,9 +22,9 @@ import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
-import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import androidx.core.net.toUri
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
 import com.ichi2.compat.CompatHelper.Companion.queryIntentActivitiesCompat
@@ -76,7 +76,7 @@ object AdaptionUtil {
         if (isUserATestClient) {
             return false
         }
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"))
+        val intent = Intent(Intent.ACTION_VIEW, "http://www.google.com".toUri())
         val pm = context.packageManager
         val list = pm.queryIntentActivitiesCompat(intent, ResolveInfoFlagsCompat.of(MATCH_DEFAULT_ONLY.toLong()))
         for (ri in list) {

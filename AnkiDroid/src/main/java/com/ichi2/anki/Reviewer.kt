@@ -53,6 +53,7 @@ import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
 import androidx.lifecycle.lifecycleScope
 import anki.frontend.SetSchedulingStatesRequest
 import com.google.android.material.color.MaterialColors
@@ -545,7 +546,7 @@ open class Reviewer :
     }
 
     public override fun changeWhiteboardPenColor() {
-        if (colorPalette.visibility == View.GONE) {
+        if (colorPalette.isGone) {
             colorPalette.visibility = View.VISIBLE
         } else {
             colorPalette.visibility = View.GONE
