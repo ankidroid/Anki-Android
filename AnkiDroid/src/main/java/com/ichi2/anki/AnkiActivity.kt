@@ -41,6 +41,7 @@ import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_SYSTEM
 import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -458,7 +459,7 @@ open class AnkiActivity :
     }
 
     fun openUrl(urlString: String) {
-        openUrl(Uri.parse(urlString))
+        openUrl(urlString.toUri())
     }
 
     fun openUrl(

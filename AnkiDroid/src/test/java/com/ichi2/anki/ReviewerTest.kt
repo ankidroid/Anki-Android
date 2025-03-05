@@ -21,6 +21,7 @@ import android.view.Menu
 import androidx.annotation.CheckResult
 import androidx.core.content.edit
 import androidx.core.os.BundleCompat
+import androidx.core.view.iterator
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -534,9 +535,7 @@ class ReviewerTest : RobolectricTest() {
         fun getVisibleButtonNamesExcept(vararg doNotReturn: Int): List<String> {
             val visibleButtons = arrayListOf<String>()
             val toSkip = hashSetOf(*doNotReturn.toTypedArray())
-            val menu = menu
-            for (i in 0 until menu!!.size()) {
-                val item = menu.getItem(i)
+            for (item in menu!!) {
                 if (toSkip.contains(item.itemId)) {
                     continue
                 }

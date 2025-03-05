@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import androidx.annotation.WorkerThread
+import androidx.core.database.sqlite.transaction
 import com.ichi2.anki.model.WhiteboardPenColor
 import com.ichi2.anki.model.WhiteboardPenColor.Companion.default
 import com.ichi2.anki.reviewer.CardSide
@@ -666,17 +667,13 @@ object MetaDB {
         openDBIfClosed(context)
         try {
             val metaDb = mMetaDb!!
-            metaDb.beginTransaction()
-            try {
+            metaDb.transaction {
                 // First clear all the existing content.
                 metaDb.execSQL("DELETE FROM smallWidgetStatus")
                 metaDb.execSQL(
                     "INSERT INTO smallWidgetStatus(due, eta) VALUES (?, ?)",
                     arrayOf<Any>(status.due, status.eta),
                 )
-                metaDb.setTransactionSuccessful()
-            } finally {
-                metaDb.endTransaction()
             }
         } catch (e: IllegalStateException) {
             Timber.e(e, "MetaDB.storeSmallWidgetStatus: failed")

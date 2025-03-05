@@ -25,6 +25,7 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuItemCompat
+import androidx.core.view.isGone
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.Themes
 import com.ichi2.utils.iconAlpha
@@ -83,7 +84,7 @@ class DrawingActivity : AnkiActivity() {
             }
             R.id.action_whiteboard_edit -> {
                 Timber.i("Drawing:: Pen Color button pressed")
-                if (colorPalette.visibility == View.GONE) {
+                if (colorPalette.isGone) {
                     colorPalette.visibility = View.VISIBLE
                 } else {
                     colorPalette.visibility = View.GONE

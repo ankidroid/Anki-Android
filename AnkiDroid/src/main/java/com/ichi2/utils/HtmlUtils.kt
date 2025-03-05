@@ -15,7 +15,7 @@
  */
 package com.ichi2.utils
 
-import android.text.TextUtils
+import androidx.core.text.htmlEncode
 
 object HtmlUtils {
     // #5188 - compat.fromHtml converts newlines into spaces.
@@ -28,5 +28,5 @@ object HtmlUtils {
         return withoutWindowsLineEndings.replace("\n", "<br/>")
     }
 
-    fun escape(html: String): String = TextUtils.htmlEncode(html)
+    fun escape(html: String): String = html.htmlEncode()
 }

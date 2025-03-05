@@ -19,7 +19,6 @@ package com.ichi2.anki.browser
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Paint
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.RippleDrawable
 import android.text.TextUtils
 import android.util.TypedValue
@@ -33,6 +32,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.ThemeUtils
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import anki.search.BrowserRow.Color
@@ -158,7 +158,7 @@ class BrowserMultiColumnAdapter(
                         arrayOf(intArrayOf(android.R.attr.state_pressed)),
                         intArrayOf(pressedColor),
                     ),
-                    ColorDrawable(color),
+                    color.toDrawable(),
                     null,
                 )
 

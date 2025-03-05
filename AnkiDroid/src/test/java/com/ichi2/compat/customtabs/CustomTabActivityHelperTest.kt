@@ -18,9 +18,9 @@ package com.ichi2.compat.customtabs
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import androidx.annotation.CheckResult
 import androidx.browser.customtabs.CustomTabsClient
+import androidx.core.net.toUri
 import com.ichi2.compat.CompatHelper.Companion.queryIntentActivitiesCompat
 import com.ichi2.compat.ResolveInfoFlagsCompat
 import org.hamcrest.CoreMatchers.not
@@ -64,7 +64,7 @@ class CustomTabActivityHelperTest {
             mock<PackageManager> {
                 on {
                     it.queryIntentActivitiesCompat(
-                        Intent(Intent.ACTION_VIEW, Uri.parse("http://www.example.com")),
+                        Intent(Intent.ACTION_VIEW, "http://www.example.com".toUri()),
                         ResolveInfoFlagsCompat.EMPTY,
                     )
                 } doReturn emptyList()

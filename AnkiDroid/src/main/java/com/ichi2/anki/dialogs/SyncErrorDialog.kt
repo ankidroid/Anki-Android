@@ -17,11 +17,11 @@
 package com.ichi2.anki.dialogs
 
 import android.app.Dialog
-import android.net.Uri
 import android.os.Bundle
 import android.os.Message
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
+import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.ConflictResolution
@@ -161,7 +161,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 dialog
                     .setPositiveButton(R.string.dialog_ok) { _, _ -> }
                     .setNegativeButton(R.string.help) { _, _ ->
-                        (requireActivity() as AnkiActivity).openUrl(Uri.parse(getString(R.string.repair_deck)))
+                        (requireActivity() as AnkiActivity).openUrl(getString(R.string.repair_deck).toUri())
                     }.setCancelable(false)
                     .create()
             }
