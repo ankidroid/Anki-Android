@@ -2575,8 +2575,7 @@ class NoteEditor :
 
     private fun updateField(field: FieldEditText?): Boolean {
         val fieldContent = field!!.text?.toString() ?: ""
-//      Decode the file name when preparing data for saveNote() to handle special characters correctly
-        val correctedFieldContent = Uri.decode(NoteService.convertToHtmlNewline(fieldContent, shouldReplaceNewlines()))
+        val correctedFieldContent = NoteService.convertToHtmlNewline(fieldContent, shouldReplaceNewlines())
         if (editorNote!!.values()[field.ord] != correctedFieldContent) {
             editorNote!!.values()[field.ord] = correctedFieldContent
             return true
