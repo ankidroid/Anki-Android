@@ -40,7 +40,6 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.utils.ext.sharedPrefs
-import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.utils.FragmentFactoryUtils
 import timber.log.Timber
 import kotlin.reflect.KClass
@@ -53,7 +52,7 @@ class PreferencesFragment :
     private val onBackPressedCallback =
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (resources.isWindowCompact() && childFragmentManager.backStackEntryCount > 0) {
+                if (!settingsIsSplit && childFragmentManager.backStackEntryCount > 0) {
                     childFragmentManager.popBackStack()
                 } else {
                     requireActivity().finish()
@@ -156,13 +155,13 @@ class PreferencesFragment :
         val fragmentClassName = arguments?.getString(INITIAL_FRAGMENT_EXTRA)
         val initialFragment =
             if (fragmentClassName == null) {
-                if (resources.isWindowCompact()) HeaderFragment() else GeneralSettingsFragment()
+                if (!settingsIsSplit) HeaderFragment() else GeneralSettingsFragment()
             } else {
                 FragmentFactoryUtils.instantiate<Fragment>(requireActivity(), fragmentClassName)
             }
         childFragmentManager.commit {
             // In big screens, show the headers fragment at the lateral navigation container
-            if (!resources.isWindowCompact()) {
+            if (settingsIsSplit) {
                 replace(R.id.lateral_nav_container, HeaderFragment())
             }
             replace(R.id.settings_container, initialFragment, initialFragment::class.java.name)
