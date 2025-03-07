@@ -61,11 +61,11 @@
         <item quantity="other">Noch ca. %d Minuten</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d Stunde %2$d verbleibend</item>
+        <item quantity="one">%1$d Stunde(n) %2$d Minute(n) verbleibend</item>
         <item quantity="other">%1$d Stunden %2$d verbleibend</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d Tag %2$dStd. übrig</item>
+        <item quantity="one">%1$d Tag %2$d Std. übrig</item>
         <item quantity="other">%1$d Tage %2$dStd. übrig</item>
     </plurals>
     <string name="no_cards_placeholder_title">Sammlung ist leer</string>
@@ -129,7 +129,7 @@
     <string name="empty_deck">Dieser Stapel ist leer</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Stapelsuche</string>
     <string name="invalid_deck_name">Ungültiger Stapelname</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
+    <string name="studyoptions_congrats_finished">Glückwunsch! Das war alles für heute.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Dieser Stapel ist vorerst geschafft! %s</string>
     <string name="studyoptions_no_cards_due">Es sind noch keine Karten fällig</string>
     <string name="sd_card_not_mounted">Gerätespeicher nicht eingebunden</string>
