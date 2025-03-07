@@ -118,4 +118,5 @@
     <string name="user_potential_columns">Verfügbar</string>
     <string name="include_column">Spalte einbeziehen</string>
     <string name="exclude_column">Spalte ausschließen</string>
+    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
 </resources>
