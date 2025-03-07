@@ -61,7 +61,7 @@
     </plurals>
     <string name="widget_add_note_button">ନୂଆ Ankidroid ନୋଟ୍ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">Deck Picker</string>
-    <string name="card_analysis_extra_widget_description">Card Analysis</string>
+    <string name="card_analysis_extra_widget_description">ପତ୍ର ବିଶ୍ଳେଷଣ</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
     <string name="select_decks_title" comment="Title for Deck Selection Dialog">Select decks</string>
     <string name="select_deck_title" comment="Title for Deck Selection Dialog">Select a deck</string>

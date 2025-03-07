@@ -70,11 +70,11 @@
     <string name="card_browser_list_my_searches_new_name">ସାମ୍ପ୍ରତିକ ସନ୍ଧାନ ପାଇଁ ନାମ </string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">ଆପଣ ନାମ ବିନା ସନ୍ଧାନ ସଞ୍ଚୟ କରିପାରିବେ ନାହିଁ</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">ନାଁଟି ଵିଦ୍ୟମାନ ଅଛି</string>
-    <string name="no_note_to_edit">No note to edit</string>
+    <string name="no_note_to_edit">ସମ୍ପାଦନ କରିବାକୁ କୌଣସି ନୋଟ୍ ନାହିଁ</string>
     <string name="card_browser_list_my_searches_remove_content">“%1$s” ଵିଲୋପ କରିବେ ତ?</string>
     <string name="card_browser_change_display_order" maxLength="28">ପ୍ରଦର୍ଶନ କ୍ରମ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">ସନ୍ଧାନ</string>
-    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">ସନ୍ଧାନ</string>
     <string name="card_browser_change_display_order_title">ପ୍ରଦର୍ଶନ କ୍ରମ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
     <string name="card_details_tags">ଟ୍ୟାଗ୍ </string>
     <string-array name="card_browser_order_labels">
@@ -114,8 +114,8 @@
     <!-- Manage columns dialog -->
     <string name="browse_manage_columns_main_heading">Columns</string>
     <string name="browse_manage_columns">Manage columns</string>
-    <string name="user_active_columns">Active</string>
-    <string name="user_potential_columns">Available</string>
+    <string name="user_active_columns">ସକ୍ରିୟ</string>
+    <string name="user_potential_columns">ଉପଲବ୍ଧ</string>
     <string name="include_column">Include column</string>
     <string name="exclude_column">Exclude column</string>
 </resources>
