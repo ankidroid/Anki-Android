@@ -158,7 +158,7 @@ class CardBrowserViewModelTest : JvmTest() {
 
             assertThat("All decks should be selected", hasSelectedAllDecks())
 
-            val addIntent = CardBrowser.createAddNoteIntent(mockIt(), this)
+            val addIntent = CardBrowser.createAddNoteLauncher(this).toIntent(mockIt())
             val bundle = addIntent.getBundleExtra(SingleFragmentActivity.FRAGMENT_ARGS_EXTRA)
             IntentAssert.doesNotHaveExtra(bundle, NoteEditor.EXTRA_DID)
         }

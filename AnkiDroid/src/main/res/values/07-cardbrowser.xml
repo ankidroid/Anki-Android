@@ -97,4 +97,6 @@
     <string name="user_potential_columns">Available</string>
     <string name="include_column">Include column</string>
     <string name="exclude_column">Exclude column</string>
+
+    <string name="save_changes_message">Please save your changes first</string>
 </resources>
