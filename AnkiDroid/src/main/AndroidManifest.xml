@@ -488,6 +488,10 @@
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:configChanges="keyboardHidden|screenSize" />
 
+        <activity android:name=".jsaddons.AddonsBrowserActivity"
+            android:parentActivityName=".DeckPicker"
+            android:exported="false" />
+
         <service
             android:name="androidx.work.impl.foreground.SystemForegroundService"
             android:foregroundServiceType="dataSync"
