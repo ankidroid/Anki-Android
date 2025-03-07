@@ -130,4 +130,5 @@
     <string name="user_potential_columns">Доступні</string>
     <string name="include_column">Включити стовпець</string>
     <string name="exclude_column">Виключити стовпець</string>
+    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
 </resources>

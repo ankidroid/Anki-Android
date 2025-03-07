@@ -118,4 +118,5 @@
     <string name="user_potential_columns">Saatavilla</string>
     <string name="include_column">Sisällytä sarake</string>
     <string name="exclude_column">Jätä pois sarake</string>
+    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
 </resources>

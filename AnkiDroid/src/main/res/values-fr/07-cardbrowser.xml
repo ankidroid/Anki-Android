@@ -118,4 +118,5 @@
     <string name="user_potential_columns">Disponible</string>
     <string name="include_column">Inclure la colonne</string>
     <string name="exclude_column">Exclure la colonne</string>
+    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
 </resources>

@@ -61,12 +61,12 @@
         <item quantity="other">Noch ca. %d Minuten</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d Stunde(n) %2$d Minute(n) verbleibend</item>
+        <item quantity="one">%1$d Stunde %2$d Minute(n) verbleibend</item>
         <item quantity="other">%1$d Stunden %2$d verbleibend</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%1$d Tag %2$d Std. übrig</item>
-        <item quantity="other">%1$d Tage %2$dStd. übrig</item>
+        <item quantity="other">%1$d Tage %2$d Std. übrig</item>
     </plurals>
     <string name="no_cards_placeholder_title">Sammlung ist leer</string>
     <string name="no_cards_placeholder_description">Fügen Sie Karten \nmit dem + -Symbol hinzu.</string>

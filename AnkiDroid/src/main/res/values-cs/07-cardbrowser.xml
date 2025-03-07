@@ -130,4 +130,5 @@
     <string name="user_potential_columns">Dostupné</string>
     <string name="include_column">Přidat sloupec</string>
     <string name="exclude_column">Odebrat sloupec</string>
+    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
 </resources>
