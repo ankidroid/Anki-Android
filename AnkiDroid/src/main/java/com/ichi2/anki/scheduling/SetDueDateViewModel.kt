@@ -123,6 +123,10 @@ class SetDueDateViewModel : ViewModel() {
         this.cardIds = cardIds.toList()
         this.fsrsEnabled = fsrsEnabled
 
+        initCurrentInterval(cardIds)
+    }
+
+    private fun initCurrentInterval(cardIds: LongArray) {
         // Current interval cannot be shown if multiple cards are selected
         if (cardCount == 1) {
             viewModelScope.launch {
