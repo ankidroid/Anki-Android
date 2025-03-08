@@ -179,6 +179,7 @@ android {
     flavorDimensions += "appStore"
     productFlavors {
         create('play') {
+            getIsDefault().set(true)
             dimension "appStore"
         }
         create('amazon') {
