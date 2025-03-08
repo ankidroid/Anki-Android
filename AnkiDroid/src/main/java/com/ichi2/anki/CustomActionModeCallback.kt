@@ -21,6 +21,7 @@ import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.core.view.size
 
 /**
  * Custom ActionMode.Callback implementation for adding and handling cloze deletion action
@@ -57,7 +58,7 @@ class CustomActionModeCallback(
             item.isVisible = false
         }
 
-        val initialSize = menu.size()
+        val initialSize = menu.size
         if (isClozeType) {
             menu.add(
                 Menu.NONE,
@@ -66,7 +67,7 @@ class CustomActionModeCallback(
                 clozeMenuTitle,
             )
         }
-        return initialSize != menu.size()
+        return initialSize != menu.size
     }
 
     override fun onActionItemClicked(

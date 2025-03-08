@@ -16,15 +16,15 @@
  */
 package com.ichi2.compat
 
-import android.annotation.TargetApi
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import java.io.Serializable
 
-@TargetApi(33)
+@RequiresApi(33)
 open class CompatV33 :
     CompatV31(),
     Compat {

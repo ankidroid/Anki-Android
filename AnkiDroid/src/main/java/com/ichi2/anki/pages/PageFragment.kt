@@ -17,7 +17,6 @@ package com.ichi2.anki.pages
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.webkit.JavascriptInterface
@@ -25,6 +24,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
+import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
@@ -122,7 +122,7 @@ open class PageFragment(
         val title = arguments.getString(TITLE_ARG_KEY)
 
         val nightMode = if (Themes.currentTheme.isNightMode) "#night" else ""
-        val url = Uri.parse("${server.baseUrl()}$path$nightMode")
+        val url = "${server.baseUrl()}$path$nightMode".toUri()
         Timber.i("Loading $url")
         webView.loadUrl(url.toString())
 

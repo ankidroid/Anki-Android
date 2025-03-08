@@ -20,6 +20,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteException
 import android.net.Uri
 import android.webkit.MimeTypeMap
+import androidx.core.net.toUri
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.utils.ContentResolverUtil.getFileName
@@ -38,7 +39,7 @@ import org.robolectric.annotation.Config
 class ContentResolverUtilTest {
     @Test
     fun testViaQueryWorking() {
-        val uri = Uri.parse("http://example.com/test.jpeg")
+        val uri = "http://example.com/test.jpeg".toUri()
         val mock = mock(ContentResolver::class.java)
 
         setQueryReturning(mock, cursorReturning("filename_from_cursor.jpg"))

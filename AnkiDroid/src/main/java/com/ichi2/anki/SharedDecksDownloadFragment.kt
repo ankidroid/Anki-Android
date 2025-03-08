@@ -24,7 +24,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.database.Cursor
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -37,6 +36,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.SharedDecksActivity.Companion.DOWNLOAD_FILE
 import com.ichi2.anki.snackbar.showSnackbar
@@ -191,7 +191,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         fileToBeDownloaded: DownloadFile,
         currentFileName: String,
     ): DownloadManager.Request {
-        val request: DownloadManager.Request = DownloadManager.Request(Uri.parse(fileToBeDownloaded.url))
+        val request: DownloadManager.Request = DownloadManager.Request(fileToBeDownloaded.url.toUri())
         request.setMimeType(fileToBeDownloaded.mimeType)
 
         val cookies = CookieManager.getInstance().getCookie(fileToBeDownloaded.url)
