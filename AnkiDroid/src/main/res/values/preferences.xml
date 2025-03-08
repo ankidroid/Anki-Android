@@ -34,6 +34,7 @@
     <string name="day_theme_key">dayTheme</string>
     <string name="night_theme_key">nightTheme</string>
     <string name="pref_deck_picker_background_key">deckPickerBackground</string>
+    <string name="pref_remove_background_key">removeBackgroundOption</string>
     <string name="custom_buttons_link_preference">custom_buttons_link</string>
     <string name="fullscreen_mode_preference">fullscreenMode</string>
     <string name="center_vertically_preference">centerVertically</string>

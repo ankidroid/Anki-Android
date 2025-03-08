@@ -63,13 +63,13 @@
             android:key="@string/pref_deck_picker_background_key"
             android:shouldDisableView="true"
             android:icon="@drawable/wallpaper_icon"
-            android:summary="Set Background Image"
+            android:summary="@string/background_image_summary"
             android:title="@string/choose_an_image" />
         <Preference
-            android:key="remove_background_key"
-            android:summary="Remove Background Image"
+            android:key="@string/remove_background_image_option"
+            android:summary="@string/remove_background_image_option_summary"
             android:icon="@drawable/ic_remove"
-            android:title="Remove Background"/>
+            android:title="@string/remove_background_image_option"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_reviewer" >
         <Preference

@@ -91,6 +91,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             R.string.reviewer_frame_style_key, // reviewerFrameStyle
             R.string.hide_system_bars_key, // hideSystemBars
             R.string.ignore_display_cutout_key, // ignoreDisplayCutout
+            R.string.pref_remove_background_key, // removeBackgroundOption
         ).toStringResourceSet()
 
     @Test

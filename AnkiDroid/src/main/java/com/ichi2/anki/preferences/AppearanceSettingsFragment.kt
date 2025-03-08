@@ -54,7 +54,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
     override fun initSubscreen() {
         // Configure background
         backgroundImage = requirePreference<Preference>("deckPickerBackground")
-        removeBackgroundPref = requirePreference("remove_background_key")
+        removeBackgroundPref = requirePreference(getString(R.string.remove_background_image_option))
         backgroundImage!!.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
                 try {

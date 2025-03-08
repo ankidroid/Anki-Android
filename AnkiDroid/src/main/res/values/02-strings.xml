@@ -176,6 +176,9 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Background</string>
     <string name="choose_an_image" maxLength="41">Select image</string>
+    <string name="background_image_summary" maxLength="41">Set Background Image</string>
+    <string name="remove_background_image_option" maxLength="41">Remove Background</string>
+    <string name="remove_background_image_option_summary" maxLength="41">Remove Background Image</string>
     <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Restore Default</string>
