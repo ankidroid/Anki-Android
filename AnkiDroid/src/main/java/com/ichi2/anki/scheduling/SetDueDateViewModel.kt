@@ -114,6 +114,13 @@ class SetDueDateViewModel : ViewModel() {
             field = value
         }
 
+    /**
+     * The current interval of the card.
+     *
+     * The value represents the number of days.
+     * The value is not-null if exactly one card is selected, which is the only case
+     * in which the view should display the interval.
+     */
     val currentInterval = MutableStateFlow<Int?>(null)
 
     fun init(
