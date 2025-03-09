@@ -45,6 +45,7 @@ import timber.log.Timber
 
 class AppearanceSettingsFragment : SettingsFragment() {
     private var backgroundImage: Preference? = null
+    private var removeBackgroundPref: Preference? = null
     override val preferenceResource: Int
         get() = R.xml.preferences_appearance
     override val analyticsScreenNameConstant: String
@@ -53,6 +54,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
     override fun initSubscreen() {
         // Configure background
         backgroundImage = requirePreference<Preference>("deckPickerBackground")
+        removeBackgroundPref = requirePreference<Preference>("removeWallPaper")
         backgroundImage!!.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
                 try {
@@ -63,6 +65,13 @@ class AppearanceSettingsFragment : SettingsFragment() {
                 }
                 true
             }
+        removeBackgroundPref?.setOnPreferenceClickListener {
+            showRemoveBackgroundImageDialog()
+            true
+        }
+
+        // Initially update visibility based on whether a background exists
+        updateRemoveBackgroundVisibility()
 
         val appThemePref = requirePreference<ListPreference>(R.string.app_theme_key)
         val dayThemePref = requirePreference<ListPreference>(R.string.day_theme_key)
@@ -150,12 +159,17 @@ class AppearanceSettingsFragment : SettingsFragment() {
         }
     }
 
+    private fun updateRemoveBackgroundVisibility() {
+        removeBackgroundPref?.isVisible = BackgroundImage.shouldBeShown(requireContext())
+    }
+
     private fun showRemoveBackgroundImageDialog() {
         AlertDialog.Builder(requireContext()).show {
             title(R.string.remove_background_image)
             positiveButton(R.string.dialog_remove) {
                 if (BackgroundImage.remove(requireContext())) {
                     showSnackbar(R.string.background_image_removed)
+                    updateRemoveBackgroundVisibility()
                 } else {
                     showSnackbar(R.string.error_deleting_image)
                 }
@@ -189,6 +203,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
                     }
                     is FileSizeResult.OK -> {
                         BackgroundImage.import(this, selectedImage)
+                        updateRemoveBackgroundVisibility()
                     }
                 }
             } catch (e: OutOfMemoryError) {

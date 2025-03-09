@@ -502,6 +502,7 @@ object UsageAnalytics {
             R.string.day_theme_key, // Day theme
             R.string.night_theme_key, // Night theme
             R.string.pref_deck_picker_background_key, // Background image
+            R.string.pref_remove_wallpaper_key, // Remove wallpaper
             R.string.fullscreen_mode_preference, // Fullscreen mode
             R.string.center_vertically_preference, // Center align
             R.string.show_estimates_preference, // Show button time
