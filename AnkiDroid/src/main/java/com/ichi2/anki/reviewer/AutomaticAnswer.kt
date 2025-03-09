@@ -26,6 +26,8 @@ import com.ichi2.anki.reviewer.AnswerButtons.GOOD
 import com.ichi2.anki.reviewer.AnswerButtons.HARD
 import com.ichi2.anki.reviewer.AutomaticAnswerAction.Companion.answerAction
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.windows.reviewer.autoadvance.QuestionAction
+import com.ichi2.anki.ui.windows.reviewer.autoadvance.QuestionAction.Companion.questionAction
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckConfig
@@ -89,7 +91,7 @@ class AutomaticAnswer(
                 Timber.d("showAnswer: disabled")
                 return@Runnable
             }
-            target.automaticShowAnswer()
+            target.automaticShowAnswer(settings.questionAction)
         }
     private val showQuestionTask =
         Runnable {
@@ -211,7 +213,7 @@ class AutomaticAnswer(
     }
 
     interface AutomaticallyAnswered {
-        fun automaticShowAnswer()
+        fun automaticShowAnswer(action: QuestionAction)
 
         fun automaticShowQuestion(action: AutomaticAnswerAction)
     }
@@ -249,6 +251,7 @@ class AutomaticAnswer(
  */
 class AutomaticAnswerSettings(
     val answerAction: AutomaticAnswerAction = AutomaticAnswerAction.BURY_CARD,
+    val questionAction: QuestionAction = QuestionAction.SHOW_ANSWER,
     private val secondsToShowQuestionFor: Double = 60.0,
     private val secondsToShowAnswerFor: Double = 20.0,
 ) {
@@ -273,6 +276,7 @@ class AutomaticAnswerSettings(
             val conf = col.decks.configDictForDeckId(selectedDid)
             return AutomaticAnswerSettings(
                 answerAction = conf.answerAction,
+                questionAction = conf.questionAction,
                 secondsToShowQuestionFor = conf.secondsToShowQuestion,
                 secondsToShowAnswerFor = conf.secondsToShowAnswer,
             )
