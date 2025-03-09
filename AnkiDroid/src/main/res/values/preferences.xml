@@ -65,6 +65,7 @@
     <string name="custom_button_suspend_key">customButtonSuspend</string>
     <string name="custom_button_delete_key">customButtonDelete</string>
     <string name="custom_button_enable_whiteboard_key">customButtonEnableWhiteboard</string>
+    <string name="custom_button_toggle_eraser_key">customButtonToggleEraser</string>
     <string name="custom_button_toggle_stylus_key">customButtonToggleStylus</string>
     <string name="custom_button_save_whiteboard_key">customButtonSaveWhiteboard</string>
     <string name="custom_button_whiteboard_pen_color_key">customButtonWhiteboardPenColor</string>
@@ -119,6 +120,7 @@
     <string name="replay_voice_command_key">binding_REPLAY_VOICE</string>
     <string name="save_voice_command_key">binding_SAVE_VOICE</string>
     <string name="toggle_whiteboard_command_key">binding_TOGGLE_WHITEBOARD</string>
+    <string name="toggle_eraser_command_key">binding_TOGGLE_ERASER</string>
     <string name="clear_whiteboard_command_key">binding_CLEAR_WHITEBOARD</string>
     <string name="change_whiteboard_pen_color_command_key">binding_CHANGE_WHITEBOARD_PEN_COLOR</string>
     <string name="show_hint_command_key">binding_SHOW_HINT</string>
