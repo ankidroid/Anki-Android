@@ -105,7 +105,7 @@ class TypeAnswer(
             fldTag = fldTag.split(":").toTypedArray()[1]
         }
         // loop through fields for a match
-        for (fld in card.noteType(col).flds) {
+        for (fld in card.noteType(col).fields) {
             val name = fld.name
             if (name == fldTag) {
                 correct = card.note(col).getItem(name)

@@ -215,9 +215,9 @@ open class Card : Cloneable {
     fun template(col: Collection): CardTemplate {
         val m = noteType(col)
         return if (m.isStd) {
-            m.tmpls[ord]
+            m.templates[ord]
         } else {
-            noteType(col).tmpls[0]
+            noteType(col).templates[0]
         }
     }
 

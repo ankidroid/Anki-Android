@@ -279,7 +279,7 @@ class ReviewerTest : RobolectricTest() {
 
             val didAb = addDeck("A::B")
             val basic = models.byName(BASIC_MODEL_NAME)
-            basic!!.put("did", didAb)
+            basic!!.did = didAb
             addBasicNote("foo", "bar")
 
             addDeck("A", setAsSelected = true)
@@ -454,7 +454,7 @@ class ReviewerTest : RobolectricTest() {
     private fun addNoteWithThreeCards() {
         val models = col.notetypes
         var notetype: NotetypeJson = models.copy(models.current())
-        notetype.put("name", "Three")
+        notetype.name = "Three"
         models.add(notetype)
         notetype = models.byName("Three")!!
 
@@ -463,7 +463,7 @@ class ReviewerTest : RobolectricTest() {
 
         val newNote = col.newNote()
         newNote.setField(0, "Hello")
-        assertThat(newNote.notetype["name"], equalTo("Three"))
+        assertThat(newNote.notetype.name, equalTo("Three"))
 
         assertThat(col.addNote(newNote), equalTo(3))
     }
@@ -474,7 +474,7 @@ class ReviewerTest : RobolectricTest() {
         notetype: NotetypeJson,
         extra: String,
     ) {
-        val tmpls = notetype.tmpls
+        val tmpls = notetype.templates
         val defaultTemplate = tmpls.first()
 
         val newTemplate = defaultTemplate.deepClone()
