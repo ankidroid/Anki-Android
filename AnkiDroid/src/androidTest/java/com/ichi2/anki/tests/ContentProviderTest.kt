@@ -930,7 +930,7 @@ class ContentProviderTest : InstrumentedTest() {
                 assertNotNull("Check that the deck we received actually exists", deck)
                 assertEquals(
                     "Check that the received deck has the correct name",
-                    deck.getString("name"),
+                    deck.name,
                     deckName,
                 )
             }
@@ -964,7 +964,7 @@ class ContentProviderTest : InstrumentedTest() {
                 )
                 assertEquals(
                     "Check that received deck name equals real deck name",
-                    realDeck.getString("name"),
+                    realDeck.name,
                     returnedDeckName,
                 )
             }
