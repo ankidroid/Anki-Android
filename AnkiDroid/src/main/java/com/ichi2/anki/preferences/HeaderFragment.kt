@@ -135,6 +135,18 @@ class HeaderFragment :
                     .withResId(R.xml.preferences_controls)
                     .addBreadcrumb(activity.getString(R.string.pref_cat_controls))
                     .addBreadcrumb(setDuePreferenceTitle)
+                /** Index the system wide menu items - dynamically */
+                indexItem()
+                    .withKey(activity.getString(R.string.anki_card_external_context_menu_key))
+                    .withTitle(activity.getString(R.string.card_browser_enable_external_context_menu, "Anki Card"))
+                    .withResId(R.xml.preferences_general)
+                    .addBreadcrumb(activity.getString(R.string.pref_cat_system_wide))
+
+                indexItem()
+                    .withKey(activity.getString(R.string.card_browser_external_context_menu_key))
+                    .withTitle(activity.getString(R.string.card_browser_enable_external_context_menu, "Card Browser"))
+                    .withResId(R.xml.preferences_general)
+                    .addBreadcrumb(activity.getString(R.string.pref_cat_system_wide))
             }
 
             // Some preferences and categories are only shown conditionally,
