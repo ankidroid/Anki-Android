@@ -38,6 +38,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.anki.testutil.GrantStoragePermission
+import com.ichi2.anki.testutil.closeGetStartedScreenIfExists
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.utils.isWindowCompact
 import org.hamcrest.Matchers.allOf
@@ -53,18 +54,17 @@ class PreferencesNavigationTest {
     val runtimePermissionRule = grantPermissions(GrantStoragePermission.storagePermission)
 
     /**
-     * This test verifies the navigation when search bar is clicked.
-     * When user searches for something in the search bar,It should close the search view
-     * on backPress() instead of closing the settings activity.
+     * Verifies navigation behavior when the search bar is tapped.
+     * - When the user searches for something using the search bar,the search view should close upon pressing the back button.
+     * - The back button should not close the entire preferences activity.
      */
     @Test
     fun testOnCompactMode() {
-        fun isCompactMode(context: Context): Boolean = context.resources.isWindowCompact()
 
         val context = ApplicationProvider.getApplicationContext<Context>()
-        assumeTrue(isCompactMode(context))
+        assumeTrue(context.resources.isWindowCompact())
         ActivityScenario.launch(IntentHandler::class.java)
-        onView(withId(R.id.get_started)).perform(click())
+        closeGetStartedScreenIfExists()
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open())
         onView(withId(R.id.nav_settings)).perform(click())
         onView(withId(R.id.search)).perform(click())
@@ -81,24 +81,24 @@ class PreferencesNavigationTest {
     }
 
     /**
-     * This test verifies the navigation when multiple menus are opened.
-     * Even after opening multiple menus, when the back button is pressed,
-     * it should close the settings activity instead of going to the previous menus.
+     * Verifies navigation behavior when multiple menus are opened.
+     * - Even after opening multiple menus, pressing the back button should
+     * close the preference activity instead of navigating back through the previously opened menus.
      */
     @Test
     fun testOnNonCompactMode() {
-        fun isTablet(context: Context): Boolean = context.resources.configuration.smallestScreenWidthDp >= 600
+        fun isTablet(context: Context): Boolean =
+            context.resources.configuration.smallestScreenWidthDp >= 600
 
         val context = ApplicationProvider.getApplicationContext<Context>()
         assumeTrue(isTablet(context))
         ActivityScenario.launch(IntentHandler::class.java)
-        onView(withId(R.id.get_started)).perform(click())
+        closeGetStartedScreenIfExists()
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open())
         onView(withId(R.id.nav_settings)).perform(click())
         onView(withId(R.id.search)).perform(click())
-        onView(allOf(withId(R.id.search), hasFocus())).perform(typeText("Controls"))
-        onView(allOf(withText(R.string.pref_cat_controls), hasFocus())).perform(click())
-        pressBack()
+        onView(allOf(withId(R.id.search), hasFocus())).perform(typeText("Card"))
+        onView(withText(R.string.card_zoom)).perform(click())
         onView(withId(R.id.settings_container)).check(matches(isDisplayed()))
         onView(withText(R.string.notification_pref)).perform(click())
         pressBack()
