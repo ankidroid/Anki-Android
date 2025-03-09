@@ -4,4 +4,6 @@
     android:minHeight="40dp"
     android:minWidth="40dp"
     android:updatePeriodMillis="0"
-    android:widgetCategory="home_screen" />
+    android:widgetCategory="home_screen"
+    android:previewLayout="@layout/widget_add_note_drawable_v31"
+    android:previewImage="@drawable/widget_add_note_drawable" />
