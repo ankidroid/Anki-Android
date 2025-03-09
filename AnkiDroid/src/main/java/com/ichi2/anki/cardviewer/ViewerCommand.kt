@@ -60,6 +60,7 @@ enum class ViewerCommand {
     SAVE_VOICE,
     REPLAY_VOICE,
     TOGGLE_WHITEBOARD,
+    TOGGLE_WHITEBOARD_VISIBILITY,
     CLEAR_WHITEBOARD,
     CHANGE_WHITEBOARD_PEN_COLOR,
     SHOW_HINT,
@@ -173,7 +174,8 @@ enum class ViewerCommand {
                 TAG,
                 CARD_INFO,
                 ABORT_AND_SYNC,
-                TOGGLE_WHITEBOARD,
+                TOGGLE_WHITEBOARD, // enable/disable whiteboard
+                TOGGLE_WHITEBOARD_VISIBILITY, // show/hide whiteboard
                 CLEAR_WHITEBOARD,
                 CHANGE_WHITEBOARD_PEN_COLOR,
                 RESCHEDULE_NOTE,

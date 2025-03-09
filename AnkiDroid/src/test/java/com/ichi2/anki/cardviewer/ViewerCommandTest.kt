@@ -61,7 +61,8 @@ class ViewerCommandTest {
                 "binding_RECORD_VOICE",
                 "binding_SAVE_VOICE",
                 "binding_REPLAY_VOICE",
-                "binding_TOGGLE_WHITEBOARD",
+                "binding_TOGGLE_WHITEBOARD", // enable/disable whiteboard
+                "binding_TOGGLE_WHITEBOARD_VISIBILITY", // show/hide whiteboard
                 "binding_CLEAR_WHITEBOARD",
                 "binding_CHANGE_WHITEBOARD_PEN_COLOR",
                 "binding_SHOW_HINT",
