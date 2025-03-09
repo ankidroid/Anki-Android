@@ -377,7 +377,7 @@ object UsageAnalytics {
     object Actions {
         // Analytics actions used in Help Dialog
         @AnalyticsConstant
-        val OPENED_HELPDIALOG = "Opened HelpDialogBox"
+        val OPENED_HELP_DIALOG = "Opened HelpDialogBox"
 
         @AnalyticsConstant
         val OPENED_USING_ANKIDROID = "Opened Using AnkiDroid"

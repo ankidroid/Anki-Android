@@ -30,6 +30,7 @@ import java.io.File
  * See <a href="https://github.com/ACRA/acra/wiki/Custom-Extensions">Custom Extensions</a>
  */
 @AutoService(ReportInteraction::class)
+@Suppress("unused")
 class AcraAnalyticsInteraction : ReportInteraction {
     override fun performInteraction(
         context: Context,
