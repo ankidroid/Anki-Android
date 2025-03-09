@@ -36,7 +36,7 @@ import com.ichi2.libanki.addNotetypeLegacy
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.getNotetype
 import com.ichi2.libanki.getNotetypeNames
-import com.ichi2.libanki.getStockNotetypeLegacy
+import com.ichi2.libanki.getStockNotetype
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.libanki.utils.set
 import com.ichi2.utils.customView
@@ -57,7 +57,7 @@ class AddNewNotesType(
                         StockNotetype.Kind.entries
                             .filter { it != StockNotetype.Kind.UNRECOGNIZED }
                             .map {
-                                val stockNotetype = BackendUtils.fromJsonBytes(getStockNotetypeLegacy(it))
+                                val stockNotetype = getStockNotetype(it)
                                 AddNotetypeUiModel(
                                     id = it.number.toLong(),
                                     name = stockNotetype.get("name") as String,
@@ -155,7 +155,7 @@ class AddNewNotesType(
             activity.runAndRefreshAfter {
                 val kind = StockNotetype.Kind.forNumber(selectedOption.id.toInt())
                 val updatedStandardNotetype =
-                    BackendUtils.fromJsonBytes(getStockNotetypeLegacy(kind)).apply {
+                    getStockNotetype(kind).apply {
                         set("name", newName)
                     }
                 addNotetypeLegacy(BackendUtils.toJsonBytes(updatedStandardNotetype))

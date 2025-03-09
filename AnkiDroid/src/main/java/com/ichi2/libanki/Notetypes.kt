@@ -217,12 +217,7 @@ class Notetypes(
         return nt
     }
 
-    fun newBasicNotetype(): NotetypeJson =
-        NotetypeJson(
-            BackendUtils.fromJsonBytes(
-                col.backend.getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC),
-            ),
-        )
+    fun newBasicNotetype(): NotetypeJson = col.getStockNotetype(StockNotetype.Kind.KIND_BASIC)
 
     /** Delete model, and all its cards/notes. */
     fun rem(notetype: NotetypeJson) {
@@ -756,9 +751,8 @@ fun Collection.getNotetypeNames(): List<NotetypeNameId> = backend.getNotetypeNam
 
 fun Collection.addNotetypeLegacy(json: ByteString): OpChangesWithId = backend.addNotetypeLegacy(json = json)
 
-fun Collection.getStockNotetypeLegacy(kind: StockNotetype.Kind): ByteString = backend.getStockNotetypeLegacy(kind = kind)
-
-fun Collection.getStockNotetype(kind: StockNotetype.Kind): NotetypeJson = NotetypeJson(fromJsonBytes(getStockNotetypeLegacy(kind)))
+fun Collection.getStockNotetype(kind: StockNotetype.Kind): NotetypeJson =
+    NotetypeJson(fromJsonBytes(backend.getStockNotetypeLegacy(kind = kind)))
 
 /**
  * Restores a notetype to its original stock kind.
