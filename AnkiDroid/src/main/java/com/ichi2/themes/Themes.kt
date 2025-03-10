@@ -39,7 +39,7 @@ import timber.log.Timber
  */
 object Themes {
     const val ALPHA_ICON_ENABLED_LIGHT = 255 // 100%
-    const val ALPHA_ICON_DISABLED_LIGHT = 76 // 31%
+    const val ALPHA_ICON_DISABLED_LIGHT = 76 // 30%
 
     const val FOLLOW_SYSTEM_MODE = "0"
     private const val APP_THEME_KEY = "appTheme"
