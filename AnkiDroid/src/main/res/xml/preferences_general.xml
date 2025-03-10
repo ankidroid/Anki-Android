@@ -71,7 +71,7 @@
                 android:defaultValue="true"
                 android:key="@string/anki_card_external_context_menu_key"
                 tools:title="‘Anki Card’ Menu"
-                tools:summary="Enables the ‘Anki Card’ context menu globally"/>
+                tools:summary="Enables the ‘Anki Card’ context menu globally" />
             <SwitchPreferenceCompat
                 android:id="@+id/card_browser_external_context_menu"
                 android:defaultValue="false"
