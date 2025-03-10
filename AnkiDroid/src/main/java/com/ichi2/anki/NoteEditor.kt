@@ -132,7 +132,6 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.setupNoteTypeSpinner
-import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
@@ -145,7 +144,6 @@ import com.ichi2.imagecropper.ImageCropper.Companion.CROP_IMAGE_RESULT
 import com.ichi2.imagecropper.ImageCropperLauncher
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Field
@@ -754,7 +752,7 @@ class NoteEditor :
         // Deck Selector
         val deckTextView = requireView().findViewById<TextView>(R.id.CardEditorDeckText)
         // If edit mode and more than one card template distinguish between "Deck" and "Card deck"
-        if (!addNote && editorNote!!.notetype.tmpls.length() > 1) {
+        if (!addNote && editorNote!!.notetype.templates.length() > 1) {
             deckTextView.setText(R.string.CardEditorCardDeck)
         }
         deckSpinnerSelection =
@@ -1220,7 +1218,7 @@ class NoteEditor :
             }
             // Save deck to model
             Timber.d("setting 'last deck' of note type %s to %d", editorNote!!.notetype.name, deckId)
-            editorNote!!.notetype.put("did", deckId)
+            editorNote!!.notetype.did = deckId
             // Save tags to model
             editorNote!!.setTagsFromStr(getColUnsafe, tagsAsString(selectedTags!!))
             val tags = JSONArray()
@@ -1688,7 +1686,7 @@ class NoteEditor :
     }
 
     val currentFields: Fields
-        get() = editorNote!!.notetype.flds
+        get() = editorNote!!.notetype.fields
 
     @get:CheckResult
     val currentFieldStrings: Array<String?>
@@ -1716,7 +1714,7 @@ class NoteEditor :
         if (currentNotetypeIsImageOcclusion()) {
             val occlusionTag = "0"
             val imageTag = "1"
-            val fields = currentlySelectedNotetype!!.flds
+            val fields = currentlySelectedNotetype!!.fields
             for ((i, field) in fields.withIndex()) {
                 val tag = field.imageOcclusionTag
                 if (tag == occlusionTag || tag == imageTag) {
@@ -2503,7 +2501,7 @@ class NoteEditor :
 
     private fun setNoteTypePosition() {
         // Set current note type and deck positions in spinners
-        val position = allModelIds!!.indexOf(editorNote!!.notetype.getLong("id"))
+        val position = allModelIds!!.indexOf(editorNote!!.notetype.id)
         // set selection without firing selectionChanged event
         noteTypeSpinner!!.setSelection(position, false)
     }
@@ -2541,7 +2539,7 @@ class NoteEditor :
     @KotlinCleanup("make non-null")
     private fun updateCards(model: NotetypeJson?) {
         Timber.d("updateCards()")
-        val tmpls = model!!.tmpls
+        val tmpls = model!!.templates
         var cardsList = StringBuilder()
         // Build comma separated list of card names
         Timber.d("updateCards() template count is %s", tmpls.length())
@@ -2550,7 +2548,7 @@ class NoteEditor :
             // If more than one card, and we have an existing card, underline existing card
             if (!addNote &&
                 tmpls.length() > 1 &&
-                model === editorNote!!.notetype &&
+                model.jsonObject === editorNote!!.notetype.jsonObject &&
                 currentEditedCard != null &&
                 currentEditedCard!!.template(getColUnsafe).jsonObject.optString("name") == name
             ) {
@@ -2562,7 +2560,7 @@ class NoteEditor :
             }
         }
         // Make cards list red if the number of cards is being reduced
-        if (!addNote && tmpls.length() < editorNote!!.notetype.tmpls.length()) {
+        if (!addNote && tmpls.length() < editorNote!!.notetype.templates.length()) {
             cardsList = StringBuilder("<font color='red'>$cardsList</font>")
         }
         cardsButton!!.text =
@@ -2636,7 +2634,7 @@ class NoteEditor :
     }
 
     private fun changeNoteType(newId: NoteTypeId) {
-        val oldModelId = getColUnsafe.notetypes.current().getLong("id")
+        val oldModelId = getColUnsafe.notetypes.current().id
         Timber.i("Changing note type to '%d", newId)
 
         if (oldModelId == newId) {
@@ -2656,7 +2654,7 @@ class NoteEditor :
 
         // Update deck
         if (!getColUnsafe.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
-            deckId = model.optLong("did", Consts.DEFAULT_DECK_ID)
+            deckId = model.did
         }
 
         refreshNoteData(FieldChangeType.changeFieldCount(shouldReplaceNewlines()))
@@ -2695,7 +2693,7 @@ class NoteEditor :
             id: Long,
         ) {
             // Get the current model
-            val noteModelId = currentEditedCard!!.noteType(getColUnsafe).getLong("id")
+            val noteModelId = currentEditedCard!!.noteType(getColUnsafe).id
             // Get new model
             val newModel = getColUnsafe.notetypes.get(allModelIds!![pos])
             if (newModel == null) {
@@ -2707,7 +2705,7 @@ class NoteEditor :
                 @KotlinCleanup("Check if this ever happens")
                 val tmpls =
                     try {
-                        newModel.tmpls
+                        newModel.templates
                     } catch (e: Exception) {
                         Timber.w("error in obtaining templates from model %s", allModelIds!![pos])
                         return

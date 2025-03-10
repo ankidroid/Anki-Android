@@ -50,14 +50,14 @@ class CardTest : JvmTest() {
     }
 
     @Test
-    @SuppressLint("CheckResult") // col.models.current()!!.getLong("id")
+    @SuppressLint("CheckResult") // col.models.current()!!.id
     fun test_misc_cards() {
         val note = col.newNote()
         note.setItem("Front", "1")
         note.setItem("Back", "2")
         col.addNote(note)
         val c = note.cards()[0]
-        col.notetypes.current().getLong("id")
+        col.notetypes.current().id
         assertEquals(0, c.template().ord)
     }
 
@@ -81,7 +81,7 @@ class CardTest : JvmTest() {
         assertEquals(2, note.numberOfCards())
         // if the template is changed to remove cards, they'll be removed
         t =
-            noteType.tmpls[1].apply {
+            noteType.templates[1].apply {
                 qfmt = "{{Back}}"
             }
         noteTypes.save(noteType)
@@ -106,7 +106,7 @@ class CardTest : JvmTest() {
         assertEquals(1, note.cards()[0].did)
         // set the model to a new default col
         val newId = addDeck("new")
-        cloze.put("did", newId)
+        cloze.did = newId
         col.notetypes.save(cloze)
         // a newly generated card should share the first card's col
         note.setItem("Text", "{{c2::two}}")
@@ -124,12 +124,12 @@ class CardTest : JvmTest() {
         val models = col.notetypes
         val model = models.byName("Basic")
         assertNotNull(model)
-        models.renameFieldLegacy(model, model.flds[0], "A")
-        models.renameFieldLegacy(model, model.flds[1], "B")
+        models.renameFieldLegacy(model, model.fields[0], "A")
+        models.renameFieldLegacy(model, model.fields[1], "B")
         val fld2 = models.newField("C")
         fld2.setOrd(null)
         models.addFieldLegacy(model, fld2)
-        model.tmpls[0].qfmt = "{{A}}{{B}}{{C}}"
+        model.templates[0].qfmt = "{{A}}{{B}}{{C}}"
         // ensure first card is always generated,
         // because at last one card is generated
         val tmpl = Notetypes.newTemplate("AND_OR")
@@ -172,9 +172,9 @@ class CardTest : JvmTest() {
         val models = col.notetypes
         val model = models.byName("Basic")
         assertNotNull(model)
-        val tmpls = model.tmpls
-        models.renameFieldLegacy(model, model.flds[0], "First")
-        models.renameFieldLegacy(model, model.flds[1], "Front")
+        val tmpls = model.templates
+        models.renameFieldLegacy(model, model.fields[0], "First")
+        models.renameFieldLegacy(model, model.fields[1], "Front")
         val fld2 = models.newField("AddIfEmpty")
         fld2.name = "AddIfEmpty"
         models.addFieldLegacy(model, fld2)

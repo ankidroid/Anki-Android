@@ -124,7 +124,7 @@ open class SchedulerTest : JvmTest() {
             val note = col.newNote()
             note.setItem("Front", i.toString())
             if (i > 4) {
-                note.notetype.put("did", deck2)
+                note.notetype.did = deck2
             }
             col.addNote(note)
         }
@@ -1057,7 +1057,7 @@ open class SchedulerTest : JvmTest() {
         note = col.newNote()
         note.setItem("Front", "two")
         val default1 = addDeck("Default::1")
-        note.notetype.put("did", default1)
+        note.notetype.did = default1
         col.addNote(note)
         // make it a review card
         val c =
@@ -1068,12 +1068,12 @@ open class SchedulerTest : JvmTest() {
         // add one more with a new deck
         note = col.newNote()
         note.setItem("Front", "two")
-        note.notetype.put("did", addDeck("foo::bar"))
+        note.notetype.did = addDeck("foo::bar")
         col.addNote(note)
         // and one that's a sibling
         note = col.newNote()
         note.setItem("Front", "three")
-        note.notetype.put("did", addDeck("foo::baz"))
+        note.notetype.did = addDeck("foo::baz")
         col.addNote(note)
         Assert.assertEquals(
             5,
@@ -1124,13 +1124,13 @@ open class SchedulerTest : JvmTest() {
         note = col.newNote()
         note.setItem("Front", "two")
         var default1 = addDeck("Default::2")
-        note.notetype.put("did", default1)
+        note.notetype.did = default1
         col.addNote(note)
         // and another that's higher up
         note = col.newNote()
         note.setItem("Front", "three")
         default1 = addDeck("Default::1")
-        note.notetype.put("did", default1)
+        note.notetype.did = default1
         col.addNote(note)
         // should get top level one first, then ::1, then ::2
         Assert.assertEquals(Counts(3, 0, 0), col.sched.counts())
