@@ -187,6 +187,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">پس زمینه</string>
     <string name="choose_an_image" maxLength="41">انتخاب تصویر</string>
+    <string name="remove_wallpaper_image" maxLength="41"> Remove background</string>
     <string name="remove_background_image">حذف پس‌زمینه؟</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">بازنشانی پیش‌فرض</string>
@@ -260,7 +261,7 @@
     <string name="search_using_deck_name">جست و جو با استفاده از اسم دسته</string>
     <string name="external_storage_unavailable">بارگیری توقف شد، حافظه خارجی در دسترس نیست</string>
     <string name="home" maxLength="28">خانه</string>
-    <!-- Reviewer actions 
+    <!-- Reviewer actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">کارت دفن شد.</string>
     <plurals name="note_suspended">

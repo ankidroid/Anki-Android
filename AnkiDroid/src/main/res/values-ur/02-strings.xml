@@ -188,6 +188,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">پس منظر</string>
     <string name="choose_an_image" maxLength="41">تصویر منتخب کریں۔</string>
+    <string name="remove_wallpaper_image" maxLength="41"> Remove background</string>
     <string name="remove_background_image">پس منظر ہٹائیں؟</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">ڈیفالٹ بحال کریں۔</string>
@@ -261,7 +262,7 @@
     <string name="search_using_deck_name">ڈیک کا نام استعمال کرکے تلاش کریں</string>
     <string name="external_storage_unavailable">ڈاؤن لوڈ منسوخ کر دیا گیا، بیرونی اسٹوریج دستیاب نہیں ہے</string>
     <string name="home" maxLength="28">گھر</string>
-    <!-- Reviewer actions 
+    <!-- Reviewer actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">کارڈ دفن کر دیا گیا</string>
     <plurals name="note_suspended">

@@ -187,6 +187,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">ପୃଷ୍ଠପଟ</string>
     <string name="choose_an_image" maxLength="41">ଛବି ବାଛନ୍ତୁ</string>
+    <string name="remove_wallpaper_image" maxLength="41"> Remove background</string>
     <string name="remove_background_image">ପୃଷ୍ଠପଟ ଅପସାରଣ କରିବେ ତ?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">ଡିଫଲ୍ଟ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ</string>
@@ -260,7 +261,7 @@
     <string name="search_using_deck_name">ତାସଖଣ୍ଡ ନାମ ବ୍ୟବହାର କରି ସନ୍ଧାନ କରନ୍ତୁ</string>
     <string name="external_storage_unavailable">ଡାଉନଲୋଡ୍ ପରିତ୍ୟାଗ ହୋଇଛି, ବହିଃ-ଷ୍ଟୋରେଜ୍ ଉପଲବ୍ଧ ନାହିଁ</string>
     <string name="home" maxLength="28">ଗୃହ</string>
-    <!-- Reviewer actions 
+    <!-- Reviewer actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">ପତ୍ର ସ୍ଥଗିତ କରାଗଲା।</string>
     <plurals name="note_suspended">

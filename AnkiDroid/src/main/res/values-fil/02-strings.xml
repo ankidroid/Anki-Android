@@ -187,6 +187,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Likuran</string>
     <string name="choose_an_image" maxLength="41">Pumili ng Litrato</string>
+    <string name="remove_wallpaper_image" maxLength="41"> Remove background</string>
     <string name="remove_background_image">Tanggalin ang background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Ibalik sa Default</string>
@@ -260,7 +261,7 @@
     <string name="search_using_deck_name">Hanapin gamit ang pangalan ng deck</string>
     <string name="external_storage_unavailable">Naudlot ang pag-download, wala nang natirang lugar sa external storage</string>
     <string name="home" maxLength="28">Home</string>
-    <!-- Reviewer actions 
+    <!-- Reviewer actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Naibaon ang card.</string>
     <plurals name="note_suspended">

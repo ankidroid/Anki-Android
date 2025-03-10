@@ -195,6 +195,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Tło</string>
     <string name="choose_an_image" maxLength="41">Wybierz obraz</string>
+    <string name="remove_wallpaper_image" maxLength="41"> Remove background</string>
     <string name="remove_background_image">Usunąć tło?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Przywróć domyślne</string>
@@ -268,7 +269,7 @@
     <string name="search_using_deck_name">Szukaj używając nazwy talii</string>
     <string name="external_storage_unavailable">Pobieranie przerwane, pamięć zewnętrzna nie jest dostępna</string>
     <string name="home" maxLength="28">Strona główna</string>
-    <!-- Reviewer actions 
+    <!-- Reviewer actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Karta zakopana.</string>
     <plurals name="note_suspended">
