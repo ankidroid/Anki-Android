@@ -17,10 +17,9 @@ package com.ichi2.anki.reviewer
 
 import android.view.KeyEvent
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.tests.InstrumentedTest
-import com.ichi2.anki.testutil.MockReviewerUi
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasSize
@@ -34,16 +33,11 @@ class PeripheralKeymapTest : InstrumentedTest() {
         // #7736 Ensures that a numpad key is passed through (mostly testing num lock)
         val processed: MutableList<ViewerCommand> = ArrayList()
 
+        val sharedPrefs = testContext.sharedPrefs()
         val peripheralKeymap =
-            PeripheralKeymap(MockReviewerUi.displayingAnswer()) { e: ViewerCommand, _: Gesture? -> processed.add(e) }
-        peripheralKeymap.setup()
+            PeripheralKeymap(sharedPrefs, ViewerCommand.entries) { e: ViewerCommand, _ -> processed.add(e) }
 
         peripheralKeymap.onKeyDown(
-            KeyEvent.KEYCODE_NUMPAD_1,
-            getNumpadEvent(KeyEvent.KEYCODE_NUMPAD_1),
-        )
-        peripheralKeymap.onKeyUp(
-            KeyEvent.KEYCODE_NUMPAD_1,
             getNumpadEvent(KeyEvent.KEYCODE_NUMPAD_1),
         )
         assertThat<List<ViewerCommand>>(processed, hasSize(1))
