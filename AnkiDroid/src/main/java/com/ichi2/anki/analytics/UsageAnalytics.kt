@@ -551,6 +551,7 @@ object UsageAnalytics {
             R.string.replay_voice_command_key,
             R.string.save_voice_command_key,
             R.string.toggle_whiteboard_command_key,
+            R.string.toggle_whiteboard_visibility_command_key,
             R.string.clear_whiteboard_command_key,
             R.string.change_whiteboard_pen_color_command_key,
             R.string.toggle_auto_advance_command_key,
