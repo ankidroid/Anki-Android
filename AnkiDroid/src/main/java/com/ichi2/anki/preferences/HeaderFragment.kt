@@ -35,7 +35,6 @@ import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.compat.CompatHelper
 import com.ichi2.preferences.HeaderPreference
 import com.ichi2.utils.AdaptionUtil
-import org.apache.commons.compress.harmony.archive.internal.nls.Messages.getString
 
 class HeaderFragment :
     PreferenceFragmentCompat(),
