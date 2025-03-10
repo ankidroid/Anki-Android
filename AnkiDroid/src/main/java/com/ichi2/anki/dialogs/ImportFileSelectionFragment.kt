@@ -31,8 +31,8 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.MimeTypeUtils
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.utils.AssetHelper.TEXT_PLAIN
 import com.ichi2.utils.title
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
@@ -96,15 +96,8 @@ class ImportFileSelectionFragment : DialogFragment() {
                             UsageAnalytics.Actions.IMPORT_CSV_FILE,
                             ImportFileType.CSV,
                             multiple = false,
-                            mimeType = "*/*",
-                            extraMimes =
-                                arrayOf(
-                                    TEXT_PLAIN,
-                                    "text/comma-separated-values",
-                                    "text/csv",
-                                    "text/tab-separated-values",
-                                    "text/tsv",
-                                ),
+                            mimeType = "/",
+                            extraMimes = MimeTypeUtils.CSV_TSV_MIME_TYPES,
                         ),
                     )
                 }
