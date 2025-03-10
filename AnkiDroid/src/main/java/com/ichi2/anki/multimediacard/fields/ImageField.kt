@@ -19,7 +19,6 @@
 
 package com.ichi2.anki.multimediacard.fields
 
-import android.net.Uri
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import com.ichi2.annotations.NeedsTest
@@ -80,8 +79,10 @@ class ImageField :
         @NeedsTest("files with HTML illegal chars can be imported and rendered")
         fun formatImageFileName(file: File): String =
             if (file.exists()) {
-                val encodedName = Uri.encode(file.name)
-                """<img src="$encodedName">"""
+                // No need to encode the file name, as it will be encoded during rendering.
+                // val encodedName = Uri.encode(file.name)
+                val fileName = file.name
+                """<img src="$fileName">"""
             } else {
                 ""
             }
