@@ -195,6 +195,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Pozadie</string>
     <string name="choose_an_image" maxLength="41">Zvoliť obrázok</string>
+    <string name="remove_wallpaper_image" maxLength="41"> Remove background</string>
     <string name="remove_background_image">Odstrániť tapetu?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Obnoviť predvolené</string>
@@ -268,7 +269,7 @@
     <string name="search_using_deck_name">Hľadať pomocou názvu balíčka</string>
     <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home" maxLength="28">Domov</string>
-    <!-- Reviewer actions 
+    <!-- Reviewer actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Karta zahrabaná.</string>
     <plurals name="note_suspended">

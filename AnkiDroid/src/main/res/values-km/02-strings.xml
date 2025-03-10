@@ -183,6 +183,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">ផ្ទៃខាងក្រោយ</string>
     <string name="choose_an_image" maxLength="41">ជ្រើសរើសរូបភាព</string>
+    <string name="remove_wallpaper_image" maxLength="41"> Remove background</string>
     <string name="remove_background_image">ដកផ្ទៃខាងក្រោយចេញ?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">ស្តារលំនាំដើមឡើងវិញ</string>
@@ -256,7 +257,7 @@
     <string name="search_using_deck_name">ស្វែងរកដោយប្រើឈ្មោះជាន់</string>
     <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home" maxLength="28">Home</string>
-    <!-- Reviewer actions 
+    <!-- Reviewer actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">កាតបានកប់។</string>
     <plurals name="note_suspended">

@@ -195,6 +195,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Фон</string>
     <string name="choose_an_image" maxLength="41">Оберіть зображення</string>
+    <string name="remove_wallpaper_image" maxLength="41"> Remove background</string>
     <string name="remove_background_image">Видалити задній фон?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Відновити «Типове»</string>
@@ -268,7 +269,7 @@
     <string name="search_using_deck_name">Пошук за назвою колоди</string>
     <string name="external_storage_unavailable">Завантаження перервано, зовнішнє сховище недоступне</string>
     <string name="home" maxLength="28">Головна</string>
-    <!-- Reviewer actions 
+    <!-- Reviewer actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Картку відкладено.</string>
     <plurals name="note_suspended">

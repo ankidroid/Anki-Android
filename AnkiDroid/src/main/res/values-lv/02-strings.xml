@@ -191,6 +191,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Background</string>
     <string name="choose_an_image" maxLength="41">Select image</string>
+    <string name="remove_wallpaper_image" maxLength="41"> Remove background</string>
     <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Restore Default</string>
@@ -264,7 +265,7 @@
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home" maxLength="28">Home</string>
-    <!-- Reviewer actions 
+    <!-- Reviewer actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Card buried.</string>
     <plurals name="note_suspended">

@@ -183,6 +183,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Hình nền</string>
     <string name="choose_an_image" maxLength="41">Chọn một hình ảnh</string>
+    <string name="remove_wallpaper_image" maxLength="41"> Remove background</string>
     <string name="remove_background_image">Gỡ bỏ nền?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Khôi phục mặc định</string>
@@ -256,7 +257,7 @@
     <string name="search_using_deck_name">Tìm kiếm theo tên bộ thẻ</string>
     <string name="external_storage_unavailable">Tải xuống bị hủy, bộ nhớ ngoài không khả dụng</string>
     <string name="home" maxLength="28">Trang chủ</string>
-    <!-- Reviewer actions 
+    <!-- Reviewer actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Các thẻ bị chôn</string>
     <plurals name="note_suspended">

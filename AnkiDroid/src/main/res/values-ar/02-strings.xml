@@ -203,6 +203,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">خلفية</string>
     <string name="choose_an_image" maxLength="41">اختيار صورة</string>
+    <string name="remove_wallpaper_image" maxLength="41"> Remove background</string>
     <string name="remove_background_image">هل تريد إزالة الخلفية؟</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">استعادة الافتراضي</string>
@@ -276,7 +277,7 @@
     <string name="search_using_deck_name">ابحث باستخدام اسم الرزمة</string>
     <string name="external_storage_unavailable">تم إلغاء التنزيل لأن التخزين الخارجي غير متوفر</string>
     <string name="home" maxLength="28">الصفحة الرئيسية</string>
-    <!-- Reviewer actions 
+    <!-- Reviewer actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">تم دفن البطاقة</string>
     <plurals name="note_suspended">

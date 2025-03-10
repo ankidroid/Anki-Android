@@ -112,5 +112,5 @@
     <string name="user_potential_columns">可用</string>
     <string name="include_column">包含列</string>
     <string name="exclude_column">排除列</string>
-    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
+    <string name="browser_find_replace_loading_fields">正在获取字段名&#8230;</string>
 </resources>

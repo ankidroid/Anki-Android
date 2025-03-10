@@ -186,6 +186,7 @@ Context | Request Context    [1]</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">배경</string>
     <string name="choose_an_image" maxLength="41">이미지 선택</string>
+    <string name="remove_wallpaper_image" maxLength="41"> Remove background</string>
     <string name="remove_background_image">배경을 제거하시겠습니까?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">기본값 복원</string>
@@ -259,7 +260,7 @@ Context | Request Context    [1]</string>
     <string name="search_using_deck_name">사용 중인 카드 덱 이름 찾기</string>
     <string name="external_storage_unavailable">다운로드가 중단되었습니다. 외부 저장 공간을 사용할 수 없습니다.</string>
     <string name="home" maxLength="28">홈</string>
-    <!-- Reviewer actions 
+    <!-- Reviewer actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">카드 숨기기 완료.</string>
     <plurals name="note_suspended">
