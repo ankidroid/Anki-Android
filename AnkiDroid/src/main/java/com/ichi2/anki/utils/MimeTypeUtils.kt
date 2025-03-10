@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2024 argon2r <vincentcs008@gmail.com>
+ *  Copyright (c) 2025 argon2r <vincentcs008@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -23,5 +23,6 @@ object MimeTypeUtils {
             "text/csv",
             "text/tab-separated-values",
             "text/tsv",
+            "text/plain",
         )
 }

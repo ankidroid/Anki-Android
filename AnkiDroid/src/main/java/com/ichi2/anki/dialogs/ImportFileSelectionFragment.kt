@@ -95,6 +95,8 @@ class ImportFileSelectionFragment : DialogFragment() {
                             R.string.import_csv,
                             UsageAnalytics.Actions.IMPORT_CSV_FILE,
                             ImportFileType.CSV,
+                            multiple = false,
+                            mimeType = "/",
                             extraMimes = MimeTypeUtils.CSV_TSV_MIME_TYPES,
                         ),
                     )
