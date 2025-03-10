@@ -32,6 +32,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.anki.pages.DeckOptions
+import com.ichi2.anki.utils.getIntentWithNewTaskAndClearTask
 import com.ichi2.libanki.DeckId
 import com.ichi2.widget.ACTION_UPDATE_WIDGET
 import com.ichi2.widget.AnalyticsWidgetProvider
@@ -170,10 +171,16 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
             remoteViews.setViewVisibility(R.id.deckCollection, View.GONE)
 
+//            val configIntent =
+//                Intent(context, DeckPickerWidgetConfig::class.java).apply {
+//                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+//                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                }
             val configIntent =
-                Intent(context, DeckPickerWidgetConfig::class.java).apply {
+                context.getIntentWithNewTaskAndClearTask(
+                    DeckPickerWidgetConfig::class.java,
+                ) {
                     putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 }
             val configPendingIntent =
                 PendingIntent.getActivity(
