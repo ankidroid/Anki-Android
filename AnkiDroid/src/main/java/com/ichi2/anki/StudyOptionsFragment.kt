@@ -43,7 +43,6 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
-import com.ichi2.anki.utils.ext.description
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
@@ -419,8 +418,8 @@ class StudyOptionsFragment :
             if (loadWithDeckOptions) {
                 loadWithDeckOptions = false
                 val deck = col!!.decks.current()
-                if (deck.isFiltered && deck.has("empty")) {
-                    deck.remove("empty")
+                if (deck.isFiltered) {
+                    deck.removeEmpty()
                 }
                 launchCatchingTask { rebuildCram() }
             } else {
@@ -550,7 +549,7 @@ class StudyOptionsFragment :
             // Set the deck name
             val deck = col.decks.current()
             // Main deck name
-            val fullName = deck.getString("name")
+            val fullName = deck.name
             val name = Decks.path(fullName)
             val nameBuilder = StringBuilder()
             if (name.isNotEmpty()) {
