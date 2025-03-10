@@ -66,7 +66,7 @@ class HeaderFragment :
             requirePreference<SearchPreference>(R.string.search_preference_key).searchConfiguration,
         )
 
-        if (!resources.isWindowCompact()) {
+        if (settingsIsSplit) {
             parentFragmentManager.findFragmentById(R.id.settings_container)?.let {
                 val key = getHeaderKeyForFragment(it) ?: return@let
                 highlightPreference(key)
@@ -192,3 +192,11 @@ class HeaderFragment :
             }
     }
 }
+
+/**
+ * Whether the Settings view is split in two.
+ * If so, the left side contains the list of all preference categories, and the right side contains the category currently opened.
+ * Otherwise, the same view is used to show the list of categories first, and then one specific category.
+ */
+val Fragment.settingsIsSplit
+    get() = !resources.isWindowCompact()
