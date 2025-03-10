@@ -1193,7 +1193,6 @@ class NoteEditor :
         // adding current note to collection
         requireActivity().withProgress(resources.getString(R.string.saving_facts)) {
             undoableOp {
-                editorNote!!.notetype.put("tags", tags)
                 notetypes.save(editorNote!!.notetype)
                 addNote(editorNote!!, deckId)
             }
