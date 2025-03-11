@@ -233,7 +233,7 @@
         <com.ichi2.preferences.ReviewerControlPreference
             android:key="@string/toggle_whiteboard_command_key"
             android:title="@string/gesture_toggle_whiteboard"
-            android:icon="@drawable/ic_gesture_white"
+            android:icon="@drawable/ic_enable_whiteboard"
             />
         <com.ichi2.preferences.ReviewerControlPreference
             android:key="@string/clear_whiteboard_command_key"
