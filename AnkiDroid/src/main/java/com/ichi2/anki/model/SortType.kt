@@ -50,7 +50,7 @@ enum class SortType(
     EASE("cardEase", 7),
     REVIEWS("cardReps", 8),
     LAPSES("cardLapses", 9),
-    BY_POSITION("position", 10),
+    POSITION("position", 10),
     ;
 
     fun save(
