@@ -137,7 +137,6 @@ open class Card : Cloneable {
         oDid = card.originalDeckId
         flags = card.flags
         originalPosition = if (card.hasOriginalPosition()) card.originalPosition else null
-        customData = card.customData
         memoryState = if (card.hasMemoryState()) card.memoryState else null
         desiredRetention = if (card.hasDesiredRetention()) card.desiredRetention else null
     }
