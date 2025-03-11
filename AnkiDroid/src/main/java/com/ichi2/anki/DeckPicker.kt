@@ -1334,6 +1334,12 @@ open class DeckPicker :
         }
     }
 
+    /**
+     * Performs a sync if the conditions are met, e.g. user is logged in, there are changes,
+     * and auto sync is enabled.
+     * @param runInBackground whether the sync should be performed in the background or not
+     * @return whether a sync was performed or not.
+     */
     private suspend fun automaticSync(runInBackground: Boolean = false): Boolean {
         /**
          * @return whether there are collection changes to be sync.
