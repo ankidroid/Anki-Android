@@ -49,6 +49,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import anki.notetypes.StockNotetype
@@ -101,6 +102,7 @@ import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.listItems
 import com.ichi2.utils.show
+import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.Translations
 import org.json.JSONArray
 import org.json.JSONException
@@ -764,32 +766,32 @@ open class CardTemplateEditor :
             )
         }
 
-        // TODO: Use withCol {} instead
         fun deleteCardTemplate() {
-            val col = templateEditor.getColUnsafe
-            val tempModel = templateEditor.tempModel
-            val ordinal = templateEditor.viewPager.currentItem
-            val template = tempModel!!.getTemplate(ordinal)
-            // Don't do anything if only one template
-            if (tempModel.templateCount < 2) {
-                templateEditor.showSimpleMessageDialog(resources.getString(R.string.card_template_editor_cant_delete))
-                return
-            }
-
-            if (deletionWouldOrphanNote(col, tempModel, ordinal)) {
-                showOrphanNoteDialog()
-                return
-            }
-
-            // Show confirmation dialog
-            val numAffectedCards =
-                if (!CardTemplateNotetype.isOrdinalPendingAdd(tempModel, ordinal)) {
-                    Timber.d("Ordinal is not a pending add, so we'll get the current card count for confirmation")
-                    col.notetypes.tmplUseCount(tempModel.notetype, ordinal)
-                } else {
-                    0
+            templateEditor.lifecycleScope.launch {
+                val tempModel = templateEditor.tempModel
+                val ordinal = templateEditor.viewPager.currentItem
+                val template = tempModel!!.getTemplate(ordinal)
+                // Don't do anything if only one template
+                if (tempModel.templateCount < 2) {
+                    templateEditor.showSimpleMessageDialog(resources.getString(R.string.card_template_editor_cant_delete))
+                    return@launch
                 }
-            confirmDeleteCards(template, tempModel.notetype, numAffectedCards)
+
+                if (deletionWouldOrphanNote(tempModel, ordinal)) {
+                    showOrphanNoteDialog()
+                    return@launch
+                }
+
+                // Show confirmation dialog
+                val numAffectedCards =
+                    if (!CardTemplateNotetype.isOrdinalPendingAdd(tempModel, ordinal)) {
+                        Timber.d("Ordinal is not a pending add, so we'll get the current card count for confirmation")
+                        withCol { notetypes.tmplUseCount(tempModel.notetype, ordinal) }
+                    } else {
+                        0
+                    }
+                confirmDeleteCards(template, tempModel.notetype, numAffectedCards)
+            }
         }
 
         /* showOrphanNoteDialog shows a AlertDialog if the deletionWouldOrphanNote returns true
@@ -1115,8 +1117,7 @@ open class CardTemplateEditor :
             return requireArguments().getInt(CARD_INDEX)
         }
 
-        private fun deletionWouldOrphanNote(
-            col: Collection,
+        private suspend fun deletionWouldOrphanNote(
             tempModel: CardTemplateNotetype?,
             position: Int,
         ): Boolean {
@@ -1128,8 +1129,8 @@ open class CardTemplateEditor :
             // pending deletes could orphan cards
             if (!CardTemplateNotetype.isOrdinalPendingAdd(tempModel!!, position)) {
                 val currentDeletes = tempModel.getDeleteDbOrds(position)
-                // TODO - this is a SQL query on GUI thread - should see a DeckTask conversion ideally
-                if (col.notetypes.getCardIdsForModel(tempModel.modelId, currentDeletes) == null) {
+                val cardIds = withCol { notetypes.getCardIdsForModel(tempModel.modelId, currentDeletes) }
+                if (cardIds == null) {
                     // It is possible but unlikely that a user has an in-memory template addition that would
                     // generate cards making the deletion safe, but we don't handle that. All users who do
                     // not already have cards generated making it safe will see this error message:
