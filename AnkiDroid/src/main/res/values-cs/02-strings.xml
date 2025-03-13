@@ -195,7 +195,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Pozadí</string>
     <string name="choose_an_image" maxLength="41">Vybrat obrázek</string>
-    <string name="remove_wallpaper_image" maxLength="41"> Remove background</string>
+    <string name="remove_wallpaper_image" maxLength="41"> Odebrat pozadí</string>
     <string name="remove_background_image">Odebrat pozadí?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Obnovit výchozí</string>
@@ -351,14 +351,14 @@
     <!--Keyboard shortcuts dialog-->
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Výběr balíčků</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Editor Paznámek</string>
     <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
-    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Upravit formátování </string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">Akce uživatele %s není v tomto typu poznámky nastavena. Nakonfigurujte ji prosím</string>
