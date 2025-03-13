@@ -52,6 +52,28 @@ class TranslationTypoTest {
     }
 
     @Test
+    fun `plurals - javascript fails`() {
+        val invalidLowerCase = """<resources>
+           <plurals name="pl">
+               <item quantity="other">>javascript</item>
+           </plurals>
+        </resources>"""
+
+        TranslationTypo.ISSUE.assertXmlStringsHasError(invalidLowerCase, "should be 'JavaScript'")
+    }
+
+    @Test
+    fun `string array - javascript fails`() {
+        val invalidLowerCase = """<resources>
+           <string-array name="arr">
+               <item>javascript</item>
+           </string-array>
+        </resources>"""
+
+        TranslationTypo.ISSUE.assertXmlStringsHasError(invalidLowerCase, "should be 'JavaScript'")
+    }
+
+    @Test
     fun `vandalism fails`() {
         val stringRemoved = """<resources>
            <string name="hello"></string>
