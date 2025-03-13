@@ -294,9 +294,7 @@ this formatter is used if the bind only applies to both the question and the ans
     <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
     <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
     <string name="disable_dev_options">Disable developer options</string>
-    <string name="dev_options_warning">
-        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
-    </string>
+    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
 
     <!-- #######################################################################################
          #################################### Backup options ###################################

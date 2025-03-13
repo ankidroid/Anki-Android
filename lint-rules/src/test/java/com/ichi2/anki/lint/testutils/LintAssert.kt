@@ -18,7 +18,9 @@ package com.ichi2.anki.lint.testutils
 
 import com.android.tools.lint.checks.infrastructure.TestFiles
 import com.android.tools.lint.checks.infrastructure.TestLintTask
+import com.android.tools.lint.checks.infrastructure.TestMode
 import com.android.tools.lint.detector.api.Issue
+import com.intellij.util.applyIf
 import org.intellij.lang.annotations.Language
 import org.junit.Assert.assertTrue
 
@@ -60,12 +62,14 @@ fun Issue.assertXmlStringsHasError(
     expectedError: String,
     androidLanguageFolder: String? = null,
     fileName: String? = null,
+    ignoreCData: Boolean = false,
 ) {
     val languageQualifier = if (androidLanguageFolder != null) "-$androidLanguageFolder" else ""
     val resourceFileName = fileName ?: "constants"
     TestLintTask
         .lint()
         .allowMissingSdk()
+        .applyIf(ignoreCData) { skipTestModes(TestMode.CDATA) }
         .allowCompilationErrors()
         .files(TestFiles.xml("res/values$languageQualifier/$resourceFileName.xml", xmlFile))
         .issues(this)
