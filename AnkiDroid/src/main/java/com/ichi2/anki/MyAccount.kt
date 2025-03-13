@@ -35,6 +35,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.pages.RemoveAccountFragment
 import com.ichi2.anki.settings.Prefs
@@ -149,10 +150,21 @@ open class MyAccount : AnkiActivity() {
     }
 
     private fun logout() {
-        launchCatchingTask {
-            syncLogout(baseContext)
-            switchToState(STATE_LOG_IN)
+        val dialog = ConfirmationDialog()
+        dialog.setArgs(
+            title = getString(R.string.dialog_logout_title),
+            message = getString(R.string.dialog_logout_message),
+        )
+        dialog.setConfirm {
+            launchCatchingTask {
+                syncLogout(baseContext)
+                switchToState(STATE_LOG_IN)
+            }
         }
+        dialog.setCancel {
+            // Do nothing
+        }
+        dialog.show(supportFragmentManager, "ConfirmationDialog")
     }
 
     /**
