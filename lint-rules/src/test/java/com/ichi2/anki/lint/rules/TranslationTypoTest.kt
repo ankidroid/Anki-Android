@@ -18,6 +18,7 @@ package com.ichi2.anki.lint.rules
 
 import com.ichi2.anki.lint.testutils.assertXmlStringsHasError
 import com.ichi2.anki.lint.testutils.assertXmlStringsNoIssues
+import org.junit.Ignore
 import org.junit.Test
 
 /**
@@ -86,6 +87,77 @@ class TranslationTypoTest {
     fun `vandalism passes with empty_string key`() {
         val stringRemoved = """<resources>
            <string name="empty_string"></string>
+        </resources>"""
+
+        TranslationTypo.ISSUE.assertXmlStringsNoIssues(stringRemoved)
+    }
+
+    @Test
+    fun `additional spacing before is flagged`() {
+        val stringRemoved = """<resources>
+           <string name="hello"> hello</string>
+        </resources>"""
+
+        TranslationTypo.ISSUE.assertXmlStringsHasError(
+            xmlFile = stringRemoved,
+            expectedError = "should not contain trailing whitespace",
+            ignoreCData = true,
+        )
+    }
+
+    @Test
+    fun `additional spacing after is flagged`() {
+        val stringRemoved = """<resources>
+           <string name="hello">hello </string>
+        </resources>"""
+
+        TranslationTypo.ISSUE.assertXmlStringsHasError(
+            xmlFile = stringRemoved,
+            expectedError = "should not contain trailing whitespace",
+            ignoreCData = true,
+        )
+    }
+
+    @Test
+    fun `cdata with no spaces is not flagged`() {
+        val stringRemoved = """<resources>
+           <string name="export_email_text"><![CDATA[
+                        Hi!
+                        <br/><br/>
+                        This is an Anki flashcards deck sent from AnkiDroid[1].
+                        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+                        [1] %1${"\$s"}<br/>
+                        [2] %2${"\$s"}
+                ]]></string>
+        </resources>"""
+
+        TranslationTypo.ISSUE.assertXmlStringsNoIssues(stringRemoved)
+    }
+
+    @Test
+    @Ignore("The ellipsis is unescaped")
+    @Suppress("UNUSED_EXPRESSION")
+    fun `ellipsis escaping is unchanged`() {
+        """<resources>
+            <string name="empty_filtered_deck">필터링된 덱을 비우는 중&#8230; </string>
+        </resources>"""
+
+        // TODO
+    }
+
+    @Test
+    fun `cdata with spaces is not flagged`() {
+        val stringRemoved = """<resources>
+           <string name="export_email_text">
+                <![CDATA[
+                        Hi!
+                        <br/><br/>
+                        This is an Anki flashcards deck sent from AnkiDroid[1].
+                        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+                        [1] %1${"\$s"}<br/>
+                        [2] %2${"\$s"}
+                ]]>
+            </string>
         </resources>"""
 
         TranslationTypo.ISSUE.assertXmlStringsNoIssues(stringRemoved)
