@@ -187,7 +187,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">ფონი</string>
     <string name="choose_an_image" maxLength="41">სურათის არჩევა</string>
-    <string name="remove_wallpaper_image" maxLength="41"> Remove background</string>
+    <string name="remove_wallpaper_image" maxLength="41">Remove background</string>
     <string name="remove_background_image">გსურთ ფონის წაშლა?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">ნაგულისხმევის აღდგენა</string>

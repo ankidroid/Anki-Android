@@ -186,7 +186,7 @@ Context | Request Context    [1]</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">배경</string>
     <string name="choose_an_image" maxLength="41">이미지 선택</string>
-    <string name="remove_wallpaper_image" maxLength="41"> Remove background</string>
+    <string name="remove_wallpaper_image" maxLength="41">Remove background</string>
     <string name="remove_background_image">배경을 제거하시겠습니까?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">기본값 복원</string>
