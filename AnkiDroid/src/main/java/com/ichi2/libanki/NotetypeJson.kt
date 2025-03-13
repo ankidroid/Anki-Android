@@ -17,12 +17,17 @@
 package com.ichi2.libanki
 
 import androidx.annotation.CheckResult
+import androidx.annotation.VisibleForTesting
+import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_IMAGE_OCCLUSION_VALUE
+import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_UNKNOWN_VALUE
+import com.ichi2.anki.api.AddContentApi.Companion.DEFAULT_DECK_ID
 import com.ichi2.anki.common.utils.ext.toStringList
-import com.ichi2.utils.deepClonedInto
-import org.intellij.lang.annotations.Language
+import com.ichi2.utils.JSONObjectHolder
+import com.ichi2.utils.NamedObject
+import com.ichi2.utils.deepClone
 import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
-import java.util.HashSet
 
 /**
  * Represents a note type, a.k.a. Model.
@@ -32,48 +37,81 @@ import java.util.HashSet
  * `Models.save(this, true)` should be called. However, you should do the change in batch and change only when all are d
  * one, because recomputing the list of card is an expensive operation.
  */
-class NotetypeJson : JSONObject {
-    /**
-     * Creates a new empty model object
-     */
-    constructor() : super()
-
-    /**
-     * Creates a deep copy from [JSONObject].
-     */
-    constructor(json: JSONObject) : super() {
-        json.deepClonedInto(this)
-    }
-
+@JvmInline
+value class NotetypeJson(
+    @VisibleForTesting
+    override val jsonObject: JSONObject,
+) : JSONObjectHolder,
+    NamedObject {
     /**
      * Creates a model object from json string
      */
-    constructor(
-        @Language("json") json: String,
-    ) : super(json)
+    constructor(json: String) : this(JSONObject(json))
 
     @CheckResult
-    fun deepClone(): NotetypeJson {
-        val clone = NotetypeJson()
-        return deepClonedInto(clone)
-    }
+    fun deepClone() = NotetypeJson(jsonObject.deepClone())
 
+    /**
+     * The list of name of fields.
+     */
     val fieldsNames: List<String>
-        get() = flds.map { it.name }
+        get() = fields.map { it.name }
 
-    fun getField(pos: Int): Field = flds[pos]
+    fun getField(pos: Int): Field = fields[pos]
 
     /**
      * @return model did or default deck id (1) if null
      */
-    val did: DeckId
-        get() = if (isNull("did")) 1L else getLong("did")
+    var did: DeckId
+        get() = if (jsonObject.isNull("did")) DEFAULT_DECK_ID else jsonObject.optLong("did", Consts.DEFAULT_DECK_ID)
+        set(value) {
+            jsonObject.put("did", value)
+        }
+
+    /**
+     * The list of name of the template of this note type.
+     * For cloze deletion type, there is a single name, called "cloze" (localized at time of note type creation).
+     */
     val templatesNames: List<String>
-        get() = getJSONArray("tmpls").toStringList("name")
+        get() = jsonObject.getJSONArray("tmpls").toStringList("name")
+
     val isStd: Boolean
         get() = type == NoteTypeKind.Std
+
     val isCloze: Boolean
         get() = type == NoteTypeKind.Cloze
+
+    /**
+     * The css in common of all card types of this note type.
+     */
+    var css: String
+        get() = jsonObject.getString("css")
+        set(value) {
+            jsonObject.put("css", value)
+        }
+
+    /**
+     * The preamble for the LaTeX code used in this note type.
+     * In AnkiDroid, this can only be used by the CardContentProvider.
+     * This is voluntarily not accessible in normal AnkiDroid usage because,
+     * after each change of this value all LaTeX content must be recompiled,
+     * which requires a desktop with LaTeX installed.
+     */
+    var latexPre: String
+        get() = jsonObject.getString("latexPre")
+        set(value) {
+            jsonObject.put("latexPre", value)
+        }
+
+    /**
+     * The trailer of the LaTeX code used in this note type.
+     * @see latexPre to understand context.
+     */
+    var latexPost: String
+        get() = jsonObject.getString("latexPost")
+        set(value) {
+            jsonObject.put("latexPost", value)
+        }
 
     /**
      * @param sfld Fields of a note of this note type
@@ -93,47 +131,119 @@ class NotetypeJson : JSONObject {
      * Update the dictionary with the provided key/value pairs, overwriting existing keys
      */
     fun update(updateFrom: NotetypeJson) {
-        for (k in updateFrom.keys()) {
-            put(k, updateFrom[k])
+        for (k in updateFrom.jsonObject.keys()) {
+            jsonObject.put(k, updateFrom.jsonObject[k])
         }
     }
 
-    var flds: Fields
-        get() = Fields(getJSONArray("flds"))
+    /**
+     * The array of fields of this note type.
+     */
+    var fields: Fields
+        get() = Fields(jsonObject.getJSONArray("flds"))
         set(value) {
-            put("flds", value.jsonArray)
+            jsonObject.put("flds", value.jsonArray)
         }
 
-    var tmpls: CardTemplates
-        get() = CardTemplates(getJSONArray("tmpls"))
+    /**
+     * The array of card templates of this note type.
+     * For cloze deletion type, the array contain a single element that is the only cloze template of the note type.
+     */
+    var templates: CardTemplates
+        get() = CardTemplates(jsonObject.getJSONArray("tmpls"))
         set(value) {
-            put("tmpls", value.jsonArray)
+            jsonObject.put("tmpls", value.jsonArray)
         }
 
+    /**
+     * A unique identifier for this note type.
+     * The timestamp of the deck creation in millisecond.
+     * It's unique in the collection and with high probability unique everywhere.
+     * That is, if you import cards using a note type with the same id, it's almost certainly
+     * originally the same note type, even if potentially modified since.
+     */
     var id: NoteTypeId
-        get() = getLong("id")
+        get() = jsonObject.getLong("id")
         set(value) {
-            put("id", value)
+            jsonObject.put("id", value)
         }
 
-    var name: String
-        get() = getString("name")
+    /**
+     * The name of the note type.
+     */
+    override var name: String
+        get() = jsonObject.getString("name")
         set(value) {
-            put("name", value)
+            jsonObject.put("name", value)
         }
 
-    /** Integer specifying which field is used for sorting in the browser */
+    /**
+     * One of [anki.notetypes.StockNotetype.OriginalStockKind].
+     * Represents the note type that was modified to create the current note type.
+     * Can be unset if the note type was created by a version of anki where this value was
+     * not recorded.
+     * Can be used to check whether a note type is a image occlusion, or
+     * to reset the note type to its default value.
+     */
+    val originalStockKind: Int
+        get() = jsonObject.optInt("originalStockKind", ORIGINAL_STOCK_KIND_UNKNOWN_VALUE)
+
+    val isImageOcclusion: Boolean
+        get() =
+            try {
+                originalStockKind == ORIGINAL_STOCK_KIND_IMAGE_OCCLUSION_VALUE
+            } catch (_: JSONException) {
+                false
+            }
+
+    /**
+     * In the card browser, the field noted as "sort field" is the [sortf]-th field. 0-based. */
     var sortf: Int
-        get() = getInt("sortf")
+        get() = jsonObject.getInt("sortf")
         set(value) {
-            put("sortf", value)
+            jsonObject.put("sortf", value)
         }
 
+    /**
+     * The type of the note type. Can be normal, cloze, or unknown.
+     */
     var type: NoteTypeKind
-        get() = NoteTypeKind.fromCode(getInt("type"))
+        get() = NoteTypeKind.fromCode(jsonObject.getInt("type"))
         set(value) {
-            put("type", value.code)
+            jsonObject.put("type", value.code)
         }
+
+    /**
+     * Timestamp of the last time the note type was modified.
+     * sed to decide whether syncing the note type is needed and
+     * to resolve conflict when the note type was modified locally and remotely.
+     */
+    var mod: Long
+        get() = jsonObject.getLong("mod")
+        set(value) {
+            jsonObject.put("mod", value)
+        }
+
+    /**
+     * -1 if the note type was modified locally since last sync.
+     * Otherwise the "usn" value provided by the remote server.
+     * Used to know whether this value need to be synced.
+     */
+    var usn: Int
+        get() = jsonObject.getInt("usn")
+        set(value) {
+            jsonObject.put("usn", value)
+        }
+
+    /**
+     * Whether latex must be generated as SVG. If false, it's first generated as PDF.
+     * This is used to compute the name of the image that represents a LaTeX expression
+     * used in a note in this note type.
+     * It can't be edited in AnkiDroid because that would require recompiling all LaTeX values
+     * which can only be done on a computer with LaTeX installed.
+     */
+    val latexsvg: Boolean
+        get() = jsonObject.optBoolean("latexsvg", false)
 
     /**
      * Defines the requirements for generating cards (for [standard note types][Consts.MODEL_STD])
@@ -170,8 +280,10 @@ class NotetypeJson : JSONObject {
             "https://forums.ankiweb.net/t/is-req-still-used-or-present/9977",
     )
     var req: JSONArray
-        get() = getJSONArray("req")
+        get() = jsonObject.getJSONArray("req")
         set(value) {
-            put("req", value)
+            jsonObject.put("req", value)
         }
+
+    override fun toString(): String = jsonObject.toString()
 }

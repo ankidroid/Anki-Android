@@ -41,7 +41,7 @@ class NotetypeTest : JvmTest() {
     fun test_frontSide_field() {
         // #8951 - Anki Special-cases {{FrontSide}} on the front to return empty string
         val noteType = col.notetypes.current()
-        noteType.tmpls[0].qfmt = "{{Front}}{{FrontSide}}"
+        noteType.templates[0].qfmt = "{{Front}}{{FrontSide}}"
         col.notetypes.save(noteType)
         val note = col.newNote()
         note.setItem("Front", "helloworld")
@@ -68,7 +68,7 @@ class NotetypeTest : JvmTest() {
         // Add a field called FrontSide and FrontSide2 (to ensure that fields are added correctly)
         col.notetypes.addFieldModChanged(noteType, col.notetypes.newField("FrontSide"))
         col.notetypes.addFieldModChanged(noteType, col.notetypes.newField("FrontSide2"))
-        noteType.tmpls[0].qfmt = "{{Front}}{{FrontSide}}{{FrontSide2}}"
+        noteType.templates[0].qfmt = "{{Front}}{{FrontSide}}{{FrontSide2}}"
         col.notetypes.save(noteType)
 
         val note = col.newNote()
@@ -104,13 +104,13 @@ class NotetypeTest : JvmTest() {
     fun test_modelCopy() {
         val noteType = col.notetypes.current()
         val noteType2 = col.notetypes.copy(noteType)
-        assertEquals("Basic copy", noteType2.getString("name"))
-        assertNotEquals(noteType2.getLong("id"), noteType.getLong("id"))
-        assertEquals(2, noteType2.flds.length())
-        assertEquals(2, noteType.flds.length())
-        assertEquals(noteType.flds.length(), noteType2.flds.length())
-        assertEquals(1, noteType.tmpls.length())
-        assertEquals(1, noteType2.tmpls.length())
+        assertEquals("Basic copy", noteType2.name)
+        assertNotEquals(noteType2.id, noteType.id)
+        assertEquals(2, noteType2.fields.length())
+        assertEquals(2, noteType.fields.length())
+        assertEquals(noteType.fields.length(), noteType2.fields.length())
+        assertEquals(1, noteType.templates.length())
+        assertEquals(1, noteType2.templates.length())
         assertEquals(col.notetypes.scmhash(noteType), col.notetypes.scmhash(noteType2))
     }
 
@@ -123,8 +123,8 @@ class NotetypeTest : JvmTest() {
         col.addNote(note)
         val noteType = col.notetypes.current()
         // make sure renaming a field updates the templates
-        col.notetypes.renameFieldLegacy(noteType, noteType.flds[0], "NewFront")
-        assertThat(noteType.tmpls[0].qfmt, containsString("{{NewFront}}"))
+        col.notetypes.renameFieldLegacy(noteType, noteType.fields[0], "NewFront")
+        assertThat(noteType.templates[0].qfmt, containsString("{{NewFront}}"))
         val h = col.notetypes.scmhash(noteType)
         // add a field
         var field: Field? = col.notetypes.newField("foo")
@@ -140,11 +140,11 @@ class NotetypeTest : JvmTest() {
         )
         assertNotEquals(h, col.notetypes.scmhash(noteType))
         // rename it
-        field = noteType.flds[2]
+        field = noteType.fields[2]
         col.notetypes.renameFieldLegacy(noteType, field, "bar")
         assertEquals("", col.getNote(col.notetypes.nids(noteType)[0]).getItem("bar"))
         // delete back
-        col.notetypes.remFieldLegacy(noteType, noteType.flds[1])
+        col.notetypes.remFieldLegacy(noteType, noteType.fields[1])
         assertEquals(
             listOf("1", ""),
             col
@@ -155,7 +155,7 @@ class NotetypeTest : JvmTest() {
                 ).fields,
         )
         // move 0 -> 1
-        col.notetypes.moveFieldLegacy(noteType, noteType.flds[0], 1)
+        col.notetypes.moveFieldLegacy(noteType, noteType.fields[0], 1)
         assertEquals(
             listOf("", "1"),
             col
@@ -166,7 +166,7 @@ class NotetypeTest : JvmTest() {
                 ).fields,
         )
         // move 1 -> 0
-        col.notetypes.moveFieldLegacy(noteType, noteType.flds[1], 0)
+        col.notetypes.moveFieldLegacy(noteType, noteType.fields[1], 0)
         assertEquals(
             listOf("1", ""),
             col
@@ -192,7 +192,7 @@ class NotetypeTest : JvmTest() {
                 ).fields,
         )
         // move 2 -> 1
-        col.notetypes.moveFieldLegacy(noteType, noteType.flds[2], 1)
+        col.notetypes.moveFieldLegacy(noteType, noteType.fields[2], 1)
         assertEquals(
             listOf("1", "2", ""),
             col
@@ -203,7 +203,7 @@ class NotetypeTest : JvmTest() {
                 ).fields,
         )
         // move 0 -> 2
-        col.notetypes.moveFieldLegacy(noteType, noteType.flds[0], 2)
+        col.notetypes.moveFieldLegacy(noteType, noteType.fields[0], 2)
         assertEquals(
             listOf("2", "", "1"),
             col
@@ -214,7 +214,7 @@ class NotetypeTest : JvmTest() {
                 ).fields,
         )
         // move 0 -> 1
-        col.notetypes.moveFieldLegacy(noteType, noteType.flds[0], 1)
+        col.notetypes.moveFieldLegacy(noteType, noteType.fields[0], 1)
         assertEquals(
             listOf("", "2", "1"),
             col
@@ -256,7 +256,7 @@ class NotetypeTest : JvmTest() {
         assertEquals(1, c.ord)
         assertEquals(0, c2.ord)
         // removing a template should delete its cards
-        col.notetypes.remTemplate(noteType, noteType.tmpls[0])
+        col.notetypes.remTemplate(noteType, noteType.templates[0])
         assertEquals(1, col.cardCount())
         // and should have updated the other cards' ordinals
         c = note.cards()[0]
@@ -268,7 +268,7 @@ class NotetypeTest : JvmTest() {
                 qfmt = "{{Front}}1"
             }
         col.notetypes.addTemplateModChanged(noteType, t)
-        col.notetypes.remTemplate(noteType, noteType.tmpls[0])
+        col.notetypes.remTemplate(noteType, noteType.templates[0])
         assertEquals(
             0,
             col.db.queryLongScalar(
@@ -291,7 +291,7 @@ class NotetypeTest : JvmTest() {
             }
         col.notetypes.addTemplateModChanged(noteType, t)
         col.notetypes.save(noteType)
-        col.notetypes.remTemplate(noteType, noteType.tmpls[0])
+        col.notetypes.remTemplate(noteType, noteType.templates[0])
 
         val note = col.newNote()
         note.setItem("Text", "{{c1::firstQ::firstA}}{{c2::secondQ::secondA}}")
@@ -310,7 +310,7 @@ class NotetypeTest : JvmTest() {
     fun test_text() {
         val noteType =
             col.notetypes.current().apply {
-                tmpls[0].qfmt = "{{text:Front}}"
+                templates[0].qfmt = "{{text:Front}}"
             }
         col.notetypes.save(noteType)
         val note = col.newNote()
@@ -327,7 +327,7 @@ class NotetypeTest : JvmTest() {
         }
         col.notetypes.setCurrent(col.notetypes.byName("Cloze")!!)
         var note = col.newNote()
-        assertEquals("Cloze", note.notetype.getString("name"))
+        assertEquals("Cloze", note.notetype.name)
         // a cloze model with no clozes is not empty
         note.setItem("Text", "nothing")
         assertEquals(1, col.addNote(note))
@@ -374,7 +374,7 @@ class NotetypeTest : JvmTest() {
     fun test_type_and_cloze() {
         val noteType = col.notetypes.byName("Cloze")
         col.notetypes.setCurrent(noteType!!)
-        noteType.tmpls[0].qfmt = "{{cloze:Text}}{{type:cloze:Text}}"
+        noteType.templates[0].qfmt = "{{cloze:Text}}{{type:cloze:Text}}"
         col.notetypes.save(noteType)
         val note = col.newNote()
         note.setItem("Text", "hello {{c1::world}}")
@@ -400,7 +400,7 @@ class NotetypeTest : JvmTest() {
             }
         col.notetypes.addTemplateModChanged(noteType, t)
         col.notetypes.save(noteType)
-        col.notetypes.remTemplate(noteType, noteType.tmpls[0])
+        col.notetypes.remTemplate(noteType, noteType.templates[0])
         val note = col.newNote()
         val q1 = "<span style=\"color:red\">phrase</span>"
         val a1 = "<b>sentence</b>"
@@ -496,7 +496,7 @@ class NotetypeTest : JvmTest() {
         assertEquals("f2", note.getItem("Text"))
         assertEquals(2, note.numberOfCards())
         // back the other way, with deletion of second ord
-        col.notetypes.remTemplate(basic, basic.tmpls[1])
+        col.notetypes.remTemplate(basic, basic.templates[1])
         assertEquals(
             2,
             col.db.queryScalar("select count() from cards where nid = ?", note.id),
@@ -533,13 +533,13 @@ class NotetypeTest : JvmTest() {
     @Test
     fun getDid_test() {
         val basic = col.notetypes.byName("Basic")
-        basic!!.put("did", 999L)
+        basic!!.did = 999L
 
         val expected = 999L
         assertEquals("getDid() should return the model did", expected, basic.did)
 
         // Check if returns default deck id (1) when did is null
-        basic.put("did", null as Int?)
+        basic.jsonObject.put("did", null as Int?)
         val expected2 = 1L
         assertEquals(
             "getDid() should return 1 (default deck id) if model did is null",

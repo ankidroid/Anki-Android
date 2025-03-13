@@ -65,7 +65,15 @@ class ModelFieldEditor : AnkiActivity() {
     private var currentPos = 0
     private lateinit var fieldsListView: ListView
     private var fieldNameInput: EditText? = null
-    private lateinit var notetype: NotetypeJson
+
+    // Backing field for [notetype]. Not with _ because it's only allowed for public field.
+    private var notetypeBackup: NotetypeJson? = null
+    private var notetype: NotetypeJson
+        get() = notetypeBackup!!
+        set(value) {
+            notetypeBackup = value
+        }
+
     private lateinit var fieldsLabels: List<String>
 
     // WARN: this should be lateinit, but this can't yet be done on an inline class
@@ -139,7 +147,7 @@ class ModelFieldEditor : AnkiActivity() {
             return
         }
         notetype = collectionModel
-        noteFields = notetype.flds
+        noteFields = notetype.fields
         fieldsLabels = notetype.fieldsNames
         fieldsListView.adapter = ArrayAdapter(this, R.layout.model_field_editor_list_item, fieldsLabels)
         fieldsListView.onItemClickListener =

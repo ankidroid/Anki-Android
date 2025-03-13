@@ -56,7 +56,7 @@ object NoteService {
     fun createEmptyNote(model: NotetypeJson): MultimediaEditableNote {
         val note = MultimediaEditableNote()
         try {
-            val fieldsArray = model.flds
+            val fieldsArray = model.fields
             note.setNumFields(fieldsArray.length())
             for ((i, field) in fieldsArray.withIndex()) {
                 val uiTextField =
@@ -66,7 +66,7 @@ object NoteService {
                     }
                 note.setField(i, uiTextField)
             }
-            note.noteTypeId = model.getLong("id")
+            note.noteTypeId = model.id
         } catch (e: JSONException) {
             Timber.w(e, "Error parsing model: %s", model)
             // Return note with default/empty fields

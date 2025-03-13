@@ -127,11 +127,6 @@ class InstantEditorViewModel :
         }
     }
 
-    /** Update the deck id when changed from deck spinner **/
-    fun setDeckId(deckId: DeckId) {
-        this.deckId = deckId
-    }
-
     /**
      * Checks the note fields and calls [saveNote] if all fields are valid.
      * If [skipClozeCheck] is set to true, the cloze field check is skipped.
@@ -160,7 +155,7 @@ class InstantEditorViewModel :
      */
     private suspend fun saveNote(): SaveNoteResult {
         return try {
-            editorNote.notetype.put("did", deckId)
+            editorNote.notetype.did = deckId!!
 
             val note = editorNote
             val deckId = deckId ?: return SaveNoteResult.Failure()

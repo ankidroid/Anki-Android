@@ -1686,10 +1686,10 @@ open class DeckPicker :
                 try {
                     val notetypes = getColUnsafe.notetypes
                     for (noteType in notetypes.all()) {
-                        val css = noteType.getString("css")
+                        val css = noteType.css
                         @Suppress("SpellCheckingInspection")
                         if (css.contains("font-familiy")) {
-                            noteType.put("css", css.replace("font-familiy", "font-family"))
+                            noteType.css = css.replace("font-familiy", "font-family")
                             notetypes.save(noteType)
                         }
                     }

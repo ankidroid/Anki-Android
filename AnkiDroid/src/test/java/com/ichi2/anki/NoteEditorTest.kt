@@ -38,7 +38,6 @@ import com.ichi2.anki.NoteEditorTest.FromScreen.REVIEWER
 import com.ichi2.anki.api.AddContentApi.Companion.DEFAULT_DECK_ID
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
-import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.annotations.DuplicatedCode
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
@@ -240,7 +239,7 @@ class NoteEditorTest : RobolectricTest() {
         val currentDid = addDeck("Basic::Test")
         col.config.set(CURRENT_DECK, currentDid)
         val n = super.addBasicNote("Test", "Note")
-        n.notetype.put("did", currentDid)
+        n.notetype.did = currentDid
         val editor = getNoteEditorEditingExistingBasicNote("Test", "Note", DECK_LIST)
         col.config.set(CURRENT_DECK, Consts.DEFAULT_DECK_ID) // Change DID if going through default path
         val copyNoteBundle = getCopyNoteIntent(editor)
@@ -261,7 +260,7 @@ class NoteEditorTest : RobolectricTest() {
             val basic = makeNoteForType(NoteType.BASIC)
 
             // Enable sticky "Front" field
-            basic!!.flds[0].sticky = true
+            basic!!.fields[0].sticky = true
             val initFirstField = "Hello"
             val initSecondField = "unused"
             val newFirstField = "Hello" + FieldEditText.NEW_LINE + "World" // /r/n on Windows under Robolectric
@@ -350,7 +349,7 @@ class NoteEditorTest : RobolectricTest() {
     @Test
     fun pasteHtmlAsPlainTextTest() {
         val editor = getNoteEditorAddingNote(DECK_LIST)
-        editor.setCurrentlySelectedNoteType(col.notetypes.byName("Basic")!!.getLong("id"))
+        editor.setCurrentlySelectedNoteType(col.notetypes.byName("Basic")!!.id)
         val field = editor.getFieldForTest(0)
         field.clipboard!!.setPrimaryClip(ClipData.newHtmlText("text", "text", """<span style="color: red">text</span>"""))
         assertTrue(field.clipboard!!.hasPrimaryClip())

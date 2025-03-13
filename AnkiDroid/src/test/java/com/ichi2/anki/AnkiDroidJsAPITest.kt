@@ -42,7 +42,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         runTest {
             val didA = addDeck("Test", setAsSelected = true)
             val basic = col.notetypes.byName(BASIC_MODEL_NAME)
-            basic!!.put("did", didA)
+            basic!!.did = didA
             addBasicNote("foo", "bar")
 
             val reviewer: Reviewer = startReviewer()
@@ -75,7 +75,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         runTest {
             val didA = addDeck("Test", setAsSelected = true)
             val basic = col.notetypes.byName(BASIC_MODEL_NAME)
-            basic!!.put("did", didA)
+            basic!!.did = didA
             addBasicNote("foo", "bar")
 
             val reviewer: Reviewer = startReviewer()
@@ -185,7 +185,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         runTest {
             val didA = addDeck("Test", setAsSelected = true)
             val basic = col.notetypes.byName(BASIC_MODEL_NAME)
-            basic!!.put("did", didA)
+            basic!!.did = didA
             addBasicNote("foo", "bar")
 
             val reviewer: Reviewer = startReviewer()
@@ -227,7 +227,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             // js api test for marking and flagging card
             val didA = addDeck("Test", setAsSelected = true)
             val basic = col.notetypes.byName(BASIC_MODEL_NAME)
-            basic!!.put("did", didA)
+            basic!!.did = didA
             addBasicNote("foo", "bar")
 
             val reviewer: Reviewer = startReviewer()
@@ -287,7 +287,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             // in scheduling the count will be less than previous scheduling
             val didA = addDeck("Test", setAsSelected = true)
             val basic = col.notetypes.byName(BASIC_MODEL_NAME)
-            basic!!.put("did", didA)
+            basic!!.did = didA
             addBasicNote("foo", "bar")
             addBasicNote("baz", "bak")
             addBasicNote("Anki", "Droid")
@@ -355,7 +355,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             TimeManager.reset()
             val didA = addDeck("Test", setAsSelected = true)
             val basic = col.notetypes.byName(BASIC_MODEL_NAME)
-            basic!!.put("did", didA)
+            basic!!.did = didA
             addBasicNote("foo", "bar")
             addBasicNote("baz", "bak")
 

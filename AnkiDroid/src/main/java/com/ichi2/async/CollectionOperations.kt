@@ -45,12 +45,12 @@ fun saveNoteType(
     templateChanges: ArrayList<Array<Any>>,
 ) {
     Timber.d("saveNoteType")
-    val oldNoteType = col.notetypes.get(notetype.getLong("id"))
+    val oldNoteType = col.notetypes.get(notetype.id)
 
     // TODO: make undoable
-    val newTemplates = notetype.tmpls
+    val newTemplates = notetype.templates
     for (change in templateChanges) {
-        val oldTemplates = oldNoteType!!.tmpls
+        val oldTemplates = oldNoteType!!.templates
         when (change[1] as CardTemplateNotetype.ChangeType) {
             CardTemplateNotetype.ChangeType.ADD -> {
                 Timber.d("saveNoteType() adding template %s", change[0])
@@ -65,7 +65,7 @@ fun saveNoteType(
 
     // required for Rust: the modified time can't go backwards, and we updated the note type by adding fields
     // This could be done better
-    notetype.put("mod", oldNoteType!!.getLong("mod"))
+    notetype.mod = oldNoteType!!.mod
     col.notetypes.save(notetype)
     col.notetypes.update(notetype)
 }

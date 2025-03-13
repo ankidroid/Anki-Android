@@ -265,7 +265,7 @@ interface TestClass {
         val newNotetype =
             targetNotetype.deepClone().apply {
                 id = 0
-                set("name", "$name+")
+                name = "$name+"
             }
         col.notetypes.add(newNotetype)
         return col.notetypes.byName("$name+")!!

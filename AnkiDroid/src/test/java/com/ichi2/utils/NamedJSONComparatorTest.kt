@@ -21,27 +21,26 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
-import org.json.JSONObject
 import org.junit.Test
 import org.junit.runner.RunWith
+
+class JSONNamedObject(
+    override val name: String,
+) : NamedObject
 
 @RunWith(AndroidJUnit4::class)
 class NamedJSONComparatorTest {
     @Test
     fun checkIfReturnsCorrectValueForSameNames() {
-        val firstObject = JSONObject()
-        firstObject.put("name", "TestName")
-        val secondObject = JSONObject()
-        secondObject.put("name", "TestName")
+        val firstObject = JSONNamedObject("TestName")
+        val secondObject = JSONNamedObject("TestName")
         MatcherAssert.assertThat(NamedJSONComparator.INSTANCE.compare(firstObject, secondObject), CoreMatchers.equalTo(0))
     }
 
     @Test
     fun checkIfReturnsCorrectValueForDifferentNames() {
-        val firstObject = JSONObject()
-        firstObject.put("name", "TestName1")
-        val secondObject = JSONObject()
-        secondObject.put("name", "TestName2")
+        val firstObject = JSONNamedObject("TestName1")
+        val secondObject = JSONNamedObject("TestName2")
         MatcherAssert.assertThat(NamedJSONComparator.INSTANCE.compare(firstObject, secondObject), Matchers.lessThan(0))
     }
 }

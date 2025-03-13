@@ -16,15 +16,17 @@
 
 package com.ichi2.utils
 
-import org.json.JSONObject
+interface NamedObject {
+    val name: String
+}
 
-class NamedJSONComparator : Comparator<JSONObject> {
+class NamedJSONComparator : Comparator<NamedObject> {
     override fun compare(
-        lhs: JSONObject,
-        rhs: JSONObject,
+        lhs: NamedObject,
+        rhs: NamedObject,
     ): Int {
-        val o1 = lhs.getString("name")
-        val o2 = rhs.getString("name")
+        val o1 = lhs.name
+        val o2 = rhs.name
         return o1.compareTo(o2, ignoreCase = true)
     }
 
