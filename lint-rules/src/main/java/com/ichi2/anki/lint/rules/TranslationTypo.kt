@@ -97,8 +97,8 @@ class TranslationTypo :
             return
         }
 
-        // Only check <string> or <plurals><item>, not the container
-        if ("resources" == element.tagName) {
+        // Ignore container tags: visitElement already handles visiting sub-tags (<item>/<string>)
+        if (element.tagName in listOf("resources", "plurals", "string-array")) {
             return
         }
 
