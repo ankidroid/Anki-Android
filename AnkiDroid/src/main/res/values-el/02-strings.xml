@@ -187,7 +187,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Φόντο</string>
     <string name="choose_an_image" maxLength="41">Επιλέξτε εικόνα</string>
-    <string name="remove_wallpaper_image" maxLength="41"> Remove background</string>
+    <string name="remove_wallpaper_image" maxLength="41">Remove background</string>
     <string name="remove_background_image">Αφαίρεση ταπετσαρίας;</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Επαναφορά προεπιλογής</string>

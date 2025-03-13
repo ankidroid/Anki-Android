@@ -187,7 +187,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">पार्श्वभूमी</string>
     <string name="choose_an_image" maxLength="41">प्रतिमा निवडा</string>
-    <string name="remove_wallpaper_image" maxLength="41"> Remove background</string>
+    <string name="remove_wallpaper_image" maxLength="41">Remove background</string>
     <string name="remove_background_image">पार्श्वभूमी काढायची?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">डीफॉल्ट पुनर्संचयित करा</string>

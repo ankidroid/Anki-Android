@@ -187,7 +187,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Background</string>
     <string name="choose_an_image" maxLength="41">ഒരു ചിത്രം തിരഞ്ഞെടുക്കുക</string>
-    <string name="remove_wallpaper_image" maxLength="41"> Remove background</string>
+    <string name="remove_wallpaper_image" maxLength="41">Remove background</string>
     <string name="remove_background_image">പശ്ചാത്തലം നീക്കം ചെയ്യണോ?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">നേരത്തെയുള്ളത് പുനസ്ഥാപിക്കുക</string>

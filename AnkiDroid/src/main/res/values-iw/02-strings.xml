@@ -195,7 +195,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">רקע</string>
     <string name="choose_an_image" maxLength="41">נא לבחור תמונה</string>
-    <string name="remove_wallpaper_image" maxLength="41"> Remove background</string>
+    <string name="remove_wallpaper_image" maxLength="41">Remove background</string>
     <string name="remove_background_image">להסיר רקע?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">שחזור בררת המחדל</string>
