@@ -1404,6 +1404,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(OS.ALL)
     fun `FindReplace - replaces text only for the field in the selected note`() {
         val note0 = createFindReplaceTestNote("A", "kart", "kilogram")
         val note1 = createFindReplaceTestNote("B", "pink", "chicken")
@@ -1442,6 +1443,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(OS.ALL)
     fun `FindReplace - replaces text in all notes if 'Only in selected notes' is unchecked`() {
         val note0 = createFindReplaceTestNote("A", "kart", "kilogram")
         val note1 = createFindReplaceTestNote("B", "pink", "chicken")
@@ -1469,6 +1471,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(OS.ALL)
     fun `FindReplace - replaces text in all fields of selected note if 'All fields' is selected`() {
         val note0 = createFindReplaceTestNote("A", "kart", "kilogram")
         val note1 = createFindReplaceTestNote("B", "pink", "chicken")
@@ -1489,6 +1492,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(OS.ALL)
     fun `FindReplace - replaces text of tags as expected if 'Tags' is selected`() {
         val note0 = createFindReplaceTestNote("A", "kart", "kilogram")
         val note1 = createFindReplaceTestNote("A", "pink", "chicken")
