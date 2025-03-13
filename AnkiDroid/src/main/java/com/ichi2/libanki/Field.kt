@@ -23,7 +23,7 @@ import org.json.JSONObject
 
 /**
  * A [note type][NotetypeJson] contains 1 to many named fields which define what a user can enter.
- * Fields are combined with [card templates][NotetypeJson.tmpls], to allow the note to generate
+ * Fields are combined with [card templates][NotetypeJson.templates], to allow the note to generate
  * multiple cards
  *
  * Basic field substitution syntax looks like: `{{Front}}`, where `Front` is defined by [name].

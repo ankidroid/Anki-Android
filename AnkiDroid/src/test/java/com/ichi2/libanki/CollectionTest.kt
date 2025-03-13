@@ -193,7 +193,7 @@ class CollectionTest : JvmTest() {
     fun test_furigana() {
         val noteType = col.notetypes.current()
         // filter should work
-        noteType.tmpls[0].qfmt = "{{kana:Front}}"
+        noteType.templates[0].qfmt = "{{kana:Front}}"
         col.notetypes.save(noteType)
         val n = col.newNote()
         n.setItem("Front", "foo[abc]")
@@ -206,7 +206,7 @@ class CollectionTest : JvmTest() {
         val question = c.question(true)
         assertThat("Question «$question» does not contains «anki:play».", question, Matchers.containsString("anki:play"))
         // it shouldn't throw an error while people are editing
-        noteType.tmpls[0].qfmt = "{{kana:}}"
+        noteType.templates[0].qfmt = "{{kana:}}"
         col.notetypes.save(noteType)
         c.question(true)
     }

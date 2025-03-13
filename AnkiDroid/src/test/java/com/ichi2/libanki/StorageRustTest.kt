@@ -29,7 +29,7 @@ class StorageRustTest : JvmTest() {
     @Test
     @Config(qualifiers = "en")
     fun testModelCount() {
-        val modelNames = col.notetypes.all().map { x -> x.getString("name") }
+        val modelNames = col.notetypes.all().map { x -> x.name }
         MatcherAssert.assertThat(
             modelNames,
             Matchers.containsInAnyOrder(

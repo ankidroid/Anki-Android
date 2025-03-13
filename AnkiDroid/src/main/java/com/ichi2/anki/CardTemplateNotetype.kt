@@ -64,27 +64,26 @@ class CardTemplateNotetype(
 
     fun getTemplate(ord: Int): CardTemplate {
         Timber.d("getTemplate() on ordinal %s", ord)
-        return notetype.tmpls[ord]
+        return notetype.templates[ord]
     }
 
     val templateCount: Int
-        get() = notetype.tmpls.length()
+        get() = notetype.templates.length()
 
     val noteTypeId: NoteTypeId
-        get() = notetype.getLong("id")
+        get() = notetype.id
 
-    fun updateCss(css: String?) {
-        notetype.put("css", css)
-    }
-
-    val css: String
-        get() = notetype.getString("css")
+    var css: String
+        get() = notetype.css
+        set(value) {
+            notetype.css = value
+        }
 
     fun updateTemplate(
         ordinal: Int,
         template: CardTemplate,
     ) {
-        notetype.tmpls[ordinal] = template
+        notetype.templates[ordinal] = template
     }
 
     fun addNewTemplate(newTemplate: CardTemplate) {

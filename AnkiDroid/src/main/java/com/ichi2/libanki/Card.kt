@@ -213,7 +213,7 @@ open class Card : Cloneable {
     @LibAnkiAlias("template")
     fun template(col: Collection): CardTemplate {
         val notetype = noteType(col)
-        val templates = notetype.tmpls
+        val templates = notetype.templates
         return if (notetype.isStd) {
             templates[ord]
         } else {

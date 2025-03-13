@@ -19,21 +19,23 @@ package com.ichi2.utils
 
 import anki.notetypes.StockNotetype
 import com.ichi2.anki.utils.ext.getAllClozeTextFields
-import com.ichi2.anki.utils.ext.templates
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.addNotetypeLegacy
 import com.ichi2.libanki.backend.BackendUtils
-import com.ichi2.libanki.getStockNotetypeLegacy
+import com.ichi2.libanki.getStockNotetype
 import com.ichi2.libanki.utils.set
 import junit.framework.TestCase.assertEquals
+import org.json.JSONObject
 import kotlin.test.Test
 
 // link to a method in `NoteType.kt` for navigation as it contains no classes
 
 /** Test of [NoteType][templates] */
 class NoteTypeTest {
-    private val noteType = """
+    private val noteType =
+        JSONObject(
+            """
         {
           "type":1,
           "tmpls":[
@@ -51,7 +53,8 @@ class NoteTypeTest {
               }
            ]
         }
-    """
+    """,
+        )
 
     @Test
     fun testQfmtField() {
@@ -104,10 +107,7 @@ const val BASIC_MODEL_NAME = "Basic"
  */
 fun Collection.createBasicModel(name: String = BASIC_MODEL_NAME): NotetypeJson {
     val noteType =
-        BackendUtils
-            .fromJsonBytes(
-                getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC),
-            ).apply { set("name", name) }
+        getStockNotetype(StockNotetype.Kind.KIND_BASIC).apply { this.name = name }
     addNotetypeLegacy(BackendUtils.toJsonBytes(noteType))
     return notetypes.byName(name)!!
 }
@@ -119,7 +119,7 @@ fun Collection.createBasicModel(name: String = BASIC_MODEL_NAME): NotetypeJson {
  */
 fun Collection.createBasicTypingModel(name: String): NotetypeJson {
     val noteType = createBasicModel(name)
-    noteType.tmpls[0].apply {
+    noteType.templates[0].apply {
         qfmt = "{{Front}}\n\n{{type:Back}}"
         afmt = "{{Front}}\n\n<hr id=answer>\n\n{{type:Back}}"
     }

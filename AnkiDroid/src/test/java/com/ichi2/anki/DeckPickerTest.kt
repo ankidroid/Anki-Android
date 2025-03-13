@@ -503,7 +503,7 @@ class DeckPickerTest : RobolectricTest() {
                 updateDeckList()
                 val deckId = addDeck("Deck 1")
                 getColUnsafe.decks.select(deckId)
-                getColUnsafe.notetypes.byName("Basic")!!.put("did", deckId)
+                getColUnsafe.notetypes.byName("Basic")!!.did = deckId
                 val card = addBasicNote("front", "back").firstCard()
                 getColUnsafe.sched.buryCards(listOf(card.id))
                 updateDeckList()
@@ -700,7 +700,7 @@ class DeckPickerTest : RobolectricTest() {
 
         // Add a note with 2 cards in deck "With Cards", one of these cards is to be buried
         col.notetypes.byName("Basic (and reversed card)")!!.also { noteType ->
-            col.notetypes.save(noteType.apply { put("did", deckWithCards) })
+            col.notetypes.save(noteType.apply { did = deckWithCards })
         }
         addBasicAndReversedNote()
 
