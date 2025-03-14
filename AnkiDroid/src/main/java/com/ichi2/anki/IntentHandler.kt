@@ -45,6 +45,8 @@ import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.hasLegacyStorageAccessPermission
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.trimToLength
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
 import kotlin.math.max
@@ -214,21 +216,28 @@ class IntentHandler : AbstractIntentHandler() {
     }
 
     private fun deleteImportedDeck(path: String?) {
-        try {
-            val file = File(path!!)
-            val fileUri =
-                applicationContext?.let {
-                    FileProvider.getUriForFile(
-                        it,
-                        it.applicationContext?.packageName + ".apkgfileprovider",
-                        File(it.getExternalFilesDir(FileUtil.getDownloadDirectory()), file.name),
-                    )
-                }
-            // TODO move the file deletion on a background thread
-            contentResolver.delete(fileUri!!, null, null)
-            Timber.i("onCreate() import successful and downloaded file deleted")
-        } catch (e: Exception) {
-            Timber.w(e, "onCreate() import successful and cannot delete file")
+        // TODO improve the handling of the imported temporary files
+        // Launching this scope without tying it to a lifecycle since ,
+        // IntentHandler finishes quickly, but deletion may still be in progress
+        AnkiDroidApp.applicationScope.launch(Dispatchers.IO) {
+            try {
+                val file = File(path!!)
+                val fileUri =
+                    applicationContext?.let {
+                        FileProvider.getUriForFile(
+                            it,
+                            it.applicationContext?.packageName + ".apkgfileprovider",
+                            File(
+                                it.getExternalFilesDir(FileUtil.getDownloadDirectory()),
+                                file.name,
+                            ),
+                        )
+                    }
+                contentResolver.delete(fileUri!!, null, null)
+                Timber.i("onCreate() import successful and downloaded file deleted")
+            } catch (e: Exception) {
+                Timber.w(e, "onCreate() import successful and cannot delete file")
+            }
         }
     }
 
@@ -255,13 +264,16 @@ class IntentHandler : AbstractIntentHandler() {
             Timber.i("onCreate: downloaded a shared deck but uri was null when trying to delete its file")
             return
         }
-
-        try {
-            // TODO move the file deletion on a background thread
-            contentResolver.delete(sharedDeckUri, null, null)
-            Timber.i("onCreate: downloaded shared deck deleted")
-        } catch (e: Exception) {
-            Timber.w(e, "onCreate: failed to delete downloaded shared deck")
+        // TODO improve the handling of the imported temporary files
+        // Launching this scope without tying it to a lifecycle since ,
+        // IntentHandler finishes quickly, but deletion may still be in progress
+        AnkiDroidApp.applicationScope.launch(Dispatchers.IO) {
+            try {
+                contentResolver.delete(sharedDeckUri, null, null)
+                Timber.i("onCreate: downloaded shared deck deleted")
+            } catch (e: Exception) {
+                Timber.w(e, "onCreate: failed to delete downloaded shared deck")
+            }
         }
     }
 
