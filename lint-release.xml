@@ -347,8 +347,9 @@
     <issue id="InconsistentLayout" severity="ignore" />
     <issue id="InflateParams" severity="ignore" />
     <issue id="StaticFieldLeak" severity="ignore" />
-    <issue id="DefaultLocale" severity="ignore" />
+    <issue id="DefaultLocale" severity="error" />
     <issue id="LocaleFolder" severity="ignore" />
+    <issue id="LocaleRootUsage" severity="error" />
     <issue id="GetLocales" severity="ignore" />
     <issue id="InvalidResourceFolder" severity="ignore" />
     <issue id="WrongRegion" severity="ignore" />

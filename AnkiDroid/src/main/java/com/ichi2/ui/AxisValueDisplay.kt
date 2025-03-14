@@ -25,6 +25,7 @@ import android.util.AttributeSet
 import android.view.View
 import com.google.android.material.color.MaterialColors
 import com.ichi2.utils.dpToPixels
+import java.util.Locale
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
@@ -62,7 +63,7 @@ class AxisValueDisplay(
         set(value) {
             field = value
             this.postInvalidate()
-            text = String.format("%.3f", value)
+            text = String.format(Locale.getDefault(), "%.3f", value)
             if (isExtremity) {
                 extremityListener?.invoke(field)
             }

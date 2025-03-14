@@ -15,6 +15,7 @@
  */
 package com.ichi2.libanki.sched
 
+import android.annotation.SuppressLint
 import anki.decks.DeckTreeNode
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.utils.append
@@ -130,6 +131,7 @@ data class DeckNode(
         }
     }
 
+    @SuppressLint("LocaleRootUsage")
     private fun nameMatchesFilter(filter: CharSequence?): Boolean {
         return if (filter == null) {
             true

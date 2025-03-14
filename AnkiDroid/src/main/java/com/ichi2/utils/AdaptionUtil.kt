@@ -15,6 +15,7 @@
  ****************************************************************************************/
 package com.ichi2.utils
 
+import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.content.ContentResolver
 import android.content.Context
@@ -132,7 +133,9 @@ object AdaptionUtil {
     }
 
     /** See: https://en.wikipedia.org/wiki/Vivo_(technology_company)  */
+
     val isVivo: Boolean
+        @SuppressLint("LocaleRootUsage")
         get() {
             val manufacturer = Build.MANUFACTURER ?: return false
             return manufacturer.lowercase(Locale.ROOT) == "vivo"
