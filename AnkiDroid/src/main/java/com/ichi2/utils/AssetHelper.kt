@@ -35,6 +35,7 @@
  */
 package com.ichi2.utils
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.webkit.MimeTypeMap
 import java.io.File
@@ -46,6 +47,7 @@ object AssetHelper {
      Returns the extension of [path].
      It uses [MimeTypeMap.getFileExtensionFromUrl], with the path transformed into a Uri.
      */
+    @SuppressLint("LocaleRootUsage")
     fun getFileExtensionFromFilePath(path: String): String =
         MimeTypeMap.getFileExtensionFromUrl(
             Uri.fromFile(File(path)).toString().lowercase(

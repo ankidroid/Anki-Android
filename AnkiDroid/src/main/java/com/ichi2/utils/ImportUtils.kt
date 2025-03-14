@@ -16,6 +16,7 @@
 
 package com.ichi2.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentResolver
 import android.content.Context
@@ -84,6 +85,7 @@ object ImportUtils {
         FileImporter().showImportUnsuccessfulDialog(activity, errorMessage, exitActivity)
     }
 
+    @SuppressLint("LocaleRootUsage")
     fun isCollectionPackage(filename: String?): Boolean =
         filename != null && (filename.lowercase(Locale.ROOT).endsWith(".colpkg") || "collection.apkg" == filename)
 
@@ -419,9 +421,11 @@ object ImportUtils {
                 DialogHandler.storeMessage(dialogMessage.toMessage())
             }
 
+            @SuppressLint("LocaleRootUsage")
             internal fun isDeckPackage(filename: String?): Boolean =
                 filename != null && filename.lowercase(Locale.ROOT).endsWith(".apkg") && "collection.apkg" != filename
 
+            @SuppressLint("LocaleRootUsage")
             fun hasExtension(
                 filename: String,
                 extension: String?,
