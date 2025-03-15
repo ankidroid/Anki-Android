@@ -257,8 +257,8 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
             LanguageHintService.setLanguageHintForField(col.notetypes, withLanguage, typedField, Locale("ja"))
 
-            addNoteUsingNoteTypeName(withLanguage.getString("name"), "ichi", "ni")
-            addNoteUsingNoteTypeName(normal.getString("name"), "one", "two")
+            addNoteUsingNoteTypeName(withLanguage.name, "ichi", "ni")
+            addNoteUsingNoteTypeName(normal.name, "one", "two")
             val viewer = getViewer(false)
 
             assertThat("A model with a language hint (japanese) should use it", viewer.hintLocale, equalTo("ja"))

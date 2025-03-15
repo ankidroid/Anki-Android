@@ -195,7 +195,7 @@ class CollectionTest : JvmTest() {
         val noteTypes = col.notetypes
         val noteType = noteTypes.current()
         // filter should work
-        noteType.tmpls[0].qfmt = "{{kana:Front}}"
+        noteType.templates[0].qfmt = "{{kana:Front}}"
         noteTypes.save(noteType)
         val n = col.newNote()
         n.setItem("Front", "foo[abc]")
@@ -208,7 +208,7 @@ class CollectionTest : JvmTest() {
         val question = c.question(true)
         assertThat("Question «$question» does not contains «anki:play».", question, Matchers.containsString("anki:play"))
         // it shouldn't throw an error while people are editing
-        noteType.tmpls[0].qfmt = "{{kana:}}"
+        noteType.templates[0].qfmt = "{{kana:}}"
         noteTypes.save(noteType)
         c.question(true)
     }

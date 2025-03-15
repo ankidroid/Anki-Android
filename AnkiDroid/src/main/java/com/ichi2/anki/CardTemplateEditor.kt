@@ -77,7 +77,6 @@ import com.ichi2.anki.previewer.TemplatePreviewerFragment
 import com.ichi2.anki.previewer.TemplatePreviewerPage
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
-import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.postDelayed
 import com.ichi2.annotations.NeedsTest
@@ -273,7 +272,7 @@ open class CardTemplateEditor :
         // The first time the activity loads it has a model id but no edits yet, so no edited model
         // take the passed model id load it up for editing
         if (tempModel == null) {
-            tempModel = CardTemplateNotetype(NotetypeJson(col.notetypes.get(modelId).toString()))
+            tempModel = CardTemplateNotetype(col.notetypes.get(modelId)!!.deepClone())
             // Timber.d("onCollectionLoaded() model is %s", mTempModel.getModel().toString(2));
         }
         fieldNames = tempModel!!.notetype.fieldsNames
@@ -286,7 +285,7 @@ open class CardTemplateEditor :
         // Set activity title
         supportActionBar?.let {
             it.setTitle(R.string.title_activity_template_editor)
-            it.subtitle = tempModel!!.notetype.optString("name")
+            it.subtitle = tempModel!!.notetype.name
         }
         // Close collection opening dialog if needed
         Timber.i("CardTemplateEditor:: Card template editor successfully started for model id %d", modelId)
@@ -548,7 +547,7 @@ open class CardTemplateEditor :
                         refreshFragmentRunnable?.let { refreshFragmentHandler.removeCallbacks(it) }
                         templateEditor.tabToCursorPosition[cardIndex] = editorEditText.selectionStart
                         when (currentEditorViewId) {
-                            R.id.styling_edit -> tempModel.updateCss(editorEditText.text.toString())
+                            R.id.styling_edit -> tempModel.css = editorEditText.text.toString()
                             R.id.back_edit -> template.afmt = editorEditText.text.toString()
                             else -> template.qfmt = editorEditText.text.toString()
                         }
@@ -971,7 +970,7 @@ open class CardTemplateEditor :
                         }
                     }
 
-                    val originalStockKind = tempModel.notetype.optInt("originalStockKind", ORIGINAL_STOCK_KIND_UNKNOWN_VALUE)
+                    val originalStockKind = tempModel.notetype.originalStockKind
                     if (originalStockKind != ORIGINAL_STOCK_KIND_UNKNOWN_VALUE) {
                         Timber.d("Asking to restore to original stock kind %s", originalStockKind)
                         askUser()
@@ -1102,7 +1101,7 @@ open class CardTemplateEditor :
         private fun getCurrentTemplate(): BackendCardTemplate? {
             val currentCardTemplateIndex = getCurrentCardTemplateIndex()
             return try {
-                templateEditor.tempModel!!.notetype.tmpls[currentCardTemplateIndex]
+                templateEditor.tempModel!!.notetype.templates[currentCardTemplateIndex]
             } catch (e: JSONException) {
                 Timber.w(e, "CardTemplateEditor::getCurrentTemplate - unexpectedly unable to fetch template? %d", currentCardTemplateIndex)
                 null
@@ -1271,7 +1270,7 @@ open class CardTemplateEditor :
             tmpl: BackendCardTemplate,
             notetype: NotetypeJson,
         ) {
-            val oldTemplates = notetype.tmpls
+            val oldTemplates = notetype.templates
             val newTemplates = CardTemplates(JSONArray())
             for (possibleMatch in oldTemplates) {
                 if (possibleMatch.ord != tmpl.ord) {
@@ -1281,7 +1280,7 @@ open class CardTemplateEditor :
                     templateEditor.tempModel!!.removeTemplate(possibleMatch.ord)
                 }
             }
-            notetype.tmpls = newTemplates
+            notetype.templates = newTemplates
             Notetypes._updateTemplOrds(notetype)
             // Make sure the fragments reinitialize, otherwise the reused ordinal causes staleness
             (templateEditor.viewPager.adapter as TemplatePagerAdapter).ordinalShift()
@@ -1296,7 +1295,7 @@ open class CardTemplateEditor :
         private fun addNewTemplate(model: NotetypeJson) {
             // Build new template
             val oldCardIndex = requireArguments().getInt(CARD_INDEX)
-            val templates = model.tmpls
+            val templates = model.templates
             val oldTemplate = templates[oldCardIndex]
             val newTemplate = Notetypes.newTemplate(newCardName(templates))
             // Set up question & answer formats

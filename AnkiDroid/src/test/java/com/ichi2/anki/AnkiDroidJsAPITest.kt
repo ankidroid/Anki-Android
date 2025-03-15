@@ -43,7 +43,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             val models = col.notetypes
             val didA = addDeck("Test", setAsSelected = true)
             val basic = models.byName(BASIC_MODEL_NAME)
-            basic!!.put("did", didA)
+            basic!!.did = didA
             addBasicNote("foo", "bar")
 
             val reviewer: Reviewer = startReviewer()
@@ -77,7 +77,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             val models = col.notetypes
             val didA = addDeck("Test", setAsSelected = true)
             val basic = models.byName(BASIC_MODEL_NAME)
-            basic!!.put("did", didA)
+            basic!!.did = didA
             addBasicNote("foo", "bar")
 
             val reviewer: Reviewer = startReviewer()
@@ -188,7 +188,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             val models = col.notetypes
             val didA = addDeck("Test", setAsSelected = true)
             val basic = models.byName(BASIC_MODEL_NAME)
-            basic!!.put("did", didA)
+            basic!!.did = didA
             addBasicNote("foo", "bar")
 
             val reviewer: Reviewer = startReviewer()
@@ -231,7 +231,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             val models = col.notetypes
             val didA = addDeck("Test", setAsSelected = true)
             val basic = models.byName(BASIC_MODEL_NAME)
-            basic!!.put("did", didA)
+            basic!!.did = didA
             addBasicNote("foo", "bar")
 
             val reviewer: Reviewer = startReviewer()
@@ -292,7 +292,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             val models = col.notetypes
             val didA = addDeck("Test", setAsSelected = true)
             val basic = models.byName(BASIC_MODEL_NAME)
-            basic!!.put("did", didA)
+            basic!!.did = didA
             addBasicNote("foo", "bar")
             addBasicNote("baz", "bak")
             addBasicNote("Anki", "Droid")
@@ -361,7 +361,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             val models = col.notetypes
             val didA = addDeck("Test", setAsSelected = true)
             val basic = models.byName(BASIC_MODEL_NAME)
-            basic!!.put("did", didA)
+            basic!!.did = didA
             addBasicNote("foo", "bar")
             addBasicNote("baz", "bak")
 

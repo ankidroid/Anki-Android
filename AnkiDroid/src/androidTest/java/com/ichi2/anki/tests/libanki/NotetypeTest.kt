@@ -50,7 +50,7 @@ class NotetypeTest : InstrumentedTest() {
         for (i in 0 until 1024 * 1024) {
             buf.append(testString)
         }
-        model.put(testString, buf.toString())
+        model.jsonObject.put(testString, buf.toString())
         // Buf should be more than 4MB, so at least two chunks from database.
 
         // Reload models

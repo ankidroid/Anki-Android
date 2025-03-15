@@ -38,7 +38,14 @@ class Note : Cloneable {
     @get:VisibleForTesting
     var guId: String? = null
         private set
-    lateinit var notetype: NotetypeJson
+    private var _notetype: NotetypeJson? = null
+
+    // Value type can't be lateinit. Thus using a backing field.
+    var notetype: NotetypeJson
+        get() = _notetype!!
+        set(value) {
+            _notetype = value
+        }
 
     val noteTypeId: NoteTypeId
         get() = mid
@@ -120,7 +127,7 @@ class Note : Cloneable {
                 customTemplate.deepClone()
             } else {
                 val index = if (model.isStd) ord else 0
-                model.tmpls[index]
+                model.templates[index]
             }
         // may differ in cloze case
         template.setOrd(card.ord)
