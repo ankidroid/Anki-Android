@@ -27,25 +27,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
 
 private val notetypeNamesAndCountDiff =
-    object : DiffUtil.ItemCallback<ManageNoteTypeUiModel>() {
+    object : DiffUtil.ItemCallback<NotetypeItemUiState>() {
         override fun areItemsTheSame(
-            oldItem: ManageNoteTypeUiModel,
-            newItem: ManageNoteTypeUiModel,
+            oldItem: NotetypeItemUiState,
+            newItem: NotetypeItemUiState,
         ): Boolean = oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.useCount == newItem.useCount
 
         override fun areContentsTheSame(
-            oldItem: ManageNoteTypeUiModel,
-            newItem: ManageNoteTypeUiModel,
+            oldItem: NotetypeItemUiState,
+            newItem: NotetypeItemUiState,
         ): Boolean = oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.useCount == newItem.useCount
     }
 
 internal class NotetypesAdapter(
     context: Context,
-    private val onShowFields: (ManageNoteTypeUiModel) -> Unit,
-    private val onEditCards: (ManageNoteTypeUiModel) -> Unit,
-    private val onRename: (ManageNoteTypeUiModel) -> Unit,
-    private val onDelete: (ManageNoteTypeUiModel) -> Unit,
-) : ListAdapter<ManageNoteTypeUiModel, NotetypeViewHolder>(notetypeNamesAndCountDiff) {
+    private val onRename: (NotetypeItemUiState) -> Unit,
+    private val onDelete: (NotetypeItemUiState) -> Unit,
+) : ListAdapter<NotetypeItemUiState, NotetypeViewHolder>(notetypeNamesAndCountDiff) {
     private val layoutInflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(
@@ -56,8 +54,6 @@ internal class NotetypesAdapter(
             rowView = layoutInflater.inflate(R.layout.item_manage_note_type, parent, false),
             onDelete = onDelete,
             onRename = onRename,
-            onEditCards = onEditCards,
-            onShowFields = onShowFields,
         )
 
     override fun onBindViewHolder(
@@ -70,34 +66,51 @@ internal class NotetypesAdapter(
 
 internal class NotetypeViewHolder(
     rowView: View,
-    onShowFields: (ManageNoteTypeUiModel) -> Unit,
-    onEditCards: (ManageNoteTypeUiModel) -> Unit,
-    onRename: (ManageNoteTypeUiModel) -> Unit,
-    onDelete: (ManageNoteTypeUiModel) -> Unit,
+    onRename: (NotetypeItemUiState) -> Unit,
+    onDelete: (NotetypeItemUiState) -> Unit,
 ) : RecyclerView.ViewHolder(rowView) {
     val name: TextView = rowView.findViewById(R.id.note_name)
     val useCount: TextView = rowView.findViewById(R.id.note_use_count)
     private val btnDelete: Button = rowView.findViewById(R.id.note_delete)
     private val btnRename: Button = rowView.findViewById(R.id.note_rename)
     private val btnEditCards: Button = rowView.findViewById(R.id.note_edit_cards)
-    private var mManageNoteTypeUiModel: ManageNoteTypeUiModel? = null
+    private var notetypeItemUiState: NotetypeItemUiState? = null
     private val resources = rowView.context.resources
 
     init {
-        rowView.setOnClickListener { mManageNoteTypeUiModel?.let(onShowFields) }
-        btnEditCards.setOnClickListener { mManageNoteTypeUiModel?.let(onEditCards) }
-        btnDelete.setOnClickListener { mManageNoteTypeUiModel?.let(onDelete) }
-        btnRename.setOnClickListener { mManageNoteTypeUiModel?.let(onRename) }
+        rowView.setOnClickListener {
+            notetypeItemUiState?.let { state ->
+                state.onNavigateTo(
+                    NotetypesDestination.Fields(
+                        mapOf(
+                            "title" to state.name,
+                            "noteTypeID" to state.id,
+                        ),
+                    ),
+                )
+            }
+        }
+        btnEditCards.setOnClickListener {
+            notetypeItemUiState?.let { state ->
+                state.onNavigateTo(
+                    NotetypesDestination.CardTemplateEditor(
+                        mapOf("modelId" to state.id),
+                    ),
+                )
+            }
+        }
+        btnDelete.setOnClickListener { notetypeItemUiState?.let(onDelete) }
+        btnRename.setOnClickListener { notetypeItemUiState?.let(onRename) }
     }
 
-    fun bind(manageNoteTypeUiModel: ManageNoteTypeUiModel) {
-        this.mManageNoteTypeUiModel = manageNoteTypeUiModel
-        name.text = manageNoteTypeUiModel.name
+    fun bind(notetypeItemUiState: NotetypeItemUiState) {
+        this.notetypeItemUiState = notetypeItemUiState
+        name.text = notetypeItemUiState.name
         useCount.text =
             resources.getQuantityString(
                 R.plurals.model_browser_of_type,
-                manageNoteTypeUiModel.useCount,
-                manageNoteTypeUiModel.useCount,
+                notetypeItemUiState.useCount,
+                notetypeItemUiState.useCount,
             )
     }
 }

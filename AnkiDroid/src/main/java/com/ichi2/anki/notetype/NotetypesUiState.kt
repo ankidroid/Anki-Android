@@ -15,40 +15,63 @@
  ****************************************************************************************/
 package com.ichi2.anki.notetype
 
+import android.content.Intent
 import anki.notetypes.NotetypeNameId
-import anki.notetypes.NotetypeNameIdUseCount
 import com.ichi2.libanki.NoteTypeId
 
 /**
- * Data holder class which contains the data to display a single note type in [ManageNotetypes]'s
- * list of notetypes.
+ * Contains the required information for [ManageNotetypes].
+ * @param isProcessing true if there's ongoing work happening and [ManageNotetypes] should show a
+ * "loading" ui while this takes place
+ * @param destination if non null then [ManageNotetypes] should navigate to the screen referenced by
+ * the destination
  */
-internal data class ManageNoteTypeUiModel(
-    val id: NoteTypeId,
-    val name: String,
-    /**
-     * The number of note using this note type.
-     */
-    val useCount: Int,
+data class NotetypesUiState(
+    val notetypes: List<NotetypeItemUiState> = emptyList(),
+    val isProcessing: Boolean = true,
+    val destination: NotetypesDestination? = null,
 )
 
-internal fun NotetypeNameIdUseCount.toUiModel(): ManageNoteTypeUiModel = ManageNoteTypeUiModel(id, name, useCount)
+/**
+ * Encapsulate the possible destination to go from [ManageNotetypes].
+ * @param extras the optional extras that [ManageNotetypes] might want to send through an [Intent]
+ * to screens that it starts
+ */
+sealed class NotetypesDestination(
+    val extras: Map<String, Any>,
+) {
+    data class CardTemplateEditor(
+        val templateExtras: Map<String, Any>,
+    ) : NotetypesDestination(templateExtras)
+
+    data class Fields(
+        val fieldsExtras: Map<String, Any>,
+    ) : NotetypesDestination(fieldsExtras)
+}
 
 /**
- * Data holder class which contains the data to display a single note type in [AddNewNotesType]'s
- * list of notetypes.
+ * Contains the data to display a single note type in [ManageNotetypes]'s list of notetypes.
+ * @param useCount the number of note using this note type
  */
-internal data class AddNotetypeUiModel(
+data class NotetypeItemUiState(
     val id: NoteTypeId,
     val name: String,
-    /**
-     * Whether this is a note type provided by Anki by default.
-     * If false, this is one of the note type currently in this collection (potentially a clone of a standard note type)
-     */
+    val useCount: Int,
+    val onNavigateTo: (NotetypesDestination) -> Unit,
+)
+
+/**
+ * Contains the data to display a single note type in [AddNewNotesType]'s list of notetypes.
+ * @param isStandard true if this is a note type provided by Anki by default. If false, this is one
+ * of the note types currently in this collection (potentially a clone of a standard note type)
+ */
+data class AddNotetypeUiModel(
+    val id: NoteTypeId,
+    val name: String,
     val isStandard: Boolean = false,
 )
 
 /**
  * A note type from current collection as a [AddNotetypeUiModel].
  */
-internal fun NotetypeNameId.toUiModel(): AddNotetypeUiModel = AddNotetypeUiModel(id, name, false)
+fun NotetypeNameId.toUiModel(): AddNotetypeUiModel = AddNotetypeUiModel(id, name, false)
