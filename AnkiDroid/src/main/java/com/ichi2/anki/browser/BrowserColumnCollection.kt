@@ -29,12 +29,10 @@ import timber.log.Timber
 
 /**
  * A collection of columns available in the [browser][CardBrowser]
- *
  * These are stored in [SharedPreferences] under either:
- * * [ACTIVE_CARD_COLUMNS_KEY]
- * * [ACTIVE_NOTE_COLUMNS_KEY]
- *
- * @see Backend.setActiveBrowserColumns
+ * @see BrowserConfig.ACTIVE_CARD_COLUMNS_KEY
+ * @see BrowserConfig.ACTIVE_NOTE_COLUMNS_KEY
+ * @see net.ankiweb.rsdroid.Backend.setActiveBrowserColumns
  * @see BrowserConfig.activeColumnsKey
  */
 class BrowserColumnCollection(

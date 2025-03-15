@@ -24,7 +24,6 @@ package com.ichi2.anki
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.ActivityNotFoundException
-import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -147,7 +146,6 @@ import com.ichi2.libanki.undoableOp
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.ui.FixedEditText
-import com.ichi2.utils.ClipboardUtil.getText
 import com.ichi2.utils.HandlerUtils.newHandler
 import com.ichi2.utils.HashUtil.hashSetInit
 import com.ichi2.utils.Stopwatch
@@ -241,7 +239,6 @@ abstract class AbstractFlashcardViewer :
     internal var easeButton3: EaseButton? = null
     internal var easeButton4: EaseButton? = null
     protected var topBarLayout: RelativeLayout? = null
-    private val clipboard: ClipboardManager? = null
     private var previousAnswerIndicator: PreviousAnswerIndicator? = null
 
     private var currentEase: Ease? = null
@@ -279,9 +276,6 @@ abstract class AbstractFlashcardViewer :
     @get:VisibleForTesting
     var cardContent: String? = null
         private set
-
-    private var viewerUrl: String? = null
-    private val fadeDuration = 300
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     internal lateinit var cardMediaPlayer: CardMediaPlayer
@@ -401,7 +395,7 @@ abstract class AbstractFlashcardViewer :
                 val diffX = abs(event.rawX - touchX)
                 val diffY = abs(event.rawY - touchY)
                 // If a click is not coming then we reset the touch
-                if (diffX > Companion.CLICK_ACTION_THRESHOLD || diffY > Companion.CLICK_ACTION_THRESHOLD) {
+                if (diffX > CLICK_ACTION_THRESHOLD || diffY > CLICK_ACTION_THRESHOLD) {
                     hasBeenTouched = false
                 }
             }
@@ -731,19 +725,6 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun answerFieldIsFocused(): Boolean = answerField != null && answerField!!.isFocused
-
-    protected fun clipboardHasText(): Boolean = !getText(clipboard).isNullOrEmpty()
-
-    /**
-     * Returns the text stored in the clipboard or the empty string if the clipboard is empty or contains something that
-     * cannot be converted to text.
-     *
-     * @return the text in clipboard or the empty string.
-     */
-    private fun clipboardGetText(): CharSequence {
-        val text = getText(clipboard)
-        return text ?: ""
-    }
 
     val deckOptionsLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
@@ -2071,7 +2052,7 @@ abstract class AbstractFlashcardViewer :
         private fun isTouchingEdge(e1: MotionEvent): Boolean {
             val height = touchLayer!!.height
             val width = touchLayer!!.width
-            val margin = Companion.NO_GESTURE_BORDER_DIP * resources.displayMetrics.density + 0.5f
+            val margin = NO_GESTURE_BORDER_DIP * resources.displayMetrics.density + 0.5f
             return e1.x < margin || e1.y < margin || height - e1.y < margin || width - e1.x < margin
         }
 
@@ -2141,7 +2122,7 @@ abstract class AbstractFlashcardViewer :
         private fun initShakeDetector() {
             Timber.d("Initializing shake detector")
             if (gestureProcessor.isBound(Gesture.SHAKE)) {
-                val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+                val sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
                 shakeDetector =
                     ShakeDetector(this).apply {
                         start(sensorManager, SensorManager.SENSOR_DELAY_UI)
@@ -2454,7 +2435,7 @@ abstract class AbstractFlashcardViewer :
                 return true
             }
 
-            when (val signalOrdinal = url.toSignal()) {
+            when (url.toSignal()) {
                 Signal.SIGNAL_UNHANDLED -> {}
                 Signal.SIGNAL_NOOP -> return true
                 Signal.TYPE_FOCUS -> return true

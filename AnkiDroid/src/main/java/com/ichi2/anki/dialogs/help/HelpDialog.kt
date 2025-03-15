@@ -122,7 +122,7 @@ class HelpDialog : DialogFragment() {
         private const val PAGE_TAG = "HelpMenuPage"
 
         fun newHelpInstance(): HelpDialog {
-            UsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_HELPDIALOG)
+            UsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_HELP_DIALOG)
             return HelpDialog().apply {
                 arguments =
                     bundleOf(
