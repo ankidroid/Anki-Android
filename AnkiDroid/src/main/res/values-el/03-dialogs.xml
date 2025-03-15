@@ -64,7 +64,7 @@
     <string name="answering_error_title">Σφάλμα βάσης δεδομένων</string>
     <string name="answering_error_message">Παρουσιάστηκε σφάλμα κατά την εγγραφή στη συλλογή. Αυτό θα μπορεί να σχετίζεται με κατεστραμμένη βάση δεδομένων ή ανεπαρκή αποθηκευτικό χώρο.\n\nΑν συμβαίνει συχνά, προσπαθήστε να ελέγξετε τη βάση δεδομένων, να επιδιορθώσετε τη συλλογή ή να την επαναφέρετε από ένα αντίγραφο. Κάντε κλικ στις σχετικές «επιλογές».\n\nΕκτός αυτού, μπορεί να είναι και σφάλμα του AnkiDroid· παρακαλούμε αναφέρετε το σφάλμα ώστε να το ελέγξουμε.</string>
     <string name="answering_error_report">Αναφορά σφάλματος</string>
-    <string name="storage_full_message">Δεν υπάρχει αρκετός ελεύθερος αποθηκευτικός χώρος για το άνοιγμα του AnkiDroid. Ελευθερώστε λίγο χώρο για να συνεχίσετε. </string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
     <string name="repair_deck_dialog">Είστε βέβαιοι ότι θέλετε να επιδιορθώσετε τη βάση δεδομένων;\n\nΠριν να ξεκινήσει η απόπειρα, θα δημιουργηθεί ένα αντίγραφο στον υποφάκελο \'%s\'.</string>
     <string name="intent_aedict_empty">Η κατηγορία «προεπιλεγμένο» είναι κενή</string>
     <string name="intent_aedict_category">Για να προσθέσετε κάρτες στο Ανκί-Ντρόιντ αφαιρέστε όλες τις κατηγορίες Notepad ή προσθέστε μία με όνομα «προεπιλεγμένο»</string>
@@ -212,10 +212,8 @@
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Αργότερα</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Να μην εμφανιστεί ξανά</string>
     <string name="dismiss_backup_warning_title">Προειδοποίηση απώλειας δεδομένων</string>
-    <string name="dismiss_backup_warning_new_user">        Λόγω αλλαγών στο απόρρητο του Android, τα δεδομένα και τα αυτοματοποιημένα αντίγραφα ασφαλείας θα διαγραφούν από το τηλέφωνό σας, εάν η εφαρμογή απεγκατασταθεί
-    </string>
-    <string name="dismiss_backup_warning_upgrade">        Λόγω αλλαγών στο απόρρητο του Android, τα δεδομένα και τα αυτοματοποιημένα αντίγραφα ασφαλείας δεν θα είναι προσβάσιμα, εάν η εφαρμογή απεγκατασταθεί
-    </string>
+    <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
+    <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
     <string name="deck_already_exists">Αυτή η τράπουλα υπάρχει ήδη</string>
     <string name="empty_deck_name">Το όνομα της τράπουλας δεν μπορεί να είναι κενό</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>

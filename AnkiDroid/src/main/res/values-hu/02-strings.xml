@@ -233,7 +233,7 @@
     <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
     <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
     <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android biztonsági mentés folyamatban. Próbálkozzon később</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android backup in progress. Please try again</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Az AnkiDroidban rövidítések használatához szükséges lehet az iManager használata</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">A Kezdőképernyőd nem engedi AnkiDroid közvetlen elérések elhelyezését</string>
     <string name="create_shortcut_error">Hiba történt a közvetlen elérés hozzáadásakor: %s</string>
@@ -306,14 +306,14 @@
     <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">Felvétel mentve</string>
     <string name="deleting_selected_notes">A kijelölt jegyzetek törlése.</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Nyomj egy hangra a meghallgatáshoz</string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">A hangot le kell tölteni használat előtt</string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Használat letöltés nélkül</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Tap a voice to listen</string>
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use</string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway</string>
     <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Hiba a(z) (%s) felolvasásakor</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">Internet</string>
-    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Letöltés</string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">A felolvasás beállítások megnyitása sikertelen</string>
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Install</string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Failed to open text to speech settings</string>
     <string name="shared_decks_login_required">Több pakli letöltéséhez jelentkezz be</string>
     <string name="deck_description_field_hint">Megjegyzés</string>
     <string name="failed_to_copy">Failed to copy</string>

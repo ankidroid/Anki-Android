@@ -296,7 +296,7 @@
     <string name="pref_cat_dev_options" maxLength="41">વિકાસકર્તા વિકલ્પો</string>
     <string name="dev_options_enabled_pref" maxLength="41">વિકાસકર્તા વિકલ્પો સક્ષમ કરો</string>
     <string name="disable_dev_options">વિકાસકર્તા વિકલ્પોને અક્ષમ કરો</string>
-    <string name="dev_options_warning">વિકાસકર્તા વિકલ્પોને સક્ષમ કરતા પહેલા કૃપા કરીને ખાતરી કરો. આ વિકલ્પો ખતરનાક છે અને એપને તોડી શકે છે અથવા તમારા સંગ્રહને બગાડી શકે છે.\n\nનોંધ લો કે આ વિકલ્પો મોટાભાગના વપરાશકર્તાઓ માટે યોગ્ય નથી અને તેથી અનુવાદિત નથી, તેથી તેઓ અંગ્રેજીમાં છે.</string>
+    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

@@ -64,9 +64,9 @@
     <string name="model_delete_warning">Tem certeza de que deseja excluir esse modelo de notas?</string>
     <string name="field_delete_warning">Tem certeza que deseja excluir este campo?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Adicionar: %1$s </string>
+    <string name="model_browser_add_add">Add: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">Clonar: %1$s </string>
+    <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Digite o modelo que o navegador de cards usará para exibir seus cards. Use isto para exibir uma resposta mais concisa.\n\nUm modelo frontal de\n\"A capital do {{Country}} é:\"\npode ser comprimido para\n\"Capital: {{Country}}\"</string>
     <string name="card_template_browser_appearance_question_format">Formato da questão</string>

@@ -45,8 +45,8 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks" maxLength="28">Élève </string>
-    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">Porte</string>
+    <string name="decks" maxLength="28">Decks</string>
+    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
     <string name="statistics" maxLength="28">Statistics</string>
     <string name="settings" maxLength="28">Settings</string>
     <string name="help" maxLength="28">Help</string>

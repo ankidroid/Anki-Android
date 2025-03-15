@@ -292,7 +292,7 @@
     <string name="pref_cat_dev_options" maxLength="41">Programistaj agordoj</string>
     <string name="dev_options_enabled_pref" maxLength="41">Aktivigi programistajn agordojn</string>
     <string name="disable_dev_options">Malaktivigi programistajn agordojn</string>
-    <string name="dev_options_warning">Antaŭ ol aktivigi programistajn agordojn, certiĝu, ke vi scias kion vi faras. Tiuj ĉi agordoj estas danĝeraj kaj povas difekti la aplikaĵon aŭ vian kolekton.\n\nRimarko: tiuj ĉi agordoj ne taŭgas por kutimaj uzantoj, do ne estas tradukitaj (estas en la angla).</string>
+    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

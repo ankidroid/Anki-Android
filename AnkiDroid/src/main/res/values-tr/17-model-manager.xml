@@ -64,9 +64,9 @@
     <string name="model_delete_warning">Bu not türünü silmek istediğinize emin misiniz?</string>
     <string name="field_delete_warning">Bu alanı silmek istediğinize emin misiniz?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Ekle: %1$s </string>
+    <string name="model_browser_add_add">Add: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">Klonla: %1$s </string>
+    <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Kartlarınızı görüntülemek için kullanılacak kart tarayıcı şablonunu giriniz. Daha anlaşılır bir yanıt görüntülemek için bunu kullanın.\n\nŞablonun önü\n\"{{Ülkesi}}nin başkenti: \"\nkart tarayıcıda şöyle sıkıştırılabilir\n\"Başkent: {{Ülke}}\"</string>
     <string name="card_template_browser_appearance_question_format">Soru Biçimi</string>

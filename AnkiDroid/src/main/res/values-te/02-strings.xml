@@ -233,7 +233,7 @@
     <string name="note_editor_image_too_large">చిత్రం చాలా పెద్దది, దయచేసి చిత్రాన్ని మాన్యువల్‌గా చొప్పించండి</string>
     <string name="note_editor_video_too_large">వీడియో ఫైల్ చాలా పెద్దది, దయచేసి వీడియోని మాన్యువల్‌గా చొప్పించండి</string>
     <string name="note_editor_audio_too_large">ఆడియో ఫైల్ చాలా పెద్దది, దయచేసి ఆడియోను మాన్యువల్‌గా చొప్పించండి</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android బ్యాకప్ ప్రోగ్రెస్‌లో ఉంది. దయచేసి మళ్లీ ప్రయత్నించండి</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android backup in progress. Please try again</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">సత్వరమార్గాలను జోడించడానికి AnkiDroidని అనుమతించడానికి మీరు iManagerని ఉపయోగించాల్సి రావచ్చు</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">మీ హోమ్ స్క్రీన్‌కి సత్వరమార్గాలను జోడించడానికి AnkiDroid మిమ్మల్ని అనుమతించదు</string>
     <string name="create_shortcut_error">సత్వరమార్గాన్ని జోడించడంలో లోపం: %s</string>
@@ -305,14 +305,14 @@
     <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">రికార్డింగ్ సేవ్ చేయబడింది</string>
     <string name="deleting_selected_notes">ఎంచుకున్న గమనికలను తొలగిస్తోంది</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">వినడానికి వాయిస్ నొక్కండి</string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">ఉపయోగించడానికి ముందు వాయిస్ తప్పనిసరిగా ఇన్‌స్టాల్ చేయబడాలి</string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">ఎలాగైనా వాడండి</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Tap a voice to listen</string>
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use</string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway</string>
     <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">టెక్స్ట్ టు స్పీచ్ లోపం (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
-    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">ఇంటర్నెట్</string>
-    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">దీన్ని ఇన్‌స్టాల్ చేయండి</string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">టెక్స్ట్ టు స్పీచ్ సెట్టింగ్‌లను తెరవడంలో విఫలమైంది</string>
+    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">Internet</string>
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Install</string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Failed to open text to speech settings</string>
     <string name="shared_decks_login_required">దయచేసి మరిన్ని డెక్‌లను డౌన్‌లోడ్ చేయడానికి లాగిన్ చేయండి</string>
     <string name="deck_description_field_hint">వివరణ</string>
     <string name="failed_to_copy">కాపీ చేయడంలో విఫలమైంది</string>

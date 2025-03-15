@@ -64,9 +64,9 @@
     <string name="model_delete_warning">Θέλετε σίγουρα να διαγράψετε αυτό τον τύπο σημείωσης;</string>
     <string name="field_delete_warning">Θέλετε σίγουρα να διαγράψετε αυτό το πεδίο;</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Προσθήκη: %1$s </string>
+    <string name="model_browser_add_add">Add: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">Κλώνος: %1$s </string>
+    <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Εισάγετε το πρότυπο που θα χρησιμοποιήσει ο περιηγητής της κάρτας για την εμφάνιση των καρτών σας. Χρησιμοποιήστε αυτό για να εμφανίσετε μια πιο συνοπτική απάντηση.\n\nΈνα μπροστινό πρότυπο του\n“Η πρωτεύουσα του {{Country}} είναι:”\nθα μπορούσε να συμπιεστεί στον περιηγητή της κάρτας σε\n“Capital: {{Country}}”</string>
     <string name="card_template_browser_appearance_question_format">Μορφή ερώτησης</string>

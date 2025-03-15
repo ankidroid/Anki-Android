@@ -297,8 +297,7 @@
     <string name="pref_cat_dev_options" maxLength="41">Mga opsyon pangdeveloper</string>
     <string name="dev_options_enabled_pref" maxLength="41">Paganahin ang mga opsyon pangdeveloper</string>
     <string name="disable_dev_options">Huwag paganahin ang mga opsyon pangdeveloper</string>
-    <string name="dev_options_warning">        Siguraduhin na gusto mong paganahin ang mga opsyon pangdeveloper. Ang mga opsyon dito ay delikado at maaring ikasira ng app o ika-corrupt ng iyong mga tipon.\n\nTandaan na ang mga opsyon na ito ay hindi angkop sa karamihan ng mga user at samakatwid ay hindi sinalin ang mga ito, kaya naka-Ingles ang mga ito.
-    </string>
+    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

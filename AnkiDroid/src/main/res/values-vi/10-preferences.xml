@@ -293,8 +293,7 @@
     <string name="pref_cat_dev_options" maxLength="41">Tùy chọn nhà phát triển</string>
     <string name="dev_options_enabled_pref" maxLength="41">Bật tùy chọn nhà phát triển</string>
     <string name="disable_dev_options">Tắt tùy chọn nhà phát triển</string>
-    <string name="dev_options_warning">        Hãy chắc chắn trước khi bật tùy chọn nhà phát triển. Các tùy chọn này rất nguy hiểm và có thể làm hỏng ứng dụng hoặc làm hỏng bộ sưu tập của bạn.\n\nXin lưu ý rằng các tùy chọn này không phù hợp với hầu hết người dùng và do đó không được dịch, vì vậy chúng bằng tiếng Anh.
-    </string>
+    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

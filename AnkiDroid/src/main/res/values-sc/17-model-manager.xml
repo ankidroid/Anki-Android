@@ -64,9 +64,9 @@
     <string name="model_delete_warning">Ses seguru de chèrrere iscantzellare custa casta de nota?</string>
     <string name="field_delete_warning">Ses seguru de chèrrere iscantzellare custu campu?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Annanghe: %1$s</string>
+    <string name="model_browser_add_add">Add: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">Clona: %1$s</string>
+    <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Inserta su mollu chi su navigadore de cartas at a impreare pro ammustrare sas cartas tuas. Imprea custu pro visualizare una risposta prus cuntzisa.\n
                                              \n

@@ -64,7 +64,7 @@
     <string name="answering_error_title">డేటాబేస్ లోపం</string>
     <string name="answering_error_message">సేకరణకు వ్రాయడంలో విఫలమైంది. డేటాబేస్ పాడైపోయి ఉండవచ్చు లేదా డిస్క్‌లో తగినంత ఖాళీ స్థలం ఉండకపోవచ్చు.\n\nఇది తరచుగా జరిగితే, డేటాబేస్‌ని తనిఖీ చేయడం, సేకరణను రిపేర్ చేయడం లేదా బ్యాకప్ నుండి పునరుద్ధరించడం వంటివి ప్రయత్నించండి. దాని కోసం \"ఎంపికలు\" తాకండి.\n\లేదా అది AnkiDroid బగ్ కావచ్చు; దయచేసి లోపాన్ని నివేదించండి, తద్వారా మేము దాన్ని తనిఖీ చేయవచ్చు.</string>
     <string name="answering_error_report">నివేదన లోపం</string>
-    <string name="storage_full_message">AnkiDroidని తెరవడానికి తగినంత ఉచిత నిల్వ లేదు. కొనసాగించడానికి కొంత స్థలాన్ని ఖాళీ చేయండి.</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
     <string name="repair_deck_dialog">మీరు నిజంగా డాటాబేస్ రిపేరు చేయాలనుకుంటున్నారా? \n\n ప్రయత్నం ప్రారంభించటానికి ముందు, \"కాపీ\" ఫోల్డర్ \"%s\" లో సృష్టించబడుతుంది.</string>
     <string name="intent_aedict_empty">\"default\" వర్గం ఖాళీగా ఉంది</string>
     <string name="intent_aedict_category">AnkiDroid కు కార్డులు జోడించడానికి అన్ని నోట్ప్యాడ్లో కేతగిరీలు తొలగించండి లేదా \"default\" కు ఒక పేరును జోడించండి</string>
@@ -212,8 +212,8 @@
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">తర్వాత</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">దాన్ని మళ్లీ చూపించవద్దు</string>
     <string name="dismiss_backup_warning_title">డేటా నష్టం హెచ్చరిక</string>
-    <string name="dismiss_backup_warning_new_user">Android గోప్యతా మార్పుల కారణంగా, యాప్‌ను అన్‌ఇన్‌స్టాల్ చేయడం వలన మీ ఫోన్ నుండి మీ డేటా మరియు ఆటోమేటెడ్ బ్యాకప్ తొలగించబడుతుంది</string>
-    <string name="dismiss_backup_warning_upgrade">Android గోప్యతా మార్పుల కారణంగా, యాప్ అన్‌ఇన్‌స్టాల్ చేయబడితే మీ డేటా మరియు ఆటోమేటెడ్ బ్యాకప్‌లు యాక్సెస్ చేయబడవు</string>
+    <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
+    <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
     <string name="deck_already_exists">డెక్ ఇప్పటికే ఉంది</string>
     <string name="empty_deck_name">డెక్ పేరు ఖాళీగా ఉండకూడదు</string>
     <string name="create_deck_numeric_hint">మీకు డెక్ ఆర్డరింగ్ సమస్యలు ఉంటే (ఉదా. \'2\'కి ముందు \'10\' కనిపిస్తుంది), \'2\'ని \'02\'తో భర్తీ చేయండి</string>

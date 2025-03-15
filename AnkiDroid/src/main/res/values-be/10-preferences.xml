@@ -301,8 +301,7 @@
     <string name="pref_cat_dev_options" maxLength="41">Параметры распрацоўшчыка</string>
     <string name="dev_options_enabled_pref" maxLength="41">Уключыць параметры распрацоўшчыка</string>
     <string name="disable_dev_options">Адключыць параметры распрацоўшчыка</string>
-    <string name="dev_options_warning">        Пераканайцеся, што вы сапраўды ўпэўнены ў сваіх дзеяннях. Гэтыя параметры з\'яўляюцца небяспечнымі і могуць парушыць працу праграмы або пашкодзіць вашу калекцыю.\n\nЗвярніце ўвагу, што гэтыя параметры не пасуюць для большасці карыстальнікаў і таму, яны не перакладаюцца. Па гэтай прычыны, яны пішуцца толькі на англійскай мове.
-    </string>
+    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

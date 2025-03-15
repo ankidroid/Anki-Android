@@ -64,7 +64,7 @@
     <string name="answering_error_title">ಡೇಟಾಬೇಸ್ ದೋಷ</string>
     <string name="answering_error_message">ಸಂಗ್ರಹಣೆಗೆ ಬರೆಯುವುದು ವಿಫಲವಾಗಿದೆ. ಡೇಟಾಬೇಸ್ ದೋಷಪೂರಿತವಾಗಿರಬಹುದು ಅಥವಾ ಡಿಸ್ಕ್‌ನಲ್ಲಿ ಸಾಕಷ್ಟು ಖಾಲಿ ಜಾಗವಿಲ್ಲದಿರಬಹುದು.\n\nಇದು ಹೆಚ್ಚಾಗಿ ಸಂಭವಿಸಿದರೆ, ಡೇಟಾಬೇಸ್ ಅನ್ನು ಪರಿಶೀಲಿಸಲು ಪ್ರಯತ್ನಿಸಿ, ಸಂಗ್ರಹಣೆಯನ್ನು ಸರಿಪಡಿಸಲು ಅಥವಾ ಬ್ಯಾಕಪ್‌ನಿಂದ ಅದನ್ನು ಮರುಸ್ಥಾಪಿಸಲು. ಅದಕ್ಕಾಗಿ \"ಆಯ್ಕೆಗಳನ್ನು\" ಸ್ಪರ್ಶಿಸಿ.\n\ಅಥವಾ ಇದು AnkiDroid ದೋಷವೂ ಆಗಿರಬಹುದು; ದಯವಿಟ್ಟು ದೋಷವನ್ನು ವರದಿ ಮಾಡಿ ಇದರಿಂದ ನಾವು ಇದನ್ನು ಪರಿಶೀಲಿಸಬಹುದು.</string>
     <string name="answering_error_report">ದೋಷವನ್ನು ವರದಿ ಮಾಡಿ</string>
-    <string name="storage_full_message">AnkiDroid ತೆರೆಯಲು ಸಾಕಷ್ಟು ಉಚಿತ ಸಂಗ್ರಹಣೆ ಸ್ಥಳವಿಲ್ಲ. ಮುಂದುವರಿಯಲು ಸ್ವಲ್ಪ ಜಾಗವನ್ನು ಮುಕ್ತಗೊಳಿಸಿ.</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
     <string name="repair_deck_dialog">ಡೇಟಾಬೇಸ್ ಅನ್ನು ಸರಿಪಡಿಸಲು ನೀವು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?\n\nಪ್ರಯತ್ನವನ್ನು ಪ್ರಾರಂಭಿಸುವ ಮೊದಲು, \"%s\" ಉಪಫೋಲ್ಡರ್‌ನಲ್ಲಿ ನಕಲನ್ನು ರಚಿಸಲಾಗುತ್ತದೆ.</string>
     <string name="intent_aedict_empty">\"ಡೀಫಾಲ್ಟ್\" ವರ್ಗ ಖಾಲಿಯಾಗಿದೆ</string>
     <string name="intent_aedict_category">ಎಲ್ಲಾ ನೋಟ್‌ಪ್ಯಾಡ್ ವಿಭಾಗಗಳನ್ನು ತೆಗೆದುಹಾಕಿ ಅಥವಾ AnkiDroid ಗೆ ಕಾರ್ಡ್‌ಗಳನ್ನು ಸೇರಿಸಲು \"ಡೀಫಾಲ್ಟ್\" ಹೆಸರಿನ ಒಂದನ್ನು ಸೇರಿಸಿ</string>
@@ -212,8 +212,8 @@
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">ನಂತರ</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">ಅದನ್ನು ಮತ್ತೆ ತೋರಿಸಬೇಡ</string>
     <string name="dismiss_backup_warning_title">ಡೇಟಾ ನಷ್ಟದ ಎಚ್ಚರಿಕೆ</string>
-    <string name="dismiss_backup_warning_new_user">Android ಗೌಪ್ಯತೆ ಬದಲಾವಣೆಗಳಿಂದಾಗಿ, ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಅನ್‌ಇನ್‌ಸ್ಟಾಲ್ ಮಾಡಿದರೆ ನಿಮ್ಮ ಡೇಟಾ ಮತ್ತು ಸ್ವಯಂಚಾಲಿತ ಬ್ಯಾಕಪ್‌ಗಳನ್ನು ನಿಮ್ಮ ಫೋನ್‌ನಿಂದ ಅಳಿಸಲಾಗುತ್ತದೆ</string>
-    <string name="dismiss_backup_warning_upgrade">Android ಗೌಪ್ಯತೆ ಬದಲಾವಣೆಗಳಿಂದಾಗಿ, ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಅನ್‌ಇನ್‌ಸ್ಟಾಲ್ ಮಾಡುವುದರಿಂದ ನಿಮ್ಮ ಡೇಟಾ ಮತ್ತು ಸ್ವಯಂಚಾಲಿತ ಬ್ಯಾಕಪ್‌ಗಳನ್ನು ಪ್ರವೇಶಿಸಲಾಗುವುದಿಲ್ಲ</string>
+    <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
+    <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
     <string name="deck_already_exists">ಡೆಕ್ ಈಗಾಗಲೇ ಅಸ್ತಿತ್ವದಲ್ಲಿದೆ</string>
     <string name="empty_deck_name">Deck name cannot be empty</string>
     <string name="create_deck_numeric_hint">ನೀವು ಡೆಕ್ ಆರ್ಡರ್ ಮಾಡುವ ಸಮಸ್ಯೆಗಳನ್ನು ಹೊಂದಿದ್ದರೆ (ಉದಾ \'10\' \'2\' ಮೊದಲು ಕಾಣಿಸಿಕೊಳ್ಳುತ್ತದೆ), \'2\' ಅನ್ನು \'02\' ನೊಂದಿಗೆ ಬದಲಾಯಿಸಿ</string>

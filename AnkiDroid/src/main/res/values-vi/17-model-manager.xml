@@ -62,9 +62,9 @@
     <string name="model_delete_warning">Bạn có chắc chắn muốn xóa loại ghi chú này không?</string>
     <string name="field_delete_warning">Bạn có chắc chắn muốn xóa trường này không?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Thêm: %1$s</string>
+    <string name="model_browser_add_add">Add: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">Nhân bản: %1$s</string>
+    <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Nhập mẫu mà trình duyệt thẻ sẽ sử dụng để hiển thị thẻ của bạn. Sử dụng tùy chọn này để hiển thị câu trả lời ngắn gọn hơn.\n\nMẫu trước của thẻ\n“Thủ đô của {{Country}} là:” \ncó thể được nén trong trình duyệt thẻ thành\n“Thủ đô: {{Country}}”</string>
     <string name="card_template_browser_appearance_question_format">Định dạng câu hỏi</string>

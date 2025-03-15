@@ -68,9 +68,9 @@
     <string name="model_delete_warning">Ste si istý, že si želáte vymazať tento typ poznámok?</string>
     <string name="field_delete_warning">Skutočne si prajete odstrániť toto pole?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Pridať: %1$s </string>
+    <string name="model_browser_add_add">Add: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">Klon: %1$s </string>
+    <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Vložte šablónu, ktorú prehliadač kartičiek použije na zobrazenie vašich kartičiek. Použite to na zobrazenie stručnejšej odpovede.\n\nPredok šablóny\n“Hlavné mesto {{Country}} je:”\nmôže byť v prehliadači kartičiek skrátené na\n“Hlavné mesto: {{Country}}”</string>
     <string name="card_template_browser_appearance_question_format">Formát otázky</string>

@@ -64,9 +64,9 @@
     <string name="model_delete_warning">Sei sicuro/a di voler eliminare questo tipo di nota?</string>
     <string name="field_delete_warning">Sei sicuro di voler eliminare questo campo?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Aggiungi: %1$s </string>
+    <string name="model_browser_add_add">Add: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">Clona: %1$s </string>
+    <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Inserisci il modello che il browser delle carte userà per visualizzare le tue carte. Usa questo per visualizzare una risposta più concisa.\n\nUn modello iniziale di\n«La capitale di {{Country}} è:»\npotrebbe essere compresso nel browser delle carte a\n«Capitale: {{Country}}»</string>
     <string name="card_template_browser_appearance_question_format">Formato della domanda</string>

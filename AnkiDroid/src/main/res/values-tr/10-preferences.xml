@@ -296,7 +296,7 @@
     <string name="pref_cat_dev_options" maxLength="41">Geliştirici seçenekleri</string>
     <string name="dev_options_enabled_pref" maxLength="41">Geliştirici seçeneklerini aç</string>
     <string name="disable_dev_options">Geliştirici seçeneklerini kapat</string>
-    <string name="dev_options_warning">        Lütfen geliştirici seçeneklerini açmadan önce emin olun. Bu seçenekler tehlikelidir ve uygulamayı ya da koleksiyonunuzu bozabilir.\n\nBu seçenekler çoğu kullanıcı için uygun değildir ve çevrilmezler, bu yüzden İngilizce olduklarını göz önünde bulundurun.</string>
+    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
