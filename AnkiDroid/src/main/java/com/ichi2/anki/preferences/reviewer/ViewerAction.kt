@@ -15,6 +15,8 @@
  */
 package com.ichi2.anki.preferences.reviewer
 
+import android.content.SharedPreferences
+import android.view.KeyEvent
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
@@ -23,6 +25,13 @@ import com.ichi2.anki.R
 import com.ichi2.anki.preferences.reviewer.MenuDisplayType.ALWAYS
 import com.ichi2.anki.preferences.reviewer.MenuDisplayType.DISABLED
 import com.ichi2.anki.preferences.reviewer.MenuDisplayType.MENU_ONLY
+import com.ichi2.anki.reviewer.Binding
+import com.ichi2.anki.reviewer.Binding.ModifierKeys
+import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
+import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
+import com.ichi2.anki.reviewer.CardSide
+import com.ichi2.anki.reviewer.MappableAction
+import com.ichi2.anki.reviewer.ReviewerBinding
 
 /**
  * @param menuId menu Id of the action
@@ -32,12 +41,12 @@ import com.ichi2.anki.preferences.reviewer.MenuDisplayType.MENU_ONLY
  * or if the item has a [parentMenu].
  */
 enum class ViewerAction(
-    @IdRes val menuId: Int,
-    @DrawableRes val drawableRes: Int?,
+    @IdRes val menuId: Int = 0,
+    @DrawableRes val drawableRes: Int? = null,
     @StringRes val titleRes: Int = R.string.empty_string,
     val defaultDisplayType: MenuDisplayType? = null,
     val parentMenu: ViewerAction? = null,
-) {
+) : MappableAction<ReviewerBinding> {
     // Always
     UNDO(R.id.action_undo, R.drawable.ic_undo_white, R.string.undo, ALWAYS),
 
@@ -78,9 +87,117 @@ enum class ViewerAction(
     FLAG_PINK(Flag.PINK.id, Flag.PINK.drawableRes, parentMenu = FLAG_MENU),
     FLAG_TURQUOISE(Flag.TURQUOISE.id, Flag.TURQUOISE.drawableRes, parentMenu = FLAG_MENU),
     FLAG_PURPLE(Flag.PURPLE.id, Flag.PURPLE.drawableRes, parentMenu = FLAG_MENU),
+
+    // Command only
+    SHOW_ANSWER,
+    FLIP_OR_ANSWER_EASE1,
+    FLIP_OR_ANSWER_EASE2,
+    FLIP_OR_ANSWER_EASE3,
+    FLIP_OR_ANSWER_EASE4,
+    SHOW_HINT,
+    SHOW_ALL_HINTS,
+    EXIT,
     ;
 
+    override val preferenceKey: String get() = "binding_$name"
+
+    override fun getBindings(prefs: SharedPreferences): List<ReviewerBinding> {
+        val prefValue = prefs.getString(preferenceKey, null) ?: return defaultBindings
+        return ReviewerBinding.fromPreferenceString(prefValue)
+    }
+
+    private val defaultBindings: List<ReviewerBinding> get() =
+        when (this) {
+            UNDO -> listOf(keycode(KeyEvent.KEYCODE_Z, ctrl()))
+            REDO -> listOf(keycode(KeyEvent.KEYCODE_Z, ModifierKeys(shift = true, ctrl = true, alt = false)))
+            MARK -> listOf(unicode('*'))
+            EDIT -> listOf(keycode(KeyEvent.KEYCODE_E))
+            ADD_NOTE -> listOf(keycode(KeyEvent.KEYCODE_A))
+            BURY_NOTE -> listOf(unicode('='))
+            BURY_CARD -> listOf(unicode('-'))
+            SUSPEND_NOTE -> listOf(unicode('!'))
+            SUSPEND_CARD -> listOf(unicode('@'))
+            TOGGLE_AUTO_ADVANCE -> listOf(keycode(KeyEvent.KEYCODE_A, shift()))
+            SHOW_HINT -> listOf(keycode(KeyEvent.KEYCODE_H))
+            SHOW_ALL_HINTS -> listOf(keycode(KeyEvent.KEYCODE_G))
+            FLIP_OR_ANSWER_EASE1 ->
+                listOf(
+                    keycode(KeyEvent.KEYCODE_BUTTON_Y),
+                    keycode(KeyEvent.KEYCODE_1, side = CardSide.ANSWER),
+                    keycode(KeyEvent.KEYCODE_NUMPAD_1, side = CardSide.ANSWER),
+                )
+            FLIP_OR_ANSWER_EASE2 ->
+                listOf(
+                    keycode(KeyEvent.KEYCODE_BUTTON_X),
+                    keycode(KeyEvent.KEYCODE_2, side = CardSide.ANSWER),
+                    keycode(KeyEvent.KEYCODE_NUMPAD_2, side = CardSide.ANSWER),
+                )
+            FLIP_OR_ANSWER_EASE3 ->
+                listOf(
+                    keycode(KeyEvent.KEYCODE_BUTTON_B),
+                    keycode(KeyEvent.KEYCODE_3, side = CardSide.ANSWER),
+                    keycode(KeyEvent.KEYCODE_NUMPAD_3, side = CardSide.ANSWER),
+                    keycode(KeyEvent.KEYCODE_DPAD_CENTER),
+                    keycode(KeyEvent.KEYCODE_SPACE, side = CardSide.BOTH),
+                    keycode(KeyEvent.KEYCODE_ENTER, side = CardSide.ANSWER),
+                    keycode(KeyEvent.KEYCODE_NUMPAD_ENTER, side = CardSide.ANSWER),
+                )
+            FLIP_OR_ANSWER_EASE4 ->
+                listOf(
+                    keycode(KeyEvent.KEYCODE_BUTTON_A),
+                    keycode(KeyEvent.KEYCODE_4, side = CardSide.ANSWER),
+                    keycode(KeyEvent.KEYCODE_NUMPAD_4, side = CardSide.ANSWER),
+                )
+            // No default gestures
+            SHOW_ANSWER,
+            DELETE,
+            CARD_INFO,
+            EXIT,
+            USER_ACTION_1,
+            USER_ACTION_2,
+            USER_ACTION_3,
+            USER_ACTION_4,
+            USER_ACTION_5,
+            USER_ACTION_6,
+            USER_ACTION_7,
+            USER_ACTION_8,
+            USER_ACTION_9,
+            // Menu flag actions. They set the flag, but don't toggle it
+            UNSET_FLAG,
+            FLAG_RED,
+            FLAG_ORANGE,
+            FLAG_BLUE,
+            FLAG_GREEN,
+            FLAG_PINK,
+            FLAG_TURQUOISE,
+            FLAG_PURPLE,
+            // Menu only
+            DECK_OPTIONS,
+            BURY_MENU,
+            SUSPEND_MENU,
+            FLAG_MENU,
+            -> emptyList()
+        }
+
     fun isSubMenu() = ViewerAction.entries.any { it.parentMenu == this }
+
+    private fun keycode(
+        keycode: Int,
+        keys: ModifierKeys = ModifierKeys.none(),
+        side: CardSide = CardSide.BOTH,
+    ): ReviewerBinding {
+        val binding = Binding.keyCode(keycode, keys)
+        return ReviewerBinding(binding = binding, side = side)
+    }
+
+    private fun unicode(
+        unicodeChar: Char,
+        keys: ModifierKeys = ModifierKeys.none(),
+        side: CardSide = CardSide.BOTH,
+    ): ReviewerBinding {
+        val binding = Binding.unicode(unicodeChar, keys)
+        return ReviewerBinding(binding = binding, side = side)
+    }
 
     companion object {
         fun fromId(

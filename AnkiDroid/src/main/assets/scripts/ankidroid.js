@@ -13,3 +13,19 @@ globalThis.ankidroid.userAction = function (number) {
         alert(e);
     }
 };
+
+globalThis.ankidroid.showHint = function () {
+    var hints = document.querySelectorAll("a.hint");
+    for (var i = 0; i < hints.length; i++) {
+        if (hints[i].style.display != "none") {
+            hints[i].click();
+            break;
+        }
+    }
+};
+
+globalThis.ankidroid.showAllHints = function () {
+    document.querySelectorAll("a.hint").forEach(el => {
+        el.click();
+    });
+};
