@@ -611,27 +611,43 @@ class StudyOptionsFragment :
             learningCountText.text = result.lrnCardsToday.toString()
             reviewCountText.text = result.revCardsToday.toString()
             // set bury numbers
-            buryInfoLabel.isVisible = result.buriedNew > 0 || result.buriedLearning > 0 || result.buriedReview > 0
-            newBuryText.text =
-                requireContext().resources.getQuantityString(
-                    R.plurals.studyoptions_buried_count,
-                    result.buriedNew,
-                    result.buriedNew,
-                )
-            newBuryText.isVisible = result.buriedNew != 0
-            learningBuryText.text =
-                requireContext().resources.getQuantityString(
-                    R.plurals.studyoptions_buried_count,
-                    result.buriedLearning,
-                    result.buriedLearning,
-                )
-            learningBuryText.isVisible = result.buriedLearning != 0
-            reviewBuryText.text =
-                requireContext().resources.getQuantityString(
-                    R.plurals.studyoptions_buried_count,
-                    result.buriedReview,
-                    result.buriedReview,
-                )
+            buryInfoLabel.isVisible =
+                result.buriedNew > 0 ||
+                result.buriedLearning > 0 ||
+                result.buriedReview > 0
+            if (result.buriedNew > 0) {
+                newBuryText.text =
+                    requireContext().resources.getQuantityString(
+                        R.plurals.studyoptions_buried_count,
+                        result.buriedNew,
+                        result.buriedNew,
+                    )
+                newBuryText.isVisible = true
+            } else {
+                newBuryText.isVisible = false
+            }
+            if (result.buriedLearning > 0) {
+                learningBuryText.text =
+                    requireContext().resources.getQuantityString(
+                        R.plurals.studyoptions_buried_count,
+                        result.buriedLearning,
+                        result.buriedLearning,
+                    )
+                learningBuryText.isVisible = true
+            } else {
+                learningBuryText.isVisible = false
+            }
+            if (result.buriedReview > 0) {
+                reviewBuryText.text =
+                    requireContext().resources.getQuantityString(
+                        R.plurals.studyoptions_buried_count,
+                        result.buriedReview,
+                        result.buriedReview,
+                    )
+                reviewBuryText.isVisible = true
+            } else {
+                reviewBuryText.isVisible = false
+            }
             reviewBuryText.isVisible = result.buriedReview != 0
             totalNewCardsCount.text = result.totalNewCards.toString()
             totalCardsCount.text = result.numberOfCardsInDeck.toString()
