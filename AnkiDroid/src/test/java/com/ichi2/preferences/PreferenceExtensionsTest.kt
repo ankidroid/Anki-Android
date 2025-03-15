@@ -40,6 +40,13 @@ class PreferenceExtensionsTest {
         supplier: Supplier<String>,
     ): String = mockPreferences.getOrSetString(key, supplier)
 
+    private fun getOrSetLong(
+        key: String,
+        supplier: Supplier<Long>,
+    ): Long = mockPreferences.getOrSetLong(key, supplier)
+
+    // String Tests
+
     @Test
     fun existingKeyReturnsMappedValue() {
         val ret = getOrSetString(VALID_KEY, UNUSED_SUPPLIER)
@@ -69,16 +76,49 @@ class PreferenceExtensionsTest {
         getOrSetString(MISSING_KEY, EXCEPTION_SUPPLIER)
     }
 
+    // Long Tests
+
+    @Test
+    fun existingLongKeyReturnsStoredValue() {
+        mockPreferences.edit { putLong(LONG_VALID_KEY, LONG_VALID_VALUE) }
+        val result = getOrSetLong(LONG_VALID_KEY, LONG_UNUSED_SUPPLIER)
+        assertEquals(LONG_VALID_VALUE, result)
+    }
+
+    @Test
+    fun missingLongKeyPersistsValue() {
+        getOrSetLong(LONG_MISSING_KEY) { LONG_LAMBDA_VALUE }
+        assertEquals(LONG_LAMBDA_VALUE, mockPreferences.getLong(LONG_MISSING_KEY, -1))
+    }
+
+    @Test
+    fun handlesNegativeLongValue() {
+        getOrSetLong(NEGATIVE_TEST_KEY) { LONG_NEGATIVE_VALUE }
+        assertEquals(LONG_NEGATIVE_VALUE, mockPreferences.getLong(NEGATIVE_TEST_KEY, 0))
+    }
+
     private class ExpectedException : RuntimeException()
 
     private class UnexpectedException : RuntimeException()
 
     companion object {
-        private val UNUSED_SUPPLIER = Supplier<String> { throw UnexpectedException() }
-        private val EXCEPTION_SUPPLIER = Supplier<String> { throw ExpectedException() }
+        // String constants
         private const val VALID_KEY = "VALID"
         private const val VALID_RESULT = "WAS VALID KEY"
         private const val MISSING_KEY = "INVALID"
         private const val LAMBDA_RETURN = "LAMBDA"
+
+        // Long constants
+        private const val LONG_VALID_KEY = "LONG_VALID"
+        private const val LONG_VALID_VALUE = 42L
+        private const val LONG_MISSING_KEY = "LONG_INVALID"
+        private const val LONG_LAMBDA_VALUE = 100L
+        private const val LONG_NEGATIVE_VALUE = -500L
+        private const val NEGATIVE_TEST_KEY = "negative_test"
+
+        // Suppliers
+        private val UNUSED_SUPPLIER = Supplier<String> { throw UnexpectedException() }
+        private val EXCEPTION_SUPPLIER = Supplier<String> { throw ExpectedException() }
+        private val LONG_UNUSED_SUPPLIER = Supplier<Long> { throw UnexpectedException() }
     }
 }
