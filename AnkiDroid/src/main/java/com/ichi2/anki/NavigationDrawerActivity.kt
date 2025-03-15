@@ -46,6 +46,7 @@ import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.anki.utils.getIntentWithClearTask
 import com.ichi2.anki.workarounds.FullDraggableContainerFix
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.CardId
@@ -479,9 +480,10 @@ abstract class NavigationDrawerActivity :
                     .build()
 
             // CardBrowser Shortcut
-            val intentCardBrowser = Intent(context, CardBrowser::class.java)
-            intentCardBrowser.action = Intent.ACTION_VIEW
-            intentCardBrowser.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+            val intentCardBrowser =
+                context.getIntentWithClearTask(CardBrowser::class.java) {
+                    action = Intent.ACTION_VIEW
+                }
             val cardBrowserShortcut =
                 ShortcutInfoCompat
                     .Builder(context, "cardBrowserShortcutId")
