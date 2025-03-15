@@ -1734,6 +1734,11 @@ abstract class AbstractFlashcardViewer :
                 true
             }
 
+            ViewerCommand.TOGGLE_ERASER -> {
+                toggleEraser()
+                true
+            }
+
             ViewerCommand.CLEAR_WHITEBOARD -> {
                 clearWhiteboard()
                 true
@@ -1798,6 +1803,10 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun toggleWhiteboard() {
+        // intentionally blank
+    }
+
+    protected open fun toggleEraser() {
         // intentionally blank
     }
 
