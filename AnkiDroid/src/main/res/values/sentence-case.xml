@@ -46,5 +46,7 @@ undoActionUndone()
     <string name="sentence_reposition_new_cards">Reposition new cards</string>
     <string name="sentence_find_and_replace">Find and replace</string>
     <string name="sentence_all_fields">All fields</string>
+    <string name="sentence_choose_tags">Choose tags</string>
+    <string name="sentence_selective_study">Selective study</string>
 
 </resources>
