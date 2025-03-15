@@ -1669,7 +1669,7 @@ fun TestClass.flagCardForNote(
     flag: Flag,
 ) {
     n.firstCard().update {
-        setUserFlag(flag)
+        setUserFlag(flag.code)
     }
 }
 
