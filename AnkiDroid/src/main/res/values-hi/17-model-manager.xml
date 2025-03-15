@@ -64,9 +64,9 @@
     <string name="model_delete_warning">आप सुनिश्चित करें कि आप इस नोटों को हटाना चाहते हैं?</string>
     <string name="field_delete_warning">क्या आप सचमुच इस फ़ील्ड को मिटाना चाहते हैं?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">जोड़ें: %1$s </string>
+    <string name="model_browser_add_add">Add: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">जुड़वाँ: %1$s </string>
+    <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">वह टेम्प्लेट दर्ज करें जिसका उपयोग कार्ड ब्राउज़र आपके कार्ड प्रदर्शित करने के लिए करेगा।अधिक संक्षिप्त उत्तर प्रदर्शित करने के लिए इसका उपयोग करें।\n\n एक \"{{Country}} की राजधानी है:\" अग्र टेम्पलेट को \n कार्ड ब्राउज़र में \n \"राजधानी:{{Country}}\" की तरह संपीड़ित किया जा सकता है I</string>
     <string name="card_template_browser_appearance_question_format">प्रश्न प्रारूप</string>

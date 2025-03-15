@@ -64,9 +64,9 @@
     <string name="model_delete_warning">Sigurado ka ba na nais mong burahin ang uri ng tala na ito?</string>
     <string name="field_delete_warning">Sigurado ka bang nais mong tanggalin ang field na ito?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Magdagdag ng:%1$s</string>
+    <string name="model_browser_add_add">Add: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">I-clone:%1$s </string>
+    <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Ilagay ang template na gagamitin ng card browser upang maipakita ang iyong mga card. Gamitin ito upang maipakita ang mas maiksi na sagot.\n\nAng harap na template ng\n\"Ang kabisera ng {{Country}} ay:\"\nay maaaring paiksiin sa card browser bilang\n\"Kabisera: {{Country}}\"</string>
     <string name="card_template_browser_appearance_question_format">Format ng Tanong</string>

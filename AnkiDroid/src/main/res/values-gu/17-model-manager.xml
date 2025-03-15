@@ -64,9 +64,9 @@
     <string name="model_delete_warning">શું તમે ખરેખર આ નોંધ પ્રકાર કાઢી નાખવા માંગો છો?</string>
     <string name="field_delete_warning">શું તમે ખરેખર આ ફીલ્ડ કાઢી નાખવા માંગો છો?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">ઉમેરો: %1$s</string>
+    <string name="model_browser_add_add">Add: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">ક્લોન: %1$s</string>
+    <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">કાર્ડ બ્રાઉઝર તમારા કાર્ડ પ્રદર્શિત કરવા માટે ઉપયોગ કરશે તે ટેમ્પલેટ દાખલ કરો. વધુ સંક્ષિપ્ત જવાબ પ્રદર્શિત કરવા માટે આનો ઉપયોગ કરો.\n\n\"{{Country}} ની રાજધાની છે:\"\n\"રાજધાની: {{Country}}\"માં સંકુચિત કરી શકાય છે.</string>
     <string name="card_template_browser_appearance_question_format">પ્રશ્ન ફોર્મેટ</string>

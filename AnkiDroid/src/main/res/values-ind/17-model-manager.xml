@@ -62,9 +62,9 @@
     <string name="model_delete_warning">Yakin ingin menghapus tipe catatan ini?</string>
     <string name="field_delete_warning">Yakin ingin menghapus kolom ini?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Tambah: %1$s </string>
+    <string name="model_browser_add_add">Add: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">Duplikat: %1$s </string>
+    <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Masukkan templat yang penelusur kartu akan gunakan untuk menampilkan kartumu. Gunakan ini untuk menampilkan jawaban yang lebih ringkas.\n\nContoh: templat depan\n“Ibukota {{Negara}} adalah:”\nbisa diringkas lagi di penelusur kartu menjadi\n“Ibukota: {{Negara}}”</string>
     <string name="card_template_browser_appearance_question_format">Format pertanyaan</string>

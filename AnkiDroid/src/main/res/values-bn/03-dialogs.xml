@@ -64,7 +64,7 @@
     <string name="answering_error_title">ডাটাবেস ত্রুটি</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">ত্রুটি রিপোর্ট</string>
-    <string name="storage_full_message">AnkiDroid খোলার জন্য পর্যাপ্ত ফ্রি স্টোরেজ স্পেস নেই। চালিয়ে যেতে কিছু জায়গা খালি করুন।</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
     <string name="repair_deck_dialog">আপনি কি ডাটাবেস মেরামত করার চেষ্টা করার বিষয়ে নিশ্চিত?\n\nপ্রয়াস শুরু করার আগে, সাবফোল্ডার “%s”-এ একটি অনুলিপি তৈরি করা হবে।</string>
     <string name="intent_aedict_empty">বিভাগ \"ডিফল্ট\" খালি</string>
     <string name="intent_aedict_category">AnkiDroid-এ কার্ড যোগ করতে নোটপ্যাডের সমস্ত বিভাগ সরিয়ে ফেলুন বা \"ডিফল্ট\" নামে একটি যোগ করুন।</string>
@@ -212,10 +212,8 @@
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">আবার দেখাবেন না</string>
     <string name="dismiss_backup_warning_title">ডেটা হারানোর সতর্কতা</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
-    </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
-    </string>
+    <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
+    <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
     <string name="deck_already_exists">ডেক ইতিমধ্যেই বিদ্যমান</string>
     <string name="empty_deck_name">ডেকের নাম খালি রাখা যাবে না</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>

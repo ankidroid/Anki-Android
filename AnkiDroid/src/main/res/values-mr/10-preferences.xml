@@ -295,7 +295,7 @@
     <string name="pref_cat_dev_options" maxLength="41">विकसक पर्याय</string>
     <string name="dev_options_enabled_pref" maxLength="41">विकसक पर्याय सक्षम करा</string>
     <string name="disable_dev_options">विकसक पर्याय अक्षम करा</string>
-    <string name="dev_options_warning">कृपया विकसक पर्याय सक्षम करण्यापूर्वी खात्री करा. हे पर्याय धोकादायक आहेत आणि ॲप खंडित करू शकतात किंवा तुमचे संग्रहण खराब करू शकतात.\n\nलक्षात ठेवा की हे पर्याय बहुतेक वापरकर्त्यांसाठी योग्य नाहीत आणि म्हणून भाषांतरित केलेले नाहीत, म्हणून ते इंग्रजीमध्ये आहेत.</string>
+    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

@@ -295,7 +295,7 @@
     <string name="pref_cat_dev_options" maxLength="41">ಅಭಿವೃಧಿಕಾರರ ಸೂಚನೆಗಳು</string>
     <string name="dev_options_enabled_pref" maxLength="41">ಡೆವಲಪರ್ ಆಯ್ಕೆಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="disable_dev_options">ಡೆವಲಪರ್ ಆಯ್ಕೆಗಳನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>
-    <string name="dev_options_warning">ಡೆವಲಪರ್ ಆಯ್ಕೆಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸುವ ಮೊದಲು ದಯವಿಟ್ಟು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ. ಈ ಆಯ್ಕೆಗಳು ಅಪಾಯಕಾರಿ ಮತ್ತು ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಒಡೆಯಬಹುದು ಅಥವಾ ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯನ್ನು ಭ್ರಷ್ಟಗೊಳಿಸಬಹುದು.\n\nಈ ಆಯ್ಕೆಗಳು ಹೆಚ್ಚಿನ ಬಳಕೆದಾರರಿಗೆ ಸೂಕ್ತವಲ್ಲ ಮತ್ತು ಆದ್ದರಿಂದ ಅನುವಾದಿಸಲಾಗಿಲ್ಲ, ಆದ್ದರಿಂದ ಅವು ಇಂಗ್ಲಿಷ್‌ನಲ್ಲಿವೆ.</string>
+    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

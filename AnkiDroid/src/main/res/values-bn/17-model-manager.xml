@@ -64,9 +64,9 @@
     <string name="model_delete_warning">আপনি এই নোট টাইপ মুছে ফেলার বিষয়ে নিশ্চিত?</string>
     <string name="field_delete_warning">আপনি এই ক্ষেত্র মুছে ফেলার বিষয়ে নিশ্চিত?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">যোগ করুন: %1$s</string>
+    <string name="model_browser_add_add">Add: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">ক্লোন: %1$s</string>
+    <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
     <string name="card_template_browser_appearance_question_format">প্রশ্ন বিন্যাস</string>

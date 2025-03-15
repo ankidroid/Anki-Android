@@ -64,9 +64,9 @@
     <string name="model_delete_warning">آیا از حذف این نوع یادداشت اطمینان دارید؟</string>
     <string name="field_delete_warning">از حذف این فیلد مطمئن هستید؟</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">افزودن: %1$s </string>
+    <string name="model_browser_add_add">Add: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">بدل: %1$s </string>
+    <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">قالب نمایش کارت برای مرورگر کارت را وارد کنید. از این ویژگی برای نمایش پاسخی مختصر استفاده کنید.\n\nبرای مثال قالب جلویی به شکل:\n\"نام پایتخت برای {{کشور}} چیست؟\"\nرا می‌توانید به‌صورت\n\"پایتخت {{کشور}}؟\"\nخلاصه کنید.</string>
     <string name="card_template_browser_appearance_question_format">قالب سوال</string>

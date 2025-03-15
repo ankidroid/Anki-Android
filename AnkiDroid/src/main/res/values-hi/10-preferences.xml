@@ -293,7 +293,7 @@
     <string name="pref_cat_dev_options" maxLength="41">डेवलपर विकल्प</string>
     <string name="dev_options_enabled_pref" maxLength="41">डेवलपर विकल्प सक्षम करें</string>
     <string name="disable_dev_options">डेवलपर विकल्प अक्षम करें</string>
-    <string name="dev_options_warning">ध्यान दें: डेवलपर विकल्प ऐप या आपके संग्रह को नुकसान पहुंचा सकते हैं, यह इस बात पर निर्भर करता है कि आप उनका उपयोग कैसे करते हैं। \n\nये विकल्प अधिकांश उपयोगकर्ताओं के लिए उपयुक्त नहीं हैं और केवल अंग्रेज़ी में प्रदर्शित होते हैं।</string>
+    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

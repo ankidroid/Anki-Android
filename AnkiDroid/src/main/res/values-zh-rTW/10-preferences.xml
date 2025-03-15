@@ -294,8 +294,7 @@
     <string name="pref_cat_dev_options" maxLength="41">開發人員選項</string>
     <string name="dev_options_enabled_pref" maxLength="41">啟用開發人員選項</string>
     <string name="disable_dev_options">禁用開發人員選項</string>
-    <string name="dev_options_warning">        啟用開發者選項之前，您需要知曉這些選項很危險，可能會破壞應用程序或損壞您的牌組。 \n\n注意這些選項不適合大多數用戶，因而沒有翻譯，所以它們仍以英語顯示。
-    </string>
+    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

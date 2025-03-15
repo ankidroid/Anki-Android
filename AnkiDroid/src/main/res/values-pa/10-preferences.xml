@@ -296,7 +296,7 @@
     <string name="pref_cat_dev_options" maxLength="41">ਵਿਕਾਸਕਾਰ ਵਿਕਲਪ</string>
     <string name="dev_options_enabled_pref" maxLength="41">ਵਿਕਾਸਕਾਰ ਵਿਕਲਪਾਂ ਨੂੰ ਸਮਰੱਥ ਬਣਾਓ</string>
     <string name="disable_dev_options">ਵਿਕਾਸ ਕਾਰਖਾਨੇ ਬਣਾਉਣ ਨੂੰ ਬਣਾਉਣਾ</string>
-    <string name="dev_options_warning">ਕਿਰਪਾ ਕਰਕੇ ਵਿਕਾਸਕਾਰ ਵਿਕਲਪਾਂ ਨੂੰ ਸਮਰੱਥ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਯਕੀਨੀ ਬਣਾਓ। ਇਹ ਵਿਕਲਪ ਖ਼ਤਰਨਾਕ ਹਨ ਅਤੇ ਐਪ ਨੂੰ ਤੋੜ ਸਕਦੇ ਹਨ ਜਾਂ ਤੁਹਾਡੇ ਸੰਗ੍ਰਹਿ ਨੂੰ ਖਰਾਬ ਕਰ ਸਕਦੇ ਹਨ।\n\nਨੋਟ ਕਰੋ ਕਿ ਇਹ ਵਿਕਲਪ ਜ਼ਿਆਦਾਤਰ ਉਪਭੋਗਤਾਵਾਂ ਲਈ ਢੁਕਵੇਂ ਨਹੀਂ ਹਨ ਅਤੇ ਇਸਲਈ ਅਨੁਵਾਦ ਨਹੀਂ ਕੀਤੇ ਗਏ ਹਨ, ਇਸਲਈ ਇਹ ਅੰਗਰੇਜ਼ੀ ਵਿੱਚ ਹਨ।</string>
+    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

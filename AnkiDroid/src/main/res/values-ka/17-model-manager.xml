@@ -64,9 +64,9 @@
     <string name="model_delete_warning">ნამდვილად გსურთ ამ შენიშვნის ტიპის წაშლა?</string>
     <string name="field_delete_warning">ნამდვილად გსურთ ამ ველის წაშლა?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">დამატება: %1$s</string>
+    <string name="model_browser_add_add">Add: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">კლონი: %1$s </string>
+    <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">შეიყვანეთ შაბლონი, რომელსაც ბარათების საძიებო პასუხების შემოკლებული ვერსიების საჩვენებლად გამოიყენებს.\n\n\"{{ქვეყანა}}-ს დედაქალაქი არის:\"\nრომ ავიღოთ მაგალითად, მისი შიგთავსი შეიძლება წინა შაბლონით შემოკლდეს როგორც\n\"დედაქალაქი: {{ქვეყანა}}\"</string>
     <string name="card_template_browser_appearance_question_format">კითხვის ფორმატი</string>

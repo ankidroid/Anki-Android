@@ -64,9 +64,9 @@
     <string name="model_delete_warning">आपली खात्री आहे की आपण हा टीप प्रकार हटवू इच्छिता?</string>
     <string name="field_delete_warning">आपली खात्री आहे की आपण हे फील्ड हटवू इच्छिता?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">जोडा:%1$s</string>
+    <string name="model_browser_add_add">Add: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">क्लोन:%1$s</string>
+    <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">कार्ड ब्राउझर आपली कार्डे प्रदर्शित करण्यासाठी वापरणारे टेम्पलेट प्रविष्ट करा. अधिक संक्षिप्त उत्तर प्रदर्शित करण्यासाठी हे वापरा. ​​\N \n A n \"{{Country}}  ची राजधानी आहे:\" चे पुढील टेम्पलेट: \"\n\" कार्ड ब्राउझरमध्ये \n \"कॅपिटल: {{Country}}\" \"कॉम्प्रेस केले जाईल.</string>
     <string name="card_template_browser_appearance_question_format">प्रश्न स्वरूप</string>

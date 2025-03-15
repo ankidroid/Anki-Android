@@ -296,8 +296,7 @@
     <string name="pref_cat_dev_options" maxLength="41">Opties voor ontwikkelaars</string>
     <string name="dev_options_enabled_pref" maxLength="41">Opties voor ontwikkelaars inschakelen</string>
     <string name="disable_dev_options">Ontwikkelaarsopties uitschakelen</string>
-    <string name="dev_options_warning">        Zorg ervoor dat u zeker bent voordat u de ontwikkelaarsopties inschakelt. Deze opties zijn gevaarlijk en kunnen de app kapot maken of je collectie beschadigen.\n\nMerk op dat deze opties niet geschikt zijn voor de meeste gebruikers en daarom niet vertaald zijn, dus in het Engels zijn.
-    </string>
+    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

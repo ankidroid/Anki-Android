@@ -296,8 +296,7 @@
     <string name="pref_cat_dev_options" maxLength="41">Optziones de isvilupu</string>
     <string name="dev_options_enabled_pref" maxLength="41">Abìlita sas optziones de isvilupu</string>
     <string name="disable_dev_options">Disabìlita sas optziones de isvilupu</string>
-    <string name="dev_options_warning">        Assegura·ti de s\'intentu tuo in antis de abilitare sas optziones de isvilupu. Custas optziones sunt perigulosas e diant pòdere segare s\'aplicatzione o corrùmpere sa colletzione tua.\n\nTene in contu chi custas optziones non sunt adatas pro sa parte manna de sos utentes e pro custa resone non sunt traduidas, duncas sunt in inglesu.
-    </string>
+    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

@@ -296,8 +296,7 @@
     <string name="pref_cat_dev_options" maxLength="41">ഡെവലപ്പർ ഓപ്ഷനുകൾ</string>
     <string name="dev_options_enabled_pref" maxLength="41">ഡെവലപ്പർ ഓപ്ഷനുകൾ പ്രവർത്തനക്ഷമമാക്കുക</string>
     <string name="disable_dev_options">ഡെവലപ്പർ ഓപ്ഷനുകൾ പ്രവർത്തനരഹിതമാക്കുക</string>
-    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
-    </string>
+    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

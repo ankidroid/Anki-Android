@@ -296,8 +296,7 @@
     <string name="pref_cat_dev_options" maxLength="41">Kehittäjän asetukset</string>
     <string name="dev_options_enabled_pref" maxLength="41">Ota kehittäjän asetukset käyttöön</string>
     <string name="disable_dev_options">Poista kehittäjän asetukset käytöstä</string>
-    <string name="dev_options_warning">        Ymmärrä mitä olet tekemässä, ennen kuin otat kehittäjän asetukset käyttöön. Nämä asetukset ovat vaarallisia ja voivat rikkoa sovelluksen tai vahingoittaa kokoelmaasi.\n\nHuomaa, että nämä asetukset eivät sovellu useimmille käyttäjille, ja siksi niitä ei ole käännetty, joten ne ovat englanniksi.
-    </string>
+    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

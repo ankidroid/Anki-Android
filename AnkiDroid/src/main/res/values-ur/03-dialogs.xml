@@ -64,7 +64,7 @@
     <string name="answering_error_title">ڈیٹا بیس کی خرابی۔</string>
     <string name="answering_error_message">مجموعہ پر لکھنا ناکام ہو گیا۔ ڈیٹا بیس کرپٹ ہو سکتا ہے یا ڈسک پر کافی جگہ خالی نہیں ہو سکتی۔\n\nاگر ایسا زیادہ ہوتا ہے تو ڈیٹا بیس کو چیک کرنے، جمع کو ٹھیک کرنے یا اسے بیک اپ سے بحال کرنے کی کوشش کریں۔ اس کے لیے \"اختیارات\" کو ٹچ کریں۔\n\یا یہ AnkiDroid بگ بھی ہو سکتا ہے۔ براہ کرم غلطی کی اطلاع دیں تاکہ ہم اسے چیک کر سکیں۔</string>
     <string name="answering_error_report">غلطی کی اطلاع دیں۔</string>
-    <string name="storage_full_message">AnkiDroid کھولنے کے لیے کافی خالی جگہ نہیں ہے۔ جاری رکھنے کے لیے کچھ جگہ خالی کریں۔</string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
     <string name="repair_deck_dialog">کیا آپ واقعی ڈیٹا بیس کو ٹھیک کرنے کی کوشش کرنا چاہتے ہیں؟\n\nکوشش شروع کرنے سے پہلے، ذیلی فولڈر \"%s\" میں ایک کاپی بنائی جائے گی۔</string>
     <string name="intent_aedict_empty">زمرہ \"ڈیفالٹ\" خالی ہے۔</string>
     <string name="intent_aedict_category">AnkiDroid میں کارڈز شامل کرنے کے لیے تمام نوٹ پیڈ کیٹیگریز کو ہٹا دیں یا \"ڈیفالٹ\" کے نام سے ایک شامل کریں۔</string>
@@ -212,10 +212,8 @@
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">بعد میں</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">دوبارہ نہ دکھائیں</string>
     <string name="dismiss_backup_warning_title">ڈیٹا ضائع ہونے کی وارننگ</string>
-    <string name="dismiss_backup_warning_new_user">       Android پرائیویسی کی تبدیلیوں کی وجہ سے، آپ کا ڈیٹا اور خودکار بیک اپ حذف ہو جائیں گے۔اگر ایپ ان انسٹال ہے تو آپ کے فون سے
-    </string>
-    <string name="dismiss_backup_warning_upgrade">        اینڈرائیڈ پرائیویسی تبدیلیوں کی وجہ سے، آپ کا ڈیٹا اور خودکار بیک اپ ہوں گے اگر ایپ ان انسٹال ہے تو ناقابل رسائی
-    </string>
+    <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
+    <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
     <string name="deck_already_exists">ڈیک پہلے سے موجود ہے</string>
     <string name="empty_deck_name">ڈیک کا نام خالی نہیں ہو سکتا</string>
     <string name="create_deck_numeric_hint">اگر آپ کو ڈیک آرڈر کرنے کے مسائل ہیں (جیسے \'10\' \'2\' سے پہلے ظاہر ہوتا ہے)، \'2\' کو \'02\' سے بدل دیں</string>

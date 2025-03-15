@@ -295,7 +295,7 @@
     <string name="pref_cat_dev_options" maxLength="41">డెవలపర్ ఎంపికలు</string>
     <string name="dev_options_enabled_pref" maxLength="41">డెవలపర్ ఎంపికలను ప్రారంభించండి</string>
     <string name="disable_dev_options">డెవలపర్ ఎంపికలను నిలిపివేయండి</string>
-    <string name="dev_options_warning">దయచేసి డెవలపర్ ఎంపికలను ప్రారంభించే ముందు నిర్ధారించుకోండి. ఈ ఎంపికలు ప్రమాదకరమైనవి మరియు యాప్‌ను విచ్ఛిన్నం చేయవచ్చు లేదా మీ సేకరణకు హాని కలిగించవచ్చు.\n\nఈ ఎంపికలు చాలా మంది వినియోగదారులకు తగినవి కావు మరియు అందువల్ల అనువదించబడలేదు, కాబట్టి అవి ఆంగ్లంలో ఉన్నాయని దయచేసి గమనించండి.</string>
+    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

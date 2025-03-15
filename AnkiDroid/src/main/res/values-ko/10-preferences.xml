@@ -293,7 +293,7 @@
     <string name="pref_cat_dev_options" maxLength="41">개발자 옵션</string>
     <string name="dev_options_enabled_pref" maxLength="41">개발자 옵션 활성화하기</string>
     <string name="disable_dev_options">개발자 옵션 비활성화하기</string>
-    <string name="dev_options_warning">개발자 옵션을 켜기 전에 유의할 점이 있습니다. 이 옵션들은 앱을 고장내거나 카드 모음을 이상하게 만들 위험성이 있습니다. 이 옵션들은 대부분의 유저에게는 사용할 필요가 없기 때문에 영어인 채로 번역되지 않았습니다.</string>
+    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

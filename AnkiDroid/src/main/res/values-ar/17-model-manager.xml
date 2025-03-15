@@ -72,9 +72,9 @@
     <string name="model_delete_warning">هل أنت متأكد من رغبتك في حذف نوع الملحوظة هذا؟</string>
     <string name="field_delete_warning">هل أنت متأكد من رغبتك في حذف هذا الحقل؟</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">إضافة: %1$s </string>
+    <string name="model_browser_add_add">Add: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">استنساخ: %1$s </string>
+    <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">أدخل القالب الذي سيستخدمه متصفح البطاقات لعرض بطاقاتك. استخدم هذا لعرض جواب أقصر.\n\nيمكن اختصار قالب أمامي يحتوي على «عاصمة {{Country}} هي:»\nفي متصفح البطاقات بـ «عاصمة: {{Country}}»</string>
     <string name="card_template_browser_appearance_question_format">صيغة السؤال</string>

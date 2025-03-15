@@ -68,7 +68,7 @@
     <string name="answering_error_title">Помилка бази даних</string>
     <string name="answering_error_message">Під час запису в колекцію сталася помилка. Причиною може бути пошкоджена база даних або відсутність місця на диску.\n\nЯкщо це трапляється частіше, будь ласка, спробуйте перевірити базу даних, полагодити колекцію, або відновити її з резервної копії. Для цього натисніть на «налаштування».\n\nОднак, це також може бути недолік AnkiDroid; будь ласка, надішліть звіт для перевірки цього.</string>
     <string name="answering_error_report">Повідомити про помилку</string>
-    <string name="storage_full_message">Недостатньо вільного місця, щоб відкрити AnkiDroid. Звільніть трохи пам\'яті, аби продовжити. </string>
+    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
     <string name="repair_deck_dialog">Ви дійсно бажаєте спробувати відновити базу даних?\n\nПеред початком спроби в підкаталозі \'%s\' буде створена копія.</string>
     <string name="intent_aedict_empty">Категорія  \"стандартна\"  порожня</string>
     <string name="intent_aedict_category">Щоб додати картки до AnkiDroid, видаліть всі категорії Notepad або додайте категорію \'default\'</string>
@@ -220,10 +220,8 @@
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Пізніше</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Більше не показувати</string>
     <string name="dismiss_backup_warning_title">Ризик втрати даних</string>
-    <string name="dismiss_backup_warning_new_user">        У зв\'язку зі зміною політики конфіденційності Android, ваші дані та автоматизовані резервні копії будуть видалені з вашого пристрою, якщо додаток буде видалено
-    </string>
-    <string name="dismiss_backup_warning_upgrade">        У зв\'язку зі зміною політики конфіденційності Android, ваші дані та автоматизовані резервні копії стануть недоступними, якщо додаток буде видалено
-    </string>
+    <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
+    <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
     <string name="deck_already_exists">Колода вже існує</string>
     <string name="empty_deck_name">Назва колоди не може бути порожньою</string>
     <string name="create_deck_numeric_hint">Якщо у вас є проблеми з порядком колод (наприклад, \'10\' стоїть перед \'2\') - замініть \'2\' на \'02\'</string>

@@ -64,9 +64,9 @@
     <string name="model_delete_warning">మీరు ఈ గమనిక రకాన్ని ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?</string>
     <string name="field_delete_warning">మీరు ఖచ్చితంగా ఈ ఫీల్డ్ని తొలగించాలనుకుంటున్నారా?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">చెరచు %1$s </string>
+    <string name="model_browser_add_add">Add: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">ఒకే రీతి: %1$s </string>
+    <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">మీ కార్డ్‌లను ప్రదర్శించడానికి కార్డ్ బ్రౌజర్ ఉపయోగించే టెంప్లేట్‌ను నమోదు చేయండి. మరింత సంక్షిప్త సమాధానాన్ని ప్రదర్శించడానికి దీన్ని ఉపయోగించండి.\n\n\n బ్రౌజర్‌లో “{{Country}} రాజధాని:”\n ముందు ఉన్న టెంప్లేట్ కార్డ్ “క్యాపిటల్: {{Country}}”కి కుదించబడుతుంది.</string>
     <string name="card_template_browser_appearance_question_format">ప్రశ్న ఫార్మాట్</string>

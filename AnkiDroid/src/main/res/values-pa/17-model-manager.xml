@@ -64,9 +64,9 @@
     <string name="model_delete_warning">ਕੀ ਤੁਸੀਂ ਯਕੀਨੀ ਤੌਰ \'ਤੇ ਇਸ ਨੋਟ ਕਿਸਮ ਨੂੰ ਮਿਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
     <string name="field_delete_warning">ਕੀ ਤੁਸੀਂ ਯਕੀਨੀ ਤੌਰ \'ਤੇ ਇਸ ਖੇਤਰ ਨੂੰ ਮਿਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">ਸ਼ਾਮਲ ਕਰੋ: %1$s</string>
+    <string name="model_browser_add_add">Add: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">ਕਲੋਨ: %1$s</string>
+    <string name="model_browser_add_clone">Clone: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">ਉਹ ਟੈਂਪਲੇਟ ਦਾਖਲ ਕਰੋ ਜਿਸਦੀ ਵਰਤੋਂ ਕਾਰਡ ਬ੍ਰਾਊਜ਼ਰ ਤੁਹਾਡੇ ਕਾਰਡਾਂ ਨੂੰ ਪ੍ਰਦਰਸ਼ਿਤ ਕਰਨ ਲਈ ਕਰੇਗਾ। ਹੋਰ ਸੰਖੇਪ ਜਵਾਬ ਦਿਖਾਉਣ ਲਈ ਇਸਦੀ ਵਰਤੋਂ ਕਰੋ।\n\n“{{Country}} ਦੀ ਰਾਜਧਾਨੀ ਹੈ:”\n\n“ਰਾਜਧਾਨੀ: {{Country}}” ਵਿੱਚ ਸਮੇਟਿਆ ਜਾ ਸਕਦਾ ਹੈ।</string>
     <string name="card_template_browser_appearance_question_format">ਪ੍ਰਸ਼ਨ ਫਾਰਮੈਟ</string>

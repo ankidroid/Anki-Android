@@ -233,7 +233,7 @@
     <string name="note_editor_image_too_large">ছবি খুবই বড়, অনুগ্রহ করে ম্যানুয়ালি ছবি ঢোকান</string>
     <string name="note_editor_video_too_large">ভিডিও ফাইলটি খুব বড়, দয়া করে ভিডিওটি ম্যানুয়ালি ঢোকান৷</string>
     <string name="note_editor_audio_too_large">অডিও ফাইলটি খুব বড়, অনুগ্রহ করে ম্যানুয়ালি অডিও ঢোকান৷</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">অ্যান্ড্রয়েড ব্যাকআপ চলছে। আবার চেষ্টা করুন</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android backup in progress. Please try again</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid-কে শর্টকাট যোগ করার অনুমতি দিতে আপনাকে iManager ব্যবহার করতে হতে পারে</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">আপনার হোম স্ক্রীন AnkiDroid-কে শর্টকাট যোগ করার অনুমতি দেয় না</string>
     <string name="create_shortcut_error">শর্টকাট যোগ করার সময় ত্রুটি: %s</string>
@@ -305,14 +305,14 @@
     <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">রেকর্ডিং সংরক্ষিত হয়</string>
     <string name="deleting_selected_notes">Deleting selected notes</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">শুনতে একটি ভয়েস আলতো চাপুন</string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">ব্যবহারের আগে ভয়েস ইনস্টল করা উচিত</string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">যাইহোক এটি ব্যবহার করুন</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Tap a voice to listen</string>
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use</string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway</string>
     <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">টেক্সট টু স্পিচ ত্রুটি (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
-    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">ইন্টারনেট</string>
-    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">ইনস্টল করুন</string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">টেক্সট টু স্পিচ সেটিংস খুলতে ব্যর্থ হয়েছে</string>
+    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">Internet</string>
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Install</string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Failed to open text to speech settings</string>
     <string name="shared_decks_login_required">আরো ডেক ডাউনলোড করতে লগ ইন করুন</string>
     <string name="deck_description_field_hint">বর্ণনা</string>
     <string name="failed_to_copy">অনুলিপি ব্যর্থ হয়েছে</string>

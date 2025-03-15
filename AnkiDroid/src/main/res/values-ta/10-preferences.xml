@@ -296,8 +296,7 @@
     <string name="pref_cat_dev_options" maxLength="41">டெவலப்பர் விருப்பங்கள்</string>
     <string name="dev_options_enabled_pref" maxLength="41">டெவலப்பர் விருப்பங்களை இயக்கு</string>
     <string name="disable_dev_options">டெவலப்பர் விருப்பங்களை முடக்கு</string>
-    <string name="dev_options_warning">        டெவலப்பர் விருப்பங்களை இயக்கும் முன் உறுதிசெய்யவும். இந்த விருப்பத்தேர்வுகள் ஆபத்தானவை மற்றும் பயன்பாட்டை உடைக்கலாம் அல்லது உங்கள் சேகரிப்பை சிதைக்கலாம்.\n\nஇந்த விருப்பங்கள் பெரபயனர்களுக்குப் பொருந்தாதுொருந்தாது, எனவே அவை மொழிபெயர்க்கப்படவில்லை, எனவே அவை ஆங்கிலத்தில் உள்ளன.
-    </string>
+    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
