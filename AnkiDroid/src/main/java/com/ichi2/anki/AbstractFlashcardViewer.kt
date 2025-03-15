@@ -127,6 +127,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.windows.reviewer.autoadvance.QuestionAction
 import com.ichi2.anki.utils.OnlyOnce.Method.ANSWER_CARD
 import com.ichi2.anki.utils.OnlyOnce.preventSimultaneousExecutions
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -1300,7 +1301,7 @@ abstract class AbstractFlashcardViewer :
         easeButton1!!.performSafeClick()
     }
 
-    override fun automaticShowAnswer() {
+    override fun automaticShowAnswer(action: QuestionAction) {
         if (flipCardLayout!!.isEnabled && flipCardLayout!!.visibility == View.VISIBLE) {
             flipCardLayout!!.performClick()
         }

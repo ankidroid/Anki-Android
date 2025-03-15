@@ -53,11 +53,13 @@ import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import anki.frontend.SetSchedulingStatesRequest
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Whiteboard.Companion.createInstance
 import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
@@ -94,6 +96,7 @@ import com.ichi2.anki.servicelayer.NoteService.toggleMark
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
+import com.ichi2.anki.ui.windows.reviewer.autoadvance.QuestionAction
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.navBarNeedsScrim
 import com.ichi2.anki.utils.remainingTime
@@ -970,6 +973,22 @@ open class Reviewer :
         // explicitly do not call super
         if (easeButton1!!.canPerformClick) {
             action.execute(this)
+        }
+    }
+
+    override fun automaticShowAnswer(action: QuestionAction) {
+        if (flipCardLayout!!.isVisible) {
+            execute(action)
+        }
+    }
+
+    fun execute(action: QuestionAction) {
+        val command = action.toCommand()
+        if (command != null) {
+            Timber.i("Executing %s", command)
+            executeCommand(command)
+        } else {
+            showSnackbar(TR.studyingQuestionTimeElapsed())
         }
     }
 
