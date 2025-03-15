@@ -610,29 +610,27 @@ class StudyOptionsFragment :
             newCountText.text = result.newCardsToday.toString()
             learningCountText.text = result.lrnCardsToday.toString()
             reviewCountText.text = result.revCardsToday.toString()
+
             // set bury numbers
             buryInfoLabel.isVisible = result.buriedNew > 0 || result.buriedLearning > 0 || result.buriedReview > 0
-            newBuryText.text =
-                requireContext().resources.getQuantityString(
-                    R.plurals.studyoptions_buried_count,
-                    result.buriedNew,
-                    result.buriedNew,
-                )
-            newBuryText.isVisible = result.buriedNew != 0
-            learningBuryText.text =
-                requireContext().resources.getQuantityString(
-                    R.plurals.studyoptions_buried_count,
-                    result.buriedLearning,
-                    result.buriedLearning,
-                )
-            learningBuryText.isVisible = result.buriedLearning != 0
-            reviewBuryText.text =
-                requireContext().resources.getQuantityString(
-                    R.plurals.studyoptions_buried_count,
-                    result.buriedReview,
-                    result.buriedReview,
-                )
-            reviewBuryText.isVisible = result.buriedReview != 0
+
+            fun TextView.updateBuryText(count: Int) {
+                this.isVisible = count > 0
+                this.text =
+                    when {
+                        count > 0 ->
+                            requireContext().resources.getQuantityString(
+                                R.plurals.studyoptions_buried_count,
+                                count,
+                                count,
+                            )
+                        // #18094 - potential race condition: view may be visible with a count of 0
+                        else -> ""
+                    }
+            }
+            newBuryText.updateBuryText(result.buriedNew)
+            learningBuryText.updateBuryText(result.buriedLearning)
+            reviewBuryText.updateBuryText(result.buriedReview)
             totalNewCardsCount.text = result.totalNewCards.toString()
             totalCardsCount.text = result.numberOfCardsInDeck.toString()
             // Rebuild the options menu
