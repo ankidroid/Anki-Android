@@ -44,12 +44,13 @@
             android:key="@string/analytics_opt_in_key"
             android:summary="@string/analytics_summ"
             android:title="@string/analytics_title" />
+    <PreferenceCategory android:title="@string/pref_cat_editing">
         <SwitchPreferenceCompat
             android:defaultValue="true"
             android:title="@string/paste_as_png"
-            android:summary="@string/paste_as_png_summary"
             android:maxLength="41"
             android:key="@string/paste_png_key"/>
+    </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_studying">
             <ListPreference
                 android:entries="@array/add_to_cur_labels"
