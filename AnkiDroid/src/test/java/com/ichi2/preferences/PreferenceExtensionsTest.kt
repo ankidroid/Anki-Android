@@ -93,8 +93,8 @@ class PreferenceExtensionsTest {
 
     @Test
     fun handlesNegativeLongValue() {
-        getOrSetLong("negative_test") { LONG_NEGATIVE_VALUE }
-        assertEquals(LONG_NEGATIVE_VALUE, mockPreferences.getLong("negative_test", 0))
+        getOrSetLong(NEGATIVE_TEST_KEY) { LONG_NEGATIVE_VALUE }
+        assertEquals(LONG_NEGATIVE_VALUE, mockPreferences.getLong(NEGATIVE_TEST_KEY, 0))
     }
 
     private class ExpectedException : RuntimeException()
@@ -114,11 +114,11 @@ class PreferenceExtensionsTest {
         private const val LONG_MISSING_KEY = "LONG_INVALID"
         private const val LONG_LAMBDA_VALUE = 100L
         private const val LONG_NEGATIVE_VALUE = -500L
+        private const val NEGATIVE_TEST_KEY = "negative_test"
 
         // Suppliers
         private val UNUSED_SUPPLIER = Supplier<String> { throw UnexpectedException() }
         private val EXCEPTION_SUPPLIER = Supplier<String> { throw ExpectedException() }
         private val LONG_UNUSED_SUPPLIER = Supplier<Long> { throw UnexpectedException() }
-        private val LONG_EXCEPTION_SUPPLIER = Supplier<Long> { throw ExpectedException() }
     }
 }
