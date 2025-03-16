@@ -66,7 +66,7 @@ object NoteService {
                     }
                 note.setField(i, uiTextField)
             }
-            note.modelId = model.getLong("id")
+            note.noteTypeId = model.getLong("id")
         } catch (e: JSONException) {
             Timber.w(e, "Error parsing model: %s", model)
             // Return note with default/empty fields
@@ -77,7 +77,7 @@ object NoteService {
     fun updateMultimediaNoteFromFields(
         col: Collection,
         fields: Array<String>,
-        modelId: NoteTypeId,
+        noteTypeId: NoteTypeId,
         mmNote: MultimediaEditableNote,
     ) {
         for (i in fields.indices) {
@@ -95,7 +95,7 @@ object NoteService {
             field.setFormattedString(col, value)
             mmNote.setField(i, field)
         }
-        mmNote.modelId = modelId
+        mmNote.noteTypeId = noteTypeId
         mmNote.freezeInitialFieldValues()
         // TODO: set current id of the note as well
     }
@@ -112,7 +112,7 @@ object NoteService {
         editorNoteDst: Note,
     ) {
         if (noteSrc is MultimediaEditableNote) {
-            if (noteSrc.modelId != editorNoteDst.noteTypeId) {
+            if (noteSrc.noteTypeId != editorNoteDst.noteTypeId) {
                 throw RuntimeException("Source and Destination Note ID do not match.")
             }
             val totalFields: Int = noteSrc.numberOfFields

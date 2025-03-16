@@ -128,7 +128,7 @@ open class CardTemplateEditor :
     var tempModel: CardTemplateNotetype? = null
         private set
     private var fieldNames: List<String>? = null
-    private var modelId: NoteTypeId = 0
+    private var noteTypeId: NoteTypeId = 0
     private var noteId: NoteId = 0
 
     // the position of the cursor in the editor view
@@ -170,8 +170,8 @@ open class CardTemplateEditor :
         // Load the args either from the intent or savedInstanceState bundle
         if (savedInstanceState == null) {
             // get model id
-            modelId = intent.getLongExtra(EDITOR_NOTE_TYPE_ID, NOT_FOUND_NOTE_TYPE)
-            if (modelId == NOT_FOUND_NOTE_TYPE) {
+            noteTypeId = intent.getLongExtra(EDITOR_NOTE_TYPE_ID, NOT_FOUND_NOTE_TYPE)
+            if (noteTypeId == NOT_FOUND_NOTE_TYPE) {
                 Timber.e("CardTemplateEditor :: no model ID was provided")
                 finish()
                 return
@@ -183,7 +183,7 @@ open class CardTemplateEditor :
             tabToCursorPosition[0] = 0
             tabToViewId[0] = R.id.front_edit
         } else {
-            modelId = savedInstanceState.getLong(EDITOR_NOTE_TYPE_ID)
+            noteTypeId = savedInstanceState.getLong(EDITOR_NOTE_TYPE_ID)
             noteId = savedInstanceState.getLong(EDITOR_NOTE_ID)
             startingOrdId = savedInstanceState.getInt(EDITOR_START_ORD_ID)
             tabToCursorPosition = savedInstanceState.getSerializableCompat<HashMap<Int, Int?>>(TAB_TO_CURSOR_POSITION_KEY)!!
@@ -244,7 +244,7 @@ open class CardTemplateEditor :
     public override fun onSaveInstanceState(outState: Bundle) {
         with(outState) {
             tempModel?.let { putAll(it.toBundle()) }
-            putLong(EDITOR_NOTE_TYPE_ID, modelId)
+            putLong(EDITOR_NOTE_TYPE_ID, noteTypeId)
             putLong(EDITOR_NOTE_ID, noteId)
             putInt(EDITOR_START_ORD_ID, startingOrdId)
             putSerializable(TAB_TO_VIEW_ID, tabToViewId)
@@ -273,7 +273,7 @@ open class CardTemplateEditor :
         // The first time the activity loads it has a model id but no edits yet, so no edited model
         // take the passed model id load it up for editing
         if (tempModel == null) {
-            tempModel = CardTemplateNotetype(NotetypeJson(col.notetypes.get(modelId).toString()))
+            tempModel = CardTemplateNotetype(NotetypeJson(col.notetypes.get(noteTypeId).toString()))
             // Timber.d("onCollectionLoaded() model is %s", mTempModel.getModel().toString(2));
         }
         fieldNames = tempModel!!.notetype.fieldsNames
@@ -289,7 +289,7 @@ open class CardTemplateEditor :
             it.subtitle = tempModel!!.notetype.optString("name")
         }
         // Close collection opening dialog if needed
-        Timber.i("CardTemplateEditor:: Card template editor successfully started for model id %d", modelId)
+        Timber.i("CardTemplateEditor:: Card template editor successfully started for model id %d", noteTypeId)
 
         // Set the tab to the current template if an ord id was provided
         Timber.d("Setting starting tab to %d", startingOrdId)
@@ -299,7 +299,7 @@ open class CardTemplateEditor :
     }
 
     fun modelHasChanged(): Boolean {
-        val oldModel: NotetypeJson? = getColUnsafe.notetypes.get(modelId)
+        val oldModel: NotetypeJson? = getColUnsafe.notetypes.get(noteTypeId)
         return tempModel != null && tempModel!!.notetype.toString() != oldModel.toString()
     }
 
@@ -890,7 +890,7 @@ open class CardTemplateEditor :
 
         @NeedsTest("Notetype is restored to stock kind")
         private suspend fun restoreNotetypeToStock(kind: StockNotetype.Kind? = null) {
-            val nid = notetypeId { ntid = tempModel.modelId }
+            val nid = notetypeId { ntid = tempModel.noteTypeId }
             undoableOp { restoreNotetypeToStock(nid, kind) }
             onModelSaved()
             showThemedToast(
@@ -1129,7 +1129,7 @@ open class CardTemplateEditor :
             // pending deletes could orphan cards
             if (!CardTemplateNotetype.isOrdinalPendingAdd(tempModel!!, position)) {
                 val currentDeletes = tempModel.getDeleteDbOrds(position)
-                val cardIds = withCol { notetypes.getCardIdsForModel(tempModel.modelId, currentDeletes) }
+                val cardIds = withCol { notetypes.getCardIdsForModel(tempModel.noteTypeId, currentDeletes) }
                 if (cardIds == null) {
                     // It is possible but unlikely that a user has an in-memory template addition that would
                     // generate cards making the deletion safe, but we don't handle that. All users who do

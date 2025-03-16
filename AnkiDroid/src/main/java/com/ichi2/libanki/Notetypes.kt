@@ -659,30 +659,30 @@ class Notetypes(
      * This method will either give you all the card ids for the ordinals sent in related to the model sent in *or*
      * it will return null if the result of deleting the ordinals is unsafe because it would leave notes with no cards
      *
-     * @param modelId long id of the JSON model
+     * @param noteTypeId long id of the JSON model
      * @param ords array of ints, each one is the ordinal a the card template in the given model
      * @return null if deleting ords would orphan notes, long[] of related card ids to delete if it is safe
      */
     @Suppress("ktlint:standard:max-line-length")
     fun getCardIdsForModel(
-        modelId: NoteTypeId,
+        noteTypeId: NoteTypeId,
         ords: IntArray,
     ): List<Long>? {
         val cardIdsToDeleteSql =
             "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = ? and c2.ord  in ${Utils.ids2str(ords)}"
-        val cids: List<Long> = col.db.queryLongList(cardIdsToDeleteSql, modelId)
+        val cids: List<Long> = col.db.queryLongList(cardIdsToDeleteSql, noteTypeId)
         // Timber.d("cardIdsToDeleteSql was ' %s' and got %s", cardIdsToDeleteSql, Utils.ids2str(cids));
-        Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.size, modelId, Utils.ids2str(ords))
+        Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.size, noteTypeId, Utils.ids2str(ords))
 
         // all notes with this template must have at least two cards, or we could end up creating orphaned notes
         val noteCountPreDeleteSql = "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?)"
-        val preDeleteNoteCount: Int = col.db.queryScalar(noteCountPreDeleteSql, modelId)
+        val preDeleteNoteCount: Int = col.db.queryScalar(noteCountPreDeleteSql, noteTypeId)
         Timber.d("noteCountPreDeleteSql was '%s'", noteCountPreDeleteSql)
         Timber.d("preDeleteNoteCount is %s", preDeleteNoteCount)
         val noteCountPostDeleteSql =
             "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?) and ord not in ${Utils.ids2str(ords)}"
         Timber.d("noteCountPostDeleteSql was '%s'", noteCountPostDeleteSql)
-        val postDeleteNoteCount: Int = col.db.queryScalar(noteCountPostDeleteSql, modelId)
+        val postDeleteNoteCount: Int = col.db.queryScalar(noteCountPostDeleteSql, noteTypeId)
         Timber.d("postDeleteNoteCount would be %s", postDeleteNoteCount)
         if (preDeleteNoteCount != postDeleteNoteCount) {
             Timber.d("There will be orphan notes if these cards are deleted.")

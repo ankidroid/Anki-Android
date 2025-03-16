@@ -2587,8 +2587,8 @@ class NoteEditor :
     private val currentlySelectedNotetype: NotetypeJson?
         get() =
             noteTypeSpinner?.selectedItemPosition?.let { position ->
-                allModelIds?.get(position)?.let { modelId ->
-                    getColUnsafe.notetypes.get(modelId)
+                allModelIds?.get(position)?.let { noteTypeId ->
+                    getColUnsafe.notetypes.get(noteTypeId)
                 }
             }
 
