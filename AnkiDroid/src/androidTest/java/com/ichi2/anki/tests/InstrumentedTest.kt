@@ -158,22 +158,22 @@ abstract class InstrumentedTest {
     }
 
     @DuplicatedCode("This is copied from RobolectricTest. This will be refactored into a shared library later")
-    internal fun addNoteUsingBasicModel(
+    internal fun addNoteUsingBasicNoteType(
         front: String = "Front",
         back: String = "Back",
-    ): Note = addNoteUsingModelName("Basic", front, back)
+    ): Note = addNoteUsingNoteTypeName("Basic", front, back)
 
     @DuplicatedCode("This is copied from RobolectricTest. This will be refactored into a shared library later")
-    private fun addNoteUsingModelName(
+    private fun addNoteUsingNoteTypeName(
         name: String,
         vararg fields: String,
     ): Note {
-        val model =
+        val noteType =
             col.notetypes.byName(name)
-                ?: throw IllegalArgumentException("Could not find model '$name'")
+                ?: throw IllegalArgumentException("Could not find note type '$name'")
         // PERF: if we modify newNote(), we can return the card and return a Pair<Note, Card> here.
         // Saves a database trip afterwards.
-        val n = col.newNote(model)
+        val n = col.newNote(noteType)
         for ((i, field) in fields.withIndex()) {
             n.setField(i, field)
         }

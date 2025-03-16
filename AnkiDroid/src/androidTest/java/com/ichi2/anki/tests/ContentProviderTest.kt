@@ -1308,7 +1308,7 @@ class ContentProviderTest : InstrumentedTest() {
         val invalid3 = "[anki:play:a:text]" // string instead of text
 
         val back = "$invalid1$invalid2$invalid3"
-        val note = addNoteUsingBasicModel("Hello$sound", back)
+        val note = addNoteUsingBasicNoteType("Hello$sound", back)
         val ord = 0
 
         val noteUri =

@@ -34,8 +34,8 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.LocaleSelectionDialogHandler
-import com.ichi2.anki.dialogs.ModelEditorContextMenu.Companion.newInstance
-import com.ichi2.anki.dialogs.ModelEditorContextMenu.ModelEditorContextMenuAction
+import com.ichi2.anki.dialogs.NoteTypeEditorContextMenu.Companion.newInstance
+import com.ichi2.anki.dialogs.NoteTypeEditorContextMenu.NoteTypeEditorContextMenuAction
 import com.ichi2.anki.servicelayer.LanguageHintService.setLanguageHintForField
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
@@ -501,14 +501,14 @@ class ModelFieldEditor :
         finish()
     }
 
-    fun handleAction(contextMenuAction: ModelEditorContextMenuAction) {
+    fun handleAction(contextMenuAction: NoteTypeEditorContextMenuAction) {
         when (contextMenuAction) {
-            ModelEditorContextMenuAction.Sort -> sortByField()
-            ModelEditorContextMenuAction.Reposition -> repositionFieldDialog()
-            ModelEditorContextMenuAction.Delete -> deleteFieldDialog()
-            ModelEditorContextMenuAction.Rename -> renameFieldDialog()
-            ModelEditorContextMenuAction.ToggleSticky -> toggleStickyField()
-            ModelEditorContextMenuAction.AddLanguageHint -> localeHintDialog()
+            NoteTypeEditorContextMenuAction.Sort -> sortByField()
+            NoteTypeEditorContextMenuAction.Reposition -> repositionFieldDialog()
+            NoteTypeEditorContextMenuAction.Delete -> deleteFieldDialog()
+            NoteTypeEditorContextMenuAction.Rename -> renameFieldDialog()
+            NoteTypeEditorContextMenuAction.ToggleSticky -> toggleStickyField()
+            NoteTypeEditorContextMenuAction.AddLanguageHint -> localeHintDialog()
         }
     }
 

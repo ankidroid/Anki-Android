@@ -69,7 +69,7 @@ class ReviewerFragmentTest : InstrumentedTest() {
             states.good.normal.review.scheduledDays = 123;
             customData.good.c += 1;
             """
-        val note = addNoteUsingBasicModel("foo", "bar")
+        val note = addNoteUsingBasicNoteType("foo", "bar")
         val card = note.firstCard(col)
         val deck = col.decks.get(note.notetype.did)!!
         card.moveToReviewQueue()
@@ -107,7 +107,7 @@ class ReviewerFragmentTest : InstrumentedTest() {
         setNewReviewer()
         // Issue 15035 - runtime errors weren't handled
         col.cardStateCustomizer = "states.this_is_not_defined.normal.review = 12;"
-        addNoteUsingBasicModel()
+        addNoteUsingBasicNoteType()
 
         closeGetStartedScreenIfExists()
         closeBackupCollectionDialogIfExists()

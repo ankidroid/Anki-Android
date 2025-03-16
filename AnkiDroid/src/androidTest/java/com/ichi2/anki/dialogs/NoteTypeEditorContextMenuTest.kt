@@ -23,25 +23,25 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
-import com.ichi2.anki.dialogs.ModelEditorContextMenu.ModelEditorContextMenuAction
+import com.ichi2.anki.dialogs.NoteTypeEditorContextMenu.NoteTypeEditorContextMenuAction
 import com.ichi2.anki.tests.InstrumentedTest
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class ModelEditorContextMenuTest : InstrumentedTest() {
+class NoteTypeEditorContextMenuTest : InstrumentedTest() {
     private val testDialogTitle = "test editor title"
 
     @Test
     @Ignore("flaky")
     fun showsAllOptions() {
         launchFragment(
-            fragmentArgs = bundleOf(ModelEditorContextMenu.KEY_LABEL to testDialogTitle),
+            fragmentArgs = bundleOf(NoteTypeEditorContextMenu.KEY_LABEL to testDialogTitle),
             themeResId = R.style.Theme_Light,
-        ) { ModelEditorContextMenu() }
+        ) { NoteTypeEditorContextMenu() }
         onView(withText(testDialogTitle)).check(matches(isDisplayed()))
-        ModelEditorContextMenuAction.entries.forEach {
+        NoteTypeEditorContextMenuAction.entries.forEach {
             onView(withText(it.actionTextId)).check(matches(isDisplayed()))
         }
     }
