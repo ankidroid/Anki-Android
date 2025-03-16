@@ -170,7 +170,7 @@ open class CardTemplateEditor :
         // Load the args either from the intent or savedInstanceState bundle
         if (savedInstanceState == null) {
             // get model id
-            modelId = intent.getLongExtra(EDITOR_MODEL_ID, NOT_FOUND_NOTE_TYPE)
+            modelId = intent.getLongExtra(EDITOR_NOTE_TYPE_ID, NOT_FOUND_NOTE_TYPE)
             if (modelId == NOT_FOUND_NOTE_TYPE) {
                 Timber.e("CardTemplateEditor :: no model ID was provided")
                 finish()
@@ -183,7 +183,7 @@ open class CardTemplateEditor :
             tabToCursorPosition[0] = 0
             tabToViewId[0] = R.id.front_edit
         } else {
-            modelId = savedInstanceState.getLong(EDITOR_MODEL_ID)
+            modelId = savedInstanceState.getLong(EDITOR_NOTE_TYPE_ID)
             noteId = savedInstanceState.getLong(EDITOR_NOTE_ID)
             startingOrdId = savedInstanceState.getInt(EDITOR_START_ORD_ID)
             tabToCursorPosition = savedInstanceState.getSerializableCompat<HashMap<Int, Int?>>(TAB_TO_CURSOR_POSITION_KEY)!!
@@ -244,7 +244,7 @@ open class CardTemplateEditor :
     public override fun onSaveInstanceState(outState: Bundle) {
         with(outState) {
             tempModel?.let { putAll(it.toBundle()) }
-            putLong(EDITOR_MODEL_ID, modelId)
+            putLong(EDITOR_NOTE_TYPE_ID, modelId)
             putLong(EDITOR_NOTE_ID, noteId)
             putInt(EDITOR_START_ORD_ID, startingOrdId)
             putSerializable(TAB_TO_VIEW_ID, tabToViewId)
@@ -1394,7 +1394,7 @@ open class CardTemplateEditor :
         private const val TAB_TO_CURSOR_POSITION_KEY = "tabToCursorPosition"
         private const val EDITOR_VIEW_ID_KEY = "editorViewId"
         private const val TAB_TO_VIEW_ID = "tabToViewId"
-        private const val EDITOR_MODEL_ID = "modelId"
+        private const val EDITOR_NOTE_TYPE_ID = "noteTypeId"
         private const val EDITOR_NOTE_ID = "noteId"
         private const val EDITOR_START_ORD_ID = "ordId"
         private const val CARD_INDEX = "card_ord"

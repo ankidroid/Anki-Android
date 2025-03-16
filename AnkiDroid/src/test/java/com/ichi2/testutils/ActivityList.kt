@@ -103,7 +103,7 @@ object ActivityList {
         }
     }
 
-    private fun intentForCardTemplateEditor(): Intent = Intent().apply { putExtra("modelId", 1L) }
+    private fun intentForCardTemplateEditor(): Intent = Intent().apply { putExtra("noteTypeId", 1L) }
 
     class ActivityLaunchParam(
         var activity: Class<out Activity>,
