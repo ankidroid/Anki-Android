@@ -87,8 +87,8 @@ class Notetypes(
         // legacy code expects preserve_usn=false behaviour, but that
         // causes a backup entry to be created, which invalidates the
         // v2 review history. So we manually update the usn/mtime here
-        notetype.put("mod", TimeManager.time.intTime())
-        notetype.put("usn", col.usn())
+        notetype.mod = TimeManager.time.intTime()
+        notetype.usn = col.usn()
         update(notetype, preserveUsnAndMtime = true)
     }
 
@@ -211,8 +211,8 @@ class Notetypes(
     fun new(name: String): NotetypeJson {
         // caller should call save() after modifying
         val nt = newBasicNotetype()
-        nt.flds = Fields(JSONArray())
-        nt.tmpls = CardTemplates(JSONArray())
+        nt.fields = Fields(JSONArray())
+        nt.templates = CardTemplates(JSONArray())
         nt.name = name
         return nt
     }
@@ -280,7 +280,7 @@ class Notetypes(
      */
 
     @NotInLibAnki
-    fun nids(model: NotetypeJson): List<int> = nids(model.getLong("id"))
+    fun nids(model: NotetypeJson): List<int> = nids(model.id)
 
     /** Note ids for M. */
     fun nids(ntid: int): List<int> = col.db.queryLongList("select id from notes where mid = ?", ntid)
@@ -324,7 +324,7 @@ class Notetypes(
     @LibAnkiAlias("new_field")
     fun newField(name: String): Field {
         val nt = newBasicNotetype()
-        val field = nt.flds[0]
+        val field = nt.fields[0]
         field.name = name
         field.setOrd(null)
         return field
@@ -336,7 +336,7 @@ class Notetypes(
         notetype: NotetypeJson,
         field: Field,
     ) {
-        notetype.flds.append(field)
+        notetype.fields.append(field)
     }
 
     /** Modifies schema. */
@@ -345,7 +345,7 @@ class Notetypes(
         notetype: NotetypeJson,
         field: Field,
     ) {
-        notetype.flds.remove(field)
+        notetype.fields.remove(field)
     }
 
     /** Modifies schema. */
@@ -355,13 +355,13 @@ class Notetypes(
         field: Field,
         idx: Int,
     ) {
-        val oldidx = notetype.flds.index(field).get()
+        val oldidx = notetype.fields.index(field).get()
         if (oldidx == idx) {
             return
         }
 
-        notetype.flds.remove(field)
-        notetype.flds.insert(idx, field)
+        notetype.fields.remove(field)
+        notetype.fields.insert(idx, field)
     }
 
     @LibAnkiAlias("rename_field")
@@ -370,7 +370,7 @@ class Notetypes(
         field: Field,
         newName: String,
     ) {
-        check(notetype.flds.contains(field)) { "Field to be renamed was not found in the notetype fields" }
+        check(notetype.fields.contains(field)) { "Field to be renamed was not found in the notetype fields" }
         field.name = newName
     }
 
@@ -380,7 +380,7 @@ class Notetypes(
         nt: NotetypeJson,
         idx: Int,
     ) {
-        require(0 <= idx && idx < len(nt.flds)) { "Selected sort field's index is not valid" }
+        require(0 <= idx && idx < len(nt.fields)) { "Selected sort field's index is not valid" }
         nt.sortf = idx
     }
 
@@ -494,7 +494,7 @@ class Notetypes(
     @LibAnkiAlias("new_template")
     fun newTemplate(name: String): CardTemplate {
         val nt = newBasicNotetype()
-        val template = nt.tmpls[0]
+        val template = nt.templates[0]
         template.name = name
         template.qfmt = ""
         template.afmt = ""
@@ -508,7 +508,7 @@ class Notetypes(
         notetype: NotetypeJson,
         template: CardTemplate,
     ) {
-        notetype.tmpls.append(template)
+        notetype.templates.append(template)
     }
 
     /** Modifies schema */
@@ -517,8 +517,8 @@ class Notetypes(
         notetype: NotetypeJson,
         template: CardTemplate,
     ) {
-        check(len(notetype.tmpls) > 1) { "Attempting to remove the last template" }
-        notetype.tmpls.remove(template)
+        check(len(notetype.templates) > 1) { "Attempting to remove the last template" }
+        notetype.templates.remove(template)
     }
 
     /** Modifies schema. */
@@ -528,13 +528,13 @@ class Notetypes(
         template: CardTemplate,
         idx: Int,
     ) {
-        val oldidx = notetype.tmpls.index(template).get()
+        val oldidx = notetype.templates.index(template).get()
         if (oldidx == idx) {
             return
         }
 
-        notetype.tmpls.remove(template)
-        notetype.tmpls.insert(idx, template)
+        notetype.templates.remove(template)
+        notetype.templates.insert(idx, template)
     }
 
     /** legacy */
@@ -638,10 +638,10 @@ class Notetypes(
     /** Return a hash of the schema, to see if models are compatible. */
     fun scmhash(notetype: NotetypeJson): String {
         var s = ""
-        for (f in notetype.flds) {
+        for (f in notetype.fields) {
             s += f.name
         }
-        for (t in notetype.tmpls) {
+        for (t in notetype.templates) {
             s += t.name
         }
         return checksum(s)
@@ -707,13 +707,13 @@ class Notetypes(
 
         /** "Mapping of field name -> (ord, field).  */
         fun fieldMap(notetype: NotetypeJson): Map<String, Pair<Int, Field>> =
-            notetype.flds.associateBy({ f -> f.name }, { f -> Pair(f.ord, f) })
+            notetype.fields.associateBy({ f -> f.name }, { f -> Pair(f.ord, f) })
 
         // not in anki
-        fun isModelNew(notetype: NotetypeJson): Boolean = notetype.getLong("id") == 0L
+        fun isModelNew(notetype: NotetypeJson): Boolean = notetype.id == 0L
 
         fun _updateTemplOrds(notetype: NotetypeJson) {
-            for ((i, template) in notetype.tmpls.withIndex()) {
+            for ((i, template) in notetype.templates.withIndex()) {
                 template.setOrd(i)
             }
         }
@@ -756,9 +756,8 @@ fun Collection.getNotetypeNames(): List<NotetypeNameId> = backend.getNotetypeNam
 
 fun Collection.addNotetypeLegacy(json: ByteString): OpChangesWithId = backend.addNotetypeLegacy(json = json)
 
-fun Collection.getStockNotetypeLegacy(kind: StockNotetype.Kind): ByteString = backend.getStockNotetypeLegacy(kind = kind)
-
-fun Collection.getStockNotetype(kind: StockNotetype.Kind): NotetypeJson = NotetypeJson(fromJsonBytes(getStockNotetypeLegacy(kind)))
+fun Collection.getStockNotetype(kind: StockNotetype.Kind): NotetypeJson =
+    NotetypeJson(fromJsonBytes(backend.getStockNotetypeLegacy(kind = kind)))
 
 /**
  * Restores a notetype to its original stock kind.

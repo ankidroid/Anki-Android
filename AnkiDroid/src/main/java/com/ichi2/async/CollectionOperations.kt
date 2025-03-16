@@ -45,12 +45,12 @@ fun saveModel(
     templateChanges: ArrayList<Array<Any>>,
 ) {
     Timber.d("doInBackgroundSaveModel")
-    val oldModel = col.notetypes.get(notetype.getLong("id"))
+    val oldModel = col.notetypes.get(notetype.id)
 
     // TODO: make undoable
-    val newTemplates = notetype.tmpls
+    val newTemplates = notetype.templates
     for (change in templateChanges) {
-        val oldTemplates = oldModel!!.tmpls
+        val oldTemplates = oldModel!!.templates
         when (change[1] as CardTemplateNotetype.ChangeType) {
             CardTemplateNotetype.ChangeType.ADD -> {
                 Timber.d("doInBackgroundSaveModel() adding template %s", change[0])
@@ -65,7 +65,7 @@ fun saveModel(
 
     // required for Rust: the modified time can't go backwards, and we updated the model by adding fields
     // This could be done better
-    notetype.put("mod", oldModel!!.getLong("mod"))
+    notetype.mod = oldModel!!.mod
     col.notetypes.save(notetype)
     col.notetypes.update(notetype)
 }
