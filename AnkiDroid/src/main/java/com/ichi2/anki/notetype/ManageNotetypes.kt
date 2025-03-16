@@ -73,7 +73,7 @@ class ManageNotetypes : AnkiActivity() {
                     ),
                 )
             },
-            onEditCards = { launchForChanges<CardTemplateEditor>(mapOf("modelId" to it.id)) },
+            onEditCards = { launchForChanges<CardTemplateEditor>(mapOf("noteTypeId" to it.id)) },
             onRename = ::renameNotetype,
             onDelete = ::deleteNotetype,
         )

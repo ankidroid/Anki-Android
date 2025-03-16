@@ -1638,10 +1638,10 @@ class NoteEditor :
     private fun showCardTemplateEditor() {
         val intent = Intent(requireContext(), CardTemplateEditor::class.java)
         // Pass the model ID
-        intent.putExtra("modelId", currentlySelectedNotetype!!.id)
+        intent.putExtra("noteTypeId", currentlySelectedNotetype!!.id)
         Timber.d(
             "showCardTemplateEditor() for model %s",
-            intent.getLongExtra("modelId", NOT_FOUND_NOTE_TYPE),
+            intent.getLongExtra("noteTypeId", NOT_FOUND_NOTE_TYPE),
         )
         // Also pass the note id and ord if not adding new note
         if (!addNote && currentEditedCard != null) {
