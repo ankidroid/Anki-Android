@@ -26,7 +26,6 @@ import androidx.preference.PreferenceFragmentCompat
 import com.bytehamster.lib.preferencesearch.SearchConfiguration
 import com.bytehamster.lib.preferencesearch.SearchPreference
 import com.ichi2.anki.BuildConfig
-import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.settings.Prefs
@@ -51,7 +50,7 @@ class HeaderFragment :
         setPreferencesFromResource(R.xml.preference_headers, rootKey)
 
         requirePreference<HeaderPreference>(R.string.pref_backup_limits_screen_key)
-            .title = CollectionManager.TR.preferencesBackups()
+            .title = TR.preferencesBackups()
 
         requirePreference<Preference>(R.string.pref_advanced_screen_key).apply {
             if (AdaptionUtil.isXiaomiRestrictedLearningDevice) {
@@ -143,6 +142,11 @@ class HeaderFragment :
                             R.string.card_browser_enable_external_context_menu,
                             activity.getString(R.string.context_menu_anki_card_label),
                         ),
+                    ).withSummary(
+                        activity.getString(
+                            R.string.card_browser_enable_external_context_menu_summary,
+                            activity.getString(R.string.context_menu_anki_card_label),
+                        ),
                     ).withResId(R.xml.preferences_general)
                     .addBreadcrumb(activity.getString(R.string.pref_cat_general))
                     .addBreadcrumb(activity.getString(R.string.pref_cat_system_wide))
@@ -154,9 +158,31 @@ class HeaderFragment :
                             R.string.card_browser_enable_external_context_menu,
                             activity.getString(R.string.card_browser_context_menu),
                         ),
+                    ).withSummary(
+                        activity.getString(
+                            R.string.card_browser_enable_external_context_menu_summary,
+                            activity.getString(R.string.card_browser_context_menu),
+                        ),
                     ).withResId(R.xml.preferences_general)
                     .addBreadcrumb(activity.getString(R.string.pref_cat_general))
                     .addBreadcrumb(activity.getString(R.string.pref_cat_system_wide))
+
+                indexItem()
+                    .withKey(activity.getString(R.string.show_audio_play_buttons_key))
+                    .withTitle(
+                        TR.preferencesShowPlayButtonsOnCardsWith(),
+                    ).withResId(R.xml.preferences_appearance)
+                    .addBreadcrumb(activity.getString(R.string.pref_cat_appearance))
+                    .addBreadcrumb(activity.getString(R.string.pref_cat_reviewer))
+
+                indexItem()
+                    .withKey(activity.getString(R.string.one_way_sync_key))
+                    .withTitle(
+                        activity.getString(R.string.one_way_sync_title),
+                    ).withSummary(TR.preferencesOnNextSyncForceChangesIn())
+                    .withResId(R.xml.preferences_sync)
+                    .addBreadcrumb(activity.getString(R.string.pref_cat_sync))
+                    .addBreadcrumb(activity.getString(R.string.pref_cat_advanced))
             }
 
             // Some preferences and categories are only shown conditionally,
