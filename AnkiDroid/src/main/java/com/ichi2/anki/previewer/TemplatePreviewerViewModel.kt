@@ -228,7 +228,7 @@ class TemplatePreviewerViewModel(
  */
 @Parcelize
 data class TemplatePreviewerArguments(
-    private val notetypeFile: NotetypeFile,
+    private val noteTypeFile: NotetypeFile,
     val fields: MutableList<String>,
     val tags: MutableList<String>,
     val id: NoteId = 0,
@@ -236,5 +236,5 @@ data class TemplatePreviewerArguments(
     val fillEmpty: Boolean = false,
     val deckId: DeckId = DEFAULT_DECK_ID,
 ) : Parcelable {
-    val notetype: NotetypeJson get() = notetypeFile.getNotetype()
+    val notetype: NotetypeJson get() = noteTypeFile.getNotetype()
 }

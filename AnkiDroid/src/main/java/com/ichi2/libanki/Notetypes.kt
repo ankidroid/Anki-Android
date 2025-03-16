@@ -664,7 +664,7 @@ class Notetypes(
      * @return null if deleting ords would orphan notes, long[] of related card ids to delete if it is safe
      */
     @Suppress("ktlint:standard:max-line-length")
-    fun getCardIdsForModel(
+    fun getCardIdsForNoteType(
         noteTypeId: NoteTypeId,
         ords: IntArray,
     ): List<Long>? {
