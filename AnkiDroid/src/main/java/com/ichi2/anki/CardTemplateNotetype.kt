@@ -70,7 +70,7 @@ class CardTemplateNotetype(
     val templateCount: Int
         get() = notetype.tmpls.length()
 
-    val modelId: NoteTypeId
+    val noteTypeId: NoteTypeId
         get() = notetype.getLong("id")
 
     fun updateCss(css: String?) {

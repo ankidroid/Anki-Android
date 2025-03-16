@@ -34,7 +34,7 @@ class MultimediaEditableNote : IMultimediaEditableNote {
     override var isModified = false
         private set
     private var fields: ArrayList<IField?>? = null
-    var modelId: NoteTypeId = 0
+    var noteTypeId: NoteTypeId = 0
 
     /**
      * Field values in the note editor, before any editing has taken place

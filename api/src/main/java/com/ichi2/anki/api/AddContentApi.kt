@@ -154,14 +154,14 @@ public class AddContentApi(
      *
      * Example usage:
      * ```
-     *     Long modelId = getModelId(); // implementation can be seen in api sample app
+     *     Long noteTypeId = getModelId(); // implementation can be seen in api sample app
      *     Long deckId = getDeckId(); // as above
      *     Set<String> tags = getTags(); // as above
      *     Uri fileUri = ... // this will be returned by a File Picker activity where we select an image file
      *     String addedImageFileName = mApi.addMediaFromUri(fileUri, "My_Image_File", "image");
      *
      *     String[] fields = new String[] {"text on front of card", "text on back of card " + addedImageFileName};
-     *     mApi.addNote(modelId, deckId, fields, tags)
+     *     mApi.addNote(noteTypeId, deckId, fields, tags)
      * ```
      *
      * @param fileUri   Uri for the file to be added, required.
@@ -480,13 +480,13 @@ public class AddContentApi(
         val models: MutableMap<Long, String> = HashMap()
         allModelsQuery.use { allModelsCursor ->
             while (allModelsCursor.moveToNext()) {
-                val modelId = allModelsCursor.getLong(allModelsCursor.getColumnIndex(Model._ID))
+                val noteTypeId = allModelsCursor.getLong(allModelsCursor.getColumnIndex(Model._ID))
                 val name = allModelsCursor.getString(allModelsCursor.getColumnIndex(Model.NAME))
                 val flds =
                     allModelsCursor.getString(allModelsCursor.getColumnIndex(Model.FIELD_NAMES))
                 val numFlds: Int = Utils.splitFields(flds).size
                 if (numFlds >= minNumFields) {
-                    models[modelId] = name
+                    models[noteTypeId] = name
                 }
             }
         }
@@ -626,7 +626,7 @@ public class AddContentApi(
         /**
          * Query all notes for a given model
          * @param modelId the model ID to limit query to
-         * @return a cursor with all notes matching modelId
+         * @return a cursor with all notes matching noteTypeId
          */
         fun queryNotes(modelId: Long): Cursor?
 
