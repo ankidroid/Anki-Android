@@ -41,8 +41,8 @@ class NotetypeTest : InstrumentedTest() {
             "This test is flaky on API29, ignoring",
             Build.VERSION.SDK_INT != Build.VERSION_CODES.Q,
         )
-        val models = testCol.notetypes
-        val model = models.all()[0]
+        val noteTypes = testCol.notetypes
+        val noteType = noteTypes.all()[0]
         val testString = "test"
         val size = testString.length * 1024 * 1024
         val buf = StringBuilder((size * 1.01).toInt())
@@ -50,12 +50,12 @@ class NotetypeTest : InstrumentedTest() {
         for (i in 0 until 1024 * 1024) {
             buf.append(testString)
         }
-        model.put(testString, buf.toString())
+        noteType.put(testString, buf.toString())
         // Buf should be more than 4MB, so at least two chunks from database.
 
         // Reload models
         testCol.load()
-        val newModel = models.all()[0]
-        assertEquals(newModel, model)
+        val newNoteType = noteTypes.all()[0]
+        assertEquals(newNoteType, noteType)
     }
 }

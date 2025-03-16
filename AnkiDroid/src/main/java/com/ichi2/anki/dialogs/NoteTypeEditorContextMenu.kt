@@ -18,11 +18,11 @@ import timber.log.Timber
 /**
  * Note: the class is declared as open only to support testing.
  */
-open class ModelEditorContextMenu : AnalyticsDialogFragment() {
+open class NoteTypeEditorContextMenu : AnalyticsDialogFragment() {
     @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        val availableItems = ModelEditorContextMenuAction.entries.sortedBy { it.order }
+        val availableItems = NoteTypeEditorContextMenuAction.entries.sortedBy { it.order }
 
         return AlertDialog.Builder(requireActivity()).create {
             setTitle(requireArguments().getString(KEY_LABEL))
@@ -33,7 +33,7 @@ open class ModelEditorContextMenu : AnalyticsDialogFragment() {
         }
     }
 
-    enum class ModelEditorContextMenuAction(
+    enum class NoteTypeEditorContextMenuAction(
         val order: Int,
         @StringRes val actionTextId: Int,
     ) {
@@ -49,8 +49,8 @@ open class ModelEditorContextMenu : AnalyticsDialogFragment() {
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         const val KEY_LABEL = "key_label"
 
-        fun newInstance(label: String): ModelEditorContextMenu =
-            ModelEditorContextMenu().apply {
+        fun newInstance(label: String): NoteTypeEditorContextMenu =
+            NoteTypeEditorContextMenu().apply {
                 arguments = bundleOf(KEY_LABEL to label)
             }
     }
