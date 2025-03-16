@@ -89,8 +89,8 @@
         <item quantity="many">+%d přeskočené</item>
         <item quantity="other">+%d přeskočených</item>
     </plurals>
-    <string name="studyoptions_total_new_label">Total new cards</string>
-    <string name="studyoptions_total_label">Total cards</string>
+    <string name="studyoptions_total_new_label">Všechny nové kartičky</string>
+    <string name="studyoptions_total_label">Všechny karty</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Upravit poznámku</string>
     <string name="discard">Zahodit</string>

@@ -137,7 +137,7 @@
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Wollen Sie die Synchronisation abbrechen?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Synchronisierung fortsetzen</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synchronisation abgebrochen</string>
-    <string name="sync_cancel_message" tools:ignore="UnusedResources">Breche ab&#8230;\nDies kann einige Zeit dauern.</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Breche ab &#8230;\nDies kann einige Zeit dauern.</string>
     <string name="syncing_media">Synchronisiere Medien</string>
     <string name="export_deck" maxLength="28">Stapel exportieren</string>
     <string name="export_collection">Sammlung exportieren</string>

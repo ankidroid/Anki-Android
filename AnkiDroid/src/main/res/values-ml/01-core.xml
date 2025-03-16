@@ -84,7 +84,7 @@
     <string name="redo" maxLength="28">വീണ്ടും ചെയ്യുക</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">സ്ട്രോക്ക് പഴയപടിയാക്കുക</string>
     <string name="move_all_to_deck">എല്ലാം ഡെക്കിലേക്ക് നീക്കുക</string>
-    <string name="unbury" maxLength="28"> അൺബറി</string>
+    <string name="unbury" maxLength="28">അൺബറി</string>
     <string name="rename_deck" maxLength="28">ഡെക്കിന്റെ പേരുമാറ്റുക</string>
     <string name="create_shortcut">കുറുക്കുവഴി സൃഷ്ടിക്കുക</string>
     <string name="browse_cards">കാർഡുകൾ ബ്രൗസ് ചെയ്യുക</string>

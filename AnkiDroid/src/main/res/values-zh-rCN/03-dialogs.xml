@@ -62,7 +62,7 @@
     <string name="answering_error_title">数据库错误</string>
     <string name="answering_error_message">写入集合时出错。可能是数据库损坏，或者磁盘空间不足。\n\n如果频繁发生此错误，请检查数据库，修复集合或从备份中恢复。点击\"选项\"按钮以执行上述操作。\n\n当然，也可能只是 AnkiDroid 的 bug，请报告这个错误，我们会尽力解决。</string>
     <string name="answering_error_report">报告错误</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
+    <string name="storage_full_message">没有足够的可用存储空间来打开AnkiDroid。释放一些空间以继续。</string>
     <string name="repair_deck_dialog">确实要尝试修复数据库吗？\n\n在开始前，副本将保存在子目录“%s”里。</string>
     <string name="intent_aedict_empty">类别“默认”为空</string>
     <string name="intent_aedict_category">向AnkiDroid中添加卡牌，需要删除所有NotePad类别，或者添加“默认(default)”类别。</string>
@@ -208,8 +208,8 @@
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">稍后</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">不再显示</string>
     <string name="dismiss_backup_warning_title">数据丢失警告</string>
-    <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
-    <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
+    <string name="dismiss_backup_warning_new_user">由于 Android 隐私发生变化，如果应用被卸载，您的数据和自动备份将从您的手机中删除</string>
+    <string name="dismiss_backup_warning_upgrade">由于Android 隐私发生变化，如果应用被卸载，您的数据和自动备份将无法访问</string>
     <string name="deck_already_exists">牌组已存在</string>
     <string name="empty_deck_name">牌组名称不能为空</string>
     <string name="create_deck_numeric_hint">如果您有牌组排序问题 (例如“10”出现在“2”之前)，用“02”替换“2”</string>

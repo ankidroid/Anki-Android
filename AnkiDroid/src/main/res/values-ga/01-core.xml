@@ -81,9 +81,9 @@
     <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">Clóscríobh freagra </string>
+    <string name="type_answer_hint">Clóscríobh freagra</string>
     <string name="show_answer" maxLength="41">Taispeáin freagra</string>
-    <string name="hide_answer">Cuir freagra i bhfolach </string>
+    <string name="hide_answer">Cuir freagra i bhfolach</string>
     <string name="ease_button_again" maxLength="41">Arís</string>
     <string name="ease_button_hard" maxLength="41">Deacair</string>
     <string name="ease_button_good" maxLength="41">Maith</string>
@@ -128,7 +128,7 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
     <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
-    <string name="rebuild_cram_label" maxLength="28">Tóg arís </string>
+    <string name="rebuild_cram_label" maxLength="28">Tóg arís</string>
     <string name="empty_cram_label" maxLength="28">Folamh</string>
     <string name="create_subdeck">Create subdeck</string>
     <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>

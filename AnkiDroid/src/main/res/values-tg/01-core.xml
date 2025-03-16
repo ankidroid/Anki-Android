@@ -54,7 +54,7 @@
     <string name="send_feedback">Фикру мулоҳиза фиристодан</string>
     <string name="studyoptions_start">Омӯхтан</string>
     <!-- DeckPicker.kt -->
-    <string name="expand">Васеъ кардан </string>
+    <string name="expand">Васеъ кардан</string>
     <string name="collapse">Фурӯпушоӣ</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>

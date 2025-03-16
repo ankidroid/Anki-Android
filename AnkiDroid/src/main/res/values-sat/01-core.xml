@@ -107,7 +107,7 @@
     <string name="delete_note_message">ᱱᱚᱛᱴ ᱥᱟᱞᱟᱜ ᱛᱮ ᱡᱷᱚᱛᱚ ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱡᱤᱱᱥᱚ ᱠᱚ ᱜᱮᱫ ᱜᱤᱰᱤᱭᱟ ᱥᱮ?\n%s</string>
     <string name="menu_search" maxLength="28">%1$s ᱨᱮ ᱧᱮᱞ ᱵᱤᱰᱟᱣ ᱢᱮ</string>
     <string name="menu_mark_note" maxLength="28">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱪᱤᱱᱦᱟᱹᱭ ᱢᱮ</string>
-    <string name="menu_unmark_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱚ-ᱪᱤᱱᱦᱟᱹᱭ ᱢᱮ </string>
+    <string name="menu_unmark_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱚ-ᱪᱤᱱᱦᱟᱹᱭ ᱢᱮ</string>
     <string name="menu_enable_voice_playback" maxLength="28">ᱥᱮᱨᱮᱧ ᱯᱷᱟᱭᱞᱟᱣ ᱮᱱᱮᱡ</string>
     <string name="menu_disable_voice_playback">ᱥᱮᱨᱮᱧ ᱯᱷᱟᱭᱞᱟᱣ ᱵᱚᱫᱚᱞ</string>
     <string name="new_deck">ᱱᱟᱶᱟ ᱰᱮᱠ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
@@ -151,7 +151,7 @@
     <string name="card_template_editor_deck_override" maxLength="28">ᱰᱮᱠ ᱠᱟᱰ ᱢᱮ</string>
     <string name="card_template_editor_insert_field" maxLength="28">ᱡᱟᱭᱜᱟ ᱠᱷᱚᱧᱡᱟᱭ ᱢᱮ</string>
     <string name="card_template_editor_select_field">ᱴᱷᱟᱶ ᱵᱟᱪᱷᱟᱣ ᱢᱮ</string>
-    <string name="card_template_editor_cant_delete">ᱠᱚᱢ ᱥᱮ ᱠᱚᱢ ᱢᱤᱫ ᱯᱨᱚᱠᱟᱨ ᱨᱮᱭᱟᱜ ᱠᱟᱰ ᱫᱚᱨᱠᱟᱨ ᱠᱟᱱᱟ </string>
+    <string name="card_template_editor_cant_delete">ᱠᱚᱢ ᱥᱮ ᱠᱚᱢ ᱢᱤᱫ ᱯᱨᱚᱠᱟᱨ ᱨᱮᱭᱟᱜ ᱠᱟᱰ ᱫᱚᱨᱠᱟᱨ ᱠᱟᱱᱟ</string>
     <plurals name="card_template_editor_confirm_add">
         <item quantity="one">ᱱᱚᱣᱟ %1$dᱜᱚᱴᱟᱝ ᱠᱟᱰ ᱥᱤᱨᱡᱟᱹᱣ ᱟ । ᱞᱟᱦᱟᱜ ᱟᱢ?</item>
         <item quantity="other">ᱱᱚᱣᱟ %1$dᱜᱚᱴᱟᱝ ᱠᱟᱰ ᱥᱤᱨᱡᱟᱹᱣ ᱟ । ᱞᱟᱦᱟᱜ ᱟᱢ?</item>

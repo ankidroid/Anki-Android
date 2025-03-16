@@ -70,7 +70,7 @@
     <string name="hide_whiteboard" maxLength="28">ᱥᱤᱠᱮᱴ ᱩᱠᱩᱭ ᱢᱮ </string>
     <string name="clear_whiteboard" maxLength="28">ᱥᱤᱠᱮᱴ ᱤᱬᱤᱡ ᱢᱮ </string>
     <string name="replay_audio" maxLength="28">Audio replay ᱢᱮ </string>
-    <string name="leech_suspend_notification">ᱠᱟᱰ ᱫᱚ leech ᱟᱨ ᱵᱚᱸᱫ ᱛᱮ ᱢᱟᱨᱠ ᱮᱱᱟ </string>
+    <string name="leech_suspend_notification">ᱠᱟᱰ ᱫᱚ leech ᱟᱨ ᱵᱚᱸᱫ ᱛᱮ ᱢᱟᱨᱠ ᱮᱱᱟ</string>
     <string name="leech_notification">ᱠᱟᱰ ᱫᱚ leech ᱛᱮ ᱢᱟᱨᱠ ᱮᱱᱟ </string>
     <string name="webview_crash_unknown">ᱵᱟᱝᱵᱟᱰᱟᱭᱟᱜ ᱵᱷᱩᱞ </string>
     <string name="webview_crash_unknwon_detailed">ᱱᱚᱶᱟ ᱫᱚ WebView ᱨᱮ ᱵᱷᱤᱛᱨᱤ ᱵᱷᱩᱞ ᱠᱷᱟᱛᱤᱨ ᱛᱮ </string>
@@ -200,7 +200,7 @@
     <!-- JS api -->
     <string name="api_version_developer_contact">ᱱᱚᱶᱟ ᱠᱟᱰ ᱫᱚ ᱵᱟᱝ ᱥᱟᱯᱯᱚᱨᱴ AnkiDroid ᱯᱷᱤᱪᱚᱨ ᱠᱚ ᱵᱮᱵᱷᱟᱨ ᱮᱫ ᱟᱭ ᱾ %1$s ᱰᱮᱵᱷᱞᱚᱯᱟᱹᱨ ᱥᱚᱢᱯᱚᱨᱠ ᱠᱚᱢ, ᱟᱨ ᱵᱟᱝ ᱣᱤᱠᱤ ᱧᱮᱞ ᱢᱮ ᱾ %2$s</string>
     <string name="invalid_json_data">ᱠᱟᱰ ᱵᱷᱩᱞ ᱰᱟᱴᱟ ᱮᱢᱠᱮᱫ ᱟ ᱾ %s</string>
-    <string name="valid_js_api_version"> ‌‌ᱵᱷᱩᱯ AnkiDroid JS API ᱵᱷᱟᱹᱨᱥᱚᱱ ᱾%s ᱰᱮᱵᱷᱞᱚᱯᱟᱹᱨ ᱥᱚᱢᱯᱚᱨᱠ ᱠᱚᱢ, ᱟᱨ ᱵᱟᱝ ᱣᱤᱠᱤ ᱧᱮᱞ ᱢᱮ ᱾</string>
+    <string name="valid_js_api_version">ᱵᱷᱩᱯ AnkiDroid JS API ᱵᱷᱟᱹᱨᱥᱚᱱ ᱾%s ᱰᱮᱵᱷᱞᱚᱯᱟᱹᱨ ᱥᱚᱢᱯᱚᱨᱠ ᱠᱚᱢ, ᱟᱨ ᱵᱟᱝ ᱣᱤᱠᱤ ᱧᱮᱞ ᱢᱮ ᱾</string>
     <string name="update_js_api_version">AnkiDroid JS API ᱟᱹᱯᱰᱮᱴ ᱢᱮᱱᱟᱜᱼᱟ ᱾ %s ᱰᱮᱵᱷᱞᱚᱯᱟᱹᱨ ᱥᱚᱢᱯᱚᱨᱠ ᱠᱚᱢ, ᱟᱨ ᱵᱟᱝ ᱣᱤᱠᱤ ᱧᱮᱞ ᱢᱮ ᱾</string>
     <string name="reviewer_invalid_api_version_visit_documentation">ᱫᱮᱠᱷᱟᱣ</string>
     <string name="anki_js_error_code">(ᱵᱷᱩᱞ ᱠᱳᱰ: %d)</string>

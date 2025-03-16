@@ -44,5 +44,5 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="open_statistics" comment="Description of the shortcut that opens the statistics page">Open statistics</string>
+    <string name="open_statistics" comment="Description of the shortcut that opens the statistics page">Otevřít statistiku</string>
 </resources>
