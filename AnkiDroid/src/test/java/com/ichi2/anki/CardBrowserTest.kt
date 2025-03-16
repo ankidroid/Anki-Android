@@ -804,7 +804,7 @@ class CardBrowserTest : RobolectricTest() {
     /** PR #8553  */
     @Test
     fun checkDisplayOrderPersistence() {
-        // Start the Card Browser with Basic Model
+        // Start the Card Browser with Basic Note Type
         ensureCollectionLoadIsSynchronous()
         var cardBrowserController =
             Robolectric

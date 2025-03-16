@@ -58,7 +58,7 @@ class ModelFieldEditorTest(
      * @param forbiddenFieldName The forbidden field name to identify
      */
     private fun testForIllegalCharacters(forbiddenFieldName: String) {
-        val modelFields = getCurrentDatabaseModelCopy("Basic").fieldsNames
+        val modelFields = getCurrentDatabaseNoteTypeCopy("Basic").fieldsNames
         val fieldName = modelFields[modelFields.size - 1]
         MatcherAssert.assertThat("forbidden character detected!", fieldName, Matchers.not(Matchers.equalTo(forbiddenFieldName)))
     }
@@ -104,12 +104,12 @@ class ModelFieldEditorTest(
         AlertDialog.Builder(ContextThemeWrapper(targetContext, R.style.Theme_Light)).show {
             positiveButton(text = "") {
                 try {
-                    val modelName = "Basic"
+                    val noteTypeName = "Basic"
 
                     // start ModelFieldEditor activity
                     val intent = Intent()
-                    intent.putExtra("title", modelName)
-                    intent.putExtra("noteTypeID", col.notetypes.idForName(modelName)!!)
+                    intent.putExtra("title", noteTypeName)
+                    intent.putExtra("noteTypeID", col.notetypes.idForName(noteTypeName)!!)
                     val modelFieldEditor =
                         startActivityNormallyOpenCollectionWithIntent(
                             this@ModelFieldEditorTest,

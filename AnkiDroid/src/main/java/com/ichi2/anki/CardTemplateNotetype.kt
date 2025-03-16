@@ -50,7 +50,7 @@ class CardTemplateNotetype(
 
     fun toBundle(): Bundle =
         bundleOf(
-            INTENT_MODEL_FILENAME to saveTempModel(AnkiDroidApp.instance.applicationContext, notetype),
+            INTENT_MODEL_FILENAME to saveTempNoteType(AnkiDroidApp.instance.applicationContext, notetype),
             "mTemplateChanges" to _templateChanges,
         )
 
@@ -100,7 +100,7 @@ class CardTemplateNotetype(
     fun saveToDatabase(col: Collection) {
         Timber.d("saveToDatabase() called")
         dumpChanges()
-        clearTempModelFiles()
+        clearTempNoteTypeFiles()
         return saveModel(col, notetype, adjustedTemplateChanges)
     }
 
@@ -320,7 +320,7 @@ class CardTemplateNotetype(
             Timber.d("onCreate() loading saved model file %s", editedModelFileName)
             val tempNotetypeJSON: NotetypeJson =
                 try {
-                    getTempModel(editedModelFileName)
+                    getTempNoteType(editedModelFileName)
                 } catch (e: IOException) {
                     Timber.w(e, "Unable to load saved model file")
                     return null
@@ -334,7 +334,7 @@ class CardTemplateNotetype(
          * Save the current model to a temp file in the application internal cache directory
          * @return String representing the absolute path of the saved file, or null if there was a problem
          */
-        fun saveTempModel(
+        fun saveTempNoteType(
             context: Context,
             tempModel: NotetypeJson,
         ): String? {
@@ -357,7 +357,7 @@ class CardTemplateNotetype(
          * @return JSONObject holding the model, or null if there was a problem
          */
         @Throws(IOException::class)
-        fun getTempModel(tempModelFileName: String): NotetypeJson {
+        fun getTempNoteType(tempModelFileName: String): NotetypeJson {
             Timber.d("getTempModel() fetching tempModel %s", tempModelFileName)
             try {
                 ByteArrayOutputStream().use { target ->
@@ -371,7 +371,7 @@ class CardTemplateNotetype(
         }
 
         /** Clear any temp model files saved into internal cache directory  */
-        fun clearTempModelFiles(): Int {
+        fun clearTempNoteTypeFiles(): Int {
             var deleteCount = 0
             for (c in AnkiDroidApp.instance.cacheDir.listFiles() ?: arrayOf()) {
                 val absolutePath = c.absolutePath

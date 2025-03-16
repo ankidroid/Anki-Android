@@ -1588,7 +1588,7 @@ class NoteEditor :
                 setResult(result)
             }
             // ensure there are no orphans from possible edit previews
-            CardTemplateNotetype.clearTempModelFiles()
+            CardTemplateNotetype.clearTempNoteTypeFiles()
 
             // Set the finish animation if there is one on the intent which created the activity
             val animation =

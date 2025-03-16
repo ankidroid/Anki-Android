@@ -125,7 +125,7 @@ open class CardTemplateEditor :
     @VisibleForTesting
     lateinit var viewPager: ViewPager2
     private var slidingTabLayout: TabLayout? = null
-    var tempModel: CardTemplateNotetype? = null
+    var tempNotetype: CardTemplateNotetype? = null
         private set
     private var fieldNames: List<String>? = null
     private var modelId: NoteTypeId = 0
@@ -188,7 +188,7 @@ open class CardTemplateEditor :
             startingOrdId = savedInstanceState.getInt(EDITOR_START_ORD_ID)
             tabToCursorPosition = savedInstanceState.getSerializableCompat<HashMap<Int, Int?>>(TAB_TO_CURSOR_POSITION_KEY)!!
             tabToViewId = savedInstanceState.getSerializableCompat<HashMap<Int, Int?>>(TAB_TO_VIEW_ID)!!
-            tempModel = CardTemplateNotetype.fromBundle(savedInstanceState)
+            tempNotetype = CardTemplateNotetype.fromBundle(savedInstanceState)
         }
 
         templatePreviewerFrame = findViewById(R.id.fragment_container)
@@ -213,14 +213,14 @@ open class CardTemplateEditor :
     }
 
     /**
-     *  Loads or reloads [tempModel] in [R.id.fragment_container] if the view is fragmented. Do nothing otherwise.
+     *  Loads or reloads [tempNotetype] in [R.id.fragment_container] if the view is fragmented. Do nothing otherwise.
      */
     private fun loadTemplatePreviewerFragmentIfFragmented() {
         if (!fragmented) {
             return
         }
         launchCatchingTask {
-            val notetype = tempModel!!.notetype
+            val notetype = tempNotetype!!.notetype
             val notetypeFile = NotetypeFile(this@CardTemplateEditor, notetype)
             val ord = viewPager.currentItem
             val note = withCol { currentFragment?.getNote(this) ?: Note.fromNotetypeId(this@withCol, notetype.id) }
@@ -243,7 +243,7 @@ open class CardTemplateEditor :
 
     public override fun onSaveInstanceState(outState: Bundle) {
         with(outState) {
-            tempModel?.let { putAll(it.toBundle()) }
+            tempNotetype?.let { putAll(it.toBundle()) }
             putLong(EDITOR_MODEL_ID, modelId)
             putLong(EDITOR_NOTE_ID, noteId)
             putInt(EDITOR_START_ORD_ID, startingOrdId)
@@ -272,21 +272,21 @@ open class CardTemplateEditor :
         col.notetypes.clearCache()
         // The first time the activity loads it has a model id but no edits yet, so no edited model
         // take the passed model id load it up for editing
-        if (tempModel == null) {
-            tempModel = CardTemplateNotetype(NotetypeJson(col.notetypes.get(modelId).toString()))
+        if (tempNotetype == null) {
+            tempNotetype = CardTemplateNotetype(NotetypeJson(col.notetypes.get(modelId).toString()))
             // Timber.d("onCollectionLoaded() model is %s", mTempModel.getModel().toString(2));
         }
-        fieldNames = tempModel!!.notetype.fieldsNames
+        fieldNames = tempNotetype!!.notetype.fieldsNames
         // Set up the ViewPager with the sections adapter.
         viewPager.adapter = TemplatePagerAdapter(this@CardTemplateEditor)
         TabLayoutMediator(slidingTabLayout!!, viewPager) { tab: TabLayout.Tab, position: Int ->
-            tab.text = tempModel!!.getTemplate(position).name
+            tab.text = tempNotetype!!.getTemplate(position).name
         }.apply { attach() }
 
         // Set activity title
         supportActionBar?.let {
             it.setTitle(R.string.title_activity_template_editor)
-            it.subtitle = tempModel!!.notetype.optString("name")
+            it.subtitle = tempNotetype!!.notetype.optString("name")
         }
         // Close collection opening dialog if needed
         Timber.i("CardTemplateEditor:: Card template editor successfully started for model id %d", modelId)
@@ -298,30 +298,30 @@ open class CardTemplateEditor :
         }
     }
 
-    fun modelHasChanged(): Boolean {
+    fun noteTypeHasChanged(): Boolean {
         val oldModel: NotetypeJson? = getColUnsafe.notetypes.get(modelId)
-        return tempModel != null && tempModel!!.notetype.toString() != oldModel.toString()
+        return tempNotetype != null && tempNotetype!!.notetype.toString() != oldModel.toString()
     }
 
     private fun showDiscardChangesDialog() =
         DiscardChangesDialog.showDialog(this) {
             Timber.i("TemplateEditor:: OK button pressed to confirm discard changes")
             // Clear the edited model from any cache files, and clear it from this objects memory to discard changes
-            CardTemplateNotetype.clearTempModelFiles()
-            tempModel = null
+            CardTemplateNotetype.clearTempNoteTypeFiles()
+            tempNotetype = null
             finish()
         }
 
     /** When a deck is selected via Deck Override  */
     override fun onDeckSelected(deck: SelectableDeck?) {
-        if (tempModel!!.notetype.isCloze) {
+        if (tempNotetype!!.notetype.isCloze) {
             Timber.w("Attempted to set deck for cloze model")
             showSnackbar(getString(R.string.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
             return
         }
 
         val ordinal = viewPager.currentItem
-        val template = tempModel!!.getTemplate(ordinal)
+        val template = tempNotetype!!.getTemplate(ordinal)
         val templateName = template.name
 
         if (deck != null && getColUnsafe.decks.isFiltered(deck.deckId)) {
@@ -440,7 +440,7 @@ open class CardTemplateEditor :
             return CardTemplateFragment.newInstance(position, noteId, editorPosition, editorViewId)
         }
 
-        override fun getItemCount(): Int = tempModel?.templateCount ?: 0
+        override fun getItemCount(): Int = tempNotetype?.templateCount ?: 0
 
         override fun getItemId(position: Int): Long = baseId + position
 
@@ -496,7 +496,7 @@ open class CardTemplateEditor :
             templateEditor = activity as CardTemplateEditor
             val mainView = inflater.inflate(R.layout.card_template_editor_item, container, false)
             val cardIndex = requireArguments().getInt(CARD_INDEX)
-            tempModel = templateEditor.tempModel!!
+            tempModel = templateEditor.tempNotetype!!
             // Load template
             val template: BackendCardTemplate =
                 try {
@@ -552,7 +552,7 @@ open class CardTemplateEditor :
                             R.id.back_edit -> template.afmt = editorEditText.text.toString()
                             else -> template.qfmt = editorEditText.text.toString()
                         }
-                        templateEditor.tempModel!!.updateTemplate(cardIndex, template)
+                        templateEditor.tempNotetype!!.updateTemplate(cardIndex, template)
                         val updateRunnable =
                             Runnable {
                                 templateEditor.loadTemplatePreviewerFragmentIfFragmented()
@@ -664,7 +664,7 @@ open class CardTemplateEditor :
                 return
             }
             val ordinal = templateEditor.viewPager.currentItem
-            val template = templateEditor.tempModel!!.getTemplate(ordinal)
+            val template = templateEditor.tempNotetype!!.getTemplate(ordinal)
 
             RenameCardTemplateDialog.showInstance(
                 requireContext(),
@@ -744,7 +744,7 @@ open class CardTemplateEditor :
          */
         @NeedsTest("cannot perform operations on Image Occlusion")
         private fun noteTypeCreatesDynamicNumberOfNotes(): Boolean {
-            val noteType = templateEditor.tempModel!!.notetype
+            val noteType = templateEditor.tempNotetype!!.notetype
             return noteType.isCloze || noteType.isImageOcclusion
         }
 
@@ -768,7 +768,7 @@ open class CardTemplateEditor :
 
         fun deleteCardTemplate() {
             templateEditor.lifecycleScope.launch {
-                val tempModel = templateEditor.tempModel
+                val tempModel = templateEditor.tempNotetype
                 val ordinal = templateEditor.viewPager.currentItem
                 val template = tempModel!!.getTemplate(ordinal)
                 // Don't do anything if only one template
@@ -820,12 +820,12 @@ open class CardTemplateEditor :
             // isOrdinalPendingAdd method will check if there are any new card types added or not,
             // if TempModel has new card type then numAffectedCards will be 0 by default.
             val numAffectedCards =
-                if (!CardTemplateNotetype.isOrdinalPendingAdd(templateEditor.tempModel!!, ordinal)) {
-                    templateEditor.getColUnsafe.notetypes.tmplUseCount(templateEditor.tempModel!!.notetype, ordinal)
+                if (!CardTemplateNotetype.isOrdinalPendingAdd(templateEditor.tempNotetype!!, ordinal)) {
+                    templateEditor.getColUnsafe.notetypes.tmplUseCount(templateEditor.tempNotetype!!.notetype, ordinal)
                 } else {
                     0
                 }
-            confirmAddCards(templateEditor.tempModel!!.notetype, numAffectedCards)
+            confirmAddCards(templateEditor.tempNotetype!!.notetype, numAffectedCards)
         }
 
         fun saveNoteType(): Boolean {
@@ -840,7 +840,7 @@ open class CardTemplateEditor :
                 }
                 launchCatchingTask(resources.getString(R.string.card_template_editor_save_error)) {
                     requireActivity().withProgress(resources.getString(R.string.saving_model)) {
-                        withCol { templateEditor.tempModel!!.saveToDatabase(this@withCol) }
+                        withCol { templateEditor.tempNotetype!!.saveToDatabase(this@withCol) }
                     }
                     onModelSaved()
                 }
@@ -874,7 +874,7 @@ open class CardTemplateEditor :
             }
 
             // It is invalid to delete if there is only one card template, remove the option from UI
-            if (templateEditor.tempModel!!.templateCount < 2) {
+            if (templateEditor.tempNotetype!!.templateCount < 2) {
                 menu.findItem(R.id.action_delete).isVisible = false
             }
 
@@ -1005,7 +1005,7 @@ open class CardTemplateEditor :
         private val currentTemplate: CardTemplate?
             get() =
                 try {
-                    val tempModel = templateEditor.tempModel
+                    val tempModel = templateEditor.tempNotetype
                     val template: BackendCardTemplate = tempModel!!.getTemplate(templateEditor.viewPager.currentItem)
                     CardTemplate(
                         front = template.qfmt,
@@ -1036,7 +1036,7 @@ open class CardTemplateEditor :
             if (button != null) {
                 button.isEnabled = true
             }
-            templateEditor.tempModel = null
+            templateEditor.tempNotetype = null
             templateEditor.finish()
         }
 
@@ -1047,7 +1047,7 @@ open class CardTemplateEditor :
 
         fun performPreview() {
             launchCatchingTask {
-                val notetype = templateEditor.tempModel!!.notetype
+                val notetype = templateEditor.tempNotetype!!.notetype
                 val notetypeFile = NotetypeFile(requireContext(), notetype)
                 val ord = templateEditor.viewPager.currentItem
                 val note = withCol { getNote(this) ?: Note.fromNotetypeId(this@withCol, notetype.id) }
@@ -1102,7 +1102,7 @@ open class CardTemplateEditor :
         private fun getCurrentTemplate(): BackendCardTemplate? {
             val currentCardTemplateIndex = getCurrentCardTemplateIndex()
             return try {
-                templateEditor.tempModel!!.notetype.tmpls[currentCardTemplateIndex]
+                templateEditor.tempNotetype!!.notetype.tmpls[currentCardTemplateIndex]
             } catch (e: JSONException) {
                 Timber.w(e, "CardTemplateEditor::getCurrentTemplate - unexpectedly unable to fetch template? %d", currentCardTemplateIndex)
                 null
@@ -1129,7 +1129,7 @@ open class CardTemplateEditor :
             // pending deletes could orphan cards
             if (!CardTemplateNotetype.isOrdinalPendingAdd(tempModel!!, position)) {
                 val currentDeletes = tempModel.getDeleteDbOrds(position)
-                val cardIds = withCol { notetypes.getCardIdsForModel(tempModel.modelId, currentDeletes) }
+                val cardIds = withCol { notetypes.getCardIdsForNoteType(tempModel.modelId, currentDeletes) }
                 if (cardIds == null) {
                     // It is possible but unlikely that a user has an in-memory template addition that would
                     // generate cards making the deletion safe, but we don't handle that. All users who do
@@ -1152,7 +1152,7 @@ open class CardTemplateEditor :
                 if (result.resultCode != RESULT_OK) {
                     return@registerForActivityResult
                 }
-                CardTemplateNotetype.clearTempModelFiles()
+                CardTemplateNotetype.clearTempNoteTypeFiles()
                 // Make sure the fragments reinitialize, otherwise there is staleness on return
                 (templateEditor.viewPager.adapter as TemplatePagerAdapter).ordinalShift()
                 templateEditor.viewPager.adapter!!.notifyDataSetChanged()
@@ -1171,7 +1171,7 @@ open class CardTemplateEditor :
             }
         }
 
-        private fun modelHasChanged(): Boolean = templateEditor.modelHasChanged()
+        private fun modelHasChanged(): Boolean = templateEditor.noteTypeHasChanged()
 
         /**
          * Confirm if the user wants to delete all the cards associated with current template
@@ -1278,7 +1278,7 @@ open class CardTemplateEditor :
                     newTemplates.append(possibleMatch)
                 } else {
                     Timber.d("deleteTemplate() found match - removing template with ord %s", possibleMatch.ord)
-                    templateEditor.tempModel!!.removeTemplate(possibleMatch.ord)
+                    templateEditor.tempNotetype!!.removeTemplate(possibleMatch.ord)
                 }
             }
             notetype.tmpls = newTemplates
@@ -1310,7 +1310,7 @@ open class CardTemplateEditor :
             Timber.d("addNewTemplate() lastExistingOrd was %s", lastExistingOrd)
             newTemplate.setOrd(lastExistingOrd + 1)
             templates.append(newTemplate)
-            templateEditor.tempModel!!.addNewTemplate(newTemplate)
+            templateEditor.tempNotetype!!.addNewTemplate(newTemplate)
             templateEditor.viewPager.adapter!!.notifyDataSetChanged()
             templateEditor.viewPager.setCurrentItem(templates.length() - 1, templateEditor.animationDisabled())
         }
