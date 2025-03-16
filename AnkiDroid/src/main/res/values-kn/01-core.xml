@@ -46,15 +46,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks" maxLength="28">ಡೆಕ್ಸ್</string>
-    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">ಕಾರ್ಡ್ ಬ್ರೌಸರ್  </string>
-    <string name="statistics" maxLength="28">ಅಂಕಿಅಂಶಗಳು </string>
+    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">ಕಾರ್ಡ್ ಬ್ರೌಸರ್</string>
+    <string name="statistics" maxLength="28">ಅಂಕಿಅಂಶಗಳು</string>
     <string name="settings" maxLength="28">ಸೆಟ್ಟಿಂಗ್‍ಗಳು</string>
-    <string name="help" maxLength="28">ಸಹಾಯ </string>
+    <string name="help" maxLength="28">ಸಹಾಯ</string>
     <string name="drawing">ಚಿತ್ರ</string>
-    <string name="send_feedback">ಪ್ರತಿಕ್ರಿಯೆ ಕಳುಹಿಸಿ </string>
-    <string name="studyoptions_start">ಅಧ್ಯಯನ </string>
+    <string name="send_feedback">ಪ್ರತಿಕ್ರಿಯೆ ಕಳುಹಿಸಿ</string>
+    <string name="studyoptions_start">ಅಧ್ಯಯನ</string>
     <!-- DeckPicker.kt -->
-    <string name="expand">ವಿಸ್ತರಿಸಿ </string>
+    <string name="expand">ವಿಸ್ತರಿಸಿ</string>
     <string name="collapse">ಬೀಳಿಸಿ</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d ನಿಮಿಷಗಳು ಉಳಿದಿವೆ</item>
@@ -68,17 +68,17 @@
         <item quantity="one">%1$d day %2$dh left</item>
         <item quantity="other">%1$d days %2$dh left</item>
     </plurals>
-    <string name="no_cards_placeholder_title">ಸಂಗ್ರಹ ಖಾಲಿಯಾಗಿದೆ </string>
+    <string name="no_cards_placeholder_title">ಸಂಗ್ರಹ ಖಾಲಿಯಾಗಿದೆ</string>
     <string name="no_cards_placeholder_description">ಕಾರ್ಡ್‌ಗಳನ್ನು ಸೇರಿಸಲು ಪ್ರಾರಂಭಿಸಿ \n  + ಐಕಾನ್ ಬಳಸಿ</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">ಉತ್ತರವನ್ನು ಟೈಪ್ ಮಾಡಿ</string>
-    <string name="show_answer" maxLength="41">ಉತ್ತರ ತೋರಿಸು </string>
-    <string name="hide_answer">ಉತ್ತರವನ್ನು ಮರೆಮಾಡಿ </string>
-    <string name="ease_button_again" maxLength="41">ಮತ್ತೆ </string>
+    <string name="show_answer" maxLength="41">ಉತ್ತರ ತೋರಿಸು</string>
+    <string name="hide_answer">ಉತ್ತರವನ್ನು ಮರೆಮಾಡಿ</string>
+    <string name="ease_button_again" maxLength="41">ಮತ್ತೆ</string>
     <string name="ease_button_hard" maxLength="41">ಕಠಿಣ </string>
-    <string name="ease_button_good" maxLength="41">ಒಳ್ಳೆಯದು </string>
-    <string name="ease_button_easy">ಸುಲಭ </string>
+    <string name="ease_button_good" maxLength="41">ಒಳ್ಳೆಯದು</string>
+    <string name="ease_button_easy">ಸುಲಭ</string>
     <string name="menu_import" maxLength="28">ಇಂಪೋರ್ಟ್</string>
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">ರದ್ದು</string>
     <string name="redo" maxLength="28">ಮತ್ತೆ ಮಾಡು</string>

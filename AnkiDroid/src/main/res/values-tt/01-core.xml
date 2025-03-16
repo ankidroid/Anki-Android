@@ -138,7 +138,7 @@
     <string name="syncing_media">Syncing media</string>
     <string name="export_deck" maxLength="28">Колоданы экспортлау</string>
     <string name="export_collection">Export collection</string>
-    <string name="nothing">Берни </string>
+    <string name="nothing">Берни</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Кәрт төрләре</string>
     <string name="card_template_editor_front">Алгы шаблон</string>

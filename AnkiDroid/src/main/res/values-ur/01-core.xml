@@ -50,7 +50,7 @@
     <string name="statistics" maxLength="28">اعداد و شمار</string>
     <string name="settings" maxLength="28">ترتیبات</string>
     <string name="help" maxLength="28">مدد</string>
-    <string name="drawing">تصور لگائے </string>
+    <string name="drawing">تصور لگائے</string>
     <string name="send_feedback">فیڈ بیک بھیجیں</string>
     <string name="studyoptions_start">مطالعہ</string>
     <!-- DeckPicker.kt -->

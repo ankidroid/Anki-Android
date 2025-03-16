@@ -297,7 +297,7 @@
     <string name="pref_cat_dev_options" maxLength="41">Opções de programador</string>
     <string name="dev_options_enabled_pref" maxLength="41">Ativar as opções de programador</string>
     <string name="disable_dev_options">Desativar opções do desenvolvedor</string>
-    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
+    <string name="dev_options_warning">Tenha a certeza antes de activar as opções de programador. Estas opções são perigosas e podem impedir o correcto funcionamento da aplicação ou a corrupção da sua colecção.\n\nRepare que estas opções não são adequadas para a maioria dos utilizadores e, por isso, não foram traduzidas do inglês.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

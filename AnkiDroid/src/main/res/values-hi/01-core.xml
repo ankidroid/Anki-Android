@@ -86,7 +86,7 @@
     <string name="move_all_to_deck">सभी को डेक में ले जाएं</string>
     <string name="unbury" maxLength="28">वापस लौंटे</string>
     <string name="rename_deck" maxLength="28">डेक का नाम बदलें</string>
-    <string name="create_shortcut">क्षुद्र मार्ग बनाएँ </string>
+    <string name="create_shortcut">क्षुद्र मार्ग बनाएँ</string>
     <string name="browse_cards">कार्ड ढुंढे</string>
     <string name="edit_deck_description" comment="edit the deck description">संपादित करें] वर्णन</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">जोड़ें</string>

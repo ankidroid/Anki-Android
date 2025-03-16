@@ -62,9 +62,9 @@
     <string name="model_delete_warning">您确定要删除此卡牌记录类型吗？</string>
     <string name="field_delete_warning">是否确定删除此字段？</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Add: %1$s</string>
+    <string name="model_browser_add_add">添加：%1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">Clone: %1$s</string>
+    <string name="model_browser_add_clone">克隆：%1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">请输入卡牌浏览器用于显示您卡牌的模板。用此来显示更简洁的答案。\n\n一个前置模板\n“{{Country}} 的首都是：”\n可以被卡牌浏览器压缩为\n“首都：{{Country}}”</string>
     <string name="card_template_browser_appearance_question_format">问题格式</string>

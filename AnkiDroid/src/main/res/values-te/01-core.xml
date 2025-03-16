@@ -50,7 +50,7 @@
     <string name="statistics" maxLength="28">గణాంకాలు</string>
     <string name="settings" maxLength="28">సెట్టింగులు</string>
     <string name="help" maxLength="28">సహాయం</string>
-    <string name="drawing">బొమ్మ </string>
+    <string name="drawing">బొమ్మ</string>
     <string name="send_feedback">స్పందన పంపండి</string>
     <string name="studyoptions_start">స్టడీ</string>
     <!-- DeckPicker.kt -->
@@ -68,7 +68,7 @@
         <item quantity="one">%1$d రోజు %2$dh మిగిలి ఉంది</item>
         <item quantity="other">%1$d రోజులు %2$dh మిగిలి ఉన్నాయి</item>
     </plurals>
-    <string name="no_cards_placeholder_title">సముదాయం ఖాళీ గా ఉంది </string>
+    <string name="no_cards_placeholder_title">సముదాయం ఖాళీ గా ఉంది</string>
     <string name="no_cards_placeholder_description">+ గుర్తు ని నొక్కి చీటీ కూర్చు</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->

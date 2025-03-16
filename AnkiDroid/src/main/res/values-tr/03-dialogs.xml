@@ -68,7 +68,7 @@
     <string name="repair_deck_dialog">Veritabanını onarmayı gerçekten denemek istiyor musunuz?\n\nGirişime başlamadan önce, \"%s\" altklasöründe bir kopya oluşturulacak.</string>
     <string name="intent_aedict_empty">\"Varsayılan\" kategorisi boş</string>
     <string name="intent_aedict_category">AnkiDroid\'e kart eklemek için bütün Not Defteri kategorilerini kaldırın veya \"default\" isminde bir tane ekleyin</string>
-    <string name="custom_study_new_extend">Bugünün yeni kart sınırını şu kadar arttırın/azaltın (“-3”) </string>
+    <string name="custom_study_new_extend">Bugünün yeni kart sınırını şu kadar arttırın/azaltın (“-3”)</string>
     <string name="custom_study_rev_extend">Bugünün gözden geçirme sınırını şu kadar arttırın/azaltın (“-3”)</string>
     <string name="custom_study_forgotten">Son x gündeki unutulan kartları izle:</string>
     <string name="custom_study_ahead">X günleri önce izle:</string>

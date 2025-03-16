@@ -303,7 +303,7 @@
     <string name="toggle_cards_notes">Kartları/Notları Aç/Kapat</string>
     <string name="truncate_content_help">Tarayıcının her sırasının yüksekliğini içeriğin sadece ilk 3 satırını gösterecek şekilde kırp</string>
     <string name="browser_options_dialog_heading">Tarayıcı seçenekleri</string>
-    <string name="audio_saved">Alınan kayıtlar kaydedildi. </string>
+    <string name="audio_saved">Alınan kayıtlar kaydedildi.</string>
     <string name="deleting_selected_notes">Seçili notlar siliniyor</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Tap a voice to listen</string>
     <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use</string>
