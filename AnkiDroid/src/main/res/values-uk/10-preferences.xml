@@ -119,7 +119,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Дотик лівого нижнього кута</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Дотик правого нижнього кута</string>
     <string name="gestures_shake" maxLength="41">Потрясти пристроєм</string>
-    <string name="card_browser_enable_external_context_menu">Меню \'%s\'</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">Меню \'%s\'</string>
     <string name="card_browser_enable_external_context_menu_summary">Включає \'%s\' в загальне контекстне меню</string>
     <string name="double_scrolling_gap" maxLength="41">Подвійне прокручування</string>
     <string name="double_scrolling_gap_summ">Подвоїти розрив прокручування в eReader-і</string>
@@ -246,7 +246,7 @@
     <string name="deck_conf_cram_reschedule_summ">Перепланувати картки на основі моїх відповідей в цій колоді</string>
     <string name="deck_conf_cram_filter_2_check">Увімкнути другий фільтр</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Задати власні кроки</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41"> Затримка попереднього перегляду</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Затримка попереднього перегляду</string>
     <string name="deck_conf_cram_preview_delays_summ">Затримка в секундах. 0 повертає картку до початкової колоди.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Допоможіть зробити AnkiDroid кращим!</string>

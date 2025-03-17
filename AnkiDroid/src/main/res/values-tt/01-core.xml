@@ -134,7 +134,7 @@
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Синхронизацияне кире кагыргамы?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Синхронизацияне дәвам итү</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Синхронизация кире кагылган</string>
-    <string name="sync_cancel_message" tools:ignore="UnusedResources">Кире кагу&#8230;\nБу бераз вакыт алырга мөмкин </string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Кире кагу&#8230;\nБу бераз вакыт алырга мөмкин</string>
     <string name="syncing_media">Syncing media</string>
     <string name="export_deck" maxLength="28">Колоданы экспортлау</string>
     <string name="export_collection">Export collection</string>

@@ -195,12 +195,12 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Error al desar l\'imatge de la pissarra. %s</string>
     <string name="white_board_image_saved">Imatge de la pissara desada a %s</string>
-    <string name="title_whiteboard_editor" maxLength="28">Editor de la pissarra </string>
+    <string name="title_whiteboard_editor" maxLength="28">Editor de la pissarra</string>
     <string name="user_is_a_robot">Test automàtic detectat. Si ets un humà contacta amb el suport AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Aquesta carta usa funcions AnkiDroid no compatibles. Contacta amb el desenvolupador %1$s, o mira la wiki %2$s</string>
     <string name="invalid_json_data">La carta ha proporcionat dades no vàlides. %s</string>
-    <string name="valid_js_api_version">Versió invàlida d\'API JS AnkiDroid. Contacta amb el desenvolupador %s o mira la wiki </string>
+    <string name="valid_js_api_version">Versió invàlida d\'API JS AnkiDroid. Contacta amb el desenvolupador %s o mira la wiki</string>
     <string name="update_js_api_version">Actualització disponible de l\'API JS AnkiDroid. Contacta amb el desenvolupador %s o mira la wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">Veure</string>
     <string name="anki_js_error_code">(Codi d\'error: %d)</string>

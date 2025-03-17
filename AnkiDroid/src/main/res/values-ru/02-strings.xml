@@ -140,7 +140,7 @@
     <string name="import_preparing_file">Подготовка файла для импорта&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Добавить</string>
     <string name="import_message_replace_confirm">Ваша коллекция будет удалена, и её заменят данные из файла %s</string>
-    <string name="import_dialog_message_add">Добавить \"%s\" в коллекцию? Может потребоваться немало времени </string>
+    <string name="import_dialog_message_add">Добавить \"%s\" в коллекцию? Может потребоваться немало времени</string>
     <string name="import_log_no_apkg">Это недопустимый пакет Anki</string>
     <string name="import_title_error" comment="Title of error dialog">Ошибка</string>
     <string name="import_error_handle_exception">Не удалось импортировать файл\n\n%s</string>

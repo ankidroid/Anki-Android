@@ -56,7 +56,7 @@
     <string name="tag_name">ট্যাগের নাম</string>
     <string name="add_new_filter_tags">ট্যাগ যুক্ত/ফিল্টার করুন</string>
     <string name="add_tag" maxLength="28">ট্যাগ যোগ করুন</string>
-    <string name="check_all_tags" maxLength="28">সবগুলো বাছাই/অবাছাই করুন </string>
+    <string name="check_all_tags" maxLength="28">সবগুলো বাছাই/অবাছাই করুন</string>
     <string name="filter_tags" maxLength="28">ট্যাগ ফিল্টার করুন</string>
     <string name="no_tags">আপনি এখনো কোন ট্যাগ যুক্ত করেননি</string>
     <string name="updated_version">%s সংস্করণে আপডেট করা হয়েছে</string>
@@ -138,7 +138,7 @@
     <string name="import_log_no_apkg">এটি কোন বৈধ আনকি প্যাকেজ ফাইল নয়</string>
     <string name="import_title_error" comment="Title of error dialog">ত্রুটি</string>
     <string name="import_error_handle_exception">ফাইল আমদানিতে ব্যর্থ\n\n%s</string>
-    <string name="import_error_not_apkg_extension"> \"%s\" ফাইলে .apkg বা .colpkg এক্সটেনশন নেই</string>
+    <string name="import_error_not_apkg_extension">\"%s\" ফাইলে .apkg বা .colpkg এক্সটেনশন নেই</string>
     <string name="import_error_load_imported_database">Anki ডাটাবেস (.anki2) প্রতিস্থাপন এখনও সমর্থিত নয়। প্রতিস্থাপন নির্দেশাবলীর জন্য ম্যানুয়াল দেখুন।</string>
     <string name="import_error_content_provider">নির্বাচিত ফাইলটি AnkiDroid দ্বারা স্বয়ংক্রিয়ভাবে আমদানি করা যায়নি। আনকি ফাইলটি ম্যানুয়ালি কিভাবে আমদানি করতে হয় তার জন্য অনুগ্রহ করে ব্যবহারকারীর ম্যানুয়ালটি পড়ুন: \n%s</string>
     <string name="import_error_copy_to_cache">ফাইল ক্যাশে করতে ব্যর্থ হয়েছে (সম্ভবত স্টোরেজ স্পেস নেই)</string>
@@ -164,7 +164,7 @@
     <string name="menu__deck_options" maxLength="28">ডেক বিকল্প</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">অধ্যয়নের বিকল্প</string>
     <string name="select_tts" maxLength="28">TTS ভাষা সেট করুন</string>
-    <string name="custom_study" maxLength="28">কাস্টম অধ্যয়ন </string>
+    <string name="custom_study" maxLength="28">কাস্টম অধ্যয়ন</string>
     <string name="dyn_deck_desc">স্বাভাবিক সময়সূচীর বাইরে অধ্যয়ন করার জন্য এটি একটি বিশেষ ডেক। রিভিউয়ের পর কার্ডসমূহকে স্বয়ংক্রিয়ভাবে তাদের আসল ডেকসমূহে ফিরিয়ে দেয়া হবে। এই ডেকটি মুছে ফেলা হলে বাকি থাকা কার্ডগুলিকে তাদের আসল ডেকে ফিরিয়ে দেয়া হবে।</string>
     <string name="steps_error">ধাপ 0-এর বেশি হতে হবে</string>
     <string name="steps_min_error">অন্তত একটি পদক্ষেপ প্রয়োজন</string>

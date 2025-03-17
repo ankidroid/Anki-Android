@@ -81,7 +81,7 @@
     <!-- gestures_labels -->
     <string name="answer_again" maxLength="41">उत्तर (फिर से)</string>
     <string name="answer_hard" maxLength="41">कठिन उत्तर</string>
-    <string name="answer_good" maxLength="41">सही उत्तर </string>
+    <string name="answer_good" maxLength="41">सही उत्तर</string>
     <string name="answer_easy" maxLength="41">आसान उत्तर</string>
     <string name="gesture_play" maxLength="41">मीडिया चलाएं</string>
     <string name="gesture_abort_learning" maxLength="41">समीक्षक बंद करें</string>

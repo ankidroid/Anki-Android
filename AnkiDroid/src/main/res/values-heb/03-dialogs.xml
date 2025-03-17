@@ -75,7 +75,7 @@
     <string name="intent_aedict_category">כדי להוסיף כרטיסים ל-AnkiDroid הסר את כל קטגוריות פנקס הרשימות או הוסף אחת בשם \"ברירת מחדל\"</string>
     <string name="custom_study_new_extend">הוספה/הורדה(“-3”) הגבלת כרטיסים חדשים להיום ב</string>
     <string name="custom_study_rev_extend">הוספה/הורדה(“-3”) הגבלת חזרות להיום ב</string>
-    <string name="custom_study_forgotten">חזרה על כרטיסים נשכחים בx ימים האחרונים </string>
+    <string name="custom_study_forgotten">חזרה על כרטיסים נשכחים בx ימים האחרונים</string>
     <string name="custom_study_ahead">עבור כמה ימים ברצונך לשנן מראש?</string>
     <string name="custom_study_preview">צפייה ראשונית בכרטיסים חדשים שנוספו בx ימים האחרונים:</string>
     <string name="storage_full_title">האיחסון מלא</string>
@@ -128,7 +128,7 @@
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">מתבצע איתור כרטיסים ריקים&#8230;</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">לא מצליח לקבל הרשאת מיקרופון </string>
+    <string name="multimedia_editor_audio_permission_refused">לא מצליח לקבל הרשאת מיקרופון</string>
     <string name="multimedia_editor_failed">נכשל בפתיחת עורך מדיה.</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">הרשאת הקלטת שמע נדחתה</string>

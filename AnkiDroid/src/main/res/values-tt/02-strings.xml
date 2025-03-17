@@ -142,7 +142,7 @@
     <string name="import_interrupted">Импорт бүленгән иде</string>
     <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
-    <string name="export_send_no_handlers">apkg файлын укый ала торган кушымталар юк. Саклана&#8230; </string>
+    <string name="export_send_no_handlers">apkg файлын укый ала торган кушымталар юк. Саклана&#8230;</string>
     <string name="export_save_apkg_successful">Anki пакеты уңышлы итеп сакланды</string>
     <string name="export_save_apkg_unsuccessful">Anki пакеты саклана алмады</string>
     <string name="export_share_title">Send Anki package using</string>
@@ -163,7 +163,7 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts" maxLength="28">Текст телен көйләргә</string>
     <string name="custom_study" maxLength="28">Тагын өйрәнү</string>
-    <string name="dyn_deck_desc">Бу - гадәттәгедән тыш күбрәк уку өчен колода. Кәртләрне карап чыккач, алар үзенең колодаларына кире кайтачаклар. Бу колоданы бетерү аның эчендәге кәртләрнең үзенең колодаларына кайтуына китерер. </string>
+    <string name="dyn_deck_desc">Бу - гадәттәгедән тыш күбрәк уку өчен колода. Кәртләрне карап чыккач, алар үзенең колодаларына кире кайтачаклар. Бу колоданы бетерү аның эчендәге кәртләрнең үзенең колодаларына кайтуына китерер.</string>
     <string name="steps_error">Адымнар 0дән күбрәк сан булырга тиеш</string>
     <string name="steps_min_error">Бер булса да адым кирәк</string>
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>

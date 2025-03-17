@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">ᱥᱚᱯᱷᱴᱣᱮᱭᱟᱨ ᱫᱚ ᱵᱟᱝ ᱥᱟᱦᱟᱣ ᱟᱠᱟᱱᱟ. ᱟᱢᱟᱜ ᱥᱴᱳᱨᱮᱡ ᱨᱮ ᱥᱯᱮᱥᱮᱡᱽ ᱵᱟᱹᱱᱩᱜᱼᱟ᱾ ᱵᱮᱠᱟᱨᱯᱷ ᱰᱤᱯᱷᱤᱰ ᱠᱚᱢ ᱢᱮ ᱟᱨᱵᱟᱝ ᱮᱴᱟᱜ ᱯᱷᱟᱤᱞ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ.</string>
     <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
-    <string name="backup_restore" maxLength="28">ᱱᱚᱠᱚᱞ-ᱡᱚ ᱫᱚᱦᱰᱟ ᱡᱚᱜᱟᱣ </string>
+    <string name="backup_restore" maxLength="28">ᱱᱚᱠᱚᱞ-ᱡᱚ ᱫᱚᱦᱰᱟ ᱡᱚᱜᱟᱣ</string>
     <string name="backup_new_collection">ᱱᱟᱶᱟ ᱴᱩᱢᱟᱹᱞ</string>
     <string name="backup_del_collection">ᱴᱩᱢᱟᱹᱞ ᱜᱮᱫ ᱜᱤᱲᱤ ᱢᱮ ᱟᱨ ᱱᱟᱶᱟ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
     <string name="backup_del_collection_question">ᱴᱩᱢᱟᱹᱞ ᱜᱮᱫ ᱜᱤᱲᱤ ᱢᱮ ᱟᱨ ᱱᱟᱶᱟ ᱛᱮᱭᱟᱨ ᱢᱮ? ᱱᱚᱶᱟ ᱟᱢᱟᱜ ᱪᱮᱫᱚᱜ ᱴᱷᱚᱞᱨᱟᱣᱟᱭ, ᱡᱷᱚᱛᱚ ᱠᱟᱰ ᱢᱮᱴᱟᱣᱼᱜ ᱛᱟᱢᱟ ᱾ ᱾</string>

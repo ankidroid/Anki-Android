@@ -76,7 +76,7 @@
     <string name="show_answer" maxLength="41">ಉತ್ತರ ತೋರಿಸು</string>
     <string name="hide_answer">ಉತ್ತರವನ್ನು ಮರೆಮಾಡಿ</string>
     <string name="ease_button_again" maxLength="41">ಮತ್ತೆ</string>
-    <string name="ease_button_hard" maxLength="41">ಕಠಿಣ </string>
+    <string name="ease_button_hard" maxLength="41">ಕಠಿಣ</string>
     <string name="ease_button_good" maxLength="41">ಒಳ್ಳೆಯದು</string>
     <string name="ease_button_easy">ಸುಲಭ</string>
     <string name="menu_import" maxLength="28">ಇಂಪೋರ್ಟ್</string>
@@ -89,7 +89,7 @@
     <string name="create_shortcut">ಕಿರುದಾರಿ ರಚಿಸಿ</string>
     <string name="browse_cards">ಕಾರ್ಡ್‌ಗಳನ್ನು ಬ್ರೌಸ್ ಮಾಡಿ</string>
     <string name="edit_deck_description" comment="edit the deck description">ವಿವರಣೆಯನ್ನು ಸಂಪಾದಿಸಿ</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">ಸೇರಿಸಿ </string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">ಸೇರಿಸಿ</string>
     <string name="menu_add_note" maxLength="28">ಟಿಪ್ಪಣಿ ಸೇರಿಸಿ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ಖಾತೆಯನ್ನು ಸಿಂಕ್ ಮಾಡಿ</string>
     <string name="menu_dismiss_note" maxLength="41">ಮರೆಮಾಡು / ಅಳಿಸಿ</string>

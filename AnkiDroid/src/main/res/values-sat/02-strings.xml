@@ -46,34 +46,34 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
     <string name="drawer_open">ᱰᱨᱚᱣᱟᱹᱨ ᱠᱷᱩᱞᱟᱹᱭ ᱢᱮ </string>
-    <string name="drawer_close">ᱰᱨᱚᱣᱟᱹᱨ ᱵᱚᱸᱫᱚᱭ ᱢᱮ </string>
+    <string name="drawer_close">ᱰᱨᱚᱣᱟᱹᱨ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</string>
     <string name="CardEditorCardDeck">ᱠᱟᱰ ᱰᱮᱠᱺ </string>
     <string name="CardEditorNoteDeck">ᱰᱮᱠᱺ </string>
     <string name="CardEditorModel">ᱯᱨᱚᱠᱟᱨᱺ </string>
-    <string name="CardEditorTags">ᱴᱮᱜᱥᱺ%1$s </string>
-    <string name="CardEditorCards">ᱠᱟᱰᱺ%1$s </string>
+    <string name="CardEditorTags">ᱴᱮᱜᱥᱺ%1$s</string>
+    <string name="CardEditorCards">ᱠᱟᱰᱺ%1$s</string>
     <string name="edit_occlusions">ᱚᱠᱥᱩᱞᱤᱥᱚᱱ ᱥᱟᱯᱲᱟᱣ ᱢᱮ</string>
-    <string name="tag_name">ᱴᱮᱜ ᱧᱩᱛᱩᱢ </string>
-    <string name="add_new_filter_tags">ᱥᱮᱞᱮᱫ/ᱴᱮᱜ ᱯᱷᱤᱞᱴᱚᱨ </string>
-    <string name="add_tag" maxLength="28">ᱴᱮᱜ ᱥᱮᱞᱮᱫ ᱢᱮ </string>
-    <string name="check_all_tags" maxLength="28">ᱪᱮᱠ ᱢᱮ/ᱡᱷᱚᱛᱟ ᱴᱮᱜ uncheck ᱢᱮ </string>
-    <string name="filter_tags" maxLength="28">ᱴᱮᱜ ᱯᱷᱤᱞᱴᱚᱨ ᱢᱮ </string>
-    <string name="no_tags">ᱟᱢ ᱴᱮᱜ ᱵᱟᱝ ᱥᱮᱞᱮᱫ ᱠᱟᱜᱼᱟᱢ </string>
-    <string name="updated_version">%s ᱵᱷᱟᱹᱨᱥᱚᱱ ᱛᱮ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ  </string>
+    <string name="tag_name">ᱴᱮᱜ ᱧᱩᱛᱩᱢ</string>
+    <string name="add_new_filter_tags">ᱥᱮᱞᱮᱫ/ᱴᱮᱜ ᱯᱷᱤᱞᱴᱚᱨ</string>
+    <string name="add_tag" maxLength="28">ᱴᱮᱜ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
+    <string name="check_all_tags" maxLength="28">ᱪᱮᱠ ᱢᱮ/ᱡᱷᱚᱛᱟ ᱴᱮᱜ uncheck ᱢᱮ</string>
+    <string name="filter_tags" maxLength="28">ᱴᱮᱜ ᱯᱷᱤᱞᱴᱚᱨ ᱢᱮ</string>
+    <string name="no_tags">ᱟᱢ ᱴᱮᱜ ᱵᱟᱝ ᱥᱮᱞᱮᱫ ᱠᱟᱜᱼᱟᱢ</string>
+    <string name="updated_version">%s ᱵᱷᱟᱹᱨᱥᱚᱱ ᱛᱮ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard" maxLength="28">ᱯᱩᱸᱰ ᱵᱚᱰ ᱥᱟᱱᱪᱟᱣ ᱢᱮ </string>
+    <string name="save_whiteboard" maxLength="28">ᱯᱩᱸᱰ ᱵᱚᱰ ᱥᱟᱱᱪᱟᱣ ᱢᱮ</string>
     <string name="enable_stylus" maxLength="28">ᱥᱴᱟᱭᱞᱩᱥ ᱚᱞᱚᱜ ᱮᱱᱮᱡ ᱢᱮ</string>
     <string name="disable_stylus">ᱥᱴᱟᱭᱞᱩᱥ ᱚᱞᱚᱜ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="enable_whiteboard" maxLength="28">ᱥᱤᱠᱮᱴ ᱞᱟᱜᱩᱭ ᱢᱮ </string>
-    <string name="disable_whiteboard">ᱥᱤᱠᱮᱴ ᱵᱚᱱᱫ ᱢᱮ </string>
-    <string name="show_whiteboard">ᱥᱤᱠᱮᱴ ᱫᱮᱠᱷᱟᱣ ᱢᱮ </string>
-    <string name="hide_whiteboard" maxLength="28">ᱥᱤᱠᱮᱴ ᱩᱠᱩᱭ ᱢᱮ </string>
-    <string name="clear_whiteboard" maxLength="28">ᱥᱤᱠᱮᱴ ᱤᱬᱤᱡ ᱢᱮ </string>
-    <string name="replay_audio" maxLength="28">Audio replay ᱢᱮ </string>
+    <string name="disable_whiteboard">ᱥᱤᱠᱮᱴ ᱵᱚᱱᱫ ᱢᱮ</string>
+    <string name="show_whiteboard">ᱥᱤᱠᱮᱴ ᱫᱮᱠᱷᱟᱣ ᱢᱮ</string>
+    <string name="hide_whiteboard" maxLength="28">ᱥᱤᱠᱮᱴ ᱩᱠᱩᱭ ᱢᱮ</string>
+    <string name="clear_whiteboard" maxLength="28">ᱥᱤᱠᱮᱴ ᱤᱬᱤᱡ ᱢᱮ</string>
+    <string name="replay_audio" maxLength="28">Audio replay ᱢᱮ</string>
     <string name="leech_suspend_notification">ᱠᱟᱰ ᱫᱚ leech ᱟᱨ ᱵᱚᱸᱫ ᱛᱮ ᱢᱟᱨᱠ ᱮᱱᱟ</string>
-    <string name="leech_notification">ᱠᱟᱰ ᱫᱚ leech ᱛᱮ ᱢᱟᱨᱠ ᱮᱱᱟ </string>
-    <string name="webview_crash_unknown">ᱵᱟᱝᱵᱟᱰᱟᱭᱟᱜ ᱵᱷᱩᱞ </string>
-    <string name="webview_crash_unknwon_detailed">ᱱᱚᱶᱟ ᱫᱚ WebView ᱨᱮ ᱵᱷᱤᱛᱨᱤ ᱵᱷᱩᱞ ᱠᱷᱟᱛᱤᱨ ᱛᱮ </string>
+    <string name="leech_notification">ᱠᱟᱰ ᱫᱚ leech ᱛᱮ ᱢᱟᱨᱠ ᱮᱱᱟ</string>
+    <string name="webview_crash_unknown">ᱵᱟᱝᱵᱟᱰᱟᱭᱟᱜ ᱵᱷᱩᱞ</string>
+    <string name="webview_crash_unknwon_detailed">ᱱᱚᱶᱟ ᱫᱚ WebView ᱨᱮ ᱤᱱᱴᱚᱨᱱᱟᱞ ᱵᱷᱩᱞ ᱠᱷᱟᱛᱤᱨ ᱛᱮ </string>
     <string name="webview_crash_oom">Out of Memory</string>
     <string name="webview_crash_oom_details">ᱥᱤᱥᱴᱚᱢ ᱫᱚ Webview ᱵᱚᱸᱫ ᱠᱮᱜᱼᱟᱭ ᱾ ᱱᱚᱶᱟ ᱫᱚ ᱡᱟᱹᱥᱛᱤ ᱢᱟᱨᱟᱝ ᱯᱷᱚᱱᱴᱥ ᱟᱨ ᱢᱤᱰᱭᱟ  ᱠᱷᱟᱹᱛᱤᱨ ᱟᱣᱩᱴ ᱚᱯᱷ ᱢᱮᱢᱚᱨᱤ ᱫᱮᱠᱷᱟᱣ ᱮᱫ ᱟᱭ ᱾</string>
     <string name="webview_crash_nonfatal">WebView ᱨᱮᱱᱰᱚᱨᱚᱨ ᱠᱨᱟᱥ ᱮᱱᱟ ᱾ ᱠᱟᱨᱚᱬ:%s</string>
@@ -95,7 +95,7 @@
     <string name="note_editor_no_cards_created">ᱚᱠᱟ ᱠᱟᱰ ᱦᱚᱸ ᱵᱟᱭ ᱛᱮᱟᱛ ᱟᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱡᱟᱜᱮ ᱟᱨᱦᱚᱸ ᱡᱟᱭᱜᱟ ᱯᱩᱨᱚᱬ ᱢᱮ</string>
     <string name="note_editor_no_cards_created_all_fields">ᱱᱚᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱠᱟᱰ ᱵᱟᱭ ᱛᱮᱭᱟᱨᱮᱟᱭ ᱾ \n ᱫᱚᱭᱠᱟᱛᱮ ᱱᱟᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱨᱮᱭᱟᱜ ᱵᱟᱪᱷᱟᱣ ᱢᱮ, ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ \'ᱠᱟᱨᱰᱥ\' ᱨᱮ ᱚᱛᱟ ᱡᱟ ᱟᱨ field substitute ᱥᱮᱞᱮᱫ ᱢᱮ</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">ᱠᱞᱚᱡ ᱢᱮᱴᱟᱹᱣ ᱫᱚ ᱠᱞᱚᱡ ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱴᱷᱮᱱ ᱮ ᱠᱟᱹᱢᱤ ᱟ</string>
-    <string name="saving_facts">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱚᱱᱪᱟᱣ ᱢᱮ </string>
+    <string name="saving_facts">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱚᱱᱪᱟᱣ ᱢᱮ</string>
     <string name="saving_model">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱥᱟᱱᱪᱟᱣ ᱢᱮ</string>
     <string name="save" maxLength="28">ᱥᱟᱝᱪᱚᱣ</string>
     <string name="close">ᱵᱚᱫᱽ</string>
@@ -121,7 +121,7 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱧᱮᱞ</string>
     <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">ᱪᱮᱫ ᱞᱮᱠᱟᱱ ᱱᱳᱴ ᱠᱚ ᱧᱟᱢ ᱟᱠᱟᱱᱟ</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar"> %2$d ᱨᱮᱱᱟᱜ %1$d</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d ᱨᱮᱱᱟᱜ %1$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">ᱫᱚᱦᱲᱟ ᱧᱩᱛᱩᱢ</string>
     <string name="checks_action" maxLength="28">ᱪᱟᱠᱷᱟ</string>
     <string name="check_db" maxLength="28">ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱢᱮ</string>
@@ -159,13 +159,13 @@
         ]]></string>
     <string name="export_choice_share">ᱦᱟᱹᱴᱤᱧ</string>
     <string name="export_choice_save_to">ᱞᱟᱹᱜᱤᱫ ᱫᱚᱦᱚᱭ ᱢᱮ</string>
-    <string name="export_saving_exported_collection"> ᱮᱠᱥᱯᱳᱨᱴ ᱟᱠᱟᱱ ᱯᱷᱤᱞᱤ ᱥᱟᱦᱟᱣ ᱠᱟᱱᱟ&#8230;</string>
+    <string name="export_saving_exported_collection">ᱮᱠᱥᱯᱳᱨᱴ ᱟᱠᱟᱱ ᱯᱷᱤᱞᱤ ᱥᱟᱦᱟᱣ ᱠᱟᱱᱟ&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">ᱚᱯᱥᱚᱱᱠᱚ</string>
     <string name="menu__deck_options" maxLength="28">ᱰᱮᱠ ᱚᱯᱥᱚᱱᱠᱚ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ᱯᱟᱲᱦᱟᱣ ᱚᱯᱥᱚᱱ ᱠᱚ</string>
     <string name="select_tts" maxLength="28">TTS ᱯᱟᱹᱨᱥᱤ ᱥᱮᱴ ᱢᱮ</string>
     <string name="custom_study" maxLength="28">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣ</string>
-    <string name="dyn_deck_desc">ᱱᱚᱶᱟ ᱫᱚ ᱱᱚᱨᱢᱟᱞ ᱥᱮᱰᱭᱩᱞ ᱠᱷᱣᱱ ᱮᱴᱟᱜ ᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱥᱯᱮᱥᱟᱞ ᱰᱮᱠ ᱠᱟᱱᱟ ᱾ ᱠᱟᱰ ᱠᱚ ᱨᱤᱵᱷᱤᱣ ᱯᱚᱨᱮ ᱟᱡ ᱛᱮᱜᱮ ᱢᱩᱞ ᱰᱮᱢᱠ ᱥᱮᱱ ᱥᱮᱱᱚᱜᱼᱟ ᱾ ᱰᱮᱠ ᱞᱤᱥᱴ ᱠᱷᱚᱱ ᱰᱮᱠᱜᱮᱫ ᱜᱤᱰᱤ ᱞᱮᱠᱷᱱᱟ ᱫᱚ ᱡᱷᱚᱛᱚ ᱠᱟᱲ ᱢᱩᱞ ᱰᱮᱠ ᱥᱮᱱ ᱥᱮᱱᱚᱜᱼᱟ  </string>
+    <string name="dyn_deck_desc">ᱱᱚᱶᱟ ᱫᱚ ᱱᱚᱨᱢᱟᱞ ᱥᱮᱰᱭᱩᱞ ᱠᱷᱣᱱ ᱮᱴᱟᱜ ᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱥᱯᱮᱥᱟᱞ ᱰᱮᱠ ᱠᱟᱱᱟ ᱾ ᱠᱟᱰ ᱠᱚ ᱨᱤᱵᱷᱤᱣ ᱯᱚᱨᱮ ᱟᱡ ᱛᱮᱜᱮ ᱢᱩᱞ ᱰᱮᱢᱠ ᱥᱮᱱ ᱥᱮᱱᱚᱜᱼᱟ ᱾ ᱰᱮᱠ ᱞᱤᱥᱴ ᱠᱷᱚᱱ ᱰᱮᱠᱜᱮᱫ ᱜᱤᱰᱤ ᱞᱮᱠᱷᱱᱟ ᱫᱚ ᱡᱷᱚᱛᱚ ᱠᱟᱲ ᱢᱩᱞ ᱰᱮᱠ ᱥᱮᱱ ᱥᱮᱱᱚᱜᱼᱟ</string>
     <string name="steps_error">ᱥᱴᱮᱯᱥ ᱫᱚ ᱥᱩᱱᱭᱚ ᱱᱩᱚᱢᱵᱚᱨ ᱠᱷᱚᱱ ᱰᱷᱮᱨ ᱜᱮ ᱛᱟᱦᱮᱱ ᱢᱟ</string>
     <string name="steps_min_error">ᱠᱚᱢ ᱥᱮ ᱠᱚᱢ ᱢᱤᱫᱴᱟᱝ ᱥᱴᱮᱯ ᱫᱚᱨᱠᱟᱨ</string>
     <string name="tag_editor_add_feedback">“%1$s” ᱥᱞᱮᱫ ᱞᱟᱹᱜᱤᱫ ᱛᱮ “%2$s” ᱚᱛᱟᱭᱯᱮ</string>
@@ -193,7 +193,7 @@
     <string name="restore_default" maxLength="28">ᱢᱩᱞ ᱯᱷᱮᱰᱟᱛ ᱨᱮ ᱫᱚᱦᱰᱟ ᱡᱚᱜᱟᱣ</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ᱮᱠᱷᱮᱵᱟᱜ</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ ᱥᱟᱱᱪᱟᱣ ᱵᱷᱩᱞ ᱾. %s </string>
+    <string name="white_board_image_save_failed">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ ᱥᱟᱱᱪᱟᱣ ᱵᱷᱩᱞ ᱾. %s</string>
     <string name="white_board_image_saved">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ %s ᱛᱮ ᱥᱟᱱᱪᱟᱣ</string>
     <string name="title_whiteboard_editor" maxLength="28">ᱯᱩᱸᱰᱵᱚᱰ ᱮᱰᱤᱴᱚᱨ</string>
     <string name="user_is_a_robot">ᱟᱹᱴᱚᱢᱮᱴᱮᱰ ᱴᱮᱥᱴ ᱯᱟᱱᱛᱮ ᱚᱲᱚᱠ ᱾ ᱡᱩᱫᱤ ᱟᱢ ᱦᱚᱲ ᱠᱟᱱᱟᱢ AnkiDroid ᱥᱚᱢᱯᱚᱨᱠ ᱠᱚᱢ</string>

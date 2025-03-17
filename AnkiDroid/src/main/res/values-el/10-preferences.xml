@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Άγγιγμα κάτω αριστερά</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Άγγιγμα κάτω δεξιά</string>
     <string name="gestures_shake" maxLength="41">Ανακίνηση συσκευής</string>
-    <string name="card_browser_enable_external_context_menu">Μενού ‘%s’</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">Μενού ‘%s’</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap" maxLength="41">Διπλή κύλιση</string>
     <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
@@ -285,7 +285,7 @@
     <string name="card_side_both" maxLength="28">Ερώτηση &amp; Απάντηση</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Ε: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">Α: %s</string>
-    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s </string>
+    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Αφαίρεση ‘%s’</string>
     <string name="bindings_already_bound">Already bound to ‘%s’</string>

@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Tocar abajo a la izquierda</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Tocar abajo a la derecha</string>
     <string name="gestures_shake" maxLength="41">Sacudir dispositivo</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menú </string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ Menú</string>
     <string name="card_browser_enable_external_context_menu_summary">Habilitar globalmente el menú contextual ‘%s</string>
     <string name="double_scrolling_gap" maxLength="41">Doble desplazamiento</string>
     <string name="double_scrolling_gap_summ">Doblar la distancia de desplazamiento con e-Reader</string>

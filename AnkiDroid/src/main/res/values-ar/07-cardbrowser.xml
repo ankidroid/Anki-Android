@@ -82,7 +82,7 @@
     <string name="card_browser_list_my_searches_new_name">اسم عبارة البحث الحالية</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">لا يمكنك حفظ عبارة بحث بدون اسم</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">الاسم موجود</string>
-    <string name="no_note_to_edit">لا يوجد ملحوظات لتعديلها </string>
+    <string name="no_note_to_edit">لا يوجد ملحوظات لتعديلها</string>
     <string name="card_browser_list_my_searches_remove_content">هل تريد حذف “%1$s”؟</string>
     <string name="card_browser_change_display_order" maxLength="28">تغيير ترتيب العرض</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">بحث</string>
@@ -136,10 +136,10 @@
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
     <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">إظهار مربع حوار الطلب</string>
     <!-- Manage columns dialog -->
-    <string name="browse_manage_columns_main_heading">أعمدة </string>
+    <string name="browse_manage_columns_main_heading">أعمدة</string>
     <string name="browse_manage_columns">إدارة الأعمدة</string>
     <string name="user_active_columns">فعال</string>
-    <string name="user_potential_columns">متوفر </string>
+    <string name="user_potential_columns">متوفر</string>
     <string name="include_column">إضافة عمود</string>
     <string name="exclude_column">استخراج عمود</string>
     <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>

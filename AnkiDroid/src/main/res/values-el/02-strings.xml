@@ -125,7 +125,7 @@
     <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Μετονομασία</string>
     <string name="checks_action" maxLength="28">Έλεγχος</string>
     <string name="check_db" maxLength="28">Έλεγχος βάσης δεδομένων</string>
-    <string name="check_media" maxLength="28">Έλεγχος πολυμέσων </string>
+    <string name="check_media" maxLength="28">Έλεγχος πολυμέσων</string>
     <string name="empty_cards" maxLength="28">Κενές κάρτες</string>
     <string name="unknown_type_field_warning">Τύπος απάντησης: άγνωστο πεδίο %s</string>
     <string name="delete_deck">Διαγραφή τράπουλας&#8230;\nΠαρακαλούμε περιμένετε.</string>

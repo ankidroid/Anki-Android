@@ -130,7 +130,7 @@
     <string name="integrity_check_startup_content">AnkiDroid yükseltildi. Bu yükseltme, olası veritabanı sorunları için düzeltmeleri içerir ve veritabanını şimdi kontrol etmenizi öneririz.</string>
     <string name="integrity_check_continue_anyway">Yine de devam et</string>
     <string name="integrity_check_insufficient_space">Veritabanı Kontrolü büyük miktarda geçici depolama alanı kullanıyor.\n\nDevam etmeden önce cihazınızda en az %s boş alanın olması şiddetle önerilir.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nŞu anda %s boş alanınız var. </string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nŞu anda %s boş alanınız var.</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Karttaki verinin kod çözme hatası</string>

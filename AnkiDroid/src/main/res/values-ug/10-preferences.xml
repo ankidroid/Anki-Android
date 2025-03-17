@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">سول ئاستىنى چەك</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">ئوڭ ئاستىنى چەك</string>
     <string name="gestures_shake" maxLength="41">ئۈسكۈنىنى سىلكى</string>
-    <string name="card_browser_enable_external_context_menu">«%s» تىزىملىكى</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">«%s» تىزىملىكى</string>
     <string name="card_browser_enable_external_context_menu_summary">«%s» مەزمۇن تىزىملىكىنى پۈتكۈل دائىرىدە قوزغىتىدۇ</string>
     <string name="double_scrolling_gap" maxLength="41">قوش دومىلات</string>
     <string name="double_scrolling_gap_summ">ئېلېكتىرونلۇق ئوقۇغۇچتا قوش دومىلىتىدۇ</string>

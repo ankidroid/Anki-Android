@@ -77,7 +77,7 @@
     <string name="reset_confirmation">Thiết lập lại tất cả các trạng thái</string>
     <string name="card_zoom" maxLength="41">Thu phóng thẻ</string>
     <string name="image_zoom" maxLength="41">Thu phóng hình ảnh</string>
-    <string name="button_size" maxLength="41">Kích thước nút trả lời </string>
+    <string name="button_size" maxLength="41">Kích thước nút trả lời</string>
     <string name="card_browser_font_size" maxLength="41">Thẻ trình duyệt font rộng</string>
     <string name="card_browser_hide_media" maxLength="41">Hiển thị tên tệp trong trình duyệt thẻ</string>
     <string name="card_browser_hide_media_summary">Hiển thị tên tệp phương tiện trong các trường câu hỏi / câu trả lời của trình duyệt thẻ</string>
@@ -116,16 +116,16 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Chạm vào dưới cùng bên trái</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Chạm vào dưới cùng bên phải</string>
     <string name="gestures_shake" maxLength="41">Lắc thiết bị</string>
-    <string name="card_browser_enable_external_context_menu">Menu ‘%s’</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">Menu ‘%s’</string>
     <string name="card_browser_enable_external_context_menu_summary">Bật menu ngữ cảnh ‘%s’ trên toàn cầu</string>
     <string name="double_scrolling_gap" maxLength="41">Bấm phím scrolling (chuột giữa) hai lần</string>
-    <string name="double_scrolling_gap_summ">bấm hai lần chuột giữa với eReader </string>
+    <string name="double_scrolling_gap_summ">bấm hai lần chuột giữa với eReader</string>
     <string name="swipe_sensitivity" maxLength="41">Độ nhạy của chạm vuốt</string>
     <string name="tts" maxLength="41">Văn bản sang tiếng nói</string>
     <string name="tts_summ">Đọc ra câu hỏi và câu trả lời nếu không có tập tin âm thanh nào được kèm theo</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Tìm nạp phương tiện truyền thông trên đồng bộ</string>
-    <string name="sync_account" maxLength="41">tài khoản AnkiWeb </string>
+    <string name="sync_account" maxLength="41">tài khoản AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Chưa đăng nhập</string>
     <string name="automatic_sync_choice" maxLength="41">Đồng bộ hóa tự động</string>
     <string name="automatic_sync_choice_summ">Đồng bộ hóa tự động khi khởi động / thoát ứng dụng nếu lần đồng bộ hóa cuối cùng nhiều hơn 10         phút trước.</string>

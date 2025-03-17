@@ -91,10 +91,10 @@
     <string name="menu_add_note" maxLength="28">增加筆記</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">同步帳戶</string>
     <string name="menu_dismiss_note" maxLength="41">隐藏/删除</string>
-    <string name="menu_bury_card" maxLength="28">暫時隱藏卡片 </string>
+    <string name="menu_bury_card" maxLength="28">暫時隱藏卡片</string>
     <string name="menu_bury_note" maxLength="28">暫時隱藏筆記</string>
-    <string name="menu_suspend_card" maxLength="28">暫停卡片 </string>
-    <string name="menu_suspend_note" maxLength="28">長久擱置筆記 </string>
+    <string name="menu_suspend_card" maxLength="28">暫停卡片</string>
+    <string name="menu_suspend_note" maxLength="28">長久擱置筆記</string>
     <string name="menu_bury" maxLength="28">埋葬</string>
     <string name="menu_suspend" maxLength="28">擱置</string>
     <string name="menu_delete_note" maxLength="28">刪除筆記</string>

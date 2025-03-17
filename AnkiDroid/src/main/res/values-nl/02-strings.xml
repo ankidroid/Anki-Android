@@ -80,7 +80,7 @@
     <string name="webview_crash_fatal">Fatale fout: WebView renderer is gecrasht. Oorzaak: %s</string>
     <string name="webview_crash_loop_dialog_title">Systeem WebView Rendering Mislukking.</string>
     <string name="webview_crash_loop_dialog_content">Systeem WebView kon de kaart \'%1$s\' niet renderen.\n%2$s</string>
-    <string name="filter_by_flags" maxLength="41">Vlaggen </string>
+    <string name="filter_by_flags" maxLength="41">Vlaggen</string>
     <!-- Custom study options -->
     <string name="custom_study_limit_tags">Beperken tot bepaalde tags</string>
     <plurals name="studyoptions_buried_count">

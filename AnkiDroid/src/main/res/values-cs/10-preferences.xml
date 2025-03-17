@@ -119,7 +119,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Klepnutí vlevo dole</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Klepnutí vpravo dole</string>
     <string name="gestures_shake" maxLength="41">Zatřesení zařízením</string>
-    <string name="card_browser_enable_external_context_menu">Menu „%s“</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">Menu „%s“</string>
     <string name="card_browser_enable_external_context_menu_summary">Povolí globální kontextovou nabídku „%s“</string>
     <string name="double_scrolling_gap" maxLength="41">Dvojitý posun</string>
     <string name="double_scrolling_gap_summ">Dvojitý posuvník s eReader</string>
@@ -331,7 +331,7 @@
     </plurals>
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Odstranit nepoužívané multimediální soubory</string>
-    <string name="pref__delete_unused_media_files__summary">Odstranit obrázky a další multimédia, která nemají předponu _ a na které neodkazují žádné poznámky </string>
+    <string name="pref__delete_unused_media_files__summary">Odstranit obrázky a další multimédia, která nemají předponu _ a na které neodkazují žádné poznámky</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Odstranit nepoužívané multimediální soubory</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Odstranit zálohy</string>

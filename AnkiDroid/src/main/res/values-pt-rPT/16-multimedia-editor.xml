@@ -65,7 +65,7 @@
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Falha na gravação</string>
     <string name="multimedia_editor_audio_view_playing_failed">Falha na reprodução</string>
-    <string name="multimedia_editor_audio_view_create_failed">Não foi possível criar a barra de ferramentas de gravação </string>
+    <string name="multimedia_editor_audio_view_create_failed">Não foi possível criar a barra de ferramentas de gravação</string>
     <!-- Crop function-->
     <string name="crop_image">Quer recortar esta imagem?</string>
     <string name="crop_button" maxLength="28">Recortar imagem</string>

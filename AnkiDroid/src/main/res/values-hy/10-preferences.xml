@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Սեղմել ներքևի ձախ մասում</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Սեղմել ներքևի աջ մասում</string>
     <string name="gestures_shake" maxLength="41">Թափահարել սարքը</string>
-    <string name="card_browser_enable_external_context_menu">«%s» մենյու</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">«%s» մենյու</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap" maxLength="41">Double scrolling</string>
     <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>

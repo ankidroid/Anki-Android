@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Sol alta dokun</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Sağ alta dokun</string>
     <string name="gestures_shake" maxLength="41">Cihazı salla</string>
-    <string name="card_browser_enable_external_context_menu">\"%s\" Menüsü</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">\"%s\" Menüsü</string>
     <string name="card_browser_enable_external_context_menu_summary">\"%s\" durum menüsünü uygulama çapında etkinleştirir</string>
     <string name="double_scrolling_gap" maxLength="41">Hızlı kaydırma</string>
     <string name="double_scrolling_gap_summ">eOkuyucu\'yla kaydırma mesafesini iki katına çıkarmak istiyorsanız bunu etkinleştirin</string>

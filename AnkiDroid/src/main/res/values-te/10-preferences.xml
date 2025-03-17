@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">దిగువ ఎడమవైపు తాకండి</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">దిగువ కుడివైపు తాకండి</string>
     <string name="gestures_shake" maxLength="41">షేక్ పరికరం</string>
-    <string name="card_browser_enable_external_context_menu">\'%s\' మెను</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">\'%s\' మెను</string>
     <string name="card_browser_enable_external_context_menu_summary">ప్రపంచవ్యాప్తంగా \'%s\' సందర్భ మెనుని ప్రారంభిస్తుంది</string>
     <string name="double_scrolling_gap" maxLength="41">డబుల్ స్క్రోలింగ్</string>
     <string name="double_scrolling_gap_summ">eReader తో డబుల్ స్క్రోల్ స్పేస్</string>
@@ -264,7 +264,7 @@
     <string name="key_picker_default_press_key">ఒక కీని నొక్కండి</string>
     <string name="binding_add_axis">జాయ్‌స్టిక్/మోషన్ కంట్రోలర్‌ను జోడించండి</string>
     <string name="axis_picker_move_joystick">జాయ్‌స్టిక్/మోషన్ కంట్రోలర్‌ను తరలించండి</string>
-    <string name="user_actions" maxLength="41">వినియోగదారు చర్యలు </string>
+    <string name="user_actions" maxLength="41">వినియోగదారు చర్యలు</string>
     <string name="user_actions_summary" maxLength="41">సమీక్ష స్క్రీన్ నుండి జావాస్క్రిప్ట్‌ని ట్రిగ్గర్ చేయండి</string>
     <string name="user_action_1" maxLength="28">వినియోగదారు చర్య 1</string>
     <string name="user_action_2" maxLength="28">వినియోగదారు చర్యలు 2</string>

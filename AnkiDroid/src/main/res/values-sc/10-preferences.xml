@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Toca in bassu a manca</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Toca in bassu a dereta</string>
     <string name="gestures_shake" maxLength="41">Iscutzina su dispositivu</string>
-    <string name="card_browser_enable_external_context_menu">Menù ‘%s’</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">Menù ‘%s’</string>
     <string name="card_browser_enable_external_context_menu_summary">Abilitat su menù de cuntestu ‘%s’ globalmente</string>
     <string name="double_scrolling_gap" maxLength="41">Iscurrimentu dòpiu</string>
     <string name="double_scrolling_gap_summ">Addopiat sa distàntzia de iscurrimentu cun eReader</string>
@@ -265,7 +265,7 @@
     <string name="key_picker_default_press_key">Incarca una tecla</string>
     <string name="binding_add_axis">Annanghe unu joystick/controllore de movimentu</string>
     <string name="axis_picker_move_joystick">Move unu joystick/controllore de movimentu</string>
-    <string name="user_actions" maxLength="41">Atziones utente </string>
+    <string name="user_actions" maxLength="41">Atziones utente</string>
     <string name="user_actions_summary" maxLength="41">Esecuta JavaScript dae s\'ischermada de ripetitzione</string>
     <string name="user_action_1" maxLength="28">Atzione utente 1</string>
     <string name="user_action_2" maxLength="28">Atzione utente 2</string>

@@ -89,7 +89,7 @@
     <string name="create_shortcut">ᱥᱚᱴᱠᱚᱴ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
     <string name="browse_cards">ᱠᱟᱰ ᱠᱚ ᱵᱨᱟᱩᱡᱽ ᱢᱮ</string>
     <string name="edit_deck_description" comment="edit the deck description">ᱥᱟᱯᱲᱟᱣ ᱞᱤᱥᱴᱤ</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">ᱥᱮᱞᱮᱫ </string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">ᱥᱮᱞᱮᱫ</string>
     <string name="menu_add_note" maxLength="28">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ᱠᱷᱟᱛᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱢᱮ</string>
     <string name="menu_dismiss_note" maxLength="41">ᱩᱠᱩᱭ ᱢᱮ/ᱜᱫ ᱜᱤᱰᱤ</string>
@@ -112,7 +112,7 @@
     <string name="menu_disable_voice_playback">ᱥᱮᱨᱮᱧ ᱯᱷᱟᱭᱞᱟᱣ ᱵᱚᱫᱚᱞ</string>
     <string name="new_deck">ᱱᱟᱶᱟ ᱰᱮᱠ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
     <string name="new_dynamic_deck">ᱯᱷᱤᱞᱴᱚᱨ ᱰᱮᱠ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
-    <string name="directory_inaccessible">AnkiDroid ᱩᱱᱩᱫᱩᱜ ᱫᱚ ᱵᱟᱭ ᱦᱟᱛᱟᱣ ᱫᱟᱲᱮᱟᱜ ᱠᱟᱱᱟ </string>
+    <string name="directory_inaccessible">AnkiDroid ᱩᱱᱩᱫᱩᱜ ᱫᱚ ᱵᱟᱭ ᱦᱟᱛᱟᱣ ᱫᱟᱲᱮᱟᱜ ᱠᱟᱱᱟ</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
@@ -137,7 +137,7 @@
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">ᱟᱭᱩᱨ ᱢᱤᱫ ᱵᱟᱫᱽ ᱜᱤᱰᱤᱭᱟᱢ ᱥᱮ ?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">ᱟᱭᱩᱨ ᱢᱤᱫ ᱪᱟᱹᱞᱩ ᱫᱚᱦᱚᱭ</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">ᱟᱭᱩᱨ ᱢᱤᱫ ᱵᱟᱫᱽ ᱜᱤᱰᱤ</string>
-    <string name="sync_cancel_message" tools:ignore="UnusedResources">ᱵᱟᱫ ᱜᱤᱰᱤᱼᱜ ᱠᱟᱱᱟ &#8230;\n ᱠᱤᱪᱷᱤ ᱥᱚᱢᱟᱭ ᱤᱫᱤ ᱫᱟᱲᱮᱭᱟᱜᱼᱟᱭ ᱾ </string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">ᱵᱟᱫ ᱜᱤᱰᱤᱼᱜ ᱠᱟᱱᱟ &#8230;\n ᱠᱤᱪᱷᱤ ᱥᱚᱢᱟᱭ ᱤᱫᱤ ᱫᱟᱲᱮᱭᱟᱜᱼᱟᱭ ᱾</string>
     <string name="syncing_media">ᱥᱤᱸᱠᱨᱚᱱᱥ ᱢᱮᱰᱤᱭᱟ</string>
     <string name="export_deck" maxLength="28">ᱰᱮᱠ ᱵᱷᱮᱡᱟᱭ ᱢᱮ</string>
     <string name="export_collection">ᱴᱩᱢᱟᱹᱞ ᱵᱷᱮᱡᱟᱭ ᱢᱮ</string>
@@ -160,8 +160,8 @@
         <item quantity="one">\&quot;%2$s\&quot; ᱠᱟᱰ ᱯᱨᱚᱠᱟᱨ ᱟᱨ %1$d ᱠᱟᱰ ᱠᱚ ᱮᱢᱟᱱ ᱜᱮᱫ ᱜᱤᱰᱤ ᱟ ᱥᱮ?</item>
         <item quantity="other">\&quot;%2$s\&quot; ᱠᱟᱰ ᱯᱨᱚᱠᱟᱨ ᱟᱨ %1$d ᱠᱟᱰ ᱠᱚ ᱮᱢᱟᱱ ᱜᱮᱫ ᱜᱤᱰᱤ ᱟ ᱥᱮ?</item>
     </plurals>
-    <string name="card_template_editor_save_error">ᱠᱟᱰ ᱪᱷᱚᱸᱪ ᱵᱟᱭ ᱥᱚᱝᱪᱚᱭᱚᱜ ᱠᱟᱱᱟᱺ %s </string>
-    <string name="template_for_current_card_deleted">ᱱᱚᱶᱟ ᱠᱟᱰ ᱨᱮᱭᱟᱼᱜ ᱠᱟᱲ ᱯᱨᱚᱠᱟᱨ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟ ᱾ </string>
+    <string name="card_template_editor_save_error">ᱠᱟᱰ ᱪᱷᱚᱸᱪ ᱵᱟᱭ ᱥᱚᱝᱪᱚᱭᱚᱜ ᱠᱟᱱᱟᱺ %s</string>
+    <string name="template_for_current_card_deleted">ᱱᱚᱶᱟ ᱠᱟᱰ ᱨᱮᱭᱟᱼᱜ ᱠᱟᱲ ᱯᱨᱚᱠᱟᱨ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟ ᱾</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">ᱵᱨᱟᱩᱡᱚᱨ ᱧᱮᱞᱚᱜ ᱠᱚ</string>
     <!-- card Info -->

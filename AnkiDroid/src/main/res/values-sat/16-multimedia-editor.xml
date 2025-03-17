@@ -58,17 +58,17 @@
     <string name="multimedia_editor_image_field_editing_photo">ᱠᱭᱟᱢᱮᱨᱟ</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
-    <string name="multimedia_editor_something_wrong">ᱡᱟᱦᱟᱱᱟᱜ ᱠᱚ ᱵᱷᱩᱞ ᱦᱩᱭᱮᱱᱟ </string>
+    <string name="multimedia_editor_something_wrong">ᱡᱟᱦᱟᱱᱟᱜ ᱠᱚ ᱵᱷᱩᱞ ᱦᱩᱭᱮᱱᱟ</string>
     <string name="multimedia_editor_png_paste_error">ᱠᱞᱤᱯᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ png ᱨᱮ ᱵᱚᱫᱚᱞ ᱨᱮ ᱦᱤᱲᱤᱡ : %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s ᱡᱟᱭᱜᱟ ᱨᱮ ᱢᱟᱹᱞᱴᱤᱢᱤᱰᱤᱭᱟ ᱡᱤᱱᱤᱥ ᱞᱟᱴᱷᱟᱭ ᱢᱮ</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
-    <string name="multimedia_editor_audio_view_recording_failed">ᱨᱮᱠᱚᱰ ᱠᱚ ᱰᱤᱜᱟᱹᱣᱮᱱᱟ </string>
-    <string name="multimedia_editor_audio_view_playing_failed">ᱮᱛᱦᱚᱵ ᱠᱚ ᱰᱤᱜᱟᱹᱣ </string>
-    <string name="multimedia_editor_audio_view_create_failed">ᱨᱮᱠᱚᱰ ᱦᱟᱹᱛᱤᱭᱟᱨ ᱵᱟᱨ ᱵᱟᱭ ᱛᱮᱭᱟᱨᱚᱜ ᱠᱟᱱᱟ </string>
+    <string name="multimedia_editor_audio_view_recording_failed">ᱨᱮᱠᱚᱰ ᱠᱚ ᱰᱤᱜᱟᱹᱣᱮᱱᱟ</string>
+    <string name="multimedia_editor_audio_view_playing_failed">ᱮᱛᱦᱚᱵ ᱠᱚ ᱰᱤᱜᱟᱹᱣ</string>
+    <string name="multimedia_editor_audio_view_create_failed">ᱨᱮᱠᱚᱰ ᱦᱟᱹᱛᱤᱭᱟᱨ ᱵᱟᱨ ᱵᱟᱭ ᱛᱮᱭᱟᱨᱚᱜ ᱠᱟᱱᱟ</string>
     <!-- Crop function-->
     <string name="crop_image">ᱟᱢ ᱪᱤᱛᱟᱹᱨ ᱠᱷᱟᱴᱚ ᱥᱟᱱᱟᱮᱫ ᱢᱮᱭᱟ ᱥᱮ ᱵᱟᱝ-ᱟ  ?</string>
-    <string name="crop_button" maxLength="28">ᱪᱤᱛᱟᱹᱨ ᱠᱷᱟᱴᱚᱭ ᱢᱮ </string>
+    <string name="crop_button" maxLength="28">ᱪᱤᱛᱟᱹᱨ ᱠᱷᱟᱴᱚᱭ ᱢᱮ</string>
     <string name="save_dialog_content">ᱱᱤᱛᱚᱜᱟᱜ ᱪᱤᱛᱟᱹᱨ ᱢᱟᱨᱟᱝ ᱫᱚ %sMB ᱠᱟᱱᱟ. ᱰᱤᱯᱷᱚᱞᱴ ᱪᱤᱛᱟᱹᱨ ᱢᱟᱨᱟᱝ ᱜᱚᱴᱟ ᱫᱚ 1MB ᱠᱟᱱᱟ. ᱟᱢ ᱱᱚᱶᱟ ᱠᱚᱢᱯᱨᱮᱥ (compress) ᱠᱮᱭᱟᱢ ᱥᱮ?</string>
     <string name="select_image_failed">"ᱪᱤᱛᱹᱨ ᱵᱟᱪᱷᱟᱣ ᱦᱩᱰᱟᱹᱜ, ᱫᱚᱭᱚᱠᱟᱛᱮ ᱫᱩᱦᱰᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">ᱯᱷᱤᱞᱰ ᱥᱟᱦᱴᱟ</string>

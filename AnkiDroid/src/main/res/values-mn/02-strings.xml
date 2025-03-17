@@ -64,7 +64,7 @@
     <string name="save_whiteboard" maxLength="28">Зурсан зургаа хадгалах</string>
     <string name="enable_stylus" maxLength="28">Enable stylus writing</string>
     <string name="disable_stylus">Disable stylus writing</string>
-    <string name="enable_whiteboard" maxLength="28">Зураг зурах горимыг идэвхжүүлэх </string>
+    <string name="enable_whiteboard" maxLength="28">Зураг зурах горимыг идэвхжүүлэх</string>
     <string name="disable_whiteboard">Зураг зурах горимыг унтраах</string>
     <string name="show_whiteboard">Зурсан зургыг харуулах</string>
     <string name="hide_whiteboard" maxLength="28">Зурсан зургыг нуух</string>
@@ -74,13 +74,13 @@
     <string name="leech_notification">Card marked as leech</string>
     <string name="webview_crash_unknown">Тодорхойгүй алдаа</string>
     <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Багтаамж дүүрсэн байна </string>
+    <string name="webview_crash_oom">Багтаамж дүүрсэн байна</string>
     <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
     <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
-    <string name="filter_by_flags" maxLength="41">Дарцагнууд </string>
+    <string name="filter_by_flags" maxLength="41">Дарцагнууд</string>
     <!-- Custom study options -->
     <string name="custom_study_limit_tags">Limit to particular tags</string>
     <plurals name="studyoptions_buried_count">

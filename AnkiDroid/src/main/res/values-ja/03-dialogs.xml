@@ -69,7 +69,7 @@
     <string name="custom_study_new_extend">上限枚数をいくつ増やしますか？（減らす場合は負の数）</string>
     <string name="custom_study_rev_extend">上限枚数をいくつ増やしますか？（減らす場合は負の数）</string>
     <string name="custom_study_forgotten">直近 x 日間で「やり直し」を選んだカードを再学習</string>
-    <string name="custom_study_ahead"> x 日先までの復習カードを予習</string>
+    <string name="custom_study_ahead">x 日先までの復習カードを予習</string>
     <string name="custom_study_preview">直近 x 日間で追加した習得未開始の新規カードを予習</string>
     <string name="storage_full_title">ストレージの空き容量がありません</string>
     <string name="storage_almost_full_title">ストレージの空き容量が少なくなっています</string>
@@ -136,7 +136,7 @@
     <string name="database_locked_title">データベースがロックされています</string>
     <string name="database_locked_summary">AnkiDroidデータベースを別のアプリが使用中です。該当するアプリを終了してAnkiDroidを再起動してください。</string>
     <string name="incompatible_database_version_title">互換性のないバージョンのデータベース</string>
-    <string name="incompatible_database_version_summary">このデータベースは、このAnkiDroidでは使用できません。 これを使用するには、AnkiDroidをアップグレードするか、データベースをダウングレードしてください。\n\nこのAnkiDroidで開ける最大バージョン: %1$d\nこのデータベースのバージョン: %2$d\n\n次の復元オプションは、現在のコレクションを、このAnkiDroidで使用できる可能性が高いデータベースで上書きします。 </string>
+    <string name="incompatible_database_version_summary">このデータベースは、このAnkiDroidでは使用できません。 これを使用するには、AnkiDroidをアップグレードするか、データベースをダウングレードしてください。\n\nこのAnkiDroidで開ける最大バージョン: %1$d\nこのデータベースのバージョン: %2$d\n\n次の復元オプションは、現在のコレクションを、このAnkiDroidで使用できる可能性が高いデータベースで上書きします。</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">背景画像に適用しました</string>
     <string name="background_image_removed">背景画像を削除しました</string>

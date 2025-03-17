@@ -45,7 +45,7 @@
     <string name="model_browser_rename" comment="Rename a note type">이름 변경하기</string>
     <string name="model_browser_template">카드 편집하기</string>
     <!--Rename-->
-    <string name="rename_model">노트 유형 이름 바꾸기 </string>
+    <string name="rename_model">노트 유형 이름 바꾸기</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">키보드 언어 힌트를 %s로 설정하기</string>
     <!--Field Editing-->

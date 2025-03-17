@@ -74,7 +74,7 @@
     <string name="sync_corrupt_database">Databasen din er ødelagt. Vennligst fiks den før du prøver å synkronisere på nytt.\n\nSee %s for informasjon om å reparere databaser.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Lokalt</string>
-    <string name="sync_sanity_remote">Ekstern </string>
+    <string name="sync_sanity_remote">Ekstern</string>
     <string name="one_way_sync_title" maxLength="41">One-way sync</string>
     <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>

@@ -124,7 +124,7 @@
     <string name="create_subdeck">Opret understak</string>
     <string name="empty_filtered_deck">Tømmer filtreret stak&#8230;</string>
     <string name="custom_study_deck_name">Tilpasset studiesession</string>
-    <string name="custom_study_deck_exists">Omdøb den eksisterende tilpassede stak først </string>
+    <string name="custom_study_deck_exists">Omdøb den eksisterende tilpassede stak først</string>
     <string name="search_deck" comment="Deck search for selecting it">Staksøgning</string>
     <string name="empty_deck">Denne stak er tom</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Staksøgning</string>
@@ -151,7 +151,7 @@
     <string name="card_template_editor_deck_override" maxLength="28">Overskriv stak</string>
     <string name="card_template_editor_insert_field" maxLength="28">Indsæt felt</string>
     <string name="card_template_editor_select_field">Vælg felt</string>
-    <string name="card_template_editor_cant_delete">Mindst én korttype er påkrævet </string>
+    <string name="card_template_editor_cant_delete">Mindst én korttype er påkrævet</string>
     <plurals name="card_template_editor_confirm_add">
         <item quantity="one">Dette vil oprette %1$d kort. Fortsæt?</item>
         <item quantity="other">Dette vil oprette %1$d kort. Fortsæt?</item>

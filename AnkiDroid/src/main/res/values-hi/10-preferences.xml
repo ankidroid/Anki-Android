@@ -52,19 +52,19 @@
     </plurals>
     <string name="pref_milliseconds">%s एमएस</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
-    <string name="pref_search_no_results">कोई परिणाम नहीं </string>
+    <string name="pref_search_no_results">कोई परिणाम नहीं</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">सामान्य</string>
-    <string name="pref_cat_studying" maxLength="41">पढा जा रहा है </string>
+    <string name="pref_cat_studying" maxLength="41">पढा जा रहा है</string>
     <string name="pref_cat_system_wide" maxLength="41">विस्तृत - प्रणाली</string>
     <string name="pref_cat_reviewing" maxLength="41">समीक्षा</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">साथ साथ करना</string>
-    <string name="pref_cat_scheduling" maxLength="41">निर्धारण </string>
+    <string name="pref_cat_scheduling" maxLength="41">निर्धारण</string>
     <string name="pref_cat_whiteboard" maxLength="41">श्वेतपट्ट</string>
     <string name="pref_cat_appearance" maxLength="41">दिखावट</string>
     <string name="pref_cat_themes" maxLength="41">थीम</string>
     <string name="pref_cat_gestures" maxLength="41">इशारे</string>
-    <string name="pref_cat_controls" maxLength="41">नियंत्रणे </string>
+    <string name="pref_cat_controls" maxLength="41">नियंत्रणे</string>
     <string name="pref_cat_advanced" maxLength="41">उन्नत</string>
     <string name="pref_cat_workarounds" maxLength="41">वैकल्पिक हल</string>
     <string name="pref_cat_plugins" maxLength="41">प्लगइन</string>
@@ -111,13 +111,13 @@
     <string name="gestures_tap_left" maxLength="41">बाएं स्पर्श करें</string>
     <string name="gestures_tap_right" maxLength="41">दाएं स्पर्श करें</string>
     <string name="gestures_tap_bottom" maxLength="41">नीचे स्पर्श करें</string>
-    <string name="gestures_corner_tap_top_left" maxLength="41">ऊपर से बाएं को छुएं </string>
-    <string name="gestures_corner_tap_top_right" maxLength="41">ऊपर से दाएं को छुएं </string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">ऊपर से बाएं को छुएं</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">ऊपर से दाएं को छुएं</string>
     <string name="gestures_corner_tap_middle_center" maxLength="41">मध्य में केंद्र को स्पर्श करें</string>
-    <string name="gestures_corner_tap_bottom_left" maxLength="41">नीचे से बाएं से छुएं </string>
-    <string name="gestures_corner_tap_bottom_right" maxLength="41">नीचे से दाएं को छुएं </string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">नीचे से बाएं से छुएं</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">नीचे से दाएं को छुएं</string>
     <string name="gestures_shake" maxLength="41">डिवाइस हिलाओ</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ मेन्यू</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ मेन्यू</string>
     <string name="card_browser_enable_external_context_menu_summary">विश्व स्तर पर \'%s\' संदर्भ मेनू को सक्षम करता है</string>
     <string name="double_scrolling_gap" maxLength="41">डबल स्क्रॉल</string>
     <string name="double_scrolling_gap_summ">ई-रीडर के साथ स्क्रॉल गैप डबल</string>

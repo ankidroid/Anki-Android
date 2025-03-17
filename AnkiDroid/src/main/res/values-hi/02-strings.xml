@@ -116,7 +116,7 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid कार्ड</string>
     <string name="note_editor_copy_note" maxLength="28">नोट कॉपी करें</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">स्थानांतरित करे </string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">स्थानांतरित करे</string>
     <string name="card_editor_reset_card" maxLength="28">प्रगति को रीसेट</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">पुनः शेड्यूल करें</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">पूर्वावलोकन</string>
@@ -146,8 +146,8 @@
     <string name="export_preparation_in_progress">निर्यात करने की तैयारी है&#8230;</string>
     <string name="export_ready_title">एक्सपोर्ट तैयार  है</string>
     <string name="export_send_no_handlers">apkg को संभालने के लिए कोई एप्लिकेशन उपलब्ध नहीं है। सहेजा जा रहा है &#8230;</string>
-    <string name="export_save_apkg_successful">सफलतापूर्वक Anki पैकेज को सहेजा गया </string>
-    <string name="export_save_apkg_unsuccessful">Anki पैकेज सहेजना विफल रहा </string>
+    <string name="export_save_apkg_successful">सफलतापूर्वक Anki पैकेज को सहेजा गया</string>
+    <string name="export_save_apkg_unsuccessful">Anki पैकेज सहेजना विफल रहा</string>
     <string name="export_share_title">Anki पैकेज का उपयोग करके भेजें</string>
     <string name="export_email_subject">AnkiDroid निर्यात किए गए स्पैनिश: %s</string>
     <string name="export_email_text"><![CDATA[        नमस्ते!

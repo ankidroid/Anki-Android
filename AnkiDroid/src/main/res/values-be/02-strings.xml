@@ -52,7 +52,7 @@
     <string name="CardEditorModel">Тып:</string>
     <string name="CardEditorTags">Меткі: %1$s</string>
     <string name="CardEditorCards">Карткі: %1$s</string>
-    <string name="edit_occlusions">Рэдагаваць аклюзіі </string>
+    <string name="edit_occlusions">Рэдагаваць аклюзіі</string>
     <string name="tag_name">Назва меткі</string>
     <string name="add_new_filter_tags">Дадаць/фільтраваць меткі</string>
     <string name="add_tag" maxLength="28">Дадаць метку</string>
@@ -75,7 +75,7 @@
     <string name="webview_crash_unknown">Невядомая памылка</string>
     <string name="webview_crash_unknwon_detailed">Выклікана ўнутранай памылкай у WebView</string>
     <string name="webview_crash_oom">Недастаткова памяці</string>
-    <string name="webview_crash_oom_details">WebView завершаны сістэмай. Звычайны гэта здараецца, калі праграме пачынае не хапаць сістэмнай памяці з-за вялікіх шрыфтоў або медыяфайлаў. </string>
+    <string name="webview_crash_oom_details">WebView завершаны сістэмай. Звычайны гэта здараецца, калі праграме пачынае не хапаць сістэмнай памяці з-за вялікіх шрыфтоў або медыяфайлаў.</string>
     <string name="webview_crash_nonfatal">Збой апрацоўшчыка WebView. Прычына: %s</string>
     <string name="webview_crash_fatal">Крытычная памылка: збой апрацоўшчыка WebView. Прычына: %s</string>
     <string name="webview_crash_loop_dialog_title">Памылка апрацоўшчыка сістэмнага WebView</string>
