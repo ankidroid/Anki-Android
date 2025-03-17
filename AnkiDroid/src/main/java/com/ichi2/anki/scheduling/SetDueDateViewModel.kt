@@ -37,6 +37,14 @@ import timber.log.Timber
 typealias NumberOfDaysInFuture = Int
 
 /**
+ * Represents the interval between reviews in days.
+ *
+ * - A value of `0` means the next review is due today.
+ * - Indicates the number of days until a card's next review.
+ */
+typealias ReviewIntervalDays = Int
+
+/**
  * [ViewModel] for [SetDueDateDialog]
  */
 class SetDueDateViewModel : ViewModel() {
@@ -121,7 +129,7 @@ class SetDueDateViewModel : ViewModel() {
      * The value is not-null if exactly one card is selected, which is the only case
      * in which the view should display the interval.
      */
-    val currentInterval = MutableStateFlow<Int?>(null)
+    val currentInterval = MutableStateFlow<ReviewIntervalDays?>(null)
 
     fun init(
         cardIds: LongArray,
@@ -143,8 +151,6 @@ class SetDueDateViewModel : ViewModel() {
                     }
                 }
             }
-        } else {
-            currentInterval.value = null
         }
     }
 
