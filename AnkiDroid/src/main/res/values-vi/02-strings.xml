@@ -245,6 +245,7 @@
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Tải bộ thẻ xuống</string>
+    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Open in Browser</string>
     <string name="try_again">Thử lại</string>
     <string name="cancel_download">Hủy tải xuống</string>
     <string name="cancel_download_question_title">Hủy tải xuống?</string>
