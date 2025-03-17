@@ -249,6 +249,7 @@
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Baixar paquet</string>
+    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Open in Browser</string>
     <string name="try_again">Torneu-ho a provar</string>
     <string name="cancel_download">Cancel·lar baixada</string>
     <string name="cancel_download_question_title">Cancel·lo la baixada?</string>
