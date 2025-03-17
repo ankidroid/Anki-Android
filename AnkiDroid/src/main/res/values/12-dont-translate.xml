@@ -16,8 +16,14 @@
 -->
 <!-- This contains strings that are used to test the translation process. They should not be used in actual code -->
 <resources>
+    <!--
+    Adding or removing new line at the start/end of the string cause crowdin to require a new translation. Let's check if a comment before lead to a translation need!
+    -->
   <string
       name="crowdin_test_string_do_not_translate"
       >In order to ensure this string is not shown as untranslated, translate it the way you want. Probably using a single letter, so that it\'s quick. This string will never appear in ankidroid and is present here only to test crowdin feature.</string>
+    <string name="crowdin_second_string_to_test">
+        This will be used to check that changing the order of strings does not require translation.
+    </string>
 </resources>
 
