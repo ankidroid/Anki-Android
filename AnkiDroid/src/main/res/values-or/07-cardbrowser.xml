@@ -67,7 +67,7 @@
     <string name="card_browser_list_my_searches" maxLength="28">ମୋ ସନ୍ଧାନଗୁଡ଼ିକ</string>
     <string name="card_browser_list_my_searches_save" maxLength="28">ସନ୍ଧାନ ସଂରକ୍ଷିତ କର</string>
     <string name="card_browser_list_my_searches_title">ଏକ ସଞ୍ଚିତ ସନ୍ଧାନ ବାଛନ୍ତୁ</string>
-    <string name="card_browser_list_my_searches_new_name">ସାମ୍ପ୍ରତିକ ସନ୍ଧାନ ପାଇଁ ନାମ </string>
+    <string name="card_browser_list_my_searches_new_name">ସାମ୍ପ୍ରତିକ ସନ୍ଧାନ ପାଇଁ ନାମ</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">ଆପଣ ନାମ ବିନା ସନ୍ଧାନ ସଞ୍ଚୟ କରିପାରିବେ ନାହିଁ</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">ନାଁଟି ଵିଦ୍ୟମାନ ଅଛି</string>
     <string name="no_note_to_edit">ସମ୍ପାଦନ କରିବାକୁ କୌଣସି ନୋଟ୍ ନାହିଁ</string>
@@ -76,7 +76,7 @@
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">ସନ୍ଧାନ</string>
     <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">ସନ୍ଧାନ</string>
     <string name="card_browser_change_display_order_title">ପ୍ରଦର୍ଶନ କ୍ରମ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
-    <string name="card_details_tags">ଟ୍ୟାଗ୍ </string>
+    <string name="card_details_tags">ଟ୍ୟାଗ୍</string>
     <string-array name="card_browser_order_labels">
         <item>କୌଣସି ସଜାଣି ନାହିଁ (ଦ୍ରୁତ)</item>
         <item>ସଜାଇବା କ୍ଷେତ୍ର ଅନୁସାରେ</item>

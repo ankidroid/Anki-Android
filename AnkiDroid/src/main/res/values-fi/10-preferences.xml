@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Kosketa alavasemmalle</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Kosketa alaoikealle</string>
     <string name="gestures_shake" maxLength="41">Ravista laitetta</string>
-    <string name="card_browser_enable_external_context_menu">\"%s\" -valikko</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">\"%s\" -valikko</string>
     <string name="card_browser_enable_external_context_menu_summary">Ota \"%s\" -valikko käyttöön koko sovelluksessa</string>
     <string name="double_scrolling_gap" maxLength="41">Kaksoisvieritys</string>
     <string name="double_scrolling_gap_summ">Kaksinkertaista vieritysaskeleen koko eReaderin kanssa</string>
@@ -205,7 +205,7 @@
     <string name="paste_as_png" maxLength="41">Liitä leikepöydän kuvat PNG:nä</string>
     <string name="paste_as_png_summary">Oletusarvoisesti Anki liittää kuvat leikepöydältä JPG-tiedostoina levytilan säästämiseksi. Tämän vaihtoehdon avulla voit sen sijaan käyttää PNG-kuvia.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Takaisin/poistu painamalla \"takaisin\" kahdesti</string>
-    <string name="exit_via_double_tap_back_summ">Vältä poistumasta vahingossa kertausnäkymästä tai sovelluksesta </string>
+    <string name="exit_via_double_tap_back_summ">Vältä poistumasta vahingossa kertausnäkymästä tai sovelluksesta</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Salli kaikki tiedostot mediaa tuotaessa</string>
     <string name="media_import_allow_all_files_summ">Jos Android ei tunnista mediatiedostoja</string>

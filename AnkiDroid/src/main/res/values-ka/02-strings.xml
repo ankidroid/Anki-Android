@@ -286,7 +286,7 @@
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">ნაკლები მეცადინეობა</string>
     <string name="intro_ankidroid_tagline_two">მეტის დამახსოვრება</string>
-    <string name="intro_short_ankidroid_explanation">Anki-ს განრიგის მგეგმავი რთულად დასახსომებელი ცოდნის უკეთ დასწავლასა და ღრმა ცოდნის შენარჩუნებაში გეხმარებათ, რათა დაზოგოთ ძვირფასი დრო </string>
+    <string name="intro_short_ankidroid_explanation">Anki-ს განრიგის მგეგმავი რთულად დასახსომებელი ცოდნის უკეთ დასწავლასა და ღრმა ცოდნის შენარჩუნებაში გეხმარებათ, რათა დაზოგოთ ძვირფასი დრო</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">დაწყება</string>
     <string name="intro_sync_from_ankiweb">სინქრონიზაცია AnkiWeb-თან</string>
     <!-- IntentHandler -->

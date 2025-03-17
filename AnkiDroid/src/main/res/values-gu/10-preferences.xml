@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">નીચે ડાબી બાજુએ ટચ કરો</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">નીચે જમણે ટચ કરો</string>
     <string name="gestures_shake" maxLength="41">શેક ઉપકરણ</string>
-    <string name="card_browser_enable_external_context_menu">\'%s\' મેનૂ</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">\'%s\' મેનૂ</string>
     <string name="card_browser_enable_external_context_menu_summary">વૈશ્વિક સ્તરે \'%s\' સંદર્ભ મેનૂને સક્ષમ કરે છે</string>
     <string name="double_scrolling_gap" maxLength="41">ડબલ સ્ક્રોલિંગ</string>
     <string name="double_scrolling_gap_summ">eReader વડે સ્ક્રોલ ગેપને બમણો કરો</string>

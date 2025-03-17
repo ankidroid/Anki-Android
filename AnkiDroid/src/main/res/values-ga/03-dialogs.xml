@@ -58,7 +58,7 @@
     <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">Níl TTS ar fáil sa teanga seo</string>
     <string name="tts_no_tts">Teanga ar bith</string>
-    <string name="reposition_card_not_new_error">Ní féidir ach cártaí nua a athlonnú </string>
+    <string name="reposition_card_not_new_error">Ní féidir ach cártaí nua a athlonnú</string>
     <string name="reset_card_dialog_title">Glan stair an chárta maidir le do dhul ar aghaidh?</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d card reset</item>

@@ -63,7 +63,7 @@
     <!-- Reviewer.kt -->
     <string name="save_whiteboard" maxLength="28">حفظ السبورة</string>
     <string name="enable_stylus" maxLength="28">تمكين وضع Stylus</string>
-    <string name="disable_stylus"> تعطيل وضع Stylus</string>
+    <string name="disable_stylus">تعطيل وضع Stylus</string>
     <string name="enable_whiteboard" maxLength="28">تفعيل السبورة</string>
     <string name="disable_whiteboard">تعطيل السبورة</string>
     <string name="show_whiteboard">إظهار السبورة</string>
@@ -313,8 +313,8 @@
     <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
     <string name="already_logged_in">تم تسجيل الدخول مسبقًا</string>
     <!-- Deck Creation -->
-    <string name="deck_created">كيفية </string>
-    <string name="deck_renamed">Minato </string>
+    <string name="deck_created">كيفية</string>
+    <string name="deck_renamed">Deck renamed</string>
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">تم حذف الرزمة. يرجى حذف الاختصار</string>
     <!-- Browser Options Dialog -->

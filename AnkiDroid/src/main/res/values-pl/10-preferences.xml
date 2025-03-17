@@ -119,8 +119,8 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Dotknij lewej dolnej części ekranu</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Dotknij prawej dolnej części ekranu</string>
     <string name="gestures_shake" maxLength="41">Potrząśnij urządzeniem</string>
-    <string name="card_browser_enable_external_context_menu">Menu „%s”</string>
-    <string name="card_browser_enable_external_context_menu_summary">Włącza menu kontekstowe „%s”globalne </string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">Menu „%s”</string>
+    <string name="card_browser_enable_external_context_menu_summary">Włącza menu kontekstowe „%s”globalne</string>
     <string name="double_scrolling_gap" maxLength="41">Podwójne przewijanie</string>
     <string name="double_scrolling_gap_summ">Podwójny skok suwaka na eReaderze</string>
     <string name="swipe_sensitivity" maxLength="41">Czułość przy przewijaniu</string>
@@ -299,7 +299,7 @@
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Ustawienia programisty</string>
     <string name="dev_options_enabled_pref" maxLength="41">Włącz opcje dla programistów</string>
-    <string name="disable_dev_options">Wyłącz opcje dla programistów </string>
+    <string name="disable_dev_options">Wyłącz opcje dla programistów</string>
     <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################

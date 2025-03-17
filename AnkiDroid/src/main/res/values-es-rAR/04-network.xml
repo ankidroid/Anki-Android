@@ -70,7 +70,7 @@
     <string name="sync_title">Sincronización</string>
     <string name="sync_log_uploading_message">Sincronización desde el dispositivo completa</string>
     <string name="sync_database_acknowledge">Colección sincronizada</string>
-    <string name="col_synced_media_in_background"> Colección sincronizada. Los archivos multimedia se están sincronizando en segundo plano.</string>
+    <string name="col_synced_media_in_background">Colección sincronizada. Los archivos multimedia se están sincronizando en segundo plano.</string>
     <string name="sync_corrupt_database">Su base de datos está dañada. Por favor, repárela antes de intentar la sincronización nuevamente.\n\nVer %s para informarse sobre la reparación de su base de datos.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Local</string>

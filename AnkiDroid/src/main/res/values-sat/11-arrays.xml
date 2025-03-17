@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">ᱯᱚᱛᱠᱟ ᱚᱪᱚᱜ ᱢᱮ</string>
     <string name="gesture_page_up" maxLength="41">ᱥᱟᱠᱟᱢ ᱪᱮᱛᱟᱱ</string>
     <string name="gesture_page_down" maxLength="41">ᱥᱟᱠᱟᱢ ᱞᱟᱛᱟᱨ</string>
-    <string name="gesture_abort_sync" maxLength="41">ᱥᱟᱱᱛᱟᱲᱤ ᱱᱤᱩᱡᱽ ᱰᱮᱥᱠ </string>
+    <string name="gesture_abort_sync" maxLength="41">ᱥᱟᱱᱛᱟᱲᱤ ᱱᱤᱩᱡᱽ ᱰᱮᱥᱠ</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">ᱯᱩᱱᱰᱵᱚᱰ ᱴᱩᱜᱟᱹᱞ ᱢᱮ</string>
     <string name="gesture_show_hint" maxLength="41">ᱦᱤᱱᱫᱤ ᱪᱤᱛᱟᱹᱨ</string>
     <string name="gesture_show_all_hints" maxLength="41">ᱡᱚᱛᱚ ᱥᱟᱹᱠᱷᱭᱟᱹᱛ ᱮᱢ ᱢᱮ</string>

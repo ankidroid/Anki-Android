@@ -133,7 +133,7 @@
     <string name="custom_study_deck_exists">Prašome pirmiausiai pervadinti esamą individualaus mokymosi rinkinį</string>
     <string name="search_deck" comment="Deck search for selecting it">Rinkinio paieška</string>
     <string name="empty_deck">Šis rinkinys yra tuščias</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Rinkinio paieška </string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Rinkinio paieška</string>
     <string name="invalid_deck_name">Blogas rinkinio vardas</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
@@ -154,7 +154,7 @@
     <string name="card_template_editor_back">Galinė pusė</string>
     <string name="card_template_editor_styling" maxLength="28">Išvaizdos keitimas</string>
     <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Naršyklės išvaizda</string>
-    <string name="card_template_editor_deck_override" maxLength="28">Rinkinio perrašymas </string>
+    <string name="card_template_editor_deck_override" maxLength="28">Rinkinio perrašymas</string>
     <string name="card_template_editor_insert_field" maxLength="28">Įterpti laukelį</string>
     <string name="card_template_editor_select_field">Pasirinkti laukelį</string>
     <string name="card_template_editor_cant_delete">Reikalingas bent vienas kortelės tipas</string>

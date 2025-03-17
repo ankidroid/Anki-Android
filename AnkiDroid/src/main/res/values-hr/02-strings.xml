@@ -46,7 +46,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Otvori ladicu</string>
-    <string name="drawer_close">Zatvori ladicu </string>
+    <string name="drawer_close">Zatvori ladicu</string>
     <string name="CardEditorCardDeck">Špil karata:</string>
     <string name="CardEditorNoteDeck">Špil:</string>
     <string name="CardEditorModel">Tip:</string>
@@ -58,14 +58,14 @@
     <string name="add_tag" maxLength="28">Dodaj oznaku</string>
     <string name="check_all_tags" maxLength="28">Označi / odznači sve oznake</string>
     <string name="filter_tags" maxLength="28">Filtriraj oznake</string>
-    <string name="no_tags">Niste još dodali ni jednu oznaku </string>
+    <string name="no_tags">Niste još dodali ni jednu oznaku</string>
     <string name="updated_version">Ažurirano na verziju %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard" maxLength="28">Save whiteboard</string>
     <string name="enable_stylus" maxLength="28">Enable stylus writing</string>
     <string name="disable_stylus">Disable stylus writing</string>
     <string name="enable_whiteboard" maxLength="28">Omogući ploču</string>
-    <string name="disable_whiteboard">Onemogući ploču </string>
+    <string name="disable_whiteboard">Onemogući ploču</string>
     <string name="show_whiteboard">Pokaži ploču</string>
     <string name="hide_whiteboard" maxLength="28">Sakrij ploču</string>
     <string name="clear_whiteboard" maxLength="28">Obriši ploču</string>

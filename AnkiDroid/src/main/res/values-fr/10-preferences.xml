@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Toucher en bas à gauche</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Toucher en bas à droite</string>
     <string name="gestures_shake" maxLength="41">Secouer l\'appareil</string>
-    <string name="card_browser_enable_external_context_menu">Menu « %s »</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">Menu « %s »</string>
     <string name="card_browser_enable_external_context_menu_summary">Active le menu contextuel « %s » globalement</string>
     <string name="double_scrolling_gap" maxLength="41">Défilement double</string>
     <string name="double_scrolling_gap_summ">Doubler la vitesse de défilement avec eReader</string>

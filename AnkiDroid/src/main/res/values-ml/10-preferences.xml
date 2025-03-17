@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">ചുവടെ ഇടത് സ്പർശിക്കുക</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">ചുവടെ വലതുവശത്ത് സ്‌പർശിക്കുക</string>
     <string name="gestures_shake" maxLength="41">ഉപകരണം കുലുക്കുക</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ മെനു</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ മെനു</string>
     <string name="card_browser_enable_external_context_menu_summary">ആഗോളതലത്തിൽ ‘%s’ സന്ദർഭ മെനു പ്രവർത്തനക്ഷമമാക്കുന്നു</string>
     <string name="double_scrolling_gap" maxLength="41">ഇരട്ട സ്ക്രോളിംഗ്</string>
     <string name="double_scrolling_gap_summ">eReader ഉപയോഗിച്ച് സ്ക്രോൾ വിടവ് ഇരട്ടിയാക്കുക</string>

@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">கீழே இடதுபுறத்தைத் தொடவும்</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">கீழ் வலதுபுறத்தைத் தொடவும்</string>
     <string name="gestures_shake" maxLength="41">சாதனத்தை அசைக்கவும்</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ மெனு</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ மெனு</string>
     <string name="card_browser_enable_external_context_menu_summary">உலகளவில் சூழல் மெனு \'%s\' ஐ இயக்குகிறது</string>
     <string name="double_scrolling_gap" maxLength="41">இரட்டை ஸ்க்ரோலிங்</string>
     <string name="double_scrolling_gap_summ">eReader மூலம் ஸ்க்ரோல் இடைவெளியை இரட்டிப்பாக்கவும்</string>

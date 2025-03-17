@@ -46,7 +46,7 @@
 -->
 <resources>
     <string name="youre_offline">आप ऑफ़लाइन हैं</string>
-    <string name="sync_error">सिंक में दिकत </string>
+    <string name="sync_error">सिंक में दिकत</string>
     <string name="vague_error" comment="Network error dialog title">गलती</string>
     <string name="retry">पुनः प्रयास करें</string>
     <string name="menu_get_shared_decks">साझा किए गए डेक पाएँ</string>

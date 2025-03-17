@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">ಕೆಳಗಿನ ಎಡಭಾಗವನ್ನು ಸ್ಪರ್ಶಿಸಿ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">ಕೆಳಗಿನ ಬಲಕ್ಕೆ ಸ್ಪರ್ಶಿಸಿ</string>
     <string name="gestures_shake" maxLength="41">ಸಾಧನವನ್ನು ಅಲ್ಲಾಡಿಸಿ</string>
-    <string name="card_browser_enable_external_context_menu">\'%s\' ಮೆನು</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">\'%s\' ಮೆನು</string>
     <string name="card_browser_enable_external_context_menu_summary">ಜಾಗತಿಕವಾಗಿ \'%s\' ಸಂದರ್ಭ ಮೆನುವನ್ನು ಸಕ್ರಿಯಗೊಳಿಸುತ್ತದೆ</string>
     <string name="double_scrolling_gap" maxLength="41">ಡಬಲ್ ಸ್ಕ್ರೋಲಿಂಗ್</string>
     <string name="double_scrolling_gap_summ">eReader ನೊಂದಿಗೆ ಸ್ಕ್ರಾಲ್ ದೂರವನ್ನು ದ್ವಿಗುಣಗೊಳಿಸಿ</string>
@@ -233,7 +233,7 @@
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">ಸಾಮಾನ್ಯ</string>
     <string name="deck_conf_reminders" maxLength="41">ಜ್ಞಾಪನೆಗಳು</string>
     <string name="deck_conf_cram_filter" maxLength="41">ಫಿಲ್ಟರ್</string>
-    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">ಇದಕ್ಕಾಗಿ ಹುಡುಕು </string>
+    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">ಇದಕ್ಕಾಗಿ ಹುಡುಕು</string>
     <string name="deck_conf_cram_limit" maxLength="41">ಗೆ ಮಿತಿ</string>
     <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">ಮರುಹೊಂದಿಸಿ</string>

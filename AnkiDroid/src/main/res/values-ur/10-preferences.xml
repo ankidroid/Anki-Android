@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">نیچے بائیں کو ٹچ کریں</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">نیچے دائیں کو ٹچ کریں</string>
     <string name="gestures_shake" maxLength="41">شیک ڈیوائس</string>
-    <string name="card_browser_enable_external_context_menu">\'%s\' مینو</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">\'%s\' مینو</string>
     <string name="card_browser_enable_external_context_menu_summary">عالمی سطح پر \'%s\' سیاق و سباق کے مینو کو فعال کرتا ہے۔</string>
     <string name="double_scrolling_gap" maxLength="41">ڈبل اسکرولنگ</string>
     <string name="double_scrolling_gap_summ">eReader کے ساتھ اسکرول گیپ کو دوگنا کریں</string>

@@ -80,13 +80,13 @@
     <string name="card_zoom" maxLength="41">কার্ড জুম</string>
     <string name="image_zoom" maxLength="41">ছবি জুম</string>
     <string name="button_size" maxLength="41">উত্তর বাটান আকার</string>
-    <string name="card_browser_font_size" maxLength="41">কার্ড ব্রাউজারের ফন্ট আকার </string>
-    <string name="card_browser_hide_media" maxLength="41">ব্রাউজারে ফাইলের নাম দেখান </string>
+    <string name="card_browser_font_size" maxLength="41">কার্ড ব্রাউজারের ফন্ট আকার</string>
+    <string name="card_browser_hide_media" maxLength="41">ব্রাউজারে ফাইলের নাম দেখান</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
-    <string name="col_path" maxLength="41">AnkiDroid ডিরেক্টরি </string>
+    <string name="col_path" maxLength="41">AnkiDroid ডিরেক্টরি</string>
     <string name="fullscreen_review" maxLength="41">ফুলস্ক্রিন মোড</string>
     <string name="full_screen_off">বন্ধ</string>
-    <string name="full_screen_system">সিস্টেম বার আড়াল করুন </string>
+    <string name="full_screen_system">সিস্টেম বার আড়াল করুন</string>
     <string name="full_screen_complete">সিস্টেম বার এবং উত্তর বোতাম লুকান</string>
     <string name="answer_buttons_position" maxLength="41">উত্তর বোতামের অবস্থান</string>
     <string-array name="answer_buttons_position_labels">
@@ -118,7 +118,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">নীচে বাম দিকে স্পর্শ করুন</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">নীচে ডানদিকে স্পর্শ করুন</string>
     <string name="gestures_shake" maxLength="41">ডিভাইস ঝাঁকান</string>
-    <string name="card_browser_enable_external_context_menu">\'%s\' মেনু</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">\'%s\' মেনু</string>
     <string name="card_browser_enable_external_context_menu_summary">বিশ্বব্যাপী \'%s\' প্রসঙ্গ মেনু সক্রিয় করে</string>
     <string name="double_scrolling_gap" maxLength="41">ডাবল স্ক্রলিং</string>
     <string name="double_scrolling_gap_summ">eReader এর সাথে স্ক্রোল ব্যবধান দ্বিগুণ করুন</string>

@@ -106,11 +106,11 @@
     <string name="menu_flag" maxLength="41">Marcaj</string>
     <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card" maxLength="28">Marchează card</string>
-    <string name="menu_edit_tags" maxLength="28">Editează etichete </string>
+    <string name="menu_edit_tags" maxLength="28">Editează etichete</string>
     <string name="delete_note_message">Doriți sigur să ștergeți această notă și toate cardurile sale?\n%s</string>
     <string name="menu_search" maxLength="28">Căutare în %1$s</string>
     <string name="menu_mark_note" maxLength="28">Marcheaza nota</string>
-    <string name="menu_unmark_note">Demarcheaza nota </string>
+    <string name="menu_unmark_note">Demarcheaza nota</string>
     <string name="menu_enable_voice_playback" maxLength="28">Enable voice playback</string>
     <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Crează punte</string>

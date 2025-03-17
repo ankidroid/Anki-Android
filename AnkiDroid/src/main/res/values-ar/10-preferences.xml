@@ -121,7 +121,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">النقر في أسفل اليسار</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">النقر في أسفل اليمين</string>
     <string name="gestures_shake" maxLength="41">رج الجهاز</string>
-    <string name="card_browser_enable_external_context_menu">قائمة \'%s\'</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">قائمة \'%s\'</string>
     <string name="card_browser_enable_external_context_menu_summary">يفعل قائمة سياق \'%s\' عمومًا</string>
     <string name="double_scrolling_gap" maxLength="41">مضاعفة فجوة التمرير</string>
     <string name="double_scrolling_gap_summ">مضاعفة فجوة التمرير مع القارئ الإلكتروني</string>

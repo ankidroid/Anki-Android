@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Pagpindot sa kaliwa sa ibaba</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Pagpindot sa kanan sa ibaba</string>
     <string name="gestures_shake" maxLength="41">Alugin ang device</string>
-    <string name="card_browser_enable_external_context_menu">Menu ng \'%s\'</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">Menu ng \'%s\'</string>
     <string name="card_browser_enable_external_context_menu_summary">Ine-enable ang context manu na \'%s\' kahit saan</string>
     <string name="double_scrolling_gap" maxLength="41">Double scrolling</string>
     <string name="double_scrolling_gap_summ">I-double ang scroll gap sa eReader</string>

@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">ਹੇਠਾਂ ਖੱਬੇ ਪਾਸੇ ਛੋਹਵੋ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">ਹੇਠਾਂ ਸੱਜੇ ਪਾਸੇ ਛੋਹਵੋ</string>
     <string name="gestures_shake" maxLength="41">ਸ਼ੇਕ ਜੰਤਰ</string>
-    <string name="card_browser_enable_external_context_menu">\'%s\' ਮੀਨੂ</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">\'%s\' ਮੀਨੂ</string>
     <string name="card_browser_enable_external_context_menu_summary">ਵਿਸ਼ਵ ਪੱਧਰ \'ਤੇ \'%s\' ਸੰਦਰਭ ਮੀਨੂ ਨੂੰ ਸਮਰੱਥ ਬਣਾਉਂਦਾ ਹੈ</string>
     <string name="double_scrolling_gap" maxLength="41">ਡਬਲ ਸਕ੍ਰੋਲਿੰਗ</string>
     <string name="double_scrolling_gap_summ">eReader ਨਾਲ ਸਕ੍ਰੋਲ ਗੈਪ ਨੂੰ ਦੁੱਗਣਾ ਕਰੋ</string>

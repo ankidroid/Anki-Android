@@ -92,7 +92,7 @@
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">افزودن</string>
     <string name="menu_add_note" maxLength="28">افزودن یادداشت</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">همگام سازی حساب</string>
-    <string name="menu_dismiss_note" maxLength="41">پنهان/حذف </string>
+    <string name="menu_dismiss_note" maxLength="41">پنهان/حذف</string>
     <string name="menu_bury_card" maxLength="28">مخفی کردن کارت</string>
     <string name="menu_bury_note" maxLength="28">مخفی کردن یادداشت</string>
     <string name="menu_suspend_card" maxLength="28">تعلیق کارت</string>
@@ -127,7 +127,7 @@
     <string name="custom_study_deck_exists">لطفا ابتدا دسته مطالعه سفارشی موجود را مجددا نام گذاری کنید.</string>
     <string name="search_deck" comment="Deck search for selecting it">جستجوی دسته‌ها</string>
     <string name="empty_deck">این دسته خالی است</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">جستجوی دسته‌ها </string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">جستجوی دسته‌ها</string>
     <string name="invalid_deck_name">نام دسته نامعتبر است</string>
     <string name="studyoptions_congrats_finished">تبریک! امروز کارتان تمام شد.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">دسته کارت فعلاً به پایان رسید! %s</string>

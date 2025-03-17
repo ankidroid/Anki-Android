@@ -91,7 +91,7 @@
     <string name="edit_deck_description" comment="edit the deck description">વર્ણન સંપાદિત કરો</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">ઉમેરો</string>
     <string name="menu_add_note" maxLength="28">નોંધ ઉમેરો</string>
-    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ખાતું સિંક્રનાઇઝ કરો </string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ખાતું સિંક્રનાઇઝ કરો</string>
     <string name="menu_dismiss_note" maxLength="41">છુપાવો / કાઢો</string>
     <string name="menu_bury_card" maxLength="28">કાર્ડ કાઢો</string>
     <string name="menu_bury_note" maxLength="28">નોંધ કાઢો</string>
@@ -105,12 +105,12 @@
     <string name="menu_flag_card" maxLength="28">કાર્ડને ચિહ્નિત કરો</string>
     <string name="menu_edit_tags" maxLength="28">ચિહ્નો બદલો</string>
     <string name="delete_note_message">આ નોંધ અને તેના તમામ કાડઁ ખરેખર કાઢી નાખીએ ?\n%s</string>
-    <string name="menu_search" maxLength="28">%1$s માં જુઓ </string>
+    <string name="menu_search" maxLength="28">%1$s માં જુઓ</string>
     <string name="menu_mark_note" maxLength="28">નોંધ ચિહ્નિત કરો</string>
     <string name="menu_unmark_note">ચિહ્નિત નોંધોમાથી કાઢો</string>
     <string name="menu_enable_voice_playback" maxLength="28">વૉઇસ પ્લેબેક સક્ષમ કરો</string>
     <string name="menu_disable_voice_playback">વૉઇસ પ્લેબેક અક્ષમ કરો</string>
-    <string name="new_deck">થપ્પી ઉમેરો </string>
+    <string name="new_deck">થપ્પી ઉમેરો</string>
     <string name="new_dynamic_deck">ફિલ્ટર કરેલ ડેક બનાવો</string>
     <string name="directory_inaccessible">AnkiDroid શબ્દાવલિ પહોંચ બહાર છે</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.

@@ -121,7 +121,7 @@
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Üres kártyák keresése&#8230;</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Nem sikerült mikrofon engedélyt szerezni. </string>
+    <string name="multimedia_editor_audio_permission_refused">Nem sikerült mikrofon engedélyt szerezni.</string>
     <string name="multimedia_editor_failed">A Multimédia Szerkesztő megnyitása sikertelen</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Audió felvétel engedély megtagadva</string>
@@ -147,7 +147,7 @@
     <string name="error_selecting_image">Hiba a kép kiválasztása közben. Kérjük olvassa el az útmutatót. %s</string>
     <string name="error_deleting_image">Hiba a kép törlése közben</string>
     <string name="failed_to_apply_background_image">Hiba a  %s háttérkép feltevése közben</string>
-    <string name="background_image_too_large"> A Pakli Választó háttérkép túl nagy méretű</string>
+    <string name="background_image_too_large">A Pakli Választó háttérkép túl nagy méretű</string>
     <string name="image_max_size_allowed"> A maximum képméret %d MB</string>
     <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
     <!-- Global Intent handler -->

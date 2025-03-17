@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Frapeti suban maldekstron</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Frapeti suban dekstron</string>
     <string name="gestures_shake" maxLength="41">Skui aparaton</string>
-    <string name="card_browser_enable_external_context_menu">Menuo “%s”</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">Menuo “%s”</string>
     <string name="card_browser_enable_external_context_menu_summary">Aktivigi la kuntekstan menuon “%s” tutaplikaĵe</string>
     <string name="double_scrolling_gap" maxLength="41">Duobla rulumado</string>
     <string name="double_scrolling_gap_summ">Duobligi distancon de rulumado kun elektronika legilo</string>

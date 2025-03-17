@@ -119,7 +119,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
     <string name="gestures_shake" maxLength="41">Shake device</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ Menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap" maxLength="41">Dvigubas slinkimas</string>
     <string name="double_scrolling_gap_summ">Padvigubinkite slinkimo tarpą naudodami el. knygų skaityklę</string>
@@ -250,7 +250,7 @@
     <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Padėkite tobulinti „AnkiDroid“!</string>
-    <string name="analytics_title" maxLength="41"> Dalintis funkcijų naudojimu</string>
+    <string name="analytics_title" maxLength="41">Dalintis funkcijų naudojimu</string>
     <string name="analytics_summ">Galite prisidėti prie „AnkiDroid“ tobulinimo, padėdami kūrėjų komandai suprasti, kokiomis funkcijomis žmonės naudojasi</string>
     <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>

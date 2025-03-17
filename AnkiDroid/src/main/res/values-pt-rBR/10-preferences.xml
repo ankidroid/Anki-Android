@@ -95,7 +95,7 @@
     </string-array>
     <string name="gestures" maxLength="41">Habilitar gestos</string>
     <string name="gestures_summ">Atribuir gestos a ações tais como responder e editar cards.</string>
-    <string name="gestures_corner_touch" maxLength="41">9 Ações de Toque </string>
+    <string name="gestures_corner_touch" maxLength="41">9 Ações de Toque</string>
     <string name="gestures_corner_touch_summary">Permitir gestos de toque nos cantos da tela</string>
     <string name="show_keyboard_shortcuts" maxLength="41">Exibir teclas de atalho</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Painel de navegação em tela cheia</string>
@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Toque Baixo Esquerda</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Toque Baixo Direita</string>
     <string name="gestures_shake" maxLength="41">Agitar o dispositivo</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu </string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ Menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Habilita o menu de contexto globalmente ‘%s\'</string>
     <string name="double_scrolling_gap" maxLength="41">Rolagem dupla</string>
     <string name="double_scrolling_gap_summ">Duplicar a lacuna de rolagem com eReader</string>
@@ -225,8 +225,8 @@
     <string name="answer_buttons" maxLength="41">Botões de resposta</string>
     <string name="card" maxLength="41" comment="Generic term to refer to a card">Carta</string>
     <string name="note" maxLength="41">Nota</string>
-    <string name="navigation" maxLength="41">Navegação </string>
-    <string name="media" maxLength="41">Multimídia </string>
+    <string name="navigation" maxLength="41">Navegação</string>
+    <string name="media" maxLength="41">Multimídia</string>
     <string name="misc" maxLength="41">Diversos</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Selecione Tags</string>

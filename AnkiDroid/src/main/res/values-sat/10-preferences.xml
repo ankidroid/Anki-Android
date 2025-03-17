@@ -61,7 +61,7 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">ᱟᱭᱩᱨ ᱢᱤᱫ</string>
     <string name="pref_cat_scheduling" maxLength="41">ᱡᱚᱡᱚᱱᱟ</string>
     <string name="pref_cat_whiteboard" maxLength="41">ᱯᱩᱸᱰᱯᱟᱴᱟ</string>
-    <string name="pref_cat_appearance" maxLength="41">ᱧᱮᱞᱚᱜ ᱠᱚ </string>
+    <string name="pref_cat_appearance" maxLength="41">ᱧᱮᱞᱚᱜ ᱠᱚ</string>
     <string name="pref_cat_themes" maxLength="41">ᱛᱷᱤᱢᱥ</string>
     <string name="pref_cat_gestures" maxLength="41">ᱪᱤᱱᱦᱟᱹ</string>
     <string name="pref_cat_controls" maxLength="41">ᱠᱳᱸᱴᱨᱳᱞ</string>
@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">ᱞᱟᱛᱟᱨ ᱞᱮᱸᱜᱟ ᱯᱟᱦᱴᱟ ᱨᱮ ᱚᱛᱟᱭ ᱢᱮ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">ᱞᱟᱛᱟᱨ ᱡᱟᱡᱚᱢ ᱛᱤ ᱯᱟᱦᱴᱟ ᱚᱛᱟᱭ ᱢᱮ</string>
     <string name="gestures_shake" maxLength="41">ᱥᱤᱠᱷᱱᱟᱹᱛ ᱚᱱᱚᱞ</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ ᱢᱚᱱᱩ</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ ᱢᱚᱱᱩ</string>
     <string name="card_browser_enable_external_context_menu_summary">ᱠᱚᱱᱴᱮᱠᱥᱴ ᱢᱮᱱᱩ ᱠᱡᱟᱜᱟᱛ ᱨᱮ ‘%s’ ᱦᱩᱭ ᱦᱚᱪᱚ</string>
     <string name="double_scrolling_gap" maxLength="41">ᱫᱚᱦᱲᱟ ᱥᱠᱨᱚᱞ</string>
     <string name="double_scrolling_gap_summ">ᱤᱼᱨᱤᱰᱚᱨ ᱮᱨ ᱥᱠᱨᱚᱞ ᱜᱮᱯ ᱫᱚᱦᱲᱟᱭ ᱢᱮ</string>
@@ -162,7 +162,7 @@
     <string name="vertical_centering" maxLength="41">ᱛᱟᱞᱟ ᱥᱟᱡᱟᱣ</string>
     <string name="vertical_centering_summ">ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱡᱤᱱᱤᱥ ᱠᱚ ᱛᱟᱞᱟ ᱨᱮ ᱥᱤᱫᱷᱟ ᱛᱮ ᱟᱹᱜᱩᱭᱢᱮ</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ᱵᱟᱨᱫᱷᱟᱣ ᱞᱭᱟᱯ ᱚᱠᱛᱚ ᱤᱱᱴᱟᱹᱨᱵᱷᱟᱞ (ᱢᱤᱞᱤᱥᱮᱠᱮᱰ)</string>
-    <string name="pref_double_tap_time_interval_summary">ᱡᱩᱫᱤ ᱱᱤᱛᱚᱜ ᱵᱟᱝ ᱦᱩᱭᱟᱹᱠᱟᱱᱟ ᱮᱱᱠᱷᱟᱱ ᱞᱟᱹᱱᱟᱹᱭ ᱵᱚᱴᱚᱱ ᱨᱮᱭᱟᱜ ᱫᱚᱥᱟᱨ ᱴᱭᱟᱯ ᱵᱟᱝ ᱛᱩᱸᱠᱷᱤᱜ-ᱟ । ᱱᱚᱣᱟ ᱦᱩᱯᱠᱟᱹ ᱰᱚᱵᱚᱞ ᱴᱭᱟᱯ ᱴᱷᱟᱠᱮᱫ ᱚᱪᱚᱭᱟ </string>
+    <string name="pref_double_tap_time_interval_summary">ᱡᱩᱫᱤ ᱱᱤᱛᱚᱜ ᱵᱟᱝ ᱦᱩᱭᱟᱹᱠᱟᱱᱟ ᱮᱱᱠᱷᱟᱱ ᱞᱟᱹᱱᱟᱹᱭ ᱵᱚᱴᱚᱱ ᱨᱮᱭᱟᱜ ᱫᱚᱥᱟᱨ ᱴᱭᱟᱯ ᱵᱟᱝ ᱛᱩᱸᱠᱷᱤᱜ-ᱟ । ᱱᱚᱣᱟ ᱦᱩᱯᱠᱟᱹ ᱰᱚᱵᱚᱞ ᱴᱭᱟᱯ ᱴᱷᱟᱠᱮᱫ ᱚᱪᱚᱭᱟ</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">ᱟᱹᱰᱤ ᱫᱤᱱ ᱞᱟᱦᱟᱛᱮ ᱚᱞ ᱞᱟᱹᱠᱛᱤ ᱠᱟᱱᱟ</string>
     <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">ᱵᱟᱹᱴᱟᱹᱱ ᱥᱚᱢᱚᱭ ᱫᱮᱠᱷᱟᱣ</string>
@@ -178,7 +178,7 @@
     <string name="use_current" maxLength="41">ᱱᱟᱶᱟ ᱠᱟᱰ ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱰᱮᱠ</string>
     <string name="learn_cutoff" maxLength="41">ᱢᱟᱲᱟᱝ ᱥᱮᱫ ᱯᱟᱲᱦᱟᱣ ᱪᱮᱫᱚᱜ</string>
     <string name="time_limit" maxLength="41">ᱥᱚᱢᱚᱭ ᱵᱟᱠᱥᱚ ᱚᱠᱛᱚ ᱥᱤᱢᱟᱹ</string>
-    <string name="day_offset_with_description" maxLength="41">ᱜᱟᱯᱟ ᱫᱤᱱ ᱟᱜ ᱮᱛᱦᱚᱵ </string>
+    <string name="day_offset_with_description" maxLength="41">ᱜᱟᱯᱟ ᱫᱤᱱ ᱟᱜ ᱮᱛᱦᱚᱵ</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="one">%d ᱚᱠᱛᱚ ᱥᱮᱛᱟᱜ</item>
         <item quantity="other">ᱧᱤᱫᱟᱹ ᱛᱟᱞᱟ ᱠᱷᱚᱱ %d ᱚᱠᱛᱚ</item>

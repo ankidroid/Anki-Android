@@ -178,7 +178,7 @@
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">ファイル %s への書き込みまたは同ファイルの作成ができません</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">アクセスできないコレクション</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid"> Playストアのプライバシーポリシーの変更により、AnkiDroidはアンインストール前のコレクションにはアクセスできなくなりました。\n\nコレクションは\n%s\nに保存されており、復元可能です。 \n\n復元するための選択肢は次の通りです:</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Playストアのプライバシーポリシーの変更により、AnkiDroidはアンインストール前のコレクションにはアクセスできなくなりました。\n\nコレクションは\n%s\nに保存されており、復元可能です。 \n\n復元するための選択肢は次の通りです:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">AnkiDroidを数か月使用していなかったため、 %1$s の権限が、Androidによって削除されました。\n\nあなたのコレクション（データ）自体は削除されておらず、使用を再開することも可能ですのでご安心ください。あなたのコレクションは次のフォルダに安全に保管されています：\n%2$s\n\nAnkiDroidの利用を再開するために、次の中からご希望の対処方法を選択してください。</string>
     <string name="restore_data_from_ankiweb">AnkiWebから復元 (推奨)</string>
     <string name="install_non_play_store_ankidroid_recommended">フォルダへのアクセスを回復 (推奨)</string>

@@ -154,7 +154,7 @@
     <string name="export_send_no_handlers">Не знайдено додатків для обробки apkg. Збереження&#8230;</string>
     <string name="export_save_apkg_successful">Пакунок Anki успішно збережено</string>
     <string name="export_save_apkg_unsuccessful">Не вдалося зберегти пакунок Anki</string>
-    <string name="export_share_title">Надіслати пакет Anki використовуючи </string>
+    <string name="export_share_title">Надіслати пакет Anki використовуючи</string>
     <string name="export_email_subject">AnkiDroid експортує картки: %s</string>
     <string name="export_email_text"><![CDATA[        Привіт!
         <br/><br/>

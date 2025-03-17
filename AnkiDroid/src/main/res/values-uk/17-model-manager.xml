@@ -53,7 +53,7 @@
     <!--Rename-->
     <string name="rename_model">Перейменувати тип запису</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_success_result">Встановити %s як мову підказок </string>
+    <string name="model_field_editor_language_hint_dialog_success_result">Встановити %s як мову підказок</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Редагувати поля</string>
     <string name="model_field_editor_add" maxLength="28">Додати поле</string>
