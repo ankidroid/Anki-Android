@@ -47,7 +47,7 @@ value class CrowdinFileIdentifier(
                 "11-arrays" to 8174,
                 "16-multimedia-editor" to 8229,
                 "17-model-manager" to 8230,
-                "19-standard-models" to 8232,
+                "18-standard-models" to 8232,
                 "20-search-preference" to 8236,
             ).mapValues { CrowdinFileIdentifier(it.value.toLong()) }
 
