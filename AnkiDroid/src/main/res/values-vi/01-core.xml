@@ -63,7 +63,7 @@
         <item quantity="other">Còn %1$d giờ %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">Còn %1$d ngày %2$d giờ </item>
+        <item quantity="other">Còn %1$d ngày %2$d giờ</item>
     </plurals>
     <string name="no_cards_placeholder_title">Bộ sưu tập đang trống</string>
     <string name="no_cards_placeholder_description">Hãy thêm thẻ\nbằng biểu tượng +</string>

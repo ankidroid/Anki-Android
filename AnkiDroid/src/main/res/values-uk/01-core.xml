@@ -66,7 +66,7 @@
         <item quantity="one">Залишилася %1$d година %2$d</item>
         <item quantity="few">Залишилося %1$d годин %2$d</item>
         <item quantity="many">Залишилося %1$d годин %2$d</item>
-        <item quantity="other">Залишилося %1$d годин %2$d </item>
+        <item quantity="other">Залишилося %1$d годин %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">Залишився %1$d день %2$d година</item>

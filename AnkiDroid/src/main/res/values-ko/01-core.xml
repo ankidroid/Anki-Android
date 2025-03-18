@@ -115,11 +115,11 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">계속하기 위해서는 AnkiDroid에 \'저장소\'권한이 필요합니다.</string>
-    <string name="rebuild_filtered_deck">필터링된 덱을 재구성하는 중&#8230; </string>
+    <string name="rebuild_filtered_deck">필터링된 덱을 재구성하는 중&#8230;</string>
     <string name="rebuild_cram_label" maxLength="28">재생성</string>
     <string name="empty_cram_label" maxLength="28">비우기</string>
     <string name="create_subdeck">하위 뭉치 만들기</string>
-    <string name="empty_filtered_deck">필터링된 덱을 비우는 중&#8230; </string>
+    <string name="empty_filtered_deck">필터링된 덱을 비우는 중&#8230;</string>
     <string name="custom_study_deck_name">맞춤 학습 세션</string>
     <string name="custom_study_deck_exists">기존의 맞춤 학습 덱의 이름을 먼저 변경하세요.</string>
     <string name="search_deck" comment="Deck search for selecting it">덱 검색하기</string>

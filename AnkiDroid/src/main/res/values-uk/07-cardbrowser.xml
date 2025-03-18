@@ -85,7 +85,7 @@
     <string name="card_details_tags">Теги</string>
     <string-array name="card_browser_order_labels">
         <item>Без сортування (швидше)</item>
-        <item>За полем сортування </item>
+        <item>За полем сортування</item>
         <item>За часом створення</item>
         <item>За часом зміни запису</item>
         <item>За часом зміни картки</item>
