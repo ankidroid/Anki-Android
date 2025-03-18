@@ -148,14 +148,14 @@
     <string name="notification_pref_title" maxLength="41">ᱚᱠᱟ ᱡᱷᱟᱚᱜ ᱤᱰᱞᱟᱹᱭ</string>
     <string name="never_notify">ᱛᱤᱥᱦᱚᱸ ᱵᱟᱝ ᱤᱛᱞᱟᱹᱭ</string>
     <string name="notify_when_pending">ᱢᱟᱲᱟᱝᱟ ᱠᱷᱚᱵᱚᱨ ᱥᱟᱨᱮᱡ ᱢᱮᱱᱟᱜᱼᱟ</string>
-    <string name="notification_minimum_cards_due"> %d ᱠᱦᱚᱱ ᱡᱟᱹᱥᱛᱤ ᱠᱟᱰᱥ ᱥᱟᱨᱮᱡ</string>
+    <string name="notification_minimum_cards_due">%d ᱠᱦᱚᱱ ᱡᱟᱹᱥᱛᱤ ᱠᱟᱰᱥ ᱥᱟᱨᱮᱡ</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">ᱛᱷᱟᱨᱼᱛᱷᱟᱨᱟᱣ</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">ᱫᱷᱩᱯᱼᱫᱷᱟᱯ ᱟᱨᱥᱟᱞ</string>
     <string name="select_locale_title">ᱟᱲᱟᱝ ᱵᱟᱪᱷᱟᱣ</string>
-    <string name="software_render" maxLength="41">ᱠᱟᱰ ᱦᱟᱰᱣᱮᱨ ᱥᱤᱡᱚᱱᱤᱭᱟᱹ ᱴᱷᱟᱠᱮᱫ ᱮᱢᱮ </string>
+    <string name="software_render" maxLength="41">ᱠᱟᱰ ᱦᱟᱰᱣᱮᱨ ᱥᱤᱡᱚᱱᱤᱭᱟᱹ ᱴᱷᱟᱠᱮᱫ ᱮᱢᱮ</string>
     <string name="software_render_summ">ᱦᱟᱰᱣᱮᱨ ᱵᱮᱱᱟᱣ ᱩᱥᱟᱹᱨᱟ ᱜᱮᱭᱟ ᱢᱮᱱᱠᱟᱷᱟᱱ ᱵᱤᱥᱮᱥ ᱞᱮᱠᱟᱛᱮ Android 8/8.1. ᱮᱴᱠᱮᱴᱚᱬᱮ ᱦᱩᱭᱫᱟᱲᱮᱟᱫ-ᱟ।ᱡᱩᱫᱤ ᱟᱢ ᱤᱸᱴᱚᱨᱯᱷᱮᱥ  ᱠᱟᱰ ᱨᱤᱵᱷᱭᱩ ᱟᱜ ᱵᱟᱢ ᱧᱮᱞᱧᱟᱢᱮᱫ-ᱟ, ᱮᱱᱠᱷᱟᱱ ᱥᱮᱴᱤᱝ ᱨᱮ ᱪᱮᱥᱴᱟᱭᱢᱮ</string>
     <string name="safe_display" maxLength="41">ᱡᱟᱹᱯᱛᱤ ᱚᱵᱚᱥᱛᱷᱟ ᱩᱫᱩᱜᱽ ᱢᱚᱰ</string>
-    <string name="safe_display_summ">ᱡᱷᱚᱛᱚ ᱮᱱᱤᱢᱮᱥᱚᱱ ᱵᱚᱱᱫᱽ ᱠᱟᱛᱮ ᱟᱨ ᱴᱷᱤᱠ ᱛᱚᱨᱤᱠᱟ ᱛᱮ ᱠᱟᱰ ᱤᱫᱤ ᱢᱮ ᱾ ᱤᱼᱠᱟᱲᱤ ᱰᱤᱵᱷᱟᱤᱥ ᱫᱚᱨᱠᱟᱨ ᱯᱟᱲᱟᱣ ᱜᱮᱭᱟ ᱾ </string>
+    <string name="safe_display_summ">ᱡᱷᱚᱛᱚ ᱮᱱᱤᱢᱮᱥᱚᱱ ᱵᱚᱱᱫᱽ ᱠᱟᱛᱮ ᱟᱨ ᱴᱷᱤᱠ ᱛᱚᱨᱤᱠᱟ ᱛᱮ ᱠᱟᱰ ᱤᱫᱤ ᱢᱮ ᱾ ᱤᱼᱠᱟᱲᱤ ᱰᱤᱵᱷᱟᱤᱥ ᱫᱚᱨᱠᱟᱨ ᱯᱟᱲᱟᱣ ᱜᱮᱭᱟ ᱾</string>
     <string name="disable_extended_text_ui" maxLength="41">ᱢᱤᱫᱴᱟᱹᱝ ᱡᱟᱭᱜᱟ ᱥᱟᱯᱰᱟᱣ ᱢᱚᱰ ᱵᱸᱫᱚ</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">\'ᱠᱞᱚᱡ ᱢᱮᱴᱟᱣ\' ᱠᱚᱱᱴᱮᱠᱥᱴ ᱢᱮᱱᱩ ᱚᱛᱱᱚᱜ ᱧᱮᱸᱞ ᱢᱚᱰ ᱨᱮ ᱵᱟᱛᱟᱣ ᱢᱮ ᱾.</string>

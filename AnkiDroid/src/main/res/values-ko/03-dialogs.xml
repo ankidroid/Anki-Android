@@ -230,7 +230,7 @@
     <!-- Instant Note Editor -->
     <string name="cloze_note_required">Cloze 타입 노트 필요</string>
     <string name="cloze_not_found_message">Cloze 타입 노트 없음. 노트 에디터를 열거나 Cloze 타입 노트를 추가한 후 다시 시도하세요.</string>
-    <string name="open">열기 </string>
+    <string name="open">열기</string>
     <string name="change_cloze_number">Cloze 수 바꾸기</string>
     <string name="cloze_number">Cloze 수:</string>
     <string name="change_editor_mode">에디터 모드 바꾸기</string>

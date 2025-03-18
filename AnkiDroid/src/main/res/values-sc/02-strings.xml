@@ -280,7 +280,7 @@
     <string name="not_valid_js_addon_package">%s no est unu pachete de estensione JavaScript vàlidu</string>
     <string name="could_not_create_dir">No at fatu a creare sa cartella %s</string>
     <string name="malicious_archive_entry_outside">Archìviu malu. Cuntenet un\'intrada a foras de sa cartella de obietivu: %s</string>
-    <string name="malicious_archive_exceeds_limit">Archìviu malu. Sa mannària bàrigat sos %1$s o cuntenet prus de %2$d documentos </string>
+    <string name="malicious_archive_exceeds_limit">Archìviu malu. Sa mannària bàrigat sos %1$s o cuntenet prus de %2$d documentos</string>
     <string name="file_extract_exceeds_storage_space">S\'estratzione de su documentu bàrigat sa capatzidade de archiviatzione</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Ismànnia s\'eticheta \'%s\'</string>

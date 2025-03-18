@@ -202,7 +202,7 @@
     <string name="create_new_collection">Создать новую коллекцию</string>
     <string name="new_unsafe_collection">Новая коллекция будет удалена с вашего телефона, если вы удалите AnkiDroid</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid требует дополнительных разрешений для работы </string>
+    <string name="permissions_screen_headline">AnkiDroid требует дополнительных разрешений для работы</string>
     <string name="storage_access_title">Доступ к хранилищу</string>
     <string name="storage_access_summary">Сохраняет вашу коллекцию в безопасном месте, чтобы она не исчезла при удалении приложения</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Доступ ко всем файлам</string>

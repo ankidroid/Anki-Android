@@ -96,7 +96,7 @@
     <string name="dialog_positive_overwrite">ନବଲିଖନ କରନ୍ତୁ</string>
     <string name="dialog_positive_repair">ସଜାଡନ୍ତୁ</string>
     <string name="dialog_positive_replace">ପ୍ରତିସ୍ଥାପନ</string>
-    <string name="dialog_collection_path_not_dir">ନିର୍ଦ୍ଦିଷ୍ଟ ପଥ ଏକ ବୈଧ ନିର୍ଦେଶିକା ନୁହେଁ </string>
+    <string name="dialog_collection_path_not_dir">ନିର୍ଦ୍ଦିଷ୍ଟ ପଥ ଏକ ବୈଧ ନିର୍ଦେଶିକା ନୁହେଁ</string>
     <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
     <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
     <string name="dialog_updated_custom_certificate">Certificate updated</string>

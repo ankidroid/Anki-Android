@@ -275,7 +275,7 @@
     <string name="search_card_js_api_no_results">Zoekopdracht heeft geen resultaten opgeleverd</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s is geen geldig JavaScript-addon-pakket</string>
-    <string name="could_not_create_dir">Kon de map %s niet creëeren </string>
+    <string name="could_not_create_dir">Kon de map %s niet creëeren</string>
     <string name="malicious_archive_entry_outside">Schadelijk archief. Bevat item buiten de doelmap: %s</string>
     <string name="malicious_archive_exceeds_limit">Schadelijk archief. Grootte overschrijdt %1$s of bevat meer dan %2$d bestanden</string>
     <string name="file_extract_exceeds_storage_space">Bestand extract overschrijdt opslagruimte</string>

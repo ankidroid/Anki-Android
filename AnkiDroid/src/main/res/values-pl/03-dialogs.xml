@@ -154,7 +154,7 @@
     <string name="error_deleting_image">Błąd podczas usuwania obrazu</string>
     <string name="failed_to_apply_background_image">Nie udało się ustawić obrazu w tle%s</string>
     <string name="background_image_too_large">Tło ekranu wyboru talii zbyt duże</string>
-    <string name="image_max_size_allowed">Maksymalny dozwolony rozmiar obrazu: %d MB </string>
+    <string name="image_max_size_allowed">Maksymalny dozwolony rozmiar obrazu: %d MB</string>
     <string name="image_dimensions_too_large">Rozmiary obrazu są zbyt duże (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->

@@ -76,7 +76,7 @@
     <string name="storage_full_title">No queda espai al disc</string>
     <string name="storage_almost_full_title">El disc està gairebé ple</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Sense espai</string>
-    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid necessita %s d\'espai lliure per continuar. Allibereu una mica d\'espai si us plau </string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid necessita %s d\'espai lliure per continuar. Allibereu una mica d\'espai si us plau</string>
     <string name="restore_backup_title">Restaurar la còpia de seguretat?</string>
     <string name="restore_backup">La seva col·lecció serà replaçada per una còpia anterior. Tots els canvis fets després de desar es perdran.</string>
     <string name="restore_backup_choose_another">Trieu-ne un altre</string>
@@ -148,7 +148,7 @@
     <string name="error_deleting_image">Error esborrant imatge</string>
     <string name="failed_to_apply_background_image">Error al aplicar la imatge de fons %s</string>
     <string name="background_image_too_large">La imatge de fons del selector de paquets és massa gran</string>
-    <string name="image_max_size_allowed">Mida màxima de la imatge: %d MB </string>
+    <string name="image_max_size_allowed">Mida màxima de la imatge: %d MB</string>
     <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
