@@ -46,7 +46,7 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">%d քարտ է ցուցադրված </item>
+        <item quantity="one">%d քարտ է ցուցադրված</item>
         <item quantity="other">%d քարտ է ցուցադրված</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">

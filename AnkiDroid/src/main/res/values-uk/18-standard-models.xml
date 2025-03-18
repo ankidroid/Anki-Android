@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name" maxLength="28"> Лицьовий бік</string>
+    <string name="front_field_name" maxLength="28">Лицьовий бік</string>
     <string name="back_field_name" maxLength="28">Зворотній бік</string>
 </resources>

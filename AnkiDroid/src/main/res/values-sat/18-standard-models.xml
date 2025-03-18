@@ -27,5 +27,5 @@
 <resources>
     <!--Fields-->
     <string name="front_field_name" maxLength="28">ᱥᱟᱢᱟᱝ</string>
-    <string name="back_field_name" maxLength="28">ᱛᱟᱭᱚᱢ </string>
+    <string name="back_field_name" maxLength="28">ᱛᱟᱭᱚᱢ</string>
 </resources>

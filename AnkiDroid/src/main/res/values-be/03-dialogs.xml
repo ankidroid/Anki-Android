@@ -228,7 +228,7 @@
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Задаць інтэрвал на тое ж самае значэнне</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="one">Паказваць картку за </item>
+        <item quantity="one">Паказваць картку за</item>
         <item quantity="few">Паказваць карткі за</item>
         <item quantity="many">Паказваць карткі за</item>
         <item quantity="other">Паказваць карткі за</item>
