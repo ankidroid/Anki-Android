@@ -116,7 +116,17 @@ data class CrowdinContext(
     val languageTag: CrowdinLanguageTag,
     val fileIdentifier: CrowdinFileIdentifier,
 ) {
-    private fun getStringName(element: Element): String? = if (element.hasAttribute("name")) element.getAttribute("name") else null
+    private fun getStringName(element: Element?): String? {
+        if (element == null) return null
+        return when (element.tagName) {
+            // <string-array> or <plurals>
+            "item" -> {
+                val parentElement = element.parentNode as? Element? ?: return null
+                getStringName(parentElement)
+            }
+            else -> if (element.hasAttribute("name")) element.getAttribute("name") else null
+        }
+    }
 
     fun getEditUrl(element: Element): String? {
         val stringName = getStringName(element) ?: return null
