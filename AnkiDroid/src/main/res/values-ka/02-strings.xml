@@ -205,7 +205,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">ხედი</string>
     <string name="anki_js_error_code">(შეცდომის კოდი: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info"> დაკოპირდა გაცვლის ბუფერზე</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">დაკოპირდა გაცვლის ბუფერზე</string>
     <string name="about_ankidroid_error_copy_debug_info">შეცდომა გამართვის ინფორმაციის გაცვლის ბუფერზე დაკოპირებისას</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ბარათის შიგთავსის შეცდომა: „%s“ ვერ ჩაიტვირთა</string>

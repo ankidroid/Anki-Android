@@ -158,7 +158,7 @@
     <string name="safe_display_summ">Desactiveu totes les animacions i utilitzeu un mètode més segur per dibuixar cartes. Els dispositius de tinta electrònica poden requerir-ho.</string>
     <string name="disable_extended_text_ui" maxLength="41">Desactiva mode d\'edició d\'un sol camp</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Permet el menú \'Supressió Parcial\' quan som en mode apaisat </string>
+    <string name="disable_extended_text_ui_summ">Permet el menú \'Supressió Parcial\' quan som en mode apaisat</string>
     <string name="vertical_centering" maxLength="41">Alinear al centre</string>
     <string name="vertical_centering_summ">Centra verticalment el contingut de cartes</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Interval de doble tacte (milisegons)</string>

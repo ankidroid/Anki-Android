@@ -98,7 +98,7 @@
     <string name="menu_suspend_card" maxLength="28">निलंबन कार्ड</string>
     <string name="menu_suspend_note" maxLength="28">निलंबित नोट</string>
     <string name="menu_bury" maxLength="28">दफन</string>
-    <string name="menu_suspend" maxLength="28"> निलंबित करा</string>
+    <string name="menu_suspend" maxLength="28">निलंबित करा</string>
     <string name="menu_delete_note" maxLength="28">टीप हटवा</string>
     <string name="menu_flag" maxLength="41">झेंडा</string>
     <string name="rename_flag">ध्वजांचे नाव बदला</string>

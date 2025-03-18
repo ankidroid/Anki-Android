@@ -245,7 +245,7 @@
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">下载牌组</string>
-    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Open in Browser</string>
+    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">在浏览器中打开</string>
     <string name="try_again">再试一次</string>
     <string name="cancel_download">取消下载</string>
     <string name="cancel_download_question_title">是否取消下载？</string>

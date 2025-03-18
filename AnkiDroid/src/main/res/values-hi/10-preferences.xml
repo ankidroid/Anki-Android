@@ -100,7 +100,7 @@
     <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">फुल स्क्रीन नेविगेशन दराज</string>
     <string name="gestures_fullscreen_nav_drawer_summary">स्क्रीन पर कहीं से भी स्वाइप किए जाने पर नेविगेशन दराज खोलें</string>
-    <string name="gestures_none" maxLength="41" comment="No gestures">कोई नहीं </string>
+    <string name="gestures_none" maxLength="41" comment="No gestures">कोई नहीं</string>
     <string name="gestures_swipe_up" maxLength="41">ऊपर की ओर स्वाइप</string>
     <string name="gestures_swipe_down" maxLength="41">निचे की ओर स्वाइप</string>
     <string name="gestures_swipe_left" maxLength="41">बाएं स्वाइप करें</string>
@@ -130,7 +130,7 @@
     <string name="sync_account_summ_logged_out">लॉगिन नहीं हैं</string>
     <string name="automatic_sync_choice" maxLength="41">स्वचालित सिंक्रनाइज़ेशन</string>
     <string name="automatic_sync_choice_summ">यदि अंतिम सिंक्रनाइज़ेशन 10 मिनट पहले से अधिक था, तो अनुप्रयोग प्रारंभ/निकास पर स्वचालित रूप से सिंक्रनाइज़ करें ।</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">हमेशा </string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">हमेशा</string>
     <string name="sync_media_only_unmetered">केवल बिना जांचे गए कनेक्शन पर</string>
     <string name="sync_media_never">कभीं नहीं</string>
     <string name="sync_status_badge" maxLength="41">सिंक्रनाइज़ेशन स्थिति को दिखाएं</string>
@@ -139,7 +139,7 @@
     <string name="metered_sync_summary">यदि अक्षम है, तो मीटर वाले कनेक्शन पर सिंक करने का प्रयास करने पर आपको चेतावनी दी जाएगी</string>
     <string name="backup_limits_frequency">फ्रीक्वेंसी</string>
     <string name="backup_limits_lifetime">समय सीमा</string>
-    <string name="app_theme" maxLength="41">थीम </string>
+    <string name="app_theme" maxLength="41">थीम</string>
     <string name="day_theme" maxLength="41">दिवस थीम</string>
     <string name="night_theme" maxLength="41">रात विषय</string>
     <string name="language" maxLength="41">भाषा</string>

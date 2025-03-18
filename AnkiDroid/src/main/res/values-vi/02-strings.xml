@@ -75,7 +75,7 @@
     <string name="webview_crash_unknown">Lỗi không xác định</string>
     <string name="webview_crash_unknwon_detailed">Lỗi nội bộ trong webview</string>
     <string name="webview_crash_oom">Không đủ bộ nhớ</string>
-    <string name="webview_crash_oom_details">WebView đã bị ngắt bởi hệ thống. Việc này thường xảy ra khi ứng dụng hết bộ nhớ vì font chữ hoặc file media quá lớn. </string>
+    <string name="webview_crash_oom_details">WebView đã bị ngắt bởi hệ thống. Việc này thường xảy ra khi ứng dụng hết bộ nhớ vì font chữ hoặc file media quá lớn.</string>
     <string name="webview_crash_nonfatal">Trình kết xuất WebView bị lỗi. Nguyên nhân: %s</string>
     <string name="webview_crash_fatal">Lỗi nghiêm trọng: Trình kết xuất WebView bị lỗi. Nguyên nhân: %s</string>
     <string name="webview_crash_loop_dialog_title">Hệ thống hiển thị WebView không thành công</string>

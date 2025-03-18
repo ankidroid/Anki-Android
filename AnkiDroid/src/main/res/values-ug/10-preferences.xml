@@ -161,7 +161,7 @@
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">توغرىسىغا ھالەتتە مەزمۇن تىزىملىكىدە «بوش ئورۇن تولدۇرۇش» قا يول قويىدۇ.</string>
     <string name="vertical_centering" maxLength="41">ئۇتتۇرىغا توغرىلا</string>
-    <string name="vertical_centering_summ">كارتا مەزمۇنىنى بويىغا ئوتتۇرىغا توغرىلايدۇ </string>
+    <string name="vertical_centering_summ">كارتا مەزمۇنىنى بويىغا ئوتتۇرىغا توغرىلايدۇ</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ۋاقىت ئارىلىقى قوش چېكىلىدۇ (مىللىسېكۇنت)</string>
     <string name="pref_double_tap_time_interval_summary">ئەگەر بۇ ۋاقىت ئۆتۈپ كەتمىگەن بولسا، جاۋاب توپچىنىڭ ئىككىنچى قېتىم چېكىلىشى نەزەردىن ساقىت قىلىنىدۇ. بۇ تاسادىپىي قوش چېكىشنىڭ ئالدىنى ئالىدۇ</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">«جاۋابنى كۆرسەت» نىڭ ئۇزۇن بېسىش ۋاقتى</string>

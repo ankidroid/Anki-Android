@@ -45,11 +45,11 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">ᱰᱨᱚᱣᱟᱹᱨ ᱠᱷᱩᱞᱟᱹᱭ ᱢᱮ </string>
+    <string name="drawer_open">ᱰᱨᱚᱣᱟᱹᱨ ᱠᱷᱩᱞᱟᱹᱭ ᱢᱮ</string>
     <string name="drawer_close">ᱰᱨᱚᱣᱟᱹᱨ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</string>
-    <string name="CardEditorCardDeck">ᱠᱟᱰ ᱰᱮᱠᱺ </string>
-    <string name="CardEditorNoteDeck">ᱰᱮᱠᱺ </string>
-    <string name="CardEditorModel">ᱯᱨᱚᱠᱟᱨᱺ </string>
+    <string name="CardEditorCardDeck">ᱠᱟᱰ ᱰᱮᱠᱺ</string>
+    <string name="CardEditorNoteDeck">ᱰᱮᱠᱺ</string>
+    <string name="CardEditorModel">ᱯᱨᱚᱠᱟᱨᱺ</string>
     <string name="CardEditorTags">ᱴᱮᱜᱥᱺ%1$s</string>
     <string name="CardEditorCards">ᱠᱟᱰᱺ%1$s</string>
     <string name="edit_occlusions">ᱚᱠᱥᱩᱞᱤᱥᱚᱱ ᱥᱟᱯᱲᱟᱣ ᱢᱮ</string>
@@ -64,7 +64,7 @@
     <string name="save_whiteboard" maxLength="28">ᱯᱩᱸᱰ ᱵᱚᱰ ᱥᱟᱱᱪᱟᱣ ᱢᱮ</string>
     <string name="enable_stylus" maxLength="28">ᱥᱴᱟᱭᱞᱩᱥ ᱚᱞᱚᱜ ᱮᱱᱮᱡ ᱢᱮ</string>
     <string name="disable_stylus">ᱥᱴᱟᱭᱞᱩᱥ ᱚᱞᱚᱜ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
-    <string name="enable_whiteboard" maxLength="28">ᱥᱤᱠᱮᱴ ᱞᱟᱜᱩᱭ ᱢᱮ </string>
+    <string name="enable_whiteboard" maxLength="28">ᱥᱤᱠᱮᱴ ᱞᱟᱜᱩᱭ ᱢᱮ</string>
     <string name="disable_whiteboard">ᱥᱤᱠᱮᱴ ᱵᱚᱱᱫ ᱢᱮ</string>
     <string name="show_whiteboard">ᱥᱤᱠᱮᱴ ᱫᱮᱠᱷᱟᱣ ᱢᱮ</string>
     <string name="hide_whiteboard" maxLength="28">ᱥᱤᱠᱮᱴ ᱩᱠᱩᱭ ᱢᱮ</string>
@@ -73,7 +73,7 @@
     <string name="leech_suspend_notification">ᱠᱟᱰ ᱫᱚ leech ᱟᱨ ᱵᱚᱸᱫ ᱛᱮ ᱢᱟᱨᱠ ᱮᱱᱟ</string>
     <string name="leech_notification">ᱠᱟᱰ ᱫᱚ leech ᱛᱮ ᱢᱟᱨᱠ ᱮᱱᱟ</string>
     <string name="webview_crash_unknown">ᱵᱟᱝᱵᱟᱰᱟᱭᱟᱜ ᱵᱷᱩᱞ</string>
-    <string name="webview_crash_unknwon_detailed">ᱱᱚᱶᱟ ᱫᱚ WebView ᱨᱮ ᱤᱱᱴᱚᱨᱱᱟᱞ ᱵᱷᱩᱞ ᱠᱷᱟᱛᱤᱨ ᱛᱮ </string>
+    <string name="webview_crash_unknwon_detailed">ᱱᱚᱶᱟ ᱫᱚ WebView ᱨᱮ ᱤᱱᱴᱚᱨᱱᱟᱞ ᱵᱷᱩᱞ ᱠᱷᱟᱛᱤᱨ ᱛᱮ</string>
     <string name="webview_crash_oom">Out of Memory</string>
     <string name="webview_crash_oom_details">ᱥᱤᱥᱴᱚᱢ ᱫᱚ Webview ᱵᱚᱸᱫ ᱠᱮᱜᱼᱟᱭ ᱾ ᱱᱚᱶᱟ ᱫᱚ ᱡᱟᱹᱥᱛᱤ ᱢᱟᱨᱟᱝ ᱯᱷᱚᱱᱴᱥ ᱟᱨ ᱢᱤᱰᱭᱟ  ᱠᱷᱟᱹᱛᱤᱨ ᱟᱣᱩᱴ ᱚᱯᱷ ᱢᱮᱢᱚᱨᱤ ᱫᱮᱠᱷᱟᱣ ᱮᱫ ᱟᱭ ᱾</string>
     <string name="webview_crash_nonfatal">WebView ᱨᱮᱱᱰᱚᱨᱚᱨ ᱠᱨᱟᱥ ᱮᱱᱟ ᱾ ᱠᱟᱨᱚᱬ:%s</string>

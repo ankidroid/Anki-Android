@@ -194,7 +194,7 @@
     <string name="metered_sync_data_warning">ᱟᱢᱟᱜ ᱤᱱᱴᱟᱨᱱᱮᱴ ᱯᱨᱚᱵᱷᱟᱭᱰᱟᱨ ᱰᱮᱴᱟ ᱵᱮᱵᱷᱟᱨ ᱞᱟᱹᱜᱤᱫ ᱴᱟᱠᱟ ᱦᱟᱛᱟᱣᱟ</string>
     <string name="deck_picker_new">ᱱᱚᱣᱟ ᱰᱮᱠᱨᱮ ᱛᱮᱦᱮᱧ ᱧᱮᱞ ᱞᱟᱹᱜᱤᱫ ᱱᱟᱣᱟ ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱮᱞ</string>
     <string name="deck_picker_rev">ᱱᱚᱣᱟ ᱰᱮᱠ ᱨᱮ ᱛᱮᱦᱮᱧ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱟᱜ ᱱᱟᱣᱟ ᱮᱞ</string>
-    <string name="deck_picker_lrn">ᱱᱚᱣᱟ ᱰᱮᱠ ᱨᱮᱭᱟᱜ ᱥᱮᱪᱮᱫ ᱠᱟᱰ  ᱮᱞ </string>
+    <string name="deck_picker_lrn">ᱱᱚᱣᱟ ᱰᱮᱠ ᱨᱮᱭᱟᱜ ᱥᱮᱪᱮᱫ ᱠᱟᱰ  ᱮᱞ</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
@@ -233,7 +233,7 @@
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">ᱠᱷᱚᱱ</string>
-    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)"> ᱛᱮ</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">ᱛᱮ</string>
     <!-- Instant Note Editor -->
     <string name="cloze_note_required">ᱠᱞᱳᱡ ᱴᱟᱭᱤᱯ ᱱᱳᱴ ᱞᱟᱹᱠᱛᱤ ᱠᱟᱱᱟ</string>
     <string name="cloze_not_found_message">Cloze ᱞᱮᱠᱟᱱ ᱱᱳᱴ ᱵᱟᱝ ᱧᱟᱢ ᱞᱮᱱᱟ, ᱱᱳᱴ ᱮᱰᱤᱴᱚᱨ ᱮᱛᱦᱚᱵ ᱢᱮ ᱟᱨ ᱵᱟᱝ Cloze ᱞᱮᱠᱟᱱ ᱱᱳᱴ ᱥᱮᱞᱮᱫ ᱠᱟᱛᱮ ᱟᱨᱦᱚᱸ ᱯᱨᱚᱵᱷᱟᱣ ᱢᱮ ᱾</string>

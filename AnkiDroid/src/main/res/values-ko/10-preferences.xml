@@ -137,7 +137,7 @@
     <string name="metered_sync_title" maxLength="41">과금 연결에서 동기화 허용</string>
     <string name="metered_sync_summary">비활성화하면 과금 인터넷에서 동기화를 시도할 때 경고가 표시됩니다.</string>
     <string name="backup_limits_frequency">빈도</string>
-    <string name="backup_limits_lifetime">보관기간 </string>
+    <string name="backup_limits_lifetime">보관기간</string>
     <string name="app_theme" maxLength="41">테마</string>
     <string name="day_theme" maxLength="41">주간 테마</string>
     <string name="night_theme" maxLength="41">야간 테마</string>

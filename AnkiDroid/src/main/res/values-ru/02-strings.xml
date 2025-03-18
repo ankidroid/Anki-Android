@@ -52,7 +52,7 @@
     <string name="CardEditorModel">Тип:</string>
     <string name="CardEditorTags">Метки: %1$s</string>
     <string name="CardEditorCards">Карточки: %1$s</string>
-    <string name="edit_occlusions"> Править скрытие</string>
+    <string name="edit_occlusions">Править скрытие</string>
     <string name="tag_name">Название метки</string>
     <string name="add_new_filter_tags">Добавить/отфильтровать метки</string>
     <string name="add_tag" maxLength="28">Добавить метку</string>
@@ -314,7 +314,7 @@
     <string name="toggle_cards_notes">Карточки — записи</string>
     <string name="truncate_content_help">Показывать в списке только первые 3 строки</string>
     <string name="browser_options_dialog_heading">Параметры списка карточек</string>
-    <string name="audio_saved">Запись сохранена </string>
+    <string name="audio_saved">Запись сохранена</string>
     <string name="deleting_selected_notes">Выбранные записи удаляются</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Tap a voice to listen</string>
     <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use</string>

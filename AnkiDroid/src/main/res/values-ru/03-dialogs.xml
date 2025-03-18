@@ -251,7 +251,7 @@
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">До</string>
     <!-- Instant Note Editor -->
     <string name="cloze_note_required">Нужен тип записи с пропусками</string>
-    <string name="cloze_not_found_message">Записей с пропусками не найдено, откройте редактор записей или попробуйте снова после добавления карточки с пропусками. </string>
+    <string name="cloze_not_found_message">Записей с пропусками не найдено, откройте редактор записей или попробуйте снова после добавления карточки с пропусками.</string>
     <string name="open">Открыть</string>
     <string name="change_cloze_number">Количество пропусков</string>
     <string name="cloze_number">Количество пропусков:</string>

@@ -72,8 +72,8 @@
     <string name="repair_deck_dialog">Вы сапраўды хочаце аднавіць базу даных?\n\nПерад спробай па яе аднаўленні, будзе створана копія ў  падпапцы \'%s\'.</string>
     <string name="intent_aedict_empty">Катэгорыя “default” нічога не змяшчае</string>
     <string name="intent_aedict_category">Для таго, каб дадаць карткі ў AnkiDroid, выдаліце ўсе катэгорыі Notepad або дадайце катэгорыю з назвай \"default\"</string>
-    <string name="custom_study_new_extend">Павялічыць/паменшыць (“-3”) абмежаванні новых картак на сёння </string>
-    <string name="custom_study_rev_extend">Павялічыць/паменшыць (“-3”) абмежаванні паўтарэння новых картак на сёння </string>
+    <string name="custom_study_new_extend">Павялічыць/паменшыць (“-3”) абмежаванні новых картак на сёння</string>
+    <string name="custom_study_rev_extend">Павялічыць/паменшыць (“-3”) абмежаванні паўтарэння новых картак на сёння</string>
     <string name="custom_study_forgotten">Паўтарыць забытыя карткі за апошнія некалькі дзён:</string>
     <string name="custom_study_ahead">Вывучыць на некалькі дзён наперад:</string>
     <string name="custom_study_preview">Прагледзець новыя карткі, якія дадзены за апошнія некалькі дзён:</string>
@@ -133,7 +133,7 @@
     <string name="multimedia_editor_audio_permission_denied">Адхілены доступ да запісу гуку</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Праграма AnkiDroid абноўленая</string>
-    <string name="integrity_check_startup_content">Праграма AnkiDroid абноўленая. Дадзенае абнаўленне змяшчае выпраўленні магчымых праблем з базай даных і мы раім вам запусціць яе праверку. </string>
+    <string name="integrity_check_startup_content">Праграма AnkiDroid абноўленая. Дадзенае абнаўленне змяшчае выпраўленні магчымых праблем з базай даных і мы раім вам запусціць яе праверку.</string>
     <string name="integrity_check_continue_anyway">Усё роўна працягнуць</string>
     <string name="integrity_check_insufficient_space">Праверка базы даных патрабуе вялікай колькасці часовага сховішча.\n\nВельмі пажадана мець прынамсі %s свабоднага месца на прыладзе для таго, каб паспяхова выканаць гэту аперацыю.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nУ цяперашні час у вас %s вольнага месца.</string>
@@ -224,7 +224,7 @@
     <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
     <string name="deck_already_exists">Калода ўжо існуе</string>
     <string name="empty_deck_name">Калода не можа быць пустой</string>
-    <string name="create_deck_numeric_hint">Калі ў вас ёсць праблемы з парадкам калод (напрыклад, ‘10’  калода стаіць перад ‘2’), замяніце ‘2’ на ‘02’ </string>
+    <string name="create_deck_numeric_hint">Калі ў вас ёсць праблемы з парадкам калод (напрыклад, ‘10’  калода стаіць перад ‘2’), замяніце ‘2’ на ‘02’</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Задаць інтэрвал на тое ж самае значэнне</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">

@@ -205,7 +205,7 @@
         <item quantity="one">In %d segundu diat pòdere incumintzare una sincronizatzione automàtica</item>
         <item quantity="other">In %d segundos diat pòdere incumintzare una sincronizatzione automàtica</item>
     </plurals>
-    <string name="metered_sync_data_warning">Su frunidore de ìnternet tuo ti diat pòdere fàghere pagare dinare pro s\'impreu de datos </string>
+    <string name="metered_sync_data_warning">Su frunidore de ìnternet tuo ti diat pòdere fàghere pagare dinare pro s\'impreu de datos</string>
     <string name="deck_picker_new">Nùmeru de cartas noas de pompiare oe in custu matzu.</string>
     <string name="deck_picker_rev">Nùmeru de cartas chi iscadint oe in custu matzu.</string>
     <string name="deck_picker_lrn">Nùmeru de cartas de imparare in custu matzu.</string>
@@ -222,7 +222,7 @@
     <string name="backup_your_collection">Faghe una còpia de seguresa de sa colletzione tua</string>
     <string name="backup_collection_message">No as fatu una còpia de seguresa de sa colletzione tua dae unu pagu de tempus. Lu dias dèpere fàghere como pro prevènnere pèrdidas de datos</string>
     <string name="button_backup" maxLength="41">Faghe una còpia</string>
-    <string name="button_disable_reminder">Disabìlita su promemòria </string>
+    <string name="button_disable_reminder">Disabìlita su promemòria</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Prus a tardu</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Non lu torres a mustrare</string>
     <string name="dismiss_backup_warning_title">Avisu de pèrdida de datos</string>
