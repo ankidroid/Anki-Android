@@ -321,7 +321,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 showError(
                     activity,
                     activity.getString(R.string.something_wrong),
-                    ClassCastException(activity.javaClass.simpleName + " is not " + DeckPicker.javaClass.simpleName),
+                    ClassCastException(activity.javaClass.simpleName + " is not " + DeckPicker::class.java.simpleName),
                     true,
                 )
                 return

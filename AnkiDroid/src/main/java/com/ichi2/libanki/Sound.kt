@@ -167,7 +167,6 @@ object Sound {
                     SoundOrVideoTag.Type.VIDEO -> asVideo(tag)
                 }
             }
-            else -> throw IllegalStateException("unrecognised tag")
         }
     }
 
