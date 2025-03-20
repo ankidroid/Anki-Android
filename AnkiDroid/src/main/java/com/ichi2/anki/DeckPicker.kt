@@ -854,7 +854,6 @@ open class DeckPicker :
                 }
             is DiskFull -> displayNoStorageError()
             is DBError -> displayDatabaseFailure(CustomExceptionData.fromException(failure.exception))
-            else -> displayDatabaseFailure()
         }
     }
 
