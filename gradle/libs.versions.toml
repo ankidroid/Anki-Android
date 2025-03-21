@@ -100,7 +100,7 @@ okhttp = "4.12.0"
 protobufKotlinLite = "4.29.3"
 # ../AnkiDroid/robolectricDownload.gradle may need changes - read instructions in that file
 robolectric = "4.14.1"
-searchpreference = "2.7.1"
+searchpreference = "2.7.0"
 seismic = "1.0.3"
 sharedPreferencesMock = "1.2.4"
 slackKeeper = "0.16.1"
