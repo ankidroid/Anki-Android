@@ -56,7 +56,7 @@ androidxTestUiAutomator = "2.3.0"
 # https://developer.android.com/jetpack/androidx/releases/viewpager2
 androidxViewpager2 = "1.1.0"
 # https://developer.android.com/jetpack/androidx/releases/webkit
-androidxWebkit = "1.12.1"
+androidxWebkit = "1.13.0"
 # https://developer.android.com/jetpack/androidx/releases/work
 androidxWork = "2.10.0"
 ankiBackend = '0.1.51-anki25.02'
