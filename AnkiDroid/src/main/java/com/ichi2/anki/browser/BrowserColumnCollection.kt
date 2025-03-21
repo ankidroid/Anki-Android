@@ -66,7 +66,9 @@ class BrowserColumnCollection(
                     val value = mode.defaultColumns()
                     value.split(SEPARATOR_CHAR).map { CardBrowserColumn.fromColumnKey(it) }
                 }
-            return BrowserColumnCollection(columns)
+            // shared preferences had duplicate columns for unknown reasons
+            // this removes duplicates on load, any saves will be de-duplicated
+            return BrowserColumnCollection(columns.distinct())
         }
 
         class ColumnReplacement(
