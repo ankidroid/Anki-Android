@@ -546,7 +546,7 @@ class UniqueArrayListTest {
         val uniqueList = UniqueArrayList.from(longs)
 
         assertNotEquals(2, uniqueList.size.toLong())
-        uniqueList.retainAll(listOf(1L, 3L))
+        uniqueList.retainAll(setOf(1L, 3L))
         assertEquals(2, uniqueList.size.toLong())
         assertEquals(listOf(1L, 3L), uniqueList)
     }

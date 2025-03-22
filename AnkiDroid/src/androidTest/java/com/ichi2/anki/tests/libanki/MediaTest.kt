@@ -123,13 +123,13 @@ class MediaTest : InstrumentedTest() {
         }
         // check media
         val ret = testCol!!.media.check()
-        var expected = listOf("fake2.png")
+        var expected = setOf("fake2.png")
         var actual = ret.missingFileNames.toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
-        expected = listOf("foo.jpg")
+        expected = setOf("foo.jpg")
         actual = ret.unusedFileNames.toMutableList()
-        actual.retainAll(expected.toSet())
+        actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
     }
 
