@@ -26,14 +26,15 @@ import android.widget.EditText
 import android.widget.ListView
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
+import androidx.core.os.BundleCompat
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog
-import com.ichi2.anki.dialogs.LocaleSelectionDialog.LocaleSelectionDialogHandler
+import com.ichi2.anki.dialogs.LocaleSelectionDialog.Companion.KEY_SELECTED_LOCALE
+import com.ichi2.anki.dialogs.LocaleSelectionDialog.Companion.REQUEST_HINT_LOCALE_SELECTION
 import com.ichi2.anki.dialogs.NoteTypeEditorContextMenu.Companion.newInstance
 import com.ichi2.anki.dialogs.NoteTypeEditorContextMenu.NoteTypeEditorContextMenuAction
 import com.ichi2.anki.servicelayer.LanguageHintService.setLanguageHintForField
@@ -58,9 +59,7 @@ import org.json.JSONException
 import timber.log.Timber
 import java.util.Locale
 
-class ModelFieldEditor :
-    AnkiActivity(),
-    LocaleSelectionDialogHandler {
+class ModelFieldEditor : AnkiActivity() {
     // Position of the current field selected
     private var currentPos = 0
     private lateinit var fieldsListView: ListView
@@ -86,6 +85,15 @@ class ModelFieldEditor :
             subtitle = intent.getStringExtra("title")
         }
         startLoadingCollection()
+        supportFragmentManager.setFragmentResultListener(REQUEST_HINT_LOCALE_SELECTION, this) { _, bundle ->
+            // if the user cancelled the selection the Bundle will be empty
+            if (bundle.containsKey(KEY_SELECTED_LOCALE)) {
+                val selectedLocale =
+                    BundleCompat.getSerializable(bundle, KEY_SELECTED_LOCALE, Locale::class.java) ?: error("Missing selected locale!")
+                addFieldLocaleHint(selectedLocale)
+            }
+            dismissAllDialogFragments()
+        }
     }
 
     override fun onStop() {
@@ -515,8 +523,7 @@ class ModelFieldEditor :
     private fun localeHintDialog() {
         Timber.i("displaying locale hint dialog")
         // We don't currently show the current value, but we may want to in the future
-        val dialogFragment: DialogFragment = LocaleSelectionDialog.newInstance(this)
-        showDialogFragment(dialogFragment)
+        showDialogFragment(LocaleSelectionDialog())
     }
 
     /*
@@ -527,15 +534,6 @@ class ModelFieldEditor :
         setLanguageHintForField(getColUnsafe.notetypes, notetype, currentPos, selectedLocale)
         val format = getString(R.string.model_field_editor_language_hint_dialog_success_result, selectedLocale.displayName)
         showSnackbar(format, Snackbar.LENGTH_SHORT)
-    }
-
-    override fun onSelectedLocale(selectedLocale: Locale) {
-        addFieldLocaleHint(selectedLocale)
-        dismissAllDialogFragments()
-    }
-
-    override fun onLocaleSelectionCancelled() {
-        dismissAllDialogFragments()
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
