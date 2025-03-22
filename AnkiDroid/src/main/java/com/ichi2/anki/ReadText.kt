@@ -24,6 +24,7 @@ import android.speech.tts.UtteranceProgressListener
 import android.view.WindowManager.BadTokenException
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import androidx.core.net.toUri
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.provider.pureAnswer
 import com.ichi2.anki.reviewer.CardSide
@@ -304,7 +305,7 @@ object ReadText {
                                     errorToDeveloperString(errorCode),
                                     errorCode,
                                 )
-                                val helpUrl = Uri.parse(context.getString(R.string.link_faq_tts))
+                                val helpUrl = context.getString(R.string.link_faq_tts).toUri()
                                 val ankiActivity = context as AnkiActivity
                                 ankiActivity.mayOpenUrl(helpUrl)
                                 // TODO: We can do better in this UI now we have a reason for failure

@@ -18,9 +18,9 @@ ktlint = '1.5.0'
 #
 # Old changelogs - See 'Table of Contents' in sidebar
 # https://developer.android.com/build/releases/past-releases
-androidGradlePlugin = "8.8.1"
+androidGradlePlugin = "8.9.0"
 # https://developer.android.com/jetpack/androidx/releases/activity
-androidxActivity = "1.10.0"
+androidxActivity = "1.10.1"
 # https://developer.android.com/jetpack/androidx/releases/annotation
 androidxAnnotation = "1.9.1"
 # https://developer.android.com/jetpack/androidx/releases/appcompat
@@ -28,13 +28,13 @@ androidxAppCompat = "1.7.0"
 # https://developer.android.com/jetpack/androidx/releases/browser
 androidxBrowser = "1.8.0"
 # https://developer.android.com/jetpack/androidx/releases/constraintlayout
-androidxConstraintlayout = "2.2.0"
+androidxConstraintlayout = "2.2.1"
 # https://developer.android.com/jetpack/androidx/releases/core
 androidxCoreKtx = "1.15.0"
 # https://developer.android.com/jetpack/androidx/releases/draganddrop
 androidxDragAndDrop = "1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/exifinterface
-androidxExifinterface = "1.3.7"
+androidxExifinterface = "1.4.0"
 # https://developer.android.com/jetpack/androidx/releases/fragment
 androidxFragmentKtx = "1.8.6"
 # https://developer.android.com/jetpack/androidx/releases/media
@@ -56,7 +56,7 @@ androidxTestUiAutomator = "2.3.0"
 # https://developer.android.com/jetpack/androidx/releases/viewpager2
 androidxViewpager2 = "1.1.0"
 # https://developer.android.com/jetpack/androidx/releases/webkit
-androidxWebkit = "1.12.1"
+androidxWebkit = "1.13.0"
 # https://developer.android.com/jetpack/androidx/releases/work
 androidxWork = "2.10.0"
 ankiBackend = '0.1.51-anki25.02'
@@ -70,7 +70,7 @@ commonsCompress = "1.27.1"
 # https://commons.apache.org/proper/commons-io/changes-report.html
 commonsIo = "2.18.0"
 coroutines = '1.10.1'
-desugar-jdk-libs-nio = "2.1.4"
+desugar-jdk-libs-nio = "2.1.5"
 drawer = "1.0.3"
 espresso = '3.6.1'
 mikehardyGoogleAnalyticsJava7 = "2.0.13"
@@ -79,25 +79,25 @@ imageCropper = "4.6.0"
 javaSemver = "0.10.2"
 jetbrainsAnnotations = "26.0.2"
 json = "20250107"
-jsoup = "1.18.3"
+jsoup = "1.19.1"
 androidTestJunit = "1.2.1"
-junitJupiter = "5.11.4"
-junitPlatformLauncher = "1.11.4"
+junitJupiter = "5.12.1"
+junitPlatformLauncher = "1.12.1"
 # https://github.com/JetBrains/kotlin/releases/
-kotlin = '2.1.10'
+kotlin = '2.1.20'
 kotlinxSerializationJson = "1.8.0"
-ktlintGradlePlugin = "12.1.2"
+ktlintGradlePlugin = "12.2.0"
 leakcanaryAndroid = "2.14"
-lint = '31.8.1'
+lint = '31.9.0'
 material = "1.12.0"
 materialTapTargetPrompt = "3.3.2"
 mockitoInline = "5.2.0"
 mockitoKotlin = "5.4.0"
-mockk = "1.13.16"
+mockk = "1.13.17"
 nanohttpd = "2.3.1"
 okhttp = "4.12.0"
 # https://github.com/protocolbuffers/protobuf/releases
-protobufKotlinLite = "4.29.3"
+protobufKotlinLite = "4.30.1"
 # ../AnkiDroid/robolectricDownload.gradle may need changes - read instructions in that file
 robolectric = "4.14.1"
 searchpreference = "2.7.0"
