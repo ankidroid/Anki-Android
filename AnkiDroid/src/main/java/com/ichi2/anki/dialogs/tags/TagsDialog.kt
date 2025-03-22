@@ -45,7 +45,6 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.apache.commons.io.FileUtils
 import timber.log.Timber
@@ -66,11 +65,6 @@ class TagsDialog : AnalyticsDialogFragment {
          * Filter notes by tags
          */
         FILTER_BY_TAG,
-
-        /**
-         * A custom study session filtered by tags
-         */
-        CUSTOM_STUDY_TAGS,
     }
 
     private var type: DialogType? = null
