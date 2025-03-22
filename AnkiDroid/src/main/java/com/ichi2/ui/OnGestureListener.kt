@@ -39,10 +39,6 @@ class OnGestureListener(
         return true
     }
 
-    override fun onLongPress(e: MotionEvent) {
-        consumer.accept(Gesture.LONG_TAP)
-    }
-
     override fun onFling(
         e1: MotionEvent?,
         e2: MotionEvent,
@@ -81,6 +77,11 @@ class OnGestureListener(
             consumer.accept(gesture)
         }
         return true
+    }
+
+    override fun onLongPress(e: MotionEvent) {
+        // selecting stuff in a WebView takes priority over gesture detection
+        // so, do nothing in the method
     }
 
     companion object {

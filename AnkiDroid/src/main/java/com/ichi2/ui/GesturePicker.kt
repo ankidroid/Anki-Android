@@ -34,8 +34,8 @@ import timber.log.Timber
 // This class exists as elements resized when adding in the spinner to GestureDisplay.kt
 
 /** [View] which allows selection of a gesture either via taps/swipes, or via a [Spinner]
- * The spinner aids discoverability of [Gesture.DOUBLE_TAP] and [Gesture.LONG_TAP]
- * as they're not explained in [GestureDisplay].
+ * The spinner aids discoverability of [Gesture.DOUBLE_TAP]
+ * as it is not explained in [GestureDisplay].
  *
  * Current use is via [com.ichi2.anki.dialogs.GestureSelectionDialogBuilder]
  */

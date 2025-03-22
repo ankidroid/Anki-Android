@@ -295,9 +295,6 @@ abstract class AbstractFlashcardViewer :
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
-    private val longClickHandler = newHandler()
-    private val startLongClickAction = Runnable { gestureProcessor.onLongTap() }
-
     // Handler for the "show answer" button
     private val flipCardListener =
         View.OnClickListener {
@@ -608,7 +605,6 @@ abstract class AbstractFlashcardViewer :
         if (this::cardMediaPlayer.isInitialized) {
             cardMediaPlayer.isEnabled = false
         }
-        longClickHandler.removeCallbacks(startLongClickAction)
         // Prevent loss of data in Cookies
         CookieManager.getInstance().flush()
     }
@@ -1894,7 +1890,6 @@ abstract class AbstractFlashcardViewer :
     protected open fun closeReviewer(result: Int) {
         automaticAnswer.disable()
         previousAnswerIndicator!!.stopAutomaticHide()
-        longClickHandler.removeCallbacks(startLongClickAction)
         this@AbstractFlashcardViewer.setResult(result)
         finish()
     }
