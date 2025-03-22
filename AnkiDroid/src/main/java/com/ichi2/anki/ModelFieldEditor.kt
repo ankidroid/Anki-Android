@@ -89,7 +89,11 @@ class ModelFieldEditor : AnkiActivity() {
             // if the user cancelled the selection the Bundle will be empty
             if (bundle.containsKey(KEY_SELECTED_LOCALE)) {
                 val selectedLocale =
-                    BundleCompat.getSerializable(bundle, KEY_SELECTED_LOCALE, Locale::class.java) ?: error("Missing selected locale!")
+                    BundleCompat.getSerializable(
+                        bundle,
+                        KEY_SELECTED_LOCALE,
+                        Locale::class.java,
+                    ) ?: error("Missing selected locale!")
                 addFieldLocaleHint(selectedLocale)
             }
             dismissAllDialogFragments()
