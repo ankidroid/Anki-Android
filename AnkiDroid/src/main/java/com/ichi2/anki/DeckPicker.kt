@@ -1674,12 +1674,12 @@ open class DeckPicker :
                 Timber.i("Fixing font-family definition in templates")
                 try {
                     val models = getColUnsafe.notetypes
-                    for (m in models.all()) {
-                        val css = m.getString("css")
+                    for (noteType in models.all()) {
+                        val css = noteType.getString("css")
                         @Suppress("SpellCheckingInspection")
                         if (css.contains("font-familiy")) {
-                            m.put("css", css.replace("font-familiy", "font-family"))
-                            models.save(m)
+                            noteType.put("css", css.replace("font-familiy", "font-family"))
+                            models.save(noteType)
                         }
                     }
                 } catch (e: JSONException) {
