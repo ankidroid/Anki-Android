@@ -15,14 +15,14 @@
   this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="8dp">
 
-    <androidx.appcompat.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/locale_dialog_selection_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,7 +36,6 @@
         app:navigationIcon="@drawable/close_icon"
         />
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/locale_dialog_selection_list"
         android:scrollbars="vertical"
@@ -45,19 +44,17 @@
         android:layout_below="@+id/locale_dialog_selection_toolbar"
         android:layout_above="@+id/locale_dialog_summary"
         android:fadeScrollbars="false"
-        android:paddingStart="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         />
 
     <com.ichi2.ui.FixedTextView
         android:id="@+id/locale_dialog_summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:text="@string/locale_selection_dialog_summary"
-        android:padding="@dimen/content_vertical_padding"
+        android:paddingVertical="@dimen/content_vertical_padding"
         android:layout_alignParentBottom="true"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
+        android:paddingHorizontal="20dp"
         />
 
 </RelativeLayout>
