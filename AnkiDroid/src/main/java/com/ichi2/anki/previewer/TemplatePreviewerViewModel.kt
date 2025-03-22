@@ -63,6 +63,11 @@ class TemplatePreviewerViewModel(
     override var currentCard: Deferred<Card>
     override val server = AnkiServer(this).also { it.start() }
 
+    /**
+     * for use in [TemplatePreviewerFragment] when flagging cards with empty fronts.
+     */
+    internal val cardsWithEmptyFronts: Deferred<List<Boolean>>?
+
     init {
         note =
             asyncIO {
@@ -105,9 +110,34 @@ class TemplatePreviewerViewModel(
                     val tr = CollectionManager.TR
                     clozeNumbers.await().map { tr.cardTemplatesCard(it) }
                 }
+            cardsWithEmptyFronts = null
         } else {
             clozeOrds = null
             templateNames = CompletableDeferred(notetype.templatesNames)
+            cardsWithEmptyFronts =
+                asyncIO {
+                    val note = note.await()
+                    val names = templateNames.await()
+                    withCol {
+                        // checks if each card's front contains the error text
+                        // which is defined at https://github.com/ankitects/anki/blob/d52889f45c3f7999a45fd2dde367f79f3bc3bad4/ftl/core/card-template-rendering.ftl#L4
+                        // and stores the result in a boolean array, to be used in [TemplatePreviewerPage]
+                        List(names.size) { index ->
+                            note
+                                .ephemeralCard(
+                                    col = this,
+                                    ord = index,
+                                    customNoteType = notetype,
+                                    fillEmpty = fillEmpty,
+                                    deckId = arguments.deckId,
+                                ).question(
+                                    this,
+                                ).contains(
+                                    "<div>The front of this card is blank.<br><a href='https://docs.ankiweb.net/templates/errors.html#front-of-card-is-blank'>More information</a></div>",
+                                )
+                        }
+                    }
+                }
         }
     }
 
