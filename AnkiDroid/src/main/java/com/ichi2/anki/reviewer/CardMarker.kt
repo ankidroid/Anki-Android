@@ -19,6 +19,7 @@ package com.ichi2.anki.reviewer
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
+import androidx.core.view.isVisible
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 
@@ -39,7 +40,7 @@ class CardMarker(
 
     /** Whether the mark icon is visible on the toolbar */
     val isDisplayingMark: Boolean
-        get() = markView.visibility == View.VISIBLE
+        get() = markView.isVisible
 
     /** Sets the flag icon on the card  */
     fun displayFlag(flag: Flag) {

@@ -65,6 +65,7 @@ import androidx.core.content.FileProvider
 import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.net.toUri
 import androidx.core.os.BundleCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.util.component1
@@ -2455,7 +2456,7 @@ class NoteEditor :
             AlertDialog
                 .Builder(requireContext())
                 .neutralButton(R.string.help) {
-                    requireAnkiActivity().openUrl(Uri.parse(getString(R.string.link_manual_note_format_toolbar)))
+                    requireAnkiActivity().openUrl(getString(R.string.link_manual_note_format_toolbar).toUri())
                 }.negativeButton(R.string.dialog_cancel)
 
     private fun displayAddToolbarDialog() {

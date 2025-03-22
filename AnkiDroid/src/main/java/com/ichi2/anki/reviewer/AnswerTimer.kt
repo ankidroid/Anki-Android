@@ -22,6 +22,7 @@ import android.view.View
 import android.widget.Chronometer
 import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
+import androidx.core.view.isInvisible
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
@@ -69,7 +70,7 @@ class AnswerTimer(
     ) {
         currentCard = newCard
         showTimer = newCard.shouldShowTimer(col)
-        if (showTimer && cardTimer.visibility == View.INVISIBLE) {
+        if (showTimer && cardTimer.isInvisible) {
             cardTimer.visibility = View.VISIBLE
         } else if (!showTimer && cardTimer.visibility != View.INVISIBLE) {
             cardTimer.visibility = View.INVISIBLE

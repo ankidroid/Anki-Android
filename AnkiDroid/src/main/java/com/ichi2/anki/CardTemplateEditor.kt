@@ -44,6 +44,7 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentContainerView
@@ -616,14 +617,14 @@ open class CardTemplateEditor :
                 if (menu.findItem(insertFieldId) != null) {
                     return false
                 }
-                val initialSize = menu.size()
+                val initialSize = menu.size
 
                 if (currentEditorViewId != R.id.styling_edit) {
                     // 10644: Do not pass in a R.string as the final parameter as MIUI on Android 12 crashes.
                     menu.add(Menu.FIRST, insertFieldId, 0, getString(R.string.card_template_editor_insert_field))
                 }
 
-                return initialSize != menu.size()
+                return initialSize != menu.size
             }
 
             override fun onActionItemClicked(

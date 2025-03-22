@@ -25,6 +25,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.OnContextAndLongClickListener
@@ -334,7 +335,7 @@ class TagsDialog : AnalyticsDialogFragment {
             val tag = TagsUtil.getUniformedTag(rawTag)
             val feedbackText: String
             if (tags!!.add(tag)) {
-                if (noTagsTextView!!.visibility == View.VISIBLE) {
+                if (noTagsTextView!!.isVisible) {
                     noTagsTextView!!.visibility = View.GONE
                 }
                 tags!!.add(tag)

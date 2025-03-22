@@ -22,6 +22,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.core.view.isVisible
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.Ease
 import com.ichi2.utils.KotlinCleanup
@@ -47,7 +48,7 @@ class EaseButton(
 
     @get:JvmName("canPerformClick")
     val canPerformClick
-        get() = layout.isEnabled && layout.visibility == View.VISIBLE
+        get() = layout.isEnabled && layout.isVisible
 
     var nextTime: String
         get() = easeTimeView.text.toString()

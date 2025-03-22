@@ -18,6 +18,7 @@ package com.ichi2.anki.cardviewer
 
 import android.net.Uri
 import android.webkit.WebResourceRequest
+import androidx.core.net.toUri
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.EmptyApplication
@@ -146,7 +147,7 @@ class MediaErrorHandlerTest {
 
     private fun getWebResourceRequest(url: String): WebResourceRequest =
         object : WebResourceRequest {
-            override fun getUrl(): Uri = Uri.parse(url)
+            override fun getUrl(): Uri = url.toUri()
 
             override fun isForMainFrame(): Boolean = false
 

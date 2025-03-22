@@ -21,6 +21,7 @@ import android.net.Uri
 import android.provider.MediaStore
 import android.webkit.MimeTypeMap
 import androidx.annotation.CheckResult
+import androidx.core.net.toUri
 import timber.log.Timber
 
 object ContentResolverUtil {
@@ -96,7 +97,7 @@ object ContentResolverUtil {
                 // content uri contains only id and _data columns in samsung clipboard and not media columns
                 // gboard contains media columns and works with MediaStore.MediaColumns.DISPLAY_NAME
                 val dataIndex = c.getColumnIndexOrThrow("_data")
-                val fileUri = Uri.parse(c.getString(dataIndex))
+                val fileUri = c.getString(dataIndex).toUri()
                 return fileUri.lastPathSegment
             }
         } catch (e: SQLiteException) {

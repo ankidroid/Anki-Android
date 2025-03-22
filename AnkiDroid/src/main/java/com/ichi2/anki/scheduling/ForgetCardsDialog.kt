@@ -17,9 +17,9 @@
 package com.ichi2.anki.scheduling
 
 import android.app.Dialog
-import android.net.Uri
 import android.os.Bundle
 import androidx.core.content.edit
+import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.checkbox.MaterialCheckBox
@@ -116,7 +116,7 @@ class ForgetCardsDialog : DialogFragment() {
             // title(text = TR.actionsForgetCard().toSentenceCase(R.string.sentence_forget_cards))
             // "Reset card progress" is less explicit on the singular/plural dimension
             titleWithHelpIcon(stringRes = R.string.reset_card_dialog_title) {
-                requireActivity().openUrl(Uri.parse(getString(R.string.link_help_forget_cards)))
+                requireActivity().openUrl(getString(R.string.link_help_forget_cards).toUri())
             }
             positiveButton(R.string.dialog_ok) {
                 sharedPrefs.edit {

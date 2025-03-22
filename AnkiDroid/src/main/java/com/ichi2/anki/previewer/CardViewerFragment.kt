@@ -197,7 +197,7 @@ abstract class CardViewerFragment(
                         startActivity(intent)
                     } else {
                         val packageName = intent.getPackage() ?: return
-                        val marketUri = Uri.parse("market://details?id=$packageName")
+                        val marketUri = "market://details?id=$packageName".toUri()
                         val marketIntent = Intent(Intent.ACTION_VIEW, marketUri)
                         Timber.d("Trying to open market uri %s", marketUri)
                         if (packageManager.resolveActivityCompat(marketIntent) != null) {
@@ -261,7 +261,7 @@ abstract class CardViewerFragment(
 
     private fun showMediaErrorSnackbar(filename: String) {
         showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename)) {
-            setAction(R.string.help) { openUrl(Uri.parse(getString(R.string.link_faq_missing_media))) }
+            setAction(R.string.help) { openUrl(getString(R.string.link_faq_missing_media).toUri()) }
         }
     }
 

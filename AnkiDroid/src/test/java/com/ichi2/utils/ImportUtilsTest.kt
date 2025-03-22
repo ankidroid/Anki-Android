@@ -21,6 +21,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.annotation.CheckResult
+import androidx.core.net.toUri
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.utils.ImportUtils.FileImporter
@@ -113,7 +114,7 @@ class ImportUtilsTest : RobolectricTest() {
     }
 
     private fun clipDataUriFromFile(fileName: String): ClipData {
-        val item = ClipData.Item(Uri.parse("content://$fileName"))
+        val item = ClipData.Item("content://$fileName".toUri())
         val description = ClipDescription("", arrayOf())
         return ClipData(description, item)
     }

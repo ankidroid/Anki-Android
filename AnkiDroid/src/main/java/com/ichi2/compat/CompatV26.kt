@@ -16,11 +16,11 @@
  ****************************************************************************************/
 package com.ichi2.compat
 
-import android.annotation.TargetApi
 import android.content.Context
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.NotificationChannels
 import java.io.File
@@ -38,7 +38,7 @@ import java.nio.file.StandardCopyOption
 import kotlin.time.Duration
 
 /** Implementation of [Compat] for SDK level 26 and higher. Check  [Compat]'s for more detail.  */
-@TargetApi(26)
+@RequiresApi(26)
 open class CompatV26 : CompatV24() {
     /**
      * In Oreo and higher, you must create a channel for all notifications.

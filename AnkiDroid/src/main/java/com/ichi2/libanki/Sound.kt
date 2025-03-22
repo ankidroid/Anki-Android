@@ -25,7 +25,7 @@
 
 package com.ichi2.libanki
 
-import android.text.TextUtils
+import androidx.core.text.htmlEncode
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.preferences.getHidePlayAudioButtons
 import com.ichi2.compat.CompatHelper
@@ -151,7 +151,7 @@ object Sound {
                 """<video
                     | src="$uri"
                     | controls
-                    | data-file="${TextUtils.htmlEncode(tag.filename)}"
+                    | data-file="${tag.filename.htmlEncode()}"
                     | onended='$onEnded'
                     | onpause='$onPause'
                     | data-play="$playsound" controlsList="nodownload"></video>
@@ -167,7 +167,6 @@ object Sound {
                     SoundOrVideoTag.Type.VIDEO -> asVideo(tag)
                 }
             }
-            else -> throw IllegalStateException("unrecognised tag")
         }
     }
 

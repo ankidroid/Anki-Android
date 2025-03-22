@@ -22,7 +22,6 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.content.ActivityNotFoundException
 import android.content.ClipboardManager
 import android.content.Context
@@ -70,11 +69,14 @@ import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CheckResult
 import androidx.annotation.IdRes
+import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import androidx.core.net.toUri
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.children
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle.State.RESUMED
 import anki.collection.OpChanges
 import com.drakeet.drawer.FullDraggableContainer
@@ -1301,7 +1303,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     override fun automaticShowAnswer() {
-        if (flipCardLayout!!.isEnabled && flipCardLayout!!.visibility == View.VISIBLE) {
+        if (flipCardLayout!!.isEnabled && flipCardLayout!!.isVisible) {
             flipCardLayout!!.performClick()
         }
     }
@@ -2521,7 +2523,7 @@ abstract class AbstractFlashcardViewer :
                             intent =
                                 Intent(
                                     Intent.ACTION_VIEW,
-                                    Uri.parse("market://details?id=$packageName"),
+                                    "market://details?id=$packageName".toUri(),
                                 )
                             if (packageManager.resolveActivityCompat(
                                     intent,
@@ -2541,7 +2543,7 @@ abstract class AbstractFlashcardViewer :
             }
             if (intent == null) {
                 Timber.d("Opening external link \"%s\" with an Intent", url)
-                intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                intent = Intent(Intent.ACTION_VIEW, url.toUri())
             } else {
                 Timber.d("Opening resolved external link \"%s\" with an Intent: %s", url, intent)
             }
@@ -2592,7 +2594,7 @@ abstract class AbstractFlashcardViewer :
             }
         }
 
-        @TargetApi(Build.VERSION_CODES.O)
+        @RequiresApi(Build.VERSION_CODES.O)
         override fun onRenderProcessGone(
             view: WebView,
             detail: RenderProcessGoneDetail,
@@ -2627,7 +2629,7 @@ abstract class AbstractFlashcardViewer :
 
     internal fun displayCouldNotFindMediaSnackbar(filename: String?) {
         showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename)) {
-            setAction(R.string.help) { openUrl(Uri.parse(getString(R.string.link_faq_missing_media))) }
+            setAction(R.string.help) { openUrl(getString(R.string.link_faq_missing_media).toUri()) }
         }
     }
 

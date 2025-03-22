@@ -28,6 +28,7 @@ import android.database.MatrixCursor
 import android.database.sqlite.SQLiteQueryBuilder
 import android.net.Uri
 import android.webkit.MimeTypeMap
+import androidx.core.net.toUri
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager
@@ -1003,7 +1004,7 @@ class CardContentProvider : ContentProvider() {
         col: Collection,
     ): Uri? {
         // Insert media file using libanki.Media.addFile and return Uri for the inserted file.
-        val fileUri = Uri.parse(values!!.getAsString(FlashCardsContract.AnkiMedia.FILE_URI))
+        val fileUri = values!!.getAsString(FlashCardsContract.AnkiMedia.FILE_URI).toUri()
         val preferredName = values.getAsString(FlashCardsContract.AnkiMedia.PREFERRED_NAME)
         return try {
             val cR = context!!.contentResolver

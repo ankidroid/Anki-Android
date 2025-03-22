@@ -17,12 +17,12 @@
 
 package com.ichi2.anki
 
-import android.annotation.TargetApi
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import timber.log.Timber
@@ -40,7 +40,7 @@ object NotificationChannels {
      * TODO should be called in response to [Intent.ACTION_LOCALE_CHANGED]
      * @param context the context for access to localized strings for channel names
      */
-    @TargetApi(26)
+    @RequiresApi(26)
     fun setup(context: Context) {
         val res = context.resources
         for (channel in Channel.entries) {

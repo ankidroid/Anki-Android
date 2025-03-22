@@ -44,6 +44,7 @@ import kotlin.test.assertFailsWith
 @RunWith(Parameterized::class)
 abstract class Test21And26 {
     companion object {
+        @SuppressLint("NewApi")
         @JvmStatic // required for Parameters
         @Parameterized.Parameters(name = "{1}")
         fun data(): Iterable<Array<Any>> =

@@ -28,6 +28,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -93,7 +94,7 @@ abstract class MultimediaFragment(
                 field = multimediaActivityExtra.field
                 note = multimediaActivityExtra.note
                 if (multimediaActivityExtra.imageUri != null) {
-                    imageUri = Uri.parse(multimediaActivityExtra.imageUri)
+                    imageUri = multimediaActivityExtra.imageUri.toUri()
                 }
             }
         }

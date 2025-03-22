@@ -213,7 +213,6 @@ class TagsDialogTest : RobolectricTest() {
                     CheckBoxTriStates.State.INDETERMINATE -> foundIndeterminate.add(tag)
                     CheckBoxTriStates.State.UNCHECKED -> foundUncheckedTags.add(tag)
                     CheckBoxTriStates.State.CHECKED -> foundCheckedTags.add(tag)
-                    else -> Assert.fail("Unknown CheckBoxTriStates.State? " + vh.checkboxState)
                 }
             }
             ListUtil.assertListEquals(expectedAllTags, foundAllTags)

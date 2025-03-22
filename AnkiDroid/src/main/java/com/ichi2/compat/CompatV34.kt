@@ -16,10 +16,10 @@
 
 package com.ichi2.compat
 
-import android.annotation.TargetApi
 import android.view.MotionEvent
+import androidx.annotation.RequiresApi
 
-@TargetApi(34)
+@RequiresApi(34)
 @Suppress("ktlint:standard:property-naming")
 open class CompatV34 : CompatV33() {
     override val AXIS_GESTURE_X_OFFSET = MotionEvent.AXIS_GESTURE_X_OFFSET

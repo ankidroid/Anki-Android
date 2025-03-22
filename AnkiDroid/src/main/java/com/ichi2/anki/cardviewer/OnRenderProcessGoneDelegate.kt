@@ -15,7 +15,6 @@
  */
 package com.ichi2.anki.cardviewer
 
-import android.annotation.TargetApi
 import android.os.Build
 import android.webkit.RenderProcessGoneDetail
 import android.webkit.WebView
@@ -134,7 +133,7 @@ open class OnRenderProcessGoneDelegate(
         return target.resources.getString(errorCauseId)
     }
 
-    @TargetApi(Build.VERSION_CODES.O)
+    @RequiresApi(Build.VERSION_CODES.O)
     protected open fun displayRenderLoopDialog(
         currentCardId: CardId,
         detail: RenderProcessGoneDetail,
