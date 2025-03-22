@@ -72,19 +72,37 @@
                         app:srcCompat="@drawable/anki_box" />
 
                     <com.ichi2.ui.FixedTextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:gravity="center"
                         android:text="@string/no_cards_placeholder_title"
+                        android:background="@drawable/blue_rounded_background"
+                        android:padding="6dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold|normal"
+                        android:layout_gravity="center_horizontal"
+                        android:shadowColor="@color/black"
+                        android:shadowDy="2"
+                        android:shadowDx="2"
+                        android:shadowRadius="2"
                         style="@style/TextAppearance.AppCompat.Medium" />
 
                     <com.ichi2.ui.FixedTextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:textAlignment="center"
                         android:text="@string/no_cards_placeholder_description"
+                        android:background="@drawable/gray_rounded_background"
+                        android:layout_gravity="center_horizontal"
+                        android:padding="6dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:shadowColor="@color/black"
+                        android:shadowDx="1.5"
+                        android:shadowDy="1.5"
+                        android:shadowRadius="3"
                         style="@style/TextAppearance.AppCompat.Body1" />
                 </LinearLayout>
 
