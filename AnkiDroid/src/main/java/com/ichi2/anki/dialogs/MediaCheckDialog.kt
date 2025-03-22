@@ -100,7 +100,9 @@ class MediaCheckDialog : AsyncDialogFragment() {
                         setNeutralButton(R.string.dialog_cancel) { _, _ -> activity?.dismissAllDialogFragments() }
 
                         if (noHave.isNotEmpty()) {
-                            setNegativeButton(TR.mediaCheckAddTag().toSentenceCase(requireContext(), R.string.tag_missing)) { _, _ ->
+                            setNegativeButton(
+                                TR.mediaCheckAddTag().toSentenceCase(requireContext(), R.string.sentence_tag_missing),
+                            ) { _, _ ->
                                 (activity as MediaCheckDialogListener?)?.tagMissing(missingMediaNotes)
                                 activity?.dismissAllDialogFragments()
                             }
