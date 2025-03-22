@@ -55,8 +55,17 @@ class TemplatePreviewerPage : Fragment(R.layout.template_previewer_container) {
         val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout)
 
         lifecycleScope.launch {
-            for (templateName in viewModel.getTemplateNames()) {
-                tabLayout.addTab(tabLayout.newTab().setText(templateName))
+            for ((index, templateName) in viewModel.getTemplateNames().withIndex()) {
+                val newTab = tabLayout.newTab()
+                newTab.setText(templateName)
+                viewModel.cardsWithEmptyFronts?.let { list ->
+                    if (list.await()[index]) {
+                        val badge = newTab.getOrCreateBadge()
+                        badge.text = "!"
+                        badge.verticalPadding = 2
+                    }
+                }
+                tabLayout.addTab(newTab)
             }
             tabLayout.selectTab(tabLayout.getTabAt(viewModel.getCurrentTabIndex()))
             tabLayout.addOnTabSelectedListener(
