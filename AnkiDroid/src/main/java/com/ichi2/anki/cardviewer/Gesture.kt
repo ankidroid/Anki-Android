@@ -45,7 +45,6 @@ enum class Gesture(
     SWIPE_DOWN(R.string.gestures_swipe_down),
     SWIPE_LEFT(R.string.gestures_swipe_left),
     SWIPE_RIGHT(R.string.gestures_swipe_right),
-    LONG_TAP(R.string.gestures_long_tap),
     DOUBLE_TAP(R.string.gestures_double_tap),
     TAP_TOP_LEFT(R.string.gestures_corner_tap_top_left),
     TAP_TOP(R.string.gestures_tap_top),

@@ -330,7 +330,6 @@ object PreferenceUpgradeService {
                 upgradeGestureToBinding(preferences, "gestureSwipeDown", Gesture.SWIPE_DOWN)
                 upgradeGestureToBinding(preferences, "gestureSwipeLeft", Gesture.SWIPE_LEFT)
                 upgradeGestureToBinding(preferences, "gestureSwipeRight", Gesture.SWIPE_RIGHT)
-                upgradeGestureToBinding(preferences, "gestureLongclick", Gesture.LONG_TAP)
                 upgradeGestureToBinding(preferences, "gestureDoubleTap", Gesture.DOUBLE_TAP)
                 upgradeGestureToBinding(preferences, "gestureTapTopLeft", Gesture.TAP_TOP_LEFT)
                 upgradeGestureToBinding(preferences, "gestureTapTop", Gesture.TAP_TOP)
