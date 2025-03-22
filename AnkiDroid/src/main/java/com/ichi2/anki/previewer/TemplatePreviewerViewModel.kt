@@ -119,6 +119,9 @@ class TemplatePreviewerViewModel(
                     val note = note.await()
                     val names = templateNames.await()
                     withCol {
+                        // checks if each card's front contains the error text
+                        // which is defined at https://github.com/ankitects/anki/blob/d52889f45c3f7999a45fd2dde367f79f3bc3bad4/ftl/core/card-template-rendering.ftl#L4
+                        // and stores the result in a boolean array, to be used in [TemplatePreviewerPage]
                         List(names.size) { index ->
                             note
                                 .ephemeralCard(

@@ -62,7 +62,8 @@ class TemplatePreviewerPage : Fragment(R.layout.template_previewer_container) {
                     if (list.await()[index]) {
                         val badge = newTab.getOrCreateBadge()
                         badge.text = "!"
-                        badge.verticalPadding = 2
+                        // offset vertically a bit to prevent it from overlapping with the tab title
+                        badge.verticalOffset = 2
                     }
                 }
                 tabLayout.addTab(newTab)
