@@ -130,5 +130,5 @@
     <string name="user_potential_columns">זמין</string>
     <string name="include_column">כלול עמודה</string>
     <string name="exclude_column">אל תכלול עמודה</string>
-    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
+    <string name="browser_find_replace_loading_fields">מאחזר שמות שדות&#8230;</string>
 </resources>

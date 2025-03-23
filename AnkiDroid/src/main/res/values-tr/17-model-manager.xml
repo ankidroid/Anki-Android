@@ -26,10 +26,10 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">Not türlerini belirle</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">Not türlerini yönet</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Alanları yönet</string>
     <!--Toasts-->
-    <string name="toast_last_model">Son not türünüzü silemezsin.</string>
+    <string name="toast_last_model">Son not türünüzü silemezsiniz</string>
     <string name="toast_last_field">Not türlerinin en az bir alanı olmak zorundadır</string>
     <string name="toast_empty_name">İsim girmeniz gerekiyor</string>
     <string name="toast_duplicate_field">Alan ismi zaten kullanılıyor</string>
@@ -44,17 +44,17 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Not türünü sil</string>
-    <string name="model_browser_rename" comment="Rename a note type">Yeniden adlandır</string>
+    <string name="model_browser_rename" comment="Rename a note type">Adını değiştir</string>
     <string name="model_browser_template">Kartları düzenle</string>
     <!--Rename-->
-    <string name="rename_model">Not türünü yeniden adlandır</string>
+    <string name="rename_model">Not türünün adını değiştir</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Dil ipucunu %s olarak ayarla</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Alanları düzenle</string>
     <string name="model_field_editor_add" maxLength="28">Alan ekle</string>
     <string name="model_field_editor_delete">Alanı sil</string>
-    <string name="model_field_editor_rename">Alanı yeniden adlandır</string>
+    <string name="model_field_editor_rename">Alanın ismini değiştir</string>
     <string name="model_field_editor_language_hint">Klavye dili ipucunu ayarla</string>
     <string name="model_field_editor_reposition_menu">Alanın yerini değiştir</string>
     <string name="model_field_editor_toggle_sticky">Eklerken son girişi hatırla</string>
@@ -64,9 +64,9 @@
     <string name="model_delete_warning">Bu not türünü silmek istediğinize emin misiniz?</string>
     <string name="field_delete_warning">Bu alanı silmek istediğinize emin misiniz?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Add: %1$s</string>
+    <string name="model_browser_add_add">Ekle: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">Clone: %1$s</string>
+    <string name="model_browser_add_clone">Klonla: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Kartlarınızı görüntülemek için kullanılacak kart tarayıcı şablonunu giriniz. Daha anlaşılır bir yanıt görüntülemek için bunu kullanın.\n\nŞablonun önü\n\"{{Ülkesi}}nin başkenti: \"\nkart tarayıcıda şöyle sıkıştırılabilir\n\"Başkent: {{Ülke}}\"</string>
     <string name="card_template_browser_appearance_question_format">Soru Biçimi</string>
