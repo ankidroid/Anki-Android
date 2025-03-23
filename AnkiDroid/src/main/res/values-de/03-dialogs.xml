@@ -213,7 +213,7 @@
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Nicht erneut anzeigen</string>
     <string name="dismiss_backup_warning_title">Warnung wegen Datenverlust</string>
     <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
-    <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
+    <string name="dismiss_backup_warning_upgrade">Aufgrund von Android-Datenschutzänderungen sind Ihre Daten und automatischen Backups nicht mehr zugänglich, wenn die App deinstalliert wird</string>
     <string name="deck_already_exists">Stapel bereits vorhanden</string>
     <string name="empty_deck_name">Stapelname darf nicht leer sein</string>
     <string name="create_deck_numeric_hint">Wenn Sie Probleme mit der Reihenfolge der Stapel haben (z.B. \'10\' erscheint vor \'2\'), ersetzen Sie \'2\' durch \'02\'</string>

@@ -109,8 +109,8 @@
     <string name="browse_manage_columns_main_heading">열</string>
     <string name="browse_manage_columns">열 관리</string>
     <string name="user_active_columns">활성</string>
-    <string name="user_potential_columns">Available</string>
+    <string name="user_potential_columns">사용가능</string>
     <string name="include_column">열 포함하기</string>
     <string name="exclude_column">열 제외하기</string>
-    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
+    <string name="browser_find_replace_loading_fields">필드 이름 검색 중&#8230;</string>
 </resources>

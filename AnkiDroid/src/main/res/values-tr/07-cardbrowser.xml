@@ -118,5 +118,5 @@
     <string name="user_potential_columns">Kullanılabilir</string>
     <string name="include_column">Sütunu ekle</string>
     <string name="exclude_column">Sütunu çıkar</string>
-    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
+    <string name="browser_find_replace_loading_fields">Alan adları okunuyor&#8230;</string>
 </resources>

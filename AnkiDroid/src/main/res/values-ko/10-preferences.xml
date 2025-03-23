@@ -246,24 +246,24 @@
     <string name="analytics_summ">개발팀이 사람들이 어떤 기능을 사용하는지 볼 수 있도록 도와주어 AnkiDroid에 기여할 수 있습니다.</string>
     <string name="note_editor_replace_newlines" maxLength="41">HTML로 신규 라인 교체하기</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="type_in_answer_focus" maxLength="41">\'정답 입력\' 포커스</string>
+    <string name="type_in_answer_focus_summ">\'정답 입력\' 필드에 자동으로 포커스합니다</string>
     <!-- About -->
     <string name="open_changelog">업데이트 기록 열기</string>
-    <string name="pref_cat_about_title" maxLength="41">About</string>
+    <string name="pref_cat_about_title" maxLength="41">정보</string>
     <string name="contributors_title">기여자들</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">라이센스</string>
     <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="donate_description"><![CDATA[<a href=\"%1$s\">기부를</a> 통해 AnkiDroid 개발을 지원해주실 수 있습니다. 얼마가 되든 감사드립니다.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">제스쳐 추가하기</string>
     <string name="binding_add_key">키 추가하기</string>
     <string name="key_picker_default_press_key">키 누르기</string>
     <string name="binding_add_axis">조이스틱/모션 컨트롤러 추가하기</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">조이스틱/모션 콘트롤러를 움직이십시오</string>
     <string name="user_actions" maxLength="41">사용자 행동</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
+    <string name="user_actions_summary" maxLength="41">리뷰 화면에서 JavaScript 동작</string>
     <string name="user_action_1" maxLength="28">사용자 행동 1</string>
     <string name="user_action_2" maxLength="28">사용자 행동 2</string>
     <string name="user_action_3" maxLength="28">사용자 행동 3</string>
@@ -318,7 +318,7 @@
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">에러</string>
     <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">계산\n중&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
-        <item quantity="other">%1$d files\n%2$s</item>
+        <item quantity="other">%1$d 파일\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">사용되지 않는 미디어 파일 삭제하기</string>
@@ -358,7 +358,7 @@
     <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">상태 바</string>
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">내비게이션 바</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">전부</string>
-    <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
+    <string name="ignore_display_cutout" maxLength="41">디스플레이 컷아웃 무시</string>
     <string name="hide_answer_buttons" maxLength="41">정답 버튼 숨기기</string>
     <string name="hide_hard_and_easy" maxLength="41">\'어려움\', \'쉬움\' 버튼 숨기기</string>
     <string name="reviewer_frame_style" maxLength="41">프레임 스타일</string>

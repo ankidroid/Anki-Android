@@ -99,7 +99,7 @@
     <string name="gestures_summ">שיוך מחוות לפעולות כגון מענה ועריכת קלפים.</string>
     <string name="gestures_corner_touch" maxLength="41">מגע 9 נקודות</string>
     <string name="gestures_corner_touch_summary">אפשר מחוות מגע בפינות המסך</string>
-    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">הצגת קיצורי-מקלדת</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">מגירת היישומים במסך מלא</string>
     <string name="gestures_fullscreen_nav_drawer_summary">פתח את מגירת הניווט בעת החלקה ימינה מכל מקום על המסך</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">ללא</string>
@@ -300,7 +300,8 @@
     <string name="pref_cat_dev_options" maxLength="41">אפשרויות מפתח</string>
     <string name="dev_options_enabled_pref" maxLength="41">הפעלת מצב מפתח</string>
     <string name="disable_dev_options">השבת את מצב המפתח</string>
-    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
+    <string name="dev_options_warning">אנא ודא לפני הפעלת מצב מפתח. אפשרויות אלה מסוכנות ועלולות להשבית את האפליקציה או להשחית את האוסף שלך.\n\nשים לב שהאפשרויות הללו אינן מתאימות לרוב המשתמשים ולכן אינן מתורגמות, ולכן הן באנגלית.
+    </string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
