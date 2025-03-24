@@ -104,10 +104,8 @@
     <string name="check_media_title">میڈیا چیک کریں؟</string>
     <string name="check_media_warning">میڈیا کے بڑے مجموعوں کے ساتھ اس میں کافی وقت لگ سکتا ہے</string>
     <string name="check_media_message">میڈیا کو چیک کیا جا رہا ہے&#8230;</string>
-    <string name="check_media_acknowledge">میڈیا چیک کیا</string>
-    <string name="check_media_invalid">غلط انکوڈنگ والی فائلیں: %d</string>
-    <string name="check_media_no_unused_missing">کوئی غیر استعمال شدہ یا گم شدہ فائلیں نہیں ملی</string>
-    <string name="check_media_delete_unused">غیر استعمال شدہ کو حذف کریں</string>
+    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">میڈیا کو حذف کیا جا رہا ہے&#8230;</string>
     <string name="delete_media_result_title">حذف کرنے کا نتیجہ</string>
     <plurals name="delete_media_result_message">

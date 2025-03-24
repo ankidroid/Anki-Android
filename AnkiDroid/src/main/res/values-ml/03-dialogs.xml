@@ -104,10 +104,8 @@
     <string name="check_media_title">മീഡിയ പരിശോധിക്കുക?</string>
     <string name="check_media_warning">വലിയ മീഡിയ ശേഖരണങ്ങളുമായി ഇത് വളരെയധികം സമയമെടുക്കും</string>
     <string name="check_media_message">മീഡിയ പരിശോധിക്കുന്നു&#8230;</string>
-    <string name="check_media_acknowledge">മീഡിയ പരിശോധിച്ചു</string>
-    <string name="check_media_invalid">അസാധുവായ എൻ‌കോഡിംഗ് ഉള്ള ഫയലുകൾ‌:%d</string>
-    <string name="check_media_no_unused_missing">ഉപയോഗിക്കാത്തതോ നഷ്‌ടമായതോ ആയ ഫയലുകളൊന്നും കണ്ടെത്തിയില്ല</string>
-    <string name="check_media_delete_unused">ഉപയോഗിക്കാത്തവ ഇല്ലാതാക്കുക</string>
+    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">മീഡിയ ഇല്ലാതാക്കുന്നു&#8230;</string>
     <string name="delete_media_result_title">ഇല്ലാതാക്കൽ ഫലം</string>
     <plurals name="delete_media_result_message">

@@ -104,10 +104,8 @@
     <string name="check_media_title">மீடியாவைப் பார்க்கவா?</string>
     <string name="check_media_warning">பெரிய மீடியா வசூலில் இதற்கு நீண்ட நேரம் ஆகலாம்</string>
     <string name="check_media_message">மீடியாவைச் சரிபார்க்கிறது&#8230;</string>
-    <string name="check_media_acknowledge">மீடியா சோதனை செய்தது</string>
-    <string name="check_media_invalid">தவறான குறியாக்கம் கொண்ட கோப்புகள்: %d</string>
-    <string name="check_media_no_unused_missing">பயன்படுத்தப்படாத அல்லது விடுபட்ட கோப்புகள் எதுவும் இல்லை</string>
-    <string name="check_media_delete_unused">பயன்படுத்தப்படாததை நீக்கு</string>
+    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">மீடியாவை நீக்குகிறது&#8230;</string>
     <string name="delete_media_result_title">நீக்குதல் முடிவு</string>
     <plurals name="delete_media_result_message">

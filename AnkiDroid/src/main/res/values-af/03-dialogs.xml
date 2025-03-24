@@ -104,10 +104,8 @@
     <string name="check_media_title">Kontroleer media?</string>
     <string name="check_media_warning">Dit kan lank neem met groot mediaversamelings</string>
     <string name="check_media_message">Media word nagegaan&#8230;</string>
-    <string name="check_media_acknowledge">Media nagegaan</string>
-    <string name="check_media_invalid">Lêers met ongeldige enkodering: %d</string>
-    <string name="check_media_no_unused_missing">Geen ongebruikte of ontbrekende lêers gevind nie</string>
-    <string name="check_media_delete_unused">Verwyder ongebruikte</string>
+    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Media word uitgevee&#8230;</string>
     <string name="delete_media_result_title">Verwyderingsresultaat</string>
     <plurals name="delete_media_result_message">

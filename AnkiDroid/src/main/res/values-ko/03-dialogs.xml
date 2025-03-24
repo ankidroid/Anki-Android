@@ -102,10 +102,8 @@
     <string name="check_media_title">미디어를 점검할까요?</string>
     <string name="check_media_warning">큰 미디어 컬렉션은 시간이 오래 걸릴 수 있습니다</string>
     <string name="check_media_message">미디어 점검 중&#8230;</string>
-    <string name="check_media_acknowledge">미디어 점검됨</string>
-    <string name="check_media_invalid">올바르지 않은 인코딩을 포함한 파일: %d</string>
-    <string name="check_media_no_unused_missing">사용되지 않거나 누락된 파일이 발견되지 않았습니다.</string>
-    <string name="check_media_delete_unused">사용되지 않은 파일 삭제</string>
+    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">미디어 삭제 중&#8230;</string>
     <string name="delete_media_result_title">삭제 결과</string>
     <plurals name="delete_media_result_message">

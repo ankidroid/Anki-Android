@@ -104,11 +104,8 @@
     <string name="check_media_title">Suriin ang media?</string>
     <string name="check_media_warning">Ito ay maaaring tumagal ng mahabang oras kasama ang malalaking koleksyon ng media</string>
     <string name="check_media_message">Sinusuri ang media&#8230;</string>
-    <string name="check_media_acknowledge">Ang media ay sinuri</string>
-    <string name="check_media_invalid">60/5000
-Mga file na may di-wastong pag-encode:%d</string>
-    <string name="check_media_no_unused_missing">Walang nagamit o nawawalang file na nahanap</string>
-    <string name="check_media_delete_unused">Tanggalin ang hindi ginagamit</string>
+    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Binubura ang media&#8230;</string>
     <string name="delete_media_result_title">Resulta ng pagbura</string>
     <plurals name="delete_media_result_message">

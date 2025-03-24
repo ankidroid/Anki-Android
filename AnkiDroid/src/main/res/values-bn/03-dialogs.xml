@@ -104,10 +104,8 @@
     <string name="check_media_title">মিডিয়া চেক করবেন?</string>
     <string name="check_media_warning">বড় মিডিয়া সংগ্রহের সাথে এটি একটি দীর্ঘ সময় নিতে পারে</string>
     <string name="check_media_message">মিডিয়া পরীক্ষা করা হচ্ছে&#8230;</string>
-    <string name="check_media_acknowledge">মিডিয়া চেক করা হয়েছে</string>
-    <string name="check_media_invalid">অবৈধ এনকোডিং সহ ফাইল: %d</string>
-    <string name="check_media_no_unused_missing">কোন অব্যবহৃত বা অনুপস্থিত ফাইল খুঁজে পাওয়া যায়নি</string>
-    <string name="check_media_delete_unused">অব্যবহৃত মুছুন</string>
+    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">মিডিয়া মুছে ফেলা হচ্ছে&#8230;</string>
     <string name="delete_media_result_title">মুছে ফেলার ফলাফল</string>
     <plurals name="delete_media_result_message">
