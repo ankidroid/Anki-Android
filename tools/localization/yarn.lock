@@ -1302,6 +1302,7 @@ __metadata:
     "@types/node": "npm:^22.13.11"
     "@typescript-eslint/eslint-plugin": "npm:^8.27.0"
     "@typescript-eslint/parser": "npm:^8.27.0"
+    axios: "npm:^1.8.4"
     dotenv: "npm:^16.4.7"
     eslint: "npm:^9.22.0"
     eslint-config-prettier: "npm:^10.1.1"
@@ -1499,7 +1500,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1":
+"axios@npm:^1, axios@npm:^1.8.4":
   version: 1.8.4
   resolution: "axios@npm:1.8.4"
   dependencies:
