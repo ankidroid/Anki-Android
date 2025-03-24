@@ -8,8 +8,8 @@
         "build": "tsc",
         "start": "node ./dist/index.js",
         "dev": "tsc --watch",
-        "checkformat": "npx prettier --check .",
-        "format": "npx prettier --write .",
+        "checkformat": "npx prettier --check *js src/",
+        "format": "npx prettier --write *js src/",
         "lint": "eslint src/ --max-warnings=0",
         "test": "jest --passWithNoTests"
     },
