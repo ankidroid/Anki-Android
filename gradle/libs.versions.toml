@@ -18,7 +18,7 @@ ktlint = '1.5.0'
 #
 # Old changelogs - See 'Table of Contents' in sidebar
 # https://developer.android.com/build/releases/past-releases
-androidGradlePlugin = "8.9.0"
+androidGradlePlugin = "8.9.1"
 # https://developer.android.com/jetpack/androidx/releases/activity
 androidxActivity = "1.10.1"
 # https://developer.android.com/jetpack/androidx/releases/annotation
@@ -59,7 +59,7 @@ androidxViewpager2 = "1.1.0"
 androidxWebkit = "1.13.0"
 # https://developer.android.com/jetpack/androidx/releases/work
 androidxWork = "2.10.0"
-ankiBackend = '0.1.51-anki25.02'
+ankiBackend = '0.1.52-anki25.02'
 autoService = "1.1.1"
 autoServiceAnnotations = "1.1.1"
 colorpicker = "1.2.0"
@@ -88,7 +88,7 @@ kotlin = '2.1.20'
 kotlinxSerializationJson = "1.8.0"
 ktlintGradlePlugin = "12.2.0"
 leakcanaryAndroid = "2.14"
-lint = '31.9.0'
+lint = '31.9.1'
 material = "1.12.0"
 materialTapTargetPrompt = "3.3.2"
 mockitoInline = "5.2.0"
@@ -100,7 +100,7 @@ okhttp = "4.12.0"
 protobufKotlinLite = "4.30.1"
 # ../AnkiDroid/robolectricDownload.gradle may need changes - read instructions in that file
 robolectric = "4.14.1"
-searchpreference = "2.7.0"
+searchpreference = "2.7.2"
 seismic = "1.0.3"
 sharedPreferencesMock = "1.2.4"
 slackKeeper = "0.16.1"
