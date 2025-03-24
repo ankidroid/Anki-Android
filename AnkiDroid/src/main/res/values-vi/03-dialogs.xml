@@ -102,10 +102,8 @@
     <string name="check_media_title">Kiểm tra tệp đa phương tiện?</string>
     <string name="check_media_warning">Có thể hơi lâu với các bộ sưu tập đa phương tiện lớn</string>
     <string name="check_media_message">Đang kiểm tra tệp đa phương tiện&#8230;</string>
-    <string name="check_media_acknowledge">Đã kiểm tệp đa phương tiện</string>
-    <string name="check_media_invalid">Các tệp với mã hoá không hợp lệ: %d</string>
-    <string name="check_media_no_unused_missing">Không thấy tệp chưa dùng hoặc thất lạc nào</string>
-    <string name="check_media_delete_unused">Xoá tệp chưa dùng</string>
+    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Đang xóa phương tiện&#8230;</string>
     <string name="delete_media_result_title">Kết quả xóa</string>
     <plurals name="delete_media_result_message">

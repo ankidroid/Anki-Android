@@ -104,10 +104,8 @@
     <string name="check_media_title">మీడియా తనిఖీ చేయాలా?</string>
     <string name="check_media_warning">పెద్ద మీడియా సేకరణలతో ఇది ఎక్కువ సమయం పట్టవచ్చు</string>
     <string name="check_media_message">మీడియాను తనిఖీ చేస్తోంది&#8230;</string>
-    <string name="check_media_acknowledge">మీడియా తనిఖీ చేయబడింది</string>
-    <string name="check_media_invalid">చెల్లని ఎన్కోడింగ్ ఫైల్లు: %d</string>
-    <string name="check_media_no_unused_missing">ఉపయోగించని లేదా తప్పిపోయిన ఫైల్లు కనుగొనబడలేదు</string>
-    <string name="check_media_delete_unused">ఉపయోగించనిది తొలగించండి</string>
+    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">మీడియాను తీసివేస్తోంది&#8230;</string>
     <string name="delete_media_result_title">తొలగింపు ఫలితం</string>
     <plurals name="delete_media_result_message">

@@ -104,10 +104,8 @@
     <string name="check_media_title">¿Comprobar archivos multimedia?</string>
     <string name="check_media_warning">Esto podría tardar mucho tiempo con colecciones de grandes archivos multimedia</string>
     <string name="check_media_message">Comprobando archivos multimedia&#8230;</string>
-    <string name="check_media_acknowledge">Archivos multimedia comprobados</string>
-    <string name="check_media_invalid">Archivos con codificación inválida: %d</string>
-    <string name="check_media_no_unused_missing">No se halló archivos sin utilizar o perdidos</string>
-    <string name="check_media_delete_unused">Eliminar no utilizado</string>
+    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Eliminando multimedia&#8230;</string>
     <string name="delete_media_result_title">Resultado de la eliminación</string>
     <plurals name="delete_media_result_message">

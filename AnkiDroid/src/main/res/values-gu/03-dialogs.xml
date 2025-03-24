@@ -104,10 +104,8 @@
     <string name="check_media_title">મીડિયા તપાસીએ?</string>
     <string name="check_media_warning">મોટા મીડિયા સંગ્રહ સાથે આમાં લાંબો સમય લાગી શકે છે</string>
     <string name="check_media_message">મીડિયા તપાસી રહ્યું છે&#8230;</string>
-    <string name="check_media_acknowledge">મીડિયા તપાસ્યું</string>
-    <string name="check_media_invalid">અમાન્ય એન્કોડિંગ સાથેની ફાઇલો: %d</string>
-    <string name="check_media_no_unused_missing">કોઈ બિનઉપયોગી અથવા ગુમ થયેલ ફાઇલો મળી નથી</string>
-    <string name="check_media_delete_unused">ન વપરાયેલ કાઢી નાખો</string>
+    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">મીડિયા ડિલીટ કરી રહ્યાં છીએ&#8230;</string>
     <string name="delete_media_result_title">કાઢી નાખવાનું પરિણામ</string>
     <plurals name="delete_media_result_message">

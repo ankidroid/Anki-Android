@@ -102,10 +102,8 @@
     <string name="check_media_title">是否检查媒体？</string>
     <string name="check_media_warning">如果媒体数据较多，检查媒体文件可能会需要较长的时间</string>
     <string name="check_media_message">正在检查媒体文件&#8230;</string>
-    <string name="check_media_acknowledge">媒体文件检查完毕</string>
-    <string name="check_media_invalid">编码无效的文件：%d</string>
-    <string name="check_media_no_unused_missing">没有发现未使用或缺失的文件</string>
-    <string name="check_media_delete_unused">删除未使用的文件</string>
+    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">正在删除媒体&#8230;</string>
     <string name="delete_media_result_title">填空结果</string>
     <plurals name="delete_media_result_message">

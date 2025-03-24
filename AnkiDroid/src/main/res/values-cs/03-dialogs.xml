@@ -108,10 +108,8 @@
     <string name="check_media_title">Zkontrolovat multimédia?</string>
     <string name="check_media_warning">Toto může trvat dlouhou dobu u velké sbírky multimédií</string>
     <string name="check_media_message">Kontrolují se multimédia&#8230;</string>
-    <string name="check_media_acknowledge">Multimédia zkontrolována</string>
-    <string name="check_media_invalid">Soubory s neplatným kódováním: %d</string>
-    <string name="check_media_no_unused_missing">Nenalezeny žádné nepoužívané nebo chybějící soubory</string>
-    <string name="check_media_delete_unused">Odstranit nepoužité</string>
+    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Odstraňují se multimédia&#8230;</string>
     <string name="delete_media_result_title">Výsledek odstraňování</string>
     <plurals name="delete_media_result_message">

@@ -104,10 +104,8 @@
     <string name="check_media_title">ᱢᱮᱰᱤᱭᱟ ᱧᱮᱞ ᱵᱤᱰᱟᱣ ᱢᱮ ?</string>
     <string name="check_media_warning">ᱢᱟᱨᱟᱝ ᱢᱮᱰᱤᱭᱟ ᱴᱩᱢᱟᱹᱞ ᱫᱚ ᱡᱟᱹᱥᱛᱤ ᱥᱚᱢᱚᱭ ᱤᱫᱤᱟᱭ</string>
     <string name="check_media_message">ᱢᱮᱰᱤᱭᱟ ᱧᱮᱞ ᱵᱤᱰᱟᱣᱜ ᱠᱟᱱᱟ&#8230;</string>
-    <string name="check_media_acknowledge">ᱢᱮᱰᱤᱭᱟ ᱧᱮᱞᱮᱱᱟ</string>
-    <string name="check_media_invalid">ᱨᱚᱫ ᱨᱮ ᱵᱟᱲ ᱫᱟᱱᱟᱲ ᱪᱤᱱᱦᱟ: %d</string>
-    <string name="check_media_no_unused_missing">ᱵᱟᱝ ᱵᱮᱵᱦᱟᱨᱟᱜ ᱨᱮᱫ ᱵᱟᱭ ᱧᱟᱢᱞᱮᱱᱟ</string>
-    <string name="check_media_delete_unused">ᱵᱟᱝ ᱵᱮᱵᱷᱟᱨ ᱚᱠ ᱜᱮᱫ ᱜᱤᱰᱤ ᱢᱮ</string>
+    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">ᱢᱤᱰᱤᱭᱟ ᱜᱮᱫ ᱜᱤᱰᱤᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="delete_media_result_title">ᱜᱮᱫ ᱜᱤᱰᱤ‌ ᱛᱮᱞᱟ</string>
     <plurals name="delete_media_result_message">
