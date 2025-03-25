@@ -39,6 +39,7 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.parcelize.Parcelize
+import org.intellij.lang.annotations.Language
 import org.jetbrains.annotations.VisibleForTesting
 
 class TemplatePreviewerViewModel(
@@ -62,6 +63,11 @@ class TemplatePreviewerViewModel(
     private val clozeOrds: Deferred<List<Int>>?
     override var currentCard: Deferred<Card>
     override val server = AnkiServer(this).also { it.start() }
+
+    /**
+     * Ordered list of cards with empty fronts
+     */
+    internal val cardsWithEmptyFronts: Deferred<List<Boolean>>?
 
     init {
         note =
@@ -105,9 +111,28 @@ class TemplatePreviewerViewModel(
                     val tr = CollectionManager.TR
                     clozeNumbers.await().map { tr.cardTemplatesCard(it) }
                 }
+            cardsWithEmptyFronts = null
         } else {
             clozeOrds = null
             templateNames = CompletableDeferred(notetype.templatesNames)
+            cardsWithEmptyFronts =
+                asyncIO {
+                    val note = note.await()
+                    List(templateNames.await().size) { ord ->
+                        val questionText =
+                            withCol {
+                                note
+                                    .ephemeralCard(
+                                        col = this,
+                                        ord = ord,
+                                        customNoteType = notetype,
+                                        fillEmpty = fillEmpty,
+                                        deckId = arguments.deckId,
+                                    ).renderOutput(this)
+                            }.questionText
+                        EMPTY_FRONT_LINK in questionText
+                    }
+                }
         }
     }
 
@@ -205,6 +230,9 @@ class TemplatePreviewerViewModel(
         }
 
     companion object {
+        @Language("HTML")
+        private const val EMPTY_FRONT_LINK = """<a href='https://docs.ankiweb.net/templates/errors.html#front-of-card-is-blank'>"""
+
         fun factory(
             arguments: TemplatePreviewerArguments,
             cardMediaPlayer: CardMediaPlayer,
