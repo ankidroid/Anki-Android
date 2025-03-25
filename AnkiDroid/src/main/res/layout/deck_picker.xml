@@ -53,6 +53,11 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="4dp"
+                        android:autoSizeMaxTextSize="24sp"
+                        android:autoSizeMinTextSize="8sp"
+                        android:autoSizeStepGranularity="1sp"
+                        android:maxLines="1"
+                        android:autoSizeTextType="uniform"
                         android:gravity="center"/>
 
                 </RelativeLayout>
