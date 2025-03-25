@@ -57,8 +57,6 @@ object ClipboardUtil {
 
     fun getUri(clipboard: ClipboardManager?): Uri? = clipboard?.getFirstItem()?.uri
 
-    fun hasSVG(description: ClipDescription): Boolean = description.hasMimeType("image/svg+xml")
-
     fun hasMedia(clipboard: ClipboardManager?): Boolean =
         clipboard
             ?.primaryClip
@@ -78,9 +76,6 @@ object ClipboardUtil {
         }
 
     fun getDescription(clipboard: ClipboardManager?): ClipDescription? = clipboard?.primaryClip?.description
-
-    @CheckResult
-    fun getText(clipboard: ClipboardManager?): CharSequence? = clipboard?.getFirstItem()?.text
 
     @CheckResult
     fun getPlainText(
