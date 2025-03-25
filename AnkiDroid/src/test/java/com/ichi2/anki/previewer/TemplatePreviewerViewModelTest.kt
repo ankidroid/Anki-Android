@@ -57,6 +57,21 @@ class TemplatePreviewerViewModelTest : JvmTest() {
         }
     }
 
+    @Test
+    fun `empty front field detected correctly for tab badge`() =
+        runOptionalReversedTest(
+            fields =
+                mutableListOf(
+                    "we have two normal fields",
+                    "and purposefully leave the third blank",
+                    "",
+                ),
+        ) {
+            onPageFinished(false)
+            assertThat(this.cardsWithEmptyFronts!!.await()[0], equalTo(false))
+            assertThat(this.cardsWithEmptyFronts!!.await()[1], equalTo(true))
+        }
+
     private fun runClozeTest(
         ord: Int = 0,
         fields: MutableList<String>? = null,
@@ -67,6 +82,23 @@ class TemplatePreviewerViewModelTest : JvmTest() {
             TemplatePreviewerArguments(
                 notetypeFile = NotetypeFile(tempDirectory.root, notetype),
                 fields = fields ?: mutableListOf("{{c1::foo}} {{c2::bar}}", "anki"),
+                tags = mutableListOf(),
+                ord = ord,
+            )
+        val viewModel = TemplatePreviewerViewModel(arguments, mock())
+        block(viewModel)
+    }
+
+    private fun runOptionalReversedTest(
+        ord: Int = 0,
+        fields: MutableList<String>? = null,
+        block: suspend TemplatePreviewerViewModel.() -> Unit,
+    ) = runTest {
+        val notetype = col.notetypes.byName("Basic (optional reversed card)")!!
+        val arguments =
+            TemplatePreviewerArguments(
+                notetypeFile = NotetypeFile(tempDirectory.root, notetype),
+                fields = fields ?: mutableListOf("question text", "answer text", "y"),
                 tags = mutableListOf(),
                 ord = ord,
             )
