@@ -24,7 +24,10 @@ import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.libanki.BrowserConfig
+import com.ichi2.libanki.BrowserConfig.ACTIVE_CARD_COLUMNS_KEY
+import com.ichi2.libanki.BrowserConfig.ACTIVE_NOTE_COLUMNS_KEY
 import com.ichi2.libanki.BrowserDefaults
+import net.ankiweb.rsdroid.Backend
 import timber.log.Timber
 
 /**
