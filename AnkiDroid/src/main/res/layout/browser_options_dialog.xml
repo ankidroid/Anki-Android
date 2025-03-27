@@ -16,6 +16,41 @@
         android:layout_margin="8dp">
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:text="@string/toggle_tap_action"
+                android:textStyle="bold" />
+
+
+            <RadioGroup
+                android:id="@+id/select_tap_mode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="16dp">
+
+                <RadioButton
+                    android:id="@+id/tap_to_preview_mode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tap_to_preview" />
+
+                <RadioButton
+                    android:id="@+id/tap_to_edit_mode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tap_to_edit" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="8dp">
+
+            <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/toggle_cards_notes"

@@ -266,3 +266,13 @@ data class TemplatePreviewerArguments(
 ) : Parcelable {
     val notetype: NotetypeJson get() = notetypeFile.getNotetype()
 }
+
+data class TemplatePreviewerUiArguments(
+    val notetype: NotetypeJson,
+    val fields: MutableList<String>,
+    val tags: MutableList<String>,
+    val id: NoteId = 0,
+    val ord: Int = 0,
+    val fillEmpty: Boolean = false,
+    val deckId: DeckId = DEFAULT_DECK_ID,
+)
