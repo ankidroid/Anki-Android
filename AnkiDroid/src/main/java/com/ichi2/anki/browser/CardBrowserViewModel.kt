@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.browser
 
+import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.annotation.CheckResult
@@ -36,6 +37,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.Flag
+import com.ichi2.anki.NotetypeFile
 import com.ichi2.anki.PreviewerDestination
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ALL_FIELDS_AS_FIELD
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.TAGS_AS_FIELD
@@ -49,6 +51,9 @@ import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
+import com.ichi2.anki.preferences.booleanPref
+import com.ichi2.anki.previewer.TemplatePreviewerArguments
+import com.ichi2.anki.previewer.TemplatePreviewerPage
 import com.ichi2.anki.utils.ext.normalizeForSearch
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import com.ichi2.annotations.NeedsTest
@@ -57,6 +62,7 @@ import com.ichi2.libanki.CardId
 import com.ichi2.libanki.CardType
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.Note
 import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.QueueType.ManuallyBuried
 import com.ichi2.libanki.QueueType.SiblingBuried
@@ -185,6 +191,8 @@ class CardBrowserViewModel(
     val flowOfIsTruncated: MutableStateFlow<Boolean> =
         MutableStateFlow(sharedPrefs().getBoolean("isTruncated", false))
     val isTruncated get() = flowOfIsTruncated.value
+
+    var tapCardToEdit by booleanPref("tapCardToEdit", true)
 
     var shouldIgnoreAccents: Boolean = false
 
@@ -482,6 +490,38 @@ class CardBrowserViewModel(
         sharedPrefs().edit {
             putBoolean("isTruncated", value)
         }
+    }
+
+    suspend fun openPreviewForNote(
+        cardId: CardId,
+        context: Context,
+    ) {
+        val noteId = withCol { notesOfCards(mutableListOf(cardId)).first() }
+        val note = withCol { getNote(noteId) }
+        val ord =
+            if (note.notetype.isCloze) {
+                val tempNote = withCol { Note.fromNotetypeId(this@withCol, note.notetype.id) }
+                tempNote.fields = note.fields // makes possible to get the cloze numbers from the fields
+                val clozeNumbers = withCol { clozeNumbersInNote(tempNote) }
+                if (clozeNumbers.isNotEmpty()) {
+                    clozeNumbers.first() - 1
+                } else {
+                    0
+                }
+            } else {
+                0
+            }
+        val args =
+            TemplatePreviewerArguments(
+                notetypeFile = NotetypeFile(context, withCol { note.notetype }),
+                fields = note.fields,
+                tags = note.tags,
+                id = noteId,
+                ord = ord,
+                fillEmpty = false,
+            )
+        val intent = TemplatePreviewerPage.getIntent(context, args)
+        context.startActivity(intent)
     }
 
     fun setIgnoreAccents(value: Boolean) {
