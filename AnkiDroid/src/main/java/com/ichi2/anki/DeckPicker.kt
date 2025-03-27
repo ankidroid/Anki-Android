@@ -274,8 +274,6 @@ open class DeckPicker :
 
     private lateinit var floatingActionMenu: DeckPickerFloatingActionMenu
 
-    private lateinit var currentAnkiDroidDirectory: String
-
     // flag asking user to do a full sync which is used in upgrade path
     private var recommendOneWaySync = false
 
@@ -902,7 +900,7 @@ open class DeckPicker :
             backgroundView.setBackgroundResource(0)
             return false
         }
-        currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this)
+        val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this)
         val imgFile = File(currentAnkiDroidDirectory, "DeckPickerBackground.png")
         if (!imgFile.exists()) {
             Timber.d("No DeckPicker background image")
@@ -2250,21 +2248,6 @@ open class DeckPicker :
         }
     }
 
-    /**
-     * Updates the background visibility based on the collection state
-     * Hides the background when collection is empty for better text readability
-     */
-    private fun updateBackgroundVisibility(collectionIsEmpty: Boolean) {
-        val backgroundView = findViewById<ImageView>(R.id.background)
-        if (collectionIsEmpty) {
-            Timber.d("Collection is empty, hiding background image")
-            backgroundView.visibility = View.GONE
-        } else {
-            Timber.d("Collection has cards, showing background image if available")
-            backgroundView.visibility = View.VISIBLE
-        }
-    }
-
     private suspend fun renderPage(collectionIsEmpty: Boolean) {
         val tree = dueTree
         if (tree == null) {
@@ -2274,11 +2257,11 @@ open class DeckPicker :
             updateDeckList()
             return
         }
-
-        // Update background visibility based on collection state
-        updateBackgroundVisibility(collectionIsEmpty)
         // Check if default deck is the only available and there are no cards
         val isEmpty = tree.children.size == 1 && tree.children[0].did == 1L && collectionIsEmpty
+        // Update background visibility based on collection state
+        val backgroundView = findViewById<ImageView>(R.id.background)
+        backgroundView.visibility = if (isEmpty) View.GONE else View.VISIBLE
         if (animationDisabled()) {
             deckPickerContent.visibility = if (isEmpty) View.GONE else View.VISIBLE
             noDecksPlaceholder.visibility = if (isEmpty) View.VISIBLE else View.GONE
