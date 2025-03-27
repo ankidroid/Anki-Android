@@ -17,9 +17,33 @@
 package com.ichi2.anki.preferences
 
 import android.content.SharedPreferences
+import androidx.annotation.VisibleForTesting
+import androidx.core.content.edit
+import kotlin.properties.ReadWriteProperty
+import kotlin.reflect.KProperty
 
 /** Provides a reference to [SharedPreferences] without a required Android dependency */
 // SharedPreferences is an interface, so this remains Android-free
 fun interface SharedPreferencesProvider {
     fun sharedPrefs(): SharedPreferences
 }
+
+@VisibleForTesting
+fun SharedPreferencesProvider.booleanPref(
+    key: String,
+    defaultValue: Boolean,
+): ReadWriteProperty<Any?, Boolean> =
+    object : ReadWriteProperty<Any?, Boolean> {
+        override fun getValue(
+            thisRef: Any?,
+            property: KProperty<*>,
+        ): Boolean = sharedPrefs().getBoolean(key, defaultValue)
+
+        override fun setValue(
+            thisRef: Any?,
+            property: KProperty<*>,
+            value: Boolean,
+        ) {
+            sharedPrefs().edit { putBoolean(key, value) }
+        }
+    }
