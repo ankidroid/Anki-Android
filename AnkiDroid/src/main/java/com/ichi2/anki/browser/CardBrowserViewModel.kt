@@ -186,6 +186,10 @@ class CardBrowserViewModel(
         MutableStateFlow(sharedPrefs().getBoolean("isTruncated", false))
     val isTruncated get() = flowOfIsTruncated.value
 
+    val flowOfTapCardToEdit: MutableStateFlow<Boolean> =
+        MutableStateFlow(sharedPrefs().getBoolean("tapCardToEdit", true))
+    val tapCardToEdit get() = flowOfTapCardToEdit.value
+
     var shouldIgnoreAccents: Boolean = false
 
     var defaultBrowserSearch: String? = null
@@ -481,6 +485,15 @@ class CardBrowserViewModel(
         }
         sharedPrefs().edit {
             putBoolean("isTruncated", value)
+        }
+    }
+
+    fun setTapCardToEdit(value: Boolean) {
+        viewModelScope.launch {
+            flowOfTapCardToEdit.emit(value)
+        }
+        sharedPrefs().edit {
+            putBoolean("tapCardToEdit", value)
         }
     }
 

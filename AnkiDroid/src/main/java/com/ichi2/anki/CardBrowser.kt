@@ -103,6 +103,8 @@ import com.ichi2.anki.model.SortType
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.PreviewerFragment
+import com.ichi2.anki.previewer.TemplatePreviewerArguments
+import com.ichi2.anki.previewer.TemplatePreviewerPage
 import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.scheduling.registerOnForgetHandler
@@ -118,6 +120,7 @@ import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.DeckNameId
+import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.SortOrder
 import com.ichi2.libanki.undoableOp
@@ -353,7 +356,11 @@ open class CardBrowser :
                 viewModel.oldCardTopOffset = calculateTopOffset(viewModel.lastSelectedPosition)
             } else {
                 val cardId = viewModel.queryDataForCardEdit(id)
-                openNoteEditorForCard(cardId)
+                if (viewModel.tapCardToEdit) {
+                    openNoteEditorForCard(cardId)
+                } else {
+                    openPreviewForNote(cardId)
+                }
             }
         }
 
@@ -846,6 +853,35 @@ open class CardBrowser :
         onEditCardActivityResult.launch(intent)
         // #6432 - FIXME - onCreateOptionsMenu crashes if receiving an activity result from edit card when in multiselect
         viewModel.endMultiSelectMode()
+    }
+
+    private suspend fun openPreviewForNote(cardId: CardId) {
+        val noteId = withCol { notesOfCards(mutableListOf(cardId)).first() }
+        val note = withCol { getNote(noteId) }
+        val ord =
+            if (note.notetype.isCloze) {
+                val tempNote = withCol { Note.fromNotetypeId(this@withCol, note.notetype.id) }
+                tempNote.fields = note.fields // makes possible to get the cloze numbers from the fields
+                val clozeNumbers = withCol { clozeNumbersInNote(tempNote) }
+                if (clozeNumbers.isNotEmpty()) {
+                    clozeNumbers.first() - 1
+                } else {
+                    0
+                }
+            } else {
+                0
+            }
+        val args =
+            TemplatePreviewerArguments(
+                notetypeFile = NotetypeFile(this@CardBrowser, withCol { note.notetype }),
+                fields = note.fields,
+                tags = note.tags,
+                id = noteId,
+                ord = ord,
+                fillEmpty = false,
+            )
+        val intent = TemplatePreviewerPage.getIntent(this@CardBrowser, args)
+        startActivity(intent)
     }
 
     /**
@@ -1598,7 +1634,12 @@ open class CardBrowser :
     }
 
     private fun showOptionsDialog() {
-        val dialog = BrowserOptionsDialog.newInstance(viewModel.cardsOrNotes, viewModel.isTruncated)
+        val dialog =
+            BrowserOptionsDialog.newInstance(
+                viewModel.cardsOrNotes,
+                viewModel.isTruncated,
+                viewModel.tapCardToEdit,
+            )
         dialog.show(supportFragmentManager, "browserOptionsDialog")
     }
 
