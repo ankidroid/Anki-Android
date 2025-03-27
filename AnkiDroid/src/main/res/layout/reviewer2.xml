@@ -211,7 +211,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:barrierDirection="top"
-            app:barrierAllowsGoneWidgets="false"
             app:constraint_referenced_ids="type_answer_container, answer_buttons, show_answer"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
