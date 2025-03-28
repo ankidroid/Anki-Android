@@ -38,13 +38,12 @@ import kotlin.reflect.KClass
 /**
  * Base class for displaying Anki HTML pages
  */
-@Suppress("LeakingThis")
 open class PageFragment(
     @LayoutRes contentLayoutId: Int = R.layout.page_fragment,
 ) : Fragment(contentLayoutId),
     PostRequestHandler {
     lateinit var webView: WebView
-    private val server = AnkiServer(this).also { it.start() }
+    private var server: AnkiServer? = null
 
     /**
      * A loading indicator for the page. May be shown before the WebView is loaded to
@@ -102,6 +101,10 @@ open class PageFragment(
         view: View,
         savedInstanceState: Bundle?,
     ) {
+        if (server == null) {
+            server = AnkiServer(this)
+            server?.start()
+        }
         val pageWebViewClient = onCreateWebViewClient(savedInstanceState)
         webView =
             view.findViewById<WebView>(R.id.webview).apply {
@@ -122,7 +125,7 @@ open class PageFragment(
         val title = arguments.getString(TITLE_ARG_KEY)
 
         val nightMode = if (Themes.currentTheme.isNightMode) "#night" else ""
-        val url = "${server.baseUrl()}$path$nightMode".toUri()
+        val url = "${server!!.baseUrl()}$path$nightMode".toUri()
         Timber.i("Loading $url")
         webView.loadUrl(url.toString())
 
@@ -149,6 +152,12 @@ open class PageFragment(
         return activity.handleUiPostRequest(methodName, bytes)
             ?: handleCollectionPostRequest(methodName, bytes)
             ?: throw IllegalArgumentException("unhandled method: $methodName")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        server?.shutdown()
+        server = null
     }
 
     companion object {

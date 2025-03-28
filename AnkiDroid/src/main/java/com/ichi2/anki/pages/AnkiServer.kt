@@ -23,7 +23,7 @@ import timber.log.Timber
 import java.io.ByteArrayInputStream
 
 open class AnkiServer(
-    private val postHandler: PostRequestHandler,
+    private var postHandler: PostRequestHandler? = null,
 ) : NanoHTTPD(LOCALHOST, 0) {
     fun baseUrl(): String = "http://$LOCALHOST:$listeningPort/"
 
@@ -39,7 +39,7 @@ open class AnkiServer(
                 val inputBytes = getSessionBytes(session)
 
                 try {
-                    val data = runBlocking { postHandler.handlePostRequest(uri, inputBytes) }
+                    val data = runBlocking { postHandler!!.handlePostRequest(uri, inputBytes) }
                     buildResponse(data)
                 } catch (exception: Exception) {
                     Timber.w(exception, "buildResponse failure")
@@ -66,6 +66,11 @@ open class AnkiServer(
         } else {
             newChunkedResponse(status, mimeType, ByteArrayInputStream(data))
         }
+
+    fun shutdown() {
+        postHandler = null
+        stop()
+    }
 
     companion object {
         const val LOCALHOST = "127.0.0.1"
