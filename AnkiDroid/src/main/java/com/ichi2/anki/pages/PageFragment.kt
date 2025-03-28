@@ -38,13 +38,12 @@ import kotlin.reflect.KClass
 /**
  * Base class for displaying Anki HTML pages
  */
-@Suppress("LeakingThis")
 open class PageFragment(
     @LayoutRes contentLayoutId: Int = R.layout.page_fragment,
 ) : Fragment(contentLayoutId),
     PostRequestHandler {
     lateinit var webView: WebView
-    private val server = AnkiServer(this).also { it.start() }
+    private lateinit var server: AnkiServer
 
     /**
      * A loading indicator for the page. May be shown before the WebView is loaded to
@@ -103,6 +102,7 @@ open class PageFragment(
         savedInstanceState: Bundle?,
     ) {
         val pageWebViewClient = onCreateWebViewClient(savedInstanceState)
+        server = AnkiServer(this).also { it.start() }
         webView =
             view.findViewById<WebView>(R.id.webview).apply {
                 with(settings) {
@@ -149,6 +149,11 @@ open class PageFragment(
         return activity.handleUiPostRequest(methodName, bytes)
             ?: handleCollectionPostRequest(methodName, bytes)
             ?: throw IllegalArgumentException("unhandled method: $methodName")
+    }
+
+    override fun onDestroyView() {
+        server.stop()
+        super.onDestroyView()
     }
 
     companion object {
