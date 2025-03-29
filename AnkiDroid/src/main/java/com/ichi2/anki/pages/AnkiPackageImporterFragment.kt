@@ -18,23 +18,31 @@ import android.content.Intent
 import android.os.Bundle
 import android.webkit.WebView
 import androidx.activity.OnBackPressedCallback
+import androidx.core.util.remove
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
 import com.ichi2.anki.hideShowButtonCss
 
 class AnkiPackageImporterFragment : PageFragment() {
+    private lateinit var backCallback: OnBackPressedCallback
+
     override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
         // the back callback is only enabled when import is running and showing progress
-        val backCallback =
+        backCallback =
             object : OnBackPressedCallback(false) {
                 override fun handleOnBackPressed() {
                     CollectionManager.getBackend().setWantsAbort()
                     // once triggered the callback is not needed as the import process can't be resumed
-                    remove()
+                    isEnabled = false
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(this, backCallback)
         return AnkiPackageImporterWebViewClient(backCallback)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        backCallback.remove()
     }
 
     class AnkiPackageImporterWebViewClient(
