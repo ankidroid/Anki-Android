@@ -2244,8 +2244,8 @@ open class DeckPicker :
                 layoutParams.setMargins(0, 0, 0, reviewSummaryTextView.height / 2)
                 fabLinearLayout.layoutParams = layoutParams
             }
+            Timber.d("Startup - Deck List UI Completed")
         }
-        Timber.d("Startup - Deck List UI Completed")
     }
 
     private suspend fun renderPage(collectionIsEmpty: Boolean) {
@@ -2257,9 +2257,11 @@ open class DeckPicker :
             updateDeckList()
             return
         }
-
         // Check if default deck is the only available and there are no cards
         val isEmpty = tree.children.size == 1 && tree.children[0].did == 1L && collectionIsEmpty
+        // Update background visibility based on collection state
+        val backgroundView = findViewById<ImageView>(R.id.background)
+        backgroundView.visibility = if (isEmpty) View.GONE else View.VISIBLE
         if (animationDisabled()) {
             deckPickerContent.visibility = if (isEmpty) View.GONE else View.VISIBLE
             noDecksPlaceholder.visibility = if (isEmpty) View.VISIBLE else View.GONE
