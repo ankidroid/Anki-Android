@@ -80,7 +80,7 @@ class TemplatePreviewerViewModelTest : JvmTest() {
         val notetype = col.notetypes.byName("Cloze")!!
         val arguments =
             TemplatePreviewerArguments(
-                notetypeFile = NotetypeFile(tempDirectory.root, notetype),
+                noteTypeFile = NotetypeFile(tempDirectory.root, notetype),
                 fields = fields ?: mutableListOf("{{c1::foo}} {{c2::bar}}", "anki"),
                 tags = mutableListOf(),
                 ord = ord,
