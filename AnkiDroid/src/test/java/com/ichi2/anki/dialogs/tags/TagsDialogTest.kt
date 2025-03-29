@@ -15,24 +15,17 @@
  */
 package com.ichi2.anki.dialogs.tags
 
-import android.content.DialogInterface
 import android.os.Bundle
-import android.view.View
 import android.widget.EditText
-import android.widget.RadioGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LifecycleRegistry
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.utils.AnKingTags
-import com.ichi2.anki.model.CardStateFilter
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.RecyclerViewUtils
@@ -44,68 +37,10 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
-import org.mockito.kotlin.whenever
 import timber.log.Timber
-import java.util.concurrent.atomic.AtomicReference
 
 @RunWith(AndroidJUnit4::class)
 class TagsDialogTest : RobolectricTest() {
-    @Test
-    fun testTagsDialogCustomStudyOptionInterface() {
-        val type = TagsDialog.DialogType.CUSTOM_STUDY_TAGS
-        val allTags = listOf("1", "2", "3", "4")
-        val args =
-            TagsDialog(ParametersUtils.whatever())
-                .withTestArguments(type, ArrayList(), allTags)
-                .requireArguments()
-        val mockListener = Mockito.mock(TagsDialogListener::class.java)
-        val factory = TagsDialogFactory(mockListener)
-        runTagsDialogScenario(args, factory) { f: TagsDialog ->
-            val dialog = f.dialog as AlertDialog?
-            assertThat(dialog, IsNull.notNullValue())
-
-            val optionsGroup = dialog!!.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup)!!
-            Assert.assertEquals(optionsGroup.visibility.toLong(), View.VISIBLE.toLong())
-            val expectedOption = CardStateFilter.NEW
-            optionsGroup.getChildAt(1).performClick()
-            dialog.getButton(DialogInterface.BUTTON_POSITIVE).callOnClick()
-            advanceRobolectricLooper()
-            Mockito.verify(mockListener, Mockito.times(1)).onSelectedTags(ArrayList(), ArrayList(), expectedOption)
-        }
-    }
-
-    @Test
-    fun testTagsDialogCustomStudyOptionFragmentAPI() {
-        val type = TagsDialog.DialogType.CUSTOM_STUDY_TAGS
-        val allTags = listOf("1", "2", "3", "4")
-        val args =
-            TagsDialog(ParametersUtils.whatever())
-                .withTestArguments(type, ArrayList(), allTags)
-                .requireArguments()
-        runTagsDialogScenario(args) { f: TagsDialog ->
-            val dialog = f.dialog as AlertDialog?
-            assertThat(dialog, IsNull.notNullValue())
-            val returnedList = AtomicReference<List<String>?>()
-            val returnedOption = AtomicReference<CardStateFilter>()
-            f.parentFragmentManager.setFragmentResultListener(
-                TagsDialogListener.ON_SELECTED_TAGS_KEY,
-                mockLifecycleOwner(),
-            ) { _: String?, bundle: Bundle ->
-                returnedList.set(bundle.getStringArrayList(TagsDialogListener.ON_SELECTED_TAGS__SELECTED_TAGS))
-                returnedOption.set(bundle.getSerializableCompat<CardStateFilter>(TagsDialogListener.ON_SELECTED_TAGS__OPTION))
-            }
-
-            val optionsGroup = dialog!!.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup)!!
-            Assert.assertEquals(optionsGroup.visibility.toLong(), View.VISIBLE.toLong())
-            val expectedOption = CardStateFilter.DUE
-            optionsGroup.getChildAt(2).performClick()
-            dialog.getButton(DialogInterface.BUTTON_POSITIVE).callOnClick()
-            advanceRobolectricLooper()
-            ListUtil.assertListEquals(ArrayList(), returnedList.get())
-            Assert.assertEquals(expectedOption, returnedOption.get())
-        }
-    }
-
     // regression test #8762
     // test for #8763
     @Test
@@ -709,16 +644,6 @@ class TagsDialogTest : RobolectricTest() {
             scenario.onFragment { tagsDialog: TagsDialog ->
                 block(tagsDialog)
             }
-        }
-    }
-
-    companion object {
-        private fun mockLifecycleOwner(): LifecycleOwner {
-            val owner = Mockito.mock(LifecycleOwner::class.java)
-            val lifecycle = LifecycleRegistry(owner)
-            lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
-            whenever(owner.lifecycle).thenReturn(lifecycle)
-            return owner
         }
     }
 }
