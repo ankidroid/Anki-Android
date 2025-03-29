@@ -66,7 +66,7 @@ class BrowserColumnCollection(
                     val value = mode.defaultColumns()
                     value.split(SEPARATOR_CHAR).map { CardBrowserColumn.fromColumnKey(it) }
                 }
-            return BrowserColumnCollection(columns)
+            return BrowserColumnCollection(columns.distinct())
         }
 
         class ColumnReplacement(
