@@ -352,6 +352,8 @@ open class CardBrowser :
                 viewModel.saveScrollingState(id)
                 viewModel.oldCardTopOffset = calculateTopOffset(viewModel.lastSelectedPosition)
             } else {
+                viewModel.lastSelectedPosition = (cardsListView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                viewModel.oldCardTopOffset = calculateTopOffset(viewModel.lastSelectedPosition)
                 val cardId = viewModel.queryDataForCardEdit(id)
                 openNoteEditorForCard(cardId)
             }
@@ -895,6 +897,7 @@ open class CardBrowser :
     override fun onResume() {
         super.onResume()
         selectNavigationItem(R.id.nav_browser)
+        autoScrollTo(viewModel.lastSelectedPosition, viewModel.oldCardTopOffset)
     }
 
     @KotlinCleanup("Add a few variables to get rid of the !!")
