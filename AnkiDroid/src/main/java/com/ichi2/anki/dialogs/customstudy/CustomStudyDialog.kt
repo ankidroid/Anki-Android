@@ -62,9 +62,9 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Consts
-import com.ichi2.libanki.Consts.DynPriority
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.FilteredDeck
 import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.BundleUtils.getNullableInt
 import com.ichi2.utils.KotlinCleanup
@@ -79,7 +79,6 @@ import com.ichi2.utils.textAsIntOrNull
 import com.ichi2.utils.title
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
-import org.json.JSONObject
 import timber.log.Timber
 
 /**
@@ -432,43 +431,43 @@ class CustomStudyDialog :
      * @param terms search terms
      */
     private suspend fun createTagsCustomStudySession(terms: Array<Any>) {
-        val dyn: Deck
+        val dyn: FilteredDeck
 
         val deckToStudyName = withCol { decks.name(dialogDeckId) }
         val customStudyDeck = resources.getString(R.string.custom_study_deck_name)
-        val cur = withCol { decks.byName(customStudyDeck) }
+        val cur = withCol { decks.byName(customStudyDeck) as? FilteredDeck }
         if (cur != null) {
             Timber.i("Found deck: '%s'", customStudyDeck)
-            if (cur.isNormal) {
+            if (cur.isRegular) {
                 Timber.w("Deck: '%s' was non-dynamic", customStudyDeck)
                 showThemedToast(requireContext(), getString(R.string.custom_study_deck_exists), true)
                 return
             } else {
                 Timber.i("Emptying dynamic deck '%s' for custom study", customStudyDeck)
                 // safe to empty
-                withCol { sched.emptyDyn(cur.getLong("id")) }
+                withCol { sched.emptyDyn(cur.id) }
                 // reuse; don't delete as it may have children
                 dyn = cur
-                withCol { decks.select(cur.getLong("id")) }
+                withCol { decks.select(cur.id) }
             }
         } else {
             Timber.i("Creating Dynamic Deck '%s' for custom study", customStudyDeck)
             dyn =
                 try {
-                    withCol { decks.get(decks.newFiltered(customStudyDeck))!! }
+                    withCol { decks.get(decks.newFiltered(customStudyDeck))!! as FilteredDeck }
                 } catch (ex: BackendDeckIsFilteredException) {
                     showThemedToast(requireActivity(), ex.localizedMessage ?: ex.message ?: "", true)
                     return
                 }
         }
         // and then set various options
-        dyn.put("delays", JSONObject.NULL)
-        val ar = dyn.getJSONArray("terms")
-        ar.getJSONArray(0).put(0, """deck:"$deckToStudyName" ${terms[0]}""")
-        ar.getJSONArray(0).put(1, terms[1])
-        @DynPriority val priority = terms[2] as Int
-        ar.getJSONArray(0).put(2, priority)
-        dyn.put("resched", true)
+        dyn.delays = null
+        dyn.firstFilter.apply {
+            search = """deck:"$deckToStudyName" ${terms[0]}"""
+            limit = terms[1] as Int
+            order = terms[2] as Int
+        }
+        dyn.resched = true
         // Rebuild the filtered deck
         Timber.i("Rebuilding Custom Study Deck")
         // PERF: Should be in background
