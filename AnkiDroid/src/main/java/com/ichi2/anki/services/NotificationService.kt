@@ -20,6 +20,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
 import com.ichi2.anki.Channel
@@ -33,7 +34,8 @@ import timber.log.Timber
 class NotificationService : BroadcastReceiver() {
     companion object {
         /** The id of the notification for due cards.  */
-        private const val WIDGET_NOTIFY_ID = 1
+        @VisibleForTesting
+        const val WIDGET_NOTIFY_ID = 1
 
         fun triggerNotificationFor(context: Context) {
             Timber.i("NotificationService: OnStartCommand")
