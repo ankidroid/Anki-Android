@@ -2676,51 +2676,36 @@ class NoteEditor :
         oldNotetype: NotetypeJson,
         newNotetype: NotetypeJson,
     ): Map<Int, Int> {
-        // Get field maps for both old and new note types
         val oldFieldMap = Notetypes.fieldMap(oldNotetype)
         val newFieldMap = Notetypes.fieldMap(newNotetype)
 
-        // Create a result map that will hold the mapping from old field indices to new field indices
         val resultMap: MutableMap<Int, Int> = HashUtil.hashMapInit(oldFieldMap.size)
 
-        // Create a set to track which new fields have already been mapped to
         val mappedNewFieldIndices = mutableSetOf<Int>()
 
-        // First, map fields with the same name
         for ((oldFieldName, oldFieldData) in oldFieldMap) {
             val oldFieldIndex = oldFieldData.first
 
             // Find the corresponding field in the new note type (if any)
-            val newFieldData = newFieldMap[oldFieldName]
-            if (newFieldData != null) {
+            newFieldMap[oldFieldName]?.let { newFieldData ->
                 val newFieldIndex = newFieldData.first
                 resultMap[oldFieldIndex] = newFieldIndex
                 mappedNewFieldIndices.add(newFieldIndex)
             }
         }
 
-        // For any old fields not mapped yet, try to map them to unused new fields with the same index (if possible)
+        // For any old fields not mapped yet, trying to map them to unused new fields with the same index (if possible)
         for (oldIndex in 0 until oldFieldMap.size) {
             if (!resultMap.containsKey(oldIndex)) {
-                // Try to use the same index if it's available
-                if (oldIndex < newFieldMap.size && !mappedNewFieldIndices.contains(oldIndex)) {
-                    resultMap[oldIndex] = oldIndex
-                    mappedNewFieldIndices.add(oldIndex)
-                } else {
-                    // Find any available index in the new note type
-                    for (newIndex in 0 until newFieldMap.size) {
-                        if (!mappedNewFieldIndices.contains(newIndex)) {
-                            resultMap[oldIndex] = newIndex
-                            mappedNewFieldIndices.add(newIndex)
-                            break
-                        }
+                val newIndex =
+                    when {
+                        oldIndex < newFieldMap.size && !mappedNewFieldIndices.contains(oldIndex) -> oldIndex
+
+                        else -> (0 until newFieldMap.size).firstOrNull { it !in mappedNewFieldIndices } ?: 0
                     }
 
-                    // If we couldn't find any available field, map to the first field (some content is better than none)
-                    if (!resultMap.containsKey(oldIndex) && newFieldMap.isNotEmpty()) {
-                        resultMap[oldIndex] = 0
-                    }
-                }
+                resultMap[oldIndex] = newIndex
+                mappedNewFieldIndices.add(newIndex)
             }
         }
 
