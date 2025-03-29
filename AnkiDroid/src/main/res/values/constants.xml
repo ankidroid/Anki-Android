@@ -334,4 +334,10 @@
         <item>android.permission.WRITE_EXTERNAL_STORAGE</item>
     </string-array>
 
+    <string-array name="mathjax_equations">
+        <item>MathJax inline</item>
+        <item>MathJax block</item>
+        <item>MathJax chemistry</item>
+    </string-array>
+
 </resources>
