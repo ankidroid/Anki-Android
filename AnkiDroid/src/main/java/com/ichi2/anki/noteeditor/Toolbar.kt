@@ -48,6 +48,7 @@ import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.convertDpToPixel
@@ -124,6 +125,10 @@ class Toolbar : FrameLayout {
         setupButtonWrappingText(R.id.note_editor_toolbar_button_horizontal_rule, "<hr>", "")
         findViewById<View>(R.id.note_editor_toolbar_button_font_size).setOnClickListener { displayFontSizeDialog() }
         findViewById<View>(R.id.note_editor_toolbar_button_title).setOnClickListener { displayInsertHeadingDialog() }
+        findViewById<View>(R.id.note_editor_toolbar_button_insert_mathjax).setOnLongClickListener {
+            displayInsertMathJaxEquationsDialog()
+            true
+        }
 
         val parentLayout = findViewById<LinearLayout>(R.id.editor_toolbar_internal)
         parentLayout.children.forEach { child ->
@@ -303,6 +308,31 @@ class Toolbar : FrameLayout {
                 onFormat(formatter)
             }
             title(R.string.insert_heading)
+        }
+    }
+
+    /**
+     * Displays a dialog that allows the user to insert a MathJax equation in different formats.
+     */
+    private fun displayInsertMathJaxEquationsDialog() {
+        data class MathJaxOption(
+            val label: String,
+            val prefix: String,
+            val suffix: String,
+        ) {
+            fun toTextWrapper() = TextWrapper(prefix = this.prefix, suffix = this.suffix)
+        }
+
+        val mathjaxOptions =
+            arrayOf(
+                MathJaxOption(TR.editingMathjaxBlock(), prefix = "\\[\\", suffix = "\\]"),
+                MathJaxOption(TR.editingMathjaxChemistry(), prefix = "\\( \\ce{", suffix = "} \\)"),
+            )
+        AlertDialog.Builder(context).show {
+            setItems(mathjaxOptions.map(MathJaxOption::label).toTypedArray()) { _, index ->
+                onFormat(mathjaxOptions[index].toTextWrapper())
+            }
+            title(R.string.insert_mathjax)
         }
     }
 
