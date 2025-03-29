@@ -48,6 +48,7 @@ import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.convertDpToPixel
@@ -124,6 +125,10 @@ class Toolbar : FrameLayout {
         setupButtonWrappingText(R.id.note_editor_toolbar_button_horizontal_rule, "<hr>", "")
         findViewById<View>(R.id.note_editor_toolbar_button_font_size).setOnClickListener { displayFontSizeDialog() }
         findViewById<View>(R.id.note_editor_toolbar_button_title).setOnClickListener { displayInsertHeadingDialog() }
+        findViewById<View>(R.id.note_editor_toolbar_button_insert_mathjax).setOnLongClickListener {
+            displayInsertMathJaxEquationsDialog()
+            true
+        }
 
         val parentLayout = findViewById<LinearLayout>(R.id.editor_toolbar_internal)
         parentLayout.children.forEach { child ->
@@ -303,6 +308,23 @@ class Toolbar : FrameLayout {
                 onFormat(formatter)
             }
             title(R.string.insert_heading)
+        }
+    }
+
+    /**
+     * Displays a dialog that allows the user to insert a MathJax equation in different formats.
+     */
+    @SuppressLint("CheckResult")
+    private fun displayInsertMathJaxEquationsDialog() {
+        val equations = arrayOf(TR.editingMathjaxBlock(), TR.editingMathjaxChemistry())
+        val prefixes = arrayOf("\\[\\", "\\[ \\ce{")
+        val suffixes = arrayOf("\\]", "} \\]")
+        AlertDialog.Builder(context).show {
+            setItems(equations) { _, index ->
+                val formatter = TextWrapper(prefix = prefixes[index], suffix = suffixes[index])
+                onFormat(formatter)
+            }
+            title(R.string.insert_mathjax)
         }
     }
 
