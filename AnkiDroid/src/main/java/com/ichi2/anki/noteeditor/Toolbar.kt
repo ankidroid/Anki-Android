@@ -48,6 +48,7 @@ import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.convertDpToPixel
@@ -315,9 +316,9 @@ class Toolbar : FrameLayout {
      */
     @SuppressLint("CheckResult")
     private fun displayInsertMathJaxEquationsDialog() {
-        val equations = resources.getStringArray(R.array.mathjax_equations)
-        val prefixes = arrayOf("\\(", "\\[\\", "\\[ \\ce{")
-        val suffixes = arrayOf("\\)", "\\]", "} \\]")
+        val equations = arrayOf(TR.editingMathjaxBlock(), TR.editingMathjaxChemistry())
+        val prefixes = arrayOf("\\[\\", "\\[ \\ce{")
+        val suffixes = arrayOf("\\]", "} \\]")
         AlertDialog.Builder(context).show {
             setItems(equations) { _, index ->
                 val formatter = TextWrapper(prefix = prefixes[index], suffix = suffixes[index])
