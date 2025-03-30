@@ -57,6 +57,7 @@ import anki.notetypes.StockNotetype
 import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_UNKNOWN_VALUE
 import anki.notetypes.notetypeId
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -101,6 +102,7 @@ import com.ichi2.ui.FixedEditText
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.copyToClipboard
+import com.ichi2.utils.dp
 import com.ichi2.utils.listItems
 import com.ichi2.utils.show
 import kotlinx.coroutines.launch
@@ -238,6 +240,16 @@ open class CardTemplateEditor :
             val fragment = TemplatePreviewerFragment.newInstance(args, backgroundColor)
             supportFragmentManager.commitNow {
                 replace(R.id.fragment_container, fragment)
+            }
+
+            // Modify the "Show Answer" button height to 80dp to maintain visual consistency with the BottomNavigationView,
+            // which has a default height of 80dp.
+            fragment.view?.post {
+                val showAnswerButton = fragment.view?.findViewById<MaterialButton>(R.id.show_answer)
+                showAnswerButton?.let { button ->
+                    button.layoutParams.height = 80.dp.toPx(button.context)
+                    button.requestLayout()
+                }
             }
         }
     }
