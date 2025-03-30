@@ -317,7 +317,7 @@ this formatter is used if the bind only applies to both the question and the ans
     <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
     <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
     <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
-    <string name="pref__backup_directory_path__title">Custom Backup Location</string>
+    <string name="pref__backup_directory_path__title" maxLength="41">Custom Backup Location</string>
 
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
