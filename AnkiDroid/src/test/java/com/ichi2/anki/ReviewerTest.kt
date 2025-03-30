@@ -50,7 +50,7 @@ import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import com.ichi2.testutils.ext.addNote
-import com.ichi2.utils.BASIC_MODEL_NAME
+import com.ichi2.utils.BASIC_NOTE_TYPE_NAME
 import com.ichi2.utils.KotlinCleanup
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
@@ -279,7 +279,7 @@ class ReviewerTest : RobolectricTest() {
             val models = col.notetypes
 
             val didAb = addDeck("A::B")
-            val basic = models.byName(BASIC_MODEL_NAME)
+            val basic = models.byName(BASIC_NOTE_TYPE_NAME)
             basic!!.put("did", didAb)
             addBasicNote("foo", "bar")
 
