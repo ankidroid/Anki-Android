@@ -26,6 +26,8 @@ import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction.Companion.REQUEST_KEY
+import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.ui.RtlCompliantActionProvider
 import com.ichi2.widget.WidgetStatus
@@ -49,7 +51,7 @@ class StudyOptionsActivity :
         }
         setResult(RESULT_OK)
 
-        supportFragmentManager.setFragmentResultListener(CustomStudyAction.REQUEST_KEY, this) { requestKey, bundle ->
+        setFragmentResultListener(REQUEST_KEY) { _, bundle ->
             when (CustomStudyAction.fromBundle(bundle)) {
                 CustomStudyAction.CUSTOM_STUDY_SESSION,
                 CustomStudyAction.EXTEND_STUDY_LIMITS,
