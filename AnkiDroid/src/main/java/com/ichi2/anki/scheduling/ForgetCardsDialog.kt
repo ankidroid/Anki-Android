@@ -31,6 +31,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
@@ -156,7 +157,7 @@ class ForgetCardsDialog : DialogFragment() {
  * @param cardsIdsProducer lambda which returns the list of cards for which to reset the progress
  */
 internal fun AnkiActivity.registerOnForgetHandler(cardsIdsProducer: suspend () -> List<CardId>) {
-    supportFragmentManager.setFragmentResultListener(ForgetCardsDialog.REQUEST_KEY_FORGET, this) { _, bundle: Bundle ->
+    setFragmentResultListener(ForgetCardsDialog.REQUEST_KEY_FORGET) { _, bundle ->
         forgetCards(
             cardsIdsProducer = cardsIdsProducer,
             restoreOriginalPositionIfPossible = bundle.getBoolean(ForgetCardsDialog.ARG_RESTORE_ORIGINAL),

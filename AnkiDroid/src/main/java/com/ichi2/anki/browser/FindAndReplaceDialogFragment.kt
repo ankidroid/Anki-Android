@@ -48,6 +48,7 @@ import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_SEARCH
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.REQUEST_FIND_AND_REPLACE
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.customView
 import com.ichi2.utils.negativeButton
@@ -203,16 +204,15 @@ class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
 }
 
 fun CardBrowser.registerFindReplaceHandler(action: (FindReplaceResult) -> Unit) {
-    supportFragmentManager.setFragmentResultListener(REQUEST_FIND_AND_REPLACE, this) { _, bundle ->
+    setFragmentResultListener(REQUEST_FIND_AND_REPLACE) { _, bundle ->
         action(
             FindReplaceResult(
                 search = bundle.getString(ARG_SEARCH) ?: error("Missing required argument: search"),
-                replacement =
-                    bundle.getString(ARG_REPLACEMENT) ?: error("Missing required argument: replacement"),
+                replacement = bundle.getString(ARG_REPLACEMENT) ?: error("Missing required argument: replacement"),
                 field = bundle.getString(ARG_FIELD) ?: error("Missing required argument: field"),
-                bundle.getBoolean(ARG_ONLY_SELECTED_NOTES, true),
-                bundle.getBoolean(ARG_MATCH_CASE, false),
-                bundle.getBoolean(ARG_REGEX, false),
+                onlyOnSelectedNotes = bundle.getBoolean(ARG_ONLY_SELECTED_NOTES, true),
+                matchCase = bundle.getBoolean(ARG_MATCH_CASE, false),
+                regex = bundle.getBoolean(ARG_REGEX, false),
             ),
         )
     }

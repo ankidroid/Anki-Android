@@ -37,10 +37,8 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.view.View
 import android.widget.Button
-import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.setFragmentResult
 import com.ichi2.anki.R
 import com.ichi2.anki.introduction.SetupCollectionFragment.CollectionSetupOption.DeckPickerWithNewCollection
@@ -90,13 +88,5 @@ class SetupCollectionFragment : Fragment(R.layout.introduction_layout) {
     companion object {
         const val FRAGMENT_KEY = "collectionSetup"
         const val RESULT_KEY = "result"
-
-        /** Handles a result from a [SetupCollectionFragment] */
-        fun FragmentActivity.handleCollectionSetupOption(handleResult: (CollectionSetupOption) -> Unit) {
-            supportFragmentManager.setFragmentResultListener(FRAGMENT_KEY, this) { _, b ->
-                val item = BundleCompat.getParcelable(b, RESULT_KEY, CollectionSetupOption::class.java)!!
-                handleResult(item)
-            }
-        }
     }
 }
