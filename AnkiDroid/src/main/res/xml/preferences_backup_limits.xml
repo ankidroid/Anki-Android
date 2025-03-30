@@ -33,4 +33,8 @@
         android:title="@string/pref__monthly_backups_to_keep__title"
         android:persistent="false"
         app:min="0"/>
-</PreferenceScreen>
+    <Preference
+        android:key="@string/pref_backup_directory_key"
+        android:title="@string/pref__backup_directory_path__title"
+        android:summary="@string/not_set"/>
+</PreferenceScreen> 

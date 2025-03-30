@@ -21,6 +21,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Disabled</string>
+    <string name="not_set">Not Set</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
         <item quantity="other">%d mins</item>
@@ -308,11 +309,15 @@ this formatter is used if the bind only applies to both the question and the ans
         To be safe, please periodically synchronize your collection, or back up exports of it.
         <br><br>
         You can restore from a backup and export your collection in the deck list menu.
+        <br><br>
+        You can set a custom folder for backups, this is useful for permanent backups in case AnkiDroid is uninstalled.
+        It will mirror the default backup directory, following your backup preferences.
     ]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
     <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
     <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+    <string name="pref__backup_directory_path__title">Custom Backup Location</string>
 
     <!-- #######################################################################################
          ################################# Manage space activity ###############################

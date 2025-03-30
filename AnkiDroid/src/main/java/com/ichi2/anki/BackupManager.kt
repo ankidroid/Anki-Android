@@ -16,22 +16,180 @@
 
 package com.ichi2.anki
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.provider.DocumentsContract
 import android.text.format.DateFormat
+import androidx.documentfile.provider.DocumentFile
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.Time.Companion.utcOffset
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.FileUtil.getFreeDiskSpace
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.io.IOException
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.io.use
 
 open class BackupManager {
+    // move folder from one SAF Uri to another, using persistedUri
+    fun moveBackupFiles(
+        context: Context,
+        sourceUri: Uri,
+        targetUri: Uri,
+    ) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val resolver = context.contentResolver
+                val sourceFolder = DocumentFile.fromTreeUri(context, sourceUri)
+                val targetFolder = DocumentFile.fromTreeUri(context, targetUri)
+
+                if (sourceFolder?.isDirectory != true || targetFolder?.isDirectory != true) {
+                    return@launch
+                }
+
+                sourceFolder.listFiles().forEach { file ->
+                    if (!file.isFile || !file.name.orEmpty().endsWith(".colpkg")) return@forEach
+
+                    val targetFile =
+                        targetFolder.createFile(file.type ?: "application/octet-stream", file.name ?: "unknown") ?: run {
+                            return@forEach
+                        }
+
+                    resolver.openInputStream(file.uri)?.use { input ->
+                        resolver.openOutputStream(targetFile.uri)?.use { output ->
+                            input.copyTo(output)
+                        } ?: Timber.e("Failed to open output stream for ${targetFile.uri}")
+                    } ?: Timber.e("Failed to open input stream for ${file.uri}")
+
+                    if (!file.delete()) Timber.e("Failed to delete ${file.name}")
+                }
+            } catch (e: Exception) {
+                Timber.e(e, "Error moving files from $sourceUri to $targetUri")
+            }
+        }
+    }
+
+    // move from default backup dir to custom one (SAF uri)
+    fun moveBackupFilesFromDefault(context: Context) {
+        val sourceFolder = getBackupDirectory(File(CollectionHelper.getCollectionPath(context)).parentFile!!)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val resolver = context.contentResolver
+                val targetUri = resolver.persistedUriPermissions.firstOrNull()?.uri
+                if (targetUri == null) {
+                    Timber.e("No persisted URI found")
+                    return@launch
+                }
+
+                val documentId = DocumentsContract.getTreeDocumentId(targetUri)
+                val destinationFolderUri = DocumentsContract.buildDocumentUriUsingTree(targetUri, documentId)
+
+                if (!sourceFolder.exists() || !sourceFolder.isDirectory) {
+                    Timber.e("Source folder does not exist or is not a directory")
+                    return@launch
+                }
+
+                sourceFolder.listFiles()?.forEach { sourceFile ->
+                    if (!sourceFile.isFile) return@forEach
+
+                    val destinationUri =
+                        DocumentsContract.createDocument(
+                            resolver,
+                            destinationFolderUri,
+                            "application/octet-stream",
+                            sourceFile.name,
+                        )
+
+                    if (destinationUri == null) {
+                        Timber.e("Failed to create file in destination for ${sourceFile.name}")
+                        return@forEach
+                    }
+
+                    try {
+                        resolver.openOutputStream(destinationUri)?.use { output ->
+                            FileInputStream(sourceFile).use { input ->
+                                input.copyTo(output)
+                            }
+                        } ?: Timber.e("Failed to open output stream for $destinationUri")
+
+                        if (!sourceFile.delete()) Timber.e("Failed to delete ${sourceFile.name}")
+                    } catch (e: Exception) {
+                        Timber.e(e, "Error moving ${sourceFile.name}")
+                    }
+                }
+            } catch (e: Exception) {
+                Timber.e(e, "Error moving files to SAF location")
+            }
+        }
+    }
+
+    // move from custom one (SAF uri) back to default
+    fun moveBackupFilesToDefault(context: Context) {
+        val targetFolder = getBackupDirectory(File(CollectionHelper.getCollectionPath(context)).parentFile!!)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val resolver = context.contentResolver
+                val sourceUri = resolver.persistedUriPermissions.firstOrNull()?.uri
+                if (sourceUri == null) {
+                    Timber.e("No persisted URI found")
+                    return@launch
+                }
+
+                val sourceFolder = DocumentFile.fromTreeUri(context, sourceUri)
+                if (sourceFolder?.isDirectory != true) {
+                    Timber.e("Invalid source folder")
+                    return@launch
+                }
+
+                if (!targetFolder.exists() && !targetFolder.mkdirs()) {
+                    Timber.e("Failed to create target directory: ${targetFolder.absolutePath}")
+                    return@launch
+                }
+
+                sourceFolder.listFiles().forEach { file ->
+                    if (!file.isFile || !file.name.orEmpty().endsWith(".colpkg")) return@forEach
+
+                    val targetFile = File(targetFolder, file.name ?: "unknown")
+
+                    try {
+                        resolver.openInputStream(file.uri)?.use { input ->
+                            FileOutputStream(targetFile).use { output ->
+                                input.copyTo(output)
+                            }
+                        } ?: Timber.e("Failed to open input stream for ${file.uri}")
+
+                        if (!file.delete()) Timber.e("Failed to delete ${file.name}")
+                    } catch (e: Exception) {
+                        Timber.e(e, "Error moving ${file.name}")
+                    }
+                }
+
+                resolver.persistedUriPermissions.forEach { permission ->
+                    resolver.releasePersistableUriPermission(
+                        permission.uri,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION,
+                    )
+                }
+            } catch (e: Exception) {
+                Timber.e(e, "Error moving files to ${targetFolder.absolutePath}")
+            }
+        }
+    }
+
     companion object {
         private const val MIN_FREE_SPACE = 10
         private const val BACKUP_SUFFIX = "backup"
@@ -59,6 +217,20 @@ open class BackupManager {
                 Timber.w("getBrokenDirectory() mkdirs on %s failed", ankidroidDir)
             }
             return directory
+        }
+
+        // since the import backend using File.absolutePath, get the path from DocumentFile using temp and then delete temp after importing
+        fun getTempPathFromDocumentFile(
+            context: Context,
+            documentFile: DocumentFile,
+        ): String {
+            val tempFile = File.createTempFile("temp_backup", ".colpkg", context.cacheDir)
+            context.contentResolver.openInputStream(documentFile.uri)!!.use { input ->
+                tempFile.outputStream().use { output ->
+                    input.copyTo(output)
+                }
+            }
+            return tempFile.absolutePath
         }
 
         fun enoughDiscSpace(path: String?): Boolean = getFreeDiscSpace(path) >= MIN_FREE_SPACE * 1024 * 1024
@@ -201,6 +373,25 @@ open class BackupManager {
         }
 
         /**
+         * @return Array of DocumentFiles with names which matches the backup name pattern,
+         * in order of creation.
+         */
+        // may break if persistedUri is used elsewhere
+        fun getBackups(context: Context): Array<DocumentFile> {
+            val persistedUri = context.contentResolver.persistedUriPermissions[0].uri
+
+            val backupDir = DocumentFile.fromTreeUri(context, persistedUri) ?: return emptyArray()
+            return backupDir
+                .listFiles()
+                .filter { it.isFile }
+                .mapNotNull { file ->
+                    getBackupTimeString(file.name ?: "")?.let { time -> Pair(time, file) }
+                }.sortedBy { it.first }
+                .map { it.second }
+                .toTypedArray()
+        }
+
+        /**
          * Delete backups as specified by [backupsToDelete],
          * throwing [IllegalArgumentException] if any of the files passed aren't actually backups.
          *
@@ -244,8 +435,15 @@ class LocalizedUnambiguousBackupTimeFormatter {
             DateFormat.getBestDateTimePattern(Locale.getDefault(), "dd MMM yyyy HH:mm"),
         )
 
-    fun getTimeOfBackupAsText(file: File): String {
-        val backupDate = BackupManager.getBackupDate(file.name) ?: return file.name
+    fun getTimeOfBackupAsText(file: Any): String {
+        val name =
+            when (file) {
+                is File -> file.name
+                is DocumentFile -> file.name.orEmpty()
+                else -> return "Unknown"
+            }
+
+        val backupDate = BackupManager.getBackupDate(name) ?: return name
         return formatter.format(backupDate)
     }
 }

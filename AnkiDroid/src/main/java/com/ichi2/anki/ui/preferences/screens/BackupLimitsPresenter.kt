@@ -14,6 +14,10 @@
 
 package com.ichi2.anki.ui.preferences.screens
 
+import android.content.Intent
+import android.net.Uri
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -24,6 +28,8 @@ import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import anki.config.Preferences.BackupLimits
+import com.ichi2.anki.AnkiDroidApp.Companion.sharedPrefs
+import com.ichi2.anki.BackupManager
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
@@ -37,9 +43,16 @@ import com.ichi2.anki.utils.getUserFriendlyErrorText
 import com.ichi2.preferences.HtmlHelpPreference
 import com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
 import com.ichi2.preferences.NumberRangePreferenceCompat.ShouldShowDialog
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
+import com.ichi2.utils.title
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
+
+private val backupManager = BackupManager()
 
 sealed interface State {
     data object Fetching : State
@@ -121,6 +134,14 @@ class BackupLimitsPresenter(
     private lateinit var dailyBackupsToKeepPreference: IncrementerNumberRangePreferenceCompat
     private lateinit var weeklyBackupsToKeepPreference: IncrementerNumberRangePreferenceCompat
     private lateinit var monthlyBackupsToKeepPreference: IncrementerNumberRangePreferenceCompat
+    private lateinit var backupFolderPreference: Preference
+
+    private val pickFolderLauncher =
+        fragment.registerForActivityResult(
+            ActivityResultContracts.OpenDocumentTree(),
+        ) { uri ->
+            handleBackupFolder(uri)
+        }
 
     override fun onCreate(owner: LifecycleOwner) {
         backupsHelpPreference = fragment.requirePreference(R.string.pref_backups_help_key)
@@ -128,6 +149,7 @@ class BackupLimitsPresenter(
         dailyBackupsToKeepPreference = fragment.requirePreference(R.string.pref_daily_backups_to_keep_key)
         weeklyBackupsToKeepPreference = fragment.requirePreference(R.string.pref_weekly_backups_to_keep_key)
         monthlyBackupsToKeepPreference = fragment.requirePreference(R.string.pref_monthly_backups_to_keep_key)
+        backupFolderPreference = fragment.requirePreference(R.string.pref_backup_directory_key)
 
         minutesBetweenAutomaticBackupsPreference
             .launchWhenChanged<Int> { viewModel.updateBackupLimits { minimumIntervalMins = it } }
@@ -137,6 +159,17 @@ class BackupLimitsPresenter(
             .launchWhenChanged<Int> { viewModel.updateBackupLimits { weekly = it } }
         monthlyBackupsToKeepPreference
             .launchWhenChanged<Int> { viewModel.updateBackupLimits { monthly = it } }
+
+        backupFolderPreference.summary =
+            sharedPrefs().getString(
+                fragment.getString(R.string.pref_backup_directory_key),
+                fragment.getString(R.string.not_set),
+            )
+
+        backupFolderPreference.setOnPreferenceClickListener {
+            pickFolderLauncher.launch(null)
+            true
+        }
 
         // TODO Make NumberRangePreferenceCompat, and perhaps other preferences,
         //   aware of the idea that the value may not have loaded yet, and simplify this.
@@ -183,6 +216,54 @@ class BackupLimitsPresenter(
         }
     }
 
+    private fun handleBackupFolder(uri: Uri?) {
+        val context = fragment.requireContext()
+        Timber.d("Selected backup URI: $uri")
+
+        // if no URI, show snackbar or prompt to remove folder
+        if (uri == null) {
+            val currentPath = backupFolderPreference.summary
+            if (currentPath == context.getString(R.string.not_set)) {
+                fragment.showSnackbar(R.string.no_folder_selected)
+            } else {
+                // give option to remove or keep
+                showRemoveBackupFolderDialog()
+            }
+            return
+        }
+        val contentResolver = context.contentResolver
+
+        contentResolver.takePersistableUriPermission(
+            uri,
+            Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION,
+        )
+
+        with(backupFolderPreference.sharedPreferences?.edit()) {
+            this?.putString(fragment.getString(R.string.pref_backup_directory_key), uri.toString())
+            this?.apply()
+        }
+        backupFolderPreference.summary = uri.toString()
+
+        // persistedUri = 1: Newly fetched URI (was "Not Set")
+        // persistedUri = 2: Updated from one URI to another
+        // may break if persistedUri is used elsewhere
+        if (contentResolver.persistedUriPermissions.count() == 1) {
+            backupManager.moveBackupFilesFromDefault(context)
+        } else {
+            val sortedUris = contentResolver.persistedUriPermissions.sortedBy { it.persistedTime }
+
+            val sourceUri = sortedUris.first().uri
+            val targetUri = sortedUris.last().uri
+
+            backupManager.moveBackupFiles(context, sourceUri, targetUri)
+
+            contentResolver.releasePersistableUriPermission(
+                sourceUri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION,
+            )
+        }
+    }
+
     override fun onResume(owner: LifecycleOwner) {
         refresh()
     }
@@ -193,6 +274,23 @@ class BackupLimitsPresenter(
 
     fun observeLifecycle() {
         fragment.lifecycle.addObserver(this)
+    }
+
+    // move to default folder if uri is removed
+    private fun showRemoveBackupFolderDialog() {
+        AlertDialog.Builder(fragment.requireContext()).show {
+            title(R.string.remove_backup_folder)
+            positiveButton(R.string.dialog_remove) {
+                backupManager.moveBackupFilesToDefault(fragment.requireContext())
+                with(backupFolderPreference.sharedPreferences?.edit()) {
+                    this?.putString(fragment.getString(R.string.pref_backup_directory_key), fragment.getString(R.string.not_set))
+                    this?.apply()
+                }
+                backupFolderPreference.summary = fragment.getString(R.string.not_set)
+                fragment.showSnackbar(R.string.backup_folder_removed)
+            }
+            negativeButton(R.string.dialog_keep)
+        }
     }
 
     // T is reified in order to make the cast checked
