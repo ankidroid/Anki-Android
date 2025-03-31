@@ -25,7 +25,7 @@ import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.Ease
-import com.ichi2.utils.KotlinCleanup
+import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 
 /**
  * The UI of an ease button

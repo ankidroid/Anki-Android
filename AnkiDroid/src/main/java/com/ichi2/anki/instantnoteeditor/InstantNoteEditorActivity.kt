@@ -47,6 +47,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CustomActionModeCallback
 import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.R
+import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.launchCatchingTask
@@ -58,7 +59,6 @@ import com.ichi2.libanki.NotetypeJson
 import com.ichi2.themes.setTransparentBackground
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.AssetHelper.TEXT_PLAIN
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton

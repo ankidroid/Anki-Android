@@ -18,6 +18,7 @@ package com.ichi2.libanki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.scheduler.UnburyDeckRequest
 import com.ichi2.anki.Ease
+import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.libanki.CardType.Relearning
 import com.ichi2.libanki.Consts.LEECH_SUSPEND
@@ -29,7 +30,6 @@ import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.testutils.AnkiAssert
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.ext.addNote
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers

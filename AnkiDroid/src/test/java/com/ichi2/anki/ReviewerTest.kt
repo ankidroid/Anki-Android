@@ -33,6 +33,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand.FLIP_OR_ANSWER_EASE1
 import com.ichi2.anki.cardviewer.ViewerCommand.MARK
+import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.PreferenceTestUtils
 import com.ichi2.anki.preferences.sharedPrefs
@@ -51,7 +52,6 @@ import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import com.ichi2.testutils.ext.addNote
 import com.ichi2.utils.BASIC_MODEL_NAME
-import com.ichi2.utils.KotlinCleanup
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue

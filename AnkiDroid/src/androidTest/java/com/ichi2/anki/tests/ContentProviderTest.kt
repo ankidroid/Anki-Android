@@ -27,6 +27,7 @@ import anki.notetypes.StockNotetype
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.Ease
 import com.ichi2.anki.FlashCardsContract
+import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.provider.pureAnswer
 import com.ichi2.anki.testutil.DatabaseUtils.cursorFillWindow
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
@@ -48,7 +49,6 @@ import com.ichi2.libanki.getStockNotetypeLegacy
 import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.libanki.utils.set
 import com.ichi2.testutils.common.assertThrows
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.emptyStringArray
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import org.hamcrest.MatcherAssert.assertThat

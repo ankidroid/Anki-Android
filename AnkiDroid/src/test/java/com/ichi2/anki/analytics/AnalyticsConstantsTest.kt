@@ -12,7 +12,7 @@
  */
 package com.ichi2.anki.analytics
 
-import com.ichi2.utils.KotlinCleanup
+import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not

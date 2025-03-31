@@ -19,7 +19,7 @@
  ****************************************************************************************/
 
 package com.ichi2.anki.web
-import com.ichi2.utils.KotlinCleanup
+import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

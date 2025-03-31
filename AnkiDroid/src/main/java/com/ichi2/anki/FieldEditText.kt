@@ -29,6 +29,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import androidx.annotation.VisibleForTesting
 import com.google.android.material.color.MaterialColors
+import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.snackbar.showSnackbar
@@ -37,7 +38,6 @@ import com.ichi2.utils.ClipboardUtil.getDescription
 import com.ichi2.utils.ClipboardUtil.getPlainText
 import com.ichi2.utils.ClipboardUtil.getUri
 import com.ichi2.utils.ClipboardUtil.hasMedia
-import com.ichi2.utils.KotlinCleanup
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 import java.util.Locale

@@ -26,6 +26,7 @@ import androidx.annotation.MainThread
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckCreationListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
@@ -36,7 +37,6 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.DeckNameId
 import com.ichi2.utils.FragmentManagerSupplier
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.asFragmentManagerSupplier
 import timber.log.Timber
 
