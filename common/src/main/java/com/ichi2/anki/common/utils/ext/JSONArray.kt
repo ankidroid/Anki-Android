@@ -39,9 +39,10 @@
  *    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  *    SOFTWARE.
  */
-package com.ichi2.utils
+package com.ichi2.anki.common.utils.ext
 
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.utils.deepClone
 import org.json.JSONArray
 import org.json.JSONObject
 

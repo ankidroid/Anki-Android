@@ -36,6 +36,7 @@ import anki.decks.DeckTreeNode
 import anki.decks.FilteredDeckForUpdate
 import anki.decks.SetDeckCollapsedRequest
 import anki.decks.copy
+import com.ichi2.anki.common.utils.ext.jsonObjectIterable
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.BackendUtils.toJsonBytes
@@ -43,7 +44,6 @@ import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.append
 import com.ichi2.libanki.utils.len
-import com.ichi2.utils.jsonObjectIterable
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
