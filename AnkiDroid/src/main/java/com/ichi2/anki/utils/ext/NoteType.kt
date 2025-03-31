@@ -17,9 +17,9 @@
 package com.ichi2.anki.utils.ext
 
 import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_IMAGE_OCCLUSION_VALUE
+import com.ichi2.anki.common.utils.ext.jsonObjectIterable
 import com.ichi2.anki.utils.CardTemplateJson
 import com.ichi2.libanki.NotetypeJson
-import com.ichi2.utils.jsonObjectIterable
 import org.json.JSONException
 
 /**

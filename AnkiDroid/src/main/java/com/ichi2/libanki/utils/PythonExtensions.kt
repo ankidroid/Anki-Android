@@ -16,7 +16,7 @@
 
 package com.ichi2.libanki.utils
 
-import com.ichi2.utils.jsonObjectIterable
+import com.ichi2.anki.common.utils.ext.jsonObjectIterable
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.Optional

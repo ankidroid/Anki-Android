@@ -43,6 +43,7 @@ package com.ichi2.utils
 
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.common.utils.ext.deepClone
 import org.json.JSONArray
 import org.json.JSONObject
 

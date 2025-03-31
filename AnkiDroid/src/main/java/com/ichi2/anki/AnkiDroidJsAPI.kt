@@ -36,6 +36,7 @@ import com.ichi2.anki.AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_SUSPEND_NOTE
 import com.ichi2.anki.AnkiDroidJsAPIConstants.flagCommands
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.common.utils.ext.stringIterable
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.servicelayer.rescheduleCards
 import com.ichi2.anki.servicelayer.resetCards
@@ -48,7 +49,6 @@ import com.ichi2.libanki.Decks
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.SortOrder
 import com.ichi2.utils.NetworkUtils
-import com.ichi2.utils.stringIterable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
