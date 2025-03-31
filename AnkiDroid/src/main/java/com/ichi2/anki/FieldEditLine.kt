@@ -35,9 +35,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.os.ParcelCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
+import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.ui.AnimationUtil.collapseView
 import com.ichi2.ui.AnimationUtil.expandView
-import com.ichi2.utils.KotlinCleanup
 import java.util.Locale
 
 @KotlinCleanup("replace _name with `field`")

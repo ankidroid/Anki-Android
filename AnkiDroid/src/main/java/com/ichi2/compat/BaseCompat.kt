@@ -31,7 +31,7 @@ import android.os.Vibrator
 import android.provider.MediaStore
 import android.view.View
 import androidx.appcompat.widget.TooltipCompat
-import com.ichi2.utils.KotlinCleanup
+import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream

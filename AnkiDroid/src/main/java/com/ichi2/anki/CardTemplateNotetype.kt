@@ -22,6 +22,7 @@ import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.core.os.bundleOf
+import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.async.saveModel
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
@@ -29,7 +30,6 @@ import com.ichi2.libanki.CardTemplate
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.NoteTypeId
 import com.ichi2.libanki.NotetypeJson
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream

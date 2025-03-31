@@ -29,9 +29,9 @@ import com.brsanthu.googleanalytics.request.DefaultRequest
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
+import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.utils.DisplayUtils
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.WebViewDebugging.hasSetDataDirectory
 import org.acra.ACRA
 import org.acra.util.Installation

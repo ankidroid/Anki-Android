@@ -41,6 +41,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.EXTEND_NEW
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.EXTEND_REV
@@ -67,7 +68,6 @@ import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.BundleUtils.getNullableInt
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.bundleOfNotNull
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.customView

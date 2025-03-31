@@ -28,8 +28,8 @@ import androidx.annotation.WorkerThread
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService.sendExceptionReport
+import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
-import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
 import timber.log.Timber

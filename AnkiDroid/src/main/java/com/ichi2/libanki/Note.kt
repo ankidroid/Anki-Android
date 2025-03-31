@@ -20,11 +20,11 @@ package com.ichi2.libanki
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import anki.notes.NoteFieldsCheckResponse
+import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.emptyStringArray
 import java.util.regex.Pattern
 
