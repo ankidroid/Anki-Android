@@ -15,11 +15,13 @@
  */
 package com.ichi2.anki.browser
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -28,9 +30,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.R
-import com.ichi2.utils.create
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -39,11 +39,12 @@ class ColumnSelectionDialogFragment : DialogFragment() {
     private val columnToReplace: ColumnHeading
         get() =
             requireNotNull(
-                BundleCompat.getParcelable(requireArguments(), "selected_column", ColumnHeading::class.java),
+                BundleCompat.getParcelable(requireArguments(), SELECTED_COLUMN, ColumnHeading::class.java),
             )
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         val listView = ListView(requireContext())
+        val padding24 = 24.toPx(requireContext()).toInt()
 
         val adapter =
             object : ArrayAdapter<ColumnWithSample>(
@@ -72,8 +73,8 @@ class ColumnSelectionDialogFragment : DialogFragment() {
                     return view
                 }
             }
-
         listView.adapter = adapter
+        listView.divider = null
 
         // Fetch columns
         lifecycleScope.launch {
@@ -93,12 +94,22 @@ class ColumnSelectionDialogFragment : DialogFragment() {
             dismissAllowingStateLoss()
         }
 
-        return AlertDialog.Builder(requireActivity()).create {
-            setTitle(getString(R.string.change) + ": ${columnToReplace.label}")
-            setView(listView)
-            setNegativeButton(android.R.string.cancel) { _, _ -> dismissAllowingStateLoss() }
-        }
+        val container =
+            LinearLayout(context).apply {
+                orientation = LinearLayout.VERTICAL
+                setPadding(padding24, padding24, padding24, padding24)
+                addView(listView)
+            }
+
+        return AlertDialog
+            .Builder(requireActivity())
+            .setTitle(getString(R.string.change))
+            .setView(container)
+            .setNegativeButton(android.R.string.cancel) { _, _ -> dismissAllowingStateLoss() }
+            .create()
     }
+
+    private fun Int.toPx(context: Context): Float = this * context.resources.displayMetrics.density
 
     companion object {
         private const val SELECTED_COLUMN = "selected_column"
@@ -107,17 +118,5 @@ class ColumnSelectionDialogFragment : DialogFragment() {
             ColumnSelectionDialogFragment().apply {
                 arguments = bundleOf(SELECTED_COLUMN to selectedColumn)
             }
-
-        fun CardBrowserViewModel.updateSelectedColumn(
-            selectedColumn: ColumnHeading,
-            newColumn: ColumnWithSample,
-        ) = viewModelScope.launch {
-            val replacementKey = selectedColumn.ankiColumnKey
-            val replacements =
-                activeColumns.toMutableList().apply {
-                    replaceAll { if (it.ankiColumnKey == replacementKey) newColumn.columnType else it }
-                }
-            updateActiveColumns(replacements, cardsOrNotes)
-        }
     }
 }
