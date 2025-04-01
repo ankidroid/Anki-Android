@@ -22,7 +22,6 @@ import android.os.Vibrator
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
-import com.ichi2.anki.NotificationChannels
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
@@ -40,14 +39,6 @@ import kotlin.time.Duration
 /** Implementation of [Compat] for SDK level 26 and higher. Check  [Compat]'s for more detail.  */
 @RequiresApi(26)
 open class CompatV26 : CompatV24() {
-    /**
-     * In Oreo and higher, you must create a channel for all notifications.
-     * This will create the channel if it doesn't exist, or if it exists it will update the name.
-     */
-    override fun setupNotificationChannel(context: Context) {
-        NotificationChannels.setup(context)
-    }
-
     override fun setTooltipTextByContentDescription(view: View) { // Nothing to do API26+
     }
 

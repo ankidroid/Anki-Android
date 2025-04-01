@@ -180,7 +180,7 @@ open class AnkiDroidApp :
             this,
             preferences.getBoolean(getString(R.string.anki_card_external_context_menu_key), true),
         )
-        CompatHelper.compat.setupNotificationChannel(applicationContext)
+        setupNotificationChannels(applicationContext)
 
         makeBackendUsable(this)
 
