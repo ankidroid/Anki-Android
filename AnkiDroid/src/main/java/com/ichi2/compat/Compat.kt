@@ -76,8 +76,6 @@ import kotlin.time.Duration
  * [CompatV29] in order to use [Environment.DIRECTORY_PICTURES], need not be implemented again in [CompatV26].
  */
 interface Compat {
-    fun setupNotificationChannel(context: Context)
-
     fun setTooltipTextByContentDescription(view: View)
 
     fun vibrate(
