@@ -2244,7 +2244,6 @@ open class DeckPicker :
                 layoutParams.setMargins(0, 0, 0, reviewSummaryTextView.height / 2)
                 fabLinearLayout.layoutParams = layoutParams
             }
-            Timber.d("Startup - Deck List UI Completed")
         }
     }
 
@@ -2257,9 +2256,10 @@ open class DeckPicker :
             updateDeckList()
             return
         }
+
         // Check if default deck is the only available and there are no cards
         val isEmpty = tree.children.size == 1 && tree.children[0].did == 1L && collectionIsEmpty
-        // Update background visibility based on collection state
+        // Hide the background when there are no cards to improve text readability.
         val backgroundView = findViewById<ImageView>(R.id.background)
         backgroundView.visibility = if (isEmpty) View.GONE else View.VISIBLE
         if (animationDisabled()) {
