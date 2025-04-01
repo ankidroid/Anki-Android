@@ -2245,6 +2245,7 @@ open class DeckPicker :
                 fabLinearLayout.layoutParams = layoutParams
             }
         }
+        Timber.d("Startup - Deck List UI Completed")
     }
 
     private suspend fun renderPage(collectionIsEmpty: Boolean) {
