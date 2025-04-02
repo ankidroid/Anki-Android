@@ -6,7 +6,6 @@
     <string name="deck_for_new_cards_key">useCurrent</string>
     <string name="pref_language_key">language</string>
     <string name="analytics_opt_in_key">analytics_opt_in</string>
-    <string name="paste_png_key">pastePNG</string>
     <string name="error_reporting_mode_key">reportErrorMode</string>
     <!-- Reviewing -->
     <string name="pref_reviewing_screen_key">reviewingScreen</string>
@@ -28,6 +27,8 @@
     <string name="username_key">username</string>
     <!-- Backup -->
     <string name="pref_backup_limits_screen_key">backupLimitsScreen</string>
+    <!-- Editing -->
+    <string name="paste_png_key">pastePNG</string>
     <!-- Appearance -->
     <string name="pref_appearance_screen_key">appearance_preference_group</string>
     <string name="app_theme_key">appTheme</string>
