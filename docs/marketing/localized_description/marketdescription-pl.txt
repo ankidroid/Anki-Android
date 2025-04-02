@@ -6,7 +6,7 @@ Ucz się czegokolwiek zechcesz, gdziekolwiek zechcesz. Wykorzystaj wolny czas w 
 
 Twórz własne talie lub pobierz talie darmowe, tworzone dla wielu języków oraz dziedzin (dostępnych jest ponad 6000 talii).
 
-Dodawanie materiału za pomocą desktopowego programu Anki lub bezpośrednio w AnkiDroidzie. Aplikacja wspiera nawet dodawanie materiału automatycznie z poziomu słownika!
+Dodawaj materiał za pomocą desktopowego programu Anki lub bezpośrednio w AnkiDroidzie. Aplikacja umożliwia nawet dodawanie materiału automatycznie z poziomu słownika!
 
 ★ Podstawowe cechy:
 • karty mogą zawierać: tekst, obrazki, dźwięki, LaTeX

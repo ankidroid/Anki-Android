@@ -76,7 +76,7 @@
     <string name="card_browser_list_my_searches_new_name">Nazwa bieżącego wyszukiwania</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Nie można zapisać wyszukiwania bez nazwy</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Nazwa już istnieje</string>
-    <string name="no_note_to_edit">No note to edit</string>
+    <string name="no_note_to_edit">Brak notatki do edycji</string>
     <string name="card_browser_list_my_searches_remove_content">Usunąć \"%1$s\"?</string>
     <string name="card_browser_change_display_order" maxLength="28">Zmień kolejność wyświetlania</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Szukaj</string>
@@ -124,11 +124,11 @@
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Okno dialogowe edycji tagów</string>
     <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
     <!-- Manage columns dialog -->
-    <string name="browse_manage_columns_main_heading">Columns</string>
-    <string name="browse_manage_columns">Manage columns</string>
-    <string name="user_active_columns">Active</string>
-    <string name="user_potential_columns">Available</string>
-    <string name="include_column">Include column</string>
-    <string name="exclude_column">Exclude column</string>
-    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
+    <string name="browse_manage_columns_main_heading">Kolumny</string>
+    <string name="browse_manage_columns">Zarządzaj kolumnami</string>
+    <string name="user_active_columns">Aktywne</string>
+    <string name="user_potential_columns">Dostępne</string>
+    <string name="include_column">Dołącz kolumnę</string>
+    <string name="exclude_column">Wyklucz kolumnę</string>
+    <string name="browser_find_replace_loading_fields">Pobieranie nazw pól&#8230;</string>
 </resources>

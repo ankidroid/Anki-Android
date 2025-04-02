@@ -342,7 +342,7 @@
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Nie można usunąć typu karty</string>
     <string name="orphan_note_message">Usunięcie tej karty spowoduje pozostawienie niektórych notatek bez żadnej karty.</string>
-    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
+    <string name="voice_not_supported">Głos nie jest obsługiwany. Spróbuj użyć innego lub zainstaluj silnik głosowy.</string>
     <!--Keyboard shortcuts dialog-->
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Wybór talii</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Usuń talię bez potwierdzenia</string>

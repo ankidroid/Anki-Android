@@ -118,5 +118,5 @@
     <string name="user_potential_columns">ئىشلىتىلىشچان</string>
     <string name="include_column">رەت ئىچىدە</string>
     <string name="exclude_column">رەت سىرتىدا</string>
-    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
+    <string name="browser_find_replace_loading_fields">بۆلەك ئىسمىغا ئېرىشىۋاتىدۇ&#8230;</string>
 </resources>

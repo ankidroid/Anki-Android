@@ -99,7 +99,7 @@
     <string name="gestures_summ">Przydziel gesty do akcji takich jak odpowiedzi lub edycja kart.</string>
     <string name="gestures_corner_touch" maxLength="41">Dotyk 9-punktowy</string>
     <string name="gestures_corner_touch_summary">Zezwalaj na gesty dotykowe w rogach ekranu</string>
-    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Pokaż skróty klawiszowe</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Panel nawigacyjny w pełnym ekranie</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Otwórz panel nawigacyjny po przesunięciu w prawo w dowolnym miejscu ekranu</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">Brak</string>
@@ -140,7 +140,7 @@
     <string name="metered_sync_title" maxLength="41">Zezwalaj na synchronizację przy połączeniach taryfowych</string>
     <string name="metered_sync_summary">Jeśli wyłączone, zostaniesz ostrzeżony, jeśli spróbujesz zsynchronizować używając połączenia taryfowego</string>
     <string name="backup_limits_frequency">Częstotliwość</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_lifetime">Okres</string>
     <string name="app_theme" maxLength="41">Motyw</string>
     <string name="day_theme" maxLength="41">Motyw na dzień</string>
     <string name="night_theme" maxLength="41">Motyw na noc</string>
@@ -269,7 +269,7 @@
     <string name="key_picker_default_press_key">Naciśnij klawisz</string>
     <string name="binding_add_axis">Add joystick/motion controller</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
-    <string name="user_actions" maxLength="41">User actions</string>
+    <string name="user_actions" maxLength="41">Działania użytkownika</string>
     <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
     <string name="user_action_1" maxLength="28">Akcja użytkownika 1</string>
     <string name="user_action_2" maxLength="28">Akcja użytkownika 2</string>
@@ -280,7 +280,7 @@
     <string name="user_action_7" maxLength="28">Akcja użytkownika 7</string>
     <string name="user_action_8" maxLength="28">Akcja użytkownika 8</string>
     <string name="user_action_9" maxLength="28">Akcja użytkownika 9</string>
-    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
+    <string name="toggle_auto_advance" maxLength="41">Przełącz auto-postęp</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Wybierz stronę karty</string>
     <string name="card_side_question">Pytanie</string>
@@ -363,17 +363,17 @@
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Pobieranie&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Obliczanie&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Kolekcja nie istnieje</string>
-    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
-    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">None</string>
-    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Status bar</string>
-    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigation bar</string>
-    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Ukryj paski systemowe</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">Żaden</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Pasek stanu</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Pasek nawigacyjny</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Wszystkie</string>
     <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
-    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
+    <string name="hide_answer_buttons" maxLength="41">Ukryj przyciski odpowiedzi</string>
     <string name="hide_hard_and_easy" maxLength="41">Ukryj przyciski \'Trudna\' i \'Łatwa\'</string>
-    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <string name="reviewer_frame_style" maxLength="41">Styl ramki</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Karta</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Pudełko</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Otwórz ustawienia</string>
 </resources>

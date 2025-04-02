@@ -112,11 +112,11 @@
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Malfermi redaktilon de etikedoj</string>
     <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Ŝanĝi ordigon</string>
     <!-- Manage columns dialog -->
-    <string name="browse_manage_columns_main_heading">Columns</string>
-    <string name="browse_manage_columns">Manage columns</string>
-    <string name="user_active_columns">Active</string>
-    <string name="user_potential_columns">Available</string>
-    <string name="include_column">Include column</string>
-    <string name="exclude_column">Exclude column</string>
-    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
+    <string name="browse_manage_columns_main_heading">Kolumnoj</string>
+    <string name="browse_manage_columns">Alĝustigi kolumnojn</string>
+    <string name="user_active_columns">Aktivaj</string>
+    <string name="user_potential_columns">Disponeblaj</string>
+    <string name="include_column">Aldoni kolumnon</string>
+    <string name="exclude_column">Forigi kolumnon</string>
+    <string name="browser_find_replace_loading_fields">Akirado de nomoj de kampoj&#8230;</string>
 </resources>

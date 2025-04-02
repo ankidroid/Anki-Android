@@ -64,7 +64,7 @@
     <string name="answering_error_title">ساندان خاتالىقى</string>
     <string name="answering_error_message">توپلامغا يازالمىدى. ساندان بۇزۇلغان بولۇشى ياكى دىسكىدا يېتەرلىك بوشلۇق بولماسلىقى مۇمكىن.\n\nئەگەر بۇ خىل ئەھۋال دائىم يۈز بەرسە، سانداننى تەكشۈرۈڭ، توپلامنى ئوڭشاڭ ياكى زاپاستىن ئەسلىگە كەلتۈرۈڭ. بۇنىڭ ئۈچۈن «تاللانما» نى چېكىڭ.\n\ياكى AnkiDroid كەمتۈكى بولۇشى مۇمكىن؛ خاتالىقنى مەلۇم قىلسىڭىز بىز ئۇنى تەكشۈرەلەيمىز.</string>
     <string name="answering_error_report">خاتالىق مەلۇم قىل</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
+    <string name="storage_full_message">AnkiDroid نى ئېچىشقا يېتەرلىك دىسكا بوشلۇقى يوق. داۋاملاشتۇرۇش ئۈچۈن ئارزاق بوشلۇق بوشىتىڭ.</string>
     <string name="repair_deck_dialog">سانداننى ھەقىقەتەن ئوڭشامسىز؟\n\nباشلاشتىن ئىلگىرى، بىر نۇسخا كۆچۈرۈلمىسى «%s» تارماق قىسقۇچقا قۇرۇلىدۇ.</string>
     <string name="intent_aedict_empty">سەھىپە «كۆڭۈلدىكى» بوش</string>
     <string name="intent_aedict_category">AnkiDroid قا كارتا قوشۇشتا بارلىق خاتىرە دەپتەر سەھىپىنى چىقىرىۋېتىدۇ ياكى «كۆڭۈلدىكى» ئاتىدا بىرنى قوشىدۇ</string>
@@ -104,8 +104,8 @@
     <string name="check_media_title">ۋاسىتە تەكشۈرەمدۇ؟</string>
     <string name="check_media_warning">چوڭ ۋاسىتە توپلىمىغا ئۇزۇن ۋاقىت كېتىشى مۇمكىن</string>
     <string name="check_media_message">ۋاسىتە تەكشۈرۈۋاتىدۇ&#8230;</string>
-    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_adding_missing_tag">بەلگە قوش&#8230;</string>
+    <string name="check_media_tags_added">بەلگە قوشۇلدى</string>
     <string name="delete_media_message">ۋاسىتە ئۆچۈرۈۋاتىدۇ&#8230;</string>
     <string name="delete_media_result_title">ئۆچۈرۈش نەتىجىسى</string>
     <plurals name="delete_media_result_message">
@@ -210,8 +210,8 @@
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">كېيىن</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">قايتا كۆرسەتمە</string>
     <string name="dismiss_backup_warning_title">سانلىق-مەلۇمات يوقۇلۇش ئاگاھلاندۇرۇشى</string>
-    <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
-    <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
+    <string name="dismiss_backup_warning_new_user">Android شەخسىيەت تۈزۈمى ئۆزگەرگەنلىكتىن، ئەگەر ئەپ ئۆچۈرۈلسە، سانلىق مەلۇماتىڭىز ۋە ئۆزلۈكىدىن زاپاسلانغانلار تېلېفونىڭىزدىن ئۆچۈرۈلىدۇ</string>
+    <string name="dismiss_backup_warning_upgrade">Android شەخسىيەت تۈزۈمى ئۆزگەرگەنلىكتىن، ئەگەر ئەپ ئۆچۈرۈلسە، سانلىق مەلۇماتىڭىز ۋە ئۆزلۈكىدىن زاپاسلانغانلارنى زىيارەت قىلغىلى بولمايدۇ</string>
     <string name="deck_already_exists">دەستە مەۋجۇت</string>
     <string name="empty_deck_name">دەستە ئىسمى بوش قالمايدۇ</string>
     <string name="create_deck_numeric_hint">ئەگەر دەستە تەرتىپ مەسىلىسى بولسا (مەسىلەن، «10»«2»)دىن ئىلگىرى كۆرۈنسە، «2» نى «02» گە ئالماشتۇرۇڭ)</string>
