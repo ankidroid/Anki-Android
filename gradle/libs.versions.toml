@@ -85,7 +85,7 @@ junitJupiter = "5.12.1"
 junitPlatformLauncher = "1.12.1"
 # https://github.com/JetBrains/kotlin/releases/
 kotlin = '2.1.20'
-kotlinxSerializationJson = "1.8.0"
+kotlinxSerializationJson = "1.8.1"
 ktlintGradlePlugin = "12.2.0"
 leakcanaryAndroid = "2.14"
 lint = '31.9.1'
