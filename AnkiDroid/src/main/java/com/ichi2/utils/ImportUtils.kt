@@ -274,15 +274,19 @@ object ImportUtils {
         private fun ensureValidLength(fileName: String): String {
             // #6137 - filenames can be too long when URLEncoded
             return try {
-                val encoded = URLEncoder.encode(fileName, "UTF-8")
+                // Remove All special symbols that are not safe in file names
+                // #18173 - special symbols causing error in image opening in image occlusion
+                val sanitizedFileName = fileName.replace(Regex("[/\\\\:*?\"<>|%$&+^#@!(){}\\[\\]=]"), "_")
+
+                val encoded = URLEncoder.encode(sanitizedFileName, "UTF-8")
                 if (encoded.length <= FILE_NAME_SHORTENING_THRESHOLD) {
                     Timber.d("No filename truncation necessary")
-                    fileName
+                    sanitizedFileName
                 } else {
                     Timber.d("Filename was longer than %d, shortening", FILE_NAME_SHORTENING_THRESHOLD)
                     // take 90 instead of 100 so we don't get the extension
                     val substringLength = FILE_NAME_SHORTENING_THRESHOLD - 10
-                    val shortenedFileName = encoded.substring(0, substringLength) + "..." + getExtension(fileName)
+                    val shortenedFileName = encoded.substring(0, substringLength) + "..." + getExtension(sanitizedFileName)
                     Timber.d("Shortened filename '%s' to '%s'", fileName, shortenedFileName)
                     // if we don't decode, % is double-encoded
                     URLDecoder.decode(shortenedFileName, "UTF-8")
