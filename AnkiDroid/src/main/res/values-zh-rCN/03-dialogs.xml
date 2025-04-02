@@ -102,8 +102,8 @@
     <string name="check_media_title">是否检查媒体？</string>
     <string name="check_media_warning">如果媒体数据较多，检查媒体文件可能会需要较长的时间</string>
     <string name="check_media_message">正在检查媒体文件&#8230;</string>
-    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_adding_missing_tag">正在添加标签&#8230;</string>
+    <string name="check_media_tags_added">标签已添加</string>
     <string name="delete_media_message">正在删除媒体&#8230;</string>
     <string name="delete_media_result_title">填空结果</string>
     <plurals name="delete_media_result_message">

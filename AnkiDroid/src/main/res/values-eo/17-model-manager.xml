@@ -64,9 +64,9 @@
     <string name="model_delete_warning">Ĉu vi certe volas forigi tiun ĉi nototipon?</string>
     <string name="field_delete_warning">Ĉu vi efektive volas forigi tiun kampon?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Add: %1$s</string>
+    <string name="model_browser_add_add">Aldoni: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">Clone: %1$s</string>
+    <string name="model_browser_add_clone">Kloni: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Enigu la ŝablonon, kiu estos uzata de la kart‑foliumilo por vidigi kartojn. Uzu tion ĉi por vidigi pli koncizan respondon.\n\nEkzemple  la antaŭa ŝablono de\n\n“La ĉefurbo de {{Country}} estas:”\npovus esti mallongigita al\n“Ĉefurbo: {{Country}}”</string>
     <string name="card_template_browser_appearance_question_format">Formo de demando</string>
