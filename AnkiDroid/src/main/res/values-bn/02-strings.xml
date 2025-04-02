@@ -82,7 +82,8 @@
     <string name="webview_crash_loop_dialog_content">সিস্টেম ওয়েব-ভিউ \'%1$s\'.\n %2$s কার্ড রেন্ডার করতে ব্যর্থ হয়েছে</string>
     <string name="filter_by_flags" maxLength="41">নিশান</string>
     <!-- Custom study options -->
-    <string name="custom_study_limit_tags">নির্দিষ্ট ট্যাগে সীমিতকরণ</string>
+    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d সমাহিত করা হয়েছে</item>
         <item quantity="other">+%d সমাহিত করা হয়েছে</item>

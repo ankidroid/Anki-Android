@@ -73,6 +73,7 @@
     <string name="custom_study_forgotten">مرور کارت های فراموش شده در x روز گذشته:</string>
     <string name="custom_study_ahead">مرور پیش از موعد تا x روز:</string>
     <string name="custom_study_preview">پیش نمایش کارت های جدید اضافه شده در  x روز گذشته:</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">حافظه</string>
     <string name="storage_almost_full_title">اوکی</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">جای خالی وجود ندارد</string>

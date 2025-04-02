@@ -70,6 +70,7 @@
     <string name="pref_cat_advanced" maxLength="41">Розширені налаштування</string>
     <string name="pref_cat_workarounds" maxLength="41">Спеціальні функції</string>
     <string name="pref_cat_plugins" maxLength="41">Плагіни</string>
+    <string name="pref_cat_editing" maxLength="41">Editing</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Ширина штриха</string>
     <string name="use_input_tag" maxLength="41">Введіть відповідь на картці</string>
@@ -208,7 +209,6 @@
     <string name="accessibility" maxLength="41">Доступність</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Вставити зображення у форматі PNG</string>
-    <string name="paste_as_png_summary">За замовчуванням Anki вводить зображення в буфер обміну в якості JPG файлів для економії місця на диску. Ви можете змінити в меню на PNG зображення.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Натиснeння \"Назад\" двічі, щоб перейти назад/вийти</string>
     <string name="exit_via_double_tap_back_summ">Для уникнення випадкового виходу з оглядача чи додатку</string>
     <!-- Allow all files in media imports -->

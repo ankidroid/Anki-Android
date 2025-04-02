@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">بوش</string>
     <string name="create_subdeck">تارماق دەستە قۇر</string>
     <string name="empty_filtered_deck">سۈزۈلگەن دەستىنى بوشىتىۋاتىدۇ&#8230;</string>
-    <string name="custom_study_deck_name">ئىختىيارى ئۆگىنىش جەريانى</string>
-    <string name="custom_study_deck_exists">ئالدى بىلەن مەۋجۇت ئىختىيارى ئۆگىنىش دەستىسىنىڭ ئاتىنى ئۆزگەرتىڭ</string>
     <string name="search_deck" comment="Deck search for selecting it">دەستە ئىزدە</string>
     <string name="empty_deck">بۇ دەستە بوش</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">دەستە ئىزدە</string>

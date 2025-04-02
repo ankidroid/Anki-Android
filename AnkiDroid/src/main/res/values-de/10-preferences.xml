@@ -68,6 +68,7 @@
     <string name="pref_cat_advanced" maxLength="41">Erweitert</string>
     <string name="pref_cat_workarounds" maxLength="41">Workarounds</string>
     <string name="pref_cat_plugins" maxLength="41">Plug-Ins</string>
+    <string name="pref_cat_editing" maxLength="41">Editing</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Pinselbreite</string>
     <string name="use_input_tag" maxLength="41">Antwort in Karte eintippen</string>
@@ -203,7 +204,6 @@
     <string name="accessibility" maxLength="41">Bedienungshilfen</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Zwischenablage-Bilder als PNG einfügen</string>
-    <string name="paste_as_png_summary">Standardmäßig fügt Anki Bilder in der Zwischenablage als JPG-Dateien ein, um Speicherplatz zu sparen. Sie können diese Einstellung verwenden, um stattdessen PNG-Bilder einzufügen.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Zweimal Zurück drücken, um zurückzugehen</string>
     <string name="exit_via_double_tap_back_summ">Um zu vermeiden, dass Sie den Rezensenten oder die App versehentlich verlassen</string>
     <!-- Allow all files in media imports -->

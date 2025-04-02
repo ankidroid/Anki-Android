@@ -73,6 +73,7 @@
     <string name="custom_study_forgotten">കഴിഞ്ഞ x ദിവസങ്ങളിൽ മറന്ന അവലോകന കാർഡുകൾ:</string>
     <string name="custom_study_ahead">X ദിവസത്തിനകം അവലോകനം ചെയ്യുക:</string>
     <string name="custom_study_preview">അവസാന x ദിവസങ്ങളിൽ ചേർത്ത പുതിയ കാർഡുകൾ പ്രിവ്യൂ ചെയ്യുക:</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">സംഭരണം നിറഞ്ഞു</string>
     <string name="storage_almost_full_title">സംഭരണം ഏതാണ്ട് നിറഞ്ഞു</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ഇടമില്ല</string>

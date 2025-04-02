@@ -73,6 +73,7 @@
     <string name="custom_study_forgotten">Повтаряне на забравени карти през последните x дни:</string>
     <string name="custom_study_ahead">Преглед за следващите x дни:</string>
     <string name="custom_study_preview">Преглед на нови карти, добавени през последните x дни:</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Пълно хранилище</string>
     <string name="storage_almost_full_title">Почти пълно хранилище</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Няма място</string>

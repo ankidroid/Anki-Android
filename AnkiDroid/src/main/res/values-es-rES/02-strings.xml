@@ -82,7 +82,8 @@
     <string name="webview_crash_loop_dialog_content">WebView del sistema no pudo procesar la tarjeta \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Banderas</string>
     <!-- Custom study options -->
-    <string name="custom_study_limit_tags">Limitar a etiquetas concretas</string>
+    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d enterrada</item>
         <item quantity="other">+%d enterradas</item>

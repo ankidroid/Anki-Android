@@ -120,8 +120,6 @@
     <string name="empty_cram_label" maxLength="28">Kosongkan</string>
     <string name="create_subdeck">Cipta subdek</string>
     <string name="empty_filtered_deck">Mengosongkan dek ditapis&#8230;</string>
-    <string name="custom_study_deck_name">Sesi ulang kaji tersuai</string>
-    <string name="custom_study_deck_exists">Nama semula dek ulang kaji tersuai sedia ada dahulu</string>
     <string name="search_deck" comment="Deck search for selecting it">Carian Dek</string>
     <string name="empty_deck">Dek kosong</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Carian Dek</string>

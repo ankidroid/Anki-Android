@@ -126,8 +126,6 @@
     <string name="empty_cram_label" maxLength="28">Tukšs</string>
     <string name="create_subdeck">Izveidot apakškavu</string>
     <string name="empty_filtered_deck">Iztukšo pielāgoto kavu</string>
-    <string name="custom_study_deck_name">Pielāgota mācība</string>
-    <string name="custom_study_deck_exists">Vispirms pārsauciet esošo pielāgoto kavu</string>
     <string name="search_deck" comment="Deck search for selecting it">Kavu pārlūks</string>
     <string name="empty_deck">Šī kava ir tukša</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Kavu meklētājs</string>

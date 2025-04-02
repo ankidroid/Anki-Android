@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">Bosh</string>
     <string name="create_subdeck">Krijoni nëndeck</string>
     <string name="empty_filtered_deck">Po zbrazni kuvertën e filtruar&#8230;</string>
-    <string name="custom_study_deck_name">Sesion studimi me porosi</string>
-    <string name="custom_study_deck_exists">Riemërtoni fillimisht kuvertën ekzistuese të studimit të personalizuar</string>
     <string name="search_deck" comment="Deck search for selecting it">Kërkimi i kuvertës</string>
     <string name="empty_deck">Kjo kuvertë është bosh</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Kërkimi i kuvertës</string>

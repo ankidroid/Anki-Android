@@ -129,8 +129,6 @@
     <string name="empty_cram_label" maxLength="28">Vyprázdniť</string>
     <string name="create_subdeck">Vytvoriť podbalíček</string>
     <string name="empty_filtered_deck">Vyprázdňujem filtrovaný balíček&#8230;</string>
-    <string name="custom_study_deck_name">Vlastné štúdium</string>
-    <string name="custom_study_deck_exists">Prosím premenujte najprv existujúci balíček Vlastné štúdium.</string>
     <string name="search_deck" comment="Deck search for selecting it">Vyhľadávanie v balíčku</string>
     <string name="empty_deck">Tento balíček je prázdny</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Vyhľadávanie v balíčku</string>

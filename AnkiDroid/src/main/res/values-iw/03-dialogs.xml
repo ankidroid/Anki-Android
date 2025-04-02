@@ -78,6 +78,7 @@
     <string name="custom_study_forgotten">חזרה על כרטיסים נשכחים בx ימים האחרונים</string>
     <string name="custom_study_ahead">עבור כמה ימים ברצונך לשנן מראש?</string>
     <string name="custom_study_preview">צפייה ראשונית בכרטיסים חדשים שנוספו בx ימים האחרונים:</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">האיחסון מלא</string>
     <string name="storage_almost_full_title">שטח האחסון כמעט מלא</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">אין מקום</string>

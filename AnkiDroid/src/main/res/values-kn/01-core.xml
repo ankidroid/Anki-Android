@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">ಖಾಲಿ</string>
     <string name="create_subdeck">ಉಪ ಸಂಗ್ರಹವನ್ನು ರಚಿಸಿ</string>
     <string name="empty_filtered_deck">ಫಿಲ್ಟರ್ ಮಾಡಿದ ಡೆಕ್ ಅನ್ನು ಖಾಲಿ ಮಾಡಲಾಗುತ್ತಿದೆ&#8230;</string>
-    <string name="custom_study_deck_name">ಕಸ್ಟಮ್ ಅಧ್ಯಯನ ಅಧಿವೇಶನ</string>
-    <string name="custom_study_deck_exists">ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಕಸ್ಟಮ್ ಸ್ಟಡಿ ಡೆಕ್ ಅನ್ನು ಮೊದಲು ಮರುಹೆಸರಿಸಿ</string>
     <string name="search_deck" comment="Deck search for selecting it">ಡೆಕ್ ಹುಡುಕಾಟ</string>
     <string name="empty_deck">ಈ ಡೆಕ್ ಖಾಲಿಯಾಗಿದೆ</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">ಡೆಕ್ ಹುಡುಕಾಟ</string>

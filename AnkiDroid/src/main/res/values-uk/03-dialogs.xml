@@ -77,6 +77,7 @@
     <string name="custom_study_forgotten">Повторити картки забуті за останні x днів:</string>
     <string name="custom_study_ahead">Повторити наперед за х днів:</string>
     <string name="custom_study_preview">Переглянути нові картки додані за останні x днів:</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Сховище заповнено</string>
     <string name="storage_almost_full_title">Сховище майже заповнено</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Пам\'ять заповнена</string>

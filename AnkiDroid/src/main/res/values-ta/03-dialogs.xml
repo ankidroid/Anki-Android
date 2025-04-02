@@ -73,6 +73,7 @@
     <string name="custom_study_forgotten">கடந்த x நாட்களில் மறக்கப்பட்ட மதிப்பாய்வு அட்டைகள்:</string>
     <string name="custom_study_ahead">x நாட்களுக்குள் மதிப்பாய்வு செய்யவும்:</string>
     <string name="custom_study_preview">கடந்த x நாட்களில் சேர்க்கப்பட்ட புதிய கார்டுகளின் மாதிரிக்காட்சி:</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">சேமிப்பு நிரம்பியது</string>
     <string name="storage_almost_full_title">சேமிப்பு கிட்டத்தட்ட நிரம்பிவிட்டது</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">இடமில்லை</string>

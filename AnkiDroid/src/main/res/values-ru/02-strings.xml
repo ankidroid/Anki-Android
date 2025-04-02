@@ -82,7 +82,8 @@
     <string name="webview_crash_loop_dialog_content">Системному WebView не удалось отрисовать карточку «%1$s».\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Флажки</string>
     <!-- Custom study options -->
-    <string name="custom_study_limit_tags">Отфильтровать по меткам</string>
+    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d отложен</item>
         <item quantity="few">+%d отложено</item>

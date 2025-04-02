@@ -67,6 +67,7 @@
     <string name="pref_cat_advanced" maxLength="41">Lanjutan</string>
     <string name="pref_cat_workarounds" maxLength="41">Penyelesaian sementara</string>
     <string name="pref_cat_plugins" maxLength="41">Plugin</string>
+    <string name="pref_cat_editing" maxLength="41">Editing</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Lebar garisan</string>
     <string name="use_input_tag" maxLength="41">Taipkan jawapan ke dalam kad</string>
@@ -202,7 +203,6 @@
     <string name="accessibility" maxLength="41">Kebolehcapaian</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Tampal gambar papan keratan sebagai PNG</string>
-    <string name="paste_as_png_summary">Secara lalai Anki tampal gambar pada papan keratan sebagai fail JPG untuk jimat ruang cakera. Anda boleh guna tetapan ini untuk sebaliknya tampal gambar PNG.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Tekan kembali dua kali untuk kembali/keluar</string>
     <string name="exit_via_double_tap_back_summ">Elak keluar dari penyemak atau aplikasi tanpa sengaja</string>
     <!-- Allow all files in media imports -->

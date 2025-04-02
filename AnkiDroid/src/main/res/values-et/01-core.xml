@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">Tühi</string>
     <string name="create_subdeck">Loo alakaardipakk</string>
     <string name="empty_filtered_deck">Tühjendan filtritud kaardipakki&#8230;</string>
-    <string name="custom_study_deck_name">Kohandatud õppesessioon</string>
-    <string name="custom_study_deck_exists">Esmalt nimeta ümber juba olemasolev täiendava õppe kaardipakk</string>
     <string name="search_deck" comment="Deck search for selecting it">Otsi kaardipakki</string>
     <string name="empty_deck">See kaardipakk on tühi</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Otsi kaardipakki</string>

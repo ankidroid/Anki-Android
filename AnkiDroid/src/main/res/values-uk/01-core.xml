@@ -129,8 +129,6 @@
     <string name="empty_cram_label" maxLength="28">Спорожнити</string>
     <string name="create_subdeck">Створити підколоду</string>
     <string name="empty_filtered_deck">Очищення фільтрованої колоди&#8230;</string>
-    <string name="custom_study_deck_name">Сесія індивідуального навчання</string>
-    <string name="custom_study_deck_exists">Спочатку перейменуйте колоду індивідуального навчання</string>
     <string name="search_deck" comment="Deck search for selecting it">Пошук колоди</string>
     <string name="empty_deck">Ця колода порожня</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Пошук колоди</string>

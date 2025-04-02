@@ -68,6 +68,7 @@
     <string name="pref_cat_advanced" maxLength="41">आधुनिक</string>
     <string name="pref_cat_workarounds" maxLength="41">वर्कराउंड्स</string>
     <string name="pref_cat_plugins" maxLength="41">प्लगइन</string>
+    <string name="pref_cat_editing" maxLength="41">Editing</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">स्ट्रोक रून्दी</string>
     <string name="use_input_tag" maxLength="41">कार्डमध्ये उत्तर टाइप करा</string>
@@ -203,7 +204,6 @@
     <string name="accessibility" maxLength="41">प्रवेशयोग्यता</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">क्लिपबोर्ड प्रतिमा PNG म्हणून पेस्ट करा</string>
-    <string name="paste_as_png_summary">डिफॉल्टनुसार अंकी डिस्क स्पेस वाचवण्यासाठी JPG फाइल्स म्हणून क्लिपबोर्डवर प्रतिमा पेस्ट करते. त्याऐवजी तुम्ही PNG इमेज म्हणून पेस्ट करण्यासाठी हा पर्याय वापरू शकता.</string>
     <string name="exit_via_double_tap_back" maxLength="41">परत जाण्यासाठी/बाहेर पडण्यासाठी दोनदा परत दाबा</string>
     <string name="exit_via_double_tap_back_summ">चुकून पुनरावलोकनकर्ता किंवा ॲप सोडणे टाळण्यासाठी</string>
     <!-- Allow all files in media imports -->

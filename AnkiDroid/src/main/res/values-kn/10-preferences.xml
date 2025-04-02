@@ -68,6 +68,7 @@
     <string name="pref_cat_advanced" maxLength="41">ಸುಧಾರಿತ</string>
     <string name="pref_cat_workarounds" maxLength="41">ಪರಿಹಾರೋಪಾಯಗಳು</string>
     <string name="pref_cat_plugins" maxLength="41">ಪ್ಲಗಿನ್‌ಗಳು</string>
+    <string name="pref_cat_editing" maxLength="41">Editing</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">ಸ್ಟ್ರೋಕ್ ಅಗಲ</string>
     <string name="use_input_tag" maxLength="41">ಕಾರ್ಡ್‌ನಲ್ಲಿ ಉತ್ತರವನ್ನು ಟೈಪ್ ಮಾಡಿ</string>
@@ -203,7 +204,6 @@
     <string name="accessibility" maxLength="41">ಪ್ರವೇಶಿಸುವಿಕೆ</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">ಕ್ಲಿಪ್‌ಬೋರ್ಡ್ ಚಿತ್ರಗಳನ್ನು PNG ನಂತೆ ಅಂಟಿಸಿ</string>
-    <string name="paste_as_png_summary">ಕ್ಲಿಪ್‌ಬೋರ್ಡ್‌ನಲ್ಲಿ ಡಿಸ್ಕ್ ಜಾಗವನ್ನು ಉಳಿಸಲು ಡೀಫಾಲ್ಟ್ ಆಗಿ ಅಂಕಿ ಚಿತ್ರಗಳನ್ನು JPG ಫೈಲ್‌ಗಳಾಗಿ ಅಂಟಿಸುತ್ತಾನೆ. ಬದಲಿಗೆ PNG ಚಿತ್ರಗಳನ್ನು ಅಂಟಿಸಲು ನೀವು ಈ ಆಯ್ಕೆಯನ್ನು ಬಳಸಬಹುದು.</string>
     <string name="exit_via_double_tap_back" maxLength="41">ಹಿಂತಿರುಗಲು/ನಿರ್ಗಮಿಸಲು ಎರಡು ಬಾರಿ ಹಿಂದಕ್ಕೆ ಒತ್ತಿರಿ</string>
     <string name="exit_via_double_tap_back_summ">ವಿಮರ್ಶಕರು ಅಥವಾ ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಆಕಸ್ಮಿಕವಾಗಿ ತೊರೆಯುವುದನ್ನು ತಪ್ಪಿಸಲು</string>
     <!-- Allow all files in media imports -->

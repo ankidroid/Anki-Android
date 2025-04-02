@@ -82,7 +82,8 @@
     <string name="webview_crash_loop_dialog_content">सिस्टम WebView कार्ड रेंडर करने में विफल रहा \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">झंडे</string>
     <!-- Custom study options -->
-    <string name="custom_study_limit_tags">विशेष टैग करने के लिए सीमा</string>
+    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d दफनाया गया</item>
         <item quantity="other">+%d दफनाया गया</item>

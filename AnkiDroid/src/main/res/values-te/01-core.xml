@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">ఖాళీ</string>
     <string name="create_subdeck">సబ్‌డెక్‌ను సృష్టించండి</string>
     <string name="empty_filtered_deck">ఫిల్టర్ చేసిన డెక్‌ను ఖాళీ చేస్తోంది&#8230;</string>
-    <string name="custom_study_deck_name">కస్టమ్ అధ్యయనం సెషన్</string>
-    <string name="custom_study_deck_exists">మొదటి సానుకూల అధ్యయనం డెక్ యొక్క పేరు మార్చండి</string>
     <string name="search_deck" comment="Deck search for selecting it">డెక్ శోధన</string>
     <string name="empty_deck">ఈ డెక్ ఖాళీగా ఉంది</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">డెక్ శోధన</string>

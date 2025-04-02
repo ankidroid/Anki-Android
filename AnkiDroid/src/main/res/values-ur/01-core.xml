@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">خالى</string>
     <string name="create_subdeck">سب ڈیک بنائیں</string>
     <string name="empty_filtered_deck">فلٹر شدہ ڈیک کو خالی کیا جا رہا ہے&#8230;</string>
-    <string name="custom_study_deck_name">اپنی مرضی کے مطابق تعلیمی سیشن</string>
-    <string name="custom_study_deck_exists">پہلے موجودہ مخصوص مطالعہ ڈیک کو نیا نام دیں</string>
     <string name="search_deck" comment="Deck search for selecting it">ڈیک تلاش</string>
     <string name="empty_deck">یہ ڈیک خالی ہے</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">ڈیک تلاش</string>

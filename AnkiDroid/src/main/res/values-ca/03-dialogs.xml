@@ -73,6 +73,7 @@
     <string name="custom_study_forgotten">Revisa les fitxes oblidades en els darrers x dies:</string>
     <string name="custom_study_ahead">Revisió de x dies endavant:</string>
     <string name="custom_study_preview">Mostra les fitxes noves afegides en els últims x dies:</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">No queda espai al disc</string>
     <string name="storage_almost_full_title">El disc està gairebé ple</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Sense espai</string>

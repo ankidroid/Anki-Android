@@ -82,7 +82,8 @@
     <string name="webview_crash_loop_dialog_content">Сістэмнаму WebView не атрымалася апрацаваць картку \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Сцягі</string>
     <!-- Custom study options -->
-    <string name="custom_study_limit_tags">Абмежаваць вызначанымі меткамі</string>
+    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d адкладзеная</item>
         <item quantity="few">+%d адкладзеныя</item>

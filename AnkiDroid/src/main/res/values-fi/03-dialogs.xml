@@ -73,6 +73,7 @@
     <string name="custom_study_forgotten">Kortteja unohdettu edellisenä x päivänä:</string>
     <string name="custom_study_ahead">Kertaa etukäteen x päivää:</string>
     <string name="custom_study_preview">Esikatsele viimeisinä x päivänä lisättyjä kortteja:</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Tallennustila on täynnä</string>
     <string name="storage_almost_full_title">Tallennustila on melkein täynnä</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Ei tilaa</string>

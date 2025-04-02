@@ -68,6 +68,7 @@
     <string name="pref_cat_advanced" maxLength="41">ఉన్నతస్థాయి</string>
     <string name="pref_cat_workarounds" maxLength="41">పరిష్కారాలను</string>
     <string name="pref_cat_plugins" maxLength="41">ప్లగ్ఇన్</string>
+    <string name="pref_cat_editing" maxLength="41">Editing</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">స్ట్రోక్ వెడల్పు</string>
     <string name="use_input_tag" maxLength="41">కార్డుకు సమాధానం టైప్ చేయండి</string>
@@ -203,7 +204,6 @@
     <string name="accessibility" maxLength="41">సౌలభ్యాన్ని</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">క్లిప్‌బోర్డ్ చిత్రాలను PNGగా అతికించండి</string>
-    <string name="paste_as_png_summary">డిఫాల్ట్‌గా Anki డిస్క్ స్థలాన్ని ఆదా చేయడానికి చిత్రాలను JPG ఫైల్‌లుగా క్లిప్‌బోర్డ్‌కు అతికిస్తుంది. బదులుగా PNG చిత్రాల వలె అతికించడానికి మీరు ఈ ఎంపికను ఉపయోగించవచ్చు.</string>
     <string name="exit_via_double_tap_back" maxLength="41">వెనుకకు వెళ్లడానికి/నిష్క్రమించడానికి రెండుసార్లు వెనుకకు నొక్కండి</string>
     <string name="exit_via_double_tap_back_summ">ప్రమాదవశాత్తూ సమీక్షకుడు లేదా యాప్ నుండి నిష్క్రమించడాన్ని నివారించడానికి</string>
     <!-- Allow all files in media imports -->

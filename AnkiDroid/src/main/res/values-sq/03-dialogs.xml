@@ -73,6 +73,7 @@
     <string name="custom_study_forgotten">Rishikoni kartat e harruara në x ditët e fundit:</string>
     <string name="custom_study_ahead">Rishikoni përpara për x ditë:</string>
     <string name="custom_study_preview">Shikoni paraprakisht kartat e reja të shtuara në x ditët e fundit:</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Magazinimi plot</string>
     <string name="storage_almost_full_title">Magazinimi pothuajse i mbushur</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Nuk ka hapësirë</string>

@@ -71,6 +71,7 @@
     <string name="custom_study_forgotten">直近 x 日間で「やり直し」を選んだカードを再学習</string>
     <string name="custom_study_ahead">x 日先までの復習カードを予習</string>
     <string name="custom_study_preview">直近 x 日間で追加した習得未開始の新規カードを予習</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">ストレージの空き容量がありません</string>
     <string name="storage_almost_full_title">ストレージの空き容量が少なくなっています</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">空き容量不足</string>

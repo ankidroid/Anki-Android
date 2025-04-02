@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">Malplenigi</string>
     <string name="create_subdeck">Krei subkartaron</string>
     <string name="empty_filtered_deck">Malplenigado de filtrita kartaro&#8230;</string>
-    <string name="custom_study_deck_name">Propra lernado</string>
-    <string name="custom_study_deck_exists">Unue ŝanĝu nomon de kartaro por propra lernado</string>
     <string name="search_deck" comment="Deck search for selecting it">Serĉi kartaron</string>
     <string name="empty_deck">Tiu ĉi kartaro estas malplena</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Serĉi kartaron</string>

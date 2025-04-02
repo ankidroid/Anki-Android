@@ -75,6 +75,7 @@
     <string name="custom_study_forgotten">Понови заборављено за последњих х дана:</string>
     <string name="custom_study_ahead">Прегледај унапред за х дана:</string>
     <string name="custom_study_preview">Нове картице, додате за последњих х дана:</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Storage full</string>
     <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>

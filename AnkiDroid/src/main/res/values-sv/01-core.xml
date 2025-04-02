@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">Töm</string>
     <string name="create_subdeck">Skapa underkortlek</string>
     <string name="empty_filtered_deck">Tömmer filtrerad kortlek&#8230;</string>
-    <string name="custom_study_deck_name">Anpassad studiesession</string>
-    <string name="custom_study_deck_exists">Var god döp om den existerande anpassade studiekortleken först.</string>
     <string name="search_deck" comment="Deck search for selecting it">Kortlekssökning</string>
     <string name="empty_deck">Den här kortleken är tom</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Kortlekssökning</string>

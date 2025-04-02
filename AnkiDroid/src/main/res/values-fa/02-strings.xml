@@ -82,7 +82,8 @@
     <string name="webview_crash_loop_dialog_content">سیستم در تنظیم ظاهر کارت %1$s با خطا مواجه شد.\n%2$s</string>
     <string name="filter_by_flags" maxLength="41">پرچم ها</string>
     <!-- Custom study options -->
-    <string name="custom_study_limit_tags">محدود کردن به برچسب هايی خاص</string>
+    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d دفن شده</item>
         <item quantity="other">+%d دفن شده</item>

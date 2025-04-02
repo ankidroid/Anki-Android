@@ -68,6 +68,7 @@
     <string name="pref_cat_advanced" maxLength="41">Avancerat</string>
     <string name="pref_cat_workarounds" maxLength="41">Specialfunktioner</string>
     <string name="pref_cat_plugins" maxLength="41">Plugins</string>
+    <string name="pref_cat_editing" maxLength="41">Editing</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Streckbredd</string>
     <string name="use_input_tag" maxLength="41">Skriv svar i kortet</string>
@@ -203,7 +204,6 @@
     <string name="accessibility" maxLength="41">Tillgänglighet</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Klistra in urklipps bilder som PNG</string>
-    <string name="paste_as_png_summary">Som standard klistrar Anki in bilder från urklipp som JPG-filer för att spara diskutrymme. Du kan använda den här inställningen för att klistra in bilder som PNG-filer istället.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Tryck bakåt 2 ggr för att gå bakåt/sluta</string>
     <string name="exit_via_double_tap_back_summ">För att undvika att av misstag lämna granskaren eller appen</string>
     <!-- Allow all files in media imports -->

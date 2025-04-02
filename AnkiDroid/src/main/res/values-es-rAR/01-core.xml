@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">Vaciar</string>
     <string name="create_subdeck">Crear submazo</string>
     <string name="empty_filtered_deck">Vaciando mazo filtrado</string>
-    <string name="custom_study_deck_name">Sesión de estudio personalizado</string>
-    <string name="custom_study_deck_exists">Renombre primero el mazo de estudio personalizado existente</string>
     <string name="search_deck" comment="Deck search for selecting it">Buscar mazo</string>
     <string name="empty_deck">Este mazo está vacío</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Búsqueda de Mazo</string>

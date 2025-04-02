@@ -68,6 +68,7 @@
     <string name="pref_cat_advanced" maxLength="41">மேம்பட்டது</string>
     <string name="pref_cat_workarounds" maxLength="41">தீர்வுகள்</string>
     <string name="pref_cat_plugins" maxLength="41">செருகுநிரல்கள்</string>
+    <string name="pref_cat_editing" maxLength="41">Editing</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">ஸ்ட்ரோக் அகலம்</string>
     <string name="use_input_tag" maxLength="41">அட்டையில் பதிலை உள்ளிடவும்</string>
@@ -203,7 +204,6 @@
     <string name="accessibility" maxLength="41">அணுகல்தன்மை</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">கிளிப்போர்டு படங்களை PNG ஆக ஒட்டவும்</string>
-    <string name="paste_as_png_summary">டிஸ்க் இடத்தைச் சேமிப்பதற்காக அங்கி இயல்பாகக் கிளிப்போர்டில் படங்களை JPG கோப்புகளாக ஒட்டுகிறது. அதற்குப் பதிலாக PNG படங்களாக ஒட்டுவதற்கு இந்த விருப்பத்தைப் பயன்படுத்தலாம்.</string>
     <string name="exit_via_double_tap_back" maxLength="41">திரும்பிச் செல்ல/வெளியேற மீண்டும் இருமுறை அழுத்தவும்</string>
     <string name="exit_via_double_tap_back_summ">தற்செயலாக மதிப்பாய்வாளர் அல்லது விண்ணப்பத்தை விட்டு வெளியேறுவதைத் தவிர்க்க</string>
     <!-- Allow all files in media imports -->

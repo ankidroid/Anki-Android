@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">Vala</string>
     <string name="create_subdeck">Create subdeck</string>
     <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
-    <string name="custom_study_deck_name">Custom study session</string>
-    <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="empty_deck">This deck is empty</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Deck Search</string>

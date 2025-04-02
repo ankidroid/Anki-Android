@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">খালি</string>
     <string name="create_subdeck">সাব ডেক বানাও</string>
     <string name="empty_filtered_deck">খালি করা হচ্ছে ফিল্টারড ডেক</string>
-    <string name="custom_study_deck_name">নিজস্ব গবেষণা অধিবেশন</string>
-    <string name="custom_study_deck_exists">বর্তমান স্বনির্ধারিত গবেষণা ডেক প্রথম পুনঃনামকরণ করুন</string>
     <string name="search_deck" comment="Deck search for selecting it">ডেক অনুসন্ধান</string>
     <string name="empty_deck">এই ডেক ফাঁকা।</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">ডেক অনুসন্ধান</string>

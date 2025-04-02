@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">Leeren</string>
     <string name="create_subdeck">Unterstapel erstellen</string>
     <string name="empty_filtered_deck">Gefilterter Stapel wird geleert &#8230;</string>
-    <string name="custom_study_deck_name">Benutzerdefinierte Sitzung</string>
-    <string name="custom_study_deck_exists">Bitte benennen Sie zunächst den existierenden Stapel »Benutzerdefinierte Sitzung« um</string>
     <string name="search_deck" comment="Deck search for selecting it">Stapelsuche</string>
     <string name="empty_deck">Dieser Stapel ist leer</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Stapelsuche</string>

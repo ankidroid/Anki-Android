@@ -68,6 +68,7 @@
     <string name="pref_cat_advanced" maxLength="41">उन्नत</string>
     <string name="pref_cat_workarounds" maxLength="41">वैकल्पिक हल</string>
     <string name="pref_cat_plugins" maxLength="41">प्लगइन</string>
+    <string name="pref_cat_editing" maxLength="41">Editing</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">अंकन की चौड़ाई</string>
     <string name="use_input_tag" maxLength="41">पत्ता में उत्तर दर्ज करें</string>
@@ -203,7 +204,6 @@
     <string name="accessibility" maxLength="41">सरल उपयोग</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">क्लिपबोर्ड इमेजेज को पीएनजी प्रारूप में चिपकाएँ</string>
-    <string name="paste_as_png_summary">डिफ़ॉल्ट रूप से एंड्रॉइड डिस्क स्थान को बचाने के लिए छवियों को JPG फ़ाइलों के रूप में क्लिपबोर्ड पर चिपकाता है। आप इसके बजाय पीएनजी छवियों के रूप में पेस्ट करने के लिए इस विकल्प का उपयोग कर सकते हैं।</string>
     <string name="exit_via_double_tap_back" maxLength="41">वापस जाने/बाहर निकलने के लिए दो बार बैक दबाएँ</string>
     <string name="exit_via_double_tap_back_summ">समीक्षक या ऐप को गलती से छोड़ने से बचने के लिए</string>
     <!-- Allow all files in media imports -->

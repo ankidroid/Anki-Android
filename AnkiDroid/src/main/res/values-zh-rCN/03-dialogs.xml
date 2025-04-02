@@ -71,6 +71,7 @@
     <string name="custom_study_forgotten">复习过去 x 天中忘记的卡片：</string>
     <string name="custom_study_ahead">提前 x 天复习：</string>
     <string name="custom_study_preview">预览过去 x 天中新增的卡片：</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">存储空间已满</string>
     <string name="storage_almost_full_title">存储空间几乎满了</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">没有空间</string>

@@ -73,6 +73,7 @@
     <string name="custom_study_forgotten">Herhaal kaarten vergeten in de laatste x dagen:</string>
     <string name="custom_study_ahead">Herhaal x dagen vooruit:</string>
     <string name="custom_study_preview">Voorbeschouw nieuwe kaarten toegevoegd in de laatste x dagen:</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Opslag vol</string>
     <string name="storage_almost_full_title">Opslag is bijna vol</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Geen ruimte</string>

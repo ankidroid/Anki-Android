@@ -73,6 +73,7 @@
     <string name="custom_study_forgotten">Karten wiederholen, die in den letzten x Tagen vergessen wurden:</string>
     <string name="custom_study_ahead">x Tage im Voraus lernen:</string>
     <string name="custom_study_preview">Vorschau auf neue Karten, die in den letzten x Tagen hinzugefügt wurden:</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Speicher voll</string>
     <string name="storage_almost_full_title">Speicher fast voll</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Kein Speicherplatz</string>

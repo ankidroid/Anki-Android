@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">காலி</string>
     <string name="create_subdeck">துணைத் தளத்தை உருவாக்கவும்</string>
     <string name="empty_filtered_deck">வடிகட்டிய தளத்தைக் காலி செய்கிறது&#8230;</string>
-    <string name="custom_study_deck_name">தனிப்பயன் ஆய்வு கூட்டம்</string>
-    <string name="custom_study_deck_exists">தற்போதுள்ள விருப்ப ஆய்வு கட்டு முதலில் மறுபெயரிடு</string>
     <string name="search_deck" comment="Deck search for selecting it">டெக் தேடல்</string>
     <string name="empty_deck">இந்த கட்டு காலியாக உள்ளது</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">டெக் தேடல்</string>

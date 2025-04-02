@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">Tøm</string>
     <string name="create_subdeck">Lag ein underkortleik</string>
     <string name="empty_filtered_deck">Den filtrerte kortstokken tømmes&#8230;</string>
-    <string name="custom_study_deck_name">Tilpasset studiesesjon</string>
-    <string name="custom_study_deck_exists">Gi den eksisterende tilpassede studiestokken nytt navn først</string>
     <string name="search_deck" comment="Deck search for selecting it">Finn kortstokk</string>
     <string name="empty_deck">Denne kortleiken er tom</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Finn kortstokk</string>

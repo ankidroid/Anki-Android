@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">ባዶ ቦታ</string>
     <string name="create_subdeck">Create subdeck</string>
     <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
-    <string name="custom_study_deck_name">መጽናዕቲ ብዝጠዕም ምምዕርራይ</string>
-    <string name="custom_study_deck_exists">መጀመርያ ዝነበረ ምምዕርራይ መጽናዕቲ ባይታ ከምባሓዱሽ ሰዩም።</string>
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="empty_deck">እዚ ባይታ እዚ ጥርሑ እዩ ዘሎ።</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Deck Search</string>

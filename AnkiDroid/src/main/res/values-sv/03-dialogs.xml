@@ -73,6 +73,7 @@
     <string name="custom_study_forgotten">Repetera kort som är glömda under de senaste x dagarna:</string>
     <string name="custom_study_ahead">Repetera i förväg för x dagar:</string>
     <string name="custom_study_preview">Förhandsgranska nya kort som lagts till de senaste x dagarna:</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Lagring full</string>
     <string name="storage_almost_full_title">Lagring nästan full</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Inget utrymme</string>
