@@ -73,6 +73,7 @@
     <string name="custom_study_forgotten">پچھلے دنوں میں بھولے گئے کارڈز کا جائزہ لیں:</string>
     <string name="custom_study_ahead">ایکس دنوں میں آگے کا جائزہ لیں:</string>
     <string name="custom_study_preview">پچھلے x دنوں میں شامل کیے گئے نئے کارڈز کا جائزہ لیں:</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">اسٹوریج بھرا ہوا ہے</string>
     <string name="storage_almost_full_title">اسٹوریج تقریباً بھر گیا ہے</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">کوئی جگہ نہیں</string>

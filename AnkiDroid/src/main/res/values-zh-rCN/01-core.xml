@@ -120,8 +120,6 @@
     <string name="empty_cram_label" maxLength="28">清空</string>
     <string name="create_subdeck">创建子牌组</string>
     <string name="empty_filtered_deck">正在清空已过滤的牌组&#8230;</string>
-    <string name="custom_study_deck_name">自定义学习的进程</string>
-    <string name="custom_study_deck_exists">请先重命名现有的自定义学习牌组。</string>
     <string name="search_deck" comment="Deck search for selecting it">牌组搜索</string>
     <string name="empty_deck">此牌组为空</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">牌组搜索</string>

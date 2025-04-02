@@ -71,6 +71,7 @@
     <string name="custom_study_forgotten">최근 x일 동안 잊혀진 복습 카드:</string>
     <string name="custom_study_ahead">x일 만큼 미리 복습하기:</string>
     <string name="custom_study_preview">최근 x일 내에 추가된 카드 미리 학습하기:</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">저장 공간이 가득 찼습니다.</string>
     <string name="storage_almost_full_title">저장공간이 거의 가득 찼습니다.</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">빈 공간 없음</string>

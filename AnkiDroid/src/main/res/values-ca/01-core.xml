@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">Buit</string>
     <string name="create_subdeck">Crea un paquet</string>
     <string name="empty_filtered_deck">S\'està buidant el paquet filtrat</string>
-    <string name="custom_study_deck_name">Sessió d\'estudi a mida</string>
-    <string name="custom_study_deck_exists">Si us plau, primer canvieu de nom el paquet d\'estudi a mida</string>
     <string name="search_deck" comment="Deck search for selecting it">Cerca un paquet</string>
     <string name="empty_deck">Aquest paquet és buit</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Cerca un paquet</string>

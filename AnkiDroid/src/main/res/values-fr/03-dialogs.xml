@@ -73,6 +73,7 @@
     <string name="custom_study_forgotten">Revoir les cartes oubliées dans les x derniers jours :</string>
     <string name="custom_study_ahead">Réviser à l\'avance de x jours :</string>
     <string name="custom_study_preview">Afficher les nouvelles cartes ajoutées dans les x derniers jours :</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Stockage plein</string>
     <string name="storage_almost_full_title">Il n\'y a presque plus d\'espace libre</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Aucun espace</string>

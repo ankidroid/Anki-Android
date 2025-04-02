@@ -71,6 +71,7 @@
     <string name="custom_study_forgotten">Ulas kartu yang terlupakan dalam x hari terakhir:</string>
     <string name="custom_study_ahead">Ulas duluan sampai x hari:</string>
     <string name="custom_study_preview">Pratinjau kartu yang baru ditambahkan dalam x hari terakhir:</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Penyimpanan sudah penuh</string>
     <string name="storage_almost_full_title">Penyimpanan hampir penuh</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Tidak ada ruang</string>

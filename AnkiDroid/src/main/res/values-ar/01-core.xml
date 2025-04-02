@@ -135,8 +135,6 @@
     <string name="empty_cram_label" maxLength="28">إفراغ</string>
     <string name="create_subdeck">إنشاء رزمة فرعية</string>
     <string name="empty_filtered_deck">جار إفراغ الرزمة المفلترة&#8230;</string>
-    <string name="custom_study_deck_name">جلسة دراسة مخصصة</string>
-    <string name="custom_study_deck_exists">أولا أعد تسمية \"رزمة الدراسة المخصصة\" الحالية</string>
     <string name="search_deck" comment="Deck search for selecting it">البحث عن رزمة</string>
     <string name="empty_deck">هذه الرزمة فارغة</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">بحث عن رزمة</string>

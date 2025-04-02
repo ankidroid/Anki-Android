@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">Празно</string>
     <string name="create_subdeck">Създай подтесте</string>
     <string name="empty_filtered_deck">Изпразване на филтрирано тесте&#8230;</string>
-    <string name="custom_study_deck_name">Допълнително време за учене</string>
-    <string name="custom_study_deck_exists">Първо преименувайте съществуващото тесте за учене</string>
     <string name="search_deck" comment="Deck search for selecting it">Потърси тесте</string>
     <string name="empty_deck">Това тесте е празно</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Потърси тесте</string>

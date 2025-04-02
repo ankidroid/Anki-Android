@@ -129,8 +129,6 @@
     <string name="empty_cram_label" maxLength="28">Очистить</string>
     <string name="create_subdeck">Создать подколоду</string>
     <string name="empty_filtered_deck">Фильтрованная колода очищается&#8230;</string>
-    <string name="custom_study_deck_name">Допзанятие</string>
-    <string name="custom_study_deck_exists">Сначала переименуйте существующую дополнительную колоду</string>
     <string name="search_deck" comment="Deck search for selecting it">Поиск колод</string>
     <string name="empty_deck">Эта колода пуста</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Поиск колоды</string>

@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">ખાલી</string>
     <string name="create_subdeck">સબડેક બનાવો</string>
     <string name="empty_filtered_deck">ફિલ્ટર કરેલ ડેક ખાલી કરી રહ્યું છે&#8230;</string>
-    <string name="custom_study_deck_name">કસ્ટમ અભ્યાસ સત્ર</string>
-    <string name="custom_study_deck_exists">પહેલા હાલના કસ્ટમ સ્ટડી ડેકનું નામ બદલો</string>
     <string name="search_deck" comment="Deck search for selecting it">ડેક શોધ</string>
     <string name="empty_deck">આ ડેક ખાલી છે</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">ડેક શોધ</string>

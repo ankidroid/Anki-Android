@@ -68,6 +68,7 @@
     <string name="pref_cat_advanced" maxLength="41">અદ્યતન</string>
     <string name="pref_cat_workarounds" maxLength="41">વર્કઅરાઉન્ડ</string>
     <string name="pref_cat_plugins" maxLength="41">પ્લગઈન્સ</string>
+    <string name="pref_cat_editing" maxLength="41">Editing</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">સ્ટ્રોક પહોળાઈ</string>
     <string name="use_input_tag" maxLength="41">કાર્ડમાં જવાબ લખો</string>
@@ -203,7 +204,6 @@
     <string name="accessibility" maxLength="41">સુલભતા</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">ક્લિપબોર્ડ છબીઓને PNG તરીકે પેસ્ટ કરો</string>
-    <string name="paste_as_png_summary">ડિફૉલ્ટ રીતે અંકી ડિસ્ક સ્પેસ બચાવવા માટે JPG ફાઇલો તરીકે ક્લિપબોર્ડ પર છબીઓ પેસ્ટ કરે છે. તમે તેના બદલે PNG છબીઓ તરીકે પેસ્ટ કરવા માટે આ વિકલ્પનો ઉપયોગ કરી શકો છો.</string>
     <string name="exit_via_double_tap_back" maxLength="41">પાછા જવા/બહાર જવા માટે બે વાર પાછા દબાવો</string>
     <string name="exit_via_double_tap_back_summ">આકસ્મિક રીતે સમીક્ષક અથવા એપ્લિકેશન છોડવાનું ટાળવા માટે</string>
     <!-- Allow all files in media imports -->

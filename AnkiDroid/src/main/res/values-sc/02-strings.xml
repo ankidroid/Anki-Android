@@ -83,7 +83,8 @@
    %2$s</string>
     <string name="filter_by_flags" maxLength="41">Banderas</string>
     <!-- Custom study options -->
-    <string name="custom_study_limit_tags">Lìmita a etichetas particulares</string>
+    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d interrada</item>
         <item quantity="other">+%d interradas</item>

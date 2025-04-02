@@ -83,7 +83,8 @@
 %2$s</string>
     <string name="filter_by_flags" maxLength="41">플래그</string>
     <!-- Custom study options -->
-    <string name="custom_study_limit_tags">특정 태그로만 제한하기</string>
+    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="other">+%d 숨겨짐</item>
     </plurals>

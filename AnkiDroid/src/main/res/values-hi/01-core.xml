@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">खाली</string>
     <string name="create_subdeck">सबडेक बनाऐं</string>
     <string name="empty_filtered_deck">फ़िल्टर किए गए डेक को खाली करना &#8230;</string>
-    <string name="custom_study_deck_name">कस्टम अध्ययन सत्र</string>
-    <string name="custom_study_deck_exists">कृपया पहले मौजूदा कस्टम अध्ययन डेक का नाम बदलें।</string>
     <string name="search_deck" comment="Deck search for selecting it">डेक खोज</string>
     <string name="empty_deck">इस डेक खाली है</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">डेक खोज</string>

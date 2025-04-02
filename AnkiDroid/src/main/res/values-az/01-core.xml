@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">Boş</string>
     <string name="create_subdeck">Alt dəstə yarat</string>
     <string name="empty_filtered_deck">filtrlənmiş dəstənin boşaldılması</string>
-    <string name="custom_study_deck_name">Şəxsi öyrənmə sessiyası</string>
-    <string name="custom_study_deck_exists">Əvvəlcə mövcud fərdi tədqiqat dəstəsinin adını dəyişin</string>
     <string name="search_deck" comment="Deck search for selecting it">Dəstə axtar</string>
     <string name="empty_deck">Bu dəstə boşdur</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Dəstə axtar</string>

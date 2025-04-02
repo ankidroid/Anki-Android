@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">Хоослох</string>
     <string name="create_subdeck">Дэд багц үүсгэх</string>
     <string name="empty_filtered_deck">Хоосон багцыг ангилж байна&#8230;</string>
-    <string name="custom_study_deck_name">Тусгай суралцах горим</string>
-    <string name="custom_study_deck_exists">Аль хэдийн эхлүүлсэн \"Тусгай судлах хэсэг\"-ийнхээ нэрээ эхэлж өөрчилнө үү</string>
     <string name="search_deck" comment="Deck search for selecting it">Багц хайх</string>
     <string name="empty_deck">Энэ багц хоосон байна</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Интернетээс багц хайх</string>

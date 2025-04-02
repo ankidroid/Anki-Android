@@ -82,7 +82,8 @@
     <string name="webview_crash_loop_dialog_content">\'%1$s\' കാർഡ് റെൻഡർ ചെയ്യുന്നതിൽ സിസ്റ്റം വെബ്‌വ്യൂ പരാജയപ്പെട്ടു. \n%2$s</string>
     <string name="filter_by_flags" maxLength="41">പതാകകൾ</string>
     <!-- Custom study options -->
-    <string name="custom_study_limit_tags">പ്രത്യേക ടാഗുകളിലേക്ക് പരിമിതപ്പെടുത്തുക</string>
+    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d അടക്കം ചെയ്തു</item>
         <item quantity="other">+%d അടക്കം ചെയ്തു</item>

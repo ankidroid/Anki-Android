@@ -73,6 +73,7 @@
     <string name="custom_study_forgotten">Hersien kaarte wat in die laaste x dae vergeet is</string>
     <string name="custom_study_ahead">Hersien vooruit met x dae:</string>
     <string name="custom_study_preview">Voorskou nuwe kaarte wat in die laaste x dae bygevoeg is:</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Stoor is vol</string>
     <string name="storage_almost_full_title">Stoor is amper vol</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Geen stoorplek</string>

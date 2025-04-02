@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">Kiürít</string>
     <string name="create_subdeck">Alcsoportok létrehozása</string>
     <string name="empty_filtered_deck">Szűrt pakli kiürítése</string>
-    <string name="custom_study_deck_name">Egyéni tanulás pakli</string>
-    <string name="custom_study_deck_exists">Kérlek, előbb nevezd át a meglévő, Egyéni tanulás paklit</string>
     <string name="search_deck" comment="Deck search for selecting it">Paklik keresése</string>
     <string name="empty_deck">Ez a pakli üres</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Paklik keresése</string>

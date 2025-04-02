@@ -70,6 +70,7 @@
     <string name="pref_cat_advanced" maxLength="41">Pokročilé</string>
     <string name="pref_cat_workarounds" maxLength="41">Možná zástupná řešení</string>
     <string name="pref_cat_plugins" maxLength="41">Pluginy</string>
+    <string name="pref_cat_editing" maxLength="41">Editing</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Šířka tahu</string>
     <string name="use_input_tag" maxLength="41">Napište odpověď do karty</string>
@@ -99,7 +100,7 @@
     <string name="gestures_summ">Přiřazení gest akcím, jako je odpovídání a úprava karet</string>
     <string name="gestures_corner_touch" maxLength="41">Devítibodový dotyk</string>
     <string name="gestures_corner_touch_summary">Povolí dotyková gesta v rozích obrazovky</string>
-    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Zobrazit klávesové zkratky</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Navigační menu v režimu celé obrazovky</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Otevřít navigační menu, když se táhne doprava kdekoliv na obrazovce</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">Žádné</string>
@@ -207,7 +208,6 @@
     <string name="accessibility" maxLength="41">Usnadnění přístupu</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Vkládat obrázky ze schránky jako PNG</string>
-    <string name="paste_as_png_summary">Ve výchozím nastavení Anki vkládá obrázky ve schránce jako JPG soubory, aby se šetřilo místo na disku. Můžete použít tuto volbu, aby se místo toho vkládaly PNG obrázky</string>
     <string name="exit_via_double_tap_back" maxLength="41">Pro návrat/ukončit stisknout zpět dvakrát</string>
     <string name="exit_via_double_tap_back_summ">Vyhnout se nechtěnému opuštění opakování nebo ukončení aplikace</string>
     <!-- Allow all files in media imports -->
@@ -300,7 +300,8 @@
     <string name="pref_cat_dev_options" maxLength="41">Možnosti pro vývojáře</string>
     <string name="dev_options_enabled_pref" maxLength="41">Povolit možnosti pro vývojáře</string>
     <string name="disable_dev_options">Zakázat možnosti pro vývojáře</string>
-    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
+    <string name="dev_options_warning">Buďte si prosím jisti před povolením nástrojů pro vývojáře. Tyto nástroje jsou nebezpečné a mohou poškodit aplikaci nebo vaši kolekci.\n\nVšimněte si, že tyto nástroje nejsou vhodné pro většinu uživatelů, a nejsou proto přeloženy, jsou tudíž v angličtině.
+    </string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
@@ -374,5 +375,5 @@
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Karta</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Otevřít nastavení</string>
 </resources>

@@ -82,7 +82,8 @@
     <string name="webview_crash_loop_dialog_content">Համակարգի WebView-ը չկարողացավ ցուցադրել «%1$s» քարտը։\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Դրոշներ</string>
     <!-- Custom study options -->
-    <string name="custom_study_limit_tags">Սահմանափակել որոշակի պիտակներին</string>
+    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d թաղված</item>
         <item quantity="other">+%d թաղված</item>

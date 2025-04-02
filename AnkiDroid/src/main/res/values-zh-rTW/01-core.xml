@@ -121,8 +121,6 @@
     <string name="empty_cram_label" maxLength="28">清空</string>
     <string name="create_subdeck">建立子牌組</string>
     <string name="empty_filtered_deck">清除已篩選牌組中&#8230;</string>
-    <string name="custom_study_deck_name">自訂學程</string>
-    <string name="custom_study_deck_exists">請先重新命名現有的「自訂學習」牌組。</string>
     <string name="search_deck" comment="Deck search for selecting it">牌組搜尋</string>
     <string name="empty_deck">這是個空牌組</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">牌組搜尋</string>

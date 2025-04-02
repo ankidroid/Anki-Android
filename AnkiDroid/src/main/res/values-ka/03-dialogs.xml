@@ -73,6 +73,7 @@
     <string name="custom_study_forgotten">გასულ x დღეში დავიწყებული ბარათების გადახედვა:</string>
     <string name="custom_study_ahead">X დღით ადრე სწავლა:</string>
     <string name="custom_study_preview">ბოლო x დღეში დამატებული ბარათების წინასწარ ნახვა:</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">მეხსიერება სავსეა</string>
     <string name="storage_almost_full_title">მეხსიერება თითქმის გავსებულია</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">მეხსიერების სივრცე არ არის</string>

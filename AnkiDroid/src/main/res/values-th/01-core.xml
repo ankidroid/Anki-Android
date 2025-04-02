@@ -120,8 +120,6 @@
     <string name="empty_cram_label" maxLength="28">ล้างสำรับ</string>
     <string name="create_subdeck">สร้างสำรับย่อย</string>
     <string name="empty_filtered_deck">กำลังทำให้สำรับแบบกรองว่าง&#8230;</string>
-    <string name="custom_study_deck_name">Custom study session</string>
-    <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
     <string name="search_deck" comment="Deck search for selecting it">ค้นหาสำรับ</string>
     <string name="empty_deck">สำรับนี้ว่างเปล่า</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">ค้นหาสำรับ</string>

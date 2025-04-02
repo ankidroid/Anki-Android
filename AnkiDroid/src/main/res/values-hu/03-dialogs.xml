@@ -73,6 +73,7 @@
     <string name="custom_study_forgotten">Az elmúlt x napban elfelejtett kártyák ismétlése:</string>
     <string name="custom_study_ahead">Idő előtti, x nappal előre ismétlés:</string>
     <string name="custom_study_preview">Az elmúlt x nap új kártyáinak előre átnézése:</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Tárhely megtelt</string>
     <string name="storage_almost_full_title">Tárhely majdnem megtelt</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Nincs hely</string>

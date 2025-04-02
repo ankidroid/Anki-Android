@@ -120,8 +120,6 @@
     <string name="empty_cram_label" maxLength="28">Dọn trống</string>
     <string name="create_subdeck">Tạo bộ thẻ phụ</string>
     <string name="empty_filtered_deck">Đang làm trống các bộ thẻ đã lọc</string>
-    <string name="custom_study_deck_name">Phiên học tuỳ chọn</string>
-    <string name="custom_study_deck_exists">Đổi tên bộ thẻ học tuỳ chọn hiện hữu trước nhất</string>
     <string name="search_deck" comment="Deck search for selecting it">Tìm kiếm bộ thẻ</string>
     <string name="empty_deck">Bộ thẻ này rỗng</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Tìm kiếm bộ thẻ</string>

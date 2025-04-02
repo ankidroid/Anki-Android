@@ -68,6 +68,7 @@
     <string name="pref_cat_advanced" maxLength="41">Avançat</string>
     <string name="pref_cat_workarounds" maxLength="41">Solucions</string>
     <string name="pref_cat_plugins" maxLength="41">Plugins</string>
+    <string name="pref_cat_editing" maxLength="41">Editing</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Amplada del traç</string>
     <string name="use_input_tag" maxLength="41">Tipus de resposta a la targeta</string>
@@ -203,7 +204,6 @@
     <string name="accessibility" maxLength="41">Accessibilitat</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Enganxa imatges del porta-retalls com PNG</string>
-    <string name="paste_as_png_summary">Per defecte, Anki enganxa les imatges al porta-retalls com a fitxers JPG per estalviar espai al disc. Podeu utilitzar aquesta opció per enganxar com a imatges PNG.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Enrera dos vegades per enrera o sortir</string>
     <string name="exit_via_double_tap_back_summ">Per evitar abandonar accidentalment el revisor o l\'aplicació</string>
     <!-- Allow all files in media imports -->

@@ -82,7 +82,8 @@
     <string name="webview_crash_loop_dialog_content">سسٹم WebView کارڈ \'%1$s\' رینڈر کرنے میں ناکام رہا۔\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">جھنڈے</string>
     <!-- Custom study options -->
-    <string name="custom_study_limit_tags">مخصوص ٹیگز تک محدود</string>
+    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d دفن کر دیا گیا۔</item>
         <item quantity="other">+%d دفن کر دیا گیا۔</item>

@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">Leeg</string>
     <string name="create_subdeck">Creëer subleerset</string>
     <string name="empty_filtered_deck">Gefilterde set wordt leeggemaakt&#8230;</string>
-    <string name="custom_study_deck_name">Aangepaste studiesessie</string>
-    <string name="custom_study_deck_exists">Gelieve eerst de bestaande aangepaste studieset te hernoemen.</string>
     <string name="search_deck" comment="Deck search for selecting it">Leerset zoeken</string>
     <string name="empty_deck">Deze leerset is leeg</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Set doorzoeken</string>

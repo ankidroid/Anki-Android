@@ -68,6 +68,7 @@
     <string name="pref_cat_advanced" maxLength="41">Altnivelaj</string>
     <string name="pref_cat_workarounds" maxLength="41">Provizoraĵoj</string>
     <string name="pref_cat_plugins" maxLength="41">Kromaĵoj</string>
+    <string name="pref_cat_editing" maxLength="41">Editing</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Larĝo de streko</string>
     <string name="use_input_tag" maxLength="41">Enigi respondon al karto</string>
@@ -203,7 +204,6 @@
     <string name="accessibility" maxLength="41">Alirebleco</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Alglui bildojn kiel PNG</string>
-    <string name="paste_as_png_summary">Implicite la aplikaĵo Anki algluas bildojn el la tondujo kiel dosierojn JPG por konservi spacon. Vi povas uzi tiun ĉi agordon por alglui ilin kiel PNG.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Duoble premi por reiri/eliri</string>
     <string name="exit_via_double_tap_back_summ">Por eviti neatenditan eliron el la aplikaĵo</string>
     <!-- Allow all files in media imports -->

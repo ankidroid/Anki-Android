@@ -120,8 +120,6 @@
     <string name="empty_cram_label" maxLength="28">Бушату</string>
     <string name="create_subdeck">Колода эчендә колода ясау</string>
     <string name="empty_filtered_deck">Фильтрлы колода бушатыла&#8230;</string>
-    <string name="custom_study_deck_name">Шәхси өйрәнү сессиясе</string>
-    <string name="custom_study_deck_exists">Башта булган артык өйрәнү колода исемен үзгәртегез</string>
     <string name="search_deck" comment="Deck search for selecting it">Колода эзләү</string>
     <string name="empty_deck">Бу колода буш</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Колода эзләү</string>

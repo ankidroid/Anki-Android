@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">Baleirar</string>
     <string name="create_subdeck">crear submazo</string>
     <string name="empty_filtered_deck">baleirar mazo filtrado</string>
-    <string name="custom_study_deck_name">Sesión de estudo personalizado</string>
-    <string name="custom_study_deck_exists">Por favor, renomee a baralla de estudo personalizado existente primeiro.</string>
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="empty_deck">Esta baralla está baleira</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Deck Search</string>

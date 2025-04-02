@@ -71,6 +71,7 @@
     <string name="custom_study_forgotten">Ôn lại các thẻ đã quên trong x ngày trước:</string>
     <string name="custom_study_ahead">Ôn tập trước x ngày:</string>
     <string name="custom_study_preview">Xem trước thẻ mới được thêm vào x ngày trước:</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Bộ nhớ đầy</string>
     <string name="storage_almost_full_title">Bộ nhớ gần đầy</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Không có không gian</string>

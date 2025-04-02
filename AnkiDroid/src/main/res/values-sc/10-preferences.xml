@@ -68,6 +68,7 @@
     <string name="pref_cat_advanced" maxLength="41">Avantzadas</string>
     <string name="pref_cat_workarounds" maxLength="41">Solutziones alternativas</string>
     <string name="pref_cat_plugins" maxLength="41">Estensiones</string>
+    <string name="pref_cat_editing" maxLength="41">Editing</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Grussària de su tratu</string>
     <string name="use_input_tag" maxLength="41">Iscrie sa risposta in sa carta</string>
@@ -203,7 +204,6 @@
     <string name="accessibility" maxLength="41">Atzessibilidade</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Incolla sas immàgines in PNG</string>
-    <string name="paste_as_png_summary">Comente impostatzione predefinida Anki incollat sas immàgines in punta de billete in formadu JPG pro savare logu in sa memòria. Pro incollare sas immàgines in formadu PNG podes, imbetzes, impreare custa optzione.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Incarca 2 bortas in segus pro essire</string>
     <string name="exit_via_double_tap_back_summ">Pro evitare de essire in manera atzidentale dae su revisionadore o dae s\'aplicatzione</string>
     <!-- Allow all files in media imports -->

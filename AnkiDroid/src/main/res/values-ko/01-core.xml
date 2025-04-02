@@ -120,8 +120,6 @@
     <string name="empty_cram_label" maxLength="28">비우기</string>
     <string name="create_subdeck">하위 뭉치 만들기</string>
     <string name="empty_filtered_deck">필터링된 덱을 비우는 중&#8230;</string>
-    <string name="custom_study_deck_name">맞춤 학습 세션</string>
-    <string name="custom_study_deck_exists">기존의 맞춤 학습 덱의 이름을 먼저 변경하세요.</string>
     <string name="search_deck" comment="Deck search for selecting it">덱 검색하기</string>
     <string name="empty_deck">이 덱은 비어있습니다</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">카드 덱 검색</string>

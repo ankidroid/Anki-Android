@@ -82,7 +82,8 @@
     <string name="webview_crash_loop_dialog_content">Hệ thống WebView không thể hiển thị thẻ \'%1$s\'.\ n%2$s</string>
     <string name="filter_by_flags" maxLength="41">Cờ</string>
     <!-- Custom study options -->
-    <string name="custom_study_limit_tags">Giới hạn cho các đuôi cụ thể</string>
+    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="other">+%d tạm ẩn</item>
     </plurals>

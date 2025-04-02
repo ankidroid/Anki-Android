@@ -68,6 +68,7 @@
     <string name="pref_cat_advanced" maxLength="41">സംഗീർണതയുള്ളവ</string>
     <string name="pref_cat_workarounds" maxLength="41">പരിഹാരങ്ങൾ</string>
     <string name="pref_cat_plugins" maxLength="41">പ്ലഗിൻ</string>
+    <string name="pref_cat_editing" maxLength="41">Editing</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">സ്ട്രോക്ക് വീതി</string>
     <string name="use_input_tag" maxLength="41">കാർഡിൽ ഉത്തരം ടൈപ്പുചെയ്യുക</string>
@@ -203,7 +204,6 @@
     <string name="accessibility" maxLength="41">പ്രവേശനക്ഷമത</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">ക്ലിപ്പ്ബോർഡ് ചിത്രങ്ങൾ PNG ആയി ഒട്ടിക്കുക</string>
-    <string name="paste_as_png_summary">ഡിഫോൾട്ടായി, ഡിസ്ക് സ്പേസ് ലാഭിക്കുന്നതിനായി Anki ചിത്രങ്ങൾ JPG ഫയലുകളായി ക്ലിപ്പ്ബോർഡിലേക്ക് ഒട്ടിക്കുന്നു. പകരം PNG ഇമേജുകളായി ഒട്ടിക്കാൻ നിങ്ങൾക്ക് ഈ ഓപ്ഷൻ ഉപയോഗിക്കാം.</string>
     <string name="exit_via_double_tap_back" maxLength="41">തിരികെ പോകാൻ / പുറത്തുകടക്കാൻ രണ്ട് തവണ പിന്നിലേക്ക് അമർത്തുക</string>
     <string name="exit_via_double_tap_back_summ">റിവ്യൂവറിൽ നിന്നോ ആപ്പിൽ നിന്നോ ആകസ്മികമായി ഉപേക്ഷിക്കുന്നത് ഒഴിവാക്കാൻ</string>
     <!-- Allow all files in media imports -->

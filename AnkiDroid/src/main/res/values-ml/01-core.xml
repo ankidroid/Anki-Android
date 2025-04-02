@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">ശൂന്യമാണ്</string>
     <string name="create_subdeck">സബ്ഡെക്ക് സൃഷ്ടിക്കുക</string>
     <string name="empty_filtered_deck">ഫിൽട്ടർ ചെയ്ത ഡെക്ക് ശൂന്യമാക്കുന്നു&#8230;</string>
-    <string name="custom_study_deck_name">ഇഷ്‌ടാനുസൃത പഠന സെഷൻ</string>
-    <string name="custom_study_deck_exists">ആദ്യം നിലവിലുള്ള ഇഷ്‌ടാനുസൃത പഠന ഡെക്കിന്റെ പേരുമാറ്റുക</string>
     <string name="search_deck" comment="Deck search for selecting it">ഡെക്ക് തിരയൽ</string>
     <string name="empty_deck">ഈ ഡെക്ക് ശൂന്യമാണ്</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">ഡെക്ക് തിരയൽ</string>

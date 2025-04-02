@@ -82,7 +82,8 @@
     <string name="webview_crash_loop_dialog_content">System WebView nie potrafił wyrenderować karty \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Flagi</string>
     <!-- Custom study options -->
-    <string name="custom_study_limit_tags">Ogranicz do poszczególnych tagów</string>
+    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d zakopana</item>
         <item quantity="few">+%d zakopane</item>

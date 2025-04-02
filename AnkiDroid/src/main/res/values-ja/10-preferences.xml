@@ -67,6 +67,7 @@
     <string name="pref_cat_advanced" maxLength="41">高度な設定</string>
     <string name="pref_cat_workarounds" maxLength="41">不具合回避策</string>
     <string name="pref_cat_plugins" maxLength="41">プラグイン</string>
+    <string name="pref_cat_editing" maxLength="41">Editing</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">線の太さ</string>
     <string name="use_input_tag" maxLength="41">答えを入力する欄をカード内に表示</string>
@@ -201,7 +202,6 @@
     <string name="accessibility" maxLength="41">アクセシビリティ</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">クリップボード画像をPNG形式で貼り付け</string>
-    <string name="paste_as_png_summary">このオプションがオフ（デフォルト）の場合、クリップボードにある画像を貼り付ける際は、ディスク領域の節約のためにJPG形式の画像ファイルとして貼り付けます。このオプションをオンにすると、PNG形式の画像ファイルとして貼り付けます</string>
     <string name="exit_via_double_tap_back" maxLength="41">学習終了・アプリ終了には「戻る」操作２回</string>
     <string name="exit_via_double_tap_back_summ">学習画面とデッキリスト画面でそれぞれ、意図せず画面を閉じてしまう操作ミスを起こりにくくします</string>
     <!-- Allow all files in media imports -->

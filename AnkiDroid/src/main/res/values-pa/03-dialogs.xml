@@ -73,6 +73,7 @@
     <string name="custom_study_forgotten">ਅੱਜ ਦੀ ਸਮੀਖਿਆ ਸੀਮਾ ਵਧਾਓ/ਘਟਾਓ (“-3”)</string>
     <string name="custom_study_ahead">x ਦਿਨ ਅੱਗੇ ਦੀ ਸਮੀਖਿਆ ਕਰੋ:</string>
     <string name="custom_study_preview">ਪਿਛਲੇ x ਦਿਨਾਂ ਵਿੱਚ ਸ਼ਾਮਲ ਕੀਤੇ ਗਏ ਨਵੇਂ ਕਾਰਡਾਂ ਦੀ ਸੰਖੇਪ ਜਾਣਕਾਰੀ:</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">ਸਟੋਰੇਜ ਭਰੀ ਹੋਈ ਹੈ</string>
     <string name="storage_almost_full_title">ਸਟੋਰੇਜ ਲਗਭਗ ਭਰੀ ਹੋਈ ਹੈ</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ਕੋਈ ਥਾਂ ਨਹੀਂ</string>

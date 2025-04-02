@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">ცარიელია</string>
     <string name="create_subdeck">ქვედასტის შექმნა</string>
     <string name="empty_filtered_deck">გაფილტრული დეკის დაცარიელება</string>
-    <string name="custom_study_deck_name">სწავლის ინდივიდუალური სესია</string>
-    <string name="custom_study_deck_exists">ჯერ ინდივიდუალური სასწავლო დასტის სახელი შეცვალეთ</string>
     <string name="search_deck" comment="Deck search for selecting it">დასტის ძებნა</string>
     <string name="empty_deck">ეს დასტა ცარიელია</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">დასტის ძიება</string>

@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">تخلیه</string>
     <string name="create_subdeck">ایجاد زیردسته</string>
     <string name="empty_filtered_deck">درحال تخلیه دسته‌ی کارت فیلتر شده&#8230;</string>
-    <string name="custom_study_deck_name">جلسه مطالعه سفارشی</string>
-    <string name="custom_study_deck_exists">لطفا ابتدا دسته مطالعه سفارشی موجود را مجددا نام گذاری کنید.</string>
     <string name="search_deck" comment="Deck search for selecting it">جستجوی دسته‌ها</string>
     <string name="empty_deck">این دسته خالی است</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">جستجوی دسته‌ها</string>

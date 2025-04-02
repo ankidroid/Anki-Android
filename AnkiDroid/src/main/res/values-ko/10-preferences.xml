@@ -67,6 +67,7 @@
     <string name="pref_cat_advanced" maxLength="41">고급 설정</string>
     <string name="pref_cat_workarounds" maxLength="41">차선책</string>
     <string name="pref_cat_plugins" maxLength="41">플러그인</string>
+    <string name="pref_cat_editing" maxLength="41">Editing</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">획 두께</string>
     <string name="use_input_tag" maxLength="41">카드에 정답 입력</string>
@@ -201,7 +202,6 @@
     <string name="accessibility" maxLength="41">접근성</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">클립보드 이미지를 PNG로 붙여넣기</string>
-    <string name="paste_as_png_summary">기본적으로 Anki는 클립보드의 이미지를 JPG로 저장해 저장 공간을 절약합니다. 이 옵션을 사용해 대신 PNG 이미지를 사용할 수 있습니다.</string>
     <string name="exit_via_double_tap_back" maxLength="41">뒤로가기 버튼 두번 눌러 돌아가기/나가기</string>
     <string name="exit_via_double_tap_back_summ">실수로 인한 학습 종료와 앱 종료 방지</string>
     <!-- Allow all files in media imports -->

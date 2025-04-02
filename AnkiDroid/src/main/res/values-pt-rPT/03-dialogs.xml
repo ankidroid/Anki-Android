@@ -73,6 +73,7 @@
     <string name="custom_study_forgotten">Rever fichas esquecidas nos últimos x dias:</string>
     <string name="custom_study_ahead">Rever em avanço por x dias:</string>
     <string name="custom_study_preview">Pré-visualizar novas fichas adicionadas nos últimos x dias:</string>
+    <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Armazenamento cheio</string>
     <string name="storage_almost_full_title">Armazenamento quase cheio</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Sem espaço</string>

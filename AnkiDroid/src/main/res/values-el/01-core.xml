@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">Άδειασμα</string>
     <string name="create_subdeck">Δημιουργία υποτράπουλας</string>
     <string name="empty_filtered_deck">Άδειασμα φιλτραρισμένης τράπουλας&#8230;</string>
-    <string name="custom_study_deck_name">Προσαρμοσμένη μελέτη λειτουργίας</string>
-    <string name="custom_study_deck_exists">Παρακαλούμε μετονομάστε την υπάρχουσα τράπουλα Προσαρμοσμένης Μελέτης πρώτα.</string>
     <string name="search_deck" comment="Deck search for selecting it">Αναζήτηση</string>
     <string name="empty_deck">Αυτή η τράπουλα είναι κενή</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Αναζήτηση</string>

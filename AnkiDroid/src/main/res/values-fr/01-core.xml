@@ -123,8 +123,6 @@
     <string name="empty_cram_label" maxLength="28">Vide</string>
     <string name="create_subdeck">Créer un sous-paquet</string>
     <string name="empty_filtered_deck">Vidage du paquet filtré&#8230;</string>
-    <string name="custom_study_deck_name">Session d\'étude personnalisée</string>
-    <string name="custom_study_deck_exists">Merci de renommer d\'abord le paquet d\'étude personnalisée.</string>
     <string name="search_deck" comment="Deck search for selecting it">Recherche de paquet</string>
     <string name="empty_deck">Ce paquet est vide</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Chercher un deck</string>

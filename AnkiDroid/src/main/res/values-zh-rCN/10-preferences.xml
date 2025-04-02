@@ -67,6 +67,7 @@
     <string name="pref_cat_advanced" maxLength="41">高级设置</string>
     <string name="pref_cat_workarounds" maxLength="41">变通方法</string>
     <string name="pref_cat_plugins" maxLength="41">插件</string>
+    <string name="pref_cat_editing" maxLength="41">Editing</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">笔画粗细</string>
     <string name="use_input_tag" maxLength="41">在卡片中输入答案</string>
@@ -201,7 +202,6 @@
     <string name="accessibility" maxLength="41">无障碍功能</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">将剪贴板图像粘贴为 PNG</string>
-    <string name="paste_as_png_summary">Anki 默认将剪贴板图粘贴为 JPG 以节省空间。 您可用此选项粘贴为 PNG。</string>
     <string name="exit_via_double_tap_back" maxLength="41">按两次返回键返回/退出</string>
     <string name="exit_via_double_tap_back_summ">避免意外离开复习界面或应用程序</string>
     <!-- Allow all files in media imports -->
