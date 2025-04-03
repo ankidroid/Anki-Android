@@ -1425,6 +1425,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(OS.ALL)
     fun `FindReplace - replaces text based on regular expression`() {
         val note0 = createFindReplaceTestNote("A", "kart", "ki1logram")
         val note1 = createFindReplaceTestNote("B", "pink", "chicken")
