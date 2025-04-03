@@ -9,7 +9,7 @@
 
 
 # Basic expectations
-# - tools needed: sed, gawk, github-release, git
+# - tools needed: sed, gawk, gh, git
 # - authority needed: ability to commit/tag/push directly to main branch in AnkiDroid, ability to create releases
 # - ankidroiddocs checked out in a sibling directory (that is, '../ankidroiddocs' should exist with 'upstream' remote set correctly)
 
@@ -18,11 +18,11 @@ SUFFIX=""
 PUBLIC=$1
 
 # Make sure we can find our binaries
-export PATH="~/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
 
 # Check basic expectations
 echo "Checking basic utility installation status..."
-for UTILITY in sed gawk github-release asciidoctor; do
+for UTILITY in sed gawk gh asciidoctor; do
   if ! command -v "$UTILITY" >/dev/null 2>&1; then echo "$UTILITY" missing; exit 1; fi
 done
 if [ "$PUBLIC" = "public" ] && ! [ -f ../ankidroiddocs/changelog.asc ]; then
@@ -129,20 +129,35 @@ for UCFLAVOR in $UCFLAVORS; do
   fi
 done
 
+# PREFIX is used to order the apks in the file list. Most users will use `arm64-v8a`.
+# variant ABIs are a source of error and confusion, so should be lower in the list
+PREFIX=""
 # Copy full ABI APKs to cwd
 ABIS='arm64-v8a x86 x86_64 armeabi-v7a'
 for ABI in $ABIS; do
-  cp AnkiDroid/build/outputs/apk/full/release/AnkiDroid-full-"$ABI"-release.apk AnkiDroid-"$VERSION"-"$ABI".apk
+  if [ "$ABI" = "arm64-v8a" ]; then
+    PREFIX=""
+  else
+    PREFIX="variant-abi-"
+  fi
+  cp AnkiDroid/build/outputs/apk/full/release/AnkiDroid-full-"$ABI"-release.apk "$PREFIX"AnkiDroid-"$VERSION"-"$ABI".apk
 done
 
 # Copy universal APKs for all flavors to cwd
 FLAVORS='full amazon play'
 for FLAVOR in $FLAVORS; do
-  cp AnkiDroid/build/outputs/apk/"$FLAVOR"/release/AnkiDroid-"$FLAVOR"-universal-release.apk AnkiDroid-"$VERSION"-"$FLAVOR"-universal.apk
+  if [ "$FLAVOR" = "full" ]; then
+    PREFIX=""
+  else
+    PREFIX="dev-"
+  fi
+  cp AnkiDroid/build/outputs/apk/"$FLAVOR"/release/AnkiDroid-"$FLAVOR"-universal-release.apk "$PREFIX"AnkiDroid-"$VERSION"-"$FLAVOR"-universal.apk
 done
 
 # Pack up our proguard mapping file for debugging in case needed
+PREFIX="z-"
 tar -zcf proguard-mappings.tar.gz AnkiDroid/build/outputs/mapping
+cp proguard-mappings.tar.gz "$PREFIX"proguard-mappings.tar.gz
 
 # Create a full universal build that disables minify, to help diagnose proguard issues
 ./gradlew --stop
@@ -153,7 +168,7 @@ then
   exit 1
 fi
 # Copy our unminified full universal release out
-cp AnkiDroid/build/outputs/apk/full/release/AnkiDroid-full-universal-release.apk AnkiDroid-"$VERSION"-full-universal-nominify.apk
+cp AnkiDroid/build/outputs/apk/full/release/AnkiDroid-full-universal-release.apk "$PREFIX"AnkiDroid-"$VERSION"-full-universal-nominify.apk
 
 # Push to Github Releases.
 GITHUB_TOKEN=$(cat ~/src/my-github-personal-access-token)
@@ -162,48 +177,49 @@ export GITHUB_USER="ankidroid"
 export GITHUB_REPO="Anki-Android"
 
 if [ "$PUBLIC" = "public" ]; then
-  PRE_RELEASE=""
+  RELEASE_TYPE="--latest"
 else
-  PRE_RELEASE="--pre-release"
+  RELEASE_TYPE="--prerelease"
 fi
 
 # Get the directory of the current script
 SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 # Read the content of the markdown file using the absolute path
-RELEASE_NOTES=$(cat "$SCRIPT_DIR/release-description.md")
+RELEASE_NOTES="$SCRIPT_DIR/release-description.md"
 echo "Creating new Github release"
-github-release release --tag v"$VERSION" --name "AnkiDroid $VERSION" --description "$RELEASE_NOTES" $PRE_RELEASE
+gh release create v"$VERSION" --title "AnkiDroid $VERSION" -F "$RELEASE_NOTES" $RELEASE_TYPE
 
 echo "Sleeping 30s to make sure the release exists, see issue 11746"
 sleep 30
 
-# PREFIX is used to order the ABIs in the file list. Most users will use `arm64-v8a`.
-# variant ABIs are a source of error and confusion, so should be lower in the list
-PREFIX=""
+# Upload full ABI APKs to GitHub release
 for ABI in $ABIS; do
   if [ "$ABI" = "arm64-v8a" ]; then
     PREFIX=""
   else
     PREFIX="variant-abi-"
   fi
-  echo "Adding full APK for $ABI to Github release"
-  github-release upload --tag v"$VERSION" --name "$PREFIX"AnkiDroid-"$VERSION"-"$ABI".apk --file AnkiDroid-"$VERSION"-"$ABI".apk
+  echo "Adding full APK for $ABI to GitHub release"
+  gh release upload v"$VERSION" "$PREFIX"AnkiDroid-"$VERSION"-"$ABI".apk
 done
+
+# Upload universal APKs for all flavors to GitHub release
 for FLAVOR in $FLAVORS; do
   if [ "$FLAVOR" = "full" ]; then
     PREFIX=""
   else
     PREFIX="dev-"
   fi
-  echo "Adding full APK for $FLAVOR to Github release"
-  github-release upload --tag v"$VERSION" --name "$PREFIX"AnkiDroid-"$VERSION"-"$FLAVOR"-universal.apk --file AnkiDroid-"$VERSION"-"$FLAVOR"-universal.apk
+  echo "Adding full APK for $FLAVOR to GitHub release"
+  gh release upload v"$VERSION" "$PREFIX"AnkiDroid-"$VERSION"-"$FLAVOR"-universal.apk
 done
+
 # Set to z- for un-minified full universal APK and proguard to ensure it is at the end of the list
 PREFIX="z-"
 echo "Adding un-minified full universal APK to GitHub release"
-github-release upload --tag v"$VERSION" --name "$PREFIX"AnkiDroid-"$VERSION"-full-universal-nominify.apk --file AnkiDroid-"$VERSION"-full-universal-nominify.apk
+gh release upload v"$VERSION" "$PREFIX"AnkiDroid-"$VERSION"-full-universal-nominify.apk
 echo "Adding proguard mappings file to Github release"
-github-release upload --tag v"$VERSION" --name "$PREFIX"proguard-mappings.tar.gz --file proguard-mappings.tar.gz
+gh release upload v"$VERSION" "$PREFIX"proguard-mappings.tar.gz
 
 # Not publishing to amazon pending: https://github.com/ankidroid/Anki-Android/issues/14161
 #if [ "$PUBLIC" = "public" ]; then
@@ -229,5 +245,6 @@ fi
 for BUILD in $BUILDNAMES; do
   PREFIX=""
   echo "Adding parallel build $BUILD to Github release"
-  github-release upload --tag v"$VERSION" --name "$PREFIX"AnkiDroid-"$VERSION".parallel."$BUILD".apk --file AnkiDroid-"$VERSION".parallel."$BUILD".apk
+  cp AnkiDroid-"$VERSION".parallel."$BUILD".apk "$PREFIX"AnkiDroid-"$VERSION".parallel."$BUILD".apk
+  gh release upload v"$VERSION" "$PREFIX"AnkiDroid-"$VERSION".parallel."$BUILD".apk
 done
