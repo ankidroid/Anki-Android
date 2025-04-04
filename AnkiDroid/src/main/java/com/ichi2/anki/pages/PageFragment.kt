@@ -79,10 +79,10 @@ open class PageFragment(
             return
         }
         webView.addJavascriptInterface(
-            object : Object() {
+            object : Any() {
                 @JavascriptInterface
                 fun bridgeCommandImpl(request: String) {
-                    bridgeCommands.orEmpty().getOrDefault(request) {
+                    bridgeCommands.getOrDefault(request) {
                         Timber.d("Unknown request received %s", request)
                     }()
                 }
