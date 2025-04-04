@@ -210,6 +210,14 @@ class ReviewerViewModel(
         flagFlow.emit(flag)
     }
 
+    private suspend fun toggleFlag(flag: Flag) {
+        if (flag == flagFlow.value) {
+            setFlag(Flag.NONE)
+        } else {
+            setFlag(flag)
+        }
+    }
+
     fun onStateMutationCallback() {
         statesMutated = true
     }
@@ -513,6 +521,13 @@ class ReviewerViewModel(
                 ViewerAction.FLAG_PINK -> setFlag(Flag.PINK)
                 ViewerAction.FLAG_TURQUOISE -> setFlag(Flag.TURQUOISE)
                 ViewerAction.FLAG_PURPLE -> setFlag(Flag.PURPLE)
+                ViewerAction.TOGGLE_FLAG_RED -> toggleFlag(Flag.RED)
+                ViewerAction.TOGGLE_FLAG_ORANGE -> toggleFlag(Flag.ORANGE)
+                ViewerAction.TOGGLE_FLAG_BLUE -> toggleFlag(Flag.BLUE)
+                ViewerAction.TOGGLE_FLAG_GREEN -> toggleFlag(Flag.GREEN)
+                ViewerAction.TOGGLE_FLAG_PINK -> toggleFlag(Flag.PINK)
+                ViewerAction.TOGGLE_FLAG_TURQUOISE -> toggleFlag(Flag.TURQUOISE)
+                ViewerAction.TOGGLE_FLAG_PURPLE -> toggleFlag(Flag.PURPLE)
                 ViewerAction.SHOW_ANSWER -> if (!showingAnswer.value) onShowAnswer()
                 ViewerAction.FLIP_OR_ANSWER_EASE1 -> flipOrAnswer(Ease.AGAIN)
                 ViewerAction.FLIP_OR_ANSWER_EASE2 -> flipOrAnswer(Ease.HARD)

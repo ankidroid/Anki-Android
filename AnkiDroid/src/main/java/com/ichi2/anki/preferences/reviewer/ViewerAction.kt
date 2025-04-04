@@ -94,6 +94,13 @@ enum class ViewerAction(
     FLIP_OR_ANSWER_EASE2,
     FLIP_OR_ANSWER_EASE3,
     FLIP_OR_ANSWER_EASE4,
+    TOGGLE_FLAG_RED,
+    TOGGLE_FLAG_ORANGE,
+    TOGGLE_FLAG_GREEN,
+    TOGGLE_FLAG_BLUE,
+    TOGGLE_FLAG_PINK,
+    TOGGLE_FLAG_TURQUOISE,
+    TOGGLE_FLAG_PURPLE,
     SHOW_HINT,
     SHOW_ALL_HINTS,
     EXIT,
@@ -120,6 +127,41 @@ enum class ViewerAction(
             TOGGLE_AUTO_ADVANCE -> listOf(keycode(KeyEvent.KEYCODE_A, shift()))
             SHOW_HINT -> listOf(keycode(KeyEvent.KEYCODE_H))
             SHOW_ALL_HINTS -> listOf(keycode(KeyEvent.KEYCODE_G))
+            TOGGLE_FLAG_RED ->
+                listOf(
+                    keycode(KeyEvent.KEYCODE_1, ctrl()),
+                    keycode(KeyEvent.KEYCODE_NUMPAD_1, ctrl()),
+                )
+            TOGGLE_FLAG_ORANGE ->
+                listOf(
+                    keycode(KeyEvent.KEYCODE_2, ctrl()),
+                    keycode(KeyEvent.KEYCODE_NUMPAD_2, ctrl()),
+                )
+            TOGGLE_FLAG_GREEN ->
+                listOf(
+                    keycode(KeyEvent.KEYCODE_3, ctrl()),
+                    keycode(KeyEvent.KEYCODE_NUMPAD_3, ctrl()),
+                )
+            TOGGLE_FLAG_BLUE ->
+                listOf(
+                    keycode(KeyEvent.KEYCODE_4, ctrl()),
+                    keycode(KeyEvent.KEYCODE_NUMPAD_4, ctrl()),
+                )
+            TOGGLE_FLAG_PINK ->
+                listOf(
+                    keycode(KeyEvent.KEYCODE_5, ctrl()),
+                    keycode(KeyEvent.KEYCODE_NUMPAD_5, ctrl()),
+                )
+            TOGGLE_FLAG_TURQUOISE ->
+                listOf(
+                    keycode(KeyEvent.KEYCODE_6, ctrl()),
+                    keycode(KeyEvent.KEYCODE_NUMPAD_6, ctrl()),
+                )
+            TOGGLE_FLAG_PURPLE ->
+                listOf(
+                    keycode(KeyEvent.KEYCODE_7, ctrl()),
+                    keycode(KeyEvent.KEYCODE_NUMPAD_7, ctrl()),
+                )
             FLIP_OR_ANSWER_EASE1 ->
                 listOf(
                     keycode(KeyEvent.KEYCODE_BUTTON_Y),
