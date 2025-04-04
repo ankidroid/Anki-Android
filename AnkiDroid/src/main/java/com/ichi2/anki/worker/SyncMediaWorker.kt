@@ -41,6 +41,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.cancelMediaSync
 import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.anki.utils.ext.trySetForeground
+import com.ichi2.utils.Permissions
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import net.ankiweb.rsdroid.Backend
@@ -50,8 +51,13 @@ class SyncMediaWorker(
     context: Context,
     parameters: WorkerParameters,
 ) : CoroutineWorker(context, parameters) {
-    private val notificationManager = NotificationManagerCompat.from(context)
     private val cancelIntent = WorkManager.getInstance(context).createCancelPendingIntent(id)
+    private val notificationManager: NotificationManagerCompat? =
+        if (Permissions.canPostNotifications(context)) {
+            NotificationManagerCompat.from(context)
+        } else {
+            null
+        }
 
     override suspend fun doWork(): Result {
         Timber.v("SyncMediaWorker::doWork")
@@ -86,7 +92,7 @@ class SyncMediaWorker(
             return Result.failure()
         } finally {
             Timber.d("SyncMediaWorker: cancelling notification")
-            notificationManager.cancel(NotificationId.SYNC_MEDIA)
+            notificationManager?.cancel(NotificationId.SYNC_MEDIA)
         }
 
         Timber.d("SyncMediaWorker: success")
@@ -132,7 +138,7 @@ class SyncMediaWorker(
         }
     }
 
-    private fun notify(notification: Notification) = notificationManager.notify(NotificationId.SYNC_MEDIA, notification)
+    private fun notify(notification: Notification) = notificationManager?.notify(NotificationId.SYNC_MEDIA, notification)
 
     private fun notify(builder: NotificationCompat.Builder.() -> Unit) {
         notify(buildNotification(builder))

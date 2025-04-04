@@ -48,6 +48,7 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.setLastSyncTimeToNow
 import com.ichi2.anki.utils.ext.trySetForeground
 import com.ichi2.libanki.syncCollection
+import com.ichi2.utils.Permissions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -74,8 +75,13 @@ class SyncWorker(
     parameters: WorkerParameters,
 ) : CoroutineWorker(context, parameters) {
     private val workManager = WorkManager.getInstance(context)
-    private val notificationManager = NotificationManagerCompat.from(context)
-    private val cancelIntent = workManager.createCancelPendingIntent(id)
+    private val cancelIntent = WorkManager.getInstance(context).createCancelPendingIntent(id)
+    private val notificationManager: NotificationManagerCompat? =
+        if (Permissions.canPostNotifications(context)) {
+            NotificationManagerCompat.from(context)
+        } else {
+            null
+        }
 
     override suspend fun doWork(): Result {
         Timber.v("SyncWorker::doWork")
@@ -106,7 +112,7 @@ class SyncWorker(
             return Result.failure()
         } finally {
             Timber.d("SyncWorker: cancelling notification")
-            notificationManager.cancel(NotificationId.SYNC)
+            notificationManager?.cancel(NotificationId.SYNC)
         }
 
         Timber.d("SyncWorker: success")
@@ -206,7 +212,7 @@ class SyncWorker(
     }
 
     private fun notify(notification: Notification) {
-        notificationManager.notify(NotificationId.SYNC, notification)
+        notificationManager?.notify(NotificationId.SYNC, notification)
     }
 
     private fun notify(builder: NotificationCompat.Builder.() -> Unit) {

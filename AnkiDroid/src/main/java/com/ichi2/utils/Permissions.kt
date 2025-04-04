@@ -180,6 +180,10 @@ object Permissions {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.R &&
             context.arePermissionsDefinedInAnkiDroidManifest(MANAGE_EXTERNAL_STORAGE)
     }
+
+    fun canPostNotifications(context: Context): Boolean =
+        Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
 }
 
 fun Fragment.hasAnyOfPermissionsBeenDenied(permissions: Collection<String>): Boolean {
