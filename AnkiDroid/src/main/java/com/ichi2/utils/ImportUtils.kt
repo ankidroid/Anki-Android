@@ -52,6 +52,9 @@ object ImportUtils {
     // A filename should be shortened if over this threshold
     private const val FILE_NAME_SHORTENING_THRESHOLD = 100
 
+    // Regex to remove special characters
+    private val INVALID_FILENAME_CHARS = Regex("[/\\\\:*?\"<>|%$&+^#@!(){}\\[\\]=]")
+
     /**
      * This code is used in multiple places to handle package imports
      *
@@ -276,7 +279,7 @@ object ImportUtils {
             return try {
                 // Remove All special symbols that are not safe in file names
                 // #18173 - special symbols causing error in image opening in image occlusion
-                val sanitizedFileName = fileName.replace(Regex("[/\\\\:*?\"<>|%$&+^#@!(){}\\[\\]=]"), "_")
+                val sanitizedFileName = fileName.replace(INVALID_FILENAME_CHARS, "_")
 
                 val encoded = URLEncoder.encode(sanitizedFileName, "UTF-8")
                 if (encoded.length <= FILE_NAME_SHORTENING_THRESHOLD) {
