@@ -369,9 +369,9 @@ class InstantEditorViewModel :
             ?.toInt()
             ?.let { shouldResetClozeNumber(it) }
 
-        val punctuationAtStart: String? = matchResult?.groups?.get(1)?.value ?: ""
-        val capturedWord: String? = matchResult?.groups?.get(3)?.value ?: ""
-        val punctuationAtEnd: String? = matchResult?.groups?.get(4)?.value ?: ""
+        val punctuationAtStart: String = matchResult.groups[1]?.value ?: ""
+        val capturedWord: String = matchResult.groups[3]?.value ?: ""
+        val punctuationAtEnd: String = matchResult.groups[4]?.value ?: ""
 
         return punctuationAtStart + capturedWord + punctuationAtEnd
     }
