@@ -18,6 +18,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.edit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -167,6 +168,10 @@ class BackupLimitsPresenter(
             )
 
         backupFolderPreference.setOnPreferenceClickListener {
+            if (BackupManager.isBackupMoveInProgress()) {
+                fragment.showSnackbar(R.string.backup_move_in_progress)
+                return@setOnPreferenceClickListener false
+            }
             pickFolderLauncher.launch(null)
             true
         }
@@ -238,9 +243,8 @@ class BackupLimitsPresenter(
             Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION,
         )
 
-        with(backupFolderPreference.sharedPreferences?.edit()) {
-            this?.putString(fragment.getString(R.string.pref_backup_directory_key), uri.toString())
-            this?.apply()
+        backupFolderPreference.sharedPreferences?.edit {
+            putString(fragment.getString(R.string.pref_backup_directory_key), uri.toString())
         }
         backupFolderPreference.summary = uri.toString()
 
@@ -248,7 +252,7 @@ class BackupLimitsPresenter(
         // persistedUri = 2: Updated from one URI to another
         // may break if persistedUri is used elsewhere
         if (contentResolver.persistedUriPermissions.count() == 1) {
-            backupManager.moveBackupFilesFromDefault(context)
+            backupManager.moveBackupFilesFromDefault(context, true)
         } else {
             val sortedUris = contentResolver.persistedUriPermissions.sortedBy { it.persistedTime }
 
@@ -282,9 +286,8 @@ class BackupLimitsPresenter(
             title(R.string.remove_backup_folder)
             positiveButton(R.string.dialog_remove) {
                 backupManager.moveBackupFilesToDefault(fragment.requireContext())
-                with(backupFolderPreference.sharedPreferences?.edit()) {
-                    this?.putString(fragment.getString(R.string.pref_backup_directory_key), fragment.getString(R.string.not_set))
-                    this?.apply()
+                backupFolderPreference.sharedPreferences?.edit {
+                    putString(fragment.getString(R.string.pref_backup_directory_key), fragment.getString(R.string.not_set))
                 }
                 backupFolderPreference.summary = fragment.getString(R.string.not_set)
                 fragment.showSnackbar(R.string.backup_folder_removed)

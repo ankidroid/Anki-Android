@@ -64,7 +64,9 @@ private suspend fun createBackup(force: Boolean) {
         // move to custom backup directory after creation if set
         val context = AnkiDroidApp.instance.applicationContext
         sharedPrefs().getString("backup_directory", null)?.let {
-            BackupManager().moveBackupFilesFromDefault(context)
+            if (it != context.getString(R.string.not_set)) {
+                BackupManager().moveBackupFilesFromDefault(context, false)
+            }
         }
     }
 }

@@ -31,6 +31,7 @@ import com.ichi2.utils.FileUtil.getFreeDiskSpace
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
@@ -50,12 +51,15 @@ open class BackupManager {
         targetUri: Uri,
     ) {
         CoroutineScope(Dispatchers.IO).launch {
+            var success = false
+            isBackupMoveInProgress = true
             try {
                 val resolver = context.contentResolver
                 val sourceFolder = DocumentFile.fromTreeUri(context, sourceUri)
                 val targetFolder = DocumentFile.fromTreeUri(context, targetUri)
 
                 if (sourceFolder?.isDirectory != true || targetFolder?.isDirectory != true) {
+                    Timber.w("Invalid source or target folder")
                     return@launch
                 }
 
@@ -70,27 +74,41 @@ open class BackupManager {
                     resolver.openInputStream(file.uri)?.use { input ->
                         resolver.openOutputStream(targetFile.uri)?.use { output ->
                             input.copyTo(output)
-                        } ?: Timber.e("Failed to open output stream for ${targetFile.uri}")
-                    } ?: Timber.e("Failed to open input stream for ${file.uri}")
-
-                    if (!file.delete()) Timber.e("Failed to delete ${file.name}")
+                            if (!file.delete()) Timber.w("Failed to delete ${file.name}")
+                        } ?: Timber.w("Failed to open output stream for target file: ${targetFile.name}")
+                    } ?: Timber.w("Failed to open input stream for file: ${file.name}")
                 }
+                success = true
             } catch (e: Exception) {
-                Timber.e(e, "Error moving files from $sourceUri to $targetUri")
+                Timber.e(e, "Error moving files from the old directory to the new one.")
+            }
+            isBackupMoveInProgress = false
+            withContext(Dispatchers.Main) {
+                if (!success) {
+                    showThemedToast(context, R.string.backup_move_failed, true)
+                } else {
+                    showThemedToast(context, R.string.backup_move_success, true)
+                }
             }
         }
     }
 
     // move from default backup dir to custom one (SAF uri)
-    fun moveBackupFilesFromDefault(context: Context) {
+    // won't show success toast when backup is moved after creation
+    fun moveBackupFilesFromDefault(
+        context: Context,
+        showSuccessToast: Boolean,
+    ) {
         val sourceFolder = getBackupDirectory(File(CollectionHelper.getCollectionPath(context)).parentFile!!)
 
         CoroutineScope(Dispatchers.IO).launch {
+            var success = false
+            isBackupMoveInProgress = true
             try {
                 val resolver = context.contentResolver
                 val targetUri = resolver.persistedUriPermissions.firstOrNull()?.uri
                 if (targetUri == null) {
-                    Timber.e("No persisted URI found")
+                    Timber.w("No persisted URI found")
                     return@launch
                 }
 
@@ -98,7 +116,7 @@ open class BackupManager {
                 val destinationFolderUri = DocumentsContract.buildDocumentUriUsingTree(targetUri, documentId)
 
                 if (!sourceFolder.exists() || !sourceFolder.isDirectory) {
-                    Timber.e("Source folder does not exist or is not a directory")
+                    Timber.w("Source folder does not exist or is not a directory")
                     return@launch
                 }
 
@@ -114,7 +132,7 @@ open class BackupManager {
                         )
 
                     if (destinationUri == null) {
-                        Timber.e("Failed to create file in destination for ${sourceFile.name}")
+                        Timber.w("Failed to create file in destination for ${sourceFile.name}")
                         return@forEach
                     }
 
@@ -122,16 +140,24 @@ open class BackupManager {
                         resolver.openOutputStream(destinationUri)?.use { output ->
                             FileInputStream(sourceFile).use { input ->
                                 input.copyTo(output)
+                                if (!sourceFile.delete()) Timber.w("Failed to delete ${sourceFile.name}")
                             }
-                        } ?: Timber.e("Failed to open output stream for $destinationUri")
-
-                        if (!sourceFile.delete()) Timber.e("Failed to delete ${sourceFile.name}")
+                        } ?: Timber.w("Failed to open output stream for file: ${sourceFile.name}")
                     } catch (e: Exception) {
                         Timber.e(e, "Error moving ${sourceFile.name}")
                     }
                 }
+                success = true
             } catch (e: Exception) {
-                Timber.e(e, "Error moving files to SAF location")
+                Timber.e(e, "Error moving files from default directory to custom directory")
+            }
+            isBackupMoveInProgress = false
+            withContext(Dispatchers.Main) {
+                if (!success) {
+                    showThemedToast(context, R.string.backup_move_failed, true)
+                } else if (showSuccessToast) {
+                    showThemedToast(context, R.string.backup_move_success, true)
+                }
             }
         }
     }
@@ -141,22 +167,24 @@ open class BackupManager {
         val targetFolder = getBackupDirectory(File(CollectionHelper.getCollectionPath(context)).parentFile!!)
 
         CoroutineScope(Dispatchers.IO).launch {
+            var success = false
+            isBackupMoveInProgress = true
             try {
                 val resolver = context.contentResolver
                 val sourceUri = resolver.persistedUriPermissions.firstOrNull()?.uri
                 if (sourceUri == null) {
-                    Timber.e("No persisted URI found")
+                    Timber.w("No persisted URI found")
                     return@launch
                 }
 
                 val sourceFolder = DocumentFile.fromTreeUri(context, sourceUri)
                 if (sourceFolder?.isDirectory != true) {
-                    Timber.e("Invalid source folder")
+                    Timber.w("Invalid source folder")
                     return@launch
                 }
 
-                if (!targetFolder.exists() && !targetFolder.mkdirs()) {
-                    Timber.e("Failed to create target directory: ${targetFolder.absolutePath}")
+                if (!targetFolder.exists()) {
+                    Timber.w("Target directory does not exist")
                     return@launch
                 }
 
@@ -169,10 +197,9 @@ open class BackupManager {
                         resolver.openInputStream(file.uri)?.use { input ->
                             FileOutputStream(targetFile).use { output ->
                                 input.copyTo(output)
+                                if (!file.delete()) Timber.w("Failed to delete ${file.name}")
                             }
-                        } ?: Timber.e("Failed to open input stream for ${file.uri}")
-
-                        if (!file.delete()) Timber.e("Failed to delete ${file.name}")
+                        } ?: Timber.w("Failed to open input stream for file: ${file.name}")
                     } catch (e: Exception) {
                         Timber.e(e, "Error moving ${file.name}")
                     }
@@ -184,13 +211,23 @@ open class BackupManager {
                         Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION,
                     )
                 }
+                success = true
             } catch (e: Exception) {
-                Timber.e(e, "Error moving files to ${targetFolder.absolutePath}")
+                Timber.e(e, "Error moving files from custom directory to default directory")
+            }
+            isBackupMoveInProgress = false
+            withContext(Dispatchers.Main) {
+                if (!success) {
+                    showThemedToast(context, R.string.backup_move_failed, true)
+                } else {
+                    showThemedToast(context, R.string.backup_move_success, true)
+                }
             }
         }
     }
 
     companion object {
+        private var isBackupMoveInProgress = false
         private const val MIN_FREE_SPACE = 10
         private const val BACKUP_SUFFIX = "backup"
         const val BROKEN_COLLECTIONS_SUFFIX = "broken"
@@ -421,6 +458,8 @@ open class BackupManager {
             }
             return dir.delete()
         }
+
+        fun isBackupMoveInProgress(): Boolean = isBackupMoveInProgress
     }
 }
 
