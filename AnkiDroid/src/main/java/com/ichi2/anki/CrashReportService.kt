@@ -26,11 +26,11 @@ import androidx.webkit.WebViewCompat
 import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.analytics.UsageAnalytics.sendAnalyticsException
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.exception.ManuallyReportedException
 import com.ichi2.anki.exception.UserSubmittedException
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ThrowableFilterService
-import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.WebViewDebugging.setDataDirectorySuffix
 import org.acra.ACRA
 import org.acra.ReportField

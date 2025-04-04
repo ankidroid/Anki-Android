@@ -30,13 +30,13 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.R
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.utils.getTimestamp
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.DeckNameId
-import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.BundleUtils.getNullableLong
 
 class Statistics :

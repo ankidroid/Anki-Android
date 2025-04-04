@@ -19,12 +19,12 @@ package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
 import anki.cards.FsrsMemoryState
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.utils.ext.ifZero
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
-import com.ichi2.libanki.utils.TimeManager
 import net.ankiweb.rsdroid.RustCleanup
 
 /**
