@@ -83,6 +83,7 @@
     <string name="gesture_page_down" maxLength="41">Page Down</string>
     <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Toggle Whiteboard</string>
+    <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
     <string name="gesture_show_hint" maxLength="41">Show Hint</string>
     <string name="gesture_show_all_hints" maxLength="41">Show All Hints</string>
     <string name="record_voice" maxLength="41">Record Voice</string>
