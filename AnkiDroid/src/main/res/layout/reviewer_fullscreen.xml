@@ -8,10 +8,14 @@ xmlns:android="http://schemas.android.com/apk/res/android">
         android:id="@+id/fullscreen_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <include layout="@layout/reviewer_topbar"
+        <include layout="@layout/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"/>
+        <include layout="@layout/reviewer_topbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar"/>
         <include
             layout="@layout/reviewer_mic_tool_bar"
             android:layout_width="match_parent"
@@ -27,16 +31,10 @@ xmlns:android="http://schemas.android.com/apk/res/android">
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_above="@+id/bottom_area_layout"/>
-        <include layout="@layout/reviewer_answer_buttons"/>
-    </RelativeLayout>
-    <!-- Controls that are overlaid over the main content when the user interrupts immersive mode -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-        <include layout="@layout/toolbar"
+        <include layout="@layout/reviewer_answer_buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="top"/>
-    </FrameLayout>
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+    <!-- Controls that are overlaid over the main content when the user interrupts immersive mode -->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
