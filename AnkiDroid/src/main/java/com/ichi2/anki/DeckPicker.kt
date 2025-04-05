@@ -2258,6 +2258,9 @@ open class DeckPicker :
 
         // Check if default deck is the only available and there are no cards
         val isEmpty = tree.children.size == 1 && tree.children[0].did == 1L && collectionIsEmpty
+        // Hide the background when there are no cards to improve text readability.
+        val backgroundView = findViewById<ImageView>(R.id.background)
+        backgroundView.visibility = if (isEmpty) View.GONE else View.VISIBLE
         if (animationDisabled()) {
             deckPickerContent.visibility = if (isEmpty) View.GONE else View.VISIBLE
             noDecksPlaceholder.visibility = if (isEmpty) View.VISIBLE else View.GONE
