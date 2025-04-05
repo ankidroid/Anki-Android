@@ -1141,7 +1141,7 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.ReviewInfo.NEXT_REVIEW_TIMES -> rb.add(nextReviewTimesJson.toString())
                 FlashCardsContract.ReviewInfo.MEDIA_FILES ->
                     rb.add(
-                        JSONArray(col.media.filesInStr(currentCard.question(col) + currentCard.answer(col))),
+                        JSONArray(col.media.filesInStr(currentCard)),
                     )
                 else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
             }
