@@ -1,51 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    android:id="@+id/root_layout"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
-
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
-
+        android:orientation="vertical">
         <include layout="@layout/toolbar" />
-
-        <LinearLayout
-            android:id="@+id/browser_column_headings"
-            android:layout_width="match_parent"
-            android:background="@drawable/browser_heading_bottom_divider"
-            android:orientation="horizontal"
-            android:paddingVertical="2dp"
-            android:layout_height="wrap_content"
-            android:longClickable="true">
-
-        </LinearLayout>
-
-        <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/browser_progress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:visibility="gone"
-            />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/card_browser_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?android:attr/colorBackground"
-            android:overScrollFooter="@color/transparent"
-            android:clipToPadding="false"
-            android:paddingBottom="72dp"
-            android:drawSelectorOnTop="true"
-            tools:listitem="@layout/card_item_browser"
-            />
-
+        <include layout="@layout/cardbrowser" />
     </LinearLayout>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
