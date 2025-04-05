@@ -920,7 +920,7 @@ open class Reviewer :
     }
 
     override fun onGenericMotionEvent(event: MotionEvent?): Boolean {
-        if (motionEventHandler.onGenericMotionEvent(event)) {
+        if (processor.onGenericMotionEvent(event)) {
             return true
         }
         return super.onGenericMotionEvent(event)

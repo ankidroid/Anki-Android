@@ -16,66 +16,8 @@
 
 package com.ichi2.anki.reviewer
 
-import android.content.Context
 import android.view.MotionEvent
-import com.ichi2.anki.AbstractFlashcardViewer
-import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.cardviewer.ViewerCommand
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.CompatHelper
-import timber.log.Timber
-
-/**
- * Handles motion events, such as joystick/pedal input and converts them to [ViewerCommand]s
- *
- * A [MotionEvent] is a **batched** collection of [actions][MotionEvent.getAction] ond [axes][Axis]
- *
- * Axes can either be bidirectional, or unidirectional. AnkiDroid allows a user to define an action
- * which occurs if the extreme of an axis [-1, 1] is met
- */
-class MotionEventHandler(
-    private val commandProcessor: ViewerCommand.CommandProcessor,
-    private val detectors: List<SingleAxisDetector>,
-) {
-    /**
-     * Accepts a [MotionEvent] and determines if one or more commands need to be executed
-     * @return whether one or more commands were executed
-     */
-    fun onGenericMotionEvent(ev: MotionEvent?): Boolean {
-        if (ev == null || !detectors.any()) return false
-
-        var processed = false
-        for (detector in detectors) {
-            val command = detector.getCommand(ev) ?: continue
-            processed = true
-            Timber.v("executing command: %s due to %s", command, detector.toDisplayString(AnkiDroidApp.instance))
-            this.commandProcessor.executeCommand(command, null)
-        }
-        return processed
-    }
-
-    companion object {
-        fun createInstance(viewer: AbstractFlashcardViewer): MotionEventHandler {
-            val handlers = getAxisButtonBindings(viewer).toList()
-            Timber.d("setting up %d motion handlers", handlers.size)
-            return MotionEventHandler(viewer, handlers)
-        }
-
-        private fun getAxisButtonBindings(context: Context) =
-            sequence {
-                for ((command, bindings) in ViewerCommand.entries
-                    .map {
-                        Pair(it, ReviewerBinding.fromPreference(context.sharedPrefs(), it))
-                    }) {
-                    for (binding in bindings
-                        .map { it.binding }
-                        .filterIsInstance<Binding.AxisButtonBinding>()) {
-                        yield(SingleAxisDetector(command, binding))
-                    }
-                }
-            }
-    }
-}
 
 /**
  * A type of movement, typically a Joystick/Trigger on a gamepad
