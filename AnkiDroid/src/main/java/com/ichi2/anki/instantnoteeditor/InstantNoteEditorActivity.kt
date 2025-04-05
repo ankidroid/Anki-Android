@@ -604,7 +604,7 @@ class InstantNoteEditorActivity :
 
     private fun View.userClickOutsideDialog(exclude: View) {
         setOnTouchListener { _, event ->
-            if (event.action != MotionEvent.ACTION_DOWN) return@setOnTouchListener false
+            if (event.action != MotionEvent.ACTION_UP) return@setOnTouchListener false
             if (exclude.rawHitTest(event)) {
                 return@setOnTouchListener false
             }
@@ -620,7 +620,7 @@ class InstantNoteEditorActivity :
 
     private fun showDiscardChangesDialog() {
         DiscardChangesDialog.showDialog(this) {
-            Timber.i("InstantNoteEditorActivity:: OK button pressed to confirm discard changes")
+            Timber.d("InstantNoteEditorActivity:: OK button pressed to confirm discard changes")
             finish()
         }
     }
