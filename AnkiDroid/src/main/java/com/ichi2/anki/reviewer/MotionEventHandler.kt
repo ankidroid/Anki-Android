@@ -37,57 +37,6 @@ class MotionEventHandler(
     private val commandProcessor: ViewerCommand.CommandProcessor,
     private val detectors: List<SingleAxisDetector>,
 ) {
-    data class SingleAxisDetector(
-        val axis: Axis,
-        val command: ViewerCommand,
-        val threshold: Float,
-    ) {
-        constructor(command: ViewerCommand, binding: Binding.AxisButtonBinding) : this(
-            command = command,
-            axis = binding.axis,
-            threshold = binding.threshold,
-        )
-
-        /** If the command has been executed and we have not returned lower than the threshold */
-        private var sentCommand: Boolean = false
-
-        /**
-         * If multiple events above the threshold are obtained, only return 1 command
-         * until the value is under the threshold
-         */
-        private val debouncedCommand: ViewerCommand?
-            get() {
-                if (sentCommand) return null
-                sentCommand = true
-                return command
-            }
-
-        /**
-         * Given a [MotionEvent], determine whether we've reached [threshold].
-         *
-         * If we have, and [command] has not been sent in the period that we reached the threshold
-         * then send the command once and wait for the value to go back under the threshold
-         *
-         * @return [command] or `null`
-         */
-        fun getCommand(ev: MotionEvent): ViewerCommand? {
-            // TODO: We may need to handle historical events as well
-            val value = ev.getAxisValue(axis.motionEventValue)
-            when {
-                threshold > 0 -> {
-                    if (value >= threshold) return debouncedCommand
-                }
-                threshold < 0 -> {
-                    if (value <= threshold) return debouncedCommand
-                }
-            }
-            sentCommand = false
-            return null
-        }
-
-        fun toDisplayString(context: Context) = Binding.AxisButtonBinding(axis, threshold).toDisplayString(context)
-    }
-
     /**
      * Accepts a [MotionEvent] and determines if one or more commands need to be executed
      * @return whether one or more commands were executed
