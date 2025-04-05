@@ -15,49 +15,38 @@
   -->
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+
+    <com.ichi2.ui.FixedTextView
+        android:id="@+id/axis_picker_selected_axis"
+        app:layout_constraintDimensionRatio="w,1:1"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintWidth_max="320dp"
+        android:textSize="24sp"
+        android:textAlignment="center"
+        android:text="@string/axis_picker_move_joystick"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <com.ichi2.ui.FixedTextView
-            android:id="@+id/axis_picker_selected_axis"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:text="@string/axis_picker_move_joystick"
-            android:textAlignment="center"
-            android:textSize="24sp" />
-
-    </LinearLayout>
 
     <ScrollView
         android:id="@+id/axis_picker_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+        >
         <LinearLayout
             android:id="@+id/axis_picker_available_axes"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" />
+            android:orientation="vertical"
+            android:layout_height="0dp"/>
     </ScrollView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
