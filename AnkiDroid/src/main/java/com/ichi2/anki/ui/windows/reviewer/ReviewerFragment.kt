@@ -67,7 +67,7 @@ import com.ichi2.anki.preferences.reviewer.ViewerAction.SUSPEND_NOTE
 import com.ichi2.anki.preferences.reviewer.ViewerAction.UNDO
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
-import com.ichi2.anki.reviewer.PeripheralKeymap
+import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.settings.enums.HideSystemBars
@@ -88,7 +88,7 @@ class ReviewerFragment :
     ActionMenuView.OnMenuItemClickListener,
     DispatchKeyEventListener {
     override val viewModel: ReviewerViewModel by viewModels {
-        ReviewerViewModel.factory(CardMediaPlayer(), PeripheralKeymap(sharedPrefs(), ViewerAction.entries))
+        ReviewerViewModel.factory(CardMediaPlayer(), BindingMap(sharedPrefs(), ViewerAction.entries))
     }
 
     override val webView: WebView

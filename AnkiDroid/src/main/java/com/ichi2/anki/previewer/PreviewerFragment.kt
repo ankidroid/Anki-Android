@@ -40,9 +40,9 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.cardviewer.CardMediaPlayer
+import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.reviewer.BindingProcessor
 import com.ichi2.anki.reviewer.MappableBinding
-import com.ichi2.anki.reviewer.PeripheralKeymap
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.utils.ext.sharedPrefs
@@ -79,7 +79,7 @@ class PreviewerFragment :
                 }
         }
 
-    private lateinit var keyMap: PeripheralKeymap<MappableBinding, PreviewerAction>
+    private lateinit var bindingMap: BindingMap<MappableBinding, PreviewerAction>
 
     override fun onViewCreated(
         view: View,
@@ -187,7 +187,7 @@ class PreviewerFragment :
             view.findViewById<MaterialCardView>(R.id.webview_container).elevation = 0F
         }
 
-        keyMap = PeripheralKeymap(sharedPrefs(), PreviewerAction.entries, this)
+        bindingMap = BindingMap(sharedPrefs(), PreviewerAction.entries, this)
     }
 
     private fun setupFlagMenu(menu: Menu) {
@@ -269,7 +269,7 @@ class PreviewerFragment :
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         if (event.action != KeyEvent.ACTION_DOWN) return false
-        return keyMap.onKeyDown(event)
+        return bindingMap.onKeyDown(event)
     }
 
     companion object {

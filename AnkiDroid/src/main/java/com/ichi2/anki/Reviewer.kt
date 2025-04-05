@@ -83,13 +83,13 @@ import com.ichi2.anki.reviewer.AnswerButtons.Companion.getTextColors
 import com.ichi2.anki.reviewer.AnswerTimer
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.Binding
+import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.reviewer.BindingProcessor
 import com.ichi2.anki.reviewer.CardMarker
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.fromPreference
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.isFullScreenReview
-import com.ichi2.anki.reviewer.PeripheralKeymap
 import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.reviewer.ReviewerUi
 import com.ichi2.anki.scheduling.ForgetCardsDialog
@@ -203,7 +203,7 @@ open class Reviewer :
     private lateinit var toolbar: Toolbar
 
     @VisibleForTesting
-    protected open lateinit var processor: PeripheralKeymap<ReviewerBinding, ViewerCommand>
+    protected open lateinit var processor: BindingMap<ReviewerBinding, ViewerCommand>
 
     private val addNoteLauncher =
         registerForActivityResult(
@@ -228,7 +228,7 @@ open class Reviewer :
         textBarReview = findViewById(R.id.review_number)
         toolbar = findViewById(R.id.toolbar)
         micToolBarLayer = findViewById(R.id.mic_tool_bar_layer)
-        processor = PeripheralKeymap(sharedPrefs(), ViewerCommand.entries, this)
+        processor = BindingMap(sharedPrefs(), ViewerCommand.entries, this)
         if (sharedPrefs().getString("answerButtonPosition", "bottom") == "bottom" && !navBarNeedsScrim) {
             setNavigationBarColor(R.attr.showAnswerColor)
         }

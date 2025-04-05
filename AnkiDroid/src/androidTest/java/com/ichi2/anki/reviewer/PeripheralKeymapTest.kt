@@ -34,10 +34,10 @@ class PeripheralKeymapTest : InstrumentedTest() {
         val processed: MutableList<ViewerCommand> = ArrayList()
 
         val sharedPrefs = testContext.sharedPrefs()
-        val peripheralKeymap =
-            PeripheralKeymap(sharedPrefs, ViewerCommand.entries) { e: ViewerCommand, _ -> processed.add(e) }
+        val bindingMap =
+            BindingMap(sharedPrefs, ViewerCommand.entries) { e: ViewerCommand, _ -> processed.add(e) }
 
-        peripheralKeymap.onKeyDown(
+        bindingMap.onKeyDown(
             getNumpadEvent(KeyEvent.KEYCODE_NUMPAD_1),
         )
         assertThat<List<ViewerCommand>>(processed, hasSize(1))

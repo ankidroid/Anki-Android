@@ -18,7 +18,6 @@ package com.ichi2.anki.reviewer
 
 import android.content.SharedPreferences
 import android.view.KeyEvent
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.Binding.Companion.possibleKeyBindings
 
 /**
@@ -26,12 +25,12 @@ import com.ichi2.anki.reviewer.Binding.Companion.possibleKeyBindings
  *
  * That way, [onKeyDown] can be used to detect key presses and trigger their actions.
  */
-class PeripheralKeymap<B : MappableBinding, A : MappableAction<B>>(
+class BindingMap<B : MappableBinding, A : MappableAction<B>>(
     sharedPrefs: SharedPreferences,
     actions: List<A>,
     private var processor: BindingProcessor<B, A>? = null,
 ) {
-    private val bindingMap = HashMap<Binding, List<Pair<A, B>>>()
+    private val keyMap = HashMap<Binding, List<Pair<A, B>>>()
 
     init {
         for (action in actions) {
@@ -39,10 +38,10 @@ class PeripheralKeymap<B : MappableBinding, A : MappableAction<B>>(
             for (mappableBinding in mappableBindings) {
                 if (!mappableBinding.isKey) continue
                 val binding = mappableBinding.binding
-                if (binding in bindingMap) {
-                    (bindingMap[binding] as MutableList).add(action to mappableBinding)
+                if (binding in keyMap) {
+                    (keyMap[binding] as MutableList).add(action to mappableBinding)
                 } else {
-                    bindingMap[binding] = mutableListOf(action to mappableBinding)
+                    keyMap[binding] = mutableListOf(action to mappableBinding)
                 }
             }
         }
@@ -58,7 +57,7 @@ class PeripheralKeymap<B : MappableBinding, A : MappableAction<B>>(
         }
         val bindings = possibleKeyBindings(event)
         for (binding in bindings) {
-            val actionAndMappableBindings = bindingMap[binding] ?: continue
+            val actionAndMappableBindings = keyMap[binding] ?: continue
             for ((action, mappableBinding) in actionAndMappableBindings) {
                 if (processor?.processAction(action, mappableBinding) == true) return true
             }
