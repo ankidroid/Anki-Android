@@ -18,6 +18,7 @@ package com.ichi2.anki.ui.windows.reviewer
 import android.text.style.RelativeSizeSpan
 import android.view.KeyEvent
 import android.view.MenuItem
+import android.view.MotionEvent
 import androidx.core.text.buildSpannedString
 import androidx.core.text.inSpans
 import androidx.lifecycle.ViewModelProvider
@@ -197,6 +198,8 @@ class ReviewerViewModel(
         if (event.action != KeyEvent.ACTION_DOWN) return false
         return bindingMap.onKeyDown(event)
     }
+
+    fun onGenericMotionEvent(event: MotionEvent?): Boolean = bindingMap.onGenericMotionEvent(event)
 
     private suspend fun toggleMark() {
         Timber.v("ReviewerViewModel::toggleMark")

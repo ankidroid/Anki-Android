@@ -34,6 +34,7 @@ import androidx.appcompat.view.menu.SubMenuBuilder
 import androidx.appcompat.widget.ActionMenuView
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.getSystemService
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -111,6 +112,10 @@ class ReviewerFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
 
+        view.setOnGenericMotionListener { _, event ->
+            viewModel.onGenericMotionEvent(event)
+        }
+
         view.findViewById<AppCompatImageButton>(R.id.back_button).setOnClickListener {
             requireActivity().finish()
         }
@@ -143,6 +148,9 @@ class ReviewerFragment :
 
         viewModel.showingAnswer.collectIn(lifecycleScope) {
             resetZoom()
+            // focus on the whole layout so motion controllers can be captured
+            // without navigating the other View elements
+            view.findViewById<CoordinatorLayout>(R.id.root_layout).requestFocus()
         }
 
         viewModel.destinationFlow.collectIn(lifecycleScope) { destination ->
