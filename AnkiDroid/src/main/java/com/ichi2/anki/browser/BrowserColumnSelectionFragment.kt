@@ -187,7 +187,11 @@ class BrowserColumnSelectionFragment : DialogFragment(R.layout.browser_columns_s
                     recyclerView: RecyclerView,
                     viewHolder: RecyclerView.ViewHolder,
                 ) {
-                    columnAdapter.refreshDataset()
+                    // Use post to defer adapter refresh and avoid IllegalStateException during layout
+                    super.clearView(recyclerView, viewHolder)
+                    recyclerView.post {
+                        columnAdapter.refreshDataset()
+                    }
                 }
             }
         val itemTouchHelper = ItemTouchHelper(callback)
