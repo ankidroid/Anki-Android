@@ -57,11 +57,13 @@ class TemplatePreviewerPage : Fragment(R.layout.template_previewer_container) {
         lifecycleScope.launch {
             val cardsWithEmptyFronts = viewModel.cardsWithEmptyFronts?.await()
             for ((index, templateName) in viewModel.getTemplateNames().withIndex()) {
-                val newTab = tabLayout.newTab().setText(templateName)
-                if (cardsWithEmptyFronts?.get(index) == true) {
-                    val badge = newTab.getOrCreateBadge()
-                    badge.horizontalOffset = -4
-                }
+                val tabTitle =
+                    if (cardsWithEmptyFronts?.get(index) == true) {
+                        getString(R.string.card_previewer_empty_front_indicator, templateName)
+                    } else {
+                        templateName
+                    }
+                val newTab = tabLayout.newTab().setText(tabTitle)
                 tabLayout.addTab(newTab)
             }
             tabLayout.selectTab(tabLayout.getTabAt(viewModel.getCurrentTabIndex()))
