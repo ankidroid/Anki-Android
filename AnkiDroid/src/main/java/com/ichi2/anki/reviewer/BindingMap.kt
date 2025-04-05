@@ -18,12 +18,17 @@ package com.ichi2.anki.reviewer
 
 import android.content.SharedPreferences
 import android.view.KeyEvent
+import android.view.MotionEvent
 import com.ichi2.anki.reviewer.Binding.Companion.possibleKeyBindings
 
 /**
- * Maps the [MappableAction] ([A]) with their configured [MappableBinding] ([B]).
+ * Maps the given [MappableAction]s with their configured [MappableBinding]s.
  *
- * That way, [onKeyDown] can be used to detect key presses and trigger their actions.
+ * That way, key presses and joystick movements can be detected to trigger their actions.
+ *
+ * * [onKeyDown]: captures key presses
+ * * [onGenericMotionEvent]: captures joystick/pedal input. Axes can either be bidirectional,
+ *   or unidirectional.
  */
 class BindingMap<B : MappableBinding, A : MappableAction<B>>(
     sharedPrefs: SharedPreferences,
@@ -31,20 +36,29 @@ class BindingMap<B : MappableBinding, A : MappableAction<B>>(
     private var processor: BindingProcessor<B, A>? = null,
 ) {
     private val keyMap = HashMap<Binding, List<Pair<A, B>>>()
+    private val axisDetectors: List<SingleAxisDetector<B, A>>
 
     init {
+        val axisList = mutableListOf<SingleAxisDetector<B, A>>()
         for (action in actions) {
             val mappableBindings = action.getBindings(sharedPrefs)
             for (mappableBinding in mappableBindings) {
-                if (!mappableBinding.isKey) continue
-                val binding = mappableBinding.binding
-                if (binding in keyMap) {
-                    (keyMap[binding] as MutableList).add(action to mappableBinding)
-                } else {
-                    keyMap[binding] = mutableListOf(action to mappableBinding)
+                when (val binding = mappableBinding.binding) {
+                    is Binding.KeyBinding -> {
+                        if (binding in keyMap) {
+                            (keyMap[binding] as MutableList).add(action to mappableBinding)
+                        } else {
+                            keyMap[binding] = mutableListOf(action to mappableBinding)
+                        }
+                    }
+                    is Binding.AxisButtonBinding -> {
+                        axisList.add(SingleAxisDetector(action, mappableBinding))
+                    }
+                    else -> {}
                 }
             }
         }
+        axisDetectors = axisList.toList()
     }
 
     fun setProcessor(processor: BindingProcessor<B, A>) {
@@ -63,5 +77,21 @@ class BindingMap<B : MappableBinding, A : MappableAction<B>>(
             }
         }
         return false
+    }
+
+    /**
+     * Accepts a [MotionEvent] and determines if one or more commands need to be executed
+     * @return whether one or more commands were executed
+     */
+    fun onGenericMotionEvent(ev: MotionEvent?): Boolean {
+        if (ev == null || axisDetectors.isEmpty()) return false
+
+        var processed = false
+        for (detector in axisDetectors) {
+            val action = detector.getAction(ev) ?: continue
+            processed = true
+            processor?.processAction(action, detector.mappableBinding)
+        }
+        return processed
     }
 }
