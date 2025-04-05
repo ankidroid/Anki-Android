@@ -22,7 +22,7 @@
 
     <com.ichi2.ui.FixedTextView
         android:id="@+id/axis_picker_selected_axis"
-        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintDimensionRatio="1:1"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
@@ -33,6 +33,7 @@
         android:focusableInTouchMode="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
