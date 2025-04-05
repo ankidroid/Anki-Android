@@ -66,6 +66,12 @@ class BrowserOptionsDialog : AppCompatDialogFragment() {
             viewModel.setTruncated(newTruncate)
         }
 
+        val newTapCardToEdit = dialogView.findViewById<RadioButton>(R.id.tap_to_edit_mode).isChecked
+
+        if (newTapCardToEdit != tapCardToEdit) {
+            viewModel.tapCardToEdit = newTapCardToEdit
+        }
+
         val newIgnoreAccent = dialogView.findViewById<CheckBox>(R.id.ignore_accents_checkbox).isChecked
         if (newIgnoreAccent != viewModel.shouldIgnoreAccents) {
             viewModel.setIgnoreAccents(newIgnoreAccent)
@@ -89,6 +95,9 @@ class BrowserOptionsDialog : AppCompatDialogFragment() {
         }
     }
 
+    // defaults to tapping on card to edit
+    private val tapCardToEdit by lazy { arguments?.getBoolean(TAP_CARD_TO_EDIT) ?: true }
+
     private val isTruncated by lazy {
         arguments?.getBoolean(IS_TRUNCATED_KEY) ?: run {
             Timber.w("BrowserOptionsDialog instantiated without configuration.")
@@ -104,6 +113,12 @@ class BrowserOptionsDialog : AppCompatDialogFragment() {
             dialogView.findViewById<RadioButton>(R.id.select_cards_mode).isChecked = true
         } else {
             dialogView.findViewById<RadioButton>(R.id.select_notes_mode).isChecked = true
+        }
+
+        if (tapCardToEdit) {
+            dialogView.findViewById<RadioButton>(R.id.tap_to_edit_mode).isChecked = true
+        } else {
+            dialogView.findViewById<RadioButton>(R.id.tap_to_preview_mode).isChecked = true
         }
 
         dialogView.findViewById<CheckBox>(R.id.truncate_checkbox).isChecked = isTruncated
@@ -153,10 +168,12 @@ class BrowserOptionsDialog : AppCompatDialogFragment() {
     companion object {
         private const val CARDS_OR_NOTES_KEY = "cardsOrNotes"
         private const val IS_TRUNCATED_KEY = "isTruncated"
+        private const val TAP_CARD_TO_EDIT = "tapCardToEdit"
 
         fun newInstance(
             cardsOrNotes: CardsOrNotes,
             isTruncated: Boolean,
+            tapCardToEdit: Boolean,
         ): BrowserOptionsDialog {
             Timber.i("BrowserOptionsDialog::newInstance")
             return BrowserOptionsDialog().apply {
@@ -164,6 +181,7 @@ class BrowserOptionsDialog : AppCompatDialogFragment() {
                     bundleOf(
                         CARDS_OR_NOTES_KEY to (cardsOrNotes == CardsOrNotes.CARDS),
                         IS_TRUNCATED_KEY to isTruncated,
+                        TAP_CARD_TO_EDIT to tapCardToEdit,
                     )
             }
         }

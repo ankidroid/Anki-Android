@@ -345,6 +345,7 @@ open class CardBrowser :
             showUndoSnackbar(TR.browsingCardsUpdated(changed.count))
         }
 
+    // TODO: move onTap logic to ViewModel as per #18178
     @VisibleForTesting
     fun onTap(id: CardOrNoteId) =
         launchCatchingTask {
@@ -354,7 +355,11 @@ open class CardBrowser :
                 viewModel.oldCardTopOffset = calculateTopOffset(viewModel.lastSelectedPosition)
             } else {
                 val cardId = viewModel.queryDataForCardEdit(id)
-                openNoteEditorForCard(cardId)
+                if (viewModel.tapCardToEdit) {
+                    openNoteEditorForCard(cardId)
+                } else {
+                    viewModel.openPreviewForNote(cardId, this@CardBrowser)
+                }
             }
         }
 
@@ -1599,7 +1604,12 @@ open class CardBrowser :
     }
 
     private fun showOptionsDialog() {
-        val dialog = BrowserOptionsDialog.newInstance(viewModel.cardsOrNotes, viewModel.isTruncated)
+        val dialog =
+            BrowserOptionsDialog.newInstance(
+                viewModel.cardsOrNotes,
+                viewModel.isTruncated,
+                viewModel.tapCardToEdit,
+            )
         dialog.show(supportFragmentManager, "browserOptionsDialog")
     }
 
