@@ -17,6 +17,7 @@
 package com.ichi2.anki.reviewer
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import com.ichi2.anki.reviewer.Binding.KeyBinding
 import com.ichi2.utils.hash
@@ -72,4 +73,17 @@ open class MappableBinding(
             }
         }
     }
+}
+
+interface MappableAction<B : MappableBinding> {
+    val preferenceKey: String
+
+    fun getBindings(prefs: SharedPreferences): List<B>
+}
+
+fun interface BindingProcessor<B : MappableBinding, A : MappableAction<B>> {
+    fun processAction(
+        action: A,
+        binding: B,
+    ): Boolean
 }

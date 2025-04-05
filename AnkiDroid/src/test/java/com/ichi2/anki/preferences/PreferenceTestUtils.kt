@@ -20,6 +20,7 @@ import androidx.annotation.XmlRes
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
+import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.testutils.getInstanceFromClassName
 import org.xmlpull.v1.XmlPullParser
 
@@ -117,7 +118,7 @@ object PreferenceTestUtils {
         getAllPreferencesFragments(context)
             .filterIsInstance<PreferenceXmlSource>()
             .map { it.preferenceResource }
-            .flatMapTo(hashSetOf()) { getKeysFromXml(context, it) }
+            .flatMapTo(hashSetOf()) { getKeysFromXml(context, it) } + ViewerCommand.entries.map { it.preferenceKey }
 
     fun getAllCustomButtonKeys(context: Context): Set<String> {
         val keys = getKeysFromXml(context, R.xml.preferences_custom_buttons).toMutableSet()

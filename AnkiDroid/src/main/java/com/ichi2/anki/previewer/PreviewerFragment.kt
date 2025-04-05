@@ -41,6 +41,9 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.cardviewer.CardMediaPlayer
+import com.ichi2.anki.reviewer.BindingProcessor
+import com.ichi2.anki.reviewer.MappableBinding
+import com.ichi2.anki.reviewer.PeripheralKeymap
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.utils.ext.sharedPrefs
@@ -53,7 +56,8 @@ class PreviewerFragment :
     CardViewerFragment(R.layout.previewer),
     Toolbar.OnMenuItemClickListener,
     BaseSnackbarBuilderProvider,
-    DispatchKeyEventListener {
+    DispatchKeyEventListener,
+    BindingProcessor<MappableBinding, PreviewerAction> {
     override val viewModel: PreviewerViewModel by viewModels {
         val previewerIdsFile =
             requireNotNull(BundleCompat.getParcelable(requireArguments(), CARD_IDS_FILE_ARG, PreviewerIdsFile::class.java)) {
@@ -75,6 +79,8 @@ class PreviewerFragment :
                     this@PreviewerFragment.view?.findViewById<MaterialButton>(R.id.show_next)
                 }
         }
+
+    private lateinit var keyMap: PeripheralKeymap<MappableBinding, PreviewerAction>
 
     override fun onViewCreated(
         view: View,
@@ -181,6 +187,8 @@ class PreviewerFragment :
         if (sharedPrefs().getBoolean("safeDisplay", false)) {
             view.findViewById<MaterialCardView>(R.id.webview_container).elevation = 0F
         }
+
+        keyMap = PeripheralKeymap(sharedPrefs(), PreviewerAction.entries, this)
     }
 
     private fun setupFlagMenu(menu: Menu) {
@@ -207,6 +215,33 @@ class PreviewerFragment :
             R.id.flag_pink -> viewModel.setFlag(Flag.PINK)
             R.id.flag_turquoise -> viewModel.setFlag(Flag.TURQUOISE)
             R.id.flag_purple -> viewModel.setFlag(Flag.PURPLE)
+        }
+        return true
+    }
+
+    override fun processAction(
+        action: PreviewerAction,
+        binding: MappableBinding,
+    ): Boolean {
+        when (action) {
+            PreviewerAction.MARK -> viewModel.toggleMark()
+            PreviewerAction.EDIT -> editCard()
+            PreviewerAction.TOGGLE_BACKSIDE_ONLY -> viewModel.toggleBackSideOnly()
+            PreviewerAction.REPLAY_AUDIO -> viewModel.replayAudios()
+            PreviewerAction.TOGGLE_FLAG_RED -> viewModel.toggleFlag(Flag.RED)
+            PreviewerAction.TOGGLE_FLAG_ORANGE -> viewModel.toggleFlag(Flag.ORANGE)
+            PreviewerAction.TOGGLE_FLAG_GREEN -> viewModel.toggleFlag(Flag.GREEN)
+            PreviewerAction.TOGGLE_FLAG_BLUE -> viewModel.toggleFlag(Flag.BLUE)
+            PreviewerAction.TOGGLE_FLAG_PINK -> viewModel.toggleFlag(Flag.PINK)
+            PreviewerAction.TOGGLE_FLAG_TURQUOISE -> viewModel.toggleFlag(Flag.TURQUOISE)
+            PreviewerAction.TOGGLE_FLAG_PURPLE -> viewModel.toggleFlag(Flag.PURPLE)
+            PreviewerAction.UNSET_FLAG -> viewModel.setFlag(Flag.NONE)
+            PreviewerAction.BACK -> {
+                requireView().findViewById<MaterialButton>(R.id.show_previous).performClickIfEnabled()
+            }
+            PreviewerAction.NEXT -> {
+                requireView().findViewById<MaterialButton>(R.id.show_next).performClickIfEnabled()
+            }
         }
         return true
     }
@@ -240,39 +275,7 @@ class PreviewerFragment :
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         if (event.action != KeyEvent.ACTION_DOWN) return false
-
-        if (event.isCtrlPressed) {
-            when (event.keyCode) {
-                KeyEvent.KEYCODE_1 -> viewModel.toggleFlag(Flag.RED)
-                KeyEvent.KEYCODE_2 -> viewModel.toggleFlag(Flag.ORANGE)
-                KeyEvent.KEYCODE_3 -> viewModel.toggleFlag(Flag.GREEN)
-                KeyEvent.KEYCODE_4 -> viewModel.toggleFlag(Flag.BLUE)
-                KeyEvent.KEYCODE_5 -> viewModel.toggleFlag(Flag.PINK)
-                KeyEvent.KEYCODE_6 -> viewModel.toggleFlag(Flag.TURQUOISE)
-                KeyEvent.KEYCODE_7 -> viewModel.toggleFlag(Flag.PURPLE)
-                else -> return false
-            }
-            return true
-        }
-
-        when (event.unicodeChar.toChar()) {
-            '*' -> {
-                viewModel.toggleMark()
-                return true
-            }
-        }
-
-        when (event.keyCode) {
-            KeyEvent.KEYCODE_DPAD_LEFT -> {
-                requireView().findViewById<MaterialButton>(R.id.show_previous).performClickIfEnabled()
-            }
-            KeyEvent.KEYCODE_DPAD_RIGHT -> {
-                requireView().findViewById<MaterialButton>(R.id.show_next).performClickIfEnabled()
-            }
-            KeyEvent.KEYCODE_R -> viewModel.replayAudios()
-            else -> return false
-        }
-        return true
+        return keyMap.onKeyDown(event)
     }
 
     companion object {
