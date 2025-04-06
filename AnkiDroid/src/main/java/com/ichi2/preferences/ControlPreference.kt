@@ -39,7 +39,6 @@ import com.ichi2.anki.preferences.requirePreference
 import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
-import com.ichi2.anki.showThemedToast
 import com.ichi2.ui.AxisPicker
 import com.ichi2.ui.KeyPicker
 import com.ichi2.utils.create
@@ -87,17 +86,13 @@ open class ControlPreference :
     /** @return whether the binding is used in another action */
     open fun warnIfUsed(
         binding: Binding,
-        warningDisplay: WarningDisplay?,
+        warningDisplay: WarningDisplay,
     ): Boolean {
         val bindingPreference = getPreferenceAssignedTo(binding) ?: return false
         if (bindingPreference == this) return false
         val actionTitle = bindingPreference.title ?: ""
         val warning = context.getString(R.string.bindings_already_bound, actionTitle)
-        if (warningDisplay != null) {
-            warningDisplay.setWarning(warning)
-        } else {
-            showThemedToast(context, warning, true)
-        }
+        warningDisplay.setWarning(warning)
         return true
     }
 
@@ -155,27 +150,40 @@ open class ControlPreference :
     }
 
     fun showAddAxisDialog() {
-        val axisPicker =
-            AxisPicker.inflate(context).apply {
-                setBindingChangedListener { binding ->
-                    warnIfUsedOrClearWarning(binding, warningDisplay = null)
-                    onAxisSelected(binding)
-                }
+        val axisPicker = AxisPicker.inflate(context)
+        val dialog =
+            AlertDialog.Builder(context).create {
+                customView(view = axisPicker.rootLayout)
+                setTitle(title)
+                setIcon(icon)
+                negativeButton(R.string.dialog_cancel) { it.dismiss() }
             }
-        AlertDialog.Builder(context).show {
-            customView(view = axisPicker.rootLayout)
-            setTitle(title)
-            setIcon(icon)
-            negativeButton(R.string.dialog_cancel) { it.dismiss() }
+        axisPicker.setBindingChangedListener { binding ->
+            dialog.dismiss()
+            val bindingPref = getPreferenceAssignedTo(binding)
+            if (bindingPref != null && bindingPref != this) {
+                AlertDialog.Builder(context).show {
+                    val warning = context.getString(R.string.bindings_already_bound, bindingPref.title)
+                    setTitle(binding.toDisplayString(context))
+                    setMessage(warning)
+                    setPositiveButton(R.string.dialog_positive_replace) { _, _ ->
+                        onAxisSelected(binding)
+                    }
+                    setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+                }
+            } else {
+                onAxisSelected(binding)
+            }
         }
+        dialog.show()
     }
 
     private fun warnIfUsedOrClearWarning(
         binding: Binding,
-        warningDisplay: WarningDisplay?,
+        warningDisplay: WarningDisplay,
     ) {
         if (!warnIfUsed(binding, warningDisplay)) {
-            warningDisplay?.clearWarning()
+            warningDisplay.clearWarning()
         }
     }
 
