@@ -25,6 +25,7 @@ import android.view.View
 import android.webkit.WebView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -46,6 +47,7 @@ import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.PeripheralKeymap
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
+import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.performClickIfEnabled
@@ -177,6 +179,16 @@ class PreviewerFragment :
 
         previousButton.setOnClickListener {
             viewModel.onPreviousButtonClick()
+        }
+
+        view.setOnGenericMotionListener { _, event ->
+            bindingMap.onGenericMotionEvent(event)
+        }
+
+        viewModel.showingAnswer.collectIn(lifecycleScope) {
+            // focus on the whole layout so motion controllers can be captured
+            // without navigating the other View elements
+            view.findViewById<CoordinatorLayout>(R.id.root_layout).requestFocus()
         }
 
         view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
