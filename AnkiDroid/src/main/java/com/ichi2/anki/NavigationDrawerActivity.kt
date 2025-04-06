@@ -65,7 +65,7 @@ abstract class NavigationDrawerActivity :
     private var navButtonGoesBack = false
 
     // Navigation drawer list item entries
-    private lateinit var drawerLayout: DrawerLayout
+    lateinit var drawerLayout: DrawerLayout
     private var navigationView: NavigationView? = null
     lateinit var drawerToggle: ActionBarDrawerToggle
         private set
