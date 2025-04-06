@@ -68,7 +68,7 @@
     <string name="answering_error_title">Chyba databáze</string>
     <string name="answering_error_message">Zápis do kolekce se nezdařil. Databáze může být poškozena nebo nemusí být dostatek prázdného místa na disku.\n\nPokud se to děje častěji, zkuste zkontrolovat databázi, opravit kolekci nebo ji obnovit ze zálohy. Klepněte na „možnosti“.\n\nNebo to může být také chyba AnkiDroid, prosím nahlaste chybu, abychom to mohli zkontrolovat.</string>
     <string name="answering_error_report">Hlášení chyby</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
+    <string name="storage_full_message">Není dostatek volného místa v úložišti pro otevření AnkiDroid. Uvolněte nějaké místo, abyste mohli pokračovat.</string>
     <string name="repair_deck_dialog">Opravdu se chcete pokusit opravit databázi?\n\nPřed obnovou bude vytvořena kopie v podadresáři „%s“.</string>
     <string name="intent_aedict_empty">Kategorie „výchozí“ je prázdná</string>
     <string name="intent_aedict_category">Chcete-li přidat karty do AnkiDroid, odstraňte všechny kategorie Poznámkového bloku nebo přidejte jednu s názvem „default“</string>
@@ -77,7 +77,7 @@
     <string name="custom_study_forgotten">Opakovat zapomenuté karty z posledních x dnů:</string>
     <string name="custom_study_ahead">Opakovat dopředu o x dnů:</string>
     <string name="custom_study_preview">Zkoušení nových karet přidaných v posledních x dnech:</string>
-    <string name="custom_study_tags">Select x cards from the deck:</string>
+    <string name="custom_study_tags">Vybrat x karet z balíčku:</string>
     <string name="storage_full_title">Úložiště je plné</string>
     <string name="storage_almost_full_title">Úložiště téměř plné</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Není místo</string>
@@ -219,10 +219,10 @@
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Později</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Znovu nezobrazovat</string>
     <string name="dismiss_backup_warning_title">Varování před ztrátou dat</string>
-    <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
-    <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
+    <string name="dismiss_backup_warning_new_user">V důsledku změn ochrany osobních údajů systému Android budou vaše data a automatické zálohy odstraněny z telefonu, pokud bude aplikace odinstalována</string>
+    <string name="dismiss_backup_warning_upgrade">V důsledku změn ochrany osobních údajů systému Android budou vaše data a automatické zálohy nedostupné, pokud bude aplikace odinstalována</string>
     <string name="deck_already_exists">Balíček již existuje</string>
-    <string name="empty_deck_name">Deck name cannot be empty</string>
+    <string name="empty_deck_name">Název balíčku nemůže být prázdný</string>
     <string name="create_deck_numeric_hint">Pokud máte problémy s pořadím balíčků (např. „10“ je před „2“), nahraďte „2“ číslem „02“</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Nastavit interval na stejnou hodnotu</string>
@@ -248,7 +248,7 @@
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Od</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Do</string>
     <!-- Instant Note Editor -->
-    <string name="cloze_note_required">Cloze Type Note Required</string>
+    <string name="cloze_note_required">Je vyžadována poznámka typu doplňovačka</string>
     <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
     <string name="open">Otevřít</string>
     <string name="change_cloze_number">Change cloze number</string>
