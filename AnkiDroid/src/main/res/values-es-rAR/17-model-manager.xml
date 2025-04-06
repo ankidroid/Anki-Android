@@ -64,9 +64,9 @@
     <string name="model_delete_warning">¿Está seguro que desea eliminar este tipo de nota?</string>
     <string name="field_delete_warning">¿Seguro que deseas eliminar este campo?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Add: %1$s</string>
+    <string name="model_browser_add_add">Añadir: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">Clone: %1$s</string>
+    <string name="model_browser_add_clone">Clonar: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Introduce la plantilla que utilizará el navegador de la tarjeta para mostrar tus tarjetas. Utiliza esto para mostrar una respuesta más concisa.\n\nUna plantilla del anverso de\n“La capital de {{Country}} es:”\npodría comprimirse en el navegador de la tarjeta a\n“Capital: {{Country}}”</string>
     <string name="card_template_browser_appearance_question_format">Formato de Pregunta</string>

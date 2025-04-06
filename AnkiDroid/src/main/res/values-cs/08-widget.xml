@@ -80,6 +80,6 @@
         <item quantity="many">Můžete vybrat až %d balíčku.</item>
         <item quantity="other">Můžete vybrat až %d balíčků.</item>
     </plurals>
-    <string name="empty_widget_state" comment="To denote the widget is empty">Chybějící balíček. Klepněte pro nastavení</string>
-    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Kolekce je prázdná, přidejte balíčky pomocí aplikace a poté znovu konfugurujte</string>
+    <string name="empty_widget_state" comment="To denote the widget is empty">Chybějící balíček. Klepnutím jej nastavíte.</string>
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Kolekce je prázdná, přidejte balíčky pomocí aplikace, a poté znovu konfugurujte</string>
 </resources>

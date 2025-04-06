@@ -82,7 +82,7 @@
     <string name="webview_crash_loop_dialog_content">System-WebView konnte die Karte »%1$s« nicht rendern.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Flaggen</string>
     <!-- Custom study options -->
-    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <string name="custom_study_loading_tags">Erstelle Schlagwortliste&#8230;</string>
     <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d aufgeschoben</item>
@@ -188,7 +188,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Hintergrund</string>
     <string name="choose_an_image" maxLength="41">Bild auswählen</string>
-    <string name="remove_wallpaper_image" maxLength="41">Remove background</string>
+    <string name="remove_wallpaper_image" maxLength="41">Hintergrund entfernen</string>
     <string name="remove_background_image">Hintergrund entfernen?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Standard wiederherstellen</string>
@@ -234,7 +234,7 @@
     <string name="note_editor_image_too_large">Das Bild ist zu groß, bitte fügen Sie das Bild manuell ein</string>
     <string name="note_editor_video_too_large">Die Videodatei ist zu groß, bitte fügen Sie das Video manuell ein</string>
     <string name="note_editor_audio_too_large">Die Audiodatei ist zu groß, bitte fügen Sie das Audio manuell ein</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android backup in progress. Please try again</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android-Backup im Gange. Bitte versuchen Sie es erneut</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Bitte verwenden Sie iManager, um AnkiDroid das Hinzufügen von Verknüpfungen zu erlauben</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Ihr Startbildschirm erlaubt AnkiDroid nicht, Verknüpfungen hinzuzufügen</string>
     <string name="create_shortcut_error">Fehler beim Hinzufügen der Verknüpfung: %s</string>
@@ -307,13 +307,13 @@
     <string name="browser_options_dialog_heading">Browser Einstellungen</string>
     <string name="audio_saved">Aufnahme gespeichert</string>
     <string name="deleting_selected_notes">Lösche ausgewählte Notizen</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Tap a voice to listen</string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use</string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Tippen Sie auf eine Stimme, um sie anzuhören</string>
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Stimme sollte vor der Verwendung installiert sein</string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Trotzdem verwenden</string>
     <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Fehler in der Sprachausgabe (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">Internet</string>
-    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Install</string>
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Installieren</string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Die Text-zu-Sprache Einstellungen konnten nicht geöffnet werden</string>
     <string name="shared_decks_login_required">Bitte melde dich an, um weitere Stapel herunterzuladen</string>
     <string name="deck_description_field_hint">Beschreibung</string>
