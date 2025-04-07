@@ -22,6 +22,7 @@ import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.libanki.CardId
+import com.ichi2.libanki.CardType
 import com.ichi2.libanki.sched.SetDueDateDays
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.async
@@ -147,7 +148,9 @@ class SetDueDateViewModel : ViewModel() {
             viewModelScope.launch {
                 withCol {
                     getCard(cardIds.first()).let {
-                        currentInterval.value = it.ivl
+                        // Only show interval if card is in the review state
+                        // New, learning, or relearning cards have an interval of 0 and should not display it
+                        currentInterval.value = if (it.type == CardType.Rev) it.ivl else null
                     }
                 }
             }
