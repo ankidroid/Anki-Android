@@ -383,6 +383,10 @@ object CollectionManager {
             ensureBackendInner()
             importCollectionPackage(backend!!, collectionPathInValidFolder(), colpkgPath)
         }
+        // delete after import if the path is in cache (temp to get absolutePath)
+        File(colpkgPath).takeIf { it.parent == AnkiDroidApp.instance.baseContext.cacheDir.absolutePath }?.apply {
+            delete()
+        }
     }
 
     fun setTestDispatcher(dispatcher: CoroutineDispatcher) {
