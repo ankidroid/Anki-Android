@@ -104,6 +104,7 @@
     <string name="field_remapping">%1$s (از \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">هرکارتی که با هیچ چیز پیوند نخورده باشد حذف خواهد شد. اگر یک یادداشت هیچ کارت باقی مانده ای نداشته باشد، از دست خواهد رفت. ادامه می دهید؟</string>
     <string name="missing_note_type">نوع یادداشتی یافت نشد</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">جعبه زمان رسیده</string>
     <plurals name="timebox_reached">
@@ -324,10 +325,12 @@
         <item quantity="other">%d کارت از حالت مخفی خارج شد</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">جابجا کردن</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
     <string name="start_recording">ضبط</string>
     <string name="stop_recording">توقف</string>
     <string name="play_recording">پخش</string>
-    <string name="next_recording">بعدی</string>
+    <string name="next_recording" comment="Description of a button to go to the next recording">بعدی</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">نمیتوان نوع کارت را حذف کرد</string>
     <string name="orphan_note_message">حذف این نوع کارت باعث بی کارت شدن بعضی یادداشت ها می شود</string>

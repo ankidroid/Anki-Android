@@ -73,7 +73,7 @@
     <string name="custom_study_forgotten">Son x gündeki unutulan kartları izle:</string>
     <string name="custom_study_ahead">X günleri önce izle:</string>
     <string name="custom_study_preview">Son x günlerdeki eklenen yeni kartları önizle:</string>
-    <string name="custom_study_tags">Select x cards from the deck:</string>
+    <string name="custom_study_tags">Desteden x kart seç:</string>
     <string name="storage_full_title">Depolama alanı dolu</string>
     <string name="storage_almost_full_title">Depolama alanı nerdeyse dolu</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Hiç alan yok</string>

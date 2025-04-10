@@ -73,20 +73,20 @@
     <string name="leech_suspend_notification">Tarxeta marcada como sambesuga e suspendida</string>
     <string name="leech_notification">Tarxeta marcada como sambesuga</string>
     <string name="webview_crash_unknown">Erro descoñecido</string>
-    <string name="webview_crash_unknwon_detailed">Isto foi causado por un erro interno na WebView</string>
+    <string name="webview_crash_unknwon_detailed">Isto foi causado por un erro interno no WebView</string>
     <string name="webview_crash_oom">Memoria insuficiente</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_oom_details">O sistema terminou WebView. Isto adoita ocorrer cando a aplicación queda sen memoria, moitas veces debido ao tipo de letra ou ficheiros multimedia grandes.</string>
+    <string name="webview_crash_nonfatal">O renderizador de WebView quebrou. Causa: %s</string>
+    <string name="webview_crash_fatal">Erro fatal: o renderizador de WebView quebrou. Causa: %s</string>
+    <string name="webview_crash_loop_dialog_title">Produciuse un erro ao representar o WebView</string>
+    <string name="webview_crash_loop_dialog_content">O WebView do sistema fallou ao representar a tarxeta \'%1$s\'.\n%2$s</string>
     <string name="filter_by_flags" maxLength="41">Bandeiras</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Creando lista de etiquetas&#8230;</string>
     <!-- Study options -->
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d soterrada</item>
-        <item quantity="other">+%d soterradas</item>
+        <item quantity="one">+%d agochada</item>
+        <item quantity="other">+%d agochadas</item>
     </plurals>
     <string name="studyoptions_total_new_label">Tarxetas novas totais</string>
     <string name="studyoptions_total_label">Tarxetas totais</string>
@@ -95,7 +95,7 @@
     <string name="discard">Descartar</string>
     <string name="note_editor_no_cards_created">Non se crearon tarxetas. Por favor, enche máis campos.</string>
     <string name="note_editor_no_cards_created_all_fields">O tipo de nota actual non produciu ningunha tarxeta.\nEscolle outro tipo de nota, ou selecciona \'Tarxetas\' e engade un campo de substitución</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Os ocos só funcionan en notas de tipo ocos</string>
     <string name="saving_facts">Gardando a nota</string>
     <string name="saving_model">Gardando tipo de nota</string>
     <string name="save" maxLength="28">Gardar</string>
@@ -103,7 +103,8 @@
     <string name="select">Seleccionar</string>
     <string name="field_remapping">%1$s (de “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Eliminaranse os cartóns asignados a ren. Se unha nota non ten cartóns restantes, perderase. Tes a certeza de querer continuar?</string>
-    <string name="missing_note_type">Non se encontrou o tipo de nota</string>
+    <string name="missing_note_type">Non se atopou o tipo de nota</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Límite de tempo acadado</string>
     <plurals name="timebox_reached">
@@ -147,14 +148,14 @@
     <string name="export_preparation_in_progress">Preparando exportación&#8230;</string>
     <string name="export_ready_title">Listo para exportar</string>
     <string name="export_send_no_handlers">Non hai aplicacións dispoñíbeis para manexar apkg. Gardando&#8230;</string>
-    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
-    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
-    <string name="export_share_title">Send Anki package using</string>
+    <string name="export_save_apkg_successful">Paquete Anki gardado correctamente</string>
+    <string name="export_save_apkg_unsuccessful">Fallo ao gardar o paquete Anki</string>
+    <string name="export_share_title">Enviar paquete Anki usando</string>
     <string name="export_email_subject">Cartóns exportados por AnkiDroid: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Ola!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        Esta é unha baralla de tarxetas Anki enviada desde AnkiDroid[1].
+        Tenta abrila usando unha das versións dispoñíbeis de Anki[2] e goza dunha aprendizaxe doada e eficiente!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
@@ -180,10 +181,10 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Produciuse un erro ao compartir o ficheiro apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="activity_start_failed">O sistema non ten ningunha aplicación instalada que poida executar esta acción.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[As imaxes da cámara poden ser grandes. Pode que desexes comprimilas e redimensionalas no directorio de multimedia]]></string>
+    <string name="no_browser_msg">Non se encontrou navegador para abrir a ligazón: %s</string>
+    <string name="web_page_error">Erro ao cargar a páxina: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Fondo</string>
@@ -191,106 +192,106 @@
     <string name="remove_wallpaper_image" maxLength="41">Retirar fondo</string>
     <string name="remove_background_image">Retirar fondo?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Restore Default</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="restore_default" maxLength="28">Restablecer predefinidos</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Baleiro</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_editor" maxLength="28">Whiteboard editor</string>
+    <string name="white_board_image_save_failed">Fallo ao gardar a imaxe do encerado. %s</string>
+    <string name="white_board_image_saved">Imaxe do encerado gardada en %s</string>
+    <string name="title_whiteboard_editor" maxLength="28">Editor do encerado</string>
     <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
     <string name="invalid_json_data">Card provided invalid data. %s</string>
     <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">Ver</string>
     <string name="anki_js_error_code">(Código de erro: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug_info">Copiado ao portapapeis</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
+    <string name="card_viewer_could_not_find_image">Erro no contido da tarxeta: Fallo ao cargar ‘%s’</string>
     <!-- Deck Picker -->
     <string name="search_decks" maxLength="28">Buscar barallas</string>
     <string name="ankidroid_init_failed_webview_title">Erro fatal</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="ankidroid_init_failed_webview">O sistema WebView, do cal depende AnkiDroid, non se encontra dispoñíbel. Isto pode ocorrer durante a instalación de actualizacións. Téntao de novo nuns minutos.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size" maxLength="28">Font size</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Show toolbar</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="menu_font_size" maxLength="28">Tamaño da letra</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Amosar barra de ferramentas</string>
+    <string name="format_insert_bold">Aplicar letra grosa</string>
+    <string name="format_insert_italic">Aplicar cursiva</string>
+    <string name="format_insert_underline">Aplicar subliñado</string>
+    <string name="insert_horizontal_line">Inserir liña horizontal</string>
+    <string name="insert_heading">Inserir cabeceira</string>
+    <string name="format_font_size">Cambiar tamaño da letra</string>
+    <string name="insert_mathjax">Inserir ecuación MathJax</string>
+    <string name="note_editor_toolbar_icon">Texto do botón</string>
+    <string name="before_text">HTML antes da selección</string>
+    <string name="after_text">HTML despois da selección</string>
+    <string name="add_toolbar_item">Crear elemento da barra de ferramentas</string>
+    <string name="edit_toolbar_item">Editar elemento da barra de ferramentas</string>
     <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
-    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
-    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
-    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
+    <string name="remove_toolbar_item">Eliminar elemento da barra de ferramentas?</string>
+    <string name="note_editor_image_too_large">A imaxe é moi grande. Insire a imaxe manualmente</string>
+    <string name="note_editor_video_too_large">O ficheiro de vídeo é moi grande. Insire o vídeo manualmente</string>
+    <string name="note_editor_audio_too_large">O ficheiro de audio é moi grande. Insire o audio manualmente</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android backup in progress. Please try again</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Capitalize sentences</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Scroll toolbar</string>
+    <string name="create_shortcut_error">Erro ao engadir atallo: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Comezar frases con maiúscula</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Barra ferramentas deslizábel</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="invalid_email">Enter a valid email</string>
-    <string name="password_empty">Password is required</string>
-    <string name="back_pressed_once">Press back again to exit</string>
+    <string name="invalid_email">Insire un correo electrónico válido</string>
+    <string name="password_empty">O contrasinal é obrigatorio</string>
+    <string name="back_pressed_once">Preme en atrás de novo para saír</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Open in Browser</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
+    <string name="download_deck">Descargar baralla</string>
+    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Abrir no navegador</string>
+    <string name="try_again">Tentar de novo</string>
+    <string name="cancel_download">Cancelar descarga</string>
+    <string name="cancel_download_question_title">Cancelar descarga?</string>
+    <string name="downloading_file">Descargando %s</string>
+    <string name="import_deck">Importar baralla</string>
+    <string name="something_wrong">Algo saíu mal. Téntao de novo</string>
+    <string name="download_failed">Fallo ao descargar</string>
     <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
+    <string name="check_network">Comproba a túa conexión de rede</string>
+    <string name="search_using_deck_name">Buscar usando o nome da baralla</string>
     <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
-    <string name="home" maxLength="28">Home</string>
+    <string name="home" maxLength="28">Inicio</string>
     <!-- Reviewer actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Tarxeta soterrada.</string>
+    <string name="card_buried">Tarxeta agochada.</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="one">%d tarxeta suspendida.</item>
+        <item quantity="other">%d tarxetas suspendidas.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="scoped_storage_learn_more">Máis información</string>
+    <string name="search_card_js_api_no_results">A busca non devolveu ningún resultado</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
+    <string name="could_not_create_dir">Non se puido crear o directorio %s</string>
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="file_extract_exceeds_storage_space">O ficheiro extraido excede o espazo de almacenamento</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">Expandir etiqueta \'%s\'</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
-    <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <string name="field_editor_model_not_available">Non se puido cargar a colección. Por favor, téntao de novo!</string>
+    <string name="cd_manage_notetypes_add">Engadir novo tipo de nota</string>
     <!-- App Intro -->
-    <string name="intro_ankidroid_tagline_one">Study less</string>
-    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_ankidroid_tagline_one">Estuda menos</string>
+    <string name="intro_ankidroid_tagline_two">Lembra máis</string>
     <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
-    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Comeza agora</string>
+    <string name="intro_sync_from_ankiweb">Sincronizar desde AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid aínda non está inicializado. Abre AnkiDroid e téntao de novo</string>
     <string name="already_logged_in">Xa iniciaches sesión</string>
@@ -320,14 +321,16 @@
     <string name="failed_to_copy">Non se puido copiar</string>
     <string name="card_browser_unavailable_when_notes_mode">Non dispoñíbel en modo \'Notas\'</string>
     <plurals name="unbury_cards_feedback">
-        <item quantity="one">%d tarxeta desenterrada</item>
-        <item quantity="other">%d tarxetas desenterradas</item>
+        <item quantity="one">%d tarxeta desagochada</item>
+        <item quantity="other">%d tarxetas desagochadas</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Reposicionar</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
     <string name="start_recording">Gravar</string>
     <string name="stop_recording">Deter</string>
     <string name="play_recording">Reproducir</string>
-    <string name="next_recording">Seguinte</string>
+    <string name="next_recording" comment="Description of a button to go to the next recording">Seguinte</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Non se puido eliminar o tipo de tarxeta</string>
     <string name="orphan_note_message">Eliminando este tipo de tarxeta deixarás algunhas notas sen tarxetas</string>
@@ -345,6 +348,6 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Editar estilo</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copiar modelo como markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Editar aparencia do explorador</string>
-    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
-    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">A acción de usuario %s non está establecida neste tipo de nota. Configúraa</string>
+    <string name="directory_inaccessible_info">Obtén máis información sobre como restaurar o acceso aquí %s ou ve á configuración para actualizar o cartafol da colección.</string>
 </resources>

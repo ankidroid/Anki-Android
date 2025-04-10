@@ -106,6 +106,7 @@
     <string name="field_remapping">%1$s (dae “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Sas cartas chene connessiones s\'ant a iscantzellare. Si una nota non tenet prus cartas s\'at a pèrdere. Ses seguru de chèrrere sighire?</string>
     <string name="missing_note_type">Peruna casta de nota atzapada</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Lìmite de tempus barigadu</string>
     <plurals name="timebox_reached">
@@ -327,10 +328,12 @@
         <item quantity="other">%d cartas no interradas</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Muda de positzione</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
     <string name="start_recording">Registra</string>
     <string name="stop_recording">Firma</string>
     <string name="play_recording">Riprodui</string>
-    <string name="next_recording">Imbeniente</string>
+    <string name="next_recording" comment="Description of a button to go to the next recording">Imbeniente</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Non faghet a cantzellare sa casta de carta</string>
     <string name="orphan_note_message">S\'iscantzelladura de custa casta de carta at a lassare unas cantas notas chene carta peruna.</string>

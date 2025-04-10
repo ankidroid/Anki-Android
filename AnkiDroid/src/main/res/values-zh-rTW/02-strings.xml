@@ -103,6 +103,7 @@
     <string name="field_remapping">%1$s (來自「%2$s」)</string>
     <string name="confirm_map_cards_to_nothing">空白卡片會被刪除，而筆記如果沒有在卡片上也會遺失。你確定要繼續嗎？</string>
     <string name="missing_note_type">未找到筆記類型</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">達到計時器限制！</string>
     <plurals name="timebox_reached">
@@ -318,10 +319,12 @@
         <item quantity="other">取消遮蓋了 %d 張卡片</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">變更位置</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
     <string name="start_recording">錄製</string>
     <string name="stop_recording">停止</string>
     <string name="play_recording">播放</string>
-    <string name="next_recording">下一個錄音</string>
+    <string name="next_recording" comment="Description of a button to go to the next recording">下一個錄音</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">無法刪除此卡類型</string>
     <string name="orphan_note_message">刪除此卡類型會使某些筆記本沒有任何卡片。</string>
