@@ -104,6 +104,7 @@
     <string name="field_remapping">%1$s (az “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Az összes üres kártyát töröljük. Ha a jegyzet összes kártyája törlődik, akkor ez is eltávolításra kerül. Folytatod?</string>
     <string name="missing_note_type">No note type found</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">A rendelkezésre álló időt elhasználtuk</string>
     <plurals name="timebox_reached">
@@ -325,10 +326,12 @@
         <item quantity="other">%d cards unburied</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Reposition</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
     <string name="start_recording">Felvétel indítása</string>
     <string name="stop_recording">Stop</string>
     <string name="play_recording">Indítás</string>
-    <string name="next_recording">Következő</string>
+    <string name="next_recording" comment="Description of a button to go to the next recording">Következő</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Cannot Delete Card Type</string>
     <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>

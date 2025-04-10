@@ -87,8 +87,8 @@
     <plurals name="studyoptions_buried_count">
         <item quantity="other">+%d buried</item>
     </plurals>
-    <string name="studyoptions_total_new_label">Total new cards</string>
-    <string name="studyoptions_total_label">Total cards</string>
+    <string name="studyoptions_total_new_label">Total kartu baru</string>
+    <string name="studyoptions_total_label">Total Kartu</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Edit catatan</string>
     <string name="discard">Buang</string>
@@ -103,6 +103,7 @@
     <string name="field_remapping">%1$s (dari “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Semua kartu yang yang dibuat kosong akan dihapus. Jika catatan tidak memiliki sisa kartu, kartu tersebut akan hilang. Apa kamu yakin?</string>
     <string name="missing_note_type">Tidak ada jenis catatan yang ditemukan</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Batas waktu telah tercapai</string>
     <plurals name="timebox_reached">
@@ -318,10 +319,12 @@
         <item quantity="other">%d cards unburied</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Pindah posisi</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
     <string name="start_recording">Mulai rekam</string>
     <string name="stop_recording">Selesai rekam</string>
     <string name="play_recording">Mainkan</string>
-    <string name="next_recording">Berikutnya</string>
+    <string name="next_recording" comment="Description of a button to go to the next recording">Berikutnya</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Cannot Delete Card Type</string>
     <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>

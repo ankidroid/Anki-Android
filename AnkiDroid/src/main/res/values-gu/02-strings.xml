@@ -104,6 +104,7 @@
     <string name="field_remapping">%1$s (“%2$s”માંથી)</string>
     <string name="confirm_map_cards_to_nothing">કંઈપણ સાથે મેપ કરેલ કોઈપણ કાર્ડ કાઢી નાખવામાં આવશે. જો કોઈ નોંધમાં કોઈ બાકી કાર્ડ નથી, તો તે ખોવાઈ જશે. શું તમે ખરેખર ચાલુ રાખવા માંગો છો?</string>
     <string name="missing_note_type">કોઈ નોંધ પ્રકાર મળ્યો નથી</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">ટાઈમબોક્સ પહોંચી ગયું</string>
     <plurals name="timebox_reached">
@@ -324,10 +325,12 @@
         <item quantity="other">%d કાર્ડ અનબરી</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">રિપોઝિશન</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
     <string name="start_recording">રેકોર્ડ કરો</string>
     <string name="stop_recording">બંધ</string>
     <string name="play_recording">પ્લે</string>
-    <string name="next_recording">આગલું</string>
+    <string name="next_recording" comment="Description of a button to go to the next recording">આગલું</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">அட்டை வகையை நீக்க முடியாது</string>
     <string name="orphan_note_message">இந்த கார்டு வகையை நீக்கினால் சில குறிப்புகள் கார்டு இல்லாமல் இருக்கும்.</string>

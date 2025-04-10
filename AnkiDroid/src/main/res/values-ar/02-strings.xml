@@ -108,6 +108,7 @@
     <string name="field_remapping">%1$s (من “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">البطاقات غير المُوزعة ستُحذف. إذا لم يتبقَّ لملحوظة أي بطاقة، ستُحذف. هل أنت متأكد من الاستمرار؟</string>
     <string name="missing_note_type">لا يوجد أي نوع ملحوظة</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">انتهت مهلة تقسيم المهام</string>
     <plurals name="timebox_reached">
@@ -348,10 +349,12 @@
         <item quantity="other">%d cards unburied</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">تغيير الموضع</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
     <string name="start_recording">تسجيل</string>
     <string name="stop_recording">إيقاف</string>
     <string name="play_recording">تشغيل</string>
-    <string name="next_recording">التالي</string>
+    <string name="next_recording" comment="Description of a button to go to the next recording">التالي</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">لا يمكنك حذف البطاقات من هذا النوع</string>
     <string name="orphan_note_message">حذف هذا النوع من البطاقات سيترك بعض الملحوظات بدون أي بطاقة.</string>

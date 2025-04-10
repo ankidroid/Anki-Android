@@ -104,6 +104,7 @@
     <string name="field_remapping">%1$s (von »%2$s«)</string>
     <string name="confirm_map_cards_to_nothing">Alle leeren Karten werden gelöscht. Sind sämtliche Karten einer Notiz gelöscht, wird diese ebenfalls entfernt. Fortfahren?</string>
     <string name="missing_note_type">Kein Notiztyp gefunden</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Zeitlimit erreicht</string>
     <plurals name="timebox_reached">
@@ -324,10 +325,12 @@
         <item quantity="other">%d Karten nicht mehr aufgeschoben</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Position ändern</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
     <string name="start_recording">Datensatz</string>
     <string name="stop_recording">Stopp</string>
     <string name="play_recording">Play</string>
-    <string name="next_recording">Weiter</string>
+    <string name="next_recording" comment="Description of a button to go to the next recording">Weiter</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Kartentyp kann nicht gelöscht werden</string>
     <string name="orphan_note_message">Das Löschen dieses Kartentyps wird einige Notizen ohne Karten hinterlassen.</string>

@@ -104,6 +104,7 @@
     <string name="field_remapping">%1$s (\"%2$s\" سے)</string>
     <string name="confirm_map_cards_to_nothing">کسی بھی کارڈ کو کچھ بھی نہیں پر میپ کیا جائے گا حذف کر دیا جائے گا۔ اگر کسی نوٹ میں کوئی کارڈ باقی نہیں ہے، تو وہ کھو جائے گا۔ کیا آپ واقعی جاری رکھنا چاہتے ہیں؟</string>
     <string name="missing_note_type">نوٹ کی کوئی قسم نہیں ملی</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">ٹائم باکس پہنچ گیا۔</string>
     <plurals name="timebox_reached">
@@ -325,10 +326,12 @@
         <item quantity="other">%d کارڈز کو دفن کیا گیا</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">ریپوزیشن</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
     <string name="start_recording">ریکارڈ کریں</string>
     <string name="stop_recording">بند کریں</string>
     <string name="play_recording">چلائیں</string>
-    <string name="next_recording">اگلے</string>
+    <string name="next_recording" comment="Description of a button to go to the next recording">اگلے</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">کارڈ کی قسم کو حذف نہیں کیا جا سکتا</string>
     <string name="orphan_note_message">اس کارڈ کی قسم کو حذف کرنے سے کچھ نوٹ بغیر کسی کارڈ کے رہ جائیں گے۔</string>

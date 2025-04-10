@@ -106,6 +106,7 @@
     <string name="field_remapping">%1$s (z “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Wszystkie nieprzypisane karty zostaną usunięte. Jeśli notatka nie zawiera już kart, również zostanie usunięta. Czy na pewno chcesz kontynuować?</string>
     <string name="missing_note_type">Nie znaleziono typu notatki</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Osiągnięto limit czasu</string>
     <plurals name="timebox_reached">
@@ -336,10 +337,12 @@
         <item quantity="other">%d kart odkopano</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Zmień pozycję</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
     <string name="start_recording">Nagraj</string>
     <string name="stop_recording">Zatrzymaj</string>
     <string name="play_recording">Odtwórz</string>
-    <string name="next_recording">Dalej</string>
+    <string name="next_recording" comment="Description of a button to go to the next recording">Dalej</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Nie można usunąć typu karty</string>
     <string name="orphan_note_message">Usunięcie tej karty spowoduje pozostawienie niektórych notatek bez żadnej karty.</string>

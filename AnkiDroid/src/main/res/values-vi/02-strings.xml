@@ -103,6 +103,7 @@
     <string name="field_remapping">%1$s (từ \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Bất kỳ thẻ nào không được gán sẽ bị xoá. Nếu một ghi chú không có thẻ nào kèm theo, nó sẽ bị mất. Có chắc là bạn muốn tiếp tục?</string>
     <string name="missing_note_type">Không tìm thấy loại ghi chú nào</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Đã đạt đến giới hạn thời gian</string>
     <plurals name="timebox_reached">
@@ -318,10 +319,12 @@
         <item quantity="other">%d thẻ chưa được ẩn</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Đặt lại vị trí</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
     <string name="start_recording">Ghi âm</string>
     <string name="stop_recording">Dừng</string>
     <string name="play_recording">Phát</string>
-    <string name="next_recording">Tiếp theo</string>
+    <string name="next_recording" comment="Description of a button to go to the next recording">Tiếp theo</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Không thể xoá loại thẻ</string>
     <string name="orphan_note_message">Việc xóa loại thẻ này sẽ để lại một số ghi chú không có thẻ nào liên kết.</string>
