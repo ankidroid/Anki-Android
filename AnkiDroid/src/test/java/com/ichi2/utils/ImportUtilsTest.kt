@@ -22,6 +22,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.annotation.CheckResult
 import androidx.core.net.toUri
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.utils.ImportUtils.FileImporter
@@ -30,10 +31,12 @@ import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.endsWith
 import org.hamcrest.Matchers.lessThanOrEqualTo
 import org.hamcrest.Matchers.not
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.io.File
 
 @RunWith(AndroidJUnit4::class)
 class ImportUtilsTest : RobolectricTest() {
@@ -65,6 +68,26 @@ class ImportUtilsTest : RobolectricTest() {
         assertThat(actualFilePath, containsString("%E5%A5%BD"))
         val fileName = actualFilePath.substring(actualFilePath.indexOf("%E5%A5%BD"))
         assertThat(fileName.length, lessThanOrEqualTo(100))
+    }
+
+    @Test
+    fun validFilename_noSpecialCharacters() {
+        // #18173 - Special Characters in file name causing error in image opening in image occlusion
+        // This filename caused error
+        val inputFileName = "609965f85823a7003548496f_##_BASIC MATHS 01 UMEED D_250330_012911_35.jpg"
+
+        val testFileImporter = TestFileImporter(inputFileName)
+
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val testUri = "content://dummy/test".toUri()
+        // getFileCachedCopy() function of ImportUtils is called in handling Image imports for image occlusion
+        val cachedPath = testFileImporter.getFileCachedCopy(context, testUri)
+        // ensureValidLength() function will replace all special characters with underscore
+        val expectedSanitizedFileName = "609965f85823a7003548496f____BASIC MATHS 01 UMEED D_250330_012911_35.jpg"
+
+        val expectedPath = File(context.cacheDir, expectedSanitizedFileName).absolutePath
+
+        assertEquals("Cached file path should use the sanitized file name", expectedPath, cachedPath)
     }
 
     private fun importValidFile(fileName: String): String {
