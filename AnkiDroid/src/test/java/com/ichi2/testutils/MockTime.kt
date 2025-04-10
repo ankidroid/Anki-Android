@@ -16,7 +16,7 @@
 package com.ichi2.testutils
 
 import android.annotation.SuppressLint
-import com.ichi2.libanki.utils.Time
+import com.ichi2.anki.common.time.Time
 import java.util.Calendar
 import java.util.GregorianCalendar
 import java.util.TimeZone

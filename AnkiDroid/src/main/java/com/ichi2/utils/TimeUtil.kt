@@ -17,7 +17,7 @@
 package com.ichi2.utils
 
 import androidx.annotation.CheckResult
-import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.anki.common.time.TimeManager
 import timber.log.Timber
 
 /**

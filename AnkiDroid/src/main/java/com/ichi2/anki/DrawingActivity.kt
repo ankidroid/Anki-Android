@@ -26,7 +26,7 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuItemCompat
 import androidx.core.view.isGone
-import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.themes.Themes
 import com.ichi2.utils.iconAlpha
 import timber.log.Timber

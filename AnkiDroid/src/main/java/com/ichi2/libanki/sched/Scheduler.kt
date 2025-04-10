@@ -42,6 +42,7 @@ import anki.scheduler.UnburyDeckRequest
 import anki.scheduler.cardAnswer
 import anki.scheduler.scheduleCardsAsNewRequest
 import com.ichi2.anki.Ease
+import com.ichi2.anki.common.time.TimeManager.time
 import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
@@ -55,7 +56,6 @@ import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
-import com.ichi2.libanki.utils.TimeManager.time
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import kotlin.math.ceil
