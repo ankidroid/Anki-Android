@@ -2134,19 +2134,11 @@ open class DeckPicker :
             return
         }
 
-        when (queryCompletedDeckCustomStudyAction(did)) {
-            CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED,
-            CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY,
-            CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED,
-            CompletedDeckStatus.DAILY_STUDY_LIMIT_REACHED,
-            -> {
-                onDeckCompleted()
-            }
-            CompletedDeckStatus.EMPTY_REGULAR_DECK -> {
-                // If the deck is empty (& has no children) then show a message saying it's empty
-                showEmptyDeckSnackbar()
-                updateUi()
-            }
+        if (isDeckAndSubdeckEmpty(did)) {
+            showEmptyDeckSnackbar()
+            updateUi()
+        } else {
+            onDeckCompleted()
         }
     }
 
@@ -2638,38 +2630,15 @@ open class DeckPicker :
     }
 
     /**
-     * Returns how a user can 'custom study' a deck with no more pending cards
+     * Returns if the deck and its subdecks are all empty.
      *
      * @param did The id of a deck with no pending cards to review
      */
-    private suspend fun queryCompletedDeckCustomStudyAction(did: DeckId): CompletedDeckStatus =
-        when {
-            withCol { sched.hasCardsTodayAfterStudyAheadLimit() } -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
-            withCol { sched.newDue() || sched.revDue() } -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
-            withCol { decks.isFiltered(did) } -> CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED
-            getNodeByDid(did).children.isEmpty() &&
-                withCol {
-                    decks.isEmpty(did)
-                } -> CompletedDeckStatus.EMPTY_REGULAR_DECK
-            else -> CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY
+    private suspend fun isDeckAndSubdeckEmpty(did: DeckId): Boolean {
+        val node = getNodeByDid(did)
+        return withCol {
+            node.all { decks.isEmpty(it.did) }
         }
-
-    /** Status for a deck with no current cards to review */
-    enum class CompletedDeckStatus {
-        /** No cards for today, but there would be if the user waited */
-        LEARN_AHEAD_LIMIT_REACHED,
-
-        /** No cards for today, but either the 'new' or 'review' limit was reached */
-        DAILY_STUDY_LIMIT_REACHED,
-
-        /** No cards are available, but the deck was dynamic */
-        DYNAMIC_DECK_NO_LIMITS_REACHED,
-
-        /** The deck contained no cards and had no child decks */
-        EMPTY_REGULAR_DECK,
-
-        /** The user has completed their studying for today, and there are future reviews */
-        REGULAR_DECK_NO_MORE_CARDS_TODAY,
     }
 
     override fun getApkgFileImportResultLauncher(): ActivityResultLauncher<Intent> = apkgFileImportResultLauncher
