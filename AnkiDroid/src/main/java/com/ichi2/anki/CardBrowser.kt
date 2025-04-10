@@ -38,6 +38,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.CheckResult
 import androidx.annotation.MainThread
+import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.ThemeUtils
@@ -104,6 +105,8 @@ import com.ichi2.anki.model.SortType
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.PreviewerFragment
+import com.ichi2.anki.previewer.TemplatePreviewerArguments
+import com.ichi2.anki.previewer.TemplatePreviewerPage
 import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.scheduling.registerOnForgetHandler
@@ -345,6 +348,7 @@ open class CardBrowser :
             showUndoSnackbar(TR.browsingCardsUpdated(changed.count))
         }
 
+    // TODO: move onTap logic to ViewModel as per #18178
     @VisibleForTesting
     fun onTap(id: CardOrNoteId) =
         launchCatchingTask {
@@ -354,7 +358,22 @@ open class CardBrowser :
                 viewModel.oldCardTopOffset = calculateTopOffset(viewModel.lastSelectedPosition)
             } else {
                 val cardId = viewModel.queryDataForCardEdit(id)
-                openNoteEditorForCard(cardId)
+                if (viewModel.tapCardToEdit) {
+                    openNoteEditorForCard(cardId)
+                } else {
+                    val args = viewModel.getTemplatePreviewArguments(cardId)
+                    val templatePreviewerArgs =
+                        TemplatePreviewerArguments(
+                            notetypeFile = NotetypeFile(this@CardBrowser, args.notetype),
+                            fields = args.fields,
+                            tags = args.tags,
+                            id = args.id,
+                            ord = args.ord,
+                            fillEmpty = args.fillEmpty,
+                        )
+                    val intent = TemplatePreviewerPage.getIntent(this@CardBrowser, templatePreviewerArgs)
+                    this@CardBrowser.startActivity(intent)
+                }
             }
         }
 
@@ -1599,7 +1618,12 @@ open class CardBrowser :
     }
 
     private fun showOptionsDialog() {
-        val dialog = BrowserOptionsDialog.newInstance(viewModel.cardsOrNotes, viewModel.isTruncated)
+        val dialog =
+            BrowserOptionsDialog.newInstance(
+                viewModel.cardsOrNotes,
+                viewModel.isTruncated,
+                viewModel.tapCardToEdit,
+            )
         dialog.show(supportFragmentManager, "browserOptionsDialog")
     }
 
@@ -1678,7 +1702,7 @@ open class CardBrowser :
         get() {
             val count = viewModel.rowCount
 
-            @androidx.annotation.StringRes val subtitleId =
+            @StringRes val subtitleId =
                 if (viewModel.cardsOrNotes == CARDS) {
                     R.plurals.card_browser_subtitle
                 } else {
