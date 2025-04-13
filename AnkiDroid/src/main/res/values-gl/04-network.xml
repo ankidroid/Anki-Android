@@ -63,23 +63,23 @@
     <string name="logged_as">Conectado como</string>
     <string name="log_out">Saír</string>
     <string name="reset_password">Restablecer contrasinal</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="lost_mail_instructions">Esqueciches o e-mail?</string>
+    <string name="sign_in">Accedendo</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Opcións para XXX</string>
     <string name="sync_title">Sincronización</string>
     <string name="sync_log_uploading_message">Sincronización completa dos datos locais</string>
     <string name="sync_database_acknowledge">Colección sincronizada</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
+    <string name="col_synced_media_in_background">Colección sincronizada. Os ficheiros multimedia estanse sincronizando en segundo plano.</string>
     <string name="sync_corrupt_database">Base de datos corrompida. Por favor corríxea antes de tentar sincronizar de novo.\n\nVer %s para máis información sobre como reparar a base de datos.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Local</string>
     <string name="sync_sanity_remote">Remoto</string>
-    <string name="one_way_sync_title" maxLength="41">One-way sync</string>
-    <string name="one_way_sync_confirmation">One way sync requested</string>
+    <string name="one_way_sync_title" maxLength="41">Sincronización unidireccional</string>
+    <string name="one_way_sync_confirmation">Sincronización unidireccional solicitada</string>
     <string name="full_sync_confirmation">O troco solicitado require subir a base de datos a próxima vez que sincronices a túa colección. Se tes revisións ou outros trocos agardando noutro dispositivo que aínda non foron sincronizados aquí, estes perderanse. Continuar?</string>
-    <string name="full_sync_confirmation_upgrade">Debido a un erro na versión anterior do AnkiDroid e recomendable realizar unha sincronización completa.</string>
+    <string name="full_sync_confirmation_upgrade">Debido a un fallo na versión anterior do AnkiDroid e recomendábel realizar unha sincronización completa.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_one_way_sync">Sincronización (unidireccional)</string>
+    <string name="sync_menu_title_no_account">Sincronización (acceder)</string>
 </resources>

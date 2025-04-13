@@ -117,7 +117,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Concede a Ankidroid o permiso de \'Almacenamento\' para continuar</string>
+    <string name="startup_no_storage_permission">Concede a AnkiDroid o permiso de \'Almacenamento\' para continuar</string>
     <string name="rebuild_filtered_deck">Reconstruíndo baralla filtrada&#8230;</string>
     <string name="rebuild_cram_label" maxLength="28">Reconstruír</string>
     <string name="empty_cram_label" maxLength="28">Baleirar</string>
