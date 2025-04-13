@@ -47,11 +47,11 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Abrir a gabeta</string>
     <string name="drawer_close">Pechar a gabeta</string>
-    <string name="CardEditorCardDeck">Baralla de cartóns:</string>
+    <string name="CardEditorCardDeck">Baralla de tarxetas:</string>
     <string name="CardEditorNoteDeck">Baralla:</string>
     <string name="CardEditorModel">Tipo:</string>
     <string name="CardEditorTags">Etiquetas: %1$s</string>
-    <string name="CardEditorCards">Cartóns: %1$s</string>
+    <string name="CardEditorCards">Tarxetas: %1$s</string>
     <string name="edit_occlusions">Editar oclusións</string>
     <string name="tag_name">Nome da etiqueta</string>
     <string name="add_new_filter_tags">Engadir/Filtrar etiquetas</string>
@@ -75,9 +75,9 @@
     <string name="webview_crash_unknown">Erro descoñecido</string>
     <string name="webview_crash_unknwon_detailed">Isto foi causado por un erro interno no WebView</string>
     <string name="webview_crash_oom">Memoria insuficiente</string>
-    <string name="webview_crash_oom_details">O sistema terminou WebView. Isto adoita ocorrer cando a aplicación queda sen memoria, moitas veces debido ao tipo de letra ou ficheiros multimedia grandes.</string>
-    <string name="webview_crash_nonfatal">O renderizador de WebView quebrou. Causa: %s</string>
-    <string name="webview_crash_fatal">Erro fatal: o renderizador de WebView quebrou. Causa: %s</string>
+    <string name="webview_crash_oom_details">O sistema terminou o WebView. Isto adoita ocorrer cando a aplicación queda sen memoria, moitas veces debido ao tipo de letra ou ficheiros multimedia grandes.</string>
+    <string name="webview_crash_nonfatal">O renderizador do WebView quebrou. Causa: %s</string>
+    <string name="webview_crash_fatal">Erro fatal: o renderizador do WebView quebrou. Causa: %s</string>
     <string name="webview_crash_loop_dialog_title">Produciuse un erro ao representar o WebView</string>
     <string name="webview_crash_loop_dialog_content">O WebView do sistema fallou ao representar a tarxeta \'%1$s\'.\n%2$s</string>
     <string name="filter_by_flags" maxLength="41">Bandeiras</string>
@@ -102,13 +102,13 @@
     <string name="close">Pechar</string>
     <string name="select">Seleccionar</string>
     <string name="field_remapping">%1$s (de “%2$s”)</string>
-    <string name="confirm_map_cards_to_nothing">Eliminaranse os cartóns asignados a ren. Se unha nota non ten cartóns restantes, perderase. Tes a certeza de querer continuar?</string>
+    <string name="confirm_map_cards_to_nothing">Eliminaranse as tarxetas asignadas a ren. Se unha nota non ten tarxetas restantes, perderase. Tes a certeza de querer continuar?</string>
     <string name="missing_note_type">Non se atopou o tipo de nota</string>
-    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (baleiro)</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Límite de tempo acadado</string>
     <plurals name="timebox_reached">
-        <item quantity="one">%1$d cartón estudado en %2$s</item>
+        <item quantity="one">%1$d tarxeta estudada en %2$s</item>
         <item quantity="other">%1$d cartóns estudados en %2$s</item>
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
@@ -116,7 +116,7 @@
         <item quantity="one">%1$d minuto</item>
         <item quantity="other">%1$d minutos</item>
     </plurals>
-    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Cartón AnkiDroid</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Tarxeta AnkiDroid</string>
     <string name="note_editor_copy_note" maxLength="28">Copiar nota</string>
     <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Reposicionar</string>
     <string name="card_editor_reset_card" maxLength="28">Reiniciar progreso</string>
@@ -128,7 +128,7 @@
     <string name="checks_action" maxLength="28">Comprobar</string>
     <string name="check_db" maxLength="28">Comprobar a base de datos</string>
     <string name="check_media" maxLength="28">Verificar multimedia</string>
-    <string name="empty_cards" maxLength="28">Cartóns baleiros</string>
+    <string name="empty_cards" maxLength="28">Tarxetas baleiras</string>
     <string name="unknown_type_field_warning">Escribe a resposta: campo descoñecido %s</string>
     <string name="delete_deck">Eliminando a baralla&#8230;</string>
     <string name="info_rate">Valora AnkiDroid</string>
@@ -151,7 +151,7 @@
     <string name="export_save_apkg_successful">Paquete Anki gardado correctamente</string>
     <string name="export_save_apkg_unsuccessful">Fallo ao gardar o paquete Anki</string>
     <string name="export_share_title">Enviar paquete Anki usando</string>
-    <string name="export_email_subject">Cartóns exportados por AnkiDroid: %s</string>
+    <string name="export_email_subject">Tarxetas exportadas por AnkiDroid: %s</string>
     <string name="export_email_text"><![CDATA[        Ola!
         <br/><br/>
         Esta é unha baralla de tarxetas Anki enviada desde AnkiDroid[1].
@@ -198,17 +198,17 @@
     <string name="white_board_image_save_failed">Fallo ao gardar a imaxe do encerado. %s</string>
     <string name="white_board_image_saved">Imaxe do encerado gardada en %s</string>
     <string name="title_whiteboard_editor" maxLength="28">Editor do encerado</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="user_is_a_robot">Detectouse un test automático. Se es humano, contacta co soporte do AnkiDroid</string>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
+    <string name="api_version_developer_contact">Esta tarxeta emprega funcionalidades non compatíbeis co AnkiDroid. Contacta co desenvolvedor %1$s, ou consulta a wiki. %2$s</string>
+    <string name="invalid_json_data">A tarxeta forneceu datos incorrectos. %s</string>
+    <string name="valid_js_api_version">Versión incorrecta da API AnkiDroid JS. Contacta co desenvolvedor %s, ou consulta a wiki</string>
+    <string name="update_js_api_version">Actualización da API AnkiDroid JS dispoñíbel. Contacta co desenvolvedor %s, ou consulta a wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">Ver</string>
     <string name="anki_js_error_code">(Código de erro: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug_info">Copiado ao portapapeis</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_error_copy_debug_info">Erro ao copiar información de depuración ao portapapeis</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Erro no contido da tarxeta: Fallo ao cargar ‘%s’</string>
     <!-- Deck Picker -->
@@ -230,14 +230,14 @@
     <string name="after_text">HTML despois da selección</string>
     <string name="add_toolbar_item">Crear elemento da barra de ferramentas</string>
     <string name="edit_toolbar_item">Editar elemento da barra de ferramentas</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
+    <string name="toolbar_item_explain_edit_or_remove">Insire o HTML para introducir antes e despois do texto seleccionado\n\nMantén premido un botón da barra de ferramentas para editalo ou eliminalo</string>
     <string name="remove_toolbar_item">Eliminar elemento da barra de ferramentas?</string>
     <string name="note_editor_image_too_large">A imaxe é moi grande. Insire a imaxe manualmente</string>
     <string name="note_editor_video_too_large">O ficheiro de vídeo é moi grande. Insire o vídeo manualmente</string>
     <string name="note_editor_audio_too_large">O ficheiro de audio é moi grande. Insire o audio manualmente</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Copia de seguranza do Android en progreso. Téntao de novo</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Usa iManager para permitir que AnkiDroid engada atallos</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">A túa pantalla de inicio non permite que AnkiDroid engada atallos</string>
     <string name="create_shortcut_error">Erro ao engadir atallo: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Comezar frases con maiúscula</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Barra ferramentas deslizábel</string>
@@ -259,10 +259,10 @@
     <string name="import_deck">Importar baralla</string>
     <string name="something_wrong">Algo saíu mal. Téntao de novo</string>
     <string name="download_failed">Fallo ao descargar</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
+    <string name="deck_download_progress_message">Podes utilizar outras aplicacións mentres a descarga está en curso</string>
     <string name="check_network">Comproba a túa conexión de rede</string>
     <string name="search_using_deck_name">Buscar usando o nome da baralla</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
+    <string name="external_storage_unavailable">Descarga interrompida, o almacenamento externo non está dispoñíbel</string>
     <string name="home" maxLength="28">Inicio</string>
     <!-- Reviewer actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
@@ -272,14 +272,14 @@
         <item quantity="other">%d tarxetas suspendidas.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">Fixar o campo %s</string>
     <string name="scoped_storage_learn_more">Máis información</string>
     <string name="search_card_js_api_no_results">A busca non devolveu ningún resultado</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
+    <string name="not_valid_js_addon_package">%s non é un paquete válido de complementos JavaScript</string>
     <string name="could_not_create_dir">Non se puido crear o directorio %s</string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
-    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
+    <string name="malicious_archive_entry_outside">Arquivo malicioso. Contén entradas fóra do directorio: %s</string>
+    <string name="malicious_archive_exceeds_limit">Arquivo malicioso. O tamaño excede %1$s ou contén máis de %2$d ficheiros</string>
     <string name="file_extract_exceeds_storage_space">O ficheiro extraido excede o espazo de almacenamento</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Expandir etiqueta \'%s\'</string>
@@ -289,7 +289,7 @@
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Estuda menos</string>
     <string name="intro_ankidroid_tagline_two">Lembra máis</string>
-    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_short_ankidroid_explanation">O planificador de tarxetas Anki aforra tempo reforzando os teus recordos máis febles e preservando os máis fortes</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Comeza agora</string>
     <string name="intro_sync_from_ankiweb">Sincronizar desde AnkiWeb</string>
     <!-- IntentHandler -->
@@ -304,7 +304,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Tarxetas</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notas</string>
     <string name="toggle_cards_notes">Alternar tarxetas/notas</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="truncate_content_help">Trunca a altura de cada fila do Explorador, de forma que só amosa as 3 primeiras liñas de contido</string>
     <string name="browser_options_dialog_heading">Opcións do explorador</string>
     <string name="audio_saved">Gravación gardada</string>
     <string name="deleting_selected_notes">Eliminando as notas seleccionadas</string>
@@ -325,8 +325,8 @@
         <item quantity="other">%d tarxetas desagochadas</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Reposicionar</string>
-    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
-    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Seguinte</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Atrás</string>
     <string name="start_recording">Gravar</string>
     <string name="stop_recording">Deter</string>
     <string name="play_recording">Reproducir</string>
