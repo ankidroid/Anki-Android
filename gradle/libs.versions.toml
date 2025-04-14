@@ -81,7 +81,7 @@ jetbrainsAnnotations = "26.0.2"
 json = "20250107"
 jsoup = "1.19.1"
 androidTestJunit = "1.2.1"
-junitJupiter = "5.12.1"
+junitJupiter = "5.12.2"
 junitPlatformLauncher = "1.12.2"
 # https://github.com/JetBrains/kotlin/releases/
 kotlin = '2.1.20'
