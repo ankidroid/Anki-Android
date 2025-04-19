@@ -21,6 +21,7 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
+import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import timber.log.Timber
@@ -30,12 +31,18 @@ object DiscardChangesDialog {
         context: Context,
         positiveButtonText: String = context.getString(R.string.discard),
         negativeButtonText: String = CollectionManager.TR.addingKeepEditing(),
+        neutralButtonText: String? = null,
         message: String = CollectionManager.TR.addingDiscardCurrentInput(),
+        negativeMethod: () -> Unit = {},
+        neutralMethod: (() -> Unit)? = null,
         positiveMethod: () -> Unit,
     ) = AlertDialog.Builder(context).show {
         Timber.i("showing 'discard changes' dialog")
         message(text = message)
         positiveButton(text = positiveButtonText) { positiveMethod() }
-        negativeButton(text = negativeButtonText)
+        negativeButton(text = negativeButtonText) { negativeMethod() }
+        if (neutralButtonText != null && neutralMethod != null) {
+            neutralButton(text = neutralButtonText) { neutralMethod() }
+        }
     }
 }
