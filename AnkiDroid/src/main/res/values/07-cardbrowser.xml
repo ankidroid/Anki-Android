@@ -64,6 +64,7 @@
         <item>By ease</item>
         <item>By reviews</item>
         <item>By lapses</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Select all</string>
     <string name="card_browser_select_none" maxLength="28">Select none</string>
