@@ -19,7 +19,7 @@ import android.content.Context
 import android.media.MediaPlayer
 import android.os.Handler
 import com.ichi2.anki.R
-import com.ichi2.libanki.utils.Time
+import com.ichi2.anki.common.time.Time
 import java.text.SimpleDateFormat
 import java.util.Locale
 import kotlin.math.max

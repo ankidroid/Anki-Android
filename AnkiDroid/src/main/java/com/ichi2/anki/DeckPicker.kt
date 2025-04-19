@@ -108,6 +108,7 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
 import com.ichi2.anki.deckpicker.BackgroundImage
@@ -174,7 +175,6 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.sched.DeckNode
-import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.AdaptionUtil
