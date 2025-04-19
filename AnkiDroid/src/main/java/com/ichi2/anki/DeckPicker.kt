@@ -138,10 +138,7 @@ import com.ichi2.anki.dialogs.SyncErrorDialog.SyncErrorDialogListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction.Companion.REQUEST_KEY
-import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportDialogFragment
-import com.ichi2.anki.export.ExportDialogsFactory
-import com.ichi2.anki.export.ExportDialogsFactoryProvider
 import com.ichi2.anki.introduction.CollectionPermissionScreenLauncher
 import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.mediacheck.MediaCheckFragment
@@ -250,8 +247,7 @@ open class DeckPicker :
     BaseSnackbarBuilderProvider,
     ApkgImportResultLauncherProvider,
     CsvImportResultLauncherProvider,
-    CollectionPermissionScreenLauncher,
-    ExportDialogsFactoryProvider {
+    CollectionPermissionScreenLauncher {
     val viewModel: DeckPickerViewModel by viewModels()
 
     // Short animation duration from system
@@ -268,7 +264,6 @@ open class DeckPicker :
     lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewLayoutManager: LinearLayoutManager
     private lateinit var deckListAdapter: DeckAdapter
-    lateinit var exportingDelegate: ActivityExportingDelegate
     private lateinit var noDecksPlaceholder: LinearLayout
     private lateinit var pullToSyncWrapper: SwipeRefreshLayout
 
@@ -493,7 +488,6 @@ open class DeckPicker :
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-        exportingDelegate = ActivityExportingDelegate(this) { getColUnsafe }
 
         // Then set theme and content view
         super.onCreate(savedInstanceState)
@@ -565,7 +559,6 @@ open class DeckPicker :
             Timber.w(e, "Failed to apply background")
             showThemedToast(this, getString(R.string.failed_to_apply_background_image, e.localizedMessage), false)
         }
-        exportingDelegate.onRestoreInstanceState(savedInstanceState)
 
         deckListAdapter =
             DeckAdapter(
@@ -1244,8 +1237,6 @@ open class DeckPicker :
         }
     }
 
-    override fun exportDialogsFactory(): ExportDialogsFactory = exportingDelegate.dialogsFactory
-
     fun exportCollection() {
         ExportDialogFragment.newInstance().show(supportFragmentManager, "exportDialog")
     }
@@ -1304,7 +1295,6 @@ open class DeckPicker :
                 outState.getString("dbRestorationPath", it.newAnkiDroidDirectory)
             }
         }
-        exportingDelegate.onSaveInstanceState(outState)
         outState.putSerializable("mediaUsnOnConflict", mediaUsnOnConflict)
         floatingActionMenu.showFloatingActionButton()
     }
