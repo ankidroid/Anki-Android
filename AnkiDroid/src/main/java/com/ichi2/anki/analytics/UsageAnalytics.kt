@@ -497,6 +497,7 @@ object UsageAnalytics {
             R.string.pref_daily_backups_to_keep_key,
             R.string.pref_weekly_backups_to_keep_key,
             R.string.pref_monthly_backups_to_keep_key,
+            R.string.pref_backup_directory_key,
             // ******************************** Appearance *********************************************
             R.string.app_theme_key, // Theme
             R.string.day_theme_key, // Day theme

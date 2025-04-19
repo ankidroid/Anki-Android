@@ -231,15 +231,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 // Allow user to restore one of the backups
                 val path = CollectionHelper.getCollectionPath(requireContext())
                 backups = BackupManager.getBackups(File(path))
-                if (backups.isEmpty()) {
-                    alertDialog
-                        .title(R.string.backup_restore)
-                        .title(text = message)
-                        .positiveButton(R.string.dialog_ok) {
-                            showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
-                        }
-                } else {
-                    // Show backups sorted with latest on top
+                if (backups.isNotEmpty()) {
                     backups.reverse()
                     val formatter = LocalizedUnambiguousBackupTimeFormatter()
                     val dates = backups.map { formatter.getTimeOfBackupAsText(it) }
@@ -267,8 +259,50 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                                 }
                             }
                         }
+                    alertDialog.create()
+                } else {
+                    // if no file backups exist from default, try loading from persisted URI (in case custom backup is set)
+                    val documentBackups = BackupManager.getBackups(requireContext())
+                    documentBackups.reverse()
+                    if (documentBackups.isNotEmpty()) {
+                        val formatter = LocalizedUnambiguousBackupTimeFormatter()
+                        val dates = documentBackups.map { formatter.getTimeOfBackupAsText(it) }
+
+                        alertDialog
+                            .title(R.string.backup_restore_select_title)
+                            .positiveButton(R.string.restore_backup_choose_another) {
+                                (activity as? AnkiActivity)?.let {
+                                    ImportFileSelectionFragment.openImportFilePicker(it, ImportFileSelectionFragment.ImportFileType.APKG)
+                                }
+                            }.negativeButton(R.string.dialog_cancel)
+                            .setSingleChoiceItems(dates.toTypedArray(), -1) { _, index: Int ->
+                                val selectedBackup = documentBackups[index]
+                                if (selectedBackup.length() > 0) {
+                                    // Restore backup from DocumentFile
+                                    val path = BackupManager.getTempPathFromDocumentFile(requireContext(), selectedBackup)
+                                    requireDeckPicker().restoreFromBackup(path)
+                                    requireActivity().dismissAllDialogFragments()
+                                } else {
+                                    // Show error dialog for invalid backup
+                                    AlertDialog.Builder(requireActivity()).show {
+                                        title(R.string.vague_error)
+                                        message(R.string.backup_invalid_file_error)
+                                        positiveButton(R.string.dialog_ok)
+                                    }
+                                }
+                            }
+                        alertDialog.create()
+                    } else {
+                        // No backups found at all, show error dialog
+                        alertDialog
+                            .title(R.string.backup_restore)
+                            .title(text = message)
+                            .positiveButton(R.string.dialog_ok) {
+                                showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
+                            }
+                        alertDialog.create()
+                    }
                 }
-                alertDialog.create()
             }
             DIALOG_NEW_COLLECTION -> {
                 // Allow user to create a new empty collection

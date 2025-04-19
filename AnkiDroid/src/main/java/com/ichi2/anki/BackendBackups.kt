@@ -16,6 +16,7 @@
 
 package com.ichi2.anki
 
+import com.ichi2.anki.AnkiDroidApp.Companion.sharedPrefs
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.libanki.createBackup
 import kotlinx.coroutines.Dispatchers
@@ -59,5 +60,13 @@ private suspend fun createBackup(force: Boolean) {
     // move this outside 'withCol' to avoid blocking
     withContext(Dispatchers.IO) {
         CollectionManager.getBackend().awaitBackupCompletion()
+
+        // move to custom backup directory after creation if set
+        val context = AnkiDroidApp.instance.applicationContext
+        sharedPrefs().getString("backup_directory", null)?.let {
+            if (it != context.getString(R.string.not_set)) {
+                BackupManager().moveBackupFilesFromDefault(context, false)
+            }
+        }
     }
 }

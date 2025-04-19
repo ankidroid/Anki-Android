@@ -1192,7 +1192,11 @@ open class DeckPicker :
             }
             R.id.action_restore_backup -> {
                 Timber.i("DeckPicker:: Restore from backup button pressed")
-                showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_CONFIRM_RESTORE_BACKUP)
+                if (BackupManager.isBackupMoveInProgress()) {
+                    showSnackbar(R.string.backup_move_in_progress)
+                } else {
+                    showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_CONFIRM_RESTORE_BACKUP)
+                }
                 return true
             }
             R.id.action_deck_rename -> {
