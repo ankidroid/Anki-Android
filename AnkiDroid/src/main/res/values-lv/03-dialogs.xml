@@ -49,19 +49,19 @@
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Delete deck</string>
     <string name="delete_deck_title">Delete deck?</string>
     <plurals name="delete_deck_message">
-        <item quantity="zero">Delete all cards in %1$s? It contains %2$d cards</item>
-        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="zero">Izdzēst visas kartītes no %1$s? Tajā ir %2$d kartīšu</item>
+        <item quantity="one">Izdzēst visas kartītes no %1$s? Tajā ir %2$d kartīte</item>
+        <item quantity="other">Izdzēst visas kartītes no %1$s? Tajā ir %2$d kartītes</item>
     </plurals>
-    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
+    <string name="delete_cram_deck_message">Izdzēst pielāgoto kavu %s un nosūtīt visas kartītes atpakaļ uz to sākotnējām kavām?</string>
     <string name="no_tts_available_message">No text-to-speech language available</string>
     <string name="tts_no_tts">Don’t speak</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
-    <string name="reset_card_dialog_title">Reset card progress</string>
+    <string name="reposition_card_not_new_error">Pārkārto var tikai jaunās kartītes</string>
+    <string name="reset_card_dialog_title">Atiestatīt kartīšu virzību</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="zero">%d cards reset</item>
-        <item quantity="one">%d card reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="zero">Atiestatītas %d kartītes</item>
+        <item quantity="one">Atiestatīta %d kartīte</item>
+        <item quantity="other">Atiestatītas %d kartītes</item>
     </plurals>
     <string name="answering_error_title">Database error</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
@@ -69,13 +69,13 @@
     <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
     <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
     <string name="intent_aedict_empty">Category “default” is empty</string>
-    <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="intent_aedict_category">Lai AnkiDroid pievienotu kartītes, jānoņem visas piezīmju grāmatiņu kategorijas vai jāpievieno viena ar nosaukumu \"default\"</string>
+    <string name="custom_study_new_extend">Palielināt/samazināt (\"-3\") šodienas jauno kartīšu skatu par</string>
     <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
-    <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
+    <string name="custom_study_forgotten">Parskatīt kartītes, kas ir aizmirstas pēdējās x dienās:</string>
     <string name="custom_study_ahead">Review ahead by x days:</string>
-    <string name="custom_study_preview">Preview new cards added in the last x days:</string>
-    <string name="custom_study_tags">Select x cards from the deck:</string>
+    <string name="custom_study_preview">Priekškatīt jaunās kartītes, kas pievienotas pēdējās x dienās:</string>
+    <string name="custom_study_tags">Atlasīt x kavas kartītes:</string>
     <string name="storage_full_title">Storage full</string>
     <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
@@ -117,8 +117,8 @@
         <item quantity="other">%d files deleted</item>
     </plurals>
     <!-- Tags Dialog Options -->
-    <string name="tags_dialog_option_all_cards">All cards</string>
-    <string name="tags_dialog_option_new_cards">New</string>
+    <string name="tags_dialog_option_all_cards">Visas kartītes</string>
+    <string name="tags_dialog_option_new_cards">Jauns</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>

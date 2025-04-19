@@ -63,7 +63,7 @@
         <item quantity="other">เหลืออีก %1$d ชั่วโมง %2$d นาที</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="other">เหลืออีก %1$d วัน %2$d ชั่วโมง</item>
     </plurals>
     <string name="no_cards_placeholder_title">ไม่มีคอเล็คชั่น</string>
     <string name="no_cards_placeholder_description">เริ่มต้นเพิ่มการ์ดได้\nโดยการกดที่ไอคอน +</string>
@@ -124,7 +124,7 @@
     <string name="empty_deck">สำรับนี้ว่างเปล่า</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">ค้นหาสำรับ</string>
     <string name="invalid_deck_name">ชื่อนี้ไม่สามารถตั้งให้สำรับได้</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
+    <string name="studyoptions_congrats_finished">ยินดีด้วย! วันนี้คุณทบทวนเสร็จแล้ว</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">ไม่มีบัตรคำที่ต้องทบทวนในตอนนี้</string>
     <string name="sd_card_not_mounted">Device storage not mounted</string>
@@ -153,15 +153,15 @@
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
     </plurals>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
+    <string name="card_template_editor_save_error">ไม่สามารถบันทึกการแก้ไขรูปแบบของการ์ด: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- card Info -->
-    <string name="card_info_title" maxLength="28">Card info</string>
+    <string name="card_info_title" maxLength="28">ข้อมูลของการ์ด</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-    <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+    <string name="read_write_permission_description">เข้าถึงโน้ต การ์ด ประเภทของการ์ด และชุดคำศัพท์ที่มีอยู่แล้ว รวมถึงกับสร้างอันใหม่ด้วย</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
@@ -176,7 +176,7 @@
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">เราไม่สามารถเข้าถึงชุดคำศัพท์ทั้งหมดของคุณหลังจากการยกเลิกการติดตั้งของแอพพลิเคชั่น เนื่องจากการเปลี่ยนแปลงนโยบายใน Play Store\n\n ข้อมูลของคุณปลอดภัยและสามารถกู้คืนได้ ซึ่งหาได้ที่\n%s\n\nโปรดเลือกตัวเลือกด้สนล่างเพื่อดำเนินการต่อ:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
@@ -186,11 +186,11 @@
     <string name="new_unsafe_collection">The new collection will be deleted from your phone if you uninstall AnkiDroid</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
+    <string name="storage_access_title">เข้าถึงพื้นที่</string>
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">เข้าถึงไฟล์ทั้งหมด</string>
     <string name="image_occlusion">Image Occlusion</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">ลบบัญชี</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>

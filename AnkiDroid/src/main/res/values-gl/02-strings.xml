@@ -326,7 +326,7 @@
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Reposicionar</string>
     <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Seguinte</string>
-    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Atrás</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Reverso</string>
     <string name="start_recording">Gravar</string>
     <string name="stop_recording">Deter</string>
     <string name="play_recording">Reproducir</string>
@@ -343,8 +343,8 @@
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Seleccionar tipo de nota</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Editor de etiquetas</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Editor de modelos de tarxetas</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Editar o modelo frontal</string>
-    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Editar o modelo posterior</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Editar o modelo do anverso</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Editar o modelo do reverso</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Editar estilo</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copiar modelo como markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Editar aparencia do explorador</string>

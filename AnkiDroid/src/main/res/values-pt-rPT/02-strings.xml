@@ -82,7 +82,7 @@
     <string name="webview_crash_loop_dialog_content">O \"WebView\" de sistema falhou no processamento da ficha \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Bandeiras</string>
     <!-- Custom study options -->
-    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <string name="custom_study_loading_tags">A construir lista de etiquetas&#8230;</string>
     <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d adiada</item>
@@ -104,7 +104,7 @@
     <string name="field_remapping">%1$s (de \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Serão eliminadas quaisquer fichas mapeadas para nada. Se uma nota não tiver fichas restantes, esta estará perdida. Tem certeza que deseja continuar?</string>
     <string name="missing_note_type">Tipo de nota não encontrado</string>
-    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (vazio)</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Limite de Tempo Atingido</string>
     <plurals name="timebox_reached">
@@ -325,8 +325,8 @@
         <item quantity="other">%d fichas com adiamento cancelado</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Reposicionar</string>
-    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
-    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Próxima</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Anterior</string>
     <string name="start_recording">Gravar</string>
     <string name="stop_recording">Interromper</string>
     <string name="play_recording">Reproduzir</string>

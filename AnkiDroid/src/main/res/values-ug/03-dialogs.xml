@@ -73,7 +73,7 @@
     <string name="custom_study_forgotten">ئۆتكەن x كۈندە ئۇنتۇلغان كارتىنى تەكرارلايدۇ:</string>
     <string name="custom_study_ahead">ئالدىن تەكرارلاش ۋاقتى x كۈنى:</string>
     <string name="custom_study_preview">يېقىنقى x كۈندە قوشقان يېڭى كارتىنى ئالدىن كۆزىتىدۇ:</string>
-    <string name="custom_study_tags">Select x cards from the deck:</string>
+    <string name="custom_study_tags">دەستىدىن x كارتا تاللىنىدۇ:</string>
     <string name="storage_full_title">ساقلىغۇچ لىق</string>
     <string name="storage_almost_full_title">ساقلىغۇچ ئاساسەن لىق</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">بوشلۇق يوق</string>

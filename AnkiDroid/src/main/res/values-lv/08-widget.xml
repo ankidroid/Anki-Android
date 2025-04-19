@@ -45,25 +45,25 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Cards due</string>
+    <string name="widget_minimum_cards_due_notification_ticker_title">Kartītes, kurām pienācis laiks</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="zero">%d AnkiDroid cards due</item>
-        <item quantity="one">%d AnkiDroid card due</item>
-        <item quantity="other">%d AnkiDroid cards due</item>
+        <item quantity="zero">Pienācis %d AnkiDroid kartīšu laiks</item>
+        <item quantity="one">Pienācis %d AnkiDroid kartītes laiks</item>
+        <item quantity="other">Pienācis %d AnkiDroid kartīšu laiks</item>
     </plurals>
-    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid small</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid mazs</string>
     <plurals name="widget_cards_due">
-        <item quantity="zero">%d cards due</item>
-        <item quantity="one">%d card due</item>
-        <item quantity="other">%d cards due</item>
+        <item quantity="zero">Pienācis %d kartīšu laiks</item>
+        <item quantity="one">Pienācis %d kartītes laiks</item>
+        <item quantity="other">Pienācis %d kartīšu laiks</item>
     </plurals>
     <plurals name="widget_eta">
-        <item quantity="zero">%d minutes remaining</item>
-        <item quantity="one">%d minute remaining</item>
-        <item quantity="other">%d minutes remaining</item>
+        <item quantity="zero">Atlikušas %d minūtes</item>
+        <item quantity="one">Atlikusi %d minūte</item>
+        <item quantity="other">Atlikušas %d minūtes</item>
     </plurals>
-    <string name="widget_add_note_button">Add new AnkiDroid note</string>
-    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">Deck Picker</string>
+    <string name="widget_add_note_button">Pievienot jaunu AnkiDroid piezīmi</string>
+    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">Kavu atlasītājs</string>
     <string name="card_analysis_extra_widget_description">Card Analysis</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
     <string name="select_decks_title" comment="Title for Deck Selection Dialog">Select decks</string>

@@ -72,18 +72,18 @@
     <string name="pref_cat_editing" maxLength="41">Editing</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Stroke width</string>
-    <string name="use_input_tag" maxLength="41">Type answer into the card</string>
-    <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
+    <string name="use_input_tag" maxLength="41">Ierakstīt atbildi kartītē</string>
+    <string name="use_input_tag_summ">Izmantot teksta ievades lauku kartītē, lai ierakstītu atbildi</string>
     <string name="reset_languages" maxLength="41">Reset languages</string>
     <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
     <string name="reset_languages_question">Reset all language assignments?</string>
     <string name="reset_confirmation">All states reset</string>
-    <string name="card_zoom" maxLength="41">Card zoom</string>
+    <string name="card_zoom" maxLength="41">Kartīšu pietuvināšana</string>
     <string name="image_zoom" maxLength="41">Image zoom</string>
     <string name="button_size" maxLength="41">Answer button size</string>
-    <string name="card_browser_font_size" maxLength="41">Card browser font scaling</string>
-    <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_font_size" maxLength="41">Kartīšu pārlūka fonta mērogošana</string>
+    <string name="card_browser_hide_media" maxLength="41">Kartīšu pārlūkā attēlot datņu nosaukumus</string>
+    <string name="card_browser_hide_media_summary">Kartīšu pārlūkā attēlot informācijas nesēju datņu nosaukumus jautājumu/atbilžu laukos</string>
     <string name="col_path" maxLength="41">AnkiDroid directory</string>
     <string name="fullscreen_review" maxLength="41">Fullscreen mode</string>
     <string name="full_screen_off">Off</string>
