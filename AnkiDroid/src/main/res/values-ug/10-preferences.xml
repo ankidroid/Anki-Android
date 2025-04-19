@@ -68,7 +68,7 @@
     <string name="pref_cat_advanced" maxLength="41">ئالىي</string>
     <string name="pref_cat_workarounds" maxLength="41">خىزمەت رايونى</string>
     <string name="pref_cat_plugins" maxLength="41">قىستۇرما</string>
-    <string name="pref_cat_editing" maxLength="41">Editing</string>
+    <string name="pref_cat_editing" maxLength="41">تەھرىرلەۋاتىدۇ</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">سىزىق توملۇقى</string>
     <string name="use_input_tag" maxLength="41">كارتىغا جاۋاب كىرگۈزۈلىدۇ</string>
@@ -199,9 +199,9 @@
     <string name="reset">ئەسلىگە قايتۇر</string>
     <string name="thirdparty_apps_title" maxLength="41">ئۈچىنچى تەرەپ API ئەپلىرى</string>
     <string name="thirdparty_apps_summary">لۇغەت، ئاممىۋى مۇلازىمەتكە ئوخشاش AnkiDroid API نى ئىشلىتىدىغان پىروگراممىلارنىڭ تىزىملىكىنى كۆرسىتىدۇ.</string>
-    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Reviews</string>
-    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
-    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
+    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">تەكرارلاش</string>
+    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">ئالدىن كۆزىتىش</string>
+    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">ئارقا تەرىپىنىلا ئالماشتۇر</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">تەكرارلىغۇچى</string>
     <string name="show_deck_title" maxLength="41">دەستە ماۋزۇسىنى كۆرسەت</string>

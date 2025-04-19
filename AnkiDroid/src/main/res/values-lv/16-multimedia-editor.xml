@@ -40,37 +40,37 @@
 -->
 <resources>
     <!-- Main editor popup menu items -->
-    <string name="multimedia_editor_popup_image">Add image</string>
-    <string name="multimedia_editor_popup_audio_clip">Add audio clip</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
-    <string name="multimedia_editor_popup_audio">Record audio</string>
-    <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
+    <string name="multimedia_editor_popup_image">Pievienot attēlu</string>
+    <string name="multimedia_editor_popup_audio_clip">Pievienot skaņas gabalu</string>
+    <string name="multimedia_editor_popup_video_clip">Pievienot video gabalu</string>
+    <string name="multimedia_editor_popup_audio">Ierakstīt skaņu</string>
+    <string name="multimedia_editor_popup_cloze">Aizpildes izdzēšana</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_audio">Audio recording</string>
-    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Done</string>
+    <string name="multimedia_editor_field_editing_audio">Skaņas ierakstīšana</string>
+    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Gatavs</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
     <!-- Image editing -->
     <!-- for buttons -->
-    <string name="multimedia_editor_image_field_editing_galery">Gallery</string>
-    <string name="multimedia_editor_image_field_editing_photo">Camera</string>
+    <string name="multimedia_editor_image_field_editing_galery">Galerija</string>
+    <string name="multimedia_editor_image_field_editing_photo">Kamera</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
-    <string name="multimedia_editor_something_wrong">Something went wrong</string>
-    <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
-    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Attach multimedia content to the %1$s field</string>
+    <string name="multimedia_editor_something_wrong">Kaut kas nogāja greizi</string>
+    <string name="multimedia_editor_png_paste_error">Kļūda starpliktuvē esoša attēla pārveidošanā par PNG: %s</string>
+    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Pievienot multimediju saturu laukam %1$s</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
-    <string name="multimedia_editor_audio_view_recording_failed">Recording failed</string>
-    <string name="multimedia_editor_audio_view_playing_failed">Playing failed</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
+    <string name="multimedia_editor_audio_view_recording_failed">Ierakstīšana neizdevās</string>
+    <string name="multimedia_editor_audio_view_playing_failed">Atskaņošana neizdevās</string>
+    <string name="multimedia_editor_audio_view_create_failed">Nav iespējams izveidot ierakstītaja rīkjoslu</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
-    <string name="crop_button" maxLength="28">Crop image</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
-    <string name="reselect" maxLength="28">Reselect</string>
+    <string name="crop_image">Vai apcirpt šo attēlu?</string>
+    <string name="crop_button" maxLength="28">Apcirpt attēlu</string>
+    <string name="save_dialog_content">Pašreizējais attēla lielums ir % MB. Noklusējuma attēla izmēra ierobežojums ir 1 MB. Vai saspiest to?</string>
+    <string name="select_image_failed">"Attēla atlasīšana neizdevās, lūgums mēģināt vēlreiz"</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Lauka saturs</string>
+    <string name="reselect" maxLength="28">Atlasīt atkārtoti</string>
 </resources>

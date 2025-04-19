@@ -45,38 +45,38 @@
 
 -->
 <resources>
-    <string name="youre_offline">You are offline</string>
-    <string name="sync_error">Sync error</string>
-    <string name="vague_error" comment="Network error dialog title">Error</string>
-    <string name="retry">Retry</string>
-    <string name="menu_get_shared_decks">Get shared decks</string>
-    <string name="connection_error_message">A network error has occurred</string>
-    <string name="not_logged_in_title">Log in to AnkiWeb</string>
-    <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
+    <string name="youre_offline">Tu esi bezsaistē</string>
+    <string name="sync_error">Sinhronizēšanas kļūda</string>
+    <string name="vague_error" comment="Network error dialog title">Kļūda</string>
+    <string name="retry">Mēģināt vēlreiz</string>
+    <string name="menu_get_shared_decks">Iegūt kopīgotās kavas</string>
+    <string name="connection_error_message">Radās tīkla kļūda</string>
+    <string name="not_logged_in_title">Pieteikties AnkiWeb</string>
+    <string name="login_create_account_message">Jāpiesakās trešo pušu kontā, lai izmantotu mākoņsinhronizēšanas pakalpojumu. Tādu var izveidot nākamajā solī.</string>
     <!-- MyAccount.kt -->
-    <string name="username">Email address</string>
-    <string name="password">Password</string>
-    <string name="log_in">Log in</string>
-    <string name="sign_up_description">Don’t have an AnkiWeb account? It’s free!</string>
-    <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
-    <string name="sign_up">Sign up</string>
-    <string name="logged_as">Logged in as</string>
-    <string name="log_out">Log out</string>
-    <string name="reset_password">Reset password</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="username">E-pasta adrese</string>
+    <string name="password">Parole</string>
+    <string name="log_in">Pieteikties</string>
+    <string name="sign_up_description">Nav AnkiWeb konta? Tas ir bez maksas.</string>
+    <string name="sign_up_not_affiliated">Piebilde: AnkiWeb nav saistīta ar AnkiDroid</string>
+    <string name="sign_up">Reģistrēties</string>
+    <string name="logged_as">Pieteicies kā</string>
+    <string name="log_out">Atteikties</string>
+    <string name="reset_password">Atiestatīt paroli</string>
+    <string name="lost_mail_instructions">Aizmirsta e-pasta adrese?</string>
+    <string name="sign_in">Piesakās</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Options for XXX</string>
-    <string name="sync_title">Synchronization</string>
-    <string name="sync_log_uploading_message">Full sync from local</string>
-    <string name="sync_database_acknowledge">Collection synchronized</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
-    <string name="sync_corrupt_database">Your database is corrupt. Please fix it before trying again to sync.\n\nSee %s for information about repairing your database.</string>
+    <string name="deckpreferences_title">XXX iespējas</string>
+    <string name="sync_title">Sinhronizēšana</string>
+    <string name="sync_log_uploading_message">Pilna sinhronizēšana no vietējās krātuves</string>
+    <string name="sync_database_acknowledge">Krājums sinhronizēts</string>
+    <string name="col_synced_media_in_background">Krājums sinhronizēts. Informācijas nesēji tiek sinhronizēti fonā.</string>
+    <string name="sync_corrupt_database">Datubāze ir bojāta. Lūgums salabot to pirms atkārtota sinhronizēšanas mēģinājuma.\n\nSkatīt \"%s\", lai iegūtu informāciju par datubāzes salabošanu.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_sanity_local">Local</string>
-    <string name="sync_sanity_remote">Remote</string>
-    <string name="one_way_sync_title" maxLength="41">One-way sync</string>
-    <string name="one_way_sync_confirmation">One way sync requested</string>
+    <string name="sync_sanity_local">Vietējo</string>
+    <string name="sync_sanity_remote">Attālo</string>
+    <string name="one_way_sync_title" maxLength="41">Vienvirziena sinhronizēšana</string>
+    <string name="one_way_sync_confirmation">Pieprasīta vienvirziena sinhronizēšana</string>
     <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
     <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
     <!-- Deck Picker Sync Icon -->

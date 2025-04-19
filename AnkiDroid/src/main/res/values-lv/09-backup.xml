@@ -44,25 +44,25 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
-    <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
-    <string name="backup_restore" maxLength="28">Restore from backup</string>
-    <string name="backup_new_collection">New collection</string>
-    <string name="backup_del_collection">Delete collection and create new one</string>
-    <string name="backup_del_collection_question">Delete the collection and create a new one? This will drop all your learning progress and delete all cards.</string>
-    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
-    <string name="backup_full_sync_from_server_question">Overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync.</string>
-    <string name="error_handling_title">Error handling</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Options</string>
-    <string name="backup_retry_opening">Retry opening</string>
-    <string name="backup_error_menu_repair">Repair database</string>
+    <string name="backup_deck_no_storage_left">Rezerves kopija nav saglabāta. Krātuvē nav atlicis pietiekami daudz vietas. Jāsamazina rezerves kopijas dziļums vai jānoņem dažas no citām datnēm.</string>
+    <string name="storage_warning">Krātuvē atlicis mazāk par %d MB.\nJāatbrīvo vieta, lai izvairītos no datu zuduma.</string>
+    <string name="backup_restore" maxLength="28">Atjaunot no rezerves kopijas</string>
+    <string name="backup_new_collection">Jauns krājums</string>
+    <string name="backup_del_collection">Izdzēst krājumu un izveidot jaunu</string>
+    <string name="backup_del_collection_question">Izdzēst krājumu un izveidot jaunu? Tiks zaudēts visa apguves virzība un izdzēstas visas kartītes.</string>
+    <string name="backup_one_way_sync_from_server">Vienvirziena sinhronizēšana no servera</string>
+    <string name="backup_full_sync_from_server_question">Pārrakstīt krājumu no AnkiWeb? Tiks zaudēta visa apguves virzība un kopš pēdējās sinhronizēšanas pievienotā informācija.</string>
+    <string name="error_handling_title">Kļūdu apstrāde</string>
+    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Iespējas</string>
+    <string name="backup_retry_opening">Mēģināt atvērt atkārtoti</string>
+    <string name="backup_error_menu_repair">Salabot datubāzi</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">Repairing database&#8230;</string>
-    <string name="backup_invalid_file_error">The selected backup file was invalid</string>
-    <string name="backup_restore_select_title">Select backup to restore</string>
-    <string name="backup_restore_no_backups">No backups available on this device. If you have backups on your desktop computer, copy them manually into your AnkiDroid folder.</string>
-    <string name="open_collection_failed_title">Collection not opened</string>
-    <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
-    <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
-    <string name="deck_repair_error">Collection couldn’t be repaired</string>
+    <string name="backup_repair_deck_progress">Labo datubāzi&#8230;</string>
+    <string name="backup_invalid_file_error">Atlasītā rezerves kopijas datne bija nederīga</string>
+    <string name="backup_restore_select_title">Atlasīt rezerves kopiju, no kuras atjaunot</string>
+    <string name="backup_restore_no_backups">Šajā ierīcē nav pieejama neviena rezerves kopija. Ja kāda ir datorā, tā pāsrocīgi jāievieto AnkiDroid mapē.</string>
+    <string name="open_collection_failed_title">Krājums nav atvērts</string>
+    <string name="corrupt_db_message">Krājums ir bojāts.\n\nJāpieskaras \"Iespējas\", lai atjaunotu no rezerves kopijas, vai, ja tas nedarbojas, jāaplūko zemāk esošās norādes pašrocīgai datubāzes labošanai:\n%1$s</string>
+    <string name="access_collection_failed_message">Atgadījās kļūda mēģinājuma piekļūt krājumam laikā. To varēja izraisīt nekaitīga nepilnība, vai ar to varētu būt kāds sarežģījums. \n\nJāmēģina veikt datubāzes pārbaude vai atjaunošana no rezerves kopijas ar pogu \"Iespējas\". Ja šis ziņojums joprojām tiek rādīts, lūgums iesniegt kļūdas ziņojumu:\n%1$s</string>
+    <string name="deck_repair_error">Krājumu nevarēja salabot</string>
 </resources>

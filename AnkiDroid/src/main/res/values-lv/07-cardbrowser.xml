@@ -46,46 +46,46 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="zero">%d cards shown</item>
-        <item quantity="one">%d card shown</item>
-        <item quantity="other">%d cards shown</item>
+        <item quantity="zero">Tiek rādītas %d kartītes</item>
+        <item quantity="one">Tiek rādīta %d kartīte</item>
+        <item quantity="other">Tiek rādītas %d kartītes</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="zero">%d notes shown</item>
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="zero">Tiek rādītas %d piezīmes</item>
+        <item quantity="one">Tiek rādīta %d piezīme</item>
+        <item quantity="other">Tiek rādītas %d piezīmes</item>
     </plurals>
-    <string name="card_browser_all_decks">All decks</string>
+    <string name="card_browser_all_decks">Visas kavas</string>
     <plurals name="card_browser_delete_notes">
-        <item quantity="zero">Delete notes</item>
-        <item quantity="one">Delete note</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="zero">Izdzēst piezīmes</item>
+        <item quantity="one">Izdzēst piezīmi</item>
+        <item quantity="other">Izdzēst piezīmes</item>
     </plurals>
-    <string name="card_browser_change_deck" maxLength="28">Change deck</string>
-    <string name="delete_card_title">Delete note?</string>
-    <string name="card_browser_show_marked" maxLength="28">Filter marked</string>
-    <string name="card_browser_show_suspended" maxLength="28">Filter suspended</string>
-    <string name="card_browser_search_by_tag" maxLength="28">Filter by tag</string>
-    <string name="card_browser_search_by_flag" maxLength="28">Filter by flag</string>
-    <string name="card_browser_list_my_searches" maxLength="28">My searches</string>
-    <string name="card_browser_list_my_searches_save" maxLength="28">Save search</string>
-    <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-    <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-    <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-    <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
-    <string name="no_note_to_edit">No note to edit</string>
-    <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
-    <string name="card_browser_change_display_order" maxLength="28">Change display order</string>
-    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
-    <string name="card_browser_change_display_order_title">Choose display order</string>
-    <string name="card_details_tags">Tags</string>
+    <string name="card_browser_change_deck" maxLength="28">Mainīt kavu</string>
+    <string name="delete_card_title">Dzēst piezīmi?</string>
+    <string name="card_browser_show_marked" maxLength="28">Atlasīt atzīmētās</string>
+    <string name="card_browser_show_suspended" maxLength="28">Atlasīt atliktās</string>
+    <string name="card_browser_search_by_tag" maxLength="28">Atlasīt pēc birkas</string>
+    <string name="card_browser_search_by_flag" maxLength="28">Atlasīt pēc karoga</string>
+    <string name="card_browser_list_my_searches" maxLength="28">Mani meklējumi</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">Saglabāt meklējumu</string>
+    <string name="card_browser_list_my_searches_title">Jāizvēlas saglabāts meklējums</string>
+    <string name="card_browser_list_my_searches_new_name">Pašreizējā meklējuma nosaukums</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">Nevar saglabāt meklējumu bez nosaukuma</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">Nosaukums pastāv</string>
+    <string name="no_note_to_edit">Nav piezīmes, ko labot</string>
+    <string name="card_browser_list_my_searches_remove_content">Izdzēst \"%1$s\"?</string>
+    <string name="card_browser_change_display_order" maxLength="28">Mainīt attēlošanas secību</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Meklēt</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Meklēt</string>
+    <string name="card_browser_change_display_order_title">Izvēlēties attēlošanas secību</string>
+    <string name="card_details_tags">Birkas</string>
     <string-array name="card_browser_order_labels">
-        <item>No sorting (faster)</item>
-        <item>By sort field</item>
-        <item>By created time</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
+        <item>Bez kārtošanas (ātrāk)</item>
+        <item>Pēc kārtošanas lauka</item>
+        <item>Pēc izveidošanas laika</item>
+        <item>Pēc piezīmes izmainīšanas laika</item>
+        <item>Pēc kartītes izmainīšanas laika</item>
         <item>By due time</item>
         <item>By interval</item>
         <item>By ease</item>
@@ -123,6 +123,6 @@
     <string name="user_active_columns">Active</string>
     <string name="user_potential_columns">Available</string>
     <string name="include_column">Include column</string>
-    <string name="exclude_column">Exclude column</string>
-    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
+    <string name="exclude_column">Izslēgt sleju</string>
+    <string name="browser_find_replace_loading_fields">Iegūst lauku nosaukumus&#8230;</string>
 </resources>
