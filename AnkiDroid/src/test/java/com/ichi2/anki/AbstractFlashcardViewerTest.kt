@@ -199,7 +199,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     @Test
     fun testEditCardProvidesInverseTransition() {
         val viewer: NonAbstractFlashcardViewer = getViewer(true)
-        val gestures = listOf(Gesture.SWIPE_LEFT, Gesture.SWIPE_UP, Gesture.LONG_TAP)
+        val gestures = listOf(Gesture.SWIPE_LEFT, Gesture.SWIPE_UP, Gesture.DOUBLE_TAP)
 
         gestures.forEach { gesture ->
             val expectedAnimation =
