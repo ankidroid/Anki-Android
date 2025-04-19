@@ -49,6 +49,7 @@ import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
+import com.ichi2.anki.preferences.booleanPref
 import com.ichi2.anki.utils.ext.normalizeForSearch
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import com.ichi2.annotations.NeedsTest
@@ -56,7 +57,11 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.CardType
 import com.ichi2.libanki.ChangeManager
+import com.ichi2.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.Note
+import com.ichi2.libanki.NoteId
+import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.QueueType.ManuallyBuried
 import com.ichi2.libanki.QueueType.SiblingBuried
@@ -185,6 +190,8 @@ class CardBrowserViewModel(
     val flowOfIsTruncated: MutableStateFlow<Boolean> =
         MutableStateFlow(sharedPrefs().getBoolean("isTruncated", false))
     val isTruncated get() = flowOfIsTruncated.value
+
+    var tapCardToEdit by booleanPref("tapCardToEdit", true)
 
     var shouldIgnoreAccents: Boolean = false
 
@@ -482,6 +489,32 @@ class CardBrowserViewModel(
         sharedPrefs().edit {
             putBoolean("isTruncated", value)
         }
+    }
+
+    suspend fun getTemplatePreviewArguments(cardId: CardId): TemplatePreviewerUiArguments {
+        val noteId = withCol { notesOfCards(mutableListOf(cardId)).first() }
+        val note = withCol { getNote(noteId) }
+        val ord =
+            if (note.notetype.isCloze) {
+                val tempNote = withCol { Note.fromNotetypeId(this@withCol, note.notetype.id) }
+                tempNote.fields = note.fields // makes possible to get the cloze numbers from the fields
+                val clozeNumbers = withCol { clozeNumbersInNote(tempNote) }
+                if (clozeNumbers.isNotEmpty()) {
+                    clozeNumbers.first() - 1
+                } else {
+                    0
+                }
+            } else {
+                0
+            }
+        return TemplatePreviewerUiArguments(
+            notetype = withCol { note.notetype },
+            fields = note.fields,
+            tags = note.tags,
+            id = noteId,
+            ord = ord,
+            fillEmpty = false,
+        )
     }
 
     fun setIgnoreAccents(value: Boolean) {
@@ -1218,4 +1251,14 @@ fun BrowserColumns.Column.getLabel(cardsOrNotes: CardsOrNotes): String = if (car
 
 data class ColumnHeading(
     val label: String,
+)
+
+data class TemplatePreviewerUiArguments(
+    val notetype: NotetypeJson,
+    val fields: MutableList<String>,
+    val tags: MutableList<String>,
+    val id: NoteId = 0,
+    val ord: Int = 0,
+    val fillEmpty: Boolean = false,
+    val deckId: DeckId = DEFAULT_DECK_ID,
 )
