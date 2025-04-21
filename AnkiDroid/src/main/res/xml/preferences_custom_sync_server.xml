@@ -7,6 +7,7 @@
     xmlns:search="http://schemas.android.com/apk/com.bytehamster.lib.preferencesearch"
     android:title="@string/custom_sync_server_title"
     android:key="@string/pref_custom_sync_server_screen_key">
+    <!--this preference is ignored because it's not actually a preference but an explanation of the subscreen content. So it should not be indexed in the preference search.-->
     <com.ichi2.preferences.HtmlHelpPreference
         android:summary="@string/custom_sync_server_help2"
         app:substitution1="@string/link_custom_sync_server_help_learn_more_en"

@@ -36,6 +36,7 @@
             android:title="@string/app_theme"
             android:icon="@drawable/ic_color_lens_white_24dp"
             app:useSimpleSummaryProvider="true"/>
+        <!--day and night theme label is ignored in search to avoid a duplicate entry and "theme" preference's entry-->
         <ListPreference
             android:defaultValue="1"
             android:entries="@array/day_theme_labels"
@@ -70,6 +71,7 @@
             android:title="@string/remove_wallpaper_image"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_reviewer" >
+        <!-- This is ignored in the search as it opens a submenu. The submenu content is what should actually appear in search result. -->
         <Preference
             android:summary="@string/custom_buttons_summary"
             android:title="@string/custom_buttons"
