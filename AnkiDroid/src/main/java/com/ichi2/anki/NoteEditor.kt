@@ -261,11 +261,11 @@ class NoteEditor :
     @get:VisibleForTesting
     var deckId: DeckId = 0
         private set
-    private var allModelIds: List<Long>? = null
+    private var allNoteTypeIds: List<Long>? = null
 
     @KotlinCleanup("this ideally should be Int, Int?")
-    private var modelChangeFieldMap: MutableMap<Int, Int>? = null
-    private var modelChangeCardMap: HashMap<Int, Int?>? = null
+    private var noteTypeChangeFieldMap: MutableMap<Int, Int>? = null
+    private var noteTypeChangeCardMap: HashMap<Int, Int?>? = null
     private val customViewIds = ArrayList<Int>()
 
     // indicates if a new note is added or a card is edited
@@ -319,7 +319,7 @@ class NoteEditor :
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
             NoteEditorActivityResultCallback {
-                // Model can change regardless of exit type - update ourselves and CardBrowser
+                // Note type can change regardless of exit type - update ourselves and CardBrowser
                 reloadRequired = true
                 editorNote!!.notetype = getColUnsafe.notetypes.get(editorNote!!.noteTypeId)!!
                 if (currentEditedCard == null ||
@@ -750,7 +750,7 @@ class NoteEditor :
 
         // Note type Selector
         noteTypeSpinner = requireView().findViewById(R.id.note_type_spinner)
-        allModelIds = setupNoteTypeSpinner(requireContext(), noteTypeSpinner!!, col)
+        allNoteTypeIds = setupNoteTypeSpinner(requireContext(), noteTypeSpinner!!, col)
 
         // Deck Selector
         val deckTextView = requireView().findViewById<TextView>(R.id.CardEditorDeckText)
@@ -782,11 +782,11 @@ class NoteEditor :
             try {
                 // If content has been shared, we can't share to an image occlusion note type
                 if (currentNotetypeIsImageOcclusion() && (sourceText != null || caller == NoteEditorCaller.ADD_IMAGE)) {
-                    val model =
+                    val noteType =
                         col.notetypes.all().first {
                             !it.isImageOcclusion
                         }
-                    changeNoteType(model.id)
+                    changeNoteType(noteType.id)
                 }
             } catch (e: NoSuchElementException) {
                 showSnackbar(R.string.missing_note_type)
@@ -1133,9 +1133,9 @@ class NoteEditor :
 
         // changed note type?
         if (!addNote && currentEditedCard != null) {
-            val newModel = currentlySelectedNotetype
-            val oldModel = currentEditedCard!!.noteType(getColUnsafe)
-            if (newModel != oldModel) {
+            val newNoteType = currentlySelectedNotetype
+            val oldNoteType = currentEditedCard!!.noteType(getColUnsafe)
+            if (newNoteType != oldNoteType) {
                 return true
             }
         }
@@ -1157,7 +1157,7 @@ class NoteEditor :
         // changed tags?
     }
 
-    private fun collectionHasLoaded(): Boolean = allModelIds != null
+    private fun collectionHasLoaded(): Boolean = allNoteTypeIds != null
 
     // ----------------------------------------------------------------------------
     // SAVE NOTE METHODS
@@ -1205,7 +1205,7 @@ class NoteEditor :
 
     @VisibleForTesting
     @NeedsTest("14664: 'first field must not be empty' no longer applies after saving the note")
-    @KotlinCleanup("fix !! on oldModel/newModel")
+    @KotlinCleanup("fix !! on oldNoteType/newNoteType")
     suspend fun saveNote() {
         val res = resources
         if (selectedTags == null) {
@@ -1219,10 +1219,10 @@ class NoteEditor :
             for (f in editFields!!) {
                 updateField(f)
             }
-            // Save deck to model
+            // Save deck to noteType
             Timber.d("setting 'last deck' of note type %s to %d", editorNote!!.notetype.name, deckId)
             editorNote!!.notetype.put("did", deckId)
-            // Save tags to model
+            // Save tags to noteType
             editorNote!!.setTagsFromStr(getColUnsafe, tagsAsString(selectedTags!!))
             val tags = JSONArray()
             for (t in selectedTags!!) {
@@ -1243,12 +1243,12 @@ class NoteEditor :
             }
         } else {
             // Check whether note type has been changed
-            val newModel = currentlySelectedNotetype
-            val oldModel = currentEditedCard?.noteType(getColUnsafe)
-            if (newModel?.id != oldModel?.id) {
+            val newNoteType = currentlySelectedNotetype
+            val oldNoteType = currentEditedCard?.noteType(getColUnsafe)
+            if (newNoteType?.id != oldNoteType?.id) {
                 reloadRequired = true
-                if (modelChangeCardMap!!.size < editorNote!!.numberOfCards(getColUnsafe) ||
-                    modelChangeCardMap!!.containsValue(
+                if (noteTypeChangeCardMap!!.size < editorNote!!.numberOfCards(getColUnsafe) ||
+                    noteTypeChangeCardMap!!.containsValue(
                         null,
                     )
                 ) {
@@ -1258,13 +1258,13 @@ class NoteEditor :
                     val confirm =
                         Runnable {
                             // Bypass the check once the user confirms
-                            changeNoteType(oldModel!!, newModel!!)
+                            changeNoteType(oldNoteType!!, newNoteType!!)
                         }
                     dialog.setConfirm(confirm)
                     showDialogFragment(dialog)
                 } else {
                     // Otherwise go straight to changing note type
-                    changeNoteType(oldModel!!, newModel!!)
+                    changeNoteType(oldNoteType!!, newNoteType!!)
                 }
                 return
             }
@@ -1318,7 +1318,7 @@ class NoteEditor :
     }
 
     /**
-     * Change the note type from oldModel to newModel, handling the case where a full sync will be required
+     * Change the note type from oldNoteType to newNoteType, handling the case where a full sync will be required
      */
     @NeedsTest("test changing note type")
     private fun changeNoteType(
@@ -1329,7 +1329,7 @@ class NoteEditor :
 
         val noteId = editorNote!!.id
         undoableOp {
-            notetypes.change(oldNotetype, noteId, newNotetype, modelChangeFieldMap!!, modelChangeCardMap!!)
+            notetypes.change(oldNotetype, noteId, newNotetype, noteTypeChangeFieldMap!!, noteTypeChangeCardMap!!)
         }
         // refresh the note object to reflect the database changes
         withCol { editorNote!!.load(this@withCol) }
@@ -1589,7 +1589,7 @@ class NoteEditor :
                 setResult(result)
             }
             // ensure there are no orphans from possible edit previews
-            CardTemplateNotetype.clearTempModelFiles()
+            CardTemplateNotetype.clearTempNoteTypeFiles()
 
             // Set the finish animation if there is one on the intent which created the activity
             val animation =
@@ -1638,7 +1638,7 @@ class NoteEditor :
 
     private fun showCardTemplateEditor() {
         val intent = Intent(requireContext(), CardTemplateEditor::class.java)
-        // Pass the model ID
+        // Pass the note type ID
         intent.putExtra("noteTypeId", currentlySelectedNotetype!!.id)
         Timber.d(
             "showCardTemplateEditor() for model %s",
@@ -1709,7 +1709,7 @@ class NoteEditor :
 
     private fun populateEditFields(
         type: FieldChangeType,
-        editModelMode: Boolean,
+        editNoteTypeMode: Boolean,
     ) {
         val editLines = fieldState.loadFieldEditLines(type)
         fieldsLayoutContainer!!.removeAllViews()
@@ -1773,7 +1773,7 @@ class NoteEditor :
             // Use custom implementation of ActionMode.Callback customize selection and insert menus
             editLineView.setActionModeCallbacks(getActionModeCallback(newEditText, View.generateViewId()))
             editLineView.setHintLocale(getHintLocaleForField(editLineView.name))
-            initFieldEditText(newEditText, i, !editModelMode)
+            initFieldEditText(newEditText, i, !editNoteTypeMode)
             editFields!!.add(newEditText)
             val prefs = this.sharedPrefs()
             if (prefs.getInt(PREF_NOTE_EDITOR_FONT_SIZE, -1) > 0) {
@@ -1783,12 +1783,12 @@ class NoteEditor :
             val mediaButton = editLineView.mediaButton
             val toggleStickyButton = editLineView.toggleSticky
             // Make the icon change between media icon and switch field icon depending on whether editing note type
-            if (editModelMode && allowFieldRemapping()) {
+            if (editNoteTypeMode && allowFieldRemapping()) {
                 // Allow remapping if originally more than two fields
                 mediaButton.setBackgroundResource(R.drawable.ic_import_export)
                 setRemapButtonListener(mediaButton, i)
                 toggleStickyButton.setBackgroundResource(0)
-            } else if (editModelMode && !allowFieldRemapping()) {
+            } else if (editNoteTypeMode && !allowFieldRemapping()) {
                 mediaButton.setBackgroundResource(0)
                 toggleStickyButton.setBackgroundResource(0)
             } else {
@@ -2118,23 +2118,23 @@ class NoteEditor :
                 val idx = item.itemId
                 Timber.i("NoteEditor:: User chose to remap to old field %d", idx)
                 // Retrieve any existing mappings between newFieldIndex and idx
-                val previousMapping = MapUtil.getKeyByValue(modelChangeFieldMap!!, newFieldIndex)
-                val mappingConflict = modelChangeFieldMap!![idx]
+                val previousMapping = MapUtil.getKeyByValue(noteTypeChangeFieldMap!!, newFieldIndex)
+                val mappingConflict = noteTypeChangeFieldMap!![idx]
                 // Update the mapping depending on any conflicts
                 if (idx == items.size && previousMapping != null) {
                     // Remove the previous mapping if None selected
-                    modelChangeFieldMap!!.remove(previousMapping)
+                    noteTypeChangeFieldMap!!.remove(previousMapping)
                 } else if (idx < items.size && mappingConflict != null && previousMapping != null && newFieldIndex != mappingConflict) {
                     // Swap the two mappings if there was a conflict and previous mapping
-                    modelChangeFieldMap!![previousMapping] = mappingConflict
-                    modelChangeFieldMap!![idx] = newFieldIndex
+                    noteTypeChangeFieldMap!![previousMapping] = mappingConflict
+                    noteTypeChangeFieldMap!![idx] = newFieldIndex
                 } else if (idx < items.size && mappingConflict != null) {
                     // Set the conflicting field to None if no previous mapping to swap into it
-                    modelChangeFieldMap!!.remove(previousMapping)
-                    modelChangeFieldMap!![idx] = newFieldIndex
+                    noteTypeChangeFieldMap!!.remove(previousMapping)
+                    noteTypeChangeFieldMap!![idx] = newFieldIndex
                 } else if (idx < items.size) {
                     // Can simply set the new mapping if no conflicts
-                    modelChangeFieldMap!![idx] = newFieldIndex
+                    noteTypeChangeFieldMap!![idx] = newFieldIndex
                 }
                 // Reload the fields
                 updateFieldsFromMap(currentlySelectedNotetype)
@@ -2289,7 +2289,7 @@ class NoteEditor :
         launchCatchingTask { deckSpinnerSelection!!.selectDeckById(deckId, false) }
     }
 
-    /** Refreshes the UI using the currently selected model as a template  */
+    /** Refreshes the UI using the currently selected note type as a template  */
     private fun refreshNoteData(changeType: FieldChangeType) {
         setNote(null, changeType)
     }
@@ -2520,7 +2520,7 @@ class NoteEditor :
 
     private fun setNoteTypePosition() {
         // Set current note type and deck positions in spinners
-        val position = allModelIds!!.indexOf(editorNote!!.notetype.getLong("id"))
+        val position = allNoteTypeIds!!.indexOf(editorNote!!.notetype.getLong("id"))
         // set selection without firing selectionChanged event
         noteTypeSpinner!!.setSelection(position, false)
     }
@@ -2556,9 +2556,9 @@ class NoteEditor :
 
     /** Update the list of card templates for current note type  */
     @KotlinCleanup("make non-null")
-    private fun updateCards(model: NotetypeJson?) {
+    private fun updateCards(noteType: NotetypeJson?) {
         Timber.d("updateCards()")
-        val tmpls = model!!.tmpls
+        val tmpls = noteType!!.tmpls
         var cardsList = StringBuilder()
         // Build comma separated list of card names
         Timber.d("updateCards() template count is %s", tmpls.length())
@@ -2567,7 +2567,7 @@ class NoteEditor :
             // If more than one card, and we have an existing card, underline existing card
             if (!addNote &&
                 tmpls.length() > 1 &&
-                model === editorNote!!.notetype &&
+                noteType === editorNote!!.notetype &&
                 currentEditedCard != null &&
                 currentEditedCard!!.template(getColUnsafe).jsonObject.optString("name") == name
             ) {
@@ -2604,26 +2604,26 @@ class NoteEditor :
     private val currentlySelectedNotetype: NotetypeJson?
         get() =
             noteTypeSpinner?.selectedItemPosition?.let { position ->
-                allModelIds?.get(position)?.let { noteTypeId ->
+                allNoteTypeIds?.get(position)?.let { noteTypeId ->
                     getColUnsafe.notetypes.get(noteTypeId)
                 }
             }
 
     /**
-     * Update all the field EditText views based on the currently selected note type and the mModelChangeFieldMap
+     * Update all the field EditText views based on the currently selected note type and the noteTypeChangeFieldMap
      */
     private fun updateFieldsFromMap(newNotetype: NotetypeJson?) {
-        val type = FieldChangeType.refreshWithMap(newNotetype, modelChangeFieldMap, shouldReplaceNewlines())
+        val type = FieldChangeType.refreshWithMap(newNotetype, noteTypeChangeFieldMap, shouldReplaceNewlines())
         populateEditFields(type, true)
         updateCards(newNotetype)
     }
 
     /**
      *
-     * @return whether or not to allow remapping of fields for current model
+     * @return whether or not to allow remapping of fields for current note type
      */
     private fun allowFieldRemapping(): Boolean {
-        // Map<String, Pair<Integer, JSONObject>> fMapNew = getCol().getModels().fieldMap(getCurrentlySelectedModel())
+        // Map<String, Pair<Integer, JSONObject>> fMapNew = getCol().getNoteTypes().fieldMap(getCurrentlySelectedNoteType())
         return editorNote!!.items().size > 2
     }
 
@@ -2653,27 +2653,27 @@ class NoteEditor :
     }
 
     private fun changeNoteType(newId: NoteTypeId) {
-        val oldModelId = getColUnsafe.notetypes.current().getLong("id")
+        val oldNoteTypeId = getColUnsafe.notetypes.current().getLong("id")
         Timber.i("Changing note type to '%d", newId)
 
-        if (oldModelId == newId) {
+        if (oldNoteTypeId == newId) {
             return
         }
 
-        val model = getColUnsafe.notetypes.get(newId)
-        if (model == null) {
-            Timber.w("New model %s not found, not changing note type", newId)
+        val noteType = getColUnsafe.notetypes.get(newId)
+        if (noteType == null) {
+            Timber.w("New note type %s not found, not changing note type", newId)
             return
         }
 
-        getColUnsafe.notetypes.setCurrent(model)
+        getColUnsafe.notetypes.setCurrent(noteType)
         val currentDeck = getColUnsafe.decks.current()
         currentDeck.put("mid", newId)
         getColUnsafe.decks.save(currentDeck)
 
         // Update deck
         if (!getColUnsafe.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
-            deckId = model.optLong("did", Consts.DEFAULT_DECK_ID)
+            deckId = noteType.optLong("did", Consts.DEFAULT_DECK_ID)
         }
 
         refreshNoteData(FieldChangeType.changeFieldCount(shouldReplaceNewlines()))
@@ -2695,7 +2695,7 @@ class NoteEditor :
             // Timber.i("NoteEditor:: onItemSelected() fired on mNoteTypeSpinner");
             // In case the type is changed while adding the card, the menu options need to be invalidated
             mainToolbar.invalidateMenu()
-            changeNoteType(allModelIds!![pos])
+            changeNoteType(allNoteTypeIds!![pos])
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -2711,42 +2711,42 @@ class NoteEditor :
             pos: Int,
             id: Long,
         ) {
-            // Get the current model
-            val noteModelId = currentEditedCard!!.noteType(getColUnsafe).getLong("id")
-            // Get new model
-            val newModel = getColUnsafe.notetypes.get(allModelIds!![pos])
-            if (newModel == null) {
-                Timber.w("newModel %s not found", allModelIds!![pos])
+            // Get the current note type
+            val noteNoteTypeId = currentEditedCard!!.noteType(getColUnsafe).getLong("id")
+            // Get new note type
+            val newNoteType = getColUnsafe.notetypes.get(allNoteTypeIds!![pos])
+            if (newNoteType == null) {
+                Timber.w("newNoteType %s not found", allNoteTypeIds!![pos])
                 return
             }
             // Configure the interface according to whether note type is getting changed or not
-            if (allModelIds!![pos] != noteModelId) {
+            if (allNoteTypeIds!![pos] != noteNoteTypeId) {
                 @KotlinCleanup("Check if this ever happens")
                 val tmpls =
                     try {
-                        newModel.tmpls
+                        newNoteType.tmpls
                     } catch (e: Exception) {
-                        Timber.w("error in obtaining templates from model %s", allModelIds!![pos])
+                        Timber.w("error in obtaining templates from note type %s", allNoteTypeIds!![pos])
                         return
                     }
-                // Initialize mapping between fields of old model -> new model
+                // Initialize mapping between fields of old note type -> new note type
                 val itemsLength = editorNote!!.items().size
-                modelChangeFieldMap = HashUtil.hashMapInit(itemsLength)
+                noteTypeChangeFieldMap = HashUtil.hashMapInit(itemsLength)
                 for (i in 0 until itemsLength) {
-                    modelChangeFieldMap!![i] = i
+                    noteTypeChangeFieldMap!![i] = i
                 }
-                // Initialize mapping between cards new model -> old model
+                // Initialize mapping between cards new note type -> old note type
                 val templatesLength = tmpls.length()
-                modelChangeCardMap = HashUtil.hashMapInit(templatesLength)
+                noteTypeChangeCardMap = HashUtil.hashMapInit(templatesLength)
                 for (i in 0 until templatesLength) {
                     if (i < editorNote!!.numberOfCards(getColUnsafe)) {
-                        modelChangeCardMap!![i] = i
+                        noteTypeChangeCardMap!![i] = i
                     } else {
-                        modelChangeCardMap!![i] = null
+                        noteTypeChangeCardMap!![i] = null
                     }
                 }
                 // Update the field text edits based on the default mapping just assigned
-                updateFieldsFromMap(newModel)
+                updateFieldsFromMap(newNoteType)
                 // Don't let the user change any other values at the same time as changing note type
                 selectedTags = editorNote!!.tags
                 updateTags()
@@ -2816,8 +2816,8 @@ class NoteEditor :
     fun getFieldForTest(index: Int): FieldEditText = editFields!![index]
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun setCurrentlySelectedModel(noteTypeId: NoteTypeId) {
-        val position = allModelIds!!.indexOf(noteTypeId)
+    fun setCurrentlySelectedNoteType(noteTypeId: NoteTypeId) {
+        val position = allNoteTypeIds!!.indexOf(noteTypeId)
         check(position != -1) { "$noteTypeId not found" }
         noteTypeSpinner!!.setSelection(position)
     }

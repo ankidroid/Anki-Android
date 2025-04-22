@@ -36,20 +36,20 @@ class CardTemplateNotetypeTest : RobolectricTest() {
     @Throws(Exception::class)
     fun testTempModelStorage() {
         // Start off with clean state in the cache dir
-        CardTemplateNotetype.clearTempModelFiles()
+        CardTemplateNotetype.clearTempNoteTypeFiles()
 
         // Make sure save / retrieve works
-        val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, NotetypeJson("{\"foo\": \"bar\"}"))
+        val tempModelPath = CardTemplateNotetype.saveTempNoteType(targetContext, NotetypeJson("{\"foo\": \"bar\"}"))
         assertNotNull("Saving temp model unsuccessful", tempModelPath)
-        val tempModel = CardTemplateNotetype.getTempModel(tempModelPath!!)
+        val tempModel = CardTemplateNotetype.getTempNoteType(tempModelPath!!)
         assertNotNull("Temp model not read successfully", tempModel)
         Assert.assertEquals(JSONObject("{\"foo\": \"bar\"}").toString(), tempModel.toString())
 
         // Make sure clearing works
-        Assert.assertEquals(1, CardTemplateNotetype.clearTempModelFiles().toLong())
+        Assert.assertEquals(1, CardTemplateNotetype.clearTempNoteTypeFiles().toLong())
         Timber.i("The following logged NoSuchFileException is an expected part of verifying a file delete.")
         try {
-            CardTemplateNotetype.getTempModel(tempModelPath)
+            CardTemplateNotetype.getTempNoteType(tempModelPath)
             Assert.fail("Should have caught an exception here because the file is missing")
         } catch (e: IOException) {
             // this is expected

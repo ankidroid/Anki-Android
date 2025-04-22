@@ -36,36 +36,36 @@ fun deleteMedia(
 }
 
 /**
- * Handles everything for a model change at once - template add / deletes as well as content updates
+ * Handles everything for a note type change at once - template add / deletes as well as content updates
  */
 @KotlinCleanup("strongly type templateChanges")
-fun saveModel(
+fun saveNoteType(
     col: Collection,
     notetype: NotetypeJson,
     templateChanges: ArrayList<Array<Any>>,
 ) {
-    Timber.d("doInBackgroundSaveModel")
-    val oldModel = col.notetypes.get(notetype.getLong("id"))
+    Timber.d("saveNoteType")
+    val oldNoteType = col.notetypes.get(notetype.getLong("id"))
 
     // TODO: make undoable
     val newTemplates = notetype.tmpls
     for (change in templateChanges) {
-        val oldTemplates = oldModel!!.tmpls
+        val oldTemplates = oldNoteType!!.tmpls
         when (change[1] as CardTemplateNotetype.ChangeType) {
             CardTemplateNotetype.ChangeType.ADD -> {
-                Timber.d("doInBackgroundSaveModel() adding template %s", change[0])
-                col.notetypes.addTemplate(oldModel, newTemplates[change[0] as Int])
+                Timber.d("saveNoteType() adding template %s", change[0])
+                col.notetypes.addTemplate(oldNoteType, newTemplates[change[0] as Int])
             }
             CardTemplateNotetype.ChangeType.DELETE -> {
-                Timber.d("doInBackgroundSaveModel() deleting template currently at ordinal %s", change[0])
-                col.notetypes.remTemplate(oldModel, oldTemplates[change[0] as Int])
+                Timber.d("saveNoteType() deleting template currently at ordinal %s", change[0])
+                col.notetypes.remTemplate(oldNoteType, oldTemplates[change[0] as Int])
             }
         }
     }
 
-    // required for Rust: the modified time can't go backwards, and we updated the model by adding fields
+    // required for Rust: the modified time can't go backwards, and we updated the note type by adding fields
     // This could be done better
-    notetype.put("mod", oldModel!!.getLong("mod"))
+    notetype.put("mod", oldNoteType!!.getLong("mod"))
     col.notetypes.save(notetype)
     col.notetypes.update(notetype)
 }
