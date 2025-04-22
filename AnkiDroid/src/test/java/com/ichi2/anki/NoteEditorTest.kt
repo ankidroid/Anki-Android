@@ -350,7 +350,7 @@ class NoteEditorTest : RobolectricTest() {
     @Test
     fun pasteHtmlAsPlainTextTest() {
         val editor = getNoteEditorAddingNote(DECK_LIST)
-        editor.setCurrentlySelectedModel(col.notetypes.byName("Basic")!!.getLong("id"))
+        editor.setCurrentlySelectedNoteType(col.notetypes.byName("Basic")!!.getLong("id"))
         val field = editor.getFieldForTest(0)
         field.clipboard!!.setPrimaryClip(ClipData.newHtmlText("text", "text", """<span style="color: red">text</span>"""))
         assertTrue(field.clipboard!!.hasPrimaryClip())

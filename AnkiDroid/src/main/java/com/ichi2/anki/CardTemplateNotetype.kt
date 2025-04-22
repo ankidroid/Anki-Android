@@ -23,7 +23,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.core.os.bundleOf
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.async.saveModel
+import com.ichi2.async.saveNoteType
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.libanki.CardTemplate
@@ -50,7 +50,7 @@ class CardTemplateNotetype(
 
     fun toBundle(): Bundle =
         bundleOf(
-            INTENT_MODEL_FILENAME to saveTempModel(AnkiDroidApp.instance.applicationContext, notetype),
+            INTENT_MODEL_FILENAME to saveTempNoteType(AnkiDroidApp.instance.applicationContext, notetype),
             "mTemplateChanges" to _templateChanges,
         )
 
@@ -100,8 +100,8 @@ class CardTemplateNotetype(
     fun saveToDatabase(col: Collection) {
         Timber.d("saveToDatabase() called")
         dumpChanges()
-        clearTempModelFiles()
-        return saveModel(col, notetype, adjustedTemplateChanges)
+        clearTempNoteTypeFiles()
+        return saveNoteType(col, notetype, adjustedTemplateChanges)
     }
 
     /**
@@ -302,27 +302,27 @@ class CardTemplateNotetype(
     }
 
     companion object {
-        const val INTENT_MODEL_FILENAME = "editedModelFilename"
+        const val INTENT_MODEL_FILENAME = "editedNoteTypeFilename"
 
         /**
-         * Load the TemporaryModel from the filename included in a Bundle
+         * Load the TemporaryNoteType from the filename included in a Bundle
          *
          * @param bundle a Bundle that should contain persisted JSON under INTENT_MODEL_FILENAME key
-         * @return re-hydrated TemporaryModel or null if there was a problem, null means should reload from database
+         * @return re-hydrated TemporaryNoteType or null if there was a problem, null means should reload from database
          */
         fun fromBundle(bundle: Bundle): CardTemplateNotetype? {
-            val editedModelFileName = bundle.getString(INTENT_MODEL_FILENAME)
+            val editedNoteTypeFileName = bundle.getString(INTENT_MODEL_FILENAME)
             // Bundle.getString is @Nullable, so we have to check.
-            if (editedModelFileName == null) {
-                Timber.d("fromBundle() - model file name under key %s", INTENT_MODEL_FILENAME)
+            if (editedNoteTypeFileName == null) {
+                Timber.d("fromBundle() - note type file name under key %s", INTENT_MODEL_FILENAME)
                 return null
             }
-            Timber.d("onCreate() loading saved model file %s", editedModelFileName)
+            Timber.d("onCreate() loading saved note type file %s", editedNoteTypeFileName)
             val tempNotetypeJSON: NotetypeJson =
                 try {
-                    getTempModel(editedModelFileName)
+                    getTempNoteType(editedNoteTypeFileName)
                 } catch (e: IOException) {
-                    Timber.w(e, "Unable to load saved model file")
+                    Timber.w(e, "Unable to load saved note type file")
                     return null
                 }
             return CardTemplateNotetype(tempNotetypeJSON).apply {
@@ -331,47 +331,47 @@ class CardTemplateNotetype(
         }
 
         /**
-         * Save the current model to a temp file in the application internal cache directory
+         * Save the current note type to a temp file in the application internal cache directory
          * @return String representing the absolute path of the saved file, or null if there was a problem
          */
-        fun saveTempModel(
+        fun saveTempNoteType(
             context: Context,
-            tempModel: NotetypeJson,
+            tempNoteType: NotetypeJson,
         ): String? {
-            Timber.d("saveTempModel() saving tempModel")
-            var tempModelFile: File
+            Timber.d("saveTempNoteType() saving tempNoteType")
+            var tempNoteTypeFile: File
             try {
-                ByteArrayInputStream(tempModel.toString().toByteArray()).use { source ->
-                    tempModelFile = File.createTempFile("editedTemplate", ".json", context.cacheDir)
-                    compat.copyFile(source, tempModelFile.absolutePath)
+                ByteArrayInputStream(tempNoteType.toString().toByteArray()).use { source ->
+                    tempNoteTypeFile = File.createTempFile("editedTemplate", ".json", context.cacheDir)
+                    compat.copyFile(source, tempNoteTypeFile.absolutePath)
                 }
             } catch (ioe: IOException) {
-                Timber.e(ioe, "Unable to create+write temp file for model")
+                Timber.e(ioe, "Unable to create+write temp file for note type")
                 return null
             }
-            return tempModelFile.absolutePath
+            return tempNoteTypeFile.absolutePath
         }
 
         /**
-         * Get the model temporarily saved into the file represented by the given path
-         * @return JSONObject holding the model, or null if there was a problem
+         * Get the note type temporarily saved into the file represented by the given path
+         * @return JSONObject holding the note type, or null if there was a problem
          */
         @Throws(IOException::class)
-        fun getTempModel(tempModelFileName: String): NotetypeJson {
-            Timber.d("getTempModel() fetching tempModel %s", tempModelFileName)
+        fun getTempNoteType(tempNoteTypeFileName: String): NotetypeJson {
+            Timber.d("getTempNoteType() fetching tempNoteType %s", tempNoteTypeFileName)
             try {
                 ByteArrayOutputStream().use { target ->
-                    compat.copyFile(tempModelFileName, target)
+                    compat.copyFile(tempNoteTypeFileName, target)
                     return NotetypeJson(target.toString())
                 }
             } catch (e: IOException) {
-                Timber.e(e, "Unable to read+parse tempModel from file %s", tempModelFileName)
+                Timber.e(e, "Unable to read+parse tempNoteType from file %s", tempNoteTypeFileName)
                 throw e
             }
         }
 
-        /** Clear any temp model files saved into internal cache directory  */
-        fun clearTempModelFiles(): Int {
+        /** Clear any temp note type files saved into internal cache directory  */
+        fun clearTempNoteTypeFiles(): Int {
             var deleteCount = 0
             for (c in AnkiDroidApp.instance.cacheDir.listFiles() ?: arrayOf()) {
                 val absolutePath = c.absolutePath
@@ -380,7 +380,7 @@ class CardTemplateNotetype(
                         Timber.w("Unable to delete temp file %s", c.absolutePath)
                     } else {
                         deleteCount++
-                        Timber.d("Deleted temp model file %s", c.absolutePath)
+                        Timber.d("Deleted temp note type file %s", c.absolutePath)
                     }
                 }
             }
@@ -390,17 +390,17 @@ class CardTemplateNotetype(
         /**
          * Check if the given ordinal from the current UI state (which includes all pending changes) is a pending add
          *
-         * @param ord int representing an ordinal in the model, that might be an unsaved addition
+         * @param ord int representing an ordinal in the note type, that might be an unsaved addition
          * @return boolean true if it is a pending addition from this editing session
          */
         fun isOrdinalPendingAdd(
-            model: CardTemplateNotetype,
+            noteType: CardTemplateNotetype,
             ord: Int,
         ): Boolean {
-            for (i in model.templateChanges.indices) {
+            for (i in noteType.templateChanges.indices) {
                 // commented out to make the code compile, why is this unused?
-                // val change = model.templateChanges[i]
-                val adjustedOrdinal = getAdjustedAddOrdinalAtChangeIndex(model, i)
+                // val change = noteType.templateChanges[i]
+                val adjustedOrdinal = getAdjustedAddOrdinalAtChangeIndex(noteType, i)
                 if (adjustedOrdinal == ord) {
                     Timber.d(
                         "isOrdinalPendingAdd() found ord %s was pending add (would adjust to %s)",
@@ -421,17 +421,17 @@ class CardTemplateNotetype(
          * @return either ordinal adjusted by any pending deletes if it is a pending add, or -1 if the ordinal is not an add
          */
         fun getAdjustedAddOrdinalAtChangeIndex(
-            model: CardTemplateNotetype,
+            noteType: CardTemplateNotetype,
             changesIndex: Int,
         ): Int {
-            if (changesIndex >= model.templateChanges.size) {
+            if (changesIndex >= noteType.templateChanges.size) {
                 return -1
             }
             var ordinalAdjustment = 0
-            val change = model.templateChanges[changesIndex]
+            val change = noteType.templateChanges[changesIndex]
             val ordinalToInspect = change[0] as Int
-            for (i in model.templateChanges.size - 1 downTo changesIndex) {
-                val oldChange = model.templateChanges[i]
+            for (i in noteType.templateChanges.size - 1 downTo changesIndex) {
+                val oldChange = noteType.templateChanges[i]
                 val currentOrdinal = change[0] as Int
                 when (oldChange[1] as ChangeType) {
                     ChangeType.DELETE -> {
@@ -492,7 +492,7 @@ class NotetypeFile(
                 compat.copyFile(source, this.absolutePath)
             }
         } catch (ioe: IOException) {
-            Timber.w(ioe, "Unable to create+write temp file for model")
+            Timber.w(ioe, "Unable to create+write temp file for note type")
         }
     }
 
@@ -509,7 +509,7 @@ class NotetypeFile(
                 NotetypeJson(target.toString())
             }
         } catch (e: IOException) {
-            Timber.e(e, "Unable to read+parse tempModel from file %s", absolutePath)
+            Timber.e(e, "Unable to read+parse tempNoteType from file %s", absolutePath)
             throw e
         }
 
