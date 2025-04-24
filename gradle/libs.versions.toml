@@ -34,7 +34,7 @@ androidxCoreKtx = "1.16.0"
 # https://developer.android.com/jetpack/androidx/releases/draganddrop
 androidxDragAndDrop = "1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/exifinterface
-androidxExifinterface = "1.4.0"
+androidxExifinterface = "1.4.1"
 # https://developer.android.com/jetpack/androidx/releases/fragment
 androidxFragmentKtx = "1.8.6"
 # https://developer.android.com/jetpack/androidx/releases/media
