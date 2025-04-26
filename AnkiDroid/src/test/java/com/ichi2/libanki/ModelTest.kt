@@ -230,14 +230,13 @@ class NotetypeTest : JvmTest() {
     @Throws(ConfirmModSchemaException::class)
     fun test_templates() {
         val noteType = col.notetypes.current()
-        val noteTypes = col.notetypes
         var t =
             Notetypes.newTemplate("Reverse").apply {
                 qfmt = "{{Back}}"
                 afmt = "{{Front}}"
             }
-        noteTypes.addTemplateModChanged(noteType, t)
-        noteTypes.save(noteType)
+        col.notetypes.addTemplateModChanged(noteType, t)
+        col.notetypes.save(noteType)
         val note = col.newNote()
         note.setItem("Front", "1")
         note.setItem("Back", "2")
@@ -268,7 +267,7 @@ class NotetypeTest : JvmTest() {
             Notetypes.newTemplate("template name").apply {
                 qfmt = "{{Front}}1"
             }
-        noteTypes.addTemplateModChanged(noteType, t)
+        col.notetypes.addTemplateModChanged(noteType, t)
         col.notetypes.remTemplate(noteType, noteType.tmpls[0])
         assertEquals(
             0,
@@ -283,7 +282,6 @@ class NotetypeTest : JvmTest() {
     fun test_cloze_ordinals() {
         col.notetypes.setCurrent(col.notetypes.byName("Cloze")!!)
         val noteType = col.notetypes.current()
-        val noteTypes = col.notetypes
 
         // We replace the default Cloze template
         val t =
@@ -291,8 +289,8 @@ class NotetypeTest : JvmTest() {
                 qfmt = "{{text:cloze:Text}}"
                 afmt = "{{text:cloze:Text}}"
             }
-        noteTypes.addTemplateModChanged(noteType, t)
-        noteTypes.save(noteType)
+        col.notetypes.addTemplateModChanged(noteType, t)
+        col.notetypes.save(noteType)
         col.notetypes.remTemplate(noteType, noteType.tmpls[0])
 
         val note = col.newNote()
@@ -393,7 +391,6 @@ class NotetypeTest : JvmTest() {
     fun test_chained_mods() {
         col.notetypes.setCurrent(col.notetypes.byName("Cloze")!!)
         val noteType = col.notetypes.current()
-        val noteTypes = col.notetypes
 
         // We replace the default Cloze template
         val t =
@@ -401,8 +398,8 @@ class NotetypeTest : JvmTest() {
                 qfmt = "{{cloze:text:Text}}"
                 afmt = "{{cloze:text:Text}}"
             }
-        noteTypes.addTemplateModChanged(noteType, t)
-        noteTypes.save(noteType)
+        col.notetypes.addTemplateModChanged(noteType, t)
+        col.notetypes.save(noteType)
         col.notetypes.remTemplate(noteType, noteType.tmpls[0])
         val note = col.newNote()
         val q1 = "<span style=\"color:red\">phrase</span>"
@@ -427,14 +424,13 @@ class NotetypeTest : JvmTest() {
         val cloze = col.notetypes.byName("Cloze")
         // enable second template and add a note
         val basic = col.notetypes.current()
-        val noteTypes = col.notetypes
         val t =
             Notetypes.newTemplate("Reverse").apply {
                 qfmt = "{{Back}}"
                 afmt = "{{Front}}"
             }
-        noteTypes.addTemplateModChanged(basic, t)
-        noteTypes.save(basic)
+        col.notetypes.addTemplateModChanged(basic, t)
+        col.notetypes.save(basic)
         var note = col.newNote()
         note.setItem("Front", "note")
         note.setItem("Back", "b123")
@@ -516,8 +512,7 @@ class NotetypeTest : JvmTest() {
 
     @Test
     fun nonEmptyFieldTest() {
-        val noteTypes = col.notetypes
-        val basic = noteTypes.byName("Basic")
+        val basic = col.notetypes.byName("Basic")
         val s: MutableSet<String> = HashSet<String>()
         assertEquals(s, basic!!.nonEmptyFields(arrayOf("", "")))
         s.add("Front")
@@ -537,8 +532,7 @@ class NotetypeTest : JvmTest() {
 
     @Test
     fun getDid_test() {
-        val noteTypes = col.notetypes
-        val basic = noteTypes.byName("Basic")
+        val basic = col.notetypes.byName("Basic")
         basic!!.put("did", 999L)
 
         val expected = 999L
