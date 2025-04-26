@@ -136,14 +136,13 @@ class FinderTest : JvmTest() {
         val catCard = note.cards()[0]
         var noteType = col.notetypes.current()
         noteType = col.notetypes.copy(noteType)
-        val noteTypes = col.notetypes
         val t =
             Notetypes.newTemplate("Reverse").apply {
                 qfmt = "{{Back}}"
                 afmt = "{{Front}}"
             }
-        noteTypes.addTemplateModChanged(noteType, t)
-        noteTypes.save(noteType)
+        col.notetypes.addTemplateModChanged(noteType, t)
+        col.notetypes.save(noteType)
         note = col.newNote()
         note.setItem("Front", "test")
         note.setItem("Back", "foo bar")

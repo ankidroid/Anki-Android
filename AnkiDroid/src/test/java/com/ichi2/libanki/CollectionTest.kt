@@ -112,12 +112,11 @@ class CollectionTest : JvmTest() {
         assertEquals(1, n)
         // test multiple cards - add another template
         val noteType = col.notetypes.current()
-        val noteTypes = col.notetypes
         val t = Notetypes.newTemplate("Reverse")
         t.qfmt = "{{Back}}"
         t.afmt = "{{Front}}"
-        noteTypes.addTemplateModChanged(noteType, t)
-        noteTypes.save(noteType)
+        col.notetypes.addTemplateModChanged(noteType, t)
+        col.notetypes.save(noteType)
         assertEquals(2, col.cardCount())
         // creating new notes should use both cards
         note = col.newNote()
@@ -192,11 +191,10 @@ class CollectionTest : JvmTest() {
     @Test
     @Ignore("Pending port of media search from Rust code")
     fun test_furigana() {
-        val noteTypes = col.notetypes
-        val noteType = noteTypes.current()
+        val noteType = col.notetypes.current()
         // filter should work
         noteType.tmpls[0].qfmt = "{{kana:Front}}"
-        noteTypes.save(noteType)
+        col.notetypes.save(noteType)
         val n = col.newNote()
         n.setItem("Front", "foo[abc]")
         col.addNote(n)
@@ -209,7 +207,7 @@ class CollectionTest : JvmTest() {
         assertThat("Question «$question» does not contains «anki:play».", question, Matchers.containsString("anki:play"))
         // it shouldn't throw an error while people are editing
         noteType.tmpls[0].qfmt = "{{kana:}}"
-        noteTypes.save(noteType)
+        col.notetypes.save(noteType)
         c.question(true)
     }
 

@@ -69,22 +69,21 @@ class CardTest : JvmTest() {
         col.addNote(note)
         assertEquals(1, note.numberOfCards())
         val noteType = col.notetypes.current()
-        val noteTypes = col.notetypes
         // adding a new template should automatically create cards
         var t =
             Notetypes.newTemplate("rev").apply {
                 qfmt = "{{Front}}1"
                 afmt = ""
             }
-        noteTypes.addTemplateModChanged(noteType, t)
-        noteTypes.save(noteType)
+        col.notetypes.addTemplateModChanged(noteType, t)
+        col.notetypes.save(noteType)
         assertEquals(2, note.numberOfCards())
         // if the template is changed to remove cards, they'll be removed
         t =
             noteType.tmpls[1].apply {
                 qfmt = "{{Back}}"
             }
-        noteTypes.save(noteType)
+        col.notetypes.save(noteType)
         val rep = col.emptyCids()
         col.removeCardsAndOrphanedNotes(rep)
         assertEquals(1, note.numberOfCards())
@@ -121,22 +120,21 @@ class CardTest : JvmTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_gen_or() {
-        val models = col.notetypes
-        val model = models.byName("Basic")
+        val model = col.notetypes.byName("Basic")
         assertNotNull(model)
-        models.renameFieldLegacy(model, model.flds[0], "A")
-        models.renameFieldLegacy(model, model.flds[1], "B")
-        val fld2 = models.newField("C")
+        col.notetypes.renameFieldLegacy(model, model.flds[0], "A")
+        col.notetypes.renameFieldLegacy(model, model.flds[1], "B")
+        val fld2 = col.notetypes.newField("C")
         fld2.setOrd(null)
-        models.addFieldLegacy(model, fld2)
+        col.notetypes.addFieldLegacy(model, fld2)
         model.tmpls[0].qfmt = "{{A}}{{B}}{{C}}"
         // ensure first card is always generated,
         // because at last one card is generated
         val tmpl = Notetypes.newTemplate("AND_OR")
         tmpl.qfmt = "        {{A}}    {{#B}}        {{#C}}            {{B}}        {{/C}}    {{/B}}"
-        models.addTemplate(model, tmpl)
-        models.save(model)
-        models.setCurrent(model)
+        col.notetypes.addTemplate(model, tmpl)
+        col.notetypes.save(model)
+        col.notetypes.setCurrent(model)
         var note = col.newNote()
         note.setItem("A", "foo")
         col.addNote(note)
@@ -169,24 +167,23 @@ class CardTest : JvmTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_gen_not() {
-        val models = col.notetypes
-        val model = models.byName("Basic")
+        val model = col.notetypes.byName("Basic")
         assertNotNull(model)
         val tmpls = model.tmpls
-        models.renameFieldLegacy(model, model.flds[0], "First")
-        models.renameFieldLegacy(model, model.flds[1], "Front")
-        val fld2 = models.newField("AddIfEmpty")
+        col.notetypes.renameFieldLegacy(model, model.flds[0], "First")
+        col.notetypes.renameFieldLegacy(model, model.flds[1], "Front")
+        val fld2 = col.notetypes.newField("AddIfEmpty")
         fld2.name = "AddIfEmpty"
-        models.addFieldLegacy(model, fld2)
+        col.notetypes.addFieldLegacy(model, fld2)
 
         // ensure first card is always generated,
         // because at last one card is generated
         tmpls[0].qfmt = "{{AddIfEmpty}}{{Front}}{{First}}"
         val tmpl = Notetypes.newTemplate("NOT")
         tmpl.qfmt = "    {{^AddIfEmpty}}        {{Front}}    {{/AddIfEmpty}}    "
-        models.addTemplate(model, tmpl)
-        models.save(model)
-        models.setCurrent(model)
+        col.notetypes.addTemplate(model, tmpl)
+        col.notetypes.save(model)
+        col.notetypes.setCurrent(model)
         var note = col.newNote()
         note.setItem("First", "foo")
         note.setItem("AddIfEmpty", "foo")

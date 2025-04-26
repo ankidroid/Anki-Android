@@ -261,11 +261,10 @@ class CardContentProvider : ContentProvider() {
                 rv
             }
             NOTE_TYPES -> {
-                val noteTypes = col.notetypes
                 val columns = projection ?: FlashCardsContract.Model.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
-                for (noteTypeId: NoteTypeId in noteTypes.ids()) {
-                    addNoteTypeToCursor(noteTypeId, noteTypes, rv, columns)
+                for (noteTypeId: NoteTypeId in col.notetypes.ids()) {
+                    addNoteTypeToCursor(noteTypeId, col.notetypes, rv, columns)
                 }
                 rv
             }
@@ -278,13 +277,12 @@ class CardContentProvider : ContentProvider() {
             }
             NOTE_TYPES_ID_TEMPLATES -> {
                 // Direct access note type templates
-                val noteTypes = col.notetypes
-                val currentNoteType = noteTypes.get(getNoteTypeIdFromUri(uri, col))
+                val currentNoteType = col.notetypes.get(getNoteTypeIdFromUri(uri, col))
                 val columns = projection ?: FlashCardsContract.CardTemplate.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
                 try {
                     for ((idx, template) in currentNoteType!!.tmpls.withIndex()) {
-                        addTemplateToCursor(template, currentNoteType, idx + 1, noteTypes, rv, columns)
+                        addTemplateToCursor(template, currentNoteType, idx + 1, col.notetypes, rv, columns)
                     }
                 } catch (e: JSONException) {
                     throw IllegalArgumentException("Note type is malformed", e)
@@ -293,14 +291,13 @@ class CardContentProvider : ContentProvider() {
             }
             NOTE_TYPES_ID_TEMPLATES_ID -> {
                 // Direct access note type template with specific ID
-                val noteTypes = col.notetypes
                 val ord = uri.lastPathSegment!!.toInt()
-                val currentNoteType = noteTypes.get(getNoteTypeIdFromUri(uri, col))
+                val currentNoteType = col.notetypes.get(getNoteTypeIdFromUri(uri, col))
                 val columns = projection ?: FlashCardsContract.CardTemplate.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
                 try {
                     val template = getTemplateFromUri(uri, col)
-                    addTemplateToCursor(template, currentNoteType, ord + 1, noteTypes, rv, columns)
+                    addTemplateToCursor(template, currentNoteType, ord + 1, col.notetypes, rv, columns)
                 } catch (e: JSONException) {
                     throw IllegalArgumentException("Note type is malformed", e)
                 }
@@ -848,13 +845,12 @@ class CardContentProvider : ContentProvider() {
                     throw IllegalArgumentException("Cannot set a filtered deck as default deck for a note type")
                 }
                 // Create a new note type
-                val noteTypes = col.notetypes
-                val newNoteType = noteTypes.new(noteTypeName)
+                val newNoteType = col.notetypes.new(noteTypeName)
                 return try {
                     // Add the fields
                     val allFields = Utils.splitFields(fieldNames)
                     for (f: String? in allFields) {
-                        noteTypes.addFieldInNewNoteType(newNoteType, noteTypes.newField(f!!))
+                        col.notetypes.addFieldInNewNoteType(newNoteType, col.notetypes.newField(f!!))
                     }
                     // Add some empty card templates
                     var idx = 0
@@ -867,7 +863,7 @@ class CardContentProvider : ContentProvider() {
                             answerField = allFields[1]
                         }
                         t.afmt = "{{FrontSide}}\\n\\n<hr id=answer>\\n\\n{{$answerField}}"
-                        noteTypes.addTemplateInNewNoteType(newNoteType, t)
+                        col.notetypes.addTemplateInNewNoteType(newNoteType, t)
                         idx++
                     }
                     // Add the CSS if specified
@@ -891,7 +887,7 @@ class CardContentProvider : ContentProvider() {
                         newNoteType.put("latexPre", latexPre)
                     }
                     // Add the note type to collection (from this point on edits will require a full-sync)
-                    noteTypes.add(newNoteType)
+                    col.notetypes.add(newNoteType)
 
                     // Get the mid and return a URI
                     val noteTypeId = newNoteType.getLong("id").toString()
@@ -904,10 +900,9 @@ class CardContentProvider : ContentProvider() {
             NOTE_TYPES_ID -> throw IllegalArgumentException("Not possible to insert note type with specific ID")
             NOTE_TYPES_ID_TEMPLATES -> {
                 run {
-                    val notetypes: Notetypes = col.notetypes
                     val noteTypeId: NoteTypeId = getNoteTypeIdFromUri(uri, col)
                     val existingNoteType: NotetypeJson =
-                        notetypes.get(noteTypeId)
+                        col.notetypes.get(noteTypeId)
                             ?: throw IllegalArgumentException("note type missing: $noteTypeId")
                     val name: String = values!!.getAsString(FlashCardsContract.CardTemplate.NAME)
                     val qfmt: String = values.getAsString(FlashCardsContract.CardTemplate.QUESTION_FORMAT)
@@ -922,8 +917,8 @@ class CardContentProvider : ContentProvider() {
                                 tmpl.bqfmt = bqfmt
                                 tmpl.bafmt = bafmt
                             }
-                        notetypes.addTemplate(existingNoteType, t)
-                        notetypes.update(existingNoteType)
+                        col.notetypes.addTemplate(existingNoteType, t)
+                        col.notetypes.update(existingNoteType)
                         t = existingNoteType.tmpls.last()
                         return ContentUris.withAppendedId(uri, t.ord.toLong())
                     } catch (e: ConfirmModSchemaException) {
@@ -936,17 +931,16 @@ class CardContentProvider : ContentProvider() {
             NOTE_TYPES_ID_TEMPLATES_ID -> throw IllegalArgumentException("Not possible to insert template with specific ORD")
             NOTE_TYPES_ID_FIELDS -> {
                 run {
-                    val notetypes: Notetypes = col.notetypes
                     val noteTypeId: NoteTypeId = getNoteTypeIdFromUri(uri, col)
                     val existingNoteType: NotetypeJson =
-                        notetypes.get(noteTypeId)
+                        col.notetypes.get(noteTypeId)
                             ?: throw IllegalArgumentException("note type missing: $noteTypeId")
                     val name: String =
                         values!!.getAsString(FlashCardsContract.Model.FIELD_NAME)
                             ?: throw IllegalArgumentException("field name missing for note type: $noteTypeId")
-                    val field = notetypes.newField(name)
+                    val field = col.notetypes.newField(name)
                     try {
-                        notetypes.addFieldLegacy(existingNoteType, field)
+                        col.notetypes.addFieldLegacy(existingNoteType, field)
 
                         val flds: JSONArray = existingNoteType.getJSONArray("flds")
                         return ContentUris.withAppendedId(uri, (flds.length() - 1).toLong())

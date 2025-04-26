@@ -889,20 +889,19 @@ open class SchedulerTest : JvmTest() {
     fun test_ordcycleV2() {
         // add two more templates and set second active
         val noteType = col.notetypes.current()
-        val noteTypes = col.notetypes
         var t =
             Notetypes.newTemplate("Reverse").apply {
                 qfmt = "{{Back}}"
                 afmt = "{{Front}}"
             }
-        noteTypes.addTemplateModChanged(noteType, t)
+        col.notetypes.addTemplateModChanged(noteType, t)
         t =
             Notetypes.newTemplate("f2").apply {
                 qfmt = "{{Front}}1"
                 afmt = "{{Back}}"
             }
-        noteTypes.addTemplateModChanged(noteType, t)
-        noteTypes.save(noteType)
+        col.notetypes.addTemplateModChanged(noteType, t)
+        col.notetypes.save(noteType)
         // create a new note; it should have 3 cards
         val note = col.newNote()
         note.setItem("Front", "1")

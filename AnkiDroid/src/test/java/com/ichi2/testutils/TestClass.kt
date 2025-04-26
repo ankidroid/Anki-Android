@@ -147,9 +147,8 @@ interface TestClass {
         notetype: NotetypeJson,
         name: String,
     ) {
-        val noteTypes = col.notetypes
         try {
-            noteTypes.addFieldLegacy(notetype, noteTypes.newField(name))
+            col.notetypes.addFieldLegacy(notetype, col.notetypes.newField(name))
         } catch (e: ConfirmModSchemaException) {
             throw RuntimeException(e)
         }
