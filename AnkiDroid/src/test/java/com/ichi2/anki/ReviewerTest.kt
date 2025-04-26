@@ -51,7 +51,7 @@ import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import com.ichi2.testutils.ext.addNote
-import com.ichi2.utils.BASIC_MODEL_NAME
+import com.ichi2.utils.BASIC_NOTE_TYPE_NAME
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
@@ -276,10 +276,8 @@ class ReviewerTest : RobolectricTest() {
     @Test
     fun jsAnkiGetDeckName() =
         runTest {
-            val models = col.notetypes
-
             val didAb = addDeck("A::B")
-            val basic = models.byName(BASIC_MODEL_NAME)
+            val basic = col.notetypes.byName(BASIC_NOTE_TYPE_NAME)
             basic!!.did = didAb
             addBasicNote("foo", "bar")
 
@@ -453,14 +451,13 @@ class ReviewerTest : RobolectricTest() {
     @Throws(ConfirmModSchemaException::class)
     @KotlinCleanup("use a assertNotNull which returns rather than !!")
     private fun addNoteWithThreeCards() {
-        val models = col.notetypes
-        var notetype: NotetypeJson = models.copy(models.current())
+        var notetype = col.notetypes.copy(col.notetypes.current())
         notetype.name = "Three"
-        models.add(notetype)
-        notetype = models.byName("Three")!!
+        col.notetypes.add(notetype)
+        notetype = col.notetypes.byName("Three")!!
 
-        cloneTemplate(models, notetype, "1")
-        cloneTemplate(models, notetype, "2")
+        cloneTemplate(col.notetypes, notetype, "1")
+        cloneTemplate(col.notetypes, notetype, "2")
 
         val newNote = col.newNote()
         newNote.setField(0, "Hello")

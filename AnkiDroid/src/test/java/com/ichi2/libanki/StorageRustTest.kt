@@ -29,9 +29,9 @@ class StorageRustTest : JvmTest() {
     @Test
     @Config(qualifiers = "en")
     fun testModelCount() {
-        val modelNames = col.notetypes.all().map { x -> x.name }
+        val noteTypeNames = col.notetypes.all().map { x -> x.name }
         MatcherAssert.assertThat(
-            modelNames,
+            noteTypeNames,
             Matchers.containsInAnyOrder(
                 "Basic",
                 "Basic (and reversed card)",

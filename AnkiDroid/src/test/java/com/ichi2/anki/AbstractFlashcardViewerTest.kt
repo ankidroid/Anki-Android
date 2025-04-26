@@ -30,7 +30,7 @@ import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import com.ichi2.testutils.ext.addNote
-import com.ichi2.utils.createBasicTypingModel
+import com.ichi2.utils.createBasicTypingNoteType
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.equalTo
@@ -251,8 +251,8 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     @Flaky(OS.ALL, "executeCommand(FLIP_OR_ANSWER_EASE4) cannot be awaited")
     fun typedLanguageIsSet() =
         runTest {
-            val withLanguage = col.createBasicTypingModel("a")
-            val normal = col.createBasicTypingModel("b")
+            val withLanguage = col.createBasicTypingNoteType("a")
+            val normal = col.createBasicTypingNoteType("b")
             val typedField = 1 // BACK
 
             LanguageHintService.setLanguageHintForField(col.notetypes, withLanguage, typedField, Locale("ja"))
@@ -261,12 +261,12 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
             addNoteUsingNoteTypeName(normal.name, "one", "two")
             val viewer = getViewer(false)
 
-            assertThat("A model with a language hint (japanese) should use it", viewer.hintLocale, equalTo("ja"))
+            assertThat("A note type with a language hint (japanese) should use it", viewer.hintLocale, equalTo("ja"))
 
             viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
             viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
 
-            assertThat("A default model should have no preference", viewer.hintLocale, nullValue())
+            assertThat("A default note type should have no preference", viewer.hintLocale, nullValue())
         }
 
     @Test

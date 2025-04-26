@@ -20,7 +20,7 @@ import anki.notes.NoteFieldsCheckResponse
 import anki.notetypes.StockNotetype
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.ext.addNote
-import com.ichi2.utils.createBasicModel
+import com.ichi2.utils.createBasicNoteType
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.hamcrest.Matchers.equalTo
@@ -183,7 +183,7 @@ class CollectionTest : JvmTest() {
         val numberOfStandardModels = StockNotetype.Kind.entries.count { it != StockNotetype.Kind.UNRECOGNIZED }
         assertEquals(col.notetypes.all().size, numberOfStandardModels)
         for (i in 0..99) {
-            col.createBasicModel()
+            col.createBasicNoteType()
         }
         assertEquals(col.notetypes.all().size, (100 + numberOfStandardModels))
     }

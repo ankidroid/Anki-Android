@@ -24,7 +24,7 @@ import com.ichi2.anki.AnkiDroidJsAPI.Companion.VALUE_KEY
 import com.ichi2.anki.utils.ext.CardExt.setFlag
 import com.ichi2.libanki.CardType
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.BASIC_MODEL_NAME
+import com.ichi2.utils.BASIC_NOTE_TYPE_NAME
 import net.ankiweb.rsdroid.withoutUnicodeIsolation
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -41,7 +41,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     fun ankiGetNextTimeTest() =
         runTest {
             val didA = addDeck("Test", setAsSelected = true)
-            val basic = col.notetypes.byName(BASIC_MODEL_NAME)
+            val basic = col.notetypes.byName(BASIC_NOTE_TYPE_NAME)
             basic!!.did = didA
             addBasicNote("foo", "bar")
 
@@ -74,7 +74,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     fun ankiTestCurrentCard() =
         runTest {
             val didA = addDeck("Test", setAsSelected = true)
-            val basic = col.notetypes.byName(BASIC_MODEL_NAME)
+            val basic = col.notetypes.byName(BASIC_NOTE_TYPE_NAME)
             basic!!.did = didA
             addBasicNote("foo", "bar")
 
@@ -184,7 +184,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     fun ankiJsUiTest() =
         runTest {
             val didA = addDeck("Test", setAsSelected = true)
-            val basic = col.notetypes.byName(BASIC_MODEL_NAME)
+            val basic = col.notetypes.byName(BASIC_NOTE_TYPE_NAME)
             basic!!.did = didA
             addBasicNote("foo", "bar")
 
@@ -226,7 +226,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         runTest {
             // js api test for marking and flagging card
             val didA = addDeck("Test", setAsSelected = true)
-            val basic = col.notetypes.byName(BASIC_MODEL_NAME)
+            val basic = col.notetypes.byName(BASIC_NOTE_TYPE_NAME)
             basic!!.did = didA
             addBasicNote("foo", "bar")
 
@@ -286,7 +286,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             // count number of notes, if buried or suspended then
             // in scheduling the count will be less than previous scheduling
             val didA = addDeck("Test", setAsSelected = true)
-            val basic = col.notetypes.byName(BASIC_MODEL_NAME)
+            val basic = col.notetypes.byName(BASIC_NOTE_TYPE_NAME)
             basic!!.did = didA
             addBasicNote("foo", "bar")
             addBasicNote("baz", "bak")
@@ -354,7 +354,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         runTest {
             TimeManager.reset()
             val didA = addDeck("Test", setAsSelected = true)
-            val basic = col.notetypes.byName(BASIC_MODEL_NAME)
+            val basic = col.notetypes.byName(BASIC_NOTE_TYPE_NAME)
             basic!!.did = didA
             addBasicNote("foo", "bar")
             addBasicNote("baz", "bak")

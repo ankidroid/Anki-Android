@@ -34,7 +34,7 @@ import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 class CardTemplateNotetypeTest : RobolectricTest() {
     @Test
     @Throws(Exception::class)
-    fun testTempModelStorage() {
+    fun testTempNoteTypeStorage() {
         // Start off with clean state in the cache dir
         CardTemplateNotetype.clearTempNoteTypeFiles()
 
