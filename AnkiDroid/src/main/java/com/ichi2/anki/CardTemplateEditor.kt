@@ -299,8 +299,8 @@ open class CardTemplateEditor :
     }
 
     fun noteTypeHasChanged(): Boolean {
-        val oldModel: NotetypeJson? = getColUnsafe.notetypes.get(noteTypeId)
-        return tempNoteType != null && tempNoteType!!.notetype.toString() != oldModel.toString()
+        val oldNoteType: NotetypeJson? = getColUnsafe.notetypes.get(noteTypeId)
+        return tempNoteType != null && tempNoteType!!.notetype.toString() != oldNoteType.toString()
     }
 
     private fun showDiscardChangesDialog() =
@@ -1129,7 +1129,7 @@ open class CardTemplateEditor :
             // pending deletes could orphan cards
             if (!CardTemplateNotetype.isOrdinalPendingAdd(tempModel!!, position)) {
                 val currentDeletes = tempModel.getDeleteDbOrds(position)
-                val cardIds = withCol { notetypes.getCardIdsForModel(tempModel.noteTypeId, currentDeletes) }
+                val cardIds = withCol { notetypes.getCardIdsForNoteType(tempModel.noteTypeId, currentDeletes) }
                 if (cardIds == null) {
                     // It is possible but unlikely that a user has an in-memory template addition that would
                     // generate cards making the deletion safe, but we don't handle that. All users who do
