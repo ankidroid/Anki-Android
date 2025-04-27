@@ -204,6 +204,9 @@
     <string name="pref_browser_find_replace">browserFindReplace</string>
     <string name="dev_options_enabled_by_user_key">devOptionsEnabledByUser</string>
     <string name="pref_cat_wip_key">workInProgressDevOptions</string>
+    <!-- Developer options > Create fake notes -->
+    <string name="pref_fill_default_deck_number_key">FillDefaultNumberDeck</string>
+    <string name="pref_fill_default_deck_key">FillDefaultDeck</string>
     <!-- Developer options > Create fake media -->
     <string name="pref_fill_collection_key">fillCollection</string>
     <string name="pref_fill_collection_number_file_key">fillCollectionNumberFile</string>

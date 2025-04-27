@@ -53,6 +53,21 @@
         android:key="@string/new_congrats_screen_pref_key"
         android:defaultValue="false"/>
     <PreferenceCategory
+        android:title="Create meaningless cards notes"
+        >
+        <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
+            android:key="@string/pref_fill_default_deck_number_key"
+            android:title="Number of notes to generate"
+            app1:useSimpleSummaryProvider="true"
+            android:defaultValue="200"
+            app:min="1"
+            />
+        <Preference
+            android:key="@string/pref_fill_default_deck_key"
+            android:title="Create notes"
+            />
+    </PreferenceCategory>
+    <PreferenceCategory
         android:title="Create fake media"
         >
         <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat

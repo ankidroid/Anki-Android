@@ -23,7 +23,7 @@ import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionHelper
-import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -87,7 +87,7 @@ class DevOptionsFragment : SettingsFragment() {
         // Lock database
         requirePreference<Preference>(R.string.pref_lock_database_key).setOnPreferenceClickListener {
             Timber.w("Toggling database lock")
-            launchCatchingTask { CollectionManager.withCol { Thread.sleep(1000 * 86400) } }
+            launchCatchingTask { withCol { Thread.sleep(1000 * 86400) } }
             false
         }
         // Make it possible to test crash reporting
@@ -110,6 +110,28 @@ class DevOptionsFragment : SettingsFragment() {
                 setNegativeButton(R.string.dialog_cancel) { _, _ -> }
             }
             false
+        }
+
+        val numberOfNotesPreference =
+            requirePreference<IncrementerNumberRangePreferenceCompat>(getString(R.string.pref_fill_default_deck_number_key))
+
+        /*
+         * Create fake media section
+         */
+        requirePreference<Preference>(R.string.pref_fill_default_deck_key).setOnPreferenceClickListener {
+            val numberOfNotes = numberOfNotesPreference.getValue()
+            AlertDialog.Builder(requireContext()).show {
+                setTitle("Warning!")
+                setMessage(
+                    "You'll add $numberOfNotes notes with no meaningful content in $numberOfNotes new decks. " +
+                        "Do not do it on a collection you care about.",
+                )
+                setPositiveButton("OK") { _, _ ->
+                    generateNotes(numberOfNotes)
+                }
+                setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+            }
+            true
         }
 
         val sizePreference =
@@ -135,7 +157,37 @@ class DevOptionsFragment : SettingsFragment() {
                 }
                 setNegativeButton(R.string.dialog_cancel) { _, _ -> }
             }
-            false
+            true
+        }
+    }
+
+    /**
+     * Generate [numberOfNotes]. Note n is in deck n, with :: between each digit.
+     */
+    private fun generateNotes(numberOfNotes: Int) {
+        Timber.d("numberOf notes: $numberOfNotes")
+        launchCatchingTask {
+            withProgress("Generating $numberOfNotes notes") {
+                for (i in 1..numberOfNotes) {
+                    fun deckName(noteNumber: Int): String {
+                        if (noteNumber < 10) {
+                            return "$noteNumber"
+                        }
+                        return "${deckName(noteNumber / 10)}::${noteNumber % 10}"
+                    }
+                    withCol {
+                        val deck = decks.addNormalDeckWithName(deckName(i))
+                        addNote(
+                            newNote().apply { setField(0, "$i") },
+                            deck.id,
+                        )
+                    }
+                    if (i % 1000 == 0) {
+                        showThemedToast(requireContext(), "$i notes added.", true)
+                    }
+                }
+                showThemedToast(requireContext(), "$numberOfNotes notes added successfully", false)
+            }
         }
     }
 
@@ -154,7 +206,7 @@ class DevOptionsFragment : SettingsFragment() {
                         }
                     f.appendBytes(ByteArray(size))
 
-                    CollectionManager.withCol {
+                    withCol {
                         media.addFile(f)
                     }
                     if (i % 1000 == 0) {
