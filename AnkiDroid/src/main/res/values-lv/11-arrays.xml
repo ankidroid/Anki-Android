@@ -50,56 +50,56 @@
     <!-- 01-core:menu_suspend_card -->
     <!-- new_order_labels -->
     <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Oldest seen first</string>
-    <string name="cram_deck_conf_order_random">Random</string>
+    <string name="cram_deck_conf_order_oldest_seen_first">Vispirms vissenāk redzētās</string>
+    <string name="cram_deck_conf_order_random">Nejauši</string>
     <string name="cram_deck_conf_order_increasing_intervals">Increasing intervals</string>
     <string name="cram_deck_conf_order_decreasing_intervals">Decreasing intervals</string>
-    <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
-    <string name="cram_deck_conf_order_order_added">Order added</string>
+    <string name="cram_deck_conf_order_most_lapsed">Visvairāk atmestās</string>
+    <string name="cram_deck_conf_order_order_added">Pievienošanas secības</string>
     <string name="cram_deck_conf_order_order_due">Order due</string>
-    <string name="cram_deck_conf_order_latest_added_first">Latest added first</string>
+    <string name="cram_deck_conf_order_latest_added_first">Vispirms pēdējās pievienotās</string>
     <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
     <!-- add_to_cur_labels -->
-    <string name="add_to_deck_use_current_deck">Use current deck</string>
-    <string name="add_to_deck_decide_by_note_type">Decide by note type</string>
+    <string name="add_to_deck_use_current_deck">Izmantot pašreizējo kavu</string>
+    <string name="add_to_deck_decide_by_note_type">Izlemt pēc piezīmes veida</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">Izmantot sistēmas</string>
     <!-- day_theme_labels -->
-    <string name="day_theme_light">Light</string>
-    <string name="day_theme_plain">Plain</string>
+    <string name="day_theme_light">Gaišs</string>
+    <string name="day_theme_plain">Vienkāršs</string>
     <!-- night_theme_labels -->
-    <string name="night_theme_black">Black</string>
-    <string name="night_theme_dark">Dark</string>
+    <string name="night_theme_black">Melns</string>
+    <string name="night_theme_dark">Tumšs</string>
     <!-- html_size_code_labels -->
-    <string name="html_size_code_xx_small">xx-small</string>
-    <string name="html_size_code_x_small">x-small</string>
-    <string name="html_size_code_small">small</string>
-    <string name="html_size_code_medium">medium</string>
-    <string name="html_size_code_large">large</string>
-    <string name="html_size_code_x_large">x-large</string>
-    <string name="html_size_code_xx_large">xx-large</string>
+    <string name="html_size_code_xx_small">ļoti, ļoti mazs</string>
+    <string name="html_size_code_x_small">ļoti mazs</string>
+    <string name="html_size_code_small">mazs</string>
+    <string name="html_size_code_medium">vidējs</string>
+    <string name="html_size_code_large">liels</string>
+    <string name="html_size_code_x_large">ļoti liels</string>
+    <string name="html_size_code_xx_large">ļoti, ļoti liels</string>
     <!-- gestures_labels -->
-    <string name="answer_again" maxLength="41">Answer again</string>
-    <string name="answer_hard" maxLength="41">Answer hard</string>
-    <string name="answer_good" maxLength="41">Answer good</string>
-    <string name="answer_easy" maxLength="41">Answer easy</string>
-    <string name="gesture_play" maxLength="41">Play media</string>
-    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
-    <string name="gesture_flag_red" maxLength="41">Toggle Red Flag</string>
-    <string name="gesture_flag_orange" maxLength="41">Toggle Orange Flag</string>
-    <string name="gesture_flag_green" maxLength="41">Toggle Green Flag</string>
-    <string name="gesture_flag_blue" maxLength="41">Toggle Blue Flag</string>
-    <string name="gesture_flag_pink" maxLength="41">Toggle Pink Flag</string>
-    <string name="gesture_flag_turquoise" maxLength="41">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple" maxLength="41">Toggle Purple Flag</string>
-    <string name="gesture_flag_remove" maxLength="41">Remove Flag</string>
-    <string name="gesture_page_up" maxLength="41">Page Up</string>
-    <string name="gesture_page_down" maxLength="41">Page Down</string>
-    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
-    <string name="gesture_toggle_whiteboard" maxLength="41">Toggle Whiteboard</string>
-    <string name="gesture_show_hint" maxLength="41">Show Hint</string>
-    <string name="gesture_show_all_hints" maxLength="41">Show All Hints</string>
-    <string name="record_voice" maxLength="41">Record Voice</string>
-    <string name="replay_voice" maxLength="41">Replay Voice</string>
-    <string name="save_voice" maxLength="41">Save Recording</string>
+    <string name="answer_again" maxLength="41">Atbildēt ar \"Vēlreiz\"</string>
+    <string name="answer_hard" maxLength="41">Atbildēt ar \"Grūti\"</string>
+    <string name="answer_good" maxLength="41">Atbildēt ar \"Labi\"</string>
+    <string name="answer_easy" maxLength="41">Atbildēt ar \"Viegli\"</string>
+    <string name="gesture_play" maxLength="41">Atskaņot informācijas nesējus</string>
+    <string name="gesture_abort_learning" maxLength="41">Aizvērt izskatītāju</string>
+    <string name="gesture_flag_red" maxLength="41">Pārslēgt sarkano karogu</string>
+    <string name="gesture_flag_orange" maxLength="41">Pārslēgt oranžo karogu</string>
+    <string name="gesture_flag_green" maxLength="41">Pārslēgt zaļo karogu</string>
+    <string name="gesture_flag_blue" maxLength="41">Pārslēgt zilo karogu</string>
+    <string name="gesture_flag_pink" maxLength="41">Pārslēgt rozā karogu</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Pārslēgt tirkīza karogu</string>
+    <string name="gesture_flag_purple" maxLength="41">Pārslēgt violeto karogu</string>
+    <string name="gesture_flag_remove" maxLength="41">Noņemt karogu</string>
+    <string name="gesture_page_up" maxLength="41">Augšupšķirt</string>
+    <string name="gesture_page_down" maxLength="41">Lejupšķirt</string>
+    <string name="gesture_abort_sync" maxLength="41">Aizvērt izskatītāju un sinhronizēt</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Pārslēgt tāfeli</string>
+    <string name="gesture_show_hint" maxLength="41">Parādīt mājienu</string>
+    <string name="gesture_show_all_hints" maxLength="41">Parādīt visus mājienus</string>
+    <string name="record_voice" maxLength="41">Ierakstīt balsi</string>
+    <string name="replay_voice" maxLength="41">Atkārtoti atskaņot balsi</string>
+    <string name="save_voice" maxLength="41">Saglabāt ierakstu</string>
 </resources>

@@ -77,9 +77,9 @@
     <string name="sync_sanity_remote">Attālo</string>
     <string name="one_way_sync_title" maxLength="41">Vienvirziena sinhronizēšana</string>
     <string name="one_way_sync_confirmation">Pieprasīta vienvirziena sinhronizēšana</string>
-    <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
-    <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
+    <string name="full_sync_confirmation">Pieprasītajai izmaiņai nākamajā krājuma sinhronizēšanas reizē būs nepieciešama pilna datubāzes augšupielāde. Ja kādā citā ierīcē ir veikta izskatīšana vai citas izmaiņas, kuras nav vēl nav sinhronizētas, tās tiks zaudētas. Turpināt?</string>
+    <string name="full_sync_confirmation_upgrade">Iepriekš uzstādītā AnkiDroid versijā esošas kļūdas dēļ ir ieteicams veikt uzspiestu pilnu sinhronizēšanu.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_one_way_sync">Sinhronizēt (vienā virzinā)</string>
+    <string name="sync_menu_title_no_account">Sinhronizēt (pieteikties)</string>
 </resources>

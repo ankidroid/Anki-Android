@@ -49,7 +49,7 @@
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Sterge carte</string>
     <string name="delete_deck_title">Sterge carte</string>
     <plurals name="delete_deck_message">
-        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="one">Ștergeți toate cardurile din %1$s? Conține %2$d card</item>
         <item quantity="few">Delete all cards in %1$s? It contains %2$d cards</item>
         <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
     </plurals>

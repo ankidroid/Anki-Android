@@ -44,7 +44,7 @@
     <string name="multimedia_editor_popup_audio_clip">Pievienot skaņas gabalu</string>
     <string name="multimedia_editor_popup_video_clip">Pievienot video gabalu</string>
     <string name="multimedia_editor_popup_audio">Ierakstīt skaņu</string>
-    <string name="multimedia_editor_popup_cloze">Aizpildes izdzēšana</string>
+    <string name="multimedia_editor_popup_cloze">Satura paslēpšana</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_audio">Skaņas ierakstīšana</string>

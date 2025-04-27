@@ -105,8 +105,8 @@
     <string name="check_media_title">შემოწმდეს მედიაფაილები?</string>
     <string name="check_media_warning">ამას დიდი ზომის მედია-კოლექციების შემთხვევაში შეიძლება დიდი ხანი დასჭირდეს</string>
     <string name="check_media_message">მედიაფაილების შემოწმება&#8230;</string>
-    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_adding_missing_tag">იარლიყების დამატება&#8230;</string>
+    <string name="check_media_tags_added">იარლიყები დამატებულია</string>
     <string name="delete_media_message">მიმდინარეობს მედიაფაილების წაშლა&#8230;</string>
     <string name="delete_media_result_title">წაშლის შედეგი</string>
     <plurals name="delete_media_result_message">

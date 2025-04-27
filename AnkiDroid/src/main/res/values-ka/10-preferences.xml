@@ -165,9 +165,9 @@
     <string name="pref_double_tap_time_interval" maxLength="41">ორმაგი შეხების შუალედის დრო (მილიწამებში)</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">შეხების საჭირო ხანგრძლივობა პასუხის საჩვენებლად</string>
-    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
+    <string name="pref_show_answer_long_press_time_summary">ეკრანზე დაჭერის მინიმალური ხანგრძლივობა, რომ პასუხის ღილაკმა აღიქვას შეხება.</string>
     <string name="show_estimates" maxLength="41">ღილაკზე დროის ჩვენება</string>
-    <string name="show_estimates_summ">Show next review time on answer buttons</string>
+    <string name="show_estimates_summ">აჩვენებს შემდეგი გადახედვის დროს პასუხის ღილაკებზე</string>
     <string name="show_large_answer_buttons" maxLength="41">დიდი პასუხის ღილაკების ჩვენება</string>
     <string name="show_large_answer_buttons_summ">პასუხის ღილაკების ორ რიგში ჩვენება</string>
     <string name="show_top_bar" maxLength="41">ზედა ზოლის ჩვენება</string>
@@ -198,8 +198,8 @@
     <string name="reset">საწყისი პარამეტრების აღდგენა</string>
     <string name="thirdparty_apps_title" maxLength="41">მესამე მხარეების API-აპლიკაციები</string>
     <string name="thirdparty_apps_summary">იხილეთ სია იმ აპლიკაციებისა, როგორებიცაა მაგალითად ლექსიკონები, რომლებიც AnkiDroid-ის API-ს მოიხმარებენ.</string>
-    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Reviews</string>
-    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
+    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">გადახედვები</string>
+    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">წინასწარი ნახვა</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">გადამხედველი</string>
