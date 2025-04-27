@@ -152,7 +152,7 @@ class TtsVoicesViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             ttsEngineStatus.emit(TtsEngineStatus.Loading)
             val player =
-                AndroidTtsPlayer.createInstance(context = AnkiDroidApp.instance, viewModelScope)
+                AndroidTtsPlayer.createInstance(viewModelScope)
             ttsEngineStatus.emit(TtsEngineStatus.Success(player))
         }
         viewModelScope.launch(Dispatchers.IO) {
