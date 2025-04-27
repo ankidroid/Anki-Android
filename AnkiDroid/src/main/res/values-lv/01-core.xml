@@ -75,7 +75,7 @@
     <string name="no_cards_placeholder_description">Sāc pievienot jaunas kartītes\nar pogu +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">Ieraksti atbildi</string>
+    <string name="type_answer_hint">Ierakstīt atbildi</string>
     <string name="show_answer" maxLength="41">Parādīt atbildi</string>
     <string name="hide_answer">Paslēpt atbildi</string>
     <string name="ease_button_again" maxLength="41">Vēlreiz</string>
@@ -202,5 +202,5 @@
     <string name="image_occlusion">Attēla aizklāšana</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Noņemt kontu</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Ātrā kartīte</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Tūlītēja kartīte</string>
 </resources>

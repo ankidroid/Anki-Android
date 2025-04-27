@@ -86,43 +86,43 @@
         <item>Pēc izveidošanas laika</item>
         <item>Pēc piezīmes izmainīšanas laika</item>
         <item>Pēc kartītes izmainīšanas laika</item>
-        <item>By due time</item>
-        <item>By interval</item>
-        <item>By ease</item>
-        <item>By reviews</item>
-        <item>By lapses</item>
+        <item>Pēc pienākšanas laika</item>
+        <item>Pēc starplaika</item>
+        <item>Pēc vienkāršuma</item>
+        <item>Pēc izskatīšanām</item>
+        <item>Pēc atmešanu skaita</item>
     </string-array>
-    <string name="card_browser_select_all" maxLength="28">Select all</string>
-    <string name="card_browser_select_none" maxLength="28">Select none</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
+    <string name="card_browser_select_all" maxLength="28">Atlasīt visu</string>
+    <string name="card_browser_select_none" maxLength="28">Neatlasīt neko</string>
+    <string name="card_browser_no_cards_in_deck">Kavā \"%s\" netika atrasta neviena kartīte</string>
+    <string name="card_browser_search_all_decks">Meklēt visās kavās</string>
+    <string name="card_browser_unknown_deck_name">Nezināma</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Apcirpt saturu</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Šodien ir \"0 %1$s\", rīt ir \"1 %2$s\" utt.&#8230;</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="zero">Export cards</item>
-        <item quantity="one">Export card</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="zero">Izgūt kartītes</item>
+        <item quantity="one">Izgūt kartīti</item>
+        <item quantity="other">Izgūt kartītes</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="zero">Export notes</item>
-        <item quantity="one">Export note</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="zero">Izgūt piezīmes</item>
+        <item quantity="one">Izgūt piezīmi</item>
+        <item quantity="other">Izgūt piezīmes</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="zero">%d cards deleted</item>
-        <item quantity="one">%d card deleted</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="zero">Izdzēstas %d kartītes</item>
+        <item quantity="one">Izdzēsta %d kartīte</item>
+        <item quantity="other">Izdzēstas %d kartītes</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Birku labošanas lodziņš</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Rādīt secības lodziņu</string>
     <!-- Manage columns dialog -->
-    <string name="browse_manage_columns_main_heading">Columns</string>
-    <string name="browse_manage_columns">Manage columns</string>
-    <string name="user_active_columns">Active</string>
-    <string name="user_potential_columns">Available</string>
-    <string name="include_column">Include column</string>
+    <string name="browse_manage_columns_main_heading">Slejas</string>
+    <string name="browse_manage_columns">Pārvaldīt slejas</string>
+    <string name="user_active_columns">Izvēlētas</string>
+    <string name="user_potential_columns">PIeejamas</string>
+    <string name="include_column">Iekļaut sleju</string>
     <string name="exclude_column">Izslēgt sleju</string>
     <string name="browser_find_replace_loading_fields">Iegūst lauku nosaukumus&#8230;</string>
 </resources>
