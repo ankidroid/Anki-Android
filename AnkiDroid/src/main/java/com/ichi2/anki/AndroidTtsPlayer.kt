@@ -36,7 +36,6 @@ import timber.log.Timber
 import kotlin.coroutines.resume
 
 class AndroidTtsPlayer(
-    private val context: Context,
     private val voices: List<TtsVoice>,
 ) : TtsPlayer() {
     private lateinit var scope: CoroutineScope
@@ -55,7 +54,7 @@ class AndroidTtsPlayer(
     suspend fun init(scope: CoroutineScope) {
         this.scope = scope
         this.tts =
-            TtsVoices.createTts(context)?.apply {
+            TtsVoices.createTts()?.apply {
                 setOnUtteranceProgressListener(
                     object : UtteranceProgressListenerCompat() {
                         override fun onStart(utteranceId: String?) {
@@ -161,12 +160,9 @@ class AndroidTtsPlayer(
         }
 
         @CheckResult
-        suspend fun createInstance(
-            context: Context,
-            scope: CoroutineScope,
-        ): AndroidTtsPlayer {
+        suspend fun createInstance(scope: CoroutineScope): AndroidTtsPlayer {
             val voices = TtsVoices.allTtsVoices().toList()
-            return AndroidTtsPlayer(context, voices).apply {
+            return AndroidTtsPlayer(voices).apply {
                 init(scope)
                 Timber.v("TTS creation: initialized player instance")
             }

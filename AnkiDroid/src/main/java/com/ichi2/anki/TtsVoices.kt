@@ -22,7 +22,6 @@
 
 package com.ichi2.anki
 
-import android.content.Context
 import android.icu.util.ULocale
 import android.speech.tts.TextToSpeech
 import android.speech.tts.Voice
@@ -191,7 +190,7 @@ object TtsVoices {
      * @return a usable [TextToSpeech] instance, or `null` if the [TextToSpeech.OnInitListener]
      * returns [TextToSpeech.ERROR]
      */
-    suspend fun createTts(context: Context = AnkiDroidApp.instance) =
+    suspend fun createTts() =
         suspendCancellableCoroutine { continuation ->
             var textToSpeech: TextToSpeech? = null
             continuation.invokeOnCancellation {
@@ -201,7 +200,10 @@ object TtsVoices {
             }
             Timber.v("begin TTS creation")
             textToSpeech =
-                TextToSpeech(context) { status ->
+                // TextToSpeech retains the context. So we can't give it any context that
+                // may be expected to disappear, as it would cause a memory leak. Hence
+                // we pass it the application as context.
+                TextToSpeech(AnkiDroidApp.instance) { status ->
                     if (status == TextToSpeech.SUCCESS) {
                         Timber.v("TTS creation success")
                         ttsEngine = textToSpeech?.defaultEngine
