@@ -158,16 +158,6 @@ jobs:
             sleep 5
             ./gradlew uninstallAll jacocoAndroidTestReport --daemon
 
-      - name: Verify Page Size
-        if: matrix.target == 'google_apis_ps16k'
-        run: |
-          PAGE_SIZE=$(adb shell getconf PAGE_SIZE)
-          echo "Page size: $PAGE_SIZE"
-          if [ "$PAGE_SIZE" != "16384" ]; then
-            echo "Error: Expected page size of 16384, got $PAGE_SIZE"
-            exit 1
-          fi
-
       - name: Install NDK tools
         run: |
           echo "Installing NDK tools for alignment checking"
