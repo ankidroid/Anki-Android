@@ -83,6 +83,7 @@
         <item name="navDrawerImage">@drawable/nav_drawer_logo_black_theme</item>
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.AnkiDroid.AlertDialog.Black</item>
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">#000000</item>
         <item name="popupBackgroundColor">@color/popup_background_theme_black</item>
@@ -107,5 +108,9 @@
 
     <style name="SnackbarTextStyleBlack" parent="@style/Widget.MaterialComponents.Snackbar.TextView">
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="ThemeOverlay.AnkiDroid.AlertDialog.Black" parent="ThemeOverlay.AnkiDroid.AlertDialog">
+        <item name="android:background">@color/theme_black_primary_light</item>
     </style>
 </resources>
