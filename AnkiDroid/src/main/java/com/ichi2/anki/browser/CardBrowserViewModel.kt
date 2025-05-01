@@ -125,7 +125,10 @@ class CardBrowserViewModel(
 
     var searchTerms = ""
         private set
-    private var restrictOnDeck: String = ""
+
+    @VisibleForTesting
+    var restrictOnDeck: String = ""
+        private set
 
     /** text in the search box (potentially unsubmitted) */
     // this does not currently bind to the value in the UI and is only used for posting
@@ -232,7 +235,9 @@ class CardBrowserViewModel(
                 ""
             } else {
                 val deckName = withCol { decks.name(deckId) }
-                "deck:\"$deckName\" "
+                // Escape any quotes in the deck name to prevent search syntax errors
+                val escapedDeckName = deckName.replace("\"", "\\\"")
+                "deck:\"$escapedDeckName\""
             }
         flowOfDeckId.update { deckId }
     }
