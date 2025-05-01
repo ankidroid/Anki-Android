@@ -1011,6 +1011,19 @@ class CardBrowserViewModelTest : JvmTest() {
             assertThat("German", firstHeading(), equalTo("Sortierfeld"))
         }
 
+    @Test
+    fun `deck name with quotes is properly escaped in search query`() =
+        runViewModelTest {
+            val deckWithQuotes = addDeck("Test\"Quotes\"In\"Deck")
+            setDeckId(deckWithQuotes)
+
+            assertThat(
+                "Quotes in deck name should be escaped with backslashes",
+                restrictOnDeck,
+                equalTo("deck:\"Test\\\"Quotes\\\"In\\\"Deck\""),
+            )
+        }
+
     private fun assertDate(str: String?) {
         // 2025-01-09 @ 18:06
         assertNotNull(str)
