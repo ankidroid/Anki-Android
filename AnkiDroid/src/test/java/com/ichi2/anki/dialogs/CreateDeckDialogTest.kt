@@ -106,6 +106,23 @@ class CreateDeckDialogTest : RobolectricTest() {
     }
 
     @Test
+    fun testCreateDeckWithQuotes() {
+        val deckNameWithQuotes = "New \"Quoted\" Deck"
+        ensureExecutionOfScenario(DeckDialogType.DECK) { createDeckDialog, assertionCalled ->
+            createDeckDialog.onNewDeckCreated = { id: DeckId ->
+                // Verify that quotes are preserved in deck names when creating
+                assertThat(
+                    "Quotes should be preserved in deck names when creating",
+                    col.decks.name(id),
+                    equalTo(deckNameWithQuotes),
+                )
+                assertionCalled()
+            }
+            createDeckDialog.createDeck(deckNameWithQuotes)
+        }
+    }
+
+    @Test
     fun testRenameDeckFunction() {
         val deckName = "Deck Name"
         val deckNewName = "New Deck Name"
@@ -117,6 +134,25 @@ class CreateDeckDialogTest : RobolectricTest() {
                 assertionCalled()
             }
             createDeckDialog.renameDeck(deckNewName)
+        }
+    }
+
+    @Test
+    fun testRenameDeckWithQuotes() {
+        val deckName = "Deck Name"
+        val deckNewNameWithQuotes = "New \"Quoted\" Deck Name"
+        ensureExecutionOfScenario(DeckDialogType.RENAME_DECK) { createDeckDialog, assertionCalled ->
+            createDeckDialog.deckName = deckName
+            createDeckDialog.onNewDeckCreated = { id: DeckId ->
+                // Verify that the quotes are preserved in the renamed deck
+                assertThat(
+                    "Quotes should be preserved in deck names when renaming",
+                    col.decks.name(id),
+                    equalTo(deckNewNameWithQuotes),
+                )
+                assertionCalled()
+            }
+            createDeckDialog.renameDeck(deckNewNameWithQuotes)
         }
     }
 
