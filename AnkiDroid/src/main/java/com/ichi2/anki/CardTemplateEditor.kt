@@ -380,8 +380,8 @@ open class CardTemplateEditor :
                 Timber.i("Ctrl+I: Insert field from keypress")
                 currentFragment.showInsertFieldDialog()
             }
-            KeyEvent.KEYCODE_A -> {
-                Timber.i("Ctrl+A: Add card template from keypress")
+            KeyEvent.KEYCODE_N -> {
+                Timber.i("Ctrl+N: Add card template from keypress")
                 currentFragment.addCardTemplate()
             }
             KeyEvent.KEYCODE_R -> {
