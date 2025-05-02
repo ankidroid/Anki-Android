@@ -815,6 +815,10 @@ open class CardTemplateEditor :
         }
 
         fun addCardTemplate() {
+            if (templateEditor.tempNoteType!!.notetype.isCloze) {
+                Timber.w("addCardTemplate attempted on cloze note type")
+                return
+            }
             // Show confirmation dialog
             val ordinal = templateEditor.viewPager.currentItem
             // isOrdinalPendingAdd method will check if there are any new card types added or not,
