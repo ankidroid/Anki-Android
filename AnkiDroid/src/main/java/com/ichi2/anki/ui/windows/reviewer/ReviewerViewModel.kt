@@ -596,12 +596,28 @@ class ReviewerViewModel(
         return true
     }
 
+    // Based in https://github.com/ankitects/anki/blob/1f95d030bbc7ebcc004ffe1e2be2a320c9fe1e94/qt/aqt/reviewer.py#L201
+    // and https://github.com/ankitects/anki/blob/1f95d030bbc7ebcc004ffe1e2be2a320c9fe1e94/qt/aqt/reviewer.py#L219
     override fun opExecuted(
         changes: OpChanges,
         handler: Any?,
     ) {
         Timber.v("ReviewerViewModel::opExecuted")
-        launchCatchingIO { updateUndoAndRedoLabels() }
+        launchCatchingIO {
+            updateUndoAndRedoLabels()
+
+            when {
+                changes.noteText -> {
+                    val card = currentCard.await()
+                    withCol { card.load(this) }
+                    if (showingAnswer.value) {
+                        showAnswer()
+                    } else {
+                        showQuestion()
+                    }
+                }
+            }
+        }
     }
 
     companion object {
