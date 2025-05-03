@@ -432,7 +432,7 @@ class ReviewerViewModel(
         Timber.v("ReviewerViewModel::answerCard")
         launchCatchingIO {
             queueState.await()?.let {
-                undoableOp { sched.answerCard(it, ease) }
+                undoableOp(this) { sched.answerCard(it, ease) }
                 updateCurrentCard()
             }
         }
@@ -606,7 +606,10 @@ class ReviewerViewModel(
         launchCatchingIO {
             updateUndoAndRedoLabels()
 
+            if (handler == this) return@launchCatchingIO
+
             when {
+                changes.studyQueues -> updateCurrentCard()
                 changes.noteText -> {
                     val card = currentCard.await()
                     withCol { card.load(this) }

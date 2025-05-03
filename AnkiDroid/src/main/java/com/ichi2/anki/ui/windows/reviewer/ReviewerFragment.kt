@@ -29,7 +29,6 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
 import android.widget.LinearLayout
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.appcompat.view.menu.SubMenuBuilder
 import androidx.appcompat.widget.ActionMenuView
@@ -54,9 +53,6 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.CardMediaPlayer
-import com.ichi2.anki.noteeditor.NoteEditorLauncher
-import com.ichi2.anki.pages.CardInfoDestination
-import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuView
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.preferences.reviewer.ViewerAction.BURY_CARD
@@ -150,14 +146,7 @@ class ReviewerFragment :
         }
 
         viewModel.destinationFlow.collectIn(lifecycleScope) { destination ->
-            val intent = destination.toIntent(requireContext())
-            when (destination) {
-                is DeckOptionsDestination -> deckOptionsLauncher.launch(intent)
-                is NoteEditorLauncher.EditNoteFromPreviewer,
-                is NoteEditorLauncher.AddNote,
-                is CardInfoDestination,
-                -> startActivity(intent)
-            }
+            startActivity(destination.toIntent(requireContext()))
         }
     }
 
@@ -451,11 +440,6 @@ class ReviewerFragment :
             }
         }
     }
-
-    private val deckOptionsLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            viewModel.refreshCard()
-        }
 
     companion object {
         fun getIntent(context: Context): Intent = CardViewerActivity.getIntent(context, ReviewerFragment::class)
