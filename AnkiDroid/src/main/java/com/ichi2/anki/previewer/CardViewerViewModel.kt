@@ -126,7 +126,7 @@ abstract class CardViewerViewModel(
         )
 
     protected open suspend fun showQuestion() {
-        Timber.v("showQuestion()")
+        Timber.v("showQuestion")
         showingAnswer.emit(false)
 
         val card = currentCard.await()
