@@ -52,7 +52,6 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DispatchKeyEventListener
-import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
@@ -153,10 +152,11 @@ class ReviewerFragment :
         viewModel.destinationFlow.collectIn(lifecycleScope) { destination ->
             val intent = destination.toIntent(requireContext())
             when (destination) {
-                is NoteEditorLauncher.EditNoteFromPreviewer -> noteEditorLauncher.launch(intent)
-                is NoteEditorLauncher.AddNote -> noteEditorLauncher.launch(intent)
                 is DeckOptionsDestination -> deckOptionsLauncher.launch(intent)
-                is CardInfoDestination -> startActivity(intent)
+                is NoteEditorLauncher.EditNoteFromPreviewer,
+                is NoteEditorLauncher.AddNote,
+                is CardInfoDestination,
+                -> startActivity(intent)
             }
         }
     }
@@ -451,15 +451,6 @@ class ReviewerFragment :
             }
         }
     }
-
-    private val noteEditorLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.data?.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) == true ||
-                result.data?.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false) == true
-            ) {
-                viewModel.refreshCard()
-            }
-        }
 
     private val deckOptionsLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
