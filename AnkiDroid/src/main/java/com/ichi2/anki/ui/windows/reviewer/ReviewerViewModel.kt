@@ -314,7 +314,6 @@ class ReviewerViewModel(
                 CollectionManager.TR.undoActionUndone(changes.operation)
             }
         actionFeedbackFlow.emit(message)
-        updateCurrentCard()
     }
 
     private suspend fun redo() {
@@ -327,7 +326,6 @@ class ReviewerViewModel(
                 CollectionManager.TR.undoRedoAction(changes.operation)
             }
         actionFeedbackFlow.emit(message)
-        updateCurrentCard()
     }
 
     private suspend fun userAction(
@@ -613,11 +611,17 @@ class ReviewerViewModel(
                 changes.noteText -> {
                     val card = currentCard.await()
                     withCol { card.load(this) }
+                    updateMarkIcon()
                     if (showingAnswer.value) {
                         showAnswer()
                     } else {
                         showQuestion()
                     }
+                }
+                changes.card -> {
+                    val card = currentCard.await()
+                    withCol { card.load(this) }
+                    updateFlagIcon()
                 }
             }
         }
