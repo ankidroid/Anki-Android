@@ -173,7 +173,7 @@ class TagsDialog : AnalyticsDialogFragment {
         tagsListRecyclerView?.requestFocus()
         val tagsListLayout: RecyclerView.LayoutManager = LinearLayoutManager(activity)
         tagsListRecyclerView?.layoutManager = tagsListLayout
-        tagsArrayAdapter = TagsArrayAdapter(tags!!, resources)
+        tagsArrayAdapter = TagsArrayAdapter(tags!!)
         tagsListRecyclerView?.adapter = tagsArrayAdapter
         noTagsTextView = tagsDialogView.findViewById(R.id.tags_dialog_no_tags_textview)
         val noTagsTextView: TextView? = noTagsTextView
