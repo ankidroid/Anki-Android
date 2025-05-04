@@ -57,19 +57,6 @@ class Tags(
         collapsed: Boolean,
     ): OpChanges = col.backend.setTagCollapsed(name = tag, collapsed = collapsed)
 
-    // Legacy signature, used by unit tests.
-    fun bulkAdd(
-        ids: List<Long>,
-        tags: String,
-        add: Boolean,
-    ) {
-        if (add) {
-            bulkAdd(ids, tags)
-        } else {
-            bulkRemove(ids, tags)
-        }
-    }
-
     /** Add space-separate tags to provided notes. */
     fun bulkAdd(
         noteIds: List<NoteId>,
