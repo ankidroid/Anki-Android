@@ -43,11 +43,19 @@ class Tags(
     @LibAnkiAlias("tree")
     fun tree(): TagTreeNode = col.backend.tagTree()
 
-    fun byDeck(did: DeckId): List<String> =
-        col.backend
-            .customStudyDefaults(did)
-            .tagsList
-            .map { it.name }
+    /*
+     * Registering and fetching tags
+     * ***********************************************************
+     */
+
+    @LibAnkiAlias("clear_unused_tags")
+    fun clearUnusedTags(): OpChangesWithCount = col.backend.clearUnusedTags()
+
+    @LibAnkiAlias("set_collapsed")
+    fun setCollapsed(
+        tag: String,
+        collapsed: Boolean,
+    ): OpChanges = col.backend.setTagCollapsed(name = tag, collapsed = collapsed)
 
     // Legacy signature, used by unit tests.
     fun bulkAdd(
