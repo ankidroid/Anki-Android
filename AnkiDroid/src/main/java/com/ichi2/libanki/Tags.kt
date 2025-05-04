@@ -19,6 +19,7 @@ package com.ichi2.libanki
 
 import androidx.annotation.CheckResult
 import androidx.annotation.WorkerThread
+import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import anki.tags.TagTreeNode
 import com.ichi2.libanki.utils.LibAnkiAlias
@@ -51,11 +52,17 @@ class Tags(
     @LibAnkiAlias("clear_unused_tags")
     fun clearUnusedTags(): OpChangesWithCount = col.backend.clearUnusedTags()
 
+    /** Set browser expansion state for tag, registering the tag if missing. */
     @LibAnkiAlias("set_collapsed")
     fun setCollapsed(
         tag: String,
         collapsed: Boolean,
     ): OpChanges = col.backend.setTagCollapsed(name = tag, collapsed = collapsed)
+
+    /*
+     * Bulk addition/removal from specific notes
+     * ***********************************************************
+     */
 
     /** Add space-separate tags to provided notes. */
     fun bulkAdd(
