@@ -21,7 +21,7 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.browser.PreviewerIdsFile
+import com.ichi2.anki.browser.IdsFile
 import com.ichi2.testutils.createTransientDirectory
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
@@ -36,7 +36,7 @@ class PreviewerFragmentTest : RobolectricTest() {
         val intent =
             PreviewerFragment.getIntent(
                 targetContext,
-                previewerIdsFile = PreviewerIdsFile(createTransientDirectory(), note.cardIds(col)),
+                idsFile = IdsFile(createTransientDirectory(), note.cardIds(col)),
                 currentIndex = 0,
             )
 

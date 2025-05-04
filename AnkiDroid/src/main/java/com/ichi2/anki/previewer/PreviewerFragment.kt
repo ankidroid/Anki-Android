@@ -39,7 +39,7 @@ import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
-import com.ichi2.anki.browser.PreviewerIdsFile
+import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.reviewer.BindingProcessor
 import com.ichi2.anki.reviewer.MappableBinding
@@ -59,12 +59,12 @@ class PreviewerFragment :
     DispatchKeyEventListener,
     BindingProcessor<MappableBinding, PreviewerAction> {
     override val viewModel: PreviewerViewModel by viewModels {
-        val previewerIdsFile =
-            requireNotNull(BundleCompat.getParcelable(requireArguments(), CARD_IDS_FILE_ARG, PreviewerIdsFile::class.java)) {
+        val idsFile =
+            requireNotNull(BundleCompat.getParcelable(requireArguments(), CARD_IDS_FILE_ARG, IdsFile::class.java)) {
                 "$CARD_IDS_FILE_ARG is required"
             }
         val currentIndex = requireArguments().getInt(CURRENT_INDEX_ARG, 0)
-        PreviewerViewModel.factory(previewerIdsFile, currentIndex, CardMediaPlayer())
+        PreviewerViewModel.factory(idsFile, currentIndex, CardMediaPlayer())
     }
     override val webView: WebView
         get() = requireView().findViewById(R.id.webview)
@@ -282,18 +282,18 @@ class PreviewerFragment :
         /** Index of the card to be first displayed among the IDs provided by [CARD_IDS_FILE_ARG] */
         const val CURRENT_INDEX_ARG = "currentIndex"
 
-        /** Argument key to a [PreviewerIdsFile] with the IDs of the cards to be displayed */
+        /** Argument key to a [IdsFile] with the IDs of the cards to be displayed */
         const val CARD_IDS_FILE_ARG = "cardIdsFile"
 
         fun getIntent(
             context: Context,
-            previewerIdsFile: PreviewerIdsFile,
+            idsFile: IdsFile,
             currentIndex: Int,
         ): Intent {
             val arguments =
                 bundleOf(
                     CURRENT_INDEX_ARG to currentIndex,
-                    CARD_IDS_FILE_ARG to previewerIdsFile,
+                    CARD_IDS_FILE_ARG to idsFile,
                 )
             return CardViewerActivity.getIntent(context, PreviewerFragment::class, arguments)
         }

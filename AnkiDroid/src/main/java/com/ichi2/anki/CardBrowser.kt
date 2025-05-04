@@ -68,7 +68,7 @@ import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Searching
 import com.ichi2.anki.browser.CardOrNoteId
 import com.ichi2.anki.browser.ColumnHeading
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment
-import com.ichi2.anki.browser.PreviewerIdsFile
+import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.browser.RepositionCardFragment
 import com.ichi2.anki.browser.RepositionCardFragment.Companion.REQUEST_REPOSITION_NEW_CARDS
 import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
@@ -1437,14 +1437,14 @@ open class CardBrowser :
     private fun onPreview() {
         launchCatchingTask {
             val intentData = viewModel.queryPreviewIntentData()
-            onPreviewCardsActivityResult.launch(getPreviewIntent(intentData.currentIndex, intentData.previewerIdsFile))
+            onPreviewCardsActivityResult.launch(getPreviewIntent(intentData.currentIndex, intentData.idsFile))
         }
     }
 
     private fun getPreviewIntent(
         index: Int,
-        previewerIdsFile: PreviewerIdsFile,
-    ): Intent = PreviewerDestination(index, previewerIdsFile).toIntent(this)
+        idsFile: IdsFile,
+    ): Intent = PreviewerDestination(index, idsFile).toIntent(this)
 
     private fun rescheduleSelectedCards() {
         if (!viewModel.hasSelectedAnyRows()) {
@@ -1950,8 +1950,8 @@ suspend fun searchForRows(
 
 class PreviewerDestination(
     val currentIndex: Int,
-    val previewerIdsFile: PreviewerIdsFile,
+    val idsFile: IdsFile,
 )
 
 @CheckResult
-fun PreviewerDestination.toIntent(context: Context) = PreviewerFragment.getIntent(context, previewerIdsFile, currentIndex)
+fun PreviewerDestination.toIntent(context: Context) = PreviewerFragment.getIntent(context, idsFile, currentIndex)
