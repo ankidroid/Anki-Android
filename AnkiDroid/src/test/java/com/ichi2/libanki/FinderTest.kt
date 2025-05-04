@@ -168,7 +168,8 @@ class FinderTest : JvmTest() {
         col.tags.bulkAdd(col.db.queryLongList("select id from notes"), "foo bar")
         assertEquals(5, col.findCards("tag:foo").size)
         assertEquals(5, col.findCards("tag:bar").size)
-        col.tags.bulkAdd(col.db.queryLongList("select id from notes"), "foo", add = false)
+        val ids = col.db.queryLongList("select id from notes")
+        col.tags.bulkRemove(ids, "foo")
         assertEquals(0, col.findCards("tag:foo").size)
         assertEquals(5, col.findCards("tag:bar").size)
         // text searches
