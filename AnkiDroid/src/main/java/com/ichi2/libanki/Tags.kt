@@ -20,6 +20,7 @@ package com.ichi2.libanki
 import androidx.annotation.CheckResult
 import androidx.annotation.WorkerThread
 import anki.collection.OpChangesWithCount
+import anki.tags.TagTreeNode
 import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.join
 import java.util.AbstractSet
@@ -38,6 +39,9 @@ class Tags(
 ) {
     /** all tags */
     fun all(): List<String> = col.backend.allTags()
+
+    @LibAnkiAlias("tree")
+    fun tree(): TagTreeNode = col.backend.tagTree()
 
     fun byDeck(did: DeckId): List<String> =
         col.backend
