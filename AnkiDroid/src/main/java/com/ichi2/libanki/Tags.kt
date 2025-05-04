@@ -19,7 +19,9 @@ package com.ichi2.libanki
 
 import androidx.annotation.CheckResult
 import androidx.annotation.WorkerThread
+import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
+import anki.tags.TagTreeNode
 import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.join
 import java.util.AbstractSet
@@ -39,24 +41,28 @@ class Tags(
     /** all tags */
     fun all(): List<String> = col.backend.allTags()
 
-    fun byDeck(did: DeckId): List<String> =
-        col.backend
-            .customStudyDefaults(did)
-            .tagsList
-            .map { it.name }
+    @LibAnkiAlias("tree")
+    fun tree(): TagTreeNode = col.backend.tagTree()
 
-    // Legacy signature, used by unit tests.
-    fun bulkAdd(
-        ids: List<Long>,
-        tags: String,
-        add: Boolean,
-    ) {
-        if (add) {
-            bulkAdd(ids, tags)
-        } else {
-            bulkRemove(ids, tags)
-        }
-    }
+    /*
+     * Registering and fetching tags
+     * ***********************************************************
+     */
+
+    @LibAnkiAlias("clear_unused_tags")
+    fun clearUnusedTags(): OpChangesWithCount = col.backend.clearUnusedTags()
+
+    /** Set browser expansion state for tag, registering the tag if missing. */
+    @LibAnkiAlias("set_collapsed")
+    fun setCollapsed(
+        tag: String,
+        collapsed: Boolean,
+    ): OpChanges = col.backend.setTagCollapsed(name = tag, collapsed = collapsed)
+
+    /*
+     * Bulk addition/removal from specific notes
+     * ***********************************************************
+     */
 
     /** Add space-separate tags to provided notes. */
     fun bulkAdd(
@@ -73,6 +79,29 @@ class Tags(
             noteIds = noteIds,
             tags = tags,
         )
+
+    /*
+     * Bulk addition/removal based on tag
+     * ***********************************************************
+     */
+
+    /** Rename provided tag and its children, returning number of changed notes. */
+    fun rename(
+        old: String,
+        new: String,
+    ): OpChangesWithCount = col.backend.renameTags(currentPrefix = old, newPrefix = new)
+
+    /** Remove the provided tag(s) and their children from notes and the tag list. */
+    fun remove(spaceSeparatedTags: String): OpChangesWithCount = col.backend.removeTags(`val` = spaceSeparatedTags)
+
+    /**
+     * Change the parent of the provided tags.
+     * If new_parent is empty, tags will be reparented to the top-level.
+     */
+    fun reparent(
+        tags: Iterable<String>,
+        newParent: String,
+    ): OpChangesWithCount = col.backend.reparentTags(tags = tags, newParent = newParent)
 
     /*
      * String-based utilities
