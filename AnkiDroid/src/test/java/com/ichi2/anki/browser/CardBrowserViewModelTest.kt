@@ -769,7 +769,7 @@ class CardBrowserViewModelTest : JvmTest() {
             val data = queryPreviewIntentData()
             assertThat(data.currentIndex, equalTo(0))
 
-            data.previewerIdsFile.getCardIds().also { actualCardIds ->
+            data.idsFile.getIds().also { actualCardIds ->
                 assertThat("previewing a note previews cards", actualCardIds, hasSize(5))
 
                 val firstCardIds =
@@ -793,7 +793,7 @@ class CardBrowserViewModelTest : JvmTest() {
         runViewModelTest(notes = 2) {
             val data = queryPreviewIntentData()
             assertThat(data.currentIndex, equalTo(0))
-            assertThat(data.previewerIdsFile.getCardIds(), hasSize(2))
+            assertThat(data.idsFile.getIds(), hasSize(2))
         }
 
     @Test
@@ -802,7 +802,7 @@ class CardBrowserViewModelTest : JvmTest() {
             selectRowsWithPositions(0).also {
                 val data = queryPreviewIntentData()
                 assertThat(data.currentIndex, equalTo(0))
-                assertThat(data.previewerIdsFile.getCardIds(), hasSize(2))
+                assertThat(data.idsFile.getIds(), hasSize(2))
             }
 
             selectNone()
@@ -811,7 +811,7 @@ class CardBrowserViewModelTest : JvmTest() {
             selectRowsWithPositions(1).also {
                 val data = queryPreviewIntentData()
                 assertThat(data.currentIndex, equalTo(1))
-                assertThat(data.previewerIdsFile.getCardIds(), hasSize(2))
+                assertThat(data.idsFile.getIds(), hasSize(2))
             }
         }
 

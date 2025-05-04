@@ -888,11 +888,11 @@ class CardBrowserViewModel(
     suspend fun queryPreviewIntentData(): PreviewerDestination {
         // If in NOTES mode, we show one Card per Note, as this matches Anki Desktop
         return if (selectedRowCount() > 1) {
-            PreviewerDestination(currentIndex = 0, PreviewerIdsFile(cacheDir, queryAllSelectedCardIds()))
+            PreviewerDestination(currentIndex = 0, IdsFile(cacheDir, queryAllSelectedCardIds()))
         } else {
             // Preview all cards, starting from the one that is currently selected
             val startIndex = indexOfFirstCheckedCard() ?: 0
-            PreviewerDestination(startIndex, PreviewerIdsFile(cacheDir, queryOneCardIdPerNote()))
+            PreviewerDestination(startIndex, IdsFile(cacheDir, queryOneCardIdPerNote()))
         }
     }
 
@@ -1154,26 +1154,28 @@ enum class SaveSearchResult {
 }
 
 /**
- * Temporary file containing the IDs of the cards to be displayed at the previewer
+ * Temporary file containing cards or note IDs to be passed in a Bundle.
+ *
+ * It avoids [android.os.TransactionTooLargeException] when passing a big amount of data.
  */
-class PreviewerIdsFile(
+class IdsFile(
     path: String,
 ) : File(path),
     Parcelable {
     /**
      * @param directory parent directory of the file. Generally it should be the cache directory
-     * @param cardIds ids of the cards to be displayed
+     * @param ids ids to store
      */
-    constructor(directory: File, cardIds: List<CardId>) : this(createTempFile("previewerIds", ".tmp", directory).path) {
+    constructor(directory: File, ids: List<Long>) : this(createTempFile("ids", ".tmp", directory).path) {
         DataOutputStream(FileOutputStream(this)).use { outputStream ->
-            outputStream.writeInt(cardIds.size)
-            for (id in cardIds) {
+            outputStream.writeInt(ids.size)
+            for (id in ids) {
                 outputStream.writeLong(id)
             }
         }
     }
 
-    fun getCardIds(): List<Long> =
+    fun getIds(): List<Long> =
         DataInputStream(FileInputStream(this)).use { inputStream ->
             val size = inputStream.readInt()
             List(size) { inputStream.readLong() }
@@ -1192,10 +1194,10 @@ class PreviewerIdsFile(
         @JvmField
         @Suppress("unused")
         val CREATOR =
-            object : Parcelable.Creator<PreviewerIdsFile> {
-                override fun createFromParcel(source: Parcel?): PreviewerIdsFile = PreviewerIdsFile(source!!.readString()!!)
+            object : Parcelable.Creator<IdsFile> {
+                override fun createFromParcel(source: Parcel?): IdsFile = IdsFile(source!!.readString()!!)
 
-                override fun newArray(size: Int): Array<PreviewerIdsFile> = arrayOf()
+                override fun newArray(size: Int): Array<IdsFile> = arrayOf()
             }
     }
 }
