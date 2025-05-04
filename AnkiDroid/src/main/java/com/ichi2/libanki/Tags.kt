@@ -81,6 +81,29 @@ class Tags(
         )
 
     /*
+     * Bulk addition/removal based on tag
+     * ***********************************************************
+     */
+
+    /** Rename provided tag and its children, returning number of changed notes. */
+    fun rename(
+        old: String,
+        new: String,
+    ): OpChangesWithCount = col.backend.renameTags(currentPrefix = old, newPrefix = new)
+
+    /** Remove the provided tag(s) and their children from notes and the tag list. */
+    fun remove(spaceSeparatedTags: String): OpChangesWithCount = col.backend.removeTags(`val` = spaceSeparatedTags)
+
+    /**
+     * Change the parent of the provided tags.
+     * If new_parent is empty, tags will be reparented to the top-level.
+     */
+    fun reparent(
+        tags: Iterable<String>,
+        newParent: String,
+    ): OpChangesWithCount = col.backend.reparentTags(tags = tags, newParent = newParent)
+
+    /*
      * String-based utilities
      * ***********************************************************
      */
