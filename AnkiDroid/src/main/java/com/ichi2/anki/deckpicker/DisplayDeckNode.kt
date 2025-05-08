@@ -86,7 +86,7 @@ private fun DeckNode.filterAndFlattenDisplayInner(
     list: MutableList<DisplayDeckNode>,
     parentMatched: Boolean,
 ) {
-    if (node.level > 0 && (nameMatchesFilter((filter)) || parentMatched)) {
+    if (!isSyntheticDeck && (nameMatchesFilter((filter)) || parentMatched)) {
         addVisibleToList(list, true)
         return
     }
@@ -97,14 +97,14 @@ private fun DeckNode.filterAndFlattenDisplayInner(
         return
     }
 
-    if (node.level > 0) {
+    if (!isSyntheticDeck) {
         list.append(DisplayDeckNode.from(this, false))
     }
     val startingLen = list.size
     for (child in children) {
         child.filterAndFlattenDisplayInner(filter, list, false)
     }
-    if (node.level > 0 && startingLen == list.size) {
+    if (!isSyntheticDeck && startingLen == list.size) {
         // we don't include ourselves if no children matched
         list.removeAt(list.lastIndex)
     }

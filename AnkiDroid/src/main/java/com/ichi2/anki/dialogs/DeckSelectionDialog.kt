@@ -397,8 +397,10 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         private fun hasSubDecks(node: DeckNode): Boolean = node.children.isNotEmpty()
 
         private fun isViewable(deck: DeckNode): Boolean {
-            val parentNode = deck.parent ?: return true
-            return !parentNode.get()?.collapsed!! && isViewable(parentNode.get()!!)
+            val parentNodeRef = deck.parent ?: return true
+            // The parent belongs to the tree retained by [allDecksList], so should still exist.
+            val parentNode = parentNodeRef.get()!!
+            return !parentNode.collapsed && isViewable(parentNode)
         }
 
         override fun getItemCount(): Int = currentlyDisplayedDecks.size
