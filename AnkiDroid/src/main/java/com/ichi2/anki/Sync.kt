@@ -224,14 +224,14 @@ private suspend fun handleNormalSync(
     Timber.i("Sync: Normal collection sync")
     var auth2 = auth
     val output =
-        deckPicker.withProgress(
+        deckPicker.withProgressV2(
             extractProgress = {
                 if (progress.hasNormalSync()) {
                     text = progress.normalSync.run { "$added\n$removed" }
                 }
             },
             onCancel = ::cancelSync,
-            manualCancelButton = R.string.dialog_cancel,
+            manualCancelButtonText = deckPicker.getString(R.string.dialog_cancel),
         ) {
             withCol {
                 syncCollection(auth2, media = false) // media is synced by SyncMediaWorker
@@ -306,7 +306,7 @@ private suspend fun handleDownload(
     mediaUsn: Int?,
 ) {
     Timber.i("Sync: Full collection download requested")
-    deckPicker.withProgress(
+    deckPicker.withProgressV2(
         extractProgress = fullDownloadProgress(TR.syncDownloadingFromAnkiweb()),
         onCancel = ::cancelSync,
     ) {
