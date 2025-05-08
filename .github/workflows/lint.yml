@@ -69,7 +69,7 @@ jobs:
         # npm install --location=global prettier
         # prettier --check AnkiDroid/**/*.js
       - name: Prettify AnkiDroid javascript code
-        uses: creyD/prettier_action@v4.3
+        uses: creyD/prettier_action@v4.5
         with:
           prettier_options: --check AnkiDroid/**/*.js
           dry: True
