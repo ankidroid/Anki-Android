@@ -29,8 +29,8 @@ A semi-official port of the open source [Anki](https://apps.ankiweb.net/index.ht
 - Syncing with AnkiWeb
 - Write answers (optional)
 - Text-to-speech integration
-- More than 6,000 premade decks
-- Spaced repetition (supermemo 2 algorithm)
+- More than 10,000 premade decks
+- Spaced repetition (AI-optimized [FSRS algorithm](https://github.com/open-spaced-repetition))
 - Supported contents: text, images, sounds, MathJax
 - Add cards by intent from other applications like dictionaries
 
