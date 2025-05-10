@@ -14,6 +14,7 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.view.children
 import androidx.fragment.app.FragmentManager
 import androidx.test.core.app.ActivityScenario
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
@@ -25,7 +26,6 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Storage
-import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.BackendEmulatingOpenConflict
 import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.testutils.DbUtils

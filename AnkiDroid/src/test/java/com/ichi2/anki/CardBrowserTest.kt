@@ -72,6 +72,7 @@ import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.REQUEST_FIN
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.TAGS_AS_FIELD
 import com.ichi2.anki.browser.column1
 import com.ichi2.anki.browser.setColumn
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.model.CardsOrNotes.CARDS
@@ -90,7 +91,6 @@ import com.ichi2.libanki.CardType
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.QueueType
-import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.TestClass

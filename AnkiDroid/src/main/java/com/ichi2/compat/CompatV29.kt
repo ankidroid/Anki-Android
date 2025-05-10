@@ -24,7 +24,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.util.Size
 import androidx.annotation.RequiresApi
-import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.anki.common.time.TimeManager
 import java.io.File
 import java.io.IOException
 

@@ -6,7 +6,7 @@ import android.content.Context
 import android.util.DisplayMetrics
 import android.widget.Toast
 import androidx.annotation.StringRes
-import com.ichi2.libanki.utils.Time
+import com.ichi2.anki.common.time.Time
 import java.util.Calendar
 
 fun showThemedToast(
