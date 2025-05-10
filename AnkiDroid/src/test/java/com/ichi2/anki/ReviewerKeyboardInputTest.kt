@@ -43,8 +43,8 @@ import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.Binding.ModifierKeys
+import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.reviewer.CardSide
-import com.ichi2.anki.reviewer.PeripheralKeymap
 import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.utils.ext.addBinding
 import com.ichi2.libanki.Card
@@ -260,8 +260,8 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             displayAnswer = true
         }
 
-        override var processor: PeripheralKeymap<ReviewerBinding, ViewerCommand> =
-            PeripheralKeymap(sharedPrefs(), ViewerCommand.entries, this)
+        override var processor: BindingMap<ReviewerBinding, ViewerCommand> =
+            BindingMap(sharedPrefs(), ViewerCommand.entries, this)
 
         override fun answerFieldIsFocused(): Boolean = focusTextField
 
