@@ -150,7 +150,7 @@ class UniqueArrayList<E> /**
              * @param comparator used to judge uniqueness
              */
             fun <E> from(
-                source: List<E>,
+                source: Collection<E>,
                 comparator: Comparator<in E>? = null,
             ): UniqueArrayList<E> {
                 val set: Set<E> =

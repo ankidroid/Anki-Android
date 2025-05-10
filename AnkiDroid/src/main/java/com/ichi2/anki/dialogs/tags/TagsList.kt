@@ -35,14 +35,14 @@ import java.util.TreeSet
  * @param uncheckedTags a list containing the currently unselected tags. Any duplicates will be ignored.
  */
 class TagsList(
-    allTags: List<String>,
-    checkedTags: List<String>,
-    uncheckedTags: List<String>? = null,
+    allTags: Collection<String>,
+    checkedTags: Collection<String>,
+    uncheckedTags: Collection<String>? = null,
 ) : Iterable<String> {
     /**
      * A Set containing the currently selected tags
      */
-    private val checkedTags: MutableSet<String>
+    private val checkedTags: MutableSet<String> = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
 
     /**
      * A Set containing the tags with indeterminate state
@@ -55,7 +55,6 @@ class TagsList(
     private val allTags: UniqueArrayList<String>
 
     init {
-        this.checkedTags = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
         this.checkedTags.addAll(checkedTags)
         this.allTags = from(allTags, java.lang.String.CASE_INSENSITIVE_ORDER)
         this.allTags.addAll(this.checkedTags)

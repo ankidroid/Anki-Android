@@ -2619,12 +2619,11 @@ abstract class AbstractFlashcardViewer :
         get() = displayAnswer
 
     internal fun showTagsDialog() {
-        val tags = ArrayList(getColUnsafe.tags.all())
-        val selTags = ArrayList(currentCard!!.note(getColUnsafe).tags)
+        val noteId = currentCard!!.note(getColUnsafe).id
         val dialog =
             tagsDialogFactory!!
                 .newTagsDialog()
-                .withArguments(this, TagsDialog.DialogType.EDIT_TAGS, selTags, tags)
+                .withArguments(this, TagsDialog.DialogType.EDIT_TAGS, noteIds = listOf(noteId))
         showDialogFragment(dialog)
     }
 
