@@ -113,9 +113,12 @@ data class DeckNode(
             return
         }
 
-        if (collapsed) {
+        // When searching, ignore collapsed state and always search children
+        val searching = filter != null
+        if (collapsed && !searching) {
             return
         }
+        // TODO: https://github.com/ankidroid/Anki-Android/pull/18298#pullrequestreview-2831503938
 
         if (node.level > 0) {
             list.append(this)
