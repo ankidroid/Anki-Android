@@ -67,6 +67,7 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import timber.log.Timber
 
 class ReviewerViewModel(
     cardMediaPlayer: CardMediaPlayer,
@@ -150,6 +151,7 @@ class ReviewerViewModel(
      ********************************************************************************************* */
 
     override fun onPageFinished(isAfterRecreation: Boolean) {
+        Timber.v("ReviewerViewModel::onPageFinished %b", isAfterRecreation)
         if (isAfterRecreation) {
             launchCatchingIO {
                 // TODO handle "Don't keep activities"
@@ -169,6 +171,7 @@ class ReviewerViewModel(
      * @see showAnswer
      */
     fun onShowAnswer(typedAnswer: String? = null) {
+        Timber.v("ReviewerViewModel::onShowAnswer")
         launchCatchingIO {
             while (!statesMutated) {
                 delay(50)
@@ -196,6 +199,7 @@ class ReviewerViewModel(
     }
 
     private suspend fun toggleMark() {
+        Timber.v("ReviewerViewModel::toggleMark")
         val card = currentCard.await()
         val note = withCol { card.note(this@withCol) }
         NoteService.toggleMark(note)
@@ -203,6 +207,7 @@ class ReviewerViewModel(
     }
 
     private suspend fun setFlag(flag: Flag) {
+        Timber.v("ReviewerViewModel::setFlag")
         val card = currentCard.await()
         undoableOp {
             setUserFlagForCards(listOf(card.id), flag)
@@ -211,6 +216,7 @@ class ReviewerViewModel(
     }
 
     private suspend fun toggleFlag(flag: Flag) {
+        Timber.v("ReviewerViewModel::toggleFlag")
         if (flag == flagFlow.value) {
             setFlag(Flag.NONE)
         } else {
@@ -296,6 +302,7 @@ class ReviewerViewModel(
     }
 
     private suspend fun undo() {
+        Timber.v("ReviewerViewModel::undo")
         val changes =
             undoableOp {
                 undo()
@@ -307,10 +314,10 @@ class ReviewerViewModel(
                 CollectionManager.TR.undoActionUndone(changes.operation)
             }
         actionFeedbackFlow.emit(message)
-        updateCurrentCard()
     }
 
     private suspend fun redo() {
+        Timber.v("ReviewerViewModel::redo")
         val changes = undoableOp { redo() }
         val message =
             if (changes.operation.isEmpty()) {
@@ -319,7 +326,6 @@ class ReviewerViewModel(
                 CollectionManager.TR.undoRedoAction(changes.operation)
             }
         actionFeedbackFlow.emit(message)
-        updateCurrentCard()
     }
 
     private suspend fun userAction(
@@ -329,10 +335,12 @@ class ReviewerViewModel(
     }
 
     fun stopAutoAdvance() {
+        Timber.v("ReviewerViewModel::stopAutoAdvance")
         autoAdvance.cancelQuestionAndAnswerActionJobs()
     }
 
     private suspend fun toggleAutoAdvance() {
+        Timber.v("ReviewerViewModel::toggleAutoAdvance")
         autoAdvance.isEnabled = !autoAdvance.isEnabled
         val message =
             if (autoAdvance.isEnabled) {
@@ -370,6 +378,7 @@ class ReviewerViewModel(
         }
 
     override suspend fun showQuestion() {
+        Timber.v("ReviewerViewModel::showQuestion")
         super.showQuestion()
         runStateMutationHook()
         if (!autoAdvance.shouldWaitForAudio()) {
@@ -418,26 +427,36 @@ class ReviewerViewModel(
     }
 
     private fun answerCard(ease: Ease) {
+        Timber.v("ReviewerViewModel::answerCard")
         launchCatchingIO {
             queueState.await()?.let {
-                undoableOp { sched.answerCard(it, ease) }
+                undoableOp(this) { sched.answerCard(it, ease) }
                 updateCurrentCard()
             }
         }
     }
 
     private suspend fun loadAndPlaySounds(side: CardSide) {
+        Timber.v("ReviewerViewModel::loadAndPlaySounds")
         cardMediaPlayer.loadCardSounds(currentCard.await())
         cardMediaPlayer.playAllSoundsForSide(side)
     }
 
-    private suspend fun updateMarkedStatus() {
+    private suspend fun updateMarkIcon() {
+        Timber.v("ReviewerViewModel::updateMarkIcon")
         val card = currentCard.await()
         val isMarkedValue = withCol { card.note(this@withCol).hasTag(this@withCol, MARKED_TAG) }
         isMarkedFlow.emit(isMarkedValue)
     }
 
+    private suspend fun updateFlagIcon() {
+        Timber.v("ReviewerViewModel::updateFlagIcon")
+        val card = currentCard.await()
+        flagFlow.emit(card.flag)
+    }
+
     private suspend fun updateCurrentCard() {
+        Timber.v("ReviewerViewModel::updateCurrentCard")
         queueState =
             asyncIO {
                 withCol {
@@ -455,8 +474,8 @@ class ReviewerViewModel(
         autoAdvance.onCardChange(card)
         showQuestion()
         loadAndPlaySounds(CardSide.QUESTION)
-        updateMarkedStatus()
-        flagFlow.emit(card.flag)
+        updateMarkIcon()
+        updateFlagIcon()
         canBuryNoteFlow.emit(isBuryNoteAvailable(card))
         canSuspendNoteFlow.emit(isSuspendNoteAvailable(card))
         countsFlow.emit(state.counts to state.countsIndex)
@@ -466,6 +485,7 @@ class ReviewerViewModel(
         text: String,
         typedAnswer: String?,
     ): String {
+        Timber.v("ReviewerViewModel::typeAnsFilter")
         val typeAnswer = TypeAnswer.getInstance(currentCard.await(), text)
         return if (showingAnswer.value) {
             typeAnswerFlow.emit(null)
@@ -477,11 +497,13 @@ class ReviewerViewModel(
     }
 
     private suspend fun updateUndoAndRedoLabels() {
+        Timber.v("ReviewerViewModel::updateUndoAndRedoLabels")
         undoLabelFlow.emit(withCol { undoLabel() })
         redoLabelFlow.emit(withCol { redoLabel() })
     }
 
     private suspend fun updateNextTimes() {
+        Timber.v("ReviewerViewModel::updateNextTimes")
         if (!shouldShowNextTimes.await()) return
         val state = queueState.await() ?: return
 
@@ -490,6 +512,7 @@ class ReviewerViewModel(
     }
 
     private fun flipOrAnswer(ease: Ease) {
+        Timber.v("ReviewerViewModel::flipOrAnswer")
         if (showingAnswer.value) {
             answerCard(ease)
         } else {
@@ -498,6 +521,7 @@ class ReviewerViewModel(
     }
 
     private fun executeAction(action: ViewerAction) {
+        Timber.v("ReviewerViewModel::executeAction")
         launchCatchingIO {
             when (action) {
                 ViewerAction.ADD_NOTE -> emitAddNoteDestination()
@@ -556,23 +580,51 @@ class ReviewerViewModel(
         action: ViewerAction,
         binding: ReviewerBinding,
     ): Boolean {
+        Timber.v("ReviewerViewModel::processAction")
         if (binding.side != CardSide.BOTH && CardSide.fromAnswer(showingAnswer.value) != binding.side) return false
         executeAction(action)
         return true
     }
 
     fun onMenuItemClick(item: MenuItem): Boolean {
+        Timber.v("ReviewerViewModel::onMenuItemClick")
         if (item.hasSubMenu()) return false
         val action = ViewerAction.fromId(item.itemId)
         executeAction(action)
         return true
     }
 
+    // Based in https://github.com/ankitects/anki/blob/1f95d030bbc7ebcc004ffe1e2be2a320c9fe1e94/qt/aqt/reviewer.py#L201
+    // and https://github.com/ankitects/anki/blob/1f95d030bbc7ebcc004ffe1e2be2a320c9fe1e94/qt/aqt/reviewer.py#L219
     override fun opExecuted(
         changes: OpChanges,
         handler: Any?,
     ) {
-        launchCatchingIO { updateUndoAndRedoLabels() }
+        Timber.v("ReviewerViewModel::opExecuted")
+        launchCatchingIO {
+            updateUndoAndRedoLabels()
+
+            if (handler == this) return@launchCatchingIO
+
+            when {
+                changes.studyQueues -> updateCurrentCard()
+                changes.noteText -> {
+                    val card = currentCard.await()
+                    withCol { card.load(this) }
+                    updateMarkIcon()
+                    if (showingAnswer.value) {
+                        showAnswer()
+                    } else {
+                        showQuestion()
+                    }
+                }
+                changes.card -> {
+                    val card = currentCard.await()
+                    withCol { card.load(this) }
+                    updateFlagIcon()
+                }
+            }
+        }
     }
 
     companion object {
