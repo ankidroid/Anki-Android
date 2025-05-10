@@ -49,6 +49,7 @@ import com.ichi2.libanki.getStockNotetype
 import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.testutils.common.assertThrows
 import com.ichi2.utils.emptyStringArray
+import kotlinx.serialization.json.Json
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
@@ -1343,6 +1344,57 @@ class ContentProviderTest : InstrumentedTest() {
                 assertThat("[sound: tag should remain", question, containsString(sound))
                 assertThat("[sound: tag should remain", answer, containsString(sound))
             } ?: fail("query returned null")
+    }
+
+    @Test
+    fun testMediaFilesAddedCorrectlyInReviewInfo() {
+        val frontContent = """<img src="img.jpg"> [sound:test.mp3]"""
+        val imageFileName = "img.jpg"
+        val audioFileName = "test.mp3"
+        val note = addNoteUsingBasicModel("Hello $frontContent", "backContent")
+        val ord = 0
+        val card = note.cards(col)[ord]
+
+        card.queue = QueueType.New
+        card.due = col.sched.today
+        col.updateCard(card)
+
+        contentResolver
+            .query(
+                FlashCardsContract.ReviewInfo.CONTENT_URI,
+                null,
+                null,
+                null,
+                null,
+            )?. let { cursor ->
+                if (!cursor.moveToFirst()) {
+                    fail("failed")
+                }
+
+                assertNotNull("Cursor should not be null", cursor)
+
+                val mediaFilesArray = cursor.getString(cursor.getColumnIndex(FlashCardsContract.ReviewInfo.MEDIA_FILES))
+
+                var imageFilePresent = false
+                var audioFilePresent = false
+                var allMediaFilesPresent = false
+
+                val media: List<String> = Json.decodeFromString(mediaFilesArray)
+
+                for (ele in media) {
+                    if (ele == imageFileName) {
+                        imageFilePresent = true
+                    }
+                    if (ele == audioFileName) {
+                        audioFilePresent = true
+                    }
+                }
+                if (imageFilePresent and audioFilePresent) {
+                    allMediaFilesPresent = true
+                }
+
+                assertTrue("All media files should be present in the media_files array", allMediaFilesPresent)
+            }
     }
 
     private fun reopenCol(): com.ichi2.libanki.Collection {
