@@ -10,9 +10,9 @@ Materiál môžete vkladať prostredníctvom počítačového programu Anki aleb
 
 ★ Kľúčové vlastnosti:
 • podporovaný obsah kartičiek: text, obrázky, zvuky, LaTeX
-• odložené opakovanie tzv. spaced-repetition (algoritmus supermemo 2)
+• spaced repetition (AI-optimized FSRS algorithm)
 • čítanie textu, tzv. TTS (text-to-speech)
-• viac ako 6000 vopred vytvorených balíčkov
+• more than 10,000 premade decks
 • widget postupu
 • podrobné štatistiky
 • synchronizácia s AnkiWeb

@@ -88,6 +88,7 @@
         <item>Par simplicité</item>
         <item>Par le nombre de répétitions passées</item>
         <item>Par difficulté</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Tout sélectionner</string>
     <string name="card_browser_select_none" maxLength="28">Ne rien sélectionner</string>

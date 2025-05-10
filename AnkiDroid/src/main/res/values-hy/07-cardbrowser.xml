@@ -88,6 +88,7 @@
         <item>Ըստ հեշտության</item>
         <item>Ըստ վերանայումների</item>
         <item>Ըստ մոռացված լինելու</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Նշել բոլորը</string>
     <string name="card_browser_select_none" maxLength="28">Ոչինչ չնշել</string>

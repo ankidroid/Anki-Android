@@ -10,9 +10,9 @@ Dodajte materijal pomoću Anki aplikacije za računala ili direktno u AnkiDroid.
 
 ★ Ključne značajke:
 • podržani dadržaj flash kartica: tekst, slike, zvuk, LaTeX
-• razmaknuto ponavljanje (supermemo 2 algoritam)
+• spaced repetition (AI-optimized FSRS algorithm)
 • integriran TTS
-• više od 6000 dostupnih skupina
+• more than 10,000 premade decks
 • widget s prikazom napretka
 • detaljne statistike
 • sinkronizacija s AnkiWebom

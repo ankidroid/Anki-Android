@@ -88,6 +88,7 @@
         <item>Por facilidad</item>
         <item>Por repasos</item>
         <item>Por lapsos</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Seleccionar todo</string>
     <string name="card_browser_select_none" maxLength="28">No seleccionar nada</string>

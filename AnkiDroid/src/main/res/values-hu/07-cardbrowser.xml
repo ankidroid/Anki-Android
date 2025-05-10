@@ -88,6 +88,7 @@
         <item>Nehézség szerint</item>
         <item>Ismétlésszám szerint</item>
         <item>Tévesztések szerint</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Összes kijelölése</string>
     <string name="card_browser_select_none" maxLength="28">Nincs kijelölve semmi</string>

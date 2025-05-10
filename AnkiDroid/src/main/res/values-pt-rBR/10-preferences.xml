@@ -68,7 +68,7 @@
     <string name="pref_cat_advanced" maxLength="41">Avançado</string>
     <string name="pref_cat_workarounds" maxLength="41">Soluções alternativas</string>
     <string name="pref_cat_plugins" maxLength="41">Plugins</string>
-    <string name="pref_cat_editing" maxLength="41">Editing</string>
+    <string name="pref_cat_editing" maxLength="41">Editando</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Largura do traço</string>
     <string name="use_input_tag" maxLength="41">Digite a resposta no card</string>
@@ -198,9 +198,9 @@
     <string name="reset">Redefinir</string>
     <string name="thirdparty_apps_title" maxLength="41">Apps de terceiros</string>
     <string name="thirdparty_apps_summary">Veja uma lista de aplicativos que usam a API do AnkiDroid, como dicionários, ferramentas.</string>
-    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Reviews</string>
-    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
-    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
+    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Revisões</string>
+    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Pré-visualizações</string>
+    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Ativar/desativar apenas o verso</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Revisor</string>
     <string name="show_deck_title" maxLength="41">Mostrar título do baralho</string>
@@ -299,7 +299,8 @@
     <string name="pref_cat_dev_options" maxLength="41">Opções do desenvolvedor</string>
     <string name="dev_options_enabled_pref" maxLength="41">Ativar opções do desenvolvedor</string>
     <string name="disable_dev_options">Desativar opções do desenvolvedor</string>
-    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
+    <string name="dev_options_warning">Por favor, certifique-se antes de ativar as opções do desenvolvedor. Estas opções são perigosas e podem quebrar o aplicativo ou corromper sua coleção.\n\nNote que essas opções não são adequadas para a maioria dos usuários, portanto, não são traduzidas, elas permanecerão em inglês.
+    </string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

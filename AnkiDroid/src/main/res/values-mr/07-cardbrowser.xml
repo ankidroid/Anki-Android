@@ -88,6 +88,7 @@
         <item>मध्यांतरांनी</item>
         <item>पुनरावलोकनांद्वारे</item>
         <item>चुकून</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Select all</string>
     <string name="card_browser_select_none" maxLength="28">काहीही निवडा</string>

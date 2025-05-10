@@ -94,6 +94,7 @@
         <item>Podle obtížnosti</item>
         <item>Podle opakování</item>
         <item>Podle zapomínání</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Vybrat vše</string>
     <string name="card_browser_select_none" maxLength="28">Zrušit výběr</string>

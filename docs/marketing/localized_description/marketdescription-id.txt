@@ -10,9 +10,9 @@ Tambahkan materi melalui aplikasi desktop Anki atau langsung melalui AnkiDroid. 
 
 ★ Fitur utama:
 • isi kartu flash yang didukung: teks, gambar, audio, LaTeX
-• hafalan berjarak (algoritma supermemo 2)
+• spaced repetition (AI-optimized FSRS algorithm)
 • integrasi teks ke suara
-• lebih dari 6000 dek tersedia
+• more than 10,000 premade decks
 • widget kemajuan
 • statistik yang rinci
 • sinkronisasi dengan AnkiWeb

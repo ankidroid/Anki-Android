@@ -64,7 +64,7 @@
     <string name="answering_error_title">خطای پایگاه داده</string>
     <string name="answering_error_message">ذخیرۀ مجموعه انجام نشد. دیتابیس ممکن است خراب باشد یا ممکن است فضای کافی نداشته باشید.\n\nاگر این اتفاق غالباً رخ می‌دهد، بررسی دیتابیس، تعمیر مجموعه یا بازنشانی مجموعه از یک فایل پشتیبان قبلی را برای حل کردن مشکل امتحان کنید. برای این کار به \"گزینه‌ها\" مراجعه کنید.\nاین خطا همچنین ممکن است به دلیل مشکل در آنکی‌دروید باشد؛ اگر هیچ یک از موارد بالا مشکل شما را حل نکرد، لطفاً خطا را به ما گزارش دهید تا ما بتوانیم به بررسی آن بپردازیم.</string>
     <string name="answering_error_report">گزارش خطا</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
+    <string name="storage_full_message">فضای خالی کافی برای باز شدن انکی‌دروید وجود ندارد. برای ادامه دادن مقداری فضا باز کنید.</string>
     <string name="repair_deck_dialog">آیا شما واقعا می خواهید پایگاه داده را تعمیر کنید؟\n\nقبل از شروع , یک کپی در پوشه فرعی \'%s\' به وجود خواهد آمد .</string>
     <string name="intent_aedict_empty">مجموعه \'پیش فرض\' خالی است</string>
     <string name="intent_aedict_category">اضافه کردن کارت به آنکی دروید سبب حذف همه یادداشت های مجموعه ها یا اضافه کردن یک نام پیش فرض به آنها می شود</string>
@@ -73,7 +73,7 @@
     <string name="custom_study_forgotten">مرور کارت های فراموش شده در x روز گذشته:</string>
     <string name="custom_study_ahead">مرور پیش از موعد تا x روز:</string>
     <string name="custom_study_preview">پیش نمایش کارت های جدید اضافه شده در  x روز گذشته:</string>
-    <string name="custom_study_tags">Select x cards from the deck:</string>
+    <string name="custom_study_tags">انتخاب x کارت از دسته کارت ها:</string>
     <string name="storage_full_title">حافظه</string>
     <string name="storage_almost_full_title">اوکی</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">جای خالی وجود ندارد</string>
@@ -105,8 +105,8 @@
     <string name="check_media_title">رسانه بررسی شود؟</string>
     <string name="check_media_warning">در صورت حجیم بودن رسانه مجموعه،این ممکن است طول بکشد</string>
     <string name="check_media_message">در حال بررسی رسانه&#8230;</string>
-    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_adding_missing_tag">در حال اضافه کردن تگ ها&#8230;</string>
+    <string name="check_media_tags_added">تگ ها اضافه شدند</string>
     <string name="delete_media_message">حذف رسانه&#8230;</string>
     <string name="delete_media_result_title">نتیجه حذف</string>
     <plurals name="delete_media_result_message">
@@ -211,8 +211,8 @@
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">بعداً</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">دوباره نشان نده</string>
     <string name="dismiss_backup_warning_title">خطر از دست رفتن داده‌ها</string>
-    <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
-    <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
+    <string name="dismiss_backup_warning_new_user">بنا بر تغییرات حریم خصوصی اندروید، در صورت پاک کردن اپلیکیشن از روی موبایل، داده‌ها و پشتیبان‌های اتوماتیک نیز حذف خواهند شد.</string>
+    <string name="dismiss_backup_warning_upgrade">بنا بر تغییرات حریم خصوصی اندروید، در صورت پاک کردن اپلیکیشن از روی موبایل، داده‌ها و پشتیبان‌های اتوماتیک غیرقابل دسترسی خواهند شد.</string>
     <string name="deck_already_exists">دسته کارت از قبل وجود دارد</string>
     <string name="empty_deck_name">نام دسته نمیتواند خالی باشد</string>
     <string name="create_deck_numeric_hint">اگر مشکل ترتیب دسته کارت‌ها دارید (مثلاً ‘10’ قبل از ‘2’ ظاهر می‌شود)، ‘2’ را با ‘02’ جایگزین کنید</string>

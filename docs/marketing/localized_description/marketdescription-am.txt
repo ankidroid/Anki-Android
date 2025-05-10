@@ -10,9 +10,9 @@ Create your own flashcard decks or download free decks compiled for many languag
 
 ★ Key features:
 • supported flashcard contents: text, images, sounds, LaTeX
-• spaced repetition (supermemo 2 algorithm)
+• spaced repetition (AI-optimized FSRS algorithm)
 ከፅሁፍ - ወደ - ንግግር  ማስተባበሪያ
-• more than 6000 premade decks
+• more than 10,000 premade decks
 • progress widget
 • detailed statistics
 ከአንኪዌብ ጋር ማመሳሰል

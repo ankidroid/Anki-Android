@@ -10,9 +10,9 @@ Adj új szavakat a paklihoz az asztali Ankival, vagy közvetlenül az AnkiDroidd
 
 ★ Fő funkciók:
 • támogatott szókártya tartalmak: szöveg, kép, hang, LaTeX
-• késleltetett ismétlés (supermemo 2 algoritmus)
+• spaced repetition (AI-optimized FSRS algorithm)
 • szöveg-beszéd integráció
-• több, mint 6000 előre előkészített pakli
+• more than 10,000 premade decks
 • előrehaladás widget
 • részletes statisztikák
 • AnkiWeb szinkronizálás

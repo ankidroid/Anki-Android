@@ -94,6 +94,7 @@
         <item>Па лёгкасці</item>
         <item>Па паўтарэннях</item>
         <item>Па памылках</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Выбраць усё</string>
     <string name="card_browser_select_none" maxLength="28">Адмяніць выбар</string>

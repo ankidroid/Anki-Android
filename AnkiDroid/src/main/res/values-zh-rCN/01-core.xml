@@ -66,7 +66,7 @@
         <item quantity="other">剩余 %1$d 天 %2$d 小时</item>
     </plurals>
     <string name="no_cards_placeholder_title">集合为空</string>
-    <string name="no_cards_placeholder_description">开始添加卡牌\n使用 + 图标。</string>
+    <string name="no_cards_placeholder_description">点击 + 图标来添加卡片</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">输入答案</string>
@@ -79,7 +79,7 @@
     <string name="menu_import" maxLength="28">导入牌组</string>
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">撤销</string>
     <string name="redo" maxLength="28">重做</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">撤销画笔</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">撤销笔迹</string>
     <string name="move_all_to_deck">全部移动至牌组</string>
     <string name="unbury" maxLength="28">取消搁置</string>
     <string name="rename_deck" maxLength="28">重命名</string>
@@ -98,7 +98,7 @@
     <string name="menu_suspend" maxLength="28">暂停</string>
     <string name="menu_delete_note" maxLength="28">删除笔记</string>
     <string name="menu_flag" maxLength="41">旗标</string>
-    <string name="rename_flag">重命名标记</string>
+    <string name="rename_flag">重命名旗标</string>
     <string name="menu_flag_card" maxLength="28">为卡片设置旗标</string>
     <string name="menu_edit_tags" maxLength="28">编辑标签​​​​​</string>
     <string name="delete_note_message">确定要删除此笔记及生成的卡片？\n%s</string>
@@ -115,19 +115,19 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">请授予 AnkiDroid “存储”权限以继续</string>
-    <string name="rebuild_filtered_deck">正在重建已过滤的牌组&#8230;</string>
+    <string name="rebuild_filtered_deck">正在重建筛选牌组&#8230;</string>
     <string name="rebuild_cram_label" maxLength="28">重建</string>
     <string name="empty_cram_label" maxLength="28">清空</string>
     <string name="create_subdeck">创建子牌组</string>
-    <string name="empty_filtered_deck">正在清空已过滤的牌组&#8230;</string>
+    <string name="empty_filtered_deck">正在清空筛选牌组&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">牌组搜索</string>
     <string name="empty_deck">此牌组为空</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">牌组搜索</string>
     <string name="invalid_deck_name">无效的牌组名称</string>
     <string name="studyoptions_congrats_finished">恭喜！你已经完成了今天的学习任务。</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">牌组目前已完成！ %s</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">牌组目前已完成！%s</string>
     <string name="studyoptions_no_cards_due">没有卡片待复习。</string>
-    <string name="sd_card_not_mounted">未挂载储存设备</string>
+    <string name="sd_card_not_mounted">未连接储存设备</string>
     <string name="button_sync" comment="Text of the sync button" maxLength="28">同步</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">你想要取消同步吗？</string>
     <string name="continue_sync" tools:ignore="UnusedResources">继续同步</string>
@@ -143,7 +143,7 @@
     <string name="card_template_editor_back">背面</string>
     <string name="card_template_editor_styling" maxLength="28">样式</string>
     <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">卡片浏览器外观</string>
-    <string name="card_template_editor_deck_override" maxLength="28">牌组覆盖</string>
+    <string name="card_template_editor_deck_override" maxLength="28">覆盖牌组</string>
     <string name="card_template_editor_insert_field" maxLength="28">插入字段</string>
     <string name="card_template_editor_select_field">选择字段</string>
     <string name="card_template_editor_cant_delete">至少需要保留一个卡片类型。</string>
@@ -151,22 +151,22 @@
         <item quantity="other">这将创建 %1$d 张卡片。是否继续？</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="other">确定删除「%2$s」卡片模板和它包含的 %1$d 张卡片吗？</item>
+        <item quantity="other">确定删除“%2$s”卡片模板和它包含的 %1$d 张卡片吗？</item>
     </plurals>
     <string name="card_template_editor_save_error">无法保存卡片模板更改：%s</string>
-    <string name="template_for_current_card_deleted">当前卡片的卡片模板已被删除。</string>
+    <string name="template_for_current_card_deleted">当前卡片的模板已被删除。</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">浏览器外观</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">卡片信息</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">读取并写入 AnkiDroid 数据库</string>
-    <string name="read_write_permission_description">访问现有的笔记、卡片、笔记模板和牌组，以及创建新的</string>
+    <string name="read_write_permission_description">创建或访问现有的笔记、卡片、笔记模板和牌组</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">卡片浏览器</string>
     <string name="context_menu_anki_card_label">Anki 卡片</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">卡片组无法合并。\n您想要保留哪个卡片组？</string>
+    <string name="sync_conflict_message_new">集合无法合并。\n您想要保留哪个集合？</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
     <string name="sync_conflict_remote_confirm_new">用来自 AnkiWeb 的集合替换 AnkiDroid 上的集合吗？</string>
@@ -175,19 +175,19 @@
     <string name="sync_conflict_replace_title">替换集合</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">无法写入或创建文件 %s</string>
-    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">无法访问牌组</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">卸载 AnkiDroid 后由于 Play Store 政策更改，我们无法访问您的牌组\n\n您的数据是安全的且可以被恢复。数据位于\n%s\n\n选择下方的一个选项进行还原：</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">由于不活跃，系统移除了AnkiDroid的 %1$s 权限。\n\n您的数据是安全的，可以恢复。 它位于\n%2$s\n\n选择下方的一个选项来进行恢复：</string>
+    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">无法访问集合</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">由于 Play Store 政策更改，卸载 AnkiDroid 后我们无法访问您的集合\n\n您的数据是安全的，可以恢复。数据位于\n%s\n\n选择下方的一个选项进行恢复：</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">由于长期未使用应用，系统撤销了 AnkiDroid 的 %1$s 权限。\n\n您的数据是安全的，可以恢复。 数据位于\n%2$s\n\n选择下方的一个选项来进行恢复：</string>
     <string name="restore_data_from_ankiweb">从 AnkiWeb 还原（推荐）</string>
-    <string name="install_non_play_store_ankidroid_recommended">还原文件夹访问权限（推荐）</string>
-    <string name="install_non_play_store_ankidroid">还原文件夹访问权限（高级）</string>
+    <string name="install_non_play_store_ankidroid_recommended">恢复对文件夹的访问权限（推荐）</string>
+    <string name="install_non_play_store_ankidroid">恢复对文件夹的访问权限（高级）</string>
     <string name="restore_data_from_backup">从 .colpkg 备份恢复（高级）</string>
     <string name="create_new_collection">创建新集合</string>
     <string name="new_unsafe_collection">如果您卸载 AnkiDroid，新集合将从您的手机中被删除</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid 需要一些权限才能工作</string>
-    <string name="storage_access_title">存储空间权限</string>
-    <string name="storage_access_summary">将牌组集合保存在一个即使卸载了应用也不会被删除的安全所在</string>
+    <string name="permissions_screen_headline">AnkiDroid 需要一些权限才能运行</string>
+    <string name="storage_access_title">存储权限</string>
+    <string name="storage_access_summary">将您的集合保存在安全的地方，即使卸载应用也不会被删除</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">所有文件访问权限</string>
     <string name="image_occlusion">图片遮挡</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">删除账户</string>

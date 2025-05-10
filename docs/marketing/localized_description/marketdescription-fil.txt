@@ -10,9 +10,9 @@ Magdagdag ng materyal sa pamamagitan ng Anki desktop application o direkta sa pa
 
 ★ Mga pangunahing tampok:
 • Sinusuportahan ang mga nilalaman ng flashcard: teksto, mga imahe, mga tunog, LaTeX
-• spaced repetition (supermemo 2 algorithm)
+• spaced repetition (AI-optimized FSRS algorithm)
 • text-to-speech integration
-• higit sa 6000 premade deck
+• more than 10,000 premade decks
 • widget ng progreso
 • detalyadong istatistika
 • pag-sync sa AnkiWeb

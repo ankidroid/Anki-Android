@@ -10,9 +10,9 @@ Afegiu material a través de l'aplicació d'escriptori Anki o directament a trav
 
 ★ Característiques principals:
 • contingut permès a les fitxes: text, imatges, sons, LaTeX
-• repetició espaiada (l'algorisme de SuperMemo 2)
+• spaced repetition (AI-optimized FSRS algorithm)
 • integra síntesi de veu
-• més de 6000 paquets preparats
+• more than 10,000 premade decks
 • giny del vostre progrés
 • estadístiques detallades
 • sincronització amb AnkiWeb

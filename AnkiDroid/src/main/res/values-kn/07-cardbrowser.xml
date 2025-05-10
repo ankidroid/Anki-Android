@@ -88,6 +88,7 @@
         <item>ಸುಲಭವಾಗಿ</item>
         <item>ವಿಮರ್ಶೆಗಳ ಮೂಲಕ</item>
         <item>ಲೋಪಗಳಿಂದ</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">ಎಲ್ಲವನ್ನು ಆರಿಸು</string>
     <string name="card_browser_select_none" maxLength="28">ಯಾವುದನ್ನೂ ಆಯ್ಕೆ ಮಾಡಬೇಡಿ</string>

@@ -94,6 +94,7 @@
         <item>Wg łatwości</item>
         <item>Wg powtórek</item>
         <item>Wg pomyłek</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Zaznacz wszystko</string>
     <string name="card_browser_select_none" maxLength="28">Anuluj wybór</string>

@@ -10,9 +10,9 @@ Adicione material através da aplicação Anki para Pc ou diretamente através d
 
 ★ Funcionalidades principais:
 • conteúdos de ficha suportados: texto, imagens, sons, LaTeX
-• repetição espaçada (algoritmo de supermemo 2)
+• spaced repetition (AI-optimized FSRS algorithm)
 • integração de texto para voz
-• mais de 6000 baralhos já criados
+• more than 10,000 premade decks
 • widget de progresso
 • estatísticas detalhadas
 • sincronização com a AnkiWeb

@@ -88,6 +88,7 @@
         <item>Pro revisiones</item>
         <item>Pro fatzilitade</item>
         <item>Pro intervallu</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Ischerta totu</string>
     <string name="card_browser_select_none" maxLength="28">Boga s\'ischerta</string>

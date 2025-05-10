@@ -10,9 +10,9 @@ Add material through the desktop application Anki or directly through AnkiDroid.
 
 ★ Key features:
 • supported flashcard contents: text, images, sounds, LaTeX
-• spaced repetition (supermemo 2 algorithm)
+• spaced repetition (AI-optimized FSRS algorithm)
 • text-to-speech integration
-• more than 6000 premade decks
+• more than 10,000 premade decks
 • progress widget
 • detailed statistics
 • syncing with AnkiWeb

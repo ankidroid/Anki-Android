@@ -68,7 +68,7 @@
     <string name="pref_cat_advanced" maxLength="41">پیشرفته</string>
     <string name="pref_cat_workarounds" maxLength="41">راه‌حل‌ها</string>
     <string name="pref_cat_plugins" maxLength="41">افزونه‌ها</string>
-    <string name="pref_cat_editing" maxLength="41">Editing</string>
+    <string name="pref_cat_editing" maxLength="41">در حال ویرایش</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">کلفتی خط</string>
     <string name="use_input_tag" maxLength="41">پاسخ را در کارت بنویسید</string>
@@ -98,7 +98,7 @@
     <string name="gestures_summ">استفاده از حرکات و ضربات لمسی برای انجام کارهایی مثل پاسخ دادن و ویرایش کارت‌ها.</string>
     <string name="gestures_corner_touch" maxLength="41">لمس صفحه 9 قسمت</string>
     <string name="gestures_corner_touch_summary">اجازه بده برای حرکات لمس در گوشه های صفحه</string>
-    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">نمایش میانبر های صفحه کلید</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">کشوی جهت‌یابی در کل صفحه</string>
     <string name="gestures_fullscreen_nav_drawer_summary">کشو ی جهت یابی را باز کن وقتی صفحه را به سمت راست می کشم</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">هیچ کدام</string>
@@ -198,8 +198,8 @@
     <string name="reset">تنظیم مجدد</string>
     <string name="thirdparty_apps_title" maxLength="41">ای پی آی سایر نرم‌افزارها</string>
     <string name="thirdparty_apps_summary">لیستی از برنامه‌هایی که از API انکی‌دروید استفاده می‌کنند، مانند دیکشنری‌ها و ابزارها را ببینید.</string>
-    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Reviews</string>
-    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
+    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">نظرات</string>
+    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">پیش نمایش</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">مرور کننده</string>
@@ -299,7 +299,7 @@
     <string name="pref_cat_dev_options" maxLength="41">گزینه های توسعه دهنده</string>
     <string name="dev_options_enabled_pref" maxLength="41">فعال‌سازی گزینه های توسعه دهنده</string>
     <string name="disable_dev_options">غیر فعال‌سازی گزینه‌های توسعه دهنده</string>
-    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
+    <string name="dev_options_warning">لطفا از تصمیم خود برای فعال سازی گزینه‌های توسعه دهنده اطمینان حاصل کنید. این تنظیمات خطرناک هستند و ممکن است باعث از کار افتادن برنامه یا خراب کردن مجموعه کارت های شما را دارند.\n\nتوجه داشته باشید که این گزینه ها مخصوص اکثر افراد نیستند و بنابراین ترجمه نشده‌اند، به همین دلیل به زبان انگلیسی هستند.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

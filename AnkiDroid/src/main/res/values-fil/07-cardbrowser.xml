@@ -88,6 +88,7 @@
         <item>Sa pamamagitan ng kagaanan</item>
         <item>Sa pamamagitan ng pagrepaso</item>
         <item>Sa pamamagitan ng pagdaan ng panahon</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Piliin lahat</string>
     <string name="card_browser_select_none" maxLength="28">Walang piliin</string>

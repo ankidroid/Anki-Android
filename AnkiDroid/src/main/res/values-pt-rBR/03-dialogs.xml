@@ -64,7 +64,7 @@
     <string name="answering_error_title">Erro de banco de dados</string>
     <string name="answering_error_message">Ocorreu um erro ao gravar na coleção. Isso pode estar relacionado a um banco de dados corrompido ou espaço insuficiente no disco.\n\nSe isso ocorrer frequentemente, tente verificar o banco de dados, reparar a coleção ou restaurá-la de um backup. Clique em \'Opções\' para isso.\n\nEm todo caso, isso pode ser um bug do AnkiDroid; relate o erro para que possamos verificar o problema.</string>
     <string name="answering_error_report">Reportar erro</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
+    <string name="storage_full_message">Não há espaço de armazenamento livre suficiente para abrir o AnkiDroid. Libere algum espaço para continuar.</string>
     <string name="repair_deck_dialog">Você realmente deseja tentar reparar o banco de dados?\n\nAntes de iniciar a tentativa, uma cópia será criada na subpasta \"%s\".</string>
     <string name="intent_aedict_empty">Categoria \'padrão\' está vazia</string>
     <string name="intent_aedict_category">Para adicionar cartões ao AnkiDroid, remova todas as categorias das notas ou adicione uma com o nome \'default\'</string>
@@ -73,7 +73,7 @@
     <string name="custom_study_forgotten">Revisar cards esquecidos nos últimos x dias:</string>
     <string name="custom_study_ahead">Adiantar revisão em x dias:</string>
     <string name="custom_study_preview">Visualizar novos cards adicionados nos últimos x dias:</string>
-    <string name="custom_study_tags">Select x cards from the deck:</string>
+    <string name="custom_study_tags">Selecione x cards do baralho:</string>
     <string name="storage_full_title">Armazenamento cheio</string>
     <string name="storage_almost_full_title">Armazenamento quase cheio</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Sem espaço</string>
@@ -105,8 +105,8 @@
     <string name="check_media_title">Verificar mídia?</string>
     <string name="check_media_warning">Isto pode demorar muito tempo para coleções com grande quantidade de mídia</string>
     <string name="check_media_message">Verificando mídia&#8230;</string>
-    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_adding_missing_tag">Adicionando tags&#8230;</string>
+    <string name="check_media_tags_added">Tags adiciondas</string>
     <string name="delete_media_message">Excluindo mídia&#8230;</string>
     <string name="delete_media_result_title">Resultado da exclusão</string>
     <plurals name="delete_media_result_message">
@@ -211,8 +211,8 @@
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Mais tarde</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Não mostrar novamente</string>
     <string name="dismiss_backup_warning_title">Aviso de perda de dados</string>
-    <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
-    <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
+    <string name="dismiss_backup_warning_new_user">Devido às alterações de privacidade do Android, seus dados e backups automáticos serão excluídos do seu telefone se o aplicativo for desinstalado</string>
+    <string name="dismiss_backup_warning_upgrade">Devido às alterações de privacidade do Android, seus dados e backups automáticos serão inacessíveis se o aplicativo for desinstalado</string>
     <string name="deck_already_exists">Baralho já existe</string>
     <string name="empty_deck_name">O nome do deck não pode estar vazio</string>
     <string name="create_deck_numeric_hint">Se você tem problemas com a ordem dos baralhos (ex: ‘10’ aparecendo antes de ‘2’), troque o ‘2’ por ‘02’</string>
@@ -241,7 +241,7 @@
     <string name="cloze_number">Número da omissão:</string>
     <string name="change_editor_mode">Alterar modo editor</string>
     <string name="open_note_editor">Abrir editor de notas</string>
-    <string name="change_cloze_mode">Mudar modo cloze</string>
+    <string name="change_cloze_mode">Alterar modo de omissão</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">O sistema do WebView está desatualizado. Alguns recursos não funcionarão corretamente. Por favor, atualize-o.\n\nVersão instalada %1$d\nVersão mínima necessária: %2$d</string>
     <string name="compress">Comprimir</string>

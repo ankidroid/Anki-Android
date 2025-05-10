@@ -88,6 +88,7 @@
         <item>Op gemakkelijkheid</item>
         <item>Op overhoring</item>
         <item>Op missers</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Alles selecteren</string>
     <string name="card_browser_select_none" maxLength="28">Niets selecteren</string>

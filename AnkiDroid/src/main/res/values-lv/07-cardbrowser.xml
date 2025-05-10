@@ -91,6 +91,7 @@
         <item>Pēc vienkāršuma</item>
         <item>Pēc izskatīšanām</item>
         <item>Pēc atmešanu skaita</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Atlasīt visu</string>
     <string name="card_browser_select_none" maxLength="28">Neatlasīt neko</string>

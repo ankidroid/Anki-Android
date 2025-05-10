@@ -52,8 +52,8 @@
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">ឃើញអ្វីដែលចាស់បំផុតមុន</string>
     <string name="cram_deck_conf_order_random">Random</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Increasing intervals</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Decreasing intervals</string>
+    <string name="cram_deck_conf_order_increasing_intervals">បង្កើនចន្លោះពេលវេលា</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">បន្ថយចន្លោះពេលវេលា</string>
     <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
     <string name="cram_deck_conf_order_order_added">Order added</string>
     <string name="cram_deck_conf_order_order_due">Order due</string>

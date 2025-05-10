@@ -10,9 +10,9 @@ Legg til materiale med skrivebordsapplikasjonen Anki, eller rett i AnkiDroid. Ap
 
 ★ Viktige funksjoner:
 • støttede spørrekortinnholdstyper: tekst, bilder, lyder, LaTeX
-• tidsbestemt gjentakelse (supermemo 2-algoritme)
+• spaced repetition (AI-optimized FSRS algorithm)
 • "tekst til tale"-integrasjon
-• mer enn 6000 ferdige kortstokker
+• more than 10,000 premade decks
 • fremdriftswidget
 • detaljert statistikk
 • synkronisering med AnkiWeb

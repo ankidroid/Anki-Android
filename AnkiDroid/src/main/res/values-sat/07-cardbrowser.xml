@@ -88,6 +88,7 @@
         <item>ᱟᱞᱜᱟ ᱛᱮ</item>
         <item>ᱫᱩᱦᱲᱟ ᱧᱮᱞ ᱛᱮ</item>
         <item>ᱪᱩᱠ ᱛᱮ</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">ᱡᱷᱚᱛᱚ ᱵᱟᱪᱷᱟᱣ ᱢᱮ</string>
     <string name="card_browser_select_none" maxLength="28">ᱟᱞᱚ ᱵᱟᱪᱷᱟᱣ ᱟ</string>

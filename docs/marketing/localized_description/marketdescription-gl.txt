@@ -10,9 +10,9 @@ Engade material a través da aplicación de escritorio Anki ou directamente dend
 
 ★ Características principais:
 • contido soportado polas tarxetas: texto, imaxes, sons, LaTeX
-• repetición espazada (algoritmo supermemo 2)
+• spaced repetition (AI-optimized FSRS algorithm)
 • integra síntese de voz
-• máis de 6000 barallas xa creadas
+• more than 10,000 premade decks
 • widget de progreso
 • estatísticas detalladas
 • sincronización con AnkiWeb

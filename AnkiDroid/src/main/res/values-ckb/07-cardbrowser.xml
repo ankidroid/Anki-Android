@@ -88,6 +88,7 @@
         <item>بەپێی ئاسانی</item>
         <item>بەپێی دووبارەکردن</item>
         <item>بەپێی هەڵەکان</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">گشت دیاریبکە</string>
     <string name="card_browser_select_none" maxLength="28">هیچ دیاریمەکە</string>

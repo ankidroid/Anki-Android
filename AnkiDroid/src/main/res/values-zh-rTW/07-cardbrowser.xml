@@ -85,6 +85,7 @@
         <item>依難易度</item>
         <item>依複習次數</item>
         <item>依忘記次數</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">全選</string>
     <string name="card_browser_select_none" maxLength="28">全不選</string>

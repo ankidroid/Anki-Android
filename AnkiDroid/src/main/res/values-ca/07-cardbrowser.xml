@@ -88,6 +88,7 @@
         <item>Per dificultat</item>
         <item>Per revisions</item>
         <item>Per intervals</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Selecciona-ho tot</string>
     <string name="card_browser_select_none" maxLength="28">No en seleccionis cap</string>

@@ -88,6 +88,7 @@
         <item>بر اساس سهولت</item>
         <item>بر اساس مرورها</item>
         <item>بر اساس فاصله زمانی</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">انتخاب همه</string>
     <string name="card_browser_select_none" maxLength="28">انتخاب هیچکدام</string>
@@ -112,11 +113,11 @@
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">ویرایش برچسب گفتوگو ها</string>
     <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">نمایش گفتوگو</string>
     <!-- Manage columns dialog -->
-    <string name="browse_manage_columns_main_heading">Columns</string>
-    <string name="browse_manage_columns">Manage columns</string>
-    <string name="user_active_columns">Active</string>
-    <string name="user_potential_columns">Available</string>
-    <string name="include_column">Include column</string>
-    <string name="exclude_column">Exclude column</string>
-    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
+    <string name="browse_manage_columns_main_heading">ستون ها</string>
+    <string name="browse_manage_columns">مدیریت ستون ها</string>
+    <string name="user_active_columns">فعال</string>
+    <string name="user_potential_columns">در دسترس</string>
+    <string name="include_column">در نظر گرفتن ستون ها</string>
+    <string name="exclude_column">در نظر نگرفتن ستون ها</string>
+    <string name="browser_find_replace_loading_fields">بازیابی اسامی فیلد ها&#8230;</string>
 </resources>

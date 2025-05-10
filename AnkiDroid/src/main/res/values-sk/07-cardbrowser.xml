@@ -94,6 +94,7 @@
         <item>Podľa jednoduchosti</item>
         <item>Podľa opakovaní</item>
         <item>Podľa zabudnutí</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Vybrať všetko</string>
     <string name="card_browser_select_none" maxLength="28">Nevybrať nič</string>

@@ -70,7 +70,7 @@
     <string name="pref_cat_advanced" maxLength="41">Розширені налаштування</string>
     <string name="pref_cat_workarounds" maxLength="41">Спеціальні функції</string>
     <string name="pref_cat_plugins" maxLength="41">Плагіни</string>
-    <string name="pref_cat_editing" maxLength="41">Editing</string>
+    <string name="pref_cat_editing" maxLength="41">Редагування</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Ширина штриха</string>
     <string name="use_input_tag" maxLength="41">Введіть відповідь на картці</string>
@@ -203,9 +203,9 @@
     <string name="reset">Скинути</string>
     <string name="thirdparty_apps_title" maxLength="41">API додатки сторонніх виробників</string>
     <string name="thirdparty_apps_summary">Переглянути список програм, які використовують API AnkiDroid, наприклад словники, утиліти</string>
-    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Reviews</string>
-    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
-    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
+    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Повторення</string>
+    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Попередні перегляди</string>
+    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Лише задня сторона</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Повторення</string>
     <string name="show_deck_title" maxLength="41">Показувати назву колоди</string>
@@ -299,12 +299,12 @@
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Експериментальні</string>
     <string name="readtext_deprecation_warn">AnkiDroid створив кращий механізм TTS, який сумісний з іншими клієнтами Anki і містить більше голосів та покращене відтворення мови!\n\nБудь ласка, оновіть програму якомога швидше, оскільки це налаштування буде незабаром видалено.</string>
-    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Будь ласка, оновіться до нового формату тексту-у-мовлення</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Оновіться, будь ласка, до нового формату синтезу мовлення</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Параметри розробника</string>
     <string name="dev_options_enabled_pref" maxLength="41">Увімкнути параметри розробника</string>
     <string name="disable_dev_options">Вимкнути параметри розробника</string>
-    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
+    <string name="dev_options_warning">Будь ласка, переконайтесь, що дійсно бажаєте ввімкнути параметри розробника. Ці параметри небезпечні та можуть поламати додаток або зіпсувати вашу колекцію.\n\nЗверніть увагу, що ці опції не підходять для більшості користувачів, і тому не перекладені, тож текст в них англійською мовою.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

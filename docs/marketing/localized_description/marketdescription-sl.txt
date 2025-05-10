@@ -10,9 +10,9 @@ Dodajte snov preko namiznega programa Anki ali neposredno preko AnkiDroida. Prog
 
 ★ Glavne značilnosti:
 • podprte vsebine pomnilnih kartic: besedilo, slike, zvoki, LaTeX
-• pomnjenje (algoritem supermemo 2)
+• spaced repetition (AI-optimized FSRS algorithm)
 • vgrajena pretvorba besedila v govor
-• več kot 6000 vnaprej ustvarjenih kompletov
+• more than 10,000 premade decks
 • pripomoček napredka
 • podrobna statistika
 • sinhronizacija z AnkiWebom

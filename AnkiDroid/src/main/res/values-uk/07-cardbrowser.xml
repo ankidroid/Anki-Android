@@ -94,6 +94,7 @@
         <item>За складністю</item>
         <item>За кількістю повторень</item>
         <item>За кількістю забувань</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Обрати все</string>
     <string name="card_browser_select_none" maxLength="28">Зняти виділення</string>
@@ -130,5 +131,5 @@
     <string name="user_potential_columns">Доступні</string>
     <string name="include_column">Включити стовпець</string>
     <string name="exclude_column">Виключити стовпець</string>
-    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
+    <string name="browser_find_replace_loading_fields">Пошук назв полів&#8230;</string>
 </resources>
