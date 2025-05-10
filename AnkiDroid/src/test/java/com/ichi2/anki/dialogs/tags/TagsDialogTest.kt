@@ -18,15 +18,12 @@ package com.ichi2.anki.dialogs.tags
 import android.os.Bundle
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.BundleCompat
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.dialogs.utils.AnKingTags
-import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.RecyclerViewUtils
 import com.ichi2.ui.CheckBoxTriStates
@@ -47,7 +44,7 @@ class TagsDialogTest : RobolectricTest() {
     fun test_AddNewTag_shouldBeVisibleInRecyclerView_andSortedCorrectly() {
         val type = TagsDialog.DialogType.EDIT_TAGS
         val allTags = listOf("a", "b", "d", "e")
-        val checkedTags = listOf("a", "b")
+        val checkedTags = arrayListOf("a", "b")
         val args =
             TagsDialog(ParametersUtils.whatever())
                 .withTestArguments(type, checkedTags, allTags)
@@ -81,7 +78,7 @@ class TagsDialogTest : RobolectricTest() {
     fun test_AddNewTag_existingTag_shouldBeSelectedAndSorted() {
         val type = TagsDialog.DialogType.EDIT_TAGS
         val allTags = listOf("a", "b", "d", "e")
-        val checkedTags = listOf("a", "b")
+        val checkedTags = arrayListOf("a", "b")
         val args =
             TagsDialog(ParametersUtils.whatever())
                 .withTestArguments(type, checkedTags, allTags)
@@ -114,14 +111,13 @@ class TagsDialogTest : RobolectricTest() {
     fun test_checked_unchecked_indeterminate() {
         val type = TagsDialog.DialogType.EDIT_TAGS
         val expectedAllTags = listOf("a", "b", "d", "e")
-        val checkedTags = listOf("a", "b")
-        val uncheckedTags = listOf("b", "d")
-        val expectedCheckedTags = listOf("a")
+        val checkedTags = arrayListOf("a", "b")
+        val expectedCheckedTags = listOf("a", "b")
         val expectedUncheckedTags = listOf("d", "e")
-        val expectedIndeterminate = listOf("b")
+        val expectedIndeterminate = emptyList<String>()
         val args =
             TagsDialog(ParametersUtils.whatever())
-                .withTestArguments(type, checkedTags, uncheckedTags, expectedAllTags)
+                .withTestArguments(type, checkedTags, expectedAllTags)
                 .requireArguments()
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
@@ -170,7 +166,7 @@ class TagsDialogTest : RobolectricTest() {
                 "book",
             )
         val checkedTags =
-            listOf(
+            arrayListOf(
                 "fruit::pear::big",
                 "sport::tennis",
             )
@@ -218,7 +214,7 @@ class TagsDialogTest : RobolectricTest() {
     fun test_AddNewTag_newHierarchicalTag_pathToItShouldBeExpanded() {
         val type = TagsDialog.DialogType.EDIT_TAGS
         val allTags = listOf("common::speak", "common::speak::daily", "common::sport::tennis", "common::sport::football")
-        val checkedTags = listOf("common::speak::daily", "common::sport::tennis")
+        val checkedTags = arrayListOf("common::speak::daily", "common::sport::tennis")
         val args =
             TagsDialog(ParametersUtils.whatever())
                 .withTestArguments(type, checkedTags, allTags)
@@ -271,7 +267,7 @@ class TagsDialogTest : RobolectricTest() {
     fun test_AddNewTag_newHierarchicalTag_willUniformHierarchicalTag() {
         val type = TagsDialog.DialogType.EDIT_TAGS
         val allTags = listOf("common")
-        val checkedTags = listOf("common")
+        val checkedTags = arrayListOf("common")
         val args =
             TagsDialog(ParametersUtils.whatever())
                 .withTestArguments(type, checkedTags, allTags)
@@ -316,7 +312,7 @@ class TagsDialogTest : RobolectricTest() {
                 "common::sport::football::small",
             )
         val checkedTags =
-            listOf(
+            arrayListOf(
                 "common::speak::tennis",
                 "common::sport::tennis",
                 "common::sport::football::small",
@@ -360,7 +356,7 @@ class TagsDialogTest : RobolectricTest() {
     fun test_SearchTag_willInheritExpandState() {
         val type = TagsDialog.DialogType.FILTER_BY_TAG
         val allTags = listOf("common::speak", "common::sport::tennis")
-        val checkedTags = emptyList<String>()
+        val checkedTags = arrayListOf<String>()
         val args =
             TagsDialog(ParametersUtils.whatever())
                 .withTestArguments(type, checkedTags, allTags)
@@ -407,7 +403,7 @@ class TagsDialogTest : RobolectricTest() {
                 "common::sport::football",
                 "common::sport::football::small",
             )
-        val checkedTags = emptyList<String>()
+        val checkedTags = arrayListOf<String>()
         val args =
             TagsDialog(ParametersUtils.whatever())
                 .withTestArguments(type, checkedTags, allTags)
@@ -524,7 +520,7 @@ class TagsDialogTest : RobolectricTest() {
     fun test_SearchTag_spaceWillBeFilteredCorrectly() {
         val type = TagsDialog.DialogType.FILTER_BY_TAG
         val allTags = listOf("hello::world")
-        val checkedTags = emptyList<String>()
+        val checkedTags = arrayListOf<String>()
         val args =
             TagsDialog(ParametersUtils.whatever())
                 .withTestArguments(type, checkedTags, allTags)
@@ -568,7 +564,7 @@ class TagsDialogTest : RobolectricTest() {
 
         val args =
             TagsDialog(ParametersUtils.whatever())
-                .withTestArguments(type, emptyList(), allTags)
+                .withTestArguments(type, arrayListOf(), allTags)
                 .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
@@ -578,61 +574,22 @@ class TagsDialogTest : RobolectricTest() {
         }
     }
 
-    @Test
-    fun `huge number of tags`() {
-        val type = TagsDialog.DialogType.FILTER_BY_TAG
-        val allTags = AnKingTags.value
-
-        val args =
-            TagsDialog(ParametersUtils.whatever())
-                .withTestArguments(type, emptyList(), allTags)
-                .arguments
-        val mockListener = Mockito.mock(TagsDialogListener::class.java)
-        val factory = TagsDialogFactory(mockListener)
-        FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory).use { scenario ->
-            scenario.moveToState(Lifecycle.State.STARTED)
-            scenario.onFragment { f ->
-                val tagsFile =
-                    requireNotNull(
-                        BundleCompat.getParcelable(
-                            f.requireArguments(),
-                            "tagsFile",
-                            TagsFile::class.java,
-                        ),
-                    )
-
-                val dataFromArguments = tagsFile.getData()
-
-                assertThat(dataFromArguments.allTags, containsInAnyOrder(allTags))
-            }
-        }
-    }
-
     // these are called 'withTestArguments' due to "extension is shadowed by a member" warnings
     // this is needed so we can pass in 'targetContext' for context.cacheDir
     private fun TagsDialog.withTestArguments(
         type: TagsDialog.DialogType,
-        checkedTags: List<String>,
-        allTags: List<String>,
-    ) = withArguments(
-        context = targetContext,
-        type = type,
-        checkedTags = checkedTags,
-        allTags = allTags,
-    )
-
-    private fun TagsDialog.withTestArguments(
-        type: TagsDialog.DialogType,
-        checkedTags: List<String>,
-        uncheckedTags: List<String>?,
-        allTags: List<String>,
-    ) = withArguments(
-        context = targetContext,
-        type = type,
-        checkedTags = checkedTags,
-        uncheckedTags = uncheckedTags,
-        allTags = allTags,
-    )
+        checkedTags: ArrayList<String>,
+        allTags: Collection<String>,
+    ): TagsDialog {
+        val note = col.newNote()
+        col.tags.bulkAdd(listOf(note.id), allTags.joinToString(separator = " "))
+        col.addNote(note, 0L)
+        return withArguments(
+            context = targetContext,
+            type = type,
+            checkedTags = checkedTags,
+        )
+    }
 
     private fun runTagsDialogScenario(
         args: Bundle,

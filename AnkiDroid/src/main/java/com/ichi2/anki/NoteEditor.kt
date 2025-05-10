@@ -1605,18 +1605,13 @@ class NoteEditor :
     }
 
     private fun showTagsDialog() {
-        if (selectedTags == null) {
-            selectedTags = ArrayList(0)
-        }
-        val tags = ArrayList(getColUnsafe.tags.all())
-        val selTags = ArrayList(selectedTags!!)
+        val selTags = selectedTags?.let { ArrayList(it) } ?: arrayListOf()
         val dialog =
             with(requireContext()) {
                 tagsDialogFactory!!.newTagsDialog().withArguments(
                     context = this,
                     type = TagsDialog.DialogType.EDIT_TAGS,
                     checkedTags = selTags,
-                    allTags = tags,
                 )
             }
         showDialogFragment(dialog)
