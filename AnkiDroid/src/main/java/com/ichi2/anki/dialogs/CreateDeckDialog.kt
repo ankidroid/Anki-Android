@@ -245,16 +245,15 @@ class CreateDeckDialog(
     }
 
     fun renameDeck(newDeckName: String) {
-        val newName = newDeckName.replace("\"".toRegex(), "")
-        if (!Decks.isValidDeckName(newName)) {
+        if (!Decks.isValidDeckName(newDeckName)) {
             Timber.w("CreateDeckDialog::renameDeck not renaming deck to invalid name")
-            Timber.d("invalid deck name: %s", newName)
+            Timber.d("invalid deck name: %s", newDeckName)
             displayFeedback(context.getString(R.string.invalid_deck_name), Snackbar.LENGTH_LONG)
-        } else if (newName != previousDeckName) {
+        } else if (newDeckName != previousDeckName) {
             try {
                 val decks = getColUnsafe.decks
                 val deckId = decks.id(previousDeckName!!)
-                decks.rename(decks.get(deckId)!!, newName)
+                decks.rename(decks.get(deckId)!!, newDeckName)
                 onNewDeckCreated(deckId)
                 // 11668: Display feedback if a deck is renamed
                 displayFeedback(context.getString(R.string.deck_renamed))
