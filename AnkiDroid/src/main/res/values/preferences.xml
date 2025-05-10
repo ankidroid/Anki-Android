@@ -223,6 +223,7 @@
     <string name="pref_daily_backups_to_keep_key">daily_backups_to_keep</string>
     <string name="pref_weekly_backups_to_keep_key">weekly_backups_to_keep</string>
     <string name="pref_monthly_backups_to_keep_key">monthly_backups_to_keep</string>
+    <string name="pref_backup_directory_key">backup_directory</string>
 
     <!-- Reviewer options -->
     <string name="hide_system_bars_key">hideSystemBars</string>
