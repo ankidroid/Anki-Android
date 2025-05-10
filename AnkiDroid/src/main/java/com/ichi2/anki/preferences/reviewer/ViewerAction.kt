@@ -26,6 +26,7 @@ import com.ichi2.anki.preferences.reviewer.MenuDisplayType.ALWAYS
 import com.ichi2.anki.preferences.reviewer.MenuDisplayType.DISABLED
 import com.ichi2.anki.preferences.reviewer.MenuDisplayType.MENU_ONLY
 import com.ichi2.anki.reviewer.Binding
+import com.ichi2.anki.reviewer.Binding.AppDefinedModifierKeys
 import com.ichi2.anki.reviewer.Binding.ModifierKeys
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
@@ -234,7 +235,7 @@ enum class ViewerAction(
 
     private fun unicode(
         unicodeChar: Char,
-        keys: ModifierKeys = ModifierKeys.none(),
+        keys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
         side: CardSide = CardSide.BOTH,
     ): ReviewerBinding {
         val binding = Binding.unicode(unicodeChar, keys)
