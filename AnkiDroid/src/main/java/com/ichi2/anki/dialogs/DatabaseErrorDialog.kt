@@ -39,6 +39,7 @@ import com.ichi2.anki.DatabaseRestorationListener
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.LocalizedUnambiguousBackupTimeFormatter
 import com.ichi2.anki.R
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_CONFIRM_RESTORE_BACKUP
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_DB_ERROR
@@ -60,7 +61,6 @@ import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.libanki.Consts
-import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.UiUtil.makeBold
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.copyToClipboard

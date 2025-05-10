@@ -28,6 +28,7 @@ import anki.notetypes.StockNotetype
 import anki.notetypes.copy
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.withProgress
 import com.ichi2.libanki.Utils
@@ -37,7 +38,6 @@ import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.getNotetype
 import com.ichi2.libanki.getNotetypeNames
 import com.ichi2.libanki.getStockNotetype
-import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.customView
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton

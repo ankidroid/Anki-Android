@@ -33,6 +33,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand.FLIP_OR_ANSWER_EASE1
 import com.ichi2.anki.cardviewer.ViewerCommand.MARK
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.PreferenceTestUtils
@@ -46,7 +47,6 @@ import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.undoableOp
-import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
