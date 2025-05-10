@@ -113,7 +113,9 @@ data class DeckNode(
             return
         }
 
-        if (collapsed) {
+        // When searching, ignore collapsed state and always search children
+        val searching = filter != null
+        if (collapsed && !searching) {
             return
         }
 
