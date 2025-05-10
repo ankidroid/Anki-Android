@@ -10,9 +10,9 @@ Lägg till material genom skrivbordsprogrammet Anki eller direkt via AnkiDroid. 
 
 ★ Huvudfunktioner:
 • fungerande innehåll för flashkort: text, bilder, ljud och LaTeX
-• intervallbaserad repetition (supermemo 2-algoritm)
+• spaced repetition (AI-optimized FSRS algorithm)
 • text-till-tal-integration
-• mer än 6000 tillgängliga kortlekar
+• more than 10,000 premade decks
 • widget som visar dina framsteg
 • detaljerad statistik
 • synkronisering med AnkiWeb

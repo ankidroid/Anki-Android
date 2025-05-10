@@ -85,6 +85,7 @@
         <item>난이도</item>
         <item>복습</item>
         <item>오답 횟수</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">모두 선택하기</string>
     <string name="card_browser_select_none" maxLength="28">모두 선택하지 않기</string>

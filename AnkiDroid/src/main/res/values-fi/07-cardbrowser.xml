@@ -88,6 +88,7 @@
         <item>Helppouden mukaan</item>
         <item>Kertauksien mukaan</item>
         <item>Virheiden määrän mukaan</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Valitse kaikki</string>
     <string name="card_browser_select_none" maxLength="28">Poista kaikki valinnat</string>

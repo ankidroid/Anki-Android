@@ -85,6 +85,7 @@
         <item>按简易度排序</item>
         <item>按复习时间排序</item>
         <item>按遗忘次数排序</item>
+        <item>按牌组名称</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">全选</string>
     <string name="card_browser_select_none" maxLength="28">取消全选</string>

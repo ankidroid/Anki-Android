@@ -10,9 +10,9 @@ Aggiungi materiale con l'applicazione per desktop Anki o direttamente con AnkiDr
 
 ★ Caratteristiche principali:
 • contenuti delle carte supportati: testo, immagini, audio, LaTeX
-• ripetizioni spaziate (algoritmo supermemo 2)
+• spaced repetition (AI-optimized FSRS algorithm)
 • integrazione sintesi vocale
-• più di 6000 mazzi preconfezionati
+• more than 10,000 premade decks
 • widget con progresso
 • statistiche dettagliate
 • sincronizzazione con AnkiWeb

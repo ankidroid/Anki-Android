@@ -88,6 +88,7 @@
         <item>સરળતા દ્વારા</item>
         <item>સમીક્ષાઓ દ્વારા</item>
         <item>ક્ષતિઓ દ્વારા</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">બધા પસંદ કરો</string>
     <string name="card_browser_select_none" maxLength="28">કોઈ પસંદ કરો</string>

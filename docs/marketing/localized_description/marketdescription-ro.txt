@@ -46,9 +46,9 @@ Adaugă informațiile dorite cu ajutorul aplicației pentru desktop Anki, sau di
 
 ★ Caracteristici principale:
 • conținutul suportat: text, imagine, sunete, Latex
-• repetiție spațiată (algoritmul supermemo 2)
+• spaced repetition (AI-optimized FSRS algorithm)
 • integrare text-to-speech
-• >6000 pachete deja făcute
+• more than 10,000 premade decks
 • widget ce indică progresul și timpul rămas
 • statistici detaliate
 • sincronizare cu AnkiWeb

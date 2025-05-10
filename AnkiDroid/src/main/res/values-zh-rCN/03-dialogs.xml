@@ -49,7 +49,7 @@
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">删除牌组</string>
     <string name="delete_deck_title">删除该牌组？</string>
     <plurals name="delete_deck_message">
-        <item quantity="other">删除%1$s的所有卡片吗？它包含%2$d张卡片。</item>
+        <item quantity="other">删除 %1$s 中包含的 %2$d 张卡牌吗？</item>
     </plurals>
     <string name="delete_cram_deck_message">删除筛选过的牌组 %s 并将所有卡片发回原牌组？</string>
     <string name="no_tts_available_message">没有可用的文字转语音（TTS）语言</string>
@@ -62,10 +62,10 @@
     <string name="answering_error_title">数据库错误</string>
     <string name="answering_error_message">写入集合时出错。可能是数据库损坏，或者磁盘空间不足。\n\n如果频繁发生此错误，请检查数据库，修复集合或从备份中恢复。点击\"选项\"按钮以执行上述操作。\n\n当然，也可能只是 AnkiDroid 的 bug，请报告这个错误，我们会尽力解决。</string>
     <string name="answering_error_report">报告错误</string>
-    <string name="storage_full_message">没有足够的可用存储空间来打开AnkiDroid。释放一些空间以继续。</string>
+    <string name="storage_full_message">没有足够的可用存储空间来打开 AnkiDroid。释放一些空间以继续。</string>
     <string name="repair_deck_dialog">确实要尝试修复数据库吗？\n\n在开始前，副本将保存在子目录“%s”里。</string>
     <string name="intent_aedict_empty">类别“默认”为空</string>
-    <string name="intent_aedict_category">向AnkiDroid中添加卡牌，需要删除所有NotePad类别，或者添加“默认(default)”类别。</string>
+    <string name="intent_aedict_category">向 AnkiDroid 中添加卡牌需要删除所有 Notepad 类别，或者添加“默认”类别。</string>
     <string name="custom_study_new_extend">增加/减少（“-3”）今天的新卡片限制</string>
     <string name="custom_study_rev_extend">增加/减少（“-3”）今天的复习卡片限制</string>
     <string name="custom_study_forgotten">复习过去 x 天中忘记的卡片：</string>
@@ -73,11 +73,11 @@
     <string name="custom_study_preview">预览过去 x 天中新增的卡片：</string>
     <string name="custom_study_tags">从牌组中选择 x 张卡片：</string>
     <string name="storage_full_title">存储空间已满</string>
-    <string name="storage_almost_full_title">存储空间几乎满了</string>
+    <string name="storage_almost_full_title">存储空间快满了</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">没有空间</string>
-    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid 需要 %s 可用存储空间来继续。请清除一些空间</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid 需要 %s 可用存储空间来继续。请释放一些空间</string>
     <string name="restore_backup_title">恢复备份？</string>
-    <string name="restore_backup">你的牌组集合将会被替换成一个旧的副本，任何未保存的进程都将丢失。</string>
+    <string name="restore_backup">你的集合将会被替换成一个旧的副本，任何未保存的内容都将丢失。</string>
     <string name="restore_backup_choose_another">选择另一个</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_ok">确定</string>
@@ -101,7 +101,7 @@
     <string name="dialog_updated_custom_certificate">证书已更新</string>
     <!-- Media checking -->
     <string name="check_media_title">是否检查媒体？</string>
-    <string name="check_media_warning">如果媒体数据较多，检查媒体文件可能会需要较长的时间</string>
+    <string name="check_media_warning">如果集合中媒体文件较多，可能会需要较长的时间</string>
     <string name="check_media_message">正在检查媒体文件&#8230;</string>
     <string name="check_media_adding_missing_tag">正在添加标签&#8230;</string>
     <string name="check_media_tags_added">标签已添加</string>
@@ -120,10 +120,10 @@
     <string name="multimedia_editor_audio_permission_refused">无法获取麦克风权限。</string>
     <string name="multimedia_editor_failed">打开多媒体编辑器失败</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">音频录制权限被拒绝</string>
+    <string name="multimedia_editor_audio_permission_denied">录音权限被拒绝</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid 已升级</string>
-    <string name="integrity_check_startup_content">AnkiDroid 已升级。此升级包括可能出现数据库问题的修复，我们建议您现在开始检查数据库。</string>
+    <string name="integrity_check_startup_content">AnkiDroid 已升级。此升级可能修复了一些数据库问题，我们建议您现在开始检查数据库。</string>
     <string name="integrity_check_continue_anyway">仍要继续</string>
     <string name="integrity_check_insufficient_space">检查数据库使用大量临时存储。\n\n强烈建议您在继续之前在设备上至少有 %s 可用空间。</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n您当前有 %s 可用。</string>
@@ -135,7 +135,7 @@
     <string name="database_locked_title">数据库已锁定</string>
     <string name="database_locked_summary">AnkiDroid 数据库正在被另一个应用程序使用。请关闭另一个应用程序然后重新打开 AnkiDroid。</string>
     <string name="incompatible_database_version_title">不兼容的数据库版本</string>
-    <string name="incompatible_database_version_summary">数据库的版本比当前 AnkiDroid 能处理的版本更高。升级 AnkiDroid 或降级数据库以打开它\n\n受支持的版本：%1$d\n数据库版本：%2$d\n\n以下恢复选项将覆盖您当前的收藏，可能有兼容的数据库版本：</string>
+    <string name="incompatible_database_version_summary">数据库的版本比当前 AnkiDroid 兼容的版本更高。升级 AnkiDroid 或降级数据库以打开它\n\n兼容的版本：%1$d\n数据库版本：%2$d\n\n以下恢复选项将覆盖您当前的集合，可能有兼容的数据库版本：</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">已应用背景图片</string>
     <string name="background_image_removed">已移除背景图片</string>
@@ -195,13 +195,13 @@
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">打开包含今天要查看的卡片数量的牌组概览页。</string>
     <string name="import_deck_package">牌组包（.apkg）</string>
-    <string name="import_collection_package">收藏包（.colpkg）</string>
+    <string name="import_collection_package">集合文件（.colpkg）</string>
     <string name="import_csv">文本文件(.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">您不能为所有牌组创建子牌组</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">备份你的牌组集</string>
-    <string name="backup_collection_message">您有一段时间没有备份您的牌组集了。您应该立即备份以防止数据丢失。</string>
+    <string name="backup_your_collection">备份你的集合</string>
+    <string name="backup_collection_message">您有一段时间没有备份您的集合了。您应该立即备份以防止数据丢失。</string>
     <string name="button_backup" maxLength="41">备份</string>
     <string name="button_disable_reminder">禁用提醒</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">稍后</string>

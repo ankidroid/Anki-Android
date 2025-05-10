@@ -100,6 +100,7 @@
         <item>حسب السهولة</item>
         <item>حسب المراجعات</item>
         <item>حسب السقطات</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">تحديد الكل</string>
     <string name="card_browser_select_none" maxLength="28">إلغاء التحديد</string>
@@ -133,7 +134,7 @@
         <item quantity="other">حُذِفت %d بطاقة</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">نافذة تعديل الوسوم</string>
     <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">إظهار مربع حوار الطلب</string>
     <!-- Manage columns dialog -->
     <string name="browse_manage_columns_main_heading">أعمدة</string>
@@ -142,5 +143,5 @@
     <string name="user_potential_columns">متوفر</string>
     <string name="include_column">إضافة عمود</string>
     <string name="exclude_column">استخراج عمود</string>
-    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
+    <string name="browser_find_replace_loading_fields">تُسترجع أسماء الحقول&#8230;</string>
 </resources>

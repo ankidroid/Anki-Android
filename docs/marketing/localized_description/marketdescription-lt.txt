@@ -10,9 +10,9 @@ Naują medžiagą galite suvesti naudodami kompiuterinę „Anki“ versiją arb
 
 ★ Pagrindinės savybės:
 • palaiko tekstinį, vaizdinį, garsinį ir LaTeX turinį
-• intervalinis kartojimasis (naudojant „SuperMemo 2“ algoritmą) 
+• spaced repetition (AI-optimized FSRS algorithm)
 • integruotas teksto pavertimas garsu
-• daugiau nei 6000 siūlomų rinkinių
+• more than 10,000 premade decks
 • pažangos stebėjimo valdiklis
 • išsami statistika
 • sinchronizavimas su „AnkiWeb“

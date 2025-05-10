@@ -10,9 +10,9 @@ AnkiDroidを使えば、いつでも、どこでも、どんなことでも、�
 
 ★主な特徴・機能：
 • カードの内容に画像、音声、動画、LaTeX が使用可能
-• 間隔反復学習システム（supermemo 2 アルゴリズム) 
+• spaced repetition (AI-optimized FSRS algorithm)
 • テキスト読み上げ（Text-to-Speech）機能
-• 6000種類以上の作成済みデッキが利用可能
+• more than 10,000 premade decks
 • 学習進捗状況ウィジェット
 • 詳細な統計情報の表示
 • AnkiのクラウドサービスAnkiWebおよび他端末との同期

@@ -10,9 +10,9 @@ Añade contenido mediante la aplicación de escritorio Anki o directamente media
 
 ★ Características clave:
 • contenidos de tarjeta soportados: texto, imágenes, sonidos, LaTeX
-• repaso espaciado (algoritmo de SuperMemo 2)
+• spaced repetition (AI-optimized FSRS algorithm)
 • integración de texto a voz
-• más de 6000 mazos prediseñados
+• more than 10,000 premade decks
 • widget de progreso
 • estadísticas detalladas
 • sincronización con AnkiWeb

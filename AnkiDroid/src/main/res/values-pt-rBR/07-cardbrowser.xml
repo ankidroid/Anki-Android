@@ -88,6 +88,7 @@
         <item>Por retenção</item>
         <item>Por revisões</item>
         <item>Por falhas</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Selecionar todos</string>
     <string name="card_browser_select_none" maxLength="28">Desselecionar todos</string>
@@ -118,5 +119,5 @@
     <string name="user_potential_columns">Disponível</string>
     <string name="include_column">Incluir coluna</string>
     <string name="exclude_column">Excluir coluna</string>
-    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
+    <string name="browser_find_replace_loading_fields">Recuperando nomes de campos&#8230;</string>
 </resources>

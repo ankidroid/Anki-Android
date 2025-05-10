@@ -10,9 +10,9 @@ Přidání učebního materiálu prostřednictvím aplikace Anki nebo přímo p�
 
 ★ Klíčové funkce:
 • podporovaný obsah kartiček: text, obrázky, zvuky, LaTeX
-• rozložené opakování (spaced repetition - algoritmus z programu Supermemo 2)
+• spaced repetition (AI-optimized FSRS algorithm)
 • integrované předčítání textu
-• více než 6000 již vytvořených znalostních balíčků
+• more than 10,000 premade decks
 • widget postupu
 • podrobné statistiky
 • synchronizace s AnkiWeb

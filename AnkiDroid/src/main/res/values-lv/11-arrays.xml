@@ -52,13 +52,13 @@
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Vispirms vissenāk redzētās</string>
     <string name="cram_deck_conf_order_random">Nejauši</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Increasing intervals</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Decreasing intervals</string>
+    <string name="cram_deck_conf_order_increasing_intervals">Starplaiku palielināšanās</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">Starplaiku samazināšanās</string>
     <string name="cram_deck_conf_order_most_lapsed">Visvairāk atmestās</string>
     <string name="cram_deck_conf_order_order_added">Pievienošanas secības</string>
-    <string name="cram_deck_conf_order_order_due">Order due</string>
+    <string name="cram_deck_conf_order_order_due">Laika pienākšanas secības</string>
     <string name="cram_deck_conf_order_latest_added_first">Vispirms pēdējās pievienotās</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
+    <string name="cram_deck_conf_order_relative_overdueness">Cik daudz laika ir pagājis kopš laika pienākšanas</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Izmantot pašreizējo kavu</string>
     <string name="add_to_deck_decide_by_note_type">Izlemt pēc piezīmes veida</string>

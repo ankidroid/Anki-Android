@@ -10,9 +10,9 @@ Lisää materiaalia työpöytäsovelluksen (Anki) kautta tai suoraan AnkiDroidis
 
 ★ Pääominaisuudet:
 • tuetut sisältömuodot: teksti, kuvat, äänet, LaTeX-merkinnät
-• aikavälitoisto (supermemo 2 -algoritmi)
+• spaced repetition (AI-optimized FSRS algorithm)
 • tekstistä puheeksi -tuki
-• yli 6000 valmista pakkaa
+• more than 10,000 premade decks
 • widget edistymiseen
 • yksityiskohtaiset tilastot
 • synkronointi AnkiWebin kanssa

@@ -85,6 +85,7 @@
         <item>Bởi dễ dàng</item>
         <item>Bởi ôn tập</item>
         <item>Bởi nhầm lẫn/sai sót</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Chọn tất cả</string>
     <string name="card_browser_select_none" maxLength="28">Không chọn</string>

@@ -10,9 +10,9 @@ Añada material a través de la aplicación de escritorio Anki o directamente a 
 
 ★ Características centrales:
 • contenidos soportados por las tarjetas flash: texto, imágenes, sonidos, LaTeX
-• repetición espaciada (algoritmo supermemo 2)
+• spaced repetition (AI-optimized FSRS algorithm)
 • integración texto-a-voz
-• más de 6000 mazos precompilados
+• more than 10,000 premade decks
 • widget de progreso
 • estadísticas detalladas
 • sincronización con AnkiWeb

@@ -10,9 +10,9 @@ Dodawaj materiał za pomocą desktopowego programu Anki lub bezpośrednio w Anki
 
 ★ Podstawowe cechy:
 • karty mogą zawierać: tekst, obrazki, dźwięki, LaTeX
-• planowane powtórki (algorytm supermemo 2)
+• spaced repetition (AI-optimized FSRS algorithm)
 • obsługa syntezy mowy
-• ponad 6000 gotowych talii
+• more than 10,000 premade decks
 • widok postępu w widżecie
 • szczegółowe statystyki
 • synchronizacja z AnkiWeb

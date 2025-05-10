@@ -214,7 +214,7 @@
     <string name="media_import_allow_all_files_summ">შემთხვევებისთვის, როცა AnkiDroid ვერ ცნობს გარკვეულ მედიაფაილებს</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">სინქრონიზაციის სხვა სერვერი</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">არ არის გამოყენებაში</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">არაა გამოყენებული</string>
     <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
         you may use your own server for synchronization.
         If not set, the default AnkiWeb server will be used instead.

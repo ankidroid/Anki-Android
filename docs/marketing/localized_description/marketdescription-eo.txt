@@ -10,9 +10,9 @@ Aldonu lern-enhavon per komputila programo Anki aŭ senpere per AnkiDroid. La ap
 
 ★ Ĉefaj eblaĵoj:
 • subtenata enhavo por kartoj: teksto; bildoj, sonoj, LateX
-• plani ripetojn laŭ algoritmo “supermemo 2”
+• spaced repetition (AI-optimized FSRS algorithm)
 • tekst-al-voĉo
-• pli ol 6000 antaŭ-kreitaj kartaroj
+• more than 10,000 premade decks
 • progresa fenestraĵo
 • detala statistiko
 • samtempigo kun AnkiWeb

@@ -88,6 +88,7 @@
         <item>სიმარტივეს მიხედვით</item>
         <item>გადახედვის სიხშირის მიხედვით</item>
         <item>გადავიწყების სიხშირის მიხედვით</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">ყველას მონიშვნა</string>
     <string name="card_browser_select_none" maxLength="28">არცერთის მონიშვნა</string>

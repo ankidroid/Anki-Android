@@ -10,9 +10,9 @@ Voeg materiaal toe via de desktopapplicatie Anki of rechtstreeks via AnkiDroid. 
 
 ★ Belangrijkste functies:
 • flitskaarten maken met tekst, afbeeldingen, geluiden en LaTeX
-• gespreide herhaling (supermemo 2-algoritme)
+• spaced repetition (AI-optimized FSRS algorithm)
 • tekst-naar-spraak integratie
-• meer dan 6000 kant-en-klare leersets
+• more than 10,000 premade decks
 • voortgangswidget
 • gedetailleerde statistieken
 • synchronisatie met AnkiWeb

@@ -91,6 +91,7 @@
         <item>по сложености</item>
         <item>по броју прегледа</item>
         <item>по круговима</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Select all</string>
     <string name="card_browser_select_none" maxLength="28">Select none</string>

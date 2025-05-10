@@ -10,9 +10,9 @@ Tambah bahan melalui aplikasi desktop Anki atau terus melalui AnkiDroid. Aplikas
 
 ★ Ciri-ciri utama:
 • kandungan kad imbasan yang disokong: teks, gambar, audio, LaTeX
-• ulangan jarak (algoritma supermemo 2)
+• spaced repetition (AI-optimized FSRS algorithm)
 • integrasi teks-ke-ucapan
-• lebih dari 6000 dek prabuatan
+• more than 10,000 premade decks
 • widget kemajuan
 • statistik terperinci
 • segerak ke AnkiWeb

@@ -10,9 +10,9 @@ AnkiDroid 會在你快要忘記之前讓單字卡再次出現以實現高效學�
 
 ★ 主要功能：
 • 支援的單字卡內容： 文字、 圖像、 聲音、 LaTeX
-• 間隔式複習 (supermemo 2 演算法)
+• spaced repetition (AI-optimized FSRS algorithm)
 • 整合文字轉語音功能
-• 超過 6000 個預製的牌組
+• more than 10,000 premade decks
 • 進度小工具
 • 詳細的統計資料
 • 與 AnkiWeb 進行同步

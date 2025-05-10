@@ -85,6 +85,7 @@
         <item>易しさ順</item>
         <item>学習回数順</item>
         <item>復習での忘却回数順</item>
+        <item>By deck name</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">すべて選択</string>
     <string name="card_browser_select_none" maxLength="28">選択をすべて解除</string>

@@ -10,9 +10,9 @@ Annanghe materiale pro mèdiu de s'aplicatzione de iscrivania Anki o diretamente
 
 ★ Funtzionalidades printzipales:
 • cuntenutos suportados pro sas cartas mnemònicas: testu, immàgines, sonos, LaTeX
-• ripetitzione ispatziada (algoritmu supermemo 2)
+• spaced repetition (AI-optimized FSRS algorithm)
 • integratzione de sa sìntesi vocale (TTS)
-• prus de 6000 matzos giai prontos
+• more than 10,000 premade decks
 • widget de progressu
 • istatìsticas a sa minuda
 • sincronizatzione cun AnkiWeb
