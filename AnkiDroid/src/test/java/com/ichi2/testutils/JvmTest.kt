@@ -19,10 +19,10 @@ package com.ichi2.testutils
 import android.annotation.SuppressLint
 import androidx.annotation.CallSuper
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage
-import com.ichi2.libanki.utils.TimeManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain

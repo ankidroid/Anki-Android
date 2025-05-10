@@ -27,8 +27,8 @@ import android.provider.MediaStore
 import androidx.core.content.ContentResolverCompat
 import androidx.core.net.toUri
 import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.utils.getTimestamp
-import com.ichi2.libanki.utils.TimeManager
 import timber.log.Timber
 import java.io.File
 import java.io.IOException

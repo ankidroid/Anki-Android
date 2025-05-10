@@ -30,6 +30,7 @@ import androidx.core.content.edit
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.ExportReadyDialog.ExportReadyDialogListener
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.preferences.sharedPrefs
@@ -40,7 +41,6 @@ import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.utils.TimeManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber

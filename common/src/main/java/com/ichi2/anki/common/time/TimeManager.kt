@@ -14,7 +14,7 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.libanki.utils
+package com.ichi2.anki.common.time
 
 import android.annotation.SuppressLint
 import androidx.annotation.VisibleForTesting
