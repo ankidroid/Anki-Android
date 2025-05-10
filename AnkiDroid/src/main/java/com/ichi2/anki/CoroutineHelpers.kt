@@ -32,6 +32,8 @@ import androidx.lifecycle.viewModelScope
 import anki.collection.Progress
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.dialogs.AnkiProgressDialogFragment
+import com.ichi2.anki.dialogs.AnkiProgressManager
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Collection
@@ -319,6 +321,12 @@ suspend fun <T> Backend.withProgress(
  *
  * Starts the progress dialog after 600ms so that quick operations don't just show
  * flashes of a dialog.
+ *
+ * @deprecated This method uses the deprecated ProgressDialog API which has been
+ * replaced in favor of DialogFragment since API level 26 (Android 8.0). The
+ * ProgressDialog class has several issues including improper handling of
+ * configuration changes and non-compliance with Material Design guidelines. Use
+ * [withProgressV2] which uses DialogFragment instead.
  */
 suspend fun <T> FragmentActivity.withProgress(
     extractProgress: ProgressContext.() -> Unit,
@@ -354,6 +362,12 @@ suspend fun <T> FragmentActivity.withProgress(
  *
  * Starts the progress dialog after 600ms so that quick operations don't just show
  * flashes of a dialog.
+ *
+ * @deprecated This method uses the deprecated ProgressDialog API which has been
+ * replaced in favor of DialogFragment since API level 26 (Android 8.0). The
+ * ProgressDialog class has several issues including improper handling of
+ * configuration changes and non-compliance with Material Design guidelines. Use
+ * [withProgressV2] which uses DialogFragment instead.
  */
 suspend fun <T> Activity.withProgress(
     message: String = resources.getString(R.string.dialog_processing),
@@ -453,6 +467,111 @@ suspend fun <T> withProgressDialog(
         }
     }
 
+/**
+ * Shows a progress dialog while executing the provided operation,
+ * using a DialogFragment-based implementation that handles
+ * configuration changes and provides a consistent UI.
+ *
+ * @param extractProgress Function to extract progress information from backend
+ * @param onCancel Optional callback when dialog is canceled that receives Backend instance
+ * @param manualCancelButton Optional resource ID for manual cancel button
+ * @param op The operation to execute
+ * @return The result of the operation
+ * @see AnkiProgressManager.withProgress
+ */
+suspend fun <T> FragmentActivity.withProgressV2(
+    extractProgress: ProgressContext.() -> Unit,
+    onCancel: ((Backend) -> Unit)? = { it.setWantsAbort() },
+    @StringRes manualCancelButton: Int? = null,
+    cancelableViaBackButton: Boolean = false,
+    op: suspend () -> T,
+): T {
+    val backend = CollectionManager.getBackend()
+    return AnkiProgressManager.withProgress(
+        activity = this,
+        message = "", // Will be updated based on progress
+        cancelableViaBackButton = cancelableViaBackButton,
+        cancelButtonTextResId = manualCancelButton,
+        onCancel = onCancel?.let { { it(backend) } },
+        op = { dialog ->
+            backend.withProgress(
+                extractProgress = extractProgress,
+                updateUi = { updateDialogV2(dialog) },
+            ) {
+                op()
+            }
+        },
+    )
+}
+
+/**
+ * Shows a progress dialog with the specified message while executing
+ * the provided operation.
+ *
+ * Uses a DialogFragment-based implementation that handles configuration
+ * changes properly.
+ *
+ * @param message Text to display in the progress dialog
+ * @param op The operation to execute
+ * @return The result of the operation
+ * @see AnkiProgressManager.withProgress
+ */
+suspend fun <T> FragmentActivity.withProgressV2(
+    message: String = resources.getString(R.string.dialog_processing),
+    op: suspend () -> T,
+): T =
+    AnkiProgressManager.withProgress(
+        activity = this,
+        message = message,
+        op = { op() },
+    )
+
+/**
+ * Shows a progress dialog with the specified message while executing
+ * the provided operation.
+ *
+ * Fragment extension that delegates to the parent Activity's implementation.
+ *
+ * @param message Text to display in the progress dialog
+ * @param block The operation to execute
+ * @return The result of the operation
+ * @see FragmentActivity.withProgressV2
+ */
+suspend fun <T> Fragment.withProgressV2(
+    message: String = getString(R.string.dialog_processing),
+    block: suspend () -> T,
+): T = requireActivity().withProgressV2(message, block)
+
+/**
+ * Shows a progress dialog with the specified string resource ID as message
+ * while executing the provided operation.
+ *
+ * @param messageId Resource ID for the dialog message text
+ * @param block The operation to execute
+ * @return The result of the operation
+ * @see FragmentActivity.withProgressV2
+ */
+suspend fun <T> FragmentActivity.withProgressV2(
+    @StringRes messageId: Int,
+    block: suspend () -> T,
+): T = withProgressV2(resources.getString(messageId), block)
+
+/**
+ * Shows a progress dialog with the specified string resource ID as message
+ * while executing the provided operation.
+ *
+ * Fragment extension that delegates to the parent Activity's implementation.
+ *
+ * @param messageId Resource ID for the dialog message text
+ * @param block The operation to execute
+ * @return The result of the operation
+ * @see FragmentActivity.withProgressV2
+ */
+suspend fun <T> Fragment.withProgressV2(
+    @StringRes messageId: Int,
+    block: suspend () -> T,
+): T = requireActivity().withProgressV2(messageId, block)
+
 private fun dismissDialogIfShowing(dialog: Dialog) {
     try {
         if (dialog.isShowing) {
@@ -511,6 +630,19 @@ private fun ProgressContext.updateDialog(dialog: android.app.ProgressDialog) {
         } ?: ""
     @Suppress("Deprecation") // ProgressDialog deprecation
     dialog.setMessage(text + progressText)
+}
+
+/**
+ * Extension function for ProgressContext to update an AnkiProgressDialogFragment
+ * when there's any update in the progress
+ */
+private fun ProgressContext.updateDialogV2(dialog: AnkiProgressDialogFragment) {
+    val progressText = text
+    dialog.updateMessage(progressText)
+
+    amount?.let { (current, max) ->
+        dialog.updateProgress(current, max)
+    }
 }
 
 /**
