@@ -321,7 +321,7 @@ class ReviewerNoParamTest : RobolectricTest() {
 
     private fun startReviewerFullScreen(): ReviewerExt {
         val sharedPrefs = targetContext.sharedPrefs()
-        setPreference(sharedPrefs, FullScreenMode.BUTTONS_ONLY)
+        setPreference(sharedPrefs, FullScreenMode.BUTTONS_AND_MENU_ONLY)
         return ReviewerTest.startReviewer(this, ReviewerExt::class.java)
     }
 
