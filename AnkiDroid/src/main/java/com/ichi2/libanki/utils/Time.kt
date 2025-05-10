@@ -15,13 +15,11 @@
  */
 package com.ichi2.libanki.utils
 
-import com.ichi2.libanki.DB
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.GregorianCalendar
 import java.util.Locale
 import java.util.TimeZone
-import kotlin.math.max
 import java.sql.Date as SqlDate
 import java.util.Date as UtilDate
 
@@ -41,35 +39,6 @@ abstract class Time {
         val cal = Calendar.getInstance()
         cal.time = currentDate
         return cal
-    }
-
-    /** Gregorian calendar for this date  */
-    fun gregorianCalendar(): GregorianCalendar {
-        val cal = GregorianCalendar()
-        cal.time = currentDate
-        return cal
-    }
-
-    /** Return a non-conflicting timestamp for table.  */
-    fun timestampID(
-        db: DB,
-        table: String,
-    ): Long {
-        // be careful not to create multiple objects without flushing them, or they
-        // may share an ID.
-        var t = intTimeMS()
-        while (db.queryScalar("SELECT id FROM $table WHERE id = ?", t) != 0) {
-            t += 1
-        }
-        return t
-    }
-
-    /** Return the first safe ID to use.  */
-    fun maxID(db: DB): Long {
-        var now = intTimeMS()
-        now = max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"))
-        now = max(now, db.queryLongScalar("SELECT MAX(id) FROM notes"))
-        return now + 1
     }
 
     /**
