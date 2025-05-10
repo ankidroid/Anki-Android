@@ -113,9 +113,13 @@ data class DeckNode(
             return
         }
 
-        if (collapsed) {
+        // When searching, ignore collapsed state and always search children
+        val searching = filter != null
+        if (collapsed && !searching) {
             return
         }
+        // TODO: Fix collapse/uncollapse icons showing during search even when they are not usable.
+        //       See issue #18379 for more details.
 
         if (node.level > 0) {
             list.append(this)
