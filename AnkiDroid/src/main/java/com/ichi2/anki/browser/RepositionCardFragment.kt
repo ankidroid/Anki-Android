@@ -16,7 +16,9 @@
 package com.ichi2.anki.browser
 
 import android.app.Dialog
+import android.content.res.Configuration
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -29,6 +31,7 @@ import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.utils.ext.window
 import com.ichi2.utils.create
 import com.ichi2.utils.customView
 import com.ichi2.utils.negativeButton
@@ -54,6 +57,13 @@ class RepositionCardFragment : DialogFragment() {
             TR.browsingStartPosition().removeSuffix(":")
         dialogView.findViewById<TextInputLayout>(R.id.step_input_layout).hint =
             TR.browsingStep().removeSuffix(":")
+
+        val startInputEditText = dialogView.findViewById<TextInputEditText>(R.id.start_input)
+        val stepInputEditText = dialogView.findViewById<TextInputEditText>(R.id.step_input)
+
+        startInputEditText.requestFocus()
+        startInputEditText.selectAll()
+
         val randomCheck =
             dialogView.findViewById<CheckBox>(R.id.randomize_order_check)?.apply {
                 text = TR.browsingRandomizeOrder()
@@ -68,30 +78,36 @@ class RepositionCardFragment : DialogFragment() {
             TR
                 .browsingRepositionNewCards()
                 .toSentenceCase(requireContext(), R.string.sentence_reposition_new_cards)
-        return AlertDialog.Builder(requireContext()).create {
-            title(text = title)
-            customView(dialogView)
-            negativeButton(R.string.dialog_cancel)
-            positiveButton(R.string.dialog_ok) {
-                val position =
-                    dialogView
-                        .findViewById<TextInputEditText>(R.id.start_input)
-                        .textAsIntOrNull() ?: return@positiveButton
-                val step =
-                    dialogView
-                        .findViewById<TextInputEditText>(R.id.step_input)
-                        ?.textAsIntOrNull() ?: return@positiveButton
-                setFragmentResult(
-                    REQUEST_REPOSITION_NEW_CARDS,
-                    bundleOf(
-                        ARG_POSITION to position,
-                        ARG_STEP to step,
-                        ARG_RANDOM to randomCheck.isChecked,
-                        ARG_SHIFT to shiftPositionCheck.isChecked,
-                    ),
-                )
+        val dialog =
+            AlertDialog.Builder(requireContext()).create {
+                title(text = title)
+                customView(dialogView)
+                negativeButton(R.string.dialog_cancel)
+                positiveButton(R.string.dialog_ok) {
+                    val position =
+                        startInputEditText.textAsIntOrNull() ?: return@positiveButton
+                    val step =
+                        stepInputEditText.textAsIntOrNull() ?: return@positiveButton
+                    setFragmentResult(
+                        REQUEST_REPOSITION_NEW_CARDS,
+                        bundleOf(
+                            ARG_POSITION to position,
+                            ARG_STEP to step,
+                            ARG_RANDOM to randomCheck.isChecked,
+                            ARG_SHIFT to shiftPositionCheck.isChecked,
+                        ),
+                    )
+                }
             }
+
+        // Only automatically show the keyboard in portrait mode
+        // In landscape mode, the keyboard would take up too much screen space and hide the dialog
+        val isPortrait = resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+        if (isPortrait) {
+            dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         }
+
+        return dialog
     }
 
     companion object {
