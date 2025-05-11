@@ -269,12 +269,8 @@ sealed interface Binding {
             event
                 .getUnicodeChar(event.metaState and (KeyEvent.META_SHIFT_ON or KeyEvent.META_NUM_LOCK_ON))
                 .ifNotZero { unicodeChar ->
-                    try {
-                        ret.add(unicode(unicodeChar.toChar(), modifiers) as KeyBinding)
-                    } catch (e: Exception) {
-                        // very slight chance it returns unknown()
-                        Timber.w(e)
-                    }
+                    // Do nothing if the character is [FORBIDDEN_UNICODE_CHAR]
+                    unicodeSafe(unicodeChar.toChar(), modifiers)?.let { ret.add(it) }
                 }
 
             return ret
@@ -304,14 +300,28 @@ sealed interface Binding {
         }
 
         /**
-         * Specifies a unicode binding from an unknown input device
+         * Specifies a unicode binding from an unknown input device.
+         * returns null if [unicodeChar] is [FORBIDDEN_UNICODE_CHAR]
          * See [AppDefinedModifierKeys]
          */
-        fun unicode(
+        fun unicodeSafe(
             unicodeChar: Char,
             modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
-        ): Binding {
-            if (unicodeChar == FORBIDDEN_UNICODE_CHAR) return unknown()
+        ): KeyBinding? {
+            if (unicodeChar == FORBIDDEN_UNICODE_CHAR) return null
+            return UnicodeCharacter(unicodeChar, modifierKeys)
+        }
+
+        /**
+         * Specifies a unicode binding from an unknown input device.
+         * The caller must guarantee that [unicodeChar] is not [FORBIDDEN_UNICODE_CHAR]
+         * See [AppDefinedModifierKeys]
+         */
+        fun unicodeUnsafe(
+            unicodeChar: Char,
+            modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
+        ): KeyBinding {
+            assert(unicodeChar != FORBIDDEN_UNICODE_CHAR)
             return UnicodeCharacter(unicodeChar, modifierKeys)
         }
 

@@ -29,6 +29,7 @@ import com.ichi2.anki.preferences.reviewer.MenuDisplayType.DISABLED
 import com.ichi2.anki.preferences.reviewer.MenuDisplayType.MENU_ONLY
 import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.Binding.AppDefinedModifierKeys
+import com.ichi2.anki.reviewer.Binding.Companion.FORBIDDEN_UNICODE_CHAR
 import com.ichi2.anki.reviewer.Binding.ModifierKeys
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
@@ -246,12 +247,16 @@ enum class ViewerAction(
         return ReviewerBinding(binding = binding, side = side)
     }
 
+    /**
+     * The caller must guarantee that [unicodeChar] is not [FORBIDDEN_UNICODE_CHAR]
+     */
     private fun unicode(
         unicodeChar: Char,
         keys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
         side: CardSide = CardSide.BOTH,
     ): ReviewerBinding {
-        val binding = Binding.unicode(unicodeChar, keys)
+        assert(unicodeChar != FORBIDDEN_UNICODE_CHAR)
+        val binding = Binding.unicodeUnsafe(unicodeChar, keys)
         return ReviewerBinding(binding = binding, side = side)
     }
 

@@ -41,10 +41,10 @@ class BindingAndroidTest : RobolectricTest() {
 
     @Test
     fun testFromString() {
-        assertBindingEquals(Binding.unicode('Ä'), Binding.fromString(BindingTest.UNICODE_PREFIX + "Ä"))
-        assertBindingEquals(Binding.unicode('Ä', ctrl()), Binding.fromString(BindingTest.UNICODE_PREFIX + "Ctrl+Ä"))
-        assertBindingEquals(Binding.unicode('Ä', shift()), Binding.fromString(BindingTest.UNICODE_PREFIX + "Shift+Ä"))
-        assertBindingEquals(Binding.unicode('Ä', alt()), Binding.fromString(BindingTest.UNICODE_PREFIX + "Alt+Ä"))
+        assertBindingEquals(Binding.unicodeUnsafe('Ä'), Binding.fromString(BindingTest.UNICODE_PREFIX + "Ä"))
+        assertBindingEquals(Binding.unicodeUnsafe('Ä', ctrl()), Binding.fromString(BindingTest.UNICODE_PREFIX + "Ctrl+Ä"))
+        assertBindingEquals(Binding.unicodeUnsafe('Ä', shift()), Binding.fromString(BindingTest.UNICODE_PREFIX + "Shift+Ä"))
+        assertBindingEquals(Binding.unicodeUnsafe('Ä', alt()), Binding.fromString(BindingTest.UNICODE_PREFIX + "Alt+Ä"))
         assertBindingEquals(
             Binding.keyCode(KeyEvent.KEYCODE_MEDIA_NEXT),
             Binding.fromString(BindingTest.KEY_PREFIX + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_MEDIA_NEXT)),

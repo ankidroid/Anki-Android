@@ -17,7 +17,6 @@
 package com.ichi2.ui
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import anki.scheduler.SchedulingState.Review
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.CardSide
@@ -53,8 +52,15 @@ class BindingPreferenceTest {
             Binding.unicodeSafe('a')?.let { ReviewerBinding(it, CardSide.BOTH) },
             Binding.unicodeSafe(' ')?.let { ReviewerBinding(it, CardSide.ANSWER) },
             // this one is important: ensure that "|" as a unicode char can't be used
-            Binding.unicodeSafe(Binding.FORBIDDEN_UNICODE_CHAR)?.let { ReviewerBinding(it, CardSide.QUESTION) },
+<<<<<<< HEAD
+            ReviewerBinding(Binding.unicode(Binding.FORBIDDEN_UNICODE_CHAR), CardSide.QUESTION),
             ReviewerBinding(Binding.gesture(Gesture.DOUBLE_TAP), CardSide.BOTH),
+=======
+            Binding
+                .unicodeSafe(Binding.FORBIDDEN_UNICODE_CHAR)
+                ?.let { ReviewerBinding(it, CardSide.QUESTION) },
+            ReviewerBinding(Binding.gesture(Gesture.LONG_TAP), CardSide.BOTH),
+>>>>>>> 032e37c3b0 (NF: Binding.unicode split in safe and unsafe method)
             ReviewerBinding(Binding.keyCode(12), CardSide.BOTH),
         )
 }

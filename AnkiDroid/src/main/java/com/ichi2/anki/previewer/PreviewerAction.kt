@@ -18,7 +18,7 @@ package com.ichi2.anki.previewer
 import android.content.SharedPreferences
 import android.view.KeyEvent
 import com.ichi2.anki.reviewer.Binding.Companion.keyCode
-import com.ichi2.anki.reviewer.Binding.Companion.unicode
+import com.ichi2.anki.reviewer.Binding.Companion.unicodeUnsafe
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
 import com.ichi2.anki.reviewer.MappableAction
 import com.ichi2.anki.reviewer.MappableBinding
@@ -54,7 +54,7 @@ enum class PreviewerAction : MappableAction<MappableBinding> {
             when (this) {
                 BACK -> keyCode(KeyEvent.KEYCODE_DPAD_LEFT)
                 NEXT -> keyCode(KeyEvent.KEYCODE_DPAD_RIGHT)
-                MARK -> unicode('*')
+                MARK -> unicodeUnsafe('*')
                 REPLAY_AUDIO -> keyCode(KeyEvent.KEYCODE_R)
                 EDIT -> keyCode(KeyEvent.KEYCODE_E)
                 TOGGLE_BACKSIDE_ONLY -> keyCode(KeyEvent.KEYCODE_B)
