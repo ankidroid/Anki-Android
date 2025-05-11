@@ -303,11 +303,6 @@ sealed interface Binding {
             return UnknownBinding
         }
 
-        fun unicode(
-            modifierKeys: ModifierKeys,
-            unicodeChar: Char,
-        ): Binding = unicode(unicodeChar, modifierKeys)
-
         /**
          * Specifies a unicode binding from an unknown input device
          * See [AppDefinedModifierKeys]
