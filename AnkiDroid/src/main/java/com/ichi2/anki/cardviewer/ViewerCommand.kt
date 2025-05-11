@@ -129,7 +129,7 @@ enum class ViewerCommand : MappableAction<ReviewerBinding> {
                 RECORD_VOICE -> listOf(keyCode(KeyEvent.KEYCODE_V, CardSide.BOTH, shift()))
                 SAVE_VOICE -> listOf(keyCode(KeyEvent.KEYCODE_S, CardSide.BOTH, shift()))
                 UNDO -> listOf(keyCode(KeyEvent.KEYCODE_Z, CardSide.BOTH, ctrl()))
-                REDO -> listOf(keyCode(KeyEvent.KEYCODE_Z, CardSide.BOTH, ModifierKeys(shift = true, ctrl = true, alt = false)))
+                REDO -> listOf(keyCode(KeyEvent.KEYCODE_Z, CardSide.BOTH, ModifierKeys(shift = true, ctrl = true)))
                 TOGGLE_FLAG_RED ->
                     listOf(
                         keyCode(KeyEvent.KEYCODE_1, CardSide.BOTH, ctrl()),

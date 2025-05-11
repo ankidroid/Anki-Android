@@ -122,7 +122,7 @@ enum class ViewerAction(
     private val defaultBindings: List<ReviewerBinding> get() =
         when (this) {
             UNDO -> listOf(keycode(KeyEvent.KEYCODE_Z, ctrl()))
-            REDO -> listOf(keycode(KeyEvent.KEYCODE_Z, ModifierKeys(shift = true, ctrl = true, alt = false)))
+            REDO -> listOf(keycode(KeyEvent.KEYCODE_Z, ModifierKeys(shift = true, ctrl = true)))
             MARK -> listOf(unicode('*'))
             EDIT -> listOf(keycode(KeyEvent.KEYCODE_E))
             ADD_NOTE -> listOf(keycode(KeyEvent.KEYCODE_A))
