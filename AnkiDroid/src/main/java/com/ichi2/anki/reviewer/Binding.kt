@@ -4,7 +4,6 @@ package com.ichi2.anki.reviewer
 
 import android.content.Context
 import android.view.KeyEvent
-import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.utils.StringUtils
 import com.ichi2.anki.common.utils.ext.ifNotZero
@@ -117,15 +116,6 @@ sealed interface Binding {
 
         // don't include the modifierKeys
         override fun hashCode(): Int = Objects.hash(unicodeCharacter)
-    }
-
-    data object UnknownBinding : Binding {
-        override fun toDisplayString(context: Context): String = ""
-
-        override fun toString(): String = ""
-
-        override val isValid: Boolean
-            get() = false
     }
 
     fun toDisplayString(context: Context): String
@@ -263,8 +253,8 @@ sealed interface Binding {
             return ret
         }
 
-        fun fromString(from: String): Binding {
-            if (from.isEmpty()) return UnknownBinding
+        fun fromString(from: String): Binding? {
+            if (from.isEmpty()) return null
             try {
                 return when (from[0]) {
                     JOYSTICK_CHAR_PREFIX -> AxisButtonBinding.from(from.substring(1))
@@ -278,12 +268,12 @@ sealed interface Binding {
                         val keyCode = keyCodeAsString.toInt()
                         KeyCode(keyCode, modifierKeys)
                     }
-                    else -> UnknownBinding
+                    else -> null
                 }
             } catch (ex: Exception) {
                 Timber.w(ex)
             }
-            return UnknownBinding
+            return null
         }
 
         /**
@@ -323,8 +313,5 @@ sealed interface Binding {
         ) = KeyCode(keyCode, modifiers)
 
         fun gesture(gesture: Gesture) = GestureInput(gesture)
-
-        @VisibleForTesting
-        fun unknown() = UnknownBinding
     }
 }

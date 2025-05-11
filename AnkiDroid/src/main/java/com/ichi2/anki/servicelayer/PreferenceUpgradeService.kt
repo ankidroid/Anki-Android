@@ -734,14 +734,19 @@ object PreferenceUpgradeService {
             override fun upgrade(preferences: SharedPreferences) {
                 for (key in keys) {
                     val value = preferences.getString(key, null) ?: continue
-                    val bindings = fromPreferenceString(value)
-                    val unknown = bindings.filter { it.binding is Binding.UnknownBinding }
-                    if (unknown.isEmpty()) continue
-                    val newBindings = bindings - unknown
+                    val (newBindings, error) = parseBindingsAndError(value)
+                    if (!error) continue
                     preferences.edit {
                         putString(key, newBindings.toPreferenceString())
                     }
                 }
+            }
+
+            /** The list of bindings, and whether there are bindings that could not be interpreted. */
+            private fun parseBindingsAndError(prefString: String): Pair<List<ReviewerBinding>, Boolean> {
+                val substringCount = MappableBinding.getPreferenceSubstrings(prefString).size
+                val bindings = ReviewerBinding.fromPreferenceString(prefString)
+                return bindings to (substringCount != bindings.size)
             }
         }
 
