@@ -73,8 +73,16 @@ class ReviewerBinding(
         private const val ANSWER_SUFFIX = '1'
         private const val QUESTION_AND_ANSWER_SUFFIX = '2'
 
-        fun fromPreferenceString(prefString: String?): List<ReviewerBinding> {
-            if (prefString.isNullOrEmpty()) return emptyList()
+        /**
+         * The list of bindings. And whether there are bindings that could not be interpreted.
+         */
+        fun fromPreferenceString(prefString: String?): List<ReviewerBinding> = fromPreferenceStringAndError(prefString).first
+
+        /**
+         * The list of bindings. And whether there are bindings that could not be interpreted.
+         */
+        fun fromPreferenceStringAndError(prefString: String?): Pair<List<ReviewerBinding>, Boolean> {
+            if (prefString.isNullOrEmpty()) return Pair(emptyList(), false)
 
             fun fromString(string: String): ReviewerBinding? {
                 if (string.isEmpty()) return null
@@ -82,7 +90,7 @@ class ReviewerBinding(
                     StringBuilder(string)
                         .substring(0, string.length - 1)
                         .removePrefix(PREFIX.toString())
-                val binding = Binding.fromString(bindingString)
+                val binding = Binding.fromString(bindingString) ?: return null
                 val side =
                     when (string.last()) {
                         QUESTION_SUFFIX -> CardSide.QUESTION
@@ -93,7 +101,9 @@ class ReviewerBinding(
             }
 
             val strings = getPreferenceSubstrings(prefString)
-            return strings.mapNotNull { fromString(it) }
+            val bindings = strings.map { fromString(it) }
+            val nonNullBinding = bindings.filterNotNull()
+            return Pair(nonNullBinding, bindings.size != nonNullBinding.size)
         }
 
         @CheckResult

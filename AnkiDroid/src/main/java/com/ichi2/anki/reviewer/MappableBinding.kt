@@ -67,9 +67,10 @@ open class MappableBinding(
         @CheckResult
         fun fromPreferenceString(string: String?): List<MappableBinding> {
             if (string.isNullOrEmpty()) return emptyList()
-            return getPreferenceSubstrings(string).map {
-                val binding = Binding.fromString(it)
-                MappableBinding(binding)
+            return getPreferenceSubstrings(string).mapNotNull { substring ->
+                Binding.fromString(substring)?.let { binding ->
+                    MappableBinding(binding)
+                }
             }
         }
     }

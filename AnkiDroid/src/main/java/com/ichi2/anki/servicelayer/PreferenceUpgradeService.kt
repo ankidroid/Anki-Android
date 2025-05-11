@@ -685,10 +685,8 @@ object PreferenceUpgradeService {
             override fun upgrade(preferences: SharedPreferences) {
                 for (command in ViewerCommand.entries) {
                     val value = preferences.getString(command.preferenceKey, null) ?: continue
-                    val bindings = ReviewerBinding.fromPreferenceString(value)
-                    val unknown = bindings.filter { it.binding is Binding.UnknownBinding }
-                    if (unknown.isEmpty()) continue
-                    val newBindings = bindings - unknown
+                    val (newBindings, error) = ReviewerBinding.fromPreferenceStringAndError(value)
+                    if (!error) continue
                     preferences.edit {
                         putString(command.preferenceKey, newBindings.toPreferenceString())
                     }
