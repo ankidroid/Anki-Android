@@ -144,14 +144,16 @@ class SetDueDateViewModel : ViewModel() {
 
     private fun initCurrentInterval(cardIds: LongArray) {
         // Current interval cannot be shown if multiple cards are selected
-        if (cardCount == 1) {
-            viewModelScope.launch {
-                withCol {
-                    getCard(cardIds.first()).let {
-                        // Only show interval if card is in the review state
-                        // New, learning, or relearning cards have an interval of 0 and should not display it
-                        currentInterval.value = if (it.type == CardType.Rev) it.ivl else null
-                    }
+        if (cardCount > 1) {
+            return
+        }
+
+        viewModelScope.launch {
+            withCol {
+                getCard(cardIds.first()).let {
+                    // Only show interval if card is in the review state
+                    // New, learning, or relearning cards have an interval of 0 and should not display it
+                    currentInterval.value = if (it.type == CardType.Rev) it.ivl else null
                 }
             }
         }
