@@ -73,7 +73,7 @@ class BindingTest {
     @Test
     fun testModifierKeysEquality() {
         val one = Binding.AppDefinedModifierKeys.allowShift()
-        val two = Binding.ModifierKeys(shift = true, ctrl = false, alt = false)
+        val two = Binding.ModifierKeys(shift = true)
 
         assertTrue(one.shiftMatches(true))
         assertTrue(one.shiftMatches(false))
