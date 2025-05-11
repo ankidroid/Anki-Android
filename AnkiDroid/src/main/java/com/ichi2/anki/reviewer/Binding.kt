@@ -259,11 +259,8 @@ sealed interface Binding {
             event
                 .getUnicodeChar(event.metaState and (KeyEvent.META_SHIFT_ON or KeyEvent.META_NUM_LOCK_ON))
                 .ifNotZero { unicodeChar ->
-                    try {
-                        ret.add(unicode(unicodeChar.toChar(), modifiers) as KeyBinding)
-                    } catch (e: Exception) {
-                        // very slight chance it returns unknown()
-                        Timber.w(e)
+                    BindingUnicodeCharacter.fromCharOrNull(unicodeChar.toChar())?.let { character ->
+                        ret.add(unicode(character, modifiers))
                     }
                 }
 
@@ -299,12 +296,9 @@ sealed interface Binding {
          * See [AppDefinedModifierKeys]
          */
         fun unicode(
-            unicodeChar: Char,
+            unicodeChar: BindingUnicodeCharacter,
             modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
-        ): Binding {
-            val character = BindingUnicodeCharacter.fromCharOrNull(unicodeChar) ?: return unknown()
-            return UnicodeCharacter(character, modifierKeys)
-        }
+        ): KeyBinding = UnicodeCharacter(unicodeChar, modifierKeys)
 
         fun keyCode(
             keyCode: Int,

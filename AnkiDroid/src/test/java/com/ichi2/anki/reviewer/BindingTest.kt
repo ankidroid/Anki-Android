@@ -33,6 +33,41 @@ class BindingTest {
     }
 
     @Test
+    fun `valid unicode input retains modifiers`() {
+        val event =
+            mock<KeyEvent> {
+                on { keyCode } doReturn KeyEvent.KEYCODE_8
+                on { getUnicodeChar(anyInt()) } doReturn '*'.code
+                on { isShiftPressed } doReturn true
+                on { isCtrlPressed } doReturn true
+                on { isAltPressed } doReturn true
+            }
+        val binding = Binding.possibleKeyBindings(event).filterIsInstance<Binding.UnicodeCharacter>().single()
+
+        assertEquals(BindingUnicodeCharacter('*'), binding.unicodeCharacter)
+        assertTrue(binding.modifierKeys.shift)
+        assertTrue(binding.modifierKeys.ctrl)
+        assertTrue(binding.modifierKeys.alt)
+    }
+
+    @Test
+    fun `forbidden unicode input retains the keycode binding and modifiers`() {
+        val event =
+            mock<KeyEvent> {
+                on { keyCode } doReturn KeyEvent.KEYCODE_BACKSLASH
+                on { getUnicodeChar(anyInt()) } doReturn MappableBinding.PREF_SEPARATOR.code
+                on { isShiftPressed } doReturn true
+                on { isCtrlPressed } doReturn true
+                on { isAltPressed } doReturn true
+            }
+
+        assertEquals(
+            listOf(Binding.keyCode(KeyEvent.KEYCODE_BACKSLASH, allModifierKeys())),
+            Binding.possibleKeyBindings(event),
+        )
+    }
+
+    @Test
     fun keycodeIsLoaded() {
         val binding = keyCode(KeyEvent.KEYCODE_A)
 
@@ -41,11 +76,12 @@ class BindingTest {
 
     @Test
     fun testUnicodeToString() {
-        assertEquals(UNICODE_PREFIX + "Ä", Binding.unicode('Ä').toString())
-        assertEquals(UNICODE_PREFIX + "Ctrl+Ä", Binding.unicode('Ä', Binding.ModifierKeys.ctrl()).toString())
-        assertEquals(UNICODE_PREFIX + "Shift+Ä", Binding.unicode('Ä', Binding.ModifierKeys.shift()).toString())
-        assertEquals(UNICODE_PREFIX + "Alt+Ä", Binding.unicode('Ä', Binding.ModifierKeys.alt()).toString())
-        assertEquals(UNICODE_PREFIX + "Ctrl+Alt+Shift+Ä", Binding.unicode('Ä', allModifierKeys()).toString())
+        val character = BindingUnicodeCharacter('Ä')
+        assertEquals(UNICODE_PREFIX + "Ä", Binding.unicode(character).toString())
+        assertEquals(UNICODE_PREFIX + "Ctrl+Ä", Binding.unicode(character, Binding.ModifierKeys.ctrl()).toString())
+        assertEquals(UNICODE_PREFIX + "Shift+Ä", Binding.unicode(character, Binding.ModifierKeys.shift()).toString())
+        assertEquals(UNICODE_PREFIX + "Alt+Ä", Binding.unicode(character, Binding.ModifierKeys.alt()).toString())
+        assertEquals(UNICODE_PREFIX + "Ctrl+Alt+Shift+Ä", Binding.unicode(character, allModifierKeys()).toString())
     }
 
     @Test

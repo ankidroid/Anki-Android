@@ -51,10 +51,8 @@ class BindingPreferenceTest {
 
     private fun getSampleBindings(): List<MappableBinding> =
         listOf(
-            ReviewerBinding(Binding.unicode('a'), CardSide.BOTH),
-            ReviewerBinding(Binding.unicode(' '), CardSide.ANSWER),
-            // this one is important: ensure that "|" as a unicode char can't be used
-            ReviewerBinding(Binding.unicode(MappableBinding.PREF_SEPARATOR), CardSide.QUESTION),
+            ReviewerBinding(Binding.unicode(BindingUnicodeCharacter('a')), CardSide.BOTH),
+            ReviewerBinding(Binding.unicode(BindingUnicodeCharacter(' ')), CardSide.ANSWER),
             ReviewerBinding(Binding.gesture(Gesture.DOUBLE_TAP), CardSide.BOTH),
             ReviewerBinding(Binding.keyCode(12), CardSide.BOTH),
         )
