@@ -19,6 +19,7 @@ import com.ichi2.anki.reviewer.Binding.AppDefinedModifierKeys
 import com.ichi2.anki.reviewer.Binding.ModifierKeys
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
+import com.ichi2.anki.reviewer.BindingUnicodeCharacter
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableAction
 import com.ichi2.anki.reviewer.ReviewerBinding
@@ -120,13 +121,13 @@ enum class ViewerAction(
         when (this) {
             UNDO -> listOf(keycode(KeyEvent.KEYCODE_Z, ctrl()))
             REDO -> listOf(keycode(KeyEvent.KEYCODE_Z, ModifierKeys(shift = true, ctrl = true)))
-            MARK -> listOf(unicode('*'))
+            MARK -> listOf(unicode(BindingUnicodeCharacter('*')))
             EDIT -> listOf(keycode(KeyEvent.KEYCODE_E))
             ADD_NOTE -> listOf(keycode(KeyEvent.KEYCODE_A))
-            BURY_NOTE -> listOf(unicode('='))
-            BURY_CARD -> listOf(unicode('-'))
-            SUSPEND_NOTE -> listOf(unicode('!'))
-            SUSPEND_CARD -> listOf(unicode('@'))
+            BURY_NOTE -> listOf(unicode(BindingUnicodeCharacter('=')))
+            BURY_CARD -> listOf(unicode(BindingUnicodeCharacter('-')))
+            SUSPEND_NOTE -> listOf(unicode(BindingUnicodeCharacter('!')))
+            SUSPEND_CARD -> listOf(unicode(BindingUnicodeCharacter('@')))
             TOGGLE_AUTO_ADVANCE -> listOf(keycode(KeyEvent.KEYCODE_A, shift()))
             SHOW_HINT -> listOf(keycode(KeyEvent.KEYCODE_H))
             SHOW_ALL_HINTS -> listOf(keycode(KeyEvent.KEYCODE_G))
@@ -321,7 +322,7 @@ enum class ViewerAction(
     }
 
     private fun unicode(
-        unicodeChar: Char,
+        unicodeChar: BindingUnicodeCharacter,
         keys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
         side: CardSide = CardSide.BOTH,
     ): ReviewerBinding {
