@@ -13,6 +13,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class BindingAndroidTest : RobolectricTest() {
@@ -53,8 +54,8 @@ class BindingAndroidTest : RobolectricTest() {
 
     @Test
     fun `deserialization rejects the preference separator`() {
-        assertEquals(Binding.UnknownBinding, Binding.fromString("✅|"))
-        assertEquals(Binding.UnknownBinding, Binding.fromString("✅Ctrl+|"))
+        assertNull(Binding.fromString("✅|"))
+        assertNull(Binding.fromString("✅Ctrl+|"))
     }
 
     @Test
