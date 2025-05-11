@@ -65,12 +65,6 @@ class BindingTest {
     }
 
     @Test
-    fun testUnknownToString() {
-        // This seems sensible - serialising an unknown will mean that nothing is saved.
-        assertThat(Binding.unknown().toString(), equalTo(""))
-    }
-
-    @Test
     fun testModifierKeysEquality() {
         val one = Binding.AppDefinedModifierKeys.allowShift()
         val two = Binding.ModifierKeys(shift = true)

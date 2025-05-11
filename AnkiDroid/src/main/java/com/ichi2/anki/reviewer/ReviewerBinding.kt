@@ -83,7 +83,7 @@ class ReviewerBinding(
                     StringBuilder(string)
                         .substring(0, string.length - 1)
                         .removePrefix(PREFIX.toString())
-                val binding = Binding.fromString(bindingString)
+                val binding = Binding.fromString(bindingString) ?: return null
                 val side =
                     when (string.last()) {
                         QUESTION_SUFFIX -> CardSide.QUESTION
