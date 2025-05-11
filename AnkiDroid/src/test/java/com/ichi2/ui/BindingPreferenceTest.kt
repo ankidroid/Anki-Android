@@ -14,6 +14,7 @@ import com.ichi2.anki.reviewer.ReviewerBinding
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class BindingPreferenceTest {
@@ -47,6 +48,19 @@ class BindingPreferenceTest {
 
         assertEquals(expected, bindings.toPreferenceString())
         assertEquals(bindings, ReviewerBinding.fromPreferenceString(expected))
+    }
+
+    @Test
+    fun `reviewer preference parsing preserves valid bindings and card sides around invalid entries`() {
+        val bindings = ReviewerBinding.fromPreferenceString("1/r⌨Ctrl+660|r⍝LONG_TAP2|r✅Ä1|r⌨not-a-number2|r⍝SWIPE_UP2")
+
+        assertEquals(3, bindings.size)
+        assertEquals("1/r⌨Ctrl+660|r✅Ä1|r⍝SWIPE_UP2", bindings.toPreferenceString())
+    }
+
+    @Test
+    fun `reviewer preference parsing returns no bindings when all entries are invalid`() {
+        assertTrue(ReviewerBinding.fromPreferenceString("1/r⍝LONG_TAP2|r⌨not-a-number2|r✅2").isEmpty())
     }
 
     private fun getSampleBindings(): List<MappableBinding> =

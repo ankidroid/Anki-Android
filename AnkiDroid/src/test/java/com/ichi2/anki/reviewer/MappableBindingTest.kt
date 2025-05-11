@@ -11,6 +11,8 @@ import org.hamcrest.Matchers.not
 import org.junit.Test
 import java.util.Arrays
 import java.util.stream.Collectors
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class MappableBindingTest {
     @Test
@@ -27,6 +29,18 @@ class MappableBindingTest {
         // pick an arbitrary key which is not mapped
         assertThat(allBindings, not(hasItem(unicodeCharacter('l'))))
         assertThat(allBindings, not(hasItem(keyCode(KeyEvent.KEYCODE_L))))
+    }
+
+    @Test
+    fun `preference parsing drops invalid bindings and preserves valid bindings in order`() {
+        val bindings = MappableBinding.fromPreferenceString("1/unknown|⌨Ctrl+66|⌨not-a-number|✅Ä|⍝SWIPE_UP|✅")
+
+        assertEquals(listOf("⌨Ctrl+66", "✅Ä", "⍝SWIPE_UP"), bindings.map { it.toPreferenceString() })
+    }
+
+    @Test
+    fun `preference parsing returns no bindings when all entries are invalid`() {
+        assertTrue(MappableBinding.fromPreferenceString("1/unknown|⌨not-a-number|✅").isEmpty())
     }
 
     private fun getAllBindings() =

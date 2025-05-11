@@ -49,7 +49,6 @@ class BindingMap<B : MappableBinding, A : MappableAction<B>>(
                             gestureMap[binding.gesture] = mutableListOf(action to mappableBinding)
                         }
                     }
-                    else -> {}
                 }
             }
         }

@@ -27,7 +27,6 @@ import com.ichi2.anki.browser.CardBrowserColumn.REVIEWS
 import com.ichi2.anki.browser.CardBrowserColumn.SFLD
 import com.ichi2.anki.browser.CardBrowserColumn.TAGS
 import com.ichi2.anki.cardviewer.Gesture
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.HashUtil.hashSetInit
 import com.ichi2.anki.libanki.Consts
@@ -675,7 +674,6 @@ object PreferenceUpgradeService {
             }
         }
 
-        @NeedsTest("long touch gesture is removed from preferences")
         internal class RemoveLongTouchGesture : PreferenceUpgrade(21) {
             private val keys =
                 listOf(
@@ -734,14 +732,19 @@ object PreferenceUpgradeService {
             override fun upgrade(preferences: SharedPreferences) {
                 for (key in keys) {
                     val value = preferences.getString(key, null) ?: continue
-                    val bindings = fromPreferenceString(value)
-                    val unknown = bindings.filter { it.binding is Binding.UnknownBinding }
-                    if (unknown.isEmpty()) continue
-                    val newBindings = bindings - unknown
+                    val (newBindings, error) = parseBindingsAndError(value)
+                    if (!error) continue
                     preferences.edit {
                         putString(key, newBindings.toPreferenceString())
                     }
                 }
+            }
+
+            /** The list of bindings, and whether there are bindings that could not be interpreted. */
+            private fun parseBindingsAndError(prefString: String): Pair<List<ReviewerBinding>, Boolean> {
+                val substringCount = MappableBinding.getPreferenceSubstrings(prefString).size
+                val bindings = ReviewerBinding.fromPreferenceString(prefString)
+                return bindings to (substringCount != bindings.size)
             }
         }
 
