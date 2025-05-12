@@ -58,12 +58,20 @@ class ReviewerBinding(
         return s.toString()
     }
 
-    override fun toDisplayString(context: Context): String {
+    override fun toDisplayString(
+        context: Context,
+        potentialSides: CardSide,
+    ): String {
+        val bindingDisplayString = binding.toDisplayString(context)
+        if (potentialSides != CardSide.BOTH) {
+            // No need to show "Q: " or "A: " given that the command can be executed on a single side.
+            return bindingDisplayString
+        }
         val formatString =
             when (side) {
                 CardSide.QUESTION -> context.getString(R.string.display_binding_card_side_question)
                 CardSide.ANSWER -> context.getString(R.string.display_binding_card_side_answer)
-                CardSide.BOTH -> context.getString(R.string.display_binding_card_side_both) // intentionally no prefix
+                CardSide.BOTH -> return bindingDisplayString // intentionally no prefix
             }
         return String.format(formatString, binding.toDisplayString(context))
     }
