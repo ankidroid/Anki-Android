@@ -34,9 +34,30 @@ class BindingAndroidTest : RobolectricTest() {
     fun testKeycodeToString() {
         // These use native functions. We may need KeyEvent.keyCodeToString
         assertEquals(BindingTest.KEY_PREFIX + "87", Binding.keyCode(KeyEvent.KEYCODE_MEDIA_NEXT).toString())
-        assertEquals(BindingTest.KEY_PREFIX + "Ctrl+88", Binding.keyCode(ctrl(), KeyEvent.KEYCODE_MEDIA_PREVIOUS).toString())
-        assertEquals(BindingTest.KEY_PREFIX + "Shift+25", Binding.keyCode(shift(), KeyEvent.KEYCODE_VOLUME_DOWN).toString())
-        assertEquals(BindingTest.KEY_PREFIX + "Alt+24", Binding.keyCode(alt(), KeyEvent.KEYCODE_VOLUME_UP).toString())
+        assertEquals(
+            BindingTest.KEY_PREFIX + "Ctrl+88",
+            Binding
+                .keyCode(
+                    KeyEvent.KEYCODE_MEDIA_PREVIOUS,
+                    ctrl(),
+                ).toString(),
+        )
+        assertEquals(
+            BindingTest.KEY_PREFIX + "Shift+25",
+            Binding
+                .keyCode(
+                    KeyEvent.KEYCODE_VOLUME_DOWN,
+                    shift(),
+                ).toString(),
+        )
+        assertEquals(
+            BindingTest.KEY_PREFIX + "Alt+24",
+            Binding
+                .keyCode(
+                    KeyEvent.KEYCODE_VOLUME_UP,
+                    alt(),
+                ).toString(),
+        )
     }
 
     @Test
@@ -50,15 +71,15 @@ class BindingAndroidTest : RobolectricTest() {
             Binding.fromString(BindingTest.KEY_PREFIX + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_MEDIA_NEXT)),
         )
         assertEquals(
-            Binding.keyCode(ctrl(), KeyEvent.KEYCODE_MEDIA_PREVIOUS),
+            Binding.keyCode(KeyEvent.KEYCODE_MEDIA_PREVIOUS, ctrl()),
             Binding.fromString(BindingTest.KEY_PREFIX + "Ctrl+" + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_MEDIA_PREVIOUS)),
         )
         assertEquals(
-            Binding.keyCode(shift(), KeyEvent.KEYCODE_VOLUME_DOWN),
+            Binding.keyCode(KeyEvent.KEYCODE_VOLUME_DOWN, shift()),
             Binding.fromString(BindingTest.KEY_PREFIX + "Shift+" + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_VOLUME_DOWN)),
         )
         assertEquals(
-            Binding.keyCode(alt(), KeyEvent.KEYCODE_VOLUME_UP),
+            Binding.keyCode(KeyEvent.KEYCODE_VOLUME_UP, alt()),
             Binding.fromString(BindingTest.KEY_PREFIX + "Alt+" + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_VOLUME_UP)),
         )
         assertEquals(Binding.gesture(Gesture.TAP_TOP), Binding.fromString(BindingTest.GESTURE_PREFIX + Gesture.TAP_TOP.name))
