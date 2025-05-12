@@ -17,12 +17,12 @@ package com.ichi2.anki.cardviewer
 
 import android.content.SharedPreferences
 import android.view.KeyEvent
-import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.Binding.Companion.FORBIDDEN_UNICODE_CHAR
 import com.ichi2.anki.reviewer.Binding.KeyCode
 import com.ichi2.anki.reviewer.Binding.ModifierKeys
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
+import com.ichi2.anki.reviewer.Binding.UnicodeCharacter.Companion.unsafeUnicodeBindingFactory
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableAction
 import com.ichi2.anki.reviewer.ReviewerBinding
@@ -209,7 +209,7 @@ enum class ViewerCommand : MappableAction<ReviewerBinding> {
         side: CardSide,
     ): ReviewerBinding {
         assert(c != FORBIDDEN_UNICODE_CHAR)
-        return ReviewerBinding(Binding.unicodeUnsafe(c), side)
+        return ReviewerBinding(unsafeUnicodeBindingFactory(c), side)
     }
 
     fun interface CommandProcessor {

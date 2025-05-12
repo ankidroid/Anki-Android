@@ -21,6 +21,7 @@ import anki.scheduler.SchedulingState.Review
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.Binding.KeyCode
+import com.ichi2.anki.reviewer.Binding.UnicodeCharacter.Companion.unicodeBindingFactory
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
@@ -51,11 +52,10 @@ class BindingPreferenceTest {
 
     private fun getSampleBindings(): List<MappableBinding> =
         listOfNotNull(
-            Binding.unicodeSafe('a')?.let { ReviewerBinding(it, CardSide.BOTH) },
-            Binding.unicodeSafe(' ')?.let { ReviewerBinding(it, CardSide.ANSWER) },
+            unicodeBindingFactory('a')?.let { ReviewerBinding(it, CardSide.BOTH) },
+            unicodeBindingFactory(' ')?.let { ReviewerBinding(it, CardSide.ANSWER) },
             // this one is important: ensure that "|" as a unicode char can't be used
-            Binding
-                .unicodeSafe(Binding.FORBIDDEN_UNICODE_CHAR)
+            unicodeBindingFactory(Binding.FORBIDDEN_UNICODE_CHAR)
                 ?.let { ReviewerBinding(it, CardSide.QUESTION) },
             ReviewerBinding(Binding.gesture(Gesture.DOUBLE_TAP), CardSide.BOTH),
             ReviewerBinding(KeyCode(12), CardSide.BOTH),

@@ -27,13 +27,13 @@ import com.ichi2.anki.R
 import com.ichi2.anki.preferences.reviewer.MenuDisplayType.ALWAYS
 import com.ichi2.anki.preferences.reviewer.MenuDisplayType.DISABLED
 import com.ichi2.anki.preferences.reviewer.MenuDisplayType.MENU_ONLY
-import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.Binding.AppDefinedModifierKeys
 import com.ichi2.anki.reviewer.Binding.Companion.FORBIDDEN_UNICODE_CHAR
 import com.ichi2.anki.reviewer.Binding.KeyCode
 import com.ichi2.anki.reviewer.Binding.ModifierKeys
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
+import com.ichi2.anki.reviewer.Binding.UnicodeCharacter.Companion.unsafeUnicodeBindingFactory
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableAction
 import com.ichi2.anki.reviewer.ReviewerBinding
@@ -257,7 +257,7 @@ enum class ViewerAction(
         side: CardSide = CardSide.BOTH,
     ): ReviewerBinding {
         assert(unicodeChar != FORBIDDEN_UNICODE_CHAR)
-        val binding = Binding.unicodeUnsafe(unicodeChar, keys)
+        val binding = unsafeUnicodeBindingFactory(unicodeChar, keys)
         return ReviewerBinding(binding = binding, side = side)
     }
 
