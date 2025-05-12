@@ -61,14 +61,26 @@ open class ControlPreference :
     @Suppress("unused")
     constructor(context: Context) : super(context)
 
+    /**
+     * The bindings mapped to this action.
+     */
     open fun getMappableBindings(): List<MappableBinding> = MappableBinding.fromPreferenceString(value)
 
+    /**
+     * Called when the user confirmed they want to use this shortcut binding for the current action.
+     */
     protected open fun onKeySelected(binding: Binding): Unit = addBinding(binding)
 
+    /**
+     * Called when the user confirmed they want to use this axis of the joystick/motion controller for the current action.
+     */
     protected open fun onAxisSelected(binding: Binding): Unit = addBinding(binding)
 
     open val areGesturesEnabled: Boolean = false
 
+    /**
+     * Called when the user confirmed they want to use this gesture controller for the current action.
+     */
     protected open fun onGestureSelected(binding: Binding) = Unit
 
     /** @return the title of the other action using [binding], or null if there is no conflict */
@@ -78,6 +90,10 @@ open class ControlPreference :
         return bindingPreference.title ?: ""
     }
 
+    /**
+     * Returns the value assigned to [key] in the preferences.
+     * @see getMappableBindings in order to get the actual bindings for this preference.
+     */
     var value: String?
         get() = getPersistedString(null)
         set(value) {
@@ -87,6 +103,7 @@ open class ControlPreference :
             }
         }
 
+    // The subtext of this preference is composed of all the bindings of the current action.
     override fun getSummary(): CharSequence = getMappableBindings().joinToString(", ") { it.toDisplayString(context) }
 
     override fun makeDialogFragment(): DialogFragment = ControlPreferenceDialogFragment()
@@ -149,6 +166,8 @@ open class ControlPreference :
             dialog.dismiss()
             val bindingPref = getPreferenceAssignedTo(binding)
             if (bindingPref != null && bindingPref != this) {
+                // The binding selected by the user is already associated to another gesture.
+                // Asks user to confirm they want to remove the previous binding
                 AlertDialog.Builder(context).show {
                     val warning = context.getString(CommonString.bindings_already_bound, bindingPref.title)
                     setTitle(binding.toDisplayString(context))

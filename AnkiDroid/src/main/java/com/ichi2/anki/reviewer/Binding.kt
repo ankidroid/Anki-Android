@@ -13,6 +13,9 @@ import java.util.Objects
 
 /**
  * An input that can be mapped to an action.
+ *
+ * Inputs include [GestureInput] touch screen gestures, [AxisButtonBinding] joystick axes,
+ * and [KeyBinding] keyboard or gamepad shortcuts.
  */
 sealed interface Binding {
     /** A touch screen gesture, such as a swipe or double tap. */
