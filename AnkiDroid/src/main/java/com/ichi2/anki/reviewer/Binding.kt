@@ -8,6 +8,7 @@ import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.utils.StringUtils
 import com.ichi2.anki.common.utils.ext.ifNotZero
 import com.ichi2.anki.common.utils.lastIndexOfOrNull
+import com.ichi2.anki.reviewer.Binding.UnicodeCharacter.Companion.unicodeBindingFactory
 import timber.log.Timber
 import java.util.Objects
 
@@ -95,7 +96,8 @@ sealed interface Binding {
     }
 
     @Suppress("EqualsOrHashCode")
-    data class UnicodeCharacter(
+    @ConsistentCopyVisibility
+    data class UnicodeCharacter private constructor(
         val unicodeCharacter: Char,
         override val modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
     ) : KeyBinding {
@@ -116,6 +118,34 @@ sealed interface Binding {
 
         // don't include the modifierKeys
         override fun hashCode(): Int = Objects.hash(unicodeCharacter)
+
+        companion object {
+            /**
+             * Specifies a unicode binding from an unknown input device.
+             * returns null if [unicodeChar] is [FORBIDDEN_UNICODE_CHAR]
+             * See [AppDefinedModifierKeys]
+             */
+            fun unicodeBindingFactory(
+                unicodeChar: Char,
+                modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
+            ): KeyBinding? {
+                if (unicodeChar == FORBIDDEN_UNICODE_CHAR) return null
+                return UnicodeCharacter(unicodeChar, modifierKeys)
+            }
+
+            /**
+             * Specifies a unicode binding from an unknown input device.
+             * The caller must guarantee that [unicodeChar] is not [FORBIDDEN_UNICODE_CHAR]
+             * See [AppDefinedModifierKeys]
+             */
+            fun unsafeUnicodeBindingFactory(
+                unicodeChar: Char,
+                modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
+            ): KeyBinding {
+                assert(unicodeChar != FORBIDDEN_UNICODE_CHAR)
+                return UnicodeCharacter(unicodeChar, modifierKeys)
+            }
+        }
     }
 
     fun toDisplayString(context: Context): String
@@ -247,7 +277,7 @@ sealed interface Binding {
                 .getUnicodeChar(event.metaState and (KeyEvent.META_SHIFT_ON or KeyEvent.META_NUM_LOCK_ON))
                 .ifNotZero { unicodeChar ->
                     // Do nothing if the character is [FORBIDDEN_UNICODE_CHAR]
-                    unicodeSafe(unicodeChar.toChar(), modifiers)?.let { ret.add(it) }
+                    unicodeBindingFactory(unicodeChar.toChar(), modifiers)?.let { ret.add(it) }
                 }
 
             return ret
@@ -261,7 +291,7 @@ sealed interface Binding {
                     GESTURE_PREFIX -> GestureInput(Gesture.valueOf(from.substring(1)))
                     UNICODE_PREFIX -> {
                         val (modifierKeys, char) = ModifierKeys.parse(from.substring(1))
-                        UnicodeCharacter(char[0], modifierKeys)
+                        unicodeBindingFactory(char[0], modifierKeys)
                     }
                     KEY_PREFIX -> {
                         val (modifierKeys, keyCodeAsString) = ModifierKeys.parse(from.substring(1))
@@ -274,32 +304,6 @@ sealed interface Binding {
                 Timber.w(ex)
             }
             return null
-        }
-
-        /**
-         * Specifies a unicode binding from an unknown input device.
-         * returns null if [unicodeChar] is [FORBIDDEN_UNICODE_CHAR]
-         * See [AppDefinedModifierKeys]
-         */
-        fun unicodeSafe(
-            unicodeChar: Char,
-            modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
-        ): KeyBinding? {
-            if (unicodeChar == FORBIDDEN_UNICODE_CHAR) return null
-            return UnicodeCharacter(unicodeChar, modifierKeys)
-        }
-
-        /**
-         * Specifies a unicode binding from an unknown input device.
-         * The caller must guarantee that [unicodeChar] is not [FORBIDDEN_UNICODE_CHAR]
-         * See [AppDefinedModifierKeys]
-         */
-        fun unicodeUnsafe(
-            unicodeChar: Char,
-            modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
-        ): KeyBinding {
-            assert(unicodeChar != FORBIDDEN_UNICODE_CHAR)
-            return UnicodeCharacter(unicodeChar, modifierKeys)
         }
 
         fun gesture(gesture: Gesture) = GestureInput(gesture)

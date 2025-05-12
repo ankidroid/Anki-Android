@@ -24,6 +24,7 @@ import com.ichi2.anki.reviewer.Binding.KeyCode
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.alt
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
+import com.ichi2.anki.reviewer.Binding.UnicodeCharacter.Companion.unsafeUnicodeBindingFactory
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -63,10 +64,10 @@ class BindingAndroidTest : RobolectricTest() {
 
     @Test
     fun testFromString() {
-        assertEquals(Binding.unicodeUnsafe('Ä'), Binding.fromString(BindingTest.UNICODE_PREFIX + "Ä"))
-        assertEquals(Binding.unicodeUnsafe('Ä', ctrl()), Binding.fromString(BindingTest.UNICODE_PREFIX + "Ctrl+Ä"))
-        assertEquals(Binding.unicodeUnsafe('Ä', shift()), Binding.fromString(BindingTest.UNICODE_PREFIX + "Shift+Ä"))
-        assertEquals(Binding.unicodeUnsafe('Ä', alt()), Binding.fromString(BindingTest.UNICODE_PREFIX + "Alt+Ä"))
+        assertEquals(unsafeUnicodeBindingFactory('Ä'), Binding.fromString(BindingTest.UNICODE_PREFIX + "Ä"))
+        assertEquals(unsafeUnicodeBindingFactory('Ä', ctrl()), Binding.fromString(BindingTest.UNICODE_PREFIX + "Ctrl+Ä"))
+        assertEquals(unsafeUnicodeBindingFactory('Ä', shift()), Binding.fromString(BindingTest.UNICODE_PREFIX + "Shift+Ä"))
+        assertEquals(unsafeUnicodeBindingFactory('Ä', alt()), Binding.fromString(BindingTest.UNICODE_PREFIX + "Alt+Ä"))
         assertEquals(
             KeyCode(KeyEvent.KEYCODE_MEDIA_NEXT),
             Binding.fromString(BindingTest.KEY_PREFIX + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_MEDIA_NEXT)),

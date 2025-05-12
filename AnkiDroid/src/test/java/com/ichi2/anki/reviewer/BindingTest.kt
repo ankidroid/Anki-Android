@@ -18,6 +18,7 @@ package com.ichi2.anki.reviewer
 import android.view.KeyEvent
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.reviewer.Binding.KeyCode
+import com.ichi2.anki.reviewer.Binding.UnicodeCharacter.Companion.unsafeUnicodeBindingFactory
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Assert.assertEquals
@@ -53,11 +54,11 @@ class BindingTest {
 
     @Test
     fun testUnicodeToString() {
-        assertEquals(UNICODE_PREFIX + "Ä", Binding.unicodeUnsafe('Ä').toString())
-        assertEquals(UNICODE_PREFIX + "Ctrl+Ä", Binding.unicodeUnsafe('Ä', Binding.ModifierKeys.ctrl()).toString())
-        assertEquals(UNICODE_PREFIX + "Shift+Ä", Binding.unicodeUnsafe('Ä', Binding.ModifierKeys.shift()).toString())
-        assertEquals(UNICODE_PREFIX + "Alt+Ä", Binding.unicodeUnsafe('Ä', Binding.ModifierKeys.alt()).toString())
-        assertEquals(UNICODE_PREFIX + "Ctrl+Alt+Shift+Ä", Binding.unicodeUnsafe('Ä', allModifierKeys()).toString())
+        assertEquals(UNICODE_PREFIX + "Ä", unsafeUnicodeBindingFactory('Ä').toString())
+        assertEquals(UNICODE_PREFIX + "Ctrl+Ä", unsafeUnicodeBindingFactory('Ä', Binding.ModifierKeys.ctrl()).toString())
+        assertEquals(UNICODE_PREFIX + "Shift+Ä", unsafeUnicodeBindingFactory('Ä', Binding.ModifierKeys.shift()).toString())
+        assertEquals(UNICODE_PREFIX + "Alt+Ä", unsafeUnicodeBindingFactory('Ä', Binding.ModifierKeys.alt()).toString())
+        assertEquals(UNICODE_PREFIX + "Ctrl+Alt+Shift+Ä", unsafeUnicodeBindingFactory('Ä', allModifierKeys()).toString())
     }
 
     @Test
