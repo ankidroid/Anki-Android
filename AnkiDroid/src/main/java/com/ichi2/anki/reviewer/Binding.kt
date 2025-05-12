@@ -72,65 +72,77 @@ sealed interface Binding {
         }
     }
 
-    interface KeyBinding : Binding {
-        val modifierKeys: ModifierKeys
-    }
+    /**
+     * A binding corresponding to a shortcut on a keyboard.
+     */
+    sealed class KeyBinding<T>(
+        protected val key: T,
+        // Open so that the inheriting class can redeclare it as value, and hence being data class.
+        open val modifierKeys: ModifierKeys,
+    ) : Binding {
+        protected abstract val keyPrefix: Char
 
-    @Suppress("EqualsOrHashCode")
-    data class KeyCode(
-        val keycode: Int,
-        override val modifierKeys: ModifierKeys = ModifierKeys.none(),
-    ) : KeyBinding {
-        private fun getKeyCodePrefix(): String =
-            when {
-                KeyEvent.isGamepadButton(keycode) -> GAMEPAD_PREFIX
-                else -> KEY_PREFIX.toString()
+        override fun toString() =
+            buildString {
+                append(keyPrefix)
+                append(modifierKeys.toString())
+                append(key)
             }
+
+        /**
+         * The prefix and suffix of the display string.
+         */
+        protected abstract fun getKeyCodePrefix(): String
+
+        protected abstract fun getKeyCodeSuffix(): String?
 
         override fun toDisplayString(context: Context): String =
             buildString {
                 append(getKeyCodePrefix())
                 append(' ')
                 append(modifierKeys.toString())
-                val keyCodeString = KeyEvent.keyCodeToString(keycode)
-                // replace "Button" as we use the gamepad icon
-                append(StringUtil.toTitleCase(keyCodeString.replace("KEYCODE_", "").replace("BUTTON_", "").replace('_', ' ')))
-            }
-
-        override fun toString() =
-            buildString {
-                append(KEY_PREFIX)
-                append(modifierKeys.toString())
-                append(keycode)
+                append(getKeyCodeSuffix())
             }
 
         // don't include the modifierKeys
-        override fun hashCode(): Int = Objects.hash(keycode)
+        override fun hashCode(): Int = Objects.hash(key)
+
+        override fun equals(other: Any?) =
+             (this === other) || (other is KeyBinding<T> && other.key == key && other.modifierKeys == modifierKeys)
     }
 
-    @Suppress("EqualsOrHashCode")
-    @ConsistentCopyVisibility
-    data class UnicodeCharacter private constructor(
+    class KeyCode(
+        val keycode: Int,
+        override val modifierKeys: ModifierKeys = ModifierKeys.none(),
+    ) : KeyBinding<Int>(keycode, modifierKeys) {
+        override val keyPrefix = KEY_PREFIX
+
+        override fun getKeyCodePrefix(): String =
+            when {
+                KeyEvent.isGamepadButton(key) -> GAMEPAD_PREFIX
+                else -> KEY_PREFIX.toString()
+            }
+
+        override fun getKeyCodeSuffix() =
+            // replace "Button" as we use the gamepad icon
+            StringUtil.toTitleCase(
+                KeyEvent
+                    .keyCodeToString(key)
+                    .replace("KEYCODE_", "")
+                    .replace("BUTTON_", "")
+                    .replace('_', ' '),
+            )
+    }
+
+    class UnicodeCharacter(
         val unicodeCharacter: Char,
         override val modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
-    ) : KeyBinding {
-        override fun toDisplayString(context: Context): String =
-            buildString {
-                append(KEY_PREFIX)
-                append(' ')
-                append(modifierKeys.toString())
-                append(unicodeCharacter)
-            }
+    ) : KeyBinding<Char>(unicodeCharacter, modifierKeys) {
+        override val keyPrefix = UNICODE_PREFIX
 
-        override fun toString(): String =
-            buildString {
-                append(UNICODE_PREFIX)
-                append(modifierKeys.toString())
-                append(unicodeCharacter)
-            }
+        override fun getKeyCodePrefix(): String = KEY_PREFIX.toString()
 
-        // don't include the modifierKeys
-        override fun hashCode(): Int = Objects.hash(unicodeCharacter)
+        override fun getKeyCodeSuffix() = key.toString()
 
         companion object {
             /**
@@ -141,7 +153,7 @@ sealed interface Binding {
             fun unicodeBindingFactory(
                 unicodeChar: Char,
                 modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
-            ): KeyBinding? {
+            ): UnicodeCharacter? {
                 if (unicodeChar == FORBIDDEN_UNICODE_CHAR) return null
                 return UnicodeCharacter(unicodeChar, modifierKeys)
             }
@@ -154,7 +166,7 @@ sealed interface Binding {
             fun unsafeUnicodeBindingFactory(
                 unicodeChar: Char,
                 modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
-            ): KeyBinding {
+            ): UnicodeCharacter {
                 assert(unicodeChar != FORBIDDEN_UNICODE_CHAR)
                 return UnicodeCharacter(unicodeChar, modifierKeys)
             }
@@ -279,9 +291,9 @@ sealed interface Binding {
         /**
          * This returns multiple bindings due to the "default" implementation not knowing what the keycode for a button is
          */
-        fun possibleKeyBindings(event: KeyEvent): List<KeyBinding> {
+        fun possibleKeyBindings(event: KeyEvent): List<KeyBinding<*>> {
             val modifiers = ModifierKeys(event.isShiftPressed, event.isCtrlPressed, event.isAltPressed)
-            val ret: MutableList<KeyBinding> = ArrayList()
+            val ret: MutableList<KeyBinding<*>> = ArrayList()
             event.keyCode.ifNotZero { keyCode -> ret.add(KeyCode(keyCode, modifiers)) }
 
             // passing in metaState: 0 means that Ctrl+1 returns '1' instead of '\0'
