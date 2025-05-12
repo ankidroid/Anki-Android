@@ -199,7 +199,7 @@ enum class ViewerCommand : MappableAction<ReviewerBinding> {
         keycode: Int,
         side: CardSide,
         keys: ModifierKeys = ModifierKeys.none(),
-    ): ReviewerBinding = ReviewerBinding(keyCode(keys, keycode), side)
+    ): ReviewerBinding = ReviewerBinding(keyCode(keycode, keys), side)
 
     /**
      * The caller must guarantee that [c] is not [FORBIDDEN_UNICODE_CHAR]

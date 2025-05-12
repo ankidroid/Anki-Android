@@ -320,11 +320,6 @@ sealed interface Binding {
             modifiers: ModifierKeys = ModifierKeys.none(),
         ) = KeyCode(keyCode, modifiers)
 
-        fun keyCode(
-            modifiers: ModifierKeys,
-            keyCode: Int,
-        ) = KeyCode(keyCode, modifiers)
-
         fun gesture(gesture: Gesture) = GestureInput(gesture)
     }
 }
