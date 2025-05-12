@@ -30,7 +30,7 @@ import java.util.Objects
 open class MappableBinding(
     val binding: Binding,
 ) {
-    val isKey: Boolean get() = binding is KeyBinding
+    val isKey: Boolean get() = binding is KeyBinding<*>
 
     override fun equals(other: Any?): Boolean = this === other || (other is MappableBinding && other.binding == binding)
 
