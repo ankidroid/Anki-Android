@@ -25,19 +25,28 @@ import timber.log.Timber
 import java.util.Objects
 
 /**
- * Binding + additional contextual information
+ * [Binding] + additional contextual information
  */
 open class MappableBinding(
     val binding: Binding,
 ) {
+    /**
+     * Whether the [binding] is a KeyBinding.
+     */
     val isKey: Boolean get() = binding is KeyBinding<*>
 
     override fun equals(other: Any?): Boolean = this === other || (other is MappableBinding && other.binding == binding)
 
     override fun hashCode(): Int = Objects.hash(binding)
 
+    /**
+     * The string used to display the action to the user.
+     */
     open fun toDisplayString(context: Context): String = binding.toDisplayString(context)
 
+    /**
+     * The string used to encode this binding in the preferences.
+     */
     open fun toPreferenceString(): String? = binding.toString()
 
     companion object {
@@ -83,8 +92,14 @@ open class MappableBinding(
  * the settings, by changing the preference with the corresponding [preferenceKey].
  */
 interface MappableAction<B : MappableBinding> {
+    /**
+     * The key used to represents this action in the binding preferences.
+     */
     val preferenceKey: String
 
+    /**
+     * The list of bindings that cause this action according to the [prefs].
+     */
     fun getBindings(prefs: SharedPreferences): List<B>
 }
 
