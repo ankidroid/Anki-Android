@@ -30,6 +30,7 @@ import com.ichi2.anki.preferences.reviewer.MenuDisplayType.MENU_ONLY
 import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.Binding.AppDefinedModifierKeys
 import com.ichi2.anki.reviewer.Binding.Companion.FORBIDDEN_UNICODE_CHAR
+import com.ichi2.anki.reviewer.Binding.KeyCode
 import com.ichi2.anki.reviewer.Binding.ModifierKeys
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
@@ -243,7 +244,7 @@ enum class ViewerAction(
         keys: ModifierKeys = ModifierKeys.none(),
         side: CardSide = CardSide.BOTH,
     ): ReviewerBinding {
-        val binding = Binding.keyCode(keycode, keys)
+        val binding = KeyCode(keycode, keys)
         return ReviewerBinding(binding = binding, side = side)
     }
 

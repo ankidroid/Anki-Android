@@ -17,8 +17,8 @@ package com.ichi2.anki.previewer
 
 import android.content.SharedPreferences
 import android.view.KeyEvent
-import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.Binding.Companion.unicodeUnsafe
+import com.ichi2.anki.reviewer.Binding.KeyCode
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
 import com.ichi2.anki.reviewer.MappableAction
 import com.ichi2.anki.reviewer.MappableBinding
@@ -52,19 +52,19 @@ enum class PreviewerAction : MappableAction<MappableBinding> {
     private val defaultBindings: List<MappableBinding> get() {
         val binding =
             when (this) {
-                BACK -> keyCode(KeyEvent.KEYCODE_DPAD_LEFT)
-                NEXT -> keyCode(KeyEvent.KEYCODE_DPAD_RIGHT)
+                BACK -> KeyCode(KeyEvent.KEYCODE_DPAD_LEFT)
+                NEXT -> KeyCode(KeyEvent.KEYCODE_DPAD_RIGHT)
                 MARK -> unicodeUnsafe('*')
-                REPLAY_AUDIO -> keyCode(KeyEvent.KEYCODE_R)
-                EDIT -> keyCode(KeyEvent.KEYCODE_E)
-                TOGGLE_BACKSIDE_ONLY -> keyCode(KeyEvent.KEYCODE_B)
-                TOGGLE_FLAG_RED -> keyCode(KeyEvent.KEYCODE_1, ctrl())
-                TOGGLE_FLAG_ORANGE -> keyCode(KeyEvent.KEYCODE_2, ctrl())
-                TOGGLE_FLAG_GREEN -> keyCode(KeyEvent.KEYCODE_3, ctrl())
-                TOGGLE_FLAG_BLUE -> keyCode(KeyEvent.KEYCODE_4, ctrl())
-                TOGGLE_FLAG_PINK -> keyCode(KeyEvent.KEYCODE_5, ctrl())
-                TOGGLE_FLAG_TURQUOISE -> keyCode(KeyEvent.KEYCODE_6, ctrl())
-                TOGGLE_FLAG_PURPLE -> keyCode(KeyEvent.KEYCODE_7, ctrl())
+                REPLAY_AUDIO -> KeyCode(KeyEvent.KEYCODE_R)
+                EDIT -> KeyCode(KeyEvent.KEYCODE_E)
+                TOGGLE_BACKSIDE_ONLY -> KeyCode(KeyEvent.KEYCODE_B)
+                TOGGLE_FLAG_RED -> KeyCode(KeyEvent.KEYCODE_1, ctrl())
+                TOGGLE_FLAG_ORANGE -> KeyCode(KeyEvent.KEYCODE_2, ctrl())
+                TOGGLE_FLAG_GREEN -> KeyCode(KeyEvent.KEYCODE_3, ctrl())
+                TOGGLE_FLAG_BLUE -> KeyCode(KeyEvent.KEYCODE_4, ctrl())
+                TOGGLE_FLAG_PINK -> KeyCode(KeyEvent.KEYCODE_5, ctrl())
+                TOGGLE_FLAG_TURQUOISE -> KeyCode(KeyEvent.KEYCODE_6, ctrl())
+                TOGGLE_FLAG_PURPLE -> KeyCode(KeyEvent.KEYCODE_7, ctrl())
                 UNSET_FLAG -> return emptyList()
             }
         return listOf(MappableBinding(binding))

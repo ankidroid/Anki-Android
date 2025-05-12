@@ -41,7 +41,7 @@ import com.ichi2.anki.Ease.GOOD
 import com.ichi2.anki.Ease.HARD
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
-import com.ichi2.anki.reviewer.Binding.Companion.keyCode
+import com.ichi2.anki.reviewer.Binding.KeyCode
 import com.ichi2.anki.reviewer.Binding.ModifierKeys
 import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.reviewer.CardSide
@@ -184,7 +184,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     fun pressingZShouldUndoIfAvailable() {
         ViewerCommand.UNDO.addBinding(
             sharedPrefs(),
-            ReviewerBinding(keyCode(KEYCODE_Z, ModifierKeys.none()), CardSide.BOTH),
+            ReviewerBinding(KeyCode(KEYCODE_Z, ModifierKeys.none()), CardSide.BOTH),
         )
         val underTest = KeyboardInputTestReviewer.displayingAnswer().withUndoAvailable(true)
         underTest.handleAndroidKeyPress(KEYCODE_Z)
@@ -195,7 +195,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     fun pressingZShouldNotUndoIfNotAvailable() {
         ViewerCommand.UNDO.addBinding(
             sharedPrefs(),
-            ReviewerBinding(keyCode(KEYCODE_Z, ModifierKeys.none()), CardSide.BOTH),
+            ReviewerBinding(KeyCode(KEYCODE_Z, ModifierKeys.none()), CardSide.BOTH),
         )
         val underTest = KeyboardInputTestReviewer.displayingAnswer().withUndoAvailable(false)
         underTest.handleUnicodeKeyPress('z')
