@@ -307,7 +307,7 @@ class ReviewerFragmentTest : RobolectricTest() {
     fun `key press reaches the study screen while the whiteboard is hidden`() =
         runTest {
             val cardId = addBasicNote().firstCard().id
-            bindToStudyScreenAndWhiteboard(ReviewerBinding(Binding.keyCode(KeyEvent.KEYCODE_F5), CardSide.BOTH))
+            bindToStudyScreenAndWhiteboard(ReviewerBinding(Binding.KeyCode(KeyEvent.KEYCODE_F5), CardSide.BOTH))
             withReviewer {
                 hideWhiteboard(this)
                 dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_F5))

@@ -4,6 +4,7 @@ package com.ichi2.anki.reviewer
 
 import android.view.KeyEvent
 import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.reviewer.Binding.KeyCode
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Assert.assertEquals
@@ -62,7 +63,7 @@ class BindingTest {
             }
 
         assertEquals(
-            listOf(Binding.keyCode(KeyEvent.KEYCODE_BACKSLASH, allModifierKeys())),
+            listOf(KeyCode(KeyEvent.KEYCODE_BACKSLASH, allModifierKeys())),
             Binding.possibleKeyBindings(event),
         )
     }
@@ -152,13 +153,13 @@ class BindingTest {
             return Binding.possibleKeyBindings(mock).filterIsInstance<Binding.UnicodeCharacter>().first()
         }
 
-        fun keyCode(keyCode: Int): Binding.KeyCode {
+        fun keyCode(keyCode: Int): KeyCode {
             val mock =
                 mock<KeyEvent> {
                     on { getKeyCode() } doReturn keyCode
                 }
 
-            return Binding.possibleKeyBindings(mock).filterIsInstance<Binding.KeyCode>().first()
+            return Binding.possibleKeyBindings(mock).filterIsInstance<KeyCode>().first()
         }
     }
 }
