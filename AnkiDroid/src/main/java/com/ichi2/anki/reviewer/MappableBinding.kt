@@ -10,7 +10,7 @@ import timber.log.Timber
 import java.util.Objects
 
 /**
- * Binding + additional contextual information
+ * [Binding] + additional contextual information
  */
 open class MappableBinding(
     val binding: Binding,
@@ -21,8 +21,14 @@ open class MappableBinding(
 
     override fun hashCode(): Int = Objects.hash(binding)
 
+    /**
+     * User-visible description of the input.
+     */
     open fun toDisplayString(context: Context): String = binding.toDisplayString(context)
 
+    /**
+     * Serialized representation stored in binding preferences, or `null` to omit this binding.
+     */
     open fun toPreferenceString(): String? = binding.toString()
 
     companion object {
@@ -68,8 +74,14 @@ open class MappableBinding(
  * the settings, by changing the preference with the corresponding [preferenceKey].
  */
 interface MappableAction<B : MappableBinding> {
+    /**
+     * Preference key storing this action's configured bindings.
+     */
     val preferenceKey: String
 
+    /**
+     * Returns this action's effective bindings using [prefs] and any implementation defaults.
+     */
     fun getBindings(prefs: SharedPreferences): List<B>
 }
 
