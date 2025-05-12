@@ -26,6 +26,7 @@ import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.reviewer.ReviewerBinding
 
 class ReviewerControlPreference : ControlPreference {
+    // The constructor may actually be used to inflate the XML file. We keep them exactly as in the class [DialogPreference].
     @Suppress("unused")
     constructor(
         context: Context,

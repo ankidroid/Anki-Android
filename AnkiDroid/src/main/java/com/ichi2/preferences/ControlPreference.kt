@@ -49,13 +49,18 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 
 /**
- * A preference which allows mapping of inputs to actions (example: keys -> commands)
+ * A preference which allows mapping of multiple bindings (key, gesture, joystick/montion controller)
+ * to the action assigned to [mKey] (`android:key` in the XML file of type
+ * [androidx.preference.PreferenceScreen])
  *
- * The user is allowed to either add or remove previously mapped keys
+ * The user can:
+ * * remove a previously assigned binding from this action
+ * * add a new binding to this action (removing it from other action if it was already assigned to other actions)
  */
 open class ControlPreference :
     DialogPreference,
     DialogFragmentProvider {
+    // The constructor may actually be used to inflate the XML file. We keep them exactly as in the class [DialogPreference].
     @Suppress("unused")
     constructor(
         context: Context,
@@ -73,14 +78,26 @@ open class ControlPreference :
     @Suppress("unused")
     constructor(context: Context) : super(context)
 
+    /**
+     * The bindings mapped to this action.
+     */
     open fun getMappableBindings(): List<MappableBinding> = MappableBinding.fromPreferenceString(value)
 
+    /**
+     * Called when the user confirmed they want to use this shortcut binding for the current action.
+     */
     protected open fun onKeySelected(binding: Binding): Unit = addBinding(binding)
 
+    /**
+     * Called when the user confirmed they want to use this axis of the joystick/motion controller for the current action.
+     */
     protected open fun onAxisSelected(binding: Binding): Unit = addBinding(binding)
 
     open val areGesturesEnabled: Boolean = false
 
+    /**
+     * Called when the user confirmed they want to use this gesture controller for the current action.
+     */
     protected open fun onGestureSelected(binding: Binding) = Unit
 
     /** @return whether the binding is used in another action */
@@ -96,6 +113,10 @@ open class ControlPreference :
         return true
     }
 
+    /**
+     * Returns the value assigned to [mKey] in the preferences.
+     * @see getMappableBindings in order to get the actual bindings for this preference.
+     */
     var value: String?
         get() = getPersistedString(null)
         set(value) {
@@ -105,6 +126,7 @@ open class ControlPreference :
             }
         }
 
+    // The subtext of this preference is composed of all the bindings of the current action.
     override fun getSummary(): CharSequence = getMappableBindings().joinToString(", ") { it.toDisplayString(context) }
 
     override fun makeDialogFragment(): DialogFragment = ControlPreferenceDialogFragment()
@@ -149,6 +171,9 @@ open class ControlPreference :
         }
     }
 
+    /**
+     * Show the dialog titled "Add joystick/motion controller"
+     */
     fun showAddAxisDialog() {
         val axisPicker = AxisPicker.inflate(context)
         val dialog =
@@ -162,6 +187,8 @@ open class ControlPreference :
             dialog.dismiss()
             val bindingPref = getPreferenceAssignedTo(binding)
             if (bindingPref != null && bindingPref != this) {
+                // The binding selected by the user is already associated to another gesture.
+                // Asks user to confirm they want to remove the previous binding
                 AlertDialog.Builder(context).show {
                     val warning = context.getString(R.string.bindings_already_bound, bindingPref.title)
                     setTitle(binding.toDisplayString(context))
