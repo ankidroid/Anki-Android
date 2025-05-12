@@ -53,7 +53,11 @@ class ReviewerControlPreference : ControlPreference {
         }
     }
 
-    override fun onGestureSelected(binding: Binding) = addBinding(binding, CardSide.BOTH)
+    override fun onGestureSelected(binding: Binding) {
+        CardSideSelectionDialog.displayInstance(context) { side ->
+            addBinding(binding, side)
+        }
+    }
 
     override fun onAxisSelected(binding: Binding) {
         CardSideSelectionDialog.displayInstance(context) { side ->
