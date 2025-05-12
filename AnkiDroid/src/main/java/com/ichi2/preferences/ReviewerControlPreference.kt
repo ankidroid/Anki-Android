@@ -18,6 +18,7 @@ package com.ichi2.preferences
 import android.content.Context
 import android.util.AttributeSet
 import com.ichi2.anki.cardviewer.GestureProcessor
+import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.dialogs.CardSideSelectionDialog
 import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.CardSide
@@ -42,25 +43,47 @@ class ReviewerControlPreference : ControlPreference {
     @Suppress("unused")
     constructor(context: Context) : super(context)
 
+    /**
+     * The command associated to this preference.
+     */
+    private val viewerCommand = ViewerCommand.fromPreferenceKey(key)!!
+    /**
+     *  The side(s) on which this preference can be executed
+     */
+    private val potentialSides = viewerCommand.potentialSides
+
     override val areGesturesEnabled: Boolean
         get() = sharedPreferences?.getBoolean(GestureProcessor.PREF_KEY, false) ?: false
+
+    /**
+     * If this command can be executed on a single side, execute the callback on this side.
+     * Otherwise, ask the suer to select one or two side(s) and execute the callback on them.
+     */
+    private fun selectSide(callback: (c: CardSide) -> Unit) {
+        val potentialSides = potentialSides
+        if (potentialSides != CardSide.BOTH) {
+            callback(potentialSides)
+        } else {
+            CardSideSelectionDialog.displayInstance(context, callback)
+        }
+    }
 
     override fun getMappableBindings(): List<ReviewerBinding> = ReviewerBinding.fromPreferenceString(value).toList()
 
     override fun onKeySelected(binding: Binding) {
-        CardSideSelectionDialog.displayInstance(context) { side ->
+        selectSide { side ->
             addBinding(binding, side)
         }
     }
 
     override fun onGestureSelected(binding: Binding) {
         CardSideSelectionDialog.displayInstance(context) { side ->
-            addBinding(binding, side)
+            addBinding(binding, potentialSides)
         }
     }
 
     override fun onAxisSelected(binding: Binding) {
-        CardSideSelectionDialog.displayInstance(context) { side ->
+        selectSide { side ->
             addBinding(binding, side)
         }
     }
