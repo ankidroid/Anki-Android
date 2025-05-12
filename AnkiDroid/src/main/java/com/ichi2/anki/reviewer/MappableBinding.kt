@@ -36,7 +36,10 @@ open class MappableBinding(
 
     override fun hashCode(): Int = Objects.hash(binding)
 
-    open fun toDisplayString(context: Context): String = binding.toDisplayString(context)
+    open fun toDisplayString(
+        context: Context,
+        potentialSides: CardSide,
+    ): String = binding.toDisplayString(context)
 
     open fun toPreferenceString(): String? = binding.toString()
 

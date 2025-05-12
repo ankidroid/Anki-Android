@@ -47,10 +47,11 @@ class ReviewerControlPreference : ControlPreference {
      * The command associated to this preference.
      */
     private val viewerCommand = ViewerCommand.fromPreferenceKey(key)!!
+
     /**
      *  The side(s) on which this preference can be executed
      */
-    private val potentialSides = viewerCommand.potentialSides
+    override val potentialSides = viewerCommand.potentialSides
 
     override val areGesturesEnabled: Boolean
         get() = sharedPreferences?.getBoolean(GestureProcessor.PREF_KEY, false) ?: false
