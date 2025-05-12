@@ -63,12 +63,22 @@ open class ControlPreference :
 
     open fun getMappableBindings(): List<MappableBinding> = MappableBinding.fromPreferenceString(value)
 
+    /**
+     * Called after the user confirms a key binding. The base implementation adds it to this action.
+     */
     protected open fun onKeySelected(binding: Binding): Unit = addBinding(binding)
 
+    /**
+     * Called after an axis selection and any confirmation to replace another action's binding.
+     * The base implementation adds the binding to this action.
+     */
     protected open fun onAxisSelected(binding: Binding): Unit = addBinding(binding)
 
     open val areGesturesEnabled: Boolean = false
 
+    /**
+     * Called after the user confirms a gesture. Subclasses must override this to store the binding.
+     */
     protected open fun onGestureSelected(binding: Binding) = Unit
 
     /** @return the title of the other action using [binding], or null if there is no conflict */
