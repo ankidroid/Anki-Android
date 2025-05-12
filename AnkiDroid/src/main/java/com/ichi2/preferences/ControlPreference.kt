@@ -37,9 +37,9 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 
 /**
- * A preference which allows mapping of inputs to actions (example: keys -> commands)
+ * Maps keyboard, gesture, and joystick bindings to the action identified by [key].
  *
- * The user is allowed to either add or remove previously mapped keys
+ * Users can add or remove bindings. Adding a binding can replace its assignment to another related action.
  */
 open class ControlPreference :
     DialogPreference,
@@ -133,6 +133,9 @@ open class ControlPreference :
         }
     }
 
+    /**
+     * Shows a joystick axis picker and asks for confirmation before replacing another action's binding.
+     */
     fun showAddAxisDialog() {
         val axisPicker = AxisPicker(context)
         val dialog =
