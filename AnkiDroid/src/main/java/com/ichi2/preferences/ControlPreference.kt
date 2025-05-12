@@ -100,17 +100,14 @@ open class ControlPreference :
      */
     protected open fun onGestureSelected(binding: Binding) = Unit
 
-    /** @return whether the binding is used in another action */
-    open fun warnIfUsed(
+    /** @return The name of the other preferences using [binding] if any. */
+    open fun otherActionForBinding(
         binding: Binding,
         warningDisplay: WarningDisplay,
-    ): Boolean {
-        val bindingPreference = getPreferenceAssignedTo(binding) ?: return false
-        if (bindingPreference == this) return false
-        val actionTitle = bindingPreference.title ?: ""
-        val warning = context.getString(R.string.bindings_already_bound, actionTitle)
-        warningDisplay.setWarning(warning)
-        return true
+    ): CharSequence? {
+        val bindingPreference = getPreferenceAssignedTo(binding) ?: return null
+        if (bindingPreference == this) return null
+        return bindingPreference.title ?: ""
     }
 
     /**
@@ -209,7 +206,11 @@ open class ControlPreference :
         binding: Binding,
         warningDisplay: WarningDisplay,
     ) {
-        if (!warnIfUsed(binding, warningDisplay)) {
+        val otherActionForBinding = otherActionForBinding(binding, warningDisplay)
+        if (otherActionForBinding != null) {
+            val warning = context.getString(R.string.bindings_already_bound, otherActionForBinding)
+            warningDisplay.setWarning(warning)
+        } else {
             warningDisplay.clearWarning()
         }
     }
