@@ -19,6 +19,7 @@ package com.ichi2.ui
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.reviewer.Binding
+import com.ichi2.anki.reviewer.Binding.KeyCode
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
@@ -56,6 +57,6 @@ class BindingPreferenceTest {
                 .unicodeSafe(Binding.FORBIDDEN_UNICODE_CHAR)
                 ?.let { ReviewerBinding(it, CardSide.QUESTION) },
             ReviewerBinding(Binding.gesture(Gesture.LONG_TAP), CardSide.BOTH),
-            ReviewerBinding(Binding.keyCode(12), CardSide.BOTH),
+            ReviewerBinding(KeyCode(12), CardSide.BOTH),
         )
 }

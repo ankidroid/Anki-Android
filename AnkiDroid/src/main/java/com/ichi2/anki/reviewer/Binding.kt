@@ -252,7 +252,7 @@ sealed interface Binding {
         fun possibleKeyBindings(event: KeyEvent): List<KeyBinding> {
             val modifiers = ModifierKeys(event.isShiftPressed, event.isCtrlPressed, event.isAltPressed)
             val ret: MutableList<KeyBinding> = ArrayList()
-            event.keyCode.ifNotZero { keyCode -> ret.add(keyCode(keyCode, modifiers)) }
+            event.keyCode.ifNotZero { keyCode -> ret.add(KeyCode(keyCode, modifiers)) }
 
             // passing in metaState: 0 means that Ctrl+1 returns '1' instead of '\0'
             // NOTE: We do not differentiate on upper/lower case via KeyEvent.META_CAPS_LOCK_ON
@@ -314,11 +314,6 @@ sealed interface Binding {
             assert(unicodeChar != FORBIDDEN_UNICODE_CHAR)
             return UnicodeCharacter(unicodeChar, modifierKeys)
         }
-
-        fun keyCode(
-            keyCode: Int,
-            modifiers: ModifierKeys = ModifierKeys.none(),
-        ) = KeyCode(keyCode, modifiers)
 
         fun gesture(gesture: Gesture) = GestureInput(gesture)
     }
