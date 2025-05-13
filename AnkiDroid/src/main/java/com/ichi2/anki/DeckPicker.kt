@@ -1449,7 +1449,7 @@ open class DeckPicker :
             KeyEvent.KEYCODE_S -> {
                 Timber.i("Study from keypress")
                 launchCatchingTask {
-                    handleDeckSelection(getColUnsafe.decks.selected(), DeckSelectionType.SKIP_STUDY_OPTIONS)
+                    handleDeckSelection(withCol { decks.selected() }, DeckSelectionType.SKIP_STUDY_OPTIONS)
                 }
                 return true
             }
@@ -2102,6 +2102,12 @@ open class DeckPicker :
         did: DeckId,
         selectionType: DeckSelectionType,
     ) {
+        // ignore requests(ex: from keyboard shortcuts) when the collection is empty(and
+        // adapter has no decks)
+        if (deckListAdapter.itemCount <= 0) {
+            return
+        }
+
         fun showEmptyDeckSnackbar() =
             showSnackbar(R.string.empty_deck) {
                 setAction(R.string.menu_add) { addNote(did) }
