@@ -24,7 +24,7 @@ import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
 import com.google.android.material.color.MaterialColors
-import com.ichi2.utils.dpToPixels
+import com.ichi2.utils.dp
 import java.util.Locale
 import kotlin.math.abs
 import kotlin.math.max
@@ -82,14 +82,14 @@ class AxisValueDisplay(
     private val textPaint =
         Paint().apply {
             textAlign = Paint.Align.CENTER
-            textSize = dpToPixels(20f).toFloat()
+            textSize = 20.dp.toPx(context).toFloat()
             color = MaterialColors.getColor(context, android.R.attr.textColor, 0)
         }
 
     /** stores text dimensions, used for centering text */
     private val textBounds = Rect()
 
-    private val controlHeight = dpToPixels(40f)
+    private val controlHeight = 40.dp.toPx(context)
 
     override fun onMeasure(
         widthMeasureSpec: Int,

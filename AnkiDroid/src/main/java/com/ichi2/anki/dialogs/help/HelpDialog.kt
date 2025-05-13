@@ -34,13 +34,13 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.analytics.UsageAnalytics.Actions
 import com.ichi2.anki.analytics.UsageAnalytics.Category
-import com.ichi2.anki.convertDpToPixel
 import com.ichi2.anki.dialogs.help.HelpItem.Action.OpenUrl
 import com.ichi2.anki.dialogs.help.HelpItem.Action.OpenUrlResource
 import com.ichi2.anki.dialogs.help.HelpItem.Action.Rate
 import com.ichi2.anki.dialogs.help.HelpItem.Action.SendReport
 import com.ichi2.utils.createAndApply
 import com.ichi2.utils.customView
+import com.ichi2.utils.dp
 import com.ichi2.utils.title
 
 /**
@@ -190,7 +190,6 @@ class HelpPageFragment : Fragment(R.layout.fragment_help_page) {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val drawablePadding = convertDpToPixel(16F, requireContext()).toInt()
         val pageContentLayout = view.findViewById<LinearLayout>(R.id.page_content)
         requireArgsHelpEntries().forEach { menuItem ->
             val contentRow =
@@ -207,7 +206,7 @@ class HelpPageFragment : Fragment(R.layout.fragment_help_page) {
                     0,
                     0,
                 )
-                compoundDrawablePadding = drawablePadding
+                compoundDrawablePadding = 16.dp.toPx(requireContext())
                 setOnClickListener {
                     UsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, menuItem.analyticsId)
                     parentFragmentManager.setFragmentResult(
