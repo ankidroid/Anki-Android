@@ -39,6 +39,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.preferences.switchProfiles.SwitchProfilesSettingsFragment
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.utils.FragmentFactoryUtils
 import timber.log.Timber
@@ -230,5 +231,6 @@ fun getFragmentFromXmlRes(
         R.xml.preferences_accessibility -> AccessibilitySettingsFragment()
         R.xml.preferences_dev_options -> DevOptionsFragment()
         R.xml.preferences_custom_buttons -> CustomButtonsSettingsFragment()
+        R.xml.preferences_switch_profiles -> SwitchProfilesSettingsFragment()
         else -> null
     }

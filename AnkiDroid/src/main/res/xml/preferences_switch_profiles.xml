@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/switch_profiles_title">
+
+    <com.ichi2.anki.preferences.switchProfiles.ProfileListPreference
+        android:key="@string/multiple_profiles_screen_pref_key"
+        />
+
+</PreferenceScreen>

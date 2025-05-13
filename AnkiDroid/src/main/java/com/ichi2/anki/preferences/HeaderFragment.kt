@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.preferences
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,7 @@ import com.bytehamster.lib.preferencesearch.SearchPreference
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.preferences.switchProfiles.SwitchProfilesSettingsFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.isWindowCompact
@@ -48,6 +50,28 @@ class HeaderFragment :
         rootKey: String?,
     ) {
         setPreferencesFromResource(R.xml.preference_headers, rootKey)
+
+        fun shouldDisplaySwitchProfilesOption(context: Context): Boolean =
+            context.sharedPrefs().getBoolean(context.getString(R.string.enable_multiple_profiles_pref_key), false)
+
+        val switchProfilesPref = findPreference<Preference>(getString(R.string.multiple_profiles_screen_pref_key))
+
+        /**
+         * Based on the user selection we show/hide the Switch profiles option in Preferences
+         */
+        if (!shouldDisplaySwitchProfilesOption(requireContext())) {
+            switchProfilesPref?.let { preferenceScreen.removePreference(it) }
+        } else {
+            if (switchProfilesPref == null) {
+                // Only add if not already present to avoid duplication
+                val newPref =
+                    Preference(requireContext()).apply {
+                        key = getString(R.string.multiple_profiles_screen_pref_key)
+                        title = getString(R.string.switch_profiles_title)
+                    }
+                preferenceScreen.addPreference(newPref)
+            }
+        }
 
         requirePreference<HeaderPreference>(R.string.pref_backup_limits_screen_key)
             .title = TR.preferencesBackups()
@@ -236,6 +260,7 @@ class HeaderFragment :
                 is AdvancedSettingsFragment -> R.string.pref_advanced_screen_key
                 is DevOptionsFragment, is ReviewerOptionsFragment -> R.string.pref_dev_options_screen_key
                 is AboutFragment -> R.string.about_screen_key
+                is SwitchProfilesSettingsFragment -> R.string.multiple_profiles_screen_pref_key
                 else -> null
             }
     }
