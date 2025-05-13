@@ -1447,8 +1447,12 @@ open class DeckPicker :
             }
             KeyEvent.KEYCODE_S -> {
                 Timber.i("Study from keypress")
-                launchCatchingTask {
-                    handleDeckSelection(getColUnsafe.decks.selected(), DeckSelectionType.SKIP_STUDY_OPTIONS)
+                // only accept this keyboard shortcut if we actual have decks available, using this
+                // with an empty collection will result in an IndexOutOfBoundsException being thrown
+                if (deckListAdapter.itemCount > 0) {
+                    launchCatchingTask {
+                        handleDeckSelection(getColUnsafe.decks.selected(), DeckSelectionType.SKIP_STUDY_OPTIONS)
+                    }
                 }
                 return true
             }
