@@ -23,7 +23,6 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.view.OnReceiveContentListener
 import androidx.draganddrop.DropHelper
-import com.ichi2.anki.scheduling.dpToPx
 
 /** @see View.performClick */
 fun View.performClickIfEnabled() {
@@ -131,6 +130,9 @@ fun View.updatePaddingRelative(
 val Int.dp
     get() = Dp(dp = this.toFloat())
 
+val Float.dp
+    get() = Dp(dp = this)
+
 val Double.dp
     get() = Dp(dp = this.toFloat())
 
@@ -144,3 +146,5 @@ value class Dp(
     // TODO: improve once we have context parameters
     fun toPx(context: Context) = dp.dpToPx(context)
 }
+
+private fun Float.dpToPx(context: Context): Int = (this * context.resources.displayMetrics.density + 0.5f).toInt()

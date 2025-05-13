@@ -51,11 +51,11 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
-import com.ichi2.anki.convertDpToPixel
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.ViewGroupUtils
 import com.ichi2.utils.ViewGroupUtils.getAllChildrenRecursive
+import com.ichi2.utils.dp
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import timber.log.Timber
@@ -100,7 +100,7 @@ class Toolbar : FrameLayout {
         LayoutInflater.from(context).inflate(R.layout.note_editor_toolbar, this, true)
         stringPaint =
             Paint(Paint.ANTI_ALIAS_FLAG).apply {
-                textSize = convertDpToPixel(24F, context)
+                textSize = 24.dp.toPx(context).toFloat()
                 color = Color.BLACK
                 textAlign = Paint.Align.CENTER
             }
@@ -210,7 +210,7 @@ class Toolbar : FrameLayout {
         context.theme.resolveAttribute(android.R.attr.selectableItemBackground, background, true)
         button.setBackgroundResource(background.resourceId)
         // Use layout size from R.style.note_editor_toolbar_button
-        val buttonSize = convertDpToPixel(44F, context).toInt()
+        val buttonSize = 44.dp.toPx(context)
         val params = LinearLayout.LayoutParams(buttonSize, buttonSize)
         params.gravity = Gravity.CENTER
         button.layoutParams = params
@@ -231,7 +231,7 @@ class Toolbar : FrameLayout {
 
         // Hack - items are truncated from the scrollview
         val v = findViewById<View>(R.id.toolbar_layout)
-        val expectedWidth = getVisibleItemCount(toolbar) * convertDpToPixel(48F, context)
+        val expectedWidth = getVisibleItemCount(toolbar) * 48.dp.toPx(context)
         val width = screenWidth
         val p = LayoutParams(v.layoutParams)
         p.gravity =
@@ -350,7 +350,7 @@ class Toolbar : FrameLayout {
     private fun getVisibleItemCount(layout: LinearLayout): Int = ViewGroupUtils.getAllChildren(layout).count { it.isVisible }
 
     private fun addViewToToolbar(button: AppCompatImageButton) {
-        val expectedWidth = getVisibleItemCount(toolbar) * convertDpToPixel(48F, context)
+        val expectedWidth = getVisibleItemCount(toolbar) * 48.dp.toPx(context)
         val width = screenWidth
         if (expectedWidth <= width) {
             toolbar.addView(button, toolbar.childCount)
@@ -359,7 +359,7 @@ class Toolbar : FrameLayout {
         var spaceLeft = false
         if (rows.isNotEmpty()) {
             val row = rows.last()
-            val expectedRowWidth = getVisibleItemCount(row) * convertDpToPixel(48F, context)
+            val expectedRowWidth = getVisibleItemCount(row) * 48.dp.toPx(context)
             if (expectedRowWidth <= width) {
                 row.addView(button, row.childCount)
                 spaceLeft = true

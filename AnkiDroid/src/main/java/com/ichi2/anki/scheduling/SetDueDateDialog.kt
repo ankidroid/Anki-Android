@@ -17,7 +17,6 @@
 package com.ichi2.anki.scheduling
 
 import android.app.Dialog
-import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
@@ -58,6 +57,7 @@ import com.ichi2.anki.withProgress
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.utils.create
+import com.ichi2.utils.dp
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
@@ -181,7 +181,7 @@ class SetDueDateDialog : DialogFragment() {
         // The dialog is too wide on tablets
         // Select either 450dp (tablets)
         // or 100% of the screen width (smaller phones)
-        val intendedWidth = min(MAX_WIDTH_DP.dpToPx(this.requireContext()), resources.displayMetrics.widthPixels)
+        val intendedWidth = min(MAX_WIDTH_DP.dp.toPx(this.requireContext()), resources.displayMetrics.widthPixels)
         Timber.d("updating width to %d", intendedWidth)
         this.dialog?.window?.setLayout(
             intendedWidth,
@@ -324,6 +324,3 @@ private fun AnkiActivity.updateDueDate(viewModel: SetDueDateViewModel) =
         }
         showSnackbar(TR.schedulingSetDueDateDone(cardsUpdated), Snackbar.LENGTH_SHORT)
     }
-
-// TODO: better to use 16.dp ... toPx(context)
-fun Float.dpToPx(context: Context): Int = (this * context.resources.displayMetrics.density + 0.5f).toInt()

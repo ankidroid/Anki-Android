@@ -190,6 +190,7 @@ import com.ichi2.utils.checkBoxPrompt
 import com.ichi2.utils.checkWebviewVersion
 import com.ichi2.utils.configureView
 import com.ichi2.utils.customView
+import com.ichi2.utils.dp
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.neutralButton
@@ -866,10 +867,10 @@ open class DeckPicker :
             title(R.string.directory_inaccessible)
             customView(
                 contentView,
-                convertDpToPixel(16F, this@DeckPicker).toInt(),
+                16.dp.toPx(this@DeckPicker),
                 0,
-                convertDpToPixel(32F, this@DeckPicker).toInt(),
-                convertDpToPixel(32F, this@DeckPicker).toInt(),
+                32.dp.toPx(this@DeckPicker),
+                32.dp.toPx(this@DeckPicker),
             )
             positiveButton(R.string.open_settings) {
                 val settingsIntent = PreferencesActivity.getIntent(this@DeckPicker, AdvancedSettingsFragment::class)

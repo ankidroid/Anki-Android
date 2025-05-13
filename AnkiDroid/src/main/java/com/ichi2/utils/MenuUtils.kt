@@ -24,7 +24,6 @@ import androidx.appcompat.view.menu.MenuItemImpl
 import androidx.core.view.forEach
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.R
-import com.ichi2.anki.convertDpToPixel
 
 private fun Menu.forEachOverflowItemRecursive(block: (MenuItem) -> Unit) {
     (this as? MenuBuilder)?.flagActionItems()
@@ -42,7 +41,7 @@ private fun Menu.forEachOverflowItemRecursive(block: (MenuItem) -> Unit) {
  * Has no effect for items that have no icon, or for items this has processed before.
  */
 fun Context.increaseHorizontalPaddingOfOverflowMenuIcons(menu: Menu) {
-    val extraPadding = convertDpToPixel(5f, this).toInt()
+    val extraPadding = 5.dp.toPx(this)
 
     class Wrapper(
         drawable: Drawable,
