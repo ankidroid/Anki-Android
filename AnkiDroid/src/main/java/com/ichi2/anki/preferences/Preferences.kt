@@ -43,6 +43,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.preferences.HeaderFragment.Companion.getHeaderKeyForFragment
+import com.ichi2.anki.preferences.profiles.ProfilesSettingsFragment
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ScheduleReminders
 import com.ichi2.anki.utils.ext.sharedPrefs
@@ -278,5 +279,6 @@ fun getFragmentFromXmlRes(
         R.xml.preferences_accessibility -> AccessibilitySettingsFragment()
         R.xml.preferences_dev_options -> DevOptionsFragment()
         R.xml.preferences_custom_buttons -> CustomButtonsSettingsFragment()
+        R.xml.preferences_switch_profile -> ProfilesSettingsFragment()
         else -> null
     }

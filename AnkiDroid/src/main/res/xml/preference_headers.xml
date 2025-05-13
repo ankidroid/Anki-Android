@@ -80,6 +80,14 @@
         app:summaryEntries="@array/appearance_summary_entries">
     </com.ichi2.preferences.HeaderPreference>
 
+    <!-- Switch Profile Preferences  -->
+    <com.ichi2.preferences.HeaderPreference
+        android:fragment="com.ichi2.anki.preferences.profiles.ProfilesSettingsFragment"
+        android:key="@string/pref_switch_profile_screen_key"
+        android:title="Switch Profile"
+        android:icon="@drawable/ic_switch_profile">
+    </com.ichi2.preferences.HeaderPreference>
+
     <!-- Keybinding preferences -->
     <com.ichi2.preferences.HeaderPreference
         android:fragment="com.ichi2.anki.preferences.ControlsSettingsFragment"

@@ -52,6 +52,10 @@
         android:title="New congrats screen"
         android:key="@string/new_congrats_screen_pref_key"
         android:defaultValue="false"/>
+    <SwitchPreferenceCompat
+        android:title="Switch Profile option"
+        android:key="@string/pref_enable_switch_profile_key"
+        android:defaultValue="false"/>
     <PreferenceCategory
         android:title="Create meaningless cards notes"
         >
