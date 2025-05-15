@@ -107,6 +107,7 @@
     <string name="link_anki_forum">https://forums.ankiweb.net/</string>
     <string name="link_forum">http://groups.google.com/group/anki-android</string>
     <string name="licence_wiki">http://www.gnu.org/licenses/gpl.html</string>
+    <string name="dependency_license_wiki">https://github.com/ankidroid/Anki-Android/wiki/Licences</string>
     <string name="link_agpl_wiki">https://www.gnu.org/licenses/agpl-3.0.html</string>
     <string name="link_source">https://github.com/ankidroid/Anki-Android</string>
     <string name="link_market">market://details?id=com.ichi2.anki</string>
