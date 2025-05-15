@@ -25,3 +25,17 @@ _Please, go through these checks before submitting the PR._
 - [ ] You have performed a self-review of your own code
 - [ ] UI changes: include screenshots of all affected screens (in particular showing any new or changed strings)
 - [ ] UI Changes: You have tested your change using the [Google Accessibility Scanner](https://play.google.com/store/apps/details?id=com.google.android.apps.accessibility.auditor)
+
+<!--- Uncomment this section ONLY if this PR introduces new resources (external libraries, icons etc)
+## Licenses
+_For each new external resource, add a row to the table below:_
+
+| Library | Description | License |
+| --- | --- | --- |
+| Sample Icon Library | Sample Description | [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt) |
+
+**Maintainers:**
+
+* [ ] Add the https://github.com/ankidroid/Anki-Android/labels/Licenses label
+* [ ] Update the [licenses](https://github.com/ankidroid/Anki-Android/wiki/Licences) wiki when merging
+--->
