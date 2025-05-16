@@ -202,6 +202,7 @@
     <string name="new_reviewer_pref_key">newReviewer</string>
     <string name="new_reviewer_options_key">newReviewerOptions</string>
     <string name="pref_browser_find_replace">browserFindReplace</string>
+    <string name="pref_new_notifications">newNotifications</string>
     <string name="dev_options_enabled_by_user_key">devOptionsEnabledByUser</string>
     <string name="pref_cat_wip_key">workInProgressDevOptions</string>
     <!-- Developer options > Create fake notes -->

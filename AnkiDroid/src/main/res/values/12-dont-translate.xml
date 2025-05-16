@@ -26,5 +26,16 @@
     <string
         name="crowdin_test_string_do_not_translate"
         >In order to ensure this string is not shown as untranslated, translate it the way you want. Probably using a single letter, so that it\'s quick. This string will never appear in ankidroid and is present here only to test crowdin feature.</string>
+
+    <!-- New Notifications -->
+    <!-- In progress for GSoC 2025 -->
+    <!-- TODO: Remove developer flag when the new notification system is stable -->
+    <string name="enable_new_notifications" maxLength="41" comment="Label in the developer options screen that enables the new notifications system.">Enable new notifications</string>
+    <string name="edit_notifications" maxLength="28" comment="Label for the notifications icon menu button that appears in the top bar of the individual deck detailed options menu, and the name of the button option for editing notifications for a deck when a deck is long clicked in the main screen, and the title of the screen that appears when users decide to edit the notifications of a single specific deck.">Edit notifications</string>
+    <string name="edit_all_app_wide_notifications" maxLength="41" comment="Label for the notifications settings button which users can click to view and edit notifications that apply to all decks.">Edit all app-wide notifications</string>
+    <string name="app_wide_notifications" comment="Title of the screen that appears when users are viewing and editing notifications that apply to all decks.">App-wide notifications</string>
+    <string name="edit_all_deck_specific_notifications" maxLength="41" comment="Label for the notifications settings button which users can click to view and edit notifications that apply for individual decks.">Edit all deck-specific notifications</string>
+    <string name="deck_specific_notifications" comment="Title of the screen that appears when all deck-specific notifications are being viewed and edited.">Deck-specific notifications</string>
+
 </resources>
 
