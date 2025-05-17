@@ -18,6 +18,7 @@
 package com.ichi2.libanki
 
 import androidx.annotation.WorkerThread
+import anki.media.CheckMediaResponse
 import com.google.protobuf.kotlin.toByteString
 import com.ichi2.libanki.exception.EmptyMediaException
 import timber.log.Timber
@@ -75,7 +76,7 @@ open class Media(
                 it.soundOrVideo
             }
 
-    fun findUnusedMediaFiles(): List<File> = check().unusedFileNames.map { File(dir, it) }
+    fun findUnusedMediaFiles(): List<File> = check().unusedList.map { File(dir, it) }
 
     /**
      * [IRI](https://en.wikipedia.org/wiki/Internationalized_Resource_Identifier) encodes media
@@ -98,14 +99,7 @@ open class Media(
      */
 
     // FIXME: this also provides trash count, but UI can not handle it yet
-    fun check(): MediaCheckResult {
-        val out = col.backend.checkMedia()
-        return MediaCheckResult(
-            missingFileNames = out.missingList,
-            unusedFileNames = out.unusedList,
-            missingMediaNotes = out.missingMediaNotesList,
-        )
-    }
+    fun check(): CheckMediaResponse = col.backend.checkMedia()
 
     /**
      * Copying on import
@@ -143,9 +137,3 @@ open class Media(
 }
 
 fun getCollectionMediaPath(collectionPath: String): String = collectionPath.replaceFirst("\\.anki2$".toRegex(), ".media")
-
-data class MediaCheckResult(
-    val missingFileNames: List<String>,
-    val unusedFileNames: List<String>,
-    val missingMediaNotes: List<Long>,
-)

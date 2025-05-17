@@ -19,10 +19,10 @@ package com.ichi2.anki.mediacheck
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import anki.media.CheckMediaResponse
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.deleteMedia
-import com.ichi2.libanki.MediaCheckResult
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,8 +31,8 @@ import kotlinx.coroutines.launch
 
 @NeedsTest("Test the media check process i.e. the buttons and views")
 class MediaCheckViewModel : ViewModel() {
-    private val _mediaCheckResult = MutableStateFlow<MediaCheckResult?>(null)
-    val mediaCheckResult: StateFlow<MediaCheckResult?> = _mediaCheckResult
+    private val _mediaCheckResult = MutableStateFlow<CheckMediaResponse?>(null)
+    val mediaCheckResult: StateFlow<CheckMediaResponse?> = _mediaCheckResult
 
     private val deletedFilesCount: MutableStateFlow<Int> = MutableStateFlow(0)
     private val taggedFilesCount: MutableStateFlow<Int> = MutableStateFlow(0)
@@ -48,7 +48,7 @@ class MediaCheckViewModel : ViewModel() {
         viewModelScope.launch {
             val taggedNotes =
                 undoableOp {
-                    tags.bulkAdd(_mediaCheckResult.value?.missingMediaNotes ?: listOf(), tag)
+                    tags.bulkAdd(_mediaCheckResult.value?.missingMediaNotesList ?: listOf(), tag)
                 }
             taggedFilesCount.value = taggedNotes.count
         }
@@ -62,7 +62,7 @@ class MediaCheckViewModel : ViewModel() {
     // TODO: investigate: the underlying implementation exposes progress, which we do not yet handle.
     fun deleteUnusedMedia(): Job =
         viewModelScope.launch {
-            val deletedMedia = withCol { deleteMedia(this@withCol, _mediaCheckResult.value?.unusedFileNames ?: listOf()) }
+            val deletedMedia = withCol { deleteMedia(this@withCol, _mediaCheckResult.value?.unusedList ?: listOf()) }
             deletedFilesCount.value = deletedMedia
         }
 }
