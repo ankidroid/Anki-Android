@@ -41,6 +41,7 @@ import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.description
@@ -279,6 +280,12 @@ class StudyOptionsFragment :
                 showCustomStudyContextMenu()
                 return true
             }
+            R.id.action_edit_notifications -> {
+                Timber.i("StudyOptionsFragment:: edit notifications button pressed")
+                val intent = EditNotifications.getIntentForSingleDeckSpecificEditing(requireContext(), col!!.decks.current().id)
+                startActivity(intent)
+                return true
+            }
             R.id.action_unbury -> {
                 Timber.i("StudyOptionsFragment:: unbury button pressed")
                 launchCatchingTask {
@@ -350,6 +357,13 @@ class StudyOptionsFragment :
             // Don't show custom study icon if congrats shown
             if (currentContentView == CONTENT_CONGRATS) {
                 menu.findItem(R.id.action_custom_study).isVisible = false
+            }
+            // Developer flag: Only show notifications button if new notifications are enabled
+            // TODO: Remove developer flag when the new notification system is stable
+            if (requireContext().sharedPrefs().getBoolean(getString(R.string.pref_new_notifications), false)) {
+                menu.findItem(R.id.action_edit_notifications).isVisible = true
+            } else {
+                menu.findItem(R.id.action_edit_notifications).isVisible = false
             }
             // Switch on or off unbury depending on if there are cards to unbury
             menu.findItem(R.id.action_unbury).isVisible = col != null && col!!.sched.haveBuried()
