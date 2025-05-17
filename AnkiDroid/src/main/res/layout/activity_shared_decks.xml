@@ -24,7 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <WebView
-        android:id="@+id/web_view"
+        android:id="@+id/media_check_webview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"

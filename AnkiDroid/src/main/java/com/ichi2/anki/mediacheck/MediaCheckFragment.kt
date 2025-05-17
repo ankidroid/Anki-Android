@@ -20,14 +20,19 @@ package com.ichi2.anki.mediacheck
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.RecyclerView
-import anki.media.CheckMediaResponse
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.CollectionManager.TR
@@ -51,10 +56,11 @@ import kotlinx.coroutines.launch
  **/
 class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
     private val viewModel: MediaCheckViewModel by viewModels()
-    private lateinit var adapter: MediaCheckAdapter
 
     private lateinit var deleteMediaButton: MaterialButton
     private lateinit var tagMissingButton: MaterialButton
+
+    private lateinit var webView: WebView
 
     override fun onViewCreated(
         view: View,
@@ -71,11 +77,10 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
 
         deleteMediaButton = view.findViewById(R.id.delete_used_media_button)
         tagMissingButton = view.findViewById(R.id.tag_missing_media_button)
+        webView = view.findViewById(R.id.media_check_webview)
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
-
-        adapter = MediaCheckAdapter(requireContext())
-        recyclerView.adapter = adapter
+        val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
 
         launchCatchingTask {
             withProgress(R.string.check_media_message) {
@@ -85,16 +90,11 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
 
         lifecycleScope.launch {
             viewModel.mediaCheckResult.collectLatest { result ->
-                view.findViewById<TextView>(R.id.unused_media_count)?.apply {
-                    text = (TR.mediaCheckUnusedCount(result?.unusedCount ?: 0))
-                }
-
-                view.findViewById<TextView>(R.id.missing_media_count)?.apply {
-                    text = (TR.mediaCheckMissingCount(result?.missingCount ?: 0))
-                }
-
-                result?.let { files ->
-                    handleMediaResult(files)
+                updateWebView(result?.report.orEmpty())
+                if (result != null) {
+                    tagMissingButton.visibility = if (result.missingCount != 0) View.VISIBLE else View.GONE
+                    deleteMediaButton.visibility = if (result.unusedCount != 0) View.VISIBLE else View.GONE
+                    if (result.haveTrash) setupMenu()
                 }
             }
         }
@@ -102,28 +102,56 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
         setupButtonListeners()
     }
 
-    /**
-     * Processes media check results and updates the UI.
-     *
-     * @param mediaCheckResult The result containing missing and unused media file names.
-     */
-    private fun handleMediaResult(mediaCheckResult: CheckMediaResponse) {
-        val fileList =
-            buildList {
-                if (mediaCheckResult.missingCount != 0) {
-                    tagMissingButton.visibility = View.VISIBLE
-                    add(TR.mediaCheckMissingHeader())
-                    addAll(mediaCheckResult.missingList.map(TR::mediaCheckMissingFile))
+    private fun setupMenu() {
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(
+            object : MenuProvider {
+                override fun onCreateMenu(
+                    menu: Menu,
+                    menuInflater: MenuInflater,
+                ) {
+                    menuInflater.inflate(R.menu.media_check_menu, menu)
+                    menu.findItem(R.id.action_restore_trash).apply {
+                        isVisible = true
+                        title = TR.mediaCheckRestoreTrash().toSentenceCase(requireContext(), R.string.sentence_restore_deleted)
+                    }
+                    menu.findItem(R.id.action_empty_trash).apply {
+                        isVisible = true
+                        title = TR.mediaCheckEmptyTrash().toSentenceCase(requireContext(), R.string.sentence_empty_trash)
+                    }
                 }
-                if (mediaCheckResult.unusedCount != 0) {
-                    deleteMediaButton.visibility = View.VISIBLE
-                    if (isNotEmpty()) add("\n")
-                    add(TR.mediaCheckUnusedHeader())
-                    addAll(mediaCheckResult.unusedList.map(TR::mediaCheckUnusedFile))
-                }
-            }
 
-        adapter.submitList(fileList)
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
+                    when (menuItem.itemId) {
+                        R.id.action_restore_trash -> {
+                            confirmMediaRestore()
+                            true
+                        }
+                        R.id.action_empty_trash -> {
+                            deleteTrash()
+                            true
+                        }
+                        else -> false
+                    }
+            },
+            viewLifecycleOwner,
+        )
+    }
+
+    private fun updateWebView(report: String) {
+        val html =
+            """
+            <html>
+                <body style="
+                      padding: 0px 8px;
+                    font-size:14px;
+                    white-space: pre-wrap;">$report
+                </body>
+            </html>
+            """.trimIndent()
+
+        webView.webViewClient = WebViewClient()
+        webView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null)
     }
 
     private fun setupButtonListeners() {
@@ -157,6 +185,24 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
         }
     }
 
+    private fun confirmMediaRestore() {
+        launchCatchingTask {
+            withProgress {
+                viewModel.restoreTrash().join()
+                showTrashRestoredDialog()
+            }
+        }
+    }
+
+    private fun deleteTrash() {
+        launchCatchingTask {
+            withProgress {
+                viewModel.deleteTrash().join()
+                showTrashDeletedDialog()
+            }
+        }
+    }
+
     private fun deleteConfirmationDialog() {
         AlertDialog.Builder(requireContext()).show {
             message(text = TR.mediaCheckDeleteUnusedConfirm())
@@ -174,6 +220,13 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
         }
     }
 
+    /**
+     * Displays the result of a media deletion operation and updates stored trash statistics.
+     *
+     * This function retrieves the previously stored trash information (if any),
+     * combines it with the current deletion statistics from the ViewModel, and
+     * updates the stored values accordingly.
+     */
     private fun showDeletionResult() {
         showResultDialog(
             R.string.delete_media_result_title,
@@ -183,6 +236,26 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
                 viewModel.deletedFiles,
             ),
         )
+    }
+
+    private fun showTrashRestoredDialog() {
+        AlertDialog.Builder(requireContext()).show {
+            message(text = TR.mediaCheckTrashRestored())
+            positiveButton(R.string.dialog_ok) {
+                requireActivity().finish()
+            }
+            cancelable(false)
+        }
+    }
+
+    private fun showTrashDeletedDialog() {
+        AlertDialog.Builder(requireContext()).show {
+            message(text = TR.mediaCheckTrashEmptied())
+            positiveButton(R.string.dialog_ok) {
+                requireActivity().finish()
+            }
+            cancelable(false)
+        }
     }
 
     private fun showResultDialog(

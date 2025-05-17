@@ -30,9 +30,22 @@ fun deleteMedia(
     col: Collection,
     unused: List<String>,
 ): Int {
-    // FIXME: this provides progress info that is not currently used
-    col.media.removeFiles(unused)
+    col.media.trashFiles(unused)
     return unused.size
+}
+
+/**
+ * Trashes the specified media files and immediately empties the trash in the given [Collection].
+ *
+ * @param col The [Collection] from which media files should be removed.
+ * @param unused A list of media file names to be deleted.
+ */
+fun clearMediaAndTrash(
+    col: Collection,
+    unused: List<String>,
+) {
+    col.media.trashFiles(unused)
+    col.media.emptyTrash()
 }
 
 /**

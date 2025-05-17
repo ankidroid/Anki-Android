@@ -59,6 +59,13 @@ class MediaCheckViewModel : ViewModel() {
             _mediaCheckResult.value = result
         }
 
+    fun deleteTrash(): Job = viewModelScope.launch { withCol { media.emptyTrash() } }
+
+    fun restoreTrash(): Job =
+        viewModelScope.launch {
+            withCol { media.restoreTrash() }
+        }
+
     // TODO: investigate: the underlying implementation exposes progress, which we do not yet handle.
     fun deleteUnusedMedia(): Job =
         viewModelScope.launch {
