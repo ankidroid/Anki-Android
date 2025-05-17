@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+This file contains strings that are used by feature in progress.
+That is, the feature is hidden behind a developer option and a normal user won't see this string.
+Once this feature is launched, the related string resources must be moved to other xml file.
+
+Please create one subsection per feature with XML comment and add your strings in the relevant subsection,
+so that it's easy to see which strings to move when the feature is enabled.
+
+ Strings in this files are not uploaded to crowdin. They won't be translated.
+ Please add to this file only strings that are protected by a developer options.
+ -->
+<resources>
+  <!-- Strings for the review reminder feature -->
+
+  <!-- Strings for the multiprofile feature -->
+
+</resources>
