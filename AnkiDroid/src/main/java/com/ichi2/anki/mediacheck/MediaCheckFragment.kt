@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import anki.media.CheckMediaResponse
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.CollectionManager.TR
@@ -35,7 +36,6 @@ import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.withProgress
-import com.ichi2.libanki.MediaCheckResult
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
@@ -86,11 +86,11 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
         lifecycleScope.launch {
             viewModel.mediaCheckResult.collectLatest { result ->
                 view.findViewById<TextView>(R.id.unused_media_count)?.apply {
-                    text = (TR.mediaCheckUnusedCount(result?.unusedFileNames?.size ?: 0))
+                    text = (TR.mediaCheckUnusedCount(result?.unusedCount ?: 0))
                 }
 
                 view.findViewById<TextView>(R.id.missing_media_count)?.apply {
-                    text = (TR.mediaCheckMissingCount(result?.missingMediaNotes?.size ?: 0))
+                    text = (TR.mediaCheckMissingCount(result?.missingCount ?: 0))
                 }
 
                 result?.let { files ->
@@ -107,19 +107,19 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
      *
      * @param mediaCheckResult The result containing missing and unused media file names.
      */
-    private fun handleMediaResult(mediaCheckResult: MediaCheckResult) {
+    private fun handleMediaResult(mediaCheckResult: CheckMediaResponse) {
         val fileList =
             buildList {
-                if (mediaCheckResult.missingFileNames.isNotEmpty()) {
+                if (mediaCheckResult.missingCount != 0) {
                     tagMissingButton.visibility = View.VISIBLE
                     add(TR.mediaCheckMissingHeader())
-                    addAll(mediaCheckResult.missingFileNames.map(TR::mediaCheckMissingFile))
+                    addAll(mediaCheckResult.missingList.map(TR::mediaCheckMissingFile))
                 }
-                if (mediaCheckResult.unusedFileNames.isNotEmpty()) {
+                if (mediaCheckResult.unusedCount != 0) {
                     deleteMediaButton.visibility = View.VISIBLE
                     if (isNotEmpty()) add("\n")
                     add(TR.mediaCheckUnusedHeader())
-                    addAll(mediaCheckResult.unusedFileNames.map(TR::mediaCheckUnusedFile))
+                    addAll(mediaCheckResult.unusedList.map(TR::mediaCheckUnusedFile))
                 }
             }
 
