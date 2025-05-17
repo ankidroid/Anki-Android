@@ -20,9 +20,16 @@ package com.ichi2.anki.mediacheck
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.edit
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -34,6 +41,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.cancelable
@@ -55,6 +63,7 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
 
     private lateinit var deleteMediaButton: MaterialButton
     private lateinit var tagMissingButton: MaterialButton
+    private var trashCount: Int = 0
 
     override fun onViewCreated(
         view: View,
@@ -93,13 +102,65 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
                     text = (TR.mediaCheckMissingCount(result?.missingCount ?: 0))
                 }
 
+                view.findViewById<TextView>(R.id.trash_count)?.apply {
+                    trashCount = requireContext().sharedPrefs().getInt("trashCount", 0)
+                    text =
+                        TR.mediaCheckTrashCount(
+                            trashCount,
+                            Double.fromBits(requireContext().sharedPrefs().getLong("filesMBs", 0L)),
+                        )
+                }
+
                 result?.let { files ->
                     handleMediaResult(files)
                 }
             }
         }
 
+        val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+
+        setupMenu()
+
         setupButtonListeners()
+    }
+
+    private fun setupMenu() {
+        if (trashCount == 0) return
+
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(
+            object : MenuProvider {
+                override fun onCreateMenu(
+                    menu: Menu,
+                    menuInflater: MenuInflater,
+                ) {
+                    menuInflater.inflate(R.menu.media_check_menu, menu)
+                    menu.findItem(R.id.action_restore_trash).apply {
+                        isVisible = true
+                        title = TR.mediaCheckRestoreTrash()
+                    }
+                    menu.findItem(R.id.action_empty_trash).apply {
+                        isVisible = true
+                        title = TR.mediaCheckEmptyTrash()
+                    }
+                }
+
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
+                    when (menuItem.itemId) {
+                        R.id.action_restore_trash -> {
+                            confirmMediaRestore()
+                            true
+                        }
+                        R.id.action_empty_trash -> {
+                            deleteTrash()
+                            true
+                        }
+                        else -> false
+                    }
+            },
+            viewLifecycleOwner,
+        )
     }
 
     /**
@@ -157,6 +218,26 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
         }
     }
 
+    private fun confirmMediaRestore() {
+        launchCatchingTask {
+            withProgress {
+                viewModel.restoreTrash().join()
+                setTrashInfo(0, 0.0)
+                showTrashRestoredDialog()
+            }
+        }
+    }
+
+    private fun deleteTrash() {
+        launchCatchingTask {
+            withProgress {
+                viewModel.deleteTrash().join()
+                setTrashInfo(0, 0.0)
+                showTrashDeletedDialog()
+            }
+        }
+    }
+
     private fun deleteConfirmationDialog() {
         AlertDialog.Builder(requireContext()).show {
             message(text = TR.mediaCheckDeleteUnusedConfirm())
@@ -174,7 +255,35 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
         }
     }
 
+    data class TrashInfo(
+        val count: Int,
+        val sizeMB: Double,
+    )
+
+    private fun getTrashInfo(): TrashInfo {
+        val prefs = requireContext().sharedPrefs()
+        val count = prefs.getInt("trashCount", 0)
+        val sizeMB = Double.fromBits(prefs.getLong("filesMBs", 0L))
+        return TrashInfo(count, sizeMB)
+    }
+
+    private fun setTrashInfo(
+        count: Int,
+        sizeMB: Double,
+    ) {
+        requireContext().sharedPrefs().edit {
+            putInt("trashCount", count)
+            putLong("filesMBs", sizeMB.toBits())
+        }
+    }
+
     private fun showDeletionResult() {
+        val existingTrash = getTrashInfo()
+        val totalCount = existingTrash.count + viewModel.deletedFiles
+        val totalSize = existingTrash.sizeMB + viewModel.deletedMediaMB
+
+        setTrashInfo(count = totalCount, sizeMB = totalSize)
+
         showResultDialog(
             R.string.delete_media_result_title,
             resources.getQuantityString(
@@ -183,6 +292,26 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
                 viewModel.deletedFiles,
             ),
         )
+    }
+
+    private fun showTrashRestoredDialog() {
+        AlertDialog.Builder(requireContext()).show {
+            message(text = TR.mediaCheckTrashRestored())
+            positiveButton(R.string.dialog_ok) {
+                requireActivity().finish()
+            }
+            cancelable(false)
+        }
+    }
+
+    private fun showTrashDeletedDialog() {
+        AlertDialog.Builder(requireContext()).show {
+            message(text = TR.mediaCheckTrashEmptied())
+            positiveButton(R.string.dialog_ok) {
+                requireActivity().finish()
+            }
+            cancelable(false)
+        }
     }
 
     private fun showResultDialog(

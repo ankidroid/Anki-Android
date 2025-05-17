@@ -97,9 +97,9 @@ open class Media(
       Rebuilding DB
      ***********************************************************
      */
-
-    // FIXME: this also provides trash count, but UI can not handle it yet
     fun check(): CheckMediaResponse = col.backend.checkMedia()
+
+    fun emptyTrash() = col.backend.emptyTrash()
 
     /**
      * Copying on import
@@ -123,11 +123,6 @@ open class Media(
     // to empty the trash or restore media files yet
     fun removeFiles(files: Iterable<String>) {
         col.backend.trashMediaFiles(fnames = files)
-        emptyTrash()
-    }
-
-    private fun emptyTrash() {
-        col.backend.emptyTrash()
     }
 
     @Suppress("UNUSED")

@@ -36,12 +36,16 @@ class MediaCheckViewModel : ViewModel() {
 
     private val deletedFilesCount: MutableStateFlow<Int> = MutableStateFlow(0)
     private val taggedFilesCount: MutableStateFlow<Int> = MutableStateFlow(0)
+    private val deletedMediaSize: MutableStateFlow<Double> = MutableStateFlow(0.0)
 
     val deletedFiles: Int
         get() = deletedFilesCount.value
 
     val taggedFiles: Int
         get() = taggedFilesCount.value
+
+    val deletedMediaMB: Double
+        get() = deletedMediaSize.value
 
     // TODO: Move progress notifications here
     fun tagMissing(tag: String): Job =
@@ -59,10 +63,18 @@ class MediaCheckViewModel : ViewModel() {
             _mediaCheckResult.value = result
         }
 
+    fun deleteTrash(): Job = viewModelScope.launch { withCol { media.emptyTrash() } }
+
+    fun restoreTrash(): Job =
+        viewModelScope.launch {
+            withCol { backend.restoreTrash() }
+        }
+
     // TODO: investigate: the underlying implementation exposes progress, which we do not yet handle.
     fun deleteUnusedMedia(): Job =
         viewModelScope.launch {
             val deletedMedia = withCol { deleteMedia(this@withCol, _mediaCheckResult.value?.unusedList ?: listOf()) }
-            deletedFilesCount.value = deletedMedia
+            deletedFilesCount.value = deletedMedia.count
+            deletedMediaSize.value = deletedMedia.totalSizeMB
         }
 }

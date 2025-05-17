@@ -38,6 +38,12 @@
         android:paddingHorizontal="12sp">
 
         <com.ichi2.ui.FixedTextView
+            android:id="@+id/trash_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold" />
+
+        <com.ichi2.ui.FixedTextView
             android:id="@+id/missing_media_count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
