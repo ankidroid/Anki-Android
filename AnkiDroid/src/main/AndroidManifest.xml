@@ -482,6 +482,10 @@
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
+        <activity
+            android:name="com.ichi2.anki.EditNotifications"
+            android:label="@string/edit_notifications"
+            />
 
         <activity android:name=".IntroductionActivity"
             android:exported="false"
