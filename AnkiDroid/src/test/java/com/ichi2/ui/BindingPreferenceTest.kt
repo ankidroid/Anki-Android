@@ -19,6 +19,8 @@ package com.ichi2.ui
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.reviewer.Binding
+import com.ichi2.anki.reviewer.Binding.KeyCode
+import com.ichi2.anki.reviewer.Binding.UnicodeCharacter.Companion.unicodeBindingFactory
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
@@ -48,12 +50,13 @@ class BindingPreferenceTest {
     }
 
     private fun getSampleBindings(): List<MappableBinding> =
-        listOf(
-            ReviewerBinding(Binding.unicode('a'), CardSide.BOTH),
-            ReviewerBinding(Binding.unicode(' '), CardSide.ANSWER),
+        listOfNotNull(
+            unicodeBindingFactory('a')?.let { ReviewerBinding(it, CardSide.BOTH) },
+            unicodeBindingFactory(' ')?.let { ReviewerBinding(it, CardSide.ANSWER) },
             // this one is important: ensure that "|" as a unicode char can't be used
-            ReviewerBinding(Binding.unicode(Binding.FORBIDDEN_UNICODE_CHAR), CardSide.QUESTION),
+            unicodeBindingFactory(Binding.FORBIDDEN_UNICODE_CHAR)
+                ?.let { ReviewerBinding(it, CardSide.QUESTION) },
             ReviewerBinding(Binding.gesture(Gesture.LONG_TAP), CardSide.BOTH),
-            ReviewerBinding(Binding.keyCode(12), CardSide.BOTH),
+            ReviewerBinding(KeyCode(12), CardSide.BOTH),
         )
 }
