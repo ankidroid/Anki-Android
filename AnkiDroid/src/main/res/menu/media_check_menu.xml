@@ -15,9 +15,15 @@
   ~ this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<com.ichi2.ui.FixedTextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/file_name_textview"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textSize="11sp"
-    android:paddingHorizontal="12dp"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/action_restore_trash"
+        android:visible="false"
+        tools:title="Restore deleted"/>
+
+    <item
+        android:id="@+id/action_empty_trash"
+        android:visible="false"
+        tools:title="Empty trash"/>
+</menu>
