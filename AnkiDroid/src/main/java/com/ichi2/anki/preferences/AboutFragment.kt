@@ -91,8 +91,13 @@ class AboutFragment :
         val gplLicenseLink = getString(R.string.licence_wiki)
         val agplLicenseLink = getString(R.string.link_agpl_wiki)
         val sourceCodeLink = getString(R.string.link_source)
+        val dependencyLicenseLink = getString(R.string.dependency_license_wiki)
         view.findViewById<TextView>(R.id.about_license_description).apply {
-            text = getString(R.string.license_description, gplLicenseLink, agplLicenseLink, sourceCodeLink).parseAsHtml()
+            text =
+                (
+                    getString(R.string.license_description, gplLicenseLink, agplLicenseLink, sourceCodeLink) + "<br>" +
+                        getString(R.string.other_licenses, dependencyLicenseLink)
+                ).parseAsHtml()
             movementMethod = LinkMovementMethod.getInstance()
         }
 
