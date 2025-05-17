@@ -67,8 +67,8 @@
     <string name="multimedia_editor_audio_view_playing_failed">A reprodución fallou</string>
     <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
-    <string name="crop_button" maxLength="28">Crop image</string>
+    <string name="crop_image">Queres recortar esta imaxe?</string>
+    <string name="crop_button" maxLength="28">Recortar imaxe</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"Select image failed, Please retry"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>

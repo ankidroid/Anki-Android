@@ -88,15 +88,15 @@
         <item>Por facilidade</item>
         <item>Por revisións</item>
         <item>Por fallos</item>
-        <item>By deck name</item>
+        <item>Por nome da baralla</item>
     </string-array>
-    <string name="card_browser_select_all" maxLength="28">Select all</string>
+    <string name="card_browser_select_all" maxLength="28">Seleccionar todos</string>
     <string name="card_browser_select_none" maxLength="28">Select none</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
+    <string name="card_browser_no_cards_in_deck">Ningunha tarxeta atopada na baralla ‘%s’</string>
+    <string name="card_browser_search_all_decks">Buscar en tódalas barallas</string>
+    <string name="card_browser_unknown_deck_name">Descoñecido</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncar contido</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Hoxe é ‘0 %1$s’, mañá é ‘1 %2$s’, etc&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Exportar tarxeta</item>
         <item quantity="other">Exportar tarxetas</item>
@@ -115,8 +115,8 @@
     <!-- Manage columns dialog -->
     <string name="browse_manage_columns_main_heading">Columnas</string>
     <string name="browse_manage_columns">Xestionar columnas</string>
-    <string name="user_active_columns">Active</string>
-    <string name="user_potential_columns">Available</string>
+    <string name="user_active_columns">Activo</string>
+    <string name="user_potential_columns">Dispoñíbeis</string>
     <string name="include_column">Incluír columna</string>
     <string name="exclude_column">Excluír columna</string>
     <string name="browser_find_replace_loading_fields">Recuperando os nomes dos campos&#8230;</string>

@@ -202,16 +202,16 @@
     <string name="white_board_image_save_failed">Neizdevās saglabāt tāfeles attēlu. %s</string>
     <string name="white_board_image_saved">Tāfeles attēls saglabāts %s</string>
     <string name="title_whiteboard_editor" maxLength="28">Tāfeles redaktors</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="user_is_a_robot">Noteikta automatizēta pārbaude. Ja Tu esi cilvēks, sazinies ar AnkiDroid atbalstu</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Šajā kartītē ir izmantotas neatbalstītas AnkiDroid iespējas. Jāsazinās ar izstrādātāju %1$s vai jāapmeklē vikivietne. %2$s</string>
     <string name="invalid_json_data">Kartītē norādīti nederīgi dati. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
+    <string name="valid_js_api_version">Nederīga AnkiDroid JS API versija. Jāsazinās ar izstrādātāju %s vai jāapmeklē vikivietne</string>
     <string name="update_js_api_version">Pieejams AnkiDroid JS API atjauninājums. Jāsazinās ar izstrādātāju %s vai jāapskata vikivietne</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">Apskatīt</string>
     <string name="anki_js_error_code">(Kļūdas kods: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Ievietots starpliktuvē</string>
     <string name="about_ankidroid_error_copy_debug_info">Kļūda atkļūdošanas informācijas ievietošanas starpliktuvē laikā</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Kartītes satura kļūda: neizdevās ielādēt ’%s’</string>
@@ -222,26 +222,26 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Burtu lielums</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Rādīt rīkjoslu</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="format_insert_bold">Treknraksts</string>
+    <string name="format_insert_italic">Slīpraksts</string>
+    <string name="format_insert_underline">Pasvītrojums</string>
+    <string name="insert_horizontal_line">Ievietot līmenisku līniju</string>
+    <string name="insert_heading">Ievietot virsrakstu</string>
+    <string name="format_font_size">Mainīt burtu lielumu</string>
+    <string name="insert_mathjax">Ievietot MathJax vienādojumu</string>
     <string name="note_editor_toolbar_icon">Pogas teksts</string>
     <string name="before_text">HTML pirms iezīmējuma</string>
     <string name="after_text">HTML aiz iezīmējuma</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="add_toolbar_item">Izveidot rīkjoslas vienumu</string>
+    <string name="edit_toolbar_item">Labot rīkjoslas vienumu</string>
     <string name="toolbar_item_explain_edit_or_remove">Jāievada HTML, ko ievietot pirms un pēc iezīmētā teksta\n\nRīkjoslas vienums ilgi jāpiespiež, lai to labotu vai noņemtu</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
+    <string name="remove_toolbar_item">Noņemt rīkjoslas vienumu?</string>
     <string name="note_editor_image_too_large">Attēls ir pārāk liels, lūgums pašrocīgi ievietot attēlu</string>
     <string name="note_editor_video_too_large">Video datne ir pārāk liela, lūgums pašrocīgi ievietot video</string>
     <string name="note_editor_audio_too_large">Skaņu datne ir pārāk liela, lūgums ievietot skaņu pašrocīgi</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android backup in progress. Please try again</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Notiek Android rezerves kopēšana. Lūgums mēģināt vēlreiz</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Var būt nepieciešams izmantot iManager, lai ļautu AnkiDroid pievienot saīsnes</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Sākuma ekrāns neļauj AnkiDroid pievienot saīsnes</string>
     <string name="create_shortcut_error">Kļūda saīsnes pievienošanā: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Sākt teikumus ar lielo burtu</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Ritināma rīkjosla</string>
@@ -249,25 +249,25 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="invalid_email">Enter a valid email</string>
-    <string name="password_empty">Password is required</string>
-    <string name="back_pressed_once">Press back again to exit</string>
+    <string name="invalid_email">Jāievada derīga e-pasta adrese</string>
+    <string name="password_empty">Parole ir nepieciešama</string>
+    <string name="back_pressed_once">Piespiest vēlreiz, lai izietu</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Lejuplādēt kavu</string>
     <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Atvērt pārlūkā</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
+    <string name="try_again">Mēģināt vēlreiz</string>
+    <string name="cancel_download">Atcelt lejupielādi</string>
+    <string name="cancel_download_question_title">Atcelt lejupielādi?</string>
+    <string name="downloading_file">Lejupielādē %s</string>
     <string name="import_deck">Ievietot kavu</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
+    <string name="something_wrong">Kaut kas nogāja greizi, lūgums mēģināt vēlreiz</string>
+    <string name="download_failed">Lejupielāde neizdevās</string>
     <string name="deck_download_progress_message">Var izmantot citas lietotnes, kamēr notiek lejupielāde</string>
     <string name="check_network">Lūgums pārbaudīt savu tīkla savienojumu</string>
     <string name="search_using_deck_name">Meklēt izmantojot kavas nosaukumu</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
-    <string name="home" maxLength="28">Home</string>
+    <string name="external_storage_unavailable">Lejupielāde priekšlaicīgi pārtraukta, ārējā krātuve nav pieejama</string>
+    <string name="home" maxLength="28">Sākums</string>
     <!-- Reviewer actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Kartīte paslēpta.</string>
@@ -278,14 +278,14 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Padarīt lauku %s lipīgu</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
+    <string name="scoped_storage_learn_more">Uzzināt vairāk</string>
     <string name="search_card_js_api_no_results">Meklēšana neko neatgrieza.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
-    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="not_valid_js_addon_package">%s nav derīga JavaScript papildinājuma pakotne</string>
+    <string name="could_not_create_dir">Nevarēja izveidot mapi %s</string>
+    <string name="malicious_archive_entry_outside">Kaitīgs arhīvs. Satur ierakstu, kas ir ārpus mērķa mapes: %s</string>
+    <string name="malicious_archive_exceeds_limit">Kaitīgs arhīvs. Lielums pārsniedz %1$s, vai arhīvs satur vairāk par %2$d datnēm</string>
+    <string name="file_extract_exceeds_storage_space">Datnes atspiešana pārsniedz krātuves vietu</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Izvērst birku \"%s\"</string>
     <!-- Manage note types -->
@@ -295,11 +295,11 @@
     <string name="intro_ankidroid_tagline_one">Mācies mazāk</string>
     <string name="intro_ankidroid_tagline_two">Apgūsti vairāk</string>
     <string name="intro_short_ankidroid_explanation">Anki kartīšu plānotājs ietaupa laiku ar vājāko atmiņu stiprināšanu un stripāko atmiņu saglabāšanu</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
-    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Uzsākt</string>
+    <string name="intro_sync_from_ankiweb">Sinhronizēt no AnkiWeb</string>
     <!-- IntentHandler -->
-    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
-    <string name="already_logged_in">Already logged in</string>
+    <string name="app_not_initialized_new">AnkiDroid vēl nav sāknēta. Lūgums atvērt AnkiDroid un mēģināt vēlreiz</string>
+    <string name="already_logged_in">Jau pieteicies</string>
     <!-- Deck Creation -->
     <string name="deck_created">Kava izveidota</string>
     <string name="deck_renamed">Kava pārdēvēta</string>
@@ -323,7 +323,7 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Neizdevās atvērt teksta pārveidošanas runā iestatījumus</string>
     <string name="shared_decks_login_required">Lūgums pieteikteis, lai lejupielādētu vairāk kavu</string>
     <string name="deck_description_field_hint">Apraksts</string>
-    <string name="failed_to_copy">Failed to copy</string>
+    <string name="failed_to_copy">Kopēšana neizdevās</string>
     <string name="card_browser_unavailable_when_notes_mode">Nav pieejams piezīmju skatā</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="zero">Atcelta %d kartīšu paslēpšana</item>
@@ -331,16 +331,16 @@
         <item quantity="other">Atcelta %d kartīšu paslēpšana</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Pārkārtot</string>
-    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
-    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
-    <string name="start_recording">Record</string>
-    <string name="stop_recording">Stop</string>
-    <string name="play_recording">Play</string>
-    <string name="next_recording" comment="Description of a button to go to the next recording">Next</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Nākamais</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Atpakaļ</string>
+    <string name="start_recording">Ierakstīt</string>
+    <string name="stop_recording">Apturēt</string>
+    <string name="play_recording">Atskaņot</string>
+    <string name="next_recording" comment="Description of a button to go to the next recording">Nākamais</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Nevar izdzēst kartīšu veidu</string>
     <string name="orphan_note_message">Šī kartīšu veida izdzēšana atstās atsevišķas piezīmes bez nevienas kartītes.</string>
-    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
+    <string name="voice_not_supported">Balss nav atbalstīta. Jāmēģina cits vai jāuzstāda balss dzinējs.</string>
     <!--Keyboard shortcuts dialog-->
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Kavu atlasītājs</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Izdzēst kavu bez apliecināšanas</string>
