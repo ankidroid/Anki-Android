@@ -14,7 +14,17 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<!-- This contains strings that are used to test the translation process. They should not be used in actual code -->
+<!--
+This contains strings that are used to test the translation process.
+They should not be used in actual code.
+
+Those strings still appear as untranslated to crowdin translators.
+
+If you want to use a string in your code that can't be translated, please use:
+* constants.xml if the string must be a constant, such as the name of someone or a URL
+* 13-feature-in-progress.xml if the string should not be translated because it belongs to a feature in progress.
+
+-->
 <resources>
     <!--
     Adding or removing new line at the start/end of the string cause crowdin to require a new translation. Let's check if a comment before lead to a translation need!
