@@ -42,7 +42,7 @@ class BindingPreferenceTest {
     fun test_serialisation_does_not_change() {
         // If this changes, we have introduced a breaking change in the serialization
         //
-        val expected = "1/r✅a2|r✅ 1|r⍝LONG_TAP2|r⌨122"
+        val expected = "1/r✅a2|r✅ 1|r⍝DOUBLE_TAP2|r⌨122"
 
         assertEquals(expected, getSampleBindings().toPreferenceString())
     }
@@ -53,7 +53,7 @@ class BindingPreferenceTest {
             ReviewerBinding(Binding.unicode(' '), CardSide.ANSWER),
             // this one is important: ensure that "|" as a unicode char can't be used
             ReviewerBinding(Binding.unicode(Binding.FORBIDDEN_UNICODE_CHAR), CardSide.QUESTION),
-            ReviewerBinding(Binding.gesture(Gesture.LONG_TAP), CardSide.BOTH),
+            ReviewerBinding(Binding.gesture(Gesture.DOUBLE_TAP), CardSide.BOTH),
             ReviewerBinding(Binding.keyCode(12), CardSide.BOTH),
         )
 }
