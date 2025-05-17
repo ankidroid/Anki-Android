@@ -95,10 +95,7 @@ import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
-import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportDialogFragment
-import com.ichi2.anki.export.ExportDialogsFactory
-import com.ichi2.anki.export.ExportDialogsFactoryProvider
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
@@ -149,8 +146,7 @@ open class CardBrowser :
     SubtitleListener,
     DeckSelectionListener,
     TagsDialogListener,
-    ChangeManager.Subscriber,
-    ExportDialogsFactoryProvider {
+    ChangeManager.Subscriber {
     override fun onDeckSelected(deck: SelectableDeck?) {
         deck?.let {
             launchCatchingTask { selectDeckAndSave(deck.deckId) }
@@ -182,7 +178,6 @@ open class CardBrowser :
     private var mySearchesItem: MenuItem? = null
     private var previewItem: MenuItem? = null
     private var undoSnackbar: Snackbar? = null
-    private lateinit var exportingDelegate: ActivityExportingDelegate
 
     // card that was clicked (not marked)
     override var currentCardId
@@ -377,7 +372,6 @@ open class CardBrowser :
             return
         }
         tagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
-        exportingDelegate = ActivityExportingDelegate(this) { getColUnsafe }
         super.onCreate(savedInstanceState)
         if (!ensureStoragePermissions()) {
             return
@@ -440,8 +434,6 @@ open class CardBrowser :
             }
 
         startLoadingCollection()
-
-        exportingDelegate.onRestoreInstanceState(savedInstanceState)
 
         // Selected cards aren't restored on activity recreation,
         // so it is necessary to dismiss the change deck dialog
@@ -1405,8 +1397,6 @@ open class CardBrowser :
         }
     }
 
-    override fun exportDialogsFactory(): ExportDialogsFactory = exportingDelegate.dialogsFactory
-
     private fun exportSelected() {
         val (type, selectedIds) = viewModel.querySelectionExportData() ?: return
         ExportDialogFragment.newInstance(type, selectedIds).show(supportFragmentManager, "exportDialog")
@@ -1628,7 +1618,6 @@ open class CardBrowser :
     public override fun onSaveInstanceState(outState: Bundle) {
         // Save current search terms
         outState.putString("mSearchTerms", viewModel.searchTerms)
-        exportingDelegate.onSaveInstanceState(outState)
         super.onSaveInstanceState(outState)
     }
 
