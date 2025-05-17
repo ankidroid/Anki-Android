@@ -20,7 +20,9 @@ import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import androidx.core.app.PendingIntentCompat
 import androidx.preference.ListPreference
+import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
+import com.ichi2.anki.EditNotifications
 import com.ichi2.anki.R
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
@@ -43,6 +45,18 @@ class NotificationsSettingsFragment : SettingsFragment() {
             preferenceScreen.removePreference(requirePreference<SwitchPreferenceCompat>(R.string.pref_notifications_vibrate_key))
             preferenceScreen.removePreference(requirePreference<SwitchPreferenceCompat>(R.string.pref_notifications_blink_key))
         }
+
+        // Developer flag: Only show notifications button if new notifications are enabled
+        // TODO: Remove developer flag when the new notification system is stable
+        if (requireContext().sharedPrefs().getBoolean(getString(R.string.pref_new_notifications), false)) {
+            displayNewNotificationsSubscreen()
+            return
+        }
+
+        // Otherwise, remove the new notifications buttons and continue with the legacy system
+        preferenceScreen.removePreference(requirePreference<Preference>(R.string.pref_notifications_edit_app_wide_key))
+        preferenceScreen.removePreference(requirePreference<Preference>(R.string.pref_notifications_edit_deck_specific_key))
+
         // Minimum cards due
         // The number of cards that should be due today in a deck to justify adding a notification.
         requirePreference<ListPreference>(R.string.pref_notifications_minimum_cards_due_key).apply {
@@ -67,6 +81,23 @@ class NotificationsSettingsFragment : SettingsFragment() {
                 }
                 true
             }
+        }
+    }
+
+    private fun displayNewNotificationsSubscreen() {
+        preferenceScreen.removePreference(requirePreference<ListPreference>(R.string.pref_notifications_minimum_cards_due_key))
+        val editAppWideButton = requirePreference<Preference>(R.string.pref_notifications_edit_app_wide_key)
+        val editDeckSpecificButton = requirePreference<Preference>(R.string.pref_notifications_edit_deck_specific_key)
+
+        editAppWideButton.setOnPreferenceClickListener {
+            val intent = EditNotifications.getIntentForGlobalAppWideEditing(requireContext())
+            startActivity(intent)
+            true
+        }
+        editDeckSpecificButton.setOnPreferenceClickListener {
+            val intent = EditNotifications.getIntentForGlobalDeckSpecificEditing(requireContext())
+            startActivity(intent)
+            true
         }
     }
 
