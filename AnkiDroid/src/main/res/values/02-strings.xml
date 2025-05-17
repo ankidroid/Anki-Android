@@ -325,6 +325,9 @@
     <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
 
     <!-- Browser Options Dialog -->
+    <string name="toggle_tap_action">On tap</string>
+    <string name="tap_to_edit" comment="Label for toggle tap action to edit in BrowserOptionsDialog">Edit card</string>
+    <string name="tap_to_preview" comment="Label for toggle tap action to preview in BrowserOptionsDialog">Preview card</string>
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
     <string name="toggle_cards_notes">Toggle Cards/Notes</string>
