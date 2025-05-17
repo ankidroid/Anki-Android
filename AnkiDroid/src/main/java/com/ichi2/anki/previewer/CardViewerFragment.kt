@@ -41,6 +41,7 @@ import com.ichi2.anki.ViewerResourceHandler
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.packageManager
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
@@ -102,11 +103,9 @@ abstract class CardViewerFragment(
                 null,
             )
         }
-        viewModel.eval
-            .flowWithLifecycle(lifecycle)
-            .onEach { eval ->
-                webView.evaluateJavascript(eval, null)
-            }.launchIn(lifecycleScope)
+        viewModel.eval.collectIn(lifecycleScope) { eval ->
+            webView.evaluateJavascript(eval, null)
+        }
     }
 
     private fun setupErrorListeners() {
