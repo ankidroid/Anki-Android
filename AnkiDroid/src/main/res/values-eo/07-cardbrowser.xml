@@ -88,7 +88,7 @@
         <item>Laŭ facileco</item>
         <item>Laŭ ripetoj</item>
         <item>Laŭ misrespondoj</item>
-        <item>By deck name</item>
+        <item>Laŭ nomo de kartaro</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Elekti ĉiujn</string>
     <string name="card_browser_select_none" maxLength="28">Elekti neniujn</string>

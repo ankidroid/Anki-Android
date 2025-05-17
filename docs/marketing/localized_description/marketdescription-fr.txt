@@ -10,9 +10,9 @@ Ajoutez des cartes par le biais de l’application Anki pour ordinateur ou direc
 
 ★ Principales caractéristiques :
 • contenu des cartes pris en charge: texte, images, sons, LaTeX
-• spaced repetition (AI-optimized FSRS algorithm)
+• répétition espacée (algorithme FSRS optimisé par l’IA)
 • intégration de la synthèse vocale
-• more than 10,000 premade decks
+• plus de 10000 paquets tout prêts
 • widget progression
 • statistiques détaillées
 • synchronisation avec AnkiWeb

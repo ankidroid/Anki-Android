@@ -88,7 +88,7 @@
         <item>Kolaylığa göre</item>
         <item>Tekrarlara göre</item>
         <item>Hatalara göre</item>
-        <item>By deck name</item>
+        <item>Deste adına göre</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Hepsini seç</string>
     <string name="card_browser_select_none" maxLength="28">Hiçbirini seçme</string>

@@ -88,7 +88,7 @@
         <item>Par simplicité</item>
         <item>Par le nombre de répétitions passées</item>
         <item>Par difficulté</item>
-        <item>By deck name</item>
+        <item>Par nom de paquet</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Tout sélectionner</string>
     <string name="card_browser_select_none" maxLength="28">Ne rien sélectionner</string>
@@ -111,7 +111,7 @@
     </plurals>
     <!--Keyboard shortcuts dialog-->
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Boîte de dialogue d’édition des tags</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Afficher la fenêtre de commande</string>
     <!-- Manage columns dialog -->
     <string name="browse_manage_columns_main_heading">Colonnes</string>
     <string name="browse_manage_columns">Gérer les colonnes</string>
@@ -119,5 +119,5 @@
     <string name="user_potential_columns">Disponible</string>
     <string name="include_column">Inclure la colonne</string>
     <string name="exclude_column">Exclure la colonne</string>
-    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
+    <string name="browser_find_replace_loading_fields">Récupération des noms des champs&#8230;</string>
 </resources>
