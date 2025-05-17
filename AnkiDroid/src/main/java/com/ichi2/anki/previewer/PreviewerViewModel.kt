@@ -24,7 +24,7 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.asyncIO
-import com.ichi2.anki.browser.PreviewerIdsFile
+import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.launchCatchingIO
@@ -46,7 +46,7 @@ import kotlinx.coroutines.flow.update
 import timber.log.Timber
 
 class PreviewerViewModel(
-    previewerIdsFile: PreviewerIdsFile,
+    idsFile: IdsFile,
     firstIndex: Int,
     cardMediaPlayer: CardMediaPlayer,
 ) : CardViewerViewModel(cardMediaPlayer),
@@ -55,7 +55,7 @@ class PreviewerViewModel(
     val backSideOnly = MutableStateFlow(false)
     val isMarked = MutableStateFlow(false)
     val flag: MutableStateFlow<Flag> = MutableStateFlow(Flag.NONE)
-    private val selectedCardIds: List<Long> = previewerIdsFile.getCardIds()
+    private val selectedCardIds: List<Long> = idsFile.getIds()
     val isBackButtonEnabled =
         combine(currentIndex, showingAnswer, backSideOnly) { index, showingAnswer, isBackSideOnly ->
             index != 0 || (showingAnswer && !isBackSideOnly)
@@ -249,13 +249,13 @@ class PreviewerViewModel(
 
     companion object {
         fun factory(
-            previewerIdsFile: PreviewerIdsFile,
+            idsFile: IdsFile,
             currentIndex: Int,
             cardMediaPlayer: CardMediaPlayer,
         ): ViewModelProvider.Factory =
             viewModelFactory {
                 initializer {
-                    PreviewerViewModel(previewerIdsFile, currentIndex, cardMediaPlayer)
+                    PreviewerViewModel(idsFile, currentIndex, cardMediaPlayer)
                 }
             }
     }

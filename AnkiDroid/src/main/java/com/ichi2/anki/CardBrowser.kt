@@ -71,7 +71,7 @@ import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Searching
 import com.ichi2.anki.browser.CardOrNoteId
 import com.ichi2.anki.browser.ColumnHeading
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment
-import com.ichi2.anki.browser.PreviewerIdsFile
+import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.browser.RepositionCardFragment
 import com.ichi2.anki.browser.RepositionCardFragment.Companion.REQUEST_REPOSITION_NEW_CARDS
 import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
@@ -123,7 +123,6 @@ import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.DeckNameId
-import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.SortOrder
 import com.ichi2.libanki.undoableOp
 import com.ichi2.ui.CardBrowserSearchView
@@ -133,10 +132,8 @@ import com.ichi2.utils.dp
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import com.ichi2.utils.updatePaddingRelative
 import com.ichi2.widget.WidgetStatus.updateInBackground
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.Translations
 import timber.log.Timber
@@ -1459,14 +1456,14 @@ open class CardBrowser :
     private fun onPreview() {
         launchCatchingTask {
             val intentData = viewModel.queryPreviewIntentData()
-            onPreviewCardsActivityResult.launch(getPreviewIntent(intentData.currentIndex, intentData.previewerIdsFile))
+            onPreviewCardsActivityResult.launch(getPreviewIntent(intentData.currentIndex, intentData.idsFile))
         }
     }
 
     private fun getPreviewIntent(
         index: Int,
-        previewerIdsFile: PreviewerIdsFile,
-    ): Intent = PreviewerDestination(index, previewerIdsFile).toIntent(this)
+        idsFile: IdsFile,
+    ): Intent = PreviewerDestination(index, idsFile).toIntent(this)
 
     private fun rescheduleSelectedCards() {
         if (!viewModel.hasSelectedAnyRows()) {
@@ -1525,84 +1522,16 @@ open class CardBrowser :
         if (!viewModel.hasSelectedAnyRows()) {
             Timber.d("showEditTagsDialog: called with empty selection")
         }
-
-        var progressMax: Int? = null // this can be made null to blank the dialog
-        var progress = 0
-
-        fun onProgress(progressContext: ProgressContext) {
-            val max = progressMax
-            if (max == null) {
-                progressContext.amount = null
-                progressContext.text = getString(R.string.dialog_processing)
-            } else {
-                progressContext.amount = Pair(progress, max)
-            }
-        }
-        launchCatchingTask {
-            withProgress(extractProgress = ::onProgress) {
-                val allTags = withCol { tags.all() }
-                val selectedNoteIds = viewModel.queryAllSelectedNoteIds()
-
-                progressMax = selectedNoteIds.size * 2
-                // TODO!! This is terribly slow on AnKing
-                val checkedTags =
-                    withCol {
-                        selectedNoteIds
-                            .asSequence() // reduce memory pressure
-                            .flatMap { nid ->
-                                progress++
-                                getNote(nid).tags // requires withCol
-                            }.distinct()
-                            .toList()
-                    }
-
-                if (selectedNoteIds.size == 1) {
-                    Timber.d("showEditTagsDialog: edit tags for one note")
-                    tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
-                    val dialog =
-                        tagsDialogFactory.newTagsDialog().withArguments(
-                            this@CardBrowser,
-                            type = TagsDialog.DialogType.EDIT_TAGS,
-                            checkedTags = checkedTags,
-                            allTags = allTags,
-                        )
-                    showDialogFragment(dialog)
-                    return@withProgress
-                }
-                // TODO!! This is terribly slow on AnKing
-                // PERF: This MUST be combined with the above sequence - this becomes O(2n) on a
-                // database operation performed over 30k times
-                val uncheckedTags =
-                    withCol {
-                        selectedNoteIds
-                            .asSequence() // reduce memory pressure
-                            .flatMap { nid: NoteId ->
-                                progress++
-                                val note = getNote(nid) // requires withCol
-                                val noteTags = note.tags.toSet()
-                                allTags.filter { t: String? -> !noteTags.contains(t) }
-                            }.distinct()
-                            .toList()
-                    }
-
-                progressMax = null
-
-                Timber.d("showEditTagsDialog: edit tags for multiple note")
-                tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
-
-                // withArguments performs IO, can be 18 seconds
-                val dialog =
-                    withContext(Dispatchers.IO) {
-                        tagsDialogFactory.newTagsDialog().withArguments(
-                            context = this@CardBrowser,
-                            type = TagsDialog.DialogType.EDIT_TAGS,
-                            checkedTags = checkedTags,
-                            uncheckedTags = uncheckedTags,
-                            allTags = allTags,
-                        )
-                    }
-                showDialogFragment(dialog)
-            }
+        tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
+        lifecycleScope.launch {
+            val noteIds = viewModel.queryAllSelectedNoteIds()
+            val dialog =
+                tagsDialogFactory.newTagsDialog().withArguments(
+                    this@CardBrowser,
+                    type = TagsDialog.DialogType.EDIT_TAGS,
+                    noteIds = noteIds,
+                )
+            showDialogFragment(dialog)
         }
     }
 
@@ -1613,8 +1542,7 @@ open class CardBrowser :
                 tagsDialogFactory.newTagsDialog().withArguments(
                     context = this@CardBrowser,
                     type = TagsDialog.DialogType.FILTER_BY_TAG,
-                    checkedTags = ArrayList(0),
-                    allTags = withCol { tags.all() },
+                    noteIds = emptyList(),
                 )
             showDialogFragment(dialog)
         }
@@ -1972,8 +1900,8 @@ suspend fun searchForRows(
 
 class PreviewerDestination(
     val currentIndex: Int,
-    val previewerIdsFile: PreviewerIdsFile,
+    val idsFile: IdsFile,
 )
 
 @CheckResult
-fun PreviewerDestination.toIntent(context: Context) = PreviewerFragment.getIntent(context, previewerIdsFile, currentIndex)
+fun PreviewerDestination.toIntent(context: Context) = PreviewerFragment.getIntent(context, idsFile, currentIndex)

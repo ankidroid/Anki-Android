@@ -8,5 +8,6 @@
     android:layout_alignParentTop="true"
     android:theme="@style/ActionBarStyle"
     android:background="?attr/appBarColor"
-    app:popupTheme="@style/ActionBar.Popup">
+    app:popupTheme="@style/ActionBar.Popup"
+    app:menu="@menu/tags_dialog_menu">
 </androidx.appcompat.widget.Toolbar>
