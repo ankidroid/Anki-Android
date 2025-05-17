@@ -18,6 +18,7 @@ package com.ichi2.anki.ui.windows.reviewer
 import android.text.style.RelativeSizeSpan
 import android.view.KeyEvent
 import android.view.MenuItem
+import android.view.MotionEvent
 import androidx.core.text.buildSpannedString
 import androidx.core.text.inSpans
 import androidx.lifecycle.ViewModelProvider
@@ -44,9 +45,9 @@ import com.ichi2.anki.preferences.getShowIntervalOnButtons
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerViewModel
 import com.ichi2.anki.previewer.TypeAnswer
+import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.reviewer.BindingProcessor
 import com.ichi2.anki.reviewer.CardSide
-import com.ichi2.anki.reviewer.PeripheralKeymap
 import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
@@ -70,7 +71,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 class ReviewerViewModel(
     cardMediaPlayer: CardMediaPlayer,
-    private val keyMap: PeripheralKeymap<ReviewerBinding, ViewerAction>,
+    private val bindingMap: BindingMap<ReviewerBinding, ViewerAction>,
 ) : CardViewerViewModel(cardMediaPlayer),
     ChangeManager.Subscriber,
     BindingProcessor<ReviewerBinding, ViewerAction> {
@@ -123,7 +124,7 @@ class ReviewerViewModel(
         }
 
     init {
-        keyMap.setProcessor(this)
+        bindingMap.setProcessor(this)
         ChangeManager.subscribe(this)
         launchCatchingIO {
             updateUndoAndRedoLabels()
@@ -192,8 +193,10 @@ class ReviewerViewModel(
 
     fun dispatchKeyEvent(event: KeyEvent): Boolean {
         if (event.action != KeyEvent.ACTION_DOWN) return false
-        return keyMap.onKeyDown(event)
+        return bindingMap.onKeyDown(event)
     }
+
+    fun onGenericMotionEvent(event: MotionEvent?): Boolean = bindingMap.onGenericMotionEvent(event)
 
     private suspend fun toggleMark() {
         val card = currentCard.await()
@@ -578,11 +581,11 @@ class ReviewerViewModel(
     companion object {
         fun factory(
             soundPlayer: CardMediaPlayer,
-            keyMap: PeripheralKeymap<ReviewerBinding, ViewerAction>,
+            bindingMap: BindingMap<ReviewerBinding, ViewerAction>,
         ): ViewModelProvider.Factory =
             viewModelFactory {
                 initializer {
-                    ReviewerViewModel(soundPlayer, keyMap)
+                    ReviewerViewModel(soundPlayer, bindingMap)
                 }
             }
 
