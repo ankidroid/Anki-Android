@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">Answer good</string>
     <string name="answer_easy" maxLength="41">Answer easy</string>
     <string name="gesture_play" maxLength="41">Reproducir multimedia</string>
-    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_abort_learning" maxLength="41">Cerrar pantalla de repaso</string>
     <string name="gesture_flag_red" maxLength="41">Toggle Red Flag</string>
     <string name="gesture_flag_orange" maxLength="41">Toggle Orange Flag</string>
     <string name="gesture_flag_green" maxLength="41">Toggle Green Flag</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">Remove Flag</string>
     <string name="gesture_page_up" maxLength="41">Page Up</string>
     <string name="gesture_page_down" maxLength="41">Page Down</string>
-    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_abort_sync" maxLength="41">Cerrar pantalla de repaso e sincronizar</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Toggle Whiteboard</string>
     <string name="gesture_show_hint" maxLength="41">Show Hint</string>
     <string name="gesture_show_all_hints" maxLength="41">Show All Hints</string>

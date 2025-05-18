@@ -68,7 +68,7 @@
     <string name="answering_error_title">Ошибка в базе данных</string>
     <string name="answering_error_message">Не удалось записать в коллекцию. База данных может быть повреждена, или не хватает места в хранилище.\n\nПопробуйте проверить базу данных или восстановить коллекцию из резервной копии.\nОднако, это может быть ошибкой в AnkiDroid. Пожалуйста, сообщите об этом разработчикам.</string>
     <string name="answering_error_report">Сообщить об ошибке</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
+    <string name="storage_full_message">Недостаточно свободного места для запуска AnkiDroid. Освободите место на устройстве,  чтобы продолжить.</string>
     <string name="repair_deck_dialog">Вы действительно хотите починить базу данных?\n\nПеред восстановлением копия базы данных будет помещена в папку «%s».</string>
     <string name="intent_aedict_empty">Категория «default» пуста</string>
     <string name="intent_aedict_category">Чтобы добавить карточки в AnkiDroid, удалите все категории «Notepad» или создайте категорию «default»</string>
@@ -77,7 +77,7 @@
     <string name="custom_study_forgotten">Забытые за сколько дней повторить:</string>
     <string name="custom_study_ahead">На сколько дней опередить повторение:</string>
     <string name="custom_study_preview">Посмотреть новые за сколько дней:</string>
-    <string name="custom_study_tags">Select x cards from the deck:</string>
+    <string name="custom_study_tags">Выберите количество карточек:</string>
     <string name="storage_full_title">Хранилище заполнено</string>
     <string name="storage_almost_full_title">Хранилище почти заполнено</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Нет места</string>
@@ -109,8 +109,8 @@
     <string name="check_media_title">Проверить медиафайлы?</string>
     <string name="check_media_warning">Это может занять много времени, если медиафайлов много</string>
     <string name="check_media_message">Медиафайлы проверяются&#8230;</string>
-    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_adding_missing_tag">Добавление меток&#8230;</string>
+    <string name="check_media_tags_added">Метки добавлены</string>
     <string name="delete_media_message">Медиафайлы 
 удаляются&#8230;</string>
     <string name="delete_media_result_title">Результат удаления</string>
@@ -220,8 +220,8 @@
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Позже</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Больше не показывать</string>
     <string name="dismiss_backup_warning_title">Внимание: потеря данных</string>
-    <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
-    <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
+    <string name="dismiss_backup_warning_new_user">В связи с изменениями конфиденциальности Android, при удалении приложения ваши данные и автоматизированные резервные копии будут удалены с вашего телефона</string>
+    <string name="dismiss_backup_warning_upgrade">В связи с изменениями конфиденциальности Android, после удалении приложения ваши данные и автоматизированные резервные копии будут недоступны</string>
     <string name="deck_already_exists">Колода уже существует</string>
     <string name="empty_deck_name">Название колоды не может быть пустым</string>
     <string name="create_deck_numeric_hint">Если у вас возникли проблемы с сортировкой колоды (например, \'10\' появляется перед \'2\'), замените \'2\' на \'02\'</string>
