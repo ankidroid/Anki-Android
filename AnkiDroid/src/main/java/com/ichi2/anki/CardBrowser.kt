@@ -1555,7 +1555,14 @@ open class CardBrowser :
             Timber.d("showEditTagsDialog: called with empty selection")
         }
 
+        /**
+         * Twice the number of notes to process
+         */
         var progressMax: Int? = null // this can be made null to blank the dialog
+
+        /**
+         * Number of note processed. Each note is processed twice, once for checked tags once for unchecked tags.
+         */
         var progress = 0
 
         fun onProgress(progressContext: ProgressContext) {
@@ -1564,7 +1571,8 @@ open class CardBrowser :
                 progressContext.amount = null
                 progressContext.text = getString(R.string.dialog_processing)
             } else {
-                progressContext.amount = Pair(progress, max)
+                // Dividing by two, because each note will be processed twice. And we don't want to have to explain to the user why the "over" is twice the number of selected notes.
+                progressContext.amount = ProgressContext.Amount(progress / 2, max / 2, ProgressContext.Amount.AmountType.Note)
             }
         }
         launchCatchingTask {

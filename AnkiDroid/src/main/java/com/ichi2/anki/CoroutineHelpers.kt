@@ -20,6 +20,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
+import android.text.format.Formatter
 import android.view.WindowManager
 import android.view.WindowManager.BadTokenException
 import androidx.annotation.StringRes
@@ -496,8 +497,79 @@ data class ProgressContext(
     var progress: Progress,
     var text: String = "",
     /** If set, shows progress bar with a of b complete. */
-    var amount: Pair<Int, Int>? = null,
-)
+    var amount: Amount? = null,
+) {
+    // The numbers are Long and not Int, because it may represents a number of bytes. Int would limit the progress dialog to only 2GB.
+    data class Amount(
+        /**
+         * Represents the current progress.
+         */
+        val current: Long,
+        /**
+         * Represents the maximal amount of progress before the progress is done.
+         */
+        val max: Long,
+        /**
+         * Represents what kind of number this is, in order to know how to print the progress in a human readable way.
+         */
+        val type: AmountType,
+    ) {
+        constructor(current: Int, over: Int, type: AmountType) :
+            this(current.toLong(), over.toLong(), type)
+
+        /**
+         * The type represented by [amount].
+         */
+        sealed class AmountType {
+            abstract fun progressSuffix(
+                context: Context,
+                current: Long,
+                max: Long,
+            ): String
+
+            /**
+             * [amount] does not represents anything.
+             */
+            object Scalar : AmountType() {
+                override fun progressSuffix(
+                    context: Context,
+                    current: Long,
+                    max: Long,
+                ) = context.getString(R.string.scalar_progress, current, max)
+            }
+
+            /**
+             * [amount] represents the number of notes.
+             */
+            object Note : AmountType() {
+                override fun progressSuffix(
+                    context: Context,
+                    current: Long,
+                    max: Long,
+                ) = context.getString(R.string.note_progress, current, max)
+            }
+
+            /**
+             * [amount] represents a number of bytes.
+             */
+            object Bytes : AmountType() {
+                override fun progressSuffix(
+                    context: Context,
+                    current: Long,
+                    max: Long,
+                ) = context.getString(
+                    R.string.byte_progress,
+                    Formatter
+                        .formatShortFileSize(context, current),
+                    Formatter
+                        .formatShortFileSize(context, max),
+                )
+            }
+        }
+
+        fun progressText(context: Context) = type.progressSuffix(context, current, max)
+    }
+}
 
 @Suppress("Deprecation") // ProgressDialog deprecation
 private fun ProgressContext.updateDialog(dialog: android.app.ProgressDialog) {
@@ -505,12 +577,9 @@ private fun ProgressContext.updateDialog(dialog: android.app.ProgressDialog) {
     // setting progress after starting with indeterminate progress, so we just use
     // this for now
     // this code has since been updated to ProgressDialog, and the above not rechecked
-    val progressText =
-        amount?.let {
-            " ${it.first}/${it.second}"
-        } ?: ""
+    val texts = listOf(text, amount?.progressText(dialog.context))
     @Suppress("Deprecation") // ProgressDialog deprecation
-    dialog.setMessage(text + progressText)
+    dialog.setMessage(texts.joinToString(separator = " "))
 }
 
 /**
