@@ -14,7 +14,16 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<!-- This contains strings that are used to test the translation process. They should not be used in actual code -->
+<!--
+This contains strings that are used to test the translation process.
+They should not be used in actual code.
+Those strings still appear as untranslated to crowdin translators.
+
+If you want to use a string in your code that can't be translated, please use:
+
+* constants.xml if the string must be a constant, such as the name of someone or a URL
+* hard coded string literals if the string should not be translated because it belongs to a feature in progress.
+-->
 <resources>
     <!--
     Adding or removing new line at the start/end of the string cause crowdin to require a new translation. Let's check if a comment before lead to a translation need!
@@ -26,5 +35,8 @@
     <string
         name="crowdin_test_string_do_not_translate"
         >In order to ensure this string is not shown as untranslated, translate it the way you want. Probably using a single letter, so that it\'s quick. This string will never appear in ankidroid and is present here only to test crowdin feature.</string>
+
+    <string name="crowding_test_non_breaking_space">This is a string with a non breakable-space using unicode.</string>
+    <string name="crowding_test_160_space">This is a string with a non&#160;breakable-space using entity.</string>
 </resources>
 
