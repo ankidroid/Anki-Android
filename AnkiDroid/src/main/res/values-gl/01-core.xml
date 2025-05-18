@@ -92,7 +92,7 @@
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">Engadir</string>
     <string name="menu_add_note" maxLength="28">Engadir nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sincronizar conta</string>
-    <string name="menu_dismiss_note" maxLength="41">Agochar/eliminar</string>
+    <string name="menu_dismiss_note" maxLength="41">Ocultar / eliminar</string>
     <string name="menu_bury_card" maxLength="28">Agochar tarxeta</string>
     <string name="menu_bury_note" maxLength="28">Agochar nota</string>
     <string name="menu_suspend_card" maxLength="28">Suspender tarxeta</string>
@@ -104,7 +104,7 @@
     <string name="rename_flag">Renomear bandeiras</string>
     <string name="menu_flag_card" maxLength="28">Marcar tarxeta</string>
     <string name="menu_edit_tags" maxLength="28">Editar etiquetas</string>
-    <string name="delete_note_message">Tes a certeza de querer eliminar esta nota e todas as súas tarxetas?\n%s</string>
+    <string name="delete_note_message">Tes a certeza de querer eliminar esta nota e tódalas súas tarxetas?\n%s</string>
     <string name="menu_search" maxLength="28">Procurar en %1$s</string>
     <string name="menu_mark_note" maxLength="28">Marcar nota</string>
     <string name="menu_unmark_note">Desmarcar nota</string>
@@ -142,8 +142,8 @@
     <string name="nothing">Nada</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Tipos de tarxetas</string>
-    <string name="card_template_editor_front">Modelo frontal</string>
-    <string name="card_template_editor_back">Modelo posterior</string>
+    <string name="card_template_editor_front">Modelo anverso</string>
+    <string name="card_template_editor_back">Modelo reverso</string>
     <string name="card_template_editor_styling" maxLength="28">Estilo</string>
     <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Aparencia do explorador</string>
     <string name="card_template_editor_deck_override" maxLength="28">Baralla por defecto</string>
@@ -193,7 +193,7 @@
     <string name="permissions_screen_headline">AnkiDroid precisa algúns permisos para funcionar</string>
     <string name="storage_access_title">Acceso ao almacenamento</string>
     <string name="storage_access_summary">Garda a túa colección nun lugar seguro que non se eliminará se desinstalas a aplicación</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Acceso a todos os ficheiros</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Acceso a tódolos ficheiros</string>
     <string name="image_occlusion">Oclusión de imaxe</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Eliminar conta</string>
     <!-- Instant Note Editor -->

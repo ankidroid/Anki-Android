@@ -126,8 +126,8 @@
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d de %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Renomear</string>
     <string name="checks_action" maxLength="28">Comprobar</string>
-    <string name="check_db" maxLength="28">Comprobar a base de datos</string>
-    <string name="check_media" maxLength="28">Verificar multimedia</string>
+    <string name="check_db" maxLength="28">Comprobar base de datos</string>
+    <string name="check_media" maxLength="28">Comprobar multimedia</string>
     <string name="empty_cards" maxLength="28">Tarxetas baleiras</string>
     <string name="unknown_type_field_warning">Escribe a resposta: campo descoñecido %s</string>
     <string name="delete_deck">Eliminando a baralla&#8230;</string>

@@ -41,8 +41,8 @@
 <resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Engadir imaxe</string>
-    <string name="multimedia_editor_popup_audio_clip">Add audio clip</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_audio_clip">Engadir clip de audio</string>
+    <string name="multimedia_editor_popup_video_clip">Engadir clip de vídeo</string>
     <string name="multimedia_editor_popup_audio">Gravar audio</string>
     <string name="multimedia_editor_popup_cloze">Ocos por encher</string>
     <!-- Field editing general -->
@@ -72,5 +72,5 @@
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"Select image failed, Please retry"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
-    <string name="reselect" maxLength="28">Reselect</string>
+    <string name="reselect" maxLength="28">Seleccionar de novo</string>
 </resources>
