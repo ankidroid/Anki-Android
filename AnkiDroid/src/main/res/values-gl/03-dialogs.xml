@@ -64,11 +64,11 @@
     <string name="answering_error_title">Erro na base de datos</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Informar de erros</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
+    <string name="storage_full_message">Non hai espazo de almacenamento abondo para abrir AnkiDroid. Libera espazo para continuar.</string>
     <string name="repair_deck_dialog">Tes a certeza de querer tentar reparar a base de datos?\n\nAntes de comezar, crearase unha copia no cartafol \"%s\".</string>
     <string name="intent_aedict_empty">A categoría \'predeterminado\' está baleira</string>
     <string name="intent_aedict_category">Para engadir cartóns ao AnkiDroid elimina todas as categorías do caderno de notas ou engade unha chamada \"predefinido\"</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_new_extend">Aumentar/diminuír (“-3”) o límite de novas tarxetas en</string>
     <string name="custom_study_rev_extend">Aumentar/diminuír (\"-3\") o límite de repasos actual en</string>
     <string name="custom_study_forgotten">Repasar as tarxetas esquecidas nos últimos x días:</string>
     <string name="custom_study_ahead">Repasar con x días de adianto:</string>
@@ -77,7 +77,7 @@
     <string name="storage_full_title">Almacenamento cheo</string>
     <string name="storage_almost_full_title">Almacenamento case cheo</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Sen espazo</string>
-    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid precisa %s de espazo de almacenamento para continuar. Libera algo de espazo</string>
     <string name="restore_backup_title">Restaurar copia?</string>
     <string name="restore_backup">A túa colección será substituída cunha copia antiga. Perderase calquera progreso non gardado.</string>
     <string name="restore_backup_choose_another">Escoller outro</string>
@@ -108,7 +108,7 @@
     <string name="check_media_adding_missing_tag">Engadindo etiquetas&#8230;</string>
     <string name="check_media_tags_added">Etiquetas engadidas</string>
     <string name="delete_media_message">Eliminando multimedia&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="delete_media_result_title">Resultado da eliminación</string>
     <plurals name="delete_media_result_message">
         <item quantity="one">%d ficheiro eliminado</item>
         <item quantity="other">%d ficheiros eliminados</item>
@@ -127,7 +127,7 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid actualizado</string>
     <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
+    <string name="integrity_check_continue_anyway">Continuar igualmente</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
     <!-- Card Browser -->
@@ -187,13 +187,13 @@
     <string name="help_dialog_exception_report_sent">Informe enviado!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">An automatic sync may be triggered in %d second</item>
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one">Unha sincronización automática pode activarse en %d segundo</item>
+        <item quantity="other">Unha sincronización automática pode activarse en %d segundos</item>
     </plurals>
     <string name="metered_sync_data_warning">O teu provedor de internet podería cobrar polo uso de datos móbiles</string>
-    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="deck_picker_new">Número de tarxetas novas para ver hoxe nesta baralla.</string>
+    <string name="deck_picker_rev">Número de tarxetas pendentes para hoxe nesta baralla.</string>
+    <string name="deck_picker_lrn">Número de tarxetas en aprendizaxe nesta baralla.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
@@ -210,14 +210,14 @@
     <string name="button_disable_reminder">Desactivar recordatorio</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Máis tarde</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Non mostrar de novo</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
+    <string name="dismiss_backup_warning_title">Aviso de perda de datos</string>
     <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
     <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
     <string name="deck_already_exists">A baralla xa existe</string>
     <string name="empty_deck_name">O nome da baralla non pode estar baleiro</string>
     <string name="create_deck_numeric_hint">Se tes problemas ao arranxar a baralla (por exemplo, \'10\' aparece antes que \'2\'), substitúe \'2\' por \'02\'</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Establecer intervalo ao mesmo valor</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
         <item quantity="one">Amosar tarxeta en</item>
         <item quantity="other">Amosar tarxetas en</item>
@@ -239,7 +239,7 @@
     <string name="open">Abrir</string>
     <string name="change_cloze_number">Cambiar número de ocos</string>
     <string name="cloze_number">Números de ocos:</string>
-    <string name="change_editor_mode">Change editor mode</string>
+    <string name="change_editor_mode">Cambiar modo editor</string>
     <string name="open_note_editor">Abrir editor de notas</string>
     <string name="change_cloze_mode">Cambiar modo oclusión</string>
     <!-- Outdated WebView dialog -->

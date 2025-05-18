@@ -46,7 +46,7 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">%d cartón amosado</item>
+        <item quantity="one">%d tarxeta amosada</item>
         <item quantity="other">%d cartóns amosados</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
@@ -68,11 +68,11 @@
     <string name="card_browser_list_my_searches_save" maxLength="28">Gardar a busca</string>
     <string name="card_browser_list_my_searches_title">Seleccionar unha busca gardada</string>
     <string name="card_browser_list_my_searches_new_name">Nome para a busca actual</string>
-    <string name="card_browser_list_my_searches_new_search_error_empty_name">Non podes gardar unha busca sen lle poñer un nome</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">Non podes gardar unha busca sen poñerlle un nome</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">O nome xa existe</string>
     <string name="no_note_to_edit">Ningunha nota para editar</string>
     <string name="card_browser_list_my_searches_remove_content">Eliminar “%1$s”?</string>
-    <string name="card_browser_change_display_order" maxLength="28">Mudar a orde de presentación</string>
+    <string name="card_browser_change_display_order" maxLength="28">Cambiar orde de presentación</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Buscar</string>
     <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Buscar</string>
     <string name="card_browser_change_display_order_title">Seleccionar orde de presentación</string>
@@ -91,7 +91,7 @@
         <item>Por nome da baralla</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Seleccionar todos</string>
-    <string name="card_browser_select_none" maxLength="28">Select none</string>
+    <string name="card_browser_select_none" maxLength="28">Deseleccionar todos</string>
     <string name="card_browser_no_cards_in_deck">Ningunha tarxeta atopada na baralla ‘%s’</string>
     <string name="card_browser_search_all_decks">Buscar en tódalas barallas</string>
     <string name="card_browser_unknown_deck_name">Descoñecido</string>
@@ -110,8 +110,8 @@
         <item quantity="other">%d tarxetas eliminadas</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Caixa de diálogo de editar etiquetas</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Caixa de diálogo de amosar orde</string>
     <!-- Manage columns dialog -->
     <string name="browse_manage_columns_main_heading">Columnas</string>
     <string name="browse_manage_columns">Xestionar columnas</string>
