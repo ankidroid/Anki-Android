@@ -87,6 +87,8 @@
         <item>按遗忘次数排序</item>
         <item>按牌组名称</item>
     </string-array>
+    <string name="chane_browser_column">Change column</string>
+    <string name="no_columns_available">No columns available</string>
     <string name="card_browser_select_all" maxLength="28">全选</string>
     <string name="card_browser_select_none" maxLength="28">取消全选</string>
     <string name="card_browser_no_cards_in_deck">未在牌组「%s」中找到卡片</string>

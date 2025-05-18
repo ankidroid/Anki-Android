@@ -90,6 +90,8 @@
         <item>चुकून</item>
         <item>By deck name</item>
     </string-array>
+    <string name="chane_browser_column">Change column</string>
+    <string name="no_columns_available">No columns available</string>
     <string name="card_browser_select_all" maxLength="28">Select all</string>
     <string name="card_browser_select_none" maxLength="28">काहीही निवडा</string>
     <string name="card_browser_no_cards_in_deck">डेक ‘%s’ मध्ये कोणतीही कार्डे आढळली नाहीत</string>

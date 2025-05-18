@@ -102,6 +102,8 @@
         <item>حسب السقطات</item>
         <item>By deck name</item>
     </string-array>
+    <string name="chane_browser_column">Change column</string>
+    <string name="no_columns_available">No columns available</string>
     <string name="card_browser_select_all" maxLength="28">تحديد الكل</string>
     <string name="card_browser_select_none" maxLength="28">إلغاء التحديد</string>
     <string name="card_browser_no_cards_in_deck">لا توجد بطاقات في الرزمة ‘%s’</string>
