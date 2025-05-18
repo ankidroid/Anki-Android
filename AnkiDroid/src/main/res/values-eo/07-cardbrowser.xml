@@ -90,6 +90,8 @@
         <item>Laŭ misrespondoj</item>
         <item>Laŭ nomo de kartaro</item>
     </string-array>
+    <string name="chane_browser_column">Change column</string>
+    <string name="no_columns_available">No columns available</string>
     <string name="card_browser_select_all" maxLength="28">Elekti ĉiujn</string>
     <string name="card_browser_select_none" maxLength="28">Elekti neniujn</string>
     <string name="card_browser_no_cards_in_deck">Neniu karto trovita en la kartaro “%s”</string>

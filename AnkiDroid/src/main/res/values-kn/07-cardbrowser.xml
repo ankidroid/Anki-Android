@@ -90,6 +90,8 @@
         <item>ಲೋಪಗಳಿಂದ</item>
         <item>By deck name</item>
     </string-array>
+    <string name="chane_browser_column">Change column</string>
+    <string name="no_columns_available">No columns available</string>
     <string name="card_browser_select_all" maxLength="28">ಎಲ್ಲವನ್ನು ಆರಿಸು</string>
     <string name="card_browser_select_none" maxLength="28">ಯಾವುದನ್ನೂ ಆಯ್ಕೆ ಮಾಡಬೇಡಿ</string>
     <string name="card_browser_no_cards_in_deck">\'%s\' ಡೆಕ್‌ನಲ್ಲಿ ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳು ಕಂಡುಬಂದಿಲ್ಲ</string>

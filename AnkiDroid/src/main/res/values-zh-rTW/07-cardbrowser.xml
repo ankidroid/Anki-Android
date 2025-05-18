@@ -87,6 +87,8 @@
         <item>依忘記次數</item>
         <item>By deck name</item>
     </string-array>
+    <string name="chane_browser_column">Change column</string>
+    <string name="no_columns_available">No columns available</string>
     <string name="card_browser_select_all" maxLength="28">全選</string>
     <string name="card_browser_select_none" maxLength="28">全不選</string>
     <string name="card_browser_no_cards_in_deck">牌組 ‘%s’ 中未找到任何卡片</string>

@@ -90,6 +90,8 @@
         <item>Pro intervallu</item>
         <item>By deck name</item>
     </string-array>
+    <string name="chane_browser_column">Change column</string>
+    <string name="no_columns_available">No columns available</string>
     <string name="card_browser_select_all" maxLength="28">Ischerta totu</string>
     <string name="card_browser_select_none" maxLength="28">Boga s\'ischerta</string>
     <string name="card_browser_no_cards_in_deck">Peruna carta agatada in su matzu ‘%s’</string>

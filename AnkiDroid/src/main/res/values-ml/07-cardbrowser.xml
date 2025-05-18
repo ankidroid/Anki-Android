@@ -90,6 +90,8 @@
         <item>By lapses</item>
         <item>By deck name</item>
     </string-array>
+    <string name="chane_browser_column">Change column</string>
+    <string name="no_columns_available">No columns available</string>
     <string name="card_browser_select_all" maxLength="28">എല്ലാം തിരഞ്ഞെടുക്കുക</string>
     <string name="card_browser_select_none" maxLength="28">ഒന്നും തിരഞ്ഞെടുക്കരുത്</string>
     <string name="card_browser_no_cards_in_deck">\'%s\' ഡെക്കിൽ കാർഡുകളൊന്നും കണ്ടെത്തിയില്ല</string>

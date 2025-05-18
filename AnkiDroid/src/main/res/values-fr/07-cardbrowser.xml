@@ -90,6 +90,8 @@
         <item>Par difficulté</item>
         <item>Par nom de paquet</item>
     </string-array>
+    <string name="chane_browser_column">Change column</string>
+    <string name="no_columns_available">No columns available</string>
     <string name="card_browser_select_all" maxLength="28">Tout sélectionner</string>
     <string name="card_browser_select_none" maxLength="28">Ne rien sélectionner</string>
     <string name="card_browser_no_cards_in_deck">Aucune carte trouvée dans le paquet « %s »</string>
