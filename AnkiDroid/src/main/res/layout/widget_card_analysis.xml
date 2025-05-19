@@ -1,8 +1,8 @@
 <RelativeLayout android:id="@+id/widget_deck_picker"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/widget_card_analysis_rounded_background"
     android:clickable="true"
     android:focusable="false"
@@ -25,9 +25,11 @@
         android:id="@+id/cardAnalysisDataHolder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:background="@drawable/widget_card_analysis_rounded_inner_background"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:paddingVertical="14dp"
+        android:paddingHorizontal="16dp">
 
         <TextView
             android:id="@+id/deckNew_card_analysis_widget"
@@ -67,12 +69,13 @@
         android:id="@+id/deckNameCardAnalysis"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_below="@id/cardAnalysisDataHolder"
         android:gravity="center"
-        android:padding="15dp"
-        android:paddingBottom="5dp"
+        android:paddingVertical="8dp"
+        android:paddingHorizontal="16dp"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="24sp"
+        android:textStyle="bold"
         tools:text="Default" />
 
 </RelativeLayout>
