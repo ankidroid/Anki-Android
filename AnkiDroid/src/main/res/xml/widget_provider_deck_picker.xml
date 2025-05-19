@@ -2,11 +2,11 @@
      The widths and heights parameters are determined as follows:
      The default is 3 cells in width and 2 in height.
      The height is between 1 and 5 cells.
-     The width is between 3 and 4 cells.
+     The width is between 2 and 12 cells.
      Following https://developer.android.com/develop/ui/views/appwidgets/layouts#anatomy_determining_size
      we used the portrait mode cell size for the width and the landscape mode cell size for the height. Leading to:
-     * height between 50 and 315
-     * width 203 and 276 -->
+     * height between 50 and 800
+     * width 120 and 800 -->
 
 <!-- TODO: Use updatePeriodMillis instead of the 10-minute alarm for simpler widget updates.-->
 
@@ -15,15 +15,15 @@
     android:initialLayout="@layout/widget_deck_picker_large"
     android:configure="com.ichi2.widget.deckpicker.DeckPickerWidgetConfig"
     android:widgetFeatures="reconfigurable"
-    android:minWidth="203dp"
+    android:minWidth="120dp"
     android:minHeight="50dp"
-    android:minResizeWidth="203dp"
+    android:minResizeWidth="120dp"
     android:minResizeHeight="50dp"
-    android:maxResizeWidth="276dp"
-    android:maxResizeHeight="315dp"
+    android:maxResizeWidth="800dp"
+    android:maxResizeHeight="800dp"
     android:previewImage="@drawable/widget_deck_picker_drawable"
     android:previewLayout="@layout/widget_deck_picker_drawable_v31"
     android:resizeMode="horizontal|vertical"
     android:targetCellHeight="2"
-    android:targetCellWidth="4"
+    android:targetCellWidth="12"
     android:widgetCategory="home_screen" />
