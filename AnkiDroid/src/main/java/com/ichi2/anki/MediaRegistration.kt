@@ -178,12 +178,12 @@ object MediaRegistration {
                 bytesWritten = CompatHelper.compat.copyFile(fd, clipCopy.absolutePath)
             }
         }
-        val tempFilePath = clipCopy.absolutePath
+        val tempFilePath = clipCopy
 
         val checkMediaSize = checkMediaSize(bytesWritten, isImage, isVideo, showError)
 
         if (!checkMediaSize) {
-            File(tempFilePath).delete()
+            tempFilePath.delete()
             clipCopy.delete()
             return null
         }
@@ -198,7 +198,7 @@ object MediaRegistration {
         val field = if (isImage) ImageField() else MediaClipField()
 
         field.hasTemporaryMedia = true
-        field.mediaPath = tempFilePath
+        field.mediaFile = tempFilePath
         return field.formattedValue
     }
 
@@ -223,13 +223,13 @@ object MediaRegistration {
     }
 
     @CheckResult
-    fun registerMediaForWebView(mediaPath: String?): Boolean {
+    fun registerMediaForWebView(mediaPath: File?): Boolean {
         if (mediaPath == null) {
             // Nothing to register - continue with execution.
             return true
         }
         Timber.i("Adding media to collection: %s", mediaPath)
-        val f = File(mediaPath)
+        val f = mediaPath
         return try {
             CollectionManager.getColUnsafe().media.addFile(f)
             true

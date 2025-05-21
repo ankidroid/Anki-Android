@@ -33,6 +33,7 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
 import timber.log.Timber
+import java.io.File
 
 /**
  * Database layer for AnkiDroid. Wraps an SupportSQLiteDatabase (provided by either the Rust backend
@@ -239,12 +240,12 @@ class DB(
          */
         fun withAndroidFramework(
             context: Context,
-            path: String,
+            path: File,
         ): DB {
             val db =
                 AnkiSupportSQLiteDatabase.withFramework(
                     context,
-                    path,
+                    path.absolutePath,
                     SupportSQLiteOpenHelperCallback(1),
                 )
             db.disableWriteAheadLogging()

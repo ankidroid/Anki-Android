@@ -229,8 +229,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             }
             DIALOG_RESTORE_BACKUP -> {
                 // Allow user to restore one of the backups
-                val path = CollectionHelper.getCollectionPath(requireContext())
-                backups = BackupManager.getBackups(File(path))
+                backups = BackupManager.getBackups(CollectionHelper.getCollectionPath(requireContext()))
                 if (backups.isEmpty()) {
                     alertDialog
                         .title(R.string.backup_restore)

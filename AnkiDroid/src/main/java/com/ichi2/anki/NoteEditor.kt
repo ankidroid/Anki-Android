@@ -1992,7 +1992,7 @@ class NoteEditor :
                 ?: return
 
         // Process successful result only if field has data
-        if (field.type != EFieldType.TEXT || field.mediaPath != null) {
+        if (field.type != EFieldType.TEXT || field.mediaFile != null) {
             addMediaFileToField(index, field)
         } else {
             Timber.i("field imagePath and audioPath are both null")

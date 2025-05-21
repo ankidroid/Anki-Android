@@ -27,7 +27,6 @@ import com.ichi2.testutils.createTransientFile
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.io.FileMatchers.aFileWithAbsolutePath
 import org.hamcrest.io.FileMatchers.anExistingFile
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
@@ -98,7 +97,7 @@ class NoteServiceTest : RobolectricTest() {
         FileWriter(fileAudio).use { fileWriter -> fileWriter.write("line1") }
 
         val audioField = MediaClipField()
-        audioField.mediaPath = fileAudio.absolutePath
+        audioField.mediaFile = fileAudio
 
         NoteService.importMediaToDirectory(col, audioField)
 
@@ -107,7 +106,7 @@ class NoteServiceTest : RobolectricTest() {
         assertThat(
             "path should be equal to new file made in NoteService.importMediaToDirectory",
             outFile,
-            aFileWithAbsolutePath(equalTo(audioField.mediaPath)),
+            equalTo(audioField.mediaFile),
         )
     }
 
@@ -121,7 +120,7 @@ class NoteServiceTest : RobolectricTest() {
         FileWriter(fileImage).use { fileWriter -> fileWriter.write("line1") }
 
         val imgField = ImageField()
-        imgField.extraImagePathRef = fileImage.absolutePath
+        imgField.extraImageFileRef = fileImage
 
         NoteService.importMediaToDirectory(col, imgField)
 
@@ -130,7 +129,7 @@ class NoteServiceTest : RobolectricTest() {
         assertThat(
             "path should be equal to new file made in NoteService.importMediaToDirectory",
             outFile,
-            aFileWithAbsolutePath(equalTo(imgField.extraImagePathRef)),
+            equalTo(imgField.extraImageFileRef),
         )
     }
 
@@ -155,16 +154,16 @@ class NoteServiceTest : RobolectricTest() {
         FileWriter(f2).use { fileWriter -> fileWriter.write("2") }
 
         val fld1 = MediaClipField()
-        fld1.mediaPath = f1.absolutePath
+        fld1.mediaFile = f1
 
         val fld2 = MediaClipField()
-        fld2.mediaPath = f2.absolutePath
+        fld2.mediaFile = f2
 
         // third field to test if name is kept after reimporting the same file
         val fld3 = MediaClipField()
-        fld3.mediaPath = f1.absolutePath
+        fld3.mediaFile = f1
 
-        Timber.e("media folder is %s %b", col.media.dir, File(col.media.dir).exists())
+        Timber.e("media folder is %s %b", col.media.dir, col.media.dir.exists())
         NoteService.importMediaToDirectory(col, fld1)
         val o1 = File(col.media.dir, f1.name)
 
@@ -177,17 +176,17 @@ class NoteServiceTest : RobolectricTest() {
         assertThat(
             "path should be equal to new file made in NoteService.importMediaToDirectory",
             o1,
-            aFileWithAbsolutePath(equalTo(fld1.mediaPath)),
+            equalTo(fld1.mediaFile),
         )
         assertThat(
             "path should be different to new file made in NoteService.importMediaToDirectory",
             o2,
-            aFileWithAbsolutePath(not(fld2.mediaPath)),
+            not(fld2.mediaFile),
         )
         assertThat(
             "path should be equal to new file made in NoteService.importMediaToDirectory",
             o1,
-            aFileWithAbsolutePath(equalTo(fld3.mediaPath)),
+            equalTo(fld3.mediaFile),
         )
     }
 
@@ -204,14 +203,14 @@ class NoteServiceTest : RobolectricTest() {
         FileWriter(f2).use { fileWriter -> fileWriter.write("2") }
 
         val fld1 = ImageField()
-        fld1.extraImagePathRef = f1.absolutePath
+        fld1.extraImageFileRef = f1
 
         val fld2 = ImageField()
-        fld2.extraImagePathRef = f2.absolutePath
+        fld2.extraImageFileRef = f2
 
         // third field to test if name is kept after reimporting the same file
         val fld3 = ImageField()
-        fld3.extraImagePathRef = f1.absolutePath
+        fld3.extraImageFileRef = f1
 
         NoteService.importMediaToDirectory(col, fld1)
         val o1 = File(col.media.dir, f1.name)
@@ -225,17 +224,17 @@ class NoteServiceTest : RobolectricTest() {
         assertThat(
             "path should be equal to new file made in NoteService.importMediaToDirectory",
             o1,
-            aFileWithAbsolutePath(equalTo(fld1.extraImagePathRef)),
+            equalTo(fld1.extraImageFileRef),
         )
         assertThat(
             "path should be different to new file made in NoteService.importMediaToDirectory",
             o2,
-            aFileWithAbsolutePath(not(fld2.extraImagePathRef)),
+            not(fld2.extraImageFileRef),
         )
         assertThat(
             "path should be equal to new file made in NoteService.importMediaToDirectory",
             o1,
-            aFileWithAbsolutePath(equalTo(fld3.extraImagePathRef)),
+            equalTo(fld3.extraImageFileRef),
         )
     }
 
@@ -250,7 +249,7 @@ class NoteServiceTest : RobolectricTest() {
 
         val field =
             MediaClipField().apply {
-                mediaPath = file.absolutePath
+                mediaFile = file
                 hasTemporaryMedia = true
             }
 
@@ -266,7 +265,7 @@ class NoteServiceTest : RobolectricTest() {
 
         val field =
             ImageField().apply {
-                extraImagePathRef = file.absolutePath
+                extraImageFileRef = file
                 hasTemporaryMedia = true
             }
 

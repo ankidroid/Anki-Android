@@ -62,7 +62,7 @@ data class SoundOrVideoTag(
     val filename: String,
 ) : AvTag() {
     @NotInLibAnki
-    fun getType(mediaDir: String): Type {
+    fun getType(mediaDir: File): Type {
         val extension = filename.substringAfterLast(".", "")
         return when (extension) {
             in Sound.VIDEO_ONLY_EXTENSIONS -> Type.VIDEO
@@ -120,7 +120,7 @@ object Sound {
         content: String,
         renderOutput: TemplateRenderOutput,
         showAudioPlayButtons: Boolean,
-        mediaDir: String,
+        mediaDir: File,
     ) = replaceAvRefsWith(content, renderOutput) { tag, playTag ->
         fun asAudio(): String {
             if (!showAudioPlayButtons) return ""
@@ -137,7 +137,7 @@ object Sound {
         }
 
         fun asVideo(tag: SoundOrVideoTag): String {
-            val path = Paths.get(mediaDir, tag.filename).toString()
+            val path = Paths.get(mediaDir.absolutePath, tag.filename).toString()
             val uri = getFileUri(path)
 
             val playsound = "${playTag.side}:${playTag.index}"

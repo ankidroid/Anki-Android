@@ -19,6 +19,7 @@
 package com.ichi2.anki.multimediacard.fields
 
 import com.ichi2.libanki.Collection
+import java.io.File
 import java.io.Serializable
 
 /**
@@ -30,7 +31,7 @@ interface IField : Serializable {
     val isModified: Boolean
 
     // Path of the folder containing media used by AnkiDroid.
-    var mediaPath: String?
+    var mediaFile: File?
 
     // For Text type
     var text: String?

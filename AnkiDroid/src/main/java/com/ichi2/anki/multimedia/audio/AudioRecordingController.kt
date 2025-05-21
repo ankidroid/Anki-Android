@@ -128,9 +128,9 @@ class AudioRecordingController(
             val origAudioPath = viewModel?.currentMultimediaPath?.value
             var bExist = false
             if (origAudioPath != null) {
-                val f = File(origAudioPath)
+                val f = origAudioPath
                 if (f.exists()) {
-                    tempAudioPath = f.absolutePath
+                    tempAudioPath = f
                     bExist = true
                 }
             }
@@ -477,7 +477,7 @@ class AudioRecordingController(
     private fun prepareAudioPlayer() {
         audioPlayer = MediaPlayer()
         audioPlayer?.apply {
-            if (tempAudioPath != null) setDataSource(tempAudioPath)
+            tempAudioPath?.let { tempAudioPath -> setDataSource(tempAudioPath.absolutePath) }
             setOnPreparedListener {
                 audioTimeView?.text = DEFAULT_TIME
             }
@@ -606,7 +606,7 @@ class AudioRecordingController(
 
     private fun startRecording(
         context: Context,
-        audioPath: String,
+        audioPath: File,
     ) {
         Timber.i("starting recording")
         try {
@@ -621,9 +621,8 @@ class AudioRecordingController(
 
     private fun saveRecording() {
         viewModel?.updateCurrentMultimediaPath(tempAudioPath)
-        val file = tempAudioPath?.let { File(it) }
-        if (file != null) {
-            viewModel?.updateMediaFileLength(file.length())
+        tempAudioPath?.let { tempAudioPath ->
+            viewModel?.updateMediaFileLength(tempAudioPath.length())
         }
     }
 
@@ -736,24 +735,21 @@ class AudioRecordingController(
         const val DEFAULT_TIME = "00:00.00"
         const val JUMP_VALUE = 500
 
-        fun generateTempAudioFile(context: Context): String? {
-            val tempAudioPath: String? =
-                try {
-                    val storingDirectory = context.cacheDir
-                    File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory).absolutePath
-                } catch (e: IOException) {
-                    Timber.w(e, "Could not create temporary audio file.")
-                    null
-                }
-            return tempAudioPath
-        }
+        fun generateTempAudioFile(context: Context) =
+            try {
+                val storingDirectory = context.cacheDir
+                File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory)
+            } catch (e: IOException) {
+                Timber.w(e, "Could not create temporary audio file.")
+                null
+            }
 
         fun setEditorStatus(inEditField: Boolean) {
             this.inEditField = inEditField
         }
 
         /** File of the temporary mic record  */
-        var tempAudioPath: String? = null
+        var tempAudioPath: File? = null
     }
 
     sealed interface RecordingState {

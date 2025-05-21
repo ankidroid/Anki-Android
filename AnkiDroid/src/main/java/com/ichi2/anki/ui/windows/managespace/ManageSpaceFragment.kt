@@ -121,7 +121,7 @@ class ManageSpaceViewModel(
         viewModelScope.launch {
             flowOfDeleteBackupsSize.ifCollectionDirectoryExistsEmit {
                 withCol {
-                    val backupFiles = BackupManager.getBackups(File(this.path)).toList()
+                    val backupFiles = BackupManager.getBackups(colDb).toList()
                     val backupFilesSize = backupFiles.sumOf(::calculateSize)
                     Size.FilesAndBytes(backupFiles, backupFilesSize)
                 }

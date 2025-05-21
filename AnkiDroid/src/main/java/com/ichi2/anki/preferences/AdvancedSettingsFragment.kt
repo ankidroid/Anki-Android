@@ -35,6 +35,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.show
 import timber.log.Timber
+import java.io.File
 
 class AdvancedSettingsFragment : SettingsFragment() {
     override val preferenceResource: Int
@@ -50,7 +51,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
             setOnPreferenceChangeListener { _, newValue: Any? ->
                 val newPath = newValue as String
                 try {
-                    CollectionHelper.initializeAnkiDroidDirectory(newPath)
+                    CollectionHelper.initializeAnkiDroidDirectory(File(newPath))
                     launchCatchingTask {
                         CollectionManager.discardBackend()
                         val deckPicker = Intent(requireContext(), DeckPicker::class.java)
@@ -65,7 +66,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
                         setTitle(R.string.dialog_collection_path_not_dir)
                         setPositiveButton(R.string.dialog_ok) { _, _ -> }
                         setNegativeButton(R.string.reset_custom_buttons) { _, _ ->
-                            text = CollectionHelper.getDefaultAnkiDroidDirectory(requireContext())
+                            text = CollectionHelper.getDefaultAnkiDroidDirectory(requireContext()).absolutePath
                         }
                     }
                     false

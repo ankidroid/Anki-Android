@@ -29,7 +29,7 @@ import java.util.regex.Pattern
 abstract class AudioField :
     FieldBase(),
     IField {
-    override var mediaPath: String? = null
+    override var mediaFile: File? = null
         get() = field
         set(value) {
             field = value
@@ -42,8 +42,7 @@ abstract class AudioField :
 
     override val formattedValue: String
         get() =
-            mediaPath?.let { path ->
-                val file = File(path)
+            mediaFile?.let { file ->
                 if (file.exists()) "[sound:${file.name}]" else ""
             } ?: ""
 
@@ -53,12 +52,11 @@ abstract class AudioField :
     ) {
         val p = Pattern.compile(PATH_REGEX)
         val m = p.matcher(value)
-        var res = ""
+        var mediaFileName = ""
         if (m.find()) {
-            res = m.group(1)!!
+            mediaFileName = m.group(1)!!
         }
-        val mediaDir = col.media.dir + "/"
-        mediaPath = mediaDir + res
+        mediaFile = File(col.collectionFiles.mediaFolder, mediaFileName)
     }
 
     companion object {

@@ -131,25 +131,25 @@ object NoteService {
         col: Collection,
         field: IField?,
     ) {
-        var tmpMediaPath: String? = null
+        var tmpMediaPath: File? = null
         when (field!!.type) {
-            EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP, EFieldType.IMAGE -> tmpMediaPath = field.mediaPath
+            EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP, EFieldType.IMAGE -> tmpMediaPath = field.mediaFile
             EFieldType.TEXT -> {
             }
         }
         if (tmpMediaPath != null) {
             try {
-                val inFile = File(tmpMediaPath)
+                val inFile = tmpMediaPath
                 if (inFile.exists() && inFile.length() > 0) {
                     val fname = col.media.addFile(inFile)
                     val outFile = File(col.media.dir, fname)
                     Timber.v("""File "%s" should be copied to "%s""", fname, outFile)
-                    if (field.hasTemporaryMedia && outFile.absolutePath != tmpMediaPath) {
+                    if (field.hasTemporaryMedia && outFile != tmpMediaPath) {
                         // Delete original
                         inFile.delete()
                     }
                     when (field.type) {
-                        EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP, EFieldType.IMAGE -> field.mediaPath = outFile.absolutePath
+                        EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP, EFieldType.IMAGE -> field.mediaFile = outFile
                         else -> {
                         }
                     }

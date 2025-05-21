@@ -17,7 +17,6 @@ import android.content.Context
 import android.text.format.Formatter
 import com.ichi2.utils.FileUtil
 import timber.log.Timber
-import java.io.File
 
 /**
  * This currently stores either:
@@ -112,7 +111,7 @@ class CollectionIntegrityStorageCheck {
             val requiredSpaceInBytes = maybeCurrentCollectionSizeInBytes * 2
 
             // We currently use the same directory as the collection for VACUUM/ANALYZE due to the SQLite APIs
-            val collectionFile = File(CollectionHelper.getCollectionPath(context))
+            val collectionFile = CollectionHelper.getCollectionPath(context)
             val freeSpace = FileUtil.getFreeDiskSpace(collectionFile, -1)
             if (freeSpace == -1L) {
                 Timber.w("Error obtaining free space for '%s'", collectionFile.path)

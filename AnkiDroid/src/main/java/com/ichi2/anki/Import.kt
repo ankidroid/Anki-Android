@@ -32,6 +32,7 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.ImportUtils
 import timber.log.Timber
+import java.io.File
 
 // see also:
 // ImportFileSelectionFragment - selects 'APKG/COLPKG/CSV' and opens a file picker
@@ -98,12 +99,12 @@ fun AnkiActivity.showImportDialog(options: ImportOptions) {
 
 class DatabaseRestorationListener(
     val activity: AnkiActivity,
-    val newAnkiDroidDirectory: String,
+    val newAnkiDroidDirectory: File,
 ) : ImportColpkgListener {
     override fun onImportColpkg(colpkgPath: String?) {
         Timber.i("Database restoration correct")
         activity.sharedPrefs().edit {
-            putString("deckPath", newAnkiDroidDirectory)
+            putString("deckPath", newAnkiDroidDirectory.absolutePath)
         }
         activity.dismissAllDialogFragments()
         activity.importColpkgListener = null
