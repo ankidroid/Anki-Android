@@ -261,6 +261,7 @@
     <string name="about_contributors_description"><![CDATA[Aquests són els nostres fantàstics <a href=\"%1$s\">col·laboradors</a>. També podeu ajudar l\'AnkiDroid programant, traduint, donant i <a href=\"%2$s\">d\'altres formes</a>!]]></string>
     <string name="license">Llicència</string>
     <string name="license_description"><![CDATA[AnkiDroid es publica sota les llicències <a href=\"%1$s\">GPL-3.0</a> i <a href=\"%2$s\">AGPL-3.0</a>, i el codi font està disponible <a href=\"%3$s\">a GitHub</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
     <string name="donate_description"><![CDATA[Podeu donar suport al desenvolupament d\'AnkiDroid <a href=\"%1$s\">fent una donació</a>. Apreciarem molt qualsevol quantitat.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Afegeix gest</string>

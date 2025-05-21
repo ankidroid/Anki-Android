@@ -262,6 +262,7 @@
     <string name="about_contributors_description"><![CDATA[Ito ang mga astig naming mga <a href=\"%1$s\">nag-ambag</a>. Maaari ka ring tumulong sa AnkiDroid sa pag-program, pagsalin, paghandog <a href=\"%2$s\">at iba pa</a>!]]></string>
     <string name="license">Lisensya</string>
     <string name="license_description"><![CDATA[Ang AnkiDroid ay inilabas sa ilalim ng <a href=\"%1$s\">GPL-3.0</a> at <a href=\"%2$s\">AGPL-3.0</a> na mga lisensya, kung saan ang mga source code nito ay mahahanap <a href=\"%3$s\">sa GitHub</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
     <string name="donate_description"><![CDATA[Maaari mong suportahan ang pag-develop sa AnkiDroid sa pamamagitan ng <a href=\"%1$s\">paghahandog</a>. Lubos naming ipinapasalamat ang anumang halaga.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Magdagdag ng gesture</string>

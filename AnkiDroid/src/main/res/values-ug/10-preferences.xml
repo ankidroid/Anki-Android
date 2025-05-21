@@ -262,6 +262,7 @@
     <string name="about_contributors_description"><![CDATA[بۇلار بىزنىڭ قالتىس <a href=\"%1$s\">تۆھپىكارلىرىمىز</a>. پىروگرامما تۈزۈش، تەرجىمە قىلىش، ئىئانە قىلىش ۋە  <a href=\"%2$s\">تېخىمۇ كۆپ</a> ئۇسۇللار ئارقىلىق AnkiDroid غا ياردەم قىلالايسىز!]]></string>
     <string name="license">ئىجازەتنامە</string>
     <string name="license_description"><![CDATA[AnkiDroid نى <a href=\"%1$s\">GPL-3.0</a> ۋە <a href=\"%2$s\">AGPL-3.0</a> ئىجازىتىدە تارقىتىدۇ، ئەسلى مەنبە كودى <a href=\"%3$s\">GitHub</a> تا بار]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
     <string name="donate_description"><![CDATA[سىز AnkiDroid ئىجادىيىتىگە <a href=\"%1$s\">ئىئانە</a> قىلىش ئارقىلىق قوللىيالايسىز. ھەر قانداق مىقداردىكى ئىئانە چوڭقۇر ئالقىشلىنىدۇ.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">قول ئىشارەت قوش</string>

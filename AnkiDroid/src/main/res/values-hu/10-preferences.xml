@@ -261,6 +261,7 @@
     <string name="about_contributors_description"><![CDATA[Ők a mi csodálatos <a href=\"%1$s\"> közreműködőink </a>. Te is segíthethetsz az AnkiDroidnak programozással, fordítással, adományozással és sok <a href=\"%2$s\">mással</a>!]]></string>
     <string name="license">Licensz</string>
     <string name="license_description"><![CDATA[Az AnkiDroid a <a href=\"%1$s\">GPL-3.</a> és az <a href=\"%2$s\">AGPL-3.0</a> licenc alatt lett kiadva. A forráskód <a href=\"%3$s\"> GitHubon</a> érhető el.]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
     <string name="donate_description"><![CDATA[Elősegítheted az AnkiDroid fejlesztését <a href=\"%1$s\">támogatással</a>. Bármilyen összeget nagyra értékelünk.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Gesztus hozzáadása</string>

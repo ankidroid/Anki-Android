@@ -261,6 +261,7 @@
     <string name="about_contributors_description"><![CDATA[ᱱᱩᱠᱩ ᱠᱚᱫᱚ ᱟᱵᱚᱣᱟᱜ ᱟᱹᱰᱤ ᱱᱟᱯᱟᱭ <a href=\"%1$s\">contributors</a> ᱠᱟᱱᱟ ᱠᱚ ᱾ ᱟᱢ ᱯᱨᱳᱜᱨᱟᱢ, ᱛᱚᱨᱡᱚᱢᱟ, ᱥᱚᱦᱚᱫ ᱟᱨ <a href=\"%2$s\">ᱦᱚᱲᱟᱜ</a> ᱠᱟᱛᱮ ᱟᱢᱦᱚᱸ AnkiDroid ᱜᱚᱲᱚ ᱫᱟᱲᱮᱭᱟᱜᱼᱟᱢ!]]></string>
     <string name="license">ᱞᱟᱭᱥᱮᱱᱥ</string>
     <string name="license_description"><![CDATA[AnkiDroid ᱫᱚ <a href=\"%1$s\">GPL-3.0</a> ᱟᱨ <a href=\"%2$s\">AGPL-3.0</a> ᱞᱟᱭᱥᱮᱱᱥ ᱟᱛᱮ ᱨᱤᱞᱤᱡᱽ ᱟᱠᱟᱱᱟ, ᱡᱟᱦᱟᱸ ᱨᱮᱱᱟᱜ ᱥᱳᱨᱥ ᱠᱚᱰ <a href=\"%3$s\">GitHub</a> ᱨᱮ ᱢᱮᱱᱟᱜᱼᱟ]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
     <string name="donate_description"><![CDATA[ᱟᱢ <a href=\"%1$s\">ᱫᱚᱦᱚᱭ ᱠᱟᱛᱮ</a> AnkiDroid ᱨᱮᱭᱟᱜ ᱩᱛᱷᱱᱟᱹᱣ ᱨᱮ ᱜᱚᱲᱚ ᱮᱢ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ ᱾ ᱡᱟᱦᱟᱸᱱ ᱮᱢᱟᱱ ᱜᱮ ᱟᱹᱰᱤ ᱟᱞᱜᱟ ᱛᱮᱭ ᱢᱟᱱᱟᱣ ᱵᱟᱛᱟᱣᱜᱼᱟ ᱾]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">ᱤᱥᱟᱨᱟ ᱡᱚᱲᱟᱣ</string>

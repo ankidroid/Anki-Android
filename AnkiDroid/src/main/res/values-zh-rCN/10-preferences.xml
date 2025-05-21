@@ -259,6 +259,7 @@
     <string name="about_contributors_description"><![CDATA[这些是我们非常了不起的<a href=\"%1$s\">贡献者</a>。您也可以通过贡献代码、翻译、捐赠和<a href=\"%2$s\">更多方式</a>来帮助 AnkiDroid！]]></string>
     <string name="license">许可证</string>
     <string name="license_description"><![CDATA[AnkiDroid 根据<a href=\"%1$s\">GPL-3.0</a>和<a href=\"%2$s\">AGPL-3.0</a>许可证发布，源代码可在 <a href=\"%3$s\">Github</a> 上获取]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
     <string name="donate_description"><![CDATA[您可以通过<a href=\"%1$s\">捐赠</a>支持 AnkiDroid 的开发。我们感谢任何数额的捐赠。]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">添加手势</string>

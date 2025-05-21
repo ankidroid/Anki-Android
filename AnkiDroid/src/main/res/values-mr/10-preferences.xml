@@ -260,6 +260,7 @@
     <string name="about_contributors_description"><![CDATA[हे आमचे उत्कृष्ट <a href=\"%1$s\">योगदानकर्ते</a> आहेत. तुम्ही प्रोग्रामिंग, भाषांतर, देणगी आणि <a href=\"%2$s\">अधिक</a> करून देखील AnkiDroid ला मदत करू शकता!]]></string>
     <string name="license">परवाना</string>
     <string name="license_description"><![CDATA[AnkiDroid <a href=\"%1$s\">GPL-3.0</a> आणि <a href=\"%2$s\">AGPL-3.0</a> परवान्याखाली रिलीझ केले आहे. स्रोत कोड <a href=\"%3$s\">GitHub</a> वर उपलब्ध आहे]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
     <string name="donate_description"><![CDATA[तुम्ही <a href=\"%1$s\">दान</a> करून AnkiDroid च्या विकासाला समर्थन देऊ शकता. कोणतीही रक्कम खूप कौतुकास्पद आहे.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">एक जेश्चर जोडा</string>

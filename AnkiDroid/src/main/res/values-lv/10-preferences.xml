@@ -264,6 +264,7 @@
     <string name="about_contributors_description"><![CDATA[Šie ir mūsu lieliskie <a href=\"%1$s\">līdzdalībnieki</a>. Tu arī vari palīdzēt Ankidroid ar programmēšanu, tulkošanu, ziedojumiem un <a href=\"%2$s\">vēl</a>.]]></string>
     <string name="license">License</string>
     <string name="license_description"><![CDATA[AnkiDroid ir laista klajā ar <a href=\"%1$s\">GPL-3.0</a> un <a href=\"%2$s\">AGPL-3.0</a> licencēm, un pirmkods ir pieejams <a href=\"%3$s\">GitHub</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
     <string name="donate_description"><![CDATA[AnkiDroid izstrādi var atbalstīt ar <a href=\"%1$s\">ziedošanu</a>. Jebkāds daudzums tiks ļoti novērtēts.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Add gesture</string>

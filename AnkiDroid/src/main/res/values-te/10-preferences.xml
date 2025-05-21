@@ -260,6 +260,7 @@
     <string name="about_contributors_description"><![CDATA[వీరు మా అద్భుతమైన <a href=\"%1$s\">కంట్రిబ్యూటర్లు</a>. మీరు ప్రోగ్రామింగ్, అనువాదం, విరాళం మరియు <a href=\"%2$s\">మరిన్ని</a> ద్వారా కూడా AnkiDroidకి సహాయం చేయవచ్చు!]]></string>
     <string name="license">లైసెన్స్</string>
     <string name="license_description"><![CDATA[AnkiDroid <a href=\"%1$s\">GPL-3.0</a> మరియు <a href=\"%2$s\">AGPL-3.0</a> లైసెన్స్‌ల సోర్స్ కోడ్ <a క్రింద విడుదల చేయబడింది href =\"%3$s\">GitHub</a>లో అందుబాటులో ఉంది]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
     <string name="donate_description"><![CDATA[మీరు <a href=\"%1$s\">దానం చేయడం</a> ద్వారా AnkiDroid అభివృద్ధికి మద్దతు ఇవ్వవచ్చు. ఏదైనా మొత్తం లోతుగా ప్రశంసించబడుతుంది.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">సంజ్ఞను జోడించండి</string>
