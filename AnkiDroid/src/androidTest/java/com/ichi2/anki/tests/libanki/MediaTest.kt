@@ -31,6 +31,7 @@ import org.junit.runner.RunWith
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
@@ -123,14 +124,8 @@ class MediaTest : InstrumentedTest() {
         }
         // check media
         val ret = testCol!!.media.check()
-        var expected = setOf("fake2.png")
-        var actual = ret.missingList.toMutableList()
-        actual.retainAll(expected)
-        assertEquals(expected.size, actual.size)
-        expected = setOf("foo.jpg")
-        actual = ret.unusedList.toMutableList()
-        actual.retainAll(expected)
-        assertEquals(expected.size, actual.size)
+        assertContains(ret.missingList, "fake2.png")
+        assertContains(ret.unusedList, "foo.jpg")
     }
 
     @Suppress("SpellCheckingInspection")
