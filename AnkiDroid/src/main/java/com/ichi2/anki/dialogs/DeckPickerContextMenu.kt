@@ -23,6 +23,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.libanki.DeckId
 import com.ichi2.utils.title
 
@@ -75,6 +76,11 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
             if (!dyn) {
                 add(DeckPickerContextMenuOption.EDIT_DESCRIPTION)
             }
+            // Developer flag: Only show edit notifications option if new notifications are enabled
+            // TODO: Remove developer flag when the new notification system is stable
+            if (requireContext().sharedPrefs().getBoolean(getString(R.string.pref_new_notifications), false)) {
+                add(DeckPickerContextMenuOption.EDIT_NOTIFICATIONS)
+            }
             add(DeckPickerContextMenuOption.DELETE_DECK)
         }
 
@@ -94,6 +100,7 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
         BROWSE_CARDS(R.string.browse_cards),
         EDIT_DESCRIPTION(R.string.edit_deck_description),
         ADD_CARD(R.string.menu_add),
+        EDIT_NOTIFICATIONS(R.string.edit_notifications_do_not_translate),
     }
 
     companion object {

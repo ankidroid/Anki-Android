@@ -467,6 +467,19 @@ class DeckPickerTest : RobolectricTest() {
             val deckOptionsDynamic = Shadows.shadowOf(this).nextStartedActivity!!
             assertEquals("com.ichi2.anki.FilteredDeckOptions", deckOptionsDynamic.component!!.className)
             onBackPressedDispatcher.onBackPressed()
+
+            // developer flag: updated notifications is still an in-development feature
+            // TODO: Remove developer flag when the new notification system is stable
+            targetContext.sharedPrefs().edit(commit = true) {
+                putBoolean(
+                    targetContext.getString(R.string.pref_new_notifications),
+                    true,
+                )
+            }
+            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.EDIT_NOTIFICATIONS, didA)
+            val editNotifications = Shadows.shadowOf(this).nextStartedActivity!!
+            assertEquals("com.ichi2.anki.EditNotifications", editNotifications.component!!.className)
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 

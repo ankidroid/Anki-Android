@@ -777,6 +777,12 @@ open class DeckPicker :
                 Timber.i("Editing deck description for deck '%d'", deckId)
                 showDialogFragment(EditDeckDescriptionDialog.newInstance(deckId))
             }
+            DeckPickerContextMenuOption.EDIT_NOTIFICATIONS -> {
+                Timber.i("Editing notifications for deck '%d'", deckId)
+                val intent = EditNotifications.getIntentForSingleDeckSpecificEditing(this, deckId)
+                startActivity(intent)
+                dismissAllDialogFragments()
+            }
         }
     }
 
