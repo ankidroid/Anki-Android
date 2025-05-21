@@ -20,6 +20,7 @@ package com.ichi2.imagecropper
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Rect
 import android.net.Uri
 import android.os.Build
@@ -32,11 +33,15 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.BundleCompat
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.canhub.cropper.CropImageView
 import com.ichi2.anki.R
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.withProgress
 import com.ichi2.utils.ContentResolverUtil
+import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 
@@ -71,12 +76,44 @@ class ImageCropper :
                 setOnSetImageUriCompleteListener(::onSetImageUriComplete)
                 setOnCropImageCompleteListener(::onCropImageComplete)
                 cropRect = Rect(100, 300, 500, 1200)
-                val originalImageUri =
-                    BundleCompat.getParcelable(requireArguments(), CROP_IMAGE_URI, Uri::class.java)
-                setImageUriAsync(originalImageUri)
             }
+        val originalImageUri =
+            BundleCompat.getParcelable(requireArguments(), CROP_IMAGE_URI, Uri::class.java)
+                ?: error("No image identifier was provided for cropping")
+        viewLifecycleOwner.lifecycleScope.launch {
+            withProgress {
+                if (isImageTooBig(originalImageUri)) {
+                    view.findViewById<View>(R.id.crop_image_size_notice).isVisible = true
+                } else {
+                    cropImageView.setImageUriAsync(originalImageUri)
+                }
+            }
+        }
+
         requireActivity().addMenuProvider(this, viewLifecycleOwner)
     }
+
+    /**
+     * Check if the image isn't too big for the crop editor to handle(issue #17378).
+     * @see DECODED_IMAGE_LIMIT
+     * @return true if the image is bigger than our general target limit, false otherwise(or for any error)
+     */
+    private fun isImageTooBig(imageUri: Uri): Boolean =
+        try {
+            val imageStream = requireContext().contentResolver.openInputStream(imageUri)
+            if (imageStream != null) {
+                val opts = BitmapFactory.Options()
+                opts.inJustDecodeBounds = true
+                BitmapFactory.decodeStream(imageStream, null, opts)
+                val imageDimen = opts.outWidth * opts.outHeight * 4 // Bitmap.Config.ARGB_8888
+                Timber.d("Crop target image size: $imageDimen")
+                imageDimen > DECODED_IMAGE_LIMIT
+            } else {
+                false
+            }
+        } catch (ex: Exception) {
+            false
+        }
 
     override fun onCreateMenu(
         menu: Menu,
@@ -190,6 +227,8 @@ class ImageCropper :
     }
 
     companion object {
+        private const val DECODED_IMAGE_LIMIT = 100_000_000
+
         /**
          * The key for the original image URI passed as an argument.
          */
