@@ -94,7 +94,7 @@
         <item>Podle obtížnosti</item>
         <item>Podle opakování</item>
         <item>Podle zapomínání</item>
-        <item>By deck name</item>
+        <item>Podle názvu balíčku</item>
     </string-array>
     <string name="chane_browser_column">Change column</string>
     <string name="no_columns_available">No columns available</string>

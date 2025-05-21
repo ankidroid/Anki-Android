@@ -258,6 +258,7 @@
     <string name="about_contributors_description"><![CDATA[Đây là <a href=\"%1$s\">cộng tác viên tuyệt vời của chúng tôi</a>. Bạn có thể hỗ trợ AnkiDroid bằng cách lập trình, dịch thuật, quyên góp và <a href=\"%2$s\">hơn thế nữa</a>!]]></string>
     <string name="license">Giấy phép</string>
     <string name="license_description"><![CDATA[AnkiDroid được phát hành theo giấy phép <a href=\"%1$s\">GPL-3.0</a> và <a href=\"%2$s\">AGPL-3.0</a>, với mã nguồn có sẵn <a href=\"%3$s\">trên GitHub</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
     <string name="donate_description"><![CDATA[Bạn có thể hỗ trợ sự phát triển của AnkiDroid bằng cách <a href=\"%1$s\">quyên góp</a>. Bất kỳ số tiền nào cũng được đánh giá cao.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Add gesture</string>

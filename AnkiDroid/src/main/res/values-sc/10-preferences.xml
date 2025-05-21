@@ -261,6 +261,7 @@
     <string name="about_contributors_description"><![CDATA[Custos sunt sos <a href=\"%1$s\">contribuidores</a> istravanados nostros. Fintzas tue podes agiudare AnkiDroid programmende, bortende, donende e  <a href=\"%2$s\">àteru galu</a>!]]></string>
     <string name="license">Litzèntzia</string>
     <string name="license_description"><![CDATA[AnkiDroid est publicadu suta de sas litzèntzias <a href=\"%1$s\">GPL-3.0</a> e <a href=\"%2$s\">AGPL-3.0</a>, cun su còdighe de orìgine a disponimentu <a href=\"%3$s\">in GitHub</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
     <string name="donate_description"><![CDATA[Podes suportare s\'isvilupu de AnkiDroid <a href=\"%1$s\">cun una donatzione</a>. Cale si siat tantu est apretziadu meda.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Annanghe unu gestu</string>

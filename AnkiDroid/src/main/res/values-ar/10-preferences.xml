@@ -269,6 +269,7 @@
     <string name="about_contributors_description"><![CDATA[هؤلاء هم <a href=\"%1$s\">متطوعونا</a> الرائعون. تستطيع مساعدة أنكيدرويد أيضًا بالبرمجة، والترجمة، والتبرع و<a href=\"%2$s\">المزيد</a>!]]></string>
     <string name="license">الرخصة</string>
     <string name="license_description"><![CDATA[أنكيدرويد مرخص تحت رخصتي <a href=\"%1$s\">GPL-3.0</a> و<a href=\"%2$s\">AGPL-3.0</a>، وتتوفر الشفرة المصدرية على <a href=\"%3$s\">GitHub</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
     <string name="donate_description"><![CDATA[تستطيع دعم تطوير أنكيدرويد من خلال <a href=\"%1$s\">التبرع</a>. نقدّر أي كمية.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">إضافة إيماءة</string>

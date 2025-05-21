@@ -261,6 +261,7 @@
     <string name="about_contributors_description"><![CDATA[Tässä ovat upeat  <a href=\"%1$s\">kehittäjämme ja avustajamme</a>. Sinäkin voit auttaa AnkiDroidia ohjelmoimalla, kääntämällä, lahjoittamalla ja <a href=\"%2$s\">monin muin tavoin</a>!]]></string>
     <string name="license">Lisenssi</string>
     <string name="license_description"><![CDATA[AnkiDroid julkaistaan <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a>  -lisensseillä, ja lähdekoodi on saatavilla <a href=\"%3$s\">GitHubissa</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
     <string name="donate_description"><![CDATA[Voit tukea AnkiDroid\:n kehitystä <a href=\"%1$s\">lahjoittamalla</a>. Mikä tahansa summa on erittäin tervetullut.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Lisää kosketusele</string>

@@ -261,6 +261,7 @@
     <string name="about_contributors_description"><![CDATA[Estos son nuestros increíbles <a href=\"%1$s\">colaboradores</a>. ¡También puedes ayudar a AnkiDroid programando, traduciendo, donando y <a href=\"%2$s\">más</a>!]]></string>
     <string name="license">Licencia</string>
     <string name="license_description"><![CDATA[AnkiDroid se publica bajo las licencias <a href=\"%1$s\">GPL-3.0</a> y <a href=\"%2$s\">AGPL-3.0</a> con el código fuente <a href=\"%3$s\">disponible en GitHub</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
     <string name="donate_description"><![CDATA[Puedes apoyar el desarrollo de AnkiDroid <a href=\"%1$s\">donando</a>. Cualquier cantidad es profundamente apreciada.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Agregar gesto</string>

@@ -261,6 +261,7 @@
     <string name="about_contributors_description"><![CDATA[Dessa är våra fantastiska <a href=\"%1$s\">bidragsgivare</a>. Du kan också hjälpa AnkiDroid genom att utveckla, översätta, donera och <a href=\"%2$s\">mer</a>!]]></string>
     <string name="license">Programvarulicens</string>
     <string name="license_description"><![CDATA[AnkiDroid släpps under licenserna <a href=\"%1$s\">GPL-3.0</a> och <a href=\"%2$s\">AGPL-3.0</a>, med källkoden tillgänglig <a href=\"%3$s\">på GitHub</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
     <string name="donate_description"><![CDATA[Du kan stödja AnkiDroids utveckling genom att <a href=\"%1$s\">donera</a>. Alla donationer uppskattas enormt!]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Lägg till gest</string>

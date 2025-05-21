@@ -50,21 +50,21 @@
     <string name="statistics" maxLength="28">Статистика</string>
     <string name="settings" maxLength="28">Поставке</string>
     <string name="help" maxLength="28">Помоћ</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">Цртање</string>
     <string name="send_feedback">Пошаљи повратне информације</string>
     <string name="studyoptions_start">Започни учење</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Прошири</string>
     <string name="collapse">Умањи</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
+        <item quantity="one">%d минут остао</item>
         <item quantity="few">%d minutes left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="other">%d минута остало</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="one">%1$d сат %2$d преостао</item>
         <item quantity="few">%1$d hours %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="other">%1$d сати %2$d преостало</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%1$d day %2$dh left</item>

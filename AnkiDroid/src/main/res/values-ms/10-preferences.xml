@@ -260,6 +260,7 @@
     <string name="about_contributors_description"><![CDATA[Mereka merupakan <a href=\"%1$s\">para penyumbang</a> hebat. Anda juga boleh bantu AnkiDroid melalui pengaturcaraan, penterjemahan, pendermaan dan <a href=\"%2$s\">banyak lagi</a>!]]></string>
     <string name="license">Lesen</string>
     <string name="license_description"><![CDATA[AnkiDroid dikeluarkan di bawah lesen <a href=\"%1$s\">GPL-3.0</a> dan <a href=\"%2$s\">AGPL-3.0</a>, dengan kod sumber tersedia <a href=\"%3$s\">di GitHub</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
     <string name="donate_description"><![CDATA[Anda boleh menyokong pembangunan AnkiDroid dengan <a href=\"%1$s\">menderma</a>. Apa-apa jumlah sangat dihargai.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Tambah gerak isyarat</string>

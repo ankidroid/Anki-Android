@@ -261,6 +261,7 @@
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">ლიცენზია</string>
     <string name="license_description"><![CDATA[AnkiDroid გამოშვებულია <a href=\"%1$s\">GPL-3.0</a> და <a href=\"%2$s\">AGPL-3.0</a> ლიცენზიებით. საწყისი კოდის სანახავად ეწვიეთ <a href=\"%3$s\">GitHub-ს</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
     <string name="donate_description"><![CDATA[<a href=\"%1$s\">შემოწირულებით</a> შეგიძლიათ ხელი შეუწყოთ AnkiDroid-ის განვითარებას. ნებისმიერი რაოდენობის თანხას ვაფასებთ.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">ჟესტის დამატება</string>

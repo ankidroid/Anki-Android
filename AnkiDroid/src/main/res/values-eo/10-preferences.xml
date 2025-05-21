@@ -257,6 +257,7 @@
     <string name="about_contributors_description"><![CDATA[Jen listo de niaj karaj <a href=\"%1$s\">kontribuantoj</a>. Vi ankaŭ povas helpi al AnkiDroid per programi, traduki, donaci <a href=\"%2$s\">kaj pli</a>!]]></string>
     <string name="license">Permesilo</string>
     <string name="license_description"><![CDATA[AnkiDroid estas eldonita laŭ la permesiloj <a href=\"%1$s\">GPL-3.0</a> kaj <a href=\"%2$s\">AGPL-3.0</a>, ĝia fontkodo estas disponebla en <a href=\"%3$s\">GitHub</a>.]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
     <string name="donate_description"><![CDATA[Vi povas subteni evoluigon de AnkiDroid per <a href=\"%1$s\">donaci monon</a>. Ĉiu monsumo estas dankinda.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Aldoni geston</string>

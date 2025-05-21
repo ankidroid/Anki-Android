@@ -261,6 +261,7 @@
     <string name="about_contributors_description"><![CDATA[İşte uygulamamıza katkıda bulunan müthiş <a href=\"%1$s\">insanlar</a>. Siz de AnkiDroid\'e programlayarak, çevirerek, bağış yaparak ve <a href=\"%2$s\">daha fazla yolla</a> yardım edebilirsiniz!]]></string>
     <string name="license">Lisans</string>
     <string name="license_description"><![CDATA[AnkiDroid <a href=\"%1$s\">GPL-3.0</a> ve <a href=\"%2$s\">AGPL-3.0</a> lisansları altında yayınlanmaktadır, kaynak kodu <a href=\"%3$s\">GitHub\'da</a> mevcuttur]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
     <string name="donate_description"><![CDATA[AnkiDroid\'in geliştirilmesine <a href=\"%1$s\">bağış yaparak</a> destek olabilirsiniz. Miktarı ne olursa olsun içten teşekkürlerimizi kazanırsınız.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Hareket ekle</string>

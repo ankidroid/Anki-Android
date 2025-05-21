@@ -264,6 +264,7 @@
     <string name="about_contributors_description"><![CDATA[Это наши потрясающие <a href=\"%1$s\">участники</a>. Вы также можете помочь AnkiDroid программируя, делая переводы, пожертвования <a href=\"%2$s\">и другое</a>!]]></string>
     <string name="license">Лицензия</string>
     <string name="license_description"><![CDATA[AnkiDroid выпущен на условиях лицензий <a href=\"%1$s\">GPL-3.0</a> и <a href=\"%2$s\">AGPL-3.0</a> с исходным кодом <a href=\"%3$s\">на GitHub</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
     <string name="donate_description"><![CDATA[Вы можете поддержать развитие AnkiDroid, <a href=\"%1$s\">пожертвованием</a>. Любая сумма сильно поможет.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Добавить жест</string>

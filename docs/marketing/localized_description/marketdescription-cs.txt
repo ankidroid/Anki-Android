@@ -10,9 +10,9 @@ Přidání učebního materiálu prostřednictvím aplikace Anki nebo přímo p�
 
 ★ Klíčové funkce:
 • podporovaný obsah kartiček: text, obrázky, zvuky, LaTeX
-• spaced repetition (AI-optimized FSRS algorithm)
+• opakování v rozestupech (FSRS algoritmus optimalizovaný AI)
 • integrované předčítání textu
-• more than 10,000 premade decks
+• více než 10 000 předem vytvořených balíčků
 • widget postupu
 • podrobné statistiky
 • synchronizace s AnkiWeb
