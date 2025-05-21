@@ -169,7 +169,7 @@ suspend fun <T> FragmentActivity.runCatching(
             is BackendNetworkException, is BackendSyncException, is StorageAccessException -> {
                 // these exceptions do not generate worthwhile crash reports
                 Timber.i("Showing error dialog but not sending a crash report.")
-                showError(this, exc.localizedMessage!!, exc, false)
+                showError(this, exc.localizedMessage!!, exc, false, enableEnterKeyHandler = true)
             }
             is BackendException -> {
                 Timber.e(exc, errorMessage)
@@ -263,11 +263,12 @@ fun showError(
     msg: String,
     exception: Throwable,
     crashReport: Boolean = true,
+    enableEnterKeyHandler: Boolean = false,
 ) {
     if (throwOnShowError) throw IllegalStateException("throwOnShowError: $msg", exception)
     Timber.i("Error dialog displayed")
     try {
-        AlertDialog.Builder(context).show {
+        AlertDialog.Builder(context).show(enableEnterKeyHandler = enableEnterKeyHandler) {
             title(R.string.vague_error)
             message(text = msg)
             positiveButton(R.string.dialog_ok)
