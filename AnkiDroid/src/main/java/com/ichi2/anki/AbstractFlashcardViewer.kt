@@ -2720,12 +2720,12 @@ abstract class AbstractFlashcardViewer :
          * @param mediaDir media directory path on SD card
          * @return path converted to file URL, properly UTF-8 URL encoded
          */
-        fun getMediaBaseUrl(mediaDir: String): String {
+        fun getMediaBaseUrl(mediaDir: File): String {
             // Use android.net.Uri class to ensure whole path is properly encoded
             // File.toURL() does not work here, and URLEncoder class is not directly usable
             // with existing slashes
-            if (mediaDir.isNotEmpty()) {
-                val mediaDirUri = Uri.fromFile(File(mediaDir))
+            if (mediaDir.absolutePath.isNotEmpty()) {
+                val mediaDirUri = Uri.fromFile(mediaDir)
                 return "$mediaDirUri/"
             }
             return ""

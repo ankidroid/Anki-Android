@@ -35,7 +35,6 @@ import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.Translations
 import okio.withLock
 import timber.log.Timber
-import java.io.File
 import java.util.concurrent.locks.ReentrantLock
 
 object CollectionManager {
@@ -248,9 +247,9 @@ object CollectionManager {
         ensureBackendInner()
         emulatedOpenFailure?.triggerFailure()
         if (collection == null || collection!!.dbClosed) {
-            val path = collectionPathInValidFolder()
+            val collectionPath = collectionPathInValidFolder()
             collection =
-                collection(path, backend)
+                collection(collectionPath, backend)
         }
     }
 
@@ -263,14 +262,14 @@ object CollectionManager {
 
     fun getCollectionDirectory() =
         // Allow execution if AnkiDroidApp.instance is not initialized
-        File(CollectionHelper.getCurrentAnkiDroidDirectoryOptionalContext(AnkiDroidApp.sharedPrefs()) { AnkiDroidApp.instance })
+        CollectionHelper.getCurrentAnkiDroidDirectoryOptionalContext(AnkiDroidApp.sharedPrefs()) { AnkiDroidApp.instance }
 
-    /** Ensures the AnkiDroid directory is created, then returns the path to the collection file
-     * inside it. */
-    fun collectionPathInValidFolder(): String {
-        val dir = getCollectionDirectory().path
+    /** Ensures the AnkiDroid directory is created, then returns the path to the
+     * folder and the name of the collection file inside it. */
+    fun collectionPathInValidFolder(): CollectionFiles {
+        val dir = getCollectionDirectory()
         CollectionHelper.initializeAnkiDroidDirectory(dir)
-        return File(dir, "collection.anki2").absolutePath
+        return CollectionFiles(dir)
     }
 
     /**

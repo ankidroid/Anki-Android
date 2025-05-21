@@ -309,7 +309,7 @@ private suspend fun handleDownload(
         withCol {
             try {
                 createBackup(
-                    BackupManager.getBackupDirectoryFromCollection(path),
+                    BackupManager.getBackupDirectoryFromCollection(colDb),
                     force = true,
                     waitForCompletion = true,
                 )

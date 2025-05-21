@@ -132,7 +132,6 @@ import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber
-import java.io.File
 import kotlin.coroutines.resume
 
 @Suppress("LeakingThis")
@@ -611,8 +610,7 @@ open class Reviewer :
         if (isRecording) audioRecordingController?.stopAndSaveRecording()
 
         // Remove the temporary audio file
-        tempAudioPath?.let {
-            val tempAudioPathToDelete = File(it)
+        tempAudioPath?.let { tempAudioPathToDelete ->
             if (tempAudioPathToDelete.exists()) {
                 tempAudioPathToDelete.delete()
             }

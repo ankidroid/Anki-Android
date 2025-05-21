@@ -24,19 +24,20 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.io.File
 
 class MultimediaViewModel : ViewModel() {
     /** Errors or Warnings related to the edit fields that might occur when trying to save note */
     val multimediaAction = MutableSharedFlow<MultimediaBottomSheet.MultimediaAction>()
 
-    private var prevMultimediaPath: String? = null
+    private var prevMultimediaPath: File? = null
     private var prevMultimediaUri: Uri? = null
 
     private val _currentMultimediaUri = MutableStateFlow<Uri?>(null)
     val currentMultimediaUri: StateFlow<Uri?> get() = _currentMultimediaUri
 
-    private val _currentMultimediaPath = MutableStateFlow<String?>(null)
-    val currentMultimediaPath: StateFlow<String?> get() = _currentMultimediaPath
+    private val _currentMultimediaPath = MutableStateFlow<File?>(null)
+    val currentMultimediaPath: StateFlow<File?> get() = _currentMultimediaPath
 
     var selectedMediaFileSize: Long = 0
 
@@ -47,7 +48,7 @@ class MultimediaViewModel : ViewModel() {
     }
 
     fun saveMultimediaForRevert(
-        imagePath: String?,
+        imagePath: File?,
         imageUri: Uri?,
     ) {
         prevMultimediaPath = imagePath
@@ -67,7 +68,11 @@ class MultimediaViewModel : ViewModel() {
         _currentMultimediaUri.value = uri
     }
 
-    fun updateCurrentMultimediaPath(path: String?) {
+    fun updateCurrentMultimediaPath(uri: String) {
+        updateCurrentMultimediaPath(File(uri))
+    }
+
+    fun updateCurrentMultimediaPath(path: File?) {
         _currentMultimediaPath.value = path
     }
 }

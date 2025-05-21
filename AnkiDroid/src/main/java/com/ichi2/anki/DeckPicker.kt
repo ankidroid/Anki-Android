@@ -1302,7 +1302,7 @@ open class DeckPicker :
         outState.putBoolean("mIsFABOpen", floatingActionMenu.isFABOpen)
         importColpkgListener?.let {
             if (it is DatabaseRestorationListener) {
-                outState.getString("dbRestorationPath", it.newAnkiDroidDirectory)
+                outState.getString("dbRestorationPath", it.newAnkiDroidDirectory.absolutePath)
             }
         }
         exportingDelegate.onSaveInstanceState(outState)
@@ -1314,6 +1314,7 @@ open class DeckPicker :
         super.onRestoreInstanceState(savedInstanceState)
         floatingActionMenu.isFABOpen = savedInstanceState.getBoolean("mIsFABOpen")
         savedInstanceState.getString("dbRestorationPath")?.let { path ->
+            val path = File(path)
             CollectionHelper.ankiDroidDirectoryOverride = path
             importColpkgListener = DatabaseRestorationListener(this, path)
         }

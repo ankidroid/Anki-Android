@@ -103,7 +103,7 @@ class MediaTest : InstrumentedTest() {
     @Throws(IOException::class, EmptyMediaException::class)
     fun testDeckIntegration() {
         // create a media dir
-        testCol!!.media.dir
+        val mediaDir = testCol!!.media.dir
         // Put a file into it
         val file = createNonEmptyFile("fake.png")
         testCol!!.media.addFile(file)
@@ -118,7 +118,7 @@ class MediaTest : InstrumentedTest() {
         f.setField(1, "<img src='fake2.png'>")
         testCol!!.addNote(f)
         // and add another file which isn't used
-        FileOutputStream(File(testCol!!.media.dir, "foo.jpg"), false).use { os ->
+        FileOutputStream(File(mediaDir, "foo.jpg"), false).use { os ->
             os.write("test".toByteArray())
         }
         // check media

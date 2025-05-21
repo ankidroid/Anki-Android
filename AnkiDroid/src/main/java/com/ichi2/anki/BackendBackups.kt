@@ -51,7 +51,7 @@ private suspend fun createBackup(force: Boolean) {
     withCol {
         // this two-step approach releases the backend lock after the initial copy
         createBackup(
-            BackupManager.getBackupDirectoryFromCollection(this.path),
+            BackupManager.getBackupDirectoryFromCollection(colDb),
             force,
             waitForCompletion = false,
         )
