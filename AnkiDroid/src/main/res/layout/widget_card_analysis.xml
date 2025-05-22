@@ -28,10 +28,8 @@
         android:layout_alignParentTop="true"
         android:background="@drawable/widget_card_analysis_rounded_inner_background"
         android:orientation="horizontal"
-        android:paddingTop="14dp"
-        android:paddingBottom="14dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp">
+        android:paddingVertical="14dp"
+        android:paddingHorizontal="16dp">
 
         <TextView
             android:id="@+id/deckNew_card_analysis_widget"
