@@ -148,7 +148,7 @@
     <string name="notification_pref_title" maxLength="41">다음의 경우에 알림</string>
     <string name="never_notify">알리지 않음</string>
     <string name="notify_when_pending">대기중인 메세지 있음</string>
-    <string name="notification_minimum_cards_due">%d 보다 많은 카드 남음</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">진동</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">LED 깜빡이기</string>
     <string name="select_locale_title">언어 선택</string>
@@ -168,7 +168,7 @@
     <string name="show_estimates" maxLength="41">버튼에 시간 표시</string>
     <string name="show_estimates_summ">답변 버튼에 다음 복습 시간 표시</string>
     <string name="show_large_answer_buttons" maxLength="41">버튼 크기 크게</string>
-    <string name="show_large_answer_buttons_summ">버튼을 두 줄로 표시합니다.</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">상단 바 표시</string>
     <string name="show_top_bar_summary">카드 수, 타이머, 플래그, 강조를 상단 바에 표시합니다.</string>
     <string name="show_progress" maxLength="41">남은 개수 표시</string>
@@ -180,7 +180,7 @@
     <string name="time_limit" maxLength="41">타임박스 시간 설정</string>
     <string name="day_offset_with_description" maxLength="41">다음 날의 시작</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="other">자정 %d시간 이후</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">화면을 켜진 상태로 유지</string>
     <string name="pref_keep_screen_on_summ">화면 꺼짐 비활성화하기</string>

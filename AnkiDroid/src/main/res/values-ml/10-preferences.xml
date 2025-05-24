@@ -149,7 +149,7 @@
     <string name="notification_pref_title" maxLength="41">എപ്പോൾ എന്ന് അറിയിക്കുക</string>
     <string name="never_notify">ഒരിക്കലും അറിയിക്കരുത്</string>
     <string name="notify_when_pending">തീർപ്പുകൽപ്പിക്കാത്ത സന്ദേശങ്ങൾ ലഭ്യമാണ്</string>
-    <string name="notification_minimum_cards_due">%d കാർഡുകളിൽ കൂടുതൽ</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">വൈബ്രേറ്റുചെയ്യുക</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">ബ്ലിങ്ക് ലൈറ്റ്</string>
     <string name="select_locale_title">ഭാഷ തിരഞ്ഞെടുക്കുക</string>
@@ -169,7 +169,7 @@
     <string name="show_estimates" maxLength="41">ബട്ടൺ സമയം കാണിക്കുക</string>
     <string name="show_estimates_summ">ഉത്തര ബട്ടണുകളിൽ അടുത്ത അവലോകന സമയം കാണിക്കുക</string>
     <string name="show_large_answer_buttons" maxLength="41">വലിയ ഉത്തര ബട്ടണുകൾ കാണിക്കുക</string>
-    <string name="show_large_answer_buttons_summ">2 വരികളിൽ ഉത്തരം ബട്ടൺ കാണിക്കുക</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">മുകളിലെ ബാർ കാണിക്കുക</string>
     <string name="show_top_bar_summary">കാർഡുകളുടെ എണ്ണം കാണിക്കുക, ഉത്തരം ടൈമർ, ഫ്ലാഗ്, മുകളിലെ ബാറിൽ അടയാളപ്പെടുത്തുക</string>
     <string name="show_progress" maxLength="41">ബാക്കി കാണിക്കുക</string>
@@ -181,8 +181,8 @@
     <string name="time_limit" maxLength="41">ടൈംബോക്സ് സമയ പരിധി</string>
     <string name="day_offset_with_description" maxLength="41">അടുത്ത ദിവസം തുടക്കം</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">അർദ്ധരാത്രിക്ക് ശേഷം %d മണിക്കൂർ</item>
-        <item quantity="other">അർദ്ധരാത്രിക്ക് ശേഷം %d മണിക്കൂർ</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">സ്ക്രീൻ ഓണാക്കി വയ്ക്കുക</string>
     <string name="pref_keep_screen_on_summ">സ്‌ക്രീൻ കാലഹരണപ്പെടൽ പ്രവർത്തനരഹിതമാക്കുക</string>

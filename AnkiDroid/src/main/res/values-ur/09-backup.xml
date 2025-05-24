@@ -45,7 +45,7 @@
 -->
 <resources>
     <string name="backup_deck_no_storage_left">بیک اپ محفوظ نہیں ہوا۔ آپ کے اسٹوریج میں کافی جگہ نہیں ہے۔ بیک اپ کی گہرائی کو کم کریں یا کچھ دیگر فائلوں کو ہٹا دیں۔</string>
-    <string name="storage_warning">آپ کے اسٹوریج پر %d MB سے کم جگہ رہ گئی ہے۔\nڈیٹا کے نقصان سے بچنے کے لیے کچھ جگہ خالی کریں۔</string>
+    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
     <string name="backup_restore" maxLength="28">بیک اپ سے بحال کریں</string>
     <string name="backup_new_collection">نئی کلیکشن</string>
     <string name="backup_del_collection">مجموعہ کو حذف کریں اور نیا بنائیں</string>

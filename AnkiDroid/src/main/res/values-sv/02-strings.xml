@@ -305,7 +305,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kort</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Noter</string>
     <string name="toggle_cards_notes">Växla kort/noter</string>
-    <string name="truncate_content_help">Justera höjden på varje rad i bläddraren för att endast visa de första 3 radernas innehåll</string>
+    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
     <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">Inspelning sparad</string>
     <string name="deleting_selected_notes">Raderar markerade noter</string>

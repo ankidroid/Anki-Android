@@ -149,7 +149,7 @@
     <string name="notification_pref_title" maxLength="41">Ilmoita, kun</string>
     <string name="never_notify">Älä ilmoita koskaan</string>
     <string name="notify_when_pending">Odottavia ilmoituksia saatavilla</string>
-    <string name="notification_minimum_cards_due">Enemmän kuin %d korttia erääntymässä</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Värinä</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Vilkkuvalo</string>
     <string name="select_locale_title">Valitse kieli</string>
@@ -169,7 +169,7 @@
     <string name="show_estimates" maxLength="41">Näytä aika painikkeissa</string>
     <string name="show_estimates_summ">Näytä seuraava kertausaika vastauspainikkeissa</string>
     <string name="show_large_answer_buttons" maxLength="41">Näytä suuret vastauspainikkeet</string>
-    <string name="show_large_answer_buttons_summ">Näytä vastauspainikkeet kahdella rivillä</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Näytä yläpalkki</string>
     <string name="show_top_bar_summary">Näytä korttien lukumäärät, vastausaika, lippu ja merkinnät yläpalkissa.</string>
     <string name="show_progress" maxLength="41">Näytä jäljelläoleva</string>
@@ -181,8 +181,8 @@
     <string name="time_limit" maxLength="41">Edistymisen näyttämisen aikaväli</string>
     <string name="day_offset_with_description" maxLength="41">Seuraava päivä alkaa</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d tunti keskiyön jälkeen</item>
-        <item quantity="other">%d tuntia keskiyön jälkeen</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Pidä näyttö päällä</string>
     <string name="pref_keep_screen_on_summ">Poista näytön aikakatkaisu</string>

@@ -149,7 +149,7 @@
     <string name="notification_pref_title" maxLength="41">Avisi quan</string>
     <string name="never_notify">No notifiquis mai</string>
     <string name="notify_when_pending">Missatges pendents disponibles</string>
-    <string name="notification_minimum_cards_due">Més de %d cartes per fer</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibra</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Parpellejar el llum</string>
     <string name="select_locale_title">Seleccioneu l\'idioma</string>
@@ -169,7 +169,7 @@
     <string name="show_estimates" maxLength="41">Mostra el temps al botó</string>
     <string name="show_estimates_summ">Mostra el temps de la pròxima revisió al botons de resposta</string>
     <string name="show_large_answer_buttons" maxLength="41">Mostra botons de resposta grans</string>
-    <string name="show_large_answer_buttons_summ">Mostra botó de resposta a dos files</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Mostra la barra de dalt</string>
     <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Mostra el romanent</string>
@@ -181,8 +181,8 @@
     <string name="time_limit" maxLength="41">Límit de temps de Timebox</string>
     <string name="day_offset_with_description" maxLength="41">Principi del proper dia</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d hour past midnight</item>
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Mantenir la pantalla encesa</string>
     <string name="pref_keep_screen_on_summ">Desactiva la pantalla de bloqueig</string>

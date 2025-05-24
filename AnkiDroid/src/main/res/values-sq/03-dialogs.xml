@@ -147,7 +147,7 @@
     <string name="error_deleting_image">Gabim gjatë fshirjes së imazhit</string>
     <string name="failed_to_apply_background_image">Zbatimi i imazhit të sfondit %s dështoi</string>
     <string name="background_image_too_large">Sfondi i Zgjedhësit të kuvertës shumë i madh</string>
-    <string name="image_max_size_allowed">Madhësia maksimale e imazhit %d MB e lejuar</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
     <string name="image_dimensions_too_large">Dimensionet e imazhit janë shumë të mëdha (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -187,8 +187,8 @@
     <string name="help_dialog_exception_report_sent">Raporti u dërgua!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">Një sinkronizim automatik mund të aktivizohet në %d sekondë</item>
-        <item quantity="other">Një sinkronizim automatik mund të aktivizohet për %d sekonda</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Number of new cards to see today in this deck.</string>

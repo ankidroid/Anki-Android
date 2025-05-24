@@ -149,7 +149,7 @@
     <string name="notification_pref_title" maxLength="41">Melden wanneer</string>
     <string name="never_notify">Nooit melden</string>
     <string name="notify_when_pending">Bij ongelezen berichten</string>
-    <string name="notification_minimum_cards_due">Meer dan %d kaarten te doen</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Trillen</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Licht knipperen</string>
     <string name="select_locale_title">Taal selecteren</string>
@@ -169,7 +169,7 @@
     <string name="show_estimates" maxLength="41">Herhaaltijd in knoppen</string>
     <string name="show_estimates_summ">In de antwoordknoppen weergeven wanneer de volgende overhoring is</string>
     <string name="show_large_answer_buttons" maxLength="41">Laat grote antwoordknoppen zien</string>
-    <string name="show_large_answer_buttons_summ">Laat antwoordknop in 2 rijen zien</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Toon bovenste balk</string>
     <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Resterende weergeven</string>
@@ -181,8 +181,8 @@
     <string name="time_limit" maxLength="41">Stel een tijdslimiet in</string>
     <string name="day_offset_with_description" maxLength="41">Begin van de volgende dag (0 is middernacht, 23 is 11PM)</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d uur na middernacht</item>
-        <item quantity="other">%d uur na middernacht</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Scherm aanlaten</string>
     <string name="pref_keep_screen_on_summ">Schermtimeout uitschakelen</string>

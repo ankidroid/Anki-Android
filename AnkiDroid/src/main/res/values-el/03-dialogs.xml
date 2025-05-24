@@ -147,7 +147,7 @@
     <string name="error_deleting_image">Σφάλμα διαγραφής εικόνας</string>
     <string name="failed_to_apply_background_image">Αποτυχία εφαρμογής εικόνας φόντου %s</string>
     <string name="background_image_too_large">Deck Picker background too large</string>
-    <string name="image_max_size_allowed">Μέγιστο επιτρεπόμενο μέγεθος εικόνας %d MB</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
     <string name="image_dimensions_too_large">Οι διαστάσεις της εικόνας είναι πολύ μεγάλες (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -187,8 +187,8 @@
     <string name="help_dialog_exception_report_sent">Η αναφορά εστάλη!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">Ο αυτόματος συγχρονισμός μπορεί να ενεργοποιηθεί σε %d δευτερόλεπτο</item>
-        <item quantity="other">Ο αυτόματος συγχρονισμός μπορεί να ενεργοποιηθεί σε %d δευτερόλεπτα</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">Ο πάροχος σας μπορεί να χρεώσει χρήματα για χρήση δεδομένων</string>
     <string name="deck_picker_new">Αριθμός νέων καρτών για να δείτε σήμερα σε αυτή την τράπουλα.</string>

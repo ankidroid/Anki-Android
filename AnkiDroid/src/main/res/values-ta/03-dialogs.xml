@@ -147,7 +147,7 @@
     <string name="error_deleting_image">படத்தை நீக்குவதில் பிழை</string>
     <string name="failed_to_apply_background_image">%s பின்னணிப் படத்தைப் பயன்படுத்துவதில் தோல்வி</string>
     <string name="background_image_too_large">டெக் பிக்கர் பின்னணி மிகவும் பெரியது</string>
-    <string name="image_max_size_allowed">அதிகபட்ச பட அளவு %d MB அனுமதிக்கப்படுகிறது</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
     <string name="image_dimensions_too_large">படத்தின் பரிமாணங்கள் மிகப் பெரியவை (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -187,8 +187,8 @@
     <string name="help_dialog_exception_report_sent">அறிக்கை அனுப்பப்பட்டது!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">ஒரு தானியங்கி ஒத்திசைவு %d வினாடியில் தூண்டப்படலாம்</item>
-        <item quantity="other">ஒரு தானியங்கி ஒத்திசைவு %d வினாடிகளில் தூண்டப்படலாம்</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">உங்கள் இணைய வழங்குநர் தரவு பயன்பாட்டிற்கு பணம் வசூலிக்கலாம்</string>
     <string name="deck_picker_new">இந்த டெக்கில் இன்று பார்க்க வேண்டிய புதிய கார்டுகளின் எண்ணிக்கை.</string>

@@ -324,7 +324,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">بطاقات</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ملحوظات</string>
     <string name="toggle_cards_notes">تبديل عرض البطاقات/الملحوظات</string>
-    <string name="truncate_content_help">حد ارتفاع كل صف من المتصفح لإظهار أول 3 سطور فقط</string>
+    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
     <string name="browser_options_dialog_heading">خيارات المتصفح</string>
     <string name="audio_saved">تم حفظ التسجيل</string>
     <string name="deleting_selected_notes">حذف الملحوظات المحددة</string>

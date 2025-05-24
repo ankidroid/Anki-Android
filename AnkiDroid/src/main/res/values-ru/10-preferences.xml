@@ -151,7 +151,7 @@
     <string name="notification_pref_title" maxLength="41">Какие показывать</string>
     <string name="never_notify">Никакие</string>
     <string name="notify_when_pending">Только важные</string>
-    <string name="notification_minimum_cards_due">Когда >%d карточек</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Вибросигнал</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Мерцание светодиода</string>
     <string name="select_locale_title">Выберите язык</string>
@@ -171,7 +171,7 @@
     <string name="show_estimates" maxLength="41">Показывать время на кнопках</string>
     <string name="show_estimates_summ">Показывает время следующего повторения над кнопками ответа</string>
     <string name="show_large_answer_buttons" maxLength="41">Большие кнопки ответа</string>
-    <string name="show_large_answer_buttons_summ">Кнопки ответа в две строки</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Показывать верхнюю панель</string>
     <string name="show_top_bar_summary">Показать счетчик карт, время ответа, флаг и отметку в верхней строке</string>
     <string name="show_progress" maxLength="41">Показать оставшиеся</string>
@@ -183,10 +183,10 @@
     <string name="time_limit" maxLength="41">Лимит учебного блока</string>
     <string name="day_offset_with_description" maxLength="41">Начало нового дня</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d час после полуночи</item>
-        <item quantity="few">%d часов после полуночи</item>
-        <item quantity="many">%d часов после полуночи</item>
-        <item quantity="other">%d часов после полуночи</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
+        <item quantity="few">%d hours past midnight</item>
+        <item quantity="many">%d hours past midnight</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Не выключать экран</string>
     <string name="pref_keep_screen_on_summ">Отключает спящий режим экрана</string>

@@ -314,7 +314,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Карткі</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Нататкі</string>
     <string name="toggle_cards_notes">Пераключыць Карткі/Нататкі</string>
-    <string name="truncate_content_help">Скараціць вышыню кожнага радка браўзера для адлюстравання толькі першых 3 радкоў змесціва</string>
+    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
     <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">Запіс захаваны</string>
     <string name="deleting_selected_notes">Выдаленне выбраных нататак</string>

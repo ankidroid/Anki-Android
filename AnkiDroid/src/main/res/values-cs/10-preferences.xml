@@ -151,7 +151,7 @@
     <string name="notification_pref_title" maxLength="41">Upozornit když</string>
     <string name="never_notify">Nikdy neupozorňovat</string>
     <string name="notify_when_pending">Jsou k dispozici zprávy</string>
-    <string name="notification_minimum_cards_due">Více než %d karet ke zkoušení</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrace</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blikající světlo</string>
     <string name="select_locale_title">Vyberte jazyk</string>
@@ -171,7 +171,7 @@
     <string name="show_estimates" maxLength="41">Zobrazit čas tlačítek</string>
     <string name="show_estimates_summ">Zobrazit čas příštího opakování na tlačítkách odpovědí</string>
     <string name="show_large_answer_buttons" maxLength="41">Zobrazit velká tlačítka odpovědí</string>
-    <string name="show_large_answer_buttons_summ">Zobrazit tlačítka odpovědí ve dvou řadách</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Zobrazit horní lištu</string>
     <string name="show_top_bar_summary">Zobrazit počty karet, čas odpovědi, příznak a označení v horní liště</string>
     <string name="show_progress" maxLength="41">Zobrazit zbývající</string>
@@ -183,10 +183,10 @@
     <string name="time_limit" maxLength="41">Časové omezení</string>
     <string name="day_offset_with_description" maxLength="41">Začátek příštího dne</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d hodina po půlnoci</item>
-        <item quantity="few">%d hodiny po půlnoci</item>
-        <item quantity="many">%d hodiny po půlnoci</item>
-        <item quantity="other">%d hodin po půlnoci</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
+        <item quantity="few">%d hours past midnight</item>
+        <item quantity="many">%d hours past midnight</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Nevypínat obrazovku</string>
     <string name="pref_keep_screen_on_summ">Nepovolit zhasnutí displeje</string>

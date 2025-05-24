@@ -144,7 +144,7 @@
     <string name="error_deleting_image">Galat menghapus gambar</string>
     <string name="failed_to_apply_background_image">Gagal menerapkan gambar latar belakang %s</string>
     <string name="background_image_too_large">Latar Pemilih Dek terlalu besar</string>
-    <string name="image_max_size_allowed">Ukuran gambar maksimal %d MB</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
     <string name="image_dimensions_too_large">Dimensi gambar terlalu besar (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -184,7 +184,7 @@
     <string name="help_dialog_exception_report_sent">Laporan terkirim!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="other">Sinkronisasi otomatis dapat terjadi dalam %d detik</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">Penyedia internet Anda dapat menagih biaya untuk penggunaan data</string>
     <string name="deck_picker_new">Jumlah kartu baru di dek untuk dipelajari hari ini.</string>

@@ -149,7 +149,7 @@
     <string name="notification_pref_title" maxLength="41">எப்போது எனக்கு தெரியப்படுத்துங்கள்</string>
     <string name="never_notify">ஒருபோதும் அறிவிக்க வேண்டாம்</string>
     <string name="notify_when_pending">நிலுவையில் உள்ள செய்திகள் உள்ளன</string>
-    <string name="notification_minimum_cards_due">%d க்கும் மேற்பட்ட கார்டுகள் நிலுவையில் உள்ளன</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">அதிர்வு</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">ஒளிரும் ஒளி</string>
     <string name="select_locale_title">மொழியைத் தேர்ந்தெடுக்கவும்</string>
@@ -169,7 +169,7 @@
     <string name="show_estimates" maxLength="41">நேர பொத்தானைக் காட்டு</string>
     <string name="show_estimates_summ">பதில் பொத்தான்களில் அடுத்த மதிப்பாய்வு நேரத்தைக் காட்டு</string>
     <string name="show_large_answer_buttons" maxLength="41">பெரிய பதில் பொத்தான்களைக் காட்டு</string>
-    <string name="show_large_answer_buttons_summ">2 வரிசைகளில் பதில் பொத்தானைக் காண்பி</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">மேல் பட்டியைக் காட்டு</string>
     <string name="show_top_bar_summary">அட்டை எண்ணிக்கை, பதில் டைமர், கொடி மற்றும் மேல் பட்டியில் குறிக்கவும்</string>
     <string name="show_progress" maxLength="41">மீதமுள்ளதைக் காட்டு</string>
@@ -181,8 +181,8 @@
     <string name="time_limit" maxLength="41">டைம்பாக்ஸ் நேர வரம்பு</string>
     <string name="day_offset_with_description" maxLength="41">அடுத்த நாள் தொடங்குகிறது</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">நள்ளிரவைக் கடந்த %d மணிநேரம்</item>
-        <item quantity="other">நள்ளிரவைக் கடந்த %d மணிநேரம்</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">திரையை இயக்கவும்</string>
     <string name="pref_keep_screen_on_summ">திரையின் காலாவதியை முடக்கு</string>

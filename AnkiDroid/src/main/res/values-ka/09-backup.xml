@@ -45,7 +45,7 @@
 -->
 <resources>
     <string name="backup_deck_no_storage_left">სარეზერვო ასლი ვერ შეინახა. მეხსიერებაში არ არის დარჩენილი საკმარისი ადგილი. შეამცირეთ სარეზერვო ასლის სიღრმე ან გაათავისუფლეთ მეხსიერება.</string>
-    <string name="storage_warning">თქვენს მეხსიერებაში დარჩენილია %d MB-ზე ნაკლები ადგილი.\nმონაცემების დაკარგვის თავიდან აცილების მიზნით გთხოვთ გაათავისუფლოთ მეხსიერება.</string>
+    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
     <string name="backup_restore" maxLength="28">აღდგენა სარეზერვო ასლიდან</string>
     <string name="backup_new_collection">ახალი კოლექცია</string>
     <string name="backup_del_collection">კოლექციის წაშლა და ახლის შექმნა</string>

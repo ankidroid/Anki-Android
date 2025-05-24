@@ -147,7 +147,7 @@
     <string name="error_deleting_image">चित्र हटाने में त्रुटि</string>
     <string name="failed_to_apply_background_image">पृष्ठभूमि छवि लागू करने में विफल %s</string>
     <string name="background_image_too_large">डेक पिकर पृष्ठभूमि बहुत बड़ी है</string>
-    <string name="image_max_size_allowed">अधिकतम छवि आकार %d MB की अनुमति है</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
     <string name="image_dimensions_too_large">छवि आयाम बहुत बड़े हैं (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -187,8 +187,8 @@
     <string name="help_dialog_exception_report_sent">रिपोर्ट भेज दी गई!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">%d सेकंड में एक स्वचालित सिंक को ट्रिगर किया जा सकता है</item>
-        <item quantity="other">%d सेकंड में एक स्वचालित सिंक को ट्रिगर किया जा सकता है</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">आपका इंटरनेट प्रदाता डेटा उपयोग के लिए पैसे ले सकता है</string>
     <string name="deck_picker_new">इस डेक में आज देखने के लिए नई पत्तियों की संख्या।</string>

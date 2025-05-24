@@ -66,7 +66,7 @@
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">덱 제거됨</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">이미 선택한 덱입니다.</string>
     <plurals name="deck_limit_reached">
-        <item quantity="other">최대 %d개까지 선택할 수 있습니다.</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">You can select up to %d decks.</item>
     </plurals>
     <string name="empty_widget_state" comment="To denote the widget is empty">덱 없음. 터치해서 추가하기</string>
     <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">컬렉션 비어있음. 앱에서 덱을 추가한 후 재설정하세요.</string>

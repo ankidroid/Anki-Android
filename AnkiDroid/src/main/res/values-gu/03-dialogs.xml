@@ -147,7 +147,7 @@
     <string name="error_deleting_image">છબી કાઢી નાખવામાં ભૂલ</string>
     <string name="failed_to_apply_background_image">પૃષ્ઠભૂમિ છબી %s લાગુ કરવામાં નિષ્ફળ</string>
     <string name="background_image_too_large">ડેક પીકર પૃષ્ઠભૂમિ વિશાળ છે</string>
-    <string name="image_max_size_allowed">મહત્તમ ઇમેજ સાઇઝ %d MB છે</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
     <string name="image_dimensions_too_large">છબીના પરિમાણો ખૂબ મોટા છે (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -187,8 +187,8 @@
     <string name="help_dialog_exception_report_sent">રિપોર્ટ મોકલવામાં આવ્યો હતો!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">સ્વચાલિત સમન્વયન %d સેકન્ડમાં ટ્રિગર થઈ શકે છે</item>
-        <item quantity="other">સ્વચાલિત સિંક્રનાઇઝેશન %d સેકન્ડમાં ટ્રિગર થઈ શકે છે</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">તમારા ઇન્ટરનેટ પ્રદાતા ડેટાના ઉપયોગ માટે પૈસા વસૂલ કરી શકે છે</string>
     <string name="deck_picker_new">આજે આ ડેકમાં જોવા માટે નવા કાર્ડ્સની સંખ્યા.</string>

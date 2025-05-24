@@ -144,7 +144,7 @@
     <string name="error_deleting_image">删除图片时出错</string>
     <string name="failed_to_apply_background_image">未能应用背景图片 %s</string>
     <string name="background_image_too_large">牌组选择器背景过大</string>
-    <string name="image_max_size_allowed">允许最大图像大小 %d MB</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
     <string name="image_dimensions_too_large">图像尺寸太大 (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -184,7 +184,7 @@
     <string name="help_dialog_exception_report_sent">报告已发送！</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="other">可能在 %d 秒后触发自动同步</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">您的互联网提供商可能会收取数据使用费</string>
     <string name="deck_picker_new">此牌组中今天要看的新卡片数</string>

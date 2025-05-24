@@ -153,7 +153,7 @@
     <string name="error_deleting_image">Błąd podczas usuwania obrazu</string>
     <string name="failed_to_apply_background_image">Nie udało się ustawić obrazu w tle%s</string>
     <string name="background_image_too_large">Tło ekranu wyboru talii zbyt duże</string>
-    <string name="image_max_size_allowed">Maksymalny dozwolony rozmiar obrazu: %d MB</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
     <string name="image_dimensions_too_large">Rozmiary obrazu są zbyt duże (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -193,10 +193,10 @@
     <string name="help_dialog_exception_report_sent">Raport został wysłany!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">Automatyczna synchronizacja może zostać uruchomiona za %d sekundę</item>
-        <item quantity="few">Automatyczna synchronizacja może zostać uruchomiona za %d sekundy</item>
-        <item quantity="many">Automatyczna synchronizacja może zostać uruchomiona za %d sekund</item>
-        <item quantity="other">Automatyczna synchronizacja może zostać uruchomiona za %d sekund</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
+        <item quantity="few">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="many">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">Twój dostawca Internetu może pobierać opłaty za korzystanie z danych</string>
     <string name="deck_picker_new">Liczba nowych kart do zobaczenia dziś w tej talii.</string>

@@ -149,7 +149,7 @@
     <string name="notification_pref_title" maxLength="41">اطلاع بده موقعی که</string>
     <string name="never_notify">هرگز اطلاع نده</string>
     <string name="notify_when_pending">هشدارهای مشاهده نشده</string>
-    <string name="notification_minimum_cards_due">موعد مرور بیش از %d کارت</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">لرزش</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">چشمک زدن نور</string>
     <string name="select_locale_title">انتخاب زبان</string>
@@ -169,7 +169,7 @@
     <string name="show_estimates" maxLength="41">نمایش  دکمه زمان</string>
     <string name="show_estimates_summ">نمایش زمان مرور بعدی در بالای دکمه پاسخ</string>
     <string name="show_large_answer_buttons" maxLength="41">دکمه های بزرگ جواب نشان بده</string>
-    <string name="show_large_answer_buttons_summ">دکمه ی جواب را در 2 ردیف نشان بده</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">نمایش نوار بالا</string>
     <string name="show_top_bar_summary">نمایش تعداد کارت ها، ساعت شمار پاسخ، پرچم و علامت در نوار بالا</string>
     <string name="show_progress" maxLength="41">نمایش باقیمانده</string>
@@ -181,8 +181,8 @@
     <string name="time_limit" maxLength="41">محدوده زمانی جعبه زمان</string>
     <string name="day_offset_with_description" maxLength="41">شروع روز بعد</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d ساعت پس از نیمه شب</item>
-        <item quantity="other">%d ساعت پس از نیمه شب</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">روشن نگه‌داشتن صفحه</string>
     <string name="pref_keep_screen_on_summ">غیرفعال کردن زمان خاموش شدن صفحه نمایش</string>

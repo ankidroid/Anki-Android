@@ -151,7 +151,7 @@
     <string name="notification_pref_title" maxLength="41">Powiadamiaj gdy</string>
     <string name="never_notify">Nigdy nie powiadamiaj</string>
     <string name="notify_when_pending">Dostępne oczekujące wiadomości</string>
-    <string name="notification_minimum_cards_due">Wymagane ponad %d kart</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Wibracje</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Migotanie</string>
     <string name="select_locale_title">Wybór języka</string>
@@ -171,7 +171,7 @@
     <string name="show_estimates" maxLength="41">Pokaż czas przy przyciskach</string>
     <string name="show_estimates_summ">Pokazuj czas kolejnej powtórki nad przyciskami odpowiedzi</string>
     <string name="show_large_answer_buttons" maxLength="41">Pokaż duże przyciski odpowiedzi</string>
-    <string name="show_large_answer_buttons_summ">Pokaż przycisk odpowiedzi w 2 wierszach</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Pokaż górny pasek</string>
     <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Pokaż pozostałe</string>
@@ -183,10 +183,10 @@
     <string name="time_limit" maxLength="41">Ograniczenie czasu</string>
     <string name="day_offset_with_description" maxLength="41">Początek nowego dnia</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d godzina po północy</item>
-        <item quantity="few">%d godzin po północy</item>
-        <item quantity="many">%d godzin po północy</item>
-        <item quantity="other">%d godzin po północy</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
+        <item quantity="few">%d hours past midnight</item>
+        <item quantity="many">%d hours past midnight</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Utrzymuj włączony ekran</string>
     <string name="pref_keep_screen_on_summ">Zablokuj wyłącznik czasowy ekranu</string>

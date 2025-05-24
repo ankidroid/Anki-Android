@@ -144,7 +144,7 @@
     <string name="error_deleting_image">Lỗi khi xóa hình ảnh</string>
     <string name="failed_to_apply_background_image">Không áp dụng được hình nền %s</string>
     <string name="background_image_too_large">Ảnh nền bộ chọn thẻ quá lớn</string>
-    <string name="image_max_size_allowed">Kích thước hình ảnh tối đa %d cho phép</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
     <string name="image_dimensions_too_large">Kích thước ảnh quá lớn (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -184,7 +184,7 @@
     <string name="help_dialog_exception_report_sent">Báo cáo đã được gửi!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="other">Đồng bộ hóa tự động có thể được kích hoạt sau %d giây</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">Nhà cung cấp dịch vụ internet của bạn có thể tính phí cho việc sử dụng dữ liệu.</string>
     <string name="deck_picker_new">Số thẻ mới trong bộ thẻ của ngày hôm nay</string>

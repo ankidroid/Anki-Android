@@ -304,7 +304,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kartlar</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notlar</string>
     <string name="toggle_cards_notes">Kartları/Notları Aç/Kapat</string>
-    <string name="truncate_content_help">Tarayıcının her sırasının yüksekliğini içeriğin sadece ilk 3 satırını gösterecek şekilde kırp</string>
+    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
     <string name="browser_options_dialog_heading">Tarayıcı seçenekleri</string>
     <string name="audio_saved">Alınan kayıtlar kaydedildi.</string>
     <string name="deleting_selected_notes">Seçili notlar siliniyor</string>

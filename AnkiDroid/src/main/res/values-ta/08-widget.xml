@@ -69,8 +69,8 @@
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">தளம் அகற்றப்பட்டது</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">இந்த தளம் ஏற்கனவே தேர்ந்தெடுக்கப்பட்டது</string>
     <plurals name="deck_limit_reached">
-        <item quantity="one">நீங்கள் %d தளங்கள் வரை தேர்ந்தெடுக்கலாம்.</item>
-        <item quantity="other">நீங்கள் %d தளங்கள் வரை தேர்ந்தெடுக்கலாம்.</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">You can select up to %d deck.</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">You can select up to %d decks.</item>
     </plurals>
     <string name="empty_widget_state" comment="To denote the widget is empty">டெக் காணவில்லை. மறுகட்டமைக்க தட்டவும்.</string>
     <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">சேகரிப்பு காலியாக உள்ளது, டெக்குகளைச் சேர்க்க பயன்பாட்டைப் பயன்படுத்தி மீண்டும் கட்டமைக்கவும்</string>

@@ -159,7 +159,7 @@
     <string name="error_deleting_image">فشل حذف الصورة</string>
     <string name="failed_to_apply_background_image">تعذر تطبيق صورة الخلفية %s</string>
     <string name="background_image_too_large">خلفية محدد الرزم كبيرة جدًا</string>
-    <string name="image_max_size_allowed">الحد الأقصى لحجم الصورة المسموح به هو %d ميجابايت</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
     <string name="image_dimensions_too_large">أبعاد الصورة كبيرة جدًا (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -199,12 +199,12 @@
     <string name="help_dialog_exception_report_sent">تم إرسال التقرير!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="zero">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>
-        <item quantity="one">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>
-        <item quantity="two">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>
-        <item quantity="few">قد تبدأ المزامنة التلقائية خلال %d ثوان</item>
-        <item quantity="many">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>
-        <item quantity="other">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>
+        <item quantity="zero">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
+        <item quantity="two">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="few">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="many">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">مقدم خدمة الإنترنت الخاص بك قد يدفّعك مالًا بدل استخدامك للبيانات</string>
     <string name="deck_picker_new">عدد البطاقات الجديدة لتراها اليوم من هذه الرزمة.</string>
