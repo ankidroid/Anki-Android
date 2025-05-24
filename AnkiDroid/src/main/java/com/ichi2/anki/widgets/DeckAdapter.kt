@@ -159,7 +159,9 @@ class DeckAdapter(
         if (node.children.isNotEmpty()) {
             holder.deckExpander.setOnClickListener {
                 onDeckChildrenToggled(node.did)
-                notifyItemChanged(position) // Ensure UI updates
+                // Force a complete redraw to ensure all expanders update correctly
+                // This fixes issues with bottom deck expander icon not updating
+                notifyDataSetChanged()
             }
         } else {
             holder.deckExpander.isClickable = false
