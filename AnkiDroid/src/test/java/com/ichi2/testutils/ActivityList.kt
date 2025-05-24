@@ -26,6 +26,7 @@ import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_QUEST
 import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.DrawingActivity
+import com.ichi2.anki.EditNotifications
 import com.ichi2.anki.FilteredDeckOptions
 import com.ichi2.anki.Info
 import com.ichi2.anki.IntentHandler
@@ -93,6 +94,7 @@ object ActivityList {
             get(MultimediaActivity::class.java),
             get(DeckPickerWidgetConfig::class.java),
             get(CardAnalysisWidgetConfig::class.java),
+            get(EditNotifications::class.java),
         )
 
     private fun intentForCardTemplateBrowserAppearanceEditor(): Intent {
