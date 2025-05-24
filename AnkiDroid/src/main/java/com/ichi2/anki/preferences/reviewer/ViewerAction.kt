@@ -47,6 +47,7 @@ enum class ViewerAction(
     @StringRes val titleRes: Int = R.string.empty_string,
     val defaultDisplayType: MenuDisplayType? = null,
     val parentMenu: ViewerAction? = null,
+    override val potentialSides: CardSide = CardSide.BOTH,
 ) : MappableAction<ReviewerBinding> {
     // Always
     UNDO(R.id.action_undo, R.drawable.ic_undo_white, R.string.undo, ALWAYS),
@@ -90,11 +91,11 @@ enum class ViewerAction(
     FLAG_PURPLE(Flag.PURPLE.id, Flag.PURPLE.drawableRes, parentMenu = FLAG_MENU),
 
     // Command only
-    SHOW_ANSWER,
-    FLIP_OR_ANSWER_EASE1,
-    FLIP_OR_ANSWER_EASE2,
-    FLIP_OR_ANSWER_EASE3,
-    FLIP_OR_ANSWER_EASE4,
+    SHOW_ANSWER(potentialSides = CardSide.QUESTION),
+    FLIP_OR_ANSWER_EASE1(potentialSides = CardSide.ANSWER),
+    FLIP_OR_ANSWER_EASE2(potentialSides = CardSide.ANSWER),
+    FLIP_OR_ANSWER_EASE3(potentialSides = CardSide.ANSWER),
+    FLIP_OR_ANSWER_EASE4(potentialSides = CardSide.ANSWER),
     TOGGLE_FLAG_RED,
     TOGGLE_FLAG_ORANGE,
     TOGGLE_FLAG_GREEN,

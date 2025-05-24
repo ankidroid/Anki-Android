@@ -15,7 +15,6 @@
  */
 package com.ichi2.anki.dialogs
 
-import android.annotation.SuppressLint
 import android.content.Context
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.R
@@ -26,7 +25,6 @@ import com.ichi2.utils.title
 /** Allows selecting between [CardSide.QUESTION], [CardSide.ANSWER] or [CardSide.BOTH] */
 class CardSideSelectionDialog {
     companion object {
-        @SuppressLint("CheckResult")
         fun displayInstance(
             ctx: Context,
             callback: (c: CardSide) -> Unit,
