@@ -15,7 +15,6 @@
  */
 package com.ichi2.anki.dialogs.tags
 
-import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,7 +44,6 @@ import java.util.TreeSet
  */
 class TagsArrayAdapter(
     private val tags: TagsList,
-    private val resources: Resources,
 ) : RecyclerView.Adapter<TagsArrayAdapter.ViewHolder>(),
     Filterable {
     class ViewHolder(
@@ -302,7 +300,7 @@ class TagsArrayAdapter(
             // do not add padding if there is no visible nested tag
             holder.expandButton.visibility = View.GONE
         }
-        holder.expandButton.contentDescription = resources.getString(R.string.expand_tag, holder.node.tag.replace("::", " "))
+        holder.expandButton.contentDescription = holder.itemView.context.getString(R.string.expand_tag, holder.node.tag.replace("::", " "))
 
         holder.textView.text = TagsUtil.getTagParts(holder.node.tag).last()
 
