@@ -83,16 +83,16 @@
     <string name="card_browser_font_size" maxLength="41">Escalado do texto do explorador de tarxetas</string>
     <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
-    <string name="col_path" maxLength="41">AnkiDroid directory</string>
+    <string name="col_path" maxLength="41">Directorio do AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Modo pantalla completa</string>
     <string name="full_screen_off">Desactivado</string>
     <string name="full_screen_system">Agochar barras do sistema</string>
     <string name="full_screen_complete">Hide the system bars and answer buttons</string>
     <string name="answer_buttons_position" maxLength="41">Answer buttons position</string>
     <string-array name="answer_buttons_position_labels">
-        <item>Top</item>
-        <item>Bottom</item>
-        <item>None</item>
+        <item>Enriba</item>
+        <item>Embaixo</item>
+        <item>Ningún</item>
     </string-array>
     <string name="gestures" maxLength="41">Activar xestos</string>
     <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
@@ -118,7 +118,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
     <string name="gestures_shake" maxLength="41">Shake device</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">Menú ‘%s’ </string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap" maxLength="41">Desprazamento dobre</string>
     <string name="double_scrolling_gap_summ">Duplicar a distancia de desprazamento co eReader</string>
@@ -141,9 +141,9 @@
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
     <string name="backup_limits_frequency">Frequency</string>
     <string name="backup_limits_lifetime">Lifetime</string>
-    <string name="app_theme" maxLength="41">Theme</string>
-    <string name="day_theme" maxLength="41">Day theme</string>
-    <string name="night_theme" maxLength="41">Night theme</string>
+    <string name="app_theme" maxLength="41">Esquema de cores</string>
+    <string name="day_theme" maxLength="41">Modo claro</string>
+    <string name="night_theme" maxLength="41">Modo escuro</string>
     <string name="language" maxLength="41">Idioma</string>
     <string name="language_system">Idioma do sistema</string>
     <string name="notification_pref" maxLength="41">Notificacións</string>
@@ -201,11 +201,11 @@
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
     <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Repasos</string>
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previsualizacións</string>
-    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
+    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Alternar só reverso</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Pantalla de repaso</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="accessibility" maxLength="41">Accesibilidade</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
@@ -281,7 +281,7 @@
     <string name="user_action_7" maxLength="28">Acción do usuario 7</string>
     <string name="user_action_8" maxLength="28">Acción do usuario 8</string>
     <string name="user_action_9" maxLength="28">Acción do usuario 9</string>
-    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
+    <string name="toggle_auto_advance" maxLength="41">Alternar avance automático</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Select card side</string>
     <string name="card_side_question">Pregunta</string>

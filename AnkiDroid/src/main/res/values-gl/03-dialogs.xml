@@ -49,8 +49,8 @@
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Eliminar baralla</string>
     <string name="delete_deck_title">Eliminar baralla?</string>
     <plurals name="delete_deck_message">
-        <item quantity="one">Eliminar todas as tarxetas en %1$s? Contén %2$d tarxeta</item>
-        <item quantity="other">Eliminar todas as tarxetas en %1$s? Contén %2$d tarxetas</item>
+        <item quantity="one">Eliminar tódalas tarxetas en %1$s? Contén %2$d tarxeta</item>
+        <item quantity="other">Eliminar tódalas as tarxetas en %1$s? Contén %2$d tarxetas</item>
     </plurals>
     <string name="delete_cram_deck_message">Eliminar baralla filtrada %s e devolver as tarxetas ás súas barallas orixinais?</string>
     <string name="no_tts_available_message">Ningún idioma de texto a voz dispoñíbel</string>

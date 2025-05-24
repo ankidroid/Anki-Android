@@ -47,7 +47,7 @@
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
         <item quantity="one">%d tarxeta amosada</item>
-        <item quantity="other">%d cartóns amosados</item>
+        <item quantity="other">%d tarxetas amosadas</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
         <item quantity="one">%d nota amosada</item>
@@ -58,7 +58,7 @@
         <item quantity="one">Eliminar nota</item>
         <item quantity="other">Eliminar notas</item>
     </plurals>
-    <string name="card_browser_change_deck" maxLength="28">Mudar baralla</string>
+    <string name="card_browser_change_deck" maxLength="28">Cambiar baralla</string>
     <string name="delete_card_title">Eliminar nota?</string>
     <string name="card_browser_show_marked" maxLength="28">Filtrar marcadas</string>
     <string name="card_browser_show_suspended" maxLength="28">Filtrar suspendidas</string>
@@ -87,11 +87,11 @@
         <item>Por intervalo</item>
         <item>Por facilidade</item>
         <item>Por revisións</item>
-        <item>Por fallos</item>
+        <item>Por fallas</item>
         <item>Por nome da baralla</item>
     </string-array>
-    <string name="chane_browser_column">Change column</string>
-    <string name="no_columns_available">No columns available</string>
+    <string name="chane_browser_column">Cambiar columna</string>
+    <string name="no_columns_available">Non hai columnas dispoñíbeis</string>
     <string name="card_browser_select_all" maxLength="28">Seleccionar todos</string>
     <string name="card_browser_select_none" maxLength="28">Deseleccionar todos</string>
     <string name="card_browser_no_cards_in_deck">Ningunha tarxeta atopada na baralla ‘%s’</string>

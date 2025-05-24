@@ -57,22 +57,22 @@
     <string name="expand">Išskleisti</string>
     <string name="collapse">Suskleisti</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">liko %d minučių</item>
-        <item quantity="few">%d minutes left</item>
-        <item quantity="many">%d minutes left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">liko %d minutė</item>
+        <item quantity="few">liko %d minutės</item>
+        <item quantity="many">liko %d minučių</item>
+        <item quantity="other">liko %d minučių</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="few">%1$d hours %2$d left</item>
-        <item quantity="many">%1$d hours %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">Liko %1$d valanda %2$d min.</item>
+        <item quantity="few">Liko %1$d valandos %2$d min.</item>
+        <item quantity="many">Liko %1$d valandų %2$d min.</item>
+        <item quantity="other">Liko %1$d valandų %2$d min.</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="few">%1$d days %2$dh left</item>
-        <item quantity="many">%1$d days %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">Liko %1$d diena %2$d val.</item>
+        <item quantity="few">Liko %1$d dienos %2$d val.</item>
+        <item quantity="many">Liko %1$d dienos %2$d val.</item>
+        <item quantity="other">Liko %1$d dienų %2$d val.</item>
     </plurals>
     <string name="no_cards_placeholder_title">Kolekcija tuščia</string>
     <string name="no_cards_placeholder_description">Pridėkite korteles\nnaudodami + mygtuką.</string>
@@ -87,14 +87,14 @@
     <string name="ease_button_easy">L. lengva</string>
     <string name="menu_import" maxLength="28">Importuoti</string>
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Atšaukti</string>
-    <string name="redo" maxLength="28">Redo</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Undo stroke</string>
+    <string name="redo" maxLength="28">Atkurti</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Naikinti užrašymą</string>
     <string name="move_all_to_deck">Viską perkelti į rinkinį</string>
     <string name="unbury" maxLength="28">Ištraukti</string>
     <string name="rename_deck" maxLength="28">Pervadinti malką</string>
     <string name="create_shortcut">Sukurti trumpinį</string>
     <string name="browse_cards">Naršyti korteles</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">Redaguoti aprašymą</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">Pridėti</string>
     <string name="menu_add_note" maxLength="28">Pridėti užrašą</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sinchronizuoti paskyrą</string>
@@ -107,15 +107,15 @@
     <string name="menu_suspend" maxLength="28">Atidėti</string>
     <string name="menu_delete_note" maxLength="28">Ištrinti užrašą</string>
     <string name="menu_flag" maxLength="41">Pažymėti</string>
-    <string name="rename_flag">Rename flags</string>
+    <string name="rename_flag">Pervardinti žymeklį</string>
     <string name="menu_flag_card" maxLength="28">Pažymėti su vėliava</string>
     <string name="menu_edit_tags" maxLength="28">Redaguoti žymes</string>
     <string name="delete_note_message">Ar tikrai norite ištrinti šį užrašą ir visas su juo susijusias korteles?\n%s</string>
     <string name="menu_search" maxLength="28">Ieškoti: %1$s</string>
     <string name="menu_mark_note" maxLength="28">Žymėti užrašą</string>
     <string name="menu_unmark_note">Atžymėti užrašą</string>
-    <string name="menu_enable_voice_playback" maxLength="28">Enable voice playback</string>
-    <string name="menu_disable_voice_playback">Disable voice playback</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Leisti balso atkartojimą</string>
+    <string name="menu_disable_voice_playback">Neleisti garso atkartojimo</string>
     <string name="new_deck">Kurti rinkinį</string>
     <string name="new_dynamic_deck">Kurti rinktinį rinkinį</string>
     <string name="directory_inaccessible">„AnkiDroid“ katalogas yra nepasiekiamas</string>
@@ -133,8 +133,8 @@
     <string name="empty_deck">Šis rinkinys yra tuščias</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Rinkinio paieška</string>
     <string name="invalid_deck_name">Blogas rinkinio vardas</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
+    <string name="studyoptions_congrats_finished">Sveikiname! Jūs šiandienai jau baigėte.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Kaladė šiandienai baigta. %s</string>
     <string name="studyoptions_no_cards_due">Numatytų kortelių kol kas dar nėra</string>
     <string name="sd_card_not_mounted">Atminties įrenginys neprijungtas</string>
     <string name="button_sync" comment="Text of the sync button" maxLength="28">Sinchronizuoti</string>
@@ -142,9 +142,9 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Tęsti sinchronizavimą</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sinchronizavimas atšauktas</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Atšaukiama&#8230;\nTai gali šiek tiek užtrukti.</string>
-    <string name="syncing_media">Syncing media</string>
+    <string name="syncing_media">Įrašai sinchronizuojami</string>
     <string name="export_deck" maxLength="28">Eksportuoti rinkinį</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_collection">Eksportuoti kolekciją</string>
     <string name="nothing">Nieko</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Kortelių tipai</string>
