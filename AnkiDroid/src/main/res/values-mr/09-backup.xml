@@ -45,7 +45,7 @@
 -->
 <resources>
     <string name="backup_deck_no_storage_left">बॅकअप जतन केला नाही. तुमच्या स्टोरेजवर पुरेशी जागा शिल्लक नाही. बॅकअपची खोली कमी करा किंवा काही इतर फायली काढा.</string>
-    <string name="storage_warning">तुमच्या स्टोरेजवर तुमच्याकडे %d MB पेक्षा कमी जागा शिल्लक आहे.\nडेटा हानी टाळण्यासाठी काही जागा मोकळी करा.</string>
+    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
     <string name="backup_restore" maxLength="28">Bĕka\'apamadhūna punarsan̄cayita karā</string>
     <string name="backup_new_collection">Navina saṅgraha</string>
     <string name="backup_del_collection">Saṅgraha haṭavā āṇi navīna tayāra karā</string>

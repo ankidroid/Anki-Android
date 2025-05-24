@@ -304,7 +304,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">அட்டைகள்</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">குறிப்புகள்</string>
     <string name="toggle_cards_notes">கார்டுகள்/குறிப்புகளை நிலைமாற்று</string>
-    <string name="truncate_content_help">உள்ளடக்கத்தின் முதல் 3 வரிகளை மட்டும் காண்பிக்க உலாவியின் ஒவ்வொரு வரிசையின் உயரத்தையும் துண்டிக்கவும்</string>
+    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
     <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">பதிவு சேமிக்கப்பட்டது</string>
     <string name="deleting_selected_notes">தேர்ந்தெடுக்கப்பட்ட குறிப்புகளை நீக்குகிறது</string>

@@ -147,7 +147,7 @@
     <string name="error_deleting_image">చిత్రాన్ని తొలగించడంలో లోపం</string>
     <string name="failed_to_apply_background_image">నేపథ్య చిత్రం %sని వర్తింపజేయడంలో విఫలమైంది</string>
     <string name="background_image_too_large">డెక్ పికర్ బ్యాక్ గ్రౌండ్ చాలా పెద్దది</string>
-    <string name="image_max_size_allowed">అనుమతించబడిన గరిష్ట చిత్ర పరిమాణం %d MB</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
     <string name="image_dimensions_too_large">చిత్ర కొలతలు చాలా పెద్దవి (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -187,8 +187,8 @@
     <string name="help_dialog_exception_report_sent">నివేదిక పంపబడింది!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">స్వయంచాలక సమకాలీకరణ %d సెకన్లలో ప్రారంభించబడుతుంది</item>
-        <item quantity="other">స్వయంచాలక సమకాలీకరణ %d సెకన్లలో ప్రారంభించబడుతుంది</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">డేటా వినియోగం కోసం మీ ఇంటర్నెట్ ప్రొవైడర్ మీకు ఛార్జీ విధించవచ్చు</string>
     <string name="deck_picker_new">ఈ రోజు ఈ డెక్‌లో చూడాల్సిన కొత్త కార్డ్‌ల సంఖ్య.</string>

@@ -304,7 +304,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kortit</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Muistiinpanot</string>
     <string name="toggle_cards_notes">Näytä kortit/muistiinpanot</string>
-    <string name="truncate_content_help">Katkaise selaimen jokaisen rivin korkeus niin, että näytetään vain 3 ensimmäistä riviä sisältöä.</string>
+    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
     <string name="browser_options_dialog_heading">Selaimen asetukset</string>
     <string name="audio_saved">Äänitys tallennettu</string>
     <string name="deleting_selected_notes">Poistetaan valittuja muistiinpanoja</string>

@@ -147,7 +147,7 @@
     <string name="error_deleting_image">ছবি মোছার সময় ত্রুটি</string>
     <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
     <string name="background_image_too_large">ডেক পিকার ব্যাকগ্রাউন্ড বিশাল</string>
-    <string name="image_max_size_allowed">সর্বাধিক অনুমোদিত চিত্রের আকার হল %d MB</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
     <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -187,8 +187,8 @@
     <string name="help_dialog_exception_report_sent">রিপোর্ট পাঠানো হয়েছে!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">একটি স্বয়ংক্রিয় সিঙ্ক %d সেকেন্ডের মধ্যে ট্রিগার হতে পারে৷</item>
-        <item quantity="other">একটি স্বয়ংক্রিয় সিঙ্ক %d সেকেন্ডের মধ্যে ট্রিগার হতে পারে৷</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">আপনার ইন্টারনেট প্রদানকারী ডেটা ব্যবহারের জন্য চার্জ দিতে পারে</string>
     <string name="deck_picker_new">আজ এই ডেকে দেখতে নতুন কার্ডের সংখ্যা।</string>

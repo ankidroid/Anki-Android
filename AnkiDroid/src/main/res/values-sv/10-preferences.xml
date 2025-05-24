@@ -149,7 +149,7 @@
     <string name="notification_pref_title" maxLength="41">Meddela när</string>
     <string name="never_notify">Meddela aldrig</string>
     <string name="notify_when_pending">Det finns olästa meddelanden</string>
-    <string name="notification_minimum_cards_due">Fler än %d kort kvar</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrera</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blinka</string>
     <string name="select_locale_title">Välj språk</string>
@@ -169,7 +169,7 @@
     <string name="show_estimates" maxLength="41">Visa tid på knappar</string>
     <string name="show_estimates_summ">Visa nästa repetitionstid på svarsknapparna</string>
     <string name="show_large_answer_buttons" maxLength="41">Visa stora svarsknappar</string>
-    <string name="show_large_answer_buttons_summ">Visa svarsknappen i 2 rader</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Visa översta verktygsfältet</string>
     <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Visa återstående</string>
@@ -181,8 +181,8 @@
     <string name="time_limit" maxLength="41">Tidsgräns</string>
     <string name="day_offset_with_description" maxLength="41">Början av nästa dag</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d timme efter midnatt</item>
-        <item quantity="other">%d timmar efter midnatt</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Håll skärm på</string>
     <string name="pref_keep_screen_on_summ">Inaktivera skärmtimeout</string>

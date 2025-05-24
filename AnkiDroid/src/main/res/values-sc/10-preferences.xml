@@ -149,7 +149,7 @@
     <string name="notification_pref_title" maxLength="41">Notìfica cando</string>
     <string name="never_notify">Non notìfiches mai</string>
     <string name="notify_when_pending">Messàgios in isetu a disponimentu</string>
-    <string name="notification_minimum_cards_due">Prus de %d cartas iscadidas</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibra</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Lampìgiu</string>
     <string name="select_locale_title">Seletziona sa limba</string>
@@ -169,7 +169,7 @@
     <string name="show_estimates" maxLength="41">Ammustra s\'iscadèntzia de sos butones</string>
     <string name="show_estimates_summ">Ammustra s\'iscadèntzia imbieniente in subra de sos butones de risposta</string>
     <string name="show_large_answer_buttons" maxLength="41">Ammustra sos butones de risposta mannos</string>
-    <string name="show_large_answer_buttons_summ">Ammustra su butone de risposta in duas rigas</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Ammustra sa barra superiore</string>
     <string name="show_top_bar_summary">Ammustra su nùmeru de cartas, tempus de risposta, sa bandera e su marcadore in s\'istanga de susu</string>
     <string name="show_progress" maxLength="41">Ammustra ite mancat</string>
@@ -181,8 +181,8 @@
     <string name="time_limit" maxLength="41">Lìmite de tempus pro sessione</string>
     <string name="day_offset_with_description" maxLength="41">Incumintzu de sa die chi benit</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d ora a pustis de mesanote</item>
-        <item quantity="other">%d oras a pustis de mesanote</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Mantene s\'ischermu allutu</string>
     <string name="pref_keep_screen_on_summ">Disabìlita s\'istudadura automàtica de s\'ischermu</string>

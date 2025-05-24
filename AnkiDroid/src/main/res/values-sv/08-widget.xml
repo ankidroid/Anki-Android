@@ -69,8 +69,8 @@
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Kortlek borttagen</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">Denna kortlek har redan blivit vald</string>
     <plurals name="deck_limit_reached">
-        <item quantity="one">Du kan välja upp till %d kortlek.</item>
-        <item quantity="other">Du kan välja upp till %d kortlekar.</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">You can select up to %d deck.</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">You can select up to %d decks.</item>
     </plurals>
     <string name="empty_widget_state" comment="To denote the widget is empty">Kortlek saknas. Tryck för att konfigurera.</string>
     <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Samlingen är tom, använd appen för att lägga till kortlekar och omkonfigurera</string>

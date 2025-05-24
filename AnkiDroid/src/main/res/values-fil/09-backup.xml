@@ -45,7 +45,7 @@
 -->
 <resources>
     <string name="backup_deck_no_storage_left">Hindi nai-save ang backup. Hindi sapat ang bakanteng space sa iyong storage. Ibaba ang backup na depth o magtanggal ng ibang mga file.</string>
-    <string name="storage_warning">Mas mababa sa %d MB ang natirang space sa iyong storage. \nMaglagay ng space upang maiwasan ang pagkawala ng datos.</string>
+    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
     <string name="backup_restore" maxLength="28">Ibalik mula sa backup</string>
     <string name="backup_new_collection">Bagong koleksyon</string>
     <string name="backup_del_collection">Burahin ang koleksyon at gumawa ng bago</string>

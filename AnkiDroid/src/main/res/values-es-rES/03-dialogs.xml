@@ -147,7 +147,7 @@
     <string name="error_deleting_image">Error al eliminar la imagen</string>
     <string name="failed_to_apply_background_image">Error al aplicar la imagen de fondo %s</string>
     <string name="background_image_too_large">Fondo del selector de mazos demasiado grande</string>
-    <string name="image_max_size_allowed">Tamaño máximo de imagen %d MB permitido</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
     <string name="image_dimensions_too_large">Dimensiones de imagen son demasiadas grandes (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -187,8 +187,8 @@
     <string name="help_dialog_exception_report_sent">¡Informe enviado!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">Una sincronización automática puede activarse en %d segundo</item>
-        <item quantity="other">Una sincronización automática puede activarse en %d segundos</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">Su proveedor de Internet podría cobrar dinero por el uso de datos</string>
     <string name="deck_picker_new">Número de cartas nuevas para ver hoy en este mazo.</string>

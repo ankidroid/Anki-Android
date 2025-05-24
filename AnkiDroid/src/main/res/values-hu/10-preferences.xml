@@ -150,7 +150,7 @@
     <string name="notification_pref_title" maxLength="41">Értesítsen, ha</string>
     <string name="never_notify">Ne legyen értesítés</string>
     <string name="notify_when_pending">Ha olvasatlan üzeneteim vannak</string>
-    <string name="notification_minimum_cards_due">Amikor több, mint %d kártya esedékes</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Rezgés</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Villogó fény</string>
     <string name="select_locale_title">Nyelv kiválasztása</string>
@@ -170,7 +170,7 @@
     <string name="show_estimates" maxLength="41">Idő mutatása a gombokon</string>
     <string name="show_estimates_summ">A gombokon látszódjon a következő esedékesség időpontja</string>
     <string name="show_large_answer_buttons" maxLength="41">Nagy válasz gombok megjelenítése</string>
-    <string name="show_large_answer_buttons_summ">Válasz gombok megjelenítése két sorban</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Felső Bár mutatása</string>
     <string name="show_top_bar_summary">Kártya számlálók, válaszidőzítő, jelölők és jelölések mutatása a felső sávban</string>
     <string name="show_progress" maxLength="41">Hátralévő mutatása</string>
@@ -182,8 +182,8 @@
     <string name="time_limit" maxLength="41">Időkorlát érték</string>
     <string name="day_offset_with_description" maxLength="41">Nap kezdete</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d órával éjfél után</item>
-        <item quantity="other">%d órával éjfél után</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Ne kapcsolja ki a képernyőt</string>
     <string name="pref_keep_screen_on_summ">Képernyő időtúllépésének kikapcsolása</string>

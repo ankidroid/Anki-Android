@@ -147,7 +147,7 @@
     <string name="error_deleting_image">تصویر کو حذف کرنے میں خرابی۔</string>
     <string name="failed_to_apply_background_image">پس منظر کی تصویر %s کو لاگو کرنے میں ناکام</string>
     <string name="background_image_too_large">ڈیک چننے والا پس منظر بہت بڑا ہے۔</string>
-    <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
     <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -187,8 +187,8 @@
     <string name="help_dialog_exception_report_sent">رپورٹ بھیج دی گئی!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">ایک خودکار مطابقت پذیری %d سیکنڈ میں شروع ہو سکتی ہے۔</item>
-        <item quantity="other">ایک خودکار مطابقت پذیری %d سیکنڈ میں شروع ہو سکتی ہے۔</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">آپ کا انٹرنیٹ فراہم کنندہ ڈیٹا کے استعمال کے لیے رقم وصول کر سکتا ہے۔</string>
     <string name="deck_picker_new">اس ڈیک میں آج دیکھنے کے لیے نئے کارڈز کی تعداد۔</string>

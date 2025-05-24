@@ -304,7 +304,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Tarjetas</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notas</string>
     <string name="toggle_cards_notes">Cambiar tarjetas/notas</string>
-    <string name="truncate_content_help">Limita la altura de cada fila del navegador de tal manera que solo muestra las primeras 3 líneas de contenido</string>
+    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
     <string name="browser_options_dialog_heading">Opciones del explorador</string>
     <string name="audio_saved">Grabación guardada</string>
     <string name="deleting_selected_notes">Eliminando notas seleccionadas</string>

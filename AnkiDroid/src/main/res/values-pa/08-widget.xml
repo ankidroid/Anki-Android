@@ -69,8 +69,8 @@
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">ਡੇਕ ਹਟਾਇਆ ਗਿਆ</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">ਇਹ ਡੈੱਕ ਪਹਿਲਾਂ ਹੀ ਚੁਣਿਆ ਹੋਇਆ ਹੈ</string>
     <plurals name="deck_limit_reached">
-        <item quantity="one">ਤੁਸੀਂ %d ਡੇਕ ਤੱਕ ਚੁਣ ਸਕਦੇ ਹੋ।</item>
-        <item quantity="other">ਤੁਸੀਂ %d ਡੇਕ ਤੱਕ ਚੁਣ ਸਕਦੇ ਹੋ।</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">You can select up to %d deck.</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">You can select up to %d decks.</item>
     </plurals>
     <string name="empty_widget_state" comment="To denote the widget is empty">ਗੁੰਮ ਡੇਕ ਮੁੜ ਸੰਰਚਿਤ ਕਰਨ ਲਈ ਟੈਪ ਕਰੋ।</string>
     <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">ਸੰਗ੍ਰਹਿ ਖਾਲੀ ਹੈ, ਡੈੱਕ ਜੋੜਨ ਲਈ ਐਪ ਦੀ ਵਰਤੋਂ ਕਰੋ ਫਿਰ ਮੁੜ ਸੰਰਚਿਤ ਕਰੋ</string>

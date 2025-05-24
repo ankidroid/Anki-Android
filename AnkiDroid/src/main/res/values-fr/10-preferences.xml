@@ -149,7 +149,7 @@
     <string name="notification_pref_title" maxLength="41">Notifier lorsque</string>
     <string name="never_notify">Ne jamais afficher de notification</string>
     <string name="notify_when_pending">Messages en attente disponibles</string>
-    <string name="notification_minimum_cards_due">Plus de %d cartes dues</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrer</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Lumière de notification</string>
     <string name="select_locale_title">Sélectionnez la langue</string>
@@ -169,7 +169,7 @@
     <string name="show_estimates" maxLength="41">Afficher le temps</string>
     <string name="show_estimates_summ">Afficher le temps avant la prochaine révision sur les boutons de réponse</string>
     <string name="show_large_answer_buttons" maxLength="41">Afficher de gros boutons de réponse</string>
-    <string name="show_large_answer_buttons_summ">Afficher le bouton de réponse sur 2 lignes</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Afficher la barre supérieure</string>
     <string name="show_top_bar_summary">Afficher le nombre de cartes, le chronomètre, la balise et la marque dans la barre supérieure</string>
     <string name="show_progress" maxLength="41">Afficher le nombre restant de révision</string>
@@ -181,8 +181,8 @@
     <string name="time_limit" maxLength="41">Limite de temps</string>
     <string name="day_offset_with_description" maxLength="41">Début du jour suivant (0 est minuit, 23 est 23 h)</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d heure après minuit</item>
-        <item quantity="other">%d heures après minuit</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Garder l’écran allumé</string>
     <string name="pref_keep_screen_on_summ">Désactiver l’extinction automatique de l’écran</string>

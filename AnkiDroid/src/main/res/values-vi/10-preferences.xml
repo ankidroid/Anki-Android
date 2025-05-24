@@ -148,7 +148,7 @@
     <string name="notification_pref_title" maxLength="41">Thông báo khi</string>
     <string name="never_notify">Không bao giờ thông báo</string>
     <string name="notify_when_pending">Đang chờ xử lý tin nhắn có sẵn</string>
-    <string name="notification_minimum_cards_due">Nhiều hơn %d thẻ cho phép</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Báo rung</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Nhấp nháy ánh sáng</string>
     <string name="select_locale_title">Chọn ngôn ngữ</string>
@@ -168,7 +168,7 @@
     <string name="show_estimates" maxLength="41">Hiển thị nút thời gian</string>
     <string name="show_estimates_summ">Hiển thị thời gian đánh giá tiếp theo trên các nút trả lời</string>
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Hiển thị thanh trên cùng</string>
     <string name="show_top_bar_summary">Hiển thị số lượng thẻ, đồng hồ đếm thời gian trả lời, cờ đánh dấu và dấu ở thanh trên cùng</string>
     <string name="show_progress" maxLength="41">Hiển thị còn lại</string>
@@ -180,7 +180,7 @@
     <string name="time_limit" maxLength="41">Giới hạn thời gian của hộp thời gian</string>
     <string name="day_offset_with_description" maxLength="41">Bắt đầu ngày hôm sau (0 là nửa đêm, 23 là 11 giờ tối)</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="other">%d giờ đã qua nửa đêm</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Luôn bật màn hình</string>
     <string name="pref_keep_screen_on_summ">Tắt thời gian chờ của màn hình</string>

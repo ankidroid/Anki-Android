@@ -69,8 +69,8 @@
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">డెక్ తొలగించబడింది</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">ఈ డెక్ ఇప్పటికే ఎంపిక చేయబడింది</string>
     <plurals name="deck_limit_reached">
-        <item quantity="one">మీరు %d డెక్ వరకు ఎంచుకోవచ్చు.</item>
-        <item quantity="other">మీరు గరిష్టంగా %d డెక్‌లను ఎంచుకోవచ్చు.</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">You can select up to %d deck.</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">You can select up to %d decks.</item>
     </plurals>
     <string name="empty_widget_state" comment="To denote the widget is empty">డెక్ లేదు. మళ్లీ కాన్ఫిగర్ చేయడానికి నొక్కండి.</string>
     <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">సేకరణ ఖాళీగా ఉంది, డెక్‌లను జోడించడానికి యాప్‌ని ఉపయోగించి మళ్లీ కాన్ఫిగర్ చేయండి</string>

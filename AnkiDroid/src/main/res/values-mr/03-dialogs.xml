@@ -147,7 +147,7 @@
     <string name="error_deleting_image">प्रतिमा हटविताना त्रुटी</string>
     <string name="failed_to_apply_background_image">पार्श्वभूमी प्रतिमा %s लागू करण्यात अयशस्वी</string>
     <string name="background_image_too_large">डेक पिकर पार्श्वभूमी खूप मोठी आहे</string>
-    <string name="image_max_size_allowed">कमाल प्रतिमेचा आकार %d MB अनुमत आहे</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
     <string name="image_dimensions_too_large">प्रतिमेचे परिमाण खूप मोठे आहेत (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -187,8 +187,8 @@
     <string name="help_dialog_exception_report_sent">अहवाल पाठवला!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">स्वयंचलित सिंक्रोनाइझेशन %d सेकंदात ट्रिगर केले जाऊ शकते</item>
-        <item quantity="other">स्वयंचलित समक्रमण %d सेकंदात ट्रिगर केले जाऊ शकते</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">तुमचा इंटरनेट प्रदाता डेटा वापरासाठी पैसे आकारू शकतो</string>
     <string name="deck_picker_new">या डेकमध्ये आज पाहण्यासाठी नवीन कार्डांची संख्या.</string>

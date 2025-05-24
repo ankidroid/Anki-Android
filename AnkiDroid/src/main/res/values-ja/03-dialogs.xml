@@ -144,7 +144,7 @@
     <string name="error_deleting_image">画像削除エラー</string>
     <string name="failed_to_apply_background_image">背景画像 %s の適用に失敗しました</string>
     <string name="background_image_too_large">デッキリストの背景画像が大きすぎます</string>
-    <string name="image_max_size_allowed">最大画像サイズは%dMBです</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
     <string name="image_dimensions_too_large">画像のサイズが大きすぎます (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -184,7 +184,7 @@
     <string name="help_dialog_exception_report_sent">レポートは送信済みです</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="other">%d 秒後に自動同期がスタートします。</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">データ通信の使用によって、通信事業者（携帯電話会社など）への支払い料金が増える場合があります。</string>
     <string name="deck_picker_new">このデッキ内の、今日出題する予定の新規カードの数。</string>

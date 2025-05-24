@@ -154,7 +154,7 @@
     <string name="error_deleting_image">Ошибка при удалении изображения</string>
     <string name="failed_to_apply_background_image">Не удалось установить фоновое изображение %s</string>
     <string name="background_image_too_large">Фоновое изображение слишком большое</string>
-    <string name="image_max_size_allowed">Максимальный размер изображения – %d МБ</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
     <string name="image_dimensions_too_large">Размер изображения слишком велик (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -194,10 +194,10 @@
     <string name="help_dialog_exception_report_sent">Отчёт отправлен!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">Автоматическая синхронизация может быть запущена через %d секунду</item>
-        <item quantity="few">Автоматическая синхронизация может быть запущена через %d секунды</item>
-        <item quantity="many">Автоматическая синхронизация может быть запущена через %d секунд</item>
-        <item quantity="other">Автоматическая синхронизация может быть запущена через %d секунд</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
+        <item quantity="few">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="many">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">Ваш интернет провайдер может взимать плату за использование данных</string>
     <string name="deck_picker_new">Количество новых карточек на сегодня в этой колоде.</string>

@@ -45,7 +45,7 @@
 -->
 <resources>
     <string name="backup_deck_no_storage_left">Backup não salvo. Espaço insuficiente no seu armazenamento. Diminua a profundidade do backup ou remova alguns outros arquivos.</string>
-    <string name="storage_warning">Menos de %d MB de espaço de armazenamento. \nLibere algum espaço para evitar perda de dados.</string>
+    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
     <string name="backup_restore" maxLength="28">Restaurar do backup</string>
     <string name="backup_new_collection">Nova coleção</string>
     <string name="backup_del_collection">Excluir coleção e criar uma nova</string>

@@ -153,7 +153,7 @@
     <string name="error_deleting_image">Error deleting image</string>
     <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
     <string name="background_image_too_large">Deck Picker background too large</string>
-    <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
     <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -193,10 +193,10 @@
     <string name="help_dialog_exception_report_sent">Report was sent!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">An automatic sync may be triggered in %d second</item>
-        <item quantity="few">An automatic sync may be triggered in %d seconds</item>
-        <item quantity="many">An automatic sync may be triggered in %d seconds</item>
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
+        <item quantity="few">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="many">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Number of new cards to see today in this deck.</string>

@@ -147,7 +147,7 @@
     <string name="error_deleting_image">Fout bij het wissen van het beeld</string>
     <string name="failed_to_apply_background_image">Toepassing van de achtergrondafbeelding %s mislukt</string>
     <string name="background_image_too_large">Achtergrond van het keuzescherm is te groot</string>
-    <string name="image_max_size_allowed">Maximale afbeeldingsgrootte %d MB toegestaan</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
     <string name="image_dimensions_too_large">Afbeeldingsafmetingen zijn te groot (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -187,8 +187,8 @@
     <string name="help_dialog_exception_report_sent">Rapport is verzonden!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">Een automatische synchronisatie kan worden geactiveerd in %d seconde</item>
-        <item quantity="other">Een automatische synchronisatie kan worden geactiveerd in %d seconden</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">Uw internetprovider kan geld in rekening brengen voor gegevensgebruik</string>
     <string name="deck_picker_new">Aantal nieuwe kaarten die u vandaag in deze leerset ziet.</string>

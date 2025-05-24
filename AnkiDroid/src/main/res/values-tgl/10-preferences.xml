@@ -150,7 +150,7 @@
     <string name="notification_pref_title" maxLength="41">Notipikasyon kong kailan</string>
     <string name="never_notify">Huwag kailanman ipaalam</string>
     <string name="notify_when_pending">Nakabinbin ang mga mensahe na magagamit</string>
-    <string name="notification_minimum_cards_due">Mahigit sa%d card angkop</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Tumagingting</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Kisap ng ilaw</string>
     <string name="select_locale_title">Piliin ang wika</string>
@@ -170,7 +170,7 @@
     <string name="show_estimates" maxLength="41">Ipakita ang oras na pindutan</string>
     <string name="show_estimates_summ">Ipakita ang susunod na oras ng pagsusuri sa mga pindutan ng sagot</string>
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Show top bar</string>
     <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Ipakita ang natitira</string>
@@ -182,8 +182,8 @@
     <string name="time_limit" maxLength="41">Limitasyon ng oras ng Timebox</string>
     <string name="day_offset_with_description" maxLength="41">Start of next day</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d hour past midnight</item>
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Panatilihin naka on ang screen</string>
     <string name="pref_keep_screen_on_summ">Huwag paganahin ang timeout ng screen</string>

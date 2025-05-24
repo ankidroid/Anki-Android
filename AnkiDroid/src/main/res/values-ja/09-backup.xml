@@ -45,7 +45,7 @@
 -->
 <resources>
     <string name="backup_deck_no_storage_left">バックアップを保存できませんでした。内部ストレージに十分な空き容量がありません。バックアップの範囲を減らすか、空き容量を増やしてください。</string>
-    <string name="storage_warning">ストレージの空き領域が%dMB未満です。\nデータの損失を避けるために空き領域を増やしてください。</string>
+    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
     <string name="backup_restore" maxLength="28">バックアップから復元</string>
     <string name="backup_new_collection">新しいコレクション</string>
     <string name="backup_del_collection">コレクションの削除と新規作成</string>

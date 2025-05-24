@@ -45,7 +45,7 @@
 -->
 <resources>
     <string name="backup_deck_no_storage_left">備份未保存。 您的剩餘存儲空間不足。 降低備份深度或刪除其他檔案。</string>
-    <string name="storage_warning">您的存儲空間剩餘不到%dMB。 \n釋放一些空間以避免資料丟失。</string>
+    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
     <string name="backup_restore" maxLength="28">從備份還原</string>
     <string name="backup_new_collection">新的集合</string>
     <string name="backup_del_collection">刪除集合，並建立新的集合</string>

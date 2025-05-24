@@ -69,8 +69,8 @@
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Matzu bogadu</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">Custu matzu est giai seletzionadu</string>
     <plurals name="deck_limit_reached">
-        <item quantity="one">Podes seletzionare finas a %d matzu.</item>
-        <item quantity="other">Podes seletzionare finas a %d matzos.</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">You can select up to %d deck.</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">You can select up to %d decks.</item>
     </plurals>
     <string name="empty_widget_state" comment="To denote the widget is empty">Matzu chi mancat. Toca pro torrare a cunfigurare.</string>
     <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Sa colletzione est bòida, imprea s\'aplicatzione pro annànghere matzos e a pustis torra a cunfigurare</string>

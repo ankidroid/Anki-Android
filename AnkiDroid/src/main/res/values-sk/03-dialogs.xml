@@ -153,7 +153,7 @@
     <string name="error_deleting_image">Chyba pri odstránení obrázka</string>
     <string name="failed_to_apply_background_image">Nepodarilo sa použiť obrázok pozadia %s</string>
     <string name="background_image_too_large">Pozadie Deck Picker je príliš veľké</string>
-    <string name="image_max_size_allowed">Maximálna povolená veľkosť obrázka %d MB</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
     <string name="image_dimensions_too_large">Rozmery obrázka sú priveľké (%1$d x %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -193,10 +193,10 @@
     <string name="help_dialog_exception_report_sent">Hlásenie odoslané.</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">Automatická synchronizácia sa môže spustiť za %d sekundu</item>
-        <item quantity="few">Automatická synchronizácia sa môže spustiť za %d sekundy</item>
-        <item quantity="many">Automatická synchronizácia sa môže spustiť za %d sekúnd</item>
-        <item quantity="other">Automatická synchronizácia sa môže spustiť za %d sekúnd</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
+        <item quantity="few">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="many">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">Používanie dát môže byť spoplatnené u Vášho poskytovateľa internetových služieb</string>
     <string name="deck_picker_new">Počet nových kariet na dnes v tomto balíčku</string>

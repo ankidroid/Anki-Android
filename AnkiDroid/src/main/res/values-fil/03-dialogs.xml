@@ -147,7 +147,7 @@
     <string name="error_deleting_image">May mali sa pagbura ng larawan</string>
     <string name="failed_to_apply_background_image">Bigong ilagay ang background na larawan %s</string>
     <string name="background_image_too_large">Masyadong malaki ang background ng Deck Picker</string>
-    <string name="image_max_size_allowed">Hanggang %d MB lamang ang pupwedeng laki ng larawan</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
     <string name="image_dimensions_too_large">Masyadong malaki ang sukat ng larawan (%1$d x%2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -187,8 +187,8 @@
     <string name="help_dialog_exception_report_sent">Naipadala ang ulat!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">Maaaring gumana ang automatic na pag-sync sa %d segundo</item>
-        <item quantity="other">Maaaring gumana ang automatic na pag-sync sa %d segundo</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">Maaaring sumingil ang iyong internet provider sa paggamit ng data</string>
     <string name="deck_picker_new">Dami ng mga bagong card na makikita ngayong araw sa deck na ito.</string>
