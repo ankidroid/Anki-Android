@@ -645,6 +645,7 @@ open class CardBrowser :
     private fun hideKeyboard() {
         Timber.d("hideKeyboard()")
         searchView?.let { view ->
+            view.clearFocus()
             val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
         }
@@ -940,6 +941,9 @@ open class CardBrowser :
     override fun onResume() {
         super.onResume()
         selectNavigationItem(R.id.nav_browser)
+        searchView?.post {
+            hideKeyboard()
+        }
     }
 
     @KotlinCleanup("Add a few variables to get rid of the !!")
