@@ -78,7 +78,7 @@
     <string name="custom_study_forgotten">חזרה על כרטיסים נשכחים בx ימים האחרונים</string>
     <string name="custom_study_ahead">עבור כמה ימים ברצונך לשנן מראש?</string>
     <string name="custom_study_preview">צפייה ראשונית בכרטיסים חדשים שנוספו בx ימים האחרונים:</string>
-    <string name="custom_study_tags">Select x cards from the deck:</string>
+    <string name="custom_study_tags">בחר x קלפים מהחפיסה:</string>
     <string name="storage_full_title">האיחסון מלא</string>
     <string name="storage_almost_full_title">שטח האחסון כמעט מלא</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">אין מקום</string>
@@ -110,8 +110,8 @@
     <string name="check_media_title">לבדוק את המדיה?</string>
     <string name="check_media_warning">ייתכן שפעולה זו תארך זמן אם מדובר באוסף גדול</string>
     <string name="check_media_message">קבצי המדיה בבדיקה&#8230;</string>
-    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_adding_missing_tag">הוספת תגיות&#8230;</string>
+    <string name="check_media_tags_added">תג התווסף</string>
     <string name="delete_media_message">המדיה נמחקת&#8230;</string>
     <string name="delete_media_result_title">תוצאת מחיקה</string>
     <plurals name="delete_media_result_message">

@@ -70,7 +70,7 @@
     <string name="pref_cat_advanced" maxLength="41">מתקדם</string>
     <string name="pref_cat_workarounds" maxLength="41">מעקפים</string>
     <string name="pref_cat_plugins" maxLength="41">תוספים</string>
-    <string name="pref_cat_editing" maxLength="41">Editing</string>
+    <string name="pref_cat_editing" maxLength="41">עריכה</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">עובי הקו</string>
     <string name="use_input_tag" maxLength="41">הקלד את התשובה אל הכרטיס</string>
@@ -203,9 +203,9 @@
     <string name="reset">איפוס</string>
     <string name="thirdparty_apps_title" maxLength="41">יישומי צד שלישי</string>
     <string name="thirdparty_apps_summary">ראה רשימת יישומים המשתמשים ב- API של AnkiDroid כגון מילונים, כלי עזר.</string>
-    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Reviews</string>
-    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
-    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
+    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">סקירה</string>
+    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">תצוגה מקדימה</string>
+    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">החלף את הצד האחורי בלבד</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">סוקר</string>
     <string name="show_deck_title" maxLength="41">הצג את כותרת החפיסה</string>
@@ -265,7 +265,7 @@
     <string name="about_contributors_description"><![CDATA[אלו הם ה<a href=\"%1$s\">תורמים</a> המדהימים שלנו. אתה יכול לעזור גם ל-AnkiDroid על ידי תכנות, תרגום, תרומה ו<a href=\"%2$s\">עוד</a>!]]></string>
     <string name="license">רישיון</string>
     <string name="license_description"><![CDATA[AnkiDroid משוחרר תחת הרישיונות <a href=\"%1$s\">GPL-3.0</a> ו-<a href=\"%2$s\">AGPL-3.0</a>, עם קוד המקור זמין <a href=\"%3$s\">ב-GitHub</a>]]></string>
-    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid משתמש גם בספריות ובסמלים של צד שלישי, המורשים תחת רישיונות שונים של <a href=\"%1$s\">קוד פתוח</a>]]></string>
     <string name="donate_description"><![CDATA[אתה יכול לתמוך בפיתוח של AnkiDroid על ידי <a href=\"%1$s\">תרומה</a>. כל סכום מוערך מאוד.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">הוסף מחווה</string>
