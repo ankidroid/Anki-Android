@@ -159,6 +159,13 @@ class SetDueDateViewModelTest : JvmTest() {
         }
     }
 
+    @Test
+    fun `currentInterval is null when multiple cards are selected`() {
+        runViewModelTest(cardIds = listOf(1, 2)) {
+            assertThat("currentInterval should be null", currentInterval.value, equalTo(null))
+        }
+    }
+
     private fun runViewModelTest(
         cardIds: List<CardId> = listOf(1, 2, 3),
         fsrsEnabled: Boolean = false,
