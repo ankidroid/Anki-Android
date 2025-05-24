@@ -37,7 +37,7 @@ class ImageField :
     FieldBase(),
     IField {
     @get:JvmName("getImagePath_unused")
-    var extraImagePathRef: String? = null
+    var extraImageFileRef: File? = null
     private var _name: String? = null
 
     override val type: EFieldType = EFieldType.IMAGE
@@ -45,10 +45,10 @@ class ImageField :
     override val isModified: Boolean
         get() = thisModified
 
-    override var mediaPath: String?
-        get() = extraImagePathRef
+    override var mediaFile: File?
+        get() = extraImageFileRef
         set(value) {
-            extraImagePathRef = value
+            extraImageFileRef = value
             thisModified = true
         }
 
@@ -64,7 +64,7 @@ class ImageField :
 
     override val formattedValue: String
         get() {
-            val file = File(mediaPath!!)
+            val file = mediaFile!!
             return formatImageFileName(file)
         }
 
@@ -72,7 +72,7 @@ class ImageField :
         col: Collection,
         value: String,
     ) {
-        extraImagePathRef = getImageFullPath(col, value)
+        extraImageFileRef = getImageFullPath(col, value)
     }
 
     companion object {
@@ -90,13 +90,12 @@ class ImageField :
         fun getImageFullPath(
             col: Collection,
             value: String,
-        ): String {
+        ): File? {
             val path = parseImageSrcFromHtml(value)
-
             return if (path.isNotEmpty()) {
-                "${col.media.dir}/$path"
+                File(col.collectionFiles.mediaFolder, path)
             } else {
-                ""
+                null
             }
         }
 

@@ -37,9 +37,6 @@ import java.lang.Exception
 import kotlin.Throws
 
 object CollectionHelper {
-    // Name of anki2 file
-    const val COLLECTION_FILENAME = "collection.anki2"
-
     /**
      * The preference key for the path to the current AnkiDroid directory
      *
@@ -55,8 +52,7 @@ object CollectionHelper {
 
     fun getCollectionSize(context: Context): Long? =
         try {
-            val path = getCollectionPath(context)
-            File(path).length()
+            getCollectionPath(context).length()
         } catch (e: Exception) {
             Timber.e(e, "Error getting collection Length")
             null
@@ -74,19 +70,18 @@ object CollectionHelper {
      * level, so placing it in the AnkiDroid directory will ensure media scanners will also exclude
      * the collection.media sub-directory.
      *
-     * @param path  Directory to initialize
+     * @param dir  Directory to initialize
      * @throws StorageAccessException If no write access to directory
      */
     @Synchronized
     @Throws(StorageAccessException::class)
-    fun initializeAnkiDroidDirectory(path: String) {
+    fun initializeAnkiDroidDirectory(dir: File) {
         // Create specified directory if it doesn't exit
-        val dir = File(path)
         if (!dir.exists() && !dir.mkdirs()) {
-            throw StorageAccessException("Failed to create AnkiDroid directory $path")
+            throw StorageAccessException("Failed to create AnkiDroid directory $dir")
         }
         if (!dir.canWrite()) {
-            throw StorageAccessException("No write access to AnkiDroid directory $path")
+            throw StorageAccessException("No write access to AnkiDroid directory $dir")
         }
         // Add a .nomedia file to it if it doesn't exist
         val nomedia = File(dir, ".nomedia")
@@ -180,10 +175,10 @@ object CollectionHelper {
      */
     // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
     @CheckResult
-    fun getDefaultAnkiDroidDirectory(context: Context): String {
+    fun getDefaultAnkiDroidDirectory(context: Context): File {
         val legacyStorage = selectAnkiDroidFolder(context) != AppPrivateFolder
         return if (!legacyStorage) {
-            File(getAppSpecificExternalAnkiDroidDirectory(context), "AnkiDroid").absolutePath
+            File(getAppSpecificExternalAnkiDroidDirectory(context), "AnkiDroid")
         } else {
             legacyAnkiDroidDirectory
         }
@@ -198,8 +193,8 @@ object CollectionHelper {
      *
      * @return Absolute path to the AnkiDroid directory in primary shared/external storage
      */
-    private val legacyAnkiDroidDirectory: String
-        get() = File(Environment.getExternalStorageDirectory(), "AnkiDroid").absolutePath
+    private val legacyAnkiDroidDirectory: File
+        get() = File(Environment.getExternalStorageDirectory(), "AnkiDroid")
 
     /**
      * Returns the absolute path to the AnkiDroid directory under the app-specific, primary/shared external storage
@@ -256,18 +251,20 @@ object CollectionHelper {
      *
      * @return the path to the actual [Collection] file
      */
-    fun getCollectionPath(context: Context): String = File(getCurrentAnkiDroidDirectory(context), COLLECTION_FILENAME).absolutePath
+    fun getCollectionPath(context: Context) = getCollectionPaths(context).colDb
 
     /** A temporary override for [getCurrentAnkiDroidDirectory] */
-    var ankiDroidDirectoryOverride: String? = null
+    var ankiDroidDirectoryOverride: File? = null
 
     /**
      * @return the absolute path to the AnkiDroid directory.
      */
-    fun getCurrentAnkiDroidDirectory(context: Context): String =
+    fun getCurrentAnkiDroidDirectory(context: Context): File =
         getCurrentAnkiDroidDirectoryOptionalContext(context.sharedPrefs()) { context }
 
-    fun getMediaDirectory(context: Context): File = File(getCurrentAnkiDroidDirectory(context), "collection.media")
+    fun getCollectionPaths(context: Context): CollectionFiles = CollectionFiles(getCurrentAnkiDroidDirectory(context))
+
+    fun getMediaDirectory(context: Context) = getCollectionPaths(context).mediaFolder
 
     /**
      * An accessor which makes [Context] optional in the case that [PREF_COLLECTION_PATH] is set
@@ -280,26 +277,27 @@ object CollectionHelper {
     internal fun getCurrentAnkiDroidDirectoryOptionalContext(
         preferences: SharedPreferences,
         context: () -> Context,
-    ): String =
+    ): File =
         if (AnkiDroidApp.INSTRUMENTATION_TESTING) {
             // create an "androidTest" directory inside the current collection directory which contains the test data
             // "/AnkiDroid/androidTest" would be a new collection path
             val currentCollectionDirectory =
                 preferences.getOrSetString(PREF_COLLECTION_PATH) {
-                    getDefaultAnkiDroidDirectory(context())
+                    getDefaultAnkiDroidDirectory(context()).absolutePath
                 }
             File(
                 currentCollectionDirectory,
                 "androidTest",
-            ).absolutePath
-        } else if (ankiDroidDirectoryOverride != null) {
-            ankiDroidDirectoryOverride!!
+            )
         } else {
-            preferences.getOrSetString(PREF_COLLECTION_PATH) {
-                getDefaultAnkiDroidDirectory(
-                    context(),
+            ankiDroidDirectoryOverride
+                ?: File(
+                    preferences.getOrSetString(PREF_COLLECTION_PATH) {
+                        getDefaultAnkiDroidDirectory(
+                            context(),
+                        ).absolutePath
+                    },
                 )
-            }
         }
 
     /**
@@ -311,15 +309,15 @@ object CollectionHelper {
         val preferences = context.sharedPrefs()
         val directory = getDefaultAnkiDroidDirectory(context)
         Timber.d("resetting AnkiDroid directory to %s", directory)
-        preferences.edit { putString(PREF_COLLECTION_PATH, directory) }
+        preferences.edit { putString(PREF_COLLECTION_PATH, directory.absolutePath) }
     }
 
     @Throws(UnknownDatabaseVersionException::class)
     fun getDatabaseVersion(context: Context): Int {
         // backend can't open a schema version outside range, so fall back to a pure DB implementation
         val colPath = getCollectionPath(context)
-        if (!File(colPath).exists()) {
-            throw UnknownDatabaseVersionException(FileNotFoundException(colPath))
+        if (!colPath.exists()) {
+            throw UnknownDatabaseVersionException(FileNotFoundException(colPath.absolutePath))
         }
         var db: DB? = null
         return try {
@@ -332,4 +330,13 @@ object CollectionHelper {
             db?.close()
         }
     }
+}
+
+class CollectionFiles(
+    folderPath: File,
+    val collectionName: String = "collection",
+) {
+    val colDb = File(folderPath, "$collectionName.anki2")
+    val mediaFolder = File(folderPath, "$collectionName.media")
+    val mediaDb = File(folderPath, "$collectionName.media.db")
 }

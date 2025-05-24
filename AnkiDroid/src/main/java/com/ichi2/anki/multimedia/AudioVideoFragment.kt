@@ -203,7 +203,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
                 Timber.d("Audio or Video length is not valid")
                 return@setOnClickListener
             }
-            field.mediaPath = viewModel.currentMultimediaPath.value
+            field.mediaFile = viewModel.currentMultimediaPath.value
 
             field.hasTemporaryMedia = true
 
@@ -375,7 +375,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
             requireContext().contentResolver.openInputStream(selectedMediaClip).use { inputStream ->
                 CompatHelper.compat.copyFile(inputStream!!, clipCopy.absolutePath)
 
-                viewModel.updateCurrentMultimediaPath(clipCopy.path)
+                viewModel.updateCurrentMultimediaPath(clipCopy)
                 viewModel.selectedMediaFileSize = clipCopy.length()
                 mediaFileSize.text = clipCopy.toHumanReadableSize()
             }

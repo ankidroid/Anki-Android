@@ -51,7 +51,7 @@ object AndroidPermanentlyRevokedPermissionsDialog {
             context.getString(
                 R.string.directory_revoked_after_inactivity,
                 "WRITE_EXTERNAL_STORAGE",
-                getCurrentAnkiDroidDirectory(context),
+                getCurrentAnkiDroidDirectoryPath(context),
             )
         AlertDialog.Builder(context).show {
             listItemsAndMessage(
@@ -68,9 +68,9 @@ object AndroidPermanentlyRevokedPermissionsDialog {
         }
     }
 
-    private fun getCurrentAnkiDroidDirectory(context: Context): String =
+    private fun getCurrentAnkiDroidDirectoryPath(context: Context): String =
         try {
-            CollectionHelper.getCurrentAnkiDroidDirectory(context)
+            CollectionHelper.getCurrentAnkiDroidDirectory(context).absolutePath
         } catch (e: Exception) {
             Timber.w(e)
             context.getString(R.string.card_browser_unknown_deck_name)

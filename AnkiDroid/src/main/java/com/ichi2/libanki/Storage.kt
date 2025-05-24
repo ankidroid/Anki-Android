@@ -15,6 +15,7 @@
  */
 package com.ichi2.libanki
 
+import com.ichi2.anki.CollectionFiles
 import com.ichi2.anki.common.time.Time
 import com.ichi2.anki.common.time.TimeManager.time
 import com.ichi2.anki.getDayStart
@@ -29,31 +30,31 @@ object Storage {
     /**
      *  Open a new or existing collection.
      *
-     * @param path The path to the collection.anki2 database. Should be unicode.
-     * path should be tested with [File.exists] and [File.canWrite] before this is called.
+     * @param collectionFiles: The files of this collection
+     * Files should be tested with [File.exists] and [File.canWrite] before this is called.
      * */
     fun collection(
-        path: String,
+        collectionFiles: CollectionFiles,
         backend: Backend? = null,
     ): Collection {
         val backend2 = backend ?: BackendFactory.getBackend()
-        return Collection(path, backend2)
+        return Collection(collectionFiles, backend2)
     }
 
     /**
      * Called as part of [Collection] initialization. Don't call directly.
      */
     internal fun openDB(
-        path: String,
+        path: File,
         backend: Backend,
         afterFullSync: Boolean,
     ): Pair<DB, Boolean> {
-        val dbFile = File(path)
+        val dbFile = path
         var create = !dbFile.exists()
         if (afterFullSync) {
             create = false
         } else {
-            backend.openCollection(if (isInMemory) ":memory:" else path)
+            backend.openCollection(if (isInMemory) ":memory:" else path.absolutePath)
         }
         val db = DB.withRustBackend(backend)
 

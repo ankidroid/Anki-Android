@@ -51,7 +51,7 @@ open class BackupManager {
             return directory
         }
 
-        fun getBackupDirectoryFromCollection(colPath: String): String = getBackupDirectory(File(colPath).parentFile!!).absolutePath
+        fun getBackupDirectoryFromCollection(col: File): String = getBackupDirectory(col.parentFile!!).absolutePath
 
         private fun getBrokenDirectory(ankidroidDir: File): File {
             val directory = File(ankidroidDir, BROKEN_COLLECTIONS_SUFFIX)
@@ -61,14 +61,12 @@ open class BackupManager {
             return directory
         }
 
-        fun enoughDiscSpace(path: String?): Boolean = getFreeDiscSpace(path) >= MIN_FREE_SPACE * 1024 * 1024
+        fun enoughDiscSpace(path: File): Boolean = getFreeDiscSpace(path) >= MIN_FREE_SPACE * 1024 * 1024
 
         /**
          * Get free disc space in bytes from path to Collection
          */
-        fun getFreeDiscSpace(path: String?): Long = getFreeDiscSpace(File(path!!))
-
-        private fun getFreeDiscSpace(file: File): Long = getFreeDiskSpace(file, (MIN_FREE_SPACE * 1024 * 1024).toLong())
+        fun getFreeDiscSpace(file: File): Long = getFreeDiskSpace(file, (MIN_FREE_SPACE * 1024 * 1024).toLong())
 
         /**
          * Run the sqlite3 command-line-tool (if it exists) on the collection to dump to a text file
@@ -77,8 +75,8 @@ open class BackupManager {
          * @return whether the repair was successful
          */
         fun repairCollection(col: Collection): Boolean {
-            val colPath = col.path
-            val colFile = File(colPath)
+            val colFile = col.colDb
+            val colPath = colFile.absolutePath
             val time = TimeManager.time
             Timber.i("BackupManager - RepairCollection - Closing Collection")
             col.close()
@@ -94,7 +92,7 @@ open class BackupManager {
                     Timber.e("repairCollection - dump to %s.tmp failed", colPath)
                     return false
                 }
-                if (!moveDatabaseToBrokenDirectory(colPath, false, time)) {
+                if (!moveDatabaseToBrokenDirectory(colFile, false, time)) {
                     Timber.e("repairCollection - could not move corrupt file to broken directory")
                     return false
                 }
@@ -110,12 +108,10 @@ open class BackupManager {
         }
 
         fun moveDatabaseToBrokenDirectory(
-            colPath: String,
+            colFile: File,
             moveConnectedFilesToo: Boolean,
             time: Time,
         ): Boolean {
-            val colFile = File(colPath)
-
             // move file
             val value: Date = time.genToday(utcOffset())
             var movedFilename =
@@ -211,7 +207,7 @@ open class BackupManager {
             collection: Collection,
             backupsToDelete: List<File>,
         ): Boolean {
-            val allBackups = getBackups(File(collection.path))
+            val allBackups = getBackups(collection.colDb)
             val invalidBackupsToDelete = backupsToDelete.toSet() - allBackups.toSet()
 
             if (invalidBackupsToDelete.isNotEmpty()) {
