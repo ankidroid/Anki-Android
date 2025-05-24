@@ -24,6 +24,7 @@ import com.ichi2.anki.CollectionLoadingErrorDialog
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.OneWaySyncDialog
+import com.ichi2.anki.SchedulerUpgradeDialogMessageHandler
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.ImportUtils
@@ -123,6 +124,7 @@ abstract class DialogHandlerMessage protected constructor(
                 WhichDialogHandler.MSG_SHOW_ONE_WAY_SYNC_DIALOG -> OneWaySyncDialog.fromMessage(message)
                 WhichDialogHandler.MSG_DO_SYNC -> IntentHandler.Companion.DoSync()
                 WhichDialogHandler.MSG_EXPORT_READY -> ExportReadyDialog.ExportReadyDialogMessage.fromMessage(message)
+                WhichDialogHandler.MSG_SHOW_SCHEDULER_UPGRADE_DIALOG -> SchedulerUpgradeDialogMessageHandler()
             }
     }
 
@@ -139,6 +141,7 @@ abstract class DialogHandlerMessage protected constructor(
         MSG_SHOW_ONE_WAY_SYNC_DIALOG(7),
         MSG_DO_SYNC(8),
         MSG_EXPORT_READY(10),
+        MSG_SHOW_SCHEDULER_UPGRADE_DIALOG(11),
         ;
 
         companion object {
