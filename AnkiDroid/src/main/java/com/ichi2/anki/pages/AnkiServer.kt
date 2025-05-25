@@ -24,7 +24,8 @@ import java.io.ByteArrayInputStream
 
 open class AnkiServer(
     private val postHandler: PostRequestHandler,
-) : NanoHTTPD(LOCALHOST, 0) {
+    port: Int = 0,
+) : NanoHTTPD(LOCALHOST, port) {
     fun baseUrl(): String = "http://$LOCALHOST:$listeningPort/"
 
     // it's faster to serve local files without GZip. see 'page render' in logs
