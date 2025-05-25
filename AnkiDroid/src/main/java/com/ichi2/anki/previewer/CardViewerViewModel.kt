@@ -67,8 +67,9 @@ abstract class CardViewerViewModel(
 
     @CallSuper
     override fun onCleared() {
-        super.onCleared()
         cardMediaPlayer.close()
+        server.stop()
+        super.onCleared()
     }
 
     /* *********************************************************************************************
