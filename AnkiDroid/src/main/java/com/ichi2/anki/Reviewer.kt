@@ -256,11 +256,6 @@ open class Reviewer :
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        server.stop()
-    }
-
     protected val flagToDisplay: Flag
         get() {
             return FlagToDisplay(
