@@ -535,6 +535,7 @@ abstract class AbstractFlashcardViewer :
         // set the correct mark/unmark icon on action bar
         refreshActionBar()
         focusDefaultLayout()
+        prefetchAnswerMedia()
     }
 
     private fun focusDefaultLayout() {
@@ -1301,6 +1302,12 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
+    private suspend fun prefetchAnswerMedia() {
+        withCol { currentCard?.answer(this) }?.let { html ->
+            ViewerResourceHandler.prefetch(baseContext, html)
+        }
+    }
+
     open fun displayCardQuestion() {
         Timber.d("displayCardQuestion()")
         displayAnswer = false
@@ -1315,7 +1322,8 @@ abstract class AbstractFlashcardViewer :
         } else {
             answerField?.visibility = View.GONE
         }
-        val content = cardRenderContext!!.renderCard(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
+        val col = getColUnsafe
+        val content = cardRenderContext!!.renderCard(col, currentCard!!, SingleCardSide.FRONT)
         automaticAnswer.onDisplayQuestion()
         launchCatchingTask {
             if (!automaticAnswerShouldWaitForAudio()) {
