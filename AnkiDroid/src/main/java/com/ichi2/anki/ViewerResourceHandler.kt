@@ -38,18 +38,17 @@ class ViewerResourceHandler(
     private val mediaDir = CollectionHelper.getMediaDirectory(context)
 
     fun shouldInterceptRequest(request: WebResourceRequest): WebResourceResponse? {
-        val url = request.url
-        val path = url.path
-
-        if (request.method != "GET" || path == null) {
-            return null
-        }
-        if (path == "/favicon.ico") {
-            return WebResourceResponse(null, null, ByteArrayInputStream(ByteArray(0)))
-        }
-
-        try {
-            if (path.startsWith(MATHJAX_PATH_PREFIX)) {
+        val path = request.url.path ?: return null
+        val range = request.requestHeaders[RANGE_HEADER]
+        return when {
+            request.method != "GET" -> null
+            path == "/favicon.ico" ->
+                WebResourceResponse(
+                    null,
+                    null,
+                    ByteArrayInputStream(ByteArray(0)),
+                )
+            path.startsWith(MATHJAX_PATH_PREFIX) -> {
                 val mathjaxAssetPath =
                     Paths
                         .get(
@@ -57,24 +56,39 @@ class ViewerResourceHandler(
                             path.removePrefix(MATHJAX_PATH_PREFIX),
                         ).pathString
                 val inputStream = assetManager.open(mathjaxAssetPath)
-                return WebResourceResponse(guessMimeType(path), null, inputStream)
+                try {
+                    WebResourceResponse(guessMimeType(path), null, inputStream)
+                } catch (_: Exception) {
+                    Timber.d("File $mathjaxAssetPath not found")
+                    null
+                }
             }
-
-            val file = File(mediaDir, path)
-            if (!file.exists()) {
-                return null
+            range != null -> {
+                handlePartialContent(file(path) ?: return null, range)
             }
-            request.requestHeaders[RANGE_HEADER]?.let { range ->
-                return handlePartialContent(file, range)
+            else -> {
+                try {
+                    val inputStream = FileInputStream(file(path) ?: return null)
+                    val mimeType = guessMimeType(path)
+                    return WebResourceResponse(mimeType, null, inputStream)
+                } catch (_: Exception) {
+                    Timber.d("File $path not found")
+                    return null
+                }
             }
-            val inputStream = FileInputStream(file)
-            val mimeType = guessMimeType(path)
-            return WebResourceResponse(mimeType, null, inputStream)
-        } catch (e: Exception) {
-            Timber.d("File not found")
-            return null
         }
     }
+
+    /**
+     * Returns the file at path if it exists,
+     */
+    private fun file(path: String) =
+        try {
+            File(mediaDir, path).takeIf { it.exists() }
+        } catch (_: Exception) {
+            Timber.d("can't check whether $path exists.")
+            null
+        }
 
     @NeedsTest("seeking audio - 16513")
     private fun handlePartialContent(
