@@ -76,6 +76,7 @@ espresso = '3.6.1'
 mikehardyGoogleAnalyticsJava7 = "2.0.13"
 hamcrest = "3.0"
 imageCropper = "4.6.0"
+jacoco = "0.8.13"
 javaSemver = "0.10.2"
 jetbrainsAnnotations = "26.0.2"
 json = "20250517"
