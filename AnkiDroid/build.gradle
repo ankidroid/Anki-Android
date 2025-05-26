@@ -439,7 +439,14 @@ dependencies {
     testImplementation libs.junit.jupiter.params
     testImplementation libs.junit.vintage.engine
     testImplementation libs.mockito.inline
-    testImplementation libs.mockito.kotlin
+    // only needed until mockito-kotlin bumps transitive core dep to
+    // a version that supports JDK24 (and eventually 25LTS)
+    testImplementation libs.mockito.core
+    testImplementation(libs.mockito.kotlin) {
+        // only needed until mockito-kotlin bumps transitive core dep to
+        // a version that supports JDK24 (and eventually 25LTS)
+        exclude module: "mockitoCore"
+    }
     testImplementation libs.hamcrest
     // robolectricDownloader.gradle *may* need a new SDK jar entry if they release one or if we change targetSdk. Instructions in that gradle file.
     testImplementation libs.robolectric
