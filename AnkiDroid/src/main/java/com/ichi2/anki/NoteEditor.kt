@@ -350,8 +350,13 @@ class NoteEditor :
                     @NeedsTest("#17282 returning from template editor saves further made changes")
                     // make sure the card's note is available going forward
                     currentEditedCard!!.note(getColUnsafe)
-                    editorNote = currentEditedCard!!.note // update the NoteEditor's working note reference
-                    updateCards(editorNote!!.notetype)
+                    launchCatchingTask {
+                        withCol {
+                            editorNote =
+                                currentEditedCard!!.note(this) // update the NoteEditor's working note reference
+                        }
+                        updateCards(editorNote!!.notetype)
+                    }
                 }
             },
         )
