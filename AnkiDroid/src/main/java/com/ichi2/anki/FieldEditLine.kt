@@ -36,6 +36,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.os.ParcelCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.compat.setTooltipTextCompat
 import com.ichi2.ui.AnimationUtil.collapseView
 import com.ichi2.ui.AnimationUtil.expandView
 import java.util.Locale
@@ -62,7 +63,10 @@ class FieldEditLine : FrameLayout {
         LayoutInflater.from(context).inflate(R.layout.card_multimedia_editline, this, true)
         editText = findViewById(R.id.id_note_editText)
         label = findViewById(R.id.id_label)
-        toggleSticky = findViewById(R.id.id_toggle_sticky_button)
+        toggleSticky =
+            findViewById<ImageButton?>(R.id.id_toggle_sticky_button).apply {
+                setTooltipTextCompat(CollectionManager.TR.editingToggleSticky())
+            }
         mediaButton = findViewById(R.id.id_media_button)
         val constraintLayout: ConstraintLayout = findViewById(R.id.constraint_layout)
         expandButton = findViewById(R.id.id_expand_button)
