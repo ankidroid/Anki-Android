@@ -148,7 +148,7 @@
     <string name="notification_pref_title" maxLength="41">通知类型</string>
     <string name="never_notify">从不</string>
     <string name="notify_when_pending">有新消息</string>
-    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">超过 %d 张卡片需要到期</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">振动</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">呼吸灯</string>
     <string name="select_locale_title">选择语言</string>
@@ -168,7 +168,7 @@
     <string name="show_estimates" maxLength="41">显示回答按钮的时间</string>
     <string name="show_estimates_summ">在答案按钮上方显示下次复习的时间</string>
     <string name="show_large_answer_buttons" maxLength="41">显示大的回答按钮</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons_summ">以2 行显示回答按钮</string>
     <string name="show_top_bar" maxLength="41">显示顶部栏</string>
     <string name="show_top_bar_summary">在顶部栏显示卡牌计数、回答计时器、标记和记号</string>
     <string name="show_progress" maxLength="41">显示剩余数量</string>
@@ -180,7 +180,7 @@
     <string name="time_limit" maxLength="41">指定时间内的学习卡片数</string>
     <string name="day_offset_with_description" maxLength="41">次日开始时间（0 为午夜，23 为晚上 11 点)</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">午夜过后 %d 小时</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">保持屏幕常亮</string>
     <string name="pref_keep_screen_on_summ">禁用屏幕超时</string>

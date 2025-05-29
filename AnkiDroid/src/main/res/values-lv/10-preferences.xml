@@ -100,9 +100,9 @@
     <string name="gestures_corner_touch" maxLength="41">9 punktu pieskāriens</string>
     <string name="gestures_corner_touch_summary">Ļaut pieskārienu kustības ekrāna stūros</string>
     <string name="show_keyboard_shortcuts" maxLength="41">Rādīt tastatūras saīsnes</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
-    <string name="gestures_none" maxLength="41" comment="No gestures">None</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Pilnekrāna pārvietošanās izvelkamā izvēlne</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Atver pārvietošanās izvelkamo izvēlni, kad pavelk pa labi jebkur ekrānā</string>
+    <string name="gestures_none" maxLength="41" comment="No gestures">Nekas</string>
     <string name="gestures_swipe_up" maxLength="41">Pavilkt augšup</string>
     <string name="gestures_swipe_down" maxLength="41">Pavilkt lejup</string>
     <string name="gestures_swipe_left" maxLength="41">Pavilkt pa kreisi</string>
@@ -118,14 +118,14 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Pieskarties vidū</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Pieskarties apakšējā kreisajā stūrī</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Pieskarties apakšējā labajā stūrī</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">Kratīt ierīci</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">\"%s\" izvēlne</string>
     <string name="card_browser_enable_external_context_menu_summary">Iespējo \"%s\" konteksta izvēlni</string>
-    <string name="double_scrolling_gap" maxLength="41">Double scrolling</string>
-    <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
-    <string name="swipe_sensitivity" maxLength="41">Swipe sensitivity</string>
-    <string name="tts" maxLength="41">Text to speech</string>
-    <string name="tts_summ">Reads out question and answer if no sound file is included</string>
+    <string name="double_scrolling_gap" maxLength="41">Divkārša ritināšana</string>
+    <string name="double_scrolling_gap_summ">Divkāršot ritināšanas attālumu ar e-lasītāju</string>
+    <string name="swipe_sensitivity" maxLength="41">Pavilkšanas jutīgums</string>
+    <string name="tts" maxLength="41">Teksta pārveidošana runā</string>
+    <string name="tts_summ">Nolasa jautājumu un atbildi, ja nav iekļauta skaņas datne</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Fetch media on sync</string>
     <string name="sync_account" maxLength="41">AnkiWeb account</string>
@@ -141,7 +141,7 @@
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
     <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_lifetime">Paturēšanas laiks</string>
     <string name="app_theme" maxLength="41">Izskats</string>
     <string name="day_theme" maxLength="41">Dienas izskats</string>
     <string name="night_theme" maxLength="41">Nakts izskats</string>
@@ -159,7 +159,7 @@
     <string name="software_render_summ">Aparatūras atveidotājs ir ātrāks, bet tam var būt sarežģījumi, it īpaši ar Android 8/8.1. Šis iestatījums jāmēģina, ja kartīšu nav redzamas atsevišķas kartīšu izskatīšanas saskarnes daļas.</string>
     <string name="safe_display" maxLength="41">Safe display mode</string>
     <string name="safe_display_summ">Atspējot visas animācijas un izmantot drošāku kartīšu attēlošanas veidu. Tas var būt nepieciešams e-tintes ierīcēs.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui" maxLength="41">Atspējot viena lauka labošanu</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Ļauj \"Satura paslēpšana\" konteksta izvēlni, kad tiek izmantots guleniskais novietojums.</string>
     <string name="vertical_centering" maxLength="41">Center align</string>
@@ -201,9 +201,9 @@
     <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">Third-party API apps</string>
     <string name="thirdparty_apps_summary">Apskatīt sarakstu ar lietotnēm, kas izmanto AnkiDroid API, piemēram, vārdnīcas, palīglietotnes.</string>
-    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Reviews</string>
-    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
-    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
+    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Pārskatīšanas</string>
+    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Priekšskatījumi</string>
+    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Pārslēgt tikai aizmugurējo pusi</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Izskatītājs</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>
@@ -217,7 +217,7 @@
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Pielāgots sinhronizēšanas serveris</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Netiek izmantots</string>
     <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
         you may use your own server for synchronization.
         If not set, the default AnkiWeb server will be used instead.
@@ -240,7 +240,7 @@
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">General</string>
     <string name="deck_conf_reminders" maxLength="41">Reminders</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filter</string>
-    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Search</string>
+    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Meklēt</string>
     <string name="deck_conf_cram_limit" maxLength="41">Limit to</string>
     <string name="deck_conf_cram_order" maxLength="41">Atlasītās kartītes pēc</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Pārplānot</string>
@@ -273,7 +273,7 @@
     <string name="binding_add_axis">Add joystick/motion controller</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <string name="user_actions" maxLength="41">User actions</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
+    <string name="user_actions_summary" maxLength="41">Izraisīt JavaScript darbošanos no pārskatīšanas ekrāna</string>
     <string name="user_action_1" maxLength="28">User action 1</string>
     <string name="user_action_2" maxLength="28">User action 2</string>
     <string name="user_action_3" maxLength="28">User action 3</string>
@@ -298,7 +298,7 @@
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <string name="readtext_deprecation_warn">AnkiDroid ir ieviesta labāks TTS (teksta pārvēršanas runā) mehānisms, kas ir saderīgs ar citiem Anki klientiem un iekļauj vairāk balsu un valodas atskaņošanas uzlabojumiem.\n\nLūgums atjaunināt, tiklīdz tas ir iespējams, jo šis iestatījums drīz tiks noņemts</string>
-    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Please upgrade to the new text to speech format</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Lūgums uzlabot uz jauno teksta pārveidošanas runā formātu</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
     <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
@@ -323,14 +323,14 @@
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
-    <string name="pref__manage_space__screen_title">Manage space</string>
+    <string name="pref__manage_space__screen_title">Pārvaldīt vietu</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Error</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Kļūda</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Aprē-\nķina&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
-        <item quantity="zero">%1$d files\n%2$s</item>
-        <item quantity="one">%1$d file\n%2$s</item>
-        <item quantity="other">%1$d files\n%2$s</item>
+        <item quantity="zero">%1$d datņu\n%2$s</item>
+        <item quantity="one">%1$d datne\n%2$s</item>
+        <item quantity="other">%1$d datnes\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>

@@ -70,16 +70,16 @@
     <string name="sync_title">Sinchronizavimas</string>
     <string name="sync_log_uploading_message">Išsamus sinchronizavimas iš įrenginio</string>
     <string name="sync_database_acknowledge">Kolekcija susinchronizuota</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
+    <string name="col_synced_media_in_background">Kolekcija sinchronizuota. Medija sinchronizuojama fone.</string>
     <string name="sync_corrupt_database">Jūsų duomenų bazė yra sugadinta. Prašome ją pataisyti prieš bandydami ją dar kartą susinchronizuoti.\n\nDaugiau informacijos apie duomenų bazės taisymą rasite %s.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Įrenginio</string>
     <string name="sync_sanity_remote">Nuotolinis</string>
-    <string name="one_way_sync_title" maxLength="41">One-way sync</string>
-    <string name="one_way_sync_confirmation">One way sync requested</string>
+    <string name="one_way_sync_title" maxLength="41">Vienpusė sinchronizacija</string>
+    <string name="one_way_sync_confirmation">Prašoma vienpusės sinchronizacijos</string>
     <string name="full_sync_confirmation">Norint atlikti pageidaujamą pakeitimą, sekantį kartą sinchronizuojant jūsų kolekciją, reikės įkelti visą duomenų bazę. Jei kitame įrenginyje turite dar nesusinchronizuotų peržiūrų ar kitokių pakeitimų, jie bus panaikinti. Ar norite tęsti?</string>
     <string name="full_sync_confirmation_upgrade">Kadangi praeitą kartą įdiegtoje „AnkiDroid“ versijoje atsirado pranešimas apie klaidą, rekomenduojame atlikti išsamų sinchronizavimą.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
+    <string name="sync_menu_title_one_way_sync">Sinchronizavimas (vienpusis)</string>
     <string name="sync_menu_title_no_account">Sinchronizuojamas prisijungimas</string>
 </resources>

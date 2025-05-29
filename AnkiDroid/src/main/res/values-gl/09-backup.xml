@@ -45,7 +45,7 @@
 -->
 <resources>
     <string name="backup_deck_no_storage_left">Non se puido gardar a copia de seguranza debido a non ter espazo de almacenamento abondo. Diminúe a profundidade da copia ou elimina algúns ficheiros.</string>
-    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
+    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Quedan menor de %d MB de espazo no teu almacenamento.\nLibera algo de espazo para evitar a perda de datos.</string>
     <string name="backup_restore" maxLength="28">Restaurar dende a copia</string>
     <string name="backup_new_collection">Nova colección</string>
     <string name="backup_del_collection">Eliminar a colección e crear unha nova</string>

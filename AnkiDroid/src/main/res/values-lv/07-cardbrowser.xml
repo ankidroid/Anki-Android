@@ -91,10 +91,10 @@
         <item>Pēc vienkāršuma</item>
         <item>Pēc izskatīšanām</item>
         <item>Pēc atmešanu skaita</item>
-        <item>By deck name</item>
+        <item>Pēc kavas nosaukuma</item>
     </string-array>
-    <string name="chane_browser_column">Change column</string>
-    <string name="no_columns_available">No columns available</string>
+    <string name="chane_browser_column">Mainīg sleju</string>
+    <string name="no_columns_available">Nav pieejama neviena sleja</string>
     <string name="card_browser_select_all" maxLength="28">Atlasīt visu</string>
     <string name="card_browser_select_none" maxLength="28">Neatlasīt neko</string>
     <string name="card_browser_no_cards_in_deck">Kavā \"%s\" netika atrasta neviena kartīte</string>

@@ -104,7 +104,7 @@
     <string name="field_remapping">%1$s (de \'%2$s\')</string>
     <string name="confirm_map_cards_to_nothing">Se eliminará cualquier tarjeta sin asignación. Si una nota no posee tarjetas restantes se perderá. ¿Está seguro de que desea continuar?</string>
     <string name="missing_note_type">No se encontró ningún tipo de nota</string>
-    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (vacío)</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Límite de tiempo alcanzado</string>
     <plurals name="timebox_reached">
@@ -304,7 +304,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Tarjetas</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notas</string>
     <string name="toggle_cards_notes">Cambiar tarjetas/notas</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="truncate_content_help">Ajusta la altura de cada fila del navegador para mostrar solo las primeras 3 líneas de contenido</string>
     <string name="browser_options_dialog_heading">Opciones del explorador</string>
     <string name="audio_saved">Grabación guardada</string>
     <string name="deleting_selected_notes">Eliminando notas seleccionadas</string>
@@ -325,8 +325,8 @@
         <item quantity="other">%d tarjetas desenterradas</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Reposición</string>
-    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
-    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Siguiente</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Anterior</string>
     <string name="start_recording">Grabar</string>
     <string name="stop_recording">Detener</string>
     <string name="play_recording">Reproducir</string>

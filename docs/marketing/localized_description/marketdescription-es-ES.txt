@@ -10,9 +10,9 @@ Añade contenido mediante la aplicación de escritorio Anki o directamente media
 
 ★ Características clave:
 • contenidos de tarjeta soportados: texto, imágenes, sonidos, LaTeX
-• spaced repetition (AI-optimized FSRS algorithm)
+• repetición espaciada (algoritmo FSRS optimizado por IA)
 • integración de texto a voz
-• more than 10,000 premade decks
+• más de 10.000 mazos prediseñados
 • widget de progreso
 • estadísticas detalladas
 • sincronización con AnkiWeb

@@ -66,7 +66,7 @@
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">牌组已删除</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">此牌组已被选中</string>
     <plurals name="deck_limit_reached">
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">You can select up to %d decks.</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">你最多可以选择 %d 套牌组。</item>
     </plurals>
     <string name="empty_widget_state" comment="To denote the widget is empty">缺少牌组。轻按重新配置。</string>
     <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">集合为空，使用应用添加牌组，然后重新配置</string>

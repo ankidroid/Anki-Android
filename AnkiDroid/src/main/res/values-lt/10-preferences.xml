@@ -54,23 +54,23 @@
     </plurals>
     <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">Rezultatų nėra</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Bendrosios nuostatos</string>
+    <string name="pref_cat_studying" maxLength="41">Mokymasis</string>
+    <string name="pref_cat_system_wide" maxLength="41">Visos sistemos mastu</string>
     <string name="pref_cat_reviewing" maxLength="41">Peržiūra</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sinchronizacija</string>
+    <string name="pref_cat_scheduling" maxLength="41">Planavimas</string>
     <string name="pref_cat_whiteboard" maxLength="41">Lenta</string>
     <string name="pref_cat_appearance" maxLength="41">Išvaizda</string>
     <string name="pref_cat_themes" maxLength="41">Apipavidalinimas</string>
     <string name="pref_cat_gestures" maxLength="41">Gestai</string>
-    <string name="pref_cat_controls" maxLength="41">Controls</string>
+    <string name="pref_cat_controls" maxLength="41">Valdymas</string>
     <string name="pref_cat_advanced" maxLength="41">Sudėtingiau</string>
     <string name="pref_cat_workarounds" maxLength="41">Alternatyvūs būdai</string>
     <string name="pref_cat_plugins" maxLength="41">Papildiniai</string>
-    <string name="pref_cat_editing" maxLength="41">Editing</string>
+    <string name="pref_cat_editing" maxLength="41">Redagavimas</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Linijos plotis</string>
     <string name="use_input_tag" maxLength="41">Įvesti atsakymą į kortelę</string>
@@ -83,8 +83,8 @@
     <string name="image_zoom" maxLength="41">Vaizdo priartinimas</string>
     <string name="button_size" maxLength="41">Atsakymo mygtuko dydis</string>
     <string name="card_browser_font_size" maxLength="41">Kortelių naršyklės šrifto dydis</string>
-    <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media" maxLength="41">Rodyti failų pavadinimus kortelių naršyklėje</string>
+    <string name="card_browser_hide_media_summary">Medijos failų pavadinimų rodymas kortelių naršyklės klausimų/atsakymų laukuose</string>
     <string name="col_path" maxLength="41">„AnkiDroid“ katalogas</string>
     <string name="fullscreen_review" maxLength="41">Viso ekrano režimas</string>
     <string name="full_screen_off">Išjungta</string>
@@ -94,34 +94,34 @@
     <string-array name="answer_buttons_position_labels">
         <item>Viršuje</item>
         <item>Apačioje</item>
-        <item>None</item>
+        <item>Nieko</item>
     </string-array>
     <string name="gestures" maxLength="41">Įjungti gestus</string>
     <string name="gestures_summ">Nustatykite kokiais gestais atsakinėsite į klausimus ir redaguosite korteles.</string>
-    <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
-    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
-    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
-    <string name="gestures_none" maxLength="41" comment="No gestures">None</string>
+    <string name="gestures_corner_touch" maxLength="41">9 taškų jutiklinis valdymas</string>
+    <string name="gestures_corner_touch_summary">Leidimas naudoti jutiklinius gestus ekrano kampuose</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Leidimas naudoti jutiklinius gestus ekrano kampuose</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Viso ekrano naršymo stalčius</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Atidarykite navigacijos stalčių, kai iš bet kurios ekrano vietos braukiama į dešinę</string>
+    <string name="gestures_none" maxLength="41" comment="No gestures">Nieko</string>
     <string name="gestures_swipe_up" maxLength="41">Braukiant aukštyn</string>
     <string name="gestures_swipe_down" maxLength="41">Braukiant žemyn</string>
     <string name="gestures_swipe_left" maxLength="41">Braukiant į kairę</string>
     <string name="gestures_swipe_right" maxLength="41">Braukiant į dešinę</string>
     <string name="gestures_double_tap" maxLength="41">Dvigubas palietimas</string>
-    <string name="gestures_long_tap" maxLength="41">Long touch</string>
+    <string name="gestures_long_tap" maxLength="41">Ilgas prisilietimas</string>
     <string name="gestures_tap_top" maxLength="41">Liesti viršuje</string>
     <string name="gestures_tap_left" maxLength="41">Liesti kairėje</string>
     <string name="gestures_tap_right" maxLength="41">Liesti dešinėje</string>
     <string name="gestures_tap_bottom" maxLength="41">Liesti apačioje</string>
-    <string name="gestures_corner_tap_top_left" maxLength="41">Touch top left</string>
-    <string name="gestures_corner_tap_top_right" maxLength="41">Touch top right</string>
-    <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
-    <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
-    <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ Menu</string>
-    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">Palieskite viršuje kairėje</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">Palieskite viršutinį dešinįjį kampą</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">Palieskite vidurio centrą</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">Palieskite apatinį kairįjį kampą</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">Palieskite apatinį dešinįjį kampą</string>
+    <string name="gestures_shake" maxLength="41">Pakratykite prietaisą</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ Meniu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Visuotinai įjungiamas kontekstinis meniu \'%s\'</string>
     <string name="double_scrolling_gap" maxLength="41">Dvigubas slinkimas</string>
     <string name="double_scrolling_gap_summ">Padvigubinkite slinkimo tarpą naudodami el. knygų skaityklę</string>
     <string name="swipe_sensitivity" maxLength="41">Braukimo jautrumas</string>
@@ -134,15 +134,15 @@
     <string name="automatic_sync_choice" maxLength="41">Automatinis sinchronizavimas</string>
     <string name="automatic_sync_choice_summ">Sinchronizuoti automatiškai įjungiant/išjungiant programą, jei paskutinis sinchronizavimas vyko prieš daugiau nei 10
         minučių.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
-    <string name="sync_media_never">Never</string>
-    <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Visada</string>
+    <string name="sync_media_only_unmetered">Tik nematuojamose jungtyse</string>
+    <string name="sync_media_never">Niekada</string>
+    <string name="sync_status_badge" maxLength="41">Rodoma sinchronizavimo būsena</string>
+    <string name="sync_status_badge_summ">Pakeisti sinchronizavimo piktogramą, kai galima įkelti pakeitimus</string>
+    <string name="metered_sync_title" maxLength="41">Leisti sinchronizaciją matuojamose jungtyse</string>
+    <string name="metered_sync_summary">Leisti sinchronizaciją matuojamose jungtyse</string>
+    <string name="backup_limits_frequency">Dažnis</string>
+    <string name="backup_limits_lifetime">Visą gyvenimą</string>
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Dieninis apipavidalinimas</string>
     <string name="night_theme" maxLength="41">Naktinis apipavidalinimas</string>
@@ -152,33 +152,33 @@
     <string name="notification_pref_title" maxLength="41">Pranešti, kai</string>
     <string name="never_notify">Niekada nepranešti</string>
     <string name="notify_when_pending">Yra laukiančių žinučių</string>
-    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">Daugiau nei %d mokėtinų kortelių</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibruoti</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Mirksėti švieselę</string>
     <string name="select_locale_title">Pasirinkite kalbą</string>
-    <string name="software_render" maxLength="41">Disable card hardware render</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="software_render" maxLength="41">Išjungti kortelės techninės įrangos atvaizdavimą</string>
+    <string name="software_render_summ">Techninė įranga atvaizduoja greičiau, tačiau gali kilti problemų, ypač naudojant \"Android 8/8.1\". Jei nematote kortelių peržiūros naudotojo sąsajos dalių, išbandykite šį nustatymą.</string>
     <string name="safe_display" maxLength="41">Ribotoji ekrano veiksena</string>
     <string name="safe_display_summ">Išjungti visą animaciją ir naudoti saugesnį kortelių piešimo būdą. To gali reikėti įrenginiams, kurių veikimas paremtas „E-ink“ technologija.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui" maxLength="41">Išjungti vieno lauko redagavimo režimą</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">Leidžia naudoti kontekstinį meniu \"Cloze Deletion\", kai naudojamas kraštovaizdžio režimas.</string>
     <string name="vertical_centering" maxLength="41">Centrinis lygiavimas</string>
     <string name="vertical_centering_summ">Kortelių turinį vertikaliai išdėstyti centre</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
-    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
-    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
-    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Dvigubo bakstelėjimo laiko intervalas (milisekundės)</string>
+    <string name="pref_double_tap_time_interval_summary">Antrasis atsakymų mygtukų bakstelėjimas bus ignoruojamas, jei šis laikas dar nepraėjo. Taip išvengiama atsitiktinių dvigubų bakstelėjimų</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Rodyti atsakymo ilgą paspaudimo laiką</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimalus paspaudimo laikas, per kurį rodomas atsakymo mygtukas fiksuoja prisilietimą.</string>
     <string name="show_estimates" maxLength="41">Rodyti laiko mygtuką</string>
     <string name="show_estimates_summ">Ant atsakymo mygtukų rodyti kiek liko laiko iki sekančios peržiūros</string>
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
-    <string name="show_top_bar" maxLength="41">Show top bar</string>
-    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
+    <string name="show_large_answer_buttons_summ">Rodyti atsakymo mygtuką 2 eilutėse</string>
+    <string name="show_top_bar" maxLength="41">Rodyti viršutinę juostą</string>
+    <string name="show_top_bar_summary">Viršutinėje juostoje rodyti kortelių skaičių, atsakymų laikmatį, vėliavėlę ir ženklą</string>
     <string name="show_progress" maxLength="41">Likusių kortelių rodymas</string>
     <string name="show_progress_summ">Rodyti kiek liko kortelių</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">Rodyti ETA</string>
+    <string name="show_eta_summ">Rodyti likusį laiką</string>
     <string name="use_current" maxLength="41">Rinkinys naujoms kortelėms</string>
     <string name="learn_cutoff" maxLength="41">Mokymosi į priekį apribojimas</string>
     <string name="time_limit" maxLength="41">Mokymuisi numatyto laiko apribojimas</string>
@@ -199,43 +199,43 @@
     <string name="custom_buttons_setting_if_room">Rodyti, jei galioja</string>
     <string name="custom_buttons_setting_menu_only">Tik meniu</string>
     <string name="reset_custom_buttons" maxLength="41">Atkurti numatytuosius parametrus</string>
-    <string name="reset_settings_to_default">Reset settings to default</string>
-    <string name="reset">Reset</string>
-    <string name="thirdparty_apps_title" maxLength="41">Third-party API apps</string>
-    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
-    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Reviews</string>
-    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
-    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
+    <string name="reset_settings_to_default">Iš naujo nustatyti numatytuosius nustatymus</string>
+    <string name="reset">Atstatyti</string>
+    <string name="thirdparty_apps_title" maxLength="41">Trečiųjų šalių API programos</string>
+    <string name="thirdparty_apps_summary">Peržiūrėkite programų, kurios naudoja \"AnkiDroid\" API, pvz., žodynus, pagalbines programas, sąrašą.</string>
+    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Apžvalga</string>
+    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Peržiūrėti</string>
+    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Perjungti tik galinę pusę</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="pref_cat_reviewer" maxLength="41">Vertintojas</string>
+    <string name="show_deck_title" maxLength="41">Rodyti rinkinio pavadinimą</string>
+    <string name="accessibility" maxLength="41">Prieinamumas</string>
     <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
-    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <string name="paste_as_png" maxLength="41">Įklijuokite iškarpinės vaizdus kaip PNG</string>
+    <string name="exit_via_double_tap_back" maxLength="41">Du kartus paspauskite atgal, kad grįžtumėte atgal / išeitumėte</string>
+    <string name="exit_via_double_tap_back_summ">Kad netyčia nepaliktumėte apžvalgininko arba programėlės</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
-    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <string name="media_import_allow_all_files" maxLength="41">Leisti importuoti visus medijos failus</string>
+    <string name="media_import_allow_all_files_summ">Jei \"Android\" neatpažįsta medijos failo</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Individualus sinchroniz. serveris</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Nenaudojama</string>
+    <string name="custom_sync_server_help2"><![CDATA[        sinchronizavimo su "AnkiWeb" alternatyva,
+        sinchronizavimui galite naudoti savo serverį.
+        Jei nenustatyta, bus naudojamas numatytasis "AnkiWeb" serveris.
+        <a href=„%s“>Sužinokite daugiau</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Sinchronizavimo adresas</string>
-    <string name="custom_sync_certificate_title" maxLength="41">Custom root certificate (PEM)</string>
+    <string name="custom_sync_certificate_title" maxLength="41">Pasirinktinis šakninis sertifikatas (PEM)</string>
     <!-- Key Bindings -->
-    <string name="keyboard">Keyboard</string>
-    <string name="bluetooth">Bluetooth</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41" comment="Generic term to refer to a card">Card</string>
-    <string name="note" maxLength="41">Note</string>
-    <string name="navigation" maxLength="41">Navigation</string>
-    <string name="media" maxLength="41">Media</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="keyboard">Klaviatūra</string>
+    <string name="bluetooth">\"Bluetooth\"</string>
+    <string name="answer_buttons" maxLength="41">Atsakymų mygtukai</string>
+    <string name="card" maxLength="41" comment="Generic term to refer to a card">Kortelė</string>
+    <string name="note" maxLength="41">Užrašas</string>
+    <string name="navigation" maxLength="41">Navigacija</string>
+    <string name="media" maxLength="41">Medija</string>
+    <string name="misc" maxLength="41">Įvairūs</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Pasirinkite žymes</string>
     <!-- Deck configurations -->
@@ -244,91 +244,90 @@
     <string name="deck_conf_cram_filter" maxLength="41">Filtras</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Ieškoti</string>
     <string name="deck_conf_cram_limit" maxLength="41">Apriboti iki</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
+    <string name="deck_conf_cram_order" maxLength="41">Atrinktos kortelės</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Keisti mokymosi dieną</string>
     <string name="deck_conf_cram_reschedule_summ">Keisti kortelių mokymosi dieną, remiantis mano atsakymais šiame rinkinyje</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
+    <string name="deck_conf_cram_filter_2_check">Įjungti antrąjį filtrą</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Apibrėžti individualius veiksmus</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Peržiūros vėlavimai</string>
+    <string name="deck_conf_cram_preview_delays_summ">Vėlavimai nurodomi sekundėmis. 0 kortelė grąžinama į pradinį rinkinį.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Padėkite tobulinti „AnkiDroid“!</string>
     <string name="analytics_title" maxLength="41">Dalintis funkcijų naudojimu</string>
     <string name="analytics_summ">Galite prisidėti prie „AnkiDroid“ tobulinimo, padėdami kūrėjų komandai suprasti, kokiomis funkcijomis žmonės naudojasi</string>
-    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Naujų eilučių pakeitimas HTML</string>
+    <string name="note_editor_replace_newlines_summ">Pastabų redaktoriuje redaguodami kortelę visus &lt;br&gt; atvejus paverskite naujomis eilutėmis.</string>
+    <string name="type_in_answer_focus" maxLength="41">Dėmesio centre \"įveskite atsakymą</string>
+    <string name="type_in_answer_focus_summ">Automatiškai sukoncentruokite apžvalgininko lauką \"įveskite atsakymą\".</string>
     <!-- About -->
-    <string name="open_changelog">Open Changelog</string>
-    <string name="pref_cat_about_title" maxLength="41">About</string>
-    <string name="contributors_title">Contributors</string>
+    <string name="open_changelog">Atviras pakeitimų sąrašas</string>
+    <string name="pref_cat_about_title" maxLength="41">Apie</string>
+    <string name="contributors_title">Bendraautoriai</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
+    <string name="license">Licencija</string>
     <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="other_licenses"><![CDATA["AnkiDroid" taip pat naudoja trečiųjų šalių bibliotekas ir piktogramas, kurios licencijuojamos pagal įvairias atvirojo kodo <a href=\"%1$s\">licencijas</a>.]]></string>
+    <string name="donate_description"><![CDATA[Galite paremti AnkiDroid plėtrą <a href=\"%1$s\">aukodami</a>. Bet kokia suma yra labai vertinama.]]></string>
     <!-- Controls -->
-    <string name="binding_add_gesture">Add gesture</string>
-    <string name="binding_add_key">Add key</string>
-    <string name="key_picker_default_press_key">Press a key</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
-    <string name="user_actions" maxLength="41">User actions</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="28">User action 1</string>
-    <string name="user_action_2" maxLength="28">User action 2</string>
-    <string name="user_action_3" maxLength="28">User action 3</string>
-    <string name="user_action_4" maxLength="28">User action 4</string>
-    <string name="user_action_5" maxLength="28">User action 5</string>
-    <string name="user_action_6" maxLength="28">User action 6</string>
-    <string name="user_action_7" maxLength="28">User action 7</string>
-    <string name="user_action_8" maxLength="28">User action 8</string>
-    <string name="user_action_9" maxLength="28">User action 9</string>
-    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
+    <string name="binding_add_gesture">Pridėti gestą</string>
+    <string name="binding_add_key">Pridėti raktą</string>
+    <string name="key_picker_default_press_key">Paspauskite klavišą</string>
+    <string name="binding_add_axis">Pridėti vairalazdę / judesio valdiklį</string>
+    <string name="axis_picker_move_joystick">Judinkite vairalazdę / judesio valdiklį</string>
+    <string name="user_actions" maxLength="41">Naudotojo veiksmai</string>
+    <string name="user_actions_summary" maxLength="41">JavaScript paleidimas iš peržiūros ekrano</string>
+    <string name="user_action_1" maxLength="28">1 naudotojo veiksmas</string>
+    <string name="user_action_2" maxLength="28">2 naudotojo veiksmas</string>
+    <string name="user_action_3" maxLength="28">3 naudotojo veiksmas</string>
+    <string name="user_action_4" maxLength="28">4 naudotojo veiksmas</string>
+    <string name="user_action_5" maxLength="28">5 naudotojo veiksmas</string>
+    <string name="user_action_6" maxLength="28">6 naudotojo veiksmas</string>
+    <string name="user_action_7" maxLength="28">7 naudotojo veiksmas</string>
+    <string name="user_action_8" maxLength="28">8 naudotojo veiksmas</string>
+    <string name="user_action_9" maxLength="28">9 naudotojo veiksmas</string>
+    <string name="toggle_auto_advance" maxLength="41">Perjungti automatinį išankstinį apmokėjimą</string>
     <!-- Select card side -->
-    <string name="card_side_selection_title">Select card side</string>
-    <string name="card_side_question">Question</string>
-    <string name="card_side_answer">Answer</string>
-    <string name="card_side_both" maxLength="28">Question &amp; Answer</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
+    <string name="card_side_selection_title">Pasirinkite kortelės pusę</string>
+    <string name="card_side_question">Klausimas</string>
+    <string name="card_side_answer">Atsakymas</string>
+    <string name="card_side_both" maxLength="28">Klausimas &amp; amp; Atsakymas</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Kl: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Pašalinti \'%s\'</string>
     <string name="bindings_already_bound">Already bound to ‘%s’</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Please upgrade to the new text to speech format</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Eksperimentinis</string>
+    <string name="readtext_deprecation_warn">\"AnkiDroid\" įdiegtas geresnis TTS mechanizmas, suderinamas su kitais \"Anki\" klientais, jame yra daugiau balsų ir patobulintas kalbų atkūrimas!\n\nPrašome kuo greičiau atnaujinti, nes šis nustatymas netrukus bus pašalintas.</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Atnaujinkite naują teksto į kalbą formatą</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
-    <string name="disable_dev_options">Disable developer options</string>
-    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
+    <string name="pref_cat_dev_options" maxLength="41">Kūrėjo parinktys</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Įgalinti kūrėjo parinktis</string>
+    <string name="disable_dev_options">Išjungti kūrėjo parinktis</string>
+    <string name="dev_options_warning">Prieš įjungdami kūrėjo parinktis, įsitikinkite, ar tikrai. Šios parinktys yra pavojingos ir gali sugadinti programėlę arba sugadinti jūsų kolekciją.Atkreipkite dėmesį, kad šios parinktys netinka daugumai naudotojų, todėl jos nėra išverstos, todėl yra anglų kalba.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
-        After backups are more than two days old,
-        AnkiDroid will start removing some of them to free up disk space.
+    <string name="pref__backups_help__summary"><![CDATA[        "AnkiDroid" periodiškai daro atsargines kolekcijos kopijas.
+        Po to, kai atsarginės kopijos yra daugiau nei dviejų dienų senumo,
+        "AnkiDroid" pradės šalinti kai kurias iš jų, kad atlaisvintų vietą diske.
         <br><br>
-        Note that media files are not backed up.
-        To be safe, please periodically synchronize your collection, or back up exports of it.
+        Atkreipkite dėmesį, kad medijos failų atsarginės kopijos nedaromos.
+        Norėdami būti saugūs, periodiškai sinchronizuokite savo kolekciją arba darykite atsargines jos eksporto kopijas.
         <br><br>
-        You can restore from a backup and export your collection in the deck list menu.
-    ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+        Atkurti iš atsarginės kopijos ir eksportuoti kolekciją galite denio sąrašo meniu.]]></string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutės tarp automatinių atsarginių kopijų</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Išsaugoti kasdienes atsargines kopijas</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Savaitinės atsarginės kopijos, kurias reikia saugoti</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Mėnesinės atsarginės kopijos, kurias reikia saugoti</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
-    <string name="pref__manage_space__screen_title">Manage space</string>
+    <string name="pref__manage_space__screen_title">Valdykite erdvę</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Error</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Klaida</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Skaičiuojant \n&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
         <item quantity="one">%1$d file\n%2$s</item>
         <item quantity="few">%1$d files\n%2$s</item>
@@ -336,49 +335,49 @@
         <item quantity="other">%1$d files\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
-    <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Ištrinkite nenaudojamus medijos failus</string>
+    <string name="pref__delete_unused_media_files__summary">Ištrinkite paveikslėlius ir kitą laikmeną, kurie neturi priešdėlio _ ir į kuriuos nėra nuorodų pastabose.</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Ištrinkite nenaudojamus medijos failus</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Delete backups</string>
-    <string name="progress__deleting_backups">Deleting backups&#8230;</string>
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Ištrinti atsarginių kopijas</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Ištrinti atsargines kopijas</string>
+    <string name="progress__deleting_backups">Atsarginių kopijų ištrynimas&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
-    <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Delete collection</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
-    <string name="progress__deleting_collection">Deleting collection&#8230;</string>
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Ištrinti kolekciją</string>
+    <string name="pref__delete_collection__summary">Ištrinkite kolekciją, laikmenas ir atsargines kopijas. Programos nustatymai nėra ištrinami</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Ištrinti kolekciją</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Ar tikrai norite ištrinti kolekciją, laikmenas ir atsargines kopijas?\n\nPastaba: atlikus šį veiksmą langas bus uždarytas.</string>
+    <string name="progress__deleting_collection">Ištrinkite kolekciją</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>
-    <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Delete everything</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Ištrinkite viską</string>
+    <string name="pref__delete_everything__summary">Ištrinkite kolekciją, laikmenas, atsargines kopijas ir nustatymus</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Ištrinkite viską</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Ar tikrai norite ištrinti visus duomenis? Tai apima kolekciją, laikmenas, atsargines kopijas ir nustatymus.\n\nPastaba: šis veiksmas uždarys langą.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Delete app data</string>
-    <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Delete app data</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Ištrinti programėlės duomenis</string>
+    <string name="pref__delete_app_data__summary">Ištrinkite nustatymus ir kitus programėlės duomenis</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Ištrinti programėlės duomenis</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Ar tikrai norite ištrinti programos duomenis? Tai apima nustatymus ir kitus programėlės duomenis.\n\nPastaba: šis veiksmas uždarys langą.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
-    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
-    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">None</string>
-    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Status bar</string>
-    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigation bar</string>
-    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
-    <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
-    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
-    <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
-    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Nėra surinkimo</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Klaida</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Parsisiuntimas&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Skaičiuojama &#8230;</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Kolekcija neegzistuoja</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Paslėpti sistemos juostas</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">Nieko</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Pranešimų juosta</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Naršymo juosta</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Visi</string>
+    <string name="ignore_display_cutout" maxLength="41">Ignoruokite ekrano išpjovą</string>
+    <string name="hide_answer_buttons" maxLength="41">Paslėpti atsakymų mygtukus</string>
+    <string name="hide_hard_and_easy" maxLength="41">Paslėpti atsakymų mygtukus</string>
+    <string name="reviewer_frame_style" maxLength="41">Rėmelio stilius</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Kortelė</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Dėžutė</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Atidaryti nustatymus</string>
 </resources>
