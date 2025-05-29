@@ -117,7 +117,7 @@ class Note : Cloneable {
         fillEmpty: Boolean = false,
         deckId: DeckId = DEFAULT_DECK_ID,
     ): Card {
-        val card = Card(col, id = null)
+        val card = Card(this)
         card.ord = ord
         card.did = deckId
 
@@ -142,7 +142,6 @@ class Note : Cloneable {
                     fillEmpty = fillEmpty,
                 ).render(col)
         card.renderOutput = output
-        card.note = this
         return card
     }
 

@@ -99,13 +99,14 @@ open class Card : Cloneable {
         loadFromBackendCard(card)
     }
 
-    constructor(col: Collection, id: CardId? = null) {
-        if (id != null) {
-            this.id = id
-            load(col)
-        } else {
-            loadFromBackendCard(anki.cards.Card.getDefaultInstance())
-        }
+    constructor(col: Collection, id: CardId) {
+        this.id = id
+        load(col)
+    }
+
+    constructor(note: Note) {
+        loadFromBackendCard(anki.cards.Card.getDefaultInstance())
+        this.note = note
     }
 
     @LibAnkiAlias("load")
