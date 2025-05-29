@@ -149,7 +149,7 @@
     <string name="notification_pref_title" maxLength="41">Şu durumda bildir:</string>
     <string name="never_notify">Hiç bildirme</string>
     <string name="notify_when_pending">Bekleyen mesajlar olduğunda</string>
-    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">En az %d kartın sırası geldiğinde</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Titreş</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Işığı yanıp söndür</string>
     <string name="select_locale_title">Dil Seç</string>
@@ -169,7 +169,7 @@
     <string name="show_estimates" maxLength="41">Düğmede zaman göster</string>
     <string name="show_estimates_summ">Cevap düğmelerinin üzerinde sonraki çıkma zamanını göster</string>
     <string name="show_large_answer_buttons" maxLength="41">Büyük cevap düğmelerini göster</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons_summ">Cevap düğmesini 2 satırda göster</string>
     <string name="show_top_bar" maxLength="41">Üst Çubuğu Göster</string>
     <string name="show_top_bar_summary">Kart sayılarını, cevap kronometresini, bayrağı ve işareti üst çubukta göster</string>
     <string name="show_progress" maxLength="41">Kalanı göster</string>
@@ -181,8 +181,8 @@
     <string name="time_limit" maxLength="41">Zaman sınırı</string>
     <string name="day_offset_with_description" maxLength="41">Sonraki günün başlangıcı (0 geceyarısı, 23 akşam 11)</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">Geceyarısından %d saat sonra</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">Geceyarısından %d saat sonra</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Ekranı açık tut</string>
     <string name="pref_keep_screen_on_summ">Ekran zaman aşımını devredışı bırak</string>
@@ -261,7 +261,7 @@
     <string name="about_contributors_description"><![CDATA[İşte uygulamamıza katkıda bulunan müthiş <a href=\"%1$s\">insanlar</a>. Siz de AnkiDroid\'e programlayarak, çevirerek, bağış yaparak ve <a href=\"%2$s\">daha fazla yolla</a> yardım edebilirsiniz!]]></string>
     <string name="license">Lisans</string>
     <string name="license_description"><![CDATA[AnkiDroid <a href=\"%1$s\">GPL-3.0</a> ve <a href=\"%2$s\">AGPL-3.0</a> lisansları altında yayınlanmaktadır, kaynak kodu <a href=\"%3$s\">GitHub\'da</a> mevcuttur]]></string>
-    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid çeşitli açık kaynaklı <a href=\"%1$s\">lisanslar</a> altında üçüncü parti kütüphaneler ve simgeler de kullanır.]]></string>
     <string name="donate_description"><![CDATA[AnkiDroid\'in geliştirilmesine <a href=\"%1$s\">bağış yaparak</a> destek olabilirsiniz. Miktarı ne olursa olsun içten teşekkürlerimizi kazanırsınız.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Hareket ekle</string>

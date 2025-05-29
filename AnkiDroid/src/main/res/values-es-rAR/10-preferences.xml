@@ -68,7 +68,7 @@
     <string name="pref_cat_advanced" maxLength="41">Avanzado</string>
     <string name="pref_cat_workarounds" maxLength="41">Soluciones</string>
     <string name="pref_cat_plugins" maxLength="41">Plugins</string>
-    <string name="pref_cat_editing" maxLength="41">Editing</string>
+    <string name="pref_cat_editing" maxLength="41">Edición</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Ancho del trazo</string>
     <string name="use_input_tag" maxLength="41">Tipear la respuesta en la tarjeta</string>
@@ -149,7 +149,7 @@
     <string name="notification_pref_title" maxLength="41">Notificar al</string>
     <string name="never_notify">Nunca notificar</string>
     <string name="notify_when_pending">Mensajes pendientes disponibles</string>
-    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">Más de %d tarjetas vencidas</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrar</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Luz parpadeante</string>
     <string name="select_locale_title">Seleccionar idioma</string>
@@ -169,7 +169,7 @@
     <string name="show_estimates" maxLength="41">Mostar el botón tiempo</string>
     <string name="show_estimates_summ">Mostrar el tiempo para el próximo repaso encima de los botones de respuesta</string>
     <string name="show_large_answer_buttons" maxLength="41">Mostrar botones de respuestas grandes</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons_summ">Mostrar botón de respuesta en 2 filas</string>
     <string name="show_top_bar" maxLength="41">Mostrar Barra Superior</string>
     <string name="show_top_bar_summary">Mostrar recuento de cartas, temporizador de respuesta, bandera y marca en la barra superior</string>
     <string name="show_progress" maxLength="41">Mostar restantes</string>
@@ -181,8 +181,8 @@
     <string name="time_limit" maxLength="41">Límite de tiempo para Timebox</string>
     <string name="day_offset_with_description" maxLength="41">Comienzo del siguiente día</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hora después de la medianoche</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d horas después de la medianoche</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Mantener la pantalla encendida</string>
     <string name="pref_keep_screen_on_summ">Desactivar el tiempo de espera de pantalla</string>
@@ -198,9 +198,9 @@
     <string name="reset">Restablecer</string>
     <string name="thirdparty_apps_title" maxLength="41">Aplicaciones API de terceros</string>
     <string name="thirdparty_apps_summary">Vea una lista de aplicaciones que hacen uso de la API de AnkiDroid como diccionarios, utilidades.</string>
-    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Reviews</string>
-    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
-    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
+    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Reseñas</string>
+    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Vistas previas</string>
+    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Activar/desactivar solo la parte trasera</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Revisor</string>
     <string name="show_deck_title" maxLength="41">Mostrar el título del mazo</string>
@@ -261,7 +261,7 @@
     <string name="about_contributors_description"><![CDATA[Estos son nuestros increíbles <a href=\"%1$s\">colaboradores</a>. ¡También puedes ayudar a AnkiDroid programando, traduciendo, donando y <a href=\"%2$s\">más</a>!]]></string>
     <string name="license">Licencia</string>
     <string name="license_description"><![CDATA[AnkiDroid se publica bajo las licencias <a href=\"%1$s\">GPL-3.0</a> y <a href=\"%2$s\">AGPL-3.0</a> con el código fuente <a href=\"%3$s\">disponible en GitHub</a>]]></string>
-    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid también utiliza bibliotecas e íconos de terceros, que tienen licencia de varias <a href=\"%1$s\">licencias</a> de código abierto.]]></string>
     <string name="donate_description"><![CDATA[Puedes apoyar el desarrollo de AnkiDroid <a href=\"%1$s\">donando</a>. Cualquier cantidad es profundamente apreciada.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Agregar gesto</string>
@@ -300,7 +300,7 @@
     <string name="pref_cat_dev_options" maxLength="41">Opciones de desarrollador</string>
     <string name="dev_options_enabled_pref" maxLength="41">Activar opciones de desarrollador</string>
     <string name="disable_dev_options">Desactivar opciones de desarrollador</string>
-    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
+    <string name="dev_options_warning">Asegúrate antes de activar las opciones de desarrollador. Estas opciones son peligrosas y podrían dañar la aplicación o tu colección. Ten en cuenta que estas opciones no son adecuadas para la mayoría de los usuarios y, por lo tanto, no están traducidas, por lo que están en inglés.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

@@ -76,35 +76,35 @@
     <string name="card_browser_list_my_searches_new_name">Dabartinės ieškos pavadinimas</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Paieškos negalite išsaugoti be pavadinimo</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Pavadinimas egzistuoja</string>
-    <string name="no_note_to_edit">No note to edit</string>
+    <string name="no_note_to_edit">Pastabos  redagavimui nėra</string>
     <string name="card_browser_list_my_searches_remove_content">Ar norite ištrinti „%1$s“?</string>
     <string name="card_browser_change_display_order" maxLength="28">Keisti rodymo tvarką</string>
-    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Paieška</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Paieška</string>
     <string name="card_browser_change_display_order_title">Pasirinkite rodymo tvarką</string>
     <string name="card_details_tags">Žymos</string>
     <string-array name="card_browser_order_labels">
         <item>Nerūšiuoti (greičiau)</item>
         <item>Pagal rūšiavimo lauką</item>
         <item>Pagal sukūrimo laiką</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
+        <item>Pagal pastabų keitimo laiką</item>
+        <item>Pagal kortelės modifikavimo laiką</item>
         <item>Pagal numatytą laiką</item>
         <item>Pagal intervalą</item>
         <item>Pagal lengvumą</item>
         <item>Pagal peržiūras</item>
         <item>Pagal dažniausiai užmirštamas</item>
-        <item>By deck name</item>
+        <item>Pagal rinkinio pavadinimą</item>
     </string-array>
-    <string name="chane_browser_column">Change column</string>
-    <string name="no_columns_available">No columns available</string>
+    <string name="chane_browser_column">Pakeisti stulpelį</string>
+    <string name="no_columns_available">Stulpelių nėra</string>
     <string name="card_browser_select_all" maxLength="28">Viską pažymėti</string>
     <string name="card_browser_select_none" maxLength="28">Nieko nežymėti</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
+    <string name="card_browser_no_cards_in_deck">Kaladėje \'%s\' kortų nerasta</string>
+    <string name="card_browser_search_all_decks">Ieškoti visų rinkinių</string>
+    <string name="card_browser_unknown_deck_name">Nežinomas</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Sutrumpinti turinį</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Šiandien yra \"0 %1$s\", rytoj bus \"1 %2$s\" ir t. t.&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Export card</item>
         <item quantity="few">Export cards</item>
@@ -124,14 +124,14 @@
         <item quantity="other">%d cards deleted</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Žymių redagavimo dialogo langas</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Rodyti užsakymo dialogo langą</string>
     <!-- Manage columns dialog -->
-    <string name="browse_manage_columns_main_heading">Columns</string>
-    <string name="browse_manage_columns">Manage columns</string>
-    <string name="user_active_columns">Active</string>
-    <string name="user_potential_columns">Available</string>
-    <string name="include_column">Include column</string>
-    <string name="exclude_column">Exclude column</string>
-    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
+    <string name="browse_manage_columns_main_heading">Stulpeliai</string>
+    <string name="browse_manage_columns">Stulpelių tvarkymas</string>
+    <string name="user_active_columns">Aktyvus</string>
+    <string name="user_potential_columns">Galimas</string>
+    <string name="include_column">Įtraukti stulpelį</string>
+    <string name="exclude_column">Išskirti stulpelį</string>
+    <string name="browser_find_replace_loading_fields">Laukų pavadinimų gavimas&#8230;</string>
 </resources>

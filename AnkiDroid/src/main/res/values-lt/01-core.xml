@@ -157,8 +157,8 @@
     <string name="card_template_editor_select_field">Pasirinkti laukelį</string>
     <string name="card_template_editor_cant_delete">Reikalingas bent vienas kortelės tipas</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">Tai sukurs %1$d kortelę. Ar norite tęsti?</item>
-        <item quantity="few">This will create %1$d cards. Proceed?</item>
+        <item quantity="one">Tai sukurs %1$d korteles. Ar norite tęsti?</item>
+        <item quantity="few">Tai sukurs %1$d korteles. Ar norite tęsti?</item>
         <item quantity="many">This will create %1$d cards. Proceed?</item>
         <item quantity="other">Tai sukurs %1$d korteles. Ar norite tęsti?</item>
     </plurals>
@@ -169,7 +169,7 @@
         <item quantity="other">Ar tikrai ištrinti “%2$s” kortelių tipą ir su juo susijusias %1$d kortelių?</item>
     </plurals>
     <string name="card_template_editor_save_error">Negalima užsaugoti kortelių šablono pakeitimo: %s</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">Esamos kortelės šablonas buvo ištrintas.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Naršyklės išvaizda</string>
     <!-- card Info -->
@@ -181,31 +181,31 @@
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kortelių naršyklė</string>
     <string name="context_menu_anki_card_label">Anki kortelė</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_message_new">Kolekcijų negalima sujungti.\nKurią kolekciją norite pasilikti?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
-    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Select collection to keep</string>
-    <string name="sync_conflict_replace_title">Replace collection</string>
+    <string name="sync_conflict_remote_confirm_new">Pakeisti \"AnkiDroid\" kolekciją į kolekciją iš \"AnkiWeb\"?</string>
+    <string name="sync_conflict_local_confirm_new">Pakeisti savo kolekciją į AnkiWeb į kolekciją iš AnkiDroid kolekcijos?</string>
+    <string name="sync_conflict_title_new">Pasirinkite kolekciją, kurią norite išsaugoti</string>
+    <string name="sync_conflict_replace_title">Pakeisti kolekciją</string>
     <!-- Generic errors -->
-    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
-    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
-    <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
-    <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
-    <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
-    <string name="restore_data_from_backup">Restore from .colpkg backup (advanced)</string>
-    <string name="create_new_collection">Create a new collection</string>
-    <string name="new_unsafe_collection">The new collection will be deleted from your phone if you uninstall AnkiDroid</string>
+    <string name="error__etc__cannot_write_to_or_create_file">Negalima įrašyti arba sukurti failo %s</string>
+    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Neprieinama kolekcija</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Mes negalime pasiekti jūsų kolekcijos po to, kai \"AnkiDroid\" buvo pašalinta dėl \"Play Store\" politikos pakeitimų\n\nJūsų duomenys yra saugūs ir gali būti atkurti. Jie yra adresu\n%s\n\n\nPasirinkite toliau pateiktą atkūrimo parinktį:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">\"Android\" pašalino \"AnkiDroid\" %1$s leidimą dėl programos neveiklumo.\n\nJūsų duomenys yra saugūs ir gali būti atkurti. Jie yra adresu\n%2$s\n\n\nPasirinkite toliau pateiktą atkūrimo parinktį:</string>
+    <string name="restore_data_from_ankiweb">Atkurti iš \"AnkiWeb\" (rekomenduojama)</string>
+    <string name="install_non_play_store_ankidroid_recommended">Atkurti prieigą prie aplankų (rekomenduojama)</string>
+    <string name="install_non_play_store_ankidroid">Atkurti prieigą prie aplankų (išplėstinis)</string>
+    <string name="restore_data_from_backup">Atkūrimas iš .colpkg atsarginės kopijos (išplėstinis)</string>
+    <string name="create_new_collection">Sukurti naują kolekciją</string>
+    <string name="new_unsafe_collection">Jei pašalinsite \"AnkiDroid\", naujoji kolekcija bus ištrinta ir iš telefono.</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
-    <string name="image_occlusion">Image Occlusion</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="permissions_screen_headline">\"AnkiDroid\" reikia tam tikrų leidimų, kad veiktų</string>
+    <string name="storage_access_title">Prieiga prie saugyklos</string>
+    <string name="storage_access_summary">išsaugo kolekciją saugioje vietoje, kuri nebus ištrinta, jei programėlė bus pašalinta.</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Prieiga prie visų failų</string>
+    <string name="image_occlusion">Vaizdo užsklanda</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Pašalinti paskyrą</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Momentinė kortelė</string>
 </resources>

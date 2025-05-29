@@ -299,7 +299,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">卡片</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">笔记</string>
     <string name="toggle_cards_notes">切换卡片/笔记</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="truncate_content_help">缩短浏览器每行的高度，只显示前三行内容</string>
     <string name="browser_options_dialog_heading">浏览器选项</string>
     <string name="audio_saved">录音已保存</string>
     <string name="deleting_selected_notes">删除选定笔记</string>

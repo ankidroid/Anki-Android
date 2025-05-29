@@ -148,7 +148,7 @@
     <string name="notification_pref_title" maxLength="41">通知のタイミング</string>
     <string name="never_notify">通知しない</string>
     <string name="notify_when_pending">待機状態（AnkiDroidを表示していない間に進行していたデータ処理（例: 同期、バックアップ）が完了し、ユーザーが操作を再開できる状態）</string>
-    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">待機状態の時と、　課題のカードが%d枚以上の時</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">振動でも通知</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">LEDランプ点滅でも通知</string>
     <string name="select_locale_title">言語を選択</string>
@@ -168,7 +168,7 @@
     <string name="show_estimates" maxLength="41">回答ボタンに学習間隔を表示</string>
     <string name="show_estimates_summ">次の学習までの時間の間隔を回答ボタンの中に表示します</string>
     <string name="show_large_answer_buttons" maxLength="41">回答ボタンを幅広に表示</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons_summ">「解答を表示」ボタンの縦幅を２倍にし、回答ボタンを縦２列で表示します</string>
     <string name="show_top_bar" maxLength="41">トップバーを表示</string>
     <string name="show_top_bar_summary">カードの残り枚数、回答時間測定タイマー、フラグ、マークをトップバーに表示する</string>
     <string name="show_progress" maxLength="41">残りのカード枚数を表示</string>
@@ -180,7 +180,7 @@
     <string name="time_limit" maxLength="41">タイムボックス（学習時間の目標・区切り）</string>
     <string name="day_offset_with_description" maxLength="41">日付更新時刻</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d時</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">スクリーンをオンのままにする</string>
     <string name="pref_keep_screen_on_summ">画面の自動オフを無効にします</string>
@@ -196,9 +196,9 @@
     <string name="reset">リセット</string>
     <string name="thirdparty_apps_title" maxLength="41">サードパーティー製APIアプリ</string>
     <string name="thirdparty_apps_summary">辞書やユーティリティなど、AnkiDroidを活用するアプリのリストを見るにはここをタップしてください</string>
-    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Reviews</string>
-    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
-    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
+    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">学習</string>
+    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">プレビュー</string>
+    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">背面（解答表示後の画面）のみに切り替え</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">学習画面</string>
     <string name="show_deck_title" maxLength="41">デッキのタイトルを表示</string>
@@ -259,7 +259,7 @@
     <string name="about_contributors_description"><![CDATA[AnkiDroidの開発を支えているのは、一人一人の<a href=\"%1$s\">コントリビューター</a>です。誰もが、プログラミング、翻訳、寄付、<a href=\"%2$s\">その他の方法</a>によってAnkiDroidの開発に貢献するコントリビューターになることができます。]]></string>
     <string name="license">ライセンス</string>
     <string name="license_description"><![CDATA[AnkiDroidは<a href=\"%1$s\">GPL-3.0</a>および<a href=\"%2$s\">AGPL-3.0</a>のライセンスの下でリリースされています。<a href=\"%3$s\">ソースコード</a>はGitHubで公開されています。]]></string>
-    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroidはさまざまなオープンソース<a href=\"%1$s\">ライセンス</a>に基づき、サードパーティのライブラリやアイコンを使用しています。]]></string>
     <string name="donate_description"><![CDATA[<a href=\"%1$s\">寄付</a>することでAnkiDroidの開発を支援することができます。]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">ジェスチャーを追加</string>
@@ -298,7 +298,8 @@
     <string name="pref_cat_dev_options" maxLength="41">開発者向けオプション</string>
     <string name="dev_options_enabled_pref" maxLength="41">開発者向けオプションを有効にする</string>
     <string name="disable_dev_options">開発者向けオプションを無効にする</string>
-    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
+    <string name="dev_options_warning">注意：開発者向けのオプションは、使い方によってはアプリやコレクションを損傷を与えるリスクがあります。\n\nこれらのオプションはほとんどのユーザーには適していないため、翻訳なしで英語でのみ表示されます。
+    </string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

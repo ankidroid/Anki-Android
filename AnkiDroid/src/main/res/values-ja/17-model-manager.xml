@@ -62,9 +62,9 @@
     <string name="model_delete_warning">このノートタイプを削除します。本当によろしいですか？</string>
     <string name="field_delete_warning">このフィールドを削除します。本当によろしいですか？</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Add: %1$s</string>
+    <string name="model_browser_add_add">追加: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">Clone: %1$s</string>
+    <string name="model_browser_add_clone">複製: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">カードブラウザでカードをリスト表示する際に使用するテンプレートを設定できます。これを利用すると、内容をより簡潔に表示することができます。\n\n例えば、\n「 {{Country}} の首都はどこですか？」\nという内容の表面テンプレートについて、\n「 {{Country}} の首都」\nという、リストの質問欄用のテンプレートを設定することによって、「フランス の首都」「ドイツ の首都」のように、カード表面の内容をコンパクトに示すことができます。</string>
     <string name="card_template_browser_appearance_question_format">質問欄テンプレート</string>

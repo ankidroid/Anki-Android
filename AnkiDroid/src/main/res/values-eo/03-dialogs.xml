@@ -147,7 +147,7 @@
     <string name="error_deleting_image">Eraro dum forigi bildon</string>
     <string name="failed_to_apply_background_image">Malsukcesis apliki fonan bildon %s</string>
     <string name="background_image_too_large">Fono por elektilo de kartaro estas tro granda</string>
-    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maksimuma permesata grando de bildo estas %d MB</string>
     <string name="image_dimensions_too_large">Dimensioj de la bildo estas tro grandaj (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -187,8 +187,8 @@
     <string name="help_dialog_exception_report_sent">Raporto estas sendita!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">Aŭtomata samtempigo povas startigi post %d sekundo</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">Aŭtomata samtempigo povas startigi post %d sekundoj</item>
     </plurals>
     <string name="metered_sync_data_warning">Via interret-provizanto povas enkasigi monon por transsendi datumojn</string>
     <string name="deck_picker_new">Nombro de novaj hodiaŭaj kartoj por montri en tiu ĉi kartaro.</string>
