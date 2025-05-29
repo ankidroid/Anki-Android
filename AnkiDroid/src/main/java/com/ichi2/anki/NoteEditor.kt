@@ -327,10 +327,11 @@ class NoteEditor :
                 // Note type can change regardless of exit type - update ourselves and CardBrowser
                 reloadRequired = true
                 editorNote!!.notetype = getColUnsafe.notetypes.get(editorNote!!.noteTypeId)!!
+                val currentEditedCard = currentEditedCard
                 if (currentEditedCard == null ||
                     !editorNote!!
                         .cardIds(getColUnsafe)
-                        .contains(currentEditedCard!!.id)
+                        .contains(currentEditedCard.id)
                 ) {
                     if (!addNote) {
                     /* This can occur, for example, if the
@@ -346,14 +347,15 @@ class NoteEditor :
                 } else {
                     Timber.d("onActivityResult() template edit return - current card exists")
                     // reload current card - the template ordinals are possibly different post-edit
-                    currentEditedCard = getColUnsafe.getCard(currentEditedCard!!.id)
+                    val reloadedCard = getColUnsafe.getCard(currentEditedCard.id)
+                    this.currentEditedCard = reloadedCard
                     @NeedsTest("#17282 returning from template editor saves further made changes")
                     // make sure the card's note is available going forward
-                    currentEditedCard!!.note(getColUnsafe)
+                    reloadedCard.note(getColUnsafe)
                     launchCatchingTask {
                         withCol {
                             editorNote =
-                                currentEditedCard!!.note(this) // update the NoteEditor's working note reference
+                                reloadedCard.note(this) // update the NoteEditor's working note reference
                         }
                         updateCards(editorNote!!.notetype)
                     }
