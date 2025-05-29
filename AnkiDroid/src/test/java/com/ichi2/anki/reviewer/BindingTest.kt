@@ -17,6 +17,8 @@ package com.ichi2.anki.reviewer
 
 import android.view.KeyEvent
 import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.reviewer.Binding.KeyCode
+import com.ichi2.anki.reviewer.Binding.UnicodeCharacter.Companion.unsafeUnicodeBindingFactory
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Assert.assertEquals
@@ -52,11 +54,11 @@ class BindingTest {
 
     @Test
     fun testUnicodeToString() {
-        assertEquals(UNICODE_PREFIX + "Ä", Binding.unicode('Ä').toString())
-        assertEquals(UNICODE_PREFIX + "Ctrl+Ä", Binding.unicode(Binding.ModifierKeys.ctrl(), 'Ä').toString())
-        assertEquals(UNICODE_PREFIX + "Shift+Ä", Binding.unicode(Binding.ModifierKeys.shift(), 'Ä').toString())
-        assertEquals(UNICODE_PREFIX + "Alt+Ä", Binding.unicode(Binding.ModifierKeys.alt(), 'Ä').toString())
-        assertEquals(UNICODE_PREFIX + "Ctrl+Alt+Shift+Ä", Binding.unicode(allModifierKeys(), 'Ä').toString())
+        assertEquals(UNICODE_PREFIX + "Ä", unsafeUnicodeBindingFactory('Ä').toString())
+        assertEquals(UNICODE_PREFIX + "Ctrl+Ä", unsafeUnicodeBindingFactory('Ä', Binding.ModifierKeys.ctrl()).toString())
+        assertEquals(UNICODE_PREFIX + "Shift+Ä", unsafeUnicodeBindingFactory('Ä', Binding.ModifierKeys.shift()).toString())
+        assertEquals(UNICODE_PREFIX + "Alt+Ä", unsafeUnicodeBindingFactory('Ä', Binding.ModifierKeys.alt()).toString())
+        assertEquals(UNICODE_PREFIX + "Ctrl+Alt+Shift+Ä", unsafeUnicodeBindingFactory('Ä', allModifierKeys()).toString())
     }
 
     @Test
@@ -65,15 +67,9 @@ class BindingTest {
     }
 
     @Test
-    fun testUnknownToString() {
-        // This seems sensible - serialising an unknown will mean that nothing is saved.
-        assertThat(Binding.unknown().toString(), equalTo(""))
-    }
-
-    @Test
     fun testModifierKeysEquality() {
         val one = Binding.AppDefinedModifierKeys.allowShift()
-        val two = Binding.ModifierKeys(shift = true, ctrl = false, alt = false)
+        val two = Binding.ModifierKeys(shift = true)
 
         assertTrue(one.shiftMatches(true))
         assertTrue(one.shiftMatches(false))
@@ -133,13 +129,13 @@ class BindingTest {
             return Binding.possibleKeyBindings(mock).filterIsInstance<Binding.UnicodeCharacter>().first()
         }
 
-        fun keyCode(keyCode: Int): Binding.KeyCode {
+        fun keyCode(keyCode: Int): KeyCode {
             val mock =
                 mock<KeyEvent> {
                     on { getKeyCode() } doReturn keyCode
                 }
 
-            return Binding.possibleKeyBindings(mock).filterIsInstance<Binding.KeyCode>().first()
+            return Binding.possibleKeyBindings(mock).filterIsInstance<KeyCode>().first()
         }
     }
 }

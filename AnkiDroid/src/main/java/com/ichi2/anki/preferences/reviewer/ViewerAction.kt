@@ -25,11 +25,13 @@ import com.ichi2.anki.R
 import com.ichi2.anki.preferences.reviewer.MenuDisplayType.ALWAYS
 import com.ichi2.anki.preferences.reviewer.MenuDisplayType.DISABLED
 import com.ichi2.anki.preferences.reviewer.MenuDisplayType.MENU_ONLY
-import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.Binding.AppDefinedModifierKeys
+import com.ichi2.anki.reviewer.Binding.Companion.FORBIDDEN_UNICODE_CHAR
+import com.ichi2.anki.reviewer.Binding.KeyCode
 import com.ichi2.anki.reviewer.Binding.ModifierKeys
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
+import com.ichi2.anki.reviewer.Binding.UnicodeCharacter.Companion.unsafeUnicodeBindingFactory
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableAction
 import com.ichi2.anki.reviewer.ReviewerBinding
@@ -117,7 +119,7 @@ enum class ViewerAction(
     private val defaultBindings: List<ReviewerBinding> get() =
         when (this) {
             UNDO -> listOf(keycode(KeyEvent.KEYCODE_Z, ctrl()))
-            REDO -> listOf(keycode(KeyEvent.KEYCODE_Z, ModifierKeys(shift = true, ctrl = true, alt = false)))
+            REDO -> listOf(keycode(KeyEvent.KEYCODE_Z, ModifierKeys(shift = true, ctrl = true)))
             MARK -> listOf(unicode('*'))
             EDIT -> listOf(keycode(KeyEvent.KEYCODE_E))
             ADD_NOTE -> listOf(keycode(KeyEvent.KEYCODE_A))
@@ -229,16 +231,20 @@ enum class ViewerAction(
         keys: ModifierKeys = ModifierKeys.none(),
         side: CardSide = CardSide.BOTH,
     ): ReviewerBinding {
-        val binding = Binding.keyCode(keycode, keys)
+        val binding = KeyCode(keycode, keys)
         return ReviewerBinding(binding = binding, side = side)
     }
 
+    /**
+     * The caller must guarantee that [unicodeChar] is not [FORBIDDEN_UNICODE_CHAR]
+     */
     private fun unicode(
         unicodeChar: Char,
         keys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
         side: CardSide = CardSide.BOTH,
     ): ReviewerBinding {
-        val binding = Binding.unicode(unicodeChar, keys)
+        assert(unicodeChar != FORBIDDEN_UNICODE_CHAR)
+        val binding = unsafeUnicodeBindingFactory(unicodeChar, keys)
         return ReviewerBinding(binding = binding, side = side)
     }
 
