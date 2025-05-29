@@ -45,6 +45,8 @@ import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.widget.AppWidgetId.Companion.INVALID_APPWIDGET_ID
+import com.ichi2.widget.AppWidgetId.Companion.getAppWidgetId
 import com.ichi2.widget.WidgetConfigScreenAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -58,7 +60,7 @@ class CardAnalysisWidgetConfig :
     AnkiActivity(),
     DeckSelectionListener,
     BaseSnackbarBuilderProvider {
-    private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
+    private var appWidgetId = INVALID_APPWIDGET_ID
     lateinit var deckAdapter: WidgetConfigScreenAdapter
     private lateinit var cardAnalysisWidgetPreferences: CardAnalysisWidgetPreferences
 
@@ -85,12 +87,9 @@ class CardAnalysisWidgetConfig :
 
         cardAnalysisWidgetPreferences = CardAnalysisWidgetPreferences(this)
 
-        appWidgetId = intent.extras?.getInt(
-            AppWidgetManager.EXTRA_APPWIDGET_ID,
-            AppWidgetManager.INVALID_APPWIDGET_ID,
-        ) ?: AppWidgetManager.INVALID_APPWIDGET_ID
+        appWidgetId = intent.getAppWidgetId() ?: INVALID_APPWIDGET_ID
 
-        if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
+        if (appWidgetId == INVALID_APPWIDGET_ID) {
             Timber.v("Invalid App Widget ID")
             finish()
             return
@@ -313,7 +312,7 @@ class CardAnalysisWidgetConfig :
             val appWidgetManager = AppWidgetManager.getInstance(this)
             CardAnalysisWidget.updateWidget(this, appWidgetManager, appWidgetId)
 
-            val resultValue = Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+            val resultValue = Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId.id)
             setResult(RESULT_OK, resultValue)
             finish()
         }
@@ -335,7 +334,7 @@ class CardAnalysisWidgetConfig :
         val updateIntent =
             Intent(this, CardAnalysisWidget::class.java).apply {
                 action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-                putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(appWidgetId))
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(appWidgetId.id))
                 putExtra(EXTRA_SELECTED_DECK_IDS, selectedDeck)
             }
 
@@ -353,8 +352,8 @@ class CardAnalysisWidgetConfig :
                     return
                 }
 
-                val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
-                if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
+                val appWidgetId = intent.getAppWidgetId()
+                if (appWidgetId == INVALID_APPWIDGET_ID) {
                     return
                 }
 

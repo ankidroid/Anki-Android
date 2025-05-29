@@ -21,17 +21,11 @@ package com.ichi2.anki.model
  *
  * @see [anki.search.SearchNode.CardState]
  */
-enum class CardStateFilter {
-    ALL_CARDS,
-    NEW,
-    DUE,
-    ;
-
-    val toSearch: String
-        get() =
-            when (this) {
-                ALL_CARDS -> ""
-                NEW -> "is:new "
-                DUE -> "is:due "
-            }
+enum class CardStateFilter(
+    val code: Int,
+    val toSearch: String,
+) {
+    ALL_CARDS(0, ""),
+    NEW(1, "is:new "),
+    DUE(2, "is:due "),
 }

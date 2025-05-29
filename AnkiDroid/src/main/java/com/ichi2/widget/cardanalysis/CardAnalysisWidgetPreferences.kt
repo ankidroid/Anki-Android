@@ -20,6 +20,7 @@ import android.content.Context
 import androidx.core.content.edit
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks.Companion.NOT_FOUND_DECK_ID
+import com.ichi2.widget.AppWidgetId
 
 class CardAnalysisWidgetPreferences(
     context: Context,
@@ -36,13 +37,13 @@ class CardAnalysisWidgetPreferences(
     /**
      * Deletes the selected deck ID from the shared preferences for the given widget ID.
      */
-    fun deleteDeckData(appWidgetId: Int) {
+    fun deleteDeckData(appWidgetId: AppWidgetId) {
         cardAnalysisWidgetSharedPreferences.edit {
             remove(getCardAnalysisExtraWidgetKey(appWidgetId))
         }
     }
 
-    fun getSelectedDeckIdFromPreferences(appWidgetId: Int): DeckId? {
+    fun getSelectedDeckIdFromPreferences(appWidgetId: AppWidgetId): DeckId? {
         val selectedDeckString =
             cardAnalysisWidgetSharedPreferences.getLong(
                 getCardAnalysisExtraWidgetKey(appWidgetId),
@@ -52,7 +53,7 @@ class CardAnalysisWidgetPreferences(
     }
 
     fun saveSelectedDeck(
-        appWidgetId: Int,
+        appWidgetId: AppWidgetId,
         selectedDeck: DeckId?,
     ) {
         cardAnalysisWidgetSharedPreferences.edit {
@@ -64,4 +65,4 @@ class CardAnalysisWidgetPreferences(
 /**
  * Generates the key for the shared preferences for the given widget ID.
  */
-private fun getCardAnalysisExtraWidgetKey(appWidgetId: Int): String = "card_analysis_extra_widget_selected_deck_$appWidgetId"
+private fun getCardAnalysisExtraWidgetKey(appWidgetId: AppWidgetId): String = "card_analysis_extra_widget_selected_deck_$appWidgetId"

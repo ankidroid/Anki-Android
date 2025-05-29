@@ -60,7 +60,6 @@ import com.ichi2.anki.browser.CardBrowserColumn.TAGS
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModelTest
 import com.ichi2.anki.browser.CardOrNoteId
-import com.ichi2.anki.browser.Long
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ALL_FIELDS_AS_FIELD
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_FIELD
