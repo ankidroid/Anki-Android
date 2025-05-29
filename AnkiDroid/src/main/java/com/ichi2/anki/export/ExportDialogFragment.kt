@@ -195,7 +195,7 @@ class ExportDialogFragment : DialogFragment() {
                         ).apply { setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
                     adapter = exportTypesAdapter
                     onItemSelectedListener =
-                        BasicItemSelectedListener { position, _ ->
+                        BasicItemSelectedListener { position ->
                             showExtrasOptionsFor(this@initializeCommonUi, ExportConfiguration.from(position))
                         }
                 }
