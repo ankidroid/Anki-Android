@@ -2285,35 +2285,31 @@ class NoteEditor :
         return fieldText.toString()
     }
 
-    private fun setDid(note: Note?) {
-        fun calculateDeckId(): DeckId {
-            if (deckId != 0L) return deckId
-            if (note != null && !addNote && currentEditedCard != null) {
-                return currentEditedCard!!.currentDeckId()
-            }
-
-            if (!getColUnsafe.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
-                return getColUnsafe.notetypes.current().let {
-                    Timber.d("Adding to deck of note type, noteType: %s", it.name)
-                    return@let it.did
-                }
-            }
-
-            val currentDeckId = getColUnsafe.config.get(CURRENT_DECK) ?: 1L
-            return if (getColUnsafe.decks.isFiltered(currentDeckId)) {
+    /**
+     * Set [deckId] if it's unset.
+     * Use the currently edited card id if we are editing it
+     */
+    private suspend fun setDid(note: Note?) {
+        deckId =
+            when {
+                deckId != 0L ->
+                    deckId
+                note != null && !addNote && currentEditedCard != null ->
+                    currentEditedCard!!.currentDeckId()
+                withCol { config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK) } ->
+                    withCol { config.get<DeckId>(CURRENT_DECK) }?.takeIf { !getColUnsafe.decks.isFiltered(it) } ?: 1L
                 /*
                  * If the deck in mCurrentDid is a filtered (dynamic) deck, then we can't create cards in it,
                  * and we set mCurrentDid to the Default deck. Otherwise, we keep the number that had been
                  * selected previously in the activity.
                  */
-                1
-            } else {
-                currentDeckId
+                else ->
+                    getColUnsafe.notetypes.current().let {
+                        Timber.d("Adding to deck of note type, noteType: %s", it.name)
+                        return@let it.did
+                    }
             }
-        }
-
-        deckId = calculateDeckId()
-        launchCatchingTask { deckSpinnerSelection!!.selectDeckById(deckId, false) }
+        deckSpinnerSelection!!.selectDeckById(deckId, false)
     }
 
     /** Refreshes the UI using the currently selected note type as a template  */
@@ -2340,7 +2336,7 @@ class NoteEditor :
         }
         // nb: setOnItemSelectedListener and populateEditFields need to occur after this
         setNoteTypePosition()
-        setDid(note)
+        launchCatchingTask { setDid(note) }
         updateTags()
         updateCards(editorNote!!.notetype)
         updateToolbar()
