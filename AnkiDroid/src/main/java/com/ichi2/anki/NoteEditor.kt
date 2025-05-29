@@ -80,6 +80,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import anki.config.ConfigKey
 import anki.notes.NoteFieldsCheckResponse
+import anki.notes.note
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -2058,14 +2059,20 @@ class NoteEditor :
         toggleStickyButton: ImageButton,
         index: Int,
     ) {
+        val sticky = !currentFields[index].sticky
+        currentFields[index].sticky = sticky
         val text = editFields!![index].fieldText
-        if (toggleStickyText[index] == null) {
+        if (sticky) {
             toggleStickyText[index] = text
-            toggleStickyButton.background.alpha = 255
             Timber.d("Saved Text:: %s", toggleStickyText[index])
         } else {
             toggleStickyText.remove(index)
-            toggleStickyButton.background.alpha = 64
+        }
+        toggleStickyButton.background.alpha = if (sticky) 255 else 64
+        launchCatchingTask {
+            withCol {
+                this.notetypes.save(editorNote!!.notetype)
+            }
         }
     }
 
