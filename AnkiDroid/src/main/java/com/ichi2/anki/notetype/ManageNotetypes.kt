@@ -23,6 +23,7 @@ import android.os.Bundle
 import android.view.Menu
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.StringRes
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
@@ -199,7 +200,7 @@ class ManageNotetypes : AnkiActivity() {
 
     private fun deleteNotetype(manageNoteTypeUiModel: ManageNoteTypeUiModel) {
         launchCatchingTask {
-            val messageResourceId: Int? =
+            @StringRes val messageResourceId: Int? =
                 if (userAcceptsSchemaChange()) {
                     withProgress {
                         withCol {
