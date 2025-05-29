@@ -2076,14 +2076,21 @@ class NoteEditor :
         toggleStickyButton: ImageButton,
         index: Int,
     ) {
+        val updatedStickyState = !currentFields[index].sticky
+        currentFields[index].sticky = updatedStickyState
         val text = editFields!![index].fieldText
-        if (toggleStickyText[index] == null) {
+        if (updatedStickyState) {
             toggleStickyText[index] = text
             toggleStickyButton.background.alpha = 255
             Timber.d("Saved Text:: %s", toggleStickyText[index])
         } else {
             toggleStickyText.remove(index)
             toggleStickyButton.background.alpha = 64
+        }
+        launchCatchingTask {
+            withCol {
+                this.notetypes.save(editorNote!!.notetype)
+            }
         }
     }
 
