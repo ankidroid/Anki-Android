@@ -17,10 +17,10 @@
 package com.ichi2.anki.dialogs
 
 import android.os.Bundle
-import android.text.InputType
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.utils.AlertType
 import com.ichi2.utils.input
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -65,7 +65,7 @@ open class IntegerDialog : AnalyticsDialogFragment() {
                 setView(R.layout.dialog_generic_text_input)
             }.input(
                 hint = requireArguments().getString("prompt"),
-                inputType = InputType.TYPE_CLASS_NUMBER,
+                inputType = AlertType.Number,
                 maxLength = requireArguments().getInt("digits"),
                 prefill = requireArguments().getString("defaultValue"),
                 displayKeyboard = true,

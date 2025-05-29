@@ -19,7 +19,6 @@ package com.ichi2.preferences
 
 import android.content.Context
 import android.text.InputFilter
-import android.text.InputType
 import android.util.AttributeSet
 import android.view.View
 import android.widget.EditText
@@ -30,6 +29,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.utils.getFormattedStringOrPlurals
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.utils.AlertType
 import timber.log.Timber
 
 open class NumberRangePreferenceCompat
@@ -164,7 +164,7 @@ open class NumberRangePreferenceCompat
                 editText = view.findViewById(android.R.id.edit)!!
 
                 // Only allow integer input
-                editText.inputType = InputType.TYPE_CLASS_NUMBER
+                editText.inputType = AlertType.Number.inputType
 
                 // Clone the existing filters so we don't override them, then append our one at the end.
                 editText.filters = arrayOf(*editText.filters, InputFilter.LengthFilter(numberRangePreference.maxDigits))

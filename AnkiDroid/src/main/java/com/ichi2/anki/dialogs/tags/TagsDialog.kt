@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 import android.text.InputFilter
-import android.text.InputType
 import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -35,6 +34,7 @@ import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.ui.AccessibleSearchView
+import com.ichi2.utils.AlertType
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
 import com.ichi2.utils.TagsUtil
 import com.ichi2.utils.customView
@@ -307,7 +307,7 @@ class TagsDialog : AnalyticsDialogFragment {
                     setView(R.layout.dialog_generic_text_input)
                 }.input(
                     hint = getString(R.string.tag_name),
-                    inputType = InputType.TYPE_CLASS_TEXT,
+                    inputType = AlertType.Text,
                     displayKeyboard = true,
                 ) { d: AlertDialog?, input: CharSequence ->
                     addTag(input.toString())

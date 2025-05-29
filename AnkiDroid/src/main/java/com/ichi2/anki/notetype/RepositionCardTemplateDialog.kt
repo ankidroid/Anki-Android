@@ -17,10 +17,10 @@
 package com.ichi2.anki.notetype
 
 import android.content.Context
-import android.text.InputType
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
+import com.ichi2.utils.AlertType
 import com.ichi2.utils.getInputField
 import com.ichi2.utils.input
 import com.ichi2.utils.negativeButton
@@ -53,7 +53,7 @@ class RepositionCardTemplateDialog {
                         setMessage(CollectionManager.TR.cardTemplatesEnterNewCardPosition1(numberOfTemplates))
                         setView(R.layout.dialog_generic_text_input)
                     }.input(
-                        inputType = InputType.TYPE_CLASS_NUMBER,
+                        inputType = AlertType.Number,
                         displayKeyboard = true,
                         waitForPositiveButton = false,
                     ) { dialog, text: CharSequence ->

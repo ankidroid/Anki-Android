@@ -17,10 +17,10 @@ package com.ichi2.preferences
 
 import android.content.Context
 import android.text.InputFilter.LengthFilter
-import android.text.InputType
 import android.util.AttributeSet
 import android.view.View
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.utils.AlertType
 import timber.log.Timber
 
 @Suppress(
@@ -136,7 +136,7 @@ open class NumberRangePreference :
      */
     private fun updateSettings() {
         // Only allow integer input
-        editText.inputType = InputType.TYPE_CLASS_NUMBER
+        editText.inputType = AlertType.Number.inputType
 
         // Set max number of digits
         editText.filters += LengthFilter(max.toString().length)

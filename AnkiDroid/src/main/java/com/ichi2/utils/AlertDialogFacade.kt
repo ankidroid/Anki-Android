@@ -22,6 +22,9 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.DialogInterface.OnClickListener
 import android.text.InputFilter
+import android.text.InputType
+import android.text.InputType.TYPE_CLASS_NUMBER
+import android.text.InputType.TYPE_CLASS_TEXT
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ArrayAdapter
@@ -257,6 +260,21 @@ fun AlertDialog.Builder.customListAdapterWithDecoration(
 }
 
 /**
+ * @param inputType an [InputType]
+ */
+enum class AlertType(
+    val inputType: Int,
+) {
+    Text(TYPE_CLASS_TEXT),
+    Number(TYPE_CLASS_NUMBER),
+    ;
+
+    companion object {
+        fun fromCode(c: Int) = AlertType.entries.first { it.inputType == c }
+    }
+}
+
+/**
  * Note: using [waitForPositiveButton] = true doesn't automatically close the dialog and it
  * requires a manual call to [android.app.Dialog.dismiss] inside the callback listening for text
  * input to replicate the standard dialog behavior.
@@ -274,7 +292,7 @@ fun AlertDialog.Builder.customListAdapterWithDecoration(
  */
 fun AlertDialog.input(
     hint: String? = null,
-    inputType: Int? = null,
+    inputType: AlertType? = null,
     prefill: CharSequence? = null,
     allowEmpty: Boolean = false,
     maxLength: Int? = null,
@@ -292,7 +310,7 @@ fun AlertDialog.input(
             AndroidUiUtils.setFocusAndOpenKeyboard(this, window!!)
         }
 
-        inputType?.let { this.inputType = it }
+        inputType?.let { this.inputType = it.inputType }
 
         if (!waitForPositiveButton) {
             doOnTextChanged { text, _, _, _ ->
