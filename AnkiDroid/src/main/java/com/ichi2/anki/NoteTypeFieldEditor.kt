@@ -152,7 +152,12 @@ class NoteTypeFieldEditor : AnkiActivity() {
         fieldsListView.adapter = ArrayAdapter(this, R.layout.note_type_field_editor_list_item, fieldsLabels)
         fieldsListView.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position: Int, _ ->
-                showDialogFragment(newInstance(fieldsLabels[position]))
+                showDialogFragment(
+                    newInstance(
+                        label = fieldsLabels[position],
+                        sticky = noteFields[position].sticky,
+                    ),
+                )
                 currentPos = position
             }
     }
@@ -501,11 +506,23 @@ class NoteTypeFieldEditor : AnkiActivity() {
     }
 
     /**
-     * Toggle the "Remember last input" setting AKA the "Sticky" setting
+     * Configures the field to persist input after saving a note
+     *
+     * @see com.ichi2.libanki.Field.sticky
      */
-    private fun toggleStickyField() {
+    private fun stickField() {
         val field = noteFields[currentPos]
-        field.sticky = !field.sticky
+        field.sticky = true
+    }
+
+    /**
+     * Configures the field to clear input after saving a note
+     *
+     * @see com.ichi2.libanki.Field.sticky
+     */
+    private fun unstickField() {
+        val field = noteFields[currentPos]
+        field.sticky = false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
@@ -527,7 +544,8 @@ class NoteTypeFieldEditor : AnkiActivity() {
             NoteTypeEditorContextMenuAction.Reposition -> repositionFieldDialog()
             NoteTypeEditorContextMenuAction.Delete -> deleteFieldDialog()
             NoteTypeEditorContextMenuAction.Rename -> renameFieldDialog()
-            NoteTypeEditorContextMenuAction.ToggleSticky -> toggleStickyField()
+            NoteTypeEditorContextMenuAction.StickField -> stickField()
+            NoteTypeEditorContextMenuAction.UnstickField -> unstickField()
             NoteTypeEditorContextMenuAction.AddLanguageHint -> localeHintDialog()
         }
     }

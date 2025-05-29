@@ -19,13 +19,27 @@ import timber.log.Timber
  * Note: the class is declared as open only to support testing.
  */
 open class NoteTypeEditorContextMenu : AnalyticsDialogFragment() {
+    val sticky
+        get() = requireArguments().getBoolean(KEY_STICKY)
+
     @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        val availableItems = NoteTypeEditorContextMenuAction.entries.sortedBy { it.order }
 
         return AlertDialog.Builder(requireActivity()).create {
             setTitle(requireArguments().getString(KEY_LABEL))
+
+            val excludedAction =
+                if (sticky) {
+                    NoteTypeEditorContextMenuAction.StickField
+                } else {
+                    NoteTypeEditorContextMenuAction.UnstickField
+                }
+
+            val availableItems =
+                NoteTypeEditorContextMenuAction.entries
+                    .filter { it != excludedAction }
+                    .sortedBy { it.order }
             setItems(availableItems.map { resources.getString(it.actionTextId) }.toTypedArray()) { _, index ->
                 (activity as? NoteTypeFieldEditor)?.run { handleAction(availableItems[index]) }
                     ?: Timber.e("ContextMenu used from outside of its target activity!")
@@ -41,17 +55,26 @@ open class NoteTypeEditorContextMenu : AnalyticsDialogFragment() {
         Sort(1, R.string.model_field_editor_sort_field),
         Rename(2, R.string.model_field_editor_rename),
         Delete(3, R.string.model_field_editor_delete),
-        ToggleSticky(4, R.string.model_field_editor_toggle_sticky),
+        StickField(4, R.string.model_field_editor_remember_sticky),
+        UnstickField(4, R.string.model_field_editor_forget_sticky),
         AddLanguageHint(5, R.string.model_field_editor_language_hint),
     }
 
     companion object {
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         const val KEY_LABEL = "key_label"
+        const val KEY_STICKY = "key_sticky"
 
-        fun newInstance(label: String): NoteTypeEditorContextMenu =
+        fun newInstance(
+            label: String,
+            sticky: Boolean,
+        ): NoteTypeEditorContextMenu =
             NoteTypeEditorContextMenu().apply {
-                arguments = bundleOf(KEY_LABEL to label)
+                arguments =
+                    bundleOf(
+                        KEY_LABEL to label,
+                        KEY_STICKY to sticky,
+                    )
             }
     }
 }
