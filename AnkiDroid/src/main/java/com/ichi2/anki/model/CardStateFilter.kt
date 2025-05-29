@@ -16,22 +16,28 @@
 
 package com.ichi2.anki.model
 
+import timber.log.Timber
+
 /**
  * Allows filtering a search by the state of cards
  *
  * @see [anki.search.SearchNode.CardState]
  */
-enum class CardStateFilter {
-    ALL_CARDS,
-    NEW,
-    DUE,
+enum class CardStateFilter(
+    val code: Int,
+    val toSearch: String,
+) {
+    ALL_CARDS(0, ""),
+    NEW(1, "is:new "),
+    DUE(2, "is:due "),
     ;
 
-    val toSearch: String
-        get() =
-            when (this) {
-                ALL_CARDS -> ""
-                NEW -> "is:new "
-                DUE -> "is:due "
-            }
+    companion object {
+        fun fromCode(id: Int): CardStateFilter {
+            val filter = CardStateFilter.entries.firstOrNull { it.code == id }
+            if (filter != null) return filter
+            Timber.w("unexpected value: %d", id)
+            return ALL_CARDS
+        }
+    }
 }
