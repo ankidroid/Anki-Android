@@ -18,16 +18,8 @@ package com.ichi2.anki.browser
 
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.libanki.CardId
-import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.model.CardsOrNotes
 
-/**
- * Either a [CardId] or a [NoteId]. The ID of a row inside the 'Browser' can be either.
- *
- * A [CardOrNoteId] should always be associated with [CardsOrNotes].
- * It is not included in the class as this class is primarily provided in a [BrowserRowCollection]
- * and storing the same value for every item in the list is a waste
- */
 @JvmInline
 value class CardOrNoteId(
     val cardOrNoteId: Long,
@@ -38,7 +30,7 @@ value class CardOrNoteId(
     //  to move from NoteId to CardId. Our move to 'Notes' mode wasn't well thought-through
     suspend fun toCardId(type: CardsOrNotes): CardId =
         when (type) {
-            CardsOrNotes.CARDS -> cardOrNoteId
+            CardsOrNotes.CARDS -> cardOrNoteId as CardId
             CardsOrNotes.NOTES -> withCol { cardIdsOfNote(cardOrNoteId).first() }
         }
 }

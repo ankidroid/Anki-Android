@@ -92,7 +92,7 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
                 super.onPageFinished(view, url)
 
                 val kind = requireArguments().getString(ARG_KEY_KIND)
-                val noteOrNotetypeId = requireArguments().getLong(ARG_KEY_ID)
+                val noteOrNotetypeId = requireArguments().getLong(NOTE_ID_ID)
                 val imagePath = requireArguments().getString(ARG_KEY_PATH)
 
                 val options = JSONObject()
@@ -112,7 +112,7 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
 
     companion object {
         private const val ARG_KEY_KIND = "kind"
-        private const val ARG_KEY_ID = "id"
+        private const val NOTE_ID_ID = "id"
         private const val ARG_KEY_PATH = "imagePath"
         private const val ARG_KEY_EDITOR_DECK_ID = "arg_key_editor_deck_id"
 
@@ -135,7 +135,7 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
             val arguments =
                 bundleOf(
                     ARG_KEY_KIND to kind,
-                    ARG_KEY_ID to noteOrNotetypeId,
+                    NOTE_ID_ID to noteOrNotetypeId,
                     ARG_KEY_PATH to imagePath,
                     PATH_ARG_KEY to "image-occlusion/$suffix",
                     ARG_KEY_EDITOR_DECK_ID to editorWorkingDeckId,
