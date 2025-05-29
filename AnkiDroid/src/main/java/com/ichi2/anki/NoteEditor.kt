@@ -125,6 +125,7 @@ import com.ichi2.anki.noteeditor.Toolbar
 import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
 import com.ichi2.anki.pages.ImageOcclusion
+import com.ichi2.anki.pages.NoteOrNoteTypeId
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerPage
@@ -2632,7 +2633,7 @@ class NoteEditor :
 
     private fun setupImageOcclusionEditor(imagePath: String = "") {
         val kind: String
-        val id: Long
+        val id: NoteOrNoteTypeId
         if (addNote) {
             kind = "add"
             // if opened from an intent, the selected note type may not be suitable for IO

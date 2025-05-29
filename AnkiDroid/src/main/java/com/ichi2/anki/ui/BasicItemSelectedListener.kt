@@ -23,14 +23,14 @@ import android.widget.AdapterView
  * [AdapterView.OnItemSelectedListener] which handles [onItemSelected] and not [onNothingSelected]
  */
 class BasicItemSelectedListener(
-    private val onItemSelected: (position: Int, id: Long) -> Unit,
+    private val onItemSelected: (position: Int) -> Unit,
 ) : AdapterView.OnItemSelectedListener {
     override fun onItemSelected(
         parent: AdapterView<*>?,
         view: View?,
         position: Int,
         id: Long,
-    ) = onItemSelected(position, id)
+    ) = onItemSelected(position)
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
         // do nothing
