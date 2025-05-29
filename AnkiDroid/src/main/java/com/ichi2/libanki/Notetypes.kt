@@ -76,11 +76,7 @@ class Notetypes(
      */
 
     @Suppress("ktlint:standard:backing-property-naming")
-    private var _cache: HashMap<int, NotetypeJson> = HashMap()
-
-    init {
-        _cache = HashMap()
-    }
+    private val _cache = HashMap<NoteTypeId, NotetypeJson>()
 
     /** Save changes made to provided note type. */
     fun save(notetype: NotetypeJson) {
@@ -112,7 +108,7 @@ class Notetypes(
     }
 
     @LibAnkiAlias("_get_cached")
-    private fun getCached(ntid: int): NotetypeJson? = _cache[ntid]
+    private fun getCached(ntid: NoteTypeId): NotetypeJson? = _cache[ntid]
 
     @NeedsTest("14827: styles are updated after syncing style changes")
     @LibAnkiAlias("_clear_cache")
@@ -174,10 +170,10 @@ class Notetypes(
         }
 
     /** "Get model with ID, or None." */
-    fun get(id: int): NotetypeJson? = get(id as int?)
+    fun get(id: NoteTypeId): NotetypeJson? = get(id as NoteTypeId?)
 
     /** Externally, we do not want to pass in a null id */
-    private fun get(id: int?): NotetypeJson? {
+    private fun get(id: NoteTypeId?): NotetypeJson? {
         if (id == null) {
             return null
         }
@@ -230,7 +226,7 @@ class Notetypes(
     }
 
     /** Modifies schema. */
-    fun remove(id: int) {
+    fun remove(id: NoteTypeId) {
         removeFromCache(id)
         col.backend.removeNotetype(id)
     }
@@ -283,7 +279,7 @@ class Notetypes(
     fun nids(model: NotetypeJson): List<int> = nids(model.id)
 
     /** Note ids for M. */
-    fun nids(ntid: int): List<int> = col.db.queryLongList("select id from notes where mid = ?", ntid)
+    fun nids(ntid: NoteTypeId): List<int> = col.db.queryLongList("select id from notes where mid = ?", ntid)
 
     /** Number of note using M. */
     fun useCount(notetype: NotetypeJson): Int = col.db.queryLongScalar("select count() from notes where mid = ?", notetype.id).toInt()

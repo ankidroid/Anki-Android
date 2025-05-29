@@ -185,8 +185,8 @@ class TagsDialog : AnalyticsDialogFragment {
             optionsGroup.getChildAt(i).id = i
         }
         optionsGroup.check(0)
-        selectedOption = radioButtonIdToCardState(optionsGroup.checkedRadioButtonId)
-        optionsGroup.setOnCheckedChangeListener { _: RadioGroup?, checkedId: Int -> selectedOption = radioButtonIdToCardState(checkedId) }
+        selectedOption = CardStateFilter.fromCode(optionsGroup.checkedRadioButtonId)
+        optionsGroup.setOnCheckedChangeListener { _: RadioGroup?, checkedId: Int -> selectedOption = CardStateFilter.fromCode(checkedId) }
         if (type == DialogType.EDIT_TAGS) {
             dialogTitle = resources.getString(R.string.card_details_tags)
             optionsGroup.visibility = View.GONE
@@ -223,17 +223,6 @@ class TagsDialog : AnalyticsDialogFragment {
         super.onResume()
         dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
     }
-
-    private fun radioButtonIdToCardState(id: Int) =
-        when (id) {
-            0 -> CardStateFilter.ALL_CARDS
-            1 -> CardStateFilter.NEW
-            2 -> CardStateFilter.DUE
-            else -> {
-                Timber.w("unexpected value: %d", id)
-                CardStateFilter.ALL_CARDS
-            }
-        }
 
     private fun adjustToolbar(tagsDialogView: View) {
         val toolbar: Toolbar = tagsDialogView.findViewById(R.id.tags_dialog_toolbar)
