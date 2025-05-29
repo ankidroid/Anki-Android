@@ -31,7 +31,7 @@ import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
-class ModelFieldEditorTest(
+class NoteTypeFieldEditorTest(
     private val forbiddenCharacter: String,
 ) : RobolectricTest() {
     /**
@@ -110,16 +110,16 @@ class ModelFieldEditorTest(
                     val intent = Intent()
                     intent.putExtra("title", noteTypeName)
                     intent.putExtra("noteTypeID", col.notetypes.idForName(noteTypeName)!!)
-                    val modelFieldEditor =
+                    val noteTypeFieldEditor =
                         startActivityNormallyOpenCollectionWithIntent(
-                            this@ModelFieldEditorTest,
-                            ModelFieldEditor::class.java,
+                            this@NoteTypeFieldEditorTest,
+                            NoteTypeFieldEditor::class.java,
                             intent,
                         )
                     when (fieldOperationType) {
-                        FieldOperationType.ADD_FIELD -> modelFieldEditor.addField(fieldNameInput)
+                        FieldOperationType.ADD_FIELD -> noteTypeFieldEditor.addField(fieldNameInput)
                         FieldOperationType.RENAME_FIELD ->
-                            modelFieldEditor.renameField(
+                            noteTypeFieldEditor.renameField(
                                 fieldNameInput,
                             )
                     }
