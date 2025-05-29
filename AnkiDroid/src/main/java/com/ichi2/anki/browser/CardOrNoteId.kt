@@ -6,7 +6,6 @@ import android.os.Parcelable
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
-import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.model.CardsOrNotes
 import kotlinx.parcelize.Parcelize
 
