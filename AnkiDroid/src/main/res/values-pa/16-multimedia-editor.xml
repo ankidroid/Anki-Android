@@ -60,6 +60,7 @@
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">ਕੁਝ ਗਲਤ ਹੋ ਗਿਆ</string>
     <string name="multimedia_editor_png_paste_error">ਕਲਿੱਪਬੋਰਡ ਚਿੱਤਰ ਨੂੰ png ਵਿੱਚ ਤਬਦੀਲ ਕਰਨ ਵਿੱਚ ਤਰੁੱਟੀ: %s</string>
+    <string name="multimedia_editor_attach_tooltip" comment="Appear when holding the finger  on the paperclip icon">Attach multimedia content</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">ਮਲਟੀਮੀਡੀਆ ਸਮੱਗਰੀ ਨੂੰ %1$s ਖੇਤਰ ਵਿੱਚ ਨੱਥੀ ਕਰੋ</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->

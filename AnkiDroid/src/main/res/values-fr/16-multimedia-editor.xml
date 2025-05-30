@@ -60,6 +60,7 @@
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Quelque chose s’est mal passé</string>
     <string name="multimedia_editor_png_paste_error">Erreur lors de la convertion de l\'image du presse-papier au format PNG: %s</string>
+    <string name="multimedia_editor_attach_tooltip" comment="Appear when holding the finger  on the paperclip icon">Attach multimedia content</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Joindre le contenu multimédia au champ %1$s</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
