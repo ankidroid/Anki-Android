@@ -127,15 +127,15 @@
     <string name="tts" maxLength="41">Teksta pārveidošana runā</string>
     <string name="tts_summ">Nolasa jautājumu un atbildi, ja nav iekļauta skaņas datne</string>
     <!-- Sync -->
-    <string name="sync_fetch_missing_media" maxLength="41">Fetch media on sync</string>
-    <string name="sync_account" maxLength="41">AnkiWeb account</string>
+    <string name="sync_fetch_missing_media" maxLength="41">Iegūt informācijas nesējus sinhronizēšanas laikā</string>
+    <string name="sync_account" maxLength="41">AnkiWeb konts</string>
     <string name="sync_account_summ_logged_out">Not logged in</string>
     <string name="automatic_sync_choice" maxLength="41">Automatic synchronization</string>
     <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
         minutes ago.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
-    <string name="sync_media_never">Never</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Vienmēr</string>
+    <string name="sync_media_only_unmetered">Tikai nemērāmos savienojumos</string>
+    <string name="sync_media_never">Nekad</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
@@ -213,8 +213,8 @@
     <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
     <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
-    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <string name="media_import_allow_all_files" maxLength="41">Atļaut visas datnes informācijas nesēju ievietošanās</string>
+    <string name="media_import_allow_all_files_summ">Ja Android neatpazīst informācija nesēju datni</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Pielāgots sinhronizēšanas serveris</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Netiek izmantots</string>
@@ -232,7 +232,7 @@
     <string name="card" maxLength="41" comment="Generic term to refer to a card">Kartīte</string>
     <string name="note" maxLength="41">Note</string>
     <string name="navigation" maxLength="41">Navigation</string>
-    <string name="media" maxLength="41">Media</string>
+    <string name="media" maxLength="41">Informācijas nesēji</string>
     <string name="misc" maxLength="41">Misc</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Select tags</string>
@@ -332,9 +332,9 @@
         <item quantity="other">%1$d datnes\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
-    <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Izdzēst neizmantotās informācijas nesēju datnes</string>
+    <string name="pref__delete_unused_media_files__summary">Izdzēst attēlus un citus informācijas nesējus, kuri nesākas ar _ un uz kuriem nav atsauces nevienā piezīmē</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Izdzēst neizmantotās informācijas nesēju datnes</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Delete backups</string>
