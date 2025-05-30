@@ -49,7 +49,7 @@
     <string name="backup_restore" maxLength="28">Restaurar dende a copia</string>
     <string name="backup_new_collection">Nova colección</string>
     <string name="backup_del_collection">Eliminar a colección e crear unha nova</string>
-    <string name="backup_del_collection_question">Eliminar a colección e crear unha nova? Isto eliminará todos os teus progresos e todos os cartóns.</string>
+    <string name="backup_del_collection_question">Queres eliminar a colección e crear unha nova? Isto fará que perdas todo o teu progreso de aprendizaxe e que se eliminen todas as tarxetas.</string>
     <string name="backup_one_way_sync_from_server">Sincronización unidireccional dende o servidor</string>
     <string name="backup_full_sync_from_server_question">Sobrescribir a túa colección coa de AnkiWeb? Eliminarase todo o teu progreso de aprendizaxe e a información engadida dende a última sincronización.</string>
     <string name="error_handling_title">Xestión dos erros</string>

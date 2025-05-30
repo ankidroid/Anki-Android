@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">ᱢᱤᱰᱤᱭᱟ ᱪᱮᱠ ᱢᱮ</string>
     <string name="empty_cards" maxLength="28">ᱱᱩᱬᱤᱭᱟᱹ ᱠᱟᱰ ᱠᱚ</string>
     <string name="unknown_type_field_warning">ᱨᱚᱲ ᱴᱟᱭᱤᱯ ᱢᱮᱺ ᱵᱚᱭ ᱵᱟᱰᱟᱭᱠᱟᱱ ᱡᱟᱭᱜᱟ %s</string>
-    <string name="delete_deck">ᱰᱮᱠ ᱢᱮᱴᱟᱣᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">ᱰᱮᱠ ᱢᱮᱴᱟᱣᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="info_rate">AnkiDroid ᱜᱚᱬᱚᱰ ᱢᱮ</string>
     <string name="import_title">ᱟᱹᱜᱩᱭᱮᱛ ᱟ</string>
     <string name="import_preparing_file">ᱤᱱᱯᱷᱚᱨᱢᱮᱱᱴ ᱞᱟᱹᱜᱤᱫ ᱯᱷᱤᱞᱤᱯᱤ ᱛᱮᱭᱟᱨᱚᱜ ᱠᱟᱱᱟ&#8230;</string>

@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">Έλεγχος πολυμέσων</string>
     <string name="empty_cards" maxLength="28">Κενές κάρτες</string>
     <string name="unknown_type_field_warning">Τύπος απάντησης: άγνωστο πεδίο %s</string>
-    <string name="delete_deck">Διαγραφή τράπουλας&#8230;\nΠαρακαλούμε περιμένετε.</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Διαγραφή τράπουλας&#8230;\nΠαρακαλούμε περιμένετε.</string>
     <string name="info_rate">Αξιολογείστε το Ανκί-Ντρόιντ</string>
     <string name="import_title">Εισαγωγή</string>
     <string name="import_preparing_file">Προετοιμασία αρχείου για εισαγωγή&#8230;</string>

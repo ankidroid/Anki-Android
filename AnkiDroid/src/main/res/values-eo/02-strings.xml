@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">Kontroli aŭdvidaĵojn</string>
     <string name="empty_cards" maxLength="28">Malplenaj kartoj</string>
     <string name="unknown_type_field_warning">Enigu respondon: nekonata kampo %s</string>
-    <string name="delete_deck">Forigado de kartaro&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Forigado de kartaro&#8230;</string>
     <string name="info_rate">Taksi AnkiDroid</string>
     <string name="import_title">Enporti</string>
     <string name="import_preparing_file">Preparado de dosiero por enporti&#8230;</string>

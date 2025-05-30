@@ -131,7 +131,7 @@
     <string name="check_media" maxLength="28">Проверете медиата</string>
     <string name="empty_cards" maxLength="28">Празни картички</string>
     <string name="unknown_type_field_warning">Тип на одговор: непознато поле %s</string>
-    <string name="delete_deck">Бришење на полото&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Бришење на полото&#8230;</string>
     <string name="info_rate">Гласај AnkiDroid</string>
     <string name="import_title">Увоз</string>
     <string name="import_preparing_file">Preparing file for import&#8230;</string>

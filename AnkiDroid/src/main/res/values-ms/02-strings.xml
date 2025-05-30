@@ -127,7 +127,7 @@
     <string name="check_media" maxLength="28">Periksa media</string>
     <string name="empty_cards" maxLength="28">Kad kosong</string>
     <string name="unknown_type_field_warning">Taip jawapan: medan %s tidak diketahui</string>
-    <string name="delete_deck">Memadam dek&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Memadam dek&#8230;</string>
     <string name="info_rate">Nilaikan AnkiDroid</string>
     <string name="import_title">Mengimport</string>
     <string name="import_preparing_file">Preparing file for import&#8230;</string>

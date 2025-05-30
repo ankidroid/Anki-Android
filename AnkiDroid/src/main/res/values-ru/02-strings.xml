@@ -136,7 +136,7 @@
     <string name="check_media" maxLength="28">Проверить медиафайлы</string>
     <string name="empty_cards" maxLength="28">Пустые карточки</string>
     <string name="unknown_type_field_warning">Неизвестный тип поля: %s</string>
-    <string name="delete_deck">Колода удаляется&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Колода удаляется&#8230;</string>
     <string name="info_rate">Оценить AnkiDroid</string>
     <string name="import_title">Импорт</string>
     <string name="import_preparing_file">Подготовка файла для импорта&#8230;</string>

@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">Suriin ang media</string>
     <string name="empty_cards" maxLength="28">Tangalin ang mga baraha</string>
     <string name="unknown_type_field_warning">I-type ang sagot: di kilalang field %s</string>
-    <string name="delete_deck">Bunubura ang deck&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Bunubura ang deck&#8230;</string>
     <string name="info_rate">I-rate ang AnkiDroid</string>
     <string name="import_title">Ini-Import</string>
     <string name="import_preparing_file">Preparing file for import&#8230;</string>

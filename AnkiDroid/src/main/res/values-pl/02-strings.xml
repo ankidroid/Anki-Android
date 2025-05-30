@@ -136,7 +136,7 @@
     <string name="check_media" maxLength="28">Sprawdź media</string>
     <string name="empty_cards" maxLength="28">Puste karty</string>
     <string name="unknown_type_field_warning">Wpisz odpowiedź: nieznane pole %s</string>
-    <string name="delete_deck">Usuwanie talii&#8230;\nProszę czekać&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Usuwanie talii&#8230;\nProszę czekać&#8230;</string>
     <string name="info_rate">Oceń AnkiDroid</string>
     <string name="import_title">Importowanie</string>
     <string name="import_preparing_file">Przygotowywanie pliku do importu&#8230;</string>

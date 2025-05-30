@@ -136,7 +136,7 @@
     <string name="check_media" maxLength="28">בדוק מדיה</string>
     <string name="empty_cards" maxLength="28">כרטסיות ריקות</string>
     <string name="unknown_type_field_warning">הקלד תשובה: שדה אינו מוכר %s</string>
-    <string name="delete_deck">מוחק חפיסה&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">מוחק חפיסה&#8230;</string>
     <string name="info_rate">דירוג AnkiDroid</string>
     <string name="import_title">מתבצע ייבוא</string>
     <string name="import_preparing_file">מכין קובץ לייבוא&#8230;</string>

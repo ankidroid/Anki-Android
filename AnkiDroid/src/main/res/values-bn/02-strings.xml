@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">মিডিয়া চেক</string>
     <string name="empty_cards" maxLength="28">খালি কার্ডসমূহ</string>
     <string name="unknown_type_field_warning">উত্তর টাইপ করুন: অজানা ফিল্ড %s</string>
-    <string name="delete_deck">ডেক মুছছি&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">ডেক মুছছি&#8230;</string>
     <string name="info_rate">আনকি-ড্রয়েডকে রেটিং দিন</string>
     <string name="import_title">আমদানি হচ্ছে</string>
     <string name="import_preparing_file">আমদানির জন্য ফাইল প্রস্তুত করা হচ্ছে&#8230;</string>

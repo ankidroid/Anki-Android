@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">Medien überprüfen</string>
     <string name="empty_cards" maxLength="28">Leere Karten</string>
     <string name="unknown_type_field_warning">Antworteingabe: Unbekanntes Feld %s</string>
-    <string name="delete_deck">Lösche Stapel&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Lösche Stapel&#8230;</string>
     <string name="info_rate">AnkiDroid bewerten</string>
     <string name="import_title">Importieren</string>
     <string name="import_preparing_file">Datei für den Import vorbereiten&#8230;</string>

@@ -114,7 +114,7 @@
         <item quantity="other">%d ficheiros eliminados</item>
     </plurals>
     <!-- Tags Dialog Options -->
-    <string name="tags_dialog_option_all_cards">Todos os cartóns</string>
+    <string name="tags_dialog_option_all_cards">Todas as tarxetas</string>
     <string name="tags_dialog_option_new_cards">Novo</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Pendentes</string>
     <!-- Empty cards -->

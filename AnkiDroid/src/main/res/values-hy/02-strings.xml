@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">Ստուգել մեդիան</string>
     <string name="empty_cards" maxLength="28">Դատարկ քարտեր</string>
     <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
-    <string name="delete_deck">Deleting deck&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Deleting deck&#8230;</string>
     <string name="info_rate">Գնահատեք AnkiDroid-ը</string>
     <string name="import_title">Importing</string>
     <string name="import_preparing_file">Preparing file for import&#8230;</string>

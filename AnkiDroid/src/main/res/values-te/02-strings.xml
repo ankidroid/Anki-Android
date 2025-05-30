@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">మీడియా తనిఖీ చేయండి</string>
     <string name="empty_cards" maxLength="28">ఖాళీ కార్డులు</string>
     <string name="unknown_type_field_warning">సమాధానం టైప్: తెలియని ఫీల్డ్ %s</string>
-    <string name="delete_deck">డెక్ను తొలగిస్తోంది&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">డెక్ను తొలగిస్తోంది&#8230;</string>
     <string name="info_rate">రేట్ AnkiDroid</string>
     <string name="import_title">దిగుమతి</string>
     <string name="import_preparing_file">దిగుమతి కోసం ఫైల్‌ను సిద్ధం చేస్తోంది&#8230;</string>

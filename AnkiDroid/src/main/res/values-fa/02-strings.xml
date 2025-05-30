@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">بررسی رسانه ها</string>
     <string name="empty_cards" maxLength="28">کارت های خالی</string>
     <string name="unknown_type_field_warning">پاسخ را تایپ کنید:فیلد نامشخص %s</string>
-    <string name="delete_deck">در حال حذف دسته کارت&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">در حال حذف دسته کارت&#8230;</string>
     <string name="info_rate">امتیازدهی به AnkiDroid</string>
     <string name="import_title">درحال وارد کردن</string>
     <string name="import_preparing_file">آماده‌سازی فایل برای وارد کردن&#8230;</string>

@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">Media controleren</string>
     <string name="empty_cards" maxLength="28">Lege kaarten zoeken</string>
     <string name="unknown_type_field_warning">Type antwoord: onbekend veld %s</string>
-    <string name="delete_deck">Leerset verwijderen&#8230;\nEven wachten.</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Leerset verwijderen&#8230;\nEven wachten.</string>
     <string name="info_rate">Beoordeel AnkiDroid</string>
     <string name="import_title">Importeren</string>
     <string name="import_preparing_file">Bestand voorbereiden voor importeren&#8230;</string>

@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">Tarkista media</string>
     <string name="empty_cards" maxLength="28">Tyhjät kortit</string>
     <string name="unknown_type_field_warning">Kirjoita vastaus: tuntematon kenttä %s</string>
-    <string name="delete_deck">Poistetaan pakka&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Poistetaan pakka&#8230;</string>
     <string name="info_rate">Arvostele AnkiDroid</string>
     <string name="import_title">Tuodaan</string>
     <string name="import_preparing_file">Valmistellaan tiedostoa tuontiin&#8230;</string>

@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">Comprovar la multimèdia</string>
     <string name="empty_cards" maxLength="28">Targetes buides</string>
     <string name="unknown_type_field_warning">Tipus de resposta: camp desconegut %s</string>
-    <string name="delete_deck">S\'està suprimint el paquet&#8230;\nUn moment si us plau.</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">S\'està suprimint el paquet&#8230;\nUn moment si us plau.</string>
     <string name="info_rate">Valoreu l\'AnkiDroid</string>
     <string name="import_title">S\'està important</string>
     <string name="import_preparing_file">Preparing file for import&#8230;</string>

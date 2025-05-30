@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">Vérifier les médias</string>
     <string name="empty_cards" maxLength="28">Cartes vides</string>
     <string name="unknown_type_field_warning">Taper la réponse : champ inconnu %s</string>
-    <string name="delete_deck">Suppression du paquet&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Suppression du paquet&#8230;</string>
     <string name="info_rate">Noter AnkiDroid</string>
     <string name="import_title">Importation en cours</string>
     <string name="import_preparing_file">Préparation du fichier pour l\'import&#8230;</string>

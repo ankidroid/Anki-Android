@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">ಮಾಧ್ಯಮವನ್ನು ಪರಿಶೀಲಿಸಿ</string>
     <string name="empty_cards" maxLength="28">ಖಾಲಿ ಕಾರ್ಡ್‌ಗಳು</string>
     <string name="unknown_type_field_warning">ಉತ್ತರವನ್ನು ಟೈಪ್ ಮಾಡಿ: ಅಜ್ಞಾತ ಕ್ಷೇತ್ರ %s</string>
-    <string name="delete_deck">ಡೆಕ್ ಅಳಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">ಡೆಕ್ ಅಳಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="info_rate">ಆಂಕಿಡ್ರಾಯ್ಡ್ ಅನ್ನು ರೇಟ್ ಮಾಡಿ</string>
     <string name="import_title">ಆಮದು ಮಾಡಲಾಗುತ್ತಿದೆ</string>
     <string name="import_preparing_file">Preparing file for import&#8230;</string>
