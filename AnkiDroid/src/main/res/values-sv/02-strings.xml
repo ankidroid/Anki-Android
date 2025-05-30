@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">Kontrollera media</string>
     <string name="empty_cards" maxLength="28">Tomma kort</string>
     <string name="unknown_type_field_warning">Skriv svar: okänt fält %s</string>
-    <string name="delete_deck">Raderar kortlek&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Raderar kortlek&#8230;</string>
     <string name="info_rate">Betygsätt AnkiDroid</string>
     <string name="import_title">Importera</string>
     <string name="import_preparing_file">Förbereder fil för importering&#8230;</string>

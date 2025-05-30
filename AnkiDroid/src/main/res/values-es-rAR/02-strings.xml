@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">Comprobar archivo multimedia</string>
     <string name="empty_cards" maxLength="28">Tarjetas vacías</string>
     <string name="unknown_type_field_warning">Tipear respuesta: campo desconocido %s</string>
-    <string name="delete_deck">Eliminando mazo&#8230;\nPor favor aguarde.</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Eliminando mazo&#8230;\nPor favor aguarde.</string>
     <string name="info_rate">Puntúe AnkiDroid</string>
     <string name="import_title">Importando</string>
     <string name="import_preparing_file">Preparando el archivo para la importación&#8230;</string>

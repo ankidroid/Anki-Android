@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">ମିଡ଼ିଆ ଯାଞ୍ଚ</string>
     <string name="empty_cards" maxLength="28">ଖାଲି ପତ୍ର</string>
     <string name="unknown_type_field_warning">ଉତ୍ତର ଟାଇପ୍ କରନ୍ତୁ: ଅଜ୍ଞାତ କ୍ଷେତ୍ର %s</string>
-    <string name="delete_deck">ତାସଖଣ୍ଡ ଵିଲୋପ ହେଉଛି&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">ତାସଖଣ୍ଡ ଵିଲୋପ ହେଉଛି&#8230;</string>
     <string name="info_rate">AnkiDroid କୁ ମୂଲ୍ୟାଙ୍କନ କରନ୍ତୁ</string>
     <string name="import_title">ଆମଦାନି ଚାଲିଛି</string>
     <string name="import_preparing_file">Preparing file for import&#8230;</string>

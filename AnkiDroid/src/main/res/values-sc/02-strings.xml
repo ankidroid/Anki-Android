@@ -132,7 +132,7 @@
     <string name="check_media" maxLength="28">Verìfica sos documentos multimediales</string>
     <string name="empty_cards" maxLength="28">Cartas bòidas</string>
     <string name="unknown_type_field_warning">Iscrie sa risposta: campu disconnotu %s</string>
-    <string name="delete_deck">Iscantzellende su matzu&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Iscantzellende su matzu&#8230;</string>
     <string name="info_rate">Dae unu votu a AnkiDroid</string>
     <string name="import_title">Importende</string>
     <string name="import_preparing_file">Preparende su documentu pro s\'importatzione&#8230;</string>

@@ -127,7 +127,7 @@
     <string name="check_media" maxLength="28">Periksa media</string>
     <string name="empty_cards" maxLength="28">Kartu kosong</string>
     <string name="unknown_type_field_warning">Ketik jawaban: bidang %s tidak diketahui</string>
-    <string name="delete_deck">Menghapus dek&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Menghapus dek&#8230;</string>
     <string name="info_rate">Beri AnkiDroid rating</string>
     <string name="import_title">Mengimpor</string>
     <string name="import_preparing_file">Preparing file for import&#8230;</string>

@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">Kontroleer media</string>
     <string name="empty_cards" maxLength="28">Leë Kaarte</string>
     <string name="unknown_type_field_warning">Tik antwoord: onbekende veld %s</string>
-    <string name="delete_deck">Pak verwyder&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Pak verwyder&#8230;</string>
     <string name="info_rate">Beoordeel AnkiDroid</string>
     <string name="import_title">Invoer</string>
     <string name="import_preparing_file">Lêer voorberei vir invoer&#8230;</string>

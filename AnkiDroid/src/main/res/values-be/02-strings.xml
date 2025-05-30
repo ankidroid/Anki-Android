@@ -136,7 +136,7 @@
     <string name="check_media" maxLength="28">Праверыць медыяфайлы</string>
     <string name="empty_cards" maxLength="28">Пустыя карткі</string>
     <string name="unknown_type_field_warning">Тып адказу: невядомае поле %s</string>
-    <string name="delete_deck">Выдаленне калоды&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Выдаленне калоды&#8230;</string>
     <string name="info_rate">Ацаніць AnkiDroid</string>
     <string name="import_title">Імпартаванне</string>
     <string name="import_preparing_file">Падрыхтоўка файла для імпартавання&#8230;</string>

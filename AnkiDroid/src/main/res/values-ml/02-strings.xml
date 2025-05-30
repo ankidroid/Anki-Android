@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">മീഡിയ പരിശോധിക്കുക</string>
     <string name="empty_cards" maxLength="28">ശൂന്യമായ കാർഡുകൾ</string>
     <string name="unknown_type_field_warning">ഉത്തരം ടൈപ്പ് ചെയ്യുക: അജ്ഞാത ഫീൽഡ് %s</string>
-    <string name="delete_deck">ഡെക്ക് ഇല്ലാതാക്കുന്നു&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">ഡെക്ക് ഇല്ലാതാക്കുന്നു&#8230;</string>
     <string name="info_rate">അങ്കിഡ്രോയിഡ് റേറ്റുചെയ്യുക</string>
     <string name="import_title">ഇറക്കുമതി ചെയ്യുന്നു</string>
     <string name="import_preparing_file">ഇറക്കുമതിക്കായി ഫയൽ തയ്യാറാക്കുന്നു&#8230;</string>

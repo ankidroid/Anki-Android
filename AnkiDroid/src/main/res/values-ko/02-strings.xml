@@ -128,7 +128,7 @@
     <string name="check_media" maxLength="28">미디어 확인</string>
     <string name="empty_cards" maxLength="28">빈 카드</string>
     <string name="unknown_type_field_warning">정답 입력: 알 수 없는 필드 %s</string>
-    <string name="delete_deck">카드 묶음 삭제 중&#8230;\n 잠시만 기다리세요.</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">카드 묶음 삭제 중&#8230;\n 잠시만 기다리세요.</string>
     <string name="info_rate">AnkiDroid 평가하기</string>
     <string name="import_title">가져오는 중</string>
     <string name="import_preparing_file">불러올 파일 준비 중&#8230;</string>

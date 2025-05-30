@@ -127,7 +127,7 @@
     <string name="check_media" maxLength="28">检查媒体</string>
     <string name="empty_cards" maxLength="28">空白卡片</string>
     <string name="unknown_type_field_warning">输入答案：未知字段 %s</string>
-    <string name="delete_deck">删除牌组\n请稍等&#8230;&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">删除牌组\n请稍等&#8230;&#8230;</string>
     <string name="info_rate">给 AnkiDroid 评分</string>
     <string name="import_title">正在导入&#8230;</string>
     <string name="import_preparing_file">准备导入文件&#8230;</string>

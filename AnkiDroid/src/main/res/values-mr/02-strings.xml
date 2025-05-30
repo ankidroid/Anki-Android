@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">Mīḍiyā tapāsā</string>
     <string name="empty_cards" maxLength="28">Empty cards</string>
     <string name="unknown_type_field_warning">Uttara dyā: Ajñāta phīlḍa %s</string>
-    <string name="delete_deck">Ḍēka haṭavata āhē&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Ḍēka haṭavata āhē&#8230;</string>
     <string name="info_rate">AnkiDroid rēṭa karā</string>
     <string name="import_title">Āyāta karīta āhē</string>
     <string name="import_preparing_file">आयात करण्यासाठी फाइल तयार करत आहे&#8230;</string>

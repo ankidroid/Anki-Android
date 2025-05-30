@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">میڈیا چیک کریں</string>
     <string name="empty_cards" maxLength="28">خالی کارڈز</string>
     <string name="unknown_type_field_warning">جواب ٹائپ کریں۔:نامعلوم جگہ %s</string>
-    <string name="delete_deck">ڈیک کو حذف کیا جا رہا ہے&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">ڈیک کو حذف کیا جا رہا ہے&#8230;</string>
     <string name="info_rate">AnkiDroid کی درجہ بندی کریں</string>
     <string name="import_title">درآمد</string>
     <string name="import_preparing_file">درآمد کے لیے فائل تیار ہو رہی ہے&#8230;</string>

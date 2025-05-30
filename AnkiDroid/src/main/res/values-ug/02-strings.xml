@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">ۋاسىتە تەكشۈر</string>
     <string name="empty_cards" maxLength="28">بوش كارتا</string>
     <string name="unknown_type_field_warning">جاۋاب كىرگۈزۈلىدۇ: يوچۇن بۆلەك %s</string>
-    <string name="delete_deck">دەستە ئۆچۈرۈۋاتىدۇ&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">دەستە ئۆچۈرۈۋاتىدۇ&#8230;</string>
     <string name="info_rate">AnkiDroid كە باھا بېرىڭ</string>
     <string name="import_title">ئەكىرىۋاتىدۇ</string>
     <string name="import_preparing_file">ئەكىرىدىغان ھۆججەتنى تەييارلاۋاتىدۇ&#8230;</string>

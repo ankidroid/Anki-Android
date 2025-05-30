@@ -130,7 +130,7 @@
     <string name="check_media" maxLength="28">மீடியாவைச் சரிபார்க்கவும்</string>
     <string name="empty_cards" maxLength="28">வெற்று அட்டைகள்</string>
     <string name="unknown_type_field_warning">பதிலைத் தட்டச்சு செய்க: தெரியாத புலம் %s</string>
-    <string name="delete_deck">தளத்தை நீக்குகிறது&#8230;</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">தளத்தை நீக்குகிறது&#8230;</string>
     <string name="info_rate">AnkiDroid ஐ மதிப்பிடவும்</string>
     <string name="import_title">இறக்குகிறது</string>
     <string name="import_preparing_file">இறக்குமதி செய்யக் கோப்பை தயார் செய்கிறது&#8230;</string>
