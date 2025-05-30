@@ -103,7 +103,7 @@
     <string name="field_remapping">%1$s (\'%2$s\'から)</string>
     <string name="confirm_map_cards_to_nothing">カードタイプ数がより少ないノートタイプに変更する場合、変更先がないカードタイプのカードは削除されます（たとえば、「基本（裏表反転カード付き）」から「基本」に変更する場合、裏表反転カードは削除されます）。続行してもよろしいですか？</string>
     <string name="missing_note_type">ノートタイプが見つかりませんでした</string>
-    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (空)</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">タイムボックスの時間です</string>
     <plurals name="timebox_reached">

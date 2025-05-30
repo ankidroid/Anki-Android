@@ -60,6 +60,7 @@
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Någonting gick fel</string>
     <string name="multimedia_editor_png_paste_error">Fel vid konvertering av urklippsbild till PNG: %s</string>
+    <string name="multimedia_editor_attach_tooltip" comment="Appear when holding the finger  on the paperclip icon">Attach multimedia content</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Lägg till multimedia-innehåll till fältet %1$s</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
