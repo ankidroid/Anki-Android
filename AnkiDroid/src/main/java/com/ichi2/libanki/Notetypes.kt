@@ -32,6 +32,7 @@
 package com.ichi2.libanki
 
 import androidx.annotation.CheckResult
+import androidx.annotation.VisibleForTesting
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithId
 import anki.notetypes.Notetype
@@ -107,7 +108,8 @@ class Notetypes(
     }
 
     @LibAnkiAlias("_remove_from_cache")
-    private fun removeFromCache(ntid: int) {
+    @VisibleForTesting
+    fun removeFromCache(ntid: int) {
         _cache.remove(ntid)
     }
 
@@ -742,11 +744,28 @@ fun Collection.getNotetypeNamesRaw(input: ByteArray): ByteArray = backend.getNot
 
 fun Collection.getFieldNamesRaw(input: ByteArray): ByteArray = backend.getFieldNamesRaw(input)
 
-fun Collection.updateNotetype(updatedNotetype: Notetype): OpChanges = backend.updateNotetype(input = updatedNotetype)
+fun Collection.updateNotetype(updatedNotetype: Notetype): OpChanges {
+    val result = backend.updateNotetype(input = updatedNotetype)
+    // Remove the specific notetype from cache to ensure consistency after updates
+    // This allows the next access to fetch the fresh data from backend
+    notetypes.removeFromCache(updatedNotetype.id)
+    return result
+}
 
-fun Collection.removeNotetype(notetypeId: NoteTypeId): OpChanges = backend.removeNotetype(ntid = notetypeId)
+fun Collection.removeNotetype(notetypeId: NoteTypeId): OpChanges {
+    val result = backend.removeNotetype(ntid = notetypeId)
+    // Remove the specific notetype from cache to ensure consistency after removal
+    notetypes.removeFromCache(notetypeId)
+    return result
+}
 
-fun Collection.addNotetype(newNotetype: Notetype): OpChangesWithId = backend.addNotetype(input = newNotetype)
+fun Collection.addNotetype(newNotetype: Notetype): OpChangesWithId {
+    val result = backend.addNotetype(input = newNotetype)
+    // For add operations, we need to clear cache since we don't know the final ID beforehand
+    // and the operation might affect note type ordering or other cached data
+    notetypes.clearCache()
+    return result
+}
 
 fun Collection.getNotetypeNameIdUseCount(): List<NotetypeNameIdUseCount> = backend.getNotetypeNamesAndCounts()
 
@@ -754,7 +773,11 @@ fun Collection.getNotetype(notetypeId: NoteTypeId): Notetype = backend.getNotety
 
 fun Collection.getNotetypeNames(): List<NotetypeNameId> = backend.getNotetypeNames()
 
-fun Collection.addNotetypeLegacy(json: ByteString): OpChangesWithId = backend.addNotetypeLegacy(json = json)
+fun Collection.addNotetypeLegacy(json: ByteString): OpChangesWithId {
+    val result = backend.addNotetypeLegacy(json = json)
+    notetypes.clearCache()
+    return result
+}
 
 fun Collection.getStockNotetype(kind: StockNotetype.Kind): NotetypeJson =
     NotetypeJson(fromJsonBytes(backend.getStockNotetypeLegacy(kind = kind)))
@@ -777,7 +800,10 @@ fun Collection.restoreNotetypeToStock(
             this.notetypeId = notetypeId
             forceKind?.let { this.forceKind = forceKind }
         }
-    return backend.restoreNotetypeToStock(msg)
+    val result = backend.restoreNotetypeToStock(msg)
+    // Remove the specific notetype from cache to ensure consistency after restoration
+    notetypes.removeFromCache(notetypeId.ntid)
+    return result
 }
 
 @NotInLibAnki
