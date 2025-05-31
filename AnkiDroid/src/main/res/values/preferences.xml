@@ -225,7 +225,7 @@
     <string name="pref_weekly_backups_to_keep_key">weekly_backups_to_keep</string>
     <string name="pref_monthly_backups_to_keep_key">monthly_backups_to_keep</string>
 
-    <!-- Reviewer options -->
+    <!-- Study Screen options -->
     <string name="hide_system_bars_key">hideSystemBars</string>
     <string name="ignore_display_cutout_key">ignoreDisplayCutout</string>
     <string name="hide_answer_buttons_key">hideAnswerButtons</string>

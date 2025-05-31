@@ -56,7 +56,7 @@
         <item name="reviewCountColor">@color/material_green_700</item>
         <item name="buryCountColor">@color/disabled_gray_light</item>
         <item name="zeroCountColor">#1f000000</item>
-        <!-- Reviewer colors -->
+        <!-- Study Screen colors -->
         <item name="againButtonBackground">@color/material_red_700</item>
         <item name="hardButtonBackground">@color/material_blue_grey_700</item>
         <item name="goodButtonBackground">@color/material_green_500</item>
@@ -69,7 +69,7 @@
         <item name="goodButtonTextColor">@color/white</item>
         <item name="easyButtonTextColor">@color/white</item>
         <item name="alternativeBackgroundColor">#f4f5f9</item>
-        <!-- Reviewer button drawables -->
+        <!-- Study Screen button drawables -->
         <item name="showAnswerColor">@color/material_blue_grey_700</item>
         <item name="againButtonRef">@drawable/footer_button_again</item>
         <item name="hardButtonRef">@drawable/footer_button_hard</item>
