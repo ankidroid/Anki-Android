@@ -16,6 +16,7 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.notetypes.copy
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.libanki.Utils.stripHTML
 import com.ichi2.libanki.exception.ConfirmModSchemaException
@@ -546,5 +547,28 @@ class NotetypeTest : JvmTest() {
             expected2,
             basic.did,
         )
+    }
+
+    @Test
+    fun test_updateNotetype_clears_cache() {
+        val noteType = col.notetypes.current()
+        val originalName = noteType.name
+        val noteTypeId = noteType.id
+
+        val cached1 = col.notetypes.get(noteTypeId)!!
+        assertEquals("Cached notetype should have original name", originalName, cached1.name)
+
+        val renamedNotetype =
+            col.getNotetype(noteTypeId).copy {
+                this.name = "${originalName}_renamed"
+            }
+        col.updateNotetype(renamedNotetype)
+
+        val cached2 = col.notetypes.get(noteTypeId)!!
+        assertEquals("Cached notetype should be cleared and show new name", "${originalName}_renamed", cached2.name)
+
+        val allNotetypes = col.notetypes.all()
+        val foundNotetype = allNotetypes.find { it.id == noteTypeId }!!
+        assertEquals("Notetype in all() should have new name", "${originalName}_renamed", foundNotetype.name)
     }
 }
