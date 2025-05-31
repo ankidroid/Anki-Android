@@ -28,7 +28,6 @@ class GestureProcessor(
     }
 
     private var gestureDoubleTap: ViewerCommand? = null
-    private var gestureLongclick: ViewerCommand? = null
     private var gestureSwipeUp: ViewerCommand? = null
     private var gestureSwipeDown: ViewerCommand? = null
     private var gestureSwipeLeft: ViewerCommand? = null
@@ -65,7 +64,6 @@ class GestureProcessor(
             }
         }
         gestureDoubleTap = associatedCommands[Gesture.DOUBLE_TAP]
-        gestureLongclick = associatedCommands[Gesture.LONG_TAP]
         gestureSwipeUp = associatedCommands[Gesture.SWIPE_UP]
         gestureSwipeDown = associatedCommands[Gesture.SWIPE_DOWN]
         gestureSwipeLeft = associatedCommands[Gesture.SWIPE_LEFT]
@@ -98,8 +96,6 @@ class GestureProcessor(
     }
 
     fun onDoubleTap(): Boolean? = execute(Gesture.DOUBLE_TAP)
-
-    fun onLongTap(): Boolean? = execute(Gesture.LONG_TAP)
 
     fun onFling(
         dx: Float,
@@ -137,7 +133,6 @@ class GestureProcessor(
             Gesture.TAP_BOTTOM_LEFT -> gestureTapBottomLeft
             Gesture.TAP_BOTTOM_RIGHT -> gestureTapBottomRight
             Gesture.DOUBLE_TAP -> gestureDoubleTap
-            Gesture.LONG_TAP -> gestureLongclick
             Gesture.SHAKE -> gestureShake
         }
 
