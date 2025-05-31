@@ -26,6 +26,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckConfig
 import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.FilteredDeck
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
@@ -179,8 +180,8 @@ interface TestClass {
         return try {
             col.decks.newFiltered(name).also { did ->
                 if (search == null) return@also
-                val deck = col.decks.get(did)!!
-                deck.getJSONArray("terms").getJSONArray(0).put(0, search)
+                val deck = col.decks.get(did)!! as FilteredDeck
+                deck.firstFilter.search = search
                 col.decks.save(deck)
                 col.sched.rebuildDyn(did)
             }
