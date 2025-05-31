@@ -3,10 +3,12 @@
 
 package com.ichi2.anki
 
+import android.app.Activity
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.ActivityNotFoundException
 import android.content.BroadcastReceiver
+import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -25,7 +27,9 @@ import android.view.Window
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.widget.ProgressBar
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.AttrRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
@@ -40,13 +44,16 @@ import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_LIGHT
 import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_SYSTEM
 import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
+import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.color.MaterialColors
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.DEFAULT
@@ -62,6 +69,9 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.CustomExceptionData
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DialogHandler
+import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.KEY_EXPORT_PATH
+import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.REQUEST_EXPORT_SAVE
+import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.REQUEST_EXPORT_SHARE
 import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.preferences.sharedPrefs
@@ -70,6 +80,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
 import com.ichi2.async.CollectionLoader
+import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.compat.customtabs.CustomTabsFallback
@@ -78,10 +89,14 @@ import com.ichi2.libanki.Collection
 import com.ichi2.themes.Themes
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.HandlerUtils
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import timber.log.Timber
+import java.io.File
+import java.io.FileOutputStream
 import androidx.browser.customtabs.CustomTabsIntent.Builder as CustomTabsIntentBuilder
 
 @UiThread
@@ -106,6 +121,16 @@ open class AnkiActivity :
     override val ankiActivity = this
 
     private val customTabActivityHelper: CustomTabActivityHelper = CustomTabActivityHelper()
+
+    private lateinit var fileExportPath: String
+    private val saveFileLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                saveFileCallback(result)
+            } else {
+                Timber.i("The file selection for the exported collection was cancelled")
+            }
+        }
 
     constructor() : super() {
         activityName = javaClass.simpleName
@@ -134,6 +159,20 @@ open class AnkiActivity :
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             window.navigationBarColor = getColor(R.color.transparent)
+        }
+        if (savedInstanceState != null) {
+            val restoredValue = savedInstanceState.getString(KEY_EXPORT_FILE_NAME) ?: return
+            fileExportPath = restoredValue
+        }
+        supportFragmentManager.setFragmentResultListener(REQUEST_EXPORT_SAVE, this) { _, bundle ->
+            saveExportFile(
+                bundle.getString(KEY_EXPORT_PATH) ?: error("Missing required exportPath!"),
+            )
+        }
+        supportFragmentManager.setFragmentResultListener(REQUEST_EXPORT_SHARE, this) { _, bundle ->
+            shareFile(
+                bundle.getString(KEY_EXPORT_PATH) ?: error("Missing required exportPath!"),
+            )
         }
     }
 
@@ -709,11 +748,149 @@ open class AnkiActivity :
     override val shortcuts
         get(): ShortcutGroup? = null
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (::fileExportPath.isInitialized) {
+            outState.putString(KEY_EXPORT_FILE_NAME, fileExportPath)
+        }
+        super.onSaveInstanceState(outState)
+    }
+
+    private fun shareFile(path: String) {
+        // Make sure the file actually exists
+        val attachment = File(path)
+        if (!attachment.exists()) {
+            Timber.e("Specified apkg file %s does not exist", path)
+            showThemedToast(this, resources.getString(R.string.apk_share_error), false)
+            return
+        }
+        val authority = "${this.packageName}.apkgfileprovider"
+
+        // Get a URI for the file to be shared via the FileProvider API
+        val uri: Uri =
+            try {
+                FileProvider.getUriForFile(this, authority, attachment)
+            } catch (e: IllegalArgumentException) {
+                Timber.e("Could not generate a valid URI for the apkg file")
+                showThemedToast(this, resources.getString(R.string.apk_share_error), false)
+                return
+            }
+        val sendIntent =
+            ShareCompat
+                .IntentBuilder(this)
+                .setType("application/apkg")
+                .setStream(uri)
+                .setSubject(getString(R.string.export_email_subject, attachment.name))
+                .setHtmlText(
+                    getString(
+                        R.string.export_email_text,
+                        getString(R.string.link_manual),
+                        getString(R.string.link_distributions),
+                    ),
+                ).intent
+                .apply {
+                    clipData = ClipData.newUri(contentResolver, attachment.name, uri)
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+                }
+        val shareFileIntent =
+            Intent.createChooser(
+                sendIntent,
+                getString(R.string.export_share_title),
+            )
+        if (shareFileIntent.resolveActivity(packageManager) != null) {
+            startActivity(shareFileIntent)
+        } else {
+            // Try to save it?
+            showSnackbar(R.string.export_send_no_handlers)
+            saveExportFile(path)
+        }
+    }
+
+    private fun saveExportFile(exportPath: String) {
+        // Make sure the file actually exists
+        val attachment = File(exportPath)
+        if (!attachment.exists()) {
+            Timber.e("saveExportFile() Specified apkg file %s does not exist", exportPath)
+            showSnackbar(R.string.export_save_apkg_unsuccessful)
+            return
+        }
+
+        fileExportPath = exportPath
+
+        // Send the user to the standard Android file picker via Intent
+        val saveIntent =
+            Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "application/apkg"
+                putExtra(Intent.EXTRA_TITLE, attachment.name)
+                putExtra("android.content.extra.SHOW_ADVANCED", true)
+                putExtra("android.content.extra.FANCY", true)
+                putExtra("android.content.extra.SHOW_FILESIZE", true)
+            }
+        try {
+            saveFileLauncher.launch(saveIntent)
+        } catch (ex: ActivityNotFoundException) {
+            Timber.w("No activity found to handle saveExportFile request")
+            showSnackbar(R.string.activity_start_failed)
+        }
+    }
+
+    private fun saveFileCallback(result: ActivityResult) {
+        launchCatchingTask {
+            withProgress(getString(R.string.export_saving_exported_collection)) {
+                val isSuccessful =
+                    withContext(Dispatchers.IO) {
+                        exportToProvider(result.data!!)
+                    }
+
+                if (isSuccessful) {
+                    showSnackbar(R.string.export_save_apkg_successful, Snackbar.LENGTH_SHORT)
+                } else {
+                    showSnackbar(R.string.export_save_apkg_unsuccessful)
+                }
+            }
+        }
+    }
+
+    private fun exportToProvider(
+        intent: Intent,
+        deleteAfterExport: Boolean = true,
+    ): Boolean {
+        if (intent.data == null) {
+            Timber.e("exportToProvider() provided with insufficient intent data %s", intent)
+            return false
+        }
+        val uri = intent.data
+        Timber.d("Exporting from file to ContentProvider URI: %s/%s", fileExportPath, uri.toString())
+        try {
+            contentResolver.openFileDescriptor(uri!!, "w").use { pfd ->
+                if (pfd != null) {
+                    FileOutputStream(pfd.fileDescriptor).use { fileOutputStream ->
+                        CompatHelper.compat.copyFile(fileExportPath, fileOutputStream)
+                    }
+                } else {
+                    Timber.w(
+                        "exportToProvider() failed - ContentProvider returned null file descriptor for %s",
+                        uri,
+                    )
+                    return false
+                }
+            }
+            if (deleteAfterExport && !File(fileExportPath).delete()) {
+                Timber.w("Failed to delete temporary export file %s", fileExportPath)
+            }
+        } catch (e: Exception) {
+            Timber.e(e, "Unable to export file to Uri: %s/%s", fileExportPath, uri.toString())
+            return false
+        }
+        return true
+    }
+
     companion object {
         /** Extra key to set the finish animation of an activity  */
         const val FINISH_ANIMATION_EXTRA = "finishAnimation"
 
         private const val SIMPLE_NOTIFICATION_ID = 0
+        private const val KEY_EXPORT_FILE_NAME = "key_export_file_name"
     }
 }
 

@@ -15,7 +15,7 @@ package com.ichi2.anki
 
 import anki.import_export.ExportLimit
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.export.ExportDialogsFactoryProvider
+import com.ichi2.anki.dialogs.ExportReadyDialog
 import com.ichi2.libanki.exportAnkiPackage
 import com.ichi2.libanki.exportCardsCsv
 import com.ichi2.libanki.exportCollectionPackage
@@ -32,31 +32,13 @@ fun AnkiActivity.exportApkgPackage(
     launchCatchingTask {
         val onProgress: ProgressContext.() -> Unit = {
             if (progress.hasExporting()) {
-                text = getString(R.string.export_preparation_in_progress)
+                text = progress.exporting
             }
         }
         withProgress(extractProgress = onProgress) {
             withCol { exportAnkiPackage(exportPath, withScheduling, withDeckConfigs, withMedia, limit, legacy) }
         }
-        val factory =
-            (this@exportApkgPackage as ExportDialogsFactoryProvider).exportDialogsFactory()
-        val dialog = factory.newExportReadyDialog().withArguments(exportPath)
-        showAsyncDialogFragment(dialog)
-    }
-}
-
-suspend fun AnkiActivity.exportColpkg(
-    colpkgPath: String,
-    withMedia: Boolean,
-    legacy: Boolean,
-) {
-    val onProgress: ProgressContext.() -> Unit = {
-        if (progress.hasExporting()) {
-            text = getString(R.string.export_preparation_in_progress)
-        }
-    }
-    withProgress(extractProgress = onProgress) {
-        withCol { exportCollectionPackage(colpkgPath, withMedia, legacy) }
+        showAsyncDialogFragment(ExportReadyDialog.newInstance(exportPath))
     }
 }
 
@@ -66,11 +48,15 @@ fun AnkiActivity.exportCollectionPackage(
     legacy: Boolean,
 ) {
     launchCatchingTask {
-        exportColpkg(exportPath, withMedia, legacy)
-        val factory =
-            (this@exportCollectionPackage as ExportDialogsFactoryProvider).exportDialogsFactory()
-        val dialog = factory.newExportReadyDialog().withArguments(exportPath)
-        showAsyncDialogFragment(dialog)
+        val onProgress: ProgressContext.() -> Unit = {
+            if (progress.hasExporting()) {
+                text = progress.exporting
+            }
+        }
+        withProgress(extractProgress = onProgress) {
+            withCol { exportCollectionPackage(exportPath, withMedia, legacy) }
+        }
+        showAsyncDialogFragment(ExportReadyDialog.newInstance(exportPath))
     }
 }
 
@@ -86,7 +72,7 @@ fun AnkiActivity.exportSelectedNotes(
     launchCatchingTask {
         val onProgress: ProgressContext.() -> Unit = {
             if (progress.hasExporting()) {
-                text = getString(R.string.export_preparation_in_progress)
+                text = progress.exporting
             }
         }
         withProgress(extractProgress = onProgress) {
@@ -102,10 +88,7 @@ fun AnkiActivity.exportSelectedNotes(
                 )
             }
         }
-        val factory =
-            (this@exportSelectedNotes as ExportDialogsFactoryProvider).exportDialogsFactory()
-        val dialog = factory.newExportReadyDialog().withArguments(exportPath)
-        showAsyncDialogFragment(dialog)
+        showAsyncDialogFragment(ExportReadyDialog.newInstance(exportPath))
     }
 }
 
@@ -117,7 +100,7 @@ fun AnkiActivity.exportSelectedCards(
     launchCatchingTask {
         val onProgress: ProgressContext.() -> Unit = {
             if (progress.hasExporting()) {
-                text = getString(R.string.export_preparation_in_progress)
+                text = progress.exporting
             }
         }
         withProgress(extractProgress = onProgress) {
@@ -125,9 +108,6 @@ fun AnkiActivity.exportSelectedCards(
                 exportCardsCsv(exportPath, withHtml, limit)
             }
         }
-        val factory =
-            (this@exportSelectedCards as ExportDialogsFactoryProvider).exportDialogsFactory()
-        val dialog = factory.newExportReadyDialog().withArguments(exportPath)
-        showAsyncDialogFragment(dialog)
+        showAsyncDialogFragment(ExportReadyDialog.newInstance(exportPath))
     }
 }
