@@ -37,13 +37,40 @@
             android:text="@string/tags_dialog_option_due_cards"/>
     </RadioGroup>
 
+    <LinearLayout
+        android:id="@+id/loading_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        tools:visibility="visible" >
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progress_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            />
+        <TextView
+            android:id="@+id/progress_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            tools:text="Loading..."
+            android:layout_marginStart="8dp"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView android:id="@+id/tags_dialog_tags_list"
-                                               android:scrollbars="vertical"
-                                               android:layout_width="match_parent"
-                                               android:layout_height="wrap_content"
-                                               android:layout_above="@id/tags_dialog_options_radiogroup"
-                                               android:layout_below="@id/tags_dialog_toolbar"
-                                               tools:listitem="@layout/tags_item_list_dialog" />
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tags_dialog_options_radiogroup"
+        android:layout_below="@id/tags_dialog_toolbar"
+        tools:listitem="@layout/tags_item_list_dialog" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="wrap_content"
