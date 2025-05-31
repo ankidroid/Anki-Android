@@ -42,6 +42,8 @@ import com.ichi2.widget.setRecurringAlarm
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+typealias AppWidgetId = Int
+
 /**
  * This widget displays a deck with the respective new, learning, and review card counts.
  * It updates every minute and if there is any changes in study queues.
@@ -68,7 +70,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
         fun updateWidget(
             context: Context,
             appWidgetManager: AppWidgetManager,
-            appWidgetId: Int,
+            appWidgetId: AppWidgetId,
         ) {
             val deckId = getDeckIdForWidget(context, appWidgetId)
             val remoteViews = RemoteViews(context.packageName, R.layout.widget_card_analysis)
@@ -103,7 +105,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
 
         private fun getDeckIdForWidget(
             context: Context,
-            appWidgetId: Int,
+            appWidgetId: AppWidgetId,
         ): DeckId {
             val widgetPreferences = CardAnalysisWidgetPreferences(context)
             return widgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId) ?: NOT_FOUND_DECK_ID
@@ -112,7 +114,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
         private fun showCollectionDeck(
             context: Context,
             appWidgetManager: AppWidgetManager,
-            appWidgetId: Int,
+            appWidgetId: AppWidgetId,
             remoteViews: RemoteViews,
         ) {
             remoteViews.setTextViewText(R.id.empty_widget, context.getString(R.string.empty_collection_state_in_widget))
@@ -140,7 +142,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
         private fun showMissingDeck(
             context: Context,
             appWidgetManager: AppWidgetManager,
-            appWidgetId: Int,
+            appWidgetId: AppWidgetId,
             remoteViews: RemoteViews,
         ) {
             // Show empty_widget and set click listener to open configuration
@@ -169,7 +171,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
         private fun showDeck(
             context: Context,
             appWidgetManager: AppWidgetManager,
-            appWidgetId: Int,
+            appWidgetId: AppWidgetId,
             remoteViews: RemoteViews,
             deckData: DeckWidgetData,
         ) {

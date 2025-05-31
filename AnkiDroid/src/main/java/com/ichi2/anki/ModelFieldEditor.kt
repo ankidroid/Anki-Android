@@ -17,7 +17,6 @@
 package com.ichi2.anki
 
 import android.os.Bundle
-import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.AdapterView
@@ -47,6 +46,7 @@ import com.ichi2.libanki.Fields
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.ui.FixedEditText
+import com.ichi2.utils.AlertType
 import com.ichi2.utils.customView
 import com.ichi2.utils.getInputField
 import com.ichi2.utils.input
@@ -388,7 +388,7 @@ class ModelFieldEditor : AnkiActivity() {
                     setView(R.layout.dialog_generic_text_input)
                 }.input(
                     prefill = (currentPos + 1).toString(),
-                    inputType = InputType.TYPE_CLASS_NUMBER,
+                    inputType = AlertType.Number,
                     displayKeyboard = true,
                     waitForPositiveButton = false,
                 ) { dialog, text: CharSequence ->

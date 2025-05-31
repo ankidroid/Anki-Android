@@ -40,6 +40,7 @@ import anki.search.BrowserRow
 import anki.search.SearchNode
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
+import com.ichi2.anki.browser.CardOrNoteIdUnderlyingType
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.libanki.Utils.ids2str
@@ -440,7 +441,7 @@ class Collection(
     // For performance, this does not match upstream:
     // https://github.com/ankitects/anki/blob/1fb1cbbf85c48a54c05cb4442b1b424a529cac60/pylib/anki/collection.py#L869-L881
     @LibAnkiAlias("browser_row_for_id")
-    fun browserRowForId(id: Long): BrowserRow = backend.browserRowForId(id)
+    fun browserRowForId(id: CardOrNoteIdUnderlyingType): BrowserRow = backend.browserRowForId(id)
 
     /** Return the stored card column names and ensure the backend columns are set and in sync. */
     @LibAnkiAlias("load_browser_card_columns")
