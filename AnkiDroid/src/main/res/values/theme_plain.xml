@@ -23,9 +23,9 @@
         <!-- Tab layout -->
         <item name="tabLayoutBackgroundColor">@color/theme_plain_primary</item>
         <item name="tabActiveIconColor">@color/white</item>
-        <!-- Reviewer colors -->
+        <!-- Study Screen colors -->
         <item name="topBarColor">@color/theme_plain_primary_light</item>
-        <!-- Reviewer button drawables -->
+        <!-- Study Screen button drawables -->
         <item name="showAnswerColor">@color/theme_plain_primary</item>
         <item name="againButtonRef">@drawable/footer_button_all_plain</item>
         <item name="hardButtonRef">@drawable/footer_button_all_plain</item>

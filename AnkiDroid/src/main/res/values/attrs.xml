@@ -96,7 +96,7 @@
     <attr name="reviewCountColor" format="color"/>
     <attr name="zeroCountColor" format="color"/>
     <attr name="buryCountColor" format="color"/>
-    <!-- Reviewer button backgrounds -->
+    <!-- Study Screen button backgrounds -->
     <attr name="answerButtonBackground" format="color"/>
     <attr name="againButtonBackground" format="color"/>
     <attr name="hardButtonBackground" format="color"/>
@@ -112,7 +112,7 @@
     <attr name="hardButtonRippleRef" format="reference"/>
     <attr name="goodButtonRippleRef" format="reference"/>
     <attr name="easyButtonRippleRef" format="reference"/>
-    <!-- Reviewer button text colors-->
+    <!-- Study Screen button text colors-->
     <attr name="answerButtonTextColor" format="color"/>
     <attr name="againButtonTextColor" format="color"/>
     <attr name="hardButtonTextColor" format="color"/>
@@ -120,7 +120,7 @@
     <attr name="easyButtonTextColor" format="color"/>
     <!-- Card Browser Colors -->
     <attr name="cardBrowserDivider" format="color"/>
-    <!-- Reviewer other colors -->
+    <!-- Study Screen other colors -->
     <attr name="topBarColor" format="color"/>
     <attr name="maxTimerColor" format="color"/>
     <attr name="alternativeBackgroundColor" format="color"/>

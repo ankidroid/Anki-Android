@@ -22,7 +22,7 @@
  * The optional handler argument can be used so that the initiator of an action can tell when a
  * OpChanges action was caused by itself. This can be useful when the default change behaviour
  * should be ignored, in favour of specific handling (eg the UI wishes to directly update the
- * displayed flag, without redrawing the entire review screen).
+ * displayed flag, without redrawing the entire study screen).
  */
 
 package com.ichi2.libanki

@@ -41,7 +41,7 @@
         <item name="reviewCountColor">@color/material_green_400</item>
         <item name="buryCountColor">@color/disabled_gray_dark</item>
         <item name="zeroCountColor">#202020</item>
-        <!-- Reviewer colors -->
+        <!-- Study Screen colors -->
         <item name="showAnswerColor">@color/theme_black_primary</item>
         <item name="topBarColor">@color/theme_black_primary</item>
         <item name="maxTimerColor">@color/material_red_300</item>
@@ -51,7 +51,7 @@
         <item name="goodButtonTextColor">@color/material_green_400</item>
         <item name="easyButtonTextColor">@color/material_blue_700</item>
         <item name="alternativeBackgroundColor">#101010</item>
-        <!-- Reviewer button drawables -->
+        <!-- Study Screen button drawables -->
         <item name="againButtonRef">@drawable/footer_button_all_black</item>
         <item name="hardButtonRef">@drawable/footer_button_all_black</item>
         <item name="goodButtonRef">@drawable/footer_button_all_black</item>
