@@ -32,11 +32,11 @@ import java.io.File
 open class Media(
     private val col: Collection,
 ) {
-    val dir = getCollectionMediaPath(col.path)
+    val dir = col.collectionFiles.mediaFolder
 
     init {
         Timber.v("dir %s", dir)
-        val file = File(dir)
+        val file = dir
         if (!file.exists()) {
             file.mkdirs()
         }
@@ -108,7 +108,7 @@ open class Media(
     open fun have(fname: String): Boolean = File(dir, fname).exists()
 
     open fun forceResync() {
-        col.backend.removeMediaDb(colPath = col.path)
+        col.backend.removeMediaDb(colPath = col.colDb.absolutePath)
     }
 
     /**
@@ -135,5 +135,3 @@ open class Media(
         col.backend.restoreTrash()
     }
 }
-
-fun getCollectionMediaPath(collectionPath: String): String = collectionPath.replaceFirst("\\.anki2$".toRegex(), ".media")

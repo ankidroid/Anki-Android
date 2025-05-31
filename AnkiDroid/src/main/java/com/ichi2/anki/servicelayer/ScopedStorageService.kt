@@ -37,7 +37,7 @@ object ScopedStorageService {
      *
      * @return `true` if AnkiDroid is storing user data in a Legacy Storage Directory.
      */
-    fun isLegacyStorage(context: Context): Boolean = isLegacyStorage(File(CollectionHelper.getCurrentAnkiDroidDirectory(context)), context)
+    fun isLegacyStorage(context: Context): Boolean = isLegacyStorage(CollectionHelper.getCurrentAnkiDroidDirectory(context), context)
 
     /**
      * Checks if current directory being used by AnkiDroid to store user data is a Legacy Storage Directory.
@@ -58,7 +58,7 @@ object ScopedStorageService {
         ) {
             return null
         }
-        return isLegacyStorage(File(CollectionHelper.getCurrentAnkiDroidDirectory(context)), context)
+        return isLegacyStorage(CollectionHelper.getCurrentAnkiDroidDirectory(context), context)
     }
 
     /**
@@ -176,7 +176,7 @@ object ScopedStorageService {
     }
 
     fun userIsPromptedToDeleteCollectionOnUninstall(context: Context): Boolean =
-        File(CollectionHelper.getCollectionPath(context)).isInsideDirectoriesRemovedWithTheApp(
+        CollectionHelper.getCollectionPath(context).isInsideDirectoriesRemovedWithTheApp(
             context,
         )
 }

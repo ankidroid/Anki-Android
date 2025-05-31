@@ -107,7 +107,7 @@ class CardMediaPlayer : Closeable {
         // javascriptEvaluator is wrapped in a lambda so the value in this class propagates down
         this.soundTagPlayer =
             SoundTagPlayer(
-                soundUriBase = getMediaBaseUrl(getMediaDirectory(AnkiDroidApp.instance).path),
+                soundUriBase = getMediaBaseUrl(getMediaDirectory(AnkiDroidApp.instance)),
                 videoPlayer = VideoPlayer { javascriptEvaluator() },
             )
         this.ttsPlayer = scope.async { AndroidTtsPlayer.createInstance(AnkiDroidApp.instance, scope) }

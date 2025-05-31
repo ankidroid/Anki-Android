@@ -18,6 +18,7 @@ package com.ichi2.anki.tests
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
+import com.ichi2.anki.CollectionFiles
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
@@ -42,8 +43,10 @@ object Shared {
         // Provide a string instead of an actual File. Storage.Collection won't populate the DB
         // if the file already exists (it assumes it's an existing DB).
         val path = f.absolutePath
+        val folder = path.substringBeforeLast("/")
+        val name = path.substringAfterLast("/").removeSuffix(".anki2")
         assertTrue(f.delete())
-        return Storage.collection(path)
+        return Storage.collection(CollectionFiles(File(folder), name))
     }
 
     /**

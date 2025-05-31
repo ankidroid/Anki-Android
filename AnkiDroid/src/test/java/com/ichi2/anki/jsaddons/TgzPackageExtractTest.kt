@@ -44,7 +44,7 @@ class TgzPackageExtractTest : RobolectricTest() {
         super.setUp()
 
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(targetContext)
-        ShadowStatFs.markAsNonEmpty(File(currentAnkiDroidDirectory))
+        ShadowStatFs.markAsNonEmpty(currentAnkiDroidDirectory)
         addonPackage = TgzPackageExtract(targetContext)
         addonDir = File(currentAnkiDroidDirectory, "addons")
         tarballPath = getFileResource("valid-ankidroid-js-addon-test-1.0.0.tgz")

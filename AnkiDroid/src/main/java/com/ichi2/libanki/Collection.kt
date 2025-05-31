@@ -40,6 +40,7 @@ import anki.search.BrowserRow
 import anki.search.SearchNode
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
+import com.ichi2.anki.CollectionFiles
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.libanki.Utils.ids2str
@@ -65,9 +66,10 @@ import java.io.File
 @WorkerThread
 class Collection(
     /**
-     *  The path to the collection.anki2 database. Must be unicode and openable with [File].
+     *  The path to the folder containing collection.anki2 database. Must be unicode and openable with [File].
      */
-    val path: String,
+
+    val collectionFiles: CollectionFiles,
     /**
      * Outside of libanki, you should not access the backend directly for collection operations.
      * Operations that work on a closed collection (eg importing), or do not require a collection
@@ -75,6 +77,8 @@ class Collection(
      */
     val backend: Backend,
 ) {
+    val colDb = collectionFiles.colDb
+
     /** Access backend translations */
     val tr = backend.tr
 
@@ -150,10 +154,7 @@ class Collection(
         }
     }
 
-    fun name(): String {
-        // TODO:
-        return File(path).name.replace(".anki2", "")
-    }
+    fun name() = collectionFiles.collectionName
 
     /**
      * Scheduler
@@ -209,9 +210,9 @@ class Collection(
 
     /** True if DB was created */
     fun reopen(afterFullSync: Boolean = false): Boolean {
-        Timber.i("(Re)opening Database: %s", path)
+        Timber.i("(Re)opening Database: %s", colDb)
         return if (dbClosed) {
-            val (database, created) = Storage.openDB(path, backend, afterFullSync)
+            val (database, created) = Storage.openDB(colDb, backend, afterFullSync)
             dbInternal = database
             load()
             if (afterFullSync) {

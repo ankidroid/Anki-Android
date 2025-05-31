@@ -24,6 +24,7 @@ import android.content.Context
 import android.media.MediaRecorder
 import com.ichi2.compat.CompatHelper
 import timber.log.Timber
+import java.io.File
 import java.io.IOException
 
 class AudioRecorder {
@@ -33,13 +34,13 @@ class AudioRecorder {
 
     private fun initMediaRecorder(
         context: Context,
-        audioPath: String,
+        audioPath: File,
     ): MediaRecorder {
         val mr = CompatHelper.compat.getMediaRecorder(context)
         mr.setAudioSource(MediaRecorder.AudioSource.MIC)
         mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
         onRecordingInitialized()
-        mr.setOutputFile(audioPath) // audioPath could change
+        mr.setOutputFile(audioPath.absolutePath) // audioPath could change
         return mr
     }
 
@@ -51,6 +52,14 @@ class AudioRecorder {
     fun startRecording(
         context: Context,
         audioPath: String,
+    ) {
+        startRecording(context, File(audioPath))
+    }
+
+    @Throws(IOException::class)
+    fun startRecording(
+        context: Context,
+        audioPath: File,
     ) {
         var highSampling = false
         try {

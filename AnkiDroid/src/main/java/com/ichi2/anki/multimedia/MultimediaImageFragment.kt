@@ -342,7 +342,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     }
 
     private fun finishAddingImage() {
-        field.mediaPath = viewModel.currentMultimediaPath.value
+        field.mediaFile = viewModel.currentMultimediaPath.value
         field.hasTemporaryMedia = true
 
         val resultData =
@@ -429,24 +429,26 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         updateAndDisplayImageSize(drawImagePath)
     }
 
-    private fun handleTakePictureResult(imagePath: String?) {
-        Timber.d("handleTakePictureResult, imagePath: %s", imagePath)
-        if (imagePath == null) {
+    private fun handleTakePictureResult(imageFile: File?) {
+        Timber.d("handleTakePictureResult, imageFile: %s", imageFile)
+        if (imageFile == null) {
             Timber.i("handleTakePictureResult appears to have an invalid picture")
             return
         }
 
-        val imageFile = File(imagePath)
-        viewModel.updateCurrentMultimediaPath(imagePath)
+        viewModel.updateCurrentMultimediaPath(imageFile)
         viewModel.updateCurrentMultimediaUri(getUriForFile(imageFile))
         viewModel.currentMultimediaUri.value?.let { previewImage(it) }
-        updateAndDisplayImageSize(imagePath)
+        updateAndDisplayImageSize(imageFile)
 
         showCropDialog(getString(R.string.crop_image))
     }
 
-    private fun updateAndDisplayImageSize(imagePath: String) {
-        val file = File(imagePath)
+    private fun updateAndDisplayImageSize(imageUri: String) {
+        updateAndDisplayImageSize(File(imageUri))
+    }
+
+    private fun updateAndDisplayImageSize(file: File) {
         viewModel.selectedMediaFileSize = file.length()
         imageFileSize.text = file.toHumanReadableSize()
     }
@@ -670,17 +672,16 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
      *
      * @return true if successful, false indicates the current image is likely not usable, revert if possible
      */
-    private fun rotateAndCompress(imagePath: String): Boolean {
-        Timber.d("rotateAndCompress() on %s", imagePath)
+    private fun rotateAndCompress(imageFile: File): Boolean {
+        Timber.d("rotateAndCompress() on %s", imageFile)
 
         // Set the rotation of the camera image and save as JPEG
-        val imageFile = File(imagePath)
         Timber.d("rotateAndCompress in path %s has size %d", imageFile.absolutePath, imageFile.length())
 
         // Load into a bitmap with max size of 1920 pixels and rotate if necessary
         var bitmap = BitmapUtil.decodeFile(imageFile, IMAGE_SAVE_MAX_WIDTH)
         if (bitmap == null) {
-            Timber.w("rotateAndCompress() unable to decode file %s", imagePath)
+            Timber.w("rotateAndCompress() unable to decode file %s", imageFile)
             return false
         }
 
@@ -697,7 +698,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
             // Delete the original image file
             if (!imageFile.delete()) {
-                Timber.w("rotateAndCompress() delete of pre-compressed image failed %s", imagePath)
+                Timber.w("rotateAndCompress() delete of pre-compressed image failed %s", imageFile)
             }
 
             val imageUri = getUriForFile(outFile)
@@ -711,10 +712,10 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
             Timber.d("rotateAndCompress out path %s has size %d", outFile.absolutePath, outFile.length())
         } catch (e: FileNotFoundException) {
-            Timber.w(e, "rotateAndCompress() File not found for image compression %s", imagePath)
+            Timber.w(e, "rotateAndCompress() File not found for image compression %s", imageFile)
             return false
         } catch (e: IOException) {
-            Timber.w(e, "rotateAndCompress() create file failed for file %s", imagePath)
+            Timber.w(e, "rotateAndCompress() create file failed for file %s", imageFile)
             return false
         } finally {
             try {

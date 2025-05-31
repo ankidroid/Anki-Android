@@ -21,6 +21,7 @@ import anki.import_export.ImportAnkiPackageOptions
 import anki.import_export.ImportResponse
 import anki.import_export.exportAnkiPackageOptions
 import anki.search.SearchNode
+import com.ichi2.anki.CollectionFiles
 import net.ankiweb.rsdroid.Backend
 
 /**
@@ -63,14 +64,14 @@ fun Collection.awaitBackupCompletion() {
  * */
 fun importCollectionPackage(
     backend: Backend,
-    colPath: String,
+    colPath: CollectionFiles,
     colpkgPath: String,
 ) {
     backend.importCollectionPackage(
-        colPath = colPath,
+        colPath = colPath.colDb.absolutePath,
         backupPath = colpkgPath,
-        mediaFolder = colPath.replace(".anki2", ".media"),
-        mediaDb = colPath.replace(".anki2", ".media.db"),
+        mediaFolder = colPath.mediaFolder.absolutePath,
+        mediaDb = colPath.mediaDb.absolutePath,
     )
 }
 

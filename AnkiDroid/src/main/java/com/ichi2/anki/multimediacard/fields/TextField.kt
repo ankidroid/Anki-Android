@@ -20,6 +20,7 @@
 package com.ichi2.anki.multimediacard.fields
 
 import com.ichi2.libanki.Collection
+import java.io.File
 
 /**
  * Text Field implementation.
@@ -35,7 +36,7 @@ class TextField :
     override val isModified: Boolean
         get() = thisModified
 
-    override var mediaPath: String? = null
+    override var mediaFile: File? = null
 
     override var text: String?
         get() = _text
