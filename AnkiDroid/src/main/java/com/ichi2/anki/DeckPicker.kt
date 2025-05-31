@@ -66,7 +66,6 @@ import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
-import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.core.util.component1
 import androidx.core.util.component2
@@ -133,6 +132,7 @@ import com.ichi2.anki.dialogs.EmptyCardsDialogFragment
 import com.ichi2.anki.dialogs.ImportDialog.ImportDialogListener
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ApkgImportResultLauncherProvider
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.CsvImportResultLauncherProvider
+import com.ichi2.anki.dialogs.SchedulerUpgradeDialog
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.dialogs.SyncErrorDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.SyncErrorDialog.SyncErrorDialogListener
@@ -193,7 +193,6 @@ import com.ichi2.utils.customView
 import com.ichi2.utils.dp
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
-import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
@@ -483,6 +482,8 @@ open class DeckPicker :
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             Timber.i("notification permission: %b", it)
         }
+
+    private var lastPromptedSchedulerVersion: Long? = null
 
     // ----------------------------------------------------------------------------
     // ANDROID ACTIVITY METHODS
@@ -2076,25 +2077,7 @@ open class DeckPicker :
     }
 
     private fun promptUserToUpdateScheduler() {
-        AlertDialog.Builder(this).show {
-            message(text = TR.schedulingUpdateRequired())
-            positiveButton(R.string.dialog_ok) {
-                launchCatchingTask {
-                    if (!userAcceptsSchemaChange(getColUnsafe)) {
-                        return@launchCatchingTask
-                    }
-                    withProgress { withCol { sched.upgradeToV2() } }
-                    showThemedToast(this@DeckPicker, TR.schedulingUpdateDone(), false)
-                    refreshState()
-                }
-            }
-            negativeButton(R.string.dialog_cancel)
-            if (AdaptionUtil.hasWebBrowser(this@DeckPicker)) {
-                neutralButton(text = TR.schedulingUpdateMoreInfoButton()) {
-                    this@DeckPicker.openUrl("https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating".toUri())
-                }
-            }
-        }
+        dialogHandler.sendMessage(SchedulerUpgradeDialogMessageHandler().toMessage())
     }
 
     @NeedsTest("14608: Ensure that the deck options refer to the selected deck")
@@ -2120,10 +2103,6 @@ open class DeckPicker :
             }
         }
 
-        if (withCol { ((config.get("schedVer") ?: 1L) == 1L) }) {
-            promptUserToUpdateScheduler()
-            return
-        }
         withCol { decks.select(did) }
         deckListAdapter.updateSelectedDeck(did)
         // Also forget the last deck used by the Browser
@@ -2202,6 +2181,19 @@ open class DeckPicker :
                             Pair(sched.deckDueTree(), isEmpty)
                         }
                     onDecksLoaded(deckDueTree, collectionHasNoCards)
+
+                    /**
+                     * Checks scheduler version and prompts upgrade dialog
+                     * Ensures dialog is shown only once per collection load, even if [updateDeckList()] is called multiple times.
+                     */
+                    val currentSchedulerVersion = withCol { config.get("schedVer") as? Long ?: 1L }
+
+                    if (currentSchedulerVersion == 1L && lastPromptedSchedulerVersion != 1L) {
+                        lastPromptedSchedulerVersion = 1L
+                        promptUserToUpdateScheduler()
+                    } else {
+                        lastPromptedSchedulerVersion = currentSchedulerVersion
+                    }
 
                     updateUndoMenuState()
                 }
@@ -2709,6 +2701,29 @@ class OneWaySyncDialog(
     companion object {
         fun fromMessage(message: Message): DialogHandlerMessage = OneWaySyncDialog(message.data.getString("message"))
     }
+}
+
+class SchedulerUpgradeDialogMessageHandler :
+    DialogHandlerMessage(
+        which = WhichDialogHandler.MSG_SHOW_SCHEDULER_UPGRADE_DIALOG,
+        analyticName = "SchedulerUpgradeDialog",
+    ) {
+    override fun handleAsyncMessage(activity: AnkiActivity) {
+        SchedulerUpgradeDialog(
+            activity = activity,
+            onUpgrade = {
+                activity.launchCatchingTask {
+                    activity.withProgress { withCol { sched.upgradeToV2() } }
+                    showThemedToast(activity, TR.schedulingUpdateDone(), false)
+                }
+            },
+            onCancel = {
+                activity.onBackPressedDispatcher.onBackPressed()
+            },
+        ).showDialog()
+    }
+
+    override fun toMessage() = emptyMessage(this.what)
 }
 
 // This is used to re-show the dialog immediately on activity recreation
