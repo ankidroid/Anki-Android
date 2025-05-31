@@ -2051,6 +2051,12 @@ abstract class AbstractFlashcardViewer :
             return false
         }
 
+        override fun onLongPress(e: MotionEvent) {
+            if (gesturesEnabled) {
+                gestureProcessor.onLongTap()
+            }
+        }
+
         private fun isTouchingEdge(e1: MotionEvent): Boolean {
             val height = touchLayer!!.height
             val width = touchLayer!!.width
