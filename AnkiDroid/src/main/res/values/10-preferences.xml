@@ -184,13 +184,13 @@
         >Toggle backside only</string>
 
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="pref_cat_reviewer" maxLength="41">Review screen</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the review screen or the app</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
@@ -244,7 +244,7 @@
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     
     <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the review screen</string>
 
     <!-- About -->
     <string name="open_changelog">Open Changelog</string>
@@ -443,9 +443,9 @@ this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
     <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
     <string name="reviewer_frame_style" maxLength="41">Frame style</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the 'Card' card frame of the Reviewer"
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the 'Card' card frame of the Review screen"
         >Card</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the 'Box' card frame of the Reviewer"
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the 'Box' card frame of the Review screen"
         >Box</string>
 
     <!--Keyboard shortcuts dialog-->
