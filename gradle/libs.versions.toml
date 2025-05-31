@@ -70,6 +70,7 @@ commonsCompress = "1.27.1"
 # https://commons.apache.org/proper/commons-io/changes-report.html
 commonsIo = "2.19.0"
 coroutines = '1.10.2'
+datastorePreferences = '1.1.7'
 desugar-jdk-libs-nio = "2.1.5"
 drawer = "1.0.3"
 espresso = '3.6.1'
@@ -121,6 +122,7 @@ androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayo
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "androidxFragmentKtx" }
 androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "androidxExifinterface" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidxCoreKtx" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-draganddrop = { module = "androidx.draganddrop:draganddrop", version.ref = "androidxDragAndDrop" }
 androidx-browser = { module = "androidx.browser:browser", version.ref = "androidxBrowser" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidxAppCompat" }
