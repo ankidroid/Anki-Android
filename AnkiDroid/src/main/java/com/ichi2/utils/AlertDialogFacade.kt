@@ -22,6 +22,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.DialogInterface.OnClickListener
 import android.text.InputFilter
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ArrayAdapter
@@ -144,7 +145,27 @@ fun AlertDialog.Builder.cancelable(cancelable: Boolean): AlertDialog.Builder = t
  */
 inline fun AlertDialog.Builder.show(block: AlertDialog.Builder.() -> Unit): AlertDialog {
     this.apply { block() }
-    return this.show()
+    val dialog = this.show()
+    return dialog.setupEnterKeyHandler()
+}
+
+/**
+ * Extension function to configure an AlertDialog to handle the Enter key press event.
+ * This will make the Enter key directly trigger the positive button action instead of just selecting it.
+ */
+fun AlertDialog.setupEnterKeyHandler(): AlertDialog {
+    this.setOnKeyListener { dialog, keyCode, event ->
+        if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+            // Get the positive button and simulate a click
+            val positiveButton = (dialog as AlertDialog).getButton(DialogInterface.BUTTON_POSITIVE)
+            if (positiveButton != null && positiveButton.isEnabled) {
+                positiveButton.performClick()
+                return@setOnKeyListener true
+            }
+        }
+        false
+    }
+    return this
 }
 
 /**
