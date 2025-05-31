@@ -9,7 +9,7 @@ import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
-import com.ichi2.anki.ModelFieldEditor
+import com.ichi2.anki.NoteTypeFieldEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.utils.create
@@ -27,7 +27,7 @@ open class NoteTypeEditorContextMenu : AnalyticsDialogFragment() {
         return AlertDialog.Builder(requireActivity()).create {
             setTitle(requireArguments().getString(KEY_LABEL))
             setItems(availableItems.map { resources.getString(it.actionTextId) }.toTypedArray()) { _, index ->
-                (activity as? ModelFieldEditor)?.run { handleAction(availableItems[index]) }
+                (activity as? NoteTypeFieldEditor)?.run { handleAction(availableItems[index]) }
                     ?: Timber.e("ContextMenu used from outside of its target activity!")
             }
         }

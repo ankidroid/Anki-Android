@@ -32,7 +32,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.ModelFieldEditor
+import com.ichi2.anki.NoteTypeFieldEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.snackbar.showSnackbar
@@ -66,7 +66,7 @@ class ManageNotetypes : AnkiActivity() {
         NotetypesAdapter(
             this@ManageNotetypes,
             onShowFields = {
-                launchForChanges<ModelFieldEditor>(
+                launchForChanges<NoteTypeFieldEditor>(
                     mapOf(
                         "title" to it.name,
                         "noteTypeID" to it.id,
