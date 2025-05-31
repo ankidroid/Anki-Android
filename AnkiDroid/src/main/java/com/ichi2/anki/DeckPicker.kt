@@ -952,6 +952,7 @@ open class DeckPicker :
             launchCatchingTask {
                 updateMenuState()
                 updateSearchVisibilityFromState(menu)
+                updateDeckRelatedMenuItems(menu)
                 if (!fragmented) {
                     updateMenuFromState(menu)
                 }
@@ -1048,6 +1049,7 @@ open class DeckPicker :
             updateUndoLabelFromState(menu.findItem(R.id.action_undo), undoLabel, undoAvailable)
             updateSyncIconFromState(menu.findItem(R.id.action_sync), this)
         }
+        updateDeckRelatedMenuItems(menu)
     }
 
     private suspend fun updateUndoMenuState() {
@@ -1057,6 +1059,18 @@ open class DeckPicker :
                     undoLabel = undoLabel(),
                     undoAvailable = undoAvailable(),
                 )
+        }
+    }
+
+    /**
+     * Shows/hides deck related menu items based on the collection being empty or not.
+     */
+    private fun updateDeckRelatedMenuItems(menu: Menu) {
+        optionsMenuState?.run {
+            menu.findItem(R.id.action_deck_rename)?.isVisible = !isColEmpty
+            menu.findItem(R.id.action_deck_delete)?.isVisible = !isColEmpty
+            // added to the menu by StudyOptionsFragment
+            menu.findItem(R.id.action_deck_or_study_options)?.isVisible = !isColEmpty
         }
     }
 
@@ -1120,10 +1134,14 @@ open class DeckPicker :
                 val searchIcon = decks.count() >= 10
                 val undoLabel = undoLabel()
                 val undoAvailable = undoAvailable()
-                Triple(searchIcon, undoLabel, undoAvailable)
-            }?.let { (searchIcon, undoLabel, undoAvailable) ->
+                // besides checking for cards being available also consider if we have empty decks
+                val isColEmpty = isEmpty && decks.count() == 1
+                // the correct sync status is fetched in the next call so "Normal" is used as a placeholder
+                // the sync status is calculated in the next call so "Normal" is used as a placeholder
+                OptionsMenuState(searchIcon, undoLabel, SyncIconState.Normal, undoAvailable, isColEmpty)
+            }?.let { (searchIcon, undoLabel, _, undoAvailable, isColEmpty) ->
                 val syncIcon = fetchSyncStatus()
-                OptionsMenuState(searchIcon, undoLabel, syncIcon, undoAvailable)
+                OptionsMenuState(searchIcon, undoLabel, syncIcon, undoAvailable, isColEmpty)
             }
     }
 
@@ -2659,6 +2677,7 @@ data class OptionsMenuState(
     val undoLabel: String?,
     val syncIcon: SyncIconState,
     val undoAvailable: Boolean,
+    val isColEmpty: Boolean,
 )
 
 enum class SyncIconState {
