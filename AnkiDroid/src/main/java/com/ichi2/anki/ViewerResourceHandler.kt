@@ -25,31 +25,34 @@ import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.FileInputStream
+import java.io.InputStream
 import java.nio.file.Paths
+import java.util.regex.Pattern
 import kotlin.io.path.pathString
+import kotlin.text.get
 
 private const val RANGE_HEADER = "Range"
 private const val MATHJAX_PATH_PREFIX = "/_anki/js/vendor/mathjax"
+private val srcPattern = Pattern.compile("src=\"([^\"]*)\"")
 
 class ViewerResourceHandler(
-    context: Context,
+    private val context: Context,
 ) {
     private val assetManager = context.assets
-    private val mediaDir = CollectionHelper.getMediaDirectory(context)
 
     fun shouldInterceptRequest(request: WebResourceRequest): WebResourceResponse? {
-        val url = request.url
-        val path = url.path
+        val path = request.url.path ?: return null
+        val range = request.requestHeaders[RANGE_HEADER]
+        return when {
+            request.method != "GET" -> null
+            path == "/favicon.ico" ->
+                WebResourceResponse(
+                    null,
+                    null,
+                    ByteArrayInputStream(ByteArray(0)),
+                )
 
-        if (request.method != "GET" || path == null) {
-            return null
-        }
-        if (path == "/favicon.ico") {
-            return WebResourceResponse(null, null, ByteArrayInputStream(ByteArray(0)))
-        }
-
-        try {
-            if (path.startsWith(MATHJAX_PATH_PREFIX)) {
+            path.startsWith(MATHJAX_PATH_PREFIX) -> {
                 val mathjaxAssetPath =
                     Paths
                         .get(
@@ -57,22 +60,26 @@ class ViewerResourceHandler(
                             path.removePrefix(MATHJAX_PATH_PREFIX),
                         ).pathString
                 val inputStream = assetManager.open(mathjaxAssetPath)
-                return WebResourceResponse(guessMimeType(path), null, inputStream)
+                try {
+                    WebResourceResponse(guessMimeType(path), null, inputStream)
+                } catch (_: Exception) {
+                    Timber.d("File $mathjaxAssetPath not found")
+                    null
+                }
             }
-
-            val file = File(mediaDir, path)
-            if (!file.exists()) {
-                return null
+            range != null -> {
+                handlePartialContent(file(context, path) ?: return null, range)
             }
-            request.requestHeaders[RANGE_HEADER]?.let { range ->
-                return handlePartialContent(file, range)
+            else -> {
+                try {
+                    val inputStream = inputStream(context, path) ?: return null
+                    val mimeType = guessMimeType(path)
+                    return WebResourceResponse(mimeType, null, inputStream)
+                } catch (_: Exception) {
+                    Timber.d("File $path not found")
+                    return null
+                }
             }
-            val inputStream = FileInputStream(file)
-            val mimeType = guessMimeType(path)
-            return WebResourceResponse(mimeType, null, inputStream)
-        } catch (e: Exception) {
-            Timber.d("File not found")
-            return null
         }
     }
 
@@ -111,6 +118,79 @@ class ViewerResourceHandler(
             responseHeaders,
             fileStream,
         )
+    }
+
+    companion object {
+        /**
+         * Returns the file at path if it exists,
+         */
+        private fun file(
+            context: Context,
+            path: String,
+        ): File? {
+            val mediaDir = CollectionHelper.getMediaDirectory(context)
+            return try {
+                File(mediaDir, path).takeIf { it.exists() }
+            } catch (_: Exception) {
+                Timber.d("can't check whether $path exists.")
+                null
+            }
+        }
+
+        private fun inputStream(
+            context: Context,
+            path: String,
+        ): InputStream? = getByteArray(path)?.let { ByteArrayInputStream(it) } ?: file(context, path)?.let { FileInputStream(it) }
+
+        /**
+         * Associate to file name the byte array of this file.
+         */
+        private val prefetch = mutableMapOf<String, ByteArray>()
+
+        fun getByteArray(path: String): ByteArray? = prefetch[path]
+
+        private fun findSrcs(html: String): Iterable<String> {
+            val paths = mutableSetOf<String>()
+            val m = srcPattern.matcher(html)
+            while (m.find()) {
+                paths.add(m.group(1)!!)
+            }
+            return paths
+        }
+
+        fun prefetch(
+            context: Context,
+            html: String,
+        ) {
+            data class PrefetchData(
+                val length: Int,
+                val stream: FileInputStream,
+                val path: String,
+            )
+            val srcs = findSrcs(html)
+            val inputStreams =
+                srcs.mapNotNull { path ->
+                    val file = file(context, path) ?: return@mapNotNull null
+                    val length =
+                        try {
+                            file.length()
+                        } catch (_: Exception) {
+                            Timber.d("File $path exists but its length can't be determined.")
+                            return@mapNotNull null
+                        }
+                    if (length > 10 * 1024 * 1024) {
+                        Timber.d("File $path length is $length, greater than 10 mb, not caching it")
+                        return@mapNotNull null
+                    }
+                    return@mapNotNull PrefetchData(length.toInt(), FileInputStream(file), path)
+                }
+            prefetch.clear()
+            for (data in inputStreams.take(20)) {
+                val bytes = ByteArray(data.length)
+                data.stream.read(bytes)
+                prefetch[data.path] = bytes
+            }
+        }
     }
 }
 
