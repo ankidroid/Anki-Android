@@ -151,5 +151,9 @@
     <!-- color used for bury count in study options(same as anki for light and dark) -->
     <color name="disabled_gray_light">#858585</color>
     <color name="disabled_gray_dark">#fcfcfc</color>
+
+    <!-- color used for the resizable screens-->
+    <color name="idle_divider_color">#B0B0B0</color>
+    <color name="drag_divider_color">#1A90FF</color>
 </resources>
 
