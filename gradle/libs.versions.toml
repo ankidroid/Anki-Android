@@ -67,7 +67,7 @@ colorpicker = "1.2.0"
 commonsCollections4 = "4.5.0"
 # https://commons.apache.org/proper/commons-compress/changes-report.html
 commonsCompress = "1.27.1"
-# https://commons.apache.org/proper/commons-io/changes-report.html
+# https://commons.apache.org/proper/commons-io/changes.html
 commonsIo = "2.19.0"
 coroutines = '1.10.2'
 desugar-jdk-libs-nio = "2.1.5"
