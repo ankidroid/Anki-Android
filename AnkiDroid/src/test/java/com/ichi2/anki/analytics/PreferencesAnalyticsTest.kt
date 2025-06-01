@@ -68,6 +68,8 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             R.string.tts_key, // tts
             R.string.pref_reset_languages_key, // resetLanguages
             R.string.pref_keyboard_shortcuts_key, // showKeyboardShortcuts
+            R.string.pref_notifications_edit_app_wide_key, // editAppWideReviewReminders
+            R.string.pref_notifications_edit_deck_specific_key, // editDeckSpecificReviewReminders
             // Opens App Bar buttons fragment
             R.string.custom_buttons_link_preference, // custom_buttons_link
             // Opens Custom sync server fragment
