@@ -15,14 +15,12 @@
  */
 package com.ichi2.anki.previewer
 
-import androidx.activity.result.ActivityResult
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
-import com.ichi2.anki.NoteEditor
-import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.cardviewer.CardMediaPlayer
@@ -37,6 +35,7 @@ import com.ichi2.anki.utils.ext.flag
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -50,7 +49,7 @@ class PreviewerViewModel(
     firstIndex: Int,
     cardMediaPlayer: CardMediaPlayer,
 ) : CardViewerViewModel(cardMediaPlayer),
-    OnErrorListener {
+    ChangeManager.Subscriber {
     val currentIndex = MutableStateFlow(firstIndex)
     val backSideOnly = MutableStateFlow(false)
     val isMarked = MutableStateFlow(false)
@@ -72,6 +71,10 @@ class PreviewerViewModel(
             withCol { getCard(selectedCardIds[firstIndex]) }
         }
     override val server = AnkiServer(this).also { it.start() }
+
+    init {
+        ChangeManager.subscribe(this)
+    }
 
     /* *********************************************************************************************
      ************************ Public methods: meant to be used by the View **************************
@@ -173,18 +176,6 @@ class PreviewerViewModel(
 
     suspend fun getNoteEditorDestination() = NoteEditorLauncher.EditNoteFromPreviewer(currentCard.await().id)
 
-    fun handleEditCardResult(result: ActivityResult) {
-        if (result.data?.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) == true ||
-            result.data?.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false) == true
-        ) {
-            Timber.v("handleEditCardResult()")
-            launchCatchingIO {
-                showCard(showAnswerOnReload)
-                loadAndPlaySounds()
-            }
-        }
-    }
-
     fun replayAudios() {
         launchCatchingIO {
             val side = if (showingAnswer.value) SingleCardSide.BACK else SingleCardSide.FRONT
@@ -246,6 +237,32 @@ class PreviewerViewModel(
         } else {
             TypeAnswer.removeTags(text)
         }
+
+    override fun opExecuted(
+        changes: OpChanges,
+        handler: Any?,
+    ) {
+        Timber.v("PreviewerViewModel::opExecuted %s", changes.toString())
+        launchCatchingIO {
+            when {
+                changes.noteText -> {
+                    val card = currentCard.await()
+                    withCol { card.load(this) }
+                    updateMarkIcon()
+                    if (showingAnswer.value) {
+                        showAnswer()
+                    } else {
+                        showQuestion()
+                    }
+                }
+                changes.card -> {
+                    val card = currentCard.await()
+                    withCol { card.load(this) }
+                    updateFlagIcon()
+                }
+            }
+        }
+    }
 
     companion object {
         fun factory(

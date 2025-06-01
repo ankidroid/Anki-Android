@@ -23,7 +23,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
@@ -261,15 +260,10 @@ class PreviewerFragment :
         }
     }
 
-    private val editCardLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            viewModel.handleEditCardResult(result)
-        }
-
     private fun editCard() {
         lifecycleScope.launch {
             val intent = viewModel.getNoteEditorDestination().toIntent(requireContext())
-            editCardLauncher.launch(intent)
+            startActivity(intent)
         }
     }
 
