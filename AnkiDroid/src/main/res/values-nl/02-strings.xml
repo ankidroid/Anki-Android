@@ -88,8 +88,8 @@
         <item quantity="one">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
-    <string name="studyoptions_total_new_label">Total new cards</string>
-    <string name="studyoptions_total_label">Total cards</string>
+    <string name="studyoptions_total_new_label">Totaal aantal nieuwe kaarten</string>
+    <string name="studyoptions_total_label">Totaal aantal kaarten</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Kaart bewerken</string>
     <string name="discard">Weggooien</string>
@@ -104,7 +104,7 @@
     <string name="field_remapping">%1$s (van “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">De kaarten toegewezen aan niets zullen worden verwijderd. Als een memo resterende kaarten heeft, zullen zij verloren gaan. Weet u zeker dat u wilt doorgaan?</string>
     <string name="missing_note_type">Geen notitietype gevonden</string>
-    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (leeg)</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Timebox bereikt</string>
     <plurals name="timebox_reached">
@@ -189,7 +189,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Achtergrond</string>
     <string name="choose_an_image" maxLength="41">Kies een afbeelding</string>
-    <string name="remove_wallpaper_image" maxLength="41">Remove background</string>
+    <string name="remove_wallpaper_image" maxLength="41">Verwijder achtergrond</string>
     <string name="remove_background_image">Achtergrond verwijderen?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Herstel Standaardinstellingen</string>
@@ -235,7 +235,7 @@
     <string name="note_editor_image_too_large">De afbeelding is te groot, voeg de afbeelding handmatig in</string>
     <string name="note_editor_video_too_large">Het videobestand is te groot, voeg de video handmatig in</string>
     <string name="note_editor_audio_too_large">Het audiobestand is te groot, voeg de audio handmatig in</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android backup in progress. Please try again</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android back-up in uitvoering. Probeer opnieuw alstublieft </string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Mogelijk moet u iManager gebruiken om AnkiDroid snelkoppelingen te laten toevoegen</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Uw startscherm staat niet toe dat AnkiDroid snelkoppelingen toevoegt</string>
     <string name="create_shortcut_error">Fout bij het toevoegen van de snelkoppeling: %s</string>
@@ -251,7 +251,7 @@
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Set downloaden</string>
-    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Open in Browser</string>
+    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Openen in Browser</string>
     <string name="try_again">Probeer nogmaals</string>
     <string name="cancel_download">Annuleer download</string>
     <string name="cancel_download_question_title">Annuleer download?</string>
@@ -305,16 +305,16 @@
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Opmerkingen</string>
     <string name="toggle_cards_notes">Kaarten/notities in-/uitschakelen</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
-    <string name="browser_options_dialog_heading">Browser options</string>
+    <string name="browser_options_dialog_heading">Browseropties</string>
     <string name="audio_saved">Opname opgeslagen</string>
     <string name="deleting_selected_notes">Geselecteerde notities verwijderen</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Tap a voice to listen</string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use</string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Klik een stem om te beluisteren</string>
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Stem moet eerst geïnstalleerd zijn om te gebruiken</string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Gebruik toch</string>
     <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Tekst naar spraak fout (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">Internet</string>
-    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Install</string>
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Installeer</string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Failed to open text to speech settings</string>
     <string name="shared_decks_login_required">Log in om meer sets te downloaden</string>
     <string name="deck_description_field_hint">Beschrijving</string>
@@ -325,8 +325,8 @@
         <item quantity="other">%d kaarten onbegraven</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Verplaatsen</string>
-    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
-    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Volgende</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Terug</string>
     <string name="start_recording">Opnemen</string>
     <string name="stop_recording">Stoppen</string>
     <string name="play_recording">Afspelen</string>
@@ -334,11 +334,11 @@
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Kan kaarttype niet verwijderen</string>
     <string name="orphan_note_message">Als je dit kaarttype verwijdert, zullen sommige notities geen kaarten meer hebben.</string>
-    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
+    <string name="voice_not_supported">Stem niet ondersteund. Kies een andere of installeer een stempakket.</string>
     <!--Keyboard shortcuts dialog-->
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Notitie editor</string>
     <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>

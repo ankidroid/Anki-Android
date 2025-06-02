@@ -88,10 +88,10 @@
         <item>Por grau de facilidade</item>
         <item>Por revisões</item>
         <item>Por falhas</item>
-        <item>By deck name</item>
+        <item>Por nome do baralho</item>
     </string-array>
-    <string name="chane_browser_column">Change column</string>
-    <string name="no_columns_available">No columns available</string>
+    <string name="chane_browser_column">Alterar coluna</string>
+    <string name="no_columns_available">Nenhuma coluna disponível</string>
     <string name="card_browser_select_all" maxLength="28">Selecionar todas</string>
     <string name="card_browser_select_none" maxLength="28">Desselecionar</string>
     <string name="card_browser_no_cards_in_deck">Não foram encontradas fichas no baralho ‘%s’</string>

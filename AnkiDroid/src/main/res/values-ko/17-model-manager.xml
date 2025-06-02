@@ -24,6 +24,7 @@
  ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
  -->
  
+<!-- This file contains strings related to the note types. Note type used to be called "model", hence the name of the file. -->
 <resources>
     <!--Menu Labels-->
     <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">노트 유형 관리하기</string>

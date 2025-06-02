@@ -150,7 +150,7 @@
     <string name="notification_pref_title" maxLength="41">Notificar quando</string>
     <string name="never_notify">Nunca notificar</string>
     <string name="notify_when_pending">Mensagens pendentes disponíveis</string>
-    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">Mais do que %d fichas pendentes</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrar</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Luz intermitente</string>
     <string name="select_locale_title">Selecionar Idioma</string>
@@ -170,7 +170,7 @@
     <string name="show_estimates" maxLength="41">Mostrar botão de tempo</string>
     <string name="show_estimates_summ">Mostrar o próximo agendamento nos botões de resposta</string>
     <string name="show_large_answer_buttons" maxLength="41">Mostrar botões de resposta grandes</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons_summ">Mostrar botão de resposta em 2 linhas</string>
     <string name="show_top_bar" maxLength="41">Mostrar barra superior</string>
     <string name="show_top_bar_summary">Mostrar contagem de fichas, tempo de resposta, bandeiras e marcas na barra superior</string>
     <string name="show_progress" maxLength="41">Mostrar restantes</string>
@@ -182,8 +182,8 @@
     <string name="time_limit" maxLength="41">Limite de tempo para Timebox</string>
     <string name="day_offset_with_description" maxLength="41">Início do próximo dia</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hora depois da meia-noite</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d horas depois da meia-noite</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Manter o ecrã aceso</string>
     <string name="pref_keep_screen_on_summ">Desativar o tempo limite de ecrã</string>
@@ -262,7 +262,7 @@
     <string name="about_contributors_description"><![CDATA[Estes são os nossos espectaculares <a href=\"%1$s\">colaboradores</a>. Também pode ajudar o AnkiDroid, ao programar, traduzir, doar ou <a href=\"%2$s\">doutras formas</a>!]]></string>
     <string name="license">Licença</string>
     <string name="license_description"><![CDATA[O AnkiDroid é publicado sob as licenças <a href=\"%1$s\">GPL-3.0</a> e <a href=\"%2$s\">AGPL-3.0</a> , com o código-fonte disponível <a href=\"%3$s\">no GitHub</a>.]]></string>
-    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
+    <string name="other_licenses"><![CDATA[O AnkiDroid usa bibliotecas e ícones de terceiros, licenciados sob várias <a href=\"%1$s\">licenças</a> de código aberto]]></string>
     <string name="donate_description"><![CDATA[Pode apoiar o desenvolvimento do AnkiDroid ao <a href=\"%1$s\">doar</a>. Ficamos muito gratos independentemente do valor.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Adicionar gesto</string>
