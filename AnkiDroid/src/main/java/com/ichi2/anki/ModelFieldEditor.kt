@@ -152,7 +152,7 @@ class ModelFieldEditor : AnkiActivity() {
         fieldsListView.adapter = ArrayAdapter(this, R.layout.model_field_editor_list_item, fieldsLabels)
         fieldsListView.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position: Int, _ ->
-                showDialogFragment(newInstance(fieldsLabels[position]))
+                showDialogFragment(newInstance(fieldsLabels[position], noteFields[position].sticky))
                 currentPos = position
             }
     }
@@ -503,9 +503,14 @@ class ModelFieldEditor : AnkiActivity() {
     /**
      * Toggle the "Remember last input" setting AKA the "Sticky" setting
      */
-    private fun toggleStickyField() {
+    private fun stickField() {
         val field = noteFields[currentPos]
-        field.sticky = !field.sticky
+        field.sticky = true
+    }
+
+    private fun unstickField() {
+        val field = noteFields[currentPos]
+        field.sticky = false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
@@ -527,7 +532,8 @@ class ModelFieldEditor : AnkiActivity() {
             NoteTypeEditorContextMenuAction.Reposition -> repositionFieldDialog()
             NoteTypeEditorContextMenuAction.Delete -> deleteFieldDialog()
             NoteTypeEditorContextMenuAction.Rename -> renameFieldDialog()
-            NoteTypeEditorContextMenuAction.ToggleSticky -> toggleStickyField()
+            NoteTypeEditorContextMenuAction.StickField -> stickField()
+            NoteTypeEditorContextMenuAction.UnstickField -> unstickField()
             NoteTypeEditorContextMenuAction.AddLanguageHint -> localeHintDialog()
         }
     }
