@@ -78,7 +78,6 @@ import androidx.draganddrop.DropHelper
 import androidx.fragment.app.commit
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -157,6 +156,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -522,6 +522,28 @@ open class DeckPicker :
         // Open StudyOptionsFragment if in fragmented mode
         if (fragmented && !startupError) {
             loadStudyOptionsFragment(false)
+
+            val resizingDivider = findViewById<View>(R.id.resizing_divider)
+            val parentLayout = findViewById<LinearLayout>(R.id.deckpicker_xl_view)
+
+            // Get references to the panes
+            val deckPickerPane = findViewById<View>(R.id.deck_picker_pane)
+            val studyOptionsPane = findViewById<View>(R.id.studyoptions_fragment)
+
+            if (deckPickerPane == null || studyOptionsPane == null) {
+                Timber.w("DeckPicker or StudyOptions pane not found. Resizing divider will not function.")
+            } else {
+                // Initialize the ResizablePaneManager
+                ResizablePaneManager(
+                    parentLayout = parentLayout,
+                    divider = resizingDivider,
+                    leftPane = deckPickerPane,
+                    rightPane = studyOptionsPane,
+                    sharedPrefs = this.sharedPrefs(),
+                    leftPaneWeightKey = PREF_DECK_PICKER_PANE_WEIGHT,
+                    rightPaneWeightKey = PREF_STUDY_OPTIONS_PANE_WEIGHT,
+                )
+            }
         }
         registerReceiver()
 
@@ -536,15 +558,9 @@ open class DeckPicker :
         deckPickerContent.visibility = View.GONE
         noDecksPlaceholder.visibility = View.GONE
 
-        // specify a LinearLayoutManager and set up item dividers for the RecyclerView
+        // specify a LinearLayoutManager for the RecyclerView
         recyclerViewLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = recyclerViewLayoutManager
-        val ta = this.obtainStyledAttributes(intArrayOf(R.attr.deckDivider))
-        val divider = ta.getDrawable(0)
-        ta.recycle()
-        val dividerDecorator = DividerItemDecoration(this, recyclerViewLayoutManager.orientation)
-        dividerDecorator.setDrawable(divider!!)
-        recyclerView.addItemDecoration(dividerDecorator)
 
         // Add background to Deckpicker activity
         val view = if (fragmented) findViewById(R.id.deckpicker_xl_view) else findViewById<View>(R.id.root_layout)
@@ -2579,6 +2595,9 @@ open class DeckPicker :
         // 10 minutes in milliseconds..
         private const val AUTOMATIC_SYNC_MINIMAL_INTERVAL_IN_MINUTES: Long = 10
         private const val SWIPE_TO_SYNC_TRIGGER_DISTANCE = 400
+
+        private const val PREF_DECK_PICKER_PANE_WEIGHT = "deckPickerPaneWeight"
+        private const val PREF_STUDY_OPTIONS_PANE_WEIGHT = "studyOptionsPaneWeight"
 
         // Animation utility methods used by renderPage() method
         fun fadeIn(
