@@ -47,7 +47,7 @@
     <string name="check_db_title">Database controleren?</string>
     <string name="check_db_warning">Dit kan een lange tijd duren</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Leerset verwijderen</string>
-    <string name="delete_deck_title">Verwijder set</string>
+    <string name="delete_deck_title">Verwijder set?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Alle kaarten verwijderen in %1$s? Het bevat %2$d kaart</item>
         <item quantity="other">Alle kaarten verwijderen in %1$s? Het bevat %2$d kaarten</item>
@@ -64,7 +64,7 @@
     <string name="answering_error_title">Fout in database</string>
     <string name="answering_error_message">Het schrijven naar de collectie is mislukt. De database kan corrupt zijn of er is onvoldoende opslagruimte op de schijf.\n\nAls dit vaker gebeurt, probeer de database te controleren, de collectie te herstellen of terug te zetten vanaf een back-up. Klik hiervoor op \'instellingen\'.\n\nHet kan ook een fout in AnkiDroid zijn. Gelieve de fout te melden zodat we dit kunnen controleren.</string>
     <string name="answering_error_report">Fout melden</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
+    <string name="storage_full_message">Er is niet genoeg opslagruimte vrij om AnkiDroid te openen. Maak ruimte vrij om door te gaan.</string>
     <string name="repair_deck_dialog">Weet u zeker dat wilt proberen de database te repareren?\n\nVoordat dit wordt geprobeerd, wordt een kopie gemaakt in de submap \'%s\'.</string>
     <string name="intent_aedict_empty">Categorie \'standaard\' is leeg</string>
     <string name="intent_aedict_category">Om kaarten aan AnkiDroid toe te voegen verwijder je alle Notepad categorieën of voeg een toe met de naam \'standaard\'</string>
@@ -73,7 +73,7 @@
     <string name="custom_study_forgotten">Herhaal kaarten vergeten in de laatste x dagen:</string>
     <string name="custom_study_ahead">Herhaal x dagen vooruit:</string>
     <string name="custom_study_preview">Voorbeschouw nieuwe kaarten toegevoegd in de laatste x dagen:</string>
-    <string name="custom_study_tags">Select x cards from the deck:</string>
+    <string name="custom_study_tags">Selecteer x aantal kaarten van de deck</string>
     <string name="storage_full_title">Opslag vol</string>
     <string name="storage_almost_full_title">Opslag is bijna vol</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Geen ruimte</string>
@@ -105,8 +105,8 @@
     <string name="check_media_title">Media controleren?</string>
     <string name="check_media_warning">Dit kan lang duren met grote hoeveelheden media</string>
     <string name="check_media_message">Media controleren&#8230;</string>
-    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_adding_missing_tag">Tags aan het toevoegen&#8230;</string>
+    <string name="check_media_tags_added">Tags toevoegen</string>
     <string name="delete_media_message">Verwijdering van media&#8230;</string>
     <string name="delete_media_result_title">Resultaat van verwijdering</string>
     <plurals name="delete_media_result_message">
@@ -147,7 +147,7 @@
     <string name="error_deleting_image">Fout bij het wissen van het beeld</string>
     <string name="failed_to_apply_background_image">Toepassing van de achtergrondafbeelding %s mislukt</string>
     <string name="background_image_too_large">Achtergrond van het keuzescherm is te groot</string>
-    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum afbeeldingsgrootte %d MB toegelaten</string>
     <string name="image_dimensions_too_large">Afbeeldingsafmetingen zijn te groot (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -188,7 +188,7 @@
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">Een automatische synchronisatie kan getriggerd worden in %d seconden</item>
     </plurals>
     <string name="metered_sync_data_warning">Uw internetprovider kan geld in rekening brengen voor gegevensgebruik</string>
     <string name="deck_picker_new">Aantal nieuwe kaarten die u vandaag in deze leerset ziet.</string>
