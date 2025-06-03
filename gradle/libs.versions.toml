@@ -18,7 +18,7 @@ ktlint = '1.5.0'
 #
 # Old changelogs - See 'Table of Contents' in sidebar
 # https://developer.android.com/build/releases/past-releases
-androidGradlePlugin = "8.10.0"
+androidGradlePlugin = "8.10.1"
 # https://developer.android.com/jetpack/androidx/releases/activity
 androidxActivity = "1.10.1"
 # https://developer.android.com/jetpack/androidx/releases/annotation
@@ -36,11 +36,11 @@ androidxDragAndDrop = "1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/exifinterface
 androidxExifinterface = "1.4.1"
 # https://developer.android.com/jetpack/androidx/releases/fragment
-androidxFragmentKtx = "1.8.6"
+androidxFragmentKtx = "1.8.7"
 # https://developer.android.com/jetpack/androidx/releases/media
 androidxMedia = "1.7.0"
 # https://developer.android.com/jetpack/androidx/releases/media3
-androidxMedia3 = "1.6.1"
+androidxMedia3 = "1.7.1"
 # https://developer.android.com/jetpack/androidx/releases/preference
 androidxPreferenceKtx = "1.2.1"
 # https://developer.android.com/jetpack/androidx/releases/recyclerview
@@ -76,28 +76,32 @@ espresso = '3.6.1'
 mikehardyGoogleAnalyticsJava7 = "2.0.13"
 hamcrest = "3.0"
 imageCropper = "4.6.0"
+jacoco = "0.8.13"
 javaSemver = "0.10.2"
 jetbrainsAnnotations = "26.0.2"
-json = "20250107"
+json = "20250517"
 jsoup = "1.20.1"
 androidTestJunit = "1.2.1"
-junitJupiter = "5.12.2"
-junitPlatformLauncher = "1.12.2"
+junitJupiter = "5.13.0"
+junitPlatformLauncher = "1.13.0"
 # https://github.com/JetBrains/kotlin/releases/
-kotlin = '2.1.20'
+kotlin = '2.1.21'
 kotlinxSerializationJson = "1.8.1"
-ktlintGradlePlugin = "12.2.0"
+ktlintGradlePlugin = "12.3.0"
 leakcanaryAndroid = "2.14"
-lint = '31.10.0'
+lint = '31.10.1'
 material = "1.12.0"
 materialTapTargetPrompt = "3.3.2"
+
+# Only needed until mockito kotlin updates this transitive itself
+mockitoCore = "5.18.0"
 mockitoInline = "5.2.0"
-mockitoKotlin = "5.4.0"
+mockitoKotlin = "5.4.0" # maybe can remove mockitoCore and its usage with release > 5.4.0
 mockk = "1.14.2"
 nanohttpd = "2.3.1"
 okhttp = "4.12.0"
 # https://github.com/protocolbuffers/protobuf/releases
-protobufKotlinLite = "4.30.2"
+protobufKotlinLite = "4.31.1"
 # ../AnkiDroid/robolectricDownload.gradle may need changes - read instructions in that file
 robolectric = "4.14.1"
 searchpreference = "2.7.3"
@@ -193,6 +197,7 @@ kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotl
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
 mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockitoInline" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
