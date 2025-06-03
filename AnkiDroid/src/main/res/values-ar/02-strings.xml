@@ -157,7 +157,6 @@
     <string name="import_error_content_provider">لا يمكن استيراد الملف المحدد تلقائيًا بواسطة أنكيدرويد. الرجاء الاطلاع على دليل المستخدم لكيفية استيراد ملفات أنكي يدويًا: \n%s</string>
     <string name="import_error_copy_to_cache">فشل تخزين الملف مؤقتًا (ربما بسبب نفاذ مساحة التخزين)</string>
     <string name="import_interrupted">تمت مقاطعة الاستيراد</string>
-    <string name="export_preparation_in_progress">يجري تجهيز التصدير&#8230;</string>
     <string name="export_ready_title">جهز التصدير</string>
     <string name="export_send_no_handlers">لا توجد تطبيقات متاحة للتعامل مع apkg. يجري الحفظ&#8230;</string>
     <string name="export_save_apkg_successful">تم حفظ حزمة أنكي بنجاح</string>

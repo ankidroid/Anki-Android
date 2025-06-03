@@ -145,7 +145,6 @@
     <string name="import_error_content_provider">নির্বাচিত ফাইলটি AnkiDroid দ্বারা স্বয়ংক্রিয়ভাবে আমদানি করা যায়নি। আনকি ফাইলটি ম্যানুয়ালি কিভাবে আমদানি করতে হয় তার জন্য অনুগ্রহ করে ব্যবহারকারীর ম্যানুয়ালটি পড়ুন: \n%s</string>
     <string name="import_error_copy_to_cache">ফাইল ক্যাশে করতে ব্যর্থ হয়েছে (সম্ভবত স্টোরেজ স্পেস নেই)</string>
     <string name="import_interrupted">আমদানি ব্যাধিত: AnkiDroid বন্ধ করা হয়েছে</string>
-    <string name="export_preparation_in_progress">রপ্তানি প্রস্তুত করা হচ্ছে&#8230;</string>
     <string name="export_ready_title">রপ্তানি প্রস্তুতি সমাপ্ত</string>
     <string name="export_send_no_handlers">apkg সামলানোর জন্য কোনো অ্যাপ নেই। সেভ করা হচ্ছে&#8230;</string>
     <string name="export_save_apkg_successful">সফলতাপূর্বক Anki প্যাকেজ সেভ হয়েছে</string>

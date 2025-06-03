@@ -148,7 +148,6 @@
     <string name="import_error_content_provider">AnkiDroid nevarēja automātiski ievietot atlasīto datni. Lūgums apskatīt lietotāja rokasgrāmatu, lai uzzinātu, kā pašrocīgi ievietot Anki datnes: \n%s</string>
     <string name="import_error_copy_to_cache">Neizdevās kešot datni (iespējams, ka trūkst vietas krātuvē)</string>
     <string name="import_interrupted">Ievietošana pārtraukta: AnkiDroid tika aizvērta</string>
-    <string name="export_preparation_in_progress">Sagatavo izguvi&#8230;</string>
     <string name="export_ready_title">Izguve gatava</string>
     <string name="export_send_no_handlers">Nav pieejama neviena lietotne .apkg apstrādāšanai. Saglabā&#8230;</string>
     <string name="export_save_apkg_successful">Anki pakotne sekmīgi saglabāta</string>

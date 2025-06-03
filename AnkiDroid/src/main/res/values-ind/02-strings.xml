@@ -142,7 +142,6 @@
     <string name="import_error_content_provider">Berkas yang dipilih tidak dapat diimpor secara otomatis oleh AnkiDroid. Silakan lihat panduan pengguna tentang cara mengimpor berkas anki secara manual: \n%s</string>
     <string name="import_error_copy_to_cache">Gagal cache file (mungkin kehabisan ruang penyimpanan)</string>
     <string name="import_interrupted">Impor terganggu</string>
-    <string name="export_preparation_in_progress">Mempersiapkan ekspor&#8230;</string>
     <string name="export_ready_title">Ekspor siap</string>
     <string name="export_send_no_handlers">Tidak ada aplikasi tersedia untuk memproses apkg. Menyimpan&#8230;</string>
     <string name="export_save_apkg_successful">Berhasil menyimpan paket Anki</string>

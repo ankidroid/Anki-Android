@@ -145,7 +145,6 @@
     <string name="import_error_content_provider">Die geselekteerde lêer kon nie outomaties deur AnkiDroid ingevoer word nie. Raadpleeg asseblief die gebruikershandleiding vir hoe om anki-lêers handmatig in te voer: \n%s</string>
     <string name="import_error_copy_to_cache">Kon nie lêer kas nie (moontlik uit stoorplek)</string>
     <string name="import_interrupted">Invoer onderbreek: AnkiDroid is gesluit</string>
-    <string name="export_preparation_in_progress">Voorbereiding van uitvoer&#8230;</string>
     <string name="export_ready_title">Gereed vir uitvoer</string>
     <string name="export_send_no_handlers">Geen toepassings beskikbaar om .apkg te hanteer nie. Stoor&#8230;</string>
     <string name="export_save_apkg_successful">Suksesvol Anki-pakket gestoor</string>

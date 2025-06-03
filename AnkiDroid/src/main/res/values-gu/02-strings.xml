@@ -145,7 +145,6 @@
     <string name="import_error_content_provider">પસંદ કરેલી ફાઇલ AnkiDroid દ્વારા આપમેળે આયાત કરી શકાઈ નથી. એન્કી ફાઇલોને મેન્યુઅલી કેવી રીતે આયાત કરવી તે માટે કૃપા કરીને વપરાશકર્તા માર્ગદર્શિકા જુઓ: \n%s</string>
     <string name="import_error_copy_to_cache">ફાઇલ કેશ કરવામાં નિષ્ફળ (કદાચ સ્ટોરેજ સ્પેસની બહાર)</string>
     <string name="import_interrupted">આયાત વિક્ષેપિત: AnkiDroid બંધ હતું</string>
-    <string name="export_preparation_in_progress">નિકાસની તૈયારી કરી રહ્યાં છીએ&#8230;</string>
     <string name="export_ready_title">નિકાસ તૈયાર છે</string>
     <string name="export_send_no_handlers">apkg હેન્ડલ કરવા માટે કોઈ એપ્લિકેશન ઉપલબ્ધ નથી. સાચવી રહ્યું છે&#8230;</string>
     <string name="export_save_apkg_successful">અંકી પેકેજ સફળતાપૂર્વક સાચવ્યું</string>

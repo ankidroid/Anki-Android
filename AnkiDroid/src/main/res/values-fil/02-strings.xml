@@ -145,7 +145,6 @@
     <string name="import_error_content_provider">Ang napiling file ay hindi awtomatikong ma-import ng AnkiDroid. Pakitingnan ang user manwal kung paano ang manwal na pag-import ng mga anki file: \n%s</string>
     <string name="import_error_copy_to_cache">Bigo sa pag-cache sa file (posibleng naubusan na ng storage)</string>
     <string name="import_interrupted">Naudlot ang pag-angkat: Nasara ang AnkiDroid</string>
-    <string name="export_preparation_in_progress">Hinahanda ang pag-export&#8230;</string>
     <string name="export_ready_title">Handa na ang pag-export</string>
     <string name="export_send_no_handlers">Walang magagamit na mga aplikasyon upang pangasiwaan ang apkg. Sini-save&#8230;</string>
     <string name="export_save_apkg_successful">Matagumpay na na-isave ang Anki package</string>

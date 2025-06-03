@@ -151,7 +151,6 @@
     <string name="import_error_content_provider">Vybraný soubor nelze automaticky importovat pomocí AnkiDroid. V uživatelské příručce naleznete, jak provést ruční import souborů anki: \n %s</string>
     <string name="import_error_copy_to_cache">Nepodařilo se uložit soubor do mezipaměti (možná nedostatek místa v úložišti)</string>
     <string name="import_interrupted">Import přerušen: AnkiDroid se zavřel</string>
-    <string name="export_preparation_in_progress">Připravuje se export&#8230;</string>
     <string name="export_ready_title">Export připraven</string>
     <string name="export_send_no_handlers">Nenalezena žádná aplikace pro zpracování apkg. Ukládá se&#8230;</string>
     <string name="export_save_apkg_successful">Anki balíček úspěšně uložen</string>

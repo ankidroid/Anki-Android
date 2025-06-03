@@ -145,7 +145,6 @@
     <string name="import_error_content_provider">El fitxer seleccionat no s\'ha importat automàticament per AnkiDroid. Consulteu el manual d\'usuari per com importar arxius anki manualment: \n%s</string>
     <string name="import_error_copy_to_cache">No ha estat possible copiar el fitxer a la memòria cau (segurament falta espai)</string>
     <string name="import_interrupted">Importació interrompuda: AnkiDroid s\'ha tancat</string>
-    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">No hi ha aplicacions disponibles per a gestionar apkg. Desant&#8230;</string>
     <string name="export_save_apkg_successful">Paquet Anki desat amb èxit</string>

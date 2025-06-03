@@ -145,7 +145,6 @@
     <string name="import_error_content_provider">Il file selezionato non ha potuto essere importato automaticamente da AnkiDroid. Consulta il manuale utente per importare manualmente i file anki: \n %s</string>
     <string name="import_error_copy_to_cache">Impossibile cache del file (forse fuori dallo spazio di archiviazione)</string>
     <string name="import_interrupted">Importazione interrotta</string>
-    <string name="export_preparation_in_progress">Preparazione dell\'esportazione&#8230;</string>
     <string name="export_ready_title">Esportazione pronta</string>
     <string name="export_send_no_handlers">Nessuna applicazione disponibile per gestire apkg. Salvataggio&#8230;</string>
     <string name="export_save_apkg_successful">Pacchetto di Anki salvato con successo</string>

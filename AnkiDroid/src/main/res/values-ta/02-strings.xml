@@ -145,7 +145,6 @@
     <string name="import_error_content_provider">தேர்ந்தெடுக்கப்பட்ட கோப்பை AnkiDroid மூலம் தானாக இறக்குமதி செய்ய முடியவில்லை. Anki கோப்புகளைக் கைமுறையாக எப்படி இறக்குமதி செய்வது என்பதை அறிய, பயனர் கையேட்டைப் பார்க்கவும்: \n%s</string>
     <string name="import_error_copy_to_cache">கோப்பை தேக்ககப்படுத்துவதில் தோல்வி (சேமிப்பிடம் இல்லாமல் இருக்கலாம்)</string>
     <string name="import_interrupted">இறக்குமதி தடைபட்டது: AnkiDroid மூடப்பட்டது</string>
-    <string name="export_preparation_in_progress">ஏற்றுமதி தயாராகிறது&#8230;</string>
     <string name="export_ready_title">ஏற்றுமதி தயார்</string>
     <string name="export_send_no_handlers">apkg ஐ கையாள எந்தப் பயன்பாடுகளும் இல்லை. சேமிக்கிறது&#8230;</string>
     <string name="export_save_apkg_successful">Anki தொகுப்பு வெற்றிகரமாகச் சேமிக்கப்பட்டது</string>

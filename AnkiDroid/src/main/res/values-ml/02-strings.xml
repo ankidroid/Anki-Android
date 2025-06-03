@@ -145,7 +145,6 @@
     <string name="import_error_content_provider">തിരഞ്ഞെടുത്ത ഫയൽ AnkiDroid സ്വപ്രേരിതമായി ഇറക്കുമതി ചെയ്യാൻ കഴിയില്ല. അങ്കി ഫയലുകൾ എങ്ങനെ സ്വമേധയാ ഇറക്കുമതി ചെയ്യാമെന്നതിനുള്ള ഉപയോക്തൃ മാനുവൽ കാണുക: \n%s</string>
     <string name="import_error_copy_to_cache">ഫയൽ കാഷെ ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു (ഒരുപക്ഷേ സ്റ്റോറേജ് ഇടം തീർന്നിരിക്കാം)</string>
     <string name="import_interrupted">ഇറക്കുമതി തടസ്സപ്പെട്ടു: അങ്കിഡ്രോയിഡ് അടച്ചു</string>
-    <string name="export_preparation_in_progress">കയറ്റുമതി തയ്യാറാക്കുന്നു&#8230;</string>
     <string name="export_ready_title">കയറ്റുമതി തയ്യാറാണ്</string>
     <string name="export_send_no_handlers">apkg കൈകാര്യം ചെയ്യാൻ അപ്ലിക്കേഷനുകളൊന്നും ലഭ്യമല്ല. സംരക്ഷിക്കുന്നത്&#8230;</string>
     <string name="export_save_apkg_successful">അങ്കി പാക്കേജ് വിജയകരമായി സംരക്ഷിച്ചു</string>

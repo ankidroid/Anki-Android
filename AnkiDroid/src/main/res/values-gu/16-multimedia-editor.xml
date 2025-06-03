@@ -73,5 +73,6 @@
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"છબી પસંદ કરવામાં નિષ્ફળ, કૃપા કરીને ફરી પ્રયાસ કરો"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">புல உள்ளடக்கங்கள்</string>
+    <string name="crop_image_size_notice">The image is too big to be handled by the crop editor. Please resize it and try again!</string>
     <string name="reselect" maxLength="28">மீண்டும் தேர்ந்தெடுக்கவும்</string>
 </resources>

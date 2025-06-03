@@ -142,7 +142,6 @@
     <string name="import_error_content_provider">Сайланган файл автомат рәвештә импортлана алмады. Аны кулдан ничек итеп импортларга, җитәкчелектән карагыз: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_interrupted">Импорт бүленгән иде</string>
-    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">apkg файлын укый ала торган кушымталар юк. Саклана&#8230;</string>
     <string name="export_save_apkg_successful">Anki пакеты уңышлы итеп сакланды</string>
