@@ -59,13 +59,12 @@ class ReviewerBinding(
     }
 
     override fun toDisplayString(context: Context): String {
-        val formatString =
-            when (side) {
-                CardSide.QUESTION -> context.getString(R.string.display_binding_card_side_question)
-                CardSide.ANSWER -> context.getString(R.string.display_binding_card_side_answer)
-                CardSide.BOTH -> context.getString(R.string.display_binding_card_side_both) // intentionally no prefix
-            }
-        return String.format(formatString, binding.toDisplayString(context))
+        val bindingString = binding.toDisplayString(context)
+        return when (side) {
+            CardSide.QUESTION -> context.getString(R.string.display_binding_card_side_question, bindingString)
+            CardSide.ANSWER -> context.getString(R.string.display_binding_card_side_answer, bindingString)
+            CardSide.BOTH -> bindingString
+        }
     }
 
     companion object {
