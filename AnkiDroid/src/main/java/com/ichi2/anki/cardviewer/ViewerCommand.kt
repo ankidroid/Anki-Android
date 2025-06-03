@@ -27,18 +27,12 @@ import com.ichi2.anki.reviewer.MappableAction
 import com.ichi2.anki.reviewer.ReviewerBinding
 
 /** Abstraction: Discuss moving many of these to 'Reviewer'  */
-enum class ViewerCommand(
-    /**
-     * [CardSide.BOTH] if the command can be executed on both question and answer.
-     * Otherwise, the side on which the command can be executed.
-     */
-    val potentialSides: CardSide = CardSide.BOTH
-) : MappableAction<ReviewerBinding> {
-    SHOW_ANSWER(potentialSides = CardSide.QUESTION),
-    FLIP_OR_ANSWER_EASE1(potentialSides = CardSide.ANSWER),
-    FLIP_OR_ANSWER_EASE2(potentialSides = CardSide.ANSWER),
-    FLIP_OR_ANSWER_EASE3(potentialSides = CardSide.ANSWER),
-    FLIP_OR_ANSWER_EASE4(potentialSides = CardSide.ANSWER),
+enum class ViewerCommand : MappableAction<ReviewerBinding> {
+    SHOW_ANSWER,
+    FLIP_OR_ANSWER_EASE1,
+    FLIP_OR_ANSWER_EASE2,
+    FLIP_OR_ANSWER_EASE3,
+    FLIP_OR_ANSWER_EASE4,
     UNDO,
     REDO,
     EDIT,
@@ -221,12 +215,5 @@ enum class ViewerCommand(
             which: ViewerCommand,
             fromGesture: Gesture?,
         ): Boolean
-    }
-
-    companion object {
-        /**
-         * The command whose key is [preferenceKey] if it exists.
-         */
-        fun fromPreferenceKey(preferenceKey: String) = ViewerCommand.entries.firstOrNull { it.preferenceKey == preferenceKey }
     }
 }
