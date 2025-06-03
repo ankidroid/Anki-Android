@@ -45,43 +45,48 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks" maxLength="28">डेकस</string>
-    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">कार्ड ब्राउज़र</string>
-    <string name="statistics" maxLength="28">आंकड़े</string>
-    <string name="settings" maxLength="28">सेटिंग्स</string>
-    <string name="help" maxLength="28">सहायता</string>
-    <string name="drawing">ड्रॉइंग</string>
-    <string name="send_feedback">प्रतिक्रिया भेजें</string>
-    <string name="studyoptions_start">पढ़ाई करें</string>
+    <string name="decks" maxLength="28" comment="Open the Deck Picker">डेकस</string>
+    <string name="card_browser" maxLength="28" comment="Title of the Card Browser, and button to open it.">कार्ड ब्राउज़र</string>
+    <string name="statistics" maxLength="28" comment="Title of the Statistics page and button to open it.">आंकड़े</string>
+    <string name="settings" maxLength="28" comment="Title of the Settings page, and button to open it.">सेटिंग्स</string>
+    <string name="help" maxLength="28" comment="Title of the help menu and button to open it.">सहायता</string>
+    <!-- The last entry "Support ankidroid" is in 03-dialogs.-->
+    <!-- Entries of the "attach" in the "add card" view. -->
+    <string name="drawing" comment="Menu entry to create a drawing to attach to a card. Also a title.">ड्रॉइंग</string>
+    <!-- Entries of the Support ankidroid menu. -->
+    <string name="send_feedback" comment="Menu entry in the \'Help&gt;Support ankidroid\' menu, that opens the web page explaining how to send feedback.">प्रतिक्रिया भेजें</string>
+    <!-- Study Options-->
+    <string name="studyoptions_start" comment="Title of the Reviewer activity. Also the button to open it.">पढ़ाई करें</string>
     <!-- DeckPicker.kt -->
-    <string name="expand">विस्तार करें</string>
-    <string name="collapse">संक्षिप्त करें</string>
-    <plurals name="reviewer_window_title">
+    <string name="expand" comment="In the deck picker: accessibility label of the buttons that display the subdecks of a deck.">विस्तार करें</string>
+    <string name="collapse" comment="In the deck picker: accessibility label of the buttons that hide the subdecks of a deck.">संक्षिप्त करें</string>
+    <string name="menu_import" comment="Title of the import page and the button to open it." maxLength="28">आयात करें</string>
+    <string name="no_cards_placeholder_title" comment="Text shown the first time AnkiDroid is opened, to explain to the user why they can\'t yet review.">यह संग्रह खाली है</string>
+    <string name="no_cards_placeholder_description" comment="Text shown the first time AnkiDroid is opened, to explain what should be their first action.">नये कार्ड जोडने के लिए \n+ आइकन का उपयोग करें।</string>
+    <!-- Reviewer -->
+    <plurals name="reviewer_window_title" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards.">
         <item quantity="one">%d मिनट शेष है</item>
         <item quantity="other">%d मिनट बचे हैं</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours_new">
+    <plurals name="reviewer_window_title_hours_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of minutes.">
         <item quantity="one">%1$d घंटा %2$d शेष है</item>
         <item quantity="other">%1$d घंटे %2$d शेष</item>
     </plurals>
-    <plurals name="reviewer_window_title_days_new">
+    <plurals name="reviewer_window_title_days_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of hours.">
         <item quantity="one">%1$d दिन %2$dh शेष है</item>
         <item quantity="other">%1$d days %2$dh left</item>
     </plurals>
-    <string name="no_cards_placeholder_title">यह संग्रह खाली है</string>
-    <string name="no_cards_placeholder_description">नये कार्ड जोडने के लिए \n+ आइकन का उपयोग करें।</string>
-    <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">उतर टाइप करें</string>
-    <string name="show_answer" maxLength="41">उत्तर देखें</string>
-    <string name="hide_answer">उत्तर छिपाएं</string>
-    <string name="ease_button_again" maxLength="41">फिर से</string>
-    <string name="ease_button_hard" maxLength="41">कठिन</string>
-    <string name="ease_button_good" maxLength="41">अच्छा</string>
-    <string name="ease_button_easy">आसान</string>
-    <string name="menu_import" maxLength="28">आयात करें</string>
+    <string name="type_answer_hint" comment="In the reviewer. When the user use note type with hint. It\'s the default content of the text field in which the user is invited to type their answer. It disappears as soon as the user start to type.">उतर टाइप करें</string>
+    <string name="show_answer" maxLength="41" comment="When displaying the question side of a card. This is the label of a button that display the answer side.">उत्तर देखें</string>
+    <string name="hide_answer" comment="In the previewer, when the answer side is displayed. This is the label of the button that sends back to the question side.">उत्तर छिपाएं</string>
+    <string name="ease_button_again" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that request the card to be shown again soon.">फिर से</string>
+    <string name="ease_button_hard" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state finding the correct answer was hard.">कठिन</string>
+    <string name="ease_button_good" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state their answer was good.">अच्छा</string>
+    <string name="ease_button_easy" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state that finding the answer to the question was easy.">आसान</string>
+    <!-- General -->
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">पूर्ववत् करें</string>
-    <string name="redo" maxLength="28">रीडू</string>
+    <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">रीडू</string>
+    <!-- flashcard_portrait.xml -->
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">आघात पूर्ववत करें</string>
     <string name="move_all_to_deck">सभी को डेक में ले जाएं</string>
     <string name="unbury" maxLength="28">वापस लौंटे</string>
@@ -195,9 +200,9 @@ Back - बैक</string>
     <string name="permissions_screen_headline">अंकीड्रॉइड को काम करने के लिए कुछ अनुमतियों की आवश्यकता है</string>
     <string name="storage_access_title">स्टोरेज एक्सेस</string>
     <string name="storage_access_summary">आपके संग्रह को एक सुरक्षित स्थान पर संग्रहीत करता है जिसे ऐप अनइंस्टॉल होने पर हटाया नहीं जाएगा</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">सभी फ़ाइलों का एक्सेस</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">सभी फ़ाइलों का एक्सेस</string>
     <string name="image_occlusion">छवि अवरोधन</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">खाता हटाएं</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">तत्काल कार्ड</string>
+    <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">तत्काल कार्ड</string>
 </resources>
