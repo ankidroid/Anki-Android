@@ -36,10 +36,7 @@ open class MappableBinding(
 
     override fun hashCode(): Int = Objects.hash(binding)
 
-    open fun toDisplayString(
-        context: Context,
-        potentialSides: CardSide,
-    ): String = binding.toDisplayString(context)
+    open fun toDisplayString(context: Context): String = binding.toDisplayString(context)
 
     open fun toPreferenceString(): String? = binding.toString()
 
@@ -86,11 +83,6 @@ open class MappableBinding(
  */
 interface MappableAction<B : MappableBinding> {
     val preferenceKey: String
-
-    /**
-     *  The side(s) on which this binding can be executed
-     */
-    val potentialSides: CardSide
 
     fun getBindings(prefs: SharedPreferences): List<B>
 }

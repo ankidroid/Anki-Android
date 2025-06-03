@@ -20,7 +20,6 @@ import android.view.KeyEvent
 import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.Binding.Companion.unicode
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
-import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableAction
 import com.ichi2.anki.reviewer.MappableBinding
 
@@ -40,8 +39,6 @@ enum class PreviewerAction : MappableAction<MappableBinding> {
     TOGGLE_FLAG_PURPLE,
     UNSET_FLAG,
     ;
-
-    override val potentialSides = CardSide.BOTH
 
     override val preferenceKey = "previewer_$name"
 
