@@ -151,7 +151,6 @@
     <string name="import_error_content_provider">Wybrany plik nie mógł zostać automatycznie zaimportowany przez AnkiDroid. Zapoznaj się z podręcznikiem użytkownika na temat ręcznego importowania plików anki: \n%s</string>
     <string name="import_error_copy_to_cache">Błąd copyFileToCache() (prawdopodobnie brak miejsca)</string>
     <string name="import_interrupted">Import przerwany</string>
-    <string name="export_preparation_in_progress">Trwa przygotowywanie do eksportu&#8230;</string>
     <string name="export_ready_title">Eksportowanie zakończone</string>
     <string name="export_send_no_handlers">Nie znaleziono aplikacji, która obsługuje apkg. Zapisywanie&#8230;</string>
     <string name="export_save_apkg_successful">Pakiet Anki zapisany pomyślnie</string>

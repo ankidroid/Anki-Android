@@ -151,7 +151,6 @@
     <string name="import_error_content_provider">Pažymėto failo „AnkiDroid“ automatiškai įkelti negali. Norėdami sužinoti, kaip „anki“ failus galėtumėte įkelti rankiniu būdu, prašome perskaityti vartotojo vadovą: \n%s</string>
     <string name="import_error_copy_to_cache">Nepavyko įrašyti failo į talpyklą (galbūt nebeliko vietos)</string>
     <string name="import_interrupted">Importas nutrauktas: AnkiDroid buvo uždarytas</string>
-    <string name="export_preparation_in_progress">Pasirengimas eksportuoti&#8230;</string>
     <string name="export_ready_title">Paruošta eksportuoti</string>
     <string name="export_send_no_handlers">Nėra jokių programėlių, galinčių nuskaityti apkg. Išsaugoma&#8230;</string>
     <string name="export_save_apkg_successful">„Anki“ paketas sėkmingai išsaugotas</string>

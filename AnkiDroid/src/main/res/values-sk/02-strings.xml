@@ -151,7 +151,6 @@
     <string name="import_error_content_provider">Zvolený súbor nemohol byť importovaný automaticky AnkiDroidom. Pozrite si, prosím, používateľský manuál ako manuálne importovať anki súbory: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_interrupted">Import prerušený</string>
-    <string name="export_preparation_in_progress">Príprava na export&#8230;</string>
     <string name="export_ready_title">Pripravené na export</string>
     <string name="export_send_no_handlers">Žiadna aplikácia na spracovanie apkg. Ukladanie&#8230;</string>
     <string name="export_save_apkg_successful">Balík Anki úspešne uložený</string>

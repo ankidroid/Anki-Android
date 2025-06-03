@@ -73,5 +73,6 @@
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"ছবি নির্বাচন করতে ব্যর্থ, আবার চেষ্টা করুন"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">ক্ষেত্রের বিষয়বস্তু</string>
+    <string name="crop_image_size_notice">The image is too big to be handled by the crop editor. Please resize it and try again!</string>
     <string name="reselect" maxLength="28">আবার নির্বাচন করুন</string>
 </resources>

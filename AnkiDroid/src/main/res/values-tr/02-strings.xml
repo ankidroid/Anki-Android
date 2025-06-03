@@ -145,7 +145,6 @@
     <string name="import_error_content_provider">Seçilen dosya AnkiDroid tarafından otomatik olarak içeri aktarılamadı. Lütfen anki dosyalarının nasıl elle içeri aktarıldığı hakkında kullanıcı kılavuzuna bakın:\n %s</string>
     <string name="import_error_copy_to_cache">Dosya belleğe alınamadı (depolama alanı bitmiş olabilir)</string>
     <string name="import_interrupted">Aktarım yarıda kesildi: AnkiDroid kapatıldı</string>
-    <string name="export_preparation_in_progress">Dışa aktarım hazırlanıyor&#8230;</string>
     <string name="export_ready_title">Dışa aktarım hazır</string>
     <string name="export_send_no_handlers">Apkg işleyecek uygulama yok. Kaydediliyor&#8230;</string>
     <string name="export_save_apkg_successful">Anki paketi başarıyla kaydedildi</string>

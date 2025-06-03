@@ -73,5 +73,6 @@
     <string name="save_dialog_content">Den nuvarande bildstorlek är %s MB. Gränsen för bildstorlek är 1 MB. Vill du komprimera bilden?</string>
     <string name="select_image_failed">"Det gick inte att välja bild. Försök igen"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Fältinnehåll</string>
+    <string name="crop_image_size_notice">The image is too big to be handled by the crop editor. Please resize it and try again!</string>
     <string name="reselect" maxLength="28">Välja om</string>
 </resources>

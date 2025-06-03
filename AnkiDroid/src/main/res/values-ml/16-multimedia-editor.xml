@@ -74,5 +74,6 @@
     <string name="select_image_failed">"ചിത്രം തിരഞ്ഞെടുക്കുന്നതിൽ പരാജയപ്പെട്ടു, വീണ്ടും ശ്രമിക്കുക
 "</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">ഫീൽഡ് ഉള്ളടക്കം</string>
+    <string name="crop_image_size_notice">The image is too big to be handled by the crop editor. Please resize it and try again!</string>
     <string name="reselect" maxLength="28">വീണ്ടും തിരഞ്ഞെടുക്കുക</string>
 </resources>

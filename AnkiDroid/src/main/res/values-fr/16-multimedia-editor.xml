@@ -73,5 +73,6 @@
     <string name="save_dialog_content">La taille actuelle de l\'image est de %s Mo. La taille de l\'image par défaut est de 1 Mo. Voulez-vous la compresser ?</string>
     <string name="select_image_failed">"La sélection de l\'image a échoué, veuillez réessayer"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Contenus du champ</string>
+    <string name="crop_image_size_notice">The image is too big to be handled by the crop editor. Please resize it and try again!</string>
     <string name="reselect" maxLength="28">Sélectionner à nouveau</string>
 </resources>

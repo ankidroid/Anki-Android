@@ -145,7 +145,6 @@
     <string name="import_error_content_provider">ಆಯ್ದ ಫೈಲ್ ಅನ್ನು ಆಂಕಿಡ್ರಾಯ್ಡ್ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಆಮದು ಮಾಡಲಾಗುವುದಿಲ್ಲ. ಆಂಕಿ ಫೈಲ್‌ಗಳನ್ನು ಹಸ್ತಚಾಲಿತವಾಗಿ ಆಮದು ಮಾಡುವುದು ಹೇಗೆ ಎಂದು ದಯವಿಟ್ಟು ಬಳಕೆದಾರರ ಕೈಪಿಡಿಯನ್ನು ನೋಡಿ: \n%s</string>
     <string name="import_error_copy_to_cache">ಫೈಲ್ ಸಂಗ್ರಹಿಸಲು ವಿಫಲವಾಗಿದೆ (ಬಹುಶಃ ಶೇಖರಣಾ ಸ್ಥಳವಿಲ್ಲ)</string>
     <string name="import_interrupted">ಆಮದು ಅಡ್ಡಿಪಡಿಸಲಾಗಿದೆ: ಆಂಕಿಡ್ರಾಯ್ಡ್ ಅನ್ನು ಮುಚ್ಚಲಾಗಿದೆ</string>
-    <string name="export_preparation_in_progress">ರಫ್ತು ಸಿದ್ಧಪಡಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="export_ready_title">ರಫ್ತು ಸಿದ್ಧವಾಗಿದೆ</string>
     <string name="export_send_no_handlers">ಎಪಿಕೆಜಿ ನಿರ್ವಹಿಸಲು ಯಾವುದೇ ಅಪ್ಲಿಕೇಶನ್‌ಗಳು ಲಭ್ಯವಿಲ್ಲ. ಉಳಿಸಲಾಗುತ್ತಿದೆ &#8230;</string>
     <string name="export_save_apkg_successful">ಅಂಕಿ ಪ್ಯಾಕೇಜ್ ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಉಳಿಸಲಾಗಿದೆ</string>

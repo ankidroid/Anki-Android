@@ -73,5 +73,6 @@
     <string name="save_dialog_content">نۆۋەتتىكى سۈرەتنىڭ چوڭلۇقى ‏‎%s‪‎‏MB‬. كۆۈلدىكى سۈرەت چوڭلۇقىنىڭ چېكى ‪1MB‬. پىرىسلامسىز؟</string>
     <string name="select_image_failed">"سۈرەت تاللىيالمىدى، قايتا سىناڭ"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">بۆلەك مەزمۇنى</string>
+    <string name="crop_image_size_notice">The image is too big to be handled by the crop editor. Please resize it and try again!</string>
     <string name="reselect" maxLength="28">قايتا تاللاش</string>
 </resources>

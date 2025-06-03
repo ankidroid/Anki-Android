@@ -148,7 +148,6 @@
                               %s</string>
     <string name="import_error_copy_to_cache">Sarvamentu de s\'archìviu in sa memòria temporànea fallidu (probabilmente ca non b\'at logu in sa memòria)</string>
     <string name="import_interrupted">Importatzione firmada: AnkiDroid est istadu serradu</string>
-    <string name="export_preparation_in_progress">Ammaniende s\'esportatzione&#8230;</string>
     <string name="export_ready_title">Esportatzione pronta</string>
     <string name="export_send_no_handlers">Peruna aplicatzione a disponimentu pro gestire apkg. Sarvende&#8230;</string>
     <string name="export_save_apkg_successful">Pachete de Anki sarvadu in manera curreta</string>

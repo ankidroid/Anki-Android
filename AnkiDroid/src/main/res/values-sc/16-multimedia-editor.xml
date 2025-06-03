@@ -73,5 +73,6 @@
     <string name="save_dialog_content">Sa mannària atuale de s\'immàgine est de %sMB. Su lìmite predefinidu de mannària pro sas immàgines est de 1MB. La cheres cumprìmere?</string>
     <string name="select_image_failed">"Seletzione de s\'immàgine fallida. Torra a proare"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Cuntenutos de su campu</string>
+    <string name="crop_image_size_notice">The image is too big to be handled by the crop editor. Please resize it and try again!</string>
     <string name="reselect" maxLength="28">Torra a seletzionare</string>
 </resources>

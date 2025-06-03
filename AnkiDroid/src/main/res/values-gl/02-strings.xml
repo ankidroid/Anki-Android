@@ -145,7 +145,6 @@
     <string name="import_error_content_provider">O ficheiro seleccionado non se puido importar automaticamente. Consulta o manual do usuario para ver como importar manualmente ficheiros anki: \n%s</string>
     <string name="import_error_copy_to_cache">Non se puido gardar o ficheiro na caché (posibelmente falta espazo)</string>
     <string name="import_interrupted">Importación interrompida: pechouse AnkiDroid</string>
-    <string name="export_preparation_in_progress">Preparando exportación&#8230;</string>
     <string name="export_ready_title">Listo para exportar</string>
     <string name="export_send_no_handlers">Non hai aplicacións dispoñíbeis para manexar apkg. Gardando&#8230;</string>
     <string name="export_save_apkg_successful">Paquete Anki gardado correctamente</string>

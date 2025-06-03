@@ -73,5 +73,6 @@
     <string name="save_dialog_content">Kích thước hình ảnh hiện tại là %sMB. Giới hạn kích thước hình ảnh mặc định là 1MB. Bạn có muốn nén nó?</string>
     <string name="select_image_failed">"Chọn hình ảnh không thành công, Vui lòng thử lại"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Nội dung đoạn</string>
+    <string name="crop_image_size_notice">The image is too big to be handled by the crop editor. Please resize it and try again!</string>
     <string name="reselect" maxLength="28">Chọn lại</string>
 </resources>

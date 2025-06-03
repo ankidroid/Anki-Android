@@ -145,7 +145,6 @@
     <string name="import_error_content_provider">تاللانغان ھۆججەتنى AnkiDroid ئۆزلۈكىدىن ئەكىرەلمەيدۇ. ئىشلەتكۈچى قوللانمىسىدىن anki ھۆججەتنى قانداق ئەكىرىشنى كۆرۈڭ: \n%s</string>
     <string name="import_error_copy_to_cache">ھۆججەتنى غەملىيەلمىدى (ساقلاش بوشلۇقى يېتىشمىگەن بولۇشى مۇمكىن)</string>
     <string name="import_interrupted">ئەكىرىش ئۈزۈلدى: AnkiDroid تاقالغان</string>
-    <string name="export_preparation_in_progress">چىقىرىشقا تەييارلىنىۋاتىدۇ&#8230;</string>
     <string name="export_ready_title">چىقىرىشقا تەييار</string>
     <string name="export_send_no_handlers">apkg نى بىر تەرەپ قىلىدىغان ئەپ يوق. ساقلاۋاتىدۇ&#8230;</string>
     <string name="export_save_apkg_successful">Anki بولىقى مۇۋەپپەقىيەتلىك ساقلاندى</string>

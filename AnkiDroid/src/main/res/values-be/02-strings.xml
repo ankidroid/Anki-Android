@@ -151,7 +151,6 @@
     <string name="import_error_content_provider">Выбраны файл немагчыма імпартаваць аўтаматычна ў праграму. Звярніцеся да даведніка карыстальніка для імпартавання файла ўручную: \n %s</string>
     <string name="import_error_copy_to_cache">Не атрымалася кэшыраваць файл (магчыма, што скончылася месца ў сховішчы)</string>
     <string name="import_interrupted">Імпарт перарваны</string>
-    <string name="export_preparation_in_progress">Падрыхтоўка да экспартавання&#8230;</string>
     <string name="export_ready_title">Экспартаванне выканана</string>
     <string name="export_send_no_handlers">Няма адпаведнай праграмы для апрацоўкі пакета apkg. Захаванне&#8230;</string>
     <string name="export_save_apkg_successful">Пакет Anki паспяхова захаваны</string>

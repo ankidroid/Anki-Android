@@ -73,5 +73,6 @@
     <string name="save_dialog_content">Aktualny rozmiar obrazu to %sMB. Domyślny limit rozmiaru obrazu to 1 MB. Czy chcesz skompresować obraz?</string>
     <string name="select_image_failed">"Wybieranie obrazu nie powiodło się, spróbuj ponownie"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Zawartość pola</string>
+    <string name="crop_image_size_notice">The image is too big to be handled by the crop editor. Please resize it and try again!</string>
     <string name="reselect" maxLength="28">Wybierz ponownie</string>
 </resources>

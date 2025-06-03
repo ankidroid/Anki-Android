@@ -145,7 +145,6 @@
     <string name="import_error_content_provider">Ne povas aŭtomate enporti elektitan dosieron al AnkiDroid. Bonvolu legi la manlibron de uzanto por sciiĝi pri kiel permane enporti anki-dosierojn:\n%s</string>
     <string name="import_error_copy_to_cache">Malsukcesis kaŝmemori dosieron (probable mankas spaco)</string>
     <string name="import_interrupted">Enportado interrompita</string>
-    <string name="export_preparation_in_progress">Proparado de elportado&#8230;</string>
     <string name="export_ready_title">Elporto estas preta</string>
     <string name="export_send_no_handlers">Neniu aplikaĵo por pritrakti apkg. Konservado&#8230;</string>
     <string name="export_save_apkg_successful">Sukcese konservis Anki-pakaĵon</string>

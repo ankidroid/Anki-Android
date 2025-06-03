@@ -145,7 +145,6 @@
     <string name="import_error_content_provider">منتخب فائل کو AnkiDroid کے ذریعے خود بخود درآمد نہیں کیا جا سکتا۔ براہ کرم انکی فائلوں کو دستی طور پر درآمد کرنے کے طریقہ کار کے لیے یوزر مینوئل دیکھیں: \n%s</string>
     <string name="import_error_copy_to_cache">فائل کو کیش کرنے میں ناکام (ممکنہ طور پر اسٹوریج کی جگہ سے باہر)</string>
     <string name="import_interrupted">درآمد میں رکاوٹ: AnkiDroid بند تھا۔</string>
-    <string name="export_preparation_in_progress">برآمد کی تیاری کر رہا ہے&#8230;</string>
     <string name="export_ready_title">ایکسپورٹ تیار ہے۔</string>
     <string name="export_send_no_handlers">apkg کو ہینڈل کرنے کے لیے کوئی ایپلیکیشن دستیاب نہیں ہے۔ محفوظ کر رہا ہے&#8230;</string>
     <string name="export_save_apkg_successful">انکی پیکج کو کامیابی کے ساتھ محفوظ کر لیا گیا۔</string>

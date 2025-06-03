@@ -146,7 +146,6 @@
     <string name="import_error_content_provider">Избраната датотека не може автоматски да биде увезен од AnkiDroid. Ве молиме погледнете го упатството за користење како да рачно внесува анки дадотеки: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
-    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving&#8230;</string>
     <string name="export_save_apkg_successful">Successfully saved Anki package</string>
