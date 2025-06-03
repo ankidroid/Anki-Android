@@ -28,7 +28,11 @@ import com.ichi2.anki.reviewer.ReviewerBinding
 
 /** Abstraction: Discuss moving many of these to 'Reviewer'  */
 enum class ViewerCommand(
-    override val potentialSides: CardSide = CardSide.BOTH,
+    /**
+     * [CardSide.BOTH] if the command can be executed on both question and answer.
+     * Otherwise, the side on which the command can be executed.
+     */
+    val potentialSides: CardSide = CardSide.BOTH
 ) : MappableAction<ReviewerBinding> {
     SHOW_ANSWER(potentialSides = CardSide.QUESTION),
     FLIP_OR_ANSWER_EASE1(potentialSides = CardSide.ANSWER),

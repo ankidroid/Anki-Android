@@ -37,7 +37,6 @@ import com.ichi2.anki.preferences.SettingsFragment
 import com.ichi2.anki.preferences.allPreferences
 import com.ichi2.anki.preferences.requirePreference
 import com.ichi2.anki.reviewer.Binding
-import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.ui.AxisPicker
@@ -74,11 +73,6 @@ open class ControlPreference :
     @Suppress("unused")
     constructor(context: Context) : super(context)
 
-    /**
-     * The sides on which the command on which this action can be executed.
-     */
-    open val potentialSides = CardSide.BOTH
-
     open fun getMappableBindings(): List<MappableBinding> = MappableBinding.fromPreferenceString(value)
 
     protected open fun onKeySelected(binding: Binding): Unit = addBinding(binding)
@@ -111,7 +105,7 @@ open class ControlPreference :
             }
         }
 
-    override fun getSummary(): CharSequence = getMappableBindings().joinToString(", ") { it.toDisplayString(context, potentialSides) }
+    override fun getSummary(): CharSequence = getMappableBindings().joinToString(", ") { it.toDisplayString(context) }
 
     override fun makeDialogFragment(): DialogFragment = ControlPreferenceDialogFragment()
 
@@ -280,7 +274,7 @@ class ControlPreferenceDialogFragment : DialogFragment() {
         }
         val titles =
             bindings.map {
-                getString(R.string.binding_remove_binding, it.toDisplayString(requireContext(), preference.potentialSides))
+                getString(R.string.binding_remove_binding, it.toDisplayString(requireContext()))
             }
         listView.apply {
             adapter = ArrayAdapter(requireContext(), R.layout.control_preference_list_item, titles)
