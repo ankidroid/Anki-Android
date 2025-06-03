@@ -38,6 +38,7 @@ import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.testutils.AnkiFragmentScenario
 import com.ichi2.testutils.isJsonEqual
@@ -217,20 +218,28 @@ class CustomStudyDialogTest : RobolectricTest() {
                 }
         }
 
-    private fun argumentsDisplayingSubscreen(subscreen: ContextMenuOption) =
-        requireNotNull(
+    private fun argumentsDisplayingSubscreen(subscreen: ContextMenuOption): Bundle {
+        @Suppress("RedundantValueArgument")
+        fun setupDefaultValuesSingleton() {
+            withCustomStudyFragment(argumentsDisplayingMainScreen(deckId = Consts.DEFAULT_DECK_ID)) { }
+        }
+
+        setupDefaultValuesSingleton()
+
+        return requireNotNull(
             CustomStudyDialog
-                .createInstance(
+                .createSubDialog(
                     deckId = Consts.DEFAULT_DECK_ID,
                     contextMenuAttribute = subscreen,
                 ).arguments,
         )
+    }
 
-    private fun argumentsDisplayingMainScreen() =
+    private fun argumentsDisplayingMainScreen(deckId: DeckId = Consts.DEFAULT_DECK_ID) =
         requireNotNull(
             CustomStudyDialog
                 .createInstance(
-                    deckId = Consts.DEFAULT_DECK_ID,
+                    deckId = deckId,
                 ).arguments,
         )
 
