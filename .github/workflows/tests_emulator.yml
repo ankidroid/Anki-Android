@@ -27,7 +27,7 @@ jobs:
         # Refactor to make these dynamic with a low/high bracket only on schedule, not push
         # For now this is the latest supported API. Previously API 29 was fastest.
         # #13695: This was reverted to API 30, 31 was unstable. This should be fixed
-        api-level: [30]
+        api-level: [30, 35]
         arch: [x86_64]
         target: [google_apis]
         first-boot-delay: [600]
@@ -157,6 +157,35 @@ jobs:
             adb emu screenrecord start --time-limit 1800 video.webm
             sleep 5
             ./gradlew uninstallAll jacocoAndroidTestReport --daemon
+
+      - name: Install NDK tools
+        run: |
+          echo "Installing NDK tools for alignment checking"
+          yes | sdkmanager --install "ndk;$ANDROID_NDK_HOME"
+          echo "export PATH=$ANDROID_HOME/ndk/$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH" >> $GITHUB_ENV
+
+      - name: Check APK ELF Alignment
+        run: |
+          chmod +x .github/check_elf_alignment.sh
+          if [ ! -d "AnkiDroid/build/outputs/apk/" ]; then
+            ./gradlew :AnkiDroid:assemblePlayRelease --daemon
+          fi
+          APK_PATH="AnkiDroid/build/outputs/apk/play/release/AnkiDroid-play-arm64-v8a-release.apk"
+          echo "Using APK: $APK_PATH"
+          .github/check_elf_alignment.sh $APK_PATH
+
+      - name: Verify zipalign
+        run: |
+          APK_PATH="AnkiDroid/build/outputs/apk/play/release/AnkiDroid-play-arm64-v8a-release.apk"
+          echo "Verifying zipalign with 16KB alignment for $APK_PATH"
+          
+          # Find the latest build-tools version installed
+          LATEST_BUILD_TOOLS=$(ls -d $ANDROID_HOME/build-tools/* | sort -V | tail -n 1)
+          PREVIOUS_BUILD_TOOLS=$(ls -d $ANDROID_HOME/build-tools/* | sort -V | tail -n 2 | head -n 1)
+          echo "Using build-tools versions: $LATEST_BUILD_TOOLS (primary), $PREVIOUS_BUILD_TOOLS (fallback)"
+          
+          # Use the latest build-tools version, fallback to previous if not available
+          $ANDROID_HOME/build-tools/$LATEST_BUILD_TOOLS/zipalign -c -P 16 -v 4 $APK_PATH || $ANDROID_HOME/build-tools/$PREVIOUS_BUILD_TOOLS/zipalign -c -P 16 -v 4 $APK_PATH
 
       - name: Upload Test Report
         uses: actions/upload-artifact@v4
