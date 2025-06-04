@@ -18,6 +18,7 @@
  ****************************************************************************************/
 package com.ichi2.anki.provider
 
+import android.annotation.SuppressLint
 import android.content.ContentProvider
 import android.content.ContentUris
 import android.content.ContentValues
@@ -413,6 +414,7 @@ class CardContentProvider : ContentProvider() {
             put(deck.newCount)
         }
 
+    @SuppressLint("CheckResult")
     override fun update(
         uri: Uri,
         values: ContentValues?,
