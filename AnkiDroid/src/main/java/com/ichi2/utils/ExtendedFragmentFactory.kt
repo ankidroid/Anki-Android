@@ -16,8 +16,8 @@
 package com.ichi2.utils
 
 import androidx.annotation.CallSuper
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.FragmentManager
 
@@ -57,7 +57,7 @@ abstract class ExtendedFragmentFactory : FragmentFactory {
      * Attaches the factory to an activity by setting the current activity fragment factory as the base factory
      * and updating the activity with the extended factory
      */
-    inline fun <reified F : ExtendedFragmentFactory?> attachToActivity(activity: AppCompatActivity): F =
+    inline fun <reified F : ExtendedFragmentFactory?> attachToActivity(activity: FragmentActivity): F =
         attachToFragmentManager<ExtendedFragmentFactory>(activity.supportFragmentManager) as F
 
     /**
