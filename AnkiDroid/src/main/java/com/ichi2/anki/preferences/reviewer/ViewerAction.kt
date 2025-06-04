@@ -15,11 +15,13 @@
  */
 package com.ichi2.anki.preferences.reviewer
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.view.KeyEvent
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.reviewer.MenuDisplayType.ALWAYS
@@ -33,6 +35,7 @@ import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableAction
 import com.ichi2.anki.reviewer.ReviewerBinding
+import com.ichi2.anki.ui.internationalization.toSentenceCase
 
 /**
  * @param menuId menu Id of the action
@@ -65,6 +68,7 @@ enum class ViewerAction(
     CARD_INFO(R.id.action_card_info, R.drawable.ic_dialog_info, R.string.card_info_title, DISABLED),
     ADD_NOTE(R.id.action_add_note, R.drawable.ic_add, R.string.menu_add_note, DISABLED),
     TAG(R.id.action_edit_tags, R.drawable.ic_tag, R.string.menu_edit_tags, DISABLED),
+    RESCHEDULE_NOTE(R.id.action_set_due_date, R.drawable.ic_reschedule, titleRes = R.string.empty_string, DISABLED),
     TOGGLE_AUTO_ADVANCE(R.id.action_toggle_auto_advance, R.drawable.ic_fast_forward, R.string.toggle_auto_advance, DISABLED),
     USER_ACTION_1(R.id.user_action_1, R.drawable.user_action_1, R.string.user_action_1, DISABLED),
     USER_ACTION_2(R.id.user_action_2, R.drawable.user_action_2, R.string.user_action_2, DISABLED),
@@ -198,6 +202,7 @@ enum class ViewerAction(
             CARD_INFO,
             TAG,
             EXIT,
+            RESCHEDULE_NOTE,
             USER_ACTION_1,
             USER_ACTION_2,
             USER_ACTION_3,
@@ -225,6 +230,12 @@ enum class ViewerAction(
         }
 
     fun isSubMenu() = ViewerAction.entries.any { it.parentMenu == this }
+
+    fun title(context: Context): String =
+        when (this) {
+            RESCHEDULE_NOTE -> TR.actionsSetDueDate().toSentenceCase(context, R.string.sentence_set_due_date)
+            else -> context.getString(titleRes)
+        }
 
     private fun keycode(
         keycode: Int,
