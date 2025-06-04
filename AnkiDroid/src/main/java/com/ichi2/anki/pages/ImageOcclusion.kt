@@ -17,6 +17,7 @@ package com.ichi2.anki.pages
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
@@ -127,16 +128,16 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
         ): Intent {
             val suffix =
                 if (kind == "edit") {
-                    "/$noteOrNotetypeId"
+                    noteOrNotetypeId
                 } else {
-                    imagePath
+                    Uri.encode(imagePath)
                 }
             val arguments =
                 bundleOf(
                     ARG_KEY_KIND to kind,
                     ARG_KEY_ID to noteOrNotetypeId,
                     ARG_KEY_PATH to imagePath,
-                    PATH_ARG_KEY to "image-occlusion$suffix",
+                    PATH_ARG_KEY to "image-occlusion/$suffix",
                     ARG_KEY_EDITOR_DECK_ID to editorWorkingDeckId,
                 )
             return SingleFragmentActivity.getIntent(context, ImageOcclusion::class, arguments)
