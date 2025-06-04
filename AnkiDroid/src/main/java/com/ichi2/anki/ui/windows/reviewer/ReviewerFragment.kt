@@ -53,6 +53,10 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.CardMediaPlayer
+import com.ichi2.anki.dialogs.tags.TagsDialog
+import com.ichi2.anki.dialogs.tags.TagsDialogFactory
+import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuView
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.preferences.reviewer.ViewerAction.BURY_CARD
@@ -79,6 +83,7 @@ import com.ichi2.anki.utils.ext.collectLatestIn
 import com.ichi2.anki.utils.ext.menu
 import com.ichi2.anki.utils.ext.removeSubMenu
 import com.ichi2.anki.utils.ext.sharedPrefs
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
 import com.ichi2.libanki.sched.Counts
 
@@ -86,7 +91,8 @@ class ReviewerFragment :
     CardViewerFragment(R.layout.reviewer2),
     BaseSnackbarBuilderProvider,
     ActionMenuView.OnMenuItemClickListener,
-    DispatchKeyEventListener {
+    DispatchKeyEventListener,
+    TagsDialogListener {
     override val viewModel: ReviewerViewModel by viewModels {
         ReviewerViewModel.factory(CardMediaPlayer(), PeripheralKeymap(sharedPrefs(), ViewerAction.entries))
     }
@@ -98,11 +104,18 @@ class ReviewerFragment :
         anchorView = this@ReviewerFragment.view?.findViewById(R.id.snackbar_anchor)
     }
 
+    private lateinit var tagsDialogFactory: TagsDialogFactory
+
     override fun onStop() {
         super.onStop()
         if (!requireActivity().isChangingConfigurations) {
             viewModel.stopAutoAdvance()
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        tagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(requireActivity())
     }
 
     override fun onViewCreated(
@@ -147,6 +160,16 @@ class ReviewerFragment :
 
         viewModel.destinationFlow.collectIn(lifecycleScope) { destination ->
             startActivity(destination.toIntent(requireContext()))
+        }
+
+        viewModel.editNoteTagsFlow.collectIn(lifecycleScope) { noteId ->
+            val dialogFragment =
+                tagsDialogFactory.newTagsDialog().withArguments(
+                    requireContext(),
+                    TagsDialog.DialogType.EDIT_TAGS,
+                    listOf(noteId),
+                )
+            showDialogFragment(dialogFragment)
         }
     }
 
@@ -440,6 +463,12 @@ class ReviewerFragment :
             }
         }
     }
+
+    override fun onSelectedTags(
+        selectedTags: List<String>,
+        indeterminateTags: List<String>,
+        stateFilter: CardStateFilter,
+    ) = viewModel.onEditedTags(selectedTags)
 
     companion object {
         fun getIntent(context: Context): Intent = CardViewerActivity.getIntent(context, ReviewerFragment::class)
