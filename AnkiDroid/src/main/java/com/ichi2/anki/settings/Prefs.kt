@@ -76,6 +76,12 @@ object Prefs {
     ): Int = sharedPrefs.getInt(key(keyResId), defValue)
 
     @VisibleForTesting
+    fun putInt(
+        @StringRes keyResId: Int,
+        defValue: Int,
+    ) = sharedPrefs.edit { putInt(key(keyResId), defValue) }
+
+    @VisibleForTesting
     fun <E> getEnum(
         @StringRes keyResId: Int,
         defaultValue: E,
@@ -126,6 +132,26 @@ object Prefs {
                 value: String?,
             ) {
                 putString(keyResId, value)
+            }
+        }
+
+    @VisibleForTesting
+    fun intPref(
+        @StringRes keyResId: Int,
+        defaultValue: Int,
+    ): ReadWriteProperty<Any, Int> =
+        object : ReadWriteProperty<Any?, Int> {
+            override fun getValue(
+                thisRef: Any?,
+                property: KProperty<*>,
+            ): Int = getInt(keyResId, defaultValue)
+
+            override fun setValue(
+                thisRef: Any?,
+                property: KProperty<*>,
+                value: Int,
+            ) {
+                putInt(keyResId, value)
             }
         }
 
