@@ -99,7 +99,7 @@ object ChangeManager {
         subscribers.clear()
     }
 
-    internal fun <T> notifySubscribers(
+    internal fun <T : Any> notifySubscribers(
         changes: T,
         initiator: Any?,
     ) {
@@ -111,7 +111,7 @@ object ChangeManager {
                 is OpChangesAfterUndo -> changes.changes
                 is OpChangesOnly -> changes.changes
                 is ImportResponse -> changes.changes
-                else -> TODO("unhandled change type")
+                else -> TODO("unhandled change type of class '${changes::class}'")
             }
         notifySubscribers(opChanges, initiator)
     }
@@ -143,7 +143,7 @@ object ChangeManager {
 
 /** Wrap a routine that returns OpChanges* or similar undo info with this
  * to notify change subscribers of the changes. */
-suspend fun <T> undoableOp(
+suspend fun <T : Any> undoableOp(
     handler: Any? = null,
     block: Collection.() -> T,
 ): T =
