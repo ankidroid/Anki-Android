@@ -82,6 +82,9 @@ import com.ichi2.anki.utils.ext.removeSubMenu
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.window
 import com.ichi2.libanki.sched.Counts
+import timber.log.Timber
+import java.net.BindException
+import java.net.ServerSocket
 
 class ReviewerFragment :
     CardViewerFragment(R.layout.reviewer2),
@@ -89,7 +92,8 @@ class ReviewerFragment :
     ActionMenuView.OnMenuItemClickListener,
     DispatchKeyEventListener {
     override val viewModel: ReviewerViewModel by viewModels {
-        ReviewerViewModel.factory(CardMediaPlayer(), BindingMap(sharedPrefs(), ViewerAction.entries))
+        val bindingMap = BindingMap(sharedPrefs(), ViewerAction.entries)
+        ReviewerViewModel.factory(CardMediaPlayer(), bindingMap, getServerPort())
     }
 
     override val webView: WebView
@@ -451,5 +455,23 @@ class ReviewerFragment :
 
     companion object {
         fun getIntent(context: Context): Intent = CardViewerActivity.getIntent(context, ReviewerFragment::class)
+
+        fun getServerPort(): Int {
+            if (!Prefs.useFixedPortInReviewer) return 0
+            return try {
+                ServerSocket(Prefs.reviewerPort)
+                    .use {
+                        it.reuseAddress = true
+                        it.localPort
+                    }.also {
+                        if (Prefs.reviewerPort == 0) {
+                            Prefs.reviewerPort = it
+                        }
+                    }
+            } catch (_: BindException) {
+                Timber.w("Fixed port %d under use. Using dynamic port", Prefs.reviewerPort)
+                0
+            }
+        }
     }
 }
