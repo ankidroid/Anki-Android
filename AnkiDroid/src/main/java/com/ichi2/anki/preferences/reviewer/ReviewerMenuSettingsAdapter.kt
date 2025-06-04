@@ -73,7 +73,7 @@ class ReviewerMenuSettingsAdapter(
         itemView: View,
     ) : RecyclerView.ViewHolder(itemView) {
         fun bind(action: ViewerAction) {
-            action.titleRes.let { findViewById<TextView>(R.id.title).setText(it) }
+            findViewById<TextView>(R.id.title).text = action.title(itemView.context)
             action.drawableRes?.let { findViewById<AppCompatImageView>(R.id.icon).setBackgroundResource(it) }
 
             findViewById<AppCompatImageView>(R.id.drag_handle).setOnTouchListener { _, event ->

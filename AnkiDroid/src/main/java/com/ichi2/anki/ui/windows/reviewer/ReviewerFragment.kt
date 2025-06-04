@@ -73,6 +73,7 @@ import com.ichi2.anki.preferences.reviewer.ViewerAction.UNDO
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
 import com.ichi2.anki.reviewer.BindingMap
+import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.settings.enums.HideSystemBars
@@ -177,6 +178,11 @@ class ReviewerFragment :
                     TagsDialog.DialogType.EDIT_TAGS,
                     listOf(noteId),
                 )
+            showDialogFragment(dialogFragment)
+        }
+
+        viewModel.setDueDateFlow.collectIn(lifecycleScope) { cardId ->
+            val dialogFragment = SetDueDateDialog.newInstance(listOf(cardId))
             showDialogFragment(dialogFragment)
         }
     }

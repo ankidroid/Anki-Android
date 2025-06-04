@@ -57,6 +57,7 @@ import com.ichi2.anki.ui.windows.reviewer.autoadvance.AutoAdvance
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.flag
 import com.ichi2.anki.utils.ext.setUserFlagForCards
+import com.ichi2.libanki.CardId
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.redo
@@ -98,6 +99,7 @@ class ReviewerViewModel(
     val typeAnswerFlow = MutableStateFlow<TypeAnswer?>(null)
     val destinationFlow = MutableSharedFlow<Destination>()
     val editNoteTagsFlow = MutableSharedFlow<NoteId>()
+    val setDueDateFlow = MutableSharedFlow<CardId>()
 
     override val server = AnkiServer(this).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
@@ -533,6 +535,11 @@ class ReviewerViewModel(
         }
     }
 
+    private suspend fun launchSetDueDate() {
+        val cardId = currentCard.await().id
+        setDueDateFlow.emit(cardId)
+    }
+
     private fun executeAction(action: ViewerAction) {
         Timber.v("ReviewerViewModel::executeAction %s", action.name)
         launchCatchingIO {
@@ -546,6 +553,7 @@ class ReviewerViewModel(
                 ViewerAction.MARK -> toggleMark()
                 ViewerAction.REDO -> redo()
                 ViewerAction.UNDO -> undo()
+                ViewerAction.RESCHEDULE_NOTE -> launchSetDueDate()
                 ViewerAction.TOGGLE_AUTO_ADVANCE -> toggleAutoAdvance()
                 ViewerAction.BURY_NOTE -> buryNote()
                 ViewerAction.BURY_CARD -> buryCard()
