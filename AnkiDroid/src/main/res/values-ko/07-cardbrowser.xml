@@ -115,5 +115,6 @@
     <string name="user_potential_columns">사용가능</string>
     <string name="include_column">열 포함하기</string>
     <string name="exclude_column">열 제외하기</string>
+    <string name="save_changes_message">Please save your changes first</string>
     <string name="browser_find_replace_loading_fields">필드 이름 검색 중&#8230;</string>
 </resources>

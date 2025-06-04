@@ -121,5 +121,6 @@
     <string name="user_potential_columns">ხელმისაწვდომი</string>
     <string name="include_column">სვეტის გამოყენება</string>
     <string name="exclude_column">სვეტის არგამოყენება</string>
+    <string name="save_changes_message">Please save your changes first</string>
     <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
 </resources>

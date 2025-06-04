@@ -121,5 +121,6 @@
     <string name="user_potential_columns">Disponible</string>
     <string name="include_column">Inclure la colonne</string>
     <string name="exclude_column">Exclure la colonne</string>
+    <string name="save_changes_message">Please save your changes first</string>
     <string name="browser_find_replace_loading_fields">Récupération des noms des champs&#8230;</string>
 </resources>

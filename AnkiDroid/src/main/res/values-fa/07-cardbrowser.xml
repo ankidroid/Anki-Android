@@ -121,5 +121,6 @@
     <string name="user_potential_columns">در دسترس</string>
     <string name="include_column">در نظر گرفتن ستون ها</string>
     <string name="exclude_column">در نظر نگرفتن ستون ها</string>
+    <string name="save_changes_message">Please save your changes first</string>
     <string name="browser_find_replace_loading_fields">بازیابی اسامی فیلد ها&#8230;</string>
 </resources>
