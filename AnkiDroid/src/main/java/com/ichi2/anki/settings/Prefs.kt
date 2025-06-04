@@ -129,25 +129,6 @@ object Prefs {
             }
         }
 
-    @VisibleForTesting
-    class StringPref(
-        @StringRes private val keyResId: Int,
-        private val defaultValue: String? = null,
-    ) : ReadWriteProperty<Any?, String?> {
-        override fun getValue(
-            thisRef: Any?,
-            property: KProperty<*>,
-        ): String? = getString(keyResId, defaultValue) ?: defaultValue
-
-        override fun setValue(
-            thisRef: Any?,
-            property: KProperty<*>,
-            value: String?,
-        ) {
-            putString(keyResId, value)
-        }
-    }
-
     // ****************************************************************************************** //
     // **************************************** Settings **************************************** //
     // ****************************************************************************************** //
