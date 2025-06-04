@@ -49,7 +49,6 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.EXTEND_NEW
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.EXTEND_REV
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_AHEAD

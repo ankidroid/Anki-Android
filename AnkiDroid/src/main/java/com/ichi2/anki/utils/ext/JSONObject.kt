@@ -39,3 +39,20 @@ fun JSONObject.getStringOrNull(key: String): String? {
         null
     }
 }
+
+/**
+ * @return null if the key doesn't exist, or the value is not a long. The long value of the key
+ * otherwise
+ *
+ * This better approximates `JSON.get` in the Python
+ */
+fun JSONObject.getLongOrNull(key: String): Long? {
+    if (!has(key)) {
+        return null
+    }
+    try {
+        return getLong(key)
+    } catch (ex: Exception) {
+        return null
+    }
+}
