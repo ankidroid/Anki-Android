@@ -145,5 +145,6 @@
     <string name="user_potential_columns">متوفر</string>
     <string name="include_column">إضافة عمود</string>
     <string name="exclude_column">استخراج عمود</string>
+    <string name="save_changes_message">Please save your changes first</string>
     <string name="browser_find_replace_loading_fields">تُسترجع أسماء الحقول&#8230;</string>
 </resources>

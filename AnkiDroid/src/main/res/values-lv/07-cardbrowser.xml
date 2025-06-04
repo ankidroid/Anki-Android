@@ -127,5 +127,6 @@
     <string name="user_potential_columns">PIeejamas</string>
     <string name="include_column">Iekļaut sleju</string>
     <string name="exclude_column">Izslēgt sleju</string>
+    <string name="save_changes_message">Please save your changes first</string>
     <string name="browser_find_replace_loading_fields">Iegūst lauku nosaukumus&#8230;</string>
 </resources>

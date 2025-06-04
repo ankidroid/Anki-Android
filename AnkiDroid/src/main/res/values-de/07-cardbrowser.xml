@@ -121,5 +121,6 @@
     <string name="user_potential_columns">Verfügbar</string>
     <string name="include_column">Spalte einbeziehen</string>
     <string name="exclude_column">Spalte ausschließen</string>
+    <string name="save_changes_message">Please save your changes first</string>
     <string name="browser_find_replace_loading_fields">Abrufen der Feldnamen&#8230;</string>
 </resources>

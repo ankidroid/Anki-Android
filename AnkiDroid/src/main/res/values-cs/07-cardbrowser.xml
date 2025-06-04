@@ -133,5 +133,6 @@
     <string name="user_potential_columns">Dostupné</string>
     <string name="include_column">Přidat sloupec</string>
     <string name="exclude_column">Odebrat sloupec</string>
+    <string name="save_changes_message">Please save your changes first</string>
     <string name="browser_find_replace_loading_fields">Načítání jmen polí&#8230;</string>
 </resources>

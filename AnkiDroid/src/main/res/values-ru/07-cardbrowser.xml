@@ -133,5 +133,6 @@
     <string name="user_potential_columns">Доступные</string>
     <string name="include_column">Включить столбец</string>
     <string name="exclude_column">Исключить столбец</string>
+    <string name="save_changes_message">Please save your changes first</string>
     <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
 </resources>

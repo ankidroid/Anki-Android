@@ -133,5 +133,6 @@
     <string name="user_potential_columns">Dostępne</string>
     <string name="include_column">Dołącz kolumnę</string>
     <string name="exclude_column">Wyklucz kolumnę</string>
+    <string name="save_changes_message">Please save your changes first</string>
     <string name="browser_find_replace_loading_fields">Pobieranie nazw pól&#8230;</string>
 </resources>
