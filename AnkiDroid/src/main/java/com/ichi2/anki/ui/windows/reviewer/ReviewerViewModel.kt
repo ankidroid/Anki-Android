@@ -147,10 +147,6 @@ class ReviewerViewModel(
         }
     }
 
-    /* *********************************************************************************************
-     ************************ Public methods: meant to be used by the View **************************
-     ********************************************************************************************* */
-
     override fun onPageFinished(isAfterRecreation: Boolean) {
         Timber.v("ReviewerViewModel::onPageFinished %b", isAfterRecreation)
         if (isAfterRecreation) {
@@ -237,12 +233,6 @@ class ReviewerViewModel(
     }
 
     private suspend fun emitAddNoteDestination() = destinationFlow.emit(NoteEditorLauncher.AddNoteFromReviewer())
-
-    fun refreshCard() {
-        launchCatchingIO {
-            updateCurrentCard()
-        }
-    }
 
     private suspend fun emitCardInfoDestination() {
         val destination = CardInfoDestination(currentCard.await().id)
@@ -361,10 +351,6 @@ class ReviewerViewModel(
             autoAdvance.onShowQuestion()
         }
     }
-
-    /* *********************************************************************************************
-     *************************************** Internal methods ***************************************
-     ********************************************************************************************* */
 
     override suspend fun handlePostRequest(
         uri: String,
