@@ -578,6 +578,7 @@ class Collection(
 
     /** Save (flush) the note to the DB. Unlike note.flush(), this is undoable. This should
      * not be used for adding new notes. */
+    @CheckResult
     fun updateNote(note: Note): OpChanges = backend.updateNotes(notes = listOf(note.toBackendNote()), skipUndoEntry = false)
 
     fun updateNotes(notes: Iterable<Note>): OpChanges = backend.updateNotes(notes = notes.map { it.toBackendNote() }, skipUndoEntry = false)

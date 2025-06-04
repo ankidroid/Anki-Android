@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.deckpicker
 
+import android.annotation.SuppressLint
 import androidx.annotation.CheckResult
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.card_rendering.EmptyCardsReport
@@ -153,6 +154,7 @@ class DeckPickerViewModelTest : RobolectricTest() {
      * This allows us to test the 'keep note' functionality only affects the first card
      */
     @CheckResult
+    @SuppressLint("CheckResult")
     private suspend fun createEmptyCards(): EmptyCardsReport {
         addNoteUsingNoteTypeName("Cloze", "{{c1::Hello}} {{c3::There}} {{c2::World}}", "").apply {
             setField(0, "No cloze")

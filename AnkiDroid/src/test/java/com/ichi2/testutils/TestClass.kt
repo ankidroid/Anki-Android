@@ -16,6 +16,7 @@
 
 package com.ichi2.testutils
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatDelegate
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.ioDispatcher
@@ -241,6 +242,7 @@ interface TestClass {
     }
 
     /** Helper method to update a note */
+    @SuppressLint("CheckResult")
     fun Note.update(block: Note.() -> Unit): Note {
         block(this)
         col.updateNote(this)
@@ -304,6 +306,7 @@ interface TestClass {
     fun Note.numberOfCards() = this.numberOfCards(col)
 
     // TODO remove this. not in libanki
+    @SuppressLint("CheckResult")
     fun Note.flush() {
         col.updateNote(this)
     }
