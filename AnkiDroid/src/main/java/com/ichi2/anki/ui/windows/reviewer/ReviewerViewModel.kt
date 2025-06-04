@@ -58,6 +58,7 @@ import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.flag
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import com.ichi2.libanki.ChangeManager
+import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.redo
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.sched.CurrentQueueState
@@ -96,6 +97,7 @@ class ReviewerViewModel(
     val countsFlow = MutableStateFlow(Counts() to Counts.Queue.NEW)
     val typeAnswerFlow = MutableStateFlow<TypeAnswer?>(null)
     val destinationFlow = MutableSharedFlow<Destination>()
+    val editNoteTagsFlow = MutableSharedFlow<NoteId>()
 
     override val server = AnkiServer(this).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
@@ -509,6 +511,28 @@ class ReviewerViewModel(
         }
     }
 
+    private suspend fun editNoteTags() {
+        val noteId = currentCard.await().nid
+        editNoteTagsFlow.emit(noteId)
+    }
+
+    fun onEditedTags(selectedTags: List<String>) {
+        launchCatchingIO {
+            val card = currentCard.await()
+            val note = withCol { card.note(this@withCol) }
+            if (note.tags == selectedTags) {
+                Timber.d("No changed tags")
+                return@launchCatchingIO
+            }
+
+            val tagsString = selectedTags.joinToString(" ")
+            withCol { note.setTagsFromStr(this@withCol, tagsString) }
+            undoableOp {
+                updateNote(note)
+            }
+        }
+    }
+
     private fun executeAction(action: ViewerAction) {
         Timber.v("ReviewerViewModel::executeAction %s", action.name)
         launchCatchingIO {
@@ -517,6 +541,7 @@ class ReviewerViewModel(
                 ViewerAction.CARD_INFO -> emitCardInfoDestination()
                 ViewerAction.DECK_OPTIONS -> emitDeckOptionsDestination()
                 ViewerAction.EDIT -> emitEditNoteDestination()
+                ViewerAction.TAG -> editNoteTags()
                 ViewerAction.DELETE -> deleteNote()
                 ViewerAction.MARK -> toggleMark()
                 ViewerAction.REDO -> redo()
