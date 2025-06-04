@@ -105,7 +105,7 @@ interface OnErrorListener {
     val onError: MutableSharedFlow<String>
 }
 
-fun <T> T.launchCatchingIO(block: suspend T.() -> Unit): Job where T : ViewModel, T : OnErrorListener =
+fun <T, U> T.launchCatchingIO(block: suspend T.() -> U): Job where T : ViewModel, T : OnErrorListener =
     viewModelScope.launchCatching(
         ioDispatcher,
         { onError.emit(it) },
