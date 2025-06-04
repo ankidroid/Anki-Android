@@ -521,7 +521,7 @@ class ReviewerViewModel(
     }
 
     private fun executeAction(action: ViewerAction) {
-        Timber.v("ReviewerViewModel::executeAction")
+        Timber.v("ReviewerViewModel::executeAction %s", action.name)
         launchCatchingIO {
             when (action) {
                 ViewerAction.ADD_NOTE -> emitAddNoteDestination()
@@ -600,7 +600,6 @@ class ReviewerViewModel(
         changes: OpChanges,
         handler: Any?,
     ) {
-        Timber.v("ReviewerViewModel::opExecuted")
         launchCatchingIO {
             updateUndoAndRedoLabels()
 

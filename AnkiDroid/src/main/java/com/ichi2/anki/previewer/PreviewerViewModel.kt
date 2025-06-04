@@ -242,7 +242,6 @@ class PreviewerViewModel(
         changes: OpChanges,
         handler: Any?,
     ) {
-        Timber.v("PreviewerViewModel::opExecuted %s", changes.toString())
         launchCatchingIO {
             when {
                 changes.noteText -> {

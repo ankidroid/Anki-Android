@@ -312,7 +312,7 @@ open class AnkiDroidApp :
         changes: OpChanges,
         handler: Any?,
     ) {
-        Timber.d("ChangeSubscriber - opExecuted called with changes: $changes")
+        Timber.d("ChangeSubscriber - opExecuted called with changes: %s", changes)
         if (changes.studyQueues) {
             DeckPickerWidget.updateDeckPickerWidgets(this)
             CardAnalysisWidget.updateCardAnalysisWidgets(this)
