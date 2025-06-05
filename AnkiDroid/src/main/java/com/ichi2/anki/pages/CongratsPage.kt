@@ -284,7 +284,9 @@ class DeckOptionsDestination(
 ) : Destination {
     override fun toIntent(context: Context): Intent =
         if (isFiltered) {
-            Intent(context, FilteredDeckOptions::class.java)
+            Intent(context, FilteredDeckOptions::class.java).apply {
+                putExtra("did", deckId)
+            }
         } else {
             DeckOptions.getIntent(context, deckId)
         }
