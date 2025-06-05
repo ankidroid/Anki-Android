@@ -32,9 +32,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.R
+import com.ichi2.anki.deckpicker.DisplayDeckNode
 import com.ichi2.anki.utils.ext.findViewById
 import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.sched.DeckNode
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
@@ -59,7 +59,7 @@ class DeckAdapter(
     private val onDeckCountsSelected: (DeckId) -> Unit,
     private val onDeckChildrenToggled: (DeckId) -> Unit,
     private val onDeckContextRequested: (DeckId) -> Unit,
-) : ListAdapter<DeckNode, DeckAdapter.ViewHolder>(deckNodeDiffCallback) {
+) : ListAdapter<DisplayDeckNode, DeckAdapter.ViewHolder>(deckNodeDiffCallback) {
     private val layoutInflater = LayoutInflater.from(context)
     private val zeroCountColor: Int
     private val newCountColor: Int
@@ -100,7 +100,7 @@ class DeckAdapter(
      * by this method) so there's no need to call [notifyDataSetChanged] on the adapter.
      */
     fun submit(
-        data: List<DeckNode>,
+        data: List<DisplayDeckNode>,
         hasSubDecks: Boolean,
         currentDeckId: DeckId,
     ) {
@@ -117,8 +117,8 @@ class DeckAdapter(
     }
 
     private fun areDataSetsEqual(
-        currentSet: List<DeckNode>,
-        newSet: List<DeckNode>,
+        currentSet: List<DisplayDeckNode>,
+        newSet: List<DisplayDeckNode>,
     ): Boolean {
         if (currentSet.size != newSet.size) return false
         return currentSet.zip(newSet).all { (fst, snd) ->
@@ -156,7 +156,7 @@ class DeckAdapter(
             holder.deckExpander.visibility = View.GONE
             deckLayout.setPaddingRelative(startPadding, 0, endPadding, 0)
         }
-        if (node.children.isNotEmpty()) {
+        if (node.canCollapse) {
             holder.deckExpander.setOnClickListener {
                 onDeckChildrenToggled(node.did)
                 notifyItemChanged(position) // Ensure UI updates
@@ -200,10 +200,10 @@ class DeckAdapter(
     private fun setDeckExpander(
         expander: ImageButton,
         indent: ImageButton,
-        node: DeckNode,
+        node: DisplayDeckNode,
     ) {
         // Apply the correct expand/collapse drawable
-        if (node.children.isNotEmpty()) {
+        if (node.canCollapse) {
             expander.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
             if (node.collapsed) {
                 expander.setImageDrawable(expandImage)
@@ -261,20 +261,14 @@ class DeckAdapter(
 }
 
 private val deckNodeDiffCallback =
-    object : DiffUtil.ItemCallback<DeckNode>() {
+    object : DiffUtil.ItemCallback<DisplayDeckNode>() {
         override fun areItemsTheSame(
-            oldItem: DeckNode,
-            newItem: DeckNode,
+            oldItem: DisplayDeckNode,
+            newItem: DisplayDeckNode,
         ): Boolean = oldItem.did == newItem.did
 
         override fun areContentsTheSame(
-            oldItem: DeckNode,
-            newItem: DeckNode,
-        ): Boolean =
-            oldItem.did == newItem.did &&
-                oldItem.filtered == newItem.filtered &&
-                oldItem.fullDeckName == newItem.fullDeckName &&
-                oldItem.newCount == newItem.newCount &&
-                oldItem.lrnCount == newItem.lrnCount &&
-                oldItem.revCount == newItem.revCount
+            oldItem: DisplayDeckNode,
+            newItem: DisplayDeckNode,
+        ): Boolean = oldItem == newItem
     }

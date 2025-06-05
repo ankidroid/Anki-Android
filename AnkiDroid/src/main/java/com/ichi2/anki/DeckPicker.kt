@@ -114,6 +114,7 @@ import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.DeckDeletionResult
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.deckpicker.EmptyCardsResult
+import com.ichi2.anki.deckpicker.filterAndFlattenDisplay
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
 import com.ichi2.anki.dialogs.ConfirmationDialog
@@ -1039,7 +1040,7 @@ open class DeckPicker :
                             val selectedDeckId = withCol { decks.current().getLong("id") }
                             dueTree?.let {
                                 adapter.submit(
-                                    data = it.filterAndFlatten(newText),
+                                    data = it.filterAndFlattenDisplay(newText),
                                     hasSubDecks = it.children.any { deckNode -> deckNode.children.any() },
                                     currentDeckId = selectedDeckId,
                                 )
@@ -2339,7 +2340,7 @@ open class DeckPicker :
             return
         }
         deckListAdapter.submit(
-            data = tree.filterAndFlatten(currentFilter),
+            data = tree.filterAndFlattenDisplay(currentFilter),
             hasSubDecks = tree.children.any { it.children.any() },
             currentDeckId = withCol { decks.current().getLong("id") },
         )
@@ -2365,7 +2366,7 @@ open class DeckPicker :
     /**
      * Get the [DeckNode] identified by [did] from [DeckAdapter].
      */
-    private fun DeckPicker.getNodeByDid(did: DeckId): DeckNode = deckListAdapter.currentList[findDeckPosition(did)]
+    private fun DeckPicker.getNodeByDid(did: DeckId): DeckNode = deckListAdapter.currentList[findDeckPosition(did)].deckNode
 
     // Callback to show study options for currently selected deck
     fun showContextMenuDeckOptions(did: DeckId) {
@@ -2420,7 +2421,7 @@ open class DeckPicker :
 
     /** Disables the shortcut of the deck and the children belonging to it.*/
     private fun disableDeckAndChildrenShortcuts(did: DeckId) {
-        val childDids = dueTree?.find(did)?.filterAndFlatten(null)?.map { it.did.toString() } ?: listOf()
+        val childDids = dueTree?.find(did)?.filterAndFlattenDisplay(null)?.map { it.did.toString() } ?: listOf()
         val deckTreeDids = listOf(did.toString(), *childDids.toTypedArray())
         val errorMessage: CharSequence = getString(R.string.deck_shortcut_doesnt_exist)
         ShortcutManagerCompat.disableShortcuts(this, deckTreeDids, errorMessage)
