@@ -14,6 +14,7 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.view.children
 import androidx.fragment.app.FragmentManager
 import androidx.test.core.app.ActivityScenario
+import app.cash.turbine.test
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
@@ -23,6 +24,7 @@ import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.dialogs.utils.title
 import com.ichi2.anki.exception.UnknownDatabaseVersionException
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Storage
@@ -60,6 +62,7 @@ import java.io.File
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.seconds
 
 @KotlinCleanup("SPMockBuilder")
 @RunWith(ParameterizedRobolectricTestRunner::class)
@@ -441,34 +444,46 @@ class DeckPickerTest : RobolectricTest() {
     }
 
     @Test
-    fun `ContextMenu starts expected activities when specific options are selected`() {
-        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            val didA = addDeck("Deck 1")
-            val didDynamicA = addDynamicDeck("Deck Dynamic 1")
+    fun `ContextMenu starts expected activities when specific options are selected`() =
+        runTest {
+            suspend fun DeckPicker.selectContextMenuOptionForActivity(
+                option: DeckPickerContextMenuOption,
+                deckId: DeckId,
+            ): Intent {
+                var result: Destination? = null
+                viewModel.flowOfDestination.test(1.seconds) {
+                    supportFragmentManager.selectContextMenuOption(option, deckId)
+                    result = awaitItem()
+                }
+                return result!!.toIntent(this)
+            }
 
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.ADD_CARD, didA)
-            val noteEditor = Shadows.shadowOf(this).nextStartedActivity!!
-            assertEquals("com.ichi2.anki.SingleFragmentActivity", noteEditor.component!!.className)
-            onBackPressedDispatcher.onBackPressed()
+            startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+                val didA = addDeck("Deck 1")
+                val didDynamicA = addDynamicDeck("Deck Dynamic 1")
 
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.BROWSE_CARDS, didA)
-            val browser = Shadows.shadowOf(this).nextStartedActivity!!
-            assertEquals("com.ichi2.anki.CardBrowser", browser.component!!.className)
-            onBackPressedDispatcher.onBackPressed()
+                supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.ADD_CARD, didA)
+                val noteEditor = Shadows.shadowOf(this).nextStartedActivity!!
+                assertEquals("com.ichi2.anki.SingleFragmentActivity", noteEditor.component!!.className)
+                onBackPressedDispatcher.onBackPressed()
 
-            // select deck options for a normal deck
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.DECK_OPTIONS, didA)
-            val deckOptionsNormal = Shadows.shadowOf(this).nextStartedActivity!!
-            assertEquals("com.ichi2.anki.SingleFragmentActivity", deckOptionsNormal.component!!.className)
-            onBackPressedDispatcher.onBackPressed()
+                val browser = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.BROWSE_CARDS, didA)
+                assertEquals("com.ichi2.anki.CardBrowser", browser.component!!.className)
+                onBackPressedDispatcher.onBackPressed()
 
-            // select deck options for a dynamic deck
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.DECK_OPTIONS, didDynamicA)
-            val deckOptionsDynamic = Shadows.shadowOf(this).nextStartedActivity!!
-            assertEquals("com.ichi2.anki.FilteredDeckOptions", deckOptionsDynamic.component!!.className)
-            onBackPressedDispatcher.onBackPressed()
+                // select deck options for a normal deck
+                supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.DECK_OPTIONS, didA)
+                val deckOptionsNormal = Shadows.shadowOf(this).nextStartedActivity!!
+                assertEquals("com.ichi2.anki.SingleFragmentActivity", deckOptionsNormal.component!!.className)
+                onBackPressedDispatcher.onBackPressed()
+
+                // select deck options for a dynamic deck
+                supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.DECK_OPTIONS, didDynamicA)
+                val deckOptionsDynamic = Shadows.shadowOf(this).nextStartedActivity!!
+                assertEquals("com.ichi2.anki.FilteredDeckOptions", deckOptionsDynamic.component!!.className)
+                onBackPressedDispatcher.onBackPressed()
+            }
         }
-    }
 
     @Test
     fun `ContextMenu deletes deck when selecting DELETE_DECK`() =
