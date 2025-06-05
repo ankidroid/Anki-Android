@@ -142,7 +142,6 @@ import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.introduction.CollectionPermissionScreenLauncher
 import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.mediacheck.MediaCheckFragment
-import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.pages.AnkiPackageImporterFragment
 import com.ichi2.anki.pages.CongratsPage
@@ -790,8 +789,7 @@ open class DeckPicker :
             }
             DeckPickerContextMenuOption.ADD_CARD -> {
                 Timber.i("ContextMenu: Add selected")
-                getColUnsafe.decks.select(deckId)
-                addNote()
+                viewModel.addNote(deckId, setAsCurrent = true)
                 dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.EDIT_DESCRIPTION -> {
@@ -1456,7 +1454,7 @@ open class DeckPicker :
         when (keyCode) {
             KeyEvent.KEYCODE_A -> {
                 Timber.i("Adding Note from keypress")
-                addNote()
+                viewModel.addNote(deckId = null, setAsCurrent = true)
                 return true
             }
             KeyEvent.KEYCODE_B -> {
@@ -1652,9 +1650,10 @@ open class DeckPicker :
         dismissAllDialogFragments()
     }
 
+    // VisibleForTesting: method is mocked, should be replaced
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun addNote(did: DeckId? = null) {
-        val intent = NoteEditorLauncher.AddNote(did).toIntent(this)
-        startActivity(intent)
+        viewModel.addNote(did, true)
     }
 
     private fun showStartupScreensAndDialogs(
@@ -2147,7 +2146,7 @@ open class DeckPicker :
 
         fun showEmptyDeckSnackbar() =
             showSnackbar(R.string.empty_deck) {
-                setAction(R.string.menu_add) { addNote(did) }
+                setAction(R.string.menu_add) { viewModel.addNote(did, true) }
             }
 
         /** Check if we need to update the fragment or update the deck list */

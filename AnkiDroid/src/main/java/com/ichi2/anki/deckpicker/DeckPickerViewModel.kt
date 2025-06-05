@@ -27,6 +27,7 @@ import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.browser.BrowserDestination
 import com.ichi2.anki.launchCatchingIO
+import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.utils.Destination
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
@@ -138,6 +139,16 @@ class DeckPickerViewModel :
             withCol { decks.select(deckId) }
             flowOfDestination.emit(BrowserDestination(deckId))
         }
+
+    fun addNote(
+        deckId: DeckId?,
+        setAsCurrent: Boolean,
+    ) = launchCatchingIO {
+        if (deckId != null && setAsCurrent) {
+            withCol { decks.select(deckId) }
+        }
+        flowOfDestination.emit(NoteEditorLauncher.AddNote(deckId))
+    }
 }
 
 /** Result of [DeckPickerViewModel.deleteDeck] */
