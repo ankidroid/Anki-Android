@@ -24,6 +24,10 @@ import anki.i18n.GeneratedTranslations
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.OnErrorListener
+import com.ichi2.anki.browser.BrowserDestination
+import com.ichi2.anki.launchCatchingIO
+import com.ichi2.anki.utils.Destination
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
@@ -35,13 +39,17 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /** @see [DeckPicker] */
-class DeckPickerViewModel : ViewModel() {
+class DeckPickerViewModel :
+    ViewModel(),
+    OnErrorListener {
     /**
      * @see deleteDeck
      * @see DeckDeletionResult
      */
     val deckDeletedNotification = MutableSharedFlow<DeckDeletionResult>()
     val emptyCardsNotification = MutableSharedFlow<EmptyCardsResult>()
+    val flowOfDestination = MutableSharedFlow<Destination>()
+    override val onError = MutableSharedFlow<String>()
 
     /**
      * A notification that the study counts have changed
@@ -123,6 +131,12 @@ class DeckPickerViewModel : ViewModel() {
             withCol { decks.select(deckId) }
             undoableOp { sched.emptyDyn(decks.selected()) }
             flowOfDeckCountsChanged.emit(Unit)
+        }
+
+    fun browseCards(deckId: DeckId) =
+        launchCatchingIO {
+            withCol { decks.select(deckId) }
+            flowOfDestination.emit(BrowserDestination(deckId))
         }
 }
 

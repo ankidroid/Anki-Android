@@ -157,6 +157,7 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.ResizablePaneManager
+import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -680,9 +681,23 @@ open class DeckPicker :
             if (fragmented) loadStudyOptionsFragment(false)
         }
 
+        fun onDestinationChanged(destination: Destination) {
+            startActivity(destination.toIntent(this))
+        }
+
+        fun onError(errorMessage: String) {
+            AlertDialog
+                .Builder(this)
+                .setTitle(R.string.vague_error)
+                .setMessage(errorMessage)
+                .show()
+        }
+
         viewModel.deckDeletedNotification.launchCollectionInLifecycleScope(::onDeckDeleted)
         viewModel.emptyCardsNotification.launchCollectionInLifecycleScope(::onCardsEmptied)
         viewModel.flowOfDeckCountsChanged.launchCollectionInLifecycleScope(::onDeckCountsChanged)
+        viewModel.flowOfDestination.launchCollectionInLifecycleScope(::onDestinationChanged)
+        viewModel.onError.launchCollectionInLifecycleScope(::onError)
     }
 
     private val onReceiveContentListener =
@@ -770,10 +785,7 @@ open class DeckPicker :
             }
             DeckPickerContextMenuOption.BROWSE_CARDS -> {
                 Timber.i("ContextMenu: Browse cards")
-                getColUnsafe.decks.select(deckId)
-                AnkiDroidApp.instance.sharedPrefsLastDeckIdRepository.lastDeckId = deckId
-                val intent = Intent(this, CardBrowser::class.java)
-                startActivity(intent)
+                viewModel.browseCards(deckId)
                 dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.ADD_CARD -> {
