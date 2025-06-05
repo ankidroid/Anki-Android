@@ -36,7 +36,7 @@ androidxDragAndDrop = "1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/exifinterface
 androidxExifinterface = "1.4.1"
 # https://developer.android.com/jetpack/androidx/releases/fragment
-androidxFragmentKtx = "1.8.7"
+androidxFragmentKtx = "1.8.8"
 # https://developer.android.com/jetpack/androidx/releases/media
 androidxMedia = "1.7.0"
 # https://developer.android.com/jetpack/androidx/releases/media3
