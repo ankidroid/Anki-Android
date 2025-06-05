@@ -24,7 +24,7 @@ androidxActivity = "1.10.1"
 # https://developer.android.com/jetpack/androidx/releases/annotation
 androidxAnnotation = "1.9.1"
 # https://developer.android.com/jetpack/androidx/releases/appcompat
-androidxAppCompat = "1.7.0"
+androidxAppCompat = "1.7.1"
 # https://developer.android.com/jetpack/androidx/releases/browser
 androidxBrowser = "1.8.0"
 # https://developer.android.com/jetpack/androidx/releases/constraintlayout
