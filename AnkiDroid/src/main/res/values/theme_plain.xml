@@ -26,6 +26,7 @@
         <!-- Study Screen colors -->
         <item name="topBarColor">@color/theme_plain_primary_light</item>
         <!-- Study Screen button drawables -->
+        <item name="showAnswerButtonBackground">@color/theme_plain_primary</item>
         <item name="showAnswerColor">@color/theme_plain_primary</item>
         <item name="againButtonRef">@drawable/footer_button_all_plain</item>
         <item name="hardButtonRef">@drawable/footer_button_all_plain</item>

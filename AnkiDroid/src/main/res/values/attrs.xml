@@ -97,6 +97,7 @@
     <attr name="zeroCountColor" format="color"/>
     <attr name="buryCountColor" format="color"/>
     <!-- Study Screen button backgrounds -->
+    <attr name="showAnswerButtonBackground" format="color"/>
     <attr name="answerButtonBackground" format="color"/>
     <attr name="againButtonBackground" format="color"/>
     <attr name="hardButtonBackground" format="color"/>

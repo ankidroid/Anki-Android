@@ -42,6 +42,7 @@
         <item name="buryCountColor">@color/disabled_gray_dark</item>
         <item name="zeroCountColor">#202020</item>
         <!-- Study Screen colors -->
+        <item name="showAnswerButtonBackground">#0C01579B</item>
         <item name="showAnswerColor">@color/theme_black_primary</item>
         <item name="topBarColor">@color/theme_black_primary</item>
         <item name="maxTimerColor">@color/material_red_300</item>
