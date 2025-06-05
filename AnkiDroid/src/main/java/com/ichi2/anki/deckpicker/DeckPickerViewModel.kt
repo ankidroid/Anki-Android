@@ -29,6 +29,7 @@ import com.ichi2.anki.browser.BrowserDestination
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.notetype.ManageNoteTypesDestination
+import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.utils.Destination
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
@@ -155,6 +156,21 @@ class DeckPickerViewModel :
      * Opens the Manage Note Types screen.
      */
     fun openManageNoteTypes() = launchCatchingIO { flowOfDestination.emit(ManageNoteTypesDestination()) }
+
+    /**
+     * Opens study options for the provided deck
+     *
+     * @param deckId Deck to open options for
+     * @param isFiltered (optional) optimization for when we know the deck is filtered
+     */
+    fun openDeckOptions(
+        deckId: DeckId,
+        isFiltered: Boolean? = null,
+    ) = launchCatchingIO {
+        // open cram options if filtered deck, otherwise open regular options
+        val filtered = isFiltered ?: withCol { decks.isFiltered(deckId) }
+        flowOfDestination.emit(DeckOptionsDestination(deckId = deckId, isFiltered = filtered))
+    }
 }
 
 /** Result of [DeckPickerViewModel.deleteDeck] */

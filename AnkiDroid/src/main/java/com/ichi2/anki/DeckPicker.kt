@@ -740,7 +740,7 @@ open class DeckPicker :
             }
             DeckPickerContextMenuOption.DECK_OPTIONS -> {
                 Timber.i("ContextMenu: Open deck options selected")
-                showContextMenuDeckOptions(deckId)
+                viewModel.openDeckOptions(deckId)
                 dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.CUSTOM_STUDY -> {
@@ -1270,9 +1270,9 @@ open class DeckPicker :
     fun showCreateFilteredDeckDialog() {
         val createFilteredDeckDialog =
             CreateDeckDialog(this@DeckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null)
-        createFilteredDeckDialog.onNewDeckCreated = {
+        createFilteredDeckDialog.onNewDeckCreated = { deckId ->
             // a filtered deck was created
-            openFilteredDeckOptions()
+            viewModel.openDeckOptions(deckId, isFiltered = true)
         }
         launchCatchingTask {
             withProgress {
@@ -2060,12 +2060,6 @@ open class DeckPicker :
         startActivity(intent)
     }
 
-    private fun openFilteredDeckOptions() {
-        val intent = Intent()
-        intent.setClass(this, FilteredDeckOptions::class.java)
-        startActivity(intent)
-    }
-
     private fun openStudyOptions(
         @Suppress("SameParameterValue") withDeckOptions: Boolean,
     ) {
@@ -2367,23 +2361,6 @@ open class DeckPicker :
      * Get the [DeckNode] identified by [did] from [DeckAdapter].
      */
     private fun DeckPicker.getNodeByDid(did: DeckId): DeckNode = deckListAdapter.currentList[findDeckPosition(did)]
-
-    // Callback to show study options for currently selected deck
-    fun showContextMenuDeckOptions(did: DeckId) {
-        // open deck options
-        if (getColUnsafe.decks.isFiltered(did)) {
-            // open cram options if filtered deck
-            val i = Intent(this@DeckPicker, FilteredDeckOptions::class.java)
-            i.putExtra("did", did)
-            startActivity(i)
-        } else {
-            // otherwise open regular options
-            val intent =
-                com.ichi2.anki.pages.DeckOptions
-                    .getIntent(this, did)
-            startActivity(intent)
-        }
-    }
 
     fun exportDeck(did: DeckId) {
         ExportDialogFragment.newInstance(did).show(supportFragmentManager, "exportOptions")

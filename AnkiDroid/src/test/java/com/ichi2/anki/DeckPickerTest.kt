@@ -55,7 +55,6 @@ import org.mockito.kotlin.whenever
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.Robolectric
 import org.robolectric.RuntimeEnvironment
-import org.robolectric.Shadows
 import org.robolectric.shadows.ShadowDialog
 import timber.log.Timber
 import java.io.File
@@ -471,14 +470,12 @@ class DeckPickerTest : RobolectricTest() {
                 onBackPressedDispatcher.onBackPressed()
 
                 // select deck options for a normal deck
-                supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.DECK_OPTIONS, didA)
-                val deckOptionsNormal = Shadows.shadowOf(this).nextStartedActivity!!
+                val deckOptionsNormal = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.DECK_OPTIONS, didA)
                 assertEquals("com.ichi2.anki.SingleFragmentActivity", deckOptionsNormal.component!!.className)
                 onBackPressedDispatcher.onBackPressed()
 
                 // select deck options for a dynamic deck
-                supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.DECK_OPTIONS, didDynamicA)
-                val deckOptionsDynamic = Shadows.shadowOf(this).nextStartedActivity!!
+                val deckOptionsDynamic = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.DECK_OPTIONS, didDynamicA)
                 assertEquals("com.ichi2.anki.FilteredDeckOptions", deckOptionsDynamic.component!!.className)
                 onBackPressedDispatcher.onBackPressed()
             }
