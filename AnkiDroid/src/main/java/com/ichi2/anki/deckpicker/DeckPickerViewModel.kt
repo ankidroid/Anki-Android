@@ -28,6 +28,7 @@ import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.browser.BrowserDestination
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
+import com.ichi2.anki.notetype.ManageNoteTypesDestination
 import com.ichi2.anki.utils.Destination
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
@@ -149,6 +150,11 @@ class DeckPickerViewModel :
         }
         flowOfDestination.emit(NoteEditorLauncher.AddNote(deckId))
     }
+
+    /**
+     * Opens the Manage Note Types screen.
+     */
+    fun openManageNoteTypes() = launchCatchingIO { flowOfDestination.emit(ManageNoteTypesDestination()) }
 }
 
 /** Result of [DeckPickerViewModel.deleteDeck] */

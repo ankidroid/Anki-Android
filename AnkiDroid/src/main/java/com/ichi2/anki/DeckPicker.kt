@@ -142,7 +142,6 @@ import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.introduction.CollectionPermissionScreenLauncher
 import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.mediacheck.MediaCheckFragment
-import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.pages.AnkiPackageImporterFragment
 import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.pages.CongratsPage.Companion.onDeckCompleted
@@ -1225,7 +1224,7 @@ open class DeckPicker :
             }
             R.id.action_model_browser_open -> {
                 Timber.i("DeckPicker:: Model browser button pressed")
-                openManageNoteTypes()
+                viewModel.openManageNoteTypes()
                 return true
             }
             R.id.action_restore_backup -> {
@@ -1284,15 +1283,6 @@ open class DeckPicker :
 
     fun exportCollection() {
         ExportDialogFragment.newInstance().show(supportFragmentManager, "exportDialog")
-    }
-
-    /**
-     * Opens the Manage Note Types screen.
-     */
-    private fun openManageNoteTypes() {
-        val manageNoteTypesTarget = ManageNotetypes::class.java
-        val noteTypeBrowser = Intent(this, manageNoteTypesTarget)
-        startActivity(noteTypeBrowser)
     }
 
     private fun processReviewResults(resultCode: Int) {
@@ -1563,7 +1553,7 @@ open class DeckPicker :
                 if (event.isCtrlPressed && event.isShiftPressed) {
                     // Shortcut: CTRL + Shift + N
                     Timber.i("Open ManageNoteTypes from keypress")
-                    openManageNoteTypes()
+                    viewModel.openManageNoteTypes()
                     return true
                 }
             }

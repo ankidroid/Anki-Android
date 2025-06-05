@@ -37,6 +37,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.userAcceptsSchemaChange
+import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.getNotetype
@@ -263,4 +264,8 @@ class ManageNotetypes : AnkiActivity() {
             else -> throw IllegalArgumentException("Unexpected value type: ${newExtra.value}")
         }
     }
+}
+
+class ManageNoteTypesDestination : Destination {
+    override fun toIntent(context: Context) = Intent(context, ManageNotetypes::class.java)
 }
