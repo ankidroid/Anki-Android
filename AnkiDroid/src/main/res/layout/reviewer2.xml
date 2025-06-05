@@ -11,6 +11,7 @@
     android:focusableInTouchMode="true"
     tools:context=".ui.windows.reviewer.ReviewerFragment">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -122,16 +123,17 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/show_answer"
-            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:text="@string/show_answer"
             android:textSize="@dimen/reviewer_answer_button_textSize"
+            app:cornerRadius="12dp"
+            android:backgroundTint="?showAnswerButtonBackground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/answer_buttons"
             app:layout_constraintStart_toStartOf="@id/answer_buttons"
             app:layout_constraintTop_toTopOf="@id/answer_buttons"
-            tools:visibility="gone"
+            tools:visibility="visible"
             />
 
         <LinearLayout
@@ -145,7 +147,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/type_answer_container"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:visibility="visible"
+            tools:visibility="invisible"
             >
 
             <com.google.android.material.button.MaterialButton
