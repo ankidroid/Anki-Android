@@ -18,6 +18,7 @@
 package com.ichi2.libanki
 
 import anki.decks.deckTreeNode
+import com.ichi2.anki.deckpicker.filterAndFlattenDisplay
 import com.ichi2.libanki.sched.DeckNode
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -108,3 +109,5 @@ class DeckNodeTest {
         assertEquals(emptyList<String>(), results.map { it.lastDeckNameComponent })
     }
 }
+
+fun DeckNode.filterAndFlatten(filter: CharSequence?) = this.filterAndFlattenDisplay(filter).map { it.deckNode }

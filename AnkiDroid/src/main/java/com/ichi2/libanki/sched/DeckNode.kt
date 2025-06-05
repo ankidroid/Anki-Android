@@ -15,10 +15,8 @@
  */
 package com.ichi2.libanki.sched
 
-import android.annotation.SuppressLint
 import anki.decks.DeckTreeNode
 import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.utils.append
 import java.lang.ref.WeakReference
 import java.util.Locale
 
@@ -27,6 +25,7 @@ data class DeckNode(
     val fullDeckName: String,
     val parent: WeakReference<DeckNode>? = null,
 ) : Iterable<DeckNode> {
+    // TODO: make this immutable and simplify 'DisplayDeckNode' to contain a 'DeckNode'
     var collapsed = node.collapsed
     val revCount = node.reviewCount
     val newCount = node.newCount
@@ -95,67 +94,4 @@ data class DeckNode(
             if (node.level > 0) yield(this@DeckNode)
             for (child in children) yieldAll(child)
         }.iterator()
-
-    /** Convert the tree into a flat list, where matching decks and the children/parents
-     * are included. Decks inside collapsed decks are not considered. */
-    fun filterAndFlatten(filter: CharSequence?): List<DeckNode> {
-        val filterPattern =
-            if (filter.isNullOrBlank()) {
-                null
-            } else {
-                filter.toString().lowercase(Locale.getDefault()).trim()
-            }
-        val list = mutableListOf<DeckNode>()
-        filterAndFlattenInner(filterPattern, list)
-        return list
-    }
-
-    private fun filterAndFlattenInner(
-        filter: CharSequence?,
-        list: MutableList<DeckNode>,
-    ) {
-        if (node.level > 0 && nameMatchesFilter(filter)) {
-            // if this deck matched, all children are included
-            addVisibleToList(list)
-            return
-        }
-
-        // When searching, ignore collapsed state and always search children
-        val searching = filter != null
-        if (collapsed && !searching) {
-            return
-        }
-        // TODO: Fix collapse/uncollapse icons showing during search even when they are not usable.
-        //       See issue #18379 for more details.
-
-        if (node.level > 0) {
-            list.append(this)
-        }
-        val startingLen = list.size
-        for (child in children) {
-            child.filterAndFlattenInner(filter, list)
-        }
-        if (node.level > 0 && startingLen == list.size) {
-            // we don't include ourselves if no children matched
-            list.removeAt(list.lastIndex)
-        }
-    }
-
-    @SuppressLint("LocaleRootUsage")
-    private fun nameMatchesFilter(filter: CharSequence?): Boolean {
-        return if (filter == null) {
-            true
-        } else {
-            return node.name.lowercase(Locale.getDefault()).contains(filter) || node.name.lowercase(Locale.ROOT).contains(filter)
-        }
-    }
-
-    fun addVisibleToList(list: MutableList<DeckNode>) {
-        list.append(this)
-        if (!collapsed) {
-            for (child in children) {
-                child.addVisibleToList(list)
-            }
-        }
-    }
 }
