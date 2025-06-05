@@ -17,59 +17,59 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="4dp"
         >
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/back_button"
-            style="?actionButtonStyle"
-            android:layout_width="?minTouchTargetSize"
-            android:layout_height="?actionBarSize"
-            android:src="?attr/homeAsUpIndicator"
-            android:layout_marginStart="4dp"
-            android:contentDescription="@string/abc_action_bar_up_description"
-            android:tooltipText="@string/abc_action_bar_up_description"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/webview_container"
-            />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/new_count"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/tools_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="?attr/newCountColor"
-            android:paddingEnd="4dp"
-            app:layout_constraintTop_toTopOf="@id/back_button"
-            app:layout_constraintBottom_toBottomOf="@id/back_button"
-            app:layout_constraintStart_toEndOf="@id/back_button"
-            app:layout_constraintEnd_toStartOf="@id/lrn_count"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            tools:text="127"
-            />
+            android:gravity="center_vertical"
+            >
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/lrn_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="?attr/learnCountColor"
-            android:paddingHorizontal="4dp"
-            app:layout_constraintTop_toTopOf="@id/back_button"
-            app:layout_constraintBottom_toBottomOf="@id/back_button"
-            app:layout_constraintStart_toEndOf="@id/new_count"
-            app:layout_constraintEnd_toStartOf="@id/rev_count"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            tools:text="381"
-            />
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/back_button"
+                style="?actionButtonStyle"
+                android:layout_width="?minTouchTargetSize"
+                android:layout_height="?actionBarSize"
+                android:src="?attr/homeAsUpIndicator"
+                android:layout_marginStart="4dp"
+                android:contentDescription="@string/abc_action_bar_up_description"
+                android:tooltipText="@string/abc_action_bar_up_description"
+                />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/rev_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="?attr/reviewCountColor"
-            android:paddingStart="4dp"
-            app:layout_constraintTop_toTopOf="@id/back_button"
-            app:layout_constraintBottom_toBottomOf="@id/back_button"
-            app:layout_constraintStart_toEndOf="@id/lrn_count"
-            tools:text="954"
-            />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/new_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?attr/newCountColor"
+                android:paddingEnd="4dp"
+                tools:text="127"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/lrn_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?attr/learnCountColor"
+                android:paddingHorizontal="4dp"
+                tools:text="381"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/rev_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?attr/reviewCountColor"
+                android:paddingStart="4dp"
+                tools:text="954"
+                />
+
+            <com.ichi2.anki.preferences.reviewer.ReviewerMenuView
+                android:id="@+id/reviewer_menu_view"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:layout_marginStart="12dp"
+                />
+        </LinearLayout>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/webview_container"
@@ -80,7 +80,7 @@
             android:layout_marginHorizontal="@dimen/reviewer_side_margin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/back_button"
+            app:layout_constraintTop_toBottomOf="@id/tools_layout"
             app:layout_constraintBottom_toTopOf="@id/type_answer_container">
 
             <WebView
@@ -198,17 +198,6 @@
                 android:layout_weight="1"
                 />
         </LinearLayout>
-
-        <com.ichi2.anki.preferences.reviewer.ReviewerMenuView
-            android:id="@+id/reviewer_menu_view"
-            android:layout_width="0dp"
-            android:layout_height="?actionBarSize"
-            app:layout_constraintStart_toEndOf="@id/rev_count"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/back_button"
-            app:layout_constraintBottom_toBottomOf="@id/back_button"
-            android:layout_marginStart="12dp"
-            />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/snackbar_anchor"
