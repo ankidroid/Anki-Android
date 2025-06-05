@@ -25,7 +25,6 @@ import android.view.View
 import android.webkit.WebView
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -40,7 +39,6 @@ import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.IdsFile
-import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.reviewer.BindingProcessor
 import com.ichi2.anki.reviewer.MappableBinding
@@ -59,14 +57,7 @@ class PreviewerFragment :
     BaseSnackbarBuilderProvider,
     DispatchKeyEventListener,
     BindingProcessor<MappableBinding, PreviewerAction> {
-    override val viewModel: PreviewerViewModel by viewModels {
-        val idsFile =
-            requireNotNull(BundleCompat.getParcelable(requireArguments(), CARD_IDS_FILE_ARG, IdsFile::class.java)) {
-                "$CARD_IDS_FILE_ARG is required"
-            }
-        val currentIndex = requireArguments().getInt(CURRENT_INDEX_ARG, 0)
-        PreviewerViewModel.factory(idsFile, currentIndex, CardMediaPlayer())
-    }
+    override val viewModel: PreviewerViewModel by viewModels()
     override val webView: WebView
         get() = requireView().findViewById(R.id.webview)
 
