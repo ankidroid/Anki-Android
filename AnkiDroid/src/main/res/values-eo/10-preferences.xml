@@ -77,10 +77,10 @@
     <string name="reset_languages_summ">Restarigi lingvajn alĝustigojn (por parolsinteziloj kaj vortaroj) por ĉiuj kartaroj</string>
     <string name="reset_languages_question">Ĉu forviŝi ĉiujn lingvajn alĝustigojn?</string>
     <string name="reset_confirmation">Restarigi ĉiujn alĝustigojn</string>
-    <string name="card_zoom" maxLength="41">Karta pligrandigo</string>
-    <string name="image_zoom" maxLength="41">Bilda pligrandigo</string>
+    <string name="card_zoom" maxLength="41">Grando de karto</string>
+    <string name="image_zoom" maxLength="41">Grando de bildo</string>
     <string name="button_size" maxLength="41">Grando de responda butono</string>
-    <string name="card_browser_font_size" maxLength="41">Skalado de tiparo de kart-foliumilo</string>
+    <string name="card_browser_font_size" maxLength="41">Grando de tiparo de kart-foliumilo</string>
     <string name="card_browser_hide_media" maxLength="41">Vidigi dosiernomojn en kart‑foliumilo</string>
     <string name="card_browser_hide_media_summary">Vidigi dosiernomojn de aŭdvidaĵoj en la kampoj “demando”/“respondo” de la kart‑foliumilo</string>
     <string name="col_path" maxLength="41">Dosierujo de AnkiDroid</string>

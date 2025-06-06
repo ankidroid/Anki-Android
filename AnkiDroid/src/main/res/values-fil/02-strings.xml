@@ -324,8 +324,8 @@
         <item quantity="other">%d na mga card ang tinanggal sa pagkabaon</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Muling iposisyon</string>
-    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
-    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Sunod</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Bumalik</string>
     <string name="start_recording">I-rekord</string>
     <string name="stop_recording">Ihinto</string>
     <string name="play_recording">I-play</string>
