@@ -20,6 +20,7 @@ import androidx.annotation.CheckResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import anki.card_rendering.EmptyCardsReport
+import anki.collection.OpChanges
 import anki.i18n.GeneratedTranslations
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -171,6 +172,11 @@ class DeckPickerViewModel :
         val filtered = isFiltered ?: withCol { decks.isFiltered(deckId) }
         flowOfDestination.emit(DeckOptionsDestination(deckId = deckId, isFiltered = filtered))
     }
+
+    fun unburyDeck(deckId: DeckId) =
+        launchCatchingIO {
+            undoableOp<OpChanges> { sched.unburyDeck(deckId) }
+        }
 }
 
 /** Result of [DeckPickerViewModel.deleteDeck] */
