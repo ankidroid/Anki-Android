@@ -257,6 +257,22 @@
         <item>@string/reviewer_frame_style_box_value</item>
     </string-array>
 
+    <string-array name="reviewer_toolbar_position_entries">
+        <item>@string/reviewer_toolbar_top</item>
+        <item>@string/reviewer_toolbar_bottom</item>
+        <item>@string/reviewer_toolbar_none</item>
+    </string-array>
+
+    <string name="reviewer_toolbar_value_top">0</string>
+    <string name="reviewer_toolbar_value_bottom">1</string>
+    <string name="reviewer_toolbar_value_none">2</string>
+
+    <string-array name="reviewer_toolbar_position_values">
+        <item>@string/reviewer_toolbar_value_top</item>
+        <item>@string/reviewer_toolbar_value_bottom</item>
+        <item>@string/reviewer_toolbar_value_none</item>
+    </string-array>
+
 
     <!-- Preferences headers summaries -->
     <string-array name="general_summary_entries">
