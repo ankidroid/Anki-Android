@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">Válasz: jó</string>
     <string name="answer_easy" maxLength="41">Válasz: könnyű</string>
     <string name="gesture_play" maxLength="41">Média lejátszása</string>
-    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Piros jelölő bekapcsolása</string>
     <string name="gesture_flag_orange" maxLength="41">Narancs Jelölő Bekapcsolása</string>
     <string name="gesture_flag_green" maxLength="41">Zöld Jelölő Bekapcsolása</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">Jelölő Törlése</string>
     <string name="gesture_page_up" maxLength="41">Felfele</string>
     <string name="gesture_page_down" maxLength="41">Lefele</string>
-    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_abort_sync" maxLength="41">Close study screen and Sync</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Tábla engedélyezése</string>
     <string name="gesture_show_hint" maxLength="41">Tipp mutatása</string>
     <string name="gesture_show_all_hints" maxLength="41">Tippek megjelenítése</string>

@@ -201,13 +201,13 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">સમીક્ષક</string>
+    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
     <string name="show_deck_title" maxLength="41">ડેક શીર્ષક બતાવો</string>
     <string name="accessibility" maxLength="41">સુલભતા</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">ક્લિપબોર્ડ છબીઓને PNG તરીકે પેસ્ટ કરો</string>
     <string name="exit_via_double_tap_back" maxLength="41">પાછા જવા/બહાર જવા માટે બે વાર પાછા દબાવો</string>
-    <string name="exit_via_double_tap_back_summ">આકસ્મિક રીતે સમીક્ષક અથવા એપ્લિકેશન છોડવાનું ટાળવા માટે</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">મીડિયા આયાતમાં બધી ફાઇલોને મંજૂરી આપો</string>
     <string name="media_import_allow_all_files_summ">જો એન્ડ્રોઇડ મીડિયા ફાઇલને ઓળખતું નથી</string>
@@ -252,7 +252,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">નવી લાઇનને HTML સાથે બદલો</string>
     <string name="note_editor_replace_newlines_summ">નોંધ સંપાદકમાં, &lt;br&gt; કાર્ડ સંપાદિત કરતી વખતે નવી લાઇનમાં.</string>
     <string name="type_in_answer_focus" maxLength="41">\'જવાબ લખો\' પર ફોકસ કરો</string>
-    <string name="type_in_answer_focus_summ">સમીક્ષકમાં આપમેળે \'ટાઈપ ઇન જવાબ\' ફીલ્ડ પર ફોકસ કરો</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
     <string name="open_changelog">ચેન્જલોગ ખોલો</string>
     <string name="pref_cat_about_title" maxLength="41">વિશે</string>
@@ -269,7 +269,7 @@
     <string name="binding_add_axis">જોયસ્ટિક/મોશન કંટ્રોલર ઉમેરો</string>
     <string name="axis_picker_move_joystick">જોયસ્ટીક/મોશન કંટ્રોલર ખસેડો</string>
     <string name="user_actions" maxLength="41">વપરાશકર્તા ક્રિયાઓ</string>
-    <string name="user_actions_summary" maxLength="41">સમીક્ષા સ્ક્રીનમાંથી JavaScript ટ્રિગર કરો</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
     <string name="user_action_1" maxLength="28">વપરાશકર્તા ક્રિયા 1</string>
     <string name="user_action_2" maxLength="28">વપરાશકર્તા ક્રિયા 2</string>
     <string name="user_action_3" maxLength="28">વપરાશકર્તા ક્રિયા 3</string>
@@ -368,8 +368,8 @@
     <string name="hide_answer_buttons" maxLength="41">જવાબ બટનો છુપાવો</string>
     <string name="hide_hard_and_easy" maxLength="41">\'હાર્ડ\' અને \'ઇઝી\' બટનો છુપાવો</string>
     <string name="reviewer_frame_style" maxLength="41">Frame style</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Box</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
 </resources>

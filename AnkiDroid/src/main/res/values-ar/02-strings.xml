@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">فلترة الوسوم</string>
     <string name="no_tags">لم تضف أي وسوم بعد</string>
     <string name="updated_version">تم التحديث إلى الإصدار: %s</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">حفظ السبورة</string>
     <string name="enable_stylus" maxLength="28">تمكين وضع Stylus</string>
     <string name="disable_stylus">تعطيل وضع Stylus</string>
@@ -209,7 +209,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">استعادة الافتراضي</string>
     <string name="reviewer_tts_cloze_spoken_replacement">فارغ</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">فشل حفظ صورة السبورة. %s</string>
     <string name="white_board_image_saved">تم حفظ صورة السبورة إلى %s</string>
     <string name="title_whiteboard_editor" maxLength="28">لون قلم السبورة</string>
@@ -279,7 +279,7 @@
     <string name="search_using_deck_name">ابحث باستخدام اسم الرزمة</string>
     <string name="external_storage_unavailable">تم إلغاء التنزيل لأن التخزين الخارجي غير متوفر</string>
     <string name="home" maxLength="28">الصفحة الرئيسية</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">تم دفن البطاقة</string>
     <plurals name="note_suspended">

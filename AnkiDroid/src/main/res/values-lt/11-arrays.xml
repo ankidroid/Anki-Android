@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">Atsakymas geras</string>
     <string name="answer_easy" maxLength="41">Atsakyti lengva</string>
     <string name="gesture_play" maxLength="41">Paleiskite mediją</string>
-    <string name="gesture_abort_learning" maxLength="41">Uždaras vertinimas</string>
+    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Perjungti į raudona vėliavėlę</string>
     <string name="gesture_flag_orange" maxLength="41">Perjungti į oranžinę vėliavėlę</string>
     <string name="gesture_flag_green" maxLength="41">Perjungti į žalią vėliavėlę</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">Pašalinti vėliavėlę</string>
     <string name="gesture_page_up" maxLength="41">Puslapis aukštyn</string>
     <string name="gesture_page_down" maxLength="41">Puslapis žemyn</string>
-    <string name="gesture_abort_sync" maxLength="41">Uždaryti vertinimą ir sinchronizuoti</string>
+    <string name="gesture_abort_sync" maxLength="41">Close study screen and Sync</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Perjungti į baltąją lentą</string>
     <string name="gesture_show_hint" maxLength="41">Rodyti užuominą</string>
     <string name="gesture_show_all_hints" maxLength="41">Rodyti visas užuominas</string>

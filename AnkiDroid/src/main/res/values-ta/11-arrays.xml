@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">நல்ல பதில்</string>
     <string name="answer_easy" maxLength="41">எளிதாக பதில் சொல்லுங்கள்</string>
     <string name="gesture_play" maxLength="41">மீடியாவை விளையாடு</string>
-    <string name="gesture_abort_learning" maxLength="41">நெருக்கமான விமர்சகர்</string>
+    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">சிவப்பு கொடியை மாற்றவும்</string>
     <string name="gesture_flag_orange" maxLength="41">ஆரஞ்சு கொடியை நிலைமாற்றவும்</string>
     <string name="gesture_flag_green" maxLength="41">பச்சைக் கொடியை மாற்றவும்</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">கொடியை அகற்று</string>
     <string name="gesture_page_up" maxLength="41">பக்கம் மேலே</string>
     <string name="gesture_page_down" maxLength="41">பக்கம் கீழே</string>
-    <string name="gesture_abort_sync" maxLength="41">மதிப்பாய்வாளர் மற்றும் ஒத்திசைவை மூடு</string>
+    <string name="gesture_abort_sync" maxLength="41">Close study screen and Sync</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">ஒயிட்போர்டை நிலைமாற்று</string>
     <string name="gesture_show_hint" maxLength="41">குறிப்பைக் காட்டு</string>
     <string name="gesture_show_all_hints" maxLength="41">அனைத்து குறிப்புகளையும் காட்டு</string>

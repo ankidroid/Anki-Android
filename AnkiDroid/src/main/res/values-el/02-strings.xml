@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">Φιλτράρισμα ετικετών</string>
     <string name="no_tags">Δεν έχετε προσθέσει καμία ετικέτα ακόμα</string>
     <string name="updated_version">Αναβαθμίστηκε στην εκδοχή %s</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">Αποθήκευση πίνακα</string>
     <string name="enable_stylus" maxLength="28">Ενεργοποίηση γραψίματος με γραφίδα</string>
     <string name="disable_stylus">Απενεργοποίηση γραψίματος με γραφίδα</string>
@@ -193,7 +193,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Επαναφορά προεπιλογής</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Κενό</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Αποτυχία αποθήκευσης της εικόνας του πίνακα. %s</string>
     <string name="white_board_image_saved">Η εικόνα του πίνακα αποθηκεύτηκε στο %s</string>
     <string name="title_whiteboard_editor" maxLength="28">Επεξεργαστής πίνακα</string>
@@ -263,7 +263,7 @@
     <string name="search_using_deck_name">Αναζήτηση με το όνομα τράπουλας</string>
     <string name="external_storage_unavailable">Η λήψη ματαιώθηκε, ο εξωτερικός χώρος αποθήκευσης δεν είναι διαθέσιμος</string>
     <string name="home" maxLength="28">Αρχική</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Η κάρτα θάφτηκε.</string>
     <plurals name="note_suspended">

@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">فیلترکردن برچسب ها</string>
     <string name="no_tags">شما هنوز برچسبی را اضافه نکرده اید</string>
     <string name="updated_version">به نسخه %s بروزرسانی شد</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">ذخیره تخته سفید</string>
     <string name="enable_stylus" maxLength="28">فعال کردن قلم</string>
     <string name="disable_stylus">غیرفعال کردن قلم</string>
@@ -193,7 +193,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">بازنشانی پیش‌فرض</string>
     <string name="reviewer_tts_cloze_spoken_replacement">خالی</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">ذخیرۀ تصویر تخته سفید با مشکل مواجه شد. %s</string>
     <string name="white_board_image_saved">تصویر تخته سفید در %s ذخیره شد</string>
     <string name="title_whiteboard_editor" maxLength="28">ویرایشگر تخته صفید</string>
@@ -263,7 +263,7 @@
     <string name="search_using_deck_name">جست و جو با استفاده از اسم دسته</string>
     <string name="external_storage_unavailable">بارگیری توقف شد، حافظه خارجی در دسترس نیست</string>
     <string name="home" maxLength="28">خانه</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">کارت دفن شد.</string>
     <plurals name="note_suspended">

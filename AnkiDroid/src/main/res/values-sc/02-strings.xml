@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">Filtra sas etichetas</string>
     <string name="no_tags">No as galu annànghidu eticheta peruna</string>
     <string name="updated_version">Atualizadu a sa versione %s</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">Sarva sa lavagna</string>
     <string name="enable_stylus" maxLength="28">Abìlita sa modalidade penninu</string>
     <string name="disable_stylus">Disabìlita sa modalidade penninu</string>
@@ -196,7 +196,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Torra a sos valores predefinidos</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Bòidu</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Sarvamentu de s\'immàgine de sa lavagna fallidu. %s</string>
     <string name="white_board_image_saved">Immàgine de sa lavagna sarvada in %s</string>
     <string name="title_whiteboard_editor" maxLength="28">Editore de sa lavagna</string>
@@ -266,7 +266,7 @@
     <string name="search_using_deck_name">Chirca impreende su nùmene de su matzu</string>
     <string name="external_storage_unavailable">Iscarrigamentu annulladu, sa memòria esterna no est a disponimentu</string>
     <string name="home" maxLength="28">Pàgina printzipale</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Carta interrada.</string>
     <plurals name="note_suspended">

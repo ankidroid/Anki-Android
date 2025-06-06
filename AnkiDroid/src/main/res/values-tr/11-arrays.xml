@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">İyi cevapla</string>
     <string name="answer_easy" maxLength="41">Kolay cevapla</string>
     <string name="gesture_play" maxLength="41">Medyayı oynat</string>
-    <string name="gesture_abort_learning" maxLength="41">Çalışmayı kapat</string>
+    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Kırmızı Bayrağı Aç/Kapat</string>
     <string name="gesture_flag_orange" maxLength="41">Turuncu Bayrağı Aç/Kapat</string>
     <string name="gesture_flag_green" maxLength="41">Yeşil Bayrağı Aç/Kapat</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">Bayrağı Kaldır</string>
     <string name="gesture_page_up" maxLength="41">Yukarı</string>
     <string name="gesture_page_down" maxLength="41">Aşağı</string>
-    <string name="gesture_abort_sync" maxLength="41">Çalışmayı kapatıp senkronize et</string>
+    <string name="gesture_abort_sync" maxLength="41">Close study screen and Sync</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Yazı Tahtasını Aç/Kapat</string>
     <string name="gesture_show_hint" maxLength="41">İpucu Göster</string>
     <string name="gesture_show_all_hints" maxLength="41">Tüm İpuçlarını Göster</string>

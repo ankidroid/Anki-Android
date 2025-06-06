@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">პასუხი: კარგი</string>
     <string name="answer_easy" maxLength="41">პასუხი: მარტივი</string>
     <string name="gesture_play" maxLength="41">მედიაფაილების დაკვრა</string>
-    <string name="gesture_abort_learning" maxLength="41">გადამხედველის დახურვა</string>
+    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">წითელი დროშის მიმაგრება/მოძრობა</string>
     <string name="gesture_flag_orange" maxLength="41">სტაფილოსფერი დროშის მიმაგრება/მოძრობა</string>
     <string name="gesture_flag_green" maxLength="41">მწვანე დროშის მიმაგრება/მოძრობა</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">დროშის მოძრობა</string>
     <string name="gesture_page_up" maxLength="41">გვერდით მაღლა</string>
     <string name="gesture_page_down" maxLength="41">გვერდით დაბლა</string>
-    <string name="gesture_abort_sync" maxLength="41">გადამხედველისა და სინქრონიზაციის დახურვა</string>
+    <string name="gesture_abort_sync" maxLength="41">Close study screen and Sync</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">დაფის ჩართვა/გამორთვა</string>
     <string name="gesture_show_hint" maxLength="41">მინიშნების ჩვენება</string>
     <string name="gesture_show_all_hints" maxLength="41">ყველა მინიშნების ჩვენება</string>

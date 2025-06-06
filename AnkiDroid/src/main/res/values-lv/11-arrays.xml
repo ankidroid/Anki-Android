@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">Atbildēt ar \"Labi\"</string>
     <string name="answer_easy" maxLength="41">Atbildēt ar \"Viegli\"</string>
     <string name="gesture_play" maxLength="41">Atskaņot informācijas nesējus</string>
-    <string name="gesture_abort_learning" maxLength="41">Aizvērt izskatītāju</string>
+    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Pārslēgt sarkano karogu</string>
     <string name="gesture_flag_orange" maxLength="41">Pārslēgt oranžo karogu</string>
     <string name="gesture_flag_green" maxLength="41">Pārslēgt zaļo karogu</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">Noņemt karogu</string>
     <string name="gesture_page_up" maxLength="41">Augšupšķirt</string>
     <string name="gesture_page_down" maxLength="41">Lejupšķirt</string>
-    <string name="gesture_abort_sync" maxLength="41">Aizvērt izskatītāju un sinhronizēt</string>
+    <string name="gesture_abort_sync" maxLength="41">Close study screen and Sync</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Pārslēgt tāfeli</string>
     <string name="gesture_show_hint" maxLength="41">Parādīt mājienu</string>
     <string name="gesture_show_all_hints" maxLength="41">Parādīt visus mājienus</string>

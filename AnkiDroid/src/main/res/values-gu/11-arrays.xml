@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">સરસ જવાબ આપો</string>
     <string name="answer_easy" maxLength="41">Answer easy</string>
     <string name="gesture_play" maxLength="41">મીડિયા ચલાવો</string>
-    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">લાલ ધ્વજને ટૉગલ કરો</string>
     <string name="gesture_flag_orange" maxLength="41">નારંગી ધ્વજને ટૉગલ કરો</string>
     <string name="gesture_flag_green" maxLength="41">લીલો ધ્વજ ટૉગલ કરો</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">ધ્વજ દૂર કરો</string>
     <string name="gesture_page_up" maxLength="41">પાનું ઉપર</string>
     <string name="gesture_page_down" maxLength="41">Page Down</string>
-    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_abort_sync" maxLength="41">Close study screen and Sync</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">વ્હાઇટબોર્ડ ટૉગલ કરો</string>
     <string name="gesture_show_hint" maxLength="41">સંકેત બતાવો</string>
     <string name="gesture_show_all_hints" maxLength="41">બધા સંકેતો બતાવો</string>

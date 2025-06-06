@@ -201,13 +201,13 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">ರಿವೈವರ್</string>
+    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
     <string name="show_deck_title" maxLength="41">ಡೆಕ್ ಶೀರ್ಷಿಕೆಯನ್ನು ತೋರಿಸಿ</string>
     <string name="accessibility" maxLength="41">ಪ್ರವೇಶಿಸುವಿಕೆ</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">ಕ್ಲಿಪ್‌ಬೋರ್ಡ್ ಚಿತ್ರಗಳನ್ನು PNG ನಂತೆ ಅಂಟಿಸಿ</string>
     <string name="exit_via_double_tap_back" maxLength="41">ಹಿಂತಿರುಗಲು/ನಿರ್ಗಮಿಸಲು ಎರಡು ಬಾರಿ ಹಿಂದಕ್ಕೆ ಒತ್ತಿರಿ</string>
-    <string name="exit_via_double_tap_back_summ">ವಿಮರ್ಶಕರು ಅಥವಾ ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಆಕಸ್ಮಿಕವಾಗಿ ತೊರೆಯುವುದನ್ನು ತಪ್ಪಿಸಲು</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">ಮಾಧ್ಯಮ ಆಮದುಗಳಲ್ಲಿ ಎಲ್ಲಾ ಫೈಲ್‌ಗಳನ್ನು ಅನುಮತಿಸಿ</string>
     <string name="media_import_allow_all_files_summ">Android ಮಾಧ್ಯಮ ಫೈಲ್ ಅನ್ನು ಗುರುತಿಸದಿದ್ದರೆ</string>
@@ -251,7 +251,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">ಹೊಸ ಸಾಲುಗಳನ್ನು HTML ನೊಂದಿಗೆ ಬದಲಾಯಿಸಿ</string>
     <string name="note_editor_replace_newlines_summ">ಟಿಪ್ಪಣಿ ಸಂಪಾದಕದಲ್ಲಿ, &lt;br&gt; ಕಾರ್ಡ್ ಅನ್ನು ಸಂಪಾದಿಸುವಾಗ ಯಾವುದೇ ನಿದರ್ಶನಗಳನ್ನು ಹೊಸ ಲೈನ್‌ಗಳಿಗೆ ಪರಿವರ್ತಿಸಿ.</string>
     <string name="type_in_answer_focus" maxLength="41">\'ಉತ್ತರವನ್ನು ಟೈಪ್ ಮಾಡಿ\' ಮೇಲೆ ಕೇಂದ್ರೀಕರಿಸಿ</string>
-    <string name="type_in_answer_focus_summ">ವಿಮರ್ಶಕರಲ್ಲಿ \'ಉತ್ತರದಲ್ಲಿ ಟೈಪ್ ಮಾಡಿ\' ಕ್ಷೇತ್ರವನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಕೇಂದ್ರೀಕರಿಸಿ</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
     <string name="open_changelog">ಚೇಂಜ್ಲಾಗ್ ತೆರೆಯಿರಿ</string>
     <string name="pref_cat_about_title" maxLength="41">ಸುಮಾರು</string>
@@ -268,7 +268,7 @@
     <string name="binding_add_axis">ಜಾಯ್ಸ್ಟಿಕ್/ಚಲನೆಯ ನಿಯಂತ್ರಕವನ್ನು ಸರಿಸಿ</string>
     <string name="axis_picker_move_joystick">ಜಾಯ್ಸ್ಟಿಕ್/ಚಲನೆಯ ನಿಯಂತ್ರಕವನ್ನು ಸರಿಸಿ</string>
     <string name="user_actions" maxLength="41">ಬಳಕೆದಾರರ ಕ್ರಿಯೆಗಳು</string>
-    <string name="user_actions_summary" maxLength="41">ವಿಮರ್ಶೆ ಪರದೆಯಿಂದ JavaScript ಅನ್ನು ಟ್ರಿಗರ್ ಮಾಡಿ</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
     <string name="user_action_1" maxLength="28">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 1</string>
     <string name="user_action_2" maxLength="28">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 2</string>
     <string name="user_action_3" maxLength="28">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 3</string>
@@ -366,8 +366,8 @@
     <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
     <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
     <string name="reviewer_frame_style" maxLength="41">Frame style</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Box</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
 </resources>

@@ -201,13 +201,13 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Aperçus</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Activer uniquement le verso</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Réviseur</string>
+    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
     <string name="show_deck_title" maxLength="41">Afficher le titre du deck</string>
     <string name="accessibility" maxLength="41">Accessibilité</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Coller les images du pressepapiers en PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Appuis double sur retour pour quitter</string>
-    <string name="exit_via_double_tap_back_summ">Pour éviter de quitter involontairement l\'application</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Autoriser l\'importation de tous fichiers</string>
     <string name="media_import_allow_all_files_summ">Si android ne reconnait pas un fichier comme média</string>
@@ -252,7 +252,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">Remplacer les nouvelles lignes par du HTML</string>
     <string name="note_editor_replace_newlines_summ">Dans l\'éditeur de notes, convertissez toutes les instances de &lt;br&gt; en nouvelles lignes lors de l\'édition d\'une carte.</string>
     <string name="type_in_answer_focus" maxLength="41">Mettre en évidence « Saisir la réponse »</string>
-    <string name="type_in_answer_focus_summ">Mettre automatiquement en évidence le champ « Saisir la réponse » dans le réviseur</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
     <string name="open_changelog">Ouvrir le journal des modifications</string>
     <string name="pref_cat_about_title" maxLength="41">À propos</string>
@@ -269,7 +269,7 @@
     <string name="binding_add_axis">Ajouter un joystick/contrôleur de mouvement</string>
     <string name="axis_picker_move_joystick">Déplacer un joystick/contrôleur de mouvement</string>
     <string name="user_actions" maxLength="41">Actions utilisateur</string>
-    <string name="user_actions_summary" maxLength="41">Exécute du JavaScript lors de la révision</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
     <string name="user_action_1" maxLength="28">Action utilisateur 1</string>
     <string name="user_action_2" maxLength="28">Action utilisateur 2</string>
     <string name="user_action_3" maxLength="28">Action utilisateur 3</string>
@@ -369,8 +369,8 @@ Elles ne sont pas destinées à la plupart des utilisateurs et restent en anglai
     <string name="hide_answer_buttons" maxLength="41">Masquer les boutons de réponse</string>
     <string name="hide_hard_and_easy" maxLength="41">Masquer les boutons « dur» et « facile»</string>
     <string name="reviewer_frame_style" maxLength="41">Style de cadre</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Carte</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Boîte</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Carte</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Boîte</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Aller aux paramètres</string>
 </resources>

@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">Відповідь: добре</string>
     <string name="answer_easy" maxLength="41">Відповідь: легко</string>
     <string name="gesture_play" maxLength="41">Відтворити медіа</string>
-    <string name="gesture_abort_learning" maxLength="41">Закрити повторення</string>
+    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Переключити червоний прапорець</string>
     <string name="gesture_flag_orange" maxLength="41">Переключити помаранчевий прапорець</string>
     <string name="gesture_flag_green" maxLength="41">Переключити зелений прапорець</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">Прибрати прапорець</string>
     <string name="gesture_page_up" maxLength="41">Попередня сторінка</string>
     <string name="gesture_page_down" maxLength="41">Наступна сторінка</string>
-    <string name="gesture_abort_sync" maxLength="41">Закрити повторення і синхронізувати</string>
+    <string name="gesture_abort_sync" maxLength="41">Close study screen and Sync</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Дошка</string>
     <string name="gesture_show_hint" maxLength="41">Показати підказку</string>
     <string name="gesture_show_all_hints" maxLength="41">Показати всі підказки</string>

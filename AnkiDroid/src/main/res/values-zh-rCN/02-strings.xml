@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">过滤标签</string>
     <string name="no_tags">你还没有添加任何标签。</string>
     <string name="updated_version">更新到 %s 版本</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">保存白板</string>
     <string name="enable_stylus" maxLength="28">启用荧光笔模式</string>
     <string name="disable_stylus">禁用荧光笔模式</string>
@@ -189,7 +189,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">恢复初始设置</string>
     <string name="reviewer_tts_cloze_spoken_replacement">空白</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">保存白板图像失败。 %s</string>
     <string name="white_board_image_saved">白板图像已保存到 %s</string>
     <string name="title_whiteboard_editor" maxLength="28">白板编辑器</string>
@@ -259,7 +259,7 @@
     <string name="search_using_deck_name">使用牌组名称搜索</string>
     <string name="external_storage_unavailable">下载中止，外部存储不可用</string>
     <string name="home" maxLength="28">主页</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">已搁置卡片</string>
     <plurals name="note_suspended">

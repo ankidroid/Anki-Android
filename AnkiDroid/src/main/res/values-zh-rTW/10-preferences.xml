@@ -199,13 +199,13 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">複習介面</string>
+    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
     <string name="show_deck_title" maxLength="41">顯示牌組標題</string>
     <string name="accessibility" maxLength="41">無障礙功能</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">複製PNG格式的圖像到剪貼簿上</string>
     <string name="exit_via_double_tap_back" maxLength="41">按二次返回鍵返回或者退出</string>
-    <string name="exit_via_double_tap_back_summ">避免不小心離開預覽器或者程式</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">允許所有置於媒體匯入中之檔案</string>
     <string name="media_import_allow_all_files_summ">如果 Android 無法辨識媒體檔案</string>
@@ -250,7 +250,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">以HTML取代新列</string>
     <string name="note_editor_replace_newlines_summ">在筆記編輯器中，編輯卡片時將&lt;br&gt;的任何實例轉換至新一列。</string>
     <string name="type_in_answer_focus" maxLength="41">聚焦“輸入答案”</string>
-    <string name="type_in_answer_focus_summ">自動聚焦在復習者的“輸入答案”字段</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
     <string name="open_changelog">打開更新日誌</string>
     <string name="pref_cat_about_title" maxLength="41">關於</string>
@@ -267,7 +267,7 @@
     <string name="binding_add_axis">新增搖桿/運動控制器</string>
     <string name="axis_picker_move_joystick">移動搖桿/運動控制器</string>
     <string name="user_actions" maxLength="41">使用者操作</string>
-    <string name="user_actions_summary" maxLength="41">從檢閱畫面觸發 JavaScript</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
     <string name="user_action_1" maxLength="28">用戶動作 1</string>
     <string name="user_action_2" maxLength="28">用戶動作 2</string>
     <string name="user_action_3" maxLength="28">用戶動作 3</string>
@@ -365,8 +365,8 @@
     <string name="hide_answer_buttons" maxLength="41">隱藏答案按鈕</string>
     <string name="hide_hard_and_easy" maxLength="41">隱藏\"難\"和\"簡單\"按鈕</string>
     <string name="reviewer_frame_style" maxLength="41">Frame style</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Box</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
 </resources>

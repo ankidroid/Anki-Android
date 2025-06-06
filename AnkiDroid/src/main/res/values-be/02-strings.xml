@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">Фільтраваць меткі</string>
     <string name="no_tags">Вы пакуль не дадалі ніводнай меткі</string>
     <string name="updated_version">Абноўлена да версіі %s</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">Захаваць дошку</string>
     <string name="enable_stylus" maxLength="28">Уключыць рэжым стылуса</string>
     <string name="disable_stylus">Адключыць рэжым стылуса</string>
@@ -201,7 +201,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Вярнуцца да прадвызначаных</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Пуста</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Не атрымалася захаваць відарыс дошкі. %s</string>
     <string name="white_board_image_saved">Відарыс дошкі захаваны ў %s</string>
     <string name="title_whiteboard_editor" maxLength="28">Рэдактар дошкі</string>
@@ -271,7 +271,7 @@
     <string name="search_using_deck_name">Пошук па назве калоды</string>
     <string name="external_storage_unavailable">Спампоўванне абарвана, бо знешняе сховішча недаступна.</string>
     <string name="home" maxLength="28">Галоўная</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Адкладзеная картка.</string>
     <plurals name="note_suspended">

@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">टैग छानें</string>
     <string name="no_tags">अपने अभी तक कोई टैग नहीं जोड़ा है</string>
     <string name="updated_version">%s संस्करण को अद्यतित किया गया</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">श्वेतपट्ट सहेजें</string>
     <string name="enable_stylus" maxLength="28">स्टाइलस मोड सक्षम करें</string>
     <string name="disable_stylus">स्टाइलस मोड अक्षम करें</string>
@@ -193,7 +193,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">पहले जैसा कर देना</string>
     <string name="reviewer_tts_cloze_spoken_replacement">रिक्त</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">श्वेतपट्ट छवि को सहेजने में विफल। %s</string>
     <string name="white_board_image_saved">श्वेतपट्ट छवि %s में सहेजी गई</string>
     <string name="title_whiteboard_editor" maxLength="28">श्वेतपट्ट संपादक</string>
@@ -263,7 +263,7 @@
     <string name="search_using_deck_name">डेक नाम का उपयोग करके खोजें</string>
     <string name="external_storage_unavailable">डाउनलोड निरस्त हो गया, बाह्य स्टोरेज  उपलब्ध नहीं है</string>
     <string name="home" maxLength="28">गृह</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">कार्ड दफन।</string>
     <plurals name="note_suspended">

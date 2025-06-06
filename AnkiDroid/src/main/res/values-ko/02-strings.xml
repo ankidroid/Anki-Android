@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">태그 필터링</string>
     <string name="no_tags">아직 추가된 태그가 없습니다.</string>
     <string name="updated_version">버전 %s로 업데이트됨</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">화이트보드 저장하기</string>
     <string name="enable_stylus" maxLength="28">스타일러스 쓰기 켜기</string>
     <string name="disable_stylus">스타일러스 쓰기 끄기</string>
@@ -192,7 +192,7 @@ Context | Request Context    [1]</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">기본값 복원</string>
     <string name="reviewer_tts_cloze_spoken_replacement">공백</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">화이트보드 이미지 저장에 실패했습니다. %s</string>
     <string name="white_board_image_saved">%s에 화이트보드 이미지가 저장되었습니다.</string>
     <string name="title_whiteboard_editor" maxLength="28">화이트보드 편집기</string>
@@ -262,7 +262,7 @@ Context | Request Context    [1]</string>
     <string name="search_using_deck_name">사용 중인 카드 덱 이름 찾기</string>
     <string name="external_storage_unavailable">다운로드가 중단되었습니다. 외부 저장 공간을 사용할 수 없습니다.</string>
     <string name="home" maxLength="28">홈</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">카드 숨기기 완료.</string>
     <plurals name="note_suspended">

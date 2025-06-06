@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">ടാഗുകൾ ഫിൽട്ടർ ചെയ്യുക</string>
     <string name="no_tags">നിങ്ങൾ ഇതുവരെ ടാഗുകളൊന്നും ചേർത്തിട്ടില്ല</string>
     <string name="updated_version">%S പതിപ്പിലേക്ക് അപ്‌ഡേറ്റുചെയ്‌തു</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">വൈറ്റ്ബോർഡ് സംരക്ഷിക്കുക</string>
     <string name="enable_stylus" maxLength="28">സ്റ്റൈലസ് എഴുത്ത് പ്രവർത്തനക്ഷമമാക്കുക</string>
     <string name="disable_stylus">Disable stylus writing</string>
@@ -193,7 +193,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">നേരത്തെയുള്ളത് പുനസ്ഥാപിക്കുക</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ശൂന്യയം</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">വൈറ്റ്ബോർഡ് ചിത്രം സംരക്ഷിക്കുന്നതിൽ പരാജയപ്പെട്ടു. %s</string>
     <string name="white_board_image_saved">വൈറ്റ്ബോർഡ് ചിത്രം %s ലേക്ക് സംരക്ഷിച്ചു</string>
     <string name="title_whiteboard_editor" maxLength="28">വൈറ്റ്ബോർഡ് എഡിറ്റർ</string>
@@ -263,7 +263,7 @@
     <string name="search_using_deck_name">ഡെക്കിൻ്റെ പേര് ഉപയോഗിച്ച് തിരയുക</string>
     <string name="external_storage_unavailable">ഡൗൺലോഡ് നിർത്തലാക്കി, ബാഹ്യ സംഭരണം ലഭ്യമല്ല</string>
     <string name="home" maxLength="28">Home</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Card buried.</string>
     <plurals name="note_suspended">

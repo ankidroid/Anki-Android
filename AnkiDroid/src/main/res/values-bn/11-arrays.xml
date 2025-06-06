@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">আনসার ভালো</string>
     <string name="answer_easy" maxLength="41">সহজ উত্তর দিন</string>
     <string name="gesture_play" maxLength="41">মিডিয়া প্লে করুন</string>
-    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">লাল পতাকা টগল করুন</string>
     <string name="gesture_flag_orange" maxLength="41">কমলা পতাকা টগল করুন</string>
     <string name="gesture_flag_green" maxLength="41">সবুজ পতাকা টগল করুন</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">পতাকা সরান</string>
     <string name="gesture_page_up" maxLength="41">পৃষ্ঠা আপ</string>
     <string name="gesture_page_down" maxLength="41">Page Down</string>
-    <string name="gesture_abort_sync" maxLength="41">সমালোচক এবং সিঙ্ক বন্ধ করুন</string>
+    <string name="gesture_abort_sync" maxLength="41">Close study screen and Sync</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">হোয়াইটবোর্ড টগল করুন</string>
     <string name="gesture_show_hint" maxLength="41">ইঙ্গিত দেখান</string>
     <string name="gesture_show_all_hints" maxLength="41">সব ইঙ্গিত দেখান</string>

@@ -201,13 +201,13 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Revisore</string>
+    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
     <string name="show_deck_title" maxLength="41">Ammustra su tìtulu de su matzu</string>
     <string name="accessibility" maxLength="41">Atzessibilidade</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Incolla sas immàgines in PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Incarca 2 bortas in segus pro essire</string>
-    <string name="exit_via_double_tap_back_summ">Pro evitare de essire in manera atzidentale dae su revisionadore o dae s\'aplicatzione</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Importende permite totu sos archìvios</string>
     <string name="media_import_allow_all_files_summ">Si Android non reconnoschet un\'archìviu multimediale</string>
@@ -252,7 +252,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">Remplasa sas lìnias noas cun s\'HTML</string>
     <string name="note_editor_replace_newlines_summ">In s\'editore de notas cunverte cada istàntzia de &lt;br&gt; in lìnias noas cando ses modifichende una carta.</string>
     <string name="type_in_answer_focus" maxLength="41">Pone in evidèntzia ‘iscrie sa risposta’</string>
-    <string name="type_in_answer_focus_summ">Pone in evidèntzia in automàticu su campu ‘iscrie sa risposta’ in su revisore</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
     <string name="open_changelog">Aberi su registru de sas modìficas</string>
     <string name="pref_cat_about_title" maxLength="41">Informatziones</string>
@@ -269,7 +269,7 @@
     <string name="binding_add_axis">Annanghe unu joystick/controllore de movimentu</string>
     <string name="axis_picker_move_joystick">Move unu joystick/controllore de movimentu</string>
     <string name="user_actions" maxLength="41">Atziones utente</string>
-    <string name="user_actions_summary" maxLength="41">Esecuta JavaScript dae s\'ischermada de ripetitzione</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
     <string name="user_action_1" maxLength="28">Atzione utente 1</string>
     <string name="user_action_2" maxLength="28">Atzione utente 2</string>
     <string name="user_action_3" maxLength="28">Atzione utente 3</string>
@@ -368,8 +368,8 @@
     <string name="hide_answer_buttons" maxLength="41">Cua su butone de sas rispostas</string>
     <string name="hide_hard_and_easy" maxLength="41">Cua sos butones ‘Difìtzile’ e ‘Fàtzile’</string>
     <string name="reviewer_frame_style" maxLength="41">Frame style</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Box</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Aberi sas impostatziones</string>
 </resources>

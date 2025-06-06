@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">I-filter ang mga tag</string>
     <string name="no_tags">Wala ka pang naidagdag na anumang mga tag</string>
     <string name="updated_version">Nai-update na sa bersyong %s</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">I-save ang puting pisara</string>
     <string name="enable_stylus" maxLength="28">Paganahin ang stylus mode</string>
     <string name="disable_stylus">Hindi paganahin ang stylus mode</string>
@@ -193,7 +193,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Ibalik sa Default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Blanko</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Bigo sa pag-save ng litrato ng puting pisara. %s</string>
     <string name="white_board_image_saved">Isinave ang litrato ng puting pisara sa %s</string>
     <string name="title_whiteboard_editor" maxLength="28">Editor ng puting pisara</string>
@@ -263,7 +263,7 @@
     <string name="search_using_deck_name">Hanapin gamit ang pangalan ng deck</string>
     <string name="external_storage_unavailable">Naudlot ang pag-download, wala nang natirang lugar sa external storage</string>
     <string name="home" maxLength="28">Home</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Naibaon ang card.</string>
     <plurals name="note_suspended">

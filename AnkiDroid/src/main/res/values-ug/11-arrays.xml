@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">جاۋابى ياخشى</string>
     <string name="answer_easy" maxLength="41">جاۋابى ئاسان</string>
     <string name="gesture_play" maxLength="41">ۋاسىتە قوي</string>
-    <string name="gesture_abort_learning" maxLength="41">تەكرارلىغۇچنى تاقا</string>
+    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">قىزىل بايراقنى ئالماشتۇر</string>
     <string name="gesture_flag_orange" maxLength="41">قىزغۇچ سېرىق بايراقنى ئالماشتۇر</string>
     <string name="gesture_flag_green" maxLength="41">يېشىل بايراقنى ئالماشتۇر</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">بايراقنى چىقىرىۋەت</string>
     <string name="gesture_page_up" maxLength="41">ئالدى بەت</string>
     <string name="gesture_page_down" maxLength="41">كەينى بەت</string>
-    <string name="gesture_abort_sync" maxLength="41">تەكرارلىغۇچنى تاقاپ قەدەمداشلايدۇ</string>
+    <string name="gesture_abort_sync" maxLength="41">Close study screen and Sync</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">ئاق دوسكىنى ئالماشتۇر</string>
     <string name="gesture_show_hint" maxLength="41">ئەسكەرتىش كۆرسەت</string>
     <string name="gesture_show_all_hints" maxLength="41">ھەممە ئەسكەرتىشنى كۆرسەت</string>

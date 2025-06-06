@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">Atlasīt birkas</string>
     <string name="no_tags">Vēl nav pievienota neviena birka</string>
     <string name="updated_version">Atjaunināta uz versiju %s</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">Saglabāt tāfeli</string>
     <string name="enable_stylus" maxLength="28">Iespējot rakstīšanu ar irbuli</string>
     <string name="disable_stylus">Atspējot rakstīšanu ar irbuli</string>
@@ -197,7 +197,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Atjaunot noklusējumu</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Tukšs</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Neizdevās saglabāt tāfeles attēlu. %s</string>
     <string name="white_board_image_saved">Tāfeles attēls saglabāts %s</string>
     <string name="title_whiteboard_editor" maxLength="28">Tāfeles redaktors</string>
@@ -267,7 +267,7 @@
     <string name="search_using_deck_name">Meklēt izmantojot kavas nosaukumu</string>
     <string name="external_storage_unavailable">Lejupielāde priekšlaicīgi pārtraukta, ārējā krātuve nav pieejama</string>
     <string name="home" maxLength="28">Sākums</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Kartīte paslēpta.</string>
     <plurals name="note_suspended">

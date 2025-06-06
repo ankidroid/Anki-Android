@@ -87,7 +87,7 @@
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">ರದ್ದು</string>
     <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">ಮತ್ತೆ ಮಾಡು</string>
     <!-- flashcard_portrait.xml -->
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">ಸ್ಟ್ರೋಕ್ ರದ್ದುಗೊಳಿಸಿ</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in the Study Screen. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">ಸ್ಟ್ರೋಕ್ ರದ್ದುಗೊಳಿಸಿ</string>
     <string name="move_all_to_deck">ಎಲ್ಲವನ್ನೂ ಡೆಕ್‌ಗೆ ಸರಿಸಿ</string>
     <string name="unbury" maxLength="28">ಅನ್ಬರಿ</string>
     <string name="rename_deck" maxLength="28">ಸಂಗ್ರಹಣೆಗೆ ಮರುಹೆಸರಿಸಿ</string>

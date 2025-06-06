@@ -200,13 +200,13 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Peninjau</string>
+    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
     <string name="show_deck_title" maxLength="41">Tampilkan judul dek</string>
     <string name="accessibility" maxLength="41">Aksesibilitas</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Tempel gambar di papan klip sebagai PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Ketuk kembali dua kali utk kembali/keluar</string>
-    <string name="exit_via_double_tap_back_summ">Untuk mencegah meninggalkan peninjau atau aplikasi secara tidak sengaja</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Perbolehkan semua berkas dlm impor media</string>
     <string name="media_import_allow_all_files_summ">Jika Android tidak mendeteksi sebuah berkas media</string>
@@ -251,7 +251,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">Ganti newlines dengan HTML</string>
     <string name="note_editor_replace_newlines_summ">Di Note Editor, konversikan bentuk apapun dari&lt;br&gt; menjadi neelones ketika mengedit sebuah kartu.</string>
     <string name="type_in_answer_focus" maxLength="41">Fokus \'ketik di jawaban\'</string>
-    <string name="type_in_answer_focus_summ">Fokuskan bagian \'ketik di jawaban\' secara otomatis di reviewer</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
     <string name="open_changelog">Buka Changelog</string>
     <string name="pref_cat_about_title" maxLength="41">Tentang</string>
@@ -268,7 +268,7 @@
     <string name="binding_add_axis">Tambahkan pengendali joystick/gerakan</string>
     <string name="axis_picker_move_joystick">Gerakkan pengendali joystick/gerakan</string>
     <string name="user_actions" maxLength="41">Tindakan pengguna</string>
-    <string name="user_actions_summary" maxLength="41">Picu JavaScript dari layar peninjauan</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
     <string name="user_action_1" maxLength="28">Tindakan pengguna 1</string>
     <string name="user_action_2" maxLength="28">Tindakan pengguna 2</string>
     <string name="user_action_3" maxLength="28">Tindakan pengguna 3</string>
@@ -366,8 +366,8 @@
     <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
     <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
     <string name="reviewer_frame_style" maxLength="41">Frame style</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Box</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
 </resources>

@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">Filtrar etiquetas</string>
     <string name="no_tags">No has añadido ninguna etiqueta aún.</string>
     <string name="updated_version">Actualizado a la versión %s</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">Guardar pizarra</string>
     <string name="enable_stylus" maxLength="28">Activar el modo del lápiz óptico</string>
     <string name="disable_stylus">Desactivar el modo del lápiz óptico</string>
@@ -193,7 +193,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Restablecer Predefinidos</string>
     <string name="reviewer_tts_cloze_spoken_replacement">En blanco</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">No se pudo guardar la imagen de pizarra. %s</string>
     <string name="white_board_image_saved">Imagen de pizarra guardada en %s</string>
     <string name="title_whiteboard_editor" maxLength="28">Editor de pizarra</string>
@@ -263,7 +263,7 @@
     <string name="search_using_deck_name">Buscar usando nombre de mazo</string>
     <string name="external_storage_unavailable">Descarga abortada, el almacenamiento externo no está disponible</string>
     <string name="home" maxLength="28">Inicio</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Tarjeta enterrada</string>
     <plurals name="note_suspended">

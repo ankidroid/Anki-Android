@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">Filter tags</string>
     <string name="no_tags">You haven’t added any tags yet</string>
     <string name="updated_version">Updated to version %s</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">Save whiteboard</string>
     <string name="enable_stylus" maxLength="28">Enable stylus writing</string>
     <string name="disable_stylus">Disable stylus writing</string>
@@ -189,7 +189,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Restore Default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
     <string name="title_whiteboard_editor" maxLength="28">Whiteboard editor</string>
@@ -259,7 +259,7 @@
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home" maxLength="28">Home</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Card buried.</string>
     <plurals name="note_suspended">

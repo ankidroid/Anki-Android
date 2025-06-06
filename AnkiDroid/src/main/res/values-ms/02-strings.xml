@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">Tapis tag</string>
     <string name="no_tags">Anda belum tambah apa-apa tag lagi</string>
     <string name="updated_version">Dikemas kini ke versi %s</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">Simpan papan putih</string>
     <string name="enable_stylus" maxLength="28">Dayakan mod stilus</string>
     <string name="disable_stylus">Lumpuhkan mod stilus</string>
@@ -189,7 +189,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Pulih Lalai</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Kosong</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Gagal menyimpan gambar papan putih. %s</string>
     <string name="white_board_image_saved">Gambar papan putih simpan di %s</string>
     <string name="title_whiteboard_editor" maxLength="28">Penyunting papan putih</string>
@@ -259,7 +259,7 @@
     <string name="search_using_deck_name">Cari menggunakan nama dek</string>
     <string name="external_storage_unavailable">Muat turun batal, tiada storan luaran tersedia</string>
     <string name="home" maxLength="28">Laman Utama</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Kad disorok.</string>
     <plurals name="note_suspended">

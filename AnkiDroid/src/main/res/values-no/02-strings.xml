@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">Filtrer etiketter</string>
     <string name="no_tags">Du har ikke lagt til noen etiketter ennå.</string>
     <string name="updated_version">Oppdatert til versjon %s</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">Lagre tavle</string>
     <string name="enable_stylus" maxLength="28">Aktiver pennemodus</string>
     <string name="disable_stylus">Slå av pennemodus</string>
@@ -193,7 +193,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Restore Default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Tom</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Kunne ikke lagre tavle. %s</string>
     <string name="white_board_image_saved">Tavle lagret som %s</string>
     <string name="title_whiteboard_editor" maxLength="28">Tavleeditor</string>
@@ -263,7 +263,7 @@
     <string name="search_using_deck_name">Søk ved hjelp av kortstokknavn</string>
     <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home" maxLength="28">Hjem</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Kort skjult.</string>
     <plurals name="note_suspended">
