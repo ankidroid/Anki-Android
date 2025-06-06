@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">Rispondi \"normale\"</string>
     <string name="answer_easy" maxLength="41">Rispondi \"facile\"</string>
     <string name="gesture_play" maxLength="41">Riproduci media</string>
-    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Attiva/disattiva contrassegno rosso</string>
     <string name="gesture_flag_orange" maxLength="41">Attiva/disattiva contrassegno aracione</string>
     <string name="gesture_flag_green" maxLength="41">Attiva/disattiva contrassegno verde</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">Rimuovi il contrassegno</string>
     <string name="gesture_page_up" maxLength="41">Vai su</string>
     <string name="gesture_page_down" maxLength="41">Vai giù</string>
-    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_abort_sync" maxLength="41">Close study screen and Sync</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Attiva/Disattiva la lavagna</string>
     <string name="gesture_show_hint" maxLength="41">Mostra suggerimento</string>
     <string name="gesture_show_all_hints" maxLength="41">Mostra tutti i suggerimenti</string>

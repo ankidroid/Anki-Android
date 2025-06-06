@@ -201,13 +201,13 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">پیش نمایش</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">مرور کننده</string>
+    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
     <string name="show_deck_title" maxLength="41">نمایش عنوان دسته کارت</string>
     <string name="accessibility" maxLength="41">قابلیت دسترسی</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">عکس های کلیپبورد را به عنوان PNG پِیست کن</string>
     <string name="exit_via_double_tap_back" maxLength="41">دوبار عقب را بزنید که به عقب/خروج بروید</string>
-    <string name="exit_via_double_tap_back_summ">تا از اشتباهی بیرون رفتن از مرورگر یا برنامه جلوگیری کنید</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">وجود همه فایل ها در ورودی مدیا را مجاز کن</string>
     <string name="media_import_allow_all_files_summ">اگر Android یک فایل مدیا ای را نمی شناسد</string>
@@ -252,7 +252,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">خط های جدید را با HTML جایگذین کن</string>
     <string name="note_editor_replace_newlines_summ">در ویرایشگر یادداشت، همه &lt;br&gt; را به خط جدید تبدیل کن موقع ویرایش کارت</string>
     <string name="type_in_answer_focus" maxLength="41">روی ‘تایپ کردن در جای جواب’ تمرکز کن</string>
-    <string name="type_in_answer_focus_summ">به صورت خودکار روی فیلد \'تایپ کردن در جای جواب\' در مرورگر تمرکز میکند</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
     <string name="open_changelog">Changelog را باز کن</string>
     <string name="pref_cat_about_title" maxLength="41">درباره ما</string>
@@ -269,7 +269,7 @@
     <string name="binding_add_axis">اضافه کردن اهرمک/تنظیم کننده حرکات</string>
     <string name="axis_picker_move_joystick">یک اهرمک/تنظیم کننده حرکات را حرکت دهید</string>
     <string name="user_actions" maxLength="41">اقدامات کاربر</string>
-    <string name="user_actions_summary" maxLength="41">اجرای جاوا اسکریپت از صفحه مرور</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
     <string name="user_action_1" maxLength="28">اقدام کاربر 1</string>
     <string name="user_action_2" maxLength="28">اقدام کاربر 2</string>
     <string name="user_action_3" maxLength="28">اقدام کاربر 3</string>
@@ -367,8 +367,8 @@
     <string name="hide_answer_buttons" maxLength="41">مخفی کردن دکمه‌های پاسخ</string>
     <string name="hide_hard_and_easy" maxLength="41">دکمه \"دشوار\" و \"آسان\" را پنهان کن</string>
     <string name="reviewer_frame_style" maxLength="41">طرح حاشیه</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">کارت</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">کادر</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">کارت</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">کادر</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">تنظیمات را باز کنید</string>
 </resources>

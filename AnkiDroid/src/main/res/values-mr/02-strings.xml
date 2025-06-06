@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">Ṭĕga philṭara karā</string>
     <string name="no_tags">You haven’t added any tags yet</string>
     <string name="updated_version">Āvr̥ttīmadhyē adyatanita kēlē%s</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">व्हाईटबोर्ड जतन करा</string>
     <string name="enable_stylus" maxLength="28">स्टाईलस लेखन सक्षम करा</string>
     <string name="disable_stylus">स्टाइलस लेखन अक्षम करा</string>
@@ -193,7 +193,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">डीफॉल्ट पुनर्संचयित करा</string>
     <string name="reviewer_tts_cloze_spoken_replacement">कोरा</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">व्हाईटबोर्ड इमेज सेव्ह करण्यात अयशस्वी. %s</string>
     <string name="white_board_image_saved">व्हाईटबोर्ड इमेज %s मध्ये सेव्ह केली</string>
     <string name="title_whiteboard_editor" maxLength="28">व्हाईटबोर्ड संपादक</string>
@@ -263,7 +263,7 @@
     <string name="search_using_deck_name">डेकचे नाव वापरून शोधा</string>
     <string name="external_storage_unavailable">डाउनलोड रद्द केले, बाह्य संचयन उपलब्ध नाही</string>
     <string name="home" maxLength="28">मुख्यपृष्ठ</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">कार्ड पुरले.</string>
     <plurals name="note_suspended">

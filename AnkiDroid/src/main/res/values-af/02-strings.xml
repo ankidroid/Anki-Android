@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">Filter etikette</string>
     <string name="no_tags">Jy het nog geen etikette bygevoeg nie</string>
     <string name="updated_version">Opgedateer na weergawe %s</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">Stoor witbord</string>
     <string name="enable_stylus" maxLength="28">Aktiveer stylus skryf</string>
     <string name="disable_stylus">Deaktiveer stylus skryf</string>
@@ -193,7 +193,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Herstel Standaard</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Leeg</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Kon nie witbordbeeld stoor nie. %s</string>
     <string name="white_board_image_saved">Witbordbeeld gestoor na %s</string>
     <string name="title_whiteboard_editor" maxLength="28">Witbordredakteur</string>
@@ -263,7 +263,7 @@
     <string name="search_using_deck_name">Soek met paknaam</string>
     <string name="external_storage_unavailable">Aflaai gestaak, die eksterne berging is nie beskikbaar nie</string>
     <string name="home" maxLength="28">Tuis</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Kaart begrawe.</string>
     <plurals name="note_suspended">

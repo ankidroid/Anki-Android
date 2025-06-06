@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">答得不錯</string>
     <string name="answer_easy" maxLength="41">太簡單了</string>
     <string name="gesture_play" maxLength="41">播放媒體檔</string>
-    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">套用紅色標記</string>
     <string name="gesture_flag_orange" maxLength="41">套用橙色標記</string>
     <string name="gesture_flag_green" maxLength="41">套用綠色標記</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">移除標記</string>
     <string name="gesture_page_up" maxLength="41">向上翻頁</string>
     <string name="gesture_page_down" maxLength="41">向下翻頁</string>
-    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_abort_sync" maxLength="41">Close study screen and Sync</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">切換白板</string>
     <string name="gesture_show_hint" maxLength="41">顯示提示</string>
     <string name="gesture_show_all_hints" maxLength="41">顯示所有提示</string>

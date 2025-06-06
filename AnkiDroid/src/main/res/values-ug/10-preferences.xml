@@ -202,13 +202,13 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">ئالدىن كۆزىتىش</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">ئارقا تەرىپىنىلا ئالماشتۇر</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">تەكرارلىغۇچى</string>
+    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
     <string name="show_deck_title" maxLength="41">دەستە ماۋزۇسىنى كۆرسەت</string>
     <string name="accessibility" maxLength="41">قوشۇمچە ئىقتىدار</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">سۈرەتنى png سۈپىتىدە چاپلاش تاختىسىغا چاپلايدۇ</string>
     <string name="exit_via_double_tap_back" maxLength="41">قايت ئىككى قېتىم چېكىلسە قايتىدۇ/چېكىنىدۇ</string>
-    <string name="exit_via_double_tap_back_summ">ئېھتىياتسىزلىقتىن تەكرارلاش كۆرۈنۈشى ياكى ئەپتىن ئايرىلىشنىڭ ئالدىنى ئالىدۇ</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">بارلىق ۋاسىتە ھۆججەتنى ئەكىرىشكە يول قويىدۇ</string>
     <string name="media_import_allow_all_files_summ">ئەگەر Android ۋاسىتە ھۆججىتىنى تونۇمىسا</string>
@@ -253,7 +253,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">يېڭى قۇرنى HTML بىلەن ئالماشتۇرىدۇ</string>
     <string name="note_editor_replace_newlines_summ">خاتىرە تەھرىرلىگۈچتە، كارتا تەھرىرلىگەندە &lt;br&gt; ھەر قاندىغى قۇر ئالماشتۇرۇشقا ئايلاندۇرۇلىدۇ.</string>
     <string name="type_in_answer_focus" maxLength="41">(جاۋاب كىرگۈزۈش) كە مەركەزلىشىدۇ</string>
-    <string name="type_in_answer_focus_summ">تەكرارلىغاندا ئۆزلۈكىدىن (جاۋاب كىرگۈزۈش) بۆلىكىگە مەركەزلىشىدۇ</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
     <string name="open_changelog">ئۆزگىرىش خاتىرىسىنى ئاچىدۇ</string>
     <string name="pref_cat_about_title" maxLength="41">ھەققىدە</string>
@@ -270,7 +270,7 @@
     <string name="binding_add_axis">ئويۇن تىزگىنىكى/ھەرىكەت تىزگىنلىگۈچ قوشىدۇ</string>
     <string name="axis_picker_move_joystick">ئويۇن تىزگىنىكى/ھەرىكەت تىزگىنلىگۈچ يۆتكەيدۇ</string>
     <string name="user_actions" maxLength="41">ئىشلەتكۈچى مەشغۇلاتى</string>
-    <string name="user_actions_summary" maxLength="41">تەكشۈرۈش ئېكرانىدىن JavaScript نى قوزغىتىدۇ</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
     <string name="user_action_1" maxLength="28">ئىشلەتكۈچىنىڭ 1-مەشغۇلاتى</string>
     <string name="user_action_2" maxLength="28">ئىشلەتكۈچىنىڭ 2-مەشغۇلاتى</string>
     <string name="user_action_3" maxLength="28">ئىشلەتكۈچىنىڭ 3-مەشغۇلاتى</string>
@@ -370,8 +370,8 @@
     <string name="hide_answer_buttons" maxLength="41">جاۋاب توپچەنى يوشۇر</string>
     <string name="hide_hard_and_easy" maxLength="41">«تەس» ۋە «ئاسان» توپچەنى يوشۇر</string>
     <string name="reviewer_frame_style" maxLength="41">كاندۇك ئۇسلۇبى</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">كارتا</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">قۇتا</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">كارتا</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">قۇتا</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">تەڭشەكنى ئاچ</string>
 </resources>

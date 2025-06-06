@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">回答“良好”</string>
     <string name="answer_easy" maxLength="41">回答 “简单”</string>
     <string name="gesture_play" maxLength="41">播放媒体</string>
-    <string name="gesture_abort_learning" maxLength="41">关闭复习程序</string>
+    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">切换红色旗标</string>
     <string name="gesture_flag_orange" maxLength="41">切换橙色旗标</string>
     <string name="gesture_flag_green" maxLength="41">切换绿色旗标</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">移除旗标</string>
     <string name="gesture_page_up" maxLength="41">向上翻页</string>
     <string name="gesture_page_down" maxLength="41">向下翻页</string>
-    <string name="gesture_abort_sync" maxLength="41">关闭复习程序并同步</string>
+    <string name="gesture_abort_sync" maxLength="41">Close study screen and Sync</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">切换白板</string>
     <string name="gesture_show_hint" maxLength="41">显示提示</string>
     <string name="gesture_show_all_hints" maxLength="41">显示所有提示</string>

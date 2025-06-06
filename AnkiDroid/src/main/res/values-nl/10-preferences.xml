@@ -201,13 +201,13 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
     <string name="show_deck_title" maxLength="41">Settitel weergeven</string>
     <string name="accessibility" maxLength="41">Toegankelijkheid</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Plak klembord afbeeldingen als PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Druk twee keer op terug om terug te gaan</string>
-    <string name="exit_via_double_tap_back_summ">Om te voorkomen dat je per ongeluk de reviewer of de app verlaat.</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Alle bestanden bij media-import toestaan</string>
     <string name="media_import_allow_all_files_summ">Als Android een mediabestand niet herkent</string>
@@ -252,7 +252,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">Nieuwe lijnen vervangen door HTML</string>
     <string name="note_editor_replace_newlines_summ">Zet in de memobewerker alle instanties van &lt;br&gt; om in nieuwe lijnen bij het bewerken van een kaart.</string>
     <string name="type_in_answer_focus" maxLength="41">Focus op ‘type in antwoord’</string>
-    <string name="type_in_answer_focus_summ">Automatisch focussen op het ‘type in antwoord’ veld in de beoordelaar</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
     <string name="open_changelog">Wijzigingslogboek openen</string>
     <string name="pref_cat_about_title" maxLength="41">Over</string>
@@ -269,7 +269,7 @@
     <string name="binding_add_axis">Joystick/bewegingscontroller toevoegen</string>
     <string name="axis_picker_move_joystick">Joystick/bewegingscontroller bewegen</string>
     <string name="user_actions" maxLength="41">Gebruikersacties</string>
-    <string name="user_actions_summary" maxLength="41">Activeer JavaScript vanuit het beoordelingsscherm</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
     <string name="user_action_1" maxLength="28">Gebruikersactie 1</string>
     <string name="user_action_2" maxLength="28">Gebruikersactie 2</string>
     <string name="user_action_3" maxLength="28">Gebruikersactie 3</string>
@@ -368,8 +368,8 @@
     <string name="hide_answer_buttons" maxLength="41">Antwoordknoppen verbergen</string>
     <string name="hide_hard_and_easy" maxLength="41">Koppen \'Moeilijk\' &amp; \'Makkelijk\' verbergen</string>
     <string name="reviewer_frame_style" maxLength="41">Frame style</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Box</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
 </resources>

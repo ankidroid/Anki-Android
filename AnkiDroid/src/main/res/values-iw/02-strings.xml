@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">סנן תגיות</string>
     <string name="no_tags">עוד לא הוספת שום תגיות</string>
     <string name="updated_version">עודקן לגירסה %s</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">שמור לוח</string>
     <string name="enable_stylus" maxLength="28">הפעל מצב סטיילוס</string>
     <string name="disable_stylus">כבה מצב סטיילוס</string>
@@ -201,7 +201,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">שחזור בררת המחדל</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ריק</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">נכשל לשמור תמונת לוח. %s</string>
     <string name="white_board_image_saved">תמונת לוח נשמרה ל %s</string>
     <string name="title_whiteboard_editor" maxLength="28">עורך לוח</string>
@@ -271,7 +271,7 @@
     <string name="search_using_deck_name">חיפוש באמצעות שם החפיסה</string>
     <string name="external_storage_unavailable">ההורדה בוטלה, האחסון החיצוני אינו זמין</string>
     <string name="home" maxLength="28">בית</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">הקלף נקבר</string>
     <plurals name="note_suspended">

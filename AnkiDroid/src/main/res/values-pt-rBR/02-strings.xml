@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">Filtrar tags</string>
     <string name="no_tags">Você ainda não adicionou nenhuma tag.</string>
     <string name="updated_version">Atualizado para a versão %s</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">Salvar quadro.</string>
     <string name="enable_stylus" maxLength="28">Ativar o modo stylus</string>
     <string name="disable_stylus">Desativar o modo stylus</string>
@@ -193,7 +193,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Restaurar Padrões</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Vazio</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Falha ao salvar imagem do quadro. %s</string>
     <string name="white_board_image_saved">Imagem do quadro branco salva em %s</string>
     <string name="title_whiteboard_editor" maxLength="28">Editor de quadro branco</string>
@@ -263,7 +263,7 @@
     <string name="search_using_deck_name">Pesquisar usando o nome do baralho</string>
     <string name="external_storage_unavailable">Transferência abortada, o armazenamento externo não está disponível</string>
     <string name="home" maxLength="28">Início</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Cartão enterrado.</string>
     <plurals name="note_suspended">

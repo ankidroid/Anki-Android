@@ -87,7 +87,7 @@
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Malfari</string>
     <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">Refari</string>
     <!-- flashcard_portrait.xml -->
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Malfari la strekon</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in the Study Screen. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Malfari la strekon</string>
     <string name="move_all_to_deck">Movi ĉiujn al kartaro</string>
     <string name="unbury" maxLength="28">Malkaŝi</string>
     <string name="rename_deck" maxLength="28">Renomi kartaron</string>

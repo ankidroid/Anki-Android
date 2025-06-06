@@ -199,13 +199,13 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">복습</string>
+    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
     <string name="show_deck_title" maxLength="41">덱 이름 표시</string>
     <string name="accessibility" maxLength="41">접근성</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">클립보드 이미지를 PNG로 붙여넣기</string>
     <string name="exit_via_double_tap_back" maxLength="41">뒤로가기 버튼 두번 눌러 돌아가기/나가기</string>
-    <string name="exit_via_double_tap_back_summ">실수로 인한 학습 종료와 앱 종료 방지</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">미디어 파일 허용하기</string>
     <string name="media_import_allow_all_files_summ">만약 안드로이드가 미디어파일을 인식하지 못한다면</string>
@@ -249,7 +249,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">HTML로 신규 라인 교체하기</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">\'정답 입력\' 포커스</string>
-    <string name="type_in_answer_focus_summ">\'정답 입력\' 필드에 자동으로 포커스합니다</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
     <string name="open_changelog">업데이트 기록 열기</string>
     <string name="pref_cat_about_title" maxLength="41">정보</string>
@@ -266,7 +266,7 @@
     <string name="binding_add_axis">조이스틱/모션 컨트롤러 추가하기</string>
     <string name="axis_picker_move_joystick">조이스틱/모션 콘트롤러를 움직이십시오</string>
     <string name="user_actions" maxLength="41">사용자 행동</string>
-    <string name="user_actions_summary" maxLength="41">리뷰 화면에서 JavaScript 동작</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
     <string name="user_action_1" maxLength="28">사용자 행동 1</string>
     <string name="user_action_2" maxLength="28">사용자 행동 2</string>
     <string name="user_action_3" maxLength="28">사용자 행동 3</string>
@@ -364,8 +364,8 @@
     <string name="hide_answer_buttons" maxLength="41">정답 버튼 숨기기</string>
     <string name="hide_hard_and_easy" maxLength="41">\'어려움\', \'쉬움\' 버튼 숨기기</string>
     <string name="reviewer_frame_style" maxLength="41">프레임 스타일</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">카드</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">상자</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">카드</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">상자</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">설정 열기</string>
 </resources>

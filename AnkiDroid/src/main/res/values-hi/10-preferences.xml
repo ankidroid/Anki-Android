@@ -201,13 +201,13 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">समीक्षक</string>
+    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
     <string name="show_deck_title" maxLength="41">डेक शीर्षक दिखाएँ</string>
     <string name="accessibility" maxLength="41">सरल उपयोग</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">क्लिपबोर्ड इमेजेज को पीएनजी प्रारूप में चिपकाएँ</string>
     <string name="exit_via_double_tap_back" maxLength="41">वापस जाने/बाहर निकलने के लिए दो बार बैक दबाएँ</string>
-    <string name="exit_via_double_tap_back_summ">समीक्षक या ऐप को गलती से छोड़ने से बचने के लिए</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">मीडिया आयात में सभी फ़ाइलो को अनुमति दें</string>
     <string name="media_import_allow_all_files_summ">यदि एंड्रॉइड किसी मीडिया फ़ाइल को नहीं पहचानता है</string>
@@ -249,7 +249,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">न्यूलाइन को हटम्ल से बदलें</string>
     <string name="note_editor_replace_newlines_summ">नोट संपादक में, &lt;br&gt; के किसी भी उदाहरण को रूपांतरित करें। किसी कार्ड को संपादित करते समय नई पंक्तियों में।</string>
     <string name="type_in_answer_focus" maxLength="41">\'उत्तर टाइप करें\' पर ध्यान दें</string>
-    <string name="type_in_answer_focus_summ">यदि कार्ड में कोई फ़ील्ड है जहां आप कीबोर्ड का उपयोग करके उत्तर दर्ज कर सकते हैं, तो कर्सर स्वचालित रूप से रखा जाएगा ताकि आप तुरंत टेक्स्ट दर्ज कर सकें।</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
     <string name="open_changelog">परिवर्तन लॉग खोलें</string>
     <string name="pref_cat_about_title" maxLength="41">इसके बारे में</string>
@@ -266,7 +266,7 @@
     <string name="binding_add_axis">जॉयस्टिक/मोशन कंट्रोलर को जोड़ें</string>
     <string name="axis_picker_move_joystick">जॉयस्टिक/मोशन कंट्रोलर को स्थानांतरित करें</string>
     <string name="user_actions" maxLength="41">उपयोगकर्ता क्रियाएं</string>
-    <string name="user_actions_summary" maxLength="41">समीक्षा स्क्रीन से जावास्क्रिप्ट ट्रिगर करें</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
     <string name="user_action_1" maxLength="28">उपयोगकर्ता क्रिया 1</string>
     <string name="user_action_2" maxLength="28">उपयोगकर्ता क्रिया 2</string>
     <string name="user_action_3" maxLength="28">उपयोगकर्ता क्रिया 3</string>
@@ -359,8 +359,8 @@
     <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
     <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
     <string name="reviewer_frame_style" maxLength="41">Frame style</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Box</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
 </resources>

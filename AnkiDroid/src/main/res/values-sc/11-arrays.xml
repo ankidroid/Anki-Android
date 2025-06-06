@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">Risposta bona</string>
     <string name="answer_easy" maxLength="41">Risposta fàtzile</string>
     <string name="gesture_play" maxLength="41">Riprodui unu mèdiu</string>
-    <string name="gesture_abort_learning" maxLength="41">Serra su revisore</string>
+    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Allughe/istuda sa bandera ruja</string>
     <string name="gesture_flag_orange" maxLength="41">Allughe/istuda sa bandera arantzu</string>
     <string name="gesture_flag_green" maxLength="41">Allughe/istuda sa bandera birde</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">Boga sa bandera</string>
     <string name="gesture_page_up" maxLength="41">Àrtzia</string>
     <string name="gesture_page_down" maxLength="41">Achirra</string>
-    <string name="gesture_abort_sync" maxLength="41">Serra su revisore e sincroniza</string>
+    <string name="gesture_abort_sync" maxLength="41">Close study screen and Sync</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Allughe/istuda sa lavagna</string>
     <string name="gesture_show_hint" maxLength="41">Ammustra s\'impòsitu</string>
     <string name="gesture_show_all_hints" maxLength="41">Ammustra totu sos impòsitos</string>

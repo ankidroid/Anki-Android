@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">Filtri etikedojn</string>
     <string name="no_tags">Vi ankoraŭ aldonis neniun etikedon</string>
     <string name="updated_version">Ĝisdatigis al la versio %s</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">Konservi skribtabulon</string>
     <string name="enable_stylus" maxLength="28">Ebligi grifelan skribadon</string>
     <string name="disable_stylus">Malebligi grifelan skribadon</string>
@@ -193,7 +193,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Restarigi implicitajn</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Malplena</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Malsukcesis konservi bildon de skribtabulo. %s</string>
     <string name="white_board_image_saved">Konservis bildon de skribtabulo al %s</string>
     <string name="title_whiteboard_editor" maxLength="28">Redaktilo de skribtabulo</string>
@@ -263,7 +263,7 @@
     <string name="search_using_deck_name">Serĉi laŭ nomo de kartaro</string>
     <string name="external_storage_unavailable">Elŝutado ĉesigita, la ekstera konservejo estas neailrebla</string>
     <string name="home" maxLength="28">Hejmo</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Karto kaŝita por tago.</string>
     <plurals name="note_suspended">

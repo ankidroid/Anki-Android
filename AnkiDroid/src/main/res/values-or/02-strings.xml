@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">ଟ୍ୟାଗ୍ ଶୋଧନ</string>
     <string name="no_tags">ଆପଣ ଏ ଯାଏଁ କୌଣସି ଟ୍ୟାଗ ଯୋଡ଼ିନାହାନ୍ତି</string>
     <string name="updated_version">ସଂସ୍କରଣ %s କୁ ଅଦ୍ୟତନ କରାଗଲା</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">ଧଳାପଟା ସଂରକ୍ଷିତ କରନ୍ତୁ</string>
     <string name="enable_stylus" maxLength="28">ଷ୍ଟାଇଲସ୍ ମୋଡ୍ ସକ୍ଷମ କରିବା</string>
     <string name="disable_stylus">ଷ୍ଟାଇଲସ୍ ମୋଡ୍ ଅକ୍ଷମ କରିବା</string>
@@ -193,7 +193,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">ଡିଫଲ୍ଟ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ଖାଲି</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">ଧଳାପଟା ଛବି ସଂରକ୍ଷଣ କରିବାରେ ବିଫଳ। %s</string>
     <string name="white_board_image_saved">ଧଳାପଟା ଛବି %sରେ ସଂରକ୍ଷିତ</string>
     <string name="title_whiteboard_editor" maxLength="28">ଧଳାପଟା ସମ୍ପାଦକ</string>
@@ -263,7 +263,7 @@
     <string name="search_using_deck_name">ତାସଖଣ୍ଡ ନାମ ବ୍ୟବହାର କରି ସନ୍ଧାନ କରନ୍ତୁ</string>
     <string name="external_storage_unavailable">ଡାଉନଲୋଡ୍ ପରିତ୍ୟାଗ ହୋଇଛି, ବହିଃ-ଷ୍ଟୋରେଜ୍ ଉପଲବ୍ଧ ନାହିଁ</string>
     <string name="home" maxLength="28">ଗୃହ</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">ପତ୍ର ସ୍ଥଗିତ କରାଗଲା।</string>
     <plurals name="note_suspended">

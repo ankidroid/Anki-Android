@@ -199,13 +199,13 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">プレビュー</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">背面（解答表示後の画面）のみに切り替え</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">学習画面</string>
+    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
     <string name="show_deck_title" maxLength="41">デッキのタイトルを表示</string>
     <string name="accessibility" maxLength="41">アクセシビリティ</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">クリップボード画像をPNG形式で貼り付け</string>
     <string name="exit_via_double_tap_back" maxLength="41">学習終了・アプリ終了には「戻る」操作２回</string>
-    <string name="exit_via_double_tap_back_summ">学習画面とデッキリスト画面でそれぞれ、意図せず画面を閉じてしまう操作ミスを起こりにくくします</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">すべてのファイルをメディアインポートの対象として許可</string>
     <string name="media_import_allow_all_files_summ">Androidがメディアファイルを認識しない場合に試してみてください</string>
@@ -250,7 +250,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">改行タグを改行に置き換えて表示</string>
     <string name="note_editor_replace_newlines_summ">「ノートを編集」画面のフィールドで、改行を表すHTMLタグ &lt;br&gt; を表示せず、実際に改行に置き換えた状態で表示します。新たに改行を行った場合も、その箇所に &lt;br&gt; タグを挿入しますが、そのタグは表示しません</string>
     <string name="type_in_answer_focus" maxLength="41">文字入力欄にフォーカス</string>
-    <string name="type_in_answer_focus_summ">答えをキーボード入力するタイプのカードでは、カードを表示したときに、あらかじめ文字入力欄を選択してキーボードを表示した状態にします</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
     <string name="open_changelog">変更履歴を開く</string>
     <string name="pref_cat_about_title" maxLength="41">AnkiDroidについて</string>
@@ -267,7 +267,7 @@
     <string name="binding_add_axis">ジョイスティック/モーションコントローラーの動作を追加</string>
     <string name="axis_picker_move_joystick">ジョイスティック/モーションコントローラーを動かしてください</string>
     <string name="user_actions" maxLength="41">ユーザーアクション</string>
-    <string name="user_actions_summary" maxLength="41">JavaScriptで記述された任意の動作を実行します</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
     <string name="user_action_1" maxLength="28">ユーザーアクション 1</string>
     <string name="user_action_2" maxLength="28">ユーザーアクション 2</string>
     <string name="user_action_3" maxLength="28">ユーザーアクション 3</string>
@@ -366,8 +366,8 @@
     <string name="hide_answer_buttons" maxLength="41">解答表示ボタン・回答ボタンを隠す</string>
     <string name="hide_hard_and_easy" maxLength="41">「難しい」ボタンと「簡単」ボタンを隠す</string>
     <string name="reviewer_frame_style" maxLength="41">カードの輪郭のスタイル</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">カード（角丸四角形）</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">ボックス（画面全幅四角形）</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">カード（角丸四角形）</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">ボックス（画面全幅四角形）</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">設定画面を開く</string>
 </resources>

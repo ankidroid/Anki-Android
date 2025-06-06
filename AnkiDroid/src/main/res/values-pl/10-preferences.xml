@@ -205,13 +205,13 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Ekran nauki</string>
+    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
     <string name="show_deck_title" maxLength="41">Pokaż tytuł talii</string>
     <string name="accessibility" maxLength="41">Ułatwienia dostępu</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Wklej zdjęcia ze schowka jako PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Kliknij dwa razy \"wstecz\" by wrócić/wyjść</string>
-    <string name="exit_via_double_tap_back_summ">Aby uniknąć przypadkowego opuszczenia aplikacji lub ekranu powtórek</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Zezwalaj na import wszystkich plików</string>
     <string name="media_import_allow_all_files_summ">Jeśli Android nie rozpoznaje pliku multimedialnego</string>
@@ -256,7 +256,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">Zastąp nowe wiersze przez HTML</string>
     <string name="note_editor_replace_newlines_summ">W Edytorze Notatek zmień wszelkie przykłady &lt;br&gt; na nowy wiersz kiedy karta jest edytowana.</string>
     <string name="type_in_answer_focus" maxLength="41">Zaznacz pole \"podaj odpowiedź\"</string>
-    <string name="type_in_answer_focus_summ">Automatycznie zaznaczaj pole \"podaj odpowiedź\" w przeglądarce</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
     <string name="open_changelog">Otwórz listę zmian w programie</string>
     <string name="pref_cat_about_title" maxLength="41">O programie</string>
@@ -273,7 +273,7 @@
     <string name="binding_add_axis">Add joystick/motion controller</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
     <string name="user_actions" maxLength="41">Działania użytkownika</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
     <string name="user_action_1" maxLength="28">Akcja użytkownika 1</string>
     <string name="user_action_2" maxLength="28">Akcja użytkownika 2</string>
     <string name="user_action_3" maxLength="28">Akcja użytkownika 3</string>
@@ -374,8 +374,8 @@
     <string name="hide_answer_buttons" maxLength="41">Ukryj przyciski odpowiedzi</string>
     <string name="hide_hard_and_easy" maxLength="41">Ukryj przyciski \'Trudna\' i \'Łatwa\'</string>
     <string name="reviewer_frame_style" maxLength="41">Styl ramki</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Karta</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Pudełko</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Karta</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Pudełko</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Otwórz ustawienia</string>
 </resources>

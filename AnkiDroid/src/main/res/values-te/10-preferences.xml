@@ -201,13 +201,13 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">సమీక్షకుడు</string>
+    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
     <string name="show_deck_title" maxLength="41">డెక్ శీర్షికను చూపించు</string>
     <string name="accessibility" maxLength="41">సౌలభ్యాన్ని</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">క్లిప్‌బోర్డ్ చిత్రాలను PNGగా అతికించండి</string>
     <string name="exit_via_double_tap_back" maxLength="41">వెనుకకు వెళ్లడానికి/నిష్క్రమించడానికి రెండుసార్లు వెనుకకు నొక్కండి</string>
-    <string name="exit_via_double_tap_back_summ">ప్రమాదవశాత్తూ సమీక్షకుడు లేదా యాప్ నుండి నిష్క్రమించడాన్ని నివారించడానికి</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">మీడియా దిగుమతులలో అన్ని ఫైల్‌లను అనుమతించండి</string>
     <string name="media_import_allow_all_files_summ">ఆండ్రాయిడ్ మీడియా ఫైల్‌ను గుర్తించకపోతే</string>
@@ -251,7 +251,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">కొత్త పంక్తులను HTMLతో భర్తీ చేయండి</string>
     <string name="note_editor_replace_newlines_summ">నోట్ ఎడిటర్‌లో, &lt;br&gt; కార్డ్‌ని ఎడిట్ చేస్తున్నప్పుడు ఏవైనా సందర్భాలను కొత్త లైన్‌లకు మార్చండి.</string>
     <string name="type_in_answer_focus" maxLength="41">\'టైప్ ఇన్ ఆన్సర్\'పై దృష్టి పెట్టండి</string>
-    <string name="type_in_answer_focus_summ">రివ్యూయర్‌లో \'టైప్ ఇన్ ఆన్సర్\' ఫీల్డ్‌ని ఆటోమేటిక్‌గా ఫోకస్ చేయండి</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
     <string name="open_changelog">చేంజ్లాగ్ తెరవండి</string>
     <string name="pref_cat_about_title" maxLength="41">గురించి</string>
@@ -268,7 +268,7 @@
     <string name="binding_add_axis">జాయ్‌స్టిక్/మోషన్ కంట్రోలర్‌ను జోడించండి</string>
     <string name="axis_picker_move_joystick">జాయ్‌స్టిక్/మోషన్ కంట్రోలర్‌ను తరలించండి</string>
     <string name="user_actions" maxLength="41">వినియోగదారు చర్యలు</string>
-    <string name="user_actions_summary" maxLength="41">సమీక్ష స్క్రీన్ నుండి జావాస్క్రిప్ట్‌ని ట్రిగ్గర్ చేయండి</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
     <string name="user_action_1" maxLength="28">వినియోగదారు చర్య 1</string>
     <string name="user_action_2" maxLength="28">వినియోగదారు చర్యలు 2</string>
     <string name="user_action_3" maxLength="28">వినియోగదారు చర్యలు 3</string>
@@ -366,8 +366,8 @@
     <string name="hide_answer_buttons" maxLength="41">జవాబు బటన్లను దాచండి</string>
     <string name="hide_hard_and_easy" maxLength="41">\'హార్డ్\' మరియు \'ఈజీ\' బటన్లను దాచండి</string>
     <string name="reviewer_frame_style" maxLength="41">Frame style</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Card</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Box</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Card</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Box</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">సెట్టింగ్‌లను తెరవండి</string>
 </resources>

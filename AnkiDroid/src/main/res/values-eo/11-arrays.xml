@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">Respondi “facile”</string>
     <string name="answer_easy" maxLength="41">Respondi “facilege”</string>
     <string name="gesture_play" maxLength="41">Ludi aŭdvidaĵon</string>
-    <string name="gesture_abort_learning" maxLength="41">Fermi lernadan ekranon</string>
+    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Baskuligi ruĝan flagon</string>
     <string name="gesture_flag_orange" maxLength="41">Baskuligi oranĝkoloran flagon</string>
     <string name="gesture_flag_green" maxLength="41">Baskuli verdan flagon</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">Forigi flagon</string>
     <string name="gesture_page_up" maxLength="41">Paĝo supren</string>
     <string name="gesture_page_down" maxLength="41">Paĝo suben</string>
-    <string name="gesture_abort_sync" maxLength="41">Fermi lernadan ekranon kaj samtempigi</string>
+    <string name="gesture_abort_sync" maxLength="41">Close study screen and Sync</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Baskuligi skribtabulon</string>
     <string name="gesture_show_hint" maxLength="41">Montri konsilon</string>
     <string name="gesture_show_all_hints" maxLength="41">Montri ĉiujn konsilojn</string>

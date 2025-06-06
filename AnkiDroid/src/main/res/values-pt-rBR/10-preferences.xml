@@ -201,13 +201,13 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Pré-visualizações</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Ativar/desativar apenas o verso</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Revisor</string>
+    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
     <string name="show_deck_title" maxLength="41">Mostrar título do baralho</string>
     <string name="accessibility" maxLength="41">Acessibilidade</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Colar imagens como PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Duplo toque em voltar para voltar/sair</string>
-    <string name="exit_via_double_tap_back_summ">Para evitar saídas acidentais do revisor ou do aplicativo</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Importar todos os arquivos de mídia</string>
     <string name="media_import_allow_all_files_summ">Se o Android não reconhecer um arquivo de mídia</string>
@@ -252,7 +252,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">Substituir novas linhas por HTML</string>
     <string name="note_editor_replace_newlines_summ">No Editor de Notas, converta as ocorrências de &lt;br&gt; para uma quebra de linha ao editar um cartão.</string>
     <string name="type_in_answer_focus" maxLength="41">Focar em “tipo em resposta”</string>
-    <string name="type_in_answer_focus_summ">Focar automaticamente no campo \"tipo de resposta\" no revisor</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
     <string name="open_changelog">Abrir Changelog</string>
     <string name="pref_cat_about_title" maxLength="41">Sobre</string>
@@ -269,7 +269,7 @@
     <string name="binding_add_axis">Adicionar controle</string>
     <string name="axis_picker_move_joystick">Movimente o controle</string>
     <string name="user_actions" maxLength="41">Ações do usuário</string>
-    <string name="user_actions_summary" maxLength="41">Acionar JavaScript a partir da tela de revisão</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
     <string name="user_action_1" maxLength="28">Ação do usuário 1</string>
     <string name="user_action_2" maxLength="28">Ação do usuário 2</string>
     <string name="user_action_3" maxLength="28">Ação do usuário 3</string>
@@ -369,8 +369,8 @@
     <string name="hide_answer_buttons" maxLength="41">Ocultar botões de resposta</string>
     <string name="hide_hard_and_easy" maxLength="41">Ocultar botões \"Difícil\" e \"Fácil\"</string>
     <string name="reviewer_frame_style" maxLength="41">Estilo de enquadramento</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Cartão</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Caixa</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Cartão</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Caixa</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Abrir configurações</string>
 </resources>

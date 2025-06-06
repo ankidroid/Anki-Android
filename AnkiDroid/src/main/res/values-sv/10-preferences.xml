@@ -201,13 +201,13 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Repeterare</string>
+    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
     <string name="show_deck_title" maxLength="41">Visa kortlekens titel</string>
     <string name="accessibility" maxLength="41">Tillgänglighet</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Klistra in urklipps bilder som PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Tryck bakåt 2 ggr för att gå bakåt/sluta</string>
-    <string name="exit_via_double_tap_back_summ">För att undvika att av misstag lämna granskaren eller appen</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Tillåt alla filer i medieimport</string>
     <string name="media_import_allow_all_files_summ">Om Android inte känner igen en mediafil</string>
@@ -252,7 +252,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">Ersätt radbrytningar med HTML</string>
     <string name="note_editor_replace_newlines_summ">I Notredigeraren, konvertera alla instanser av &lt;br&gt; till radbrytningar när du redigerar ett kort.</string>
     <string name="type_in_answer_focus" maxLength="41">Fokusera på ‘skriv in svar’</string>
-    <string name="type_in_answer_focus_summ">Fokusera automatiskt på fältet ‘skriv in svar’ i granskaren</string>
+    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
     <string name="open_changelog">Öppna ändringslogg</string>
     <string name="pref_cat_about_title" maxLength="41">Om appen</string>
@@ -269,7 +269,7 @@
     <string name="binding_add_axis">Lägg till joystick/rörelsekänslig handkontroll</string>
     <string name="axis_picker_move_joystick">Manövrera en joystick/rörelsekänslig handkontroll</string>
     <string name="user_actions" maxLength="41">Användaråtgärder</string>
-    <string name="user_actions_summary" maxLength="41">Utlös JavaScript från repetitionsskärmen</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
     <string name="user_action_1" maxLength="28">Användaråtgärd 1</string>
     <string name="user_action_2" maxLength="28">Användaråtgärd 2</string>
     <string name="user_action_3" maxLength="28">Användaråtgärd 3</string>
@@ -368,8 +368,8 @@
     <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
     <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
     <string name="reviewer_frame_style" maxLength="41">Frame style</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Kort</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Låda</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Kort</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Låda</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
 </resources>

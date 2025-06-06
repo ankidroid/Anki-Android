@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">Lọc các đuôi</string>
     <string name="no_tags">Bạn chưa thêm bất kỳ đuôi nào</string>
     <string name="updated_version">Đã cập nhật lên phiên bản %s</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">Lưu bảng viết</string>
     <string name="enable_stylus" maxLength="28">Bật tính năng viết bằng bút cảm ứng</string>
     <string name="disable_stylus">Tắt tính năng viết bằng bút cảm ứng</string>
@@ -189,7 +189,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Khôi phục mặc định</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Chỗ trống</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Không thể lưu hình ảnh bảng trắng. %s</string>
     <string name="white_board_image_saved">Hình ảnh bảng trắng được lưu vào %s</string>
     <string name="title_whiteboard_editor" maxLength="28">Trình chỉnh sửa bảng trắng</string>
@@ -259,7 +259,7 @@
     <string name="search_using_deck_name">Tìm kiếm theo tên bộ thẻ</string>
     <string name="external_storage_unavailable">Tải xuống bị hủy, bộ nhớ ngoài không khả dụng</string>
     <string name="home" maxLength="28">Trang chủ</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Các thẻ bị chôn</string>
     <plurals name="note_suspended">

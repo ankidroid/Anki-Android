@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">Suodata tunnisteita</string>
     <string name="no_tags">Et ole vielä lisännyt tunnisteita</string>
     <string name="updated_version">Päivitetty versioon %s</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">Tallenna tussitaulu</string>
     <string name="enable_stylus" maxLength="28">Ota käyttöön kynäkirjoitus</string>
     <string name="disable_stylus">Poista kynäkirjoitus käytöstä</string>
@@ -193,7 +193,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Palauta oletusarvot</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Tyhjä</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Kirjoitustaulun kuvan tallentaminen epäonnistui. %s</string>
     <string name="white_board_image_saved">Kirjoitustaulun kuva tallennettu sijaintiin %s</string>
     <string name="title_whiteboard_editor" maxLength="28">Valkotaulu editori</string>
@@ -263,7 +263,7 @@
     <string name="search_using_deck_name">Etsi käyttäen pakan nimeä</string>
     <string name="external_storage_unavailable">Lataus keskeytetty, ulkoinen tallennustila ei ole käytettävissä</string>
     <string name="home" maxLength="28">Koti</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Kortti haudattu.</string>
     <plurals name="note_suspended">

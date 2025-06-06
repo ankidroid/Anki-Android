@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">იარლიყების გაფილტვრა</string>
     <string name="no_tags">იარლიყები ჯერ არ დაგიმატებიათ</string>
     <string name="updated_version">მიმდინარეობს ვერსიის განახლება %s</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">დაფის შენახვა</string>
     <string name="enable_stylus" maxLength="28">სტილუსის რეჟიმის ჩართვა</string>
     <string name="disable_stylus">სტილუსის რეჟიმის გამორთვა</string>
@@ -193,7 +193,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">ნაგულისხმევის აღდგენა</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ცარიელი</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">დაფის სურათი ვერ შეინახა. %s</string>
     <string name="white_board_image_saved">დაფის სურათი შეინახა %s-ში</string>
     <string name="title_whiteboard_editor" maxLength="28">დაფის რედაქტორი</string>
@@ -263,7 +263,7 @@
     <string name="search_using_deck_name">დასტის სახელით ძებნა</string>
     <string name="external_storage_unavailable">ჩამოტვირთვა გაუქმდა, გარე მეხსიერება ხელმიუწვდომელია</string>
     <string name="home" maxLength="28">მთავარი</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">ბარათი დამალულია.</string>
     <plurals name="note_suspended">

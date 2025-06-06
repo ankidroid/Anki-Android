@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">Filtruoti žymes</string>
     <string name="no_tags">Dar nepridėjote jokių žymių</string>
     <string name="updated_version">Atnaujinta versija %s</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">Išsaugoti lentą</string>
     <string name="enable_stylus" maxLength="28">Įjungti rašymą plunksna</string>
     <string name="disable_stylus">Išjungti rašymą plunksna</string>
@@ -201,7 +201,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Atkurti pirminius nustatymus</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Tuščias</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Nepavyko išsaugoti lentos vaizdo. %s</string>
     <string name="white_board_image_saved">Lentos vaizdas įrašytas į %s</string>
     <string name="title_whiteboard_editor" maxLength="28">Lentos redaktorius</string>
@@ -271,7 +271,7 @@
     <string name="search_using_deck_name">Paieška pagal kortelių rinkinio pavadinimą</string>
     <string name="external_storage_unavailable">Atsisiuntimas nutrauktas, išorinė saugykla nepasiekiama</string>
     <string name="home" maxLength="28">Namai</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Kortelė paslėpta</string>
     <plurals name="note_suspended">

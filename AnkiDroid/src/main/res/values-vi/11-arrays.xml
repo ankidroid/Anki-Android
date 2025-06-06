@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">Trả lời tốt</string>
     <string name="answer_easy" maxLength="41">Trả lời dễ</string>
     <string name="gesture_play" maxLength="41">Phát file đa phương tiện</string>
-    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Chuyển đổi cờ đỏ</string>
     <string name="gesture_flag_orange" maxLength="41">Chuyển đổi cờ màu cam</string>
     <string name="gesture_flag_green" maxLength="41">Chuyển đổi cờ xanh</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">Xoá cờ</string>
     <string name="gesture_page_up" maxLength="41">Trang lên</string>
     <string name="gesture_page_down" maxLength="41">Trang dưới</string>
-    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_abort_sync" maxLength="41">Close study screen and Sync</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Chuyển đổi Bảng trắng</string>
     <string name="gesture_show_hint" maxLength="41">Hiển thị gợi ý</string>
     <string name="gesture_show_all_hints" maxLength="41">Hiện tất cả gợi ý</string>

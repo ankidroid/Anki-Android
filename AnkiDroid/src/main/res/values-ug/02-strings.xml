@@ -60,7 +60,7 @@
     <string name="filter_tags" maxLength="28">بەلگە سۈزگۈچ</string>
     <string name="no_tags">سىز تېخى ھېچقانداق خەتكۈچ قوشمىدىڭىز</string>
     <string name="updated_version">%s نەشرىگە يېڭىلاندى</string>
-    <!-- Reviewer.kt -->
+    <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">ئاق دوسكىنى ساقلا</string>
     <string name="enable_stylus" maxLength="28">قەلەمدە يېزىشنى قوزغىتىدۇ</string>
     <string name="disable_stylus">قەلەمدە يېزىشنى چەكلەيدۇ</string>
@@ -193,7 +193,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">كۆڭۈلدىكىگە قايتۇر</string>
     <string name="reviewer_tts_cloze_spoken_replacement">بوش</string>
-    <!-- Whiteboard save image message in Reviewer -->
+    <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">ئاق دوسكا سۈرىتىنى ساقلىيالمىدى %s</string>
     <string name="white_board_image_saved">ئاق دوسكا سۈرىتى %s غا ساقلاندى</string>
     <string name="title_whiteboard_editor" maxLength="28">ئاق دوسكا تەھرىرلىگۈچ</string>
@@ -263,7 +263,7 @@
     <string name="search_using_deck_name">دەستە ئىسمى بويىچە ئىزدەيدۇ</string>
     <string name="external_storage_unavailable">چۈشۈرۈش بىكار قىلىندى، سىرتقا ساقلىغۇچنى ئىشلەتكىلى بولمايدۇ</string>
     <string name="home" maxLength="28">باش بەت</string>
-    <!-- Reviewer actions
+    <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">كارتا يوشۇرۇلدى.</string>
     <plurals name="note_suspended">
