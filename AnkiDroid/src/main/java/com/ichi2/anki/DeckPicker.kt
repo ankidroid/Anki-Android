@@ -762,8 +762,7 @@ open class DeckPicker :
             }
             DeckPickerContextMenuOption.UNBURY -> {
                 Timber.i("ContextMenu: Unbury deck selected")
-                getColUnsafe.sched.unburyDeck(deckId)
-                onRequireDeckListUpdate()
+                viewModel.unburyDeck(deckId)
                 dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.CUSTOM_STUDY_REBUILD -> {
