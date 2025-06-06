@@ -28,6 +28,7 @@ import android.view.ViewGroup.MarginLayoutParams
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.annotation.StringRes
 import androidx.appcompat.view.menu.SubMenuBuilder
@@ -88,7 +89,9 @@ import com.ichi2.anki.utils.ext.removeSubMenu
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
+import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.libanki.sched.Counts
+import com.ichi2.utils.dp
 
 class ReviewerFragment :
     CardViewerFragment(R.layout.reviewer2),
@@ -104,7 +107,14 @@ class ReviewerFragment :
         get() = requireView().findViewById(R.id.webview)
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
-        anchorView = this@ReviewerFragment.view?.findViewById(R.id.snackbar_anchor)
+        val typeAnswerContainer = this@ReviewerFragment.view?.findViewById<View>(R.id.type_answer_container)
+        val answerArea = this@ReviewerFragment.view?.findViewById<View>(R.id.answer_area)
+        anchorView =
+            when {
+                typeAnswerContainer?.isVisible == true -> typeAnswerContainer
+                answerArea?.isVisible == true -> answerArea
+                else -> null
+            }
     }
 
     private lateinit var tagsDialogFactory: TagsDialogFactory
@@ -242,12 +252,16 @@ class ReviewerFragment :
     private fun setupAnswerButtons(view: View) {
         val prefs = sharedPrefs()
         val answerButtonsLayout = view.findViewById<LinearLayout>(R.id.answer_buttons)
+        val answerArea = view.findViewById<FrameLayout>(R.id.answer_area)
         if (prefs.getBoolean(getString(R.string.hide_answer_buttons_key), false)) {
-            // Expand the menu if there is no answer buttons in big screens
-            view.findViewById<ReviewerMenuView>(R.id.reviewer_menu_view).updateLayoutParams<ConstraintLayout.LayoutParams> {
-                matchConstraintMaxWidth = 0
+            if (!resources.isWindowCompact()) {
+                // Expand the menu if there is no answer buttons in big screens
+                view.findViewById<ReviewerMenuView>(R.id.reviewer_menu_view).updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    matchConstraintMaxWidth = 0
+                }
             }
-            answerButtonsLayout.isVisible = false
+            answerButtonsLayout?.isVisible = false
+            answerArea?.isVisible = false
             return
         }
 
@@ -481,13 +495,23 @@ class ReviewerFragment :
     }
 
     private fun setupToolbarPosition(view: View) {
+        if (!resources.isWindowCompact()) return
         when (Prefs.toolbarPosition) {
             ToolbarPosition.NONE -> {
                 view.findViewById<LinearLayout>(R.id.tools_layout).isVisible = false
+                view.findViewById<MaterialCardView>(R.id.webview_container).updateLayoutParams<MarginLayoutParams> {
+                    topMargin = 8F.dp.toPx(requireContext())
+                }
             }
-            ToolbarPosition.BOTTOM,
-            ToolbarPosition.TOP,
-            -> {}
+            ToolbarPosition.BOTTOM -> {
+                val mainLayout = view.findViewById<LinearLayout>(R.id.main_layout)
+                val toolbar = view.findViewById<LinearLayout>(R.id.tools_layout)
+                val answerArea = view.findViewById<FrameLayout>(R.id.answer_area)
+
+                mainLayout.removeView(toolbar)
+                mainLayout.addView(toolbar, mainLayout.indexOfChild(answerArea) + 1)
+            }
+            ToolbarPosition.TOP -> return
         }
     }
 

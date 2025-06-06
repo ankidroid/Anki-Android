@@ -12,11 +12,12 @@
     tools:context=".ui.windows.reviewer.ReviewerFragment">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="4dp"
-        >
+        android:orientation="vertical">
+
 
         <LinearLayout
             android:id="@+id/tools_layout"
@@ -74,14 +75,11 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/webview_container"
             style="@style/CardView.ViewerStyle"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_marginBottom="8dp"
-            android:layout_marginHorizontal="@dimen/reviewer_side_margin"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tools_layout"
-            app:layout_constraintBottom_toTopOf="@id/type_answer_container">
+            android:layout_marginHorizontal="@dimen/reviewer_side_margin">
 
             <WebView
                 android:id="@+id/webview"
@@ -97,8 +95,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            app:layout_constraintTop_toBottomOf="@id/webview_container"
-            app:layout_constraintBottom_toTopOf="@id/answer_buttons"
             android:layout_marginHorizontal="@dimen/reviewer_side_margin"
             android:visibility="gone"
             tools:visibility="visible">
@@ -121,90 +117,81 @@
             </com.google.android.material.textfield.TextInputLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/show_answer"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:text="@string/show_answer"
-            android:textSize="@dimen/reviewer_answer_button_textSize"
-            app:cornerRadius="12dp"
-            android:backgroundTint="?showAnswerButtonBackground"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/answer_buttons"
-            app:layout_constraintStart_toStartOf="@id/answer_buttons"
-            app:layout_constraintTop_toTopOf="@id/answer_buttons"
-            tools:visibility="visible"
-            />
-
-        <LinearLayout
-            android:id="@+id/answer_buttons"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:minHeight="?minTouchTargetSize"
-            android:visibility="invisible"
-            android:layout_marginHorizontal="@dimen/reviewer_side_margin"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/type_answer_container"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:visibility="invisible"
-            >
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/again_button"
-                style="@style/AnswerButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/answer_button_margin_horizontal"
-                android:backgroundTint="@color/again_button_bg"
-                android:text="@string/ease_button_again"
-                android:textColor="@color/again_button_text"
-                android:layout_weight="1"
-                />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/hard_button"
-                style="@style/AnswerButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/answer_button_margin_horizontal"
-                android:backgroundTint="@color/hard_button_bg"
-                android:text="@string/ease_button_hard"
-                android:textColor="@color/hard_button_text"
-                android:layout_weight="1"
-                />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/good_button"
-                style="@style/AnswerButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/answer_button_margin_horizontal"
-                android:backgroundTint="@color/good_button_bg"
-                android:text="@string/ease_button_good"
-                android:textColor="@color/good_button_text"
-                android:layout_weight="1"
-                />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/easy_button"
-                style="@style/AnswerButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/answer_button_margin_horizontal"
-                android:backgroundTint="@color/easy_button_bg"
-                android:text="@string/ease_button_easy"
-                android:textColor="@color/easy_button_text"
-                android:layout_weight="1"
-                />
-        </LinearLayout>
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/snackbar_anchor"
+        <FrameLayout
+            android:id="@+id/answer_area"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:barrierDirection="top"
-            app:constraint_referenced_ids="type_answer_container, answer_buttons, show_answer"/>
+            android:layout_marginHorizontal="@dimen/reviewer_side_margin">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/show_answer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/show_answer"
+                android:textSize="@dimen/reviewer_answer_button_textSize"
+                app:cornerRadius="12dp"
+                android:backgroundTint="?showAnswerButtonBackground"
+                tools:visibility="visible"
+                />
+
+            <LinearLayout
+                android:id="@+id/answer_buttons"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:minHeight="?minTouchTargetSize"
+                android:visibility="invisible"
+                android:layout_marginBottom="4dp"
+                tools:visibility="invisible"
+                >
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/again_button"
+                    style="@style/AnswerButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="@dimen/answer_button_margin_horizontal"
+                    android:backgroundTint="@color/again_button_bg"
+                    android:text="@string/ease_button_again"
+                    android:textColor="@color/again_button_text"
+                    android:layout_weight="1"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/hard_button"
+                    style="@style/AnswerButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="@dimen/answer_button_margin_horizontal"
+                    android:backgroundTint="@color/hard_button_bg"
+                    android:text="@string/ease_button_hard"
+                    android:textColor="@color/hard_button_text"
+                    android:layout_weight="1"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/good_button"
+                    style="@style/AnswerButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="@dimen/answer_button_margin_horizontal"
+                    android:backgroundTint="@color/good_button_bg"
+                    android:text="@string/ease_button_good"
+                    android:textColor="@color/good_button_text"
+                    android:layout_weight="1"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/easy_button"
+                    style="@style/AnswerButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="@dimen/answer_button_margin_horizontal"
+                    android:backgroundTint="@color/easy_button_bg"
+                    android:text="@string/ease_button_easy"
+                    android:textColor="@color/easy_button_text"
+                    android:layout_weight="1"
+                    />
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
