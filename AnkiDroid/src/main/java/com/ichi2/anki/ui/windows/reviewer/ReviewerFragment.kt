@@ -77,6 +77,7 @@ import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.settings.enums.HideSystemBars
+import com.ichi2.anki.settings.enums.ToolbarPosition
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
@@ -140,6 +141,7 @@ class ReviewerFragment :
         setupAnswerButtons(view)
         setupCounts(view)
         setupMenu(view)
+        setupToolbarPosition(view)
 
         viewModel.actionFeedbackFlow
             .flowWithLifecycle(lifecycle)
@@ -475,6 +477,17 @@ class ReviewerFragment :
                 cardElevation = 0F
                 shapeAppearanceModel = ShapeAppearanceModel() // Remove corners
             }
+        }
+    }
+
+    private fun setupToolbarPosition(view: View) {
+        when (Prefs.toolbarPosition) {
+            ToolbarPosition.NONE -> {
+                view.findViewById<LinearLayout>(R.id.tools_layout).isVisible = false
+            }
+            ToolbarPosition.BOTTOM,
+            ToolbarPosition.TOP,
+            -> {}
         }
     }
 
