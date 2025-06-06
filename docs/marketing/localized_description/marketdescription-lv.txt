@@ -1,6 +1,6 @@
 Iegaumē jebko ar AnkiDroid!
 
-AnkiDroid lets you learn flashcards very efficiently by showing them just before you will forget. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and MacOS.
+AnkiDroid ļauj ļoti iedarbīgi apgūt zibkartītes, rādot tās tieši pirms tās tiks aizmirstas. Tā ir pilnībā saderīga ar izkliedētāts atkārtošanas programmatūru Anki (tostarp sinhronizēšana), kas ir pieejama Windows, Linux un macOS.
 
 Study all sorts of things wherever and whenever you want. Make good use of idle times on bus trips, in supermarket queues or any other waiting situation!
 

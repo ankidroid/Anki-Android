@@ -80,7 +80,7 @@
     <string name="reset_confirmation">Visi stāvokļi atiestatīti</string>
     <string name="card_zoom" maxLength="41">Kartīšu pietuvināšana</string>
     <string name="image_zoom" maxLength="41">Attēlu tālummaiņa</string>
-    <string name="button_size" maxLength="41">Atbildes pogu lielums</string>
+    <string name="button_size" maxLength="41">Atbilžu pogu lielums</string>
     <string name="card_browser_font_size" maxLength="41">Kartīšu pārlūka fonta mērogošana</string>
     <string name="card_browser_hide_media" maxLength="41">Kartīšu pārlūkā attēlot datņu nosaukumus</string>
     <string name="card_browser_hide_media_summary">Kartīšu pārlūkā attēlot informācijas nesēju datņu nosaukumus jautājumu/atbilžu laukos</string>
@@ -165,12 +165,12 @@
     <string name="vertical_centering_summ">Kartīšu saturu noviedod vidū (stateniski)</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Divkārša piesitiena starplaiks (milisekundes)</string>
     <string name="pref_double_tap_time_interval_summary">Otrais atbilžu pogu piesitiens netiks ņemts vērā, ja nebūs aizritējis šis laiks. Tas novērš nejaušus divkāršos piesitienus</string>
-    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">\"Rādīt atbildi\" ilgas piespiešanas laiks</string>
     <string name="pref_show_answer_long_press_time_summary">Mazākais piespiešanas laiks, pirms poga \"Parādīt atbildi\" pieņem pieskārienu.</string>
-    <string name="show_estimates" maxLength="41">Show button time</string>
-    <string name="show_estimates_summ">Show next review time on answer buttons</string>
+    <string name="show_estimates" maxLength="41">Rādīt laiku uz pogas</string>
+    <string name="show_estimates_summ">Rādīt nākamās pārskatīšanas laiku uz atbilžu pogām</string>
     <string name="show_large_answer_buttons" maxLength="41">Rādīt lielas atbilžu pogas</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons_summ">Rādīt atbilžu pogas 2 rindās</string>
     <string name="show_top_bar" maxLength="41">Rādīt augšējo joslu</string>
     <string name="show_top_bar_summary">Rādīt kartīšu skaitu, atbildes laika skaitītāju, karogu un iezīmi augšējā joslā</string>
     <string name="show_progress" maxLength="41">Rādīt atlikušās</string>
@@ -178,13 +178,13 @@
     <string name="show_eta" maxLength="41">Rādīt paredzamo laiku</string>
     <string name="show_eta_summ">Rādīt atlikušo laiku</string>
     <string name="use_current" maxLength="41">Jauno kartīšu kava</string>
-    <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
-    <string name="time_limit" maxLength="41">Timebox time limit</string>
+    <string name="learn_cutoff" maxLength="41">Apgūšanas uz priekšu ierobežojums</string>
+    <string name="time_limit" maxLength="41">Laika kastes laika ierobežojums</string>
     <string name="day_offset_with_description" maxLength="41">Nākamās dienas sākums</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="zero">%d hours past midnight</item>
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
+        <item quantity="zero">%d stundas pēc pusnakts</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d stundu pēc pusnakts</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d stundas pēc pusnakts</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Paturēt ekrānu ieslēgtu</string>
     <string name="pref_keep_screen_on_summ">Atspējot ekrāna noildzi</string>
@@ -197,18 +197,18 @@
     <string name="custom_buttons_setting_menu_only">Tikai izvēlnē</string>
     <string name="reset_custom_buttons" maxLength="41">Atiestatīt uz noklusējumu</string>
     <string name="reset_settings_to_default">Atiestatīt iestatījumus uz noklusējumu</string>
-    <string name="reset">Reset</string>
-    <string name="thirdparty_apps_title" maxLength="41">Third-party API apps</string>
+    <string name="reset">Atiestatīt</string>
+    <string name="thirdparty_apps_title" maxLength="41">Trešo pušu lietotnes</string>
     <string name="thirdparty_apps_summary">Apskatīt sarakstu ar lietotnēm, kas izmanto AnkiDroid API, piemēram, vārdnīcas, palīglietotnes.</string>
     <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Pārskatīšanas</string>
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Priekšskatījumi</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Pārslēgt tikai aizmugurējo pusi</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Izskatītājs</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="show_deck_title" maxLength="41">Rādīt kavas virsrakstu</string>
+    <string name="accessibility" maxLength="41">Pieejamība</string>
     <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
+    <string name="paste_as_png" maxLength="41">Ielīmēt starplitkuves attēlus kā PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Piespiest \"Atpakaļ\" divreiz, lai dotos atpakaļ / izietu</string>
     <string name="exit_via_double_tap_back_summ">Lai izvairītoes no nejaušas iziešanas no pārskatītāja vai lietotnes</string>
     <!-- Allow all files in media imports -->
@@ -225,64 +225,64 @@
     <string name="custom_sync_server_base_url_title" maxLength="41">Sinhronizēšanas URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">Pielāgots saknes sertifikāts (PEM)</string>
     <!-- Key Bindings -->
-    <string name="keyboard">Keyboard</string>
+    <string name="keyboard">Tastatūra</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
+    <string name="answer_buttons" maxLength="41">Atbilžu pogas</string>
     <string name="card" maxLength="41" comment="Generic term to refer to a card">Kartīte</string>
-    <string name="note" maxLength="41">Note</string>
-    <string name="navigation" maxLength="41">Navigation</string>
+    <string name="note" maxLength="41">Piezīme</string>
+    <string name="navigation" maxLength="41">Pārvietošanās</string>
     <string name="media" maxLength="41">Informācijas nesēji</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="misc" maxLength="41">Dažādi</string>
     <!-- studyoptions -->
-    <string name="studyoptions_limit_select_tags">Select tags</string>
+    <string name="studyoptions_limit_select_tags">Atlasīt birkas</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">General</string>
-    <string name="deck_conf_reminders" maxLength="41">Reminders</string>
-    <string name="deck_conf_cram_filter" maxLength="41">Filter</string>
+    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Vispārīgi</string>
+    <string name="deck_conf_reminders" maxLength="41">Atgādinājumi</string>
+    <string name="deck_conf_cram_filter" maxLength="41">Atsijāt</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Meklēt</string>
-    <string name="deck_conf_cram_limit" maxLength="41">Limit to</string>
+    <string name="deck_conf_cram_limit" maxLength="41">Ierobežot līdz</string>
     <string name="deck_conf_cram_order" maxLength="41">Atlasītās kartītes pēc</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Pārplānot</string>
     <string name="deck_conf_cram_reschedule_summ">Pārplānot kartītes, vadoties pēc manām atbildēm šajā kavā</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">Define custom steps</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_filter_2_check">Iespējot otrējo atsijāšanu</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">Noteikt pielāgotus soļus</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Priekšskatījumu aizkaves</string>
     <string name="deck_conf_cram_preview_delays_summ">Aizkaves ir sekundēs. 0 atgriež kartīti sākotnējā kavā.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Palīdzi padarīt AnkiDroid labāku!</string>
-    <string name="analytics_title" maxLength="41">Share feature usage</string>
+    <string name="analytics_title" maxLength="41">Kopīgot iespēju lietojumu</string>
     <string name="analytics_summ">Tu vari sniegt savu ieguldījumu AnkiDroid, palīdzot izstrādes komandai redzēt, kuras iespējas cilvēki izmanto</string>
-    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Aizstāt pārejas jaunā rindā ar HTML</string>
     <string name="note_editor_replace_newlines_summ">Piezīmju redaktorā pārveidot jebkuru &lt;br&gt; par pāreju uz jaunu rindu, kad tiek labota kartīte.</string>
-    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="type_in_answer_focus" maxLength="41">Pārslēgties uz \"Ierakstīt atbildi\"</string>
+    <string name="type_in_answer_focus_summ">Pārskatītājā automātiski pārslēgties uz lauku \"Ievadīt atbildi\"</string>
     <!-- About -->
     <string name="open_changelog">Atvērt izmaiņu žurnālu</string>
-    <string name="pref_cat_about_title" maxLength="41">About</string>
-    <string name="contributors_title">Contributors</string>
+    <string name="pref_cat_about_title" maxLength="41">Par</string>
+    <string name="contributors_title">Līdzdalībnieki</string>
     <string name="about_contributors_description"><![CDATA[Šie ir mūsu lieliskie <a href=\"%1$s\">līdzdalībnieki</a>. Tu arī vari palīdzēt Ankidroid ar programmēšanu, tulkošanu, ziedojumiem un <a href=\"%2$s\">vēl</a>.]]></string>
-    <string name="license">License</string>
+    <string name="license">Licence</string>
     <string name="license_description"><![CDATA[AnkiDroid ir laista klajā ar <a href=\"%1$s\">GPL-3.0</a> un <a href=\"%2$s\">AGPL-3.0</a> licencēm, un pirmkods ir pieejams <a href=\"%3$s\">GitHub</a>]]></string>
-    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid izmanto arī trešo pušu bibliotēkas un ikonas, kas ir licencētas ar dažādām atvērtā pirmkoda <a href=\"%1$s\">licencēm</a>]]></string>
     <string name="donate_description"><![CDATA[AnkiDroid izstrādi var atbalstīt ar <a href=\"%1$s\">ziedošanu</a>. Jebkāds daudzums tiks ļoti novērtēts.]]></string>
     <!-- Controls -->
-    <string name="binding_add_gesture">Add gesture</string>
-    <string name="binding_add_key">Add key</string>
-    <string name="key_picker_default_press_key">Press a key</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
-    <string name="user_actions" maxLength="41">User actions</string>
+    <string name="binding_add_gesture">Pievienot kustību</string>
+    <string name="binding_add_key">Pievienot taustiņu</string>
+    <string name="key_picker_default_press_key">Nospiest taustiņu</string>
+    <string name="binding_add_axis">Pievienot kursorsviru / kustību vadīklu</string>
+    <string name="axis_picker_move_joystick">Kustināt kursorsviru / kustību vadīklu</string>
+    <string name="user_actions" maxLength="41">Lietotāja darbības</string>
     <string name="user_actions_summary" maxLength="41">Izraisīt JavaScript darbošanos no pārskatīšanas ekrāna</string>
-    <string name="user_action_1" maxLength="28">User action 1</string>
-    <string name="user_action_2" maxLength="28">User action 2</string>
-    <string name="user_action_3" maxLength="28">User action 3</string>
-    <string name="user_action_4" maxLength="28">User action 4</string>
-    <string name="user_action_5" maxLength="28">User action 5</string>
-    <string name="user_action_6" maxLength="28">User action 6</string>
-    <string name="user_action_7" maxLength="28">User action 7</string>
-    <string name="user_action_8" maxLength="28">User action 8</string>
-    <string name="user_action_9" maxLength="28">User action 9</string>
-    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
+    <string name="user_action_1" maxLength="28">1. lietotāja darbība</string>
+    <string name="user_action_2" maxLength="28">2. lietotāja darbība</string>
+    <string name="user_action_3" maxLength="28">3. lietotāja darbība</string>
+    <string name="user_action_4" maxLength="28">4. lietotāja darbība</string>
+    <string name="user_action_5" maxLength="28">5. lietotāja darbība</string>
+    <string name="user_action_6" maxLength="28">6. lietotāja darbība</string>
+    <string name="user_action_7" maxLength="28">7. lietotāja darbība</string>
+    <string name="user_action_8" maxLength="28">8. lietotāja darbība</string>
+    <string name="user_action_9" maxLength="28">9. lietotāja darbība</string>
+    <string name="toggle_auto_advance" maxLength="41">Pārslēgt automātisko virzīšanos</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Atlasīt kartītes pusi</string>
     <string name="card_side_question">Jautājums</string>
@@ -291,17 +291,17 @@
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">J: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
-    <string name="bindings_already_bound">Already bound to ‘%s’</string>
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Noņemt \"%s\"</string>
+    <string name="bindings_already_bound">Jau ir piesaistīts \"%s\"</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Izmēģinājuma</string>
     <string name="readtext_deprecation_warn">AnkiDroid ir ieviesta labāks TTS (teksta pārvēršanas runā) mehānisms, kas ir saderīgs ar citiem Anki klientiem un iekļauj vairāk balsu un valodas atskaņošanas uzlabojumiem.\n\nLūgums atjaunināt, tiklīdz tas ir iespējams, jo šis iestatījums drīz tiks noņemts</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Lūgums uzlabot uz jauno teksta pārveidošanas runā formātu</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
-    <string name="disable_dev_options">Disable developer options</string>
-    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
+    <string name="pref_cat_dev_options" maxLength="41">Izstrādātāju iespējas</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Iespējot izstrādāju iespējas</string>
+    <string name="disable_dev_options">Atspējot izstrādātāju iespējas</string>
+    <string name="dev_options_warning">Lūgums apzināties pirms izstrādātāju iespēju iespējošanas. Šīs iespējas ir bīstamas un var salauzt lietotni vai bojāt krājumu.\n\nJāņem vērā, ka šīs iespējas nav piemērotas vairumam lietotāju, tādēļ tās nav tulkotas, līdz ar to tās ir angļu valodā.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
@@ -314,10 +314,10 @@
         <br><br>
         Krājumu atjaunot no rezerves kopijas un izgūt var kavu saraksta izvēlnē.
     ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minūšu skaits starp automātisku rezerves kopēšanu</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Paturamās ikdienas rezerves kopijas</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Paturamās iknedēļas rezerves kopijas</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Paturamās ikmēneša rezerves kopijas</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
@@ -335,22 +335,22 @@
     <string name="pref__delete_unused_media_files__summary">Izdzēst attēlus un citus informācijas nesējus, kuri nesākas ar _ un uz kuriem nav atsauces nevienā piezīmē</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Izdzēst neizmantotās informācijas nesēju datnes</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Izdzēst rezerves kopijas</string>
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Izdzēst rezerves kopijas</string>
-    <string name="progress__deleting_backups">Deleting backups&#8230;</string>
+    <string name="progress__deleting_backups">Izdzēš rezerves kopijas&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Izdzēst krājumu</string>
     <string name="pref__delete_collection__summary">Izdzēst krājumu, informācijas nesējus un rezerves kopijas. Lietotnes iestatījumi netiek izdzēsti</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Izdzēst krājumu</string>
     <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Vai tiešām izdzēst savu krājumu, informācijas nesējus un rezerves kopijas?\n\nPiezīme: šī darbība aizvērs logu.</string>
-    <string name="progress__deleting_collection">Deleting collection&#8230;</string>
+    <string name="progress__deleting_collection">Izdzēš krājumu&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Izdzēst visu</string>
     <string name="pref__delete_everything__summary">Izdzēst krājumu, informācijas nesējus, rezerves kopijas un iestatījumus</string>
     <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Izdzēst visu</string>
     <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Vai tiešām izdzēst visus datus? Tiks izdzēsts Tavs krājums, informācijas nesēji, rezerves kopijas un iestatījumi.\n\nPiezīme: šī darbība aizvērs logu.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Delete app data</string>
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Izdzēst lietotnes datus</string>
     <string name="pref__delete_app_data__summary">Izdzēst iestatījumus un citus lietotnes datus</string>
     <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Izdzēst lietotnes datus</string>
     <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Vai tiešām izdzēst lietotnes datus? Tiks izdzēsti iestatījumi un citi lietotnes dati.\n\nPiezīme: šī darbība aizvērs logu.</string>
@@ -358,8 +358,8 @@
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Nav krājuma</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Kļūda</string>
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Iegūst&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Aprēķina&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Krājums nepastāv</string>
@@ -369,9 +369,9 @@
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Pārvietošanās josla</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Visas</string>
     <string name="ignore_display_cutout" maxLength="41">Neņemt vērā ekrāna izgriezumu</string>
-    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
-    <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
-    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
+    <string name="hide_answer_buttons" maxLength="41">Paslēpt atbilžu pogas</string>
+    <string name="hide_hard_and_easy" maxLength="41">Paslēpt \"Grūti\" un \"Viegli\" pogas</string>
+    <string name="reviewer_frame_style" maxLength="41">Ietvara stils</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Reviewer">Kartīte</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Reviewer">Ierāmējums</string>
     <!--Keyboard shortcuts dialog-->
