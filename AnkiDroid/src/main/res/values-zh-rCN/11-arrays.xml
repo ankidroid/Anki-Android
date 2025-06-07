@@ -95,7 +95,6 @@
     <string name="gesture_flag_remove" maxLength="41">移除旗标</string>
     <string name="gesture_page_up" maxLength="41">向上翻页</string>
     <string name="gesture_page_down" maxLength="41">向下翻页</string>
-    <string name="gesture_abort_sync" maxLength="41">关闭学习界面并同步</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">切换白板</string>
     <string name="gesture_show_hint" maxLength="41">显示提示</string>
     <string name="gesture_show_all_hints" maxLength="41">显示所有提示</string>

@@ -95,7 +95,6 @@
     <string name="gesture_flag_remove" maxLength="41">جھنڈا ہٹا دیں</string>
     <string name="gesture_page_up" maxLength="41">صفحہ اوپر</string>
     <string name="gesture_page_down" maxLength="41">نیچے صفحہ</string>
-    <string name="gesture_abort_sync" maxLength="41">Close study screen and Sync</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">وائٹ بورڈ کو ٹوگل کریں۔</string>
     <string name="gesture_show_hint" maxLength="41">اشارہ دکھائیں</string>
     <string name="gesture_show_all_hints" maxLength="41">تمام اشارے دکھائیں</string>

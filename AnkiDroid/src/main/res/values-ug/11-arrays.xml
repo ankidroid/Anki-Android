@@ -95,7 +95,6 @@
     <string name="gesture_flag_remove" maxLength="41">بايراقنى چىقىرىۋەت</string>
     <string name="gesture_page_up" maxLength="41">ئالدى بەت</string>
     <string name="gesture_page_down" maxLength="41">كەينى بەت</string>
-    <string name="gesture_abort_sync" maxLength="41">ئۆگىنىش ئېكرانىنى تقاپ ۋە قەدەمداشلايدۇ</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">ئاق دوسكىنى ئالماشتۇر</string>
     <string name="gesture_show_hint" maxLength="41">ئەسكەرتىش كۆرسەت</string>
     <string name="gesture_show_all_hints" maxLength="41">ھەممە ئەسكەرتىشنى كۆرسەت</string>

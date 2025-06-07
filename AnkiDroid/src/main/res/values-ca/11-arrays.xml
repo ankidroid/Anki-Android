@@ -95,7 +95,6 @@
     <string name="gesture_flag_remove" maxLength="41">Suprimir bandera</string>
     <string name="gesture_page_up" maxLength="41">Pàgina amunt</string>
     <string name="gesture_page_down" maxLength="41">Pàgina avall</string>
-    <string name="gesture_abort_sync" maxLength="41">Close study screen and Sync</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Activar/desactivar pissarra</string>
     <string name="gesture_show_hint" maxLength="41">Mostra un suggeriment</string>
     <string name="gesture_show_all_hints" maxLength="41">Mostra tots els suggeriments</string>
