@@ -35,6 +35,7 @@ import androidx.appcompat.view.menu.SubMenuBuilder
 import androidx.appcompat.widget.ActionMenuView
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.getSystemService
 import androidx.core.view.ViewCompat
@@ -245,17 +246,24 @@ class ReviewerFragment :
 
     private fun setupAnswerButtons(view: View) {
         val prefs = sharedPrefs()
-        val answerButtonsLayout = view.findViewById<LinearLayout>(R.id.answer_buttons)
         val answerArea = view.findViewById<FrameLayout>(R.id.answer_area)
         if (prefs.getBoolean(getString(R.string.hide_answer_buttons_key), false)) {
+            answerArea.isVisible = false
             if (!resources.isWindowCompact()) {
+                val constraintLayout = view.findViewById<ConstraintLayout>(R.id.bottom_bar)
                 // Expand the menu if there is no answer buttons in big screens
-                view.findViewById<ReviewerMenuView>(R.id.reviewer_menu_view).updateLayoutParams<ConstraintLayout.LayoutParams> {
-                    matchConstraintMaxWidth = 0
+                with(ConstraintSet()) {
+                    clone(constraintLayout)
+                    clear(R.id.reviewer_menu_view, ConstraintSet.START)
+                    connect(
+                        R.id.reviewer_menu_view,
+                        ConstraintSet.START,
+                        R.id.guideline_counts,
+                        ConstraintSet.END,
+                    )
+                    applyTo(constraintLayout)
                 }
             }
-            answerButtonsLayout?.isVisible = false
-            answerArea?.isVisible = false
             return
         }
 
@@ -301,6 +309,7 @@ class ReviewerFragment :
                     viewModel.onShowAnswer(typedAnswer = typedAnswer)
                 }
             }
+        val answerButtonsLayout = view.findViewById<LinearLayout>(R.id.answer_buttons)
 
         viewModel.showingAnswer.collectLatestIn(lifecycleScope) { isAnswerShown ->
             if (isAnswerShown) {
