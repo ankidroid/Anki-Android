@@ -35,6 +35,7 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.cardviewer.CardMediaPlayer
+import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
@@ -200,6 +201,8 @@ class ReviewerViewModel(
     }
 
     fun onGenericMotionEvent(event: MotionEvent?): Boolean = bindingMap.onGenericMotionEvent(event)
+
+    fun onTap(gesture: Gesture) = bindingMap.onTap(gesture)
 
     private suspend fun toggleMark() {
         Timber.v("ReviewerViewModel::toggleMark")
