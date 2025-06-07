@@ -65,8 +65,6 @@ class NoteTypeNameID(
     val id: NoteTypeId,
 )
 
-private typealias int = Long
-
 class Notetypes(
     val col: Collection,
 ) {
@@ -106,12 +104,12 @@ class Notetypes(
     }
 
     @LibAnkiAlias("_remove_from_cache")
-    internal fun removeFromCache(ntid: int) {
+    internal fun removeFromCache(ntid: NoteTypeId) {
         cache.remove(ntid)
     }
 
     @LibAnkiAlias("_get_cached")
-    private fun getCached(ntid: int): NotetypeJson? = cache[ntid]
+    private fun getCached(ntid: NoteTypeId): NotetypeJson? = cache[ntid]
 
     @NeedsTest("14827: styles are updated after syncing style changes")
     @LibAnkiAlias("_clear_cache")
@@ -132,10 +130,10 @@ class Notetypes(
 
     // legacy
 
-    fun ids(): Set<int> = allNamesAndIds().map { it.id }.toSet()
+    fun ids(): Set<NoteTypeId> = allNamesAndIds().map { it.id }.toSet()
 
     // only used by importing code
-    fun have(id: int): Boolean = allNamesAndIds().any { it.id == id }
+    fun have(id: NoteTypeId): Boolean = allNamesAndIds().any { it.id == id }
 
     /*
     # Current note type
@@ -165,7 +163,7 @@ class Notetypes(
      */
 
     @LibAnkiAlias("id_for_name")
-    fun idForName(name: String): Long? =
+    fun idForName(name: String): NoteTypeId? =
         try {
             col.backend.getNotetypeIdByName(name)
         } catch (e: BackendNotFoundException) {
@@ -173,10 +171,10 @@ class Notetypes(
         }
 
     /** "Get model with ID, or None." */
-    fun get(id: int): NotetypeJson? = get(id as int?)
+    fun get(id: NoteTypeId): NotetypeJson? = get(id as NoteTypeId?)
 
     /** Externally, we do not want to pass in a null id */
-    private fun get(id: int?): NotetypeJson? {
+    private fun get(id: NoteTypeId?): NotetypeJson? {
         if (id == null) {
             return null
         }
@@ -229,7 +227,7 @@ class Notetypes(
     }
 
     /** Modifies schema. */
-    fun remove(id: int) {
+    fun remove(id: NoteTypeId) {
         removeFromCache(id)
         col.backend.removeNotetype(id)
     }
@@ -279,10 +277,10 @@ class Notetypes(
      */
 
     @NotInLibAnki
-    fun nids(model: NotetypeJson): List<int> = nids(model.id)
+    fun nids(model: NotetypeJson): List<NoteId> = nids(model.id)
 
     /** Note ids for M. */
-    fun nids(ntid: int): List<int> = col.db.queryLongList("select id from notes where mid = ?", ntid)
+    fun nids(ntid: NoteTypeId): List<NoteId> = col.db.queryLongList("select id from notes where mid = ?", ntid)
 
     /** Number of note using M. */
     fun useCount(notetype: NotetypeJson): Int = col.db.queryLongScalar("select count() from notes where mid = ?", notetype.id).toInt()
@@ -658,18 +656,18 @@ class Notetypes(
      * This method will either give you all the card ids for the ordinals sent in related to the model sent in *or*
      * it will return null if the result of deleting the ordinals is unsafe because it would leave notes with no cards
      *
-     * @param noteTypeId long id of the JSON model
+     * @param noteTypeId id of the note type
      * @param ords array of ints, each one is the ordinal a the card template in the given model
-     * @return null if deleting ords would orphan notes, long[] of related card ids to delete if it is safe
+     * @return null if deleting ords would orphan notes, list of related card ids to delete if it is safe
      */
     @Suppress("ktlint:standard:max-line-length")
     fun getCardIdsForNoteType(
         noteTypeId: NoteTypeId,
         ords: IntArray,
-    ): List<Long>? {
+    ): List<CardId>? {
         val cardIdsToDeleteSql =
             "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = ? and c2.ord  in ${Utils.ids2str(ords)}"
-        val cids: List<Long> = col.db.queryLongList(cardIdsToDeleteSql, noteTypeId)
+        val cids: List<CardId> = col.db.queryLongList(cardIdsToDeleteSql, noteTypeId)
         // Timber.d("cardIdsToDeleteSql was ' %s' and got %s", cardIdsToDeleteSql, Utils.ids2str(cids));
         Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.size, noteTypeId, Utils.ids2str(ords))
 
@@ -725,7 +723,7 @@ class Notetypes(
  *
  * This better approximates `JSON.get` in the Python
  */
-private fun Deck.getLongOrNull(key: String): int? {
+private fun Deck.getLongOrNull(key: String): Long? {
     if (!has(key)) {
         return null
     }
