@@ -17,6 +17,7 @@ package com.ichi2.anki.ui.windows.reviewer
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
@@ -28,6 +29,7 @@ import android.view.ViewGroup.MarginLayoutParams
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.annotation.StringRes
@@ -56,6 +58,8 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.CardMediaPlayer
+import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
@@ -93,6 +97,10 @@ import com.ichi2.anki.utils.ext.window
 import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.utils.dp
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.math.abs
 
 class ReviewerFragment :
     CardViewerFragment(R.layout.reviewer2),
@@ -542,7 +550,91 @@ class ReviewerFragment :
         stateFilter: CardStateFilter,
     ) = viewModel.onEditedTags(selectedTags)
 
+    override fun onCreateWebViewClient(savedInstanceState: Bundle?): WebViewClient = ReviewerWebViewClient(savedInstanceState)
+
+    private inner class ReviewerWebViewClient(
+        savedInstanceState: Bundle?,
+    ) : CardViewerWebViewClient(savedInstanceState) {
+        @Suppress("DEPRECATION") // the deprecation suggests using `onScaleChanged` to avoid
+        // race conditions when the scale is being changed. The method is already being used below
+        // for that matter. For only getting the initial scale, it's safe to use the property.
+        // Robolectric crashes with 'java.lang.Integer cannot be cast to class java.lang.Float'
+        private var scale: Float = if (!isRobolectric) webView.scale else 1F
+        private var isScrolling: Boolean = false
+        private var isScrollingJob: Job? = null
+
+        init {
+            webView.setOnScrollChangeListener { _, _, _, _, _ ->
+                isScrolling = true
+                isScrollingJob?.cancel()
+                isScrollingJob =
+                    lifecycleScope.launch {
+                        delay(300)
+                        isScrolling = false
+                    }
+            }
+        }
+
+        override fun handleUrl(url: Uri): Boolean {
+            return when (url.scheme) {
+                "gesture" -> {
+                    if (isScrolling) return true
+                    if (url.host == "doubleTap") {
+                        viewModel.onGesture(Gesture.DOUBLE_TAP)
+                        return true
+                    }
+
+                    fun Uri.getIntQuery(key: String) = getQueryParameter(key)?.toIntOrNull()
+                    val tapX = url.getIntQuery("x") ?: return false
+                    val tapY = url.getIntQuery("y") ?: return false
+                    val deltaX = url.getIntQuery("deltaX") ?: return false
+                    val deltaY = url.getIntQuery("deltaY") ?: return false
+                    val absDeltaX = abs(deltaX)
+                    val absDeltaY = abs(deltaY)
+
+                    // Constant that when divided by the scale allows minimum movement while tapping
+                    val swipeThreshold = 18 / scale
+                    if (absDeltaX > swipeThreshold || absDeltaY > swipeThreshold) return true
+
+                    /** Gets the corresponding index of a dimension (X or Y) in the [gestureGrid] */
+                    fun getGridIndex(
+                        tapPosition: Int,
+                        scrolledDistance: Int,
+                        dimensionSize: Int,
+                    ): Int {
+                        val scaledTap = tapPosition * scale
+                        val adjustedTapPosition = scaledTap - scrolledDistance
+                        return (adjustedTapPosition / (dimensionSize / 3)).toInt()
+                    }
+
+                    val row = getGridIndex(tapY, webView.scrollY, webView.measuredHeight)
+                    val column = getGridIndex(tapX, webView.scrollX, webView.measuredWidth)
+                    val gesture = gestureGrid[row][column]
+                    viewModel.onGesture(gesture)
+                    true
+                }
+                else -> super.handleUrl(url)
+            }
+        }
+
+        override fun onScaleChanged(
+            view: WebView?,
+            oldScale: Float,
+            newScale: Float,
+        ) {
+            super.onScaleChanged(view, oldScale, newScale)
+            scale = newScale
+        }
+    }
+
     companion object {
         fun getIntent(context: Context): Intent = CardViewerActivity.getIntent(context, ReviewerFragment::class)
+
+        private val gestureGrid =
+            listOf(
+                listOf(Gesture.TAP_TOP_LEFT, Gesture.TAP_TOP, Gesture.TAP_TOP_RIGHT),
+                listOf(Gesture.TAP_LEFT, Gesture.TAP_CENTER, Gesture.TAP_RIGHT),
+                listOf(Gesture.TAP_BOTTOM_LEFT, Gesture.TAP_BOTTOM, Gesture.TAP_BOTTOM_RIGHT),
+            )
     }
 }
