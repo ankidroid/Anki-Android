@@ -583,9 +583,6 @@ class Collection(
 
     fun updateNotes(notes: Iterable<Note>): OpChanges = backend.updateNotes(notes = notes.map { it.toBackendNote() }, skipUndoEntry = false)
 
-    @NotInLibAnki
-    fun emptyCids(): List<CardId> = getEmptyCards().emptyCids()
-
     /** Fixes and optimizes the database. If any errors are encountered, a list of
      * problems is returned. Throws if DB is unreadable. */
     fun fixIntegrity(): List<String> = backend.checkDatabase()

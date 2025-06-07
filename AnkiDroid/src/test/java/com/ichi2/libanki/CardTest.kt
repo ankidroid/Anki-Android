@@ -84,7 +84,7 @@ class CardTest : JvmTest() {
                 qfmt = "{{Back}}"
             }
         col.notetypes.save(noteType)
-        val rep = col.emptyCids()
+        val rep = col.getEmptyCards().emptyCids()
         col.removeCardsAndOrphanedNotes(rep)
         assertEquals(1, note.numberOfCards())
         // if we add to the note, a card should be automatically generated
