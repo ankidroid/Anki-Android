@@ -68,7 +68,7 @@
     <string name="pref_cat_advanced" maxLength="41">Geavanceerd</string>
     <string name="pref_cat_workarounds" maxLength="41">Tijdelijke oplossingen</string>
     <string name="pref_cat_plugins" maxLength="41">Plugins</string>
-    <string name="pref_cat_editing" maxLength="41">Editing</string>
+    <string name="pref_cat_editing" maxLength="41">Bewerken</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Lijnbreedte</string>
     <string name="use_input_tag" maxLength="41">Typ het antwoord op de kaart</string>
@@ -98,7 +98,7 @@
     <string name="gestures_summ">Bewegingen toewijzen aan acties zoals het beantwoorden en bewerken van kaarten.</string>
     <string name="gestures_corner_touch" maxLength="41">9-punts aanraakscherm</string>
     <string name="gestures_corner_touch_summary">Aanraakgebaren in schermhoeken toestaan</string>
-    <string name="show_keyboard_shortcuts" maxLength="41">Show keyboard shortcuts</string>
+    <string name="show_keyboard_shortcuts" maxLength="41">Toon sneltoetsen</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Volledig scherm navigatiebalk</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Open navigatiescherm wanneer je overal en op het scherm naar rechts veegt</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">Geen</string>
@@ -148,7 +148,7 @@
     <string name="notification_pref_title" maxLength="41">Melden wanneer</string>
     <string name="never_notify">Nooit melden</string>
     <string name="notify_when_pending">Bij ongelezen berichten</string>
-    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">Meer dan %d kaarten te doen</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Trillen</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Licht knipperen</string>
     <string name="select_locale_title">Taal selecteren</string>
@@ -168,9 +168,9 @@
     <string name="show_estimates" maxLength="41">Herhaaltijd in knoppen</string>
     <string name="show_estimates_summ">In de antwoordknoppen weergeven wanneer de volgende overhoring is</string>
     <string name="show_large_answer_buttons" maxLength="41">Laat grote antwoordknoppen zien</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons_summ">Toon antwoordknop in 2 rijen</string>
     <string name="show_top_bar" maxLength="41">Toon bovenste balk</string>
-    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
+    <string name="show_top_bar_summary">Toon aantal kaarten, vlag en markeer in de balk bovenaan</string>
     <string name="show_progress" maxLength="41">Resterende weergeven</string>
     <string name="show_progress_summ">Toon resterend aantal kaarten</string>
     <string name="show_eta" maxLength="41">ETA weergeven</string>
@@ -180,8 +180,8 @@
     <string name="time_limit" maxLength="41">Stel een tijdslimiet in</string>
     <string name="day_offset_with_description" maxLength="41">Begin van de volgende dag (0 is middernacht, 23 is 11PM)</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d Uur na middernacht</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d Uren na middernacht</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Scherm aanlaten</string>
     <string name="pref_keep_screen_on_summ">Schermtimeout uitschakelen</string>
@@ -197,17 +197,17 @@
     <string name="reset">Resetten</string>
     <string name="thirdparty_apps_title" maxLength="41">API-apps van derden</string>
     <string name="thirdparty_apps_summary">Raadpleeg de lijst van applicaties die gebruik maken van de AnkiDroid API zoals woordenboeken, hulpprogramma\'s.</string>
-    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Reviews</string>
-    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
-    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
+    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Beoordelingen</string>
+    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Voorbeelden</string>
+    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Alleen achterzijde in-/uitschakelen</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
+    <string name="pref_cat_reviewer" maxLength="41">Studiescherm</string>
     <string name="show_deck_title" maxLength="41">Settitel weergeven</string>
     <string name="accessibility" maxLength="41">Toegankelijkheid</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Plak klembord afbeeldingen als PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Druk twee keer op terug om terug te gaan</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
+    <string name="exit_via_double_tap_back_summ">Om te voorkomen dat je per ongeluk het studiescherm of de app verlaat</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Alle bestanden bij media-import toestaan</string>
     <string name="media_import_allow_all_files_summ">Als Android een mediabestand niet herkent</string>
@@ -238,7 +238,7 @@
     <string name="deck_conf_cram_filter" maxLength="41">Filter</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Zoeken</string>
     <string name="deck_conf_cram_limit" maxLength="41">Beperken tot</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
+    <string name="deck_conf_cram_order" maxLength="41">Kaarten geselecteerd door</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Opnieuw inplannen</string>
     <string name="deck_conf_cram_reschedule_summ">Karaten opnieuw inplannen op basis van mijn antwoorden in deze set</string>
     <string name="deck_conf_cram_filter_2_check">Tweede filter inschakelen</string>
@@ -252,7 +252,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">Nieuwe lijnen vervangen door HTML</string>
     <string name="note_editor_replace_newlines_summ">Zet in de memobewerker alle instanties van &lt;br&gt; om in nieuwe lijnen bij het bewerken van een kaart.</string>
     <string name="type_in_answer_focus" maxLength="41">Focus op ‘type in antwoord’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
+    <string name="type_in_answer_focus_summ">Automatisch focussen op het \'type in antwoord\'-veld in het studiescherm</string>
     <!-- About -->
     <string name="open_changelog">Wijzigingslogboek openen</string>
     <string name="pref_cat_about_title" maxLength="41">Over</string>
@@ -260,7 +260,7 @@
     <string name="about_contributors_description"><![CDATA[Dit zijn onze geweldige <a href=\"%1$s\">medewerkers</a>. U kunt AnkiDroid ook helpen door te programmeren, te vertalen, te doneren en <a href=\"%2$s\">meer</a>!]]></string>
     <string name="license">Licentie</string>
     <string name="license_description"><![CDATA[AnkiDroid is vrijgegeven onder de <a href=\"%1$s\">GPL-3.0</a> en <a href=\"%2$s\">AGPL-3.0</a> licenties, met de broncode beschikbaar <a href=\"%3$s\">op GitHub</a>]]></string>
-    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid gebruikt ook bibliotheken en pictogrammen van derden, die zijn gelicentieerd onder verschillende open-source <a href=\"%1$s\">licenties</a>]]></string>
     <string name="donate_description"><![CDATA[U kunt de ontwikkeling van AnkiDroid steunen door te <a href="%1$s">doneren</a>. Elk bedrag wordt zeer op prijs gesteld.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Gebaar toevoegen</string>
@@ -269,7 +269,7 @@
     <string name="binding_add_axis">Joystick/bewegingscontroller toevoegen</string>
     <string name="axis_picker_move_joystick">Joystick/bewegingscontroller bewegen</string>
     <string name="user_actions" maxLength="41">Gebruikersacties</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
+    <string name="user_actions_summary" maxLength="41">Activeer JavaScript on het studiescherm</string>
     <string name="user_action_1" maxLength="28">Gebruikersactie 1</string>
     <string name="user_action_2" maxLength="28">Gebruikersactie 2</string>
     <string name="user_action_3" maxLength="28">Gebruikersactie 3</string>
@@ -298,7 +298,7 @@
     <string name="pref_cat_dev_options" maxLength="41">Opties voor ontwikkelaars</string>
     <string name="dev_options_enabled_pref" maxLength="41">Opties voor ontwikkelaars inschakelen</string>
     <string name="disable_dev_options">Ontwikkelaarsopties uitschakelen</string>
-    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
+    <string name="dev_options_warning">Wees zeker voordat u de opties voor ontwikkelaars inschakelt. Deze opties zijn gevaarlijk en kunnen de app kapot maken of je collectie beschadigen.\n\nMerk op dat deze opties niet geschikt zijn voor de meeste gebruikers en daarom niet vertaald zijn, dus ze zijn in het Engels.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
@@ -367,9 +367,9 @@
     <string name="ignore_display_cutout" maxLength="41">Schermuitsparing negeren</string>
     <string name="hide_answer_buttons" maxLength="41">Antwoordknoppen verbergen</string>
     <string name="hide_hard_and_easy" maxLength="41">Koppen \'Moeilijk\' &amp; \'Makkelijk\' verbergen</string>
-    <string name="reviewer_frame_style" maxLength="41">Frame style</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Card</string>
+    <string name="reviewer_frame_style" maxLength="41">Frame stijl</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Kaart</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Box</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Instellingen openen</string>
 </resources>

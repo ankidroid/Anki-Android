@@ -66,10 +66,10 @@
     <string name="theme_follow_system">跟随系统</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">亮色</string>
-    <string name="day_theme_plain">简洁</string>
+    <string name="day_theme_plain">平淡</string>
     <!-- night_theme_labels -->
     <string name="night_theme_black">黑色</string>
-    <string name="night_theme_dark">暗色</string>
+    <string name="night_theme_dark">深色</string>
     <!-- html_size_code_labels -->
     <string name="html_size_code_xx_small">极小</string>
     <string name="html_size_code_x_small">很小</string>
@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">回答“良好”</string>
     <string name="answer_easy" maxLength="41">回答 “简单”</string>
     <string name="gesture_play" maxLength="41">播放媒体</string>
-    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
+    <string name="gesture_abort_learning" maxLength="41">关闭学习界面</string>
     <string name="gesture_flag_red" maxLength="41">切换红色旗标</string>
     <string name="gesture_flag_orange" maxLength="41">切换橙色旗标</string>
     <string name="gesture_flag_green" maxLength="41">切换绿色旗标</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">移除旗标</string>
     <string name="gesture_page_up" maxLength="41">向上翻页</string>
     <string name="gesture_page_down" maxLength="41">向下翻页</string>
-    <string name="gesture_abort_sync" maxLength="41">Close study screen and Sync</string>
+    <string name="gesture_abort_sync" maxLength="41">关闭学习界面并同步</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">切换白板</string>
     <string name="gesture_show_hint" maxLength="41">显示提示</string>
     <string name="gesture_show_all_hints" maxLength="41">显示所有提示</string>

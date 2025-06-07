@@ -282,7 +282,7 @@
     <string name="cd_manage_notetypes_add">添加新的笔记类型</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">学得更少</string>
-    <string name="intro_ankidroid_tagline_two">记得更牢</string>
+    <string name="intro_ankidroid_tagline_two">记得更多</string>
     <string name="intro_short_ankidroid_explanation">使用 Anki 的卡片调度系统，强化并巩固远近记忆，从而节省您的学习时间</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">开始</string>
     <string name="intro_sync_from_ankiweb">从 AnkiWeb 同步</string>
