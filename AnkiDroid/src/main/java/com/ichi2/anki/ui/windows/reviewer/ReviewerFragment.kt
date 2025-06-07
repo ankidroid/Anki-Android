@@ -592,9 +592,28 @@ class ReviewerFragment :
                     val absDeltaX = abs(deltaX)
                     val absDeltaY = abs(deltaY)
 
-                    // Constant that when divided by the scale allows minimum movement while tapping
                     val swipeThreshold = 18 / scale
-                    if (absDeltaX > swipeThreshold || absDeltaY > swipeThreshold) return true
+                    if (absDeltaX > swipeThreshold || absDeltaY > swipeThreshold) {
+                        val scrollDirection = url.getQueryParameter("scrollDirection")
+                        val swipeGesture =
+                            if (absDeltaX > absDeltaY) { // horizontal
+                                if (scrollDirection?.contains('h') == true) return true
+                                if (deltaX > 0) { // right
+                                    Gesture.SWIPE_RIGHT
+                                } else { // left
+                                    Gesture.SWIPE_LEFT
+                                }
+                            } else { // vertical
+                                if (scrollDirection?.contains('v') == true) return true
+                                if (deltaY > 0) { // down
+                                    Gesture.SWIPE_DOWN
+                                } else { // top
+                                    Gesture.SWIPE_UP
+                                }
+                            }
+                        viewModel.onGesture(swipeGesture)
+                        return true
+                    }
 
                     /** Gets the corresponding index of a dimension (X or Y) in the [gestureGrid] */
                     fun getGridIndex(
