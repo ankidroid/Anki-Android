@@ -75,6 +75,12 @@ object Prefs {
     ): Int = sharedPrefs.getInt(key(keyResId), defValue)
 
     @VisibleForTesting
+    fun putInt(
+        @StringRes keyResId: Int,
+        defValue: Int,
+    ) = sharedPrefs.edit { putInt(key(keyResId), defValue) }
+
+    @VisibleForTesting
     fun <E> getEnum(
         @StringRes keyResId: Int,
         defaultValue: E,
@@ -129,23 +135,24 @@ object Prefs {
         }
 
     @VisibleForTesting
-    class StringPref(
-        @StringRes private val keyResId: Int,
-        private val defaultValue: String? = null,
-    ) : ReadWriteProperty<Any?, String?> {
-        override fun getValue(
-            thisRef: Any?,
-            property: KProperty<*>,
-        ): String? = getString(keyResId, defaultValue) ?: defaultValue
+    fun intPref(
+        @StringRes keyResId: Int,
+        defaultValue: Int,
+    ): ReadWriteProperty<Any, Int> =
+        object : ReadWriteProperty<Any?, Int> {
+            override fun getValue(
+                thisRef: Any?,
+                property: KProperty<*>,
+            ): Int = getInt(keyResId, defaultValue)
 
-        override fun setValue(
-            thisRef: Any?,
-            property: KProperty<*>,
-            value: String?,
-        ) {
-            putString(keyResId, value)
+            override fun setValue(
+                thisRef: Any?,
+                property: KProperty<*>,
+                value: Int,
+            ) {
+                putInt(keyResId, value)
+            }
         }
-    }
 
     // ****************************************************************************************** //
     // **************************************** Settings **************************************** //
@@ -187,4 +194,8 @@ object Prefs {
     var isDevOptionsEnabled: Boolean
         get() = getBoolean(R.string.dev_options_enabled_by_user_key, false) || BuildConfig.DEBUG
         set(value) = putBoolean(R.string.dev_options_enabled_by_user_key, value)
+
+    var useFixedPortInReviewer by booleanPref(R.string.use_fixed_port_pref_key, false)
+
+    var reviewerPort by intPref(R.string.reviewer_port_pref_key, defaultValue = 0)
 }

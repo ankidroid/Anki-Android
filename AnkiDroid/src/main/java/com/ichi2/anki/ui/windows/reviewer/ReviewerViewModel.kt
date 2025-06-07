@@ -75,6 +75,7 @@ import timber.log.Timber
 class ReviewerViewModel(
     cardMediaPlayer: CardMediaPlayer,
     private val bindingMap: BindingMap<ReviewerBinding, ViewerAction>,
+    serverPort: Int = 0,
 ) : CardViewerViewModel(cardMediaPlayer),
     ChangeManager.Subscriber,
     BindingProcessor<ReviewerBinding, ViewerAction> {
@@ -101,7 +102,7 @@ class ReviewerViewModel(
     val editNoteTagsFlow = MutableSharedFlow<NoteId>()
     val setDueDateFlow = MutableSharedFlow<CardId>()
 
-    override val server = AnkiServer(this).also { it.start() }
+    override val server: AnkiServer = AnkiServer(this, serverPort).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
     val statesMutationEval = MutableSharedFlow<String>()
 
@@ -652,10 +653,11 @@ class ReviewerViewModel(
         fun factory(
             soundPlayer: CardMediaPlayer,
             bindingMap: BindingMap<ReviewerBinding, ViewerAction>,
+            serverPort: Int,
         ): ViewModelProvider.Factory =
             viewModelFactory {
                 initializer {
-                    ReviewerViewModel(soundPlayer, bindingMap)
+                    ReviewerViewModel(soundPlayer, bindingMap, serverPort)
                 }
             }
 

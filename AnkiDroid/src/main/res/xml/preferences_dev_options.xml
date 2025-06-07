@@ -49,6 +49,10 @@
         android:summary="Touch here to set the database path to /storage/emulated/0/AnkiDroid"
         android:key="@string/pref_set_database_path_debug_key"/>
     <SwitchPreferenceCompat
+        android:title="Use fixed port in the Reviewer"
+        android:key="@string/use_fixed_port_pref_key"
+        android:defaultValue="false"/>
+    <SwitchPreferenceCompat
         android:title="New congrats screen"
         android:key="@string/new_congrats_screen_pref_key"
         android:defaultValue="false"/>
