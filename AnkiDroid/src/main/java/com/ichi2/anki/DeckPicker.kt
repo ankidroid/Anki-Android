@@ -1288,9 +1288,6 @@ open class DeckPicker :
     private fun processReviewResults(resultCode: Int) {
         if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
             CongratsPage.onReviewsCompleted(this, getColUnsafe.sched.totalCount() == 0)
-        } else if (resultCode == AbstractFlashcardViewer.RESULT_ABORT_AND_SYNC) {
-            Timber.i("Obtained Abort and Sync result")
-            sync()
         }
     }
 

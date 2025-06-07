@@ -114,9 +114,6 @@ class ControlsSettingsFragment :
         findPreference<ControlPreference>(getString(R.string.toggle_whiteboard_command_key))?.let {
             it.title = getString(R.string.gesture_toggle_whiteboard).toSentenceCase(R.string.sentence_gesture_toggle_whiteboard)
         }
-        findPreference<ControlPreference>(getString(R.string.abort_and_sync_command_key))?.let {
-            it.title = getString(R.string.gesture_abort_sync).toSentenceCase(R.string.sentence_gesture_abort_sync)
-        }
         findPreference<ControlPreference>(getString(R.string.flag_red_command_key))?.let {
             it.title = getString(R.string.gesture_flag_red).toSentenceCase(R.string.sentence_gesture_flag_red)
         }

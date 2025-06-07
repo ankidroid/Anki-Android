@@ -546,7 +546,6 @@ object UsageAnalytics {
             R.string.page_down_command_key,
             R.string.tag_command_key,
             R.string.card_info_command_key,
-            R.string.abort_and_sync_command_key,
             R.string.record_voice_command_key,
             R.string.replay_voice_command_key,
             R.string.save_voice_command_key,
