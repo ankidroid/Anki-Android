@@ -232,5 +232,6 @@
     <string name="hide_hard_and_easy_key">hideHardAndEasy</string>
     <string name="reviewer_menu_settings_key">reviewerMenuSettings</string>
     <string name="reviewer_frame_style_key">reviewerFrameStyle</string>
+    <string name="reviewer_toolbar_position_key">reviewerToolbarPosition</string>
 
 </resources>

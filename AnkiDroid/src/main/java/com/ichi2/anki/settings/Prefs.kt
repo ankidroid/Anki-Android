@@ -24,6 +24,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.settings.enums.HideSystemBars
 import com.ichi2.anki.settings.enums.PrefEnum
+import com.ichi2.anki.settings.enums.ToolbarPosition
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -171,6 +172,9 @@ object Prefs {
 
     val hideSystemBars: HideSystemBars
         get() = getEnum(R.string.hide_system_bars_key, HideSystemBars.NONE)
+
+    val toolbarPosition: ToolbarPosition
+        get() = getEnum(R.string.reviewer_toolbar_position_key, ToolbarPosition.TOP)
 
     // ************************************** Accessibility ************************************* //
 

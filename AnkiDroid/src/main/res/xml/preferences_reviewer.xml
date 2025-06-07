@@ -39,4 +39,12 @@
         android:key="@string/reviewer_frame_style_key"
         android:title="@string/reviewer_frame_style"
         app:useSimpleSummaryProvider="true"/>
+
+    <ListPreference
+        android:defaultValue="@string/reviewer_toolbar_value_top"
+        android:entries="@array/reviewer_toolbar_position_entries"
+        android:entryValues="@array/reviewer_toolbar_position_values"
+        android:key="@string/reviewer_toolbar_position_key"
+        android:title="Toolbar position"
+        app:useSimpleSummaryProvider="true"/>
 </androidx.preference.PreferenceScreen>

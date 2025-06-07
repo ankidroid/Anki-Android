@@ -70,6 +70,7 @@
         <item name="easyButtonTextColor">@color/white</item>
         <item name="alternativeBackgroundColor">#f4f5f9</item>
         <!-- Study Screen button drawables -->
+        <item name="showAnswerButtonBackground">@color/material_blue_700</item>
         <item name="showAnswerColor">@color/material_blue_grey_700</item>
         <item name="againButtonRef">@drawable/footer_button_again</item>
         <item name="hardButtonRef">@drawable/footer_button_hard</item>
