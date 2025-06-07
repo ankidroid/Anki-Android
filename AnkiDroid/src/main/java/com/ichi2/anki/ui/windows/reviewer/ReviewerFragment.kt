@@ -510,6 +510,13 @@ class ReviewerFragment :
 
                 mainLayout.removeView(toolbar)
                 mainLayout.addView(toolbar, mainLayout.indexOfChild(answerArea) + 1)
+
+                answerArea.updateLayoutParams<MarginLayoutParams> {
+                    bottomMargin = 0
+                }
+                view.findViewById<MaterialCardView>(R.id.webview_container).updateLayoutParams<MarginLayoutParams> {
+                    topMargin = 8F.dp.toPx(requireContext())
+                }
             }
             ToolbarPosition.TOP -> return
         }
