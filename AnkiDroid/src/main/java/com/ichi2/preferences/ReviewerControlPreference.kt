@@ -44,7 +44,7 @@ class ReviewerControlPreference : ControlPreference {
     constructor(context: Context) : super(context)
 
     /** The action associated to this preference */
-    private val viewerAction get() = ViewerAction.fromPreferenceKey(key)!!
+    private val viewerAction get() = ViewerAction.fromPreferenceKey(key)
 
     override val areGesturesEnabled: Boolean
         get() = sharedPreferences?.getBoolean(GestureProcessor.PREF_KEY, false) ?: false
