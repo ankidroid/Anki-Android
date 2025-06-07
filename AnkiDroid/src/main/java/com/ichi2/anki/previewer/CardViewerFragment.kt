@@ -159,7 +159,7 @@ abstract class CardViewerFragment(
             return handleUrl(url.toUri())
         }
 
-        private fun handleUrl(url: Uri): Boolean {
+        protected open fun handleUrl(url: Uri): Boolean {
             when (url.scheme) {
                 "playsound" -> viewModel.playSoundFromUrl(url.toString())
                 "videoended" -> viewModel.onVideoFinished()

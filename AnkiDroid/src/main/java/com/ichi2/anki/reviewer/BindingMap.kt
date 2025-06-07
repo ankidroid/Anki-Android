@@ -19,6 +19,7 @@ package com.ichi2.anki.reviewer
 import android.content.SharedPreferences
 import android.view.KeyEvent
 import android.view.MotionEvent
+import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.reviewer.Binding.Companion.possibleKeyBindings
 
 /**
@@ -37,6 +38,7 @@ class BindingMap<B : MappableBinding, A : MappableAction<B>>(
 ) {
     private val keyMap = HashMap<Binding, List<Pair<A, B>>>()
     private val axisDetectors: List<SingleAxisDetector<B, A>>
+    private val gestureMap = HashMap<Gesture, List<Pair<A, B>>>()
 
     init {
         val axisList = mutableListOf<SingleAxisDetector<B, A>>()
@@ -53,6 +55,13 @@ class BindingMap<B : MappableBinding, A : MappableAction<B>>(
                     }
                     is Binding.AxisButtonBinding -> {
                         axisList.add(SingleAxisDetector(action, mappableBinding))
+                    }
+                    is Binding.GestureInput -> {
+                        if (binding.gesture in gestureMap) {
+                            (gestureMap[binding.gesture] as MutableList).add(action to mappableBinding)
+                        } else {
+                            gestureMap[binding.gesture] = mutableListOf(action to mappableBinding)
+                        }
                     }
                     else -> {}
                 }
@@ -93,5 +102,13 @@ class BindingMap<B : MappableBinding, A : MappableAction<B>>(
             processor?.processAction(action, detector.mappableBinding)
         }
         return processed
+    }
+
+    fun onGesture(gesture: Gesture): Boolean {
+        val mappableBindings = gestureMap[gesture] ?: return false
+        for ((action, mappableBinding) in mappableBindings) {
+            if (processor?.processAction(action, mappableBinding) == true) return true
+        }
+        return false
     }
 }
