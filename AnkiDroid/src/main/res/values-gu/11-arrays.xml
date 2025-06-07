@@ -95,7 +95,6 @@
     <string name="gesture_flag_remove" maxLength="41">ધ્વજ દૂર કરો</string>
     <string name="gesture_page_up" maxLength="41">પાનું ઉપર</string>
     <string name="gesture_page_down" maxLength="41">Page Down</string>
-    <string name="gesture_abort_sync" maxLength="41">Close study screen and Sync</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">વ્હાઇટબોર્ડ ટૉગલ કરો</string>
     <string name="gesture_show_hint" maxLength="41">સંકેત બતાવો</string>
     <string name="gesture_show_all_hints" maxLength="41">બધા સંકેતો બતાવો</string>

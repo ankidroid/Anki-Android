@@ -95,7 +95,6 @@
     <string name="gesture_flag_remove" maxLength="41">ಧ್ವಜವನ್ನು ತೆಗೆದುಹಾಕಿ</string>
     <string name="gesture_page_up" maxLength="41">ಪುಟ ಮೇಲಕ್ಕೆ</string>
     <string name="gesture_page_down" maxLength="41">ಪುಟ ಕೆಳಗೆ</string>
-    <string name="gesture_abort_sync" maxLength="41">Close study screen and Sync</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">ವೈಟ್‌ಬೋರ್ಡ್ ಅನ್ನು ಟಾಗಲ್ ಮಾಡಿ</string>
     <string name="gesture_show_hint" maxLength="41">ಸುಳಿವು ತೋರಿಸಿ</string>
     <string name="gesture_show_all_hints" maxLength="41">ಎಲ್ಲಾ ಸುಳಿವುಗಳನ್ನು ತೋರಿಸಿ</string>

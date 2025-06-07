@@ -95,7 +95,6 @@
     <string name="gesture_flag_remove" maxLength="41">Odstranit příznak</string>
     <string name="gesture_page_up" maxLength="41">Stránka nahoru</string>
     <string name="gesture_page_down" maxLength="41">Stránka dolů</string>
-    <string name="gesture_abort_sync" maxLength="41">Close study screen and Sync</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Přepnout tabuli</string>
     <string name="gesture_show_hint" maxLength="41">Zobrazit nápovědu</string>
     <string name="gesture_show_all_hints" maxLength="41">Zobrazit všechny nápovědy</string>
