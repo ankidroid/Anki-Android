@@ -21,3 +21,93 @@ globalThis.ankidroid.showHint = function () {
 globalThis.ankidroid.showAllHints = function () {
     document.querySelectorAll("a.hint").forEach(el => el.click());
 };
+
+(() => {
+    const DOUBLE_TAP_TIMEOUT = 250; // Max ms between taps for a double tap.
+
+    let startX = 0,
+        startY = 0,
+        tapTimer = null,
+        isSingleTouch = false;
+
+    document.addEventListener(
+        "touchstart",
+        event => {
+            // Ignore multi-touch gestures (like two-finger taps)
+            if (event.touches.length > 1) {
+                isSingleTouch = false;
+                return;
+            }
+            isSingleTouch = true;
+            startX = event.touches[0].clientX;
+            startY = event.touches[0].clientY;
+        },
+        { passive: true },
+    );
+
+    document.addEventListener(
+        "touchend",
+        event => {
+            if (!isSingleTouch || isTextSelected() || isInteractable(event)) return;
+
+            let endX = event.changedTouches[0].clientX,
+                endY = event.changedTouches[0].clientY;
+
+            if (tapTimer != null) {
+                window.location.href = "tap://double";
+                event.preventDefault();
+                clearTimeout(tapTimer);
+                tapTimer = null;
+                return;
+            }
+
+            tapTimer = setTimeout(() => {
+                const params = new URLSearchParams({
+                    x: endX,
+                    y: endY,
+                    deltaX: Math.abs(endX - startX),
+                    deltaY: Math.abs(endY - startY),
+                });
+                window.location.href = `tap://single/?${params.toString()}`;
+                event.preventDefault();
+                tapTimer = null;
+            }, DOUBLE_TAP_TIMEOUT);
+        },
+        { passive: false },
+    );
+
+    /**
+     * Checks if the target element or its parents are interactive.
+     * @param {HTMLElement} target
+     * @returns {boolean}
+     */
+    function isInteractable(e) {
+        let node = e.target;
+        while (node && node !== document) {
+            const res =
+                node.nodeName === "A" ||
+                node.onclick ||
+                node.nodeName === "BUTTON" ||
+                node.nodeName === "VIDEO" ||
+                node.nodeName === "SUMMARY" ||
+                node.nodeName === "INPUT" ||
+                node.getAttribute("contentEditable");
+            if (res) {
+                return true;
+            }
+            if (node.classList && node.classList.contains("tappable")) {
+                return true;
+            }
+            node = node.parentNode;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if the user is selecting text.
+     * @returns {boolean}
+     */
+    function isTextSelected() {
+        return !document.getSelection().isCollapsed;
+    }
+})();
