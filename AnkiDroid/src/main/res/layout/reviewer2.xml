@@ -78,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="4dp"
             android:layout_marginHorizontal="@dimen/reviewer_side_margin">
 
             <WebView
@@ -94,7 +94,7 @@
             style="@style/CardView.ViewerStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginVertical="4dp"
             android:layout_marginHorizontal="@dimen/reviewer_side_margin"
             android:visibility="gone"
             tools:visibility="visible">
@@ -121,7 +121,9 @@
             android:id="@+id/answer_area"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/reviewer_side_margin">
+            android:layout_marginVertical="4dp"
+            android:layout_marginHorizontal="@dimen/reviewer_side_margin"
+            tools:visibility="visible">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/show_answer"
@@ -140,7 +142,6 @@
                 android:layout_width="match_parent"
                 android:minHeight="?minTouchTargetSize"
                 android:visibility="invisible"
-                android:layout_marginBottom="4dp"
                 tools:visibility="invisible"
                 >
 
@@ -149,7 +150,7 @@
                     style="@style/AnswerButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginHorizontal="@dimen/answer_button_margin_horizontal"
+                    android:layout_marginEnd="@dimen/answer_button_margin_horizontal"
                     android:backgroundTint="@color/again_button_bg"
                     android:text="@string/ease_button_again"
                     android:textColor="@color/again_button_text"
@@ -185,7 +186,7 @@
                     style="@style/AnswerButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginHorizontal="@dimen/answer_button_margin_horizontal"
+                    android:layout_marginStart="@dimen/answer_button_margin_horizontal"
                     android:backgroundTint="@color/easy_button_bg"
                     android:text="@string/ease_button_easy"
                     android:textColor="@color/easy_button_text"
