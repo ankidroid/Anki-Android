@@ -46,7 +46,7 @@ interface IField : Serializable {
     /**
      * Returns the formatted value for this field. Each implementation of IField should return in a format which will be
      * used to store in the database
-     *
+     * - The formatted value now contains the actual file name instead of the encoded name.
      * @return
      */
     val formattedValue: String?
