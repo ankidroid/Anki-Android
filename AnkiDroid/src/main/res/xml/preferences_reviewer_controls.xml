@@ -148,11 +148,6 @@
             android:title="@string/gesture_abort_learning"
             android:icon="@drawable/close_icon"
             />
-        <com.ichi2.preferences.ReviewerControlPreference
-            android:key="@string/abort_and_sync_command_key"
-            android:title="@string/gesture_abort_sync"
-            android:icon="@drawable/ic_sync"
-            />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/media">

@@ -1683,11 +1683,6 @@ abstract class AbstractFlashcardViewer :
                 true
             }
 
-            ViewerCommand.ABORT_AND_SYNC -> {
-                abortAndSync()
-                true
-            }
-
             ViewerCommand.RECORD_VOICE -> {
                 recordVoice()
                 true
@@ -1781,10 +1776,6 @@ abstract class AbstractFlashcardViewer :
 
     protected open fun changeWhiteboardPenColor() {
         // intentionally blank
-    }
-
-    private fun abortAndSync() {
-        closeReviewer(RESULT_ABORT_AND_SYNC)
     }
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
@@ -2669,7 +2660,6 @@ abstract class AbstractFlashcardViewer :
          */
         const val RESULT_DEFAULT = 50
         const val RESULT_NO_MORE_CARDS = 52
-        const val RESULT_ABORT_AND_SYNC = 53
 
         /**
          * Time to wait in milliseconds before resuming fullscreen mode
