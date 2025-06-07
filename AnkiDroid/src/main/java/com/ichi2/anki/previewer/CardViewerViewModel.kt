@@ -54,7 +54,7 @@ abstract class CardViewerViewModel(
 
     val eval = MutableSharedFlow<String>()
 
-    val showingAnswer = MutableStateFlow(false)
+    open val showingAnswer = MutableStateFlow(false)
 
     protected val cardMediaPlayer =
         cardMediaPlayer.apply {
