@@ -41,6 +41,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.textfield.TextInputLayout
+import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
@@ -166,6 +167,25 @@ class SetDueDateDialog : DialogFragment() {
                     cb.isChecked = viewModel.updateIntervalToMatchDueDate
                     cb.setOnCheckedChangeListener { _, isChecked ->
                         viewModel.updateIntervalToMatchDueDate = isChecked
+                    }
+                }
+
+                lifecycleScope.launch {
+                    viewModel.currentInterval.collect { currentInterval ->
+                        findViewById<MaterialTextView>(R.id.current_interval_text)!!.also { tv ->
+                            // Current interval is set to null when multiple cards are selected
+                            if (currentInterval != null) {
+                                tv.isVisible = true
+                                tv.text =
+                                    resources.getQuantityString(
+                                        R.plurals.set_due_date_current_interval,
+                                        currentInterval,
+                                        currentInterval,
+                                    )
+                            } else {
+                                tv.isVisible = false
+                            }
+                        }
                     }
                 }
             }
