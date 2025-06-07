@@ -73,8 +73,8 @@
         <item quantity="other">%1$d ಗಂಟೆಗಳು %2$d ಉಳಿದಿವೆ</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of hours.">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">%1$d ದಿನ %2$d ಗಂಟೆಗಳು ಉಳಿದಿವೆ</item>
+        <item quantity="other">%1$d ದಿನಗಳು %2$d ಗಂಟೆಗಳು ಉಳಿದಿವೆ</item>
     </plurals>
     <string name="type_answer_hint" comment="In the reviewer. When the user use note type with hint. It\'s the default content of the text field in which the user is invited to type their answer. It disappears as soon as the user start to type.">ಉತ್ತರವನ್ನು ಟೈಪ್ ಮಾಡಿ</string>
     <string name="show_answer" maxLength="41" comment="When displaying the question side of a card. This is the label of a button that display the answer side.">ಉತ್ತರ ತೋರಿಸು</string>

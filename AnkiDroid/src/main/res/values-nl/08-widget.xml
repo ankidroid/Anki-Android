@@ -60,7 +60,7 @@
         <item quantity="other">%d minuten resterend</item>
     </plurals>
     <string name="widget_add_note_button">Nieuwe Ankidroid-memo toevoegen</string>
-    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">Deck Picker</string>
+    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">Set kiezer</string>
     <string name="card_analysis_extra_widget_description">Kaartanalyse</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
     <string name="select_decks_title" comment="Title for Deck Selection Dialog">Sets selecteren</string>
@@ -69,9 +69,9 @@
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Set verwijderd</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">Deze set is al geselecteerd</string>
     <plurals name="deck_limit_reached">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">You can select up to %d deck.</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">You can select up to %d decks.</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">Je kan tot wel %d sets selecteren.</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">Je kan maximum %d sets selecteren.</item>
     </plurals>
-    <string name="empty_widget_state" comment="To denote the widget is empty">Missing deck. Tap to reconfigure.</string>
-    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Collection is empty, use app to add decks then reconfigure</string>
+    <string name="empty_widget_state" comment="To denote the widget is empty">Ontbrekende sets. Klik om opnieuw te configureren.</string>
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Collectie is leeg, gebruik de app om sets toe te voegen en opnieuw te configureren.</string>
 </resources>

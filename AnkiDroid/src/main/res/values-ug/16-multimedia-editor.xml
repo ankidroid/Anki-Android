@@ -60,7 +60,7 @@
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">كاشىلا كۆرۈلدى</string>
     <string name="multimedia_editor_png_paste_error">سۈرەتنى png گە ئايلاندۇرۇۋاتقاندا خاتالىق كۆرۈلدى: %s</string>
-    <string name="multimedia_editor_attach_tooltip" comment="Appear when holding the finger  on the paperclip icon">Attach multimedia content</string>
+    <string name="multimedia_editor_attach_tooltip" comment="Appear when holding the finger  on the paperclip icon">كۆپ ۋاسىتە مەزمۇننى يۈكلەيدۇ</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">كۆپ ۋاسىتە مەزمۇننى %1$s بۆلەككە قوشىدۇ</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
@@ -73,6 +73,6 @@
     <string name="save_dialog_content">نۆۋەتتىكى سۈرەتنىڭ چوڭلۇقى ‏‎%s‪‎‏MB‬. كۆۈلدىكى سۈرەت چوڭلۇقىنىڭ چېكى ‪1MB‬. پىرىسلامسىز؟</string>
     <string name="select_image_failed">"سۈرەت تاللىيالمىدى، قايتا سىناڭ"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">بۆلەك مەزمۇنى</string>
-    <string name="crop_image_size_notice">The image is too big to be handled by the crop editor. Please resize it and try again!</string>
+    <string name="crop_image_size_notice">سۈرەت بەك چوڭ بولغانلىقتىن قايچىلاش تەھرىرلىگۈچ بىر تەرەپ قىلالمايدۇ. ئۇنىڭ چوڭلۇقىنى تەڭشەپ ئاندىن قايتا سىناڭ!</string>
     <string name="reselect" maxLength="28">قايتا تاللاش</string>
 </resources>
