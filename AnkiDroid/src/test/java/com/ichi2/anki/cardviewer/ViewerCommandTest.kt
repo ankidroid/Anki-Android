@@ -57,7 +57,6 @@ class ViewerCommandTest {
                 "binding_PAGE_DOWN",
                 "binding_TAG",
                 "binding_CARD_INFO",
-                "binding_ABORT_AND_SYNC",
                 "binding_RECORD_VOICE",
                 "binding_SAVE_VOICE",
                 "binding_REPLAY_VOICE",

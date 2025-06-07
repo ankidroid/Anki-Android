@@ -314,7 +314,6 @@ object PreferenceUpgradeService {
                     Pair(31, ViewerCommand.PAGE_DOWN),
                     Pair(32, ViewerCommand.TAG),
                     Pair(33, ViewerCommand.CARD_INFO),
-                    Pair(34, ViewerCommand.ABORT_AND_SYNC),
                     Pair(35, ViewerCommand.RECORD_VOICE),
                     Pair(36, ViewerCommand.REPLAY_VOICE),
                     Pair(46, ViewerCommand.SAVE_VOICE),
