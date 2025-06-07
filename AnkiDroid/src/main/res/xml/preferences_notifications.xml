@@ -18,6 +18,12 @@
     android:title="@string/notification_pref"
     android:key="@string/pref_notifications_screen_key"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <Preference
+        android:key="@string/pref_notifications_edit_app_wide_key"
+        android:title="Edit all app-wide review reminders" />
+    <Preference
+        android:key="@string/pref_notifications_edit_deck_specific_key"
+        android:title="Edit all deck-specific review reminders" />
     <ListPreference
         android:defaultValue="1000000"
         android:entries="@array/notification_minimum_cards_due_labels"

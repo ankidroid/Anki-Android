@@ -20,12 +20,15 @@ import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import androidx.core.app.PendingIntentCompat
 import androidx.preference.ListPreference
+import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.R
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.reviewreminders.ScheduleReminders
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.utils.AdaptionUtil
+import timber.log.Timber
 
 /**
  * Fragment with preferences related to notifications
@@ -43,6 +46,15 @@ class NotificationsSettingsFragment : SettingsFragment() {
             preferenceScreen.removePreference(requirePreference<SwitchPreferenceCompat>(R.string.pref_notifications_vibrate_key))
             preferenceScreen.removePreference(requirePreference<SwitchPreferenceCompat>(R.string.pref_notifications_blink_key))
         }
+
+        // Show either the new review reminders system or the legacy system, not both
+        if (requireContext().sharedPrefs().getBoolean(getString(R.string.pref_new_notifications), false)) {
+            displayNewNotificationsSubscreen()
+            return
+        }
+        preferenceScreen.removePreference(requirePreference<Preference>(R.string.pref_notifications_edit_app_wide_key))
+        preferenceScreen.removePreference(requirePreference<Preference>(R.string.pref_notifications_edit_deck_specific_key))
+
         // Minimum cards due
         // The number of cards that should be due today in a deck to justify adding a notification.
         requirePreference<ListPreference>(R.string.pref_notifications_minimum_cards_due_key).apply {
@@ -67,6 +79,25 @@ class NotificationsSettingsFragment : SettingsFragment() {
                 }
                 true
             }
+        }
+    }
+
+    private fun displayNewNotificationsSubscreen() {
+        preferenceScreen.removePreference(requirePreference<ListPreference>(R.string.pref_notifications_minimum_cards_due_key))
+        val editAppWideButton = requirePreference<Preference>(R.string.pref_notifications_edit_app_wide_key)
+        val editDeckSpecificButton = requirePreference<Preference>(R.string.pref_notifications_edit_deck_specific_key)
+
+        editAppWideButton.setOnPreferenceClickListener {
+            Timber.i("NotificationsSettingsFragment:: edit app wide review reminders button pressed")
+            val intent = ScheduleReminders.getIntent(requireContext(), ScheduleReminders.SchedulerScope.GLOBAL_APP_WIDE)
+            startActivity(intent)
+            true
+        }
+        editDeckSpecificButton.setOnPreferenceClickListener {
+            Timber.i("NotificationsSettingsFragment:: edit deck specific review reminders button pressed")
+            val intent = ScheduleReminders.getIntent(requireContext(), ScheduleReminders.SchedulerScope.GLOBAL_DECK_SPECIFIC)
+            startActivity(intent)
+            true
         }
     }
 

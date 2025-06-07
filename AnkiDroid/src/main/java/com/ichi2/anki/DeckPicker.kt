@@ -151,6 +151,7 @@ import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
+import com.ichi2.anki.reviewreminders.ScheduleReminders
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
@@ -785,6 +786,12 @@ open class DeckPicker :
             DeckPickerContextMenuOption.EDIT_DESCRIPTION -> {
                 Timber.i("Editing deck description for deck '%d'", deckId)
                 showDialogFragment(EditDeckDescriptionDialog.newInstance(deckId))
+            }
+            DeckPickerContextMenuOption.SCHEDULE_REMINDERS -> {
+                Timber.i("Scheduling review reminders for deck '%d'", deckId)
+                val intent = ScheduleReminders.getIntent(this, ScheduleReminders.SchedulerScope.SINGLE_DECK_SPECIFIC, deckId)
+                startActivity(intent)
+                dismissAllDialogFragments()
             }
         }
     }
