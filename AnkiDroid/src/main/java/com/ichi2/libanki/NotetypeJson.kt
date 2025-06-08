@@ -121,7 +121,7 @@ value class NotetypeJson(
         sfld
             .zip(fieldsNames)
             // filter to the fields which are non-empty
-            .filter { (sfld, _) -> sfld.trim { it <= ' ' }.isNotEmpty() }
+            .filter { (sfld, _) -> sfld.trim().isNotEmpty() }
             .mapTo(HashSet()) { (_, fieldName) -> fieldName }
 
     /**

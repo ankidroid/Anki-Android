@@ -1344,7 +1344,7 @@ open class CardTemplateEditor :
                 if (!m.find()) {
                     afmt.replace("{{FrontSide}}", "")
                 } else {
-                    m.group(2)!!.trim { it <= ' ' }
+                    m.group(2)!!.trim()
                 }
             template.afmt = "{{FrontSide}}\n\n<hr id=answer>\n\n$qfmt"
         }

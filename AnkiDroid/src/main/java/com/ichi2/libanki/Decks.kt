@@ -669,7 +669,7 @@ class Decks(
         const val DECK_SEPARATOR = "::"
 
         @NotInLibAnki
-        fun isValidDeckName(deckName: String): Boolean = deckName.trim { it <= ' ' }.isNotEmpty()
+        fun isValidDeckName(deckName: String): Boolean = deckName.trim().isNotEmpty()
     }
 }
 

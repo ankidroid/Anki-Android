@@ -189,7 +189,7 @@ class DB(
         sql: String,
         vararg `object`: Any?,
     ) {
-        val s = sql.trim { it <= ' ' }.lowercase()
+        val s = sql.trim().lowercase()
         // mark modified?
         for (mo in MOD_SQL_STATEMENTS) {
             if (s.startsWith(mo)) {

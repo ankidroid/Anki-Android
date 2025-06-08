@@ -44,7 +44,7 @@ object StringFormatDetector {
     ) {
         val nodeType = node.nodeType
         if (nodeType == Node.TEXT_NODE || nodeType == Node.CDATA_SECTION_NODE) {
-            sb.append(stripQuotes(node.nodeValue.trim { it <= ' ' }))
+            sb.append(stripQuotes(node.nodeValue.trim()))
         } else {
             val childNodes = node.childNodes
             var i = 0

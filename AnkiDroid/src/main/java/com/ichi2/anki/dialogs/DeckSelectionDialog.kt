@@ -414,7 +414,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
                 constraint: CharSequence,
                 items: List<DeckNode>,
             ): List<DeckNode> {
-                val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
+                val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim()
                 return items.filter {
                     it.fullDeckName.lowercase(Locale.getDefault()).contains(filterPattern)
                 }

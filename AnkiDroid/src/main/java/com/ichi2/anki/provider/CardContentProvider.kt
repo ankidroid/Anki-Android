@@ -320,14 +320,14 @@ class CardContentProvider : ContentProvider() {
                         try {
                             // check if value is a placeholder ("?"), if so replace with the next value of selectionArgs
                             val value =
-                                if ("?" == keyAndValue[1].trim { it <= ' ' }) {
+                                if ("?" == keyAndValue[1].trim()) {
                                     selectionArgs!![selectionArgIndex++]
                                 } else {
                                     keyAndValue[1]
                                 }
-                            if ("limit" == keyAndValue[0].trim { it <= ' ' }) {
+                            if ("limit" == keyAndValue[0].trim()) {
                                 limit = value.toInt()
-                            } else if ("deckID" == keyAndValue[0].trim { it <= ' ' }) {
+                            } else if ("deckID" == keyAndValue[0].trim()) {
                                 deckIdOfTemporarilySelectedDeck = value.toLong()
                                 if (!selectDeckWithCheck(col, deckIdOfTemporarilySelectedDeck)) {
                                     return rv // if the provided deckID is wrong, return empty cursor.
@@ -1364,7 +1364,7 @@ fun Card.pureAnswer(col: Collection): String {
     for (target in arrayOf("<hr id=answer>", "<hr id=\"answer\">")) {
         val pos = s.indexOf(target)
         if (pos == -1) continue
-        return s.substring(pos + target.length).trim { it <= ' ' }
+        return s.substring(pos + target.length).trim()
     }
     // neither found
     return s
