@@ -523,7 +523,7 @@ open class DeckPicker :
         if (fragmented && !startupError) {
             loadStudyOptionsFragment(false)
 
-            val resizingDivider = findViewById<View>(R.id.resizing_divider)
+            val resizingDivider = findViewById<View>(R.id.homescreen_resizing_divider)
             val parentLayout = findViewById<LinearLayout>(R.id.deckpicker_xl_view)
 
             // Get references to the panes

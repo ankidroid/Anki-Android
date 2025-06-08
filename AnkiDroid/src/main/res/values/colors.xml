@@ -153,7 +153,8 @@
     <color name="disabled_gray_dark">#fcfcfc</color>
 
     <!-- color used for the resizable screens-->
-    <color name="idle_divider_color">#B0B0B0</color>
+    <color name="idle_divider_color">#C7C7C7</color>
     <color name="drag_divider_color">#1A90FF</color>
+    <color name="divider_handle_color">#4D4D4D</color>
 </resources>
 
