@@ -192,15 +192,17 @@ class RecyclerFastScroller
                         v: View,
                         event: MotionEvent,
                     ): Boolean {
+                        val recyclerView = requireNotNull(recyclerView)
+
                         onHandleTouchListener?.onTouch(v, event)
                         if (event.actionMasked == MotionEvent.ACTION_DOWN) {
                             handle.isPressed = true
-                            recyclerView!!.stopScroll()
+                            recyclerView.stopScroll()
 
                             var nestedScrollAxis = ViewCompat.SCROLL_AXIS_NONE
                             nestedScrollAxis = nestedScrollAxis or ViewCompat.SCROLL_AXIS_VERTICAL
 
-                            recyclerView!!.startNestedScroll(nestedScrollAxis)
+                            recyclerView.startNestedScroll(nestedScrollAxis)
 
                             initialBarHeight = bar.height.toFloat()
                             lastPressedYAdjustedToInitial = event.y + handle.y + bar.y
@@ -211,23 +213,24 @@ class RecyclerFastScroller
                             val newHandlePressedYAdjustedToInitial =
                                 newHandlePressedY + (initialBarHeight - barHeight)
 
-                            val deltaPressedYFromLastAdjustedToInitial =
-                                newHandlePressedYAdjustedToInitial - lastPressedYAdjustedToInitial
+                            val scrollProportion = newHandlePressedYAdjustedToInitial / initialBarHeight
+                            val targetPosition =
+                                (scrollProportion * recyclerView.adapter!!.itemCount)
+                                    .toInt()
+                                    .coerceIn(0, recyclerView.adapter!!.itemCount - 1)
 
-                            val dY =
-                                (
-                                    (deltaPressedYFromLastAdjustedToInitial / initialBarHeight) *
-                                        recyclerView!!.computeVerticalScrollRange()
-                                ).toInt()
-
-                            updateRvScroll(dY + lastAppBarLayoutOffset - appBarLayoutOffset)
+                            try {
+                                recyclerView.scrollToPosition(targetPosition)
+                            } catch (e: Exception) {
+                                Timber.w(e, "scrollToPosition")
+                            }
 
                             lastPressedYAdjustedToInitial = newHandlePressedYAdjustedToInitial
                             lastAppBarLayoutOffset = appBarLayoutOffset
                         } else if (event.actionMasked == MotionEvent.ACTION_UP) {
                             lastPressedYAdjustedToInitial = -1f
 
-                            recyclerView!!.stopNestedScroll()
+                            recyclerView.stopNestedScroll()
 
                             handle.isPressed = false
                             postAutoHide()
@@ -427,14 +430,6 @@ class RecyclerFastScroller
             val y = ratio * (barHeight - calculatedHandleHeight)
 
             handle.layout(handle.left, y.toInt(), handle.right, y.toInt() + calculatedHandleHeight)
-        }
-
-        fun updateRvScroll(dY: Int) {
-            try {
-                recyclerView?.scrollBy(0, dY)
-            } catch (t: Throwable) {
-                Timber.w(t)
-            }
         }
 
         companion object {
