@@ -22,6 +22,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.importAnkiPackageUndoable
@@ -36,6 +37,7 @@ import com.ichi2.libanki.getDeckNamesRaw
 import com.ichi2.libanki.getFieldNamesRaw
 import com.ichi2.libanki.getImportAnkiPackagePresetsRaw
 import com.ichi2.libanki.getNotetypeNamesRaw
+import com.ichi2.libanki.sched.computeFsrsParamsRaw
 import com.ichi2.libanki.sched.computeOptimalRetentionRaw
 import com.ichi2.libanki.sched.evaluateParamsRaw
 import com.ichi2.libanki.sched.simulateFsrsReviewRaw
@@ -45,8 +47,10 @@ import com.ichi2.libanki.stats.graphsRaw
 import com.ichi2.libanki.stats.setGraphPreferencesRaw
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 interface PostRequestHandler {
@@ -77,12 +81,12 @@ val collectionMethods =
         "cardStats" to { bytes -> cardStatsRaw(bytes) },
         "getDeckConfigsForUpdate" to { bytes -> getDeckConfigsForUpdateRaw(bytes) },
         "computeOptimalRetention" to { bytes -> computeOptimalRetentionRaw(bytes) },
+        "computeFsrsParams" to { bytes -> computeFsrsParamsRaw(bytes) },
         "evaluateParams" to { bytes -> evaluateParamsRaw(bytes) },
         "simulateFsrsReview" to { bytes -> simulateFsrsReviewRaw(bytes) },
         "getImageForOcclusion" to { bytes -> getImageForOcclusionRaw(bytes) },
         "getImageOcclusionNote" to { bytes -> getImageOcclusionNoteRaw(bytes) },
         "setWantsAbort" to { bytes -> setWantsAbortRaw(bytes) },
-        "latestProgress" to { bytes -> latestProgressRaw(bytes) },
         "getSchedulingStatesWithContext" to { bytes -> getSchedulingStatesWithContextRaw(bytes) },
         "setSchedulingStates" to { bytes -> setSchedulingStatesRaw(bytes) },
         "getChangeNotetypeInfo" to { bytes -> getChangeNotetypeInfoRaw(bytes) },
@@ -110,6 +114,13 @@ val uiMethods =
     hashMapOf<String, UIBackendInterface>(
         "searchInBrowser" to { bytes -> lifecycleScope.async { searchInBrowser(bytes) } },
         "updateDeckConfigs" to { bytes -> lifecycleScope.async { updateDeckConfigsRaw(bytes) } },
+        "latestProgress" to { bytes ->
+            lifecycleScope.async {
+                withContext(Dispatchers.IO) {
+                    CollectionManager.getBackend().latestProgressRaw(bytes)
+                }
+            }
+        },
         "importCsv" to { bytes -> lifecycleScope.async { importCsvRaw(bytes) } },
         "importAnkiPackage" to { bytes -> lifecycleScope.async { importAnkiPackageUndoable(bytes) } },
         "addImageOcclusionNote" to { bytes ->
@@ -122,7 +133,6 @@ val uiMethods =
                 withCol { updateImageOcclusionNoteRaw(bytes) }
             }
         },
-        "computeFsrsParams" to { bytes -> lifecycleScope.async { computeFsrsParams(bytes) } },
         "deckOptionsReady" to { bytes -> lifecycleScope.async { deckOptionsReady(bytes) } },
         "deckOptionsRequireClose" to { bytes -> lifecycleScope.async { deckOptionsRequireClose(bytes) } },
     )
