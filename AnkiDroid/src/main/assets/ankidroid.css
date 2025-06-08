@@ -3,11 +3,11 @@ video {
 }
 
 @font-face {
-    font-family: "Free Mono";
-    src: url("file:///android_asset/fonts/freefont/FreeMono.ttf")
+    font-family: "Noto Sans Mono";
+    src: url("file:///android_asset/fonts/noto/NotoSansMono.ttf")
 }
 
 #typeans {
   width: 100%;
-  font-family: "Free Mono";
+  font-family: "Noto Sans Mono";
 }
