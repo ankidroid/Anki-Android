@@ -25,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import anki.collection.OpChanges
+import anki.collection.OpChangesAfterUndo
 import anki.frontend.SetSchedulingStatesRequest
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
@@ -302,7 +303,11 @@ class ReviewerViewModel(
         Timber.v("ReviewerViewModel::undo")
         val changes =
             undoableOp {
-                undo()
+                if (undoAvailable()) {
+                    undo()
+                } else {
+                    OpChangesAfterUndo.getDefaultInstance()
+                }
             }
         val message =
             if (changes.operation.isEmpty()) {
@@ -315,7 +320,14 @@ class ReviewerViewModel(
 
     private suspend fun redo() {
         Timber.v("ReviewerViewModel::redo")
-        val changes = undoableOp { redo() }
+        val changes =
+            undoableOp {
+                if (redoAvailable()) {
+                    redo()
+                } else {
+                    OpChangesAfterUndo.getDefaultInstance()
+                }
+            }
         val message =
             if (changes.operation.isEmpty()) {
                 CollectionManager.TR.actionsNothingToRedo()
