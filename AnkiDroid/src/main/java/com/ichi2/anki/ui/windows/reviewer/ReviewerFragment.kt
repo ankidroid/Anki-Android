@@ -58,7 +58,6 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.CardMediaPlayer
-import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
@@ -100,7 +99,6 @@ import com.ichi2.utils.dp
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.math.abs
 
 class ReviewerFragment :
     CardViewerFragment(R.layout.reviewer2),
@@ -578,57 +576,7 @@ class ReviewerFragment :
         override fun handleUrl(url: Uri): Boolean {
             return when (url.scheme) {
                 "gesture" -> {
-                    if (isScrolling) return true
-                    if (url.host == "doubleTap") {
-                        viewModel.onGesture(Gesture.DOUBLE_TAP)
-                        return true
-                    }
-
-                    fun Uri.getIntQuery(key: String) = getQueryParameter(key)?.toIntOrNull()
-                    val tapX = url.getIntQuery("x") ?: return false
-                    val tapY = url.getIntQuery("y") ?: return false
-                    val deltaX = url.getIntQuery("deltaX") ?: return false
-                    val deltaY = url.getIntQuery("deltaY") ?: return false
-                    val absDeltaX = abs(deltaX)
-                    val absDeltaY = abs(deltaY)
-
-                    val swipeThreshold = 18 / scale
-                    if (absDeltaX > swipeThreshold || absDeltaY > swipeThreshold) {
-                        val scrollDirection = url.getQueryParameter("scrollDirection")
-                        val swipeGesture =
-                            if (absDeltaX > absDeltaY) { // horizontal
-                                if (scrollDirection?.contains('h') == true) return true
-                                if (deltaX > 0) { // right
-                                    Gesture.SWIPE_RIGHT
-                                } else { // left
-                                    Gesture.SWIPE_LEFT
-                                }
-                            } else { // vertical
-                                if (scrollDirection?.contains('v') == true) return true
-                                if (deltaY > 0) { // down
-                                    Gesture.SWIPE_DOWN
-                                } else { // top
-                                    Gesture.SWIPE_UP
-                                }
-                            }
-                        viewModel.onGesture(swipeGesture)
-                        return true
-                    }
-
-                    /** Gets the corresponding index of a dimension (X or Y) in the [gestureGrid] */
-                    fun getGridIndex(
-                        tapPosition: Int,
-                        scrolledDistance: Int,
-                        dimensionSize: Int,
-                    ): Int {
-                        val scaledTap = tapPosition * scale
-                        val adjustedTapPosition = scaledTap - scrolledDistance
-                        return (adjustedTapPosition / (dimensionSize / 3)).toInt()
-                    }
-
-                    val row = getGridIndex(tapY, webView.scrollY, webView.measuredHeight)
-                    val column = getGridIndex(tapX, webView.scrollX, webView.measuredWidth)
-                    val gesture = gestureGrid[row][column]
+                    val gesture = GestureParser.parse(url, isScrolling, scale, webView) ?: return true
                     viewModel.onGesture(gesture)
                     true
                 }
@@ -648,12 +596,5 @@ class ReviewerFragment :
 
     companion object {
         fun getIntent(context: Context): Intent = CardViewerActivity.getIntent(context, ReviewerFragment::class)
-
-        private val gestureGrid =
-            listOf(
-                listOf(Gesture.TAP_TOP_LEFT, Gesture.TAP_TOP, Gesture.TAP_TOP_RIGHT),
-                listOf(Gesture.TAP_LEFT, Gesture.TAP_CENTER, Gesture.TAP_RIGHT),
-                listOf(Gesture.TAP_BOTTOM_LEFT, Gesture.TAP_BOTTOM, Gesture.TAP_BOTTOM_RIGHT),
-            )
     }
 }
