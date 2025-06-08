@@ -436,7 +436,7 @@ class TagsArrayAdapter(
             items: List<String>,
         ): List<String> {
             val shownTags = TreeSet<String>()
-            val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
+            val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim()
             val crucialTags =
                 items.filter {
                     it.lowercase(Locale.getDefault()).contains(filterPattern)

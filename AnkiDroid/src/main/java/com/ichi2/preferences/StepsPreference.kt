@@ -100,7 +100,7 @@ class StepsPreference :
             for (step in stepsAr.stringIterable()) {
                 sb.append(step).append(" ")
             }
-            sb.toString().trim { it <= ' ' }
+            sb.toString().trim()
         }
     }
 
@@ -120,7 +120,7 @@ class StepsPreference :
             for (s in a.stringIterable()) {
                 sb.append(s).append(" ")
             }
-            return sb.toString().trim { it <= ' ' }
+            return sb.toString().trim()
         }
 
         /**
@@ -132,7 +132,7 @@ class StepsPreference :
          */
         fun convertToJSON(steps: String): JSONArray? {
             val stepsAr = JSONArray()
-            val stepsTrim = steps.trim { it <= ' ' }
+            val stepsTrim = steps.trim()
             if (steps.isEmpty()) {
                 return stepsAr
             }

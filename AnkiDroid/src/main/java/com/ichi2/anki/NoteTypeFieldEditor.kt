@@ -178,7 +178,7 @@ class NoteTypeFieldEditor : AnkiActivity() {
             }
             offset++
         }
-        input = input.substring(offset).trim { it <= ' ' }
+        input = input.substring(offset).trim()
         if (input.isEmpty()) {
             showThemedToast(this, resources.getString(R.string.toast_empty_name), true)
             return null

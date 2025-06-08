@@ -103,7 +103,7 @@ data class DeckNode(
             if (filter.isNullOrBlank()) {
                 null
             } else {
-                filter.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
+                filter.toString().lowercase(Locale.getDefault()).trim()
             }
         val list = mutableListOf<DeckNode>()
         filterAndFlattenInner(filterPattern, list)

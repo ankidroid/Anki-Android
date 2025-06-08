@@ -2565,7 +2565,7 @@ class NoteEditor :
                 R.string.CardEditorTags,
                 getColUnsafe.tags
                     .join(getColUnsafe.tags.canonify(selectedTags!!))
-                    .trim { it <= ' ' }
+                    .trim()
                     .replace(" ", ", "),
             )
     }

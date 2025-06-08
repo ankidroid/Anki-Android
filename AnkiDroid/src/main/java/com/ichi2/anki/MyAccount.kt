@@ -129,7 +129,7 @@ open class MyAccount : AnkiActivity() {
     }
 
     private fun attemptLogin() {
-        val username = username.text.toString().trim { it <= ' ' } // trim spaces, issue 1586
+        val username = username.text.toString().trim() // trim spaces, issue 1586
         val password = password.text.toString()
         if (username.isEmpty() || password.isEmpty()) {
             Timber.i("Auto-login cancelled - username/password missing")
@@ -143,7 +143,7 @@ open class MyAccount : AnkiActivity() {
         // Hide soft keyboard
         val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(username.windowToken, 0)
-        val username = username.text.toString().trim { it <= ' ' } // trim spaces, issue 1586
+        val username = username.text.toString().trim() // trim spaces, issue 1586
         val password = password.text.toString()
         handleNewLogin(username, password, notificationPermissionLauncher)
     }
