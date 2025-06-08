@@ -108,12 +108,17 @@ class ReviewerFragment :
         get() = requireView().findViewById(R.id.webview)
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
-        val typeAnswerContainer = this@ReviewerFragment.view?.findViewById<View>(R.id.type_answer_container)
-        val answerArea = this@ReviewerFragment.view?.findViewById<View>(R.id.answer_area)
+        val fragmentView = this@ReviewerFragment.view
+        val typeAnswerContainer = fragmentView?.findViewById<View>(R.id.type_answer_container)
+        val answerArea = fragmentView?.findViewById<View>(R.id.answer_area)
         anchorView =
             when {
                 typeAnswerContainer?.isVisible == true -> typeAnswerContainer
                 answerArea?.isVisible == true -> answerArea
+                (Prefs.toolbarPosition == ToolbarPosition.BOTTOM || !resources.isWindowCompact()) ->
+                    fragmentView?.findViewById(
+                        R.id.tools_layout,
+                    )
                 else -> null
             }
     }
@@ -256,7 +261,7 @@ class ReviewerFragment :
         if (prefs.getBoolean(getString(R.string.hide_answer_buttons_key), false)) {
             answerArea.isVisible = false
             if (!resources.isWindowCompact()) {
-                val constraintLayout = view.findViewById<ConstraintLayout>(R.id.bottom_bar)
+                val constraintLayout = view.findViewById<ConstraintLayout>(R.id.tools_layout)
                 // Expand the menu if there is no answer buttons in big screens
                 with(ConstraintSet()) {
                     clone(constraintLayout)
@@ -507,14 +512,14 @@ class ReviewerFragment :
         if (!resources.isWindowCompact()) return
         when (Prefs.toolbarPosition) {
             ToolbarPosition.NONE -> {
-                view.findViewById<LinearLayout>(R.id.tools_layout).isVisible = false
+                view.findViewById<View>(R.id.tools_layout).isVisible = false
                 view.findViewById<MaterialCardView>(R.id.webview_container).updateLayoutParams<MarginLayoutParams> {
                     topMargin = 8F.dp.toPx(requireContext())
                 }
             }
             ToolbarPosition.BOTTOM -> {
                 val mainLayout = view.findViewById<LinearLayout>(R.id.main_layout)
-                val toolbar = view.findViewById<LinearLayout>(R.id.tools_layout)
+                val toolbar = view.findViewById<View>(R.id.tools_layout)
                 val answerArea = view.findViewById<FrameLayout>(R.id.answer_area)
 
                 mainLayout.removeView(toolbar)
