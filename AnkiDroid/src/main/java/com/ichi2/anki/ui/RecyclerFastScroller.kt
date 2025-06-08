@@ -55,7 +55,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.GravityCompat
@@ -96,14 +95,17 @@ class RecyclerFastScroller
          * the delay in millis to hide the scrollbar
          */
         private var hideDelay: Duration = DEFAULT_AUTO_HIDE_DELAY
-        private var mHandleNormalColor: Int
-        private var mHandlePressedColor: Int
-        private var mBarColor: Int
-        private var mBarInset = 0
+        private var handleNormalColor: Int =
+            MaterialColors.getColor(context, android.R.attr.colorControlNormal, 0)
+        private var handlePressedColor: Int =
+            MaterialColors.getColor(context, android.R.attr.colorAccent, 0)
+        private var barColor: Int =
+            MaterialColors.getColor(context, android.R.attr.colorControlNormal, 0)
+        private var barInset = 0
 
-        private var mHideOverride = false
+        private var hideOverride = false
         private var adapter: RecyclerView.Adapter<*>? = null
-        private val mAdapterObserver: RecyclerView.AdapterDataObserver =
+        private val adapterObserver: RecyclerView.AdapterDataObserver =
             object : RecyclerView.AdapterDataObserver() {
                 override fun onChanged() {
                     super.onChanged()
@@ -119,7 +121,7 @@ class RecyclerFastScroller
                 field = touchTargetWidth
 
                 val eightDp: Int = 8.dp.toPx(context)
-                mBarInset = touchTargetWidth - eightDp
+                barInset = touchTargetWidth - eightDp
 
                 val fortyEightDp: Int = 48.dp.toPx(context)
                 if (touchTargetWidth > fortyEightDp) {
@@ -129,13 +131,13 @@ class RecyclerFastScroller
                 bar.layoutParams =
                     LayoutParams(
                         touchTargetWidth,
-                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        LayoutParams.MATCH_PARENT,
                         GravityCompat.END,
                     )
                 handle.layoutParams =
                     LayoutParams(
                         touchTargetWidth,
-                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        LayoutParams.MATCH_PARENT,
                         GravityCompat.END,
                     )
 
@@ -144,9 +146,6 @@ class RecyclerFastScroller
             }
 
         init {
-            mBarColor = MaterialColors.getColor(context, android.R.attr.colorControlNormal, 0)
-            mHandleNormalColor = MaterialColors.getColor(context, android.R.attr.colorControlNormal, 0)
-            mHandlePressedColor = MaterialColors.getColor(context, android.R.attr.colorAccent, 0)
 
             layoutParams = LayoutParams(minScrollHandleHeight, LayoutParams.MATCH_PARENT)
 
@@ -244,34 +243,6 @@ class RecyclerFastScroller
             translationX = hiddenTranslationX.toFloat()
         }
 
-        @get:ColorInt
-        var handlePressedColor: Int
-            get() = mHandlePressedColor
-            set(colorPressed) {
-                mHandlePressedColor = colorPressed
-                updateHandleColorsAndInset()
-            }
-
-        @get:ColorInt
-        var handleNormalColor: Int
-            get() = mHandleNormalColor
-            set(colorNormal) {
-                mHandleNormalColor = colorNormal
-                updateHandleColorsAndInset()
-            }
-
-        @get:ColorInt
-        var barColor: Int
-            get() = mBarColor
-
-            /**
-             * @param scrollBarColor Scroll bar color. Alpha will be set to ~22% to match stock scrollbar.
-             */
-            set(scrollBarColor) {
-                mBarColor = scrollBarColor
-                updateBarColorAndInset()
-            }
-
         /**
          * whether hiding is enabled
          */
@@ -289,20 +260,20 @@ class RecyclerFastScroller
             if (!isRtl()) {
                 drawable.addState(
                     PRESSED_ENABLED_STATE_SET,
-                    InsetDrawable(mHandlePressedColor.toDrawable(), mBarInset, 0, 0, 0),
+                    InsetDrawable(handlePressedColor.toDrawable(), barInset, 0, 0, 0),
                 )
                 drawable.addState(
                     EMPTY_STATE_SET,
-                    InsetDrawable(mHandleNormalColor.toDrawable(), mBarInset, 0, 0, 0),
+                    InsetDrawable(handleNormalColor.toDrawable(), barInset, 0, 0, 0),
                 )
             } else {
                 drawable.addState(
                     PRESSED_ENABLED_STATE_SET,
-                    InsetDrawable(mHandlePressedColor.toDrawable(), 0, 0, mBarInset, 0),
+                    InsetDrawable(handlePressedColor.toDrawable(), 0, 0, barInset, 0),
                 )
                 drawable.addState(
                     EMPTY_STATE_SET,
-                    InsetDrawable(mHandleNormalColor.toDrawable(), 0, 0, mBarInset, 0),
+                    InsetDrawable(handleNormalColor.toDrawable(), 0, 0, barInset, 0),
                 )
             }
             handle.background = drawable
@@ -311,9 +282,9 @@ class RecyclerFastScroller
         private fun updateBarColorAndInset() {
             val drawable: Drawable =
                 if (!isRtl()) {
-                    InsetDrawable(mBarColor.toDrawable(), mBarInset, 0, 0, 0)
+                    InsetDrawable(barColor.toDrawable(), barInset, 0, 0, 0)
                 } else {
-                    InsetDrawable(mBarColor.toDrawable(), 0, 0, mBarInset, 0)
+                    InsetDrawable(barColor.toDrawable(), 0, 0, barInset, 0)
                 }
             drawable.alpha = 57
             bar.background = drawable
@@ -338,8 +309,8 @@ class RecyclerFastScroller
 
         private fun attachAdapter(adapter: RecyclerView.Adapter<*>?) {
             if (this.adapter === adapter) return
-            this.adapter?.unregisterAdapterDataObserver(mAdapterObserver)
-            adapter?.registerAdapterDataObserver(mAdapterObserver)
+            this.adapter?.unregisterAdapterDataObserver(adapterObserver)
+            adapter?.registerAdapterDataObserver(adapterObserver)
             this.adapter = adapter
         }
 
@@ -353,7 +324,7 @@ class RecyclerFastScroller
 
             post(
                 Runnable {
-                    if (mHideOverride) {
+                    if (hideOverride) {
                         return@Runnable
                     }
                     handle.isEnabled = true
@@ -421,11 +392,11 @@ class RecyclerFastScroller
 
             if (calculatedHandleHeight >= barHeight) {
                 translationX = hiddenTranslationX.toFloat()
-                mHideOverride = true
+                hideOverride = true
                 return
             }
 
-            mHideOverride = false
+            hideOverride = false
 
             val y = ratio * (barHeight - calculatedHandleHeight)
 
