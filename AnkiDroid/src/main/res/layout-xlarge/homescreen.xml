@@ -23,17 +23,16 @@
                 android:layout_height="match_parent"/>
 
             <FrameLayout
-                android:id="@+id/resizing_divider"
-                android:layout_width="6dp"
+                android:id="@+id/homescreen_resizing_divider"
+                android:layout_width="8dp"
                 android:layout_height="match_parent"
-                android:background="#B0B0B0">
+                android:background="@color/idle_divider_color">
                 <View
-                    android:id="@+id/divider_handle"
-                    android:layout_width="2dp"
+                    android:id="@+id/homescreen_divider_handle"
+                    android:layout_width="3dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/divider_handle_background"
-                    android:elevation="2dp" />
+                    android:background="@drawable/divider_handle_background" />
             </FrameLayout>
 
             <androidx.fragment.app.FragmentContainerView
