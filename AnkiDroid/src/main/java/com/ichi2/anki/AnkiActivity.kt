@@ -91,6 +91,7 @@ import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.HandlerUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -736,6 +737,25 @@ open class AnkiActivity :
                         // hack: lifecycleScope/runOnUiThread do not handle our
                         // test dispatcher overriding both IO and Main
                         // in tests, waitForAsyncTasksToComplete may be required.
+                        HandlerUtils.postOnNewHandler { runBlocking { block(it) } }
+                    } else {
+                        block(it)
+                    }
+                }
+            }
+        }
+    }
+
+    // see above:
+    protected fun <T> StateFlow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
+        lifecycleScope.launch {
+            var lastValue: T? = null
+            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                this@launchCollectionInLifecycleScope.collect {
+                    // on re-resume, an unchanged value will be emitted for a StateFlow
+                    if (lastValue == value) return@collect
+                    lastValue = value
+                    if (isRobolectric) {
                         HandlerUtils.postOnNewHandler { runBlocking { block(it) } }
                     } else {
                         block(it)
