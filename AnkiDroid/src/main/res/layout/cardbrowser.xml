@@ -38,8 +38,6 @@
             android:layout_height="match_parent"
             android:background="?android:attr/colorBackground"
             android:overScrollFooter="@color/transparent"
-            android:clipToPadding="false"
-            android:paddingBottom="72dp"
             android:drawSelectorOnTop="true"
             tools:listitem="@layout/card_item_browser"
             />
