@@ -16,7 +16,7 @@
 package com.ichi2.anki.previewer
 
 import android.content.Context
-import com.google.android.material.color.MaterialColors
+import androidx.appcompat.widget.ThemeUtils
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.LanguageUtils
 import com.ichi2.themes.Themes
@@ -25,55 +25,42 @@ import org.intellij.lang.annotations.Language
 
 /**
  * Not exactly equal to anki's stdHtml. Some differences:
- * * `ankidroid.css` and `ankidroid.js` are added
+ * * `ankidroid.css` is added
  * * `bridgeCommand()` is ignored
  *
  * Aimed to be used only for reviewing/previewing cards
+ *
+ * @param extraJsAssets paths of additional Javascript assets
+ * in the `android_assets` folder to be included
  */
+@Language("HTML")
 fun stdHtml(
     context: Context = AnkiDroidApp.instance,
+    extraJsAssets: List<String> = emptyList(),
     nightMode: Boolean = false,
 ): String {
     val languageDirectionality = if (LanguageUtils.appLanguageIsRTL()) "rtl" else "ltr"
+    val baseTheme = if (nightMode) "dark" else "light"
+    val docClass = if (nightMode) "night-mode" else ""
+    val rootNightMode = if (nightMode) "[class*=night-mode]" else ""
 
-    val baseTheme: String
-    val docClass: String
-    if (nightMode) {
-        docClass = "night-mode"
-        baseTheme = "dark"
-    } else {
-        docClass = ""
-        baseTheme = "light"
-    }
+    val canvasColor = ThemeUtils.getThemeAttrColor(context, android.R.attr.colorBackground).toRGBHex()
+    val fgColor = ThemeUtils.getThemeAttrColor(context, android.R.attr.textColor).toRGBHex()
+    val colors = ":root$rootNightMode { --canvas: $canvasColor ; --fg: $fgColor; }"
 
-    val colors =
-        if (!nightMode) {
-            val canvasColor =
-                MaterialColors
-                    .getColor(
-                        context,
-                        android.R.attr.colorBackground,
-                        android.R.color.white,
-                    ).toRGBHex()
-            val fgColor =
-                MaterialColors.getColor(context, android.R.attr.textColor, android.R.color.black).toRGBHex()
-            ":root { --canvas: $canvasColor ; --fg: $fgColor; }"
-        } else {
-            val canvasColor =
-                MaterialColors
-                    .getColor(
-                        context,
-                        android.R.attr.colorBackground,
-                        android.R.color.black,
-                    ).toRGBHex()
-            val fgColor =
-                MaterialColors.getColor(context, android.R.attr.textColor, android.R.color.white).toRGBHex()
-            ":root[class*=night-mode] { --canvas: $canvasColor; --fg: $fgColor; }"
+    val jsAssets: List<String> =
+        listOf(
+            "backend/js/jquery.min.js",
+            "backend/js/mathjax.js",
+            "backend/js/vendor/mathjax/tex-chtml-full.js",
+            "backend/js/reviewer.js",
+        ) + extraJsAssets
+    val jsTxt =
+        jsAssets.joinToString("\n") {
+            """<script src="file:///android_asset/$it"></script>"""
         }
 
-    @Language("HTML")
-    val html =
-        """
+    return """
         <!DOCTYPE html>
         <html class="$docClass" dir="$languageDirectionality" data-bs-theme="$baseTheme">
         <head>
@@ -90,16 +77,11 @@ fun stdHtml(
             <div id="_mark" hidden>&#x2605;</div>
             <div id="_flag" hidden>&#x2691;</div>
             <div id="qa"></div>
-            <script src="file:///android_asset/backend/js/jquery.min.js"></script>
-            <script src="file:///android_asset/backend/js/mathjax.js"></script>
-            <script src="file:///android_asset/backend/js/vendor/mathjax/tex-chtml-full.js"></script>
-            <script src="file:///android_asset/scripts/ankidroid.js"></script>
-            <script src="file:///android_asset/backend/js/reviewer.js"></script>
+            $jsTxt
             <script>bridgeCommand = function(){};</script>
         </body>
         </html>
         """.trimIndent()
-    return html
 }
 
 /** @return body classes used when showing a card */

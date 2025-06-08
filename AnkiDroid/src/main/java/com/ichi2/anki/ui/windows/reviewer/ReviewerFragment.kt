@@ -77,6 +77,7 @@ import com.ichi2.anki.preferences.reviewer.ViewerAction.SUSPEND_NOTE
 import com.ichi2.anki.preferences.reviewer.ViewerAction.UNDO
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
+import com.ichi2.anki.previewer.stdHtml
 import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.settings.Prefs
@@ -95,6 +96,7 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
 import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.libanki.sched.Counts
+import com.ichi2.themes.Themes
 import com.ichi2.utils.dp
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -130,6 +132,13 @@ class ReviewerFragment :
     }
 
     private lateinit var tagsDialogFactory: TagsDialogFactory
+
+    override fun onLoadInitialHtml(): String =
+        stdHtml(
+            context = requireContext(),
+            extraJsAssets = listOf("scripts/ankidroid.js"),
+            nightMode = Themes.currentTheme.isNightMode,
+        )
 
     override fun onStop() {
         super.onStop()
