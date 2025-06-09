@@ -7,6 +7,9 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <include layout="@layout/toolbar" />
-        <include layout="@layout/cardbrowser" />
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/card_browser_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
