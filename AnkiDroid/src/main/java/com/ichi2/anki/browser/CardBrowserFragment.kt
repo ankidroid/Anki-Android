@@ -30,6 +30,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import anki.collection.OpChanges
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.R
@@ -39,13 +40,16 @@ import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Searching
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.ui.attachFastScroller
+import com.ichi2.libanki.ChangeManager
 import com.ichi2.utils.HandlerUtils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
-class CardBrowserFragment : Fragment(R.layout.cardbrowser) {
+class CardBrowserFragment :
+    Fragment(R.layout.cardbrowser),
+    ChangeManager.Subscriber {
     val viewModel: CardBrowserViewModel by activityViewModels()
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -135,6 +139,23 @@ class CardBrowserFragment : Fragment(R.layout.cardbrowser) {
         viewModel.flowOfIsInMultiSelectMode.launchCollectionInLifecycleScope(::isInMultiSelectModeChanged)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
         viewModel.rowLongPressFocusFlow.launchCollectionInLifecycleScope(::onSelectedRowUpdated)
+    }
+
+    override fun opExecuted(
+        changes: OpChanges,
+        handler: Any?,
+    ) {
+        if (handler === this || handler === viewModel) {
+            return
+        }
+
+        if (changes.browserSidebar ||
+            changes.browserTable ||
+            changes.noteText ||
+            changes.card
+        ) {
+            cardsAdapter.notifyDataSetChanged()
+        }
     }
 
     // TODO: Move this to ViewModel and test

@@ -1822,7 +1822,7 @@ open class CardBrowser :
         // reload whole view
         forceRefreshSearch()
         viewModel.endMultiSelectMode()
-        notifyDataSetChanged()
+        refreshSubtitle()
         updatePreviewMenuItem()
         invalidateOptionsMenu() // maybe the availability of undo changed
     }
@@ -1892,12 +1892,10 @@ open class CardBrowser :
             return
         }
 
-        if ((
-                changes.browserSidebar ||
-                    changes.browserTable ||
-                    changes.noteText ||
-                    changes.card
-            )
+        if (changes.browserSidebar ||
+            changes.browserTable ||
+            changes.noteText ||
+            changes.card
         ) {
             refreshAfterUndo()
         }
