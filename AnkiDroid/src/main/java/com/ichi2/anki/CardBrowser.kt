@@ -59,7 +59,6 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.browser.BrowserColumnSelectionFragment
-import com.ichi2.anki.browser.BrowserMultiColumnAdapter
 import com.ichi2.anki.browser.BrowserRowCollection
 import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.browser.CardBrowserLaunchOptions
@@ -192,10 +191,6 @@ open class CardBrowser :
     @VisibleForTesting
     val browserColumnHeadings: ViewGroup
         get() = cardBrowserFragment.browserColumnHeadings
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    val cardsAdapter: BrowserMultiColumnAdapter
-        get() = cardBrowserFragment.cardsAdapter
 
     private lateinit var tagsDialogFactory: TagsDialogFactory
     private var searchItem: MenuItem? = null
