@@ -207,6 +207,8 @@ class CardBrowserViewModel(
 
     val cardSelectionEventFlow = MutableSharedFlow<Unit>()
 
+    val flowOfCardsMarkedEvent = MutableSharedFlow<Unit>()
+
     suspend fun queryAllSelectedCardIds() = selectedRows.queryCardIds(this.cardsOrNotes)
 
     suspend fun queryAllSelectedNoteIds() = selectedRows.queryNoteIds(this.cardsOrNotes)
@@ -477,6 +479,7 @@ class CardBrowserViewModel(
                 tags.bulkRemove(noteIds, "marked")
             }
         }
+        flowOfCardsMarkedEvent.emit(Unit)
     }
 
     /**

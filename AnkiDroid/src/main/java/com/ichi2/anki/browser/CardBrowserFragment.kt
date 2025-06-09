@@ -133,12 +133,17 @@ class CardBrowserFragment :
             }
         }
 
+        fun onCardsMarkedEvent(unit: Unit) {
+            cardsAdapter.notifyDataSetChanged()
+        }
+
         viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         viewModel.flowOfActiveColumns.launchCollectionInLifecycleScope(::onColumnsChanged)
         viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
         viewModel.flowOfIsInMultiSelectMode.launchCollectionInLifecycleScope(::isInMultiSelectModeChanged)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
         viewModel.rowLongPressFocusFlow.launchCollectionInLifecycleScope(::onSelectedRowUpdated)
+        viewModel.flowOfCardsMarkedEvent.launchCollectionInLifecycleScope(::onCardsMarkedEvent)
     }
 
     override fun opExecuted(
@@ -196,9 +201,6 @@ class CardBrowserFragment :
             lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 this@launchCollectionInLifecycleScope.collect {
                     if (isRobolectric) {
-                        // hack: lifecycleScope/runOnUiThread do not handle our
-                        // test dispatcher overriding both IO and Main
-                        // in tests, waitForAsyncTasksToComplete may be required.
                         HandlerUtils.postOnNewHandler { runBlocking { block(it) } }
                     } else {
                         block(it)
