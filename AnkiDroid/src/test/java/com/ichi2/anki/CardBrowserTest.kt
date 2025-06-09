@@ -1698,8 +1698,14 @@ fun TestClass.flagCardForNote(
 
 fun CardBrowser.getVisibleRows() =
     sequence {
+        val cardsListView = cardBrowserFragment.cardsListView
         for (i in 0 until (cardsListView.childCount)) {
-            val row = cardsListView.getChildViewHolder(cardsListView.getChildAt(i))
+            val row =
+                cardsListView.getChildViewHolder(
+                    cardsListView.getChildAt(
+                        i,
+                    ),
+                )
             yield(row as BrowserMultiColumnAdapter.MultiColumnViewHolder)
         }
     }.toList().also {

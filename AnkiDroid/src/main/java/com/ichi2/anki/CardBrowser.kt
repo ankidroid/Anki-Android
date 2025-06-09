@@ -49,8 +49,6 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import anki.collection.OpChanges
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
@@ -183,9 +181,6 @@ open class CardBrowser :
 
     private lateinit var deckSpinnerSelection: DeckSpinnerSelection
 
-    @VisibleForTesting
-    val cardsListView: RecyclerView
-        get() = cardBrowserFragment.cardsListView
     private var searchView: CardBrowserSearchView? = null
 
     @VisibleForTesting
@@ -561,7 +556,6 @@ open class CardBrowser :
                 // Due to the ripple on long press, we set padding
                 browserColumnHeadings.updatePaddingRelative(start = 48.dp)
                 multiSelectOnBackPressedCallback.isEnabled = true
-                autoScrollTo(viewModel.lastSelectedPosition, viewModel.oldCardTopOffset)
             } else {
                 Timber.d("end multiselect mode")
                 refreshSubtitle()
@@ -569,7 +563,6 @@ open class CardBrowser :
                 actionBarTitle.visibility = View.GONE
                 browserColumnHeadings.updatePaddingRelative(start = 0.dp)
                 multiSelectOnBackPressedCallback.isEnabled = false
-                autoScrollTo(viewModel.lastSelectedPosition, viewModel.oldCardTopOffset)
             }
             // reload the actionbar using the multi-select mode actionbar
             invalidateOptionsMenu()
@@ -967,7 +960,6 @@ open class CardBrowser :
     override fun onResume() {
         super.onResume()
         selectNavigationItem(R.id.nav_browser)
-        autoScrollTo(viewModel.lastSelectedPosition, viewModel.oldCardTopOffset)
         searchView?.post {
             hideKeyboard()
         }
@@ -1944,13 +1936,6 @@ open class CardBrowser :
             viewModel: CardBrowserViewModel,
             inFragmentedActivity: Boolean = false,
         ): NoteEditorLauncher = NoteEditorLauncher.AddNoteFromCardBrowser(viewModel, inFragmentedActivity)
-    }
-
-    private fun autoScrollTo(
-        newPosition: Int,
-        offset: Int,
-    ) {
-        (cardsListView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(newPosition, offset)
     }
 }
 
