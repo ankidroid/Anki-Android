@@ -60,7 +60,7 @@
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Algo salió mal</string>
     <string name="multimedia_editor_png_paste_error">Error al convertir la imagen del portapapeles a png: %s</string>
-    <string name="multimedia_editor_attach_tooltip" comment="Appear when holding the finger  on the paperclip icon">Attach multimedia content</string>
+    <string name="multimedia_editor_attach_tooltip" comment="Appear when holding the finger  on the paperclip icon">Adjuntar contenido multimedia</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Colocar contenido multimedia en el campo %1$s</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
@@ -73,6 +73,6 @@
     <string name="save_dialog_content">El tamaño actual de la imagen es %sMB. El límite de tamaño de imagen por defecto es 1MB. ¿Deseas comprimirla?</string>
     <string name="select_image_failed">"Error al seleccionar la imagen. Vuelve a intentarlo"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Contenidos del campo</string>
-    <string name="crop_image_size_notice">The image is too big to be handled by the crop editor. Please resize it and try again!</string>
+    <string name="crop_image_size_notice">La imagen es demasiado grande para ser manejada por el editor de recortes. ¡Por favor, redimensiónala e inténtalo de nuevo!</string>
     <string name="reselect" maxLength="28">Seleccionar de nuevo</string>
 </resources>

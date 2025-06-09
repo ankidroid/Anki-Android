@@ -153,7 +153,7 @@
     <string name="error_deleting_image">Chyba při odstraňování obrázku</string>
     <string name="failed_to_apply_background_image">Nepodařilo se použít obrázek pozadí %s</string>
     <string name="background_image_too_large">Pozadí výběru balíčků je příliš velké</string>
-    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Povolená maximální velikost obrázku %d MB</string>
     <string name="image_dimensions_too_large">Rozměry obrázku jsou příliš velké (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->

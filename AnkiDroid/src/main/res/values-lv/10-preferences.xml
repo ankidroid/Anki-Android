@@ -179,7 +179,7 @@
     <string name="show_eta_summ">Rādīt atlikušo laiku</string>
     <string name="use_current" maxLength="41">Jauno kartīšu kava</string>
     <string name="learn_cutoff" maxLength="41">Apgūšanas uz priekšu ierobežojums</string>
-    <string name="time_limit" maxLength="41">Laika kastes laika ierobežojums</string>
+    <string name="time_limit" maxLength="41">Apgūšanai atvēlētā laika ierobežojums</string>
     <string name="day_offset_with_description" maxLength="41">Nākamās dienas sākums</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="zero">%d stundas pēc pusnakts</item>

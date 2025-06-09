@@ -227,10 +227,10 @@
     <string name="note_editor_toolbar_icon">Düğme yazısı</string>
     <string name="before_text">Seçimden önce HTML</string>
     <string name="after_text">Seçimden sonra HTML</string>
-    <string name="add_toolbar_item">Araç Çubuğu Öğesi yarat</string>
-    <string name="edit_toolbar_item">Araç Çubuğu Öğesini düzenle</string>
+    <string name="add_toolbar_item">Araç Çubuğu Öğesi Oluştur</string>
+    <string name="edit_toolbar_item">Araç Çubuğu Öğesini Düzenle</string>
     <string name="toolbar_item_explain_edit_or_remove">Seçili yazıdan önce ve sonra eklenecek HTML girin\n\nBir araç çubuğu öğesini değiştirmek ya da kaldırmak için basılı tutun</string>
-    <string name="remove_toolbar_item">Araç Çubuğu Öğesini sil?</string>
+    <string name="remove_toolbar_item">Araç Çubuğu Öğesi Silinsin Mi?</string>
     <string name="note_editor_image_too_large">Bu resim fazla büyük, lütfen resmi elle ekleyin</string>
     <string name="note_editor_video_too_large">Bu video dosyası fazla büyük, lütfen videoyu elle ekleyin</string>
     <string name="note_editor_audio_too_large">Bu ses dosyası fazla büyük, lütfen sesi elle ekleyin</string>
