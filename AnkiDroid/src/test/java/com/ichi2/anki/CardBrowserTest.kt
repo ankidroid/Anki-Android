@@ -57,6 +57,7 @@ import com.ichi2.anki.browser.CardBrowserColumn.DECK
 import com.ichi2.anki.browser.CardBrowserColumn.QUESTION
 import com.ichi2.anki.browser.CardBrowserColumn.SFLD
 import com.ichi2.anki.browser.CardBrowserColumn.TAGS
+import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModelTest
 import com.ichi2.anki.browser.CardOrNoteId
@@ -1742,3 +1743,6 @@ fun CardBrowser.searchCards(search: String? = null) {
     }
     runBlocking { viewModel.searchJob?.join() }
 }
+
+val CardBrowser.cardBrowserFragment: CardBrowserFragment
+    get() = supportFragmentManager.findFragmentById(R.id.card_browser_frame) as CardBrowserFragment

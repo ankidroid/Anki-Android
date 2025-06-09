@@ -170,9 +170,6 @@ open class CardBrowser :
 
     lateinit var viewModel: CardBrowserViewModel
 
-    val cardBrowserFragment: CardBrowserFragment
-        get() = supportFragmentManager.findFragmentById(R.id.card_browser_frame) as CardBrowserFragment
-
     /**
      * The frame containing the NoteEditor. Non null only in layout x-large.
      */
