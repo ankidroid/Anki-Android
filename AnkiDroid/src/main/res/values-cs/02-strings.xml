@@ -106,7 +106,7 @@
     <string name="field_remapping">%1$s (z \'%2$s\')</string>
     <string name="confirm_map_cards_to_nothing">Karty mapované na prázdný cíl budou odstraněny. Nezbývají-li už v poznámce žádné karty, bude poznámka ztracena. Opravdu chcete pokračovat?</string>
     <string name="missing_note_type">Nenalezen žádný typ poznámky</string>
-    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (prázdné)</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Časové omezení dosaženo</string>
     <plurals name="timebox_reached">
@@ -313,7 +313,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Karty</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Poznámky</string>
     <string name="toggle_cards_notes">Přepnout karty/poznámky</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="truncate_content_help">Zkrátit výšku každého řádku prohlížeče, aby se zobrazily pouze první 3 řádky obsahu</string>
     <string name="browser_options_dialog_heading">Možnosti prohlížeče</string>
     <string name="audio_saved">Nahrávka uložena</string>
     <string name="deleting_selected_notes">Mažou se vybrané poznámky</string>
@@ -336,8 +336,8 @@
         <item quantity="other">Zrušeno přeskočení %d karet</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Přemístit</string>
-    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
-    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Další</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Zpět</string>
     <string name="start_recording">Nahrát</string>
     <string name="stop_recording">Zastavit</string>
     <string name="play_recording">Přehrát</string>

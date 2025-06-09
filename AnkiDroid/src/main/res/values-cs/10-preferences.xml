@@ -150,7 +150,7 @@
     <string name="notification_pref_title" maxLength="41">Upozornit když</string>
     <string name="never_notify">Nikdy neupozorňovat</string>
     <string name="notify_when_pending">Jsou k dispozici zprávy</string>
-    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">Více než %d karet ke zkoušení</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrace</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blikající světlo</string>
     <string name="select_locale_title">Vyberte jazyk</string>
@@ -170,7 +170,7 @@
     <string name="show_estimates" maxLength="41">Zobrazit čas tlačítek</string>
     <string name="show_estimates_summ">Zobrazit čas příštího opakování na tlačítkách odpovědí</string>
     <string name="show_large_answer_buttons" maxLength="41">Zobrazit velká tlačítka odpovědí</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons_summ">Zobrazit tlačítka odpovědí ve dvou řadách</string>
     <string name="show_top_bar" maxLength="41">Zobrazit horní lištu</string>
     <string name="show_top_bar_summary">Zobrazit počty karet, čas odpovědi, příznak a označení v horní liště</string>
     <string name="show_progress" maxLength="41">Zobrazit zbývající</string>
@@ -182,10 +182,10 @@
     <string name="time_limit" maxLength="41">Časové omezení</string>
     <string name="day_offset_with_description" maxLength="41">Začátek příštího dne</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
-        <item quantity="few">%d hours past midnight</item>
-        <item quantity="many">%d hours past midnight</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hodina po půlnoci</item>
+        <item quantity="few">%d hodiny po půlnoci</item>
+        <item quantity="many">%d hodiny po půlnoci</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hodin po půlnoci</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Nevypínat obrazovku</string>
     <string name="pref_keep_screen_on_summ">Nepovolit zhasnutí displeje</string>
@@ -201,8 +201,8 @@
     <string name="reset">Obnovit</string>
     <string name="thirdparty_apps_title" maxLength="41">API aplikace třetích stran</string>
     <string name="thirdparty_apps_summary">Zobrazit seznam aplikací, které používají AnkiDroid API, jako jsou slovníky, nástroje</string>
-    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Reviews</string>
-    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
+    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Opakování</string>
+    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Náhled</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
