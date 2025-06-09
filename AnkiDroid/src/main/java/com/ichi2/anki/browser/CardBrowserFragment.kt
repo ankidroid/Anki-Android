@@ -125,6 +125,8 @@ class CardBrowserFragment :
             progressIndicator.isVisible = searchState == Initializing || searchState == Searching
         }
 
+        fun onSelectedRowsChanged(rows: Set<Any>) = cardsAdapter.notifyDataSetChanged()
+
         fun onSelectedRowUpdated(id: CardOrNoteId?) {
             cardsAdapter.focusedRow = id
             if (!viewModel.isInMultiSelectMode || viewModel.lastSelectedId == null) {
@@ -138,12 +140,13 @@ class CardBrowserFragment :
         }
 
         viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
+        viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         viewModel.flowOfActiveColumns.launchCollectionInLifecycleScope(::onColumnsChanged)
         viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
         viewModel.flowOfIsInMultiSelectMode.launchCollectionInLifecycleScope(::isInMultiSelectModeChanged)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
         viewModel.rowLongPressFocusFlow.launchCollectionInLifecycleScope(::onSelectedRowUpdated)
-        viewModel.flowOfCardsMarkedEvent.launchCollectionInLifecycleScope(::onCardsMarkedEvent)
+        viewModel.flowOfCardStateChanged.launchCollectionInLifecycleScope(::onCardsMarkedEvent)
     }
 
     override fun opExecuted(
