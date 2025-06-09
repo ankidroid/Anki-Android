@@ -157,6 +157,12 @@ open class CardBrowser :
         }
     }
 
+    override var fragmented: Boolean
+        get() = viewModel.isFragmented
+        set(value) {
+            throw UnsupportedOperationException()
+        }
+
     private enum class TagsDialogListenerAction {
         FILTER,
         EDIT_TAGS,
@@ -366,8 +372,6 @@ open class CardBrowser :
         )
 
         val launchOptions = intent?.toCardBrowserLaunchOptions() // must be called after super.onCreate()
-        // must be called once we have an accessible collection
-        viewModel = createViewModel(launchOptions)
 
         setContentView(R.layout.card_browser)
         initNavigationDrawer(findViewById(android.R.id.content))
@@ -380,10 +384,11 @@ open class CardBrowser :
          * [fragmented] will be true if the view size is large otherwise false
          */
         // TODO: Consider refactoring by storing noteEditorFrame and similar views in a sealed class (e.g., FragmentAccessor).
-        fragmented =
-            (noteEditorFrame?.visibility == View.VISIBLE).apply {
-                Timber.i("Using split Browser: %b", fragmented)
-            }
+        val fragmented = noteEditorFrame?.visibility == View.VISIBLE
+        Timber.i("Using split Browser: %b", fragmented)
+
+        // must be called once we have an accessible collection
+        viewModel = createViewModel(launchOptions, fragmented)
 
         supportFragmentManager.commit {
             replace(R.id.card_browser_frame, CardBrowserFragment())
@@ -842,7 +847,7 @@ open class CardBrowser :
     @NeedsTest("note edits are saved")
     @NeedsTest("I/O edits are saved")
     fun openNoteEditorForCard(cardId: CardId) {
-        viewModel.handleCardSelection(cardId, fragmented)
+        viewModel.handleCardSelection(cardId)
     }
 
     /**
@@ -1779,17 +1784,22 @@ open class CardBrowser :
      *
      * @see showedActivityFailedScreen - we may not have AnkiDroidApp.instance and therefore can't
      * create the ViewModel
+     *
+     * @param fragmented True if `noteEditorFrame` is non-null (x-large displays)
      */
-    private fun createViewModel(launchOptions: CardBrowserLaunchOptions?) =
-        ViewModelProvider(
-            viewModelStore,
-            CardBrowserViewModel.factory(
-                lastDeckIdRepository = AnkiDroidApp.instance.sharedPrefsLastDeckIdRepository,
-                cacheDir = cacheDir,
-                options = launchOptions,
-            ),
-            defaultViewModelCreationExtras,
-        )[CardBrowserViewModel::class.java]
+    private fun createViewModel(
+        launchOptions: CardBrowserLaunchOptions?,
+        fragmented: Boolean,
+    ) = ViewModelProvider(
+        viewModelStore,
+        CardBrowserViewModel.factory(
+            lastDeckIdRepository = AnkiDroidApp.instance.sharedPrefsLastDeckIdRepository,
+            cacheDir = cacheDir,
+            options = launchOptions,
+            isFragmented = fragmented,
+        ),
+        defaultViewModelCreationExtras,
+    )[CardBrowserViewModel::class.java]
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun filterByTag(vararg tags: String) {
