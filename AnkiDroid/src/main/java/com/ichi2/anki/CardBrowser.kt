@@ -518,11 +518,6 @@ open class CardBrowser :
         }
     }
 
-    fun notifyDataSetChanged() {
-        cardsAdapter.notifyDataSetChanged()
-        refreshSubtitle()
-    }
-
     private fun refreshSubtitle() {
         (findViewById<Spinner>(R.id.toolbar_spinner)?.adapter as? BaseAdapter)?.notifyDataSetChanged()
     }
@@ -672,6 +667,7 @@ open class CardBrowser :
         viewModel.flowOfDeckId.launchCollectionInLifecycleScope(::onDeckIdChanged)
         viewModel.flowOfCanSearch.launchCollectionInLifecycleScope(::onCanSaveChanged)
         viewModel.flowOfIsInMultiSelectMode.launchCollectionInLifecycleScope(::isInMultiSelectModeChanged)
+        viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
         viewModel.flowOfColumnHeadings.launchCollectionInLifecycleScope(::onColumnNamesChanged)
         viewModel.cardSelectionEventFlow.launchCollectionInLifecycleScope(::onSelectedCardUpdated)
@@ -1706,7 +1702,7 @@ open class CardBrowser :
         updateMultiselectMenu()
         actionBarMenu?.findItem(R.id.action_select_all)?.isVisible = !hasSelectedAllCards()
         actionBarMenu?.findItem(R.id.action_select_none)?.isVisible = viewModel.hasSelectedAnyRows()
-        notifyDataSetChanged()
+        refreshSubtitle()
     }
 
     /**
