@@ -82,7 +82,9 @@ jetbrainsAnnotations = "26.0.2"
 json = "20250517"
 jsoup = "1.20.1"
 androidTestJunit = "1.2.1"
+# https://github.com/junit-team/junit5/releases/
 junitJupiter = "5.13.0"
+# https://github.com/junit-team/junit5/releases/ - version numbers differ; changelogs in bundle
 junitPlatformLauncher = "1.13.0"
 # https://github.com/JetBrains/kotlin/releases/
 kotlin = '2.1.21'
