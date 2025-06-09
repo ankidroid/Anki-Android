@@ -588,7 +588,7 @@ class CardBrowserViewModelTest : JvmTest() {
     fun `suspend - notes - some cards suspended`() =
         runViewModelNotesTest(notes = 2) {
             // this suspends o single cid from a nid
-            suspend(cards.first().toCardId(cardsOrNotes))
+            suspend(cards.first().toCardId(cardsOrNotes) as CardId)
             ensureOpsExecuted(1) {
                 selectAll()
                 toggleSuspendCards()
@@ -1054,6 +1054,7 @@ class CardBrowserViewModelTest : JvmTest() {
                 cacheDir = createTransientDirectory(),
                 options = null,
                 preferences = AnkiDroidApp.sharedPreferencesProvider,
+                isFragmented = false,
                 manualInit = manualInit,
             )
         // makes ignoreValuesFromViewModelLaunch work under test
@@ -1078,6 +1079,7 @@ class CardBrowserViewModelTest : JvmTest() {
                 cacheDir = createTransientDirectory(),
                 options = null,
                 preferences = AnkiDroidApp.sharedPreferencesProvider,
+                isFragmented = false,
                 manualInit = manualInit,
             )
         // makes ignoreValuesFromViewModelLaunch work under test
@@ -1107,7 +1109,13 @@ class CardBrowserViewModelTest : JvmTest() {
             }
 
             val cache = File(createTempDirectory().pathString)
-            return CardBrowserViewModel(lastDeckIdRepository, cache, intent, AnkiDroidApp.sharedPreferencesProvider).apply {
+            return CardBrowserViewModel(
+                lastDeckIdRepository = lastDeckIdRepository,
+                cacheDir = cache,
+                options = intent,
+                isFragmented = false,
+                preferences = AnkiDroidApp.sharedPreferencesProvider,
+            ).apply {
                 invokeInitialSearch()
             }
         }

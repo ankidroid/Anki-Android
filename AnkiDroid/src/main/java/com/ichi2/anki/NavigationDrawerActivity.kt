@@ -60,7 +60,7 @@ abstract class NavigationDrawerActivity :
     /**
      * Navigation Drawer
      */
-    var fragmented = false
+    open var fragmented = false
         protected set
     private var navButtonGoesBack = false
 
