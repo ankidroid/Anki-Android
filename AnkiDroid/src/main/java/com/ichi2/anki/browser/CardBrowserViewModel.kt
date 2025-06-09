@@ -971,7 +971,7 @@ class CardBrowserViewModel(
 
     suspend fun updateSelectedCardsFlag(flag: Flag): List<CardId> {
         val idsToChange = queryAllSelectedCardIds()
-        undoableOp { setUserFlagForCards(cids = idsToChange, flag = flag) }
+        undoableOp(this) { setUserFlagForCards(cids = idsToChange, flag = flag) }
         flowOfCardStateChanged.emit(Unit)
         return idsToChange
     }
