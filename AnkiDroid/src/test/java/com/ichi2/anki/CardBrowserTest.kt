@@ -1726,7 +1726,7 @@ val CardBrowser.isShowingSelectNone: Boolean
 
 val CardBrowser.columnHeadingViews
     get() =
-        this.browserColumnHeadings.children
+        this.cardBrowserFragment.browserColumnHeadings.children
             .filterIsInstance<TextView>()
             .toList()
 
