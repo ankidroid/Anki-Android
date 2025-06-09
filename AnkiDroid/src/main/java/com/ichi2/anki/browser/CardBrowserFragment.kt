@@ -17,8 +17,10 @@
 package com.ichi2.anki.browser
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -39,9 +41,12 @@ import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Initializing
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Searching
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.attachFastScroller
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.utils.HandlerUtils
+import com.ichi2.utils.dp
+import com.ichi2.utils.updatePaddingRelative
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -121,6 +126,14 @@ class CardBrowserFragment :
         }
 
         fun isInMultiSelectModeChanged(inMultiSelect: Boolean) {
+            if (inMultiSelect) {
+                // A checkbox is added on the rows, match padding to keep the headings aligned
+                // Due to the ripple on long press, we set padding
+                browserColumnHeadings.updatePaddingRelative(start = 48.dp)
+            } else {
+                browserColumnHeadings.updatePaddingRelative(start = 0.dp)
+            }
+
             // update adapter to remove check boxes
             cardsAdapter.notifyDataSetChanged()
             autoScrollTo(viewModel.lastSelectedPosition, viewModel.oldCardTopOffset)
@@ -144,6 +157,34 @@ class CardBrowserFragment :
             cardsAdapter.notifyDataSetChanged()
         }
 
+        fun onColumnNamesChanged(columnCollection: List<ColumnHeading>) {
+            Timber.d("column names changed")
+            browserColumnHeadings.removeAllViews()
+
+            val layoutInflater = LayoutInflater.from(browserColumnHeadings.context)
+            for (column in columnCollection) {
+                Timber.d("setting up column %s", column)
+                val columnView = layoutInflater.inflate(R.layout.browser_column_heading, browserColumnHeadings, false) as TextView
+
+                columnView.text = column.label
+
+                // Attach click listener to open the selection dialog
+                columnView.setOnClickListener {
+                    Timber.d("Clicked column: ${column.label}")
+                    showColumnSelectionDialog(column)
+                }
+
+                // Attach long press listener to open the manage column dialog
+                columnView.setOnLongClickListener {
+                    Timber.d("Long-pressed column: ${column.label}")
+                    val dialog = BrowserColumnSelectionFragment.createInstance(viewModel.cardsOrNotes)
+                    dialog.show(parentFragmentManager, null)
+                    true
+                }
+                browserColumnHeadings.addView(columnView)
+            }
+        }
+
         viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         viewModel.flowOfActiveColumns.launchCollectionInLifecycleScope(::onColumnsChanged)
@@ -151,6 +192,7 @@ class CardBrowserFragment :
         viewModel.flowOfIsInMultiSelectMode.launchCollectionInLifecycleScope(::isInMultiSelectModeChanged)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
         viewModel.rowLongPressFocusFlow.launchCollectionInLifecycleScope(::onSelectedRowUpdated)
+        viewModel.flowOfColumnHeadings.launchCollectionInLifecycleScope(::onColumnNamesChanged)
         viewModel.flowOfCardStateChanged.launchCollectionInLifecycleScope(::onCardsMarkedEvent)
     }
 
@@ -168,6 +210,29 @@ class CardBrowserFragment :
             changes.card
         ) {
             cardsAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun showColumnSelectionDialog(selectedColumn: ColumnHeading) {
+        Timber.d("Fetching available columns for: ${selectedColumn.label}")
+
+        // Prevent multiple dialogs from opening
+        if (parentFragmentManager.findFragmentByTag(ColumnSelectionDialogFragment.TAG) != null) {
+            Timber.d("ColumnSelectionDialog is already shown, ignoring duplicate click.")
+            return
+        }
+
+        lifecycleScope.launch {
+            val (_, availableColumns) = viewModel.previewColumnHeadings(viewModel.cardsOrNotes)
+
+            if (availableColumns.isEmpty()) {
+                Timber.w("No available columns to replace ${selectedColumn.label}")
+                showSnackbar(R.string.no_columns_available)
+                return@launch
+            }
+
+            val dialog = ColumnSelectionDialogFragment.newInstance(selectedColumn)
+            dialog.show(parentFragmentManager, ColumnSelectionDialogFragment.TAG)
         }
     }
 

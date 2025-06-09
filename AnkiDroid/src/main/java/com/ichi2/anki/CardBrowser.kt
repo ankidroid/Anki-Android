@@ -23,12 +23,10 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.SubMenu
 import android.view.View
-import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.BaseAdapter
@@ -56,7 +54,6 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
-import com.ichi2.anki.browser.BrowserColumnSelectionFragment
 import com.ichi2.anki.browser.BrowserRowCollection
 import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.browser.CardBrowserLaunchOptions
@@ -65,8 +62,6 @@ import com.ichi2.anki.browser.CardBrowserViewModel.SearchState
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Initializing
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Searching
 import com.ichi2.anki.browser.CardOrNoteId
-import com.ichi2.anki.browser.ColumnHeading
-import com.ichi2.anki.browser.ColumnSelectionDialogFragment
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.browser.RepositionCardFragment
@@ -123,9 +118,7 @@ import com.ichi2.libanki.undoableOp
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.TagsUtil.getUpdatedTags
-import com.ichi2.utils.dp
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
-import com.ichi2.utils.updatePaddingRelative
 import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -182,10 +175,6 @@ open class CardBrowser :
     private lateinit var deckSpinnerSelection: DeckSpinnerSelection
 
     private var searchView: CardBrowserSearchView? = null
-
-    @VisibleForTesting
-    val browserColumnHeadings: ViewGroup
-        get() = cardBrowserFragment.browserColumnHeadings
 
     private lateinit var tagsDialogFactory: TagsDialogFactory
     private var searchItem: MenuItem? = null
@@ -552,16 +541,12 @@ open class CardBrowser :
                 // show title and hide spinner
                 actionBarTitle.visibility = View.VISIBLE
                 deckSpinnerSelection.setSpinnerVisibility(View.GONE)
-                // A checkbox is added on the rows, match padding to keep the headings aligned
-                // Due to the ripple on long press, we set padding
-                browserColumnHeadings.updatePaddingRelative(start = 48.dp)
                 multiSelectOnBackPressedCallback.isEnabled = true
             } else {
                 Timber.d("end multiselect mode")
                 refreshSubtitle()
                 deckSpinnerSelection.setSpinnerVisibility(View.VISIBLE)
                 actionBarTitle.visibility = View.GONE
-                browserColumnHeadings.updatePaddingRelative(start = 0.dp)
                 multiSelectOnBackPressedCallback.isEnabled = false
             }
             // reload the actionbar using the multi-select mode actionbar
@@ -589,58 +574,6 @@ open class CardBrowser :
             }
         }
 
-        fun showColumnSelectionDialog(selectedColumn: ColumnHeading) {
-            Timber.d("Fetching available columns for: ${selectedColumn.label}")
-
-            // Prevent multiple dialogs from opening
-            if (supportFragmentManager.findFragmentByTag(ColumnSelectionDialogFragment.TAG) != null) {
-                Timber.d("ColumnSelectionDialog is already shown, ignoring duplicate click.")
-                return
-            }
-
-            lifecycleScope.launch {
-                val (_, availableColumns) = viewModel.previewColumnHeadings(viewModel.cardsOrNotes)
-
-                if (availableColumns.isEmpty()) {
-                    Timber.w("No available columns to replace ${selectedColumn.label}")
-                    showSnackbar(R.string.no_columns_available)
-                    return@launch
-                }
-
-                val dialog = ColumnSelectionDialogFragment.newInstance(selectedColumn)
-                dialog.show(supportFragmentManager, ColumnSelectionDialogFragment.TAG)
-            }
-        }
-
-        fun onColumnNamesChanged(columnCollection: List<ColumnHeading>) {
-            Timber.d("column names changed")
-            browserColumnHeadings.removeAllViews()
-
-            val layoutInflater = LayoutInflater.from(browserColumnHeadings.context)
-            for (column in columnCollection) {
-                Timber.d("setting up column %s", column)
-                layoutInflater.inflate(R.layout.browser_column_heading, browserColumnHeadings, false).apply {
-                    val columnView = this as TextView
-                    columnView.text = column.label
-
-                    // Attach click listener to open the selection dialog
-                    columnView.setOnClickListener {
-                        Timber.d("Clicked column: ${column.label}")
-                        showColumnSelectionDialog(column)
-                    }
-
-                    // Attach long press listener to open the manage column dialog
-                    columnView.setOnLongClickListener {
-                        Timber.d("Long-pressed column: ${column.label}")
-                        val dialog = BrowserColumnSelectionFragment.createInstance(viewModel.cardsOrNotes)
-                        dialog.show(supportFragmentManager, null)
-                        true
-                    }
-                    browserColumnHeadings.addView(columnView)
-                }
-            }
-        }
-
         fun onSelectedCardUpdated(unit: Unit) {
             if (fragmented) {
                 loadNoteEditorFragmentIfFragmented()
@@ -657,7 +590,6 @@ open class CardBrowser :
         viewModel.flowOfIsInMultiSelectMode.launchCollectionInLifecycleScope(::isInMultiSelectModeChanged)
         viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
-        viewModel.flowOfColumnHeadings.launchCollectionInLifecycleScope(::onColumnNamesChanged)
         viewModel.cardSelectionEventFlow.launchCollectionInLifecycleScope(::onSelectedCardUpdated)
     }
 
