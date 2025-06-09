@@ -1639,7 +1639,7 @@ class CardBrowserTest : RobolectricTest() {
 }
 
 private fun CardBrowser.rerenderAllCards() {
-    cardsAdapter.notifyDataSetChanged()
+    cardBrowserFragment.cardsAdapter.notifyDataSetChanged()
     waitForAsyncTasksToComplete()
 }
 
