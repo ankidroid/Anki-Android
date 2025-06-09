@@ -919,7 +919,6 @@ open class CardBrowser :
     fun toggleMark() =
         launchCatchingTask {
             withProgress { viewModel.toggleMark() }
-            notifyDataSetChanged()
         }
 
     /** Opens the note editor for a card.
