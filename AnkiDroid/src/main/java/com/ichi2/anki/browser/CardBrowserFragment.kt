@@ -97,6 +97,11 @@ class CardBrowserFragment :
         setupFlows()
     }
 
+    override fun onResume() {
+        super.onResume()
+        autoScrollTo(viewModel.lastSelectedPosition, viewModel.oldCardTopOffset)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         if (::cardsListView.isInitialized) {
@@ -118,6 +123,7 @@ class CardBrowserFragment :
         fun isInMultiSelectModeChanged(inMultiSelect: Boolean) {
             // update adapter to remove check boxes
             cardsAdapter.notifyDataSetChanged()
+            autoScrollTo(viewModel.lastSelectedPosition, viewModel.oldCardTopOffset)
         }
 
         fun searchStateChanged(searchState: SearchState) {
@@ -193,6 +199,13 @@ class CardBrowserFragment :
         val firstVisiblePosition = layoutManager.findFirstVisibleItemPosition()
         val view = cardsListView.getChildAt(cardPosition - firstVisiblePosition)
         return view?.top ?: 0
+    }
+
+    private fun autoScrollTo(
+        newPosition: Int,
+        offset: Int,
+    ) {
+        (cardsListView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(newPosition, offset)
     }
 
     private fun requireCardBrowserActivity(): CardBrowser = requireActivity() as CardBrowser
