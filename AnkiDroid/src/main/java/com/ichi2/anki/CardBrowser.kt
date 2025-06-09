@@ -1657,7 +1657,7 @@ open class CardBrowser :
             // Hide note editor frame if deck is empty and fragmented
             noteEditorFrame?.visibility =
                 if (fragmented && !isDeckEmpty) {
-                    viewModel.currentCardId = (cardsAdapter.focusedRow ?: viewModel.cards[0]).toCardId(viewModel.cardsOrNotes)
+                    viewModel.currentCardId = (viewModel.focusedRow ?: viewModel.cards[0]).toCardId(viewModel.cardsOrNotes)
                     loadNoteEditorFragmentIfFragmented()
                     View.VISIBLE
                 } else {

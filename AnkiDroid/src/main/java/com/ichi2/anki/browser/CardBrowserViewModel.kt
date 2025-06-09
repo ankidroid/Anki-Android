@@ -212,6 +212,8 @@ class CardBrowserViewModel(
      */
     val flowOfCardStateChanged = MutableSharedFlow<Unit>()
 
+    var focusedRow: CardOrNoteId? = null
+
     suspend fun queryAllSelectedCardIds() = selectedRows.queryCardIds(this.cardsOrNotes)
 
     suspend fun queryAllSelectedNoteIds() = selectedRows.queryNoteIds(this.cardsOrNotes)
@@ -445,6 +447,7 @@ class CardBrowserViewModel(
                 saveScrollingState(id)
                 toggleRowSelection(id)
             }
+            focusedRow = id
             rowLongPressFocusFlow.emit(id)
         }
 
