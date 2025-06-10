@@ -47,13 +47,13 @@
     <!-- Widget -->
     <string name="widget_minimum_cards_due_notification_ticker_title">Tarxetas pendentes</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%d tarxeta AnkiDroid pendente</item>
-        <item quantity="other">%d tarxetas AnkiDroid pendentes</item>
+        <item quantity="one">Tes %d tarxeta AnkiDroid pendente</item>
+        <item quantity="other">Tes %d tarxetas AnkiDroid pendentes</item>
     </plurals>
     <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid pequecho</string>
     <plurals name="widget_cards_due">
-        <item quantity="one">%d tarxeta pendente</item>
-        <item quantity="other">%d tarxetas pendentes</item>
+        <item quantity="one">Tes %d tarxeta pendente</item>
+        <item quantity="other">Tes %d tarxetas pendentes</item>
     </plurals>
     <plurals name="widget_eta">
         <item quantity="one">%d minuto restante</item>
