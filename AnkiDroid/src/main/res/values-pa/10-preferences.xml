@@ -294,6 +294,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">ਪ੍ਰਯੋਗਾਤਮਕ</string>
     <string name="readtext_deprecation_warn">AnkiDroid ਨੇ ਇੱਕ ਸੁਧਾਰੀ ਹੋਈ TTS ਵਿਧੀ ਪੇਸ਼ ਕੀਤੀ ਹੈ ਜੋ ਦੂਜੇ Anki ਕਲਾਇੰਟਸ ਦੇ ਅਨੁਕੂਲ ਹੈ ਅਤੇ ਇਸ ਵਿੱਚ ਭਾਸ਼ਾ ਦੇ ਪਲੇਬੈਕ ਲਈ ਹੋਰ ਆਵਾਜ਼ਾਂ ਅਤੇ ਸੁਧਾਰ ਸ਼ਾਮਲ ਹਨ!\n\nਕਿਰਪਾ ਕਰਕੇ ਜਿੰਨੀ ਜਲਦੀ ਹੋ ਸਕੇ ਅੱਪਗ੍ਰੇਡ ਕਰੋ, ਕਿਉਂਕਿ ਇਹ ਸੈਟਿੰਗ ਜਲਦੀ ਹੀ ਹਟਾ ਦਿੱਤੀ ਜਾਵੇਗੀ। .</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">ਕਿਰਪਾ ਕਰਕੇ ਨਵੇਂ ਟੈਕਸਟ ਟੂ ਸਪੀਚ ਫਾਰਮੈਟ ਵਿੱਚ ਅੱਪਗ੍ਰੇਡ ਕਰੋ</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
+    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">ਵਿਕਾਸਕਾਰ ਵਿਕਲਪ</string>
     <string name="dev_options_enabled_pref" maxLength="41">ਵਿਕਾਸਕਾਰ ਵਿਕਲਪਾਂ ਨੂੰ ਸਮਰੱਥ ਬਣਾਓ</string>

@@ -293,6 +293,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">ప్రయోగాత్మకమైనది</string>
     <string name="readtext_deprecation_warn">AnkiDroid మెరుగైన TTS మెకానిజంను ప్రవేశపెట్టింది, ఇది ఇతర Anki క్లయింట్‌లకు అనుకూలంగా ఉంటుంది మరియు భాష ప్లేబ్యాక్‌కు మరిన్ని వాయిస్‌లు మరియు మెరుగుదలలను కలిగి ఉంది!\n\nదయచేసి వీలైనంత త్వరగా అప్‌గ్రేడ్ చేయండి, ఎందుకంటే ఈ సెట్టింగ్ త్వరలో తీసివేయబడుతుంది.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">దయచేసి కొత్త వచనాన్ని ప్రసంగ ఆకృతికి అప్‌గ్రేడ్ చేయండి</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
+    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">డెవలపర్ ఎంపికలు</string>
     <string name="dev_options_enabled_pref" maxLength="41">డెవలపర్ ఎంపికలను ప్రారంభించండి</string>

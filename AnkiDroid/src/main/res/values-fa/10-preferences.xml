@@ -294,6 +294,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">آزمایشی</string>
     <string name="readtext_deprecation_warn">انکی‌دروید مکانیزم TTS بهتری را معرفی کرده که با سایر کلاینت‌های انکی سازگار است و شامل صداهای بیشتر و بهبودهای پخش زبان می‌باشد! \n\nلطفاً هر چه سریع‌تر ارتقا دهید، زیرا این تنظیم به زودی حذف خواهد شد</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">لطفاً به فرمت جدید تبدیل متن به گفتار ارتقا دهید</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
+    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">گزینه های توسعه دهنده</string>
     <string name="dev_options_enabled_pref" maxLength="41">فعال‌سازی گزینه های توسعه دهنده</string>

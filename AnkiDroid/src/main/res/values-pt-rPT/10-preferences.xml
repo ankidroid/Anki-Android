@@ -295,6 +295,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <string name="readtext_deprecation_warn">O AnkiDroid introduziu um sistema de conversão de texto para fala melhor, compatível com outras aplicações do Anki e que inclui mais vozes e melhorias na reprodução da língua!\n\nEsta definição será removida em breve, por favor, actualize assim que possível</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Por favor, actualize para o novo formato de conversão de texto para fala</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
+    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Opções de programador</string>
     <string name="dev_options_enabled_pref" maxLength="41">Ativar as opções de programador</string>

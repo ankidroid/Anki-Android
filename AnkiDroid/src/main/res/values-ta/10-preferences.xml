@@ -294,6 +294,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">பரிசோதனை</string>
     <string name="readtext_deprecation_warn">AnkiDroid ஒரு சிறந்த TTS பொறிமுறையை அறிமுகப்படுத்தியுள்ளது, இது மற்ற Anki கிளையண்டுகளுடன் இணக்கமானது மேலும் மேலும் குரல்கள் மற்றும் மொழி பின்னணி மேம்பாடுகளை உள்ளடக்கியது!\n\nஇந்த அமைப்பு விரைவில் அகற்றப்படும் என்பதால், கூடிய விரைவில் மேம்படுத்தவும்.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">புதிய உரையை பேச்சு வடிவத்திற்கு மாற்றவும்</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
+    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">டெவலப்பர் விருப்பங்கள்</string>
     <string name="dev_options_enabled_pref" maxLength="41">டெவலப்பர் விருப்பங்களை இயக்கு</string>

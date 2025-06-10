@@ -290,6 +290,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Eksperimenta</string>
     <string name="readtext_deprecation_warn">AnkiDroid enkondukis pli bonan meĥanismon por parolsintezo, kiu kongruas kun aliaj klientoj Anki kaj liveras pliajn voĉojn kaj plibonigojn al son-ludado!\n\nĜisdatigu viajn kartojn kiel eble plej rapide, ĉar tiu ĉi agordo baldaŭ estos forigita.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Ĝisdatigu al pli nova formo de parolsintezo</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
+    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Programistaj agordoj</string>
     <string name="dev_options_enabled_pref" maxLength="41">Aktivigi programistajn agordojn</string>

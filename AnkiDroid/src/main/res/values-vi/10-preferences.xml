@@ -291,6 +291,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Tính năng thử nghiệm</string>
     <string name="readtext_deprecation_warn">AnkiDroid đã giới thiệu cơ chế TTS tốt hơn, tương thích với các ứng dụng khách Anki khác và bao gồm nhiều giọng nói hơn cũng như cải tiến về phát lại ngôn ngữ!\n\nVui lòng nâng cấp càng sớm càng tốt vì cài đặt này sẽ sớm bị xóa</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Vui lòng nâng cấp lên định dạng văn bản thành giọng nói mới</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
+    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Tùy chọn nhà phát triển</string>
     <string name="dev_options_enabled_pref" maxLength="41">Bật tùy chọn nhà phát triển</string>

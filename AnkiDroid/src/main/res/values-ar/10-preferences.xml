@@ -302,6 +302,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">تجريبي</string>
     <string name="readtext_deprecation_warn">يوفر أنكيدرويد الآن طريقة جديدة لتحويل نص إلى كلام متوافقة مع برامج أنكي الأخرى وتتضمن أصوات أكثر وتحسينات للتشغيل!\n\nيرجى الترقية بأسرع وقت ممكن لأن هذا الخيار سيزال قريبًا</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">يرجى التحديث إلى الصيغة الجديدة لتحويل النص إلى كلام</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
+    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">خيارات المطور</string>
     <string name="dev_options_enabled_pref" maxLength="41">تفعيل خيارات المطور</string>

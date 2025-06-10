@@ -298,6 +298,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">ניסיוני</string>
     <string name="readtext_deprecation_warn">AnkiDroid הציגה מנגנון TTS טוב יותר התואם עם לקוחות אחרים של Anki וכולל יותר קולות ושיפורים להפעלת שפה!\n\nנא לשדרג בהקדם האפשרי, שכן הגדרה זו תוסר בקרוב</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">שדרג לפורמט החדש של טקסט לדיבור</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
+    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">אפשרויות מפתח</string>
     <string name="dev_options_enabled_pref" maxLength="41">הפעלת מצב מפתח</string>

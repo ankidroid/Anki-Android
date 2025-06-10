@@ -293,6 +293,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <string name="readtext_deprecation_warn">AnkiDroid ಇತರ Anki ಕ್ಲೈಂಟ್‌ಗಳಿಗೆ ಹೊಂದಿಕೆಯಾಗುವ ಉತ್ತಮ TTS ಕಾರ್ಯವಿಧಾನವನ್ನು ಪರಿಚಯಿಸಿದೆ ಮತ್ತು ಭಾಷಾ ಪ್ಲೇಬ್ಯಾಕ್‌ಗೆ ಹೆಚ್ಚಿನ ಧ್ವನಿಗಳು ಮತ್ತು ಸುಧಾರಣೆಗಳನ್ನು ಒಳಗೊಂಡಿದೆ!\n\nದಯವಿಟ್ಟು ಸಾಧ್ಯವಾದಷ್ಟು ಬೇಗ ಅಪ್‌ಗ್ರೇಡ್ ಮಾಡಿ, ಏಕೆಂದರೆ ಈ ಸೆಟ್ಟಿಂಗ್ ಅನ್ನು ಶೀಘ್ರದಲ್ಲೇ ತೆಗೆದುಹಾಕಲಾಗುತ್ತದೆ.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">ದಯವಿಟ್ಟು ಹೊಸ ಪಠ್ಯವನ್ನು ಸ್ಪೀಚ್ ಫಾರ್ಮ್ಯಾಟ್‌ಗೆ ಅಪ್‌ಗ್ರೇಡ್ ಮಾಡಿ</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
+    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">ಅಭಿವೃಧಿಕಾರರ ಸೂಚನೆಗಳು</string>
     <string name="dev_options_enabled_pref" maxLength="41">ಡೆವಲಪರ್ ಆಯ್ಕೆಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
