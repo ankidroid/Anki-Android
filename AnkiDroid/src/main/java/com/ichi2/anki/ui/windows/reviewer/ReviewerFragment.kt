@@ -266,7 +266,12 @@ class ReviewerFragment :
         webView.settings.loadWithOverviewMode = true
     }
 
-    override fun dispatchKeyEvent(event: KeyEvent): Boolean = viewModel.dispatchKeyEvent(event)
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if (view?.findViewById<TextInputEditText>(R.id.type_answer_edit_text)?.isFocused == true) {
+            return false
+        }
+        return viewModel.dispatchKeyEvent(event)
+    }
 
     override fun onMenuItemClick(item: MenuItem): Boolean = viewModel.onMenuItemClick(item)
 
