@@ -17,6 +17,7 @@
 
 package com.ichi2.anki.tests
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import androidx.test.espresso.ViewAssertion
@@ -33,6 +34,7 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardType
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Note
+import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.QueueType
 import com.ichi2.testutils.common.IgnoreFlakyTestsInCIRule
 import kotlinx.coroutines.runBlocking
@@ -180,6 +182,33 @@ abstract class InstrumentedTest {
         check(col.addNote(n) != 0) { "Could not add note: {${fields.joinToString(separator = ", ")}}" }
         return n
     }
+
+    @DuplicatedCode("This is copied from RobolectricTest. This will be refactored into a shared library later")
+    fun addClozeNote(
+        text: String,
+        extra: String = "Extra",
+    ): Note =
+        col.newNote(col.notetypes.byName("Cloze")!!).apply {
+            setItem("Text", text)
+            col.addNote(this)
+        }
+
+    @DuplicatedCode("This is copied from RobolectricTest. This will be refactored into a shared library later")
+    /** Helper method to update a note */
+    @SuppressLint("CheckResult")
+    fun Note.update(block: Note.() -> Unit): Note {
+        block(this)
+        col.updateNote(this)
+        return this
+    }
+
+    val notetypes get() = col.notetypes
+
+    val Notetypes.basic
+        get() = byName("Basic")!!
+
+    val Notetypes.cloze
+        get() = byName("Cloze")!!
 }
 
 /**

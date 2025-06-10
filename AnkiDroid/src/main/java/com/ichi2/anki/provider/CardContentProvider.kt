@@ -40,6 +40,7 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.utils.ext.description
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.CardId
 import com.ichi2.libanki.CardTemplate
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Deck
@@ -684,12 +685,11 @@ class CardContentProvider : ContentProvider() {
                 col.removeNotes(nids = listOf(uri.pathSegments[1].toLong()))
                 1
             }
-//            MODELS_ID_EMPTY_CARDS -> {
-//                val noteType = col.models.get(getNoteTypeIdFromUri(uri, col)) ?: return -1
-//                val cids: List<Long> = col.genCards(col.models.nids(noteType), noteType)!!
-//                col.removeCardsAndOrphanedNotes(cids)
-//                cids.size
-//            }
+            NOTE_TYPES_ID_EMPTY_CARDS -> {
+                val noteType = col.notetypes.get(getNoteTypeIdFromUri(uri, col)) ?: return -1
+                val cardIdsToRemove = noteType.getEmptyCardIds(col)
+                return col.removeCardsAndOrphanedNotes(cardIdsToRemove).count
+            }
             else -> throw UnsupportedOperationException()
         }
     }
@@ -1368,4 +1368,17 @@ fun Card.pureAnswer(col: Collection): String {
     }
     // neither found
     return s
+}
+
+/**
+ * Returns the ids of empty cards for a given note type
+ */
+private fun NotetypeJson.getEmptyCardIds(col: Collection): List<CardId> {
+    val noteIdsOfType = col.notetypes.nids(this).toSet()
+
+    return col
+        .getEmptyCards()
+        .notesList
+        .filter { noteIdsOfType.contains(it.noteId) }
+        .flatMap { it.cardIdsList }
 }
