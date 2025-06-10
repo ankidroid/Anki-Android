@@ -192,6 +192,8 @@ class RecyclerFastScroller
                         event: MotionEvent,
                     ): Boolean {
                         val recyclerView = requireNotNull(recyclerView)
+                        val recyclerViewAdapter = recyclerView.adapter
+                        if (recyclerViewAdapter == null || recyclerViewAdapter.itemCount == 0) return false
 
                         onHandleTouchListener?.onTouch(v, event)
                         if (event.actionMasked == MotionEvent.ACTION_DOWN) {
@@ -214,9 +216,9 @@ class RecyclerFastScroller
 
                             val scrollProportion = newHandlePressedYAdjustedToInitial / initialBarHeight
                             val targetPosition =
-                                (scrollProportion * recyclerView.adapter!!.itemCount)
+                                (scrollProportion * recyclerViewAdapter.itemCount)
                                     .toInt()
-                                    .coerceIn(0, recyclerView.adapter!!.itemCount - 1)
+                                    .coerceIn(0, recyclerViewAdapter.itemCount - 1)
 
                             try {
                                 recyclerView.scrollToPosition(targetPosition)
