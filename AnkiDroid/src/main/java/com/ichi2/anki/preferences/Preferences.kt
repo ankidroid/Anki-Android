@@ -135,7 +135,7 @@ class PreferencesFragment :
         fragment.arguments = pref.extras
         childFragmentManager.commit {
             replace(R.id.settings_container, fragment, fragment::class.jvmName)
-            setOpenTransition(this)
+            setFadeTransition(this)
             addToBackStack(null)
         }
         return true
@@ -147,7 +147,7 @@ class PreferencesFragment :
         parentFragmentManager.popBackStack() // clear the search fragment from the backstack
         childFragmentManager.commit {
             replace(R.id.settings_container, fragment, fragment.javaClass.name)
-            setOpenTransition(this)
+            setFadeTransition(this)
             addToBackStack(fragment.javaClass.name)
         }
 
@@ -170,9 +170,9 @@ class PreferencesFragment :
         view?.findViewById<MaterialToolbar>(R.id.toolbar)?.title = title
     }
 
-    private fun setOpenTransition(fragmentTransaction: FragmentTransaction) {
+    private fun setFadeTransition(fragmentTransaction: FragmentTransaction) {
         if (!sharedPrefs().getBoolean("safeDisplay", false)) {
-            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         }
     }
 
