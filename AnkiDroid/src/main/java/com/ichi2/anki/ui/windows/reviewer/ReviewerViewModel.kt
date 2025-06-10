@@ -73,12 +73,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import timber.log.Timber
-import java.net.BindException
-import java.net.ServerSocket
 
 class ReviewerViewModel(
     cardMediaPlayer: CardMediaPlayer,
     private val bindingMap: BindingMap<ReviewerBinding, ViewerAction>,
+    serverPort: Int = 0,
 ) : CardViewerViewModel(cardMediaPlayer),
     ChangeManager.Subscriber,
     BindingProcessor<ReviewerBinding, ViewerAction> {
@@ -105,7 +104,7 @@ class ReviewerViewModel(
     val editNoteTagsFlow = MutableSharedFlow<NoteId>()
     val setDueDateFlow = MutableSharedFlow<CardId>()
 
-    override val server: AnkiServer
+    override val server: AnkiServer = AnkiServer(this, serverPort).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
     val statesMutationEval = MutableSharedFlow<String>()
 
@@ -133,17 +132,6 @@ class ReviewerViewModel(
         }
 
     init {
-        val port =
-            try {
-                ServerSocket(DEFAULT_PORT).use {
-                    it.reuseAddress = true
-                    it.localPort
-                }
-            } catch (_: BindException) {
-                0
-            }
-        server = AnkiServer(this, port).also { it.start() }
-
         bindingMap.setProcessor(this)
         ChangeManager.subscribe(this)
         launchCatchingIO {
@@ -680,20 +668,14 @@ class ReviewerViewModel(
     }
 
     companion object {
-        /**
-         * Default port of the Reviewer's [AnkiServer].
-         * Using a static port makes the URL constant, and that
-         * makes possible to use JavaScript's `localStorage`.
-         */
-        const val DEFAULT_PORT = 40001
-
         fun factory(
             soundPlayer: CardMediaPlayer,
             bindingMap: BindingMap<ReviewerBinding, ViewerAction>,
+            serverPort: Int,
         ): ViewModelProvider.Factory =
             viewModelFactory {
                 initializer {
-                    ReviewerViewModel(soundPlayer, bindingMap)
+                    ReviewerViewModel(soundPlayer, bindingMap, serverPort)
                 }
             }
 
