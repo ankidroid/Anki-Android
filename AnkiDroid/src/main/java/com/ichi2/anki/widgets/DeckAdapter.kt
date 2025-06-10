@@ -276,5 +276,6 @@ private val deckNodeDiffCallback =
                 oldItem.fullDeckName == newItem.fullDeckName &&
                 oldItem.newCount == newItem.newCount &&
                 oldItem.lrnCount == newItem.lrnCount &&
-                oldItem.revCount == newItem.revCount
+                oldItem.revCount == newItem.revCount &&
+                oldItem.children.isEmpty() == newItem.children.isEmpty()
     }
