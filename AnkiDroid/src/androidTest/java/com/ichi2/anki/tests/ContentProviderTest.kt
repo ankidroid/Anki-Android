@@ -1345,6 +1345,97 @@ class ContentProviderTest : InstrumentedTest() {
             } ?: fail("query returned null")
     }
 
+    @Test
+    fun emptyCards_noCardsInCollection() {
+        assertThat("deleted when collection empty", emptyCards(notetypes.cloze), equalTo(0))
+    }
+
+    @Test
+    fun emptyCards_emptyCard() {
+        val note =
+            addTempClozeNote("{{c1::A}} {{c2::B}}").update {
+                fields[0] = "{{c1::A}}"
+            }
+        assertThat("initial cards", note.numberOfCards(col), equalTo(2))
+        assertThat("cards removed by empty_cards", emptyCards(notetypes.cloze), equalTo(1))
+        assertThat("remaining cards after empty_cards", note.numberOfCards(col), equalTo(1))
+    }
+
+    @Test
+    fun emptyCards_emptyNote() {
+        // deleting the note was requested by the original implementer of this functionality in 2016
+        // https://github.com/ankidroid/Anki-Android/issues/18435#issuecomment-2954066920
+        val note =
+            addTempClozeNote("{{c1::A}} {{c2::B}}").update {
+                fields[0] = "Invalid Cloze"
+            }
+        assertThat("initial cards", note.numberOfCards(col), equalTo(2))
+        assertThat("cards removed by empty_cards", emptyCards(notetypes.cloze), equalTo(2))
+        assertThat("remaining cards after empty_cards", note.numberOfCards(col), equalTo(0))
+        assertThrows<BackendNotFoundException>("note should be deleted") { col.backend.getNote(note.id) }
+    }
+
+    @Test
+    fun emptyCards_nothingToDo() {
+        val note = addTempClozeNote("{{c1::A}}")
+        assertThat("initial cards", note.numberOfCards(col), equalTo(1))
+        assertThat("cards removed by empty_cards", emptyCards(notetypes.cloze), equalTo(0))
+        assertThat("remaining cards after empty_cards", note.numberOfCards(col), equalTo(1))
+    }
+
+    @Test
+    fun emptyCards_nonMatchingNoteType() {
+        val noteTypeToEmpty = notetypes.basic
+        val note =
+            addTempClozeNote("{{c1::A}} {{c2::B}}").update {
+                fields[0] = "{{c1::A}}"
+            }
+        assertThat("initial cards", note.numberOfCards(col), equalTo(2))
+        assertThat("cards removed by empty_cards", emptyCards(noteTypeToEmpty), equalTo(0))
+        assertThat("remaining cards after empty_cards", note.numberOfCards(col), equalTo(2))
+    }
+
+    @Test
+    fun emptyCards_invalidNoteType() {
+        assertThat("empty_cards: invalid input", emptyCardsForId(0), equalTo(-1))
+    }
+
+    @Test
+    fun emptyCards_invalidUri() {
+        val emptyCardsUri =
+            FlashCardsContract.Model.CONTENT_URI
+                .buildUpon()
+                .appendPath("should_be_numeric")
+                .appendPath("empty_cards")
+                .build()
+        val exception = assertThrows<IllegalArgumentException> { contentResolver.delete(emptyCardsUri, null, null) }
+        assertThat(exception.message, containsString("must be either numeric or"))
+    }
+
+    /**
+     * Helper for "empty_cards"
+     *
+     * see `NOTE_TYPES_ID_EMPTY_CARDS`
+     */
+    private fun emptyCards(noteType: NotetypeJson): Int = emptyCardsForId(noteType.id)
+
+    /** @see emptyCardsForId */
+    private fun emptyCardsForId(noteTypeId: NoteTypeId): Int {
+        val emptyCardsUri =
+            FlashCardsContract.Model.CONTENT_URI
+                .buildUpon()
+                .appendPath(noteTypeId.toString())
+                .appendPath("empty_cards")
+                .build()
+        return contentResolver.delete(emptyCardsUri, null, null)
+    }
+
+    /** Adds a note which will be removed by [tearDown] */
+    private fun addTempClozeNote(text: String): Note =
+        addClozeNote(text).update {
+            tags.add(TEST_TAG)
+        }
+
     private fun reopenCol(): com.ichi2.libanki.Collection {
         Timber.i("closeCollection: %s", "ContentProviderTest: reopenCol")
         CollectionManager.closeCollectionBlocking()
