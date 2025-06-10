@@ -584,6 +584,7 @@ object UsageAnalytics {
             R.string.type_in_answer_focus_key, // Focus ‘type in answer’
             R.string.media_import_allow_all_files_key, // Allow all files in media imports
             R.string.enable_api_key, // Enable AnkiDroid API
+            R.string.use_fixed_port_pref_key, // localStorage in Study Screen
             // ******************************** App bar buttons ****************************************
             R.string.reset_custom_buttons_key,
             R.string.custom_button_undo_key,

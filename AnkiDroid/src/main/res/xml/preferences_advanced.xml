@@ -88,6 +88,11 @@
                 android:key="@string/media_import_allow_all_files_key"
                 android:summary="@string/media_import_allow_all_files_summ"
                 android:title="@string/media_import_allow_all_files" />
+            <SwitchPreferenceCompat
+                android:title="@string/pref_fixed_port_title"
+                android:key="@string/use_fixed_port_pref_key"
+                android:summary="@string/pref_fixed_port_summary"
+                android:defaultValue="false"/>
         </PreferenceCategory>
         <PreferenceCategory
             android:key="@string/pref_cat_plugins_key"
