@@ -292,6 +292,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">試験運用機能</string>
     <string name="readtext_deprecation_warn">AnkiDroidは、他のAnkiクライアント（デスクトップ版Anki、AnkiMobile）と互換性がある、より優れたTTS（テキスト読み上げ）システムを導入しました。新システムでは、より多くの音声や、品質の向上した再生機能が利用できます。\n\n従来のTTSシステムを対象とするこのオプションは近い将来に削除され、利用できなくなります。そうなる前に、できるだけ早く、ノートタイプ内のカードテンプレートを新しいTTSシステムに対応したものに変更することをおすすめします。</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">テキスト読み上げ（TTS）の新しいフォーマットにアップグレードしてください</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
+    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">開発者向けオプション</string>
     <string name="dev_options_enabled_pref" maxLength="41">開発者向けオプションを有効にする</string>

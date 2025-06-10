@@ -292,6 +292,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">實驗性功能</string>
     <string name="readtext_deprecation_warn">AnkiDroid 引入了更好的 TTS 機制，與其他 Anki 客戶端相容，並包含更多的語音和語言播放的改進！\n\n請儘快升級，因為此設定將很快移除。</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">請升級至新的文字轉語音格式</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
+    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">開發人員選項</string>
     <string name="dev_options_enabled_pref" maxLength="41">啟用開發人員選項</string>

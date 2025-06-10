@@ -297,6 +297,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Izmēģinājuma</string>
     <string name="readtext_deprecation_warn">AnkiDroid ir ieviesta labāks TTS (teksta pārvēršanas runā) mehānisms, kas ir saderīgs ar citiem Anki klientiem un iekļauj vairāk balsu un valodas atskaņošanas uzlabojumiem.\n\nLūgums atjaunināt, tiklīdz tas ir iespējams, jo šis iestatījums drīz tiks noņemts</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Lūgums uzlabot uz jauno teksta pārveidošanas runā formātu</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
+    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Izstrādātāju iespējas</string>
     <string name="dev_options_enabled_pref" maxLength="41">Iespējot izstrādāju iespējas</string>

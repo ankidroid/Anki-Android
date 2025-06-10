@@ -295,6 +295,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Eksperimental</string>
     <string name="readtext_deprecation_warn">Sinimulan ng AnkiDroid ang mas pinagaling na mekanismo sa TTS kung saan ito ay gagana sa iba\'t ibang kliyente ng Anki at mayroon itong mas maraming boses at mas pinagaling na playback ng wika! Mangyaring mag-upgrade sa lalong madaling panahon, dahil mawawal na ang setting na ito.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Mangyaring mag-upgrade sa bagong text to speech na format</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
+    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Mga opsyon pangdeveloper</string>
     <string name="dev_options_enabled_pref" maxLength="41">Paganahin ang mga opsyon pangdeveloper</string>

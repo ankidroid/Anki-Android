@@ -294,6 +294,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimenteel</string>
     <string name="readtext_deprecation_warn">AnkiDroid heeft een beter TTS-mechanisme geïntroduceerd dat compatibel is met andere Anki-clients en meer stemmen en verbeteringen in het afspelen van talen bevat!nnUpgrade zo snel mogelijk, want deze instelling wordt binnenkort verwijderd</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Upgrade naar de nieuwe tekst-naar-spraak-indeling</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
+    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Opties voor ontwikkelaars</string>
     <string name="dev_options_enabled_pref" maxLength="41">Opties voor ontwikkelaars inschakelen</string>
