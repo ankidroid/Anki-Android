@@ -57,6 +57,7 @@ import com.ichi2.libanki.CardId
 import com.ichi2.libanki.CardType
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.DeckNameId
 import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.QueueType.ManuallyBuried
 import com.ichi2.libanki.QueueType.SiblingBuried
@@ -1180,6 +1181,11 @@ class CardBrowserViewModel(
             lastSelectedPosition = position
         }
     }
+
+    /**
+     * Returns the decks which are suitable for [moveSelectedCardsToDeck]
+     */
+    suspend fun getAvailableDecks(): List<DeckNameId> = withCol { decks.allNamesAndIds(includeFiltered = false) }
 }
 
 enum class SaveSearchResult {

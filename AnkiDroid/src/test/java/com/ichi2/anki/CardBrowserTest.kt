@@ -1670,7 +1670,7 @@ val CardBrowser.lastDeckId
     get() = viewModel.lastDeckId
 
 val CardBrowser.validDecksForChangeDeck
-    get() = runBlocking { getValidDecksForChangeDeck() }
+    get() = runBlocking { viewModel.getAvailableDecks() }
 
 suspend fun CardBrowser.searchCardsSync(query: String) {
     searchCards(query)
