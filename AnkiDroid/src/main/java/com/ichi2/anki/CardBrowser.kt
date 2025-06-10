@@ -112,7 +112,6 @@ import com.ichi2.libanki.CardId
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.DeckNameId
 import com.ichi2.libanki.SortOrder
 import com.ichi2.libanki.undoableOp
 import com.ichi2.ui.CardBrowserSearchView
@@ -1492,7 +1491,8 @@ open class CardBrowser :
                 return@launchCatchingTask
             }
             val selectableDecks =
-                getValidDecksForChangeDeck()
+                viewModel
+                    .getAvailableDecks()
                     .map { d -> SelectableDeck(d) }
             val dialog = getChangeDeckDialog(selectableDecks)
             showDialogFragment(dialog)
@@ -1641,9 +1641,6 @@ open class CardBrowser :
                 }
             return resources.getQuantityString(subtitleId, count, count)
         }
-
-    /** Returns the decks which are valid targets for "Change Deck"  */
-    suspend fun getValidDecksForChangeDeck(): List<DeckNameId> = deckSpinnerSelection.computeDropDownDecks(includeFiltered = false)
 
     @RustCleanup("this isn't how Desktop Anki does it")
     override fun onSelectedTags(
