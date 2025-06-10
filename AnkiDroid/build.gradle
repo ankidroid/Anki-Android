@@ -12,7 +12,7 @@ plugins {
 repositories {
     google()
     mavenCentral()
-    maven { url "https://jitpack.io" }
+    maven { url = "https://jitpack.io" }
 }
 
 keeper {
@@ -39,9 +39,9 @@ static def gitCommitHash() {
 }
 
 android {
-    namespace "com.ichi2.anki"
+    namespace = "com.ichi2.anki"
 
-    compileSdk libs.versions.compileSdk.get().toInteger()
+    compileSdk = libs.versions.compileSdk.get().toInteger()
 
     buildFeatures {
         buildConfig = true
@@ -49,13 +49,13 @@ android {
     }
 
     if (rootProject.testReleaseBuild) {
-        testBuildType "release"
+        testBuildType = "release"
     } else {
-        testBuildType "debug"
+        testBuildType = "debug"
     }
 
     defaultConfig {
-        applicationId "com.ichi2.anki"
+        applicationId = "com.ichi2.anki"
         buildConfigField "Boolean", "CI", (System.getenv("CI") == "true").toString()
         buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
         buildConfigField "String", "BACKEND_VERSION", "\"${libs.versions.ankiBackend.get()}\""
@@ -87,13 +87,13 @@ android {
         // needed for upgrades to be offered correctly.
         versionCode=22100116
         versionName="2.21alpha16"
-        minSdk libs.versions.minSdk.get().toInteger()
+        minSdk = libs.versions.minSdk.get().toInteger()
 
         // After #13695: change .tests_emulator.yml
-        targetSdk libs.versions.targetSdk.get().toInteger()
-        testApplicationId "com.ichi2.anki.tests"
+        targetSdk = libs.versions.targetSdk.get().toInteger()
+        testApplicationId = "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
-        testInstrumentationRunner 'com.ichi2.testutils.NewCollectionPathTestRunner'
+        testInstrumentationRunner = 'com.ichi2.testutils.NewCollectionPathTestRunner'
     }
     signingConfigs {
         release {
@@ -124,7 +124,7 @@ android {
                 localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
                 // #6009 Allow optional disabling of JaCoCo for general build (assembleDebug).
                 // jacocoDebug task was slow, hung, and wasn't required unless I wanted coverage
-                testCoverageEnabled localProperties['enable_coverage'] != "false"
+                testCoverageEnabled = localProperties['enable_coverage'] != "false"
                 // not profiled: optimization for build times
                 if (localProperties['enable_languages'] == "false") {
                     android.defaultConfig.resConfigs "en"
@@ -150,7 +150,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             testProguardFile 'proguard-test-rules.pro'
             splits.abi.universalApk = universalApkEnabled // Build universal APK for release with `-Duniversal-apk=true`
-            signingConfig signingConfigs.release
+            signingConfig = signingConfigs.release
 
             // syntax: assembleRelease -PcustomSuffix="suffix" -PcustomName="New name"
             if (project.hasProperty("customSuffix")) {
@@ -205,7 +205,7 @@ android {
     splits {
         abi {
             reset()
-            enable enableSeparateBuildPerCPUArchitecture
+            enable = enableSeparateBuildPerCPUArchitecture
             //universalApk enableUniversalApk  // set in debug + release config blocks above
             include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
@@ -238,7 +238,7 @@ android {
     }
 
     testOptions {
-        animationsDisabled true
+        animationsDisabled = true
         kotlinOptions {
             freeCompilerArgs += [
                     '-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi',
@@ -249,7 +249,7 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
-        coreLibraryDesugaringEnabled true
+        coreLibraryDesugaringEnabled = true
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
