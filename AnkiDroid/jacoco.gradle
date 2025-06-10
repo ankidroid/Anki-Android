@@ -10,7 +10,7 @@ jacoco {
 
 android {
     testCoverage {
-        jacocoVersion libs.versions.jacoco.get()
+        jacocoVersion = libs.versions.jacoco.get()
     }
 }
 
