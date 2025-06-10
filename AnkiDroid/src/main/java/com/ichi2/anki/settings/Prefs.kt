@@ -198,4 +198,8 @@ object Prefs {
     var isDevOptionsEnabled: Boolean
         get() = getBoolean(R.string.dev_options_enabled_by_user_key, false) || BuildConfig.DEBUG
         set(value) = putBoolean(R.string.dev_options_enabled_by_user_key, value)
+
+    var useFixedPortInReviewer by booleanPref(R.string.use_fixed_port_pref_key, false)
+
+    var reviewerPort by intPref(R.string.reviewer_port_pref_key, defaultValue = 0)
 }

@@ -127,7 +127,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.ui.windows.reviewer.ReviewerViewModel
+import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.OnlyOnce.Method.ANSWER_CARD
 import com.ichi2.anki.utils.OnlyOnce.preventSimultaneousExecutions
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -163,8 +163,6 @@ import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.File
 import java.io.UnsupportedEncodingException
-import java.net.BindException
-import java.net.ServerSocket
 import java.net.URLDecoder
 import java.util.concurrent.locks.Lock
 import java.util.concurrent.locks.ReadWriteLock
@@ -272,7 +270,7 @@ abstract class AbstractFlashcardViewer :
 
     // needs to be lateinit due to a reliance on Context
 
-    val server: AnkiServer
+    lateinit var server: AnkiServer
 
     @get:VisibleForTesting
     var cardContent: String? = null
@@ -363,16 +361,6 @@ abstract class AbstractFlashcardViewer :
     }
 
     init {
-        val port =
-            try {
-                ServerSocket(ReviewerViewModel.DEFAULT_PORT).use {
-                    it.reuseAddress = true
-                    it.localPort
-                }
-            } catch (_: BindException) {
-                0
-            }
-        server = AnkiServer(this, port).also { it.start() }
         ChangeManager.subscribe(this)
     }
 
@@ -561,6 +549,8 @@ abstract class AbstractFlashcardViewer :
 
         setContentView(getContentViewAttr(fullscreenMode))
 
+        val port = ReviewerFragment.getServerPort()
+        server = AnkiServer(this, port).also { it.start() }
         // Make ACTION_PROCESS_TEXT for in-app searching possible on > Android 4.0
         delegate.isHandleNativeActionModesEnabled = true
         val mainView = findViewById<View>(android.R.id.content)
@@ -655,7 +645,9 @@ abstract class AbstractFlashcardViewer :
 
     override fun onDestroy() {
         super.onDestroy()
-        server.stop()
+        if (this::server.isInitialized) {
+            server.stop()
+        }
         tts.releaseTts(this)
         // WebView.destroy() should be called after the end of use
         // http://developer.android.com/reference/android/webkit/WebView.html#destroy()
