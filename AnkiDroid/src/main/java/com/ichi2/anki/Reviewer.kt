@@ -867,6 +867,8 @@ open class Reviewer :
         val voicePlaybackIcon = menu.findItem(R.id.action_toggle_mic_tool_bar)
         if (isMicToolBarVisible) {
             voicePlaybackIcon.setTitle(R.string.menu_disable_voice_playback)
+            // #18477: always show 'disable', even if 'enable' was invisible
+            voicePlaybackIcon.isVisible = true
         } else {
             voicePlaybackIcon.setTitle(R.string.menu_enable_voice_playback)
         }
