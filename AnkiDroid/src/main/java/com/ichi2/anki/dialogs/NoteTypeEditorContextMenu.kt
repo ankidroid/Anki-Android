@@ -19,6 +19,8 @@ import timber.log.Timber
  * Note: the class is declared as open only to support testing.
  */
 open class NoteTypeEditorContextMenu : AnalyticsDialogFragment() {
+    val label
+        get() = requireArguments().getString(KEY_LABEL)
     val sticky
         get() = requireArguments().getBoolean(KEY_STICKY)
 
@@ -27,8 +29,7 @@ open class NoteTypeEditorContextMenu : AnalyticsDialogFragment() {
         super.onCreate(savedInstanceState)
 
         return AlertDialog.Builder(requireActivity()).create {
-            setTitle(requireArguments().getString(KEY_LABEL))
-
+            setTitle(label)
             val excludedAction =
                 if (sticky) {
                     NoteTypeEditorContextMenuAction.StickField
