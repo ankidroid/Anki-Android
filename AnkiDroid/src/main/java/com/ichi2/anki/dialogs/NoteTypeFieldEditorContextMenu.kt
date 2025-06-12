@@ -16,13 +16,13 @@ import com.ichi2.utils.create
 import timber.log.Timber
 
 /**
- * Note: the class is declared as open only to support testing.
+ * [NoteTypeFieldEditor]'s context menu
  */
-open class NoteTypeEditorContextMenu : AnalyticsDialogFragment() {
+class NoteTypeFieldEditorContextMenu : AnalyticsDialogFragment() {
     @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        val availableItems = NoteTypeEditorContextMenuAction.entries.sortedBy { it.order }
+        val availableItems = NoteTypeFieldEditorContextMenuAction.entries.sortedBy { it.order }
 
         return AlertDialog.Builder(requireActivity()).create {
             setTitle(requireArguments().getString(KEY_LABEL))
@@ -33,7 +33,7 @@ open class NoteTypeEditorContextMenu : AnalyticsDialogFragment() {
         }
     }
 
-    enum class NoteTypeEditorContextMenuAction(
+    enum class NoteTypeFieldEditorContextMenuAction(
         val order: Int,
         @StringRes val actionTextId: Int,
     ) {
@@ -49,8 +49,8 @@ open class NoteTypeEditorContextMenu : AnalyticsDialogFragment() {
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         const val KEY_LABEL = "key_label"
 
-        fun newInstance(label: String): NoteTypeEditorContextMenu =
-            NoteTypeEditorContextMenu().apply {
+        fun newInstance(label: String): NoteTypeFieldEditorContextMenu =
+            NoteTypeFieldEditorContextMenu().apply {
                 arguments = bundleOf(KEY_LABEL to label)
             }
     }
