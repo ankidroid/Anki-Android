@@ -25,9 +25,9 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.cardviewer.JavascriptEvaluator
+import com.ichi2.anki.cardviewer.MediaErrorBehavior
 import com.ichi2.anki.cardviewer.MediaErrorHandler
-import com.ichi2.anki.cardviewer.SoundErrorBehavior
-import com.ichi2.anki.cardviewer.SoundErrorListener
+import com.ichi2.anki.cardviewer.MediaErrorListener
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.PostRequestHandler
@@ -38,7 +38,6 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import timber.log.Timber
 
@@ -58,7 +57,7 @@ abstract class CardViewerViewModel(
 
     protected val cardMediaPlayer =
         cardMediaPlayer.apply {
-            setSoundErrorListener(createSoundErrorListener())
+            setMediaErrorListener(createSoundErrorListener())
             javascriptEvaluator = { JavascriptEvaluator { launchCatchingIO { eval.emit(it) } } }
         }
     abstract var currentCard: Deferred<Card>
@@ -92,7 +91,7 @@ abstract class CardViewerViewModel(
     fun playSoundFromUrl(url: String) {
         launchCatchingIO {
             Sound.getAvTag(currentCard.await(), url)?.let {
-                cardMediaPlayer.playOneSound(it)
+                cardMediaPlayer.playOne(it)
             }
         }
     }
@@ -158,21 +157,21 @@ abstract class CardViewerViewModel(
         eval.emit("_showAnswer(${Json.encodeToString(answer)}, '${bodyClass()}');")
     }
 
-    private fun createSoundErrorListener(): SoundErrorListener {
-        return object : SoundErrorListener {
-            override fun onError(uri: Uri): SoundErrorBehavior {
+    private fun createSoundErrorListener(): MediaErrorListener {
+        return object : MediaErrorListener {
+            override fun onError(uri: Uri): MediaErrorBehavior {
                 if (uri.scheme != "file") {
-                    return SoundErrorBehavior.CONTINUE_AUDIO
+                    return MediaErrorBehavior.CONTINUE_MEDIA
                 }
 
                 val file = uri.toFile()
                 // There is a multitude of transient issues with the MediaPlayer.
                 // Retrying fixes most of these
-                if (file.exists()) return SoundErrorBehavior.RETRY_AUDIO
-                mediaErrorHandler.processMissingSound(file) { fileName ->
+                if (file.exists()) return MediaErrorBehavior.RETRY_MEDIA
+                mediaErrorHandler.processMissingMedia(file) { fileName ->
                     viewModelScope.launch { onMediaError.emit(fileName) }
                 }
-                return SoundErrorBehavior.CONTINUE_AUDIO
+                return MediaErrorBehavior.CONTINUE_MEDIA
             }
 
             override fun onMediaPlayerError(
@@ -180,7 +179,7 @@ abstract class CardViewerViewModel(
                 which: Int,
                 extra: Int,
                 uri: Uri,
-            ): SoundErrorBehavior {
+            ): MediaErrorBehavior {
                 Timber.w("Media Error: (%d, %d)", which, extra)
                 return onError(uri)
             }

@@ -37,7 +37,7 @@ import timber.log.Timber
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
-/** Player for the sounds of [SoundOrVideoTag] */
+/** Player for (`[sound:...]`): [SoundOrVideoTag]  */
 @NeedsTest("CardSoundConfig.autoplay should mean that video also isn't played automatically")
 class SoundTagPlayer(
     private val soundUriBase: String,
@@ -66,18 +66,18 @@ class SoundTagPlayer(
     }
 
     /**
-     * @throws SoundException if the file does not exist, or if media playing fails
-     * @param soundErrorListener handles a sound error and returns how to continue playing sounds
+     * @throws MediaException if the file does not exist, or if media playing fails
+     * @param mediaErrorListener handles a sound error and returns how to continue playing sounds
      */
     suspend fun play(
         tag: SoundOrVideoTag,
-        soundErrorListener: SoundErrorListener?,
+        mediaErrorListener: MediaErrorListener?,
     ) {
         val tagType = tag.getType()
         return suspendCancellableCoroutine { continuation ->
             Timber.d("Playing SoundOrVideoTag")
             when (tagType) {
-                SoundOrVideoTag.Type.AUDIO -> playSound(continuation, tag, soundErrorListener)
+                SoundOrVideoTag.Type.AUDIO -> playSound(continuation, tag, mediaErrorListener)
                 SoundOrVideoTag.Type.VIDEO -> playVideo(continuation, tag)
             }
         }
@@ -95,12 +95,12 @@ class SoundTagPlayer(
     private fun playSound(
         continuation: CancellableContinuation<Unit>,
         tag: SoundOrVideoTag,
-        soundErrorListener: SoundErrorListener?,
+        mediaErrorListener: MediaErrorListener?,
     ) {
         requireNewMediaPlayer().apply {
             continuation.invokeOnCancellation {
                 Timber.i("stopping MediaPlayer due to cancellation")
-                stopSounds()
+                this@SoundTagPlayer.stop()
             }
             setOnCompletionListener {
                 Timber.v("finished playing SoundOrVideoTag successfully")
@@ -122,10 +122,10 @@ class SoundTagPlayer(
                 Timber.w("Media error %d", what)
                 abandonAudioFocus()
                 val continuationBehavior =
-                    soundErrorListener?.onMediaPlayerError(mp, what, extra, soundUri) ?: SoundErrorBehavior.CONTINUE_AUDIO
+                    mediaErrorListener?.onMediaPlayerError(mp, what, extra, soundUri) ?: MediaErrorBehavior.CONTINUE_MEDIA
                 // 15103: setOnErrorListener can be invoked after task cancellation
                 if (!continuation.isCompleted) {
-                    continuation.resumeWithException(SoundException(continuationBehavior))
+                    continuation.resumeWithException(MediaException(continuationBehavior))
                 }
                 true // do not call onCompletionListen
             }
@@ -134,8 +134,8 @@ class SoundTagPlayer(
                 awaitSetDataSource(soundUri.toString())
             } catch (e: Exception) {
                 continuation.ensureActive()
-                val continuationBehavior = soundErrorListener?.onError(soundUri) ?: SoundErrorBehavior.CONTINUE_AUDIO
-                val exception = SoundException(continuationBehavior, e)
+                val continuationBehavior = mediaErrorListener?.onError(soundUri) ?: MediaErrorBehavior.CONTINUE_MEDIA
+                val exception = MediaException(continuationBehavior, e)
                 return continuation.resumeWithException(exception)
             }
 
@@ -151,9 +151,9 @@ class SoundTagPlayer(
     }
 
     /**
-     * Releases the sound.
+     * Releases the media players.
      */
-    fun releaseSound() {
+    fun release() {
         Timber.d("Releasing sounds and abandoning audio focus")
         mediaPlayer?.let {
             // Required to remove warning: "mediaplayer went away with unhandled events"
@@ -165,7 +165,7 @@ class SoundTagPlayer(
         abandonAudioFocus()
     }
 
-    fun stopSounds() {
+    fun stop() {
         try {
             mediaPlayer?.stop()
         } catch (e: Exception) {

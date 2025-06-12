@@ -803,7 +803,7 @@ abstract class AbstractFlashcardViewer :
                     "AbstractFlashcardViewer:: OK button pressed to delete note %d",
                     currentCard!!.nid,
                 )
-                launchCatchingTask { cardMediaPlayer.stopSounds() }
+                launchCatchingTask { cardMediaPlayer.stop() }
                 deleteNoteWithoutConfirmation()
             }
             negativeButton(R.string.dialog_cancel)
@@ -845,7 +845,7 @@ abstract class AbstractFlashcardViewer :
                 }
                 // Temporarily sets the answer indicator dots appearing below the toolbar
                 previousAnswerIndicator?.displayAnswerIndicator(ease)
-                cardMediaPlayer.stopSounds()
+                cardMediaPlayer.stop()
                 currentEase = ease
 
                 answerCardInner(ease)
@@ -1286,7 +1286,7 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    private suspend fun automaticAnswerShouldWaitForAudio(): Boolean =
+    private suspend fun automaticAnswerShouldWaitForMedia(): Boolean =
         withCol {
             decks.configDictForDeckId(currentCard!!.did).waitForAudio
         }
@@ -1294,7 +1294,7 @@ abstract class AbstractFlashcardViewer :
     internal inner class ReadTextListener : ReadText.ReadTextListener {
         override fun onDone(playedSide: CardSide?) {
             Timber.d("done reading text")
-            this@AbstractFlashcardViewer.onSoundGroupCompleted()
+            this@AbstractFlashcardViewer.onMediaGroupCompleted()
         }
     }
 
@@ -1315,7 +1315,7 @@ abstract class AbstractFlashcardViewer :
         val content = cardRenderContext!!.renderCard(getColUnsafe, currentCard!!, SingleCardSide.FRONT)
         automaticAnswer.onDisplayQuestion()
         launchCatchingTask {
-            if (!automaticAnswerShouldWaitForAudio()) {
+            if (!automaticAnswerShouldWaitForMedia()) {
                 automaticAnswer.scheduleAutomaticDisplayAnswer()
             }
         }
@@ -1361,7 +1361,7 @@ abstract class AbstractFlashcardViewer :
         val answerContent = cardRenderContext!!.renderCard(getColUnsafe, currentCard!!, SingleCardSide.BACK)
         automaticAnswer.onDisplayAnswer()
         launchCatchingTask {
-            if (!automaticAnswerShouldWaitForAudio()) {
+            if (!automaticAnswerShouldWaitForMedia()) {
                 automaticAnswer.scheduleAutomaticDisplayQuestion()
             }
         }
@@ -1423,36 +1423,36 @@ abstract class AbstractFlashcardViewer :
         Timber.d("updateCard()")
         // TODO: This doesn't need to be blocking
         runBlocking {
-            cardMediaPlayer.loadCardSounds(currentCard!!)
+            cardMediaPlayer.loadCardAvTags(currentCard!!)
         }
         cardContent = content.html
         fillFlashcard()
-        playSounds(false) // Play sounds if appropriate
+        playMedia(false) // Play media if appropriate
     }
 
     /**
-     * Plays sounds (or TTS, if configured) for currently shown side of card.
+     * Plays media (or TTS, if configured) for currently shown side of card.
      *
      * @param doMediaReplay indicates an anki desktop-like replay call is desired, whose behavior is identical to
      * pressing the keyboard shortcut R on the desktop
      */
-    @NeedsTest("audio is not played if opExecuted occurs when viewer is in the background")
-    protected open fun playSounds(doMediaReplay: Boolean) {
+    @NeedsTest("media is not played if opExecuted occurs when viewer is in the background")
+    protected open fun playMedia(doMediaReplay: Boolean) {
         // this can occur due to OpChanges when the viewer is on another screen
         if (!this.lifecycle.currentState.isAtLeast(RESUMED)) {
-            Timber.w("sounds are not played as the activity is inactive")
+            Timber.w("media is not played as the activity is inactive")
             return
         }
         if (!cardMediaPlayer.config.autoplay && !doMediaReplay) return
-        // Use TTS if TTS preference enabled and no other sound source
-        val useTTS = tts.enabled && !cardMediaPlayer.hasSounds(displayAnswer)
-        // We need to play the sounds from the proper side of the card
+        // Use TTS if TTS preference enabled and no other media source
+        val useTTS = tts.enabled && !cardMediaPlayer.hasMedia(displayAnswer)
+        // We need to play the media from the proper side of the card
         if (!useTTS) {
             launchCatchingTask {
                 val side = if (displayAnswer) SingleCardSide.BACK else SingleCardSide.FRONT
                 when (doMediaReplay) {
-                    true -> cardMediaPlayer.replayAllSounds(side)
-                    false -> cardMediaPlayer.playAllSounds(side)
+                    true -> cardMediaPlayer.replayAll(side)
+                    false -> cardMediaPlayer.playAll(side)
                 }
             }
             return
@@ -1480,12 +1480,12 @@ abstract class AbstractFlashcardViewer :
     }
 
     /**
-     * @see CardMediaPlayer.onSoundGroupCompleted
+     * @see CardMediaPlayer.onMediaGroupCompleted
      */
-    open fun onSoundGroupCompleted() {
-        Timber.v("onSoundGroupCompleted")
+    open fun onMediaGroupCompleted() {
+        Timber.v("onMediaGroupCompleted")
         launchCatchingTask {
-            if (automaticAnswerShouldWaitForAudio()) {
+            if (automaticAnswerShouldWaitForMedia()) {
                 if (isDisplayingAnswer) {
                     automaticAnswer.scheduleAutomaticDisplayQuestion()
                 } else {
@@ -1560,7 +1560,7 @@ abstract class AbstractFlashcardViewer :
                     sched.buryCards(listOf(currentCard!!.id))
                 }
             }
-            cardMediaPlayer.stopSounds()
+            cardMediaPlayer.stop()
             showSnackbar(R.string.card_buried, Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
@@ -1574,7 +1574,7 @@ abstract class AbstractFlashcardViewer :
                     sched.suspendCards(listOf(currentCard!!.id))
                 }
             }
-            cardMediaPlayer.stopSounds()
+            cardMediaPlayer.stop()
             showSnackbar(TR.studyingCardSuspended(), Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
@@ -1591,7 +1591,7 @@ abstract class AbstractFlashcardViewer :
                 }
             val count = changed.count
             val noteSuspended = resources.getQuantityString(R.plurals.note_suspended, count, count)
-            cardMediaPlayer.stopSounds()
+            cardMediaPlayer.stop()
             showSnackbar(noteSuspended, Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
@@ -1606,7 +1606,7 @@ abstract class AbstractFlashcardViewer :
                         sched.buryNotes(listOf(currentCard!!.nid))
                     }
                 }
-            cardMediaPlayer.stopSounds()
+            cardMediaPlayer.stop()
             showSnackbar(TR.studyingCardsBuried(changed.count), Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
@@ -1675,7 +1675,7 @@ abstract class AbstractFlashcardViewer :
             }
 
             ViewerCommand.PLAY_MEDIA -> {
-                playSounds(true)
+                playMedia(true)
                 true
             }
 
@@ -2222,7 +2222,7 @@ abstract class AbstractFlashcardViewer :
     fun ttsInitialized() {
         ttsInitialized = true
         if (replayOnTtsInit) {
-            playSounds(true)
+            playMedia(true)
         }
     }
 
@@ -2367,7 +2367,7 @@ abstract class AbstractFlashcardViewer :
         fun filterUrl(url: String): Boolean {
             if (url.startsWith("playsound:")) {
                 launchCatchingTask {
-                    controlSound(url)
+                    controlMedia(url)
                 }
                 return true
             }
@@ -2530,7 +2530,7 @@ abstract class AbstractFlashcardViewer :
          * @param url
          */
         @NeedsTest("14221: 'playsound' should play the sound from the start")
-        private suspend fun controlSound(url: String) {
+        private suspend fun controlMedia(url: String) {
             val avTag =
                 when (val tag = currentCard?.let { getAvTag(it, url) }) {
                     is SoundOrVideoTag -> tag
@@ -2538,7 +2538,7 @@ abstract class AbstractFlashcardViewer :
                     // not currently supported
                     null -> return
                 }
-            cardMediaPlayer.playOneSound(avTag)
+            cardMediaPlayer.playOne(avTag)
         }
 
         // Run any post-load events in javascript that rely on the window being completely loaded.

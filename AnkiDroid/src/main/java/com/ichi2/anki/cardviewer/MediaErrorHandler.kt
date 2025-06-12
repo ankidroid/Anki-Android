@@ -61,7 +61,7 @@ class MediaErrorHandler {
         }
     }
 
-    fun processMissingSound(
+    fun processMissingMedia(
         file: File,
         onFailure: (String) -> Unit,
     ) {

@@ -420,7 +420,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             return true
         }
 
-        override fun playSounds(doMediaReplay: Boolean) {
+        override fun playMedia(doMediaReplay: Boolean) {
             replayMediaCalled = true
         }
 

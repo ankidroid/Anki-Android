@@ -18,10 +18,10 @@ package com.ichi2.anki.cardviewer
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardUtils
+import com.ichi2.anki.cardviewer.MediaErrorBehavior.CONTINUE_MEDIA
+import com.ichi2.anki.cardviewer.MediaErrorBehavior.RETRY_MEDIA
+import com.ichi2.anki.cardviewer.MediaErrorBehavior.STOP_MEDIA
 import com.ichi2.anki.cardviewer.SingleCardSide.BACK
-import com.ichi2.anki.cardviewer.SoundErrorBehavior.CONTINUE_AUDIO
-import com.ichi2.anki.cardviewer.SoundErrorBehavior.RETRY_AUDIO
-import com.ichi2.anki.cardviewer.SoundErrorBehavior.STOP_AUDIO
 import com.ichi2.libanki.AvTag
 import com.ichi2.libanki.SoundOrVideoTag
 import com.ichi2.libanki.TemplateManager
@@ -45,7 +45,7 @@ import org.junit.runner.RunWith
 class CardMediaPlayerTest : JvmTest() {
     internal val tagPlayer: SoundTagPlayer = mockk<SoundTagPlayer>()
     internal val ttsPlayer: TtsPlayer = mockk<TtsPlayer>()
-    internal val onSoundGroupCompleted: () -> Unit =
+    internal val onMediaGroupCompleted: () -> Unit =
         mockk<() -> Unit>().also {
             every { it.invoke() } answers { }
         }
@@ -56,7 +56,7 @@ class CardMediaPlayerTest : JvmTest() {
             answers = emptyList(),
             questions = emptyList(),
         ) {
-            playAllSoundsAndWait(BACK)
+            playAllAndWait(BACK)
 
             verifyNoSoundsPlayed()
         }
@@ -66,11 +66,11 @@ class CardMediaPlayerTest : JvmTest() {
         runSoundPlayerTest(
             questions = listOf(SoundOrVideoTag("abc.mp3")),
         ) {
-            playAllSoundsAndWait()
+            playAllAndWait()
 
             coVerify(exactly = 1) { tagPlayer.play(SoundOrVideoTag("abc.mp3"), any()) }
             coVerify(exactly = 0) { ttsPlayer.play(any()) }
-            ensureOnSoundGroupCompletedCalled()
+            ensureOnMediaGroupCompletedCalled()
         }
 
     @Test
@@ -78,7 +78,7 @@ class CardMediaPlayerTest : JvmTest() {
         runSoundPlayerTest(
             answers = listOf(SoundOrVideoTag("abc.mp3")),
         ) {
-            playAllSoundsAndWait()
+            playAllAndWait()
 
             verifyNoSoundsPlayed()
         }
@@ -88,7 +88,7 @@ class CardMediaPlayerTest : JvmTest() {
         runSoundPlayerTest(
             questions = listOf(SoundOrVideoTag("abc.mp3")),
         ) {
-            playAllSoundsAndWait(BACK)
+            playAllAndWait(BACK)
 
             verifyNoSoundsPlayed()
         }
@@ -100,7 +100,7 @@ class CardMediaPlayerTest : JvmTest() {
             answers = listOf(SoundOrVideoTag("back.mp3")),
             replayQuestion = true,
         ) {
-            replayAllSoundsAndWait(BACK)
+            replayAllAndWait(BACK)
 
             coVerifyOrder {
                 tagPlayer.play(SoundOrVideoTag("front.mp3"), any())
@@ -115,7 +115,7 @@ class CardMediaPlayerTest : JvmTest() {
             answers = listOf(SoundOrVideoTag("back.mp3")),
             replayQuestion = false,
         ) {
-            replayAllSoundsAndWait(BACK)
+            replayAllAndWait(BACK)
 
             coVerifyOrder {
                 tagPlayer.play(SoundOrVideoTag("back.mp3"), any())
@@ -123,16 +123,16 @@ class CardMediaPlayerTest : JvmTest() {
         }
 
     @Test
-    fun `onSoundGroupCompleted is called after exception`() =
+    fun `onMediaGroupCompleted is called after exception`() =
         runSoundPlayerTest(
             questions = listOf(SoundOrVideoTag("aa.mp3")),
         ) {
             coEvery { tagPlayer.play(any(), any()) } throws TestException("test")
 
-            playAllSoundsAndWait()
+            playAllAndWait()
 
             coVerify(exactly = 1) { tagPlayer.play(any(), any()) }
-            ensureOnSoundGroupCompletedCalled()
+            ensureOnMediaGroupCompletedCalled()
         }
 
     @Test
@@ -140,9 +140,9 @@ class CardMediaPlayerTest : JvmTest() {
         runSoundPlayerTest(
             questions = listOf(SoundOrVideoTag("aa.mp3"), SoundOrVideoTag("bb.mp3")),
         ) {
-            coEvery { tagPlayer.play(any(), any()) } throws SoundException(RETRY_AUDIO)
+            coEvery { tagPlayer.play(any(), any()) } throws MediaException(RETRY_MEDIA)
 
-            playAllSoundsAndWait()
+            playAllAndWait()
 
             coVerifySequence {
                 tagPlayer.play(SoundOrVideoTag("aa.mp3"), any())
@@ -151,7 +151,7 @@ class CardMediaPlayerTest : JvmTest() {
                 tagPlayer.play(SoundOrVideoTag("bb.mp3"), any())
             }
 
-            ensureOnSoundGroupCompletedCalled()
+            ensureOnMediaGroupCompletedCalled()
         }
 
     @Test
@@ -159,15 +159,15 @@ class CardMediaPlayerTest : JvmTest() {
         runSoundPlayerTest(
             questions = listOf(SoundOrVideoTag("aa.mp3"), SoundOrVideoTag("bb.mp3")),
         ) {
-            coEvery { tagPlayer.play(any(), any()) } throws SoundException(STOP_AUDIO)
+            coEvery { tagPlayer.play(any(), any()) } throws MediaException(STOP_MEDIA)
 
-            playAllSoundsAndWait()
+            playAllAndWait()
 
             coVerifySequence {
                 tagPlayer.play(SoundOrVideoTag("aa.mp3"), any())
             }
 
-            ensureOnSoundGroupCompletedCalled()
+            ensureOnMediaGroupCompletedCalled()
         }
 
     @Test
@@ -175,24 +175,24 @@ class CardMediaPlayerTest : JvmTest() {
         runSoundPlayerTest(
             questions = listOf(SoundOrVideoTag("aa.mp3"), SoundOrVideoTag("bb.mp3")),
         ) {
-            coEvery { tagPlayer.play(any(), any()) } throws SoundException(CONTINUE_AUDIO)
+            coEvery { tagPlayer.play(any(), any()) } throws MediaException(CONTINUE_MEDIA)
 
-            playAllSoundsAndWait()
+            playAllAndWait()
 
             coVerifySequence {
                 tagPlayer.play(SoundOrVideoTag("aa.mp3"), any())
                 tagPlayer.play(SoundOrVideoTag("bb.mp3"), any())
             }
 
-            ensureOnSoundGroupCompletedCalled()
+            ensureOnMediaGroupCompletedCalled()
         }
 
     @Test
     fun `retry playing single sound`() =
         runSoundPlayerTest {
-            coEvery { tagPlayer.play(any(), any()) } throws SoundException(RETRY_AUDIO)
+            coEvery { tagPlayer.play(any(), any()) } throws MediaException(RETRY_MEDIA)
 
-            playOneSoundAndWait(SoundOrVideoTag("a.mp3"))
+            playOneAndWait(SoundOrVideoTag("a.mp3"))
 
             coVerifySequence {
                 tagPlayer.play(SoundOrVideoTag("a.mp3"), any())
@@ -203,23 +203,23 @@ class CardMediaPlayerTest : JvmTest() {
     private fun verifyNoSoundsPlayed() {
         coVerify(exactly = 0) { tagPlayer.play(any(), any()) }
         coVerify(exactly = 0) { ttsPlayer.play(any()) }
-        ensureOnSoundGroupCompletedCalled()
+        ensureOnMediaGroupCompletedCalled()
     }
 
-    private fun ensureOnSoundGroupCompletedCalled() {
-        verify(exactly = 1) { onSoundGroupCompleted.invoke() }
+    private fun ensureOnMediaGroupCompletedCalled() {
+        verify(exactly = 1) { onMediaGroupCompleted.invoke() }
     }
 
-    private suspend fun CardMediaPlayer.playAllSoundsAndWait(side: SingleCardSide = SingleCardSide.FRONT) {
-        this.playAllSounds(side)?.join()
+    private suspend fun CardMediaPlayer.playAllAndWait(side: SingleCardSide = SingleCardSide.FRONT) {
+        this.playAll(side)?.join()
     }
 
-    private suspend fun CardMediaPlayer.replayAllSoundsAndWait(side: SingleCardSide) {
-        this.replayAllSounds(side)?.join()
+    private suspend fun CardMediaPlayer.replayAllAndWait(side: SingleCardSide) {
+        this.replayAll(side)?.join()
     }
 
-    private suspend fun CardMediaPlayer.playOneSoundAndWait(tag: AvTag) {
-        playOneSound(tag)?.join()
+    private suspend fun CardMediaPlayer.playOneAndWait(tag: AvTag) {
+        playOne(tag)?.join()
     }
 
     suspend fun CardMediaPlayer.setup(
@@ -252,7 +252,7 @@ class CardMediaPlayerTest : JvmTest() {
             }
         }
 
-        this.loadCardSounds(card)
+        this.loadCardAvTags(card)
     }
 }
 
@@ -272,9 +272,9 @@ fun CardMediaPlayerTest.runSoundPlayerTest(
         CardMediaPlayer(
             soundTagPlayer = tagPlayer,
             ttsPlayer = CompletableDeferred(ttsPlayer),
-            soundErrorListener = mockk(),
+            mediaErrorListener = mockk(),
         )
-    cardMediaPlayer.setOnSoundGroupCompletedListener(onSoundGroupCompleted)
+    cardMediaPlayer.setOnMediaGroupCompletedListener(onMediaGroupCompleted)
     assertThat("can play sounds", cardMediaPlayer.isEnabled)
     cardMediaPlayer.setup(questions, answers, replayQuestion, autoplay)
     testBody(cardMediaPlayer)
