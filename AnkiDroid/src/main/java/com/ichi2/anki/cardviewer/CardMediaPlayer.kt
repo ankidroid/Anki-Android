@@ -172,14 +172,14 @@ class CardMediaPlayer : Closeable {
         }
     }
 
-    suspend fun autoplayAllForSide(cardSide: CardSide): Job? {
+    fun autoplayAllForSide(cardSide: CardSide): Job? {
         if (config.autoplay) {
             return playAllForSide(cardSide)
         }
         return null
     }
 
-    suspend fun playAllForSide(cardSide: CardSide): Job? {
+    fun playAllForSide(cardSide: CardSide): Job? {
         if (!isEnabled) return null
         playAvTagsJob {
             Timber.i("playing sounds for %s", cardSide)
@@ -336,7 +336,7 @@ class CardMediaPlayer : Closeable {
     /**
      * Plays all sounds for the current side, calling [onMediaGroupCompleted] when completed
      */
-    suspend fun playAll(side: SingleCardSide) =
+    fun playAll(side: SingleCardSide) =
         when (side) {
             SingleCardSide.FRONT -> playAllForSide(CardSide.QUESTION)
             SingleCardSide.BACK -> playAllForSide(CardSide.ANSWER)
@@ -345,7 +345,7 @@ class CardMediaPlayer : Closeable {
     /**
      * Replays all sounds for [side], calling [onMediaGroupCompleted] when completed
      */
-    suspend fun replayAll(side: SingleCardSide) =
+    fun replayAll(side: SingleCardSide) =
         when (side) {
             SingleCardSide.BACK -> if (config.replayQuestion) playAllForSide(CardSide.BOTH) else playAllForSide(CardSide.ANSWER)
             SingleCardSide.FRONT -> playAllForSide(CardSide.QUESTION)
@@ -365,8 +365,7 @@ class CardMediaPlayer : Closeable {
     }
 
     /** Ensures that only one [playAvTagsJob] is running at once */
-    // TODO: make non-suspend
-    private suspend fun playAvTagsJob(block: suspend CoroutineScope.() -> Unit) {
+    private fun playAvTagsJob(block: suspend CoroutineScope.() -> Unit) {
         val oldJob = playAvTagsJob
         this.playAvTagsJob =
             scope.launch {
@@ -448,8 +447,6 @@ enum class MediaErrorBehavior {
 fun AbstractFlashcardViewer.createMediaErrorListener(): MediaErrorListener {
     val activity = this
     return object : MediaErrorListener {
-        private var handledError: HashSet<String> = hashSetOf()
-
         override fun onMediaPlayerError(
             mp: MediaPlayer?,
             which: Int,
