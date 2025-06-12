@@ -704,6 +704,11 @@ open class AnkiActivity :
             ShortcutGroup(
                 listOf(
                     shortcut("Ctrl+Z", R.string.undo),
+                    // For 'Controls': to help user discover shortcuts in all screens
+                    // BUG: There is no way to access system shortcuts, so this may not be correct
+                    // This is copied from AOSP, which will be correct in most cases
+                    // https://cs.android.com/android/_/android/platform/frameworks/base/+/1cdfff555f4a21f71ccc978290e2e212e2f8b168:packages/SystemUI/src/com/android/systemui/keyboard/shortcut/data/source/SystemShortcutsSource.kt;l=162-166;bpv=1;bpt=0;drc=697cd49fb770afa8480d4c187b30553645b5879c
+                    shortcut("Meta+/", R.string.shortcut_label_show_shortcuts_for_app),
                 ),
                 R.string.pref_cat_general,
             ).toShortcutGroup(this)

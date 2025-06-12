@@ -51,7 +51,7 @@ data class Shortcut(
     /**
      * Maps a modifier string to its corresponding KeyEvent meta flag.
      *
-     * @param modifier The modifier string (e.g., "Ctrl", "Alt", "Shift").
+     * @param modifier The modifier string (e.g., "Ctrl", "Alt", "Shift", "Meta").
      * @return The corresponding KeyEvent meta flag.
      */
     private fun getModifier(modifier: String): Int =
@@ -59,6 +59,7 @@ data class Shortcut(
             "Ctrl" -> KeyEvent.META_CTRL_ON
             "Alt" -> KeyEvent.META_ALT_ON
             "Shift" -> KeyEvent.META_SHIFT_ON
+            "Meta" -> KeyEvent.META_META_ON
 
             else -> 0
         }
