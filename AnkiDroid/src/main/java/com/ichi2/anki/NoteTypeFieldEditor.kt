@@ -500,14 +500,6 @@ class NoteTypeFieldEditor : AnkiActivity() {
         initialize()
     }
 
-    /**
-     * Toggle the "Remember last input" setting AKA the "Sticky" setting
-     */
-    private fun toggleStickyField() {
-        val field = noteFields[currentPos]
-        field.sticky = !field.sticky
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
         when (item.itemId) {
             R.id.action_add_new_model -> {
@@ -527,7 +519,6 @@ class NoteTypeFieldEditor : AnkiActivity() {
             NoteTypeFieldEditorContextMenuAction.Reposition -> repositionFieldDialog()
             NoteTypeFieldEditorContextMenuAction.Delete -> deleteFieldDialog()
             NoteTypeFieldEditorContextMenuAction.Rename -> renameFieldDialog()
-            NoteTypeFieldEditorContextMenuAction.ToggleSticky -> toggleStickyField()
             NoteTypeFieldEditorContextMenuAction.AddLanguageHint -> localeHintDialog()
         }
     }
