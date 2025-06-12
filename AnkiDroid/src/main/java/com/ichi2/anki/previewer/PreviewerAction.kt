@@ -29,6 +29,8 @@ enum class PreviewerAction : MappableAction<MappableBinding> {
     MARK,
     EDIT,
     TOGGLE_BACKSIDE_ONLY,
+
+    // TODO: rename to REPLAY_MEDIA and handle previewer_replay_audio_key
     REPLAY_AUDIO,
     TOGGLE_FLAG_RED,
     TOGGLE_FLAG_ORANGE,

@@ -167,17 +167,17 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     }
 
     @Test
-    fun pressingRShouldReplayAudio() {
+    fun pressingRShouldReplayMedia() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
         underTest.handleAndroidKeyPress(KEYCODE_R)
-        assertThat("Replay Audio should be called", underTest.replayAudioCalled)
+        assertThat("Replay Media should be called", underTest.replayMediaCalled)
     }
 
     @Test
-    fun pressingF5ShouldReplayAudio() {
+    fun pressingF5ShouldReplayMedia() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
         underTest.handleKeyPress(KEYCODE_F5, '\u0000')
-        assertThat("Replay Audio should be called", underTest.replayAudioCalled)
+        assertThat("Replay Media should be called", underTest.replayMediaCalled)
     }
 
     @Test
@@ -249,7 +249,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             private set
         var undoCalled = false
             private set
-        var replayAudioCalled = false
+        var replayMediaCalled = false
             private set
 
         private val cardFlips = mutableListOf<String>()
@@ -420,8 +420,8 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             return true
         }
 
-        override fun playSounds(doAudioReplay: Boolean) {
-            replayAudioCalled = true
+        override fun playSounds(doMediaReplay: Boolean) {
+            replayMediaCalled = true
         }
 
         override fun buryNote(): Boolean {

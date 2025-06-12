@@ -39,6 +39,7 @@ import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.IdsFile
+import com.ichi2.anki.previewer.PreviewerFragment.Companion.CARD_IDS_FILE_ARG
 import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.reviewer.BindingProcessor
 import com.ichi2.anki.reviewer.MappableBinding
@@ -229,7 +230,7 @@ class PreviewerFragment :
             PreviewerAction.MARK -> viewModel.toggleMark()
             PreviewerAction.EDIT -> editCard()
             PreviewerAction.TOGGLE_BACKSIDE_ONLY -> viewModel.toggleBackSideOnly()
-            PreviewerAction.REPLAY_AUDIO -> viewModel.replayAudios()
+            PreviewerAction.REPLAY_AUDIO -> viewModel.replayMedia()
             PreviewerAction.TOGGLE_FLAG_RED -> viewModel.toggleFlag(Flag.RED)
             PreviewerAction.TOGGLE_FLAG_ORANGE -> viewModel.toggleFlag(Flag.ORANGE)
             PreviewerAction.TOGGLE_FLAG_GREEN -> viewModel.toggleFlag(Flag.GREEN)

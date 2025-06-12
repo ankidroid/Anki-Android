@@ -174,7 +174,7 @@
     </item>
     <item
         android:id="@+id/action_replay"
-        android:title="@string/replay_audio"
+        android:title="@string/replay_media"
         android:icon="@drawable/ic_play_circle_white"
         ankidroid:showAsAction="ifRoom"/>
     <item
