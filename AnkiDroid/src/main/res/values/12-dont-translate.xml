@@ -44,7 +44,6 @@ If you want to use a string in your code that can't be translated, please use:
     <string name="enable_multiple_profiles_pref_key">enable_multiple_profiles</string>
     <string name="switch_profiles_title" maxLength="41">Switch Profiles</string>
 
-    <string name="pref_switch_profiles_screen_key">switchProfilesScreen</string>
     <string name="pref_switch_profiles_list">switch_profiles_list</string>
 
     <string name="rename_profile">more options for a selected profile</string>
