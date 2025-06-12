@@ -95,6 +95,8 @@ val collectionMethods =
         "importJsonFile" to { bytes -> importJsonFileRaw(bytes) },
         "congratsInfo" to { bytes -> congratsInfoRaw(bytes) },
         "getImageOcclusionFields" to { bytes -> getImageOcclusionFieldsRaw(bytes) },
+        "getIgnoredBeforeCount" to { bytes -> getIgnoredBeforeCountRaw(bytes) },
+        "getRetentionWorkload" to { bytes -> getRetentionWorkloadRaw(bytes) },
     )
 
 suspend fun handleCollectionPostRequest(

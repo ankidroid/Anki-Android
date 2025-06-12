@@ -647,6 +647,10 @@ class Collection(
 
     fun importJsonFileRaw(input: ByteArray): ByteArray = backend.importJsonFileRaw(input = input)
 
+    fun getIgnoredBeforeCountRaw(input: ByteArray): ByteArray = backend.getIgnoredBeforeCountRaw(input = input)
+
+    fun getRetentionWorkloadRaw(input: ByteArray): ByteArray = backend.getRetentionWorkloadRaw(input = input)
+
     fun compareAnswer(
         expected: String,
         provided: String,
