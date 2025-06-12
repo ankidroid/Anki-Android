@@ -183,7 +183,7 @@ class PreviewerViewModel(
 
     suspend fun getNoteEditorDestination() = NoteEditorLauncher.EditNoteFromPreviewer(currentCard.await().id)
 
-    fun replayAudios() {
+    fun replayMedia() {
         launchCatchingIO {
             val side = if (showingAnswer.value) SingleCardSide.BACK else SingleCardSide.FRONT
             cardMediaPlayer.replayAllSounds(side)

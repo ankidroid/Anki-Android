@@ -87,7 +87,7 @@ TODO: Add a unit test
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_replay_key"
-            android:title="@string/replay_audio"
+            android:title="@string/replay_media"
             app:useSimpleSummaryProvider="true"/>
         <ListPreference
             android:defaultValue="3"

@@ -25,8 +25,8 @@
         android:icon="@drawable/ic_popup_menu_item_editor"
         />
     <com.ichi2.preferences.ControlPreference
-        android:key="@string/previewer_replay_audio_key"
-        android:title="@string/replay_audio"
+        android:key="@string/previewer_replay_media_key"
+        android:title="@string/replay_media"
         android:icon="@drawable/ic_replay"
         />
     <com.ichi2.preferences.ControlPreference

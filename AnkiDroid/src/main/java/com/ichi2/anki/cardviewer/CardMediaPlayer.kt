@@ -200,7 +200,7 @@ class CardMediaPlayer : Closeable {
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
-                Timber.w(e, "failed to replay audio")
+                Timber.w(e, "failed to replay media")
             }
         }
 

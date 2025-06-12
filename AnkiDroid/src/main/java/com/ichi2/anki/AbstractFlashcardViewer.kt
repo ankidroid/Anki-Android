@@ -1433,24 +1433,24 @@ abstract class AbstractFlashcardViewer :
     /**
      * Plays sounds (or TTS, if configured) for currently shown side of card.
      *
-     * @param doAudioReplay indicates an anki desktop-like replay call is desired, whose behavior is identical to
+     * @param doMediaReplay indicates an anki desktop-like replay call is desired, whose behavior is identical to
      * pressing the keyboard shortcut R on the desktop
      */
     @NeedsTest("audio is not played if opExecuted occurs when viewer is in the background")
-    protected open fun playSounds(doAudioReplay: Boolean) {
+    protected open fun playSounds(doMediaReplay: Boolean) {
         // this can occur due to OpChanges when the viewer is on another screen
         if (!this.lifecycle.currentState.isAtLeast(RESUMED)) {
             Timber.w("sounds are not played as the activity is inactive")
             return
         }
-        if (!cardMediaPlayer.config.autoplay && !doAudioReplay) return
+        if (!cardMediaPlayer.config.autoplay && !doMediaReplay) return
         // Use TTS if TTS preference enabled and no other sound source
         val useTTS = tts.enabled && !cardMediaPlayer.hasSounds(displayAnswer)
         // We need to play the sounds from the proper side of the card
         if (!useTTS) {
             launchCatchingTask {
                 val side = if (displayAnswer) SingleCardSide.BACK else SingleCardSide.FRONT
-                when (doAudioReplay) {
+                when (doMediaReplay) {
                     true -> cardMediaPlayer.replayAllSounds(side)
                     false -> cardMediaPlayer.playAllSounds(side)
                 }
@@ -1462,7 +1462,7 @@ abstract class AbstractFlashcardViewer :
         // Text to speech is in effect here
         // If the question is displayed or if the question should be replayed, read the question
         if (ttsInitialized) {
-            if (!displayAnswer || doAudioReplay && replayQuestion) {
+            if (!displayAnswer || doMediaReplay && replayQuestion) {
                 readCardTts(SingleCardSide.FRONT)
             }
             if (displayAnswer) {

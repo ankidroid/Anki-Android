@@ -433,8 +433,8 @@ open class Reviewer :
                 onMark(currentCard)
             }
             R.id.action_replay -> {
-                Timber.i("Reviewer:: Replay audio button pressed (from menu)")
-                playSounds(true)
+                Timber.i("Reviewer:: Replay media button pressed (from menu)")
+                playSounds(doMediaReplay = true)
             }
             R.id.action_toggle_mic_tool_bar -> {
                 Timber.i("Reviewer:: Voice playback visibility set to %b", !isMicToolBarVisible)
