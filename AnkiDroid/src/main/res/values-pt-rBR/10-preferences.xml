@@ -300,8 +300,7 @@
     <string name="pref_cat_dev_options" maxLength="41">Opções do desenvolvedor</string>
     <string name="dev_options_enabled_pref" maxLength="41">Ativar opções do desenvolvedor</string>
     <string name="disable_dev_options">Desativar opções do desenvolvedor</string>
-    <string name="dev_options_warning">Por favor, certifique-se antes de ativar as opções do desenvolvedor. Estas opções são perigosas e podem quebrar o aplicativo ou corromper sua coleção.\n\nNote que essas opções não são adequadas para a maioria dos usuários, portanto, não são traduzidas, elas permanecerão em inglês.
-    </string>
+    <string name="dev_options_warning">Por favor, certifique-se antes de ativar as opções do desenvolvedor. Estas opções são perigosas e podem quebrar o aplicativo ou corromper sua coleção.\n\nNote que essas opções não são adequadas para a maioria dos usuários, portanto, não são traduzidas, elas permanecerão em inglês.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

@@ -199,13 +199,13 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">プレビュー</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">背面（解答表示後の画面）のみに切り替え</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
+    <string name="pref_cat_reviewer" maxLength="41">学習画面</string>
     <string name="show_deck_title" maxLength="41">デッキのタイトルを表示</string>
     <string name="accessibility" maxLength="41">アクセシビリティ</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">クリップボード画像をPNG形式で貼り付け</string>
     <string name="exit_via_double_tap_back" maxLength="41">学習終了・アプリ終了には「戻る」操作２回</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
+    <string name="exit_via_double_tap_back_summ">学習画面とデッキリスト画面でそれぞれ、意図せず画面を閉じてしまう操作ミスを起こりにくくします</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">すべてのファイルをメディアインポートの対象として許可</string>
     <string name="media_import_allow_all_files_summ">Androidがメディアファイルを認識しない場合に試してみてください</string>
@@ -298,8 +298,7 @@
     <string name="pref_cat_dev_options" maxLength="41">開発者向けオプション</string>
     <string name="dev_options_enabled_pref" maxLength="41">開発者向けオプションを有効にする</string>
     <string name="disable_dev_options">開発者向けオプションを無効にする</string>
-    <string name="dev_options_warning">注意：開発者向けのオプションは、使い方によってはアプリやコレクションを損傷を与えるリスクがあります。\n\nこれらのオプションはほとんどのユーザーには適していないため、翻訳なしで英語でのみ表示されます。
-    </string>
+    <string name="dev_options_warning">注意：開発者向けのオプションは、使い方によってはアプリやコレクションを損傷を与えるリスクがあります。\n\nこれらのオプションはほとんどのユーザーには適していないため、翻訳なしで英語でのみ表示されます。</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
@@ -370,9 +369,9 @@
     <string name="reviewer_frame_style" maxLength="41">カードの輪郭のスタイル</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">カード（角丸四角形）</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">ボックス（画面全幅四角形）</string>
-    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Top</string>
-    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Bottom</string>
-    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">None</string>
+    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">カードの上側</string>
+    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">カードの下側</string>
+    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">表示しない</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">設定画面を開く</string>
 </resources>

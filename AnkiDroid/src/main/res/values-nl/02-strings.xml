@@ -234,7 +234,7 @@
     <string name="note_editor_image_too_large">De afbeelding is te groot, voeg de afbeelding handmatig in</string>
     <string name="note_editor_video_too_large">Het videobestand is te groot, voeg de video handmatig in</string>
     <string name="note_editor_audio_too_large">Het audiobestand is te groot, voeg de audio handmatig in</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android back-up in uitvoering. Probeer opnieuw alstublieft </string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android back-up in uitvoering. Probeer opnieuw alstublieft</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Mogelijk moet u iManager gebruiken om AnkiDroid snelkoppelingen te laten toevoegen</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Uw startscherm staat niet toe dat AnkiDroid snelkoppelingen toevoegt</string>
     <string name="create_shortcut_error">Fout bij het toevoegen van de snelkoppeling: %s</string>

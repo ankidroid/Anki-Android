@@ -62,11 +62,11 @@
     <string name="collapse" comment="In the deck picker: accessibility label of the buttons that hide the subdecks of a deck.">بستن</string>
     <string name="menu_import" comment="Title of the import page and the button to open it." maxLength="28">وارد کردن</string>
     <string name="no_cards_placeholder_title" comment="Text shown the first time AnkiDroid is opened, to explain to the user why they can\'t yet review.">مجموعه خالی است</string>
-    <string name="no_cards_placeholder_description" comment="Text shown the first time AnkiDroid is opened, to explain what should be their first action.">با استفاده از دکمه +\nشروع به اضافه کردن کارت‌ها کنيد</string>
+    <string name="no_cards_placeholder_description" comment="Text shown the first time AnkiDroid is opened, to explain what should be their first action.">با استفاده از علامت + \nشروع به اضافه کردن کارت‌ها کنيد</string>
     <!-- Reviewer -->
     <plurals name="reviewer_window_title" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards.">
         <item quantity="one">%d دقیقه مانده است.</item>
-        <item quantity="other">%d دقیقه مانده است.</item>
+        <item quantity="other">%d دقایقی دیگر مانده است.</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of minutes.">
         <item quantity="one">%1$d ساعت و %2$d دقیقه مانده</item>
@@ -112,7 +112,7 @@
     <string name="delete_note_message">مطمئنید می خواهید این یادداشت و همه کارتهایش را پاک کنید؟\n%s</string>
     <string name="menu_search" maxLength="28">جستجو در %1$s</string>
     <string name="menu_mark_note" maxLength="28">علامتگذاری یادداشت</string>
-    <string name="menu_unmark_note">برداشتن علامتگذاری یادداشت</string>
+    <string name="menu_unmark_note">برداشتن علامت یادداشت</string>
     <string name="menu_enable_voice_playback" maxLength="28">فعال کردن پخش صدا</string>
     <string name="menu_disable_voice_playback">غیرفعال کردن پخش صدا</string>
     <string name="new_deck">ایجاد دسته</string>
@@ -174,10 +174,10 @@
     <string name="read_write_permission_description">دسترسی به یادداشت‌ها، کارت‌ها، انواع یادداشت‌ها و دسته‌های موجود، و همچنین ایجاد موارد جدید</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">مرورگر کارت</string>
-    <string name="context_menu_anki_card_label">کارت Anki</string>
+    <string name="context_menu_anki_card_label">کارت آنکی</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">مجموعه‌ها نمی‌توانند ترکیب شوند.\nکدام مجموعه را می‌خواهید نگه دارید؟</string>
-    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">انکی دروید</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
     <string name="sync_conflict_remote_confirm_new">آیا می‌خواهید مجموعه موجود در AnkiWeb را به جای مجموعه موجود در AnkiDroid قراردهید؟</string>
     <string name="sync_conflict_local_confirm_new">آیا می‌خواهید مجموعه موجود در AnkiDroid را به جای مجموعه موجود در AnkiWeb قراردهید؟</string>

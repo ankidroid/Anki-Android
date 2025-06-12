@@ -167,7 +167,7 @@
     <string name="help_item_mailing_list">لیست ایمیل‌ها</string>
     <string name="help_item_reddit">ردیت</string>
     <string name="help_item_report_bug">گزارش مشکل</string>
-    <string name="help_title_support_ankidroid" maxLength="28">AnkiDroid را حمایت کنید</string>
+    <string name="help_title_support_ankidroid" maxLength="28">را حمایت کنید AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">کمک مالی</string>
     <string name="help_item_support_develop_ankidroid">توسعه</string>
     <string name="help_item_support_rate_ankidroid">امتیازدهی</string>

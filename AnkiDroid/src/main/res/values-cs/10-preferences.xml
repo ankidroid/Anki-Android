@@ -304,8 +304,7 @@
     <string name="pref_cat_dev_options" maxLength="41">Možnosti pro vývojáře</string>
     <string name="dev_options_enabled_pref" maxLength="41">Povolit možnosti pro vývojáře</string>
     <string name="disable_dev_options">Zakázat možnosti pro vývojáře</string>
-    <string name="dev_options_warning">Buďte si prosím jisti před povolením nástrojů pro vývojáře. Tyto nástroje jsou nebezpečné a mohou poškodit aplikaci nebo vaši kolekci.\n\nVšimněte si, že tyto nástroje nejsou vhodné pro většinu uživatelů, a nejsou proto přeloženy, jsou tudíž v angličtině.
-    </string>
+    <string name="dev_options_warning">Buďte si prosím jisti před povolením nástrojů pro vývojáře. Tyto nástroje jsou nebezpečné a mohou poškodit aplikaci nebo vaši kolekci.\n\nVšimněte si, že tyto nástroje nejsou vhodné pro většinu uživatelů, a nejsou proto přeloženy, jsou tudíž v angličtině.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

@@ -9,28 +9,28 @@ Izveido savas zibkartīšu kavas vai lejupielādē bezmaksas kavas, kas ir izvei
 Pievieno vielu darbvirsmas lietotnē Anki vai uzreiz AnkiDroid! Lietotne pat atbalsta automātisku vielas  pievienošanu no vārdnīcas.
 
 ★ Galvenās iespējas:
-• supported flashcard contents: text, images, sounds, LaTeX
-• spaced repetition (AI-optimized FSRS algorithm)
-• text-to-speech integration
-• more than 10,000 premade decks
-• progress widget
-• detailed statistics
-• syncing with AnkiWeb
-• open source
+• atbalstītais zibkartīšu saturs: teksts, attēli, skaņas, LaTeX
+• izkliedētā atkārtošana (AI optimizēts FSRS algoritms)
+• iekļauta teksta pārveidošana runā
+• vairāk nekā 10 000 iepriekš sagatavotu kavu
+• virzības logrīks
+• izvērsts apkopojums
+• sinhronizēšana ar AnkiWeb
+• atvērts pirmkods
 
 ★ Papildu iespējas:
-• write answers (optional)
-• whiteboard
-• card editor/adder
-• card browser
-• tablet layout
-• import existing collection files (via Anki Desktop)
-• add cards by intent from other applications like dictionaries
-• custom font support
-• full backup system
-• navigation by swipe, tap
-• customisable
-• dynamic deck handling
-• night mode
-• 27 localisations
-• All previous AnkiDroid versions can be downloaded from the website
+• atbilžu ierakstīšana (pēc izvēles)
+• tāfele
+• kartīšu labotājs/pievienotājs
+• kartīšu pārlūks
+• izkārtojums planšetēm
+• esošu krājumu datņu ievietošana (ar Anki darbvirsmas lietotni)
+• kartīšu pievienošana no citām lietotnēm, piemēram, vārdnīcām
+• pielāgotu fontu atbalsts
+• pilnīga rezerves kopiju sistēma
+• pārvietošanās ar pavilkšanu, piesišanu
+• pielāgojama
+• dinamiska kavu apstrāde
+• nakts izskats
+• tulkojumi 27 valodās
+• visas iepriekšējās AnkiDroid versijas var lejupielādēt tīmekļvietnē

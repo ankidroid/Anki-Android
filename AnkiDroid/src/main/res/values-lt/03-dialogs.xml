@@ -78,7 +78,7 @@
     <string name="custom_study_ahead">Kartoti į priekį x dienų:</string>
     <string name="custom_study_preview">Peržiūrėti naujas korteles, pridėtas per paskutines x dienų:</string>
     <string name="custom_study_tags">Iš kortelių rinkinio pasirinkite x kortų:</string>
-    <string name="storage_full_title">Saugykla pilna </string>
+    <string name="storage_full_title">Saugykla pilna</string>
     <string name="storage_almost_full_title">Saugykla beveik užpildyta</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Nėra vietos</string>
     <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">Norint tęsti \"AnkiDroid\" reikia %s laisvos vietos saugykloje. Prašome išvalyti šiek tiek vietos</string>
@@ -104,7 +104,7 @@
     <string name="dialog_collection_path_not_dir">Nurodytas adresas negalioja</string>
     <string name="dialog_invalid_custom_certificate">Pateiktas tekstas neatitinka galiojančio PEM koduoto X509 sertifikato</string>
     <string name="dialog_invalid_custom_certificate_title">Klaida analizuojant sertifikatą</string>
-    <string name="dialog_updated_custom_certificate">Sertifikatas atnaujintas </string>
+    <string name="dialog_updated_custom_certificate">Sertifikatas atnaujintas</string>
     <!-- Media checking -->
     <string name="check_media_title">Tikrinti laikmenas?</string>
     <string name="check_media_warning">Esant dideliems laikmenų rinkiniams tai gali ilgai užtrukti</string>
