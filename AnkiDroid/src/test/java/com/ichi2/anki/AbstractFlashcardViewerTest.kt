@@ -13,6 +13,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
 import anki.config.ConfigKey
 import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.toAnimationTransition
 import com.ichi2.anki.AbstractFlashcardViewer.Signal
 import com.ichi2.anki.AbstractFlashcardViewer.Signal.Companion.toSignal
@@ -49,7 +50,6 @@ import org.robolectric.android.controller.ActivityController
 import timber.log.Timber
 import java.util.Locale
 import java.util.stream.Stream
-import com.ichi2.anim.ActivityTransitionAnimation.Direction as Direction
 
 @Suppress("SameParameterValue")
 @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O) // getImeHintLocales, toLanguageTags, onRenderProcessGone, RenderProcessGoneDetail
@@ -88,32 +88,32 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         /**
          * Fixes an issue with noAutomaticAnswerAfterRenderProcessGoneAndPaused_issue9632
-         * where [onSoundGroupCompleted] executed AFTER [executeCommand] completed
-         * this lead to an assertion which sometimes occurred before [onSoundGroupCompleted] had
+         * where [onMediaGroupCompleted] executed AFTER [executeCommand] completed
+         * this lead to an assertion which sometimes occurred before [onMediaGroupCompleted] had
          * been called, which failed
          *
-         * This is fine in real life, as we have sounds to play
+         * This is fine in real life, as we have media to play
          */
-        private var soundGroupCompleted = false
+        private var mediaGroupCompleted = false
 
-        override fun onSoundGroupCompleted() {
-            super.onSoundGroupCompleted()
-            soundGroupCompleted = true
+        override fun onMediaGroupCompleted() {
+            super.onMediaGroupCompleted()
+            mediaGroupCompleted = true
         }
 
         override fun executeCommand(
             which: ViewerCommand,
             fromGesture: Gesture?,
         ): Boolean {
-            soundGroupCompleted = false
+            mediaGroupCompleted = false
             return super.executeCommand(which, fromGesture).also {
                 if (which != ViewerCommand.SHOW_ANSWER) return@also
-                Timber.v("waiting for onSoundGroupCompleted")
+                Timber.v("waiting for onMediaGroupCompleted")
                 for (i in 0..100) {
-                    if (soundGroupCompleted) break
+                    if (mediaGroupCompleted) break
                     Thread.sleep(10)
                 }
-                require(soundGroupCompleted) { "soundGroupCompleted never occurred" }
+                require(mediaGroupCompleted) { "mediaGroupCompleted never occurred" }
             }
         }
     }

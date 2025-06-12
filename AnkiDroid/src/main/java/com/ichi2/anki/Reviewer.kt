@@ -434,7 +434,7 @@ open class Reviewer :
             }
             R.id.action_replay -> {
                 Timber.i("Reviewer:: Replay media button pressed (from menu)")
-                playSounds(doMediaReplay = true)
+                playMedia(doMediaReplay = true)
             }
             R.id.action_toggle_mic_tool_bar -> {
                 Timber.i("Reviewer:: Voice playback visibility set to %b", !isMicToolBarVisible)

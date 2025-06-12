@@ -141,7 +141,7 @@ class ReviewerViewModel(
             // button with the answer buttons.
             updateNextTimes()
         }
-        cardMediaPlayer.setOnSoundGroupCompletedListener {
+        cardMediaPlayer.setOnMediaGroupCompletedListener {
             launchCatchingIO {
                 if (!autoAdvance.shouldWaitForAudio()) return@launchCatchingIO
 
@@ -182,10 +182,10 @@ class ReviewerViewModel(
             }
             updateNextTimes()
             showAnswer(typedAnswer)
-            loadAndPlaySounds(CardSide.ANSWER)
+            loadAndPlayMedia(CardSide.ANSWER)
             if (!autoAdvance.shouldWaitForAudio()) {
                 autoAdvance.onShowAnswer()
-            } // else wait for onSoundGroupCompleted
+            } // else wait for onMediaGroupCompleted
         }
     }
 
@@ -395,7 +395,7 @@ class ReviewerViewModel(
         runStateMutationHook()
         if (!autoAdvance.shouldWaitForAudio()) {
             autoAdvance.onShowQuestion()
-        } // else run in onSoundGroupCompleted
+        } // else run in onMediaGroupCompleted
     }
 
     private suspend fun runStateMutationHook() {
@@ -448,10 +448,10 @@ class ReviewerViewModel(
         }
     }
 
-    private suspend fun loadAndPlaySounds(side: CardSide) {
+    private suspend fun loadAndPlayMedia(side: CardSide) {
         Timber.v("ReviewerViewModel::loadAndPlaySounds")
-        cardMediaPlayer.loadCardSounds(currentCard.await())
-        cardMediaPlayer.playAllSoundsForSide(side)
+        cardMediaPlayer.loadCardAvTags(currentCard.await())
+        cardMediaPlayer.playAllForSide(side)
     }
 
     private suspend fun updateMarkIcon() {
@@ -485,7 +485,7 @@ class ReviewerViewModel(
         currentCard = CompletableDeferred(card)
         autoAdvance.onCardChange(card)
         showQuestion()
-        loadAndPlaySounds(CardSide.QUESTION)
+        loadAndPlayMedia(CardSide.QUESTION)
         updateMarkIcon()
         updateFlagIcon()
         canBuryNoteFlow.emit(isBuryNoteAvailable(card))

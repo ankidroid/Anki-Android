@@ -208,8 +208,8 @@ class TemplatePreviewerViewModel(
      ********************************************************************************************* */
 
     private suspend fun loadAndPlaySounds(side: CardSide) {
-        cardMediaPlayer.loadCardSounds(currentCard.await())
-        cardMediaPlayer.autoplayAllSoundsForSide(side)
+        cardMediaPlayer.loadCardAvTags(currentCard.await())
+        cardMediaPlayer.autoplayAllForSide(side)
     }
 
     // https://github.com/ankitects/anki/blob/df70564079f53e587dc44f015c503fdf6a70924f/qt/aqt/clayout.py#L579

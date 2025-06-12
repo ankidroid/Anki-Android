@@ -47,8 +47,8 @@ class VideoPlayerTest : RobolectricTest() {
 
         val result = assertNotNull(m.result)
         assertThat("failure", result.isFailure)
-        val exception = result.exceptionOrNull() as? SoundException
-        assertThat("Audio is stopped", exception != null && exception.continuationBehavior == SoundErrorBehavior.STOP_AUDIO)
+        val exception = result.exceptionOrNull() as? MediaException
+        assertThat("Audio is stopped", exception != null && exception.continuationBehavior == MediaErrorBehavior.STOP_MEDIA)
     }
 
     // TODO: use a mock - couldn't get mockk working here

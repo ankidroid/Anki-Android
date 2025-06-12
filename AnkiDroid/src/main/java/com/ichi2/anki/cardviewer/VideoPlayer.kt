@@ -75,7 +75,7 @@ class VideoPlayer(
 
     fun onVideoPaused() {
         Timber.i("video paused")
-        continuation?.resumeWithException(SoundException(SoundErrorBehavior.STOP_AUDIO))
+        continuation?.resumeWithException(MediaException(MediaErrorBehavior.STOP_MEDIA))
         continuation = null
     }
 }
