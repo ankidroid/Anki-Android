@@ -44,7 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Verificar a base de datos?</string>
+    <string name="check_db_title">Comprobar a base de datos?</string>
     <string name="check_db_warning">Isto pode levar moito tempo</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Eliminar baralla</string>
     <string name="delete_deck_title">Eliminar baralla?</string>
@@ -102,8 +102,8 @@
     <string name="dialog_invalid_custom_certificate_title">Erro na análise do certificado</string>
     <string name="dialog_updated_custom_certificate">Certificado actualizado</string>
     <!-- Media checking -->
-    <string name="check_media_title">Verificar multimedia?</string>
-    <string name="check_media_warning">Isto pode levar moito tempo con coleccións grandes de medios</string>
+    <string name="check_media_title">Comprobar multimedia?</string>
+    <string name="check_media_warning">Isto pode levar moito tempo con coleccións grandes de multimedia</string>
     <string name="check_media_message">Verificando multimedia&#8230;</string>
     <string name="check_media_adding_missing_tag">Engadindo etiquetas&#8230;</string>
     <string name="check_media_tags_added">Etiquetas engadidas</string>

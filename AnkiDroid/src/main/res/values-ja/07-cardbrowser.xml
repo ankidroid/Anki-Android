@@ -85,10 +85,10 @@
         <item>易しさ順</item>
         <item>学習回数順</item>
         <item>復習での忘却回数順</item>
-        <item>By deck name</item>
+        <item>デッキ名順</item>
     </string-array>
-    <string name="chane_browser_column">Change column</string>
-    <string name="no_columns_available">No columns available</string>
+    <string name="chane_browser_column">列を変更</string>
+    <string name="no_columns_available">利用可能な列がありません</string>
     <string name="card_browser_select_all" maxLength="28">すべて選択</string>
     <string name="card_browser_select_none" maxLength="28">選択をすべて解除</string>
     <string name="card_browser_no_cards_in_deck">%s のデッキにカードが見つかりませんでした</string>
@@ -115,6 +115,6 @@
     <string name="user_potential_columns">使用可能</string>
     <string name="include_column">この列をブラウザのリストで使用</string>
     <string name="exclude_column">この列をブラウザのリストから除外</string>
-    <string name="save_changes_message">Please save your changes first</string>
+    <string name="save_changes_message">先に変更を保存してください</string>
     <string name="browser_find_replace_loading_fields">フィールド名を取得しています&#8230;</string>
 </resources>

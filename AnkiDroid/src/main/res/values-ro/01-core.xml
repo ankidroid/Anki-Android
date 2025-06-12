@@ -66,12 +66,12 @@
     <!-- Reviewer -->
     <plurals name="reviewer_window_title" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards.">
         <item quantity="one">%d minut rămas</item>
-        <item quantity="few">%d minute rămase </item>
+        <item quantity="few">%d minute rămase</item>
         <item quantity="other">%d minutes left</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of minutes.">
-        <item quantity="one">%1$d oră %2$d rămasă </item>
-        <item quantity="few">%1$d ore %2$d rămase </item>
+        <item quantity="one">%1$d oră %2$d rămasă</item>
+        <item quantity="few">%1$d ore %2$d rămase</item>
         <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of hours.">
@@ -116,8 +116,8 @@
     <string name="menu_search" maxLength="28">Căutare în %1$s</string>
     <string name="menu_mark_note" maxLength="28">Marcheaza nota</string>
     <string name="menu_unmark_note">Demarcheaza nota</string>
-    <string name="menu_enable_voice_playback" maxLength="28">Activează redarea vocii </string>
-    <string name="menu_disable_voice_playback">Dezactivează redarea vocii </string>
+    <string name="menu_enable_voice_playback" maxLength="28">Activează redarea vocii</string>
+    <string name="menu_disable_voice_playback">Dezactivează redarea vocii</string>
     <string name="new_deck">Crează punte</string>
     <string name="new_dynamic_deck">Crează punte filtrată</string>
     <string name="directory_inaccessible">Directorul AnkiDroid este inaccesibil</string>

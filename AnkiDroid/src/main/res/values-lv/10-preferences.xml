@@ -204,13 +204,13 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Priekšskatījumi</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Pārslēgt tikai aizmugurējo pusi</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
+    <string name="pref_cat_reviewer" maxLength="41">Apgūšanas ekrāns</string>
     <string name="show_deck_title" maxLength="41">Rādīt kavas virsrakstu</string>
     <string name="accessibility" maxLength="41">Pieejamība</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Ielīmēt starplitkuves attēlus kā PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Piespiest \"Atpakaļ\" divreiz, lai dotos atpakaļ / izietu</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
+    <string name="exit_via_double_tap_back_summ">Lai izvairītoes no nejaušas iziešanas no apgūšanas ekrāna vai lietotnes</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Atļaut visas datnes informācijas nesēju ievietošanās</string>
     <string name="media_import_allow_all_files_summ">Ja Android neatpazīst informācija nesēju datni</string>
@@ -255,7 +255,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">Aizstāt pārejas jaunā rindā ar HTML</string>
     <string name="note_editor_replace_newlines_summ">Piezīmju redaktorā pārveidot jebkuru &lt;br&gt; par pāreju uz jaunu rindu, kad tiek labota kartīte.</string>
     <string name="type_in_answer_focus" maxLength="41">Pārslēgties uz \"Ierakstīt atbildi\"</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
+    <string name="type_in_answer_focus_summ">Apgūšanas ekrānā automātiski pārslēgties uz lauku \"Ievadīt atbildi\"</string>
     <!-- About -->
     <string name="open_changelog">Atvērt izmaiņu žurnālu</string>
     <string name="pref_cat_about_title" maxLength="41">Par</string>
@@ -272,7 +272,7 @@
     <string name="binding_add_axis">Pievienot kursorsviru / kustību vadīklu</string>
     <string name="axis_picker_move_joystick">Kustināt kursorsviru / kustību vadīklu</string>
     <string name="user_actions" maxLength="41">Lietotāja darbības</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
+    <string name="user_actions_summary" maxLength="41">Izraisīt JavaScript darbošanos no apgūšanas ekrāna</string>
     <string name="user_action_1" maxLength="28">1. lietotāja darbība</string>
     <string name="user_action_2" maxLength="28">2. lietotāja darbība</string>
     <string name="user_action_3" maxLength="28">3. lietotāja darbība</string>
@@ -297,8 +297,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Izmēģinājuma</string>
     <string name="readtext_deprecation_warn">AnkiDroid ir ieviesta labāks TTS (teksta pārvēršanas runā) mehānisms, kas ir saderīgs ar citiem Anki klientiem un iekļauj vairāk balsu un valodas atskaņošanas uzlabojumiem.\n\nLūgums atjaunināt, tiklīdz tas ir iespējams, jo šis iestatījums drīz tiks noņemts</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Lūgums uzlabot uz jauno teksta pārveidošanas runā formātu</string>
-    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
-    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage apgūšanas ekrānā</string>
+    <string name="pref_fixed_port_summary">Iespējo JavaScript localStorage, izmantojot noteiktu servera portu apgūšanas ekrānā</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Izstrādātāju iespējas</string>
     <string name="dev_options_enabled_pref" maxLength="41">Iespējot izstrādāju iespējas</string>
@@ -376,9 +376,9 @@
     <string name="reviewer_frame_style" maxLength="41">Ietvara stils</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Kartīte</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Ierāmējums</string>
-    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Top</string>
-    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Bottom</string>
-    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">None</string>
+    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Augšā</string>
+    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Apakšā</string>
+    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Nav</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Atvērt iestatījumus</string>
 </resources>

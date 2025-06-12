@@ -142,7 +142,7 @@
     <string name="import_preparing_file">Rengiame failą importui&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Pridėti</string>
     <string name="import_message_replace_confirm">Jūsų turima kolekcija bus ištrinta ir pakeista %s failo duomenimis</string>
-    <string name="import_dialog_message_add">Pridėti \"%s\" į kolekciją? Tai gali truputį užtrukti </string>
+    <string name="import_dialog_message_add">Pridėti \"%s\" į kolekciją? Tai gali truputį užtrukti</string>
     <string name="import_log_no_apkg">Tai negaliojantis „Anki“ paketo failas</string>
     <string name="import_title_error" comment="Title of error dialog">Klaida</string>
     <string name="import_error_handle_exception">Nepavyko importuoti failo\n\n%s</string>
@@ -225,7 +225,7 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Šrifto dydis</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Rodyti įrankių juostą</string>
-    <string name="format_insert_bold">Paryškintas formatas </string>
+    <string name="format_insert_bold">Paryškintas formatas</string>
     <string name="format_insert_italic">Formatas kaip kursyvas</string>
     <string name="format_insert_underline">Pabraukta</string>
     <string name="insert_horizontal_line">Įterpti horizontalią liniją</string>

@@ -67,7 +67,7 @@
     <string name="answering_error_message">Rakstīšana krājumā neizdevās. Datubāze varētu būt bojāta vai diskā vārētu nebūt pietiekami daudz brīvas vietas.\n\nJa tas notiek biežāk, jāmēģina pārbaudīt datubāzi, labot krājumu vai atjaunot to no rezerves kopijas. Jāpiesit \"Iespējas\", lai to izdarītu.\n\nVai arī tā varētu būt AnkiDroid nepilnība; lūgums ziņot par kļūdu, lai mēs varētu to pārbaudīt.</string>
     <string name="answering_error_report">Ziņot par kļūdu</string>
     <string name="storage_full_message">Nav pietiekami daudz brīvas krātuves vietas, lai atvērtu AnkiDroid. Jāatbrīvo mazliet vietas, lai varētu turpināt.</string>
-    <string name="repair_deck_dialog">Vai tiešām mēģināt salabot datubāzi?\n\nPirms mēģinājuna uzsākšanas apakšmapē \"%s\" tiks izveidota kopija. </string>
+    <string name="repair_deck_dialog">Vai tiešām mēģināt salabot datubāzi?\n\nPirms mēģinājuna uzsākšanas apakšmapē \"%s\" tiks izveidota kopija.</string>
     <string name="intent_aedict_empty">Kategorija \"noklusējums\" ir tukša</string>
     <string name="intent_aedict_category">Lai AnkiDroid pievienotu kartītes, jānoņem visas piezīmju grāmatiņu kategorijas vai jāpievieno viena ar nosaukumu \"default\"</string>
     <string name="custom_study_new_extend">Palielināt/samazināt (\"-3\") šodienas jauno kartīšu skaitu par</string>
@@ -238,9 +238,9 @@
         <item quantity="other">dienām</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="zero">Current interval: %d days</item>
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="zero">Pašreizējais starplaiks: %d dienu</item>
+        <item quantity="one">Pašreizējais starplaiks: %d diena</item>
+        <item quantity="other">Pašreizējais starplaiks: %d dienas</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">No</string>

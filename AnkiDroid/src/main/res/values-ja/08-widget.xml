@@ -66,7 +66,7 @@
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">デッキを削除しました</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">このデッキはすでに選択されています</string>
     <plurals name="deck_limit_reached">
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">You can select up to %d decks.</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">選択できるデッキは%d個までです。</item>
     </plurals>
     <string name="empty_widget_state" comment="To denote the widget is empty">デッキが見つかりません。設定し直すためにタップしてください。</string>
     <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">コレクションが空です。アプリを開いてデッキを追加してから設定し直してください。</string>
