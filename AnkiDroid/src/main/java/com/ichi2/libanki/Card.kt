@@ -93,6 +93,7 @@ open class Card : Cloneable {
     var flags = 0
     private var memoryState: FSRSMemoryState? = null
     private var desiredRetention: Float? = null
+    private var decay: Float? = null
 
     var renderOutput: TemplateRenderOutput? = null
     var note: Note? = null
@@ -141,6 +142,7 @@ open class Card : Cloneable {
         customData = card.customData
         memoryState = if (card.hasMemoryState()) card.memoryState else null
         desiredRetention = if (card.hasDesiredRetention()) card.desiredRetention else null
+        decay = if (card.hasDecay()) card.decay else null
     }
 
     @LibAnkiAlias("_to_backend_card")
@@ -165,6 +167,7 @@ open class Card : Cloneable {
             this@Card.originalPosition?.let { originalPosition = it }
             this@Card.memoryState?.let { memoryState = it }
             this@Card.desiredRetention?.let { desiredRetention = it }
+            this@Card.decay?.let { decay = it }
         }
 
     @LibAnkiAlias("question")
