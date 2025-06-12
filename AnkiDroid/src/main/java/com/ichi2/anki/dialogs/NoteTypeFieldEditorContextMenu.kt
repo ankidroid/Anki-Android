@@ -41,8 +41,7 @@ class NoteTypeFieldEditorContextMenu : AnalyticsDialogFragment() {
         Sort(1, R.string.model_field_editor_sort_field),
         Rename(2, R.string.model_field_editor_rename),
         Delete(3, R.string.model_field_editor_delete),
-        ToggleSticky(4, R.string.model_field_editor_toggle_sticky),
-        AddLanguageHint(5, R.string.model_field_editor_language_hint),
+        AddLanguageHint(4, R.string.model_field_editor_language_hint),
     }
 
     companion object {
