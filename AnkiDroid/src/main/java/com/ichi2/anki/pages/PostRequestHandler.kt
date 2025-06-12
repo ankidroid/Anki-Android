@@ -91,10 +91,11 @@ val collectionMethods =
         "setSchedulingStates" to { bytes -> setSchedulingStatesRaw(bytes) },
         "getChangeNotetypeInfo" to { bytes -> getChangeNotetypeInfoRaw(bytes) },
         "changeNotetype" to { bytes -> changeNotetypeRaw(bytes) },
-        "importJsonString" to { bytes -> importJsonStringRaw(bytes) },
         "importJsonFile" to { bytes -> importJsonFileRaw(bytes) },
         "congratsInfo" to { bytes -> congratsInfoRaw(bytes) },
         "getImageOcclusionFields" to { bytes -> getImageOcclusionFieldsRaw(bytes) },
+        "getIgnoredBeforeCount" to { bytes -> getIgnoredBeforeCountRaw(bytes) },
+        "getRetentionWorkload" to { bytes -> getRetentionWorkloadRaw(bytes) },
     )
 
 suspend fun handleCollectionPostRequest(

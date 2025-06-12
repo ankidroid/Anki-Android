@@ -58,13 +58,14 @@ class TemplateManager {
         val anodes: TemplateReplacementList,
         val css: String,
         val latexSvg: Boolean,
+        val isEmpty: Boolean,
     ) {
         companion object {
             fun fromProto(out: anki.card_rendering.RenderCardResponse): PartiallyRenderedCard {
                 val qnodes = nodesFromProto(out.questionNodesList)
                 val anodes = nodesFromProto(out.answerNodesList)
 
-                return PartiallyRenderedCard(qnodes, anodes, out.css, out.latexSvg)
+                return PartiallyRenderedCard(qnodes, anodes, out.css, out.latexSvg, out.isEmpty)
             }
 
             fun nodesFromProto(nodes: List<anki.card_rendering.RenderedTemplateNode>): TemplateReplacementList {
