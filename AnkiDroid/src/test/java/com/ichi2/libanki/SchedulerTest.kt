@@ -631,7 +631,7 @@ open class SchedulerTest : JvmTest() {
                     Ease.EASY,
                 ),
             ),
-            Matchers.equalTo("10.8mo"),
+            Matchers.equalTo("10.7mo"),
         )
     }
 

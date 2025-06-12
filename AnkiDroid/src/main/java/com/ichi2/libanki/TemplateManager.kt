@@ -56,13 +56,13 @@ class TemplateManager {
     data class PartiallyRenderedCard(
         val qnodes: TemplateReplacementList,
         val anodes: TemplateReplacementList,
+        val isEmpty: Boolean,
     ) {
         companion object {
             fun fromProto(out: anki.card_rendering.RenderCardResponse): PartiallyRenderedCard {
                 val qnodes = nodesFromProto(out.questionNodesList)
                 val anodes = nodesFromProto(out.answerNodesList)
-
-                return PartiallyRenderedCard(qnodes, anodes)
+                return PartiallyRenderedCard(qnodes, anodes, out.isEmpty)
             }
 
             fun nodesFromProto(nodes: List<anki.card_rendering.RenderedTemplateNode>): TemplateReplacementList {
