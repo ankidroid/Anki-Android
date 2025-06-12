@@ -136,8 +136,7 @@ class TranslationTypo :
             element.reportIssue("should not be empty")
         }
 
-        // TODO(14903): remove "values" check once lint passes without it
-        if ("values" == context.file.parentFile.name && element.textContent.trim() != element.textContent) {
+        if (element.textContent.trim() != element.textContent) {
             var isValid = true
             element.childNodes.forEach {
                 if (it is CDATASection) {
