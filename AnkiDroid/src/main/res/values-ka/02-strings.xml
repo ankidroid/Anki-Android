@@ -69,7 +69,7 @@
     <string name="show_whiteboard">დაფის ჩვენება</string>
     <string name="hide_whiteboard" maxLength="28">დაფის დამალვა</string>
     <string name="clear_whiteboard" maxLength="28">დაფის გასუფთავება</string>
-    <string name="replay_audio" maxLength="28">ხმის თავიდან ჩართვა</string>
+    <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">ბარათი მოინიშნა როგორც სწავლის შემაფერხებელი ბარათი და Anki მას ამიერიდან გამოტოვებს</string>
     <string name="leech_notification">ბარათი შემაფერხებლად მოინიშნა</string>
     <string name="webview_crash_unknown">უცნობი შეცდომა</string>

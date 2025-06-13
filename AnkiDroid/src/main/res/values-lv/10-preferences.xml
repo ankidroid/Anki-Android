@@ -59,7 +59,7 @@
     <string name="pref_cat_studying" maxLength="41">Mācīšanās</string>
     <string name="pref_cat_system_wide" maxLength="41">Visā sistēmā</string>
     <string name="pref_cat_reviewing" maxLength="41">Izskatīšana</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sinhronizēšana</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Vienādošana</string>
     <string name="pref_cat_scheduling" maxLength="41">Ieplānošana</string>
     <string name="pref_cat_whiteboard" maxLength="41">Tāfele</string>
     <string name="pref_cat_appearance" maxLength="41">Izskats</string>
@@ -126,19 +126,19 @@
     <string name="tts" maxLength="41">Teksta pārveidošana runā</string>
     <string name="tts_summ">Nolasa jautājumu un atbildi, ja nav iekļauta skaņas datne</string>
     <!-- Sync -->
-    <string name="sync_fetch_missing_media" maxLength="41">Iegūt informācijas nesējus sinhronizēšanas laikā</string>
+    <string name="sync_fetch_missing_media" maxLength="41">Iegūt informācijas nesējus vienādošanas laikā</string>
     <string name="sync_account" maxLength="41">AnkiWeb konts</string>
     <string name="sync_account_summ_logged_out">Nav veikta pieteikšanās</string>
-    <string name="automatic_sync_choice" maxLength="41">Automātiska sinhronizēšana</string>
-    <string name="automatic_sync_choice_summ">Automātiski sinhronizēt pēc lietotnes palaišanas vai pirms iziešanas no tās, ja pēdējā sinhronizēšana bija
-        vairāk kā pirms 10 minūtēm.</string>
+    <string name="automatic_sync_choice" maxLength="41">Automātiska vienādošana</string>
+    <string name="automatic_sync_choice_summ">Automātiski vienādot pēc lietotnes palaišanas vai pirms iziešanas no tās, ja pēdējā vienādošana bija
+        pirms vairāk nekā 10 minūtēm.</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">Vienmēr</string>
     <string name="sync_media_only_unmetered">Tikai nemērāmos savienojumos</string>
     <string name="sync_media_never">Nekad</string>
-    <string name="sync_status_badge" maxLength="41">Attēlot sinhronizēšanas stāvokli</string>
-    <string name="sync_status_badge_summ">Mainīt sinhronizēšanas ikonu, kad var augšupielādēt izmaiņas</string>
-    <string name="metered_sync_title" maxLength="41">Ļaut sinhronizēšanu mērāmos savienojumos</string>
-    <string name="metered_sync_summary">Ja atspējots, tiks brīdināts, ja mēģināsi sinhronizēt, kad tiek izmantots mērāms savienojums</string>
+    <string name="sync_status_badge" maxLength="41">Attēlot vienādošanas stāvokli</string>
+    <string name="sync_status_badge_summ">Mainīt vienādošanas ikonu, kad var augšupielādēt izmaiņas</string>
+    <string name="metered_sync_title" maxLength="41">Ļaut vienādošanu mērāmos savienojumos</string>
+    <string name="metered_sync_summary">Ja atspējots, tiks brīdināts, ja mēģināsi vienādot, kad tiek izmantots mērāms savienojums</string>
     <string name="backup_limits_frequency">Biežums</string>
     <string name="backup_limits_lifetime">Paturēšanas laiks</string>
     <string name="app_theme" maxLength="41">Izskats</string>
@@ -215,14 +215,14 @@
     <string name="media_import_allow_all_files" maxLength="41">Atļaut visas datnes informācijas nesēju ievietošanās</string>
     <string name="media_import_allow_all_files_summ">Ja Android neatpazīst informācija nesēju datni</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title" maxLength="41">Pielāgots sinhronizēšanas serveris</string>
+    <string name="custom_sync_server_title" maxLength="41">Pielāgots vienādošanas serveris</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Netiek izmantots</string>
-    <string name="custom_sync_server_help2"><![CDATA[        Sinhronizēšans ar AnkiWeb vietā
+    <string name="custom_sync_server_help2"><![CDATA[        Vienādošanas ar AnkiWeb vietā
         var izmantot savu serveri.
         Ja nav iestatīts, tiks izmantots noklusējuma AnkiWeb serveris.
         <a href="%s">Uzzināt vairāk</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">Sinhronizēšanas URL</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Vienādošanas URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">Pielāgots saknes sertifikāts (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Tastatūra</string>
@@ -312,7 +312,7 @@
         AnkiDroid sāks noņemt dažas no tām, lai atbrīvuto krātuves vietu.
         <br><br>
         Jāņem vērāk, ka informācijas nesēju datnes netiek iekļautas rezerves kopijās.
-        Drošības dēļ lūgums laiku pa laikam sinhronizēt savu krājumu vai saglabāt tā izguves.
+        Drošības dēļ lūgums laiku pa laikam vienādot savu krājumu vai saglabāt tā izguves.
         <br><br>
         Krājumu atjaunot no rezerves kopijas un izgūt var kavu saraksta izvēlnē.
     ]]></string>

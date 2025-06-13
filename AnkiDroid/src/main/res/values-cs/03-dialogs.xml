@@ -51,7 +51,7 @@
     <plurals name="delete_deck_message">
         <item quantity="one">Vymazat všechny karty v %1$s? Obsahuje %2$d kartu</item>
         <item quantity="few">Vymazat všechny karty v %1$s? Obsahuje %2$d karty</item>
-        <item quantity="many">Vymazat všechny karty v %1$s? Obsahuje %2$d karty</item>
+        <item quantity="many">Vymazat všechny karty v %1$s? Obsahuje %2$d karet</item>
         <item quantity="other">Vymazat všechny karty v %1$s? Obsahuje %2$d karet</item>
     </plurals>
     <string name="delete_cram_deck_message">Vymazat filtrovaný balíček %s a poslat všechny karty zpět do jejich původních balíčků?</string>
@@ -67,7 +67,7 @@
     </plurals>
     <string name="answering_error_title">Chyba databáze</string>
     <string name="answering_error_message">Zápis do kolekce se nezdařil. Databáze může být poškozena nebo nemusí být dostatek prázdného místa na disku.\n\nPokud se to děje častěji, zkuste zkontrolovat databázi, opravit kolekci nebo ji obnovit ze zálohy. Klepněte na „možnosti“.\n\nNebo to může být také chyba AnkiDroid, prosím nahlaste chybu, abychom to mohli zkontrolovat.</string>
-    <string name="answering_error_report">Hlášení chyby</string>
+    <string name="answering_error_report">Nahlásit chybu</string>
     <string name="storage_full_message">Není dostatek volného místa v úložišti pro otevření AnkiDroid. Uvolněte nějaké místo, abyste mohli pokračovat.</string>
     <string name="repair_deck_dialog">Opravdu se chcete pokusit opravit databázi?\n\nPřed obnovou bude vytvořena kopie v podadresáři „%s“.</string>
     <string name="intent_aedict_empty">Kategorie „výchozí“ je prázdná</string>
@@ -193,10 +193,10 @@
     <string name="help_dialog_exception_report_sent">Nahlášení bylo odesláno!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
-        <item quantity="few">An automatic sync may be triggered in %d seconds</item>
-        <item quantity="many">An automatic sync may be triggered in %d seconds</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">Automatická synchronizace může být spuštěna za %d sekundu</item>
+        <item quantity="few">Automatická synchronizace může být spuštěna za %d sekundy</item>
+        <item quantity="many">Automatická synchronizace může být spuštěna za %d sekund</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">Automatická synchronizace může být spuštěna za %d sekund</item>
     </plurals>
     <string name="metered_sync_data_warning">Váš poskytovatel internetu si může účtovat poplatky za používání dat</string>
     <string name="deck_picker_new">Počet nových karet dnes k učení v tomto balíčku.</string>
@@ -245,10 +245,10 @@
         <item quantity="other">dní</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="few">Current interval: %d days</item>
-        <item quantity="many">Current interval: %d days</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">Současný interval: %d den</item>
+        <item quantity="few">Současný interval: %d dny</item>
+        <item quantity="many">Současný interval: %d dní</item>
+        <item quantity="other">Současný interval: %d dní</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Od</string>
@@ -264,7 +264,7 @@
     <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">Systémový WebView je zastaralý. Některé funkce nebudou fungovat správně. Aktualizujte jej prosím.\n\nNainstalovaná verze: %1$d\nMinimální požadovaná verze: %2$d</string>
-    <string name="compress">Compress</string>
+    <string name="compress">Komprimovat</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">Jazyk není podporován</string>
     <string name="tts_error_dialog_reason_text">Modul převodu textu na řeč <b>%1$s</b> nepodporuje následující jazyk: <b>%2$s</b></string>

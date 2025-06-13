@@ -69,7 +69,7 @@
     <string name="show_whiteboard">Tampilkan papan tulis putih</string>
     <string name="hide_whiteboard" maxLength="28">Sembunyikan papan tulis putih</string>
     <string name="clear_whiteboard" maxLength="28">Kosongkan papan tulis</string>
-    <string name="replay_audio" maxLength="28">Putar ulang audio</string>
+    <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">Kartu ditandai sebagai lintah dan ditangguhkan</string>
     <string name="leech_notification">Kartu ditandai sebagai lintah</string>
     <string name="webview_crash_unknown">Unknown error</string>

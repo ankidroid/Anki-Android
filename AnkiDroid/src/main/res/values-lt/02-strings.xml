@@ -69,7 +69,7 @@
     <string name="show_whiteboard">Rodyti rašymo lentą</string>
     <string name="hide_whiteboard" maxLength="28">Slėpti rašymo lentą</string>
     <string name="clear_whiteboard" maxLength="28">Išvalyti lentą</string>
-    <string name="replay_audio" maxLength="28">Pagroti dar kartą</string>
+    <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">Kortelė pažymėta kaip sunkiai įsimenama, todėl buvo atidėta</string>
     <string name="leech_notification">Kortelė buvo pažymėta kaip sunkiai įsimenama</string>
     <string name="webview_crash_unknown">Nežinoma klaida</string>

@@ -69,7 +69,7 @@
     <string name="show_whiteboard">Rādīt tāfeli</string>
     <string name="hide_whiteboard" maxLength="28">Paslēpt tāfeli</string>
     <string name="clear_whiteboard" maxLength="28">Notīrīt tāfeli</string>
-    <string name="replay_audio" maxLength="28">Atkārtoti atskaņot skaņu</string>
+    <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">Kartīte atzīmēta kā izsūcoša un atlikta</string>
     <string name="leech_notification">Kartīte atzīmēta kā izsūcoša</string>
     <string name="webview_crash_unknown">Nezināma kļūda</string>
@@ -295,7 +295,7 @@
     <string name="intro_ankidroid_tagline_two">Apgūsti vairāk</string>
     <string name="intro_short_ankidroid_explanation">Anki kartīšu plānotājs ietaupa laiku ar vājāko atmiņu stiprināšanu un stripāko atmiņu saglabāšanu</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Uzsākt</string>
-    <string name="intro_sync_from_ankiweb">Sinhronizēt no AnkiWeb</string>
+    <string name="intro_sync_from_ankiweb">Vienādot no AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid vēl nav sāknēta. Lūgums atvērt AnkiDroid un mēģināt vēlreiz</string>
     <string name="already_logged_in">Jau pieteicies</string>

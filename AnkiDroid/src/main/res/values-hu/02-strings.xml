@@ -69,7 +69,7 @@
     <string name="show_whiteboard">Rajztábla mutatása</string>
     <string name="hide_whiteboard" maxLength="28">Rajztábla elrejtése</string>
     <string name="clear_whiteboard" maxLength="28">Rajztábla törlése</string>
-    <string name="replay_audio" maxLength="28">Hang ismétlés</string>
+    <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">Kártya megjelölve piócaként és felfüggesztésre került</string>
     <string name="leech_notification">Kártya megjelölve piócaként</string>
     <string name="webview_crash_unknown">Ismeretlen hiba</string>

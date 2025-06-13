@@ -69,7 +69,7 @@
     <string name="show_whiteboard">Pokaži ploču</string>
     <string name="hide_whiteboard" maxLength="28">Sakrij ploču</string>
     <string name="clear_whiteboard" maxLength="28">Obriši ploču</string>
-    <string name="replay_audio" maxLength="28">Ponovno odslušaj</string>
+    <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">Karte označene kao preteške i suspendirane</string>
     <string name="leech_notification">Karta označena kao preteška</string>
     <string name="webview_crash_unknown">Nepoznata greška</string>

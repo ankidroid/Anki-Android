@@ -1,6 +1,6 @@
 Iegaumē jebko ar AnkiDroid!
 
-AnkiDroid ļauj ļoti iedarbīgi apgūt zibkartītes, rādot tās tieši pirms tās tiks aizmirstas. Tā ir pilnībā saderīga ar izkliedētāts atkārtošanas programmatūru Anki (tostarp sinhronizēšana), kas ir pieejama Windows, Linux un macOS.
+AnkiDroid ļauj ļoti iedarbīgi apgūt zibkartītes, rādot tās tieši pirms tās tiks aizmirstas. Tā ir pilnībā saderīga ar izkliedētāts atkārtošanas programmatūru Anki (tostarp vienādošana), kas ir pieejama Windows, Linux un macOS.
 
 Apgūsti visāda veida zināšanas kur un kad vien vēlies! Lietderīgi izmanto dīkstāvē pavadīto laiku pārbraucienos ar sabiedrisko transportu, lielveikalu rindās vai jebkuros citos gadījumos, kuros jāgaida!
 
@@ -15,7 +15,7 @@ Pievieno vielu darbvirsmas lietotnē Anki vai uzreiz AnkiDroid! Lietotne pat atb
 • vairāk nekā 10 000 iepriekš sagatavotu kavu
 • virzības logrīks
 • izvērsts apkopojums
-• sinhronizēšana ar AnkiWeb
+• vienādošana ar AnkiWeb
 • atvērts pirmkods
 
 ★ Papildu iespējas:

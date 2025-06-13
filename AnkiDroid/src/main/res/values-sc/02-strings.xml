@@ -69,7 +69,7 @@
     <string name="show_whiteboard">Ammustra sa lavagna</string>
     <string name="hide_whiteboard" maxLength="28">Cua sa lavagna</string>
     <string name="clear_whiteboard" maxLength="28">Isbòida sa lavagna</string>
-    <string name="replay_audio" maxLength="28">Riprodui s\'àudio</string>
+    <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">Carta marcada comente sambisua e suspèndida</string>
     <string name="leech_notification">Carta marcada comente sambisua</string>
     <string name="webview_crash_unknown">Faddina disconnota</string>

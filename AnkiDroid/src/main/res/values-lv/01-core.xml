@@ -99,7 +99,7 @@
     <string name="edit_deck_description" comment="edit the deck description">Labot aprakstu</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">Pievienot</string>
     <string name="menu_add_note" maxLength="28">Pievienot piezīmi</string>
-    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sinhronizēt kontu</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Vienādot kontu</string>
     <string name="menu_dismiss_note" maxLength="41">Paslēpt / izdzēst</string>
     <string name="menu_bury_card" maxLength="28">Paslēpt kartīti</string>
     <string name="menu_bury_note" maxLength="28">Paslēpt piezīmi</string>
@@ -139,12 +139,12 @@
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Kava pagaidām ir pabeigta. %s</string>
     <string name="studyoptions_no_cards_due">Vēl nav pienācis nevienas kartītes laiks</string>
     <string name="sd_card_not_mounted">Ierīces krātuve nav piemontēta</string>
-    <string name="button_sync" comment="Text of the sync button" maxLength="28">Sinhronizēšana</string>
-    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Vai pārtraukt sinhronizēšanu?</string>
-    <string name="continue_sync" tools:ignore="UnusedResources">Turpināt sinhronizēšanu</string>
-    <string name="sync_cancelled" tools:ignore="UnusedResources">Sinhronizēšana atcelta</string>
+    <string name="button_sync" comment="Text of the sync button" maxLength="28">Vienādošana</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Vai pārtraukt vienādošanu?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">Turpināt vienādošanu</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">Vienādošana atcelta</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Atceļ&#8230;\nTas var aizņemt kādu laiku.</string>
-    <string name="syncing_media">Sinhronizē informācijas nesējus</string>
+    <string name="syncing_media">Vienādo informācijas nesējus</string>
     <string name="export_deck" maxLength="28">Izgūt kavu</string>
     <string name="export_collection">Izgūt krājumu</string>
     <string name="nothing">Nekas</string>
@@ -186,7 +186,7 @@
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
     <string name="sync_conflict_remote_confirm_new">Aizstāt AnkiDroid krājumu ar AnkiWeb krājumu?</string>
     <string name="sync_conflict_local_confirm_new">Aizstāt AnkiWeb krājumu ar AnkiDroid krājumu?</string>
-    <string name="sync_conflict_title_new">Izvēlies krājumu, kuru paturēt</string>
+    <string name="sync_conflict_title_new">Paturamā krājuma atlasīšana</string>
     <string name="sync_conflict_replace_title">Aizstāt krājumu</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Nevar ierakstīt datnē %s vai izveidot to</string>

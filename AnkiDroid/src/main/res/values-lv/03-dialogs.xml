@@ -190,9 +190,9 @@
     <string name="help_dialog_exception_report_sent">Ziņojums tika nosūtīts.</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="zero">Automātiska sinhronizēšana var tik izsaukta pēc %d sekundēm</item>
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">Automātiska sinhronizēšana var tik izsaukta pēc %d sekundes</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">Automātiska sinhronizēšana var tik izsaukta pēc %d sekundēm</item>
+        <item quantity="zero">Automātiska vienādošana var tik izsaukta pēc %d sekundēm</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">Automātiska vienādošana var tik izsaukta pēc %d sekundes</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">Automātiska vienādošana var tik izsaukta pēc %d sekundēm</item>
     </plurals>
     <string name="metered_sync_data_warning">Interneta pakalpojuma sniedzējs var pieprasīt samaksu par datu izmantošanu</string>
     <string name="deck_picker_new">Jauno kartīšu skaits, ko šodien rādīt šajā kavā.</string>
