@@ -21,11 +21,13 @@ import android.text.InputType
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.utils.input
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
+import timber.log.Timber
 import java.util.function.Consumer
 
 // TODO: Pass optional validation condition i.e. Positive button not enabled if condition is true
@@ -70,7 +72,18 @@ open class IntegerDialog : AnalyticsDialogFragment() {
                 prefill = requireArguments().getString("defaultValue"),
                 displayKeyboard = true,
             ) { _, text: CharSequence ->
-                consumer!!.accept(text.toString().toInt())
+                // #18504: IME bugs can allow a user to send in a non-integer
+                val input =
+                    try {
+                        text.toString().toInt()
+                    } catch (e: Exception) {
+                        Timber.w(e)
+                        // TODO: find a good place in the foreground to show snackbar
+                        showSnackbar(R.string.something_wrong)
+                        return@input
+                    }
+
+                consumer!!.accept(input)
                 dismiss()
             }
     }
