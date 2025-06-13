@@ -106,10 +106,6 @@
                 android:textColor="?attr/newCountColor"
                 android:paddingEnd="4dp"
                 android:textSize="16sp"
-                app:layout_constraintTop_toTopOf="@id/back_button"
-                app:layout_constraintBottom_toBottomOf="@id/back_button"
-                app:layout_constraintStart_toEndOf="@id/back_button"
-                app:layout_constraintEnd_toStartOf="@id/lrn_count"
                 tools:text="127"
                 />
 
@@ -120,10 +116,6 @@
                 android:textColor="?attr/learnCountColor"
                 android:paddingHorizontal="4dp"
                 android:textSize="16sp"
-                app:layout_constraintTop_toTopOf="@id/back_button"
-                app:layout_constraintBottom_toBottomOf="@id/back_button"
-                app:layout_constraintStart_toEndOf="@id/new_count"
-                app:layout_constraintEnd_toStartOf="@id/rev_count"
                 tools:text="381"
                 />
 
@@ -134,10 +126,32 @@
                 android:textColor="?attr/reviewCountColor"
                 android:paddingStart="4dp"
                 android:textSize="16sp"
-                app:layout_constraintTop_toTopOf="@id/back_button"
-                app:layout_constraintBottom_toBottomOf="@id/back_button"
-                app:layout_constraintStart_toEndOf="@id/lrn_count"
                 tools:text="954"
+                />
+
+            <androidx.constraintlayout.helper.widget.Flow
+                android:id="@+id/counts_flow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="new_count,lrn_count,rev_count"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/back_button"
+                app:layout_constraintBottom_toTopOf="@id/timer"
+                />
+
+            <!-- Timer below counts means UI elements may jump if timer is selectively enabled.
+              This was a considered decision vs other options. Current thinking is the selectively-
+              enabled timer case will be very rare, so UI element motion should also be rare. -->
+            <com.ichi2.anki.ui.windows.reviewer.AnswerTimer
+                android:id="@+id/timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/counts_flow"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/counts_flow"
+                app:layout_constraintStart_toStartOf="@id/counts_flow"
+                android:visibility="gone"
+                tools:visibility="visible"
                 />
 
             <FrameLayout
