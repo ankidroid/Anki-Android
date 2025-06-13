@@ -87,6 +87,7 @@ import com.ichi2.utils.title
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.runBlocking
 import kotlinx.parcelize.Parcelize
+import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
 
 /**
@@ -165,7 +166,11 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         tagsToInclude: List<String> = emptyList(),
         tagsToExclude: List<String> = emptyList(),
     ) {
-        requireActivity().launchCatchingTask {
+        requireActivity().launchCatchingTask(
+            // net.ankiweb.rsdroid.BackendException: No cards matched the criteria you provided.
+            // TODO (Backend#256: make this BackendCustomStudyException)
+            skipCrashReport = { it is BackendException },
+        ) {
             withProgress {
                 try {
                     customStudy(option, cardsAmount, kind, tagsToInclude, tagsToExclude)
