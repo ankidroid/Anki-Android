@@ -153,13 +153,24 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             if (selectedStatePosition == AdapterView.INVALID_POSITION) return@setFragmentResultListener
             val kind = CustomStudyCardState.entries[selectedStatePosition].kind
             val cardsAmount = userInputValue ?: 100 // the default value
-            requireActivity().launchCatchingTask {
-                withProgress {
-                    try {
-                        customStudy(option, cardsAmount, kind, tagsToInclude, tagsToExclude)
-                    } finally {
-                        requireActivity().dismissAllDialogFragments()
-                    }
+            launchCustomStudy(option, cardsAmount, kind, tagsToInclude, tagsToExclude)
+        }
+    }
+
+    /** @see customStudy */
+    private fun launchCustomStudy(
+        option: ContextMenuOption,
+        cardsAmount: Int,
+        kind: CramKind = CramKind.CRAM_KIND_NEW,
+        tagsToInclude: List<String> = emptyList(),
+        tagsToExclude: List<String> = emptyList(),
+    ) {
+        requireActivity().launchCatchingTask {
+            withProgress {
+                try {
+                    customStudy(option, cardsAmount, kind, tagsToInclude, tagsToExclude)
+                } finally {
+                    requireActivity().dismissAllDialogFragments()
                 }
             }
         }
@@ -357,15 +368,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                     tagsSelectionDialog.show(parentFragmentManager, TagLimitFragment.TAG)
                     return@setOnClickListener
                 }
-                requireActivity().launchCatchingTask {
-                    withProgress {
-                        try {
-                            customStudy(contextMenuOption, n)
-                        } finally {
-                            requireActivity().dismissAllDialogFragments()
-                        }
-                    }
-                }
+                launchCustomStudy(contextMenuOption, n)
             }
         }
 
@@ -383,9 +386,9 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
     private suspend fun customStudy(
         contextMenuOption: ContextMenuOption,
         userEntry: Int,
-        cramKind: CramKind = CramKind.CRAM_KIND_NEW,
-        tagsSelectedForInclude: List<String> = emptyList(),
-        tagsSelectedForExclude: List<String> = emptyList(),
+        cramKind: CramKind,
+        tagsSelectedForInclude: List<String>,
+        tagsSelectedForExclude: List<String>,
     ) {
         Timber.i("Custom study: $contextMenuOption; input = $userEntry")
 
