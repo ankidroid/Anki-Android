@@ -117,6 +117,8 @@ class ReviewerFragment :
     override val webView: WebView
         get() = requireView().findViewById(R.id.webview)
 
+    private val timer: AnswerTimer? get() = view?.findViewById(R.id.timer)
+
     override val baseSnackbarBuilder: SnackbarBuilder = {
         val fragmentView = this@ReviewerFragment.view
         val typeAnswerContainer = fragmentView?.findViewById<View>(R.id.type_answer_container)
@@ -142,10 +144,20 @@ class ReviewerFragment :
             nightMode = Themes.currentTheme.isNightMode,
         )
 
+    override fun onStart() {
+        super.onStart()
+        if (!requireActivity().isChangingConfigurations) {
+            if (viewModel.answerTimerStatusFlow.value is AnswerTimerStatus.Running) {
+                timer?.resume()
+            }
+        }
+    }
+
     override fun onStop() {
         super.onStop()
         if (!requireActivity().isChangingConfigurations) {
             viewModel.stopAutoAdvance()
+            timer?.stop()
         }
     }
 
@@ -175,6 +187,7 @@ class ReviewerFragment :
         setupCounts(view)
         setupMenu(view)
         setupToolbarPosition(view)
+        setupAnswerTimer(view)
 
         viewModel.actionFeedbackFlow
             .flowWithLifecycle(lifecycle)
@@ -554,6 +567,27 @@ class ReviewerFragment :
                 }
             }
             ToolbarPosition.TOP -> return
+        }
+    }
+
+    private fun setupAnswerTimer(view: View) {
+        val timer = view.findViewById<AnswerTimer>(R.id.timer)
+        timer.isVisible = viewModel.answerTimerStatusFlow.value != null // necessary to handle configuration changes
+        viewModel.answerTimerStatusFlow.collectIn(lifecycleScope) { status ->
+            when (status) {
+                is AnswerTimerStatus.Running -> {
+                    timer.isVisible = true
+                    timer.limitInMs = status.limitInMs
+                    timer.restart()
+                }
+                AnswerTimerStatus.Stopped -> {
+                    timer.isVisible = true
+                    timer.stop()
+                }
+                null -> {
+                    timer.isVisible = false
+                }
+            }
         }
     }
 

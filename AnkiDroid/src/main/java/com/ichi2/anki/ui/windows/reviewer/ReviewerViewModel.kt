@@ -58,6 +58,7 @@ import com.ichi2.anki.ui.windows.reviewer.autoadvance.AutoAdvance
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.flag
 import com.ichi2.anki.utils.ext.setUserFlagForCards
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.NoteId
@@ -102,6 +103,7 @@ class ReviewerViewModel(
     val destinationFlow = MutableSharedFlow<Destination>()
     val editNoteTagsFlow = MutableSharedFlow<NoteId>()
     val setDueDateFlow = MutableSharedFlow<CardId>()
+    val answerTimerStatusFlow = MutableStateFlow<AnswerTimerStatus?>(null)
 
     override val server: AnkiServer = AnkiServer(this, serverPort).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
@@ -188,6 +190,13 @@ class ReviewerViewModel(
             if (!autoAdvance.shouldWaitForAudio()) {
                 autoAdvance.onShowAnswer()
             } // else wait for onMediaGroupCompleted
+
+            if (answerTimerStatusFlow.value == null) return@launchCatchingIO
+            val did = currentCard.await().currentDeckId()
+            val stopTimerOnAnswer = withCol { decks.configDictForDeckId(did) }.stopTimerOnAnswer
+            if (stopTimerOnAnswer) {
+                answerTimerStatusFlow.emit(AnswerTimerStatus.Stopped)
+            }
         }
     }
 
@@ -497,6 +506,7 @@ class ReviewerViewModel(
 
         val card = state.topCard
         currentCard = CompletableDeferred(card)
+        setupAnswerTimer(card)
         autoAdvance.onCardChange(card)
         showQuestion()
         loadAndPlayMedia(CardSide.QUESTION)
@@ -569,6 +579,16 @@ class ReviewerViewModel(
     private suspend fun launchSetDueDate() {
         val cardId = currentCard.await().id
         setDueDateFlow.emit(cardId)
+    }
+
+    private suspend fun setupAnswerTimer(card: Card) {
+        val shouldShowTimer = withCol { card.shouldShowTimer(this@withCol) }
+        if (!shouldShowTimer) {
+            answerTimerStatusFlow.emit(null)
+            return
+        }
+        val limitInMillis = withCol { card.timeLimit(this@withCol) }
+        answerTimerStatusFlow.emit(AnswerTimerStatus.Running(limitInMillis))
     }
 
     private fun executeAction(action: ViewerAction) {

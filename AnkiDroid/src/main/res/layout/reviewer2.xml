@@ -18,59 +18,84 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/tools_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            >
+            android:minHeight="?actionBarSize">
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/back_button"
                 style="?actionButtonStyle"
                 android:layout_width="?minTouchTargetSize"
                 android:layout_height="?actionBarSize"
-                android:src="?attr/homeAsUpIndicator"
                 android:layout_marginStart="4dp"
                 android:contentDescription="@string/abc_action_bar_up_description"
-                android:tooltipText="@string/abc_action_bar_up_description"
+                android:src="?attr/homeAsUpIndicator"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.helper.widget.Flow
+                android:id="@+id/counts_flow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="new_count,lrn_count,rev_count"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/back_button"
+                app:layout_constraintBottom_toTopOf="@id/timer"
                 />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/new_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="?attr/newCountColor"
                 android:paddingEnd="4dp"
-                tools:text="127"
-                />
+                android:textColor="?attr/newCountColor"
+                tools:text="127" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/lrn_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="?attr/learnCountColor"
                 android:paddingHorizontal="4dp"
-                tools:text="381"
-                />
+                android:textColor="?attr/learnCountColor"
+                tools:text="381" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/rev_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="?attr/reviewCountColor"
                 android:paddingStart="4dp"
-                tools:text="954"
+                android:textColor="?attr/reviewCountColor"
+                tools:text="954" />
+
+            <!-- Timer below counts means UI elements may jump if timer is selectively enabled.
+              This was a considered decision vs other options. Current thinking is the selectively-
+              enabled timer case will be very rare, so UI element motion should also be rare. -->
+            <com.ichi2.anki.ui.windows.reviewer.AnswerTimer
+                android:id="@+id/timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/counts_flow"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/counts_flow"
+                app:layout_constraintStart_toStartOf="@id/counts_flow"
+                android:visibility="gone"
+                tools:visibility="visible"
                 />
 
             <com.ichi2.anki.preferences.reviewer.ReviewerMenuView
                 android:id="@+id/reviewer_menu_view"
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="12dp"
-                />
-        </LinearLayout>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/rev_count"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/webview_container"
