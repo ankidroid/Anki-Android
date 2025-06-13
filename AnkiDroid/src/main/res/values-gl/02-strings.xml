@@ -119,7 +119,7 @@
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Tarxeta AnkiDroid</string>
     <string name="note_editor_copy_note" maxLength="28">Copiar nota</string>
     <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Reposicionar</string>
-    <string name="card_editor_reset_card" maxLength="28">Reiniciar progreso</string>
+    <string name="card_editor_reset_card" maxLength="28">Esquecer progreso</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Reprogramar</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Vista previa</string>
     <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Copiar como Markdown</string>
@@ -303,7 +303,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Tarxetas</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notas</string>
     <string name="toggle_cards_notes">Alternar tarxetas/notas</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="truncate_content_help">Fixa a altura de cada fila do Explorador para amosar unicamente as 3 primeiras liñas de contido</string>
     <string name="browser_options_dialog_heading">Opcións do explorador</string>
     <string name="audio_saved">Gravación gardada</string>
     <string name="deleting_selected_notes">Eliminando as notas seleccionadas</string>

@@ -47,7 +47,7 @@
     <string name="multimedia_editor_popup_cloze">Ocos por encher</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_audio">Audio recording</string>
+    <string name="multimedia_editor_field_editing_audio">Gravación de audio</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Feito</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
@@ -71,7 +71,7 @@
     <string name="crop_image">Queres recortar esta imaxe?</string>
     <string name="crop_button" maxLength="28">Recortar imaxe</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
+    <string name="select_image_failed">"Non se puido seleccionar a imaxe. Téntao de novo"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
     <string name="crop_image_size_notice">The image is too big to be handled by the crop editor. Please resize it and try again!</string>
     <string name="reselect" maxLength="28">Seleccionar de novo</string>

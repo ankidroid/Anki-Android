@@ -55,11 +55,11 @@
     <string name="delete_cram_deck_message">Eliminar baralla filtrada %s e devolver as tarxetas ás súas barallas orixinais?</string>
     <string name="no_tts_available_message">Ningún idioma de texto a voz dispoñíbel</string>
     <string name="tts_no_tts">Non fales</string>
-    <string name="reposition_card_not_new_error">Só pódense reposicionar tarxetas novas</string>
-    <string name="reset_card_dialog_title">Reiniciar o progreso da tarxeta</string>
+    <string name="reposition_card_not_new_error">Só pódense reposicionar as tarxetas novas</string>
+    <string name="reset_card_dialog_title">Esquecer o progreso da tarxeta</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d tarxeta reiniciada</item>
-        <item quantity="other">%d tarxetas reiniciadas</item>
+        <item quantity="one">%d tarxeta esquecida</item>
+        <item quantity="other">%d tarxetas esquecidas</item>
     </plurals>
     <string name="answering_error_title">Erro na base de datos</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
@@ -120,16 +120,16 @@
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Buscando tarxetas baleiras&#8230;</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <string name="multimedia_editor_audio_permission_refused">Non se puido obter permiso para usar o micrófono.</string>
+    <string name="multimedia_editor_failed">Non se puido abrir o editor multimedia</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <string name="multimedia_editor_audio_permission_denied">Denegouse o permiso para gravar audio</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid actualizado</string>
     <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
     <string name="integrity_check_continue_anyway">Continuar igualmente</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nActualmente tes %s libre.</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Erro ao descodificar os datos da tarxeta</string>
@@ -148,7 +148,7 @@
     <string name="failed_to_apply_background_image">Erro ao aplicar a imaxe do fondo %s</string>
     <string name="background_image_too_large">Deck Picker background too large</string>
     <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_dimensions_too_large">As dimensións da imaxe son demasiado grandes (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
@@ -168,7 +168,7 @@
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Informar dun erro</string>
     <string name="help_title_support_ankidroid" maxLength="28">Apoiar o AnkiDroid</string>
-    <string name="help_item_support_opencollective_donate">Doar</string>
+    <string name="help_item_support_opencollective_donate">Doazóns</string>
     <string name="help_item_support_develop_ankidroid">Desenvolver</string>
     <string name="help_item_support_rate_ankidroid">Avaliar</string>
     <string name="help_item_support_other_ankidroid">Outros</string>
@@ -187,8 +187,8 @@
     <string name="help_dialog_exception_report_sent">Informe enviado!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">A sincronización automática acontecerá en %d segundo</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">A sincronización automática acontecerá en %d segundos</item>
     </plurals>
     <string name="metered_sync_data_warning">O teu provedor de internet podería cobrar polo uso de datos móbiles</string>
     <string name="deck_picker_new">Número de tarxetas novas para ver hoxe nesta baralla.</string>
@@ -231,8 +231,8 @@
         <item quantity="other">días</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">Intervalo actual: %d día</item>
+        <item quantity="other">Intervalo actual: %d días</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Desde</string>

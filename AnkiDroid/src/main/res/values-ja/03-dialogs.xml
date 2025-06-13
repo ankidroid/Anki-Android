@@ -224,7 +224,7 @@
         <item quantity="other">日後</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="other">現在の復習間隔: %d日</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">～</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">最短</string>
