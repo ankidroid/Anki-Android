@@ -69,7 +69,7 @@
     <string name="show_whiteboard">వైట్బోర్డ్ చూపించు</string>
     <string name="hide_whiteboard" maxLength="28">వైట్బోర్డ్ని దాచిపెట్టు</string>
     <string name="clear_whiteboard" maxLength="28">క్లియర్ వైట్బోర్డ్</string>
-    <string name="replay_audio" maxLength="28">ఆడియోను రీప్లే చేయండి</string>
+    <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">కార్డ్ జ్వాల మరియు సస్పెండ్ గా గుర్తించబడింది</string>
     <string name="leech_notification">కార్డు లీచ్గా గుర్తించబడింది</string>
     <string name="webview_crash_unknown">గుర్తించలేని లోపం</string>

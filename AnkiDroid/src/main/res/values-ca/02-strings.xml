@@ -69,7 +69,7 @@
     <string name="show_whiteboard">Mostra la pissarra</string>
     <string name="hide_whiteboard" maxLength="28">Amaga la pissarra</string>
     <string name="clear_whiteboard" maxLength="28">Esborra la pissarra</string>
-    <string name="replay_audio" maxLength="28">Repetir àudio</string>
+    <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">Fitxa marcada com a lapa i suspesa</string>
     <string name="leech_notification">Fitxa marcada com a lapa</string>
     <string name="webview_crash_unknown">Error desconegut</string>

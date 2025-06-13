@@ -69,7 +69,7 @@
     <string name="show_whiteboard">Zobraziť tabuľu</string>
     <string name="hide_whiteboard" maxLength="28">Skryť tabuľu</string>
     <string name="clear_whiteboard" maxLength="28">Vyčistiť tabuľu</string>
-    <string name="replay_audio" maxLength="28">Znovu prehrať zvuk</string>
+    <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">Kartička označená ako pijavica a pozastavená</string>
     <string name="leech_notification">Kartička označená ako pijavica</string>
     <string name="webview_crash_unknown">Neznáma chyba</string>

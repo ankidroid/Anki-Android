@@ -69,7 +69,7 @@
     <string name="show_whiteboard">ਵ੍ਹਾਈਟਬੋਰਡ ਦਿਖਾਓ</string>
     <string name="hide_whiteboard" maxLength="28">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਲੁਕਾਓ</string>
     <string name="clear_whiteboard" maxLength="28">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਸਾਫ਼ ਕਰੋ</string>
-    <string name="replay_audio" maxLength="28">ਆਡੀਓ ਨੂੰ ਦੁਬਾਰਾ ਚਲਾਓ</string>
+    <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">ਕਾਰਡ ਨੂੰ ਲੀਚ ਕੀਤੇ ਅਤੇ ਮੁਅੱਤਲ ਵਜੋਂ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਗਿਆ ਸੀ</string>
     <string name="leech_notification">ਲੀਚ ਵਜੋਂ ਚਿੰਨ੍ਹਿਤ ਕਾਰਡ</string>
     <string name="webview_crash_unknown">Unknown error</string>

@@ -69,7 +69,7 @@
     <string name="show_whiteboard">Wys witbord</string>
     <string name="hide_whiteboard" maxLength="28">Versteek witbord</string>
     <string name="clear_whiteboard" maxLength="28">Duidelike witbord</string>
-    <string name="replay_audio" maxLength="28">Herhaal klank</string>
+    <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">Kaart gemerk as bloedsuier en opgeskort</string>
     <string name="leech_notification">Kaart gemerk as bloedsuier</string>
     <string name="webview_crash_unknown">Onbekende fout</string>

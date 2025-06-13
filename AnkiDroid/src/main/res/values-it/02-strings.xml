@@ -69,7 +69,7 @@
     <string name="show_whiteboard">Mostra lavagna</string>
     <string name="hide_whiteboard" maxLength="28">Nascondi lavagna</string>
     <string name="clear_whiteboard" maxLength="28">Pulisci lavagna</string>
-    <string name="replay_audio" maxLength="28">Riproduci audio</string>
+    <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">Carta contrassegnata come sanguisuga e sospesa</string>
     <string name="leech_notification">Carta contrassegnata come sanguisuga</string>
     <string name="webview_crash_unknown">Errore sconosciuto</string>

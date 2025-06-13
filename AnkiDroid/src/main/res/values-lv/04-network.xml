@@ -46,13 +46,13 @@
 -->
 <resources>
     <string name="youre_offline">Tu esi bezsaistē</string>
-    <string name="sync_error">Sinhronizēšanas kļūda</string>
+    <string name="sync_error">Vienādošanas kļūda</string>
     <string name="vague_error" comment="Network error dialog title">Kļūda</string>
     <string name="retry">Mēģināt vēlreiz</string>
     <string name="menu_get_shared_decks">Iegūt kopīgotās kavas</string>
     <string name="connection_error_message">Radās tīkla kļūda</string>
     <string name="not_logged_in_title">Pieteikties AnkiWeb</string>
-    <string name="login_create_account_message">Jāpiesakās trešo pušu kontā, lai izmantotu mākoņsinhronizēšanas pakalpojumu. Tādu var izveidot nākamajā solī.</string>
+    <string name="login_create_account_message">Jāpiesakās trešo pušu kontā, lai izmantotu mākoņvienādošanas pakalpojumu. Tādu var izveidot nākamajā solī.</string>
     <!-- MyAccount.kt -->
     <string name="username">E-pasta adrese</string>
     <string name="password">Parole</string>
@@ -67,19 +67,19 @@
     <string name="sign_in">Piesakās</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX iespējas</string>
-    <string name="sync_title">Sinhronizēšana</string>
-    <string name="sync_log_uploading_message">Pilna sinhronizēšana no vietējās krātuves</string>
-    <string name="sync_database_acknowledge">Krājums sinhronizēts</string>
-    <string name="col_synced_media_in_background">Krājums sinhronizēts. Informācijas nesēji tiek sinhronizēti fonā.</string>
-    <string name="sync_corrupt_database">Datubāze ir bojāta. Lūgums salabot to pirms atkārtota sinhronizēšanas mēģinājuma.\n\nSkatīt \"%s\", lai iegūtu informāciju par datubāzes salabošanu.</string>
+    <string name="sync_title">Vienādošana</string>
+    <string name="sync_log_uploading_message">Pilna vienādošana no vietējās krātuves</string>
+    <string name="sync_database_acknowledge">Krājums vienādots</string>
+    <string name="col_synced_media_in_background">Krājums vienādots. Informācijas nesēji tiek vienādoti fonā.</string>
+    <string name="sync_corrupt_database">Datubāze ir bojāta. Lūgums salabot to pirms atkārtota vienādošanas mēģinājuma.\n\nSkatīt \"%s\", lai iegūtu informāciju par datubāzes salabošanu.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Vietējo</string>
     <string name="sync_sanity_remote">Attālo</string>
-    <string name="one_way_sync_title" maxLength="41">Vienvirziena sinhronizēšana</string>
-    <string name="one_way_sync_confirmation">Pieprasīta vienvirziena sinhronizēšana</string>
-    <string name="full_sync_confirmation">Pieprasītajai izmaiņai nākamajā krājuma sinhronizēšanas reizē būs nepieciešama pilna datubāzes augšupielāde. Ja kādā citā ierīcē ir veikta izskatīšana vai citas izmaiņas, kuras nav vēl nav sinhronizētas, tās tiks zaudētas. Turpināt?</string>
-    <string name="full_sync_confirmation_upgrade">Iepriekš uzstādītā AnkiDroid versijā esošas kļūdas dēļ ir ieteicams veikt uzspiestu pilnu sinhronizēšanu.</string>
+    <string name="one_way_sync_title" maxLength="41">Vienvirziena vienādošana</string>
+    <string name="one_way_sync_confirmation">Pieprasīta vienvirziena vienādošana</string>
+    <string name="full_sync_confirmation">Pieprasītajai izmaiņai nākamajā krājuma vienādošanas reizē būs nepieciešama pilna datubāzes augšupielāde. Ja kādā citā ierīcē ir veikta izskatīšana vai citas izmaiņas, kuras nav vēl nav vienādotas, tās tiks zaudētas. Turpināt?</string>
+    <string name="full_sync_confirmation_upgrade">Iepriekš uzstādītā AnkiDroid versijā esošas kļūdas dēļ ir ieteicams veikt uzspiestu pilnu vienādošanu.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sinhronizēt (vienā virzinā)</string>
-    <string name="sync_menu_title_no_account">Sinhronizēt (pieteikties)</string>
+    <string name="sync_menu_title_one_way_sync">Vienādot (vienā virzinā)</string>
+    <string name="sync_menu_title_no_account">Vienādot (pieteikties)</string>
 </resources>

@@ -69,7 +69,7 @@
     <string name="show_whiteboard">Прикажи белу таблу</string>
     <string name="hide_whiteboard" maxLength="28">Сакриј белу таблу</string>
     <string name="clear_whiteboard" maxLength="28">Избриши белу таблу</string>
-    <string name="replay_audio" maxLength="28">Поново пусти аудио</string>
+    <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">Карта је означена као пијавица и отказана</string>
     <string name="leech_notification">Картица је означена као пијавица</string>
     <string name="webview_crash_unknown">Unknown error</string>

@@ -69,7 +69,7 @@
     <string name="show_whiteboard">Тактаны күрсәтү</string>
     <string name="hide_whiteboard" maxLength="28">Тактаны качыру</string>
     <string name="clear_whiteboard" maxLength="28">Тактаны сөртү</string>
-    <string name="replay_audio" maxLength="28">Аудионы кабатлау</string>
+    <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">Кәрт бәйләнчек итеп куелган hәм искә алынмас</string>
     <string name="leech_notification">Кәрт бәйләнчек итеп куелган</string>
     <string name="webview_crash_unknown">Билгесез хата</string>

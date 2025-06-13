@@ -69,7 +69,7 @@
     <string name="show_whiteboard">화이트보드 표시하기</string>
     <string name="hide_whiteboard" maxLength="28">화이트 보드 숨기기</string>
     <string name="clear_whiteboard" maxLength="28">화이트 보드 지우기</string>
-    <string name="replay_audio" maxLength="28">오디오 다시 재생</string>
+    <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">카드에 leech 태그를 붙이고 비활성 시키기</string>
     <string name="leech_notification">카드에 leech 태그를 붙이기</string>
     <string name="webview_crash_unknown">알 수 없는 오류</string>

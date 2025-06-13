@@ -69,7 +69,7 @@
     <string name="show_whiteboard">Показати дошку</string>
     <string name="hide_whiteboard" maxLength="28">Заховати дошку</string>
     <string name="clear_whiteboard" maxLength="28">Очистити дошку</string>
-    <string name="replay_audio" maxLength="28">Повторити аудіо</string>
+    <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">Картку позначено як набридливу і призупинено</string>
     <string name="leech_notification">Картку позначено як набридливу</string>
     <string name="webview_crash_unknown">Невідома помилка</string>
