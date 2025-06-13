@@ -44,6 +44,7 @@ import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Fields
+import com.ichi2.libanki.NoteTypeId
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.ui.FixedEditText
@@ -78,6 +79,9 @@ class NoteTypeFieldEditor : AnkiActivity() {
 
     // WARN: this should be lateinit, but this can't yet be done on an inline class
     private var noteFields: Fields = Fields(JSONArray())
+
+    private val noteTypeID: NoteTypeId
+        get() = intent.getLongExtra("noteTypeID", 0)
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -139,7 +143,6 @@ class NoteTypeFieldEditor : AnkiActivity() {
      * to finish the activity.
      */
     private fun initialize() {
-        val noteTypeID = intent.getLongExtra("noteTypeID", 0)
         val collectionModel = getColUnsafe.notetypes.get(noteTypeID)
         if (collectionModel == null) {
             showThemedToast(this, R.string.field_editor_model_not_available, true)
@@ -535,6 +538,11 @@ class NoteTypeFieldEditor : AnkiActivity() {
      */
     private fun addFieldLocaleHint(selectedLocale: Locale) {
         setLanguageHintForField(getColUnsafe.notetypes, notetype, currentPos, selectedLocale)
+        // update the note fields list so the (possible) new field's "ad-hint-locale" property is
+        // seen and doesn't break any potential equality checks(like for removal of the fields)
+        getColUnsafe.notetypes.get(noteTypeID)?.let {
+            noteFields = it.fields
+        }
         val format = getString(R.string.model_field_editor_language_hint_dialog_success_result, selectedLocale.displayName)
         showSnackbar(format, Snackbar.LENGTH_SHORT)
     }
