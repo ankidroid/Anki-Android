@@ -1433,10 +1433,10 @@ class NoteEditor :
             }
             R.id.action_font_size -> {
                 Timber.i("NoteEditor:: Font Size button pressed")
-                val repositionDialog = IntegerDialog()
-                repositionDialog.setArgs(getString(R.string.menu_font_size), editTextFontSize, 2)
-                repositionDialog.setCallbackRunnable { fontSizeSp: Int? -> setFontSize(fontSizeSp) }
-                showDialogFragment(repositionDialog)
+                val fontSizeDialog = IntegerDialog()
+                fontSizeDialog.setArgs(getString(R.string.menu_font_size), editTextFontSize, 2)
+                fontSizeDialog.setCallbackRunnable { fontSizeSp: Int? -> setFontSize(fontSizeSp) }
+                showDialogFragment(fontSizeDialog)
                 return true
             }
             R.id.action_show_toolbar -> {
