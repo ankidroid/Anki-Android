@@ -33,6 +33,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -75,10 +76,12 @@ import com.ichi2.anki.dialogs.InsertFieldDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog.Companion.REQUEST_FIELD_INSERT
 import com.ichi2.anki.notetype.RenameCardTemplateDialog
 import com.ichi2.anki.notetype.RepositionCardTemplateDialog
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerFragment
 import com.ichi2.anki.previewer.TemplatePreviewerPage
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.postDelayed
@@ -208,6 +211,24 @@ open class CardTemplateEditor :
         // Disable the home icon
         enableToolbar()
         startLoadingCollection()
+
+        if (fragmented) {
+            val parentLayout = findViewById<LinearLayout>(R.id.card_template_editor_xl_view)
+            val divider = findViewById<View>(R.id.card_template_editor_resizing_divider)
+            val leftPane = findViewById<View>(R.id.template_editor)
+            val rightPane = findViewById<View>(R.id.fragment_container)
+            if (parentLayout != null && divider != null && leftPane != null && rightPane != null) {
+                ResizablePaneManager(
+                    parentLayout = parentLayout,
+                    divider = divider,
+                    leftPane = leftPane,
+                    rightPane = rightPane,
+                    sharedPrefs = this.sharedPrefs(),
+                    leftPaneWeightKey = PREF_TEMPLATE_EDITOR_PANE_WEIGHT,
+                    rightPaneWeightKey = PREF_TEMPLATE_PREVIEWER_PANE_WEIGHT,
+                )
+            }
+        }
 
         // Open TemplatePreviewerFragment if in fragmented mode
         loadTemplatePreviewerFragmentIfFragmented()
@@ -1414,6 +1435,10 @@ open class CardTemplateEditor :
         private const val EDITOR_NOTE_ID = "noteId"
         private const val EDITOR_START_ORD_ID = "ordId"
         private const val CARD_INDEX = "card_ord"
+
+        // Keys for saving pane weights in SharedPreferences
+        private const val PREF_TEMPLATE_EDITOR_PANE_WEIGHT = "cardTemplateEditorPaneWeight"
+        private const val PREF_TEMPLATE_PREVIEWER_PANE_WEIGHT = "cardTemplatePreviewerPaneWeight"
 
         // Time to wait before refreshing the previewer
         private val REFRESH_PREVIEW_DELAY = 1.seconds
