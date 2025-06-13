@@ -42,6 +42,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Fields
 import com.ichi2.libanki.NotetypeJson
@@ -60,6 +61,7 @@ import org.json.JSONException
 import timber.log.Timber
 import java.util.Locale
 
+@NeedsTest("perform one action, then another")
 class NoteTypeFieldEditor : AnkiActivity() {
     // Position of the current field selected
     private var currentPos = 0
@@ -537,6 +539,7 @@ class NoteTypeFieldEditor : AnkiActivity() {
         setLanguageHintForField(getColUnsafe.notetypes, notetype, currentPos, selectedLocale)
         val format = getString(R.string.model_field_editor_language_hint_dialog_success_result, selectedLocale.displayName)
         showSnackbar(format, Snackbar.LENGTH_SHORT)
+        initialize()
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
