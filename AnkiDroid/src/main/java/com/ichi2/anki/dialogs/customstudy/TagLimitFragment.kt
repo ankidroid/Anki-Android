@@ -121,8 +121,8 @@ class TagLimitFragment : DialogFragment() {
                 setFragmentResult(
                     REQUEST_CUSTOM_STUDY_TAGS,
                     bundleOf(
-                        KEY_INCLUDED_TAGS to tagsToInclude,
-                        KEY_EXCLUDED_TAGS to tagsToExclude,
+                        KEY_INCLUDED_TAGS to ArrayList(tagsToInclude),
+                        KEY_EXCLUDED_TAGS to ArrayList(tagsToExclude),
                     ),
                 )
                 dismiss()
