@@ -16,8 +16,6 @@
 package com.ichi2.anki.preferences
 
 import android.content.res.Configuration
-import android.os.Bundle
-import android.view.View
 import androidx.annotation.StringRes
 import androidx.annotation.XmlRes
 import androidx.preference.Preference
@@ -44,7 +42,7 @@ class ControlsSettingsFragment :
         get() = "prefs.controls"
 
     override fun initSubscreen() {
-        requirePreference<Preference>(R.string.pref_controls_tab_layout_key).setViewId(R.id.tab_layout)
+        requirePreference<ControlsTabPreference>(R.string.pref_controls_tab_layout_key).setOnTabSelectedListener(this)
         val initialScreen = ControlPreferenceScreen.entries.first()
         addPreferencesFromResource(initialScreen.xmlRes)
         // TODO replace the preference with something dismissible. This is meant only to improve
@@ -68,22 +66,6 @@ class ControlsSettingsFragment :
             .filterIsInstance<ControlPreference>()
             .filter { pref -> pref.value == null }
             .forEach { pref -> commands[pref.key]?.getBindings(prefs)?.toPreferenceString()?.let { pref.value = it } }
-    }
-
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?,
-    ) {
-        super.onViewCreated(view, savedInstanceState)
-
-        listView.post {
-            val tabLayout = listView.findViewById<TabLayout>(R.id.tab_layout)
-            for (screen in ControlPreferenceScreen.entries) {
-                val tab = tabLayout.newTab().setText(screen.titleRes)
-                tabLayout.addTab(tab)
-            }
-            tabLayout.addOnTabSelectedListener(this)
-        }
     }
 
     override fun onTabSelected(tab: TabLayout.Tab) {
@@ -147,10 +129,9 @@ class ControlsSettingsFragment :
 
 enum class ControlPreferenceScreen(
     @XmlRes val xmlRes: Int,
-    @StringRes val titleRes: Int,
 ) {
-    REVIEWER(R.xml.preferences_reviewer_controls, R.string.pref_controls_reviews_tab),
-    PREVIEWER(R.xml.preferences_previewer_controls, R.string.pref_controls_previews_tab),
+    REVIEWER(R.xml.preferences_reviewer_controls),
+    PREVIEWER(R.xml.preferences_previewer_controls),
     ;
 
     fun getActions(): List<MappableAction<*>> =

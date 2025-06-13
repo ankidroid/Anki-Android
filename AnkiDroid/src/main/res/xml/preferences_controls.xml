@@ -59,9 +59,8 @@
         android:icon="@drawable/ic_keyboard"
         />
 
-        <Preference
+        <com.ichi2.anki.preferences.ControlsTabPreference
             android:key="@string/pref_controls_tab_layout_key"
-            android:layout="@layout/tab_layout"
             />
     </PreferenceCategory>
 </PreferenceScreen>
