@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">Renombrar campo</string>
     <string name="model_field_editor_language_hint">Establecer pista de idioma del teclado</string>
     <string name="model_field_editor_reposition_menu">Campo de reposición</string>
-    <string name="model_field_editor_toggle_sticky">Recordar la última entrada al agregar</string>
     <string name="model_field_editor_changing">Actualizando campos</string>
     <string name="model_field_editor_sort_field">Ordenar por este campo</string>
     <!--Warnings-->

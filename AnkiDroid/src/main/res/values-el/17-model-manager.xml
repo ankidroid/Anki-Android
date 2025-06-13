@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">Μετονομασία πεδίου</string>
     <string name="model_field_editor_language_hint">Ορισμός γλώσσας υπόδειξης πληκτρολογίου</string>
     <string name="model_field_editor_reposition_menu">Επανατοποθέτηση πεδίου</string>
-    <string name="model_field_editor_toggle_sticky">Απομνημόνευση τελευταίας καταχώρησης κατά την προσθήκη</string>
     <string name="model_field_editor_changing">Ενημέρωση πεδίων</string>
     <string name="model_field_editor_sort_field">Ταξινόμηση κατά αυτό το πεδίο</string>
     <!--Warnings-->

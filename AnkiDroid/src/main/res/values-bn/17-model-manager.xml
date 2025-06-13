@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">ক্ষেত্রের নাম পরিবর্তন করুন</string>
     <string name="model_field_editor_language_hint">কীবোর্ড ভাষার ইঙ্গিত সেট করুন</string>
     <string name="model_field_editor_reposition_menu">Reposition field</string>
-    <string name="model_field_editor_toggle_sticky">যোগ করার সময় শেষ ইনপুট মনে রাখবেন</string>
     <string name="model_field_editor_changing">ক্ষেত্র আপডেট করা হচ্ছে</string>
     <string name="model_field_editor_sort_field">এই ক্ষেত্র অনুসারে সাজান</string>
     <!--Warnings-->

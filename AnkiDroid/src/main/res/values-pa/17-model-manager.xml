@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">ਖੇਤਰ ਦਾ ਨਾਮ ਬਦਲੋ</string>
     <string name="model_field_editor_language_hint">ਕੀਬੋਰਡ ਭਾਸ਼ਾ ਸੰਕੇਤ ਸੈੱਟ ਕਰੋ</string>
     <string name="model_field_editor_reposition_menu">ਰੀਪੋਜੀਸ਼ਨ ਫੀਲਡ</string>
-    <string name="model_field_editor_toggle_sticky">ਜੋੜਨ ਵੇਲੇ ਆਖਰੀ ਇਨਪੁਟ ਯਾਦ ਰੱਖੋ</string>
     <string name="model_field_editor_changing">ਖੇਤਰਾਂ ਨੂੰ ਅੱਪਡੇਟ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
     <string name="model_field_editor_sort_field">ਇਸ ਖੇਤਰ ਦੁਆਰਾ ਕ੍ਰਮਬੱਧ ਕਰੋ</string>
     <!--Warnings-->

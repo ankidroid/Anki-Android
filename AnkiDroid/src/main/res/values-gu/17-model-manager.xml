@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">ક્ષેત્રનું નામ બદલો</string>
     <string name="model_field_editor_language_hint">કીબોર્ડ ભાષા સંકેત સેટ કરો</string>
     <string name="model_field_editor_reposition_menu">રિપોઝિશન ફીલ્ડ</string>
-    <string name="model_field_editor_toggle_sticky">ઉમેરતી વખતે છેલ્લું ઇનપુટ યાદ રાખો</string>
     <string name="model_field_editor_changing">ફીલ્ડ અપડેટ કરી રહ્યું છે</string>
     <string name="model_field_editor_sort_field">આ ક્ષેત્ર દ્વારા સૉર્ટ કરો</string>
     <!--Warnings-->

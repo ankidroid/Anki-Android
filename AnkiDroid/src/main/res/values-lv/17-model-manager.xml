@@ -60,7 +60,6 @@
     <string name="model_field_editor_rename">Pārdēvēt lauku</string>
     <string name="model_field_editor_language_hint">Iestatīt tastatūras valodas norādi</string>
     <string name="model_field_editor_reposition_menu">Pārkārtot lauku</string>
-    <string name="model_field_editor_toggle_sticky">Pievienojot atcerēties pēdējo ievadi</string>
     <string name="model_field_editor_changing">Atjaunina laukus</string>
     <string name="model_field_editor_sort_field">Kārtot pēc šī lauka</string>
     <!--Warnings-->

@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">Palitan ang pangalan ng patlang</string>
     <string name="model_field_editor_language_hint">I-set ang hint ng wika ng keyboard</string>
     <string name="model_field_editor_reposition_menu">Reposition field</string>
-    <string name="model_field_editor_toggle_sticky">Tandaan ang huling input tuwing nagdaragdag</string>
     <string name="model_field_editor_changing">Ina-update ang mga patlang</string>
     <string name="model_field_editor_sort_field">Ayusin ayon sa patlang na ito</string>
     <!--Warnings-->

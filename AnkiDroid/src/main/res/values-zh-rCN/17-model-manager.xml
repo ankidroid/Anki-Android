@@ -56,7 +56,6 @@
     <string name="model_field_editor_rename">重命名字段</string>
     <string name="model_field_editor_language_hint">设置键盘语言提示</string>
     <string name="model_field_editor_reposition_menu">修改字段位置</string>
-    <string name="model_field_editor_toggle_sticky">添加时记住上次输入</string>
     <string name="model_field_editor_changing">更新字段</string>
     <string name="model_field_editor_sort_field">按此字段排序</string>
     <!--Warnings-->

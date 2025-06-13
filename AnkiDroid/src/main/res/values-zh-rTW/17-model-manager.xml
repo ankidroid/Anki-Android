@@ -56,7 +56,6 @@
     <string name="model_field_editor_rename">重新命名欄位</string>
     <string name="model_field_editor_language_hint">選擇鍵盤提示語言</string>
     <string name="model_field_editor_reposition_menu">修改字段位置</string>
-    <string name="model_field_editor_toggle_sticky">新增時記住最後輸入</string>
     <string name="model_field_editor_changing">更新欄位</string>
     <string name="model_field_editor_sort_field">按此字段排序</string>
     <!--Warnings-->

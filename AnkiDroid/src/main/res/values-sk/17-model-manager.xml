@@ -62,7 +62,6 @@
     <string name="model_field_editor_rename">Premenovať pole</string>
     <string name="model_field_editor_language_hint">Nastaviť jazykový tip klávesnice</string>
     <string name="model_field_editor_reposition_menu">Premiestniť pole</string>
-    <string name="model_field_editor_toggle_sticky">Zapamätať posledný vstupný údaj pri pridávaní</string>
     <string name="model_field_editor_changing">Aktualizácia polí</string>
     <string name="model_field_editor_sort_field">Usporiadať podľa tohto poľa</string>
     <!--Warnings-->

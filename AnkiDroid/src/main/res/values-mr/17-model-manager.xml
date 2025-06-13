@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">फील्ड पुनर्नामित करा</string>
     <string name="model_field_editor_language_hint">कीबोर्ड भाषेचा संकेत सेट करा</string>
     <string name="model_field_editor_reposition_menu">स्थान फील्ड</string>
-    <string name="model_field_editor_toggle_sticky">जोडताना शेवटचे इनपुट लक्षात ठेवा</string>
     <string name="model_field_editor_changing">फील्ड अद्यतनित करीत आहे</string>
     <string name="model_field_editor_sort_field">या फील्डनुसार क्रमवारी लावा</string>
     <!--Warnings-->

@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">Mező átnevezése</string>
     <string name="model_field_editor_language_hint">Billentyűzet nyelvi javaslat beállítás</string>
     <string name="model_field_editor_reposition_menu">Áthelyezési mező</string>
-    <string name="model_field_editor_toggle_sticky">A beviteli érték megjegyzése hozzáadáskor</string>
     <string name="model_field_editor_changing">Mezők frissítése</string>
     <string name="model_field_editor_sort_field">Aktuális mező szerinti rendezés</string>
     <!--Warnings-->

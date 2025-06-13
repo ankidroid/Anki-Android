@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">ഫീൽഡിൻ്റെ പേര് മാറ്റുക</string>
     <string name="model_field_editor_language_hint">കീബോർഡ് ഭാഷാ സൂചന സജ്ജമാക്കുക</string>
     <string name="model_field_editor_reposition_menu">Reposition field</string>
-    <string name="model_field_editor_toggle_sticky">ചേർക്കുമ്പോൾ അവസാന ഇൻപുട്ട് ഓർക്കുക</string>
     <string name="model_field_editor_changing">ഫീൽഡുകൾ അപ്ഡേറ്റ് ചെയ്യുന്നു</string>
     <string name="model_field_editor_sort_field">ഈ ഫീൽഡ് അനുസരിച്ച് അടുക്കുക</string>
     <!--Warnings-->

@@ -62,7 +62,6 @@
     <string name="model_field_editor_rename">Перейменувати поле</string>
     <string name="model_field_editor_language_hint">Встановлення мови підказок клавіатури</string>
     <string name="model_field_editor_reposition_menu">Перемістити поле</string>
-    <string name="model_field_editor_toggle_sticky">Запам\'ятовувати останні вхідні дані під час додавання</string>
     <string name="model_field_editor_changing">Оновлення полів</string>
     <string name="model_field_editor_sort_field">Сортувати за цим полем</string>
     <!--Warnings-->

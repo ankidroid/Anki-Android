@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">Alinomi kampon</string>
     <string name="model_field_editor_language_hint">Agordi lingvon de klavaraj sugestoj</string>
     <string name="model_field_editor_reposition_menu">Repozicii kampon</string>
-    <string name="model_field_editor_toggle_sticky">Memori la antaŭan enigon je aldoni</string>
     <string name="model_field_editor_changing">Ĝisdatigado de kampoj</string>
     <string name="model_field_editor_sort_field">Ordigi laŭ tiu kampo</string>
     <!--Warnings-->

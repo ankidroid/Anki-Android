@@ -56,7 +56,6 @@
     <string name="model_field_editor_rename">필드 이름 변경하기</string>
     <string name="model_field_editor_language_hint">키보드 언어 힌트 설정하기</string>
     <string name="model_field_editor_reposition_menu">필드 재배치하기</string>
-    <string name="model_field_editor_toggle_sticky">추가 시 마지막 입력값 기억하기</string>
     <string name="model_field_editor_changing">필드 업데이트 중</string>
     <string name="model_field_editor_sort_field">이 필드로 정렬하기</string>
     <!--Warnings-->

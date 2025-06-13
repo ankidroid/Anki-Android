@@ -66,7 +66,6 @@
     <string name="model_field_editor_rename">تغيير اسم الحقل</string>
     <string name="model_field_editor_language_hint">تعيين تلميح لغة لوحة المفاتيح</string>
     <string name="model_field_editor_reposition_menu">تغيير موضع الحقل</string>
-    <string name="model_field_editor_toggle_sticky">تذكّر المدخلات الأخيرة عند الإضافة</string>
     <string name="model_field_editor_changing">يجري تحديث الحقول</string>
     <string name="model_field_editor_sort_field">فرز حسب هذا الحقل</string>
     <!--Warnings-->

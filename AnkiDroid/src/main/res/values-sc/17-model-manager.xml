@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">Muda su campu de nùmene</string>
     <string name="model_field_editor_language_hint">Imposta s\'impòsitu de limba de su tecladu</string>
     <string name="model_field_editor_reposition_menu">Torra a positzionare su campu</string>
-    <string name="model_field_editor_toggle_sticky">Ammenta s\'ùrtima intrada cando annanghes</string>
     <string name="model_field_editor_changing">Atualizatzione de sos campos</string>
     <string name="model_field_editor_sort_field">Òrdina sighende custu campu</string>
     <!--Warnings-->

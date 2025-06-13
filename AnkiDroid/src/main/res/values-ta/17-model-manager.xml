@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">புலத்தை மறுபெயரிடவும்</string>
     <string name="model_field_editor_language_hint">விசைப்பலகை மொழி குறிப்பை அமைக்கவும்</string>
     <string name="model_field_editor_reposition_menu">இடமாற்ற புலம்</string>
-    <string name="model_field_editor_toggle_sticky">சேர்க்கும்போது கடைசி உள்ளீட்டை நினைவில் கொள்ளுங்கள்</string>
     <string name="model_field_editor_changing">புதுப்பிப்பு புலங்கள்</string>
     <string name="model_field_editor_sort_field">இந்தப் புலத்தின்படி வரிசைப்படுத்தவும்</string>
     <!--Warnings-->
