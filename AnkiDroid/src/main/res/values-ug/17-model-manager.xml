@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">بۆلەك ئاتىنى ئۆزگەرت</string>
     <string name="model_field_editor_language_hint">ھەرپتاختا تىل كۆرسەتمىسىنى تەڭشەيدۇ</string>
     <string name="model_field_editor_reposition_menu">بۆلەك ئورنىنى تەڭشەيدۇ</string>
-    <string name="model_field_editor_toggle_sticky">قوشقاندا ئاخىرقى كىرگۈزگەننى ئەستە تۇتىدۇ</string>
     <string name="model_field_editor_changing">بۆلەك يېڭىلا</string>
     <string name="model_field_editor_sort_field">بۇ بۆلەك بويىچە تەرتىپلە</string>
     <!--Warnings-->

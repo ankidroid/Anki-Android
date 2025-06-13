@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">Feld umbenennen</string>
     <string name="model_field_editor_language_hint">Hinweis zu Tastatursprache festlegen</string>
     <string name="model_field_editor_reposition_menu">Feld neu positionieren</string>
-    <string name="model_field_editor_toggle_sticky">Beim Hinzufügen letzte Eingabe merken</string>
     <string name="model_field_editor_changing">Felder werden aktualisiert</string>
     <string name="model_field_editor_sort_field">Nach diesem Feld sortieren</string>
     <!--Warnings-->

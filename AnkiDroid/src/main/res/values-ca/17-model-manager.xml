@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">Canviar el nom del camp</string>
     <string name="model_field_editor_language_hint">Estableix consell d\'idioma del teclat</string>
     <string name="model_field_editor_reposition_menu">Camp de repós</string>
-    <string name="model_field_editor_toggle_sticky">Recordeu la darrera entrada al afegir</string>
     <string name="model_field_editor_changing">Actualitzant els camps</string>
     <string name="model_field_editor_sort_field">Ordena per aquest camp</string>
     <!--Warnings-->

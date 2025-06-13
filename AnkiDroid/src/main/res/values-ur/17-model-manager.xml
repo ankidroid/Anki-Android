@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">فیلڈ کا نام تبدیل کریں۔</string>
     <string name="model_field_editor_language_hint">کی بورڈ کی زبان کا اشارہ سیٹ کریں</string>
     <string name="model_field_editor_reposition_menu">ریپوزیشن فیلڈ</string>
-    <string name="model_field_editor_toggle_sticky">شامل کرتے وقت آخری ان پٹ یاد رکھیں</string>
     <string name="model_field_editor_changing">فیلڈز کو اپ ڈیٹ کرنا</string>
     <string name="model_field_editor_sort_field">اس فیلڈ کے مطابق ترتیب دیں۔</string>
     <!--Warnings-->

@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">ველის სახელის შეცვლა</string>
     <string name="model_field_editor_language_hint">კლავიატურის ენის მინიშნების დაყენება</string>
     <string name="model_field_editor_reposition_menu">ველის გადაადგილება</string>
-    <string name="model_field_editor_toggle_sticky">დამატებისას ბოლოს შეყვანილის დამახსოვრება</string>
     <string name="model_field_editor_changing">ველების განახლება</string>
     <string name="model_field_editor_sort_field">ამ ველის მიხედვით დახარისხება</string>
     <!--Warnings-->

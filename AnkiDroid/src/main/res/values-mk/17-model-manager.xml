@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">Преименувај го полето</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Поле за поместување</string>
-    <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">Ажурирање на полињата</string>
     <string name="model_field_editor_sort_field">Подреди според ова поле</string>
     <!--Warnings-->

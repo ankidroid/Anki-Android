@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">Alanın ismini değiştir</string>
     <string name="model_field_editor_language_hint">Klavye dili ipucunu ayarla</string>
     <string name="model_field_editor_reposition_menu">Alanın yerini değiştir</string>
-    <string name="model_field_editor_toggle_sticky">Eklerken son girişi hatırla</string>
     <string name="model_field_editor_changing">Alanlar güncelleniyor</string>
     <string name="model_field_editor_sort_field">Bu alana göre sırala</string>
     <!--Warnings-->

@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">تغییر نام فیلد</string>
     <string name="model_field_editor_language_hint">راهنمایی زبان کیبورد را تنظیم کن</string>
     <string name="model_field_editor_reposition_menu">تغییر مکان فیلد</string>
-    <string name="model_field_editor_toggle_sticky">ذخیرۀ آخرین متن ورودی هنگام افزودن کارت</string>
     <string name="model_field_editor_changing">به روزرسانی فیلدها</string>
     <string name="model_field_editor_sort_field">مرتب کردن بر اساس این فیلد</string>
     <!--Warnings-->

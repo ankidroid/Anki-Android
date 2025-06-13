@@ -56,7 +56,6 @@
     <string name="model_field_editor_rename">Đổi tên trường</string>
     <string name="model_field_editor_language_hint">Đặt gợi ý ngôn ngữ bàn phím</string>
     <string name="model_field_editor_reposition_menu">Định vị lại trường</string>
-    <string name="model_field_editor_toggle_sticky">Nhớ quá trình nhập liệu cùng khi thêm</string>
     <string name="model_field_editor_changing">Cập nhật các trường</string>
     <string name="model_field_editor_sort_field">Sắp xếp theo trường này</string>
     <!--Warnings-->

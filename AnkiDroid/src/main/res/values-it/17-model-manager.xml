@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">Rinomina il campo</string>
     <string name="model_field_editor_language_hint">Imposta suggerimento lingua tastiera</string>
     <string name="model_field_editor_reposition_menu">Riposiziona il campo</string>
-    <string name="model_field_editor_toggle_sticky">Ricorda l\'ultimo input quando si aggiunge</string>
     <string name="model_field_editor_changing">Aggiornamento dei campi</string>
     <string name="model_field_editor_sort_field">Ordina per questo campo</string>
     <!--Warnings-->

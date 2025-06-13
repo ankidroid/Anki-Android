@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">ಕ್ಷೇತ್ರವನ್ನು ಮರುಹೆಸರಿಸಿ</string>
     <string name="model_field_editor_language_hint">ಕೀಬೋರ್ಡ್ ಭಾಷೆಯ ಸುಳಿವನ್ನು ಹೊಂದಿಸಿ</string>
     <string name="model_field_editor_reposition_menu">ಮರುಸ್ಥಾಪನೆ ಕ್ಷೇತ್ರ</string>
-    <string name="model_field_editor_toggle_sticky">ಸೇರಿಸುವಾಗ ಕೊನೆಯ ಇನ್‌ಪುಟ್ ಅನ್ನು ನೆನಪಿಡಿ</string>
     <string name="model_field_editor_changing">ಕ್ಷೇತ್ರಗಳನ್ನು ನವೀಕರಿಸಲಾಗುತ್ತಿದೆ</string>
     <string name="model_field_editor_sort_field">ಈ ಕ್ಷೇತ್ರದಿಂದ ವಿಂಗಡಿಸಿ</string>
     <!--Warnings-->

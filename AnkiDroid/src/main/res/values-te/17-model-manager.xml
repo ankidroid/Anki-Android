@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">ఫీల్డ్ పేరు మార్చండి</string>
     <string name="model_field_editor_language_hint">కీబోర్డ్ భాష సూచనను సెట్ చేయండి</string>
     <string name="model_field_editor_reposition_menu">రీపోషన్ ఫీల్డ్</string>
-    <string name="model_field_editor_toggle_sticky">జోడించేటప్పుడు చివరి ఇన్‌పుట్‌ను గుర్తుంచుకోండి</string>
     <string name="model_field_editor_changing">ఖాళీలను నవీకరిస్తోంది</string>
     <string name="model_field_editor_sort_field">ఈ ఫీల్డ్ ద్వారా క్రమబద్ధీకరించు</string>
     <!--Warnings-->

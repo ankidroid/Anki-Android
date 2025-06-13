@@ -62,7 +62,6 @@
     <string name="model_field_editor_rename">שינוי שם שדה</string>
     <string name="model_field_editor_language_hint">הגדר שפת המקלדת לרמז</string>
     <string name="model_field_editor_reposition_menu">שינוי מיקום שדה</string>
-    <string name="model_field_editor_toggle_sticky">זכור קלט אחרון בעת ​​הוספה</string>
     <string name="model_field_editor_changing">השדות מעודכנים</string>
     <string name="model_field_editor_sort_field">מיין לפי שדה</string>
     <!--Warnings-->

@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">Naam van veld wijzigen</string>
     <string name="model_field_editor_language_hint">Suggestie voor de toetsenbordtaal instellen</string>
     <string name="model_field_editor_reposition_menu">Verplaats veld</string>
-    <string name="model_field_editor_toggle_sticky">Laatste invoer onthouden bij het toevoegen</string>
     <string name="model_field_editor_changing">Velden bijwerken</string>
     <string name="model_field_editor_sort_field">Sorteren op dit veld</string>
     <!--Warnings-->

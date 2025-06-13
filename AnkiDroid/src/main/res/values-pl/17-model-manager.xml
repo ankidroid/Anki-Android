@@ -62,7 +62,6 @@
     <string name="model_field_editor_rename">Zmień nazwę pola</string>
     <string name="model_field_editor_language_hint">Ustaw podpowiedź języka klawiatury</string>
     <string name="model_field_editor_reposition_menu">Zmień pozycję pola</string>
-    <string name="model_field_editor_toggle_sticky">Zapamiętaj ostatni wpis podczas dodawania</string>
     <string name="model_field_editor_changing">Aktualizowanie pól</string>
     <string name="model_field_editor_sort_field">Sortuj według tego pola</string>
     <!--Warnings-->

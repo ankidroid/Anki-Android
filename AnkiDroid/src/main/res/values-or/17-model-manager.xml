@@ -58,7 +58,6 @@
     <string name="model_field_editor_rename">କ୍ଷେତ୍ରଟିର ନାମ ବଦଳାନ୍ତୁ</string>
     <string name="model_field_editor_language_hint">କୀବୋର୍ଡର ସୂଚକ ଭାଷା ସେଟ୍ କରନ୍ତୁ</string>
     <string name="model_field_editor_reposition_menu">କ୍ଷେତ୍ରଟିକୁ ପୁନଃଅଵସ୍ଥିତ କରିବା</string>
-    <string name="model_field_editor_toggle_sticky">ଯୋଡ଼ିବା ସମୟରେ ଶେଷ ଇନପୁଟ୍ ମନେରଖ</string>
     <string name="model_field_editor_changing">କ୍ଷେତ୍ରଗୁଡ଼ିକ ଅଦ୍ୟତିତ ହେଉଛି</string>
     <string name="model_field_editor_sort_field">ଏହି କ୍ଷେତ୍ର ଅନୁଯାୟୀ ସଜାନ୍ତୁ</string>
     <!--Warnings-->

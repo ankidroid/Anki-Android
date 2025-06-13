@@ -56,7 +56,6 @@
     <string name="model_field_editor_rename">Ubah nama kolom</string>
     <string name="model_field_editor_language_hint">Atur petunjuk bahasa papan tik</string>
     <string name="model_field_editor_reposition_menu">Pindah posisi bidang</string>
-    <string name="model_field_editor_toggle_sticky">Ingat masukan terakhir saat menambahkan</string>
     <string name="model_field_editor_changing">Memperbarui kolom</string>
     <string name="model_field_editor_sort_field">Urutkan menurut kolom ini</string>
     <!--Warnings-->

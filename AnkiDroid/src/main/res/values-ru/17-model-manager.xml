@@ -62,7 +62,6 @@
     <string name="model_field_editor_rename">Переименовать поле</string>
     <string name="model_field_editor_language_hint">Задать язык подсказок клавиатуры</string>
     <string name="model_field_editor_reposition_menu">Переместить поле</string>
-    <string name="model_field_editor_toggle_sticky">При добавлении запоминать последний ввод</string>
     <string name="model_field_editor_changing">Поля обновляются</string>
     <string name="model_field_editor_sort_field">Сортировать по этому полю</string>
     <!--Warnings-->
