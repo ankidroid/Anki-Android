@@ -21,6 +21,18 @@ import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.NotetypeJson
 import timber.log.Timber
+import java.io.File
+
+/**
+ * Represents the result of a media deletion operation.
+ *
+ * @property count The number of media files deleted.
+ * @property totalSizeMB The total size of the deleted media files, measured in megabytes.
+ */
+data class MediaDeleteResult(
+    val count: Int,
+    val totalSizeMB: Double,
+)
 
 /**
  * Takes a list of media file names and removes them from the [Collection]
@@ -29,10 +41,25 @@ import timber.log.Timber
 fun deleteMedia(
     col: Collection,
     unused: List<String>,
-): Int {
+): MediaDeleteResult {
+    var totalSizeBytes = 0L
+
+    val mediaDir = col.media.dir
+
+    for (mediaName in unused) {
+        val file = File(mediaDir, mediaName)
+        if (file.exists()) {
+            totalSizeBytes += file.length()
+        }
+    }
+
     // FIXME: this provides progress info that is not currently used
     col.media.removeFiles(unused)
-    return unused.size
+
+    return MediaDeleteResult(
+        count = unused.size,
+        totalSizeMB = totalSizeBytes.toDouble() / (1024 * 1024),
+    )
 }
 
 /**
