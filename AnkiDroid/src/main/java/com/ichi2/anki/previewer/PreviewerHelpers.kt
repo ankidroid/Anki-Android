@@ -74,7 +74,7 @@ fun stdHtml(
             </style>
         </head>
         <body class="${bodyClass()}">
-            <div id="_mark" hidden>&#x2605;</div>
+            <div id="_mark" hidden><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FFF" stroke="#000" stroke-width="36" viewBox="0 -960 960 960"><path d="m233-120 65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z"/></svg></div>
             <div id="_flag" hidden>&#x2691;</div>
             <div id="qa"></div>
             $jsTxt

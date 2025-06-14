@@ -78,6 +78,7 @@ class ReviewerViewModel(
     cardMediaPlayer: CardMediaPlayer,
     private val bindingMap: BindingMap<ReviewerBinding, ViewerAction>,
     serverPort: Int = 0,
+    studyScreenRepository: StudyScreenRepository,
 ) : CardViewerViewModel(cardMediaPlayer),
     ChangeManager.Subscriber,
     BindingProcessor<ReviewerBinding, ViewerAction> {
@@ -109,6 +110,7 @@ class ReviewerViewModel(
     val statesMutationEval = MutableSharedFlow<String>()
 
     private val autoAdvance = AutoAdvance(this)
+    private val shouldSendMarkEval = !studyScreenRepository.isMarkShownInToolbar
 
     /**
      * A flag that determines if the SchedulingStates in CurrentQueueState are
@@ -460,6 +462,7 @@ class ReviewerViewModel(
         Timber.v("ReviewerViewModel::updateMarkIcon")
         val card = currentCard.await()
         val isMarkedValue = withCol { card.note(this@withCol).hasTag(this@withCol, MARKED_TAG) }
+        if (shouldSendMarkEval) eval.emit("_drawMark($isMarkedValue);")
         isMarkedFlow.emit(isMarkedValue)
     }
 
@@ -672,10 +675,11 @@ class ReviewerViewModel(
             soundPlayer: CardMediaPlayer,
             bindingMap: BindingMap<ReviewerBinding, ViewerAction>,
             serverPort: Int,
+            studyScreenRepository: StudyScreenRepository,
         ): ViewModelProvider.Factory =
             viewModelFactory {
                 initializer {
-                    ReviewerViewModel(soundPlayer, bindingMap, serverPort)
+                    ReviewerViewModel(soundPlayer, bindingMap, serverPort, studyScreenRepository)
                 }
             }
 
