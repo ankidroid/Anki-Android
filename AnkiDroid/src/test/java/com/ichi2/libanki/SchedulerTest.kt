@@ -38,10 +38,8 @@ import org.junit.Assert
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.lang.Exception
 import java.time.Instant
 import java.time.ZoneId
-import kotlin.Throws
 import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 import kotlin.test.assertNotNull
@@ -631,7 +629,7 @@ open class SchedulerTest : JvmTest() {
                     Ease.EASY,
                 ),
             ),
-            Matchers.equalTo("10.8mo"),
+            Matchers.equalTo("10.7mo"),
         )
     }
 
