@@ -111,6 +111,7 @@ class ReviewerViewModel(
 
     private val autoAdvance = AutoAdvance(this)
     private val shouldSendMarkEval = !studyScreenRepository.isMarkShownInToolbar
+    private val shouldSendFlagEval = !studyScreenRepository.isFlagShownInToolbar
 
     /**
      * A flag that determines if the SchedulingStates in CurrentQueueState are
@@ -469,6 +470,7 @@ class ReviewerViewModel(
     private suspend fun updateFlagIcon() {
         Timber.v("ReviewerViewModel::updateFlagIcon")
         val card = currentCard.await()
+        if (shouldSendFlagEval) eval.emit("_drawFlag(${card.userFlag()});")
         flagFlow.emit(card.flag)
     }
 

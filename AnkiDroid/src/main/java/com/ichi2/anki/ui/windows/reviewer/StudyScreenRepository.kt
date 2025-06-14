@@ -26,6 +26,7 @@ class StudyScreenRepository(
     preferences: SharedPreferences,
 ) {
     val isMarkShownInToolbar: Boolean
+    val isFlagShownInToolbar: Boolean
 
     init {
         val actions =
@@ -34,7 +35,7 @@ class StudyScreenRepository(
                     MenuDisplayType.ALWAYS,
                 ).getValue(MenuDisplayType.ALWAYS)
         val isToolbarShown = Prefs.toolbarPosition != ToolbarPosition.NONE
-
         isMarkShownInToolbar = isToolbarShown && ViewerAction.MARK in actions
+        isFlagShownInToolbar = isToolbarShown && ViewerAction.FLAG_MENU in actions
     }
 }
