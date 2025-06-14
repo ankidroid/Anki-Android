@@ -47,7 +47,6 @@ import com.ichi2.anki.preferences.getShowIntervalOnButtons
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerViewModel
 import com.ichi2.anki.previewer.TypeAnswer
-import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.reviewer.BindingProcessor
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.ReviewerBinding
@@ -76,7 +75,6 @@ import timber.log.Timber
 
 class ReviewerViewModel(
     cardMediaPlayer: CardMediaPlayer,
-    private val bindingMap: BindingMap<ReviewerBinding, ViewerAction>,
     serverPort: Int = 0,
     studyScreenRepository: StudyScreenRepository,
 ) : CardViewerViewModel(cardMediaPlayer),
@@ -110,6 +108,7 @@ class ReviewerViewModel(
     val statesMutationEval = MutableSharedFlow<String>()
 
     private val autoAdvance = AutoAdvance(this)
+    private val bindingMap = studyScreenRepository.bindingMap
     private val shouldSendMarkEval = !studyScreenRepository.isMarkShownInToolbar
     private val shouldSendFlagEval = !studyScreenRepository.isFlagShownInToolbar
 
@@ -675,13 +674,12 @@ class ReviewerViewModel(
     companion object {
         fun factory(
             soundPlayer: CardMediaPlayer,
-            bindingMap: BindingMap<ReviewerBinding, ViewerAction>,
             serverPort: Int,
             studyScreenRepository: StudyScreenRepository,
         ): ViewModelProvider.Factory =
             viewModelFactory {
                 initializer {
-                    ReviewerViewModel(soundPlayer, bindingMap, serverPort, studyScreenRepository)
+                    ReviewerViewModel(soundPlayer, serverPort, studyScreenRepository)
                 }
             }
 
