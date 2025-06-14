@@ -113,7 +113,8 @@ class ReviewerFragment :
     TagsDialogListener {
     override val viewModel: ReviewerViewModel by viewModels {
         val bindingMap = BindingMap(sharedPrefs(), ViewerAction.entries)
-        ReviewerViewModel.factory(CardMediaPlayer(), bindingMap, getServerPort())
+        val repository = StudyScreenRepository(sharedPrefs())
+        ReviewerViewModel.factory(CardMediaPlayer(), bindingMap, getServerPort(), repository)
     }
 
     override val webView: WebView
@@ -452,7 +453,6 @@ class ReviewerFragment :
         setupBury(menu)
         setupSuspend(menu)
 
-        // TODO show that the card is marked somehow when the menu item is overflowed or not shown
         val markItem = menu.findItem(MARK.menuId)
         viewModel.isMarkedFlow
             .flowWithLifecycle(lifecycle)
