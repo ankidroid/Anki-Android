@@ -64,7 +64,6 @@ import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuView
-import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.preferences.reviewer.ViewerAction.BURY_CARD
 import com.ichi2.anki.preferences.reviewer.ViewerAction.BURY_MENU
 import com.ichi2.anki.preferences.reviewer.ViewerAction.BURY_NOTE
@@ -78,7 +77,6 @@ import com.ichi2.anki.preferences.reviewer.ViewerAction.UNDO
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
 import com.ichi2.anki.previewer.stdHtml
-import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.FrameStyle
@@ -112,8 +110,8 @@ class ReviewerFragment :
     DispatchKeyEventListener,
     TagsDialogListener {
     override val viewModel: ReviewerViewModel by viewModels {
-        val bindingMap = BindingMap(sharedPrefs(), ViewerAction.entries)
-        ReviewerViewModel.factory(CardMediaPlayer(), bindingMap, getServerPort())
+        val repository = StudyScreenRepository(sharedPrefs())
+        ReviewerViewModel.factory(CardMediaPlayer(), getServerPort(), repository)
     }
 
     override val webView: WebView
@@ -452,7 +450,6 @@ class ReviewerFragment :
         setupBury(menu)
         setupSuspend(menu)
 
-        // TODO show that the card is marked somehow when the menu item is overflowed or not shown
         val markItem = menu.findItem(MARK.menuId)
         viewModel.isMarkedFlow
             .flowWithLifecycle(lifecycle)
