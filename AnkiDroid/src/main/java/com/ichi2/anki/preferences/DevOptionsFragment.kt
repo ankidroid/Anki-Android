@@ -112,6 +112,22 @@ class DevOptionsFragment : SettingsFragment() {
             false
         }
 
+        // Helps to enable/disable the switch profiles feature in settings
+        findPreference<SwitchPreferenceCompat>(getString(R.string.enable_multiple_profiles_pref_key))
+            ?.setOnPreferenceChangeListener { _, newValue ->
+                val enabled = newValue as Boolean
+                showThemedToast(
+                    requireContext(),
+                    if (enabled) "Multiple profiles option enabled" else "Multiple profiles option disabled",
+                    false,
+                )
+
+                // re-creates the activity to show changes
+                requireActivity().recreate()
+
+                true
+            }
+
         val numberOfNotesPreference =
             requirePreference<IncrementerNumberRangePreferenceCompat>(getString(R.string.pref_fill_default_deck_number_key))
 

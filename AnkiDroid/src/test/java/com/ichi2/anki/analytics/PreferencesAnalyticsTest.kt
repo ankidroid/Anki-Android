@@ -58,6 +58,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             R.string.pref_advanced_screen_key, // pref_screen_advanced
             R.string.pref_backups_screen_key, // backupsScreen
             R.string.pref_backups_help_key, // backups_help
+            R.string.multiple_profiles_screen_pref_key, // multiple_profiles_screen
             // Categories: don't have a value
             R.string.pref_appearance_screen_key, // appearance_preference_group
             R.string.pref_cat_plugins_key, // category_plugins
