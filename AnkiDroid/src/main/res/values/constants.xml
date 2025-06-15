@@ -303,6 +303,11 @@
         <item>@string/notification_minimum_cards_due_blink</item>
     </string-array>
 
+    <string-array name="review_reminders_summary_entries">
+        <item>App-wide</item>
+        <item>Deck-specific</item>
+    </string-array>
+
     <string-array name="appearance_summary_entries">
         <item>@string/pref_cat_themes</item>
         <item>@string/pref_cat_reviewer</item>
