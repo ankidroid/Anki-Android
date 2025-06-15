@@ -1368,7 +1368,7 @@ open class CardBrowser :
                     savedFilters,
                     mySearchesDialogListener,
                     "",
-                    CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_LIST,
+                    CardBrowserMySearchesDialog.SavedSearchesType.List,
                 ),
             )
         }
@@ -1381,7 +1381,7 @@ open class CardBrowser :
                 null,
                 mySearchesDialogListener,
                 searchTerms,
-                CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_SAVE,
+                CardBrowserMySearchesDialog.SavedSearchesType.Save,
             ),
         )
     }
