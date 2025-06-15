@@ -26,6 +26,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -126,7 +127,9 @@ class DeckPickerWidgetConfig :
         )
     }
 
-    fun showSnackbar(messageResId: Int) {
+    fun showSnackbar(
+        @StringRes messageResId: Int,
+    ) {
         showSnackbar(getString(messageResId))
     }
 

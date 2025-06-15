@@ -22,6 +22,9 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.DialogInterface.OnClickListener
 import android.text.InputFilter
+import android.text.InputType
+import android.text.InputType.TYPE_CLASS_NUMBER
+import android.text.InputType.TYPE_CLASS_TEXT
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -282,6 +285,21 @@ fun AlertDialog.Builder.customListAdapterWithDecoration(
     val dividerItemDecoration = DividerItemDecoration(recyclerView.context, LinearLayoutManager.VERTICAL)
     recyclerView.addItemDecoration(dividerItemDecoration)
     this.setView(recyclerView)
+}
+
+/**
+ * @param inputType an [InputType]
+ */
+enum class AlertType(
+    val inputType: Int,
+) {
+    Text(TYPE_CLASS_TEXT),
+    Number(TYPE_CLASS_NUMBER),
+    ;
+
+    companion object {
+        fun fromCode(c: Int) = AlertType.entries.first { it.inputType == c }
+    }
 }
 
 /**
