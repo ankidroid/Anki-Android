@@ -61,6 +61,7 @@ object CrashReportService {
             "ActivityManager:I",
             "SQLiteLog:W",
             AnkiDroidApp.TAG + ":D",
+            "rsdroid:E",
             "*:S",
         )
 
