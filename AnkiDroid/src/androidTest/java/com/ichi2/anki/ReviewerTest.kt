@@ -90,7 +90,7 @@ class ReviewerTest : InstrumentedTest() {
             """
         val note = addNoteUsingBasicNoteType("foo", "bar")
         val card = note.firstCard(col)
-        val deck = col.decks.get(note.notetype.did)!!
+        val deck = col.decks.getLegacy(note.notetype.did)!!
         card.moveToReviewQueue()
         col.backend.updateCards(
             listOf(

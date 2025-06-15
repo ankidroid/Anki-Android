@@ -211,7 +211,7 @@ class FilteredDeckOptions :
         }
         val extras = intent.extras
         deck = if (extras != null && extras.containsKey("did")) {
-            col.decks.get(extras.getLong("did"))
+            col.decks.getLegacy(extras.getLong("did"))
         } else {
             null
         } ?: col.decks.current()
