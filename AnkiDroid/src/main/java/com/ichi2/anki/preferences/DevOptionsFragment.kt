@@ -159,6 +159,16 @@ class DevOptionsFragment : SettingsFragment() {
             }
             true
         }
+
+        /**
+         * The new review reminders system replaces the "Notifications" button in the main settings screen
+         * with a "Review reminders" button, so we need to immediately reload the settings activity
+         * to make this change show up.
+         */
+        requirePreference<Preference>(R.string.pref_new_notifications).setOnPreferenceChangeListener { _, _ ->
+            ActivityCompat.recreate(requireActivity())
+            true
+        }
     }
 
     /**

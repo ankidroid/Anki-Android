@@ -478,6 +478,16 @@ class DeckPickerTest : RobolectricTest() {
                 val deckOptionsDynamic = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.DECK_OPTIONS, didDynamicA)
                 assertEquals("com.ichi2.anki.FilteredDeckOptions", deckOptionsDynamic.component!!.className)
                 onBackPressedDispatcher.onBackPressed()
+
+                targetContext.sharedPrefs().edit(commit = true) {
+                    putBoolean(
+                        targetContext.getString(R.string.pref_new_notifications),
+                        true,
+                    )
+                }
+                val scheduleReminders = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.SCHEDULE_REMINDERS, didA)
+                assertEquals("com.ichi2.anki.SingleFragmentActivity", scheduleReminders.component!!.className)
+                onBackPressedDispatcher.onBackPressed()
             }
         }
 

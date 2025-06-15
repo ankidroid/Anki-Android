@@ -1,6 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_schedule_reminders"
+        android:title="@string/schedule_reminders_do_not_translate"
+        android:visibility="gone"
+        android:icon="@drawable/ic_notifications"
+        ankidroid:showAsAction="always"/>
+    <item
         android:id="@+id/action_rebuild"
         android:title="@string/rebuild_cram_label"
         android:visibility = "gone"

@@ -62,6 +62,14 @@
         app:summaryEntries="@array/notifications_summary_entries">
     </com.ichi2.preferences.HeaderPreference>
 
+    <!-- Review Reminders -->
+    <com.ichi2.preferences.HeaderPreference
+        android:key="@string/pref_review_reminders_screen_key"
+        android:title="Review reminders"
+        android:icon="@drawable/ic_notifications"
+        app:summaryEntries="@array/review_reminders_summary_entries">
+    </com.ichi2.preferences.HeaderPreference>
+
     <!-- Appearance Preferences  -->
     <com.ichi2.preferences.HeaderPreference
         android:fragment="com.ichi2.anki.preferences.AppearanceSettingsFragment"

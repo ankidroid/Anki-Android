@@ -795,6 +795,11 @@ open class DeckPicker :
                 Timber.i("Editing deck description for deck '%d'", deckId)
                 showDialogFragment(EditDeckDescriptionDialog.newInstance(deckId))
             }
+            DeckPickerContextMenuOption.SCHEDULE_REMINDERS -> {
+                Timber.i("Scheduling review reminders for deck '%d'", deckId)
+                viewModel.scheduleReviewReminders(deckId)
+                dismissAllDialogFragments()
+            }
         }
     }
 
