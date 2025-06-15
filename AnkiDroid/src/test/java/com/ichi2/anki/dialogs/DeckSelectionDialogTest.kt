@@ -16,7 +16,12 @@
 
 package com.ichi2.anki.dialogs
 
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
+import com.ichi2.testutils.launchFragmentInContainer
+import io.mockk.mockkObject
+import io.mockk.unmockkObject
+import io.mockk.verify
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNotNull
 import org.hamcrest.MatcherAssert.assertThat
@@ -49,5 +54,29 @@ class DeckSelectionDialogTest {
         assertNotNull(dialog)
         assertEquals(dialogTitle, dialog.arguments?.getString("title"))
         assertEquals(summaryMessage, dialog.arguments?.getString("summaryMessage"))
+    }
+
+    @Test
+    fun `onNewDeckCreated should log and report if fragment is not added`() {
+        mockkObject(CrashReportService)
+
+        val scenario = launchFragmentInContainer<DeckSelectionDialog>()
+        scenario.onFragment { fragment ->
+            fragment.parentFragmentManager
+                .beginTransaction()
+                .remove(fragment)
+                .commitNow()
+
+            fragment.onNewDeckCreated(1234L)
+
+            verify(exactly = 1) {
+                CrashReportService.sendExceptionReport(
+                    "Fragment is not added to activity",
+                    "DeckSelectionDialog",
+                )
+            }
+        }
+
+        unmockkObject(CrashReportService)
     }
 }
