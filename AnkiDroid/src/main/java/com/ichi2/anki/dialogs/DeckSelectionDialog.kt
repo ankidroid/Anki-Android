@@ -28,6 +28,7 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -38,6 +39,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import anki.decks.deckTreeNode
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.R
@@ -223,8 +225,14 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
     }
 
     /** Updates the list and simulates a click on the newly created deck */
-    private fun onNewDeckCreated(id: DeckId) {
+    @VisibleForTesting
+    fun onNewDeckCreated(id: DeckId) {
         // a deck/subdeck was created
+        if (!isAdded) {
+            Timber.d("Fragment not added to the activity")
+            CrashReportService.sendExceptionReport("Fragment is not added to activity", "DeckSelectionDialog")
+            return
+        }
         launchCatchingTask {
             val name = withCol { decks.name(id) }
             val deck = SelectableDeck(id, name)
