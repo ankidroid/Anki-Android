@@ -19,6 +19,8 @@
 
 package com.ichi2.anki
 
+import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.CheckBoxPreference
@@ -26,11 +28,13 @@ import android.preference.EditTextPreference
 import android.preference.ListPreference
 import android.preference.Preference
 import android.preference.PreferenceCategory
+import androidx.annotation.CheckResult
 import androidx.core.content.edit
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.ext.stringIterable
 import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.DeckId
 import com.ichi2.preferences.StepsPreference.Companion.convertFromJSON
 import com.ichi2.preferences.StepsPreference.Companion.convertToJSON
 import com.ichi2.themes.Themes
@@ -210,8 +214,8 @@ class FilteredDeckOptions :
             return
         }
         val extras = intent.extras
-        deck = if (extras != null && extras.containsKey("did")) {
-            col.decks.getLegacy(extras.getLong("did"))
+        deck = if (extras != null && extras.containsKey(EXTRAS_DECK_ID)) {
+            col.decks.getLegacy(extras.getLong(EXTRAS_DECK_ID))
         } else {
             null
         } ?: col.decks.current()
@@ -223,9 +227,9 @@ class FilteredDeckOptions :
         } else {
             pref = DeckPreferenceHack()
             pref.registerOnSharedPreferenceChangeListener(this)
-            extras?.getString("search")?.let { search ->
+            extras?.getString(EXTRAS_SEARCH)?.let { search ->
                 pref.edit {
-                    putString("search", search)
+                    putString(EXTRAS_SEARCH, search)
                 }
             }
             addPreferences(col)
@@ -384,5 +388,20 @@ class FilteredDeckOptions :
                 delaysPrefCategory.isEnabled = !newValue
                 true
             }
+    }
+
+    companion object {
+        private const val EXTRAS_DECK_ID = "did"
+        private const val EXTRAS_SEARCH = "search"
+
+        @CheckResult
+        fun getIntent(
+            context: Context,
+            deckId: DeckId?,
+            searchTerms: String? = null,
+        ) = Intent(context, FilteredDeckOptions::class.java).apply {
+            deckId?.let { putExtra(EXTRAS_DECK_ID, it) }
+            searchTerms?.let { putExtra(EXTRAS_SEARCH, it) }
+        }
     }
 }

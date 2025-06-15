@@ -1320,9 +1320,13 @@ open class CardBrowser :
     private fun showCreateFilteredDeckDialog() {
         val dialog = CreateDeckDialog(this, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null)
         dialog.onNewDeckCreated = {
-            val intent = Intent(this, FilteredDeckOptions::class.java)
-            intent.putExtra("search", viewModel.searchTerms)
-            startActivity(intent)
+            startActivity(
+                FilteredDeckOptions.getIntent(
+                    this,
+                    deckId = null,
+                    searchTerms = viewModel.searchTerms,
+                ),
+            )
         }
         launchCatchingTask {
             withProgress {
