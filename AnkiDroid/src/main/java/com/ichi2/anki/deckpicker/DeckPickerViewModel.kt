@@ -80,7 +80,7 @@ class DeckPickerViewModel :
     @CheckResult // This is a slow operation and should be inside `withProgress`
     fun deleteDeck(did: DeckId) =
         viewModelScope.launch {
-            val deckName = withCol { decks.get(did)!!.name }
+            val deckName = withCol { decks.getLegacy(did)!!.name }
             val changes = undoableOp { decks.remove(listOf(did)) }
             // After deletion: decks.current() reverts to Default, necessitating `focusedDeck`
             // to match and avoid unnecessary scrolls in `renderPage()`.

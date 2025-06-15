@@ -57,7 +57,7 @@ class DecksTest : JvmTest() {
         // should be able to rename into a completely different branch, creating
         // parents as necessary
         val decks = col.decks
-        decks.rename(decks.get(id)!!, "foo::bar")
+        decks.rename(decks.getLegacy(id)!!, "foo::bar")
         var names: List<String> = decks.allNamesAndIds().map { it.name }
         assertTrue(names.contains("foo"))
         assertTrue(names.contains("foo::bar"))
@@ -74,16 +74,16 @@ class DecksTest : JvmTest() {
         // when renaming, the children should be renamed too
         addDeck("one::two::three")
         id = addDeck("one")
-        col.decks.rename(col.decks.get(id)!!, "yo")
+        col.decks.rename(col.decks.getLegacy(id)!!, "yo")
         names = decks.allNamesAndIds().map { it.name }
         for (n in arrayOf("yo", "yo::two", "yo::two::three")) {
             assertTrue(names.contains(n))
         }
         // over filtered
         val filteredId = addDynamicDeck("filtered")
-        col.decks.get(filteredId)
+        col.decks.getLegacy(filteredId)
         val childId = addDeck("child")
-        val child = col.decks.get(childId)!!
+        val child = col.decks.getLegacy(childId)!!
         assertThrows(BackendDeckIsFilteredException::class.java) {
             col.decks.rename(
                 child,
@@ -163,9 +163,9 @@ class DecksTest : JvmTest() {
     fun isDynStd() {
         val decks = col.decks
         val filteredId = addDynamicDeck("filtered")
-        val filtered = decks.get(filteredId)!!
+        val filtered = decks.getLegacy(filteredId)!!
         val deckId = addDeck("deck")
-        val deck = decks.get(deckId)!!
+        val deck = decks.getLegacy(deckId)!!
         assertThat(deck.isNormal, equalTo(true))
         assertThat(deck.isFiltered, equalTo(false))
         assertThat(filtered.isNormal, equalTo(false))

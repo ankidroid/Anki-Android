@@ -267,7 +267,7 @@ class CreateDeckDialog(
             try {
                 val decks = getColUnsafe.decks
                 val deckId = decks.id(previousDeckName!!)
-                decks.rename(decks.get(deckId)!!, newDeckName)
+                decks.rename(decks.getLegacy(deckId)!!, newDeckName)
                 onNewDeckCreated(deckId)
                 // 11668: Display feedback if a deck is renamed
                 displayFeedback(context.getString(R.string.deck_renamed))

@@ -78,7 +78,7 @@ class WidgetConfigScreenAdapter(
         coroutineScope.launch {
             val deckName =
                 withContext(Dispatchers.IO) {
-                    withCol { decks.get(deck.deckId)!!.name }
+                    withCol { decks.getLegacy(deck.deckId)!!.name }
                 }
             holder.deckNameTextView.text = deckName
         }

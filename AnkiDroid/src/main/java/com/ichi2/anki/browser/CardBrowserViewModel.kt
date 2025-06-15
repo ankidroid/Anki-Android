@@ -295,7 +295,7 @@ class CardBrowserViewModel(
         }
 
         // If a valid value for last deck exists then use it, otherwise use libanki selected deck
-        return if (lastDeckId != null && withCol { decks.get(lastDeckId) != null }) {
+        return if (lastDeckId != null && withCol { decks.getLegacy(lastDeckId) != null }) {
             lastDeckId
         } else {
             withCol { decks.selected() }

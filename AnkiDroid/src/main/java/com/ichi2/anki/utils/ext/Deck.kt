@@ -30,7 +30,7 @@ fun Decks.update(
     did: DeckId,
     block: Deck.() -> Unit,
 ) {
-    val deck = get(did)!!
+    val deck = getLegacy(did)!!
     block(deck)
     this.save(deck)
 }

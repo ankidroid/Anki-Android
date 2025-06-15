@@ -341,7 +341,7 @@ open class Reviewer :
         Timber.d("selectDeckFromExtra() with deckId = %d", did)
 
         // deckId does not exist, load default
-        if (getColUnsafe.decks.get(did) == null) {
+        if (getColUnsafe.decks.getLegacy(did) == null) {
             Timber.w("selectDeckFromExtra() deckId '%d' doesn't exist", did)
             return
         }

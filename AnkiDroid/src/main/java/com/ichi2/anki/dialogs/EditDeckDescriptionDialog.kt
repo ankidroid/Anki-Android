@@ -78,7 +78,7 @@ class EditDeckDescriptionDialog : DialogFragment() {
                         }
                     }
                 }.also { toolbar ->
-                    launchCatchingTask { toolbar.title = withCol { decks.get(deckId)!!.name } }
+                    launchCatchingTask { toolbar.title = withCol { decks.getLegacy(deckId)!!.name } }
                 }
             setFocusAndOpenKeyboard(deckDescriptionInput) { deckDescriptionInput.setSelection(deckDescriptionInput.text!!.length) }
         }
@@ -118,7 +118,7 @@ class EditDeckDescriptionDialog : DialogFragment() {
             }
         }
 
-    private suspend fun getDescription() = withCol { decks.get(deckId)!!.description }
+    private suspend fun getDescription() = withCol { decks.getLegacy(deckId)!!.description }
 
     private suspend fun setDescription(value: String) {
         Timber.i("updating deck description")
