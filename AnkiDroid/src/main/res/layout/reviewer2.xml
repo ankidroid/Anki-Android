@@ -22,7 +22,10 @@
             android:id="@+id/tools_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="?actionBarSize">
+            android:minHeight="?actionBarSize"
+            android:gravity="center_vertical"
+            android:layout_marginHorizontal="4dp"
+            >
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/back_button"
@@ -149,7 +152,8 @@
             android:id="@+id/answer_area"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginHorizontal="@dimen/reviewer_side_margin"
             tools:visibility="visible">
 
