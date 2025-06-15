@@ -31,6 +31,7 @@ import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.notetype.ManageNoteTypesDestination
 import com.ichi2.anki.pages.DeckOptionsDestination
+import com.ichi2.anki.reviewreminders.ScheduleRemindersDestination
 import com.ichi2.anki.utils.Destination
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
@@ -176,6 +177,11 @@ class DeckPickerViewModel :
     fun unburyDeck(deckId: DeckId) =
         launchCatchingIO {
             undoableOp<OpChanges> { sched.unburyDeck(deckId) }
+        }
+
+    fun scheduleReviewReminders(deckId: DeckId) =
+        viewModelScope.launch {
+            flowOfDestination.emit(ScheduleRemindersDestination(false, deckId))
         }
 }
 
