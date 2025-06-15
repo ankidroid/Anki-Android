@@ -100,6 +100,8 @@ import kotlin.math.min
 // TODO: move the tag computation to ViewModel
 
 /**
+ * ViewModel for [com.ichi2.anki.CardBrowser]
+ *
  * @param lastDeckIdRepository returns the last selected ID. See [LastDeckIdRepository]
  * @param cacheDir Temporary location to store data too large to pass via intent
  * @param options Options passed to CardBrowser on startup
