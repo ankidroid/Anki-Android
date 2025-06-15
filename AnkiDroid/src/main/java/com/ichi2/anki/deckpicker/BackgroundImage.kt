@@ -27,6 +27,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.preferences.AppearanceSettingsFragment
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.toMB
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -79,7 +80,7 @@ object BackgroundImage {
         val filePathColumn = arrayOf(MediaStore.MediaColumns.SIZE, MediaStore.MediaColumns.WIDTH, MediaStore.MediaColumns.HEIGHT)
         target.requireContext().contentResolver.query(selectedImage, filePathColumn, null, null, null).use { cursor ->
             cursor!!.moveToFirst()
-            val fileSizeInMB = cursor.getLong(0) / (1024 * 1024)
+            val fileSizeInMB = cursor.getLong(0).toMB()
             if (fileSizeInMB >= 10) {
                 return FileSizeResult.FileTooLarge(currentMB = fileSizeInMB, maxMB = 10)
             }
