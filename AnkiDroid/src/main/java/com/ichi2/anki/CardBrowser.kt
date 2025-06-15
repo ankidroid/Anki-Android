@@ -563,7 +563,7 @@ open class CardBrowser :
                     savedFilters = null,
                     mySearchesDialogListener = mySearchesDialogListener,
                     currentSearchTerms = searchTerms,
-                    type = CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_SAVE,
+                    type = CardBrowserMySearchesDialog.SavedSearchesType.Save,
                 )
             showDialogFragment(dialog)
         }
@@ -1102,7 +1102,7 @@ open class CardBrowser :
                     savedFilters,
                     mySearchesDialogListener,
                     "",
-                    CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_LIST,
+                    CardBrowserMySearchesDialog.SavedSearchesType.List,
                 ),
             )
         }
