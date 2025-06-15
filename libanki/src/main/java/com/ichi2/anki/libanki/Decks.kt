@@ -185,11 +185,9 @@ class Decks(
 
     /** Return a new normal deck. It must be added with [addDeck] after a name assigned. */
     @LibAnkiAlias("new_deck")
-    @Suppress("unused")
     fun newDeck(): anki.decks.Deck = col.backend.newDeck()
 
     @LibAnkiAlias("add_deck")
-    @Suppress("unused")
     fun addDeck(deck: anki.decks.Deck): OpChangesWithId = col.backend.addDeck(input = deck)
 
     @LibAnkiAlias("new_deck_legacy")
