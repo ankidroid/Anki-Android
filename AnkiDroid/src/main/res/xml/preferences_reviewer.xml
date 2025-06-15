@@ -30,7 +30,9 @@
 
     <Preference
         android:title="Menu actions"
-        android:key="@string/reviewer_menu_settings_key" />
+        android:key="@string/reviewer_menu_settings_key"
+        android:icon="@drawable/ic_widgets"
+        />
 
     <ListPreference
         android:defaultValue="@string/reviewer_frame_style_card_value"
