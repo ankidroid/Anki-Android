@@ -30,8 +30,7 @@ fun deleteMedia(
     col: Collection,
     unused: List<String>,
 ): Int {
-    // FIXME: this provides progress info that is not currently used
-    col.media.removeFiles(unused)
+    col.media.trashFiles(unused)
     return unused.size
 }
 

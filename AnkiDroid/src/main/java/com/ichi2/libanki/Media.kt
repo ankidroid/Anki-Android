@@ -21,6 +21,7 @@ import androidx.annotation.WorkerThread
 import anki.media.CheckMediaResponse
 import com.google.protobuf.kotlin.toByteString
 import com.ichi2.libanki.exception.EmptyMediaException
+import com.ichi2.libanki.utils.LibAnkiAlias
 import timber.log.Timber
 import java.io.File
 
@@ -97,9 +98,9 @@ open class Media(
       Rebuilding DB
      ***********************************************************
      */
-
-    // FIXME: this also provides trash count, but UI can not handle it yet
     fun check(): CheckMediaResponse = col.backend.checkMedia()
+
+    fun emptyTrash() = col.backend.emptyTrash()
 
     /**
      * Copying on import
@@ -111,23 +112,12 @@ open class Media(
         col.backend.removeMediaDb(colPath = col.colDb.absolutePath)
     }
 
-    /**
-     * Remove a file from the media directory if it exists and mark it as removed in the media database.
-     */
-    @Suppress("unused")
-    open fun removeFile(fname: String) {
-        removeFiles(listOf(fname))
-    }
-
     // FIXME: this currently removes files immediately, as the UI does not expose a way
-    // to empty the trash or restore media files yet
-    fun removeFiles(files: Iterable<String>) {
-        col.backend.trashMediaFiles(fnames = files)
-        emptyTrash()
-    }
 
-    private fun emptyTrash() {
-        col.backend.emptyTrash()
+    /** Move provided files to the trash. */
+    @LibAnkiAlias("trash_files")
+    fun trashFiles(fnames: Iterable<String>) {
+        col.backend.trashMediaFiles(fnames = fnames)
     }
 
     @Suppress("UNUSED")
