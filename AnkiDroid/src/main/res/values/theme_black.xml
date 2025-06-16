@@ -102,6 +102,8 @@
         <!-- Introduction -->
         <item name="introductionLogoTransparent">#55111111</item>
 
+        <!-- Card-->
+        <item name="cardViewStyle">@style/BlackCardBackground</item>
 
         <!-- ProgressDialog-->
         <item name="dialogBackground">@color/theme_black_primary_light</item>
@@ -110,6 +112,10 @@
 
     <style name="SnackbarTextStyleBlack" parent="@style/Widget.MaterialComponents.Snackbar.TextView">
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="BlackCardBackground" parent="CardView">
+        <item name="cardBackgroundColor">@color/theme_black_primary_light</item>
     </style>
 
     <style name="ThemeOverlay.AnkiDroid.AlertDialog.Black" parent="ThemeOverlay.AnkiDroid.AlertDialog">
