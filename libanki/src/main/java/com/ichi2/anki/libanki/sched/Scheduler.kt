@@ -25,6 +25,7 @@ import anki.config.ConfigKey
 import anki.config.OptionalStringConfigKey
 import anki.config.optionalStringConfigKey
 import anki.decks.DeckTreeNode
+import anki.decks.FilteredDeckForUpdate
 import anki.frontend.SchedulingStatesWithContext
 import anki.i18n.FormatTimespanRequest
 import anki.scheduler.BuryOrSuspendCardsRequest
@@ -443,6 +444,13 @@ open class Scheduler(
             reviewDelta = rev,
         )
     }
+
+    /**
+     * Gets the filtered deck with given [did]
+     * or creates a new one if [did] = 0
+     */
+    @LibAnkiAlias("get_or_create_filtered_deck")
+    fun getOrCreateFilteredDeck(did: DeckId): FilteredDeckForUpdate = col.backend.getOrCreateFilteredDeck(did = did)
 
     /** Rebuild a dynamic deck.
      * @param did The deck to rebuild. 0 means current deck.
