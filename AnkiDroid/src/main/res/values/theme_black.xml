@@ -119,6 +119,6 @@
     </style>
 
     <style name="ThemeOverlay.AnkiDroid.AlertDialog.Black" parent="ThemeOverlay.AnkiDroid.AlertDialog">
-        <item name="android:background">@color/theme_black_primary_light</item>
+        <item name="android:windowBackground">@drawable/black_round_alert_dialog_background</item>
     </style>
 </resources>
