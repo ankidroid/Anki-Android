@@ -69,7 +69,7 @@
     <string name="show_whiteboard">Montri skribtabulon</string>
     <string name="hide_whiteboard" maxLength="28">Kaŝi skribtabulon</string>
     <string name="clear_whiteboard" maxLength="28">Forviŝi skribtabulon</string>
-    <string name="replay_media" maxLength="28">Replay media</string>
+    <string name="replay_media" maxLength="28">Reludi aŭdvidaĵon</string>
     <string name="leech_suspend_notification">Karto markita kiel forgesema kaj kaŝita</string>
     <string name="leech_notification">Karto markita kiel forgesema</string>
     <string name="webview_crash_unknown">Nekonata eraro</string>

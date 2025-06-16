@@ -69,7 +69,7 @@
     <string name="show_whiteboard">Yazı tahtasını göster</string>
     <string name="hide_whiteboard" maxLength="28">Yazı tahtasını gizle</string>
     <string name="clear_whiteboard" maxLength="28">Yazı tahtasını temizle</string>
-    <string name="replay_media" maxLength="28">Replay media</string>
+    <string name="replay_media" maxLength="28">Medyayı yeniden oynat</string>
     <string name="leech_suspend_notification">Kart asalak olarak işaretlenip askıya alınmış</string>
     <string name="leech_notification">Kart asalak olarak işaretlenmiş</string>
     <string name="webview_crash_unknown">Bilinmeyen hata</string>
