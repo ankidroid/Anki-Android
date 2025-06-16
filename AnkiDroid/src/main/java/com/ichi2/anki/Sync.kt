@@ -42,6 +42,7 @@ import com.ichi2.libanki.syncCollection
 import com.ichi2.libanki.syncLogin
 import com.ichi2.preferences.VersatileTextWithASwitchPreference
 import com.ichi2.utils.NetworkUtils
+import com.ichi2.utils.dismissSafely
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -416,7 +417,7 @@ suspend fun monitorMediaSync(deckPicker: DeckPicker) {
         } catch (_: Exception) {
             showMessage(TR.syncMediaFailed())
         } finally {
-            dialog.dismiss()
+            dialog.dismissSafely()
         }
     }
 }

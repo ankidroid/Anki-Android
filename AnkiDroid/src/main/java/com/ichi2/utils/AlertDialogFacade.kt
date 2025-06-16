@@ -44,6 +44,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.R
 import com.ichi2.themes.Themes
 import com.ichi2.ui.FixedTextView
+import com.ichi2.utils.HandlerUtils.executeOnMainThread
 import timber.log.Timber
 
 /** Wraps [DialogInterface.OnClickListener] as we don't need the `which` parameter */
@@ -451,5 +452,22 @@ fun AlertDialog.Builder.titleWithHelpIcon(
     customTitleView.findViewById<ImageView>(R.id.help_icon).setOnClickListener { v ->
         Timber.i("dialog help icon click")
         block.onClick(v)
+    }
+}
+
+/** Calls [AlertDialog.dismiss], ignoring errors */
+fun AlertDialog.dismissSafely() {
+    // The exception will be uncaught if not run on the main thread.
+    executeOnMainThread {
+        try {
+            // safer to catch the exception to be sure dismiss() was called
+            dismiss()
+        } catch (e: IllegalArgumentException) {
+            if (window == null || !isShowing) {
+                Timber.d(e, "Dialog not attached to window manager")
+                return@executeOnMainThread
+            }
+            Timber.w(e, "Dialog not attached to window manager")
+        }
     }
 }
