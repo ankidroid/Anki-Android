@@ -30,7 +30,6 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
-import com.ichi2.anki.libanki.getOrCreateFilteredDeck
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.utils.getInputField
@@ -76,7 +75,7 @@ class CreateDeckDialog(
         Timber.i("CreateDeckDialog::showFilteredDeckDialog")
         initialDeckName =
             withCol {
-                getOrCreateFilteredDeck(did = 0).name
+                sched.getOrCreateFilteredDeck(did = 0).name
             }
         showDialog()
     }

@@ -33,7 +33,6 @@ import anki.collection.opChangesWithId
 import anki.deck_config.DeckConfigsForUpdate
 import anki.deck_config.UpdateDeckConfigsRequest
 import anki.decks.DeckTreeNode
-import anki.decks.FilteredDeckForUpdate
 import anki.decks.SetDeckCollapsedRequest
 import anki.decks.copy
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -671,9 +670,3 @@ class Decks(
 
 // These take and return bytes that the frontend TypeScript code will encode/decode.
 fun Collection.getDeckNamesRaw(input: ByteArray): ByteArray = backend.getDeckNamesRaw(input)
-
-/**
- * Gets the filtered deck with given [did]
- * or creates a new one if [did] = 0
- */
-fun Collection.getOrCreateFilteredDeck(did: DeckId): FilteredDeckForUpdate = backend.getOrCreateFilteredDeck(did = did)

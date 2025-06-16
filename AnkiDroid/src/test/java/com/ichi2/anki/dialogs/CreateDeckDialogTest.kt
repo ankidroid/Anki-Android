@@ -29,7 +29,6 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.CreateDeckDialog.DeckDialogType
 import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.libanki.getOrCreateFilteredDeck
 import com.ichi2.utils.getInputTextLayout
 import com.ichi2.utils.positiveButton
 import okhttp3.internal.closeQuietly
@@ -289,7 +288,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             }
         }
 
-        val duplicatedName = col.getOrCreateFilteredDeck(did = 0).name
+        val duplicatedName = col.sched.getOrCreateFilteredDeck(did = 0).name
 
         createDeck(duplicatedName)
         assertThat("initial filtered deck created", allDeckNames(), hasItem(duplicatedName))
