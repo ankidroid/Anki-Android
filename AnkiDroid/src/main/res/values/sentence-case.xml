@@ -48,5 +48,6 @@ undoActionUndone()
     <string name="sentence_check_media_delete_unused">Delete unused</string>
     <string name="sentence_choose_tags">Choose tags</string>
     <string name="sentence_selective_study">Selective study</string>
+    <string name="sentence_sync_media_log">Media sync log</string>
 
 </resources>
