@@ -55,7 +55,7 @@
     <string name="pref_search_no_results">Sen resultados</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Xeral</string>
-    <string name="pref_cat_studying" maxLength="41">Estudando</string>
+    <string name="pref_cat_studying" maxLength="41">Estudo</string>
     <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">Repasando</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sincronización</string>
@@ -68,7 +68,7 @@
     <string name="pref_cat_advanced" maxLength="41">Avanzado</string>
     <string name="pref_cat_workarounds" maxLength="41">Solucións</string>
     <string name="pref_cat_plugins" maxLength="41">Engadidos</string>
-    <string name="pref_cat_editing" maxLength="41">Editing</string>
+    <string name="pref_cat_editing" maxLength="41">Edición</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Grosor do trazo</string>
     <string name="use_input_tag" maxLength="41">Escribir resposta na tarxeta</string>

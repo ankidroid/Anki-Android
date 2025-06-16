@@ -55,7 +55,7 @@
     <string name="pref_search_no_results">neniu rezulto</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Ĝenerala</string>
-    <string name="pref_cat_studying" maxLength="41">Studado</string>
+    <string name="pref_cat_studying" maxLength="41">Lernado</string>
     <string name="pref_cat_system_wide" maxLength="41">Operaciumo</string>
     <string name="pref_cat_reviewing" maxLength="41">Ripetado</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Samtempigo</string>
@@ -201,13 +201,13 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Antaŭrigardo</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Baskuligi montradon de nur dorso</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
+    <string name="pref_cat_reviewer" maxLength="41">Lernada ekrano</string>
     <string name="show_deck_title" maxLength="41">Montri titolon de kartaro</string>
     <string name="accessibility" maxLength="41">Alirebleco</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Alglui bildojn kiel PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Duoble premi por reiri/eliri</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
+    <string name="exit_via_double_tap_back_summ">Por eviti pretervolan fermon de la lernada ekrano aŭ la aplikaĵo</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Ĉiuj dosieroj dum enporti aŭdvidaĵojn</string>
     <string name="media_import_allow_all_files_summ">Se Android ne povas rekoni dosierojn de aŭdvidaĵojn</string>
@@ -248,7 +248,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">Anstataŭigi novajn liniojn en HTML</string>
     <string name="note_editor_replace_newlines_summ">En la kart‑redaktilo, konverti ĉiujn &lt;br&gt; al novaj linioj dum redakti karton.</string>
     <string name="type_in_answer_focus" maxLength="41">Marki kampon “enigi respondon”</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
+    <string name="type_in_answer_focus_summ">Aŭtomate marki la kampon “enigi respondon” sur la lernada ekrano</string>
     <!-- About -->
     <string name="open_changelog">Montri ŝanĝ-protokolon</string>
     <string name="pref_cat_about_title" maxLength="41">Pri</string>
@@ -265,7 +265,7 @@
     <string name="binding_add_axis">Asigni ludstirilon</string>
     <string name="axis_picker_move_joystick">Movu per ludstirilo</string>
     <string name="user_actions" maxLength="41">Agoj de uzanto</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
+    <string name="user_actions_summary" maxLength="41">Plenumi JavaScript sur la lernada ekrano</string>
     <string name="user_action_1" maxLength="28">Ago de uzanto #1</string>
     <string name="user_action_2" maxLength="28">Ago de uzanto #2</string>
     <string name="user_action_3" maxLength="28">Ago de uzanto #3</string>
@@ -290,8 +290,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Eksperimenta</string>
     <string name="readtext_deprecation_warn">AnkiDroid enkondukis pli bonan meĥanismon por parolsintezo, kiu kongruas kun aliaj klientoj Anki kaj liveras pliajn voĉojn kaj plibonigojn al son-ludado!\n\nĜisdatigu viajn kartojn kiel eble plej rapide, ĉar tiu ĉi agordo baldaŭ estos forigita.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Ĝisdatigu al pli nova formo de parolsintezo</string>
-    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
-    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
+    <string name="pref_fixed_port_title" maxLength="41">Aktivigi localStorage sur la lernada ekrano</string>
+    <string name="pref_fixed_port_summary">Aktivigi JavaScript localStorage per uzi difinitan pordon de servilo sur la lernada ekrano</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Programistaj agordoj</string>
     <string name="dev_options_enabled_pref" maxLength="41">Aktivigi programistajn agordojn</string>
@@ -364,9 +364,9 @@ Vi povas restarigi el sekurkopio aŭ elporti vian kolekton per la menuo de listo
     <string name="reviewer_frame_style" maxLength="41">Stilo de kadro</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">karta</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">plena</string>
-    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Top</string>
-    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Bottom</string>
-    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">None</string>
+    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Supre</string>
+    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Malsupre</string>
+    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Neniu</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Malfermi agordojn</string>
 </resources>
