@@ -35,6 +35,8 @@ import anki.collection.OpChangesWithCount
 import anki.config.ConfigKey
 import anki.config.Preferences
 import anki.config.copy
+import anki.image_occlusion.GetImageForOcclusionResponse
+import anki.image_occlusion.GetImageOcclusionNoteResponse
 import anki.import_export.CsvMetadata
 import anki.import_export.ExportAnkiPackageOptions
 import anki.import_export.ExportLimit
@@ -484,6 +486,59 @@ class Collection(
     ) {
         backend.exportDataset(minEntries = minEntries, targetPath = targetPath)
     }
+
+    /*
+     * Image Occlusion
+     * ***********************************************************
+     */
+
+    @LibAnkiAlias("get_image_for_occlusion")
+    @RustCleanup("path should be nullable")
+    fun getImageForOcclusion(path: String): GetImageForOcclusionResponse = backend.getImageForOcclusion(path = path)
+
+    /** Add notetype if missing. */
+    @LibAnkiAlias("add_image_occlusion_notetype")
+    fun addImageOcclusionNoteType() {
+        backend.addImageOcclusionNotetype()
+    }
+
+    @LibAnkiAlias("add_image_occlusion_note")
+    fun addImageOcclusionNote(
+        noteTypeId: NoteTypeId,
+        imagePath: String,
+        occlusions: String,
+        header: String,
+        backExtra: String,
+        tags: List<String>,
+    ): OpChanges =
+        backend.addImageOcclusionNote(
+            notetypeId = noteTypeId,
+            imagePath = imagePath,
+            occlusions = occlusions,
+            header = header,
+            backExtra = backExtra,
+            tags = tags,
+        )
+
+    @LibAnkiAlias("get_image_occlusion_note")
+    fun getImageOcclusionNote(noteId: NoteId): GetImageOcclusionNoteResponse = backend.getImageOcclusionNote(noteId = noteId)
+
+    @LibAnkiAlias("update_image_occlusion_note")
+    @RustCleanup("parameters should all be nullable")
+    fun updateImageOcclusionNote(
+        noteId: NoteId,
+        occlusions: String,
+        header: String,
+        backExtra: String,
+        tags: List<String>,
+    ): OpChanges =
+        backend.updateImageOcclusionNote(
+            noteId = noteId,
+            occlusions = occlusions,
+            header = header,
+            backExtra = backExtra,
+            tags = tags,
+        )
 
     /**
      * Object creation helpers **************************************************
