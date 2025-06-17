@@ -588,6 +588,20 @@ class Collection(
         skipUndoEntry: Boolean = false,
     ): OpChanges = backend.updateNotes(notes = listOf(note.toBackendNote()), skipUndoEntry = skipUndoEntry)
 
+    /*
+     * Utils
+     * ***********************************************************
+     */
+
+    @CheckResult
+    @LibAnkiAlias("nextID")
+    @RustCleanup("Python returns 'Any' - may fail for Double?")
+    @Deprecated("not implemented", level = DeprecationLevel.HIDDEN)
+    fun nextId(
+        type: String,
+        inc: Boolean = true,
+    ): Long = TODO()
+
     /**
      * Notes ******************************************************************** ***************************
      */
