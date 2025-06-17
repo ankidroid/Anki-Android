@@ -1188,7 +1188,7 @@ class CardBrowserViewModel(
      * Replaces occurrences of search with the new value.
      *
      * @return the number of affected notes
-     * @see com.ichi2.anki.libanki.Collection.findReplace
+     * @see com.ichi2.anki.libanki.Collection.findAndReplace
      * @see com.ichi2.anki.libanki.Tags.findAndReplace
      */
     fun findAndReplace(result: FindReplaceResult) =
@@ -1205,7 +1205,7 @@ class CardBrowserViewModel(
                 val field =
                     if (result.field == ALL_FIELDS_AS_FIELD) null else result.field
                 undoableOp {
-                    findReplace(noteIds, result.search, result.replacement, result.regex, field, result.matchCase)
+                    findAndReplace(noteIds, result.search, result.replacement, result.regex, field, result.matchCase)
                 }.count
             }
         }
