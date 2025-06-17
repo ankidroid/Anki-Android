@@ -102,7 +102,6 @@ import com.ichi2.libanki.restoreNotetypeToStock
 import com.ichi2.libanki.undoableOp
 import com.ichi2.themes.Themes
 import com.ichi2.ui.FixedEditText
-import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.dp
 import com.ichi2.utils.listItems
@@ -510,7 +509,6 @@ open class CardTemplateEditor :
 
     class CardTemplateFragment : Fragment() {
         private val refreshFragmentHandler = Handler(Looper.getMainLooper())
-        private var currentEditorTitle: FixedTextView? = null
         private lateinit var editorEditText: FixedEditText
 
         var currentEditorViewId = 0
@@ -539,7 +537,6 @@ open class CardTemplateEditor :
                     return mainView
                 }
 
-            currentEditorTitle = mainView.findViewById(R.id.title_edit)
             editorEditText = mainView.findViewById(R.id.editor_editText)
             cursorPosition = requireArguments().getInt(CURSOR_POSITION_KEY)
 
@@ -550,14 +547,9 @@ open class CardTemplateEditor :
                 val currentSelectedId = item.itemId
                 templateEditor.tabToViewId[cardIndex] = currentSelectedId
                 when (currentSelectedId) {
-                    R.id.styling_edit -> setCurrentEditorView(currentSelectedId, tempModel.css, R.string.card_template_editor_styling)
-                    R.id.back_edit ->
-                        setCurrentEditorView(
-                            currentSelectedId,
-                            template.afmt,
-                            R.string.card_template_editor_back,
-                        )
-                    else -> setCurrentEditorView(currentSelectedId, template.qfmt, R.string.card_template_editor_front)
+                    R.id.styling_edit -> setCurrentEditorView(currentSelectedId, tempModel.css)
+                    R.id.back_edit -> setCurrentEditorView(currentSelectedId, template.afmt)
+                    else -> setCurrentEditorView(currentSelectedId, template.qfmt)
                 }
                 // contents of menu have changed and menu should be redrawn
                 templateEditor.invalidateOptionsMenu()
@@ -734,11 +726,9 @@ open class CardTemplateEditor :
         fun setCurrentEditorView(
             id: Int,
             editorContent: String,
-            editorTitleId: Int,
         ) {
             currentEditorViewId = id
             editorEditText.setText(editorContent)
-            currentEditorTitle!!.text = resources.getString(editorTitleId)
             editorEditText.setSelection(cursorPosition)
             editorEditText.requestFocus()
         }
