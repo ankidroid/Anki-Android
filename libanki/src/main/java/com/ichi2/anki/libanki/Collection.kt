@@ -52,6 +52,7 @@ import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
 import com.ichi2.anki.libanki.utils.NotInLibAnki
 import net.ankiweb.rsdroid.Backend
+import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import timber.log.Timber
 import java.io.File
@@ -156,20 +157,31 @@ class Collection(
 
     fun name() = collectionFiles.collectionName
 
-    /**
+    /*
      * Scheduler
      * ***********************************************************
      */
+
+    /**
+     * For backwards compatibility, the v3 scheduler currently returns 2.
+     * Use the separate [v3Scheduler] method to check if it is active.
+     */
+    @LibAnkiAlias("sched_ver")
     fun schedVer(): Int {
-        // schedVer was not set on legacy v1 collections
+        @RustCleanup("move outside this method")
+        @LibAnkiAlias("_supported_scheduler_versions")
+        val supportedSchedulerVersions = listOf(1, 2)
+
+        // for backwards compatibility, v3 is represented as 2
         val ver = config.get("schedVer") ?: 1
-        return if (listOf(1, 2).contains(ver)) {
-            ver
+        if (ver in supportedSchedulerVersions) {
+            return ver
         } else {
             throw RuntimeException("Unsupported scheduler version")
         }
     }
 
+    @RustCleanup("doesn't match upstream")
     fun _loadScheduler() {
         val ver = schedVer()
         if (ver == 1) {
@@ -186,6 +198,23 @@ class Collection(
                     }
                 setPreferences(prefs)
             }
+        }
+    }
+
+    @LibAnkiAlias("v3_scheduler")
+    fun v3Scheduler(): Boolean = schedVer() == 2 && backend.getConfigBool(ConfigKey.Bool.SCHED_2021)
+
+    /**
+     * @throws RuntimeException [enabled] requested, but not using the [schedVer][v2 scheduler]
+     */
+    @LibAnkiAlias("set_v3_scheduler")
+    fun setV3Scheduler(enabled: Boolean) {
+        if (this.v3Scheduler() != enabled) {
+            if (enabled && schedVer() != 2) {
+                throw RuntimeException("must upgrade to v2 scheduler first")
+            }
+            config.setBool(ConfigKey.Bool.SCHED_2021, enabled)
+            _loadScheduler()
         }
     }
 
