@@ -24,7 +24,6 @@ import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission
 import com.ichi2.anki.testutil.addNote
 import org.junit.After
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -42,20 +41,14 @@ import kotlin.test.fail
  */
 @RunWith(AndroidJUnit4::class)
 class MediaTest : InstrumentedTest() {
-    private var testCol: Collection? = null
+    private val testCol: Collection = emptyCol
 
     @get:Rule
     var runtimePermissionRule = GrantStoragePermission.instance
 
-    @Before
-    @Throws(IOException::class)
-    fun setUp() {
-        testCol = emptyCol
-    }
-
     @After
     fun tearDown() {
-        testCol!!.close()
+        testCol.close()
     }
 
     @Test
@@ -70,15 +63,15 @@ class MediaTest : InstrumentedTest() {
             os.write("hello".toByteArray())
         }
         // new file, should preserve name
-        val r = testCol!!.media.addFile(path)
+        val r = testCol.media.addFile(path)
         assertEquals("foo.jpg", r)
         // adding the same file again should not create a duplicate
-        assertEquals("foo.jpg", testCol!!.media.addFile(path))
+        assertEquals("foo.jpg", testCol.media.addFile(path))
         // but if it has a different md5, it should
         FileOutputStream(path, false).use { os ->
             os.write("world".toByteArray())
         }
-        assertNotEquals("foo.jpg", testCol!!.media.addFile(path))
+        assertNotEquals("foo.jpg", testCol.media.addFile(path))
     }
 
     @Test
@@ -93,9 +86,9 @@ class MediaTest : InstrumentedTest() {
 
         // new file, should preserve name
         try {
-            testCol!!.media.addFile(path)
+            testCol.media.addFile(path)
             fail("exception should be thrown")
-        } catch (mediaException: EmptyMediaException) {
+        } catch (_: EmptyMediaException) {
             // all good
         }
     }
@@ -104,37 +97,33 @@ class MediaTest : InstrumentedTest() {
     @Throws(IOException::class, EmptyMediaException::class)
     fun testDeckIntegration() {
         // create a media dir
-        val mediaDir = testCol!!.media.dir
+        val mediaDir = testCol.media.dir
         // Put a file into it
         val file = createNonEmptyFile("fake.png")
-        testCol!!.media.addFile(file)
+        testCol.media.addFile(file)
         // add a note which references it
-        var f = testCol!!.newNote(testCol!!.notetypes.current())
+        var f = testCol.newNote(testCol.notetypes.current())
         f.setField(0, "one")
         f.setField(1, "<img src='fake.png'>")
-        testCol!!.addNote(f)
+        testCol.addNote(f)
         // and one which references a non-existent file
-        f = testCol!!.newNote(testCol!!.notetypes.current())
+        f = testCol.newNote(testCol.notetypes.current())
         f.setField(0, "one")
         f.setField(1, "<img src='fake2.png'>")
-        testCol!!.addNote(f)
+        testCol.addNote(f)
         // and add another file which isn't used
         FileOutputStream(File(mediaDir, "foo.jpg"), false).use { os ->
             os.write("test".toByteArray())
         }
         // check media
-        val ret = testCol!!.media.check()
+        val ret = testCol.media.check()
         assertContains(ret.missingList, "fake2.png")
         assertContains(ret.unusedList, "foo.jpg")
     }
 
-    @Suppress("SpellCheckingInspection")
-    @Throws(IOException::class)
     private fun createNonEmptyFile(
         @Suppress("SameParameterValue") fileName: String,
-    ): File {
-        val file = File(testDir, fileName)
-        FileOutputStream(file, false).use { os -> os.write("a".toByteArray()) }
-        return file
+    ) = File(testDir, fileName).apply {
+        writeText("a")
     }
 }
