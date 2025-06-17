@@ -35,6 +35,13 @@ import anki.collection.OpChangesWithCount
 import anki.config.ConfigKey
 import anki.config.Preferences
 import anki.config.copy
+import anki.import_export.CsvMetadata
+import anki.import_export.ExportAnkiPackageOptions
+import anki.import_export.ExportLimit
+import anki.import_export.ImportAnkiPackageOptions
+import anki.import_export.ImportCsvRequest
+import anki.import_export.ImportResponse
+import anki.import_export.csvMetadataRequest
 import anki.search.BrowserColumns
 import anki.search.BrowserRow
 import anki.search.SearchNode
@@ -58,12 +65,15 @@ import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import timber.log.Timber
 import java.io.File
 
+typealias ImportLogWithChanges = anki.import_export.ImportResponse
+
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
 // tracked, so unused tags can only be removed from the list with a DB check.
 //
 // This module manages the tag cache and tags for notes.
 @KotlinCleanup("inline function in init { } so we don't need to init `crt` etc... at the definition")
+@RustCleanup("combine with BackendImportExport")
 @WorkerThread
 class Collection(
     /**
@@ -324,6 +334,156 @@ class Collection(
 
     @LibAnkiAlias("usn")
     fun usn(): Int = -1
+
+    /*
+     * Import/export
+     * ***********************************************************
+     */
+
+    /**
+     * (Maybe) create a colpkg backup, while keeping the collection open. If the
+     * configured backup interval has not elapsed, and force=false, no backup will be created,
+     * and this routine will return false.
+     *
+     * There must not be an active transaction.
+     *
+     * If `waitForCompletion` is true, block until the backup completes. Otherwise this routine
+     * returns quickly, and the backup can be awaited on a background thread with awaitBackupCompletion()
+     * to check for success.
+     *
+     * Backups are automatically expired according to the user's settings.
+     */
+    @LibAnkiAlias("create_backup")
+    fun createBackup(
+        backupFolder: String,
+        force: Boolean,
+        waitForCompletion: Boolean,
+    ): Boolean {
+        // ensure any pending transaction from legacy code/add-ons has been committed
+        val created =
+            backend.createBackup(
+                backupFolder = backupFolder,
+                force = force,
+                waitForCompletion = waitForCompletion,
+            )
+        return created
+    }
+
+    /**
+     * If a backup is running, block until it completes, throwing if it fails, or already
+     * failed, and the status has not yet been checked. On failure, an error is only returned
+     * once; subsequent calls are a no-op until another backup is run.
+     *
+     * @throws Exception if backup creation failed, no-op after first throw
+     */
+    @LibAnkiAlias("await_backup_completion")
+    fun awaitBackupCompletion() {
+        backend.awaitBackupCompletion()
+    }
+
+    /**
+     * Export the collection into a .colpkg file.
+     * If legacy=false, a file targeting Anki 2.1.50+ is created. It compresses better and is faster to
+     * create, but older clients can not read it.
+     */
+    @LibAnkiAlias("export_collection_package")
+    fun exportCollectionPackage(
+        out_path: String,
+        include_media: Boolean,
+        legacy: Boolean,
+    ) {
+        closeForFullSync()
+        backend.exportCollectionPackage(
+            outPath = out_path,
+            includeMedia = include_media,
+            legacy = legacy,
+        )
+        reopen() // TODO: not in libAnki
+    }
+
+    @LibAnkiAlias("import_anki_package")
+    @RustCleanup("different input parameters - OK?")
+    fun importAnkiPackage(
+        packagePath: String,
+        options: ImportAnkiPackageOptions,
+    ): ImportResponse = backend.importAnkiPackage(packagePath, options)
+
+    @LibAnkiAlias("export_anki_package")
+    fun exportAnkiPackage(
+        outPath: String,
+        options: ExportAnkiPackageOptions,
+        limit: ExportLimit,
+    ): Int =
+        backend.exportAnkiPackage(
+            outPath = outPath,
+            options = options,
+            limit = limit,
+        )
+
+    @LibAnkiAlias("get_csv_metadata")
+    fun getCsvMetadata(
+        path: String,
+        delimiter: CsvMetadata.Delimiter?,
+    ): CsvMetadata {
+        val request =
+            csvMetadataRequest {
+                this.path = path
+                delimiter?.let { this.delimiter = delimiter }
+            }
+        return backend.getCsvMetadata(request)
+    }
+
+    @LibAnkiAlias("import_csv")
+    @Deprecated("not implemented")
+    fun importCsv(request: ImportCsvRequest): ImportLogWithChanges = TODO()
+    // val log = backend.importCsvRaw(request.SerializeToString())
+    // return ImportLogWithChanges.FromString(log)
+
+    @LibAnkiAlias("export_note_csv")
+    fun exportNoteCsv(
+        outPath: String,
+        limit: ExportLimit,
+        withHtml: Boolean,
+        withTags: Boolean,
+        withDeck: Boolean,
+        withNotetype: Boolean,
+        withGuid: Boolean,
+    ): Int =
+        backend.exportNoteCsv(
+            outPath = outPath,
+            withHtml = withHtml,
+            withTags = withTags,
+            withDeck = withDeck,
+            withNotetype = withNotetype,
+            withGuid = withGuid,
+            limit = limit,
+        )
+
+    @LibAnkiAlias("export_card_csv")
+    fun exportCardCsv(
+        outPath: String,
+        limit: ExportLimit,
+        withHtml: Boolean,
+    ): Int =
+        backend.exportCardCsv(
+            outPath = outPath,
+            withHtml = withHtml,
+            limit = limit,
+        )
+
+    @LibAnkiAlias("import_json_file")
+    fun importJsonFile(path: String): ImportLogWithChanges = backend.importJsonFile(path)
+
+    @LibAnkiAlias("import_json_string")
+    fun importJsonString(json: String): ImportLogWithChanges = backend.importJsonString(json)
+
+    @LibAnkiAlias("export_dataset_for_research")
+    fun exportDatasetForResearch(
+        targetPath: String,
+        minEntries: Int = 0,
+    ) {
+        backend.exportDataset(minEntries = minEntries, targetPath = targetPath)
+    }
 
     /**
      * Object creation helpers **************************************************

@@ -23,7 +23,6 @@ import anki.collection.OpChangesOnly
 import anki.import_export.ImportAnkiPackageRequest
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.libanki.buildSearchString
-import com.ichi2.libanki.importAnkiPackage
 import com.ichi2.libanki.importCsvRaw
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.Dispatchers

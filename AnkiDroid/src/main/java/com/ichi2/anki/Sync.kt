@@ -37,7 +37,6 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.libanki.ChangeManager.notifySubscribersAllValuesChanged
-import com.ichi2.libanki.createBackup
 import com.ichi2.libanki.fullUploadOrDownload
 import com.ichi2.libanki.syncCollection
 import com.ichi2.libanki.syncLogin
