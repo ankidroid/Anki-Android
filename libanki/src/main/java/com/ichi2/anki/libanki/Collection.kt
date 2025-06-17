@@ -124,19 +124,8 @@ class Collection(
     private var startTime: Long
     private var startReps: Int
 
-    val mod: Long
-        get() = db.queryLongScalar("select mod from col")
-
-    val crt: Long
-        get() = db.queryLongScalar("select crt from col")
-
-    val scm: Long
-        get() = db.queryLongScalar("select scm from col")
-
     private val lastSync: Long
         get() = db.queryLongScalar("select ls from col")
-
-    fun usn(): Int = -1
 
     var ls: Long = 0
     // END: SQL table columns
@@ -218,12 +207,29 @@ class Collection(
         }
     }
 
+    /*
+     * DB-related
+     * ***********************************************************
+     */
+
+    // legacy properties; these will likely go away in the future
+
+    val mod: Long
+        get() = db.queryLongScalar("select mod from col")
+
+    @RustCleanup("remove")
+    @NotInLibAnki
+    val scm: Long
+        get() = db.queryLongScalar("select scm from col")
+
     /**
      * Disconnect from DB.
      * Python implementation has a save argument for legacy reasons;
      * AnkiDroid always saves as changes are made.
      */
     @Synchronized
+    @LibAnkiAlias("close")
+    @RustCleanup("doesn't match upstream")
     fun close(
         downgrade: Boolean = false,
         forFullSync: Boolean = false,
@@ -237,7 +243,23 @@ class Collection(
         }
     }
 
+    @LibAnkiAlias("close_for_full_sync")
+    fun closeForFullSync() {
+        // save and cleanup, but backend will take care of collection close
+        if (dbInternal != null) {
+            clearCaches()
+            dbInternal = null
+        }
+    }
+
+    @LibAnkiAlias("_clear_caches")
+    private fun clearCaches() {
+        notetypes.clearCache()
+    }
+
     /** True if DB was created */
+    @RustCleanup("doesn't match upstream")
+    @LibAnkiAlias("reopen")
     fun reopen(
         afterFullSync: Boolean = false,
         databaseBuilder: (Backend) -> DB,
@@ -262,6 +284,8 @@ class Collection(
         }
     }
 
+    @NotInLibAnki
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun load() {
         notetypes = Notetypes(this)
         decks = Decks(this)
@@ -290,7 +314,7 @@ class Collection(
      *
      * @throws ConfirmModSchemaException
      */
-    @Throws(ConfirmModSchemaException::class)
+    @LibAnkiAlias("mod_schema")
     fun modSchema() {
         if (!schemaChanged()) {
             /* In Android we can't show a dialog which blocks the main UI thread
@@ -302,8 +326,13 @@ class Collection(
         modSchemaNoCheck()
     }
 
-    /** True if schema changed since last sync.  */
+    /** `true` if schema changed since last sync. */
+    @LibAnkiAlias("schema_changed")
+    @RustCleanup("doesn't match upstream")
     fun schemaChanged(): Boolean = scm > lastSync
+
+    @LibAnkiAlias("usn")
+    fun usn(): Int = -1
 
     /**
      * Object creation helpers **************************************************
