@@ -688,8 +688,9 @@ class Collection(
     @LibAnkiAlias("note_count")
     fun noteCount(): Int = db.queryScalar("SELECT count() FROM notes")
 
-    /**
-     * Cards ******************************************************************** ***************************
+    /*
+     * Cards
+     * ***********************************************************
      */
 
     /**
@@ -699,7 +700,48 @@ class Collection(
     val isEmpty: Boolean
         get() = db.queryScalar("SELECT 1 FROM cards LIMIT 1") == 0
 
+    @CheckResult
+    @LibAnkiAlias("card_count")
     fun cardCount(): Int = db.queryScalar("SELECT count() FROM cards")
+
+    /**
+     * You probably want [removeNotesByCard] instead.
+     *
+     * @return the number of deleted cards. **Note:** if an invalid/duplicate [CardId] is provided,
+     * the output count may be less than the input.
+     */
+    @RustCleanup("maybe deprecate this")
+    @LibAnkiAlias("remove_cards_and_orphaned_notes")
+    fun removeCardsAndOrphanedNotes(cardIds: Iterable<CardId>): OpChangesWithCount = backend.removeCards(cardIds)
+
+    @LibAnkiAlias("set_deck")
+    fun setDeck(
+        cardIds: Iterable<CardId>,
+        deckId: DeckId,
+    ): OpChangesWithCount = backend.setDeck(cardIds = cardIds, deckId = deckId)
+
+    @CheckResult
+    @LibAnkiAlias("get_empty_cards")
+    fun getEmptyCards(): EmptyCardsReport = backend.getEmptyCards()
+
+    /*
+     * Card generation & field checksums/sort fields
+     * ***********************************************************
+     */
+
+    /** If notes modified directly in database, call this afterwards. */
+    @LibAnkiAlias("after_note_updates")
+    fun afterNoteUpdates(
+        noteIds: List<NoteId>,
+        markModified: Boolean,
+        generateCards: Boolean = true,
+    ) {
+        backend.afterNoteUpdates(
+            nids = noteIds,
+            generateCards = generateCards,
+            markNotesModified = markModified,
+        )
+    }
 
     /*
       Finding cards ************************************************************ ***********************************
@@ -922,12 +964,6 @@ class Collection(
 
     fun redoAvailable(): Boolean = undoStatus().redo != null
 
-    /**
-     * @return the number of deleted cards. **Note:** if an invalid/duplicate [CardId] is provided,
-     * the output count may be less than the input.
-     */
-    fun removeCardsAndOrphanedNotes(cardIds: Iterable<CardId>) = backend.removeCards(cardIds)
-
     lateinit var notetypes: Notetypes
         protected set
 
@@ -936,11 +972,6 @@ class Collection(
     @NotInLibAnki
     @CheckResult
     fun filterToValidCards(cards: LongArray?): List<Long> = db.queryLongList("select id from cards where id in " + ids2str(cards))
-
-    fun setDeck(
-        cids: Iterable<CardId>,
-        did: DeckId,
-    ): OpChangesWithCount = backend.setDeck(cardIds = cids, deckId = did)
 
     /** Fixes and optimizes the database. If any errors are encountered, a list of
      * problems is returned. Throws if DB is unreadable. */
@@ -952,8 +983,6 @@ class Collection(
         cids: Iterable<Long>,
         flag: Int,
     ): OpChangesWithCount = backend.setFlag(cardIds = cids, flag = flag)
-
-    fun getEmptyCards(): EmptyCardsReport = backend.getEmptyCards()
 
     @Suppress("unused")
     fun syncStatus(auth: SyncAuth): SyncStatusResponse = backend.syncStatus(input = auth)
