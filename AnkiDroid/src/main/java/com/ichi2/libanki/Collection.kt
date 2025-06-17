@@ -66,6 +66,7 @@ import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import timber.log.Timber
 import java.io.File
+import java.util.Locale
 
 typealias ImportLogWithChanges = anki.import_export.ImportResponse
 
@@ -581,6 +582,26 @@ class Collection(
     @CheckResult
     @LibAnkiAlias("update_note")
     fun updateNote(note: Note): OpChanges = backend.updateNotes(notes = listOf(note.toBackendNote()), skipUndoEntry = false)
+
+    /*
+     * Utils
+     * ***********************************************************
+     */
+
+    @LibAnkiAlias("nextID")
+    @RustCleanup("Python returns 'Any' - may fail for Double?")
+    fun nextId(
+        type: String,
+        inc: Boolean = true,
+    ): Long {
+        val capitalized = type.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+        val type = "next$type"
+        val id = config.get<Long>(type, 1)!!
+        if (inc) {
+            config.set(type, id + 1)
+        }
+        return id
+    }
 
     /**
      * Notes ******************************************************************** ***************************
