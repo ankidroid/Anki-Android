@@ -349,4 +349,6 @@
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Wysig kaartblaaier voorkoms</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">Gebruikerhandeling %s is nie in hierdie notatipe gestel nie. Stel dit asseblief op</string>
     <string name="directory_inaccessible_info">Lees meer oor hoe om toegang hier te herstel %s of gaan na instellings om versameling vouer op te dateer.</string>
+    <!-- Scheduler Upgrade Required Dialog title-->
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
 </resources>

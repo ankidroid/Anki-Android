@@ -49,6 +49,7 @@
     <string name="model_browser_template">కార్డ్లను సవరించండి</string>
     <!--Rename-->
     <string name="rename_model">గమనిక రకం పేరు మార్చండి</string>
+    <string name="rename_card_type">Rename card type</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">భాష సూచనను %sకి సెట్ చేయండి</string>
     <!--Field Editing-->
