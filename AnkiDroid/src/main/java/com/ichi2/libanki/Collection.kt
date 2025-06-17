@@ -1160,13 +1160,3 @@ class Collection(
 
 @NotInLibAnki
 fun EmptyCardsReport.emptyCids(): List<CardId> = notesList.flatMap { it.cardIdsList }
-
-/**
- * Return a new note with the model derived from the deck or the configuration
- * @param forDeck When true it uses the model specified in the deck (mid), otherwise it uses the model specified in
- * the configuration (curModel)
- * @return The new note
- */
-@NotInLibAnki
-@RustCleanup("1 dev only use, remove")
-fun Collection.newNote(forDeck: Boolean = true): Note = newNote(notetypes.current(forDeck))

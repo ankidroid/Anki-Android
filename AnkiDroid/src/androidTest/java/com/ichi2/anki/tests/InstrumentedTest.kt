@@ -202,6 +202,15 @@ abstract class InstrumentedTest {
         return this
     }
 
+    /**
+     * Return a new note with the model derived from the deck or the configuration
+     * @param forDeck When true it uses the model specified in the deck (mid), otherwise it uses the model specified in
+     * the configuration (curModel)
+     * @return The new note
+     */
+    @DuplicatedCode("Copied from TestClass")
+    fun Collection.newNote(forDeck: Boolean = true): Note = newNote(notetypes.current(forDeck))
+
     val notetypes get() = col.notetypes
 
     val Notetypes.basic

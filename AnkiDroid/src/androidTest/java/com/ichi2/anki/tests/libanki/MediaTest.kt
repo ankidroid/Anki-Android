@@ -23,7 +23,6 @@ import com.ichi2.anki.testutil.addNote
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Media
 import com.ichi2.libanki.exception.EmptyMediaException
-import com.ichi2.libanki.newNote
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

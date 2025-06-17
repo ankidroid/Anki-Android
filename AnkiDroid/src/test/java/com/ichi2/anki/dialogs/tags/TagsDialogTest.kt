@@ -24,7 +24,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.libanki.newNote
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.RecyclerViewUtils
 import com.ichi2.ui.CheckBoxTriStates

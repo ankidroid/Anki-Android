@@ -26,7 +26,6 @@ import com.ichi2.anki.reviewer.AutomaticAnswer
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.AutomaticAnswerSettings
 import com.ichi2.anki.servicelayer.LanguageHintService
-import com.ichi2.libanki.newNote
 import com.ichi2.libanki.undoableOp
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.common.Flaky
