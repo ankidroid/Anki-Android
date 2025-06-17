@@ -49,6 +49,8 @@ import anki.search.BrowserColumns
 import anki.search.BrowserRow
 import anki.search.SearchNode
 import anki.search.SearchNode.Group.Joiner
+import anki.stats.CardStatsResponse
+import anki.stats.CardStatsResponse.StatsRevlogEntry
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
 import com.ichi2.anki.CollectionFiles
@@ -85,6 +87,7 @@ enum class SearchJoiner {
 // This module manages the tag cache and tags for notes.
 @KotlinCleanup("inline function in init { } so we don't need to init `crt` etc... at the definition")
 @RustCleanup("combine with BackendImportExport")
+@RustCleanup("Config is not fully implemented")
 @WorkerThread
 class Collection(
     /**
@@ -987,11 +990,31 @@ class Collection(
     }
 
     /*
-      Stats ******************************************************************** ***************************
+     * Stats
+     * ***********************************************************
      */
 
-    // card stats
-    // stats
+    // def stats(self) -> anki.stats.CollectionStats:
+
+    /**
+     * Returns the data required to show card stats.
+     *
+     * If you wish to display the stats in a HTML table like Anki does,
+     * you can use the .js file directly - see this add-on for an example:
+     * https://ankiweb.net/shared/info/2179254157
+     */
+    @CheckResult
+    @LibAnkiAlias("card_stats_data")
+    fun cardStatsData(cardId: CardId): CardStatsResponse = backend.cardStats(cardId)
+
+    @CheckResult
+    @LibAnkiAlias("get_review_logs")
+    fun getReviewLogs(cardId: CardId): List<StatsRevlogEntry> = backend.getReviewLogs(cardId)
+
+    @RustCleanup("check sched.studiedToday")
+    @CheckResult
+    @LibAnkiAlias("studied_today")
+    fun studiedToday(): String = backend.studiedToday()
 
     /*
      * Timeboxing *************************************************************** ********************************
