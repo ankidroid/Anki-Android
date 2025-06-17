@@ -101,7 +101,7 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
 
         assertThat(
             "Different count of nested classes ($nestedClassCount) and upgrades ($upgradeCount). \n" +
-                "nested classes:\n ${nestedClasses.map { it.simpleName }.joinToString("\n")}",
+                "nested classes:\n ${nestedClasses.joinToString("\n") { it.simpleName.toString() }}",
             nestedClassCount,
             equalTo(upgradeCount),
         )
