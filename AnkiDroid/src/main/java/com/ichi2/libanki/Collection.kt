@@ -44,6 +44,7 @@ import anki.import_export.ImportAnkiPackageOptions
 import anki.import_export.ImportCsvRequest
 import anki.import_export.ImportResponse
 import anki.import_export.csvMetadataRequest
+import anki.notes.AddNoteRequest
 import anki.search.BrowserColumns
 import anki.search.BrowserRow
 import anki.search.SearchNode
@@ -603,25 +604,88 @@ class Collection(
         return id
     }
 
-    /**
-     * Notes ******************************************************************** ***************************
+    /*
+     * Notes
+     * ***********************************************************
      */
-    fun noteCount(): Int = db.queryScalar("SELECT count() FROM notes")
-
-    /**
-     * Return a new note with the model derived from the deck or the configuration
-     * @param forDeck When true it uses the model specified in the deck (mid), otherwise it uses the model specified in
-     * the configuration (curModel)
-     * @return The new note
-     */
-    fun newNote(forDeck: Boolean = true): Note = newNote(notetypes.current(forDeck))
 
     /**
      * Return a new note with a specific model
      * @param notetype The model to use for the new note
      * @return The new note
      */
+    @LibAnkiAlias("new_note")
     fun newNote(notetype: NotetypeJson): Note = Note.fromNotetypeId(this, notetype.id)
+
+    @LibAnkiAlias("add_note")
+    fun addNote(
+        note: Note,
+        deckId: DeckId,
+    ): OpChanges {
+        val out = backend.addNote(note.toBackendNote(), deckId)
+        note.id = out.noteId
+        return out.changes
+    }
+
+    @LibAnkiAlias("add_notes")
+    @RustCleanup("Implement")
+    @Deprecated("Needs implementation")
+    fun addNotes(requests: List<AddNoteRequest>): OpChanges? = TODO()
+//    {
+//        val out = backend.addNotes(requests = requests)
+//        for ((idx, request) in requests.withIndex()) {
+//            request.note!!.id = out.getNids(idx)
+//        }
+//        return out.changes
+//    }
+
+    @LibAnkiAlias("remove_notes")
+    @RustCleanup("remove cids and pass in []")
+    fun removeNotes(
+        noteIds: Iterable<NoteId> = listOf(),
+        cardIds: Iterable<CardId> = listOf(),
+    ): OpChangesWithCount =
+        backend.removeNotes(noteIds = noteIds, cardIds = cardIds).also {
+            Timber.d("removeNotes: %d changes", it.count)
+        }
+
+    @LibAnkiAlias("remove_notes_by_card")
+    fun removeNotesByCard(cardIds: Iterable<CardId>) {
+        backend.removeNotes(noteIds = emptyList(), cardIds = cardIds)
+    }
+
+    @LibAnkiAlias("card_ids_of_note")
+    fun cardIdsOfNote(nid: NoteId): List<CardId> = backend.cardsOfNote(nid = nid)
+
+    /**
+     * Get starting deck and notetype for add screen.
+     * An option in the preferences controls whether this will be based on the current deck
+     * or current notetype.
+     */
+    @LibAnkiAlias("defaults_for_adding")
+    fun defaultsForAdding(currentReviewCard: Card? = null): anki.notes.DeckAndNotetype {
+        val homeDeck = currentReviewCard?.currentDeckId() ?: 0L
+        return backend.defaultsForAdding(homeDeckOfCurrentReviewCard = homeDeck)
+    }
+
+    /**
+     * If 'change deck depending on notetype' is enabled in the preferences,
+     * return the last deck used with the provided notetype, if any..
+     */
+    @LibAnkiAlias("default_deck_for_notetype")
+    @RustCleanup("check if the == 0L logic is necessary")
+    fun defaultDeckForNoteType(noteTypeId: NoteTypeId): DeckId? {
+        if (config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
+            return null
+        }
+
+        val result = backend.defaultDeckForNotetype(ntid = noteTypeId)
+        if (result == 0L) return null
+        return result
+    }
+
+    @LibAnkiAlias("note_count")
+    fun noteCount(): Int = db.queryScalar("SELECT count() FROM notes")
 
     /**
      * Cards ******************************************************************** ***************************
@@ -857,28 +921,11 @@ class Collection(
 
     fun redoAvailable(): Boolean = undoStatus().redo != null
 
-    fun removeNotes(
-        nids: Iterable<NoteId> = listOf(),
-        cids: Iterable<CardId> = listOf(),
-    ): OpChangesWithCount =
-        backend.removeNotes(noteIds = nids, cardIds = cids).also {
-            Timber.d("removeNotes: %d changes", it.count)
-        }
-
     /**
      * @return the number of deleted cards. **Note:** if an invalid/duplicate [CardId] is provided,
      * the output count may be less than the input.
      */
     fun removeCardsAndOrphanedNotes(cardIds: Iterable<CardId>) = backend.removeCards(cardIds)
-
-    fun addNote(
-        note: Note,
-        deckId: DeckId,
-    ): OpChanges {
-        val resp = backend.addNote(note.toBackendNote(), deckId)
-        note.id = resp.noteId
-        return resp.changes
-    }
 
     lateinit var notetypes: Notetypes
         protected set
@@ -915,8 +962,6 @@ class Collection(
 
     // Python code has a cardsOfNote, but not vice-versa yet
     fun notesOfCards(cids: Iterable<CardId>): List<NoteId> = db.queryLongList("select distinct nid from cards where id in ${ids2str(cids)}")
-
-    fun cardIdsOfNote(nid: NoteId): List<CardId> = backend.cardsOfNote(nid = nid)
 
     /**
      * returns the list of cloze ordinals in a note
@@ -969,11 +1014,6 @@ class Collection(
         ordinal: Int,
     ): String = backend.extractClozeForTyping(text = text, ordinal = ordinal)
 
-    fun defaultsForAdding(currentReviewCard: Card? = null): anki.notes.DeckAndNotetype {
-        val homeDeck = currentReviewCard?.currentDeckId() ?: 0L
-        return backend.defaultsForAdding(homeDeckOfCurrentReviewCard = homeDeck)
-    }
-
     fun getPreferences(): Preferences = backend.getPreferences()
 
     fun setPreferences(preferences: Preferences): OpChanges = backend.setPreferences(preferences)
@@ -981,3 +1021,13 @@ class Collection(
 
 @NotInLibAnki
 fun EmptyCardsReport.emptyCids(): List<CardId> = notesList.flatMap { it.cardIdsList }
+
+/**
+ * Return a new note with the model derived from the deck or the configuration
+ * @param forDeck When true it uses the model specified in the deck (mid), otherwise it uses the model specified in
+ * the configuration (curModel)
+ * @return The new note
+ */
+@NotInLibAnki
+@RustCleanup("1 dev only use, remove")
+fun Collection.newNote(forDeck: Boolean = true): Note = newNote(notetypes.current(forDeck))

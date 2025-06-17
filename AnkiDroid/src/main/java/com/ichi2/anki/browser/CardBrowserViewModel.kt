@@ -508,7 +508,7 @@ class CardBrowserViewModel(
         // PERF: use `undoableOp(this)` & notify CardBrowser of changes
         // this does a double search
         val cardIds = queryAllSelectedCardIds()
-        return undoableOp { removeNotes(cids = cardIds) }
+        return undoableOp { removeNotes(cardIds = cardIds) }
             .count
             .also {
                 endMultiSelectMode()

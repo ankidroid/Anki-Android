@@ -682,7 +682,7 @@ class CardContentProvider : ContentProvider() {
         Timber.d(getLogMessage("delete", uri))
         return when (sUriMatcher.match(uri)) {
             NOTES_ID -> {
-                col.removeNotes(nids = listOf(uri.pathSegments[1].toLong()))
+                col.removeNotes(noteIds = listOf(uri.pathSegments[1].toLong()))
                 1
             }
             NOTE_TYPES_ID_EMPTY_CARDS -> {
