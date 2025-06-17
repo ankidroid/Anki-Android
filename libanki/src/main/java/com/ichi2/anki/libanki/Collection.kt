@@ -48,6 +48,7 @@ import anki.notes.AddNoteRequest
 import anki.search.BrowserColumns
 import anki.search.BrowserRow
 import anki.search.SearchNode
+import anki.search.SearchNode.Group.Joiner
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
 import com.ichi2.anki.common.time.TimeManager
@@ -68,6 +69,12 @@ import timber.log.Timber
 import java.io.File
 
 typealias ImportLogWithChanges = anki.import_export.ImportResponse
+
+@NotInLibAnki // Literal["AND", "OR"]
+enum class SearchJoiner {
+    AND,
+    OR,
+}
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -824,6 +831,11 @@ class Collection(
     // @LibAnkiAlias("find_dupes")
     // fun findDupes(fieldName: String, search: String = ""): List<Pair<String, List<Any>>>
 
+    /*
+     * Search Strings
+     * ***********************************************************
+     */
+
     /**
      * Construct a search string from the provided search nodes. For example:
      * ```kotlin
@@ -848,10 +860,70 @@ class Collection(
      *   }
      * ```
      */
-    @Suppress("unused")
-    fun buildSearchString(node: SearchNode): String = backend.buildSearchString(node)
+    @RustCleanup("support SearchJoiner argument")
+    @LibAnkiAlias("build_search_string")
+    fun buildSearchString(
+        node: SearchNode,
+        joiner: SearchJoiner = SearchJoiner.AND,
+    ): String = backend.buildSearchString(node)
 
-    // Browser Table
+    /**
+     * Join provided search nodes and strings into a single [SearchNode].
+     * If a single [SearchNode] is provided, it is returned as-is.
+     * At least one node must be provided.
+     *
+     * @throws IllegalArgumentException if no nodes are provided
+     */
+    @Deprecated("not implemented")
+    @RustCleanup("input upstream is either ")
+    @LibAnkiAlias("group_searches")
+    fun groupSearches(
+        nodes: List<SearchNode>,
+        joiner: SearchJoiner = SearchJoiner.AND,
+    ): Nothing = TODO()
+
+    /**
+     * AND or OR `additional_term` to `existing_term`, without wrapping `existing_term` in brackets.
+     * Used by the Browse screen to avoid adding extra brackets when joining.
+     * If you're building a search query yourself, you probably don't need this.
+     */
+    @LibAnkiAlias("join_searches")
+    fun joinSearches(
+        existingNode: SearchNode,
+        additionalNode: SearchNode,
+        operator: SearchJoiner,
+    ): String {
+        val searchString =
+            backend.joinSearchNodes(
+                joiner = toPbSearchSeparator(operator),
+                existingNode = existingNode,
+                additionalNode = additionalNode,
+            )
+        return searchString
+    }
+
+    /**
+     * If nodes of the same type as `replacement_node` are found in existing_node, replace them.
+     *
+     * You can use this to replace any "deck" clauses in a search with a different deck for example.
+     */
+    @LibAnkiAlias("replace_in_search_node")
+    fun replaceInSearchNode(
+        existingNode: SearchNode,
+        replacementNode: SearchNode,
+    ): String = backend.replaceSearchNode(existingNode = existingNode, replacementNode = replacementNode)
+
+    @LibAnkiAlias("_pb_search_separator")
+    fun toPbSearchSeparator(operator: SearchJoiner): SearchNode.Group.Joiner =
+        when (operator) {
+            SearchJoiner.AND -> Joiner.AND
+            SearchJoiner.OR -> Joiner.OR
+        }
+
+    /*
+     * Browser Table
+     * ***********************************************************
+     */
 
     @LibAnkiAlias("all_browser_columns")
     fun allBrowserColumns(): List<BrowserColumns.Column> = backend.allBrowserColumns()
