@@ -20,6 +20,7 @@ import com.ichi2.anki.BackupManager
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Media
 import com.ichi2.anki.libanki.exception.EmptyMediaException
+import com.ichi2.anki.libanki.newNote
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission
 import com.ichi2.anki.testutil.addNote

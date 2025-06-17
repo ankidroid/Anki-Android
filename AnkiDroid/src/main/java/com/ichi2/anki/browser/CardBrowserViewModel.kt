@@ -554,7 +554,7 @@ class CardBrowserViewModel(
         if (focusedRow?.cardOrNoteId in cardIds) {
             focusedRow = null
         }
-        return undoableOp { removeNotes(cids = cardIds) }
+        return undoableOp { removeNotes(cardIds = cardIds) }
             .count
             .also {
                 endMultiSelectMode(SingleSelectCause.Other)

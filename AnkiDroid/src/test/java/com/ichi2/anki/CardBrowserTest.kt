@@ -911,7 +911,7 @@ class CardBrowserTest : RobolectricTest() {
         positionToCorrupt: Int,
     ) {
         val cid = browser.viewModel.queryCardIdAtPosition(positionToCorrupt)
-        col.removeNotes(cids = listOf(cid))
+        col.removeNotes(cardIds = listOf(cid))
     }
 
     private fun selectOneOfManyCards(

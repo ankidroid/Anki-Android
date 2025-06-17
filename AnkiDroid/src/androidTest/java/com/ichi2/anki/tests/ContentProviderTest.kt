@@ -158,7 +158,7 @@ class ContentProviderTest : InstrumentedTest() {
         // Delete all notes
         val remnantNotes = col.findNotes("tag:$TEST_TAG")
         if (remnantNotes.isNotEmpty()) {
-            col.removeNotes(nids = remnantNotes)
+            col.removeNotes(noteIds = remnantNotes)
 
             assertEquals(
                 "Check that remnant notes have been deleted",
