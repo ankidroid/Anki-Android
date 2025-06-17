@@ -34,6 +34,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -59,6 +60,7 @@ import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_UNKNOW
 import anki.notetypes.notetypeId
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -268,6 +270,15 @@ open class CardTemplateEditor :
                 showAnswerButton?.let { button ->
                     button.layoutParams.height = 80.dp.toPx(button.context)
                     button.requestLayout()
+                }
+
+                // Adjust the top margin of the webview container to match template editor top margin
+                val webView = fragment.view?.findViewById<MaterialCardView>(R.id.webview_container)
+                webView?.let { container ->
+                    val params = container.layoutParams as ViewGroup.MarginLayoutParams
+                    val topMargin = resources.getDimensionPixelSize(R.dimen.reviewer_side_margin)
+                    params.topMargin = topMargin
+                    container.layoutParams = params
                 }
             }
         }
@@ -543,6 +554,44 @@ open class CardTemplateEditor :
             editorEditText.customInsertionActionModeCallback = ActionModeCallback()
 
             bottomNavigation = mainView.findViewById(R.id.card_template_editor_bottom_navigation)
+
+            // If in fragmented mode, wrap the edit area in a MaterialCardView
+            if (templateEditor.fragmented) {
+                val mainLayout = mainView.findViewById<LinearLayout>(R.id.main_layout)
+
+                // Set the background color of the main layout to match the previewer
+                mainLayout.setBackgroundColor(Themes.getColorFromAttr(requireContext(), R.attr.alternativeBackgroundColor))
+
+                // Create a MaterialCardView to wrap the editorEditText
+                val cardView =
+                    MaterialCardView(requireContext()).apply {
+                        layoutParams =
+                            LinearLayout
+                                .LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT,
+                                    0,
+                                    1f,
+                                ).apply {
+                                    val sideMargin = resources.getDimensionPixelSize(R.dimen.reviewer_side_margin)
+                                    setMargins(sideMargin, 0, sideMargin, 0)
+                                }
+                    }
+
+                // Remove the ScrollView from the main layout and add it to the cardView
+                val editScrollView = mainLayout.findViewById<ScrollView>(R.id.card_template_editor_scroll_view)
+                mainLayout.removeViewInLayout(editScrollView)
+
+                cardView.addView(
+                    editScrollView,
+                    ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                    ),
+                )
+
+                mainLayout.addView(cardView, 0)
+            }
+
             bottomNavigation.setOnItemSelectedListener { item: MenuItem ->
                 val currentSelectedId = item.itemId
                 templateEditor.tabToViewId[cardIndex] = currentSelectedId
