@@ -349,4 +349,6 @@
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">ᱵᱽᱨᱟᱩᱡᱚᱨ ᱨᱮᱱᱟᱜ ᱧᱮᱞ ᱥᱟᱯᱲᱟᱣ</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">ᱱᱚᱶᱟ ᱱᱳᱴᱤᱯ ᱨᱮ ᱵᱮᱵᱷᱟᱨᱤᱭᱟᱹ ᱠᱟᱹᱢᱤ %s ᱫᱚ ᱵᱟᱝ ᱥᱮᱴᱮᱨ ᱟᱠᱟᱱᱟ. ᱱᱚᱶᱟ ᱞᱤᱱ ᱢᱮ</string>
     <string name="directory_inaccessible_info">%s ᱨᱮ ᱥᱮᱴᱮᱨᱚᱜ ᱨᱮᱱᱟᱜ ᱵᱟᱹᱲᱛᱤ ᱵᱟᱰᱟᱭ ᱞᱟᱹᱜᱤᱫ ᱥᱮᱴᱮᱨᱚᱜ ᱨᱮ ᱥᱮᱴᱮᱨᱚᱜ ᱢᱮ ᱟᱨ ᱥᱮᱞᱮᱫ ᱯᱟᱹᱴᱷᱩᱣᱟᱹ ᱠᱚᱢᱯᱩᱴᱚᱨ ᱨᱮ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
+    <!-- Scheduler Upgrade Required Dialog title-->
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
 </resources>

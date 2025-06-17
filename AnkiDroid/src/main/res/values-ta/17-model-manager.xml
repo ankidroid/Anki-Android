@@ -49,6 +49,7 @@
     <string name="model_browser_template">அட்டைகளைத் திருத்தவும்</string>
     <!--Rename-->
     <string name="rename_model">குறிப்பு வகையை மறுபெயரிடவும்</string>
+    <string name="rename_card_type">Rename card type</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">மொழி குறிப்பை %s ஆக அமைக்கவும்</string>
     <!--Field Editing-->

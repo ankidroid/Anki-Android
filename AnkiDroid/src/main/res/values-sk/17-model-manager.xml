@@ -53,6 +53,7 @@
     <string name="model_browser_template">Upraviť kartičky</string>
     <!--Rename-->
     <string name="rename_model">Premenovať typ poznámok</string>
+    <string name="rename_card_type">Rename card type</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Nastaviť jazykový tip na %s</string>
     <!--Field Editing-->
