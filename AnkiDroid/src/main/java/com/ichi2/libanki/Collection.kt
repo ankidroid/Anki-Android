@@ -743,8 +743,85 @@ class Collection(
     }
 
     /*
-      Finding cards ************************************************************ ***********************************
+     * Finding cards
+     * ***********************************************************
      */
+
+    /**
+     * Return a list of card ids
+     * @throws InvalidSearchException
+     */
+    @CheckResult
+    @RustCleanup("does not match libAnki; also fix docs")
+    @LibAnkiAlias("find_cards")
+    fun findCards(
+        search: String,
+        order: SortOrder = SortOrder.NoOrdering(),
+    ): List<CardId> {
+        val adjustedOrder =
+            if (order is SortOrder.UseCollectionOrdering) {
+                SortOrder.BuiltinSortKind(
+                    config.get("sortType") ?: "noteFld",
+                    config.get("sortBackwards") ?: false,
+                )
+            } else {
+                order
+            }
+        return try {
+            backend.searchCards(search, adjustedOrder.toProtoBuf())
+        } catch (e: BackendInvalidInputException) {
+            throw InvalidSearchException(e)
+        }
+    }
+
+    @CheckResult
+    @RustCleanup("does not match upstream")
+    @LibAnkiAlias("find_notes")
+    fun findNotes(
+        query: String,
+        order: SortOrder = SortOrder.NoOrdering(),
+    ): List<NoteId> {
+        val adjustedOrder =
+            if (order is SortOrder.UseCollectionOrdering) {
+                SortOrder.BuiltinSortKind(
+                    config.get("noteSortType") ?: "noteFld",
+                    config.get("browserNoteSortBackwards") ?: false,
+                )
+            } else {
+                order
+            }
+        val noteIDsList =
+            try {
+                backend.searchNotes(query, adjustedOrder.toProtoBuf())
+            } catch (e: BackendInvalidInputException) {
+                throw InvalidSearchException(e)
+            }
+        return noteIDsList
+    }
+
+    // @LibAnkiAlias("_build_sort_mode")
+    // private fun buildSortMode()
+
+    /**
+     * @return An [OpChangesWithCount] representing the number of affected notes
+     */
+    @CheckResult
+    @LibAnkiAlias("find_and_replace")
+    fun findAndReplace(
+        nids: List<NoteId>,
+        search: String,
+        replacement: String,
+        regex: Boolean = false,
+        field: String? = null,
+        matchCase: Boolean = false,
+    ): OpChangesWithCount = backend.findAndReplace(nids, search, replacement, regex, matchCase, field ?: "")
+
+    @LibAnkiAlias("field_names_for_note_ids")
+    fun fieldNamesForNoteIds(nids: List<NoteId>): List<String> = backend.fieldNamesForNotes(nids)
+
+    // returns array of ("dupestr", [nids])
+    // @LibAnkiAlias("find_dupes")
+    // fun findDupes(fieldName: String, search: String = ""): List<Pair<String, List<Any>>>
 
     /**
      * Construct a search string from the provided search nodes. For example:
@@ -772,69 +849,6 @@ class Collection(
      */
     @Suppress("unused")
     fun buildSearchString(node: SearchNode): String = backend.buildSearchString(node)
-
-    /**
-     * Return a list of card ids
-     * @throws InvalidSearchException
-     */
-    fun findCards(
-        search: String,
-        order: SortOrder = SortOrder.NoOrdering(),
-    ): List<CardId> {
-        val adjustedOrder =
-            if (order is SortOrder.UseCollectionOrdering) {
-                SortOrder.BuiltinSortKind(
-                    config.get("sortType") ?: "noteFld",
-                    config.get("sortBackwards") ?: false,
-                )
-            } else {
-                order
-            }
-        return try {
-            backend.searchCards(search, adjustedOrder.toProtoBuf())
-        } catch (e: BackendInvalidInputException) {
-            throw InvalidSearchException(e)
-        }
-    }
-
-    fun findNotes(
-        query: String,
-        order: SortOrder = SortOrder.NoOrdering(),
-    ): List<Long> {
-        val adjustedOrder =
-            if (order is SortOrder.UseCollectionOrdering) {
-                SortOrder.BuiltinSortKind(
-                    config.get("noteSortType") ?: "noteFld",
-                    config.get("browserNoteSortBackwards") ?: false,
-                )
-            } else {
-                order
-            }
-        val noteIDsList =
-            try {
-                backend.searchNotes(query, adjustedOrder.toProtoBuf())
-            } catch (e: BackendInvalidInputException) {
-                throw InvalidSearchException(e)
-            }
-        return noteIDsList
-    }
-
-    /**
-     * @return An [OpChangesWithCount] representing the number of affected notes
-     */
-    @LibAnkiAlias("find_and_replace")
-    @CheckResult
-    fun findReplace(
-        nids: List<Long>,
-        search: String,
-        replacement: String,
-        regex: Boolean = false,
-        field: String? = null,
-        matchCase: Boolean = false,
-    ): OpChangesWithCount = backend.findAndReplace(nids, search, replacement, regex, matchCase, field ?: "")
-
-    @LibAnkiAlias("field_names_for_note_ids")
-    fun fieldNamesForNoteIds(nids: List<Long>): List<String> = backend.fieldNamesForNotes(nids)
 
     // Browser Table
 
