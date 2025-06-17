@@ -361,6 +361,7 @@ open class Card : Cloneable {
         /**
          * Returns [flags] with the 3 first bits set as in [flag]
          */
+        @NotInLibAnki
         fun setFlagInInt(
             flags: Int,
             flag: Int,
