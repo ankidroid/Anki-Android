@@ -15,6 +15,7 @@
  ****************************************************************************************/
 package com.ichi2.anki.dialogs
 
+import android.content.Context
 import android.content.res.Resources
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
@@ -41,5 +42,17 @@ abstract class AsyncDialogFragment : AnalyticsDialogFragment() {
         } catch (e: Exception) {
             Timber.w(e, "resources failure. Returning AnkiDroidApp resources as fallback.")
             AnkiDroidApp.appResources
+        }
+
+    /**
+     * Return the {@link Context} this fragment is currently associated with.
+     * Uses [AnkiDroidApp.instance] if [requireContext] fails
+     */
+    protected fun getSafeContext(): Context =
+        try {
+            requireContext()
+        } catch (e: Exception) {
+            Timber.w(e, "Error getting context; using AnkiDroidApp")
+            AnkiDroidApp.instance
         }
 }
