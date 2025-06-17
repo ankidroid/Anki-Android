@@ -540,23 +540,47 @@ class Collection(
             tags = tags,
         )
 
-    /**
-     * Object creation helpers **************************************************
-     * *********************************************
+    /*
+     * Object helpers
+     * ***********************************************************
      */
+
+    @CheckResult
+    @LibAnkiAlias("get_card")
     fun getCard(id: CardId): Card = Card(this, id)
 
+    /** Save card changes to database. */
+    @LibAnkiAlias("update_cards")
     fun updateCards(
         cards: Iterable<Card>,
         skipUndoEntry: Boolean = false,
     ): OpChanges = backend.updateCards(cards.map { it.toBackendCard() }, skipUndoEntry)
 
+    /** Save card changes to database. */
+    @LibAnkiAlias("update_card")
     fun updateCard(
         card: Card,
         skipUndoEntry: Boolean = false,
     ): OpChanges = updateCards(listOf(card), skipUndoEntry)
 
+    @LibAnkiAlias("get_note")
+    @CheckResult
     fun getNote(id: NoteId): Note = Note(this, id)
+
+    /** Save note changes to database. */
+    @LibAnkiAlias("update_notes")
+    fun updateNotes(notes: Iterable<Note>): OpChanges =
+        backend.updateNotes(
+            notes = notes.map { it.toBackendNote() },
+            skipUndoEntry = false,
+        )
+
+    /**
+     * Save note changes to database.
+     */
+    @CheckResult
+    @LibAnkiAlias("update_note")
+    fun updateNote(note: Note): OpChanges = backend.updateNotes(notes = listOf(note.toBackendNote()), skipUndoEntry = false)
 
     /**
      * Notes ******************************************************************** ***************************
@@ -848,13 +872,6 @@ class Collection(
         cids: Iterable<CardId>,
         did: DeckId,
     ): OpChangesWithCount = backend.setDeck(cardIds = cids, deckId = did)
-
-    /** Save (flush) the note to the DB. Unlike note.flush(), this is undoable. This should
-     * not be used for adding new notes. */
-    @CheckResult
-    fun updateNote(note: Note): OpChanges = backend.updateNotes(notes = listOf(note.toBackendNote()), skipUndoEntry = false)
-
-    fun updateNotes(notes: Iterable<Note>): OpChanges = backend.updateNotes(notes = notes.map { it.toBackendNote() }, skipUndoEntry = false)
 
     /** Fixes and optimizes the database. If any errors are encountered, a list of
      * problems is returned. Throws if DB is unreadable. */
