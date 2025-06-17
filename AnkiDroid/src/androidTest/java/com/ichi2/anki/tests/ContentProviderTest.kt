@@ -21,6 +21,7 @@ package com.ichi2.anki.tests
 import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.ContentValues
+import android.database.Cursor
 import android.database.CursorWindow
 import android.net.Uri
 import anki.notetypes.StockNotetype
@@ -49,12 +50,15 @@ import com.ichi2.libanki.getStockNotetype
 import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.testutils.common.assertThrows
 import com.ichi2.utils.emptyStringArray
+import kotlinx.serialization.json.Json
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.greaterThan
 import org.hamcrest.Matchers.greaterThanOrEqualTo
+import org.hamcrest.Matchers.hasItem
 import org.json.JSONObject.NULL
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -67,6 +71,7 @@ import org.junit.Rule
 import org.junit.Test
 import timber.log.Timber
 import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 import kotlin.test.junit.JUnitAsserter.assertNotNull
 
 /**
@@ -1343,6 +1348,48 @@ class ContentProviderTest : InstrumentedTest() {
                 assertThat("[sound: tag should remain", question, containsString(sound))
                 assertThat("[sound: tag should remain", answer, containsString(sound))
             } ?: fail("query returned null")
+    }
+
+    @Test
+    fun testMediaFilesAddedCorrectlyInReviewInfo() {
+        val imageFileName = "img.jpg"
+        val audioFileName = "test.mp3"
+        addNoteUsingBasicNoteType("""Hello <img src="$imageFileName"> [sound:$audioFileName]""")
+            .firstCard(col)
+            .update {
+                queue = QueueType.New
+                due = col.sched.today
+            }
+
+        queryReviewInfo { cursor ->
+            val media =
+                cursor
+                    .getString(cursor.getColumnIndex(FlashCardsContract.ReviewInfo.MEDIA_FILES))
+                    .let { Json.decodeFromString<List<String>>(it) }
+
+            assertThat(
+                "media files returned",
+                media,
+                allOf(
+                    hasItem(imageFileName),
+                    hasItem(audioFileName),
+                ),
+            )
+        }
+    }
+
+    private fun queryReviewInfo(block: (Cursor) -> Unit) {
+        contentResolver
+            .query(
+                FlashCardsContract.ReviewInfo.CONTENT_URI,
+                null,
+                null,
+                null,
+                null,
+            )?.use { cursor ->
+                assertTrue("has rows") { cursor.moveToFirst() }
+                block(cursor)
+            }
     }
 
     @Test
