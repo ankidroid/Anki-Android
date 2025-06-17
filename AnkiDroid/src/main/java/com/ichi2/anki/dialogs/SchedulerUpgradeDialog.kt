@@ -74,7 +74,7 @@ class SchedulerUpgradeDialog(
             }
 
             dialog.getButton(AlertDialog.BUTTON_NEUTRAL)?.setOnClickListener {
-                activity.openUrl(activity.getString(R.string.scheduler_upgrade_faq_url).toUri())
+                activity.openUrl(activity.getString(R.string.link_scheduler_upgrade_faq).toUri())
             }
 
             dialog.setOnKeyListener { _, keyCode, event ->
