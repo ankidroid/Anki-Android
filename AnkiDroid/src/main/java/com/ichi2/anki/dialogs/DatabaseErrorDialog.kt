@@ -420,13 +420,14 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
      * and copies the combines information to the Android clipboard.
      */
     private suspend fun copyStackTraceAndDebugInfo() {
+        val context = getSafeContext()
         val combinedInfo =
             listOfNotNull(
                 exceptionData?.toHumanReadableString(),
-                DebugInfoService.getDebugInfo(requireContext()),
+                DebugInfoService.getDebugInfo(context),
             ).joinToString(separator = "\n")
 
-        requireContext().copyToClipboard(
+        context.copyToClipboard(
             combinedInfo,
             failureMessageId = R.string.about_ankidroid_error_copy_debug_info,
         )
