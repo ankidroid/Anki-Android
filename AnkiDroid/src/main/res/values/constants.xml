@@ -158,6 +158,8 @@
     <string name="link_set_due_date_help">https://docs.ankiweb.net/browsing.html#cards</string>
     <string name="link_full_storage_access">https://github.com/ankidroid/Anki-Android/wiki/Full-Storage-Access</string>
     <string name="link_help_forget_cards">https://docs.ankiweb.net/studying.html#editing-and-more</string>
+    <!-- URL opened when user taps "Learn more" in the scheduler upgrade dialog -->
+    <string name="scheduler_upgrade_faq_url">https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating-to-v2-from-v1</string>
 
     <string-array name="cram_deck_conf_order_values">
         <item>0</item>

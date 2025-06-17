@@ -88,7 +88,4 @@
     <string name="replay_voice" maxLength="41">Replay Voice</string>
     <string name="save_voice" maxLength="41">Save Recording</string>
 
-    <!-- URL opened when user taps "Learn more" in the scheduler upgrade dialog -->
-    <string name="scheduler_upgrade_faq_url">https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating-to-v2-from-v1</string>
-
 </resources>
