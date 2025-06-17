@@ -295,6 +295,7 @@ open class Card : Cloneable {
             throw RuntimeException(e)
         }
 
+    @LibAnkiAlias("description")
     override fun toString(): String {
         val declaredFields = this.javaClass.declaredFields
         val members: MutableList<String?> = ArrayList(declaredFields.size)
@@ -342,20 +343,18 @@ open class Card : Cloneable {
     }
 
     companion object {
-        // A list of class members to skip in the toString() representation
+        /** A list of class members to skip in the [toString] representation */
+        @NotInLibAnki // inlined in pylib: 'description'
         val SKIP_PRINT: Set<String> =
             HashSet(
                 listOf(
+                    "Companion",
                     "SKIP_PRINT",
                     "\$assertionsDisabled",
-                    "TYPE_LRN",
-                    "TYPE_NEW",
-                    "TYPE_REV",
-                    "mNote",
-                    "mQA",
-                    "mCol",
-                    "mTimerStarted",
-                    "mTimerStopped",
+                    "note",
+                    "renderOutput",
+                    "timerStarted",
+                    "col",
                 ),
             )
 
