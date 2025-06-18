@@ -30,6 +30,7 @@ import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.BaseAdapter
+import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
@@ -102,6 +103,7 @@ import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.scheduling.registerOnForgetHandler
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.getCurrentDialogFragment
 import com.ichi2.anki.utils.ext.ifNotZero
@@ -382,6 +384,24 @@ open class CardBrowser :
         // TODO: Consider refactoring by storing noteEditorFrame and similar views in a sealed class (e.g., FragmentAccessor).
         val fragmented = noteEditorFrame?.visibility == View.VISIBLE
         Timber.i("Using split Browser: %b", fragmented)
+
+        if (fragmented) {
+            val parentLayout = findViewById<LinearLayout>(R.id.card_browser_xl_view)
+            val divider = findViewById<View>(R.id.card_browser_resizing_divider)
+            val leftPane = findViewById<View>(R.id.card_browser_frame)
+            val rightPane = findViewById<View>(R.id.note_editor_frame)
+            if (parentLayout != null && divider != null && leftPane != null && rightPane != null) {
+                ResizablePaneManager(
+                    parentLayout = parentLayout,
+                    divider = divider,
+                    leftPane = leftPane,
+                    rightPane = rightPane,
+                    sharedPrefs = this.sharedPrefs(),
+                    leftPaneWeightKey = PREF_CARD_BROWSER_PANE_WEIGHT,
+                    rightPaneWeightKey = PREF_NOTE_EDITOR_PANE_WEIGHT,
+                )
+            }
+        }
 
         // must be called once we have an accessible collection
         viewModel = createViewModel(launchOptions, fragmented)
@@ -1863,6 +1883,10 @@ open class CardBrowser :
          * since the cards are unselected when this happens
          */
         private const val CHANGE_DECK_KEY = "CHANGE_DECK"
+
+        // Keys for saving pane weights in SharedPreferences
+        private const val PREF_CARD_BROWSER_PANE_WEIGHT = "cardBrowserPaneWeight"
+        private const val PREF_NOTE_EDITOR_PANE_WEIGHT = "noteEditorPaneWeight"
 
         // Values related to persistent state data
         fun clearLastDeckId() = SharedPreferencesLastDeckIdRepository.clearLastDeckId()
