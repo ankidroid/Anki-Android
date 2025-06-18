@@ -237,7 +237,7 @@ class CardContentProvider : ContentProvider() {
                 if (noteIds.isNotEmpty()) {
                     val sel = "id in (${noteIds.joinToString(",")})"
                     val sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, sel, null, null, order, null)
-                    col.db.database.query(sql)
+                    col.db.query(sql)
                 } else {
                     null
                 }

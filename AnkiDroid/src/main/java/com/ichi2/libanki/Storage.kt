@@ -55,7 +55,7 @@ object Storage {
         } else {
             backend.openCollection(if (isInMemory) ":memory:" else path.absolutePath)
         }
-        val db = DB.withRustBackend(backend)
+        val db = AnkiDroidDB.withRustBackend(backend)
 
         // initialize
         if (create) {
