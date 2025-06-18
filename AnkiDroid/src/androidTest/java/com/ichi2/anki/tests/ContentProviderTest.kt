@@ -26,7 +26,6 @@ import android.database.CursorWindow
 import android.net.Uri
 import anki.notetypes.StockNotetype
 import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.Ease
 import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.common.utils.emptyStringArray
@@ -48,6 +47,7 @@ import com.ichi2.libanki.addNotetypeLegacy
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.getStockNotetype
+import com.ichi2.libanki.sched.Ease
 import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.testutils.common.assertThrows
 import kotlinx.serialization.json.Json

@@ -18,8 +18,8 @@ package com.ichi2.libanki
 import android.annotation.SuppressLint
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.Ease
 import com.ichi2.libanki.exception.ConfirmModSchemaException
+import com.ichi2.libanki.sched.Ease
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.ext.addNote
 import org.hamcrest.Matchers.containsString

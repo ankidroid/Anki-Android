@@ -31,7 +31,6 @@ import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.Ease
 import com.ichi2.anki.Flag
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.asyncIO
@@ -65,6 +64,7 @@ import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.redo
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.sched.CurrentQueueState
+import com.ichi2.libanki.sched.Ease
 import com.ichi2.libanki.undo
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.CompletableDeferred

@@ -114,6 +114,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.sched.CurrentQueueState
+import com.ichi2.libanki.sched.Ease
 import com.ichi2.libanki.undoableOp
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.currentTheme

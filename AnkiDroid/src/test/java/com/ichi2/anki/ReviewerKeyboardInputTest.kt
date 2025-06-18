@@ -35,10 +35,6 @@ import androidx.annotation.CheckResult
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ibm.icu.impl.Assert
 import com.ichi2.anki.AnkiDroidApp.Companion.sharedPrefs
-import com.ichi2.anki.Ease.AGAIN
-import com.ichi2.anki.Ease.EASY
-import com.ichi2.anki.Ease.GOOD
-import com.ichi2.anki.Ease.HARD
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.Binding.Companion.keyCode
@@ -48,6 +44,11 @@ import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.utils.ext.addBinding
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.sched.Ease
+import com.ichi2.libanki.sched.Ease.AGAIN
+import com.ichi2.libanki.sched.Ease.EASY
+import com.ichi2.libanki.sched.Ease.GOOD
+import com.ichi2.libanki.sched.Ease.HARD
 import kotlinx.coroutines.Job
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
