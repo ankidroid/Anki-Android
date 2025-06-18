@@ -16,7 +16,7 @@
 
 package com.ichi2.libanki
 
-import com.ichi2.utils.deepClonedInto
+import com.ichi2.anki.common.utils.ext.deepClonedInto
 import org.json.JSONObject
 
 class Deck : JSONObject {

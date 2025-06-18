@@ -17,6 +17,9 @@ package com.ichi2.utils
 
 import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.common.utils.ext.deepClone
+import com.ichi2.anki.common.utils.ext.deepClonedInto
+import com.ichi2.anki.common.utils.ext.fromMap
 import com.ichi2.testutils.EmptyApplication
 import org.intellij.lang.annotations.Language
 import org.json.JSONObject
