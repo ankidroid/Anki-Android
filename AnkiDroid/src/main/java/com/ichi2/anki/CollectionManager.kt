@@ -30,6 +30,7 @@ import com.ichi2.anki.CollectionManager.getColUnsafe
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.anki.CollectionManager.withQueue
+import com.ichi2.anki.backend.AnkiDroidDB
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionFiles
@@ -260,7 +261,11 @@ object CollectionManager {
         if (collection == null || collection!!.dbClosed) {
             val collectionPath = collectionPathInValidFolder()
             collection =
-                collection(collectionPath, backend)
+                collection(
+                    collectionFiles = collectionPath,
+                    databaseBuilder = { backend -> AnkiDroidDB.withRustBackend(backend) },
+                    backend = backend,
+                )
         }
     }
 
@@ -441,3 +446,6 @@ object CollectionManager {
         }
     }
 }
+
+fun Collection.reopen(afterFullSync: Boolean = false) =
+    this.reopen(afterFullSync = afterFullSync) { backend -> AnkiDroidDB.withRustBackend(backend) }

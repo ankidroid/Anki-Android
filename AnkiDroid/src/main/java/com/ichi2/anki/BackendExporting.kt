@@ -16,9 +16,9 @@ package com.ichi2.anki
 import anki.import_export.ExportLimit
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.ExportReadyDialog
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.exportAnkiPackage
 import com.ichi2.libanki.exportCardsCsv
-import com.ichi2.libanki.exportCollectionPackage
 import com.ichi2.libanki.exportNotesCsv
 
 fun AnkiActivity.exportApkgPackage(
@@ -110,4 +110,23 @@ fun AnkiActivity.exportSelectedCards(
         }
         showAsyncDialogFragment(ExportReadyDialog.newInstance(exportPath))
     }
+}
+
+/**
+ * Export the collection into a .colpkg file.
+ * If legacy=false, a file targeting Anki 2.1.50+ is created. It compresses better and is faster to
+ * create, but older clients can not read it.
+ */
+private fun Collection.exportCollectionPackage(
+    outPath: String,
+    includeMedia: Boolean,
+    legacy: Boolean,
+) {
+    close(forFullSync = true)
+    backend.exportCollectionPackage(
+        outPath = outPath,
+        includeMedia = includeMedia,
+        legacy = legacy,
+    )
+    reopen()
 }

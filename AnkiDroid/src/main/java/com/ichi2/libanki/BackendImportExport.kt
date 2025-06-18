@@ -74,25 +74,6 @@ fun importCollectionPackage(
     )
 }
 
-/**
- * Export the collection into a .colpkg file.
- * If legacy=false, a file targeting Anki 2.1.50+ is created. It compresses better and is faster to
- * create, but older clients can not read it.
- */
-fun Collection.exportCollectionPackage(
-    outPath: String,
-    includeMedia: Boolean,
-    legacy: Boolean,
-) {
-    close(forFullSync = true)
-    backend.exportCollectionPackage(
-        outPath = outPath,
-        includeMedia = includeMedia,
-        legacy = legacy,
-    )
-    reopen()
-}
-
 fun Collection.importAnkiPackage(
     packagePath: String,
     options: ImportAnkiPackageOptions,
