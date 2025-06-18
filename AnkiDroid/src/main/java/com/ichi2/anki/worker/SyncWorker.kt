@@ -47,7 +47,6 @@ import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.setLastSyncTimeToNow
 import com.ichi2.anki.utils.ext.trySetForeground
-import com.ichi2.libanki.syncCollection
 import com.ichi2.utils.Permissions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -143,7 +142,7 @@ class SyncWorker(
         val response =
             try {
                 withCol {
-                    syncCollection(auth, media = false)
+                    syncCollection(auth, syncMedia = false)
                 }
             } finally {
                 Timber.d("Collection sync completed. Cancelling monitor...")

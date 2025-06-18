@@ -37,9 +37,6 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.libanki.ChangeManager.notifySubscribersAllValuesChanged
-import com.ichi2.libanki.fullUploadOrDownload
-import com.ichi2.libanki.syncCollection
-import com.ichi2.libanki.syncLogin
 import com.ichi2.preferences.VersatileTextWithASwitchPreference
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.dismissSafely
@@ -231,7 +228,7 @@ private suspend fun handleNormalSync(
             manualCancelButton = R.string.dialog_cancel,
         ) {
             withCol {
-                syncCollection(auth2, media = false) // media is synced by SyncMediaWorker
+                syncCollection(auth2, syncMedia = false) // media is synced by SyncMediaWorker
             }
         }
 
