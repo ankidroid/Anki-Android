@@ -19,10 +19,8 @@
  */
 package com.ichi2.libanki
 
-import android.content.ContentValues
 import android.database.Cursor
 import android.database.SQLException
-import android.database.sqlite.SQLiteDatabase
 import androidx.annotation.WorkerThread
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
@@ -104,20 +102,6 @@ interface DB {
         query: String,
         vararg bindArgs: Any,
     ): ArrayList<String>
-
-    /** update must always be called via DB in order to mark the db as changed  */
-    fun update(
-        table: String,
-        values: ContentValues,
-        whereClause: String? = null,
-        whereArgs: Array<String>? = null,
-    ): Int
-
-    /** insert must always be called via DB in order to mark the db as changed  */
-    fun insert(
-        table: String,
-        values: ContentValues,
-    ): Long
 
     /**
      * @return The full path to this database file.
@@ -267,20 +251,6 @@ class AnkiDroidDB(
             database.execSQL(query)
         }
     }
-
-    /** update must always be called via DB in order to mark the db as changed  */
-    override fun update(
-        table: String,
-        values: ContentValues,
-        whereClause: String?,
-        whereArgs: Array<String>?,
-    ): Int = database.update(table, SQLiteDatabase.CONFLICT_NONE, values, whereClause, whereArgs)
-
-    /** insert must always be called via DB in order to mark the db as changed  */
-    override fun insert(
-        table: String,
-        values: ContentValues,
-    ): Long = database.insert(table, SQLiteDatabase.CONFLICT_NONE, values)
 
     /**
      * @return The full path to this database file.
