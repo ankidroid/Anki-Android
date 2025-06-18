@@ -33,11 +33,11 @@ import com.ichi2.anki.ReadText
 import com.ichi2.anki.cardviewer.MediaErrorBehavior.CONTINUE_MEDIA
 import com.ichi2.anki.cardviewer.MediaErrorBehavior.RETRY_MEDIA
 import com.ichi2.anki.cardviewer.MediaErrorBehavior.STOP_MEDIA
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.dialogs.TtsPlaybackErrorDialog
 import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.AvTag
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.SoundOrVideoTag

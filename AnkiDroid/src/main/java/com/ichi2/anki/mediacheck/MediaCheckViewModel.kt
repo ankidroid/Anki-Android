@@ -21,7 +21,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import anki.media.CheckMediaResponse
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.annotations.NeedsTest
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.async.deleteMedia
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.Job

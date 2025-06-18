@@ -22,7 +22,7 @@
 
 package com.ichi2.libanki
 
-import com.ichi2.annotations.NeedsTest
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.libanki.TemplateManager.PartiallyRenderedCard.Companion.avTagsToNative
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.model.toBackendNote

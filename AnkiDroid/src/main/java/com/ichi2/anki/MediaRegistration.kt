@@ -21,9 +21,9 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.annotation.CheckResult
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.multimediacard.fields.ImageField
 import com.ichi2.anki.multimediacard.fields.MediaClipField
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.utils.ClipboardUtil

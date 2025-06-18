@@ -26,10 +26,10 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiSelector
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.common.annotations.DuplicatedCode
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.testutil.addNote
 import com.ichi2.anki.utils.EnsureAllFilesAccessRule
-import com.ichi2.annotations.DuplicatedCode
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardType
 import com.ichi2.libanki.Collection

@@ -26,7 +26,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
-import com.ichi2.annotations.NeedsTest
+import com.ichi2.anki.common.annotations.NeedsTest
 import timber.log.Timber
 
 /**

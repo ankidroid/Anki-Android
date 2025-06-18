@@ -28,8 +28,8 @@ import androidx.preference.EditTextPreference
 import androidx.preference.EditTextPreferenceDialogFragmentCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.utils.getFormattedStringOrPlurals
-import com.ichi2.annotations.NeedsTest
 import timber.log.Timber
 
 open class NumberRangePreferenceCompat

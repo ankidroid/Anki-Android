@@ -24,13 +24,13 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.edit
 import androidx.core.os.BundleCompat
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.introduction.SetupCollectionFragment
 import com.ichi2.anki.introduction.SetupCollectionFragment.CollectionSetupOption
 import com.ichi2.anki.introduction.SetupCollectionFragment.Companion.FRAGMENT_KEY
 import com.ichi2.anki.introduction.SetupCollectionFragment.Companion.RESULT_KEY
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.utils.ext.setFragmentResultListener
-import com.ichi2.annotations.NeedsTest
 import timber.log.Timber
 
 /**

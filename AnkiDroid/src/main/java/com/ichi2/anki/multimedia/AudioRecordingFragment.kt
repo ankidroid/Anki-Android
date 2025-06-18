@@ -28,10 +28,10 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT_FIELD_INDEX
 import com.ichi2.anki.multimedia.audio.AudioRecordingController
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.Permissions
 import kotlinx.coroutines.launch

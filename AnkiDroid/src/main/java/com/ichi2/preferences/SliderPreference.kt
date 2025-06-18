@@ -26,8 +26,8 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 import com.google.android.material.slider.Slider
 import com.ichi2.anki.R
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.utils.getFormattedStringOrPlurals
-import com.ichi2.annotations.NeedsTest
 
 /**
  * Similar to [androidx.preference.SeekBarPreference],
