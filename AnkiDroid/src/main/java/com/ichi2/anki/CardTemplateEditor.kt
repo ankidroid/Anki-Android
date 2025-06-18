@@ -79,6 +79,7 @@ import com.ichi2.anki.dialogs.InsertFieldDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog.Companion.REQUEST_FIELD_INSERT
 import com.ichi2.anki.notetype.RenameCardTemplateDialog
 import com.ichi2.anki.notetype.RepositionCardTemplateDialog
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerFragment
 import com.ichi2.anki.previewer.TemplatePreviewerPage
@@ -101,7 +102,6 @@ import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.getStockNotetype
 import com.ichi2.libanki.getStockNotetypeKinds
 import com.ichi2.libanki.restoreNotetypeToStock
-import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.utils.append
 import com.ichi2.themes.Themes
 import com.ichi2.ui.FixedEditText

@@ -43,13 +43,13 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.Destination
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.listItemsAndMessage
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.show

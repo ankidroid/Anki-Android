@@ -125,6 +125,7 @@ import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.noteeditor.Toolbar
 import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.ImageOcclusion
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
@@ -157,7 +158,6 @@ import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.libanki.Utils
-import com.ichi2.libanki.undoableOp
 import com.ichi2.themes.Themes
 import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.ClipboardUtil.MEDIA_MIME_TYPES

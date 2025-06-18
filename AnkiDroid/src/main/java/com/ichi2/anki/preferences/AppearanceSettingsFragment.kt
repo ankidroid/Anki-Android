@@ -30,9 +30,9 @@ import com.ichi2.anki.R
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.BackgroundImage.FileSizeResult
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.libanki.undoableOp
 import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.systemIsInNightMode

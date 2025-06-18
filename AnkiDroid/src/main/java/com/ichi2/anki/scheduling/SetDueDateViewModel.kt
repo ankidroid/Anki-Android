@@ -21,10 +21,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.CardType
 import com.ichi2.libanki.sched.SetDueDateDays
-import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update

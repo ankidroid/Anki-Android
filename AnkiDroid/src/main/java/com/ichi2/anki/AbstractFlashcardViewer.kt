@@ -109,6 +109,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.pages.PostRequestHandler
@@ -145,7 +146,6 @@ import com.ichi2.libanki.SoundOrVideoTag
 import com.ichi2.libanki.TTSTag
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.sched.Ease
-import com.ichi2.libanki.undoableOp
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.ui.FixedEditText
