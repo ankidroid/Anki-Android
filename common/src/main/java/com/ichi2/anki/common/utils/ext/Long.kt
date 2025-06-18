@@ -13,6 +13,10 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.anki.utils.ext
+package com.ichi2.anki.common.utils.ext
 
+/**
+ * @return the receiver if non-zero, otherwise the result of calling [defaultValue]
+ */
+@Suppress("KotlinConstantConditions") // lint is incorrect
 fun Long.ifZero(defaultValue: () -> Long) = if (this == 0L) defaultValue() else this
