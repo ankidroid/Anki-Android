@@ -22,6 +22,7 @@ import androidx.annotation.WorkerThread
 import anki.backend.backendError
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.CollectionFiles
 import com.ichi2.libanki.Storage.collection
 import com.ichi2.libanki.importCollectionPackage
 import com.ichi2.utils.Threads
