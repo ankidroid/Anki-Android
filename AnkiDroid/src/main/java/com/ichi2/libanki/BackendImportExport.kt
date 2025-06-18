@@ -21,7 +21,6 @@ import anki.import_export.ImportAnkiPackageOptions
 import anki.import_export.ImportResponse
 import anki.import_export.exportAnkiPackageOptions
 import anki.search.SearchNode
-import com.ichi2.anki.CollectionFiles
 import net.ankiweb.rsdroid.Backend
 
 /**
