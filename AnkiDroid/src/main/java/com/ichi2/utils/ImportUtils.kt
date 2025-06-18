@@ -31,12 +31,12 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.ImportDialog
 import com.ichi2.anki.onSelectedCsvForImport
 import com.ichi2.anki.showImportDialog
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import org.jetbrains.annotations.Contract
 import timber.log.Timber

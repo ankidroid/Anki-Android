@@ -38,6 +38,7 @@ import anki.collection.OpChanges
 import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
@@ -54,7 +55,6 @@ import com.ichi2.anki.servicelayer.ThrowableFilterService
 import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.utils.AdaptionUtil

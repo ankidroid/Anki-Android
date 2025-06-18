@@ -24,12 +24,12 @@ import com.google.android.material.tabs.TabLayout
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.previewer.PreviewerAction
 import com.ichi2.anki.reviewer.MappableAction
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.sharedPrefs
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.preferences.ControlPreference
 import timber.log.Timber
 

@@ -24,6 +24,7 @@ import com.ichi2.anki.asyncIO
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.cardviewer.SingleCardSide
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.pages.AnkiServer
@@ -34,7 +35,6 @@ import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.flag
 import com.ichi2.anki.utils.ext.require
 import com.ichi2.anki.utils.ext.setUserFlagForCards
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.undoableOp

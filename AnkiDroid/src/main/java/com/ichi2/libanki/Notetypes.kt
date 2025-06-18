@@ -42,8 +42,8 @@ import anki.notetypes.StockNotetype
 import anki.notetypes.restoreNotetypeToStockRequest
 import com.google.protobuf.ByteString
 import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.TimeManager
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Utils.checksum
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.BackendUtils.fromJsonBytes

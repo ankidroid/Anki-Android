@@ -22,7 +22,7 @@ import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.FragmentActivity
 import com.ichi2.anki.CrashReportService
-import com.ichi2.annotations.NeedsTest
+import com.ichi2.anki.common.annotations.NeedsTest
 
 /**
  * @param resId must be a [StringRes] or a [PluralsRes]
