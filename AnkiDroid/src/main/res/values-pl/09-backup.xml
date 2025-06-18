@@ -45,7 +45,7 @@
 -->
 <resources>
     <string name="backup_deck_no_storage_left">Kopia zapasowa nie została utworzona z powodu braku miejsca w pamięci masowej. Zwolnij trochę miejsca lub zmniejsz zakres kopii zapasowej</string>
-    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
+    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">W pamięci urządzenia zostało mniej niż %d MB wolnego miejsca.\nZwolnij trochę miejsca, aby uniknąć utraty danych.</string>
     <string name="backup_restore" maxLength="28">Przywróć kopię zapasową</string>
     <string name="backup_new_collection">Nowa kolekcja</string>
     <string name="backup_del_collection">Usuń kolekcje i utworz nową</string>
