@@ -21,7 +21,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import com.ichi2.anki.R
 import com.ichi2.libanki.Collection
-import com.ichi2.utils.NamedJSONComparator
+import com.ichi2.libanki.utils.NamedJSONComparator
 
 fun setupNoteTypeSpinner(
     context: Context,

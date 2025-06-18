@@ -15,7 +15,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.utils
+package com.ichi2.libanki.utils
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.hamcrest.CoreMatchers
@@ -28,6 +28,7 @@ class JSONNamedObject(
     override val name: String,
 ) : NamedObject
 
+/** Tests [NamedJSONComparator] */
 @RunWith(AndroidJUnit4::class)
 class NamedJSONComparatorTest {
     @Test
