@@ -21,9 +21,9 @@ import androidx.annotation.VisibleForTesting
 import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_IMAGE_OCCLUSION_VALUE
 import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_UNKNOWN_VALUE
 import com.ichi2.anki.api.AddContentApi.Companion.DEFAULT_DECK_ID
+import com.ichi2.anki.common.json.NamedObject
 import com.ichi2.anki.common.utils.ext.toStringList
 import com.ichi2.utils.JSONObjectHolder
-import com.ichi2.utils.NamedObject
 import com.ichi2.utils.deepClone
 import org.json.JSONArray
 import org.json.JSONException
