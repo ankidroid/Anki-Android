@@ -1,7 +1,8 @@
 /*
  * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
  * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>
- * Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
+ * Copyright (c) 2022 Ankitects Pty Ltd <http://apps.ankiweb.net>
+ * Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General private License as published by the Free Software
