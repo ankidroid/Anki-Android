@@ -18,7 +18,7 @@ package com.ichi2.libanki
 import com.ichi2.anki.CollectionFiles
 import com.ichi2.anki.common.time.Time
 import com.ichi2.anki.common.time.TimeManager.time
-import com.ichi2.anki.getDayStart
+import com.ichi2.anki.common.time.getDayStart
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendFactory
 import java.io.File

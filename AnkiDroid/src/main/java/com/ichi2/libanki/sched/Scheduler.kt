@@ -42,8 +42,8 @@ import anki.scheduler.UnburyDeckRequest
 import anki.scheduler.cardAnswer
 import anki.scheduler.scheduleCardsAsNewRequest
 import com.ichi2.anki.Ease
+import com.ichi2.anki.common.time.SECONDS_PER_DAY
 import com.ichi2.anki.common.time.TimeManager.time
-import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.CardType
