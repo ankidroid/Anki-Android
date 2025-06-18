@@ -13,7 +13,8 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.anki
+
+package com.ichi2.libanki.sched
 
 /**
  * [value] should be kept in sync with the [com.ichi2.anki.api.Ease] enum.
