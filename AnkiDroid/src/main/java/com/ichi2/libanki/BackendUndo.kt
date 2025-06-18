@@ -16,7 +16,8 @@
 
 package com.ichi2.libanki
 
-import anki.collection.OpChangesAfterUndo
+import com.ichi2.libanki.utils.NotInLibAnki
+import net.ankiweb.rsdroid.RustCleanup
 import anki.collection.UndoStatus as UndoStatusProto
 
 /**
@@ -26,7 +27,7 @@ data class UndoStatus(
     val undo: String?,
     val redo: String?,
     // not currently used
-    val lastStep: Int,
+    val lastStep: UndoStepCounter,
 ) {
     companion object {
         fun from(proto: UndoStatusProto): UndoStatus =
@@ -38,21 +39,25 @@ data class UndoStatus(
     }
 }
 
-/**
- * Undo the last backend operation.
- *
- * Should be called via collection.op(), which will notify
- * [ChangeManager.Subscriber] of the changes.
- *
- * Will throw if no undo operation is possible (due to legacy code
- * directly mutating the database).
- */
-fun Collection.undo(): OpChangesAfterUndo = backend.undo()
+/** eg "Undo suspend card" if undo available */
+@NotInLibAnki
+@RustCleanup("similar to deprecated 'undo_name'")
+fun Collection.undoLabel(): String? {
+    val action = undoStatus().undo
+    return action?.let { tr.undoUndoAction(it) }
+}
 
-/** Redoes the previously-undone operation. See the docs for
-[Collection.undoOperation]
- */
-fun Collection.redo(): OpChangesAfterUndo = backend.redo()
+@NotInLibAnki
+fun Collection.undoAvailable(): Boolean {
+    val status = undoStatus()
+    return status.undo != null
+}
 
-/** See [UndoStatus] */
-fun Collection.undoStatus(): UndoStatus = UndoStatus.from(backend.getUndoStatus())
+@NotInLibAnki
+fun Collection.redoLabel(): String? {
+    val action = undoStatus().redo
+    return action?.let { tr.undoRedoAction(it) }
+}
+
+@NotInLibAnki
+fun Collection.redoAvailable(): Boolean = undoStatus().redo != null

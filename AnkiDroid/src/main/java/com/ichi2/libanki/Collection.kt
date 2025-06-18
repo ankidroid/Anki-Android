@@ -31,6 +31,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import anki.card_rendering.EmptyCardsReport
 import anki.collection.OpChanges
+import anki.collection.OpChangesAfterUndo
 import anki.collection.OpChangesWithCount
 import anki.config.ConfigKey
 import anki.config.Preferences
@@ -73,6 +74,9 @@ import java.io.File
 import java.util.Locale
 
 typealias ImportLogWithChanges = anki.import_export.ImportResponse
+
+@NotInLibAnki
+typealias UndoStepCounter = Int
 
 @NotInLibAnki // Literal["AND", "OR"]
 enum class SearchJoiner {
@@ -1016,30 +1020,81 @@ class Collection(
      * ***********************************************************
      */
 
-    /** eg "Undo suspend card" if undo available */
-    fun undoLabel(): String? {
-        val action = undoStatus().undo
-        return action?.let { tr.undoUndoAction(it) }
+    /** See [UndoStatus] */
+    @CheckResult
+    @RustCleanup("doesn't match upstream")
+    @LibAnkiAlias("undo_status")
+    fun undoStatus(): UndoStatus = UndoStatus.from(backend.getUndoStatus())
+
+    /**
+     * Add an empty undo entry with the given name.
+     * The return value can be used to merge subsequent changes
+     * with [mergeUndoEntries].
+     *
+     * You should only use this with your own custom actions - when
+     * extending default Anki behaviour, you should merge into an
+     * existing undo entry instead, so the existing undo name is
+     * preserved, and changes are processed correctly.
+     */
+    @LibAnkiAlias("add_custom_undo_entry")
+    fun addCustomUndoEntry(name: String): UndoStepCounter = backend.addCustomUndoEntry(name)
+
+    /**
+     * Combine multiple undoable operations into one.
+     *
+     * After a standard Anki action, you can use
+     * [undoStatus()][undoStatus].[lastStep][UndoStatus.lastStep] to retrieve the target to
+     * merge into. When defining your own custom actions, you can use [addCustomUndoEntry]
+     * to define a custom undo name.
+     */
+    @LibAnkiAlias("merge_undo_entries")
+    fun mergeUndoEntries(target: UndoStepCounter): OpChanges = backend.mergeUndoEntries(target)
+
+    /**
+     * Undo the last backend operation.
+     *
+     * Should be called via [undoableOp], which will notify
+     * [ChangeManager.Subscriber] of the changes.
+     *
+     * Will throw if no undo operation is possible (due to legacy code
+     * directly mutating the database).
+     */
+    @LibAnkiAlias("undo")
+    fun undo(): OpChangesAfterUndo = backend.undo()
+
+    /**
+     * Returns result of backend redo operation, or throws UndoEmpty.
+     */
+    @RustCleanup("document exception")
+    @LibAnkiAlias("redo")
+    fun redo(): OpChangesAfterUndo = backend.redo()
+
+    @Deprecated("Not implemented")
+    @LibAnkiAlias("op_made_changes")
+    fun opMadeChanges(changes: OpChanges): Nothing = TODO()
+
+    /**
+     * Return undo status if undo available on backend.
+     *
+     * If backend has undo available, clear the Kotlin undo state.
+     */
+    @RustCleanup("docs don't match reality ")
+    @LibAnkiAlias("_check_backend_undo_status")
+    private fun checkBackendUndoStatus(): UndoStatus? {
+        val status = backend.getUndoStatus()
+        if (status.undo.any() || status.redo.any()) {
+            return UndoStatus.from(status)
+        } else {
+            return null
+        }
     }
-
-    fun undoAvailable(): Boolean {
-        val status = undoStatus()
-        return status.undo != null
-    }
-
-    fun redoLabel(): String? {
-        val action = undoStatus().redo
-        return action?.let { tr.undoRedoAction(it) }
-    }
-
-    fun redoAvailable(): Boolean = undoStatus().redo != null
-
-    lateinit var notetypes: Notetypes
-        protected set
 
     /*
      * ***********************************************************
      */
+
+    lateinit var notetypes: Notetypes
+        protected set
 
     @NotInLibAnki
     @CheckResult

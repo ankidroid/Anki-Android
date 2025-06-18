@@ -172,6 +172,8 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.sched.DeckNode
+import com.ichi2.libanki.undoAvailable
+import com.ichi2.libanki.undoLabel
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.AdaptionUtil
