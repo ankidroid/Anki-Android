@@ -48,6 +48,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.SortOrder
+import com.ichi2.libanki.sched.Ease
 import com.ichi2.utils.NetworkUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

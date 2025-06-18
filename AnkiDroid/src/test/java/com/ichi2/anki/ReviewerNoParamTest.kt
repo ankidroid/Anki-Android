@@ -36,6 +36,7 @@ import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.utils.ext.addBinding
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.sched.Ease
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import com.ichi2.themes.Theme

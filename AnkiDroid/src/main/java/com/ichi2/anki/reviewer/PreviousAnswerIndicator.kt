@@ -17,8 +17,8 @@
 package com.ichi2.anki.reviewer
 
 import android.widget.TextView
-import com.ichi2.anki.Ease
 import com.ichi2.anki.R
+import com.ichi2.libanki.sched.Ease
 import com.ichi2.utils.HandlerUtils.newHandler
 
 /**
