@@ -22,7 +22,6 @@ import anki.import_export.ImportResponse
 import anki.import_export.exportAnkiPackageOptions
 import anki.search.SearchNode
 import net.ankiweb.rsdroid.Backend
-import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 
 /**
  * (Maybe) create a colpkg backup, while keeping the collection open. If the
@@ -73,28 +72,6 @@ fun importCollectionPackage(
         mediaFolder = colPath.mediaFolder.absolutePath,
         mediaDb = colPath.mediaDb.absolutePath,
     )
-}
-
-/**
- * Export the collection into a .colpkg file.
- * If legacy=false, a file targeting Anki 2.1.50+ is created. It compresses better and is faster to
- * create, but older clients can not read it.
- *
- * @throws BackendInvalidInputException - 'Check Media' required.
- *  See [anki.i18n.GeneratedTranslations.errorsPleaseCheckMedia]
- */
-fun Collection.exportCollectionPackage(
-    outPath: String,
-    includeMedia: Boolean,
-    legacy: Boolean,
-) {
-    close(forFullSync = true)
-    backend.exportCollectionPackage(
-        outPath = outPath,
-        includeMedia = includeMedia,
-        legacy = legacy,
-    )
-    reopen()
 }
 
 fun Collection.importAnkiPackage(

@@ -75,6 +75,7 @@ class Collection(
      * at all (eg translations) are the exception.
      */
     val backend: Backend,
+    databaseBuilder: (Backend) -> DB,
 ) {
     val colDb = collectionFiles.colDb
 
@@ -142,7 +143,7 @@ class Collection(
     init {
         media = Media(this)
         tags = Tags(this)
-        val created = reopen()
+        val created = reopen(databaseBuilder = databaseBuilder)
         startReps = 0
         startTime = 0
         _loadScheduler()
@@ -208,10 +209,19 @@ class Collection(
     }
 
     /** True if DB was created */
-    fun reopen(afterFullSync: Boolean = false): Boolean {
+    fun reopen(
+        afterFullSync: Boolean = false,
+        databaseBuilder: (Backend) -> DB,
+    ): Boolean {
         Timber.i("(Re)opening Database: %s", colDb)
         return if (dbClosed) {
-            val (database, created) = Storage.openDB(colDb, backend, afterFullSync)
+            val (database, created) =
+                Storage.openDB(
+                    path = colDb,
+                    backend = backend,
+                    afterFullSync = afterFullSync,
+                    buildDatabase = databaseBuilder,
+                )
             dbInternal = database
             load()
             if (afterFullSync) {
