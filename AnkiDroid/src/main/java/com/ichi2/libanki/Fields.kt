@@ -16,7 +16,7 @@
 
 package com.ichi2.libanki
 
-import com.ichi2.utils.JSONContainer
+import com.ichi2.libanki.utils.JSONContainer
 import org.json.JSONArray
 import org.json.JSONObject
 

@@ -14,15 +14,10 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.utils
+package com.ichi2.libanki.utils
 
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.common.utils.ext.jsonObjectIterator
-import com.ichi2.libanki.utils.NotInLibAnki
-import com.ichi2.libanki.utils.append
-import com.ichi2.libanki.utils.index
-import com.ichi2.libanki.utils.insert
-import com.ichi2.libanki.utils.remove
 import org.json.JSONArray
 import org.json.JSONObject
 

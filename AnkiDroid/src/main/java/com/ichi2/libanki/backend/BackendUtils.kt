@@ -19,8 +19,8 @@
 package com.ichi2.libanki.backend
 
 import com.google.protobuf.ByteString
+import com.ichi2.libanki.utils.JSONObjectHolder
 import com.ichi2.libanki.utils.LibAnkiAlias
-import com.ichi2.utils.JSONObjectHolder
 import org.json.JSONArray
 import org.json.JSONObject
 

@@ -16,7 +16,7 @@
 
 package com.ichi2.testutils
 
-import com.ichi2.utils.JSONObjectHolder
+import com.ichi2.libanki.utils.JSONObjectHolder
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
 import org.json.JSONObject
