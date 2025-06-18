@@ -22,9 +22,9 @@ import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.R
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.common.time.formatAsString
 import com.ichi2.anki.multimedia.audio.AudioRecordingController
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.RecordingState
-import com.ichi2.anki.utils.formatAsString
 import com.ichi2.themes.Themes
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
