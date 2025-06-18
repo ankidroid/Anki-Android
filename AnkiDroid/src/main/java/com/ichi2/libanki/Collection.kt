@@ -145,9 +145,6 @@ class Collection(
     lateinit var sched: Scheduler
         protected set
 
-    private var startTime: Long
-    private var startReps: Int
-
     private val lastSync: Long
         get() = db.queryLongScalar("select ls from col")
 
@@ -158,8 +155,6 @@ class Collection(
         media = Media(this)
         tags = Tags(this)
         val created = reopen()
-        startReps = 0
-        startTime = 0
         _loadScheduler()
         if (created) {
             config.set("schedVer", 2)
@@ -1017,42 +1012,8 @@ class Collection(
     fun studiedToday(): String = backend.studiedToday()
 
     /*
-     * Timeboxing *************************************************************** ********************************
-     */
-
-    fun startTimebox() {
-        startTime = TimeManager.time.intTime()
-        startReps = sched.numberOfAnswersRecorded
-    }
-
-    data class TimeboxReached(
-        val secs: Int,
-        val reps: Int,
-    )
-
-    /* Return (elapsedTime, reps) if timebox reached, or null.
-     * Automatically restarts timebox if expired. */
-    fun timeboxReached(): TimeboxReached? {
-        if (sched.timeboxSecs() == 0) {
-            // timeboxing disabled
-            return null
-        }
-        val elapsed = TimeManager.time.intTime() - startTime
-        val limit = sched.timeboxSecs()
-        return if (elapsed > limit) {
-            TimeboxReached(
-                limit,
-                sched.numberOfAnswersRecorded - startReps,
-            ).also {
-                startTimebox()
-            }
-        } else {
-            null
-        }
-    }
-
-    /*
-     * Undo ********************************************************************* **************************
+     * Undo
+     * ***********************************************************
      */
 
     /** eg "Undo suspend card" if undo available */
@@ -1076,7 +1037,9 @@ class Collection(
     lateinit var notetypes: Notetypes
         protected set
 
-    //endregion
+    /*
+     * ***********************************************************
+     */
 
     @NotInLibAnki
     @CheckResult
@@ -1156,6 +1119,50 @@ class Collection(
     fun getPreferences(): Preferences = backend.getPreferences()
 
     fun setPreferences(preferences: Preferences): OpChanges = backend.setPreferences(preferences)
+
+    /*
+     * Timeboxing
+     * ***********************************************************
+     * Note: this will likely be removed in a future version of libAnki
+     */
+
+    private var startTime: Long = 0L
+    private var startReps: Int = 0
+
+    @LibAnkiAlias("startTimebox")
+    fun startTimebox() {
+        startTime = TimeManager.time.intTime()
+        startReps = sched.numberOfAnswersRecorded
+    }
+
+    data class TimeboxReached(
+        val secs: Int,
+        val reps: Int,
+    )
+
+    /**
+     * Return (elapsedTime, reps) if timebox reached, or null.
+     * Automatically restarts timebox if expired.
+     */
+    @LibAnkiAlias("timeboxReached")
+    fun timeboxReached(): TimeboxReached? {
+        if (sched.timeboxSecs() == 0) {
+            // timeboxing disabled
+            return null
+        }
+        val elapsed = TimeManager.time.intTime() - startTime
+        val limit = sched.timeboxSecs()
+        return if (elapsed > limit) {
+            TimeboxReached(
+                limit,
+                sched.numberOfAnswersRecorded - startReps,
+            ).also {
+                startTimebox()
+            }
+        } else {
+            null
+        }
+    }
 }
 
 @NotInLibAnki
