@@ -21,7 +21,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
-import com.ichi2.libanki.DB
+import com.ichi2.libanki.AnkiDroidDB
 import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
 import timber.log.Timber
 import java.io.File
@@ -33,7 +33,7 @@ object BackendDBUtils {
     fun withAndroidFramework(
         context: Context,
         path: File,
-    ): DB {
+    ): AnkiDroidDB {
         val db =
             AnkiSupportSQLiteDatabase.withFramework(
                 context,
@@ -42,7 +42,7 @@ object BackendDBUtils {
             )
         db.disableWriteAheadLogging()
         db.query("PRAGMA synchronous = 2")
-        return DB(db)
+        return AnkiDroidDB(db)
     }
 }
 
