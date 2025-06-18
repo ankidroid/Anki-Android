@@ -20,6 +20,16 @@ import android.annotation.SuppressLint
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import anki.backend.backendError
+import com.ichi2.anki.CollectionManager.discardBackend
+import com.ichi2.anki.CollectionManager.ensureBackend
+import com.ichi2.anki.CollectionManager.ensureClosed
+import com.ichi2.anki.CollectionManager.ensureClosedInner
+import com.ichi2.anki.CollectionManager.ensureOpen
+import com.ichi2.anki.CollectionManager.ensureOpenInner
+import com.ichi2.anki.CollectionManager.getColUnsafe
+import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CollectionManager.withOpenColOrNull
+import com.ichi2.anki.CollectionManager.withQueue
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage.collection
