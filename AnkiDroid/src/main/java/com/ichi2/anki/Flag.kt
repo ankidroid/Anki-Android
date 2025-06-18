@@ -20,7 +20,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.utils.ext.getStringOrNull
+import com.ichi2.anki.common.utils.ext.getStringOrNull
 import org.json.JSONObject
 
 enum class Flag(

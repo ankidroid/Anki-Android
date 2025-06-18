@@ -16,16 +16,17 @@
 
 package com.ichi2.anki.utils.ext
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.common.utils.ext.getStringOrNull
 import com.ichi2.testutils.AndroidTest
 import com.ichi2.testutils.EmptyApplication
 import org.json.JSONObject
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
-import kotlin.apply
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
+// TODO: move this to the common module
 @RunWith(AndroidJUnit4::class) // This is necessary, android and JVM differ on JSONObject.NULL
 @Config(application = EmptyApplication::class)
 class JSONObjectTest : AndroidTest {
