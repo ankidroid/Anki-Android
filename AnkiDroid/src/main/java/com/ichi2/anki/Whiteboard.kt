@@ -42,9 +42,9 @@ import androidx.core.content.edit
 import androidx.core.graphics.scale
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.Time
+import com.ichi2.anki.common.time.getTimestamp
 import com.ichi2.anki.dialogs.WhiteBoardWidthDialog
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.anki.utils.getTimestamp
 import com.ichi2.compat.CompatHelper
 import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.utils.DisplayUtils.getDisplayDimensions

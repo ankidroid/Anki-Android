@@ -20,28 +20,16 @@ import android.media.MediaPlayer
 import android.os.Handler
 import android.view.View
 import com.ichi2.anki.R
-import com.ichi2.anki.common.time.Time
-import java.text.SimpleDateFormat
-import java.util.Locale
+import com.ichi2.anki.common.time.TIME_HOUR
+import com.ichi2.anki.common.time.TIME_MINUTE
 import kotlin.math.max
 import kotlin.math.roundToInt
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
-const val SECONDS_PER_DAY = 86400L
-
 private const val TIME_MINUTE_LONG: Long = 60 // seconds
 private const val TIME_HOUR_LONG = 60 * TIME_MINUTE_LONG
 private const val TIME_DAY_LONG = 24 * TIME_HOUR_LONG
-
-// These are doubles on purpose because we want a rounded, not integer result later.
-// Use values from Anki Desktop:
-// https://github.com/ankitects/anki/blob/05cc47a5d3d48851267cda47f62af79f468eb028/rslib/src/sched/timespan.rs#L83
-const val TIME_MINUTE = 60.0 // seconds
-const val TIME_HOUR = 60.0 * TIME_MINUTE
-const val TIME_DAY = 24.0 * TIME_HOUR
-private const val TIME_MONTH = 30.0 * TIME_DAY
-private const val TIME_YEAR = 12.0 * TIME_MONTH
 
 /**
  * Return a string representing how much time remains
@@ -93,8 +81,6 @@ fun remainingTime(
     }
 }
 
-fun getTimestamp(time: Time): String = SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(time.currentDate)
-
 /** @see Handler.postDelayed */
 fun Handler.postDelayed(
     runnable: Runnable,
@@ -111,17 +97,3 @@ fun View.postDelayed(
 
 /** Gets the current playback position */
 val MediaPlayer.elapsed get() = this.currentPosition.milliseconds
-
-/** Formats the time as '00:00.00' (m:s:ms), OR 00:00:00.00 (h:m:s.ms) */
-fun Duration.formatAsString(): String {
-    val milliseconds = this.inWholeMilliseconds
-    val ms = milliseconds % 1000
-    val s = (milliseconds / 1000) % 60
-    val m = (milliseconds / (1000 * 60)) % 60
-    val h = (milliseconds / (1000 * 60 * 60)) % 60
-    return if (h > 0) {
-        "%02d:%02d:%02d.%02d".format(h, m, s, ms / 10)
-    } else {
-        "%02d:%02d.%02d".format(m, s, ms / 10)
-    }
-}
