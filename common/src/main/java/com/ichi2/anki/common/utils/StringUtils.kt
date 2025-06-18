@@ -13,10 +13,28 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
 
+ ----
+
+ This file incorporates code under the following license:
+
+   Copyright (C) 2006 The Android Open Source Project
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
  */
 
 package com.ichi2.anki.common.utils
 
+import com.ichi2.anki.common.annotations.DuplicatedCode
 import com.ichi2.anki.common.annotations.NeedsTest
 import org.jetbrains.annotations.Contract
 import java.util.Locale
@@ -49,3 +67,34 @@ fun emptyStringMutableList(size: Int): MutableList<String> = MutableList(size) {
 
 @NeedsTest("untested")
 fun emptyStringArray(size: Int): Array<String> = Array(size) { "" }
+
+/**
+ * Html-encode the string.
+ * @param s the string to be encoded
+ * @return the encoded string
+ */
+// replaces:
+// androidx.core.text.htmlEncode
+// android.text.TextUtils.htmlEncode
+@NeedsTest("untested")
+@DuplicatedCode("copied from android.text.TextUtils.htmlEncode, converted to kotlin extension")
+fun String.htmlEncode(): String {
+    val sb = StringBuilder()
+    var c: Char
+    for (i in 0..<this.length) {
+        c = this[i]
+        when (c) {
+            '<' -> sb.append("&lt;") // $NON-NLS-1$
+            '>' -> sb.append("&gt;") // $NON-NLS-1$
+            '&' -> sb.append("&amp;") // $NON-NLS-1$
+            '\'' -> // http://www.w3.org/TR/xhtml1
+                // The named character reference &apos; (the apostrophe, U+0027) was introduced in
+                // XML 1.0 but does not appear in HTML. Authors should therefore use &#39; instead
+                // of &apos; to work as expected in HTML 4 user agents.
+                sb.append("&#39;") // $NON-NLS-1$
+            '"' -> sb.append("&quot;") // $NON-NLS-1$
+            else -> sb.append(c)
+        }
+    }
+    return sb.toString()
+}
