@@ -1,5 +1,6 @@
 /*
 *  Copyright (c) 2020 Arthur Milchior <arthur@milchior.fr>
+ * Copyright (c) 2024 Ashish Yadav <mailtoashish693@gmail.com>
 *
 *  This file is free software: you may copy, redistribute and/or modify it
 *  under the terms of the GNU General Public License as published by the
@@ -95,3 +96,24 @@ fun fromMap(map: Map<String, Any>) =
     JSONObject().apply {
         map.forEach { (k, v) -> put(k, v) }
     }
+
+/**
+ * @return `null` if:
+ * * The key does not exist
+ * * The value is [null][JSONObject.NULL]
+ * * ⚠️ JVM only. The value is not a string (`{ }` etc...)
+ * Otherwise, returns the value mapped by [key]. In Android, that means the potentially non-string
+ * value is converted to string first.
+ */
+fun JSONObject.getStringOrNull(key: String): String? {
+    if (!has(key)) return null
+    if (isNull(key)) return null
+    return try {
+        // Note that [JSONObject]'s [getString] behavior differs between JVM and Android.
+        // In Android, the value is converted to string before being returned.
+        // In the JVM, a non string value is ignored and null is returned.
+        getString(key)
+    } catch (_: Exception) {
+        null
+    }
+}
