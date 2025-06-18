@@ -116,6 +116,7 @@ import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.Notetypes
 import com.ichi2.anki.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.anki.libanki.Utils
+import com.ichi2.anki.libanki.clozeNumbersInNote
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.multimedia.AudioRecordingFragment
 import com.ichi2.anki.multimedia.AudioVideoFragment

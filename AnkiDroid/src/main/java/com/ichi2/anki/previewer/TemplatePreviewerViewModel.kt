@@ -31,6 +31,7 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.anki.libanki.clozeNumbersInNote
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.reviewer.CardSide
 import kotlinx.coroutines.CompletableDeferred

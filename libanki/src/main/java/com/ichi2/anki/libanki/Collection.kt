@@ -1288,29 +1288,6 @@ class Collection(
         interval: Int,
     ): Int = backend.fuzzDelta(cardId = cardId, interval = interval)
 
-    // Python code has a cardsOfNote, but not vice-versa yet
-    @CheckResult
-    @NotInLibAnki
-    fun notesOfCards(cids: Iterable<CardId>): List<NoteId> = db.queryLongList("select distinct nid from cards where id in ${ids2str(cids)}")
-
-    /**
-     * returns the list of cloze ordinals in a note
-     *
-     * `"{{c1::A}} {{c3::B}}" => [1, 3]`
-     */
-    @CheckResult
-    @NotInLibAnki
-    fun clozeNumbersInNote(n: Note): List<Int> {
-        // the call appears to be non-deterministic. Sort ascending
-        return backend
-            .clozeNumbersInNote(n.toBackendNote())
-            .sorted()
-    }
-
-    @NotInLibAnki
-    @CheckResult
-    fun filterToValidCards(cards: LongArray?): List<Long> = db.queryLongList("select id from cards where id in " + ids2str(cards))
-
     @NotInLibAnki
     fun getImageForOcclusionRaw(input: ByteArray): ByteArray = backend.getImageForOcclusionRaw(input = input)
 
@@ -1407,11 +1384,40 @@ class Collection(
 @NotInLibAnki
 fun EmptyCardsReport.emptyCids(): List<CardId> = notesList.flatMap { it.cardIdsList }
 
+// Python code has a cardsOfNote, but not vice-versa yet
+@CheckResult
+@NotInLibAnki
+fun Collection.notesOfCards(cids: Iterable<CardId>): List<NoteId> =
+    db.queryLongList("select distinct nid from cards where id in ${ids2str(cids)}")
+
+/**
+ * returns the list of cloze ordinals in a note
+ *
+ * `"{{c1::A}} {{c3::B}}" => [1, 3]`
+ */
+@CheckResult
+@NotInLibAnki
+fun Collection.clozeNumbersInNote(n: Note): List<Int> {
+    // the call appears to be non-deterministic. Sort ascending
+    return backend
+        .clozeNumbersInNote(n.toBackendNote())
+        .sorted()
+}
+
+/**
+ * Given a list of potential Card Ids, return the subset which are Ids of cards in the collection
+ */
+@NotInLibAnki
+@CheckResult
+fun Collection.filterToValidCards(cards: LongArray?): List<CardId> = db.queryLongList("select id from cards where id in " + ids2str(cards))
+
 /**
  * @return [File] referencing the media folder (`collection.media`)
  *
  * @throws UnsupportedOperationException if the collection is in-memory
  */
+@NotInLibAnki
+@CheckResult
 fun Collection.requireMediaFolder() = collectionFiles.requireMediaFolder()
 
 /**
@@ -1419,4 +1425,6 @@ fun Collection.requireMediaFolder() = collectionFiles.requireMediaFolder()
  *
  * (testing) `null` if the collection is in-memory
  */
+@NotInLibAnki
+@get:CheckResult
 val Collection.mediaFolder: File? get() = collectionFiles.mediaFolder
