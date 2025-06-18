@@ -17,31 +17,7 @@
 package com.ichi2.anki.libanki
 
 import anki.sync.SyncAuth
-import anki.sync.SyncCollectionResponse
 import anki.sync.fullUploadOrDownloadRequest
-import anki.sync.syncLoginRequest
-
-fun Collection.syncLogin(
-    username: String,
-    password: String,
-    endpoint: String?,
-): SyncAuth {
-    val req =
-        syncLoginRequest {
-            this.username = username
-            this.password = password
-            // default endpoint used here, if it is null
-            if (endpoint != null) {
-                this.endpoint = endpoint
-            }
-        }
-    return backend.syncLogin(req)
-}
-
-fun Collection.syncCollection(
-    auth: SyncAuth,
-    media: Boolean,
-): SyncCollectionResponse = backend.syncCollection(auth = auth, syncMedia = media)
 
 fun Collection.fullUploadOrDownload(
     auth: SyncAuth,
