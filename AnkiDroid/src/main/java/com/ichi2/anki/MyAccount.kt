@@ -38,7 +38,6 @@ import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.help.HelpDialog
-import com.ichi2.anki.libanki.syncLogin
 import com.ichi2.anki.pages.RemoveAccountFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.removeFragmentFromContainer
