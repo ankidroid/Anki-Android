@@ -77,7 +77,7 @@
     <string name="custom_study_forgotten">Przejrzyj zapomniane karty z ostatnich x dni:</string>
     <string name="custom_study_ahead">Przejrzyj z wyprzedzeniem x dni:</string>
     <string name="custom_study_preview">Podgląd nowych kart dodanych w ostatnich x dniach:</string>
-    <string name="custom_study_tags">Select x cards from the deck:</string>
+    <string name="custom_study_tags">Wybierz losowo x kart z talii:</string>
     <string name="storage_full_title">Pamięć jest pełna</string>
     <string name="storage_almost_full_title">Pamięć jest prawie pełna</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Brak miejsca</string>
@@ -102,7 +102,7 @@
     <string name="dialog_positive_repair">Napraw</string>
     <string name="dialog_positive_replace">Zastąp</string>
     <string name="dialog_collection_path_not_dir">Wybrana ścieżka nie wskazuje prawidłowo katalogu</string>
-    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate">Podany tekst nie rozwiązuje poprawnego certyfikatu X509 zakodowanego PEM</string>
     <string name="dialog_invalid_custom_certificate_title">Błąd podczas parsowania certyfikatu</string>
     <string name="dialog_updated_custom_certificate">Certyfikat zaktualizowany</string>
     <!-- Media checking -->
@@ -153,7 +153,7 @@
     <string name="error_deleting_image">Błąd podczas usuwania obrazu</string>
     <string name="failed_to_apply_background_image">Nie udało się ustawić obrazu w tle%s</string>
     <string name="background_image_too_large">Tło ekranu wyboru talii zbyt duże</string>
-    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maksymalny dozwolony rozmiar obrazu: %d MB</string>
     <string name="image_dimensions_too_large">Rozmiary obrazu są zbyt duże (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -193,9 +193,9 @@
     <string name="help_dialog_exception_report_sent">Raport został wysłany!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
-        <item quantity="few">An automatic sync may be triggered in %d seconds</item>
-        <item quantity="many">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">Automatyczna synchronizacja może zostać uruchomiona za %d sekund</item>
+        <item quantity="few">Automatyczna synchronizacja może zostać uruchomiona za %d sekundy</item>
+        <item quantity="many">Automatyczna synchronizacja może zostać uruchomiona za %d sekund</item>
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
     </plurals>
     <string name="metered_sync_data_warning">Twój dostawca Internetu może pobierać opłaty za korzystanie z danych</string>
@@ -245,7 +245,7 @@
         <item quantity="other">dni</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="one">Current interval: %d day</item>
+        <item quantity="one">Aktualna przerwa: %d dzień</item>
         <item quantity="few">Current interval: %d days</item>
         <item quantity="many">Current interval: %d days</item>
         <item quantity="other">Current interval: %d days</item>
@@ -255,13 +255,13 @@
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Do</string>
     <!-- Instant Note Editor -->
     <string name="cloze_note_required">Wymagana Notatka typu \"Luka\"</string>
-    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="cloze_not_found_message">Nie znaleziono notatki typu Cloze, otwórz edytor notatek lub spróbuj ponownie po dodaniu notatki typu Cloze.</string>
     <string name="open">Otwórz</string>
-    <string name="change_cloze_number">Change cloze number</string>
-    <string name="cloze_number">Cloze number:</string>
+    <string name="change_cloze_number">Zmień numer zamykający</string>
+    <string name="cloze_number">Numer zamknięcia:</string>
     <string name="change_editor_mode">Zmień tryb edytora</string>
     <string name="open_note_editor">Otwórz edytor notatek</string>
-    <string name="change_cloze_mode">Change cloze mode</string>
+    <string name="change_cloze_mode">Zmień numer zamykający</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">System WebView jest nieaktualny. Niektóre funkcje nie będą działać poprawnie. Zaktualizuj go.\n\nZainstalowana wersja: %1$d\nMinimalna wymagana wersja: %2$d</string>
     <string name="compress">Kompresuj</string>

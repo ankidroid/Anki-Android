@@ -94,10 +94,10 @@
         <item>Wg łatwości</item>
         <item>Wg powtórek</item>
         <item>Wg pomyłek</item>
-        <item>By deck name</item>
+        <item>Według nazwy talii</item>
     </string-array>
-    <string name="chane_browser_column">Change column</string>
-    <string name="no_columns_available">No columns available</string>
+    <string name="chane_browser_column">Zarządzaj kolumnami</string>
+    <string name="no_columns_available">Brak dostępnych kolumn</string>
     <string name="card_browser_select_all" maxLength="28">Zaznacz wszystko</string>
     <string name="card_browser_select_none" maxLength="28">Anuluj wybór</string>
     <string name="card_browser_no_cards_in_deck">Nie znaleziono kart w talii „%s”</string>
@@ -125,7 +125,7 @@
     </plurals>
     <!--Keyboard shortcuts dialog-->
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Okno dialogowe edycji tagów</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Pokaż okno dialogowe zamówienia</string>
     <!-- Manage columns dialog -->
     <string name="browse_manage_columns_main_heading">Kolumny</string>
     <string name="browse_manage_columns">Zarządzaj kolumnami</string>
@@ -133,6 +133,6 @@
     <string name="user_potential_columns">Dostępne</string>
     <string name="include_column">Dołącz kolumnę</string>
     <string name="exclude_column">Wyklucz kolumnę</string>
-    <string name="save_changes_message">Please save your changes first</string>
+    <string name="save_changes_message">Proszę najpierw zapisać zmiany</string>
     <string name="browser_find_replace_loading_fields">Pobieranie nazw pól&#8230;</string>
 </resources>
