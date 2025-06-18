@@ -23,7 +23,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission
-import com.ichi2.libanki.DB
+import com.ichi2.libanki.AnkiDroidDB
 import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
 import org.junit.Assert
 import org.junit.Rule
@@ -49,7 +49,7 @@ class DBTest : InstrumentedTest() {
         Assert.assertFalse("database exists already", illFatedDBFile.exists())
         val callback = TestCallback(1)
         val illFatedDB =
-            DB(
+            AnkiDroidDB(
                 AnkiSupportSQLiteDatabase.withFramework(
                     testContext,
                     illFatedDBFile.canonicalPath,

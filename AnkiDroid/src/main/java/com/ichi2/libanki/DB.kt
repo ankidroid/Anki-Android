@@ -33,20 +33,113 @@ import timber.log.Timber
 /**
  * Database layer for AnkiDroid. Wraps an SupportSQLiteDatabase (provided by either the Rust backend
  * or the Android framework), and provides some helpers on top.
+ */
+// TODO: see if we can turn query methods into extensions
+//  probably hard due to the casting of varargs Any to Array<out Any?>
+@KotlinCleanup("Improve documentation")
+@WorkerThread
+interface DB {
+    /**
+     * Closes a previously opened database connection.
+     */
+    fun close()
+
+    fun query(
+        query: String,
+        vararg selectionArgs: Any,
+    ): Cursor
+
+    fun execute(
+        sql: String,
+        vararg `object`: Any?,
+    )
+
+    /**
+     * WARNING: This is a convenience method that splits SQL scripts into separate queries with semicolons (;)
+     * as the delimiter. Only use this method on internal functions where we can guarantee that the script does
+     * not contain any non-statement-terminating semicolons.
+     */
+    fun executeScript(sql: String)
+
+    /**
+     * Convenience method for querying the database for a single integer result.
+     *
+     * @param query The raw SQL query to use.
+     * @return The integer result of the query.
+     */
+    fun queryScalar(
+        query: String,
+        vararg selectionArgs: Any,
+    ): Int
+
+    @Throws(SQLException::class)
+    fun queryString(
+        query: String,
+        vararg bindArgs: Any,
+    ): String
+
+    fun queryLongScalar(
+        query: String,
+        vararg bindArgs: Any,
+    ): Long
+
+    /**
+     * Convenience method for querying the database for an entire column of long.
+     *
+     * @param query The SQL query statement.
+     * @return An ArrayList with the contents of the specified column.
+     */
+    fun queryLongList(
+        query: String,
+        vararg bindArgs: Any,
+    ): ArrayList<Long>
+
+    /**
+     * Convenience method for querying the database for an entire column of String.
+     *
+     * @param query The SQL query statement.
+     * @return An ArrayList with the contents of the specified column.
+     */
+    fun queryStringList(
+        query: String,
+        vararg bindArgs: Any,
+    ): ArrayList<String>
+
+    /** update must always be called via DB in order to mark the db as changed  */
+    fun update(
+        table: String,
+        values: ContentValues,
+        whereClause: String? = null,
+        whereArgs: Array<String>? = null,
+    ): Int
+
+    /** insert must always be called via DB in order to mark the db as changed  */
+    fun insert(
+        table: String,
+        values: ContentValues,
+    ): Long
+
+    /**
+     * @return The full path to this database file.
+     */
+    val path: String
+}
+
+/**
+ * Database layer for AnkiDroid. Wraps an SupportSQLiteDatabase (provided by either the Rust backend
+ * or the Android framework), and provides some helpers on top.
  *
  * @param database The collection, which is actually a SQLite database.
  */
-@KotlinCleanup("Improve documentation")
-@WorkerThread
-class DB(
+class AnkiDroidDB(
     val database: SupportSQLiteDatabase,
-) {
+) : DB {
     var mod = false
 
     /**
      * Closes a previously opened database connection.
      */
-    fun close() {
+    override fun close() {
         try {
             database.close()
             Timber.d("Database %s closed = %s", database.path, !database.isOpen)
@@ -58,7 +151,7 @@ class DB(
     }
 
     // Allows to avoid using new Object[]
-    fun query(
+    override fun query(
         query: String,
         vararg selectionArgs: Any,
     ): Cursor = database.query(query, selectionArgs)
@@ -69,7 +162,7 @@ class DB(
      * @param query The raw SQL query to use.
      * @return The integer result of the query.
      */
-    fun queryScalar(
+    override fun queryScalar(
         query: String,
         vararg selectionArgs: Any,
     ): Int {
@@ -84,7 +177,7 @@ class DB(
     }
 
     @Throws(SQLException::class)
-    fun queryString(
+    override fun queryString(
         query: String,
         vararg bindArgs: Any,
     ): String {
@@ -96,7 +189,7 @@ class DB(
         }
     }
 
-    fun queryLongScalar(
+    override fun queryLongScalar(
         query: String,
         vararg bindArgs: Any,
     ): Long {
@@ -116,7 +209,7 @@ class DB(
      * @param query The SQL query statement.
      * @return An ArrayList with the contents of the specified column.
      */
-    fun queryLongList(
+    override fun queryLongList(
         query: String,
         vararg bindArgs: Any,
     ): ArrayList<Long> {
@@ -135,7 +228,7 @@ class DB(
      * @param query The SQL query statement.
      * @return An ArrayList with the contents of the specified column.
      */
-    fun queryStringList(
+    override fun queryStringList(
         query: String,
         vararg bindArgs: Any,
     ): ArrayList<String> {
@@ -148,7 +241,7 @@ class DB(
         return results
     }
 
-    fun execute(
+    override fun execute(
         sql: String,
         vararg `object`: Any?,
     ) {
@@ -168,7 +261,7 @@ class DB(
      * not contain any non-statement-terminating semicolons.
      */
     @KotlinCleanup("""Use Kotlin string. Change split so that there is no empty string after last ";".""")
-    fun executeScript(sql: String) {
+    override fun executeScript(sql: String) {
         val queries = java.lang.String(sql).split(";")
         for (query in queries) {
             database.execSQL(query)
@@ -176,15 +269,15 @@ class DB(
     }
 
     /** update must always be called via DB in order to mark the db as changed  */
-    fun update(
+    override fun update(
         table: String,
         values: ContentValues,
-        whereClause: String? = null,
-        whereArgs: Array<String>? = null,
+        whereClause: String?,
+        whereArgs: Array<String>?,
     ): Int = database.update(table, SQLiteDatabase.CONFLICT_NONE, values, whereClause, whereArgs)
 
     /** insert must always be called via DB in order to mark the db as changed  */
-    fun insert(
+    override fun insert(
         table: String,
         values: ContentValues,
     ): Long = database.insert(table, SQLiteDatabase.CONFLICT_NONE, values)
@@ -192,7 +285,7 @@ class DB(
     /**
      * @return The full path to this database file.
      */
-    val path: String
+    override val path: String
         get() = database.path ?: ":memory:"
 
     companion object {
@@ -202,6 +295,6 @@ class DB(
          * Wrap a Rust backend connection (which provides an SQL interface).
          * Caller is responsible for opening&closing the database.
          */
-        fun withRustBackend(backend: Backend): DB = DB(AnkiSupportSQLiteDatabase.withRustBackend(backend))
+        fun withRustBackend(backend: Backend): AnkiDroidDB = AnkiDroidDB(AnkiSupportSQLiteDatabase.withRustBackend(backend))
     }
 }
