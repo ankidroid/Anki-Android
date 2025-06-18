@@ -15,14 +15,17 @@
 
  */
 
-package com.ichi2.utils
+package com.ichi2.anki.common.utils
 
+import com.ichi2.anki.common.annotations.NeedsTest
 import org.jetbrains.annotations.Contract
 import java.util.Locale
 import kotlin.math.min
 
-object StringUtil {
+@NeedsTest("all except toTitleCase is untested")
+object StringUtils {
     /** Converts the string to where the first letter is uppercase, and the rest of the string is lowercase  */
+    // TODO(low): some libAnki functions can use this instead of capitalize() alternatives
     @Contract("null -> null; !null -> !null")
     fun toTitleCase(s: String?): String? {
         if (s == null) return null

@@ -19,9 +19,9 @@ import android.content.Context
 import android.view.KeyEvent
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.common.utils.StringUtils
+import com.ichi2.anki.common.utils.lastIndexOfOrNull
 import com.ichi2.anki.utils.ext.ifNotZero
-import com.ichi2.utils.StringUtil
-import com.ichi2.utils.lastIndexOfOrNull
 import timber.log.Timber
 import java.util.Objects
 
@@ -94,7 +94,7 @@ sealed interface Binding {
                 append(modifierKeys.toString())
                 val keyCodeString = KeyEvent.keyCodeToString(keycode)
                 // replace "Button" as we use the gamepad icon
-                append(StringUtil.toTitleCase(keyCodeString.replace("KEYCODE_", "").replace("BUTTON_", "").replace('_', ' ')))
+                append(StringUtils.toTitleCase(keyCodeString.replace("KEYCODE_", "").replace("BUTTON_", "").replace('_', ' ')))
             }
 
         override fun toString() =
