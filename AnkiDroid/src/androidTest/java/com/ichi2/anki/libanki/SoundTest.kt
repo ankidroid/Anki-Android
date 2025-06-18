@@ -17,9 +17,9 @@
 package com.ichi2.anki.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.backend.isAudioFileInVideoContainer
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.tests.Shared
-import com.ichi2.libanki.isAudioFileInVideoContainer
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test

@@ -85,6 +85,7 @@ import com.ichi2.anki.AbstractFlashcardViewer.Signal.Companion.toSignal
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
+import com.ichi2.anki.backend.getAvTag
 import com.ichi2.anki.backend.undoableOp
 import com.ichi2.anki.cardviewer.AndroidCardRenderContext
 import com.ichi2.anki.cardviewer.AndroidCardRenderContext.Companion.createInstance
@@ -141,7 +142,6 @@ import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
-import com.ichi2.libanki.Sound.getAvTag
 import com.ichi2.libanki.SoundOrVideoTag
 import com.ichi2.libanki.TTSTag
 import com.ichi2.libanki.Utils

@@ -23,6 +23,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.OnErrorListener
+import com.ichi2.anki.backend.addPlayButtons
+import com.ichi2.anki.backend.getAvTag
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.cardviewer.JavascriptEvaluator
 import com.ichi2.anki.cardviewer.MediaErrorBehavior
@@ -32,7 +34,6 @@ import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.PostRequestHandler
 import com.ichi2.libanki.Card
-import com.ichi2.libanki.Sound
 import com.ichi2.libanki.TtsPlayer
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -90,7 +91,7 @@ abstract class CardViewerViewModel(
 
     fun playSoundFromUrl(url: String) {
         launchCatchingIO {
-            Sound.getAvTag(currentCard.await(), url)?.let {
+            getAvTag(currentCard.await(), url)?.let {
                 cardMediaPlayer.playOne(it)
             }
         }
@@ -120,7 +121,7 @@ abstract class CardViewerViewModel(
     ): String = typeAnsFilter(prepareCardTextForDisplay(text), typedAnswer)
 
     private suspend fun prepareCardTextForDisplay(text: String): String =
-        Sound.addPlayButtons(
+        addPlayButtons(
             text = withCol { media.escapeMediaFilenames(text) },
             renderOutput = currentCard.await().let { card -> withCol { card.renderOutput(this) } },
         )
