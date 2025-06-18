@@ -31,6 +31,7 @@ import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.exception.UnknownDatabaseVersionException
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.CollectionFiles
 import com.ichi2.libanki.DB
 import com.ichi2.preferences.getOrSetString
 import timber.log.Timber
@@ -332,13 +333,4 @@ object CollectionHelper {
             db?.close()
         }
     }
-}
-
-class CollectionFiles(
-    folderPath: File,
-    val collectionName: String = "collection",
-) {
-    val colDb = File(folderPath, "$collectionName.anki2")
-    val mediaFolder = File(folderPath, "$collectionName.media")
-    val mediaDb = File(folderPath, "$collectionName.media.db")
 }
