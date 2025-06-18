@@ -82,6 +82,8 @@ import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.SortOrder
+import com.ichi2.anki.libanki.undoAvailable
+import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS

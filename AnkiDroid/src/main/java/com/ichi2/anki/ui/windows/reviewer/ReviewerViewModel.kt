@@ -31,10 +31,12 @@ import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.NoteId
-import com.ichi2.anki.libanki.redo
+import com.ichi2.anki.libanki.redoAvailable
+import com.ichi2.anki.libanki.redoLabel
 import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.libanki.sched.CurrentQueueState
-import com.ichi2.anki.libanki.undo
+import com.ichi2.anki.libanki.undoAvailable
+import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp

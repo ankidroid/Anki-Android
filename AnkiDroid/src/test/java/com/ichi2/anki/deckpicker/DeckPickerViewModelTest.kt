@@ -28,7 +28,6 @@ import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.emptyCids
-import com.ichi2.anki.libanki.undoStatus
 import com.ichi2.testutils.ensureOpsExecuted
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
