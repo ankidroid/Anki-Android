@@ -73,6 +73,12 @@ object GestureParser {
 
         val row = getGridIndex(tapY, scrollY, measuredHeight, scale)
         val column = getGridIndex(tapX, scrollX, measuredWidth, scale)
+        // FIXME fix the source of values that result in an invalid index
+        if (row !in 0..2 || column !in 0..2) {
+            throw IllegalArgumentException(
+                "Gesture parsing error: uri $uri - isScrolling $isScrolling - scale $scale - scrollX $scrollX - scrollY $scrollY - measuredWidth $measuredWidth - measuredHeight $measuredHeight",
+            )
+        }
         return gestureGrid[row][column]
     }
 
