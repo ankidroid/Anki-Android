@@ -15,7 +15,6 @@
  */
 package com.ichi2.libanki
 
-import com.ichi2.anki.backend.AnkiDroidDB
 import com.ichi2.anki.common.time.Time
 import com.ichi2.anki.common.time.TimeManager.time
 import com.ichi2.anki.common.time.getDayStart
@@ -35,10 +34,15 @@ object Storage {
      * */
     fun collection(
         collectionFiles: CollectionFiles,
+        databaseBuilder: (Backend) -> DB,
         backend: Backend? = null,
     ): Collection {
         val backend2 = backend ?: BackendFactory.getBackend()
-        return Collection(collectionFiles, backend2)
+        return Collection(
+            collectionFiles = collectionFiles,
+            databaseBuilder = databaseBuilder,
+            backend = backend2,
+        )
     }
 
     /**
@@ -48,6 +52,7 @@ object Storage {
         path: File,
         backend: Backend,
         afterFullSync: Boolean,
+        buildDatabase: (Backend) -> DB,
     ): Pair<DB, Boolean> {
         val dbFile = path
         var create = !dbFile.exists()
@@ -56,7 +61,7 @@ object Storage {
         } else {
             backend.openCollection(if (isInMemory) ":memory:" else path.absolutePath)
         }
-        val db = AnkiDroidDB.withRustBackend(backend)
+        val db = buildDatabase(backend)
 
         // initialize
         if (create) {
