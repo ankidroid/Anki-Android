@@ -62,6 +62,7 @@ import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Whiteboard.Companion.createInstance
 import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
+import com.ichi2.anki.backend.undoableOp
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -112,7 +113,6 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.sched.CurrentQueueState
-import com.ichi2.libanki.undoableOp
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay

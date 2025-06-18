@@ -26,6 +26,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.OnErrorListener
+import com.ichi2.anki.backend.undoableOp
 import com.ichi2.anki.browser.BrowserDestination
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
@@ -35,7 +36,6 @@ import com.ichi2.anki.utils.Destination
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.utils.extend
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow

@@ -20,10 +20,10 @@ import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChangesAfterUndo
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.backend.undoableOp
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.redo
 import com.ichi2.libanki.undo
-import com.ichi2.libanki.undoableOp
 
 /** If there's an action pending in the review queue, undo it and show a snackbar */
 suspend fun FragmentActivity.undoAndShowSnackbar(duration: Int = Snackbar.LENGTH_SHORT) {

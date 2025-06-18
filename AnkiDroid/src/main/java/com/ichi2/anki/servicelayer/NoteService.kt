@@ -25,6 +25,7 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.FieldEditText
+import com.ichi2.anki.backend.undoableOp
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.AudioRecordingField
 import com.ichi2.anki.multimediacard.fields.EFieldType
@@ -40,7 +41,6 @@ import com.ichi2.libanki.NoteTypeId
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.exception.EmptyMediaException
-import com.ichi2.libanki.undoableOp
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File

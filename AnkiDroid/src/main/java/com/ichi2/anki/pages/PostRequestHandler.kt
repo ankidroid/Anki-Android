@@ -25,6 +25,7 @@ import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NoteEditor
+import com.ichi2.anki.backend.undoableOp
 import com.ichi2.anki.importAnkiPackageUndoable
 import com.ichi2.anki.importCsvRaw
 import com.ichi2.anki.launchCatchingTask
@@ -45,7 +46,6 @@ import com.ichi2.libanki.stats.cardStatsRaw
 import com.ichi2.libanki.stats.getGraphPreferencesRaw
 import com.ichi2.libanki.stats.graphsRaw
 import com.ichi2.libanki.stats.setGraphPreferencesRaw
-import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async

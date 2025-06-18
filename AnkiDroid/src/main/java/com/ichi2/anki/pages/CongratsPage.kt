@@ -36,6 +36,7 @@ import com.ichi2.anki.FilteredDeckOptions
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.R
 import com.ichi2.anki.StudyOptionsActivity
+import com.ichi2.anki.backend.undoableOp
 import com.ichi2.anki.common.time.SECONDS_PER_DAY
 import com.ichi2.anki.common.time.TIME_HOUR
 import com.ichi2.anki.common.time.TIME_MINUTE
@@ -49,7 +50,6 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.Destination
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.listItemsAndMessage
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.show

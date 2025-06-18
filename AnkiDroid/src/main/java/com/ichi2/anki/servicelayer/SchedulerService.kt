@@ -20,10 +20,10 @@ import androidx.fragment.app.FragmentActivity
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.backend.undoableOp
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.withProgress
 import com.ichi2.libanki.CardId
-import com.ichi2.libanki.undoableOp
 
 suspend fun FragmentActivity.rescheduleCards(
     cardIds: List<CardId>,

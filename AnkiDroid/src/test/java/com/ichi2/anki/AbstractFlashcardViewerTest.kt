@@ -19,6 +19,7 @@ import com.ichi2.anki.AbstractFlashcardViewer.Signal
 import com.ichi2.anki.AbstractFlashcardViewer.Signal.Companion.toSignal
 import com.ichi2.anki.AnkiActivity.Companion.FINISH_ANIMATION_EXTRA
 import com.ichi2.anki.NoteEditor.Companion.NoteEditorCaller
+import com.ichi2.anki.backend.undoableOp
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.preferences.sharedPrefs
@@ -26,7 +27,6 @@ import com.ichi2.anki.reviewer.AutomaticAnswer
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.AutomaticAnswerSettings
 import com.ichi2.anki.servicelayer.LanguageHintService
-import com.ichi2.libanki.undoableOp
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS

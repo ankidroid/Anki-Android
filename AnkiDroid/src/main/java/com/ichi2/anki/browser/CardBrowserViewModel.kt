@@ -37,6 +37,7 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.Flag
 import com.ichi2.anki.PreviewerDestination
+import com.ichi2.anki.backend.undoableOp
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ALL_FIELDS_AS_FIELD
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.TAGS_AS_FIELD
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
@@ -61,7 +62,6 @@ import com.ichi2.libanki.DeckNameId
 import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.QueueType.ManuallyBuried
 import com.ichi2.libanki.QueueType.SiblingBuried
-import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async

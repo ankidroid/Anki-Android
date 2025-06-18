@@ -35,6 +35,7 @@ import com.ichi2.anki.Ease
 import com.ichi2.anki.Flag
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.asyncIO
+import com.ichi2.anki.backend.undoableOp
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.time.TimeManager
@@ -65,7 +66,6 @@ import com.ichi2.libanki.redo
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.sched.CurrentQueueState
 import com.ichi2.libanki.undo
-import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.delay

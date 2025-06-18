@@ -18,7 +18,6 @@ package com.ichi2.testutils
 
 import anki.collection.OpChanges
 import com.ichi2.libanki.ChangeManager
-import com.ichi2.libanki.undoableOp
 import timber.log.Timber
 import kotlin.test.fail
 

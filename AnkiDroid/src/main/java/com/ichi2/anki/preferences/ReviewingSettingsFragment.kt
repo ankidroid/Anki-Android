@@ -20,11 +20,11 @@ import androidx.annotation.VisibleForTesting
 import anki.config.copy
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import com.ichi2.anki.backend.undoableOp
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
-import com.ichi2.libanki.undoableOp
 import com.ichi2.preferences.NumberRangePreferenceCompat
 import com.ichi2.preferences.SliderPreference
 import timber.log.Timber

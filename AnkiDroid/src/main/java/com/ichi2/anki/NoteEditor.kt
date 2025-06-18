@@ -90,6 +90,7 @@ import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLon
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.android.input.shortcut
+import com.ichi2.anki.backend.undoableOp
 import com.ichi2.anki.bottomsheet.ImageOcclusionBottomSheetFragment
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
@@ -157,7 +158,6 @@ import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.libanki.Utils
-import com.ichi2.libanki.undoableOp
 import com.ichi2.themes.Themes
 import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.ClipboardUtil.MEDIA_MIME_TYPES

@@ -21,6 +21,7 @@ import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.asyncIO
+import com.ichi2.anki.backend.undoableOp
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.cardviewer.SingleCardSide
@@ -37,7 +38,6 @@ import com.ichi2.anki.utils.ext.require
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.ChangeManager
-import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest

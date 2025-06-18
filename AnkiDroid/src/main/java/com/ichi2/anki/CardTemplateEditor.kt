@@ -66,6 +66,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
+import com.ichi2.anki.backend.undoableOp
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.ConfirmationDialog
@@ -99,7 +100,6 @@ import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.getStockNotetype
 import com.ichi2.libanki.getStockNotetypeKinds
 import com.ichi2.libanki.restoreNotetypeToStock
-import com.ichi2.libanki.undoableOp
 import com.ichi2.themes.Themes
 import com.ichi2.ui.FixedEditText
 import com.ichi2.ui.FixedTextView

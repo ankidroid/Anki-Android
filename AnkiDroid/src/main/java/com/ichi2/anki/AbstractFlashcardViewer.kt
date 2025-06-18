@@ -85,6 +85,7 @@ import com.ichi2.anki.AbstractFlashcardViewer.Signal.Companion.toSignal
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
+import com.ichi2.anki.backend.undoableOp
 import com.ichi2.anki.cardviewer.AndroidCardRenderContext
 import com.ichi2.anki.cardviewer.AndroidCardRenderContext.Companion.createInstance
 import com.ichi2.anki.cardviewer.CardMediaPlayer
@@ -144,7 +145,6 @@ import com.ichi2.libanki.Sound.getAvTag
 import com.ichi2.libanki.SoundOrVideoTag
 import com.ichi2.libanki.TTSTag
 import com.ichi2.libanki.Utils
-import com.ichi2.libanki.undoableOp
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.ui.FixedEditText
