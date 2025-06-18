@@ -15,32 +15,30 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.utils
+package com.ichi2.anki.common.json
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.hamcrest.CoreMatchers
-import org.hamcrest.MatcherAssert
-import org.hamcrest.Matchers
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.lessThan
 import org.junit.Test
-import org.junit.runner.RunWith
 
 class JSONNamedObject(
     override val name: String,
 ) : NamedObject
 
-@RunWith(AndroidJUnit4::class)
+/** Tests [NamedJSONComparator] */
 class NamedJSONComparatorTest {
     @Test
     fun checkIfReturnsCorrectValueForSameNames() {
         val firstObject = JSONNamedObject("TestName")
         val secondObject = JSONNamedObject("TestName")
-        MatcherAssert.assertThat(NamedJSONComparator.INSTANCE.compare(firstObject, secondObject), CoreMatchers.equalTo(0))
+        assertThat(NamedJSONComparator.INSTANCE.compare(firstObject, secondObject), equalTo(0))
     }
 
     @Test
     fun checkIfReturnsCorrectValueForDifferentNames() {
         val firstObject = JSONNamedObject("TestName1")
         val secondObject = JSONNamedObject("TestName2")
-        MatcherAssert.assertThat(NamedJSONComparator.INSTANCE.compare(firstObject, secondObject), Matchers.lessThan(0))
+        assertThat(NamedJSONComparator.INSTANCE.compare(firstObject, secondObject), lessThan(0))
     }
 }
