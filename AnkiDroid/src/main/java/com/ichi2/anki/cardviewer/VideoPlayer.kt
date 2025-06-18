@@ -16,7 +16,7 @@
 
 package com.ichi2.anki.cardviewer
 
-import androidx.core.text.htmlEncode
+import com.ichi2.anki.common.utils.htmlEncode
 import com.ichi2.libanki.AvRef
 import com.ichi2.libanki.SoundOrVideoTag
 import kotlinx.coroutines.CancellableContinuation

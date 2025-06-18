@@ -25,8 +25,8 @@
 
 package com.ichi2.libanki
 
-import androidx.core.text.htmlEncode
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.common.utils.htmlEncode
 import com.ichi2.anki.preferences.getHidePlayAudioButtons
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput

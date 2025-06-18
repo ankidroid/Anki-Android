@@ -15,7 +15,7 @@
  */
 package com.ichi2.utils
 
-import androidx.core.text.htmlEncode
+import com.ichi2.anki.common.utils.htmlEncode
 
 object HtmlUtils {
     // #5188 - compat.fromHtml converts newlines into spaces.
