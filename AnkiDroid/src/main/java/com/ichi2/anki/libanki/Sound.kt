@@ -25,6 +25,7 @@
 
 package com.ichi2.libanki
 
+import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.NotInLibAnki
 import org.intellij.lang.annotations.Language
 import org.jetbrains.annotations.VisibleForTesting

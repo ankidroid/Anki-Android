@@ -22,7 +22,6 @@ import androidx.annotation.VisibleForTesting
 import anki.notes.NoteFieldsCheckResponse
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.common.utils.emptyStringArray
-import com.ichi2.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
@@ -107,44 +106,6 @@ class Note : Cloneable {
     fun cardIds(col: Collection): List<Long> = col.cardIdsOfNote(nid = id)
 
     fun cards(col: Collection): List<Card> = cardIds(col).map { col.getCard(it) }
-
-    @LibAnkiAlias("ephemeral_card")
-    fun ephemeralCard(
-        col: Collection,
-        ord: Int = 0,
-        customNoteType: NotetypeJson? = null,
-        customTemplate: CardTemplate? = null,
-        fillEmpty: Boolean = false,
-        deckId: DeckId = DEFAULT_DECK_ID,
-    ): Card {
-        val card = Card(col, id = null)
-        card.ord = ord
-        card.did = deckId
-
-        val model = customNoteType ?: notetype
-        val template =
-            if (customTemplate != null) {
-                customTemplate.deepClone()
-            } else {
-                val index = if (model.isStd) ord else 0
-                model.templates[index]
-            }
-        // may differ in cloze case
-        template.setOrd(card.ord)
-
-        val output =
-            TemplateManager.TemplateRenderContext
-                .fromCardLayout(
-                    note = this,
-                    card = card,
-                    notetype = model,
-                    template = template,
-                    fillEmpty = fillEmpty,
-                ).render(col)
-        card.renderOutput = output
-        card.note = this
-        return card
-    }
 
     /** The first card, assuming it exists. */
     @CheckResult

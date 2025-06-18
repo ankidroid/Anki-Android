@@ -25,6 +25,7 @@ import com.ichi2.anki.servicelayer.LanguageHint
 import com.ichi2.anki.servicelayer.LanguageHintService.languageHint
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.question
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
 import java.util.regex.Matcher

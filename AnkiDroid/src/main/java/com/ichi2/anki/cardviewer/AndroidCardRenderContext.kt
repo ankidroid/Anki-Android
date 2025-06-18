@@ -25,6 +25,9 @@ import com.ichi2.anki.reviewer.ReviewerCustomFonts
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
+import com.ichi2.libanki.answer
+import com.ichi2.libanki.question
+import com.ichi2.libanki.renderOutput
 import com.ichi2.libanki.template.MathJax
 import timber.log.Timber
 

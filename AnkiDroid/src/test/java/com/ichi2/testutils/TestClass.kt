@@ -33,7 +33,9 @@ import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.QueueType
+import com.ichi2.libanki.answer
 import com.ichi2.libanki.exception.ConfirmModSchemaException
+import com.ichi2.libanki.question
 import com.ichi2.testutils.ext.addNote
 import com.ichi2.utils.LanguageUtil
 import kotlinx.coroutines.Dispatchers

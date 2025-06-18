@@ -56,8 +56,11 @@ import com.ichi2.libanki.Notetypes.Companion.isModelNew
 import com.ichi2.libanki.Sound.replaceWithSoundTags
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.Utils
+import com.ichi2.libanki.answer
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.exception.EmptyMediaException
+import com.ichi2.libanki.question
+import com.ichi2.libanki.renderOutput
 import com.ichi2.libanki.sched.DeckNode
 import com.ichi2.libanki.sched.Ease
 import com.ichi2.utils.FileUtil

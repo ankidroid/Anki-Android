@@ -34,6 +34,7 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.TTSTag
+import com.ichi2.libanki.question
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
 import com.ichi2.utils.message
 import com.ichi2.utils.positiveButton

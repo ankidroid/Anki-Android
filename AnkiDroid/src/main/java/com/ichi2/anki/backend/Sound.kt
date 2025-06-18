@@ -32,7 +32,9 @@ import com.ichi2.libanki.SoundOrVideoTag
 import com.ichi2.libanki.SoundOrVideoTag.Type
 import com.ichi2.libanki.TTSTag
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
+import com.ichi2.libanki.answerAvTags
 import com.ichi2.libanki.getFileUri
+import com.ichi2.libanki.questionAvTags
 import org.intellij.lang.annotations.Language
 import org.jetbrains.annotations.VisibleForTesting
 import java.io.File

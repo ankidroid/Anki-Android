@@ -21,6 +21,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 
+// TODO: Split this between libAnki and AnkiDroid
 @RunWith(AndroidJUnit4::class)
 class UtilsTest {
     @Test
@@ -44,7 +45,7 @@ class UtilsTest {
             assertEquals(
                 s.replace("\n", "\\n") + " should be removed.",
                 "",
-                Utils.stripHTML(s),
+                stripHTML(s),
             )
         }
     }
@@ -64,7 +65,7 @@ class UtilsTest {
             assertEquals(
                 s.replace("\n", "\\n") + " should be removed.",
                 "",
-                Utils.stripHTML(s),
+                stripHTML(s),
             )
         }
     }
@@ -72,7 +73,7 @@ class UtilsTest {
     @Test
     fun test_stripSpecialFields_will_remove_type() {
         val input = "test\n\n[[type:Back]]"
-        val output = Utils.stripSpecialFields(input)
+        val output = stripSpecialFields(input)
         assertEquals(
             "type field should be removed",
             "test\n\n",
@@ -83,7 +84,7 @@ class UtilsTest {
     @Test
     fun test_stripSpecialFields_will_remove_avRef() {
         val input = "test\n\n[anki:play:q:0]"
-        val output = Utils.stripSpecialFields(input)
+        val output = stripSpecialFields(input)
         assertEquals(
             "avRef field should be removed",
             "test\n\n",

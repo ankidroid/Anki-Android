@@ -35,6 +35,9 @@ import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.PostRequestHandler
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.TtsPlayer
+import com.ichi2.libanki.answer
+import com.ichi2.libanki.question
+import com.ichi2.libanki.renderOutput
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

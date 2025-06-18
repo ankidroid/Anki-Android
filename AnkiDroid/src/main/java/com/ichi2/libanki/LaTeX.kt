@@ -147,5 +147,5 @@ object LaTeX {
     /**
      * Convert entities and fix newlines.
      */
-    private fun latexFromHtml(latex: String): String = Utils.stripHTML(latex.replace("<br( /)?>|<div>".toRegex(), "\n"))
+    private fun latexFromHtml(latex: String): String = stripHTML(latex.replace("<br( /)?>|<div>".toRegex(), "\n"))
 }

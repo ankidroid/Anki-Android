@@ -144,8 +144,10 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.SoundOrVideoTag
 import com.ichi2.libanki.TTSTag
-import com.ichi2.libanki.Utils
+import com.ichi2.libanki.question
+import com.ichi2.libanki.renderOutput
 import com.ichi2.libanki.sched.Ease
+import com.ichi2.libanki.stripHTMLAndSpecialFields
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.ui.FixedEditText
@@ -796,7 +798,7 @@ abstract class AbstractFlashcardViewer :
                 text =
                     resources.getString(
                         R.string.delete_note_message,
-                        Utils.stripHTMLAndSpecialFields(currentCard!!.question(getColUnsafe, true)).trim(),
+                        stripHTMLAndSpecialFields(currentCard!!.question(getColUnsafe, true)).trim(),
                     ),
             )
             positiveButton(R.string.dialog_positive_delete) {

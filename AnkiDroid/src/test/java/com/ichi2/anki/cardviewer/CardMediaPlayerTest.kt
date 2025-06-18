@@ -26,6 +26,7 @@ import com.ichi2.libanki.AvTag
 import com.ichi2.libanki.SoundOrVideoTag
 import com.ichi2.libanki.TemplateManager
 import com.ichi2.libanki.TtsPlayer
+import com.ichi2.libanki.renderOutput
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.TestException
 import io.mockk.coEvery
@@ -34,7 +35,7 @@ import io.mockk.coVerifyOrder
 import io.mockk.coVerifySequence
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkObject
+import io.mockk.mockkStatic
 import io.mockk.verify
 import kotlinx.coroutines.CompletableDeferred
 import org.hamcrest.MatcherAssert.assertThat
@@ -229,7 +230,7 @@ class CardMediaPlayerTest : JvmTest() {
         autoplay: Boolean?,
     ) {
         val card = addBasicNote().firstCard()
-        mockkObject(card)
+        mockkStatic("com.ichi2.libanki.CardUtilsKt")
 
         every { card.renderOutput(any()) } answers {
             TemplateManager.TemplateRenderContext.TemplateRenderOutput(

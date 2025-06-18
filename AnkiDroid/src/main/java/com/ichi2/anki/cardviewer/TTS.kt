@@ -27,7 +27,8 @@ import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.TTSTag
-import com.ichi2.libanki.Utils
+import com.ichi2.libanki.question
+import com.ichi2.libanki.stripHTML
 import com.ichi2.libanki.template.TemplateFilters
 
 class TTS {
@@ -97,7 +98,7 @@ class TTS {
     ): String {
         val clozeReplacement = context.getString(R.string.reviewer_tts_cloze_spoken_replacement)
         val clozeReplaced = text.replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, clozeReplacement)
-        return Utils.stripHTML(clozeReplaced)
+        return stripHTML(clozeReplaced)
     }
 
     fun initialize(

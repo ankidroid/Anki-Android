@@ -43,6 +43,7 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.SoundOrVideoTag
 import com.ichi2.libanki.TTSTag
 import com.ichi2.libanki.TtsPlayer
+import com.ichi2.libanki.renderOutput
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred

@@ -165,37 +165,6 @@ open class Card : Cloneable {
             this@Card.desiredRetention?.let { desiredRetention = it }
         }
 
-    @LibAnkiAlias("question")
-    fun question(
-        col: Collection,
-        reload: Boolean = false,
-        browser: Boolean = false,
-    ): String = renderOutput(col, reload, browser).questionAndStyle()
-
-    @LibAnkiAlias("answer")
-    fun answer(col: Collection): String = renderOutput(col).answerAndStyle()
-
-    @LibAnkiAlias("question_av_tags")
-    fun questionAvTags(col: Collection): List<AvTag> = renderOutput(col).questionAvTags
-
-    @LibAnkiAlias("answer_av_tags")
-    fun answerAvTags(col: Collection): List<AvTag> = renderOutput(col).answerAvTags
-
-    /**
-     * @throws net.ankiweb.rsdroid.exceptions.BackendInvalidInputException: If the card does not exist
-     */
-    @LibAnkiAlias("render_output")
-    open fun renderOutput(
-        col: Collection,
-        reload: Boolean = false,
-        browser: Boolean = false,
-    ): TemplateRenderOutput {
-        if (renderOutput == null || reload) {
-            renderOutput = TemplateManager.TemplateRenderContext.fromExistingCard(col, this, browser).render(col)
-        }
-        return renderOutput!!
-    }
-
     @LibAnkiAlias("note")
     open fun note(
         col: Collection,

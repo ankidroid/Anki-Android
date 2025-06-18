@@ -3,6 +3,7 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.libanki.question
 import com.ichi2.libanki.template.MathJax
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat

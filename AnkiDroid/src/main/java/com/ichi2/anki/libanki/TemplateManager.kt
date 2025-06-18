@@ -22,13 +22,11 @@
 
 package com.ichi2.libanki
 
-import com.ichi2.anki.common.annotations.NeedsTest
-import com.ichi2.libanki.TemplateManager.PartiallyRenderedCard.Companion.avTagsToNative
+import androidx.annotation.VisibleForTesting
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.utils.append
 import com.ichi2.libanki.utils.len
-import net.ankiweb.rsdroid.exceptions.BackendTemplateException
 
 private typealias Union<A, B> = Pair<A, B>
 private typealias TemplateReplacementList = MutableList<Union<String?, TemplateManager.TemplateReplacement?>>
@@ -130,12 +128,14 @@ class TemplateManager {
         private var _note: Note = note
 
         @Suppress("ktlint:standard:backing-property-naming")
-        private var _browser: Boolean = browser
+        @VisibleForTesting
+        var _browser: Boolean = browser
 
         @Suppress("ktlint:standard:backing-property-naming")
         private var _template: CardTemplate? = template
 
-        private var noteType: NotetypeJson = notetype ?: note.notetype
+        @VisibleForTesting
+        var noteType: NotetypeJson = notetype ?: note.notetype
 
         companion object {
             fun fromExistingCard(
@@ -170,45 +170,6 @@ class TemplateManager {
         fun note() = _note
 
         fun noteType() = noteType
-
-        @NeedsTest(
-            "TTS tags `fieldText` is correctly extracted when sources are parsed to file scheme",
-        )
-        fun render(col: Collection): TemplateRenderOutput {
-            val partial: PartiallyRenderedCard
-            try {
-                partial = partiallyRender(col)
-            } catch (e: BackendTemplateException) {
-                return TemplateRenderOutput(
-                    questionText = e.localizedMessage ?: e.toString(),
-                    answerText = e.localizedMessage ?: e.toString(),
-                    questionAvTags = emptyList(),
-                    answerAvTags = emptyList(),
-                )
-            }
-
-            val qtext = applyCustomFilters(partial.qnodes, this, frontSide = null)
-            val qout = col.backend.extractAvTags(text = qtext, questionSide = true)
-            var qoutText = qout.text
-
-            val atext = applyCustomFilters(partial.anodes, this, frontSide = qout.text)
-            val aout = col.backend.extractAvTags(text = atext, questionSide = false)
-            var aoutText = aout.text
-
-            if (!_browser) {
-                val svg = noteType.latexsvg
-                qoutText = LaTeX.mungeQA(qout.text, col, svg)
-                aoutText = LaTeX.mungeQA(aout.text, col, svg)
-            }
-
-            return TemplateRenderOutput(
-                questionText = qoutText,
-                answerText = aoutText,
-                questionAvTags = avTagsToNative(qout.avTagsList),
-                answerAvTags = avTagsToNative(aout.avTagsList),
-                css = noteType().css,
-            )
-        }
 
         fun partiallyRender(col: Collection): PartiallyRenderedCard {
             val proto =
