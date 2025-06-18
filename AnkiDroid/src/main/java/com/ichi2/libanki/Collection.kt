@@ -1279,45 +1279,6 @@ class Collection(
         interval: Int,
     ): Int = backend.fuzzDelta(cardId = cardId, interval = interval)
 
-    @NotInLibAnki
-    fun getImageForOcclusionRaw(input: ByteArray): ByteArray = backend.getImageForOcclusionRaw(input = input)
-
-    @NotInLibAnki
-    fun getImageOcclusionNoteRaw(input: ByteArray): ByteArray = backend.getImageOcclusionNoteRaw(input = input)
-
-    @NotInLibAnki
-    fun getImageOcclusionFieldsRaw(input: ByteArray): ByteArray = backend.getImageOcclusionFieldsRaw(input = input)
-
-    @NotInLibAnki
-    fun addImageOcclusionNoteRaw(input: ByteArray): ByteArray = backend.addImageOcclusionNoteRaw(input = input)
-
-    @NotInLibAnki
-    fun updateImageOcclusionNoteRaw(input: ByteArray): ByteArray = backend.updateImageOcclusionNoteRaw(input = input)
-
-    @NotInLibAnki
-    fun congratsInfoRaw(input: ByteArray): ByteArray = backend.congratsInfoRaw(input = input)
-
-    @NotInLibAnki
-    fun latestProgressRaw(input: ByteArray): ByteArray = backend.latestProgressRaw(input = input)
-
-    @NotInLibAnki
-    fun getSchedulingStatesWithContextRaw(input: ByteArray): ByteArray = backend.getSchedulingStatesWithContextRaw(input = input)
-
-    @NotInLibAnki
-    fun setSchedulingStatesRaw(input: ByteArray): ByteArray = backend.setSchedulingStatesRaw(input = input)
-
-    @NotInLibAnki
-    fun getChangeNotetypeInfoRaw(input: ByteArray): ByteArray = backend.getChangeNotetypeInfoRaw(input = input)
-
-    @NotInLibAnki
-    fun changeNotetypeRaw(input: ByteArray): ByteArray = backend.changeNotetypeRaw(input = input)
-
-    @NotInLibAnki
-    fun importJsonStringRaw(input: ByteArray): ByteArray = backend.importJsonStringRaw(input = input)
-
-    @NotInLibAnki
-    fun importJsonFileRaw(input: ByteArray): ByteArray = backend.importJsonFileRaw(input = input)
-
     /*
      * Timeboxing
      * ***********************************************************
@@ -1361,6 +1322,49 @@ class Collection(
             null
         }
     }
+
+    /*
+     * Raw methods used by Anki Pages
+     * ***********************************************************
+     * Not upstream: methods for communication between the Svelte UI and backend
+     * These methods should be blocking (e.g. `latestProgress` should directly use the backend)
+     */
+
+    @NotInLibAnki
+    fun getImageForOcclusionRaw(input: ByteArray): ByteArray = backend.getImageForOcclusionRaw(input = input)
+
+    @NotInLibAnki
+    fun getImageOcclusionNoteRaw(input: ByteArray): ByteArray = backend.getImageOcclusionNoteRaw(input = input)
+
+    @NotInLibAnki
+    fun getImageOcclusionFieldsRaw(input: ByteArray): ByteArray = backend.getImageOcclusionFieldsRaw(input = input)
+
+    @NotInLibAnki
+    fun addImageOcclusionNoteRaw(input: ByteArray): ByteArray = backend.addImageOcclusionNoteRaw(input = input)
+
+    @NotInLibAnki
+    fun updateImageOcclusionNoteRaw(input: ByteArray): ByteArray = backend.updateImageOcclusionNoteRaw(input = input)
+
+    @NotInLibAnki
+    fun congratsInfoRaw(input: ByteArray): ByteArray = backend.congratsInfoRaw(input = input)
+
+    @NotInLibAnki
+    fun getSchedulingStatesWithContextRaw(input: ByteArray): ByteArray = backend.getSchedulingStatesWithContextRaw(input = input)
+
+    @NotInLibAnki
+    fun setSchedulingStatesRaw(input: ByteArray): ByteArray = backend.setSchedulingStatesRaw(input = input)
+
+    @NotInLibAnki
+    fun getChangeNotetypeInfoRaw(input: ByteArray): ByteArray = backend.getChangeNotetypeInfoRaw(input = input)
+
+    @NotInLibAnki
+    fun changeNotetypeRaw(input: ByteArray): ByteArray = backend.changeNotetypeRaw(input = input)
+
+    @NotInLibAnki
+    fun importJsonStringRaw(input: ByteArray): ByteArray = backend.importJsonStringRaw(input = input)
+
+    @NotInLibAnki
+    fun importJsonFileRaw(input: ByteArray): ByteArray = backend.importJsonFileRaw(input = input)
 }
 
 @NotInLibAnki
