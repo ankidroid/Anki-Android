@@ -48,6 +48,7 @@ import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SortType
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.utils.ext.normalizeForSearch
@@ -61,7 +62,6 @@ import com.ichi2.libanki.DeckNameId
 import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.QueueType.ManuallyBuried
 import com.ichi2.libanki.QueueType.SiblingBuried
-import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async

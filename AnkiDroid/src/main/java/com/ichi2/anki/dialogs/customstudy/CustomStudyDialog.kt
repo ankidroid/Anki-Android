@@ -63,6 +63,7 @@ import com.ichi2.anki.dialogs.customstudy.TagLimitFragment.Companion.KEY_EXCLUDE
 import com.ichi2.anki.dialogs.customstudy.TagLimitFragment.Companion.KEY_INCLUDED_TAGS
 import com.ichi2.anki.dialogs.customstudy.TagLimitFragment.Companion.REQUEST_CUSTOM_STUDY_TAGS
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
@@ -72,7 +73,6 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withProgress
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.BundleUtils.getNullableInt
 import com.ichi2.utils.bundleOfNotNull
 import com.ichi2.utils.cancelable

@@ -36,6 +36,7 @@ import com.ichi2.anki.cardviewer.ViewerCommand.MARK
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.PreferenceTestUtils
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.ActionButtonStatus
@@ -47,7 +48,6 @@ import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.sched.Ease
-import com.ichi2.libanki.undoableOp
 import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS

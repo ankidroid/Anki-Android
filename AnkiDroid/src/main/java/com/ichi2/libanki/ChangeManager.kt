@@ -35,11 +35,8 @@ import anki.collection.OpChangesWithCount
 import anki.collection.OpChangesWithId
 import anki.collection.opChanges
 import anki.import_export.ImportResponse
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.utils.ext.ifNotZero
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
@@ -140,17 +137,3 @@ object ChangeManager {
             studyQueues = true
         }
 }
-
-/** Wrap a routine that returns OpChanges* or similar undo info with this
- * to notify change subscribers of the changes. */
-suspend fun <T : Any> undoableOp(
-    handler: Any? = null,
-    block: Collection.() -> T,
-): T =
-    withCol {
-        block()
-    }.also {
-        withContext(Dispatchers.Main) {
-            ChangeManager.notifySubscribers(it, handler)
-        }
-    }

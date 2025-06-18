@@ -97,6 +97,7 @@ import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.scheduling.ForgetCardsDialog
@@ -116,7 +117,6 @@ import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.SortOrder
-import com.ichi2.libanki.undoableOp
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.TagsUtil.getUpdatedTags

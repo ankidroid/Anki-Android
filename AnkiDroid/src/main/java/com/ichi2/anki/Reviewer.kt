@@ -75,6 +75,7 @@ import com.ichi2.anki.multimedia.audio.AudioRecordingController.Companion.setEdi
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.Companion.tempAudioPath
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.RecordingState
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.AnkiServer.Companion.ANKIDROID_JS_PREFIX
 import com.ichi2.anki.pages.AnkiServer.Companion.ANKI_PREFIX
 import com.ichi2.anki.pages.CardInfoDestination
@@ -115,7 +116,6 @@ import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.sched.CurrentQueueState
 import com.ichi2.libanki.sched.Ease
-import com.ichi2.libanki.undoableOp
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay

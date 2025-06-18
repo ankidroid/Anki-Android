@@ -30,13 +30,13 @@ import com.ichi2.anki.browser.BrowserDestination
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.notetype.ManageNoteTypesDestination
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.reviewreminders.ScheduleRemindersDestination
 import com.ichi2.anki.utils.Destination
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.utils.extend
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow

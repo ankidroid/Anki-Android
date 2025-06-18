@@ -33,6 +33,7 @@ import com.ichi2.anki.multimediacard.fields.ImageField
 import com.ichi2.anki.multimediacard.fields.MediaClipField
 import com.ichi2.anki.multimediacard.fields.TextField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Note
@@ -40,7 +41,6 @@ import com.ichi2.libanki.NoteTypeId
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.exception.EmptyMediaException
-import com.ichi2.libanki.undoableOp
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File

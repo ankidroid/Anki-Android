@@ -39,6 +39,7 @@ import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.pages.DeckOptionsDestination
@@ -66,7 +67,6 @@ import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.sched.CurrentQueueState
 import com.ichi2.libanki.sched.Ease
 import com.ichi2.libanki.undo
-import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.delay
