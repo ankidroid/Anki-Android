@@ -28,8 +28,8 @@ import android.preference.Preference
 import android.preference.PreferenceCategory
 import androidx.core.content.edit
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.ext.stringIterable
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.preferences.StepsPreference.Companion.convertFromJSON
 import com.ichi2.preferences.StepsPreference.Companion.convertToJSON

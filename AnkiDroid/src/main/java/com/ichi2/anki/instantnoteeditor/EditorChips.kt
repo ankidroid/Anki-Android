@@ -27,9 +27,9 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.dialogs.IntegerDialog
 import com.ichi2.anki.utils.ext.showDialogFragment
-import com.ichi2.annotations.NeedsTest
 import timber.log.Timber
 
 /**

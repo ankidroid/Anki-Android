@@ -30,9 +30,9 @@ import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.MimeTypeUtils
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.title
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber

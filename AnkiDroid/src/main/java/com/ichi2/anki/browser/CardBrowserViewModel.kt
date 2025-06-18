@@ -40,6 +40,7 @@ import com.ichi2.anki.PreviewerDestination
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ALL_FIELDS_AS_FIELD
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.TAGS_AS_FIELD
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.export.ExportDialogFragment.ExportType
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.model.CardStateFilter
@@ -51,7 +52,6 @@ import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.utils.ext.normalizeForSearch
 import com.ichi2.anki.utils.ext.setUserFlagForCards
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.CardType

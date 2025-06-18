@@ -27,13 +27,13 @@ import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ichi2.anki.R
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.multimedia.MultimediaBottomSheet.MultimediaAction.OPEN_CAMERA
 import com.ichi2.anki.multimedia.MultimediaBottomSheet.MultimediaAction.OPEN_DRAWING
 import com.ichi2.anki.multimedia.MultimediaBottomSheet.MultimediaAction.SELECT_AUDIO_FILE
 import com.ichi2.anki.multimedia.MultimediaBottomSheet.MultimediaAction.SELECT_AUDIO_RECORDING
 import com.ichi2.anki.multimedia.MultimediaBottomSheet.MultimediaAction.SELECT_IMAGE_FILE
 import com.ichi2.anki.multimedia.MultimediaBottomSheet.MultimediaAction.SELECT_VIDEO_FILE
-import com.ichi2.annotations.NeedsTest
 
 /**
  * A BottomSheetDialogFragment class that provides options for selecting multimedia actions.

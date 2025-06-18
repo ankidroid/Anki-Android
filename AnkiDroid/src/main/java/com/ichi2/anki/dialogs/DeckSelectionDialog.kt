@@ -42,11 +42,11 @@ import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DecksArrayAdapter.DecksFilter
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.showThemedToast
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.DeckNameId
 import com.ichi2.libanki.sched.DeckNode

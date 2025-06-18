@@ -27,8 +27,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.OnContextAndLongClickListener
 import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.R
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.utils.ext.findViewById
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.ui.CheckBoxTriStates
 import com.ichi2.ui.CheckBoxTriStates.State.CHECKED
 import com.ichi2.ui.CheckBoxTriStates.State.INDETERMINATE

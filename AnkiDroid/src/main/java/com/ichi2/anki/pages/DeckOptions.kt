@@ -33,10 +33,10 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.ProgressContext
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.withProgress
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.updateDeckConfigsRaw

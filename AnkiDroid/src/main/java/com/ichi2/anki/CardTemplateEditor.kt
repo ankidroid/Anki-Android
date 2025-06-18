@@ -66,6 +66,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
@@ -85,7 +86,6 @@ import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.postDelayed
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.libanki.CardTemplates
 import com.ichi2.libanki.Collection

@@ -37,10 +37,10 @@ import com.ichi2.anki.browser.BrowserColumnSelectionRecyclerItem.ColumnItem
 import com.ichi2.anki.browser.BrowserColumnSelectionRecyclerItem.UsageItem
 import com.ichi2.anki.browser.ColumnUsage.ACTIVE
 import com.ichi2.anki.browser.ColumnUsage.AVAILABLE
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.annotations.NeedsTest
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 

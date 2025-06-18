@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2022 David Allison <davidallisongithub@gmail.com>
+ *  Copyright (c) 2023
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -14,23 +14,12 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.annotations
+package com.ichi2.anki.common.annotations
 
 /**
- * Use when code needs unit tests
+ * Use when code is duplicated and will be refactored at a later date
  *
- * This annotation is intended to:
- * 1. Be used with all new code contributions if a test is not provided to:
- *    * Show new contributors that we care about testing without delaying their first commits
- *    * Ensure the spec is written with the code fresh in mind
- *    * Ensure the requirement doesn't go stale in a GitHub issue
- *
- * For the future:
- * 2. Let maintainers prioritize tests in terms of difficulty and priority
- * 3. List 'good first tests' for new contributors (Google Summer of Code, etc...)
- * 4. List 'small chunks' of work for shorter periods of maintainer attention
- *
- * @param value the explanation for why the test is required.
+ * @param value the explanation for why the code is duplicated.
  */
 @Target(
     AnnotationTarget.CLASS,
@@ -43,6 +32,6 @@ package com.ichi2.annotations
 @Repeatable
 @Retention(AnnotationRetention.SOURCE)
 @MustBeDocumented
-annotation class NeedsTest(
+annotation class DuplicatedCode(
     val value: String,
 )

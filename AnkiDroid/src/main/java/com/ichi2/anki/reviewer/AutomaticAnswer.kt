@@ -21,12 +21,12 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.reviewer.AnswerButtons.AGAIN
 import com.ichi2.anki.reviewer.AnswerButtons.GOOD
 import com.ichi2.anki.reviewer.AnswerButtons.HARD
 import com.ichi2.anki.reviewer.AutomaticAnswerAction.Companion.answerAction
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckConfig
 import com.ichi2.libanki.DeckConfig.Companion.ANSWER_ACTION

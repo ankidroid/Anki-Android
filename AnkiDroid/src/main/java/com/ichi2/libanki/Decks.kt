@@ -36,8 +36,8 @@ import anki.decks.DeckTreeNode
 import anki.decks.FilteredDeckForUpdate
 import anki.decks.SetDeckCollapsedRequest
 import anki.decks.copy
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.ext.jsonObjectIterable
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.BackendUtils.toJsonBytes
 import com.ichi2.libanki.utils.LibAnkiAlias

@@ -9,12 +9,12 @@ import androidx.core.app.PendingIntentCompat
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.R
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.Time
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.showThemedToast
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import timber.log.Timber
 import java.util.Calendar

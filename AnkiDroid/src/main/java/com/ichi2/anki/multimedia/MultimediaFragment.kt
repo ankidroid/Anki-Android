@@ -37,11 +37,11 @@ import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.IField
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.show
 import kotlinx.coroutines.flow.collectLatest

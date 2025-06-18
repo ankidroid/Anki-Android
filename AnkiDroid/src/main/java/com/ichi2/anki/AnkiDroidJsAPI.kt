@@ -36,13 +36,13 @@ import com.ichi2.anki.AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_SUSPEND_NOTE
 import com.ichi2.anki.AnkiDroidJsAPIConstants.flagCommands
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.ext.stringIterable
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.servicelayer.rescheduleCards
 import com.ichi2.anki.servicelayer.resetCards
 import com.ichi2.anki.snackbar.setMaxLines
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks

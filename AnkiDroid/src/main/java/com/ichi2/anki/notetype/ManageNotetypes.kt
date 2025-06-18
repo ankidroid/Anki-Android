@@ -34,12 +34,12 @@ import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NoteTypeFieldEditor
 import com.ichi2.anki.R
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.userAcceptsSchemaChange
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.withProgress
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.getNotetype
 import com.ichi2.libanki.getNotetypeNameIdUseCount
 import com.ichi2.libanki.getNotetypeNames

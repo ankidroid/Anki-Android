@@ -27,8 +27,8 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.scheduling.SetDueDateViewModel.Tab
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.CardId
 import com.ichi2.utils.positiveButton
 import org.hamcrest.MatcherAssert.assertThat

@@ -31,6 +31,7 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.Companion.KEY_SELECTED_LOCALE
@@ -42,7 +43,6 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Fields
 import com.ichi2.libanki.NotetypeJson
