@@ -20,7 +20,7 @@ package com.ichi2.libanki
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.TimeManager
-import com.ichi2.anki.utils.ext.ifZero
+import com.ichi2.anki.common.utils.ext.ifZero
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
