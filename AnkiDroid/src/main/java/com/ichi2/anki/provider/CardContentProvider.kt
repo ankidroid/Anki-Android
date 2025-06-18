@@ -46,12 +46,14 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
+import com.ichi2.libanki.Field
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.NoteTypeId
 import com.ichi2.libanki.NoteTypeKind
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
+import com.ichi2.libanki.Notetypes.Companion.isModelNew
 import com.ichi2.libanki.Sound.replaceWithSoundTags
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.Utils
@@ -61,6 +63,7 @@ import com.ichi2.libanki.sched.DeckNode
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.FileUtil.internalizeUri
 import com.ichi2.utils.Permissions.arePermissionsDefinedInManifest
+import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import org.json.JSONArray
 import org.json.JSONException
@@ -1381,4 +1384,41 @@ private fun NotetypeJson.getEmptyCardIds(col: Collection): List<CardId> {
         .notesList
         .filter { noteIdsOfType.contains(it.noteId) }
         .flatMap { it.cardIdsList }
+}
+
+/**
+ * similar to Anki's addField; but thanks to assumption that
+ * model is new, it never has to throw
+ * [ConfirmModSchemaException]
+ */
+@RustCleanup("Since Kotlin doesn't have throws, this may not be needed")
+fun Notetypes.addFieldInNewNoteType(
+    notetype: NotetypeJson,
+    field: Field,
+) {
+    check(isModelNew(notetype)) { "Model was assumed to be new, but is not" }
+    try {
+        addFieldLegacy(notetype, field)
+    } catch (e: ConfirmModSchemaException) {
+        Timber.w(e, "Unexpected mod schema")
+        CrashReportService.sendExceptionReport(e, "addFieldInNewModel: Unexpected mod schema")
+        throw IllegalStateException("ConfirmModSchemaException should not be thrown", e)
+    }
+}
+
+fun Notetypes.addTemplateInNewNoteType(
+    notetype: NotetypeJson,
+    template: CardTemplate,
+) {
+    // similar to addTemplate, but doesn't throw exception;
+    // asserting the model is new.
+    check(isModelNew(notetype)) { "Model was assumed to be new, but is not" }
+
+    try {
+        addTemplate(notetype, template)
+    } catch (e: ConfirmModSchemaException) {
+        Timber.w(e, "Unexpected mod schema")
+        CrashReportService.sendExceptionReport(e, "addTemplateInNewModel: Unexpected mod schema")
+        throw IllegalStateException("ConfirmModSchemaException should not be thrown", e)
+    }
 }

@@ -28,6 +28,8 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.Ease
 import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.provider.addFieldInNewNoteType
+import com.ichi2.anki.provider.addTemplateInNewNoteType
 import com.ichi2.anki.provider.pureAnswer
 import com.ichi2.anki.testutil.DatabaseUtils.cursorFillWindow
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission

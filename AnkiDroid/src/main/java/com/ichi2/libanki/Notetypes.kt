@@ -41,14 +41,12 @@ import anki.notetypes.NotetypeNameIdUseCount
 import anki.notetypes.StockNotetype
 import anki.notetypes.restoreNotetypeToStockRequest
 import com.google.protobuf.ByteString
-import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.libanki.Utils.checksum
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.BackendUtils.fromJsonBytes
 import com.ichi2.libanki.backend.BackendUtils.toJsonBytes
-import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.append
@@ -422,43 +420,6 @@ class Notetypes(
     ) {
         renameField(notetype, field, newName)
         save(notetype)
-    }
-
-    /**
-     * similar to Anki's addField; but thanks to assumption that
-     * model is new, it never has to throw
-     * [ConfirmModSchemaException]
-     */
-    @RustCleanup("Since Kotlin doesn't have throws, this may not be needed")
-    fun addFieldInNewNoteType(
-        notetype: NotetypeJson,
-        field: Field,
-    ) {
-        check(isModelNew(notetype)) { "Model was assumed to be new, but is not" }
-        try {
-            addFieldLegacy(notetype, field)
-        } catch (e: ConfirmModSchemaException) {
-            Timber.w(e, "Unexpected mod schema")
-            CrashReportService.sendExceptionReport(e, "addFieldInNewModel: Unexpected mod schema")
-            throw IllegalStateException("ConfirmModSchemaException should not be thrown", e)
-        }
-    }
-
-    fun addTemplateInNewNoteType(
-        notetype: NotetypeJson,
-        template: CardTemplate,
-    ) {
-        // similar to addTemplate, but doesn't throw exception;
-        // asserting the model is new.
-        check(isModelNew(notetype)) { "Model was assumed to be new, but is not" }
-
-        try {
-            addTemplate(notetype, template)
-        } catch (e: ConfirmModSchemaException) {
-            Timber.w(e, "Unexpected mod schema")
-            CrashReportService.sendExceptionReport(e, "addTemplateInNewModel: Unexpected mod schema")
-            throw IllegalStateException("ConfirmModSchemaException should not be thrown", e)
-        }
     }
 
     fun addFieldModChanged(

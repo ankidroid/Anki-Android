@@ -21,6 +21,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.isCollectionEmpty
+import com.ichi2.anki.provider.addFieldInNewNoteType
+import com.ichi2.anki.provider.addTemplateInNewNoteType
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardType
 import com.ichi2.libanki.Collection
@@ -32,7 +34,6 @@ import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.exception.ConfirmModSchemaException
-import com.ichi2.libanki.utils.set
 import com.ichi2.testutils.ext.addNote
 import com.ichi2.utils.LanguageUtil
 import kotlinx.coroutines.Dispatchers
