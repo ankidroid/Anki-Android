@@ -295,6 +295,9 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                     setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 }
         }
+
+        val canChooseTags = deferredDefaults.getCompleted().tags.isNotEmpty() && contextMenuOption == STUDY_TAGS
+
         val editText =
             v.findViewById<EditText>(R.id.custom_study_details_edittext2).apply {
                 setText(defaultValue)
@@ -307,7 +310,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 }
             }
         val positiveBtnLabel =
-            if (contextMenuOption == STUDY_TAGS) {
+            if (canChooseTags) {
                 TR.customStudyChooseTags().toSentenceCase(requireContext(), R.string.sentence_choose_tags)
             } else {
                 getString(R.string.dialog_ok)
@@ -349,7 +352,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                         allowSubmit = true
                         return@setOnClickListener
                     }
-                if (contextMenuOption == STUDY_TAGS) {
+                if (canChooseTags) {
                     // mark allowSubmit as true because, if the user cancels TagLimitFragment, when
                     // we come back we wouldn't be able to trigger again TagLimitFragment
                     allowSubmit = true
