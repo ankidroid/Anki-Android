@@ -28,6 +28,7 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.Ease
 import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.common.utils.emptyStringArray
 import com.ichi2.anki.provider.addFieldInNewNoteType
 import com.ichi2.anki.provider.addTemplateInNewNoteType
 import com.ichi2.anki.provider.pureAnswer
@@ -50,7 +51,6 @@ import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.getStockNotetype
 import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.testutils.common.assertThrows
-import com.ichi2.utils.emptyStringArray
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString

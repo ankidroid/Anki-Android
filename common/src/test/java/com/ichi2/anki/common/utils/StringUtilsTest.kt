@@ -13,15 +13,17 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.utils
 
-import com.ichi2.utils.StringUtil.toTitleCase
+package com.ichi2.anki.common.utils
+
+import com.ichi2.anki.common.utils.StringUtils.toTitleCase
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
-import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 
-class StringUtilTest {
+/** Test of [toTitleCase] */
+class StringUtilsTest {
     @Test
     fun toTitleCase_null_is_null() {
         assertThat(toTitleCase(null), nullValue())
