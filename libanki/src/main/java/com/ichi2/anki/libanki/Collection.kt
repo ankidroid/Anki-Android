@@ -1100,6 +1100,25 @@ class Collection(
     }
 
     /*
+     * DB maintenance
+     * ***********************************************************
+     */
+
+    /**
+     * Fixes and optimizes the database. If any errors are encountered, a list of
+     * problems is returned. Throws if DB is unreadable.
+     */
+    @RustCleanup("doesn't match upstream")
+    @LibAnkiAlias("fix_integrity")
+    fun fixIntegrity(): List<String> = backend.checkDatabase()
+
+    @LibAnkiAlias("optimize")
+    fun optimize() {
+        db.execute("vacuum")
+        db.execute("analyze")
+    }
+
+    /*
      * ***********************************************************
      */
 
@@ -1109,10 +1128,6 @@ class Collection(
     @NotInLibAnki
     @CheckResult
     fun filterToValidCards(cards: LongArray?): List<Long> = db.queryLongList("select id from cards where id in " + ids2str(cards))
-
-    /** Fixes and optimizes the database. If any errors are encountered, a list of
-     * problems is returned. Throws if DB is unreadable. */
-    fun fixIntegrity(): List<String> = backend.checkDatabase()
 
     /** Change the flag color of the specified cards. flag=0 removes flag. */
     @CheckResult
