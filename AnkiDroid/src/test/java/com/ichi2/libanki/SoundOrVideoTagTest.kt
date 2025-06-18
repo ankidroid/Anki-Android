@@ -17,6 +17,7 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.multimedia.getType
 import com.ichi2.libanki.SoundOrVideoTag.Type
 import com.ichi2.libanki.SoundOrVideoTag.Type.VIDEO
 import com.ichi2.testutils.JvmTest
