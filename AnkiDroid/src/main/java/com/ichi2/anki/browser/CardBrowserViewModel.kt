@@ -61,6 +61,7 @@ import com.ichi2.libanki.DeckNameId
 import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.QueueType.ManuallyBuried
 import com.ichi2.libanki.QueueType.SiblingBuried
+import com.ichi2.libanki.notesOfCards
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job

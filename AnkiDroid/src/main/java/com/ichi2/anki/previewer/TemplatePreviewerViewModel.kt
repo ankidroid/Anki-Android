@@ -34,6 +34,7 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.NotetypeJson
+import com.ichi2.libanki.clozeNumbersInNote
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableStateFlow
