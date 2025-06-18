@@ -42,7 +42,6 @@
 package com.ichi2.anki.common.utils.ext
 
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.utils.deepClone
 import org.json.JSONArray
 import org.json.JSONObject
 

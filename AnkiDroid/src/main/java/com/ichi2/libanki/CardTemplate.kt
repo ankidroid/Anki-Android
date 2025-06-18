@@ -18,7 +18,6 @@ package com.ichi2.libanki
 
 import com.ichi2.anki.common.utils.ext.deepClone
 import com.ichi2.utils.JSONObjectHolder
-import com.ichi2.utils.deepClone
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 
