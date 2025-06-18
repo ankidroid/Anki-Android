@@ -13,11 +13,12 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.libanki.backend.model
+package com.ichi2.anki.libanki.backend.model
 
+import anki.generic.Empty
 import anki.search.SortOrderKt.builtin
 import anki.search.sortOrder
-import com.ichi2.libanki.SortOrder
+import com.ichi2.anki.libanki.SortOrder
 
 // Conversion functions from SortOrder to anki.search.SortOrder
 
@@ -25,7 +26,7 @@ fun SortOrder.toProtoBuf() =
     sortOrder {
         when (this@toProtoBuf) {
             is SortOrder.NoOrdering -> {
-                none = anki.generic.Empty.getDefaultInstance()
+                none = Empty.getDefaultInstance()
             }
 
             is SortOrder.AfterSqlOrderBy ->

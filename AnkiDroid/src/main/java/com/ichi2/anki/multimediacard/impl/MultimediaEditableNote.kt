@@ -19,9 +19,9 @@
 
 package com.ichi2.anki.multimediacard.impl
 
+import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.IField
-import com.ichi2.libanki.NoteTypeId
 import org.acra.util.IOUtils
 import java.util.ArrayList
 

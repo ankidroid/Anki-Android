@@ -16,8 +16,12 @@
 
 package com.ichi2.libanki
 
-import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
-import com.ichi2.libanki.utils.LibAnkiAlias
+import com.ichi2.anki.libanki.AvTag
+import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.TemplateManager
+import com.ichi2.anki.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
+import com.ichi2.anki.libanki.utils.LibAnkiAlias
 
 @LibAnkiAlias("question")
 fun Card.question(

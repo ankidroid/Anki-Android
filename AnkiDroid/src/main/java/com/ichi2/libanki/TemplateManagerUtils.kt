@@ -17,9 +17,11 @@
 package com.ichi2.libanki
 
 import com.ichi2.anki.common.annotations.NeedsTest
-import com.ichi2.libanki.TemplateManager.PartiallyRenderedCard
-import com.ichi2.libanki.TemplateManager.PartiallyRenderedCard.Companion.avTagsToNative
-import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.TemplateManager
+import com.ichi2.anki.libanki.TemplateManager.PartiallyRenderedCard
+import com.ichi2.anki.libanki.TemplateManager.PartiallyRenderedCard.Companion.avTagsToNative
+import com.ichi2.anki.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import net.ankiweb.rsdroid.exceptions.BackendTemplateException
 
 @NeedsTest(

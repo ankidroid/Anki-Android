@@ -16,8 +16,9 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.libanki.sched.Counts
-import com.ichi2.libanki.sched.Ease
+import com.ichi2.anki.libanki.sched.Counts
+import com.ichi2.anki.libanki.sched.Ease
+import com.ichi2.anki.libanki.undo
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.ext.addNote
 import org.hamcrest.MatcherAssert.assertThat

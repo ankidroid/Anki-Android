@@ -25,7 +25,7 @@ import android.database.Cursor
 import android.database.SQLException
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.libanki.DB
+import com.ichi2.anki.libanki.DB
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
 import timber.log.Timber

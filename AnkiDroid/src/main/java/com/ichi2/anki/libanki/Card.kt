@@ -15,17 +15,19 @@
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import androidx.annotation.VisibleForTesting
 import anki.cards.FsrsMemoryState
+import anki.cards.card
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.ext.ifZero
-import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
-import com.ichi2.libanki.utils.LibAnkiAlias
-import com.ichi2.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
+import com.ichi2.anki.libanki.utils.LibAnkiAlias
+import com.ichi2.anki.libanki.utils.NotInLibAnki
 import net.ankiweb.rsdroid.RustCleanup
+import kotlin.math.min
 
 /**
  * A Card is the ultimate entity subject to review; it encapsulates the scheduling parameters (from which to derive
@@ -143,7 +145,7 @@ open class Card : Cloneable {
 
     @LibAnkiAlias("_to_backend_card")
     fun toBackendCard() =
-        anki.cards.card {
+        card {
             id = this@Card.id
             noteId = nid
             deckId = did
@@ -215,7 +217,7 @@ open class Card : Cloneable {
     fun timeTaken(col: Collection): Int {
         // Indeed an int. Difference between two big numbers is still small.
         val total = (TimeManager.time.intTimeMS() - timerStarted).toInt()
-        return kotlin.math.min(total, timeLimit(col))
+        return min(total, timeLimit(col))
     }
 
     /**

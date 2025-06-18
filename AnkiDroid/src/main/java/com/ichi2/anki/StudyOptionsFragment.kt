@@ -41,14 +41,14 @@ import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.Decks
+import com.ichi2.anki.libanki.Utils
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.description
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.libanki.ChangeManager
-import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Decks
-import com.ichi2.libanki.Utils
 import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

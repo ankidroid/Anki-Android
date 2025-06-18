@@ -28,7 +28,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.CreateDeckDialog.DeckDialogType
 import com.ichi2.anki.dialogs.utils.input
-import com.ichi2.libanki.DeckId
+import com.ichi2.anki.libanki.DeckId
 import com.ichi2.utils.getInputTextLayout
 import com.ichi2.utils.positiveButton
 import okhttp3.internal.closeQuietly

@@ -20,14 +20,13 @@ import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import androidx.core.content.edit
 import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.libanki.BrowserConfig
+import com.ichi2.anki.libanki.BrowserConfig.ACTIVE_CARD_COLUMNS_KEY
+import com.ichi2.anki.libanki.BrowserConfig.ACTIVE_NOTE_COLUMNS_KEY
+import com.ichi2.anki.libanki.BrowserDefaults
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
-import com.ichi2.libanki.BrowserConfig
-import com.ichi2.libanki.BrowserConfig.ACTIVE_CARD_COLUMNS_KEY
-import com.ichi2.libanki.BrowserConfig.ACTIVE_NOTE_COLUMNS_KEY
-import com.ichi2.libanki.BrowserDefaults
-import net.ankiweb.rsdroid.Backend
 import timber.log.Timber
 
 /**

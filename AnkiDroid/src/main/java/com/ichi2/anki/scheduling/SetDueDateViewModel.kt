@@ -22,9 +22,9 @@ import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.backend.undoableOp
-import com.ichi2.libanki.CardId
-import com.ichi2.libanki.CardType
-import com.ichi2.libanki.sched.SetDueDateDays
+import com.ichi2.anki.libanki.CardId
+import com.ichi2.anki.libanki.CardType
+import com.ichi2.anki.libanki.sched.SetDueDateDays
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update

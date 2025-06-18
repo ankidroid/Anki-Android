@@ -16,8 +16,15 @@
 
 package com.ichi2.libanki
 
-import com.ichi2.libanki.Consts.DEFAULT_DECK_ID
-import com.ichi2.libanki.utils.LibAnkiAlias
+import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.CardTemplate
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.Note
+import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.anki.libanki.TemplateManager
+import com.ichi2.anki.libanki.utils.LibAnkiAlias
 
 @LibAnkiAlias("ephemeral_card")
 fun Note.ephemeralCard(

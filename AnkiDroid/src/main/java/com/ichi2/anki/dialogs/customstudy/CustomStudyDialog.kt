@@ -64,6 +64,8 @@ import com.ichi2.anki.dialogs.customstudy.TagLimitFragment.Companion.KEY_EXCLUDE
 import com.ichi2.anki.dialogs.customstudy.TagLimitFragment.Companion.KEY_INCLUDED_TAGS
 import com.ichi2.anki.dialogs.customstudy.TagLimitFragment.Companion.REQUEST_CUSTOM_STUDY_TAGS
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.libanki.Deck
+import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
@@ -71,8 +73,6 @@ import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withProgress
-import com.ichi2.libanki.Deck
-import com.ichi2.libanki.DeckId
 import com.ichi2.utils.BundleUtils.getNullableInt
 import com.ichi2.utils.bundleOfNotNull
 import com.ichi2.utils.cancelable
@@ -111,9 +111,9 @@ import timber.log.Timber
  *
  * ## Links
  * * [https://docs.ankiweb.net/filtered-decks.html#custom-study](https://docs.ankiweb.net/filtered-decks.html#custom-study)
- * * [com.ichi2.libanki.sched.Scheduler.customStudyDefaults]
+ * * [com.ichi2.anki.libanki.sched.Scheduler.customStudyDefaults]
  *     * [sched.proto: CustomStudyDefaultsResponse](https://github.com/search?q=repo%3Aankitects%2Fanki+CustomStudyDefaultsResponse+language%3A%22Protocol+Buffer%22&type=code&l=Protocol+Buffer)
- * * [com.ichi2.libanki.sched.Scheduler.customStudy]
+ * * [com.ichi2.anki.libanki.sched.Scheduler.customStudy]
  *     * [sched.proto: CustomStudyRequest](https://github.com/search?q=repo%3Aankitects%2Fanki+CustomStudyRequest+language%3A%22Protocol+Buffer%22&type=code&l=Protocol+Buffer)
  * * [https://github.com/ankitects/anki/blob/main/qt/aqt/customstudy.py](https://github.com/ankitects/anki/blob/main/qt/aqt/customstudy.py)
  * * [https://github.com/ankitects/anki/blob/main/qt/aqt/taglimit](https://github.com/ankitects/anki/blob/main/qt/aqt/taglimit.py)

@@ -31,10 +31,10 @@ import com.ichi2.anki.cardviewer.MediaErrorBehavior
 import com.ichi2.anki.cardviewer.MediaErrorHandler
 import com.ichi2.anki.cardviewer.MediaErrorListener
 import com.ichi2.anki.launchCatchingIO
+import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.TtsPlayer
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.PostRequestHandler
-import com.ichi2.libanki.Card
-import com.ichi2.libanki.TtsPlayer
 import com.ichi2.libanki.answer
 import com.ichi2.libanki.question
 import com.ichi2.libanki.renderOutput

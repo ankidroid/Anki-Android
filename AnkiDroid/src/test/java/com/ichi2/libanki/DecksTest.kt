@@ -17,7 +17,9 @@ package com.ichi2.libanki
 
 import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.Decks.Companion.CURRENT_DECK
+import com.ichi2.anki.libanki.NoteId
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.ext.addNote

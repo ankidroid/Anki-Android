@@ -22,10 +22,10 @@ import com.ichi2.anki.cardviewer.MediaErrorBehavior.CONTINUE_MEDIA
 import com.ichi2.anki.cardviewer.MediaErrorBehavior.RETRY_MEDIA
 import com.ichi2.anki.cardviewer.MediaErrorBehavior.STOP_MEDIA
 import com.ichi2.anki.cardviewer.SingleCardSide.BACK
-import com.ichi2.libanki.AvTag
-import com.ichi2.libanki.SoundOrVideoTag
-import com.ichi2.libanki.TemplateManager
-import com.ichi2.libanki.TtsPlayer
+import com.ichi2.anki.libanki.AvTag
+import com.ichi2.anki.libanki.SoundOrVideoTag
+import com.ichi2.anki.libanki.TemplateManager
+import com.ichi2.anki.libanki.TtsPlayer
 import com.ichi2.libanki.renderOutput
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.TestException

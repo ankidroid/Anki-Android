@@ -31,8 +31,8 @@ import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShorcuts
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.isCollectionEmpty
+import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.pages.DeckOptions
-import com.ichi2.libanki.DeckId
 import com.ichi2.widget.ACTION_UPDATE_WIDGET
 import com.ichi2.widget.AnalyticsWidgetProvider
 import com.ichi2.widget.cancelRecurringAlarm

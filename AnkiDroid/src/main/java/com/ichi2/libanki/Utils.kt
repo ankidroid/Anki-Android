@@ -20,7 +20,7 @@
 package com.ichi2.libanki
 
 import androidx.core.text.HtmlCompat
-import com.ichi2.libanki.Utils.stripHTMLScriptAndStyleTags
+import com.ichi2.anki.libanki.Utils.stripHTMLScriptAndStyleTags
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 

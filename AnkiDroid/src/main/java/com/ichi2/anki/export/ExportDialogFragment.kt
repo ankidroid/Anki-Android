@@ -50,10 +50,10 @@ import com.ichi2.anki.exportApkgPackage
 import com.ichi2.anki.exportCollectionPackage
 import com.ichi2.anki.exportSelectedCards
 import com.ichi2.anki.exportSelectedNotes
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.ui.BasicItemSelectedListener
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.DeckNameId
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import kotlinx.coroutines.launch

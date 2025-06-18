@@ -23,12 +23,12 @@ import com.ichi2.anki.dialogs.DeckPickerContextMenu
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.dialogs.utils.title
 import com.ichi2.anki.exception.UnknownDatabaseVersionException
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.Storage
+import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
-import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.Storage
-import com.ichi2.libanki.sched.Ease
 import com.ichi2.testutils.BackendEmulatingOpenConflict
 import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.testutils.DbUtils
@@ -793,7 +793,7 @@ class DeckPickerTest : RobolectricTest() {
         ),
         ;
 
-        fun isCollection(col: com.ichi2.libanki.Collection): Boolean = col.decks.byName(deckName) != null
+        fun isCollection(col: com.ichi2.anki.libanki.Collection): Boolean = col.decks.byName(deckName) != null
     }
 
     private class DeckPickerEx : DeckPicker() {

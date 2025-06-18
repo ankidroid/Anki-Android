@@ -76,6 +76,19 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog.Companion.REQUEST_FIELD_INSERT
+import com.ichi2.anki.libanki.CardTemplate
+import com.ichi2.anki.libanki.CardTemplates
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.Note
+import com.ichi2.anki.libanki.NoteId
+import com.ichi2.anki.libanki.NoteTypeId
+import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.anki.libanki.Notetypes
+import com.ichi2.anki.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
+import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
+import com.ichi2.anki.libanki.getStockNotetype
+import com.ichi2.anki.libanki.getStockNotetypeKinds
+import com.ichi2.anki.libanki.restoreNotetypeToStock
 import com.ichi2.anki.notetype.RenameCardTemplateDialog
 import com.ichi2.anki.notetype.RepositionCardTemplateDialog
 import com.ichi2.anki.preferences.sharedPrefs
@@ -88,18 +101,6 @@ import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.postDelayed
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import com.ichi2.libanki.CardTemplates
-import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Note
-import com.ichi2.libanki.NoteId
-import com.ichi2.libanki.NoteTypeId
-import com.ichi2.libanki.NotetypeJson
-import com.ichi2.libanki.Notetypes
-import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
-import com.ichi2.libanki.exception.ConfirmModSchemaException
-import com.ichi2.libanki.getStockNotetype
-import com.ichi2.libanki.getStockNotetypeKinds
-import com.ichi2.libanki.restoreNotetypeToStock
 import com.ichi2.themes.Themes
 import com.ichi2.ui.FixedEditText
 import com.ichi2.ui.FixedTextView
@@ -118,7 +119,7 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.time.Duration.Companion.seconds
 
-private typealias BackendCardTemplate = com.ichi2.libanki.CardTemplate
+private typealias BackendCardTemplate = CardTemplate
 
 /**
  * Allows the user to view the template for the current note type

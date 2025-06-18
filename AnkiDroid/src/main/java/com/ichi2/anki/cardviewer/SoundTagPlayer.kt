@@ -31,7 +31,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.backend.getType
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.ensureActive
-import com.ichi2.libanki.SoundOrVideoTag
+import com.ichi2.anki.libanki.SoundOrVideoTag
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber

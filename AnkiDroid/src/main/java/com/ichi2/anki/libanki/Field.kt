@@ -14,10 +14,10 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import com.ichi2.anki.common.utils.ext.getStringOrNull
-import com.ichi2.libanki.utils.JSONObjectHolder
+import com.ichi2.anki.libanki.utils.JSONObjectHolder
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 

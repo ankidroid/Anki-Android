@@ -15,16 +15,16 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import anki.notes.NoteFieldsCheckResponse
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.common.utils.emptyStringArray
-import com.ichi2.libanki.backend.model.toBackendNote
-import com.ichi2.libanki.utils.LibAnkiAlias
-import com.ichi2.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.backend.model.toBackendNote
+import com.ichi2.anki.libanki.utils.LibAnkiAlias
+import com.ichi2.anki.libanki.utils.NotInLibAnki
 import java.util.regex.Pattern
 
 @KotlinCleanup("lots to do")
@@ -97,7 +97,7 @@ class Note : Cloneable {
         // the lists in the protobuf are NOT mutable, even though they cast to MutableList
         tags = note.tagsList.toMutableList()
         fields = note.fieldsList.toMutableList()
-        fMap = Notetypes.fieldMap(notetype)
+        fMap = Notetypes.Companion.fieldMap(notetype)
     }
 
     @NotInLibAnki

@@ -18,9 +18,9 @@ package com.ichi2.anki.cardviewer
 
 import androidx.annotation.CheckResult
 import com.ichi2.anki.CardUtils
-import com.ichi2.libanki.Card
-import com.ichi2.libanki.Collection
-import com.ichi2.libanki.DeckId
+import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.DeckId
 import timber.log.Timber
 
 /**

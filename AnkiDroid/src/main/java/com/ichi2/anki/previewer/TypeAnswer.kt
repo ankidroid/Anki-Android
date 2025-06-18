@@ -18,10 +18,10 @@ package com.ichi2.anki.previewer
 import android.os.LocaleList
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.Field
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.anki.servicelayer.LanguageHintService.languageHint
-import com.ichi2.libanki.Card
-import com.ichi2.libanki.Field
 import org.intellij.lang.annotations.Language
 import org.jetbrains.annotations.VisibleForTesting
 

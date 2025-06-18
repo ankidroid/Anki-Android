@@ -21,10 +21,10 @@ import android.content.res.Resources
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
+import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.servicelayer.LanguageHint
 import com.ichi2.anki.servicelayer.LanguageHintService.languageHint
-import com.ichi2.libanki.Card
-import com.ichi2.libanki.Collection
 import com.ichi2.libanki.question
 import org.intellij.lang.annotations.Language
 import timber.log.Timber

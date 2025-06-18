@@ -47,6 +47,8 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.libanki.CardId
+import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.scheduling.SetDueDateViewModel.Tab
 import com.ichi2.anki.servicelayer.getFSRSStatus
@@ -55,8 +57,6 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.withProgress
-import com.ichi2.libanki.CardId
-import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.utils.create
 import com.ichi2.utils.dp
 import com.ichi2.utils.negativeButton

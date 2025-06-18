@@ -18,8 +18,8 @@ package com.ichi2.anki.pages
 import android.content.Context
 import android.content.Intent
 import com.ichi2.anki.R
+import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.utils.Destination
-import com.ichi2.libanki.CardId
 
 data class CardInfoDestination(
     val cardId: CardId,

@@ -14,9 +14,9 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
-import com.ichi2.libanki.utils.JSONContainer
+import com.ichi2.anki.libanki.utils.JSONContainer
 import org.json.JSONArray
 import org.json.JSONObject
 

@@ -18,6 +18,8 @@
 package com.ichi2.libanki.utils
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.libanki.utils.NamedJSONComparator
+import com.ichi2.anki.libanki.utils.NamedObject
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
@@ -28,7 +30,7 @@ class JSONNamedObject(
     override val name: String,
 ) : NamedObject
 
-/** Tests [NamedJSONComparator] */
+/** Tests [com.ichi2.anki.libanki.utils.NamedJSONComparator] */
 @RunWith(AndroidJUnit4::class)
 class NamedJSONComparatorTest {
     @Test

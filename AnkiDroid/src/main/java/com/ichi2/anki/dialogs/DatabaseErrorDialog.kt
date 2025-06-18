@@ -56,11 +56,11 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.INCOMP
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
 import com.ichi2.anki.isLoggedIn
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
-import com.ichi2.libanki.Consts
 import com.ichi2.utils.UiUtil.makeBold
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.copyToClipboard

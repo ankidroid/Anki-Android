@@ -28,9 +28,9 @@ import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.NoteEditor.Companion.NoteEditorCaller
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.browser.CardBrowserViewModel
+import com.ichi2.anki.libanki.CardId
+import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.Destination
-import com.ichi2.libanki.CardId
-import com.ichi2.libanki.DeckId
 
 /**
  * Defines various configurations for opening the NoteEditor fragment with specific data or actions.

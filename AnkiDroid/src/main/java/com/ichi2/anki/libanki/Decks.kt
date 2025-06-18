@@ -23,7 +23,7 @@
  *
  */
 
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import androidx.annotation.CheckResult
 import anki.collection.OpChanges
@@ -38,12 +38,12 @@ import anki.decks.SetDeckCollapsedRequest
 import anki.decks.copy
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.ext.jsonObjectIterable
-import com.ichi2.libanki.backend.BackendUtils
-import com.ichi2.libanki.backend.BackendUtils.toJsonBytes
-import com.ichi2.libanki.utils.LibAnkiAlias
-import com.ichi2.libanki.utils.NotInLibAnki
-import com.ichi2.libanki.utils.append
-import com.ichi2.libanki.utils.len
+import com.ichi2.anki.libanki.backend.BackendUtils
+import com.ichi2.anki.libanki.backend.BackendUtils.toJsonBytes
+import com.ichi2.anki.libanki.utils.LibAnkiAlias
+import com.ichi2.anki.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.utils.append
+import com.ichi2.anki.libanki.utils.len
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
@@ -110,7 +110,7 @@ class Decks(
     private fun addDeckLegacy(deck: Deck): OpChangesWithId {
         val changes =
             col.backend.addDeckLegacy(
-                json = BackendUtils.toJsonBytes(deck),
+                json = toJsonBytes(deck),
             )
         deck.id = changes.id
         return changes
@@ -268,7 +268,7 @@ class Decks(
 
     @LibAnkiAlias("card_count")
     fun cardCount(
-        vararg decks: DeckId,
+        vararg decks: Long,
         includeSubdecks: Boolean,
     ): Int {
         val dids = decks.toMutableSet()
@@ -311,14 +311,14 @@ class Decks(
     ) {
         deck.id =
             col.backend.addOrUpdateDeckLegacy(
-                deck = BackendUtils.toJsonBytes(deck),
+                deck = toJsonBytes(deck),
                 preserveUsnAndMtime = preserveUsn,
             )
     }
 
     @LibAnkiAlias("update_dict")
     @Suppress("unused")
-    fun updateDict(deck: Deck): OpChanges = col.backend.updateDeckLegacy(BackendUtils.toJsonBytes(deck))
+    fun updateDict(deck: Deck): OpChanges = col.backend.updateDeckLegacy(toJsonBytes(deck))
 
     /** Rename deck prefix to NAME if not exists. Updates children. */
     @RustCleanup("return OpChanges")

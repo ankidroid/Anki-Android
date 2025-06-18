@@ -15,7 +15,7 @@
  */
 package com.ichi2.libanki
 
-import com.ichi2.libanki.Note.ClozeUtils
+import com.ichi2.anki.libanki.Note.ClozeUtils
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test

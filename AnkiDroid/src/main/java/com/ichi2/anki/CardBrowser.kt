@@ -91,6 +91,10 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.export.ExportDialogFragment
+import com.ichi2.anki.libanki.CardId
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.SortOrder
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
@@ -109,11 +113,7 @@ import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
-import com.ichi2.libanki.CardId
 import com.ichi2.libanki.ChangeManager
-import com.ichi2.libanki.Collection
-import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.SortOrder
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.TagsUtil.getUpdatedTags

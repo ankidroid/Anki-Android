@@ -29,7 +29,7 @@
 
 @file:Suppress("LiftReturnOrAssignment", "FunctionName")
 
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import androidx.annotation.CheckResult
 import anki.collection.OpChanges
@@ -43,14 +43,13 @@ import anki.notetypes.restoreNotetypeToStockRequest
 import com.google.protobuf.ByteString
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.TimeManager
-import com.ichi2.libanki.Utils.checksum
-import com.ichi2.libanki.backend.BackendUtils
-import com.ichi2.libanki.backend.BackendUtils.fromJsonBytes
-import com.ichi2.libanki.backend.BackendUtils.toJsonBytes
-import com.ichi2.libanki.utils.LibAnkiAlias
-import com.ichi2.libanki.utils.NotInLibAnki
-import com.ichi2.libanki.utils.append
-import com.ichi2.libanki.utils.len
+import com.ichi2.anki.libanki.Utils.checksum
+import com.ichi2.anki.libanki.backend.BackendUtils.fromJsonBytes
+import com.ichi2.anki.libanki.backend.BackendUtils.toJsonBytes
+import com.ichi2.anki.libanki.utils.LibAnkiAlias
+import com.ichi2.anki.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.utils.append
+import com.ichi2.anki.libanki.utils.len
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import org.intellij.lang.annotations.Language
@@ -181,7 +180,7 @@ class Notetypes(
             try {
                 nt =
                     NotetypeJson(
-                        BackendUtils.fromJsonBytes(
+                        fromJsonBytes(
                             col.backend.getNotetypeLegacy(id),
                         ),
                     )
@@ -214,7 +213,7 @@ class Notetypes(
 
     fun newBasicNotetype(): NotetypeJson =
         NotetypeJson(
-            BackendUtils.fromJsonBytes(
+            fromJsonBytes(
                 col.backend.getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC),
             ),
         )

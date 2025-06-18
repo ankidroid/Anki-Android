@@ -24,7 +24,7 @@
 // "FunctionName": many libAnki functions used to have leading _s
 @file:Suppress("FunctionName")
 
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
@@ -35,6 +35,7 @@ import anki.collection.OpChangesWithCount
 import anki.config.ConfigKey
 import anki.config.Preferences
 import anki.config.copy
+import anki.notes.DeckAndNotetype
 import anki.search.BrowserColumns
 import anki.search.BrowserRow
 import anki.search.SearchNode
@@ -42,15 +43,15 @@ import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.libanki.Utils.ids2str
-import com.ichi2.libanki.backend.model.toBackendNote
-import com.ichi2.libanki.backend.model.toProtoBuf
-import com.ichi2.libanki.exception.ConfirmModSchemaException
-import com.ichi2.libanki.exception.InvalidSearchException
-import com.ichi2.libanki.sched.DummyScheduler
-import com.ichi2.libanki.sched.Scheduler
-import com.ichi2.libanki.utils.LibAnkiAlias
-import com.ichi2.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.Utils.ids2str
+import com.ichi2.anki.libanki.backend.model.toBackendNote
+import com.ichi2.anki.libanki.backend.model.toProtoBuf
+import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
+import com.ichi2.anki.libanki.exception.InvalidSearchException
+import com.ichi2.anki.libanki.sched.DummyScheduler
+import com.ichi2.anki.libanki.sched.Scheduler
+import com.ichi2.anki.libanki.utils.LibAnkiAlias
+import com.ichi2.anki.libanki.utils.NotInLibAnki
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import timber.log.Timber
@@ -312,7 +313,7 @@ class Collection(
      * @param notetype The model to use for the new note
      * @return The new note
      */
-    fun newNote(notetype: NotetypeJson): Note = Note.fromNotetypeId(this, notetype.id)
+    fun newNote(notetype: NotetypeJson): Note = Note.Companion.fromNotetypeId(this, notetype.id)
 
     /**
      * Cards ******************************************************************** ***************************
@@ -667,7 +668,7 @@ class Collection(
         ordinal: Int,
     ): String = backend.extractClozeForTyping(text = text, ordinal = ordinal)
 
-    fun defaultsForAdding(currentReviewCard: Card? = null): anki.notes.DeckAndNotetype {
+    fun defaultsForAdding(currentReviewCard: Card? = null): DeckAndNotetype {
         val homeDeck = currentReviewCard?.currentDeckId() ?: 0L
         return backend.defaultsForAdding(homeDeckOfCurrentReviewCard = homeDeck)
     }

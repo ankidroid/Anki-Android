@@ -46,10 +46,10 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DecksArrayAdapter.DecksFilter
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.DeckNameId
+import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.showThemedToast
-import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.DeckNameId
-import com.ichi2.libanki.sched.DeckNode
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.utils.TypedFilter
 import com.ichi2.utils.create

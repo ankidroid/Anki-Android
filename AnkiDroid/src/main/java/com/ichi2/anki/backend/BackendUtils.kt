@@ -18,8 +18,8 @@
 package com.ichi2.anki.backend
 
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.libanki.Collection
 import com.ichi2.libanki.ChangeManager
-import com.ichi2.libanki.Collection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

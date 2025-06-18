@@ -21,11 +21,11 @@ import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.ERROR
 import androidx.annotation.CheckResult
+import com.ichi2.anki.libanki.TTSTag
+import com.ichi2.anki.libanki.TtsPlayer
+import com.ichi2.anki.libanki.TtsPlayer.TtsCompletionStatus
+import com.ichi2.anki.libanki.TtsVoice
 import com.ichi2.compat.UtteranceProgressListenerCompat
-import com.ichi2.libanki.TTSTag
-import com.ichi2.libanki.TtsPlayer
-import com.ichi2.libanki.TtsPlayer.TtsCompletionStatus
-import com.ichi2.libanki.TtsVoice
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

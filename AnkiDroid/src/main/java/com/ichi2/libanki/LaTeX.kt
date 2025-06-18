@@ -18,6 +18,9 @@
 package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.Media
+import com.ichi2.anki.libanki.Utils
 import com.ichi2.utils.HtmlUtils.escape
 import java.util.regex.Matcher
 import java.util.regex.Pattern

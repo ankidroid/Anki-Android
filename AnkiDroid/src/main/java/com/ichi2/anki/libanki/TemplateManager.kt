@@ -20,13 +20,16 @@
  *     License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
  */
 
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import androidx.annotation.VisibleForTesting
-import com.ichi2.libanki.backend.BackendUtils
-import com.ichi2.libanki.backend.model.toBackendNote
-import com.ichi2.libanki.utils.append
-import com.ichi2.libanki.utils.len
+import anki.card_rendering.AVTag
+import anki.card_rendering.RenderCardResponse
+import anki.card_rendering.RenderedTemplateNode
+import com.ichi2.anki.libanki.backend.BackendUtils
+import com.ichi2.anki.libanki.backend.model.toBackendNote
+import com.ichi2.anki.libanki.utils.append
+import com.ichi2.anki.libanki.utils.len
 
 private typealias Union<A, B> = Pair<A, B>
 private typealias TemplateReplacementList = MutableList<Union<String?, TemplateManager.TemplateReplacement?>>
@@ -56,17 +59,17 @@ class TemplateManager {
         val anodes: TemplateReplacementList,
     ) {
         companion object {
-            fun fromProto(out: anki.card_rendering.RenderCardResponse): PartiallyRenderedCard {
+            fun fromProto(out: RenderCardResponse): PartiallyRenderedCard {
                 val qnodes = nodesFromProto(out.questionNodesList)
                 val anodes = nodesFromProto(out.answerNodesList)
 
                 return PartiallyRenderedCard(qnodes, anodes)
             }
 
-            fun nodesFromProto(nodes: List<anki.card_rendering.RenderedTemplateNode>): TemplateReplacementList {
+            fun nodesFromProto(nodes: List<RenderedTemplateNode>): TemplateReplacementList {
                 val results: TemplateReplacementList = mutableListOf()
                 for (node in nodes) {
-                    if (node.valueCase == anki.card_rendering.RenderedTemplateNode.ValueCase.TEXT) {
+                    if (node.valueCase == RenderedTemplateNode.ValueCase.TEXT) {
                         results.append(Pair(node.text, null))
                     } else {
                         results.append(
@@ -85,9 +88,9 @@ class TemplateManager {
                 return results
             }
 
-            fun avTagToNative(tag: anki.card_rendering.AVTag): AvTag {
+            fun avTagToNative(tag: AVTag): AvTag {
                 val value = tag.valueCase
-                return if (value == anki.card_rendering.AVTag.ValueCase.SOUND_OR_VIDEO) {
+                return if (value == AVTag.ValueCase.SOUND_OR_VIDEO) {
                     SoundOrVideoTag(filename = tag.soundOrVideo)
                 } else {
                     TTSTag(
@@ -103,7 +106,7 @@ class TemplateManager {
                 }
             }
 
-            fun avTagsToNative(tags: List<anki.card_rendering.AVTag>): List<AvTag> = tags.map { avTagToNative(it) }.toList()
+            fun avTagsToNative(tags: List<AVTag>): List<AvTag> = tags.map { avTagToNative(it) }.toList()
         }
     }
 

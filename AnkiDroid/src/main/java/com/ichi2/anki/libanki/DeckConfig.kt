@@ -14,11 +14,11 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import androidx.annotation.VisibleForTesting
-import com.ichi2.libanki.utils.JSONObjectHolder
-import com.ichi2.libanki.utils.set
+import com.ichi2.anki.libanki.utils.JSONObjectHolder
+import com.ichi2.anki.libanki.utils.set
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber

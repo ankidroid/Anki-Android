@@ -18,9 +18,9 @@ package com.ichi2.anki.ui.windows.reviewer.autoadvance
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.launchCatchingIO
+import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.ui.windows.reviewer.ReviewerViewModel
-import com.ichi2.libanki.Card
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 

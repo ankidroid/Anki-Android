@@ -18,7 +18,7 @@ package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.common.utils.ext.jsonObjectIterable
-import com.ichi2.libanki.utils.insert
+import com.ichi2.anki.libanki.utils.insert
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.collection.IsIterableContainingInOrder.contains

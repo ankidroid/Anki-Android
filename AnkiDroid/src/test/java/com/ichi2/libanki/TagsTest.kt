@@ -16,6 +16,7 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.libanki.Tags
 import com.ichi2.testutils.JvmTest
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse

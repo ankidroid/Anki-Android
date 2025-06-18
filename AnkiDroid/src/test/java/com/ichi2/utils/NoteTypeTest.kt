@@ -18,13 +18,12 @@
 package com.ichi2.utils
 
 import anki.notetypes.StockNotetype
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.anki.libanki.addNotetypeLegacy
+import com.ichi2.anki.libanki.backend.BackendUtils
+import com.ichi2.anki.libanki.getStockNotetype
 import com.ichi2.anki.utils.ext.getAllClozeTextFields
-import com.ichi2.libanki.Collection
-import com.ichi2.libanki.NotetypeJson
-import com.ichi2.libanki.addNotetypeLegacy
-import com.ichi2.libanki.backend.BackendUtils
-import com.ichi2.libanki.getStockNotetype
-import com.ichi2.libanki.utils.set
 import junit.framework.TestCase.assertEquals
 import org.json.JSONObject
 import kotlin.test.Test

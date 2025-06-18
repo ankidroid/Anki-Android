@@ -26,6 +26,13 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.FieldEditText
 import com.ichi2.anki.backend.undoableOp
+import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.Note
+import com.ichi2.anki.libanki.NoteTypeId
+import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.anki.libanki.QueueType
+import com.ichi2.anki.libanki.exception.EmptyMediaException
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.AudioRecordingField
 import com.ichi2.anki.multimediacard.fields.EFieldType
@@ -34,13 +41,6 @@ import com.ichi2.anki.multimediacard.fields.ImageField
 import com.ichi2.anki.multimediacard.fields.MediaClipField
 import com.ichi2.anki.multimediacard.fields.TextField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
-import com.ichi2.libanki.Card
-import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Note
-import com.ichi2.libanki.NoteTypeId
-import com.ichi2.libanki.NotetypeJson
-import com.ichi2.libanki.QueueType
-import com.ichi2.libanki.exception.EmptyMediaException
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File

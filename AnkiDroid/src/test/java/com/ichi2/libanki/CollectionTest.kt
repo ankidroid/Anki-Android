@@ -18,6 +18,7 @@ package com.ichi2.libanki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.notes.NoteFieldsCheckResponse
 import anki.notetypes.StockNotetype
+import com.ichi2.anki.libanki.Notetypes
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.ext.addNote
 import com.ichi2.utils.createBasicNoteType

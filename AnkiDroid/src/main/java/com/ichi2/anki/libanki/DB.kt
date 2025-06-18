@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  */
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import android.database.Cursor
 import android.database.SQLException

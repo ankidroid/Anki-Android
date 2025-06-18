@@ -14,7 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki.template
+package com.ichi2.anki.libanki.template
 
 object TemplateFilters {
     const val CLOZE_DELETION_REPLACEMENT = "[...]"

@@ -19,7 +19,7 @@ package com.ichi2.libanki
 
 import anki.decks.deckTreeNode
 import com.ichi2.anki.deckpicker.filterAndFlattenDisplay
-import com.ichi2.libanki.sched.DeckNode
+import com.ichi2.anki.libanki.sched.DeckNode
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

@@ -14,7 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
@@ -22,12 +22,13 @@ import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_IMAGE_
 import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_UNKNOWN_VALUE
 import com.ichi2.anki.common.utils.ext.deepClone
 import com.ichi2.anki.common.utils.ext.toStringList
-import com.ichi2.libanki.Consts.DEFAULT_DECK_ID
-import com.ichi2.libanki.utils.JSONObjectHolder
-import com.ichi2.libanki.utils.NamedObject
+import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
+import com.ichi2.anki.libanki.utils.JSONObjectHolder
+import com.ichi2.anki.libanki.utils.NamedObject
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import kotlin.collections.iterator
 
 /**
  * Represents a note type, a.k.a. Model.
@@ -63,7 +64,15 @@ value class NotetypeJson(
      * @return model did or default deck id (1) if null
      */
     var did: DeckId
-        get() = if (jsonObject.isNull("did")) DEFAULT_DECK_ID else jsonObject.optLong("did", Consts.DEFAULT_DECK_ID)
+        get() =
+            if (jsonObject.isNull("did")) {
+                DEFAULT_DECK_ID
+            } else {
+                jsonObject.optLong(
+                    "did",
+                    DEFAULT_DECK_ID,
+                )
+            }
         set(value) {
             jsonObject.put("did", value)
         }

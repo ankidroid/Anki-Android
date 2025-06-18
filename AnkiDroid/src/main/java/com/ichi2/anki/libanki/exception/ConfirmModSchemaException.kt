@@ -14,10 +14,9 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki.exception
+package com.ichi2.anki.libanki.exception
 
 import timber.log.Timber
-import java.lang.Exception
 
 class ConfirmModSchemaException : Exception() {
     /**

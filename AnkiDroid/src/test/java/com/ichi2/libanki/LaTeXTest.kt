@@ -16,6 +16,8 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.Media
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo

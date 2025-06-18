@@ -23,10 +23,10 @@
  *    License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
  */
 
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
-import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
-import com.ichi2.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
+import com.ichi2.anki.libanki.utils.NotInLibAnki
 import org.intellij.lang.annotations.Language
 import org.jetbrains.annotations.VisibleForTesting
 import java.io.File

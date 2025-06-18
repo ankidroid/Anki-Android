@@ -26,8 +26,8 @@ import androidx.core.view.isInvisible
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
-import com.ichi2.libanki.Card
-import com.ichi2.libanki.Collection
+import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.Collection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

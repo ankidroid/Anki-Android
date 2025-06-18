@@ -18,6 +18,7 @@ package com.ichi2.libanki
 
 import androidx.annotation.CheckResult
 import com.ichi2.anki.TtsParser.getTextsToRead
+import com.ichi2.anki.libanki.TTSTag
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test

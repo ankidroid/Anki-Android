@@ -14,7 +14,7 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.libanki.sched
+package com.ichi2.anki.libanki.sched
 
 /**
  * [value] should be kept in sync with the [com.ichi2.anki.api.Ease] enum.

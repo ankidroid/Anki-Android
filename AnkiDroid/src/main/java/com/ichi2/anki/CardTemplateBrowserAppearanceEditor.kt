@@ -26,7 +26,7 @@ import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doAfterTextChanged
 import com.ichi2.anki.dialogs.DiscardChangesDialog
-import com.ichi2.libanki.CardTemplate
+import com.ichi2.anki.libanki.CardTemplate
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton

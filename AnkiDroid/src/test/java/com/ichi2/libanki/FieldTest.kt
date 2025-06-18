@@ -17,6 +17,7 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.libanki.Field
 import com.ichi2.testutils.AndroidTest
 import com.ichi2.testutils.EmptyApplication
 import org.intellij.lang.annotations.Language

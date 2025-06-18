@@ -36,10 +36,10 @@ import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.backend.undoableOp
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.updateDeckConfigsRaw
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.withProgress
-import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.updateDeckConfigsRaw
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber

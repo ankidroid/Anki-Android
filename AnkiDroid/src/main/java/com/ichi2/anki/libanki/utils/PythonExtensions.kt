@@ -14,7 +14,7 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.libanki.utils
+package com.ichi2.anki.libanki.utils
 
 import com.ichi2.anki.common.utils.ext.jsonObjectIterable
 import org.json.JSONArray

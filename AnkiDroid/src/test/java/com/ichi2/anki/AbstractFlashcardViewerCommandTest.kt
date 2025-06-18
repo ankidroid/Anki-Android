@@ -26,8 +26,8 @@ import com.ichi2.anki.cardviewer.ViewerCommand.TOGGLE_FLAG_RED
 import com.ichi2.anki.cardviewer.ViewerCommand.TOGGLE_FLAG_TURQUOISE
 import com.ichi2.anki.cardviewer.ViewerCommand.UNSET_FLAG
 import com.ichi2.anki.cardviewer.ViewerRefresh
+import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.utils.ext.flag
-import com.ichi2.libanki.Card
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.notNullValue
