@@ -367,7 +367,8 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 requireActivity().launchCatchingTask {
                     withProgress {
                         try {
-                            customStudy(contextMenuOption, n)
+                            val kind = CustomStudyCardState.entries[selectedStatePosition].kind
+                            customStudy(contextMenuOption, n, kind, emptyList(), emptyList())
                         } finally {
                             requireActivity().dismissAllDialogFragments()
                         }
