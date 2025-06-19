@@ -296,7 +296,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 }
         }
 
-        val canChooseTags = deferredDefaults.getCompleted().tags.isNotEmpty() && contextMenuOption == STUDY_TAGS
+        val canChooseTags = (deferredDefaults.isCompleted || deferredDefaults.getCompleted().tags.isNotEmpty()) && contextMenuOption == STUDY_TAGS
 
         val editText =
             v.findViewById<EditText>(R.id.custom_study_details_edittext2).apply {
