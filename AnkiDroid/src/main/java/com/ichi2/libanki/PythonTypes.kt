@@ -21,11 +21,11 @@ package com.ichi2.libanki
  * https://youtrack.jetbrains.com/issue/KT-24700 is fixed
  */
 
-internal typealias DeckId = Long
-internal typealias CardId = Long
-internal typealias DeckConfigId = Long
-internal typealias NoteId = Long
-internal typealias NoteTypeId = Long
+typealias DeckId = Long
+typealias CardId = Long
+typealias DeckConfigId = Long
+typealias NoteId = Long
+typealias NoteTypeId = Long
 
 /**
  * The number of non-leap seconds which have elapsed since the
