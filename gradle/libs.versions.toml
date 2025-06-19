@@ -58,7 +58,7 @@ androidxViewpager2 = "1.1.0"
 # https://developer.android.com/jetpack/androidx/releases/webkit
 androidxWebkit = "1.14.0"
 # https://developer.android.com/jetpack/androidx/releases/work
-androidxWork = "2.10.1"
+androidxWork = "2.10.2"
 ankiBackend = '0.1.52-anki25.02.7'
 autoService = "1.1.1"
 autoServiceAnnotations = "1.1.1"
