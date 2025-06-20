@@ -172,28 +172,6 @@ class CardBrowserTest : RobolectricTest() {
         }
 
     @Test
-    fun selectNoneIsVisibleOnceSelectAllCalled() =
-        runTest {
-            val browser = browserWithMultipleNotes
-            selectMenuItem(browser, R.id.action_select_all)
-            assertThat(browser.isShowingSelectNone, equalTo(true))
-        }
-
-    @Test
-    fun selectNoneIsVisibleWhenSelectingOne() {
-        val browser = browserWithMultipleNotes
-        selectOneOfManyCards(browser)
-        assertThat(browser.isShowingSelectNone, equalTo(true))
-    }
-
-    @Test
-    fun selectAllIsVisibleWhenSelectingOne() {
-        val browser = browserWithMultipleNotes
-        selectOneOfManyCards(browser)
-        assertThat(browser.isShowingSelectAll, equalTo(true))
-    }
-
-    @Test
     fun testOnDeckSelected() =
         withBrowser(noteCount = 1) {
             // Arrange
@@ -220,24 +198,6 @@ class CardBrowserTest : RobolectricTest() {
         selectOneOfManyCards(browser)
         assertThat(browser.viewModel.isInMultiSelectMode, equalTo(true))
     }
-
-    @Test
-    @Flaky(os = OS.WINDOWS, "Expected `true`, got `false`")
-    fun browserIsInMultiSelectModeWhenSelectingAll() =
-        runTest {
-            val browser = browserWithMultipleNotes
-            selectMenuItem(browser, R.id.action_select_all)
-            assertThat(browser.viewModel.isInMultiSelectMode, equalTo(true))
-        }
-
-    @Test
-    fun browserIsNotInMultiSelectModeWhenSelectingNone() =
-        runTest {
-            val browser = browserWithMultipleNotes
-            selectMenuItem(browser, R.id.action_select_all)
-            selectMenuItem(browser, R.id.action_select_none)
-            assertThat(browser.viewModel.isInMultiSelectMode, equalTo(false))
-        }
 
     @Test
     fun browserDoesNotFailWhenSelectingANonExistingCard() =
@@ -1717,12 +1677,6 @@ val CardBrowser.isShowingSelectAll: Boolean
     get() {
         waitForAsyncTasksToComplete()
         return actionBarMenu?.findItem(R.id.action_select_all)?.isVisible == true
-    }
-
-val CardBrowser.isShowingSelectNone: Boolean
-    get() {
-        waitForAsyncTasksToComplete()
-        return actionBarMenu?.findItem(R.id.action_select_none)?.isVisible == true
     }
 
 val CardBrowser.columnHeadingViews

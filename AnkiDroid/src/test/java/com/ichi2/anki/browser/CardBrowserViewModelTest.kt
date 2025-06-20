@@ -48,6 +48,8 @@ import com.ichi2.anki.browser.CardBrowserColumn.SFLD
 import com.ichi2.anki.browser.CardBrowserColumn.TAGS
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.DeepLink
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.SystemContextMenu
+import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_ALL
+import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_NONE
 import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.export.ExportDialogFragment
@@ -1025,6 +1027,85 @@ class CardBrowserViewModelTest : JvmTest() {
             )
         }
 
+    @Test
+    fun `toggle is 'deselect' if only row is selected`() =
+        runViewModelTest(notes = 1) {
+            this.toggleRowSelectionAtPosition(0)
+            assertThat("toggle selection", flowOfToggleSelectionState.value, equalTo(SELECT_NONE))
+            assertThat("multiselect after toggle", isInMultiSelectMode, equalTo(true))
+        }
+
+    @Test
+    fun `toggle is 'select all' after deselection - multi note`() =
+        runViewModelTest(notes = 2) {
+            this.toggleRowSelectionAtPosition(0)
+            assertThat("toggle selection", flowOfToggleSelectionState.value, equalTo(SELECT_NONE))
+        }
+
+    @Test
+    fun `toggle all - multi note`() =
+        runViewModelTest(notes = 2) {
+            flowOfToggleSelectionState.test {
+                assertThat(awaitItem(), equalTo(SELECT_NONE))
+
+                // select all
+                selectAll()?.join()
+                expectNoEvents()
+                assertThat("multiselect after toggle", isInMultiSelectMode, equalTo(true))
+
+                // select none
+                toggleSelectAllOrNone()?.join()
+                assertThat("toggle selection after select none", awaitItem(), equalTo(SELECT_ALL))
+                assertThat("multiselect after toggle 2", isInMultiSelectMode, equalTo(true))
+
+                // select all manually
+                toggleRowSelectionAtPosition(0).join()
+                expectNoEvents() // remains 'select all'
+
+                // select the last row - emits 'select none'
+                toggleRowSelectionAtPosition(1).join()
+                assertThat("toggle selection after select all manually", awaitItem(), equalTo(SELECT_NONE))
+
+                // end select mode
+                endMultiSelectMode().join()
+                assertThat("multiselect after toggle 3", isInMultiSelectMode, equalTo(false))
+                cancelAndIgnoreRemainingEvents()
+            }
+        }
+
+    @Test
+    fun `toggleSelectAllOrNone - SELECT_ALL if partial selection`() =
+        runViewModelTest(notes = 3) {
+            flowOfToggleSelectionState.test {
+                assertThat("toggle selection defaults to 'none' before selection", awaitItem(), equalTo(SELECT_NONE))
+                toggleRowSelectionAtPosition(0).join()
+                assertThat("toggle selection defaults to 'all' if 1/3 selected", awaitItem(), equalTo(SELECT_ALL))
+                toggleRowSelectionAtPosition(2).join()
+                expectNoEvents() // "toggle selection remains at 'all' if 2/3 selected"
+
+                toggleSelectAllOrNone()?.join()
+                assertThat(selectedRowCount(), equalTo(3))
+                assertThat("toggle selection defaults to 'none' if 3/3 selected", awaitItem(), equalTo(SELECT_NONE))
+            }
+        }
+
+    @Test
+    fun `tap disables selection mode`() {
+        // although a user can 'select 0' with SELECT_NONE and stay in selection mode,
+        // it felt unintuitive to tap a row/checkbox and not have it disable the selection mode
+
+        runViewModelTest(notes = 3) {
+            this.toggleRowSelectionAtPosition(2)
+            this.toggleRowSelectionAtPosition(1)
+            this.toggleRowSelectionAtPosition(0)
+            this.toggleRowSelectionAtPosition(0)
+            this.toggleRowSelectionAtPosition(1)
+            assertThat("selection -> in multiselect", flowOfIsInMultiSelectMode.value, equalTo(true))
+            this.toggleRowSelectionAtPosition(2)
+            assertThat("tap last row -> disable multiselect", flowOfIsInMultiSelectMode.value, equalTo(false))
+        }
+    }
+
     private fun assertDate(str: String?) {
         // 2025-01-09 @ 18:06
         assertNotNull(str)
@@ -1222,3 +1303,5 @@ fun CardBrowserViewModel.setColumn(
 
 val Pair<List<ColumnWithSample>, List<ColumnWithSample>>.allColumns
     get() = this.first + this.second
+
+private fun CardBrowserViewModel.toggleRowSelectionAtPosition(position: Int) = toggleRowSelection(cards[position])
