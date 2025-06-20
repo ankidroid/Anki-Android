@@ -17,11 +17,12 @@ package com.ichi2.anki.cardviewer
 
 import android.content.SharedPreferences
 import android.view.KeyEvent
-import com.ichi2.anki.reviewer.Binding.Companion.keyCode
-import com.ichi2.anki.reviewer.Binding.Companion.unicode
+import com.ichi2.anki.reviewer.Binding.Companion.FORBIDDEN_UNICODE_CHAR
+import com.ichi2.anki.reviewer.Binding.KeyCode
 import com.ichi2.anki.reviewer.Binding.ModifierKeys
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
+import com.ichi2.anki.reviewer.Binding.UnicodeCharacter.Companion.unsafeUnicodeBindingFactory
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableAction
 import com.ichi2.anki.reviewer.ReviewerBinding
@@ -129,7 +130,7 @@ enum class ViewerCommand : MappableAction<ReviewerBinding> {
                 RECORD_VOICE -> listOf(keyCode(KeyEvent.KEYCODE_V, CardSide.BOTH, shift()))
                 SAVE_VOICE -> listOf(keyCode(KeyEvent.KEYCODE_S, CardSide.BOTH, shift()))
                 UNDO -> listOf(keyCode(KeyEvent.KEYCODE_Z, CardSide.BOTH, ctrl()))
-                REDO -> listOf(keyCode(KeyEvent.KEYCODE_Z, CardSide.BOTH, ModifierKeys(shift = true, ctrl = true, alt = false)))
+                REDO -> listOf(keyCode(KeyEvent.KEYCODE_Z, CardSide.BOTH, ModifierKeys(shift = true, ctrl = true)))
                 TOGGLE_FLAG_RED ->
                     listOf(
                         keyCode(KeyEvent.KEYCODE_1, CardSide.BOTH, ctrl()),
@@ -198,12 +199,18 @@ enum class ViewerCommand : MappableAction<ReviewerBinding> {
         keycode: Int,
         side: CardSide,
         keys: ModifierKeys = ModifierKeys.none(),
-    ): ReviewerBinding = ReviewerBinding(keyCode(keys, keycode), side)
+    ): ReviewerBinding = ReviewerBinding(KeyCode(keycode, keys), side)
 
+    /**
+     * The caller must guarantee that [c] is not [FORBIDDEN_UNICODE_CHAR]
+     */
     private fun unicode(
         c: Char,
         side: CardSide,
-    ): ReviewerBinding = ReviewerBinding(unicode(c), side)
+    ): ReviewerBinding {
+        assert(c != FORBIDDEN_UNICODE_CHAR)
+        return ReviewerBinding(unsafeUnicodeBindingFactory(c), side)
+    }
 
     fun interface CommandProcessor {
         /**

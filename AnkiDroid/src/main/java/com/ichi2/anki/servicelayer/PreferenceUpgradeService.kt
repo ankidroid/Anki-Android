@@ -45,7 +45,7 @@ import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.noteeditor.CustomToolbarButton
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.Binding
-import com.ichi2.anki.reviewer.Binding.Companion.keyCode
+import com.ichi2.anki.reviewer.Binding.KeyCode
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.MappableBinding
@@ -367,7 +367,7 @@ object PreferenceUpgradeService {
                 oldGesturePreferenceKey: String,
                 volumeKeyCode: Int,
             ) {
-                upgradeBinding(preferences, oldGesturePreferenceKey, keyCode(volumeKeyCode))
+                upgradeBinding(preferences, oldGesturePreferenceKey, KeyCode(volumeKeyCode))
             }
 
             private fun upgradeGestureToBinding(
@@ -685,10 +685,8 @@ object PreferenceUpgradeService {
             override fun upgrade(preferences: SharedPreferences) {
                 for (command in ViewerCommand.entries) {
                     val value = preferences.getString(command.preferenceKey, null) ?: continue
-                    val bindings = ReviewerBinding.fromPreferenceString(value)
-                    val unknown = bindings.filter { it.binding is Binding.UnknownBinding }
-                    if (unknown.isEmpty()) continue
-                    val newBindings = bindings - unknown
+                    val (newBindings, error) = ReviewerBinding.fromPreferenceStringAndError(value)
+                    if (!error) continue
                     preferences.edit {
                         putString(command.preferenceKey, newBindings.toPreferenceString())
                     }
