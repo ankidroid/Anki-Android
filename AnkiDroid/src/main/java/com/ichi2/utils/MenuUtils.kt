@@ -15,10 +15,9 @@
 package com.ichi2.utils
 
 import android.content.Context
-import android.graphics.drawable.Drawable
+import android.graphics.drawable.InsetDrawable
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.graphics.drawable.DrawableWrapperCompat
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuItemImpl
 import androidx.core.view.forEach
@@ -40,29 +39,17 @@ private fun Menu.forEachOverflowItemRecursive(block: (MenuItem) -> Unit) {
  * as from the top and the bottom edges, as well as from the label.
  * Has no effect for items that have no icon, or for items this has processed before.
  */
-fun Context.increaseHorizontalPaddingOfOverflowMenuIcons(menu: Menu) {
-    val extraPadding = 5.dp.toPx(this)
-
-    class Wrapper(
-        drawable: Drawable,
-    ) : DrawableWrapperCompat(drawable) {
-        override fun mutate() = drawable!!.mutate() // DrawableWrapperCompat fails to delegate this
-
-        override fun getIntrinsicWidth() = super.getIntrinsicWidth() + extraPadding * 2
-
-        override fun setBounds(
-            left: Int,
-            top: Int,
-            right: Int,
-            bottom: Int,
-        ) {
-            super.setBounds(left + extraPadding, top, right - extraPadding, bottom)
-        }
-    }
+fun Context.increaseHorizontalPaddingOfOverflowMenuIcons(
+    menu: Menu,
+    paddingDp: Float = 5F,
+) {
+    val paddingPx = paddingDp.dp.toPx(this)
 
     menu.forEachOverflowItemRecursive { item ->
         item.icon?.let { icon ->
-            if (icon !is Wrapper) item.icon = Wrapper(icon)
+            if (icon !is InsetDrawable) {
+                item.icon = InsetDrawable(icon, paddingPx, 0, paddingPx, 0)
+            }
         }
     }
 }
