@@ -42,6 +42,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.ThemeUtils
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
@@ -106,6 +107,7 @@ import com.ichi2.anki.utils.ext.getCurrentDialogFragment
 import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.anki.utils.ext.toList
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.CardId
@@ -985,12 +987,6 @@ open class CardBrowser :
         if (fragmented && viewModel.rowCount != 0) {
             fragment?.onCreateMenu(menu, menuInflater)
         }
-        actionBarMenu?.findItem(R.id.action_select_all)?.run {
-            isVisible = !hasSelectedAllCards()
-        }
-        actionBarMenu?.findItem(R.id.action_select_none)?.run {
-            isVisible = viewModel.hasSelectedAnyRows()
-        }
         actionBarMenu?.findItem(R.id.action_undo)?.run {
             isVisible = getColUnsafe.undoAvailable()
             title = getColUnsafe.undoLabel()
@@ -1064,20 +1060,41 @@ open class CardBrowser :
         }
         // set the number of selected rows (only in multiselect)
         actionBarTitle.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", viewModel.selectedRowCount())
-        if (viewModel.hasSelectedAnyRows()) {
-            actionBarMenu.findItem(R.id.action_suspend_card).apply {
-                title = TR.browsingToggleSuspend().toSentenceCase(this@CardBrowser, R.string.sentence_toggle_suspend)
-                // TODO: I don't think this icon is necessary
-                setIcon(R.drawable.ic_suspend)
-            }
-            actionBarMenu.findItem(R.id.action_toggle_bury).apply {
-                title = TR.browsingToggleBury().toSentenceCase(this@CardBrowser, R.string.sentence_toggle_bury)
-            }
-            actionBarMenu.findItem(R.id.action_mark_card).apply {
-                title = TR.browsingToggleMark()
-                setIcon(R.drawable.ic_star_border_white)
-            }
+
+        actionBarMenu.findItem(R.id.action_flag).apply {
+            isVisible = viewModel.hasSelectedAnyRows()
         }
+        actionBarMenu.findItem(R.id.action_suspend_card).apply {
+            title = TR.browsingToggleSuspend().toSentenceCase(this@CardBrowser, R.string.sentence_toggle_suspend)
+            // TODO: I don't think this icon is necessary
+            setIcon(R.drawable.ic_suspend)
+            isVisible = viewModel.hasSelectedAnyRows()
+        }
+        actionBarMenu.findItem(R.id.action_toggle_bury).apply {
+            title = TR.browsingToggleBury().toSentenceCase(this@CardBrowser, R.string.sentence_toggle_bury)
+            isVisible = viewModel.hasSelectedAnyRows()
+        }
+        actionBarMenu.findItem(R.id.action_mark_card).apply {
+            title = TR.browsingToggleMark()
+            setIcon(R.drawable.ic_star_border_white)
+            isVisible = viewModel.hasSelectedAnyRows()
+        }
+        actionBarMenu.findItem(R.id.action_change_deck).apply {
+            isVisible = viewModel.hasSelectedAnyRows()
+        }
+        actionBarMenu.findItem(R.id.action_reposition_cards).apply {
+            isVisible = viewModel.hasSelectedAnyRows()
+        }
+        actionBarMenu.findItem(R.id.action_reschedule_cards).apply {
+            isVisible = viewModel.hasSelectedAnyRows()
+        }
+        actionBarMenu.findItem(R.id.action_edit_tags).apply {
+            isVisible = viewModel.hasSelectedAnyRows()
+        }
+        actionBarMenu.findItem(R.id.action_reset_cards_progress).apply {
+            isVisible = viewModel.hasSelectedAnyRows()
+        }
+
         actionBarMenu.findItem(R.id.action_export_selected).apply {
             this.title =
                 if (viewModel.cardsOrNotes == CARDS) {
@@ -1091,9 +1108,19 @@ open class CardBrowser :
                         viewModel.selectedRowCount(),
                     )
                 }
+            isVisible = viewModel.hasSelectedAnyRows()
         }
-        launchCatchingTask {
+
+        actionBarMenu.findItem(R.id.action_edit_note).isVisible = !fragmented && canPerformMultiSelectEditNote()
+        actionBarMenu.findItem(R.id.action_view_card_info).isVisible = canPerformCardInfo()
+
+        val deleteNoteItem =
             actionBarMenu.findItem(R.id.action_delete_card).apply {
+                isVisible = viewModel.hasSelectedAnyRows()
+            }
+
+        launchCatchingTask {
+            deleteNoteItem.apply {
                 this.title =
                     resources.getQuantityString(
                         R.plurals.card_browser_delete_notes,
@@ -1101,16 +1128,7 @@ open class CardBrowser :
                     )
             }
         }
-
-        actionBarMenu.findItem(R.id.action_select_all).isVisible = !hasSelectedAllCards()
-        // Note: Theoretically should not happen, as this should kick us back to the menu
-        actionBarMenu.findItem(R.id.action_select_none).isVisible =
-            viewModel.hasSelectedAnyRows()
-        actionBarMenu.findItem(R.id.action_edit_note).isVisible = !fragmented && canPerformMultiSelectEditNote()
-        actionBarMenu.findItem(R.id.action_view_card_info).isVisible = canPerformCardInfo()
     }
-
-    private fun hasSelectedAllCards(): Boolean = viewModel.selectedRowCount() >= viewModel.rowCount // must handle 0.
 
     private fun updateFlagForSelectedRows(flag: Flag) =
         launchCatchingTask {
@@ -1224,14 +1242,6 @@ open class CardBrowser :
             R.id.action_undo -> {
                 Timber.w("CardBrowser:: Undo pressed")
                 onUndo()
-                return true
-            }
-            R.id.action_select_none -> {
-                viewModel.selectNone()
-                return true
-            }
-            R.id.action_select_all -> {
-                viewModel.selectAll()
                 return true
             }
             R.id.action_preview -> {
@@ -1621,8 +1631,6 @@ open class CardBrowser :
     private fun onSelectionChanged() {
         Timber.d("onSelectionChanged")
         updateMultiselectMenu()
-        actionBarMenu?.findItem(R.id.action_select_all)?.isVisible = !hasSelectedAllCards()
-        actionBarMenu?.findItem(R.id.action_select_none)?.isVisible = viewModel.hasSelectedAnyRows()
         refreshSubtitle()
     }
 
