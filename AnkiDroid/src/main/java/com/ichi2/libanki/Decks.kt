@@ -47,7 +47,6 @@ import com.ichi2.libanki.utils.len
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
-import org.json.JSONArray
 import java.util.LinkedList
 
 typealias UpdateDeckConfigs = UpdateDeckConfigsRequest
@@ -169,7 +168,7 @@ class Decks(
     @RustCleanup("rename once we've removed this")
     fun get(did: DeckId): Deck? =
         try {
-            Deck(BackendUtils.fromJsonBytes(col.backend.getDeckLegacy(did)))
+            Deck.factory(BackendUtils.fromJsonBytes(col.backend.getDeckLegacy(did)))
         } catch (ex: BackendNotFoundException) {
             null
         }
@@ -194,24 +193,24 @@ class Decks(
     fun addDeck(deck: anki.decks.Deck): OpChangesWithId = col.backend.addDeck(input = deck)
 
     @LibAnkiAlias("new_deck_legacy")
-    private fun newDeckLegacy(filtered: Boolean): Deck {
-        val deck = BackendUtils.fromJsonBytes(col.backend.newDeckLegacy(filtered))
-        return Deck(
-            if (filtered) {
-                // until migrating to the dedicated method for creating filtered decks,
-                // we need to ensure the default config matches legacy expectations
-                val terms = deck.getJSONArray("terms").getJSONArray(0)
-                terms.put(0, "")
-                terms.put(2, 0)
-                deck.put("terms", JSONArray(listOf(terms)))
-                deck.put("browserCollapsed", false)
-                deck.put("collapsed", false)
-                deck
-            } else {
-                deck
-            },
-        )
-    }
+    private fun newDeckLegacy(filtered: Boolean) =
+        Deck.factory(BackendUtils.fromJsonBytes(col.backend.newDeckLegacy(filtered))).apply {
+            if (this.isRegular) {
+                return@apply
+            }
+            require(this is FilteredDeck) {
+                "The deck $this does not satisfies `isRegular` but is not a FilteredDeck. That should be impossible."
+            }
+            // until migrating to the dedicated method for creating filtered decks,
+            // we need to ensure the default config matches legacy expectations
+            firstFilter.apply {
+                search = ""
+                order = 0
+            }
+            secondFilter = null
+            browserCollapsed = false
+            collapsed = false
+        }
 
     @RustCleanup("implement and make public")
     @LibAnkiAlias("deck_tree")
@@ -288,7 +287,7 @@ class Decks(
         default: Boolean = true,
     ): Deck? =
         try {
-            Deck(BackendUtils.fromJsonBytes(col.backend.getDeckLegacy(did)))
+            Deck.factory(BackendUtils.fromJsonBytes(col.backend.getDeckLegacy(did)))
         } catch (ex: BackendNotFoundException) {
             null
         }
@@ -378,7 +377,7 @@ class Decks(
     /** Falls back on default config if deck or config missing */
     @LibAnkiAlias("config_dict_for_deck_id")
     fun configDictForDeckId(did: DeckId): DeckConfig {
-        val conf = get(did)?.conf ?: 1
+        val conf = (get(did) as? RegularDeck?)?.conf ?: 1
         return DeckConfig(BackendUtils.fromJsonBytes(col.backend.getDeckConfigLegacy(conf)))
     }
 
@@ -416,7 +415,7 @@ class Decks(
 
     @LibAnkiAlias("set_config_id_for_deck_dict")
     fun setConfigIdForDeckDict(
-        grp: Deck,
+        grp: RegularDeck,
         id: DeckConfigId,
     ) {
         grp.conf = id
@@ -602,7 +601,7 @@ class Decks(
     @LibAnkiAlias("new_filtered")
     fun newFiltered(name: String): DeckId {
         val did = id(name, type = DEFAULT_DECK_CONF_ID)
-        select(did!!)
+        select(did)
         return did
     }
 
@@ -628,7 +627,7 @@ class Decks(
             return null
         }
         val deck = get(did) ?: return null
-        return deck.getString("name") + DECK_SEPARATOR + subdeckName
+        return deck.name + DECK_SEPARATOR + subdeckName
     }
 
     @NotInLibAnki
