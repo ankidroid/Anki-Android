@@ -58,6 +58,7 @@
                     android:layout_margin="10dp"
                     app:backgroundTint="?attr/fab_normal"
                     android:src="@drawable/ic_file_download_white"
+                    android:contentDescription="@string/menu_get_shared_decks"
                     />
             </LinearLayout>
 
@@ -94,6 +95,7 @@
                     android:layout_margin="10dp"
                     app:backgroundTint="?attr/fab_normal"
                     android:src="@drawable/ic_add_filtered_deck"
+                    android:contentDescription="@string/new_dynamic_deck"
                     />
             </LinearLayout>
 
@@ -130,6 +132,7 @@
                     android:layout_margin="10dp"
                     app:backgroundTint="?attr/fab_normal"
                     android:src="@drawable/ic_add_deck_filled"
+                    android:contentDescription="@string/new_deck"
                     />
             </LinearLayout>
 
