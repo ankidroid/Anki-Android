@@ -32,7 +32,6 @@ import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.exception.ConfirmModSchemaException
-import com.ichi2.libanki.utils.set
 import com.ichi2.testutils.ext.addNote
 import com.ichi2.utils.LanguageUtil
 import kotlinx.coroutines.Dispatchers
@@ -254,6 +253,14 @@ interface TestClass {
         cards().forEach { it.update(update) }
         return this
     }
+
+    /**
+     * Return a new note with the model derived from the deck or the configuration
+     * @param forDeck When true it uses the model specified in the deck (mid), otherwise it uses the model specified in
+     * the configuration (curModel)
+     * @return The new note
+     */
+    fun Collection.newNote(forDeck: Boolean = true): Note = newNote(notetypes.current(forDeck))
 
     /** Helper method to update a card */
     fun Card.update(update: Card.() -> Unit): Card {

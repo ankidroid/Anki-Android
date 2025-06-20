@@ -113,6 +113,8 @@ import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.SortOrder
+import com.ichi2.libanki.undoAvailable
+import com.ichi2.libanki.undoLabel
 import com.ichi2.libanki.undoableOp
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.LanguageUtil
