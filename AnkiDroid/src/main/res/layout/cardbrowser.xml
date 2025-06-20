@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:indeterminate="true"
             android:visibility="gone"
+            tools:visbility="visible"
             />
 
         <RelativeLayout
@@ -43,6 +44,7 @@
                 android:overScrollFooter="@color/transparent"
                 android:dividerHeight="0.5dp"
                 android:drawSelectorOnTop="true"
+                tools:listitem="@layout/card_item_browser"
                 />
 
             <com.ichi2.anki.ui.RecyclerFastScroller
