@@ -18,13 +18,15 @@ import android.content.Context
 import android.graphics.drawable.InsetDrawable
 import android.view.Menu
 import android.view.MenuItem
+import androidx.annotation.DrawableRes
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuItemImpl
+import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.R
 
-private const val DEFAULT_HORIZONTAL_PADDING = 5F
+private const val DEFAULT_HORIZONTAL_PADDING = 4F
 
 private fun Menu.itemsRecursive(): Sequence<MenuItem> =
     sequence {
@@ -61,6 +63,16 @@ private fun Context.increaseHorizontalPaddingOfMenuIcons(
             }
         }
     }
+}
+
+fun MenuItem.setPaddedIcon(
+    context: Context,
+    @DrawableRes drawableResId: Int,
+    horizontalPaddingDp: Float = DEFAULT_HORIZONTAL_PADDING,
+) {
+    val padding = horizontalPaddingDp.dp.toPx(context)
+    val drawable = ContextCompat.getDrawable(context, drawableResId)
+    icon = InsetDrawable(drawable, padding, 0, padding, 0)
 }
 
 /**

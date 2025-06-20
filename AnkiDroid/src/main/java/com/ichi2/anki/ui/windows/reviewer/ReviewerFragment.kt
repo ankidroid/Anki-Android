@@ -111,6 +111,7 @@ import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.sched.Ease
 import com.ichi2.themes.Themes
 import com.ichi2.utils.dp
+import com.ichi2.utils.setPaddedIcon
 import com.squareup.seismic.ShakeDetector
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -519,24 +520,24 @@ class ReviewerFragment :
         }
         menu.setOnMenuItemClickListener(this)
 
+        setupBury(menu)
+        setupSuspend(menu)
+
         viewModel.flagFlow
             .flowWithLifecycle(lifecycle)
             .collectLatestIn(lifecycleScope) { flagCode ->
-                menu.findItem(FLAG_MENU.menuId)?.setIcon(flagCode.drawableRes)
+                menu.findItem(FLAG_MENU.menuId)?.setPaddedIcon(requireContext(), flagCode.drawableRes)
             }
-
-        setupBury(menu)
-        setupSuspend(menu)
 
         val markItem = menu.findItem(MARK.menuId)
         viewModel.isMarkedFlow
             .flowWithLifecycle(lifecycle)
             .collectLatestIn(lifecycleScope) { isMarked ->
                 if (isMarked) {
-                    markItem?.setIcon(R.drawable.ic_star)
+                    markItem?.setPaddedIcon(requireContext(), R.drawable.ic_star)
                     markItem?.setTitle(R.string.menu_unmark_note)
                 } else {
-                    markItem?.setIcon(R.drawable.ic_star_border_white)
+                    markItem?.setPaddedIcon(requireContext(), R.drawable.ic_star_border_white)
                     markItem?.setTitle(R.string.menu_mark_note)
                 }
             }
