@@ -19,7 +19,6 @@ import android.content.ContentResolver
 import android.database.Cursor
 import android.database.sqlite.SQLiteException
 import android.net.Uri
-import android.webkit.MimeTypeMap
 import androidx.core.net.toUri
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.EmptyApplication
@@ -31,7 +30,6 @@ import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.whenever
-import org.robolectric.Shadows
 import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class) // needs a URI instance
@@ -66,8 +64,6 @@ class ContentResolverUtilTest {
         )
 
         whenever(mock.getType(any())).thenReturn("image/gif")
-        // required for Robolectric
-        Shadows.shadowOf(MimeTypeMap.getSingleton()).addExtensionMimeTypeMapping("gif", "image/gif")
 
         val filename = getFileName(mock, uri)
 
