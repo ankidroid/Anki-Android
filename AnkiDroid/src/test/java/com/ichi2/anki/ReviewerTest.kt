@@ -382,7 +382,11 @@ class ReviewerTest : RobolectricTest() {
 
         preferences.edit {
             for (k in keys) {
-                putString(k, ActionButtonStatus.MENU_DISABLED.toString())
+                putString(
+                    k,
+                    ActionButtonStatus.ShowAsAction.Disabled.actionEnum
+                        .toString(),
+                )
             }
         }
     }

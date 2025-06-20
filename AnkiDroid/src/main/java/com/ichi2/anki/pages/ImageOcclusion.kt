@@ -35,6 +35,8 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 import timber.log.Timber
 
+internal typealias NoteOrNoteTypeId = Long
+
 class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
     override fun onViewCreated(
         view: View,
@@ -122,7 +124,7 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
         fun getIntent(
             context: Context,
             kind: String,
-            noteOrNotetypeId: Long,
+            noteOrNotetypeId: NoteOrNoteTypeId,
             imagePath: String?,
             editorWorkingDeckId: DeckId,
         ): Intent {

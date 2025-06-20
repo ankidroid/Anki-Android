@@ -61,6 +61,7 @@ import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModelTest
 import com.ichi2.anki.browser.CardOrNoteId
+import com.ichi2.anki.browser.CardOrNoteIdUnderlyingType
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ALL_FIELDS_AS_FIELD
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_FIELD
@@ -679,7 +680,7 @@ class CardBrowserTest : RobolectricTest() {
         }
     }
 
-    private fun getDueHeaderText(cardOrNoteId: Long): String? {
+    private fun getDueHeaderText(cardOrNoteId: CardOrNoteIdUnderlyingType): String? {
         // There's currently a minimum of 2 columns
         col.backend.setActiveBrowserColumns(listOf(CardBrowserColumn.DUE.ankiColumnKey, "answer"))
         return col
