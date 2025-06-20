@@ -37,6 +37,8 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.Flag
 import com.ichi2.anki.PreviewerDestination
+import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_ALL
+import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_NONE
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ALL_FIELDS_AS_FIELD
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.TAGS_AS_FIELD
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
@@ -207,9 +209,26 @@ class CardBrowserViewModel(
     // immutable accessor for _selectedRows
     val selectedRows: Set<CardOrNoteId> get() = _selectedRows
 
+    val flowOfIsInMultiSelectMode = MutableStateFlow(false)
+
     private val refreshSelectedRowsFlow = MutableSharedFlow<Unit>()
     val flowOfSelectedRows: Flow<Set<CardOrNoteId>> =
-        flowOf(selectedRows).combine(refreshSelectedRowsFlow) { row, _ -> row }
+        flowOf(selectedRows)
+            .combine(refreshSelectedRowsFlow) { row, _ -> row }
+            .combine(flowOfIsInMultiSelectMode) { rows, multiSelect ->
+                if (!multiSelect) emptySet() else rows
+            }
+
+    val flowOfToggleSelectionState =
+        flowOfSelectedRows
+            .map { selectedRows ->
+                // if all rows are selected: 'SELECT_NONE', otherwise: 'SELECT_ALL'
+                return@map if (selectedRows.size >= rowCount) SELECT_NONE else SELECT_ALL
+            }.stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.Lazily,
+                initialValue = SELECT_NONE,
+            )
 
     val rowLongPressFocusFlow = MutableStateFlow<CardOrNoteId?>(null)
 
@@ -234,11 +253,6 @@ class CardBrowserViewModel(
     internal suspend fun queryAllCardIds() = cards.queryCardIds()
 
     var lastSelectedId: CardOrNoteId? = null
-
-    val flowOfIsInMultiSelectMode =
-        flowOfSelectedRows
-            .map { it.isNotEmpty() }
-            .stateIn(viewModelScope, SharingStarted.Eagerly, initialValue = false)
 
     val isInMultiSelectMode
         get() = flowOfIsInMultiSelectMode.value
@@ -530,24 +544,31 @@ class CardBrowserViewModel(
         }
     }
 
-    fun selectAll() {
-        if (_selectedRows.addAll(cards)) {
-            Timber.d("selecting all: %d item(s)", cards.size)
-            refreshSelectedRowsFlow()
+    fun selectAll(): Job? {
+        if (!_selectedRows.addAll(cards)) return null
+        Timber.d("selecting all: %d item(s)", cards.size)
+        return refreshSelectedRowsFlow()
+    }
+
+    fun selectNone(): Job? {
+        if (_selectedRows.isEmpty()) return null
+        Timber.d("selecting none")
+        _selectedRows.clear()
+        return refreshSelectedRowsFlow(disableMultiSelectIfEmpty = false)
+    }
+
+    /**
+     * If all rows are selected, select none, otherwise select all
+     */
+    fun toggleSelectAllOrNone(): Job? {
+        Timber.i("Toggle select all / none")
+        return when (flowOfToggleSelectionState.value) {
+            SELECT_ALL -> selectAll()
+            SELECT_NONE -> selectNone()
         }
     }
 
-    fun selectNone() {
-        if (_selectedRows.isEmpty()) return
-        Timber.d("selecting none")
-        _selectedRows.clear()
-        refreshSelectedRowsFlow()
-    }
-
-    @VisibleForTesting
-    fun toggleRowSelectionAtPosition(position: Int) = toggleRowSelection(cards[position])
-
-    fun toggleRowSelection(id: CardOrNoteId) {
+    fun toggleRowSelection(id: CardOrNoteId): Job {
         if (_selectedRows.contains(id)) {
             _selectedRows.remove(id)
         } else {
@@ -555,7 +576,7 @@ class CardBrowserViewModel(
         }
         Timber.d("toggled selecting id '%s'; %d selected", id, selectedRowCount())
         lastSelectedId = id
-        refreshSelectedRowsFlow()
+        return refreshSelectedRowsFlow()
     }
 
     @VisibleForTesting
@@ -601,8 +622,13 @@ class CardBrowserViewModel(
     }
 
     /** emits a new value in [flowOfSelectedRows] */
-    private fun refreshSelectedRowsFlow() =
+    private fun refreshSelectedRowsFlow(disableMultiSelectIfEmpty: Boolean = true) =
         viewModelScope.launch {
+            if (_selectedRows.any()) {
+                flowOfIsInMultiSelectMode.emit(true)
+            } else if (disableMultiSelectIfEmpty) {
+                flowOfIsInMultiSelectMode.emit(false)
+            }
             refreshSelectedRowsFlow.emit(Unit)
             Timber.d("refreshed selected rows")
         }
@@ -970,7 +996,11 @@ class CardBrowserViewModel(
     /**
      * Turn off [Multi-Select Mode][isInMultiSelectMode] and return to normal state
      */
-    fun endMultiSelectMode() = selectNone()
+    fun endMultiSelectMode() =
+        viewModelScope.launch {
+            _selectedRows.clear()
+            flowOfIsInMultiSelectMode.emit(false)
+        }
 
     /**
      * @param forceRefresh if `true`, perform a search even if the search query is unchanged
@@ -1141,6 +1171,11 @@ class CardBrowserViewModel(
                 )
             }
         }
+    }
+
+    enum class ToggleSelectionState {
+        SELECT_ALL,
+        SELECT_NONE,
     }
 
     /**
