@@ -18,8 +18,8 @@ package com.ichi2.anki.ui.windows.reviewer
 import android.net.Uri
 import android.webkit.WebView
 import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.cardviewer.TapGestureMode
 import com.ichi2.anki.utils.ext.clamp
-import timber.log.Timber
 import kotlin.math.abs
 
 /**
@@ -56,6 +56,7 @@ object GestureParser {
         scrollY: Int,
         measuredWidth: Int,
         measuredHeight: Int,
+        gestureMode: TapGestureMode,
     ): Gesture? {
         if (isScrolling) return null
         if (uri.host == "doubleTap") return Gesture.DOUBLE_TAP
@@ -73,15 +74,11 @@ object GestureParser {
             return determineSwipeGesture(deltaX, deltaY, absDeltaX, absDeltaY, scrollDirection)
         }
 
-        val row = getGridIndex(pageY, scrollY, measuredHeight, scale)
-        val column = getGridIndex(pageX, scrollX, measuredWidth, scale)
-        // FIXME fix the source of values that result in an invalid index
-        if (row !in 0..2 || column !in 0..2) {
-            throw IllegalArgumentException(
-                "Gesture parsing error: row $row - column $column - uri $uri - isScrolling $isScrolling - scale $scale - pageX $pageX - pageY $pageY - scrollX $scrollX - scrollY $scrollY - measuredWidth $measuredWidth - measuredHeight $measuredHeight",
-            )
+        return if (gestureMode == TapGestureMode.FOUR_POINT) {
+            getFourPointsTap(pageX, pageY, scrollX, scrollY, measuredWidth, measuredHeight, scale)
+        } else {
+            getNinePointsTap(pageX, pageY, scrollX, scrollY, measuredWidth, measuredHeight, scale)
         }
-        return gestureGrid[row][column]
     }
 
     /**
@@ -98,6 +95,7 @@ object GestureParser {
         isScrolling: Boolean,
         scale: Float,
         webView: WebView,
+        gestureMode: TapGestureMode,
     ): Gesture? =
         parse(
             uri = uri,
@@ -107,6 +105,7 @@ object GestureParser {
             scrollY = webView.scrollY,
             measuredWidth = webView.measuredWidth,
             measuredHeight = webView.measuredHeight,
+            gestureMode = gestureMode,
         )
 
     /**
@@ -144,6 +143,15 @@ object GestureParser {
             }
         }
 
+    private fun getAdjustedTapPosition(
+        tapPosition: Int,
+        scrolledDistance: Int,
+        scale: Float,
+    ): Float {
+        val scaledTap = tapPosition * scale
+        return scaledTap - scrolledDistance
+    }
+
     /**
      * Calculates the grid index (row or column) for a tap coordinate.
      *
@@ -163,13 +171,79 @@ object GestureParser {
         scale: Float,
     ): Int {
         if (dimensionSize == 0) return 0 // avoids dividing by 0
-        val scaledTap = tapPosition * scale
-        val adjustedTapPosition = scaledTap - scrolledDistance
+        val adjustedTapPosition = getAdjustedTapPosition(tapPosition, scrolledDistance, scale)
         val relativePosition = (adjustedTapPosition / (dimensionSize / 3))
         val index = relativePosition.toInt()
-        // Temporary timber warning to solve #18559
-        Timber.w("adjustedTapPosition $adjustedTapPosition - relativePosition $relativePosition - index $index")
         return index.clamp(minimumValue = 0, maximumValue = 2)
+    }
+
+    /**
+     * Determines the tap area by dividing the view into four triangular regions
+     * using its main and anti-diagonals.
+     *
+     * @param tapX The raw x-coordinate of the tap event.
+     * @param tapY The raw y-coordinate of the tap event.
+     * @param scrollX The current horizontal scroll offset of the view.
+     * @param scrollY The current vertical scroll offset of the view.
+     * @param measuredWidth The measured width of the underlying view.
+     * @param measuredHeight The measured height of the underlying view.
+     * @param scale The current zoom scale of the view.
+     * @return The [Gesture] corresponding to the tapped area (TAP_TOP, TAP_BOTTOM, TAP_LEFT, or TAP_RIGHT).
+     */
+    private fun getFourPointsTap(
+        tapX: Int,
+        tapY: Int,
+        scrollX: Int,
+        scrollY: Int,
+        measuredWidth: Int,
+        measuredHeight: Int,
+        scale: Float,
+    ): Gesture {
+        val adjustedX = getAdjustedTapPosition(tapX, scrollX, scale)
+        val adjustedY = getAdjustedTapPosition(tapY, scrollY, scale)
+        val normalizedX = adjustedX / measuredWidth
+        val normalizedY = adjustedY / measuredHeight
+
+        /*
+         * The "main" diagonal runs from top-left (0,0) to bottom-right (width,height).
+         * The "anti" diagonal runs from top-right (width,0) to bottom-left (0,height).
+         * (0,0)      (width,0)
+         * +-----------+
+         * | \   T   / |
+         * |  \     /  |
+         * |   \   /   |
+         * |    \ /    |
+         * |L    X    R|
+         * |    / \    |
+         * |   /   \   |
+         * |  /     \  |
+         * | /   B   \ |
+         * +-----------+
+         * (0,height) (width,height)
+         */
+        val isRightOfMainDiagonal = normalizedX > normalizedY
+        val isBelowAntiDiagonal = normalizedX + normalizedY > 1
+
+        return when {
+            isRightOfMainDiagonal && isBelowAntiDiagonal -> Gesture.TAP_RIGHT
+            isRightOfMainDiagonal && !isBelowAntiDiagonal -> Gesture.TAP_TOP
+            !isRightOfMainDiagonal && isBelowAntiDiagonal -> Gesture.TAP_BOTTOM
+            else -> Gesture.TAP_LEFT // !isRightOfMainDiagonal && !isBelowAntiDiagonal
+        }
+    }
+
+    private fun getNinePointsTap(
+        tapX: Int,
+        tapY: Int,
+        scrollX: Int,
+        scrollY: Int,
+        measuredWidth: Int,
+        measuredHeight: Int,
+        scale: Float,
+    ): Gesture {
+        val row = getGridIndex(tapY, scrollY, measuredHeight, scale)
+        val column = getGridIndex(tapX, scrollX, measuredWidth, scale)
+        return gestureGrid[row][column]
     }
 
     private fun Uri.getIntQuery(key: String) = getQueryParameter(key)?.toIntOrNull()
