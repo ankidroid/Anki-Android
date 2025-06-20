@@ -24,28 +24,37 @@ import androidx.core.view.forEach
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.R
 
-private fun Menu.forEachOverflowItemRecursive(block: (MenuItem) -> Unit) {
-    (this as? MenuBuilder)?.flagActionItems()
+private const val DEFAULT_HORIZONTAL_PADDING = 5F
 
-    forEach { item ->
-        if ((item as? MenuItemImpl)?.isActionButton == false) block(item)
-        item.subMenu?.forEachOverflowItemRecursive(block)
+private fun Menu.itemsRecursive(): Sequence<MenuItem> =
+    sequence {
+        forEach { item ->
+            yield(item)
+            item.subMenu?.let { yieldAll(it.itemsRecursive()) }
+        }
     }
-}
 
-/**
- * Recursively increase horizontal icon padding for the items of the given menu,
- * so that the icon visually appears at the same distance from the starting edge of the popup
- * as from the top and the bottom edges, as well as from the label.
- * Has no effect for items that have no icon, or for items this has processed before.
- */
-fun Context.increaseHorizontalPaddingOfOverflowMenuIcons(
-    menu: Menu,
-    paddingDp: Float = 5F,
+private fun Menu.overflowItemsRecursive(): Sequence<MenuItem> =
+    sequence {
+        (this@overflowItemsRecursive as? MenuBuilder)?.flagActionItems()
+
+        forEach { item ->
+            if ((item as? MenuItemImpl)?.isActionButton == false) {
+                yield(item)
+            }
+            item.subMenu?.let {
+                yieldAll(it.overflowItemsRecursive())
+            }
+        }
+    }
+
+private fun Context.increaseHorizontalPaddingOfMenuIcons(
+    items: Sequence<MenuItem>,
+    paddingDp: Float = DEFAULT_HORIZONTAL_PADDING,
 ) {
     val paddingPx = paddingDp.dp.toPx(this)
 
-    menu.forEachOverflowItemRecursive { item ->
+    items.forEach { item ->
         item.icon?.let { icon ->
             if (icon !is InsetDrawable) {
                 item.icon = InsetDrawable(icon, paddingPx, 0, paddingPx, 0)
@@ -53,6 +62,28 @@ fun Context.increaseHorizontalPaddingOfOverflowMenuIcons(
         }
     }
 }
+
+/**
+ * Recursively increase horizontal icon padding for the overflown items of the given menu,
+ * so that the icon visually appears at the same distance from the starting edge of the popup
+ * as from the top and the bottom edges, as well as from the label.
+ * Has no effect for items that have no icon, or for items this has processed before.
+ */
+fun Context.increaseHorizontalPaddingOfOverflowMenuIcons(
+    menu: Menu,
+    paddingDp: Float = DEFAULT_HORIZONTAL_PADDING,
+) = increaseHorizontalPaddingOfMenuIcons(menu.overflowItemsRecursive(), paddingDp)
+
+/**
+ * Recursively increase horizontal icon padding for the items of the given menu,
+ * so that the icon visually appears at the same distance from the starting edge of the popup
+ * as from the top and the bottom edges, as well as from the label.
+ * Has no effect for items that have no icon, or for items this has processed before.
+ */
+fun Context.increaseHorizontalPaddingOfMenuIcons(
+    menu: Menu,
+    paddingDp: Float = DEFAULT_HORIZONTAL_PADDING,
+) = increaseHorizontalPaddingOfMenuIcons(menu.itemsRecursive(), paddingDp)
 
 /**
  * Recursively mutates and tints the icons of the items of the given overflow or popup menu
@@ -65,7 +96,7 @@ fun Context.tintOverflowMenuIcons(
 ) {
     val iconColor = MaterialColors.getColor(this, R.attr.overflowAndPopupMenuIconColor, 0)
 
-    menu.forEachOverflowItemRecursive { item ->
+    menu.overflowItemsRecursive().forEach { item ->
         if (skipIf == null || !skipIf(item)) {
             item.icon?.mutate()?.setTint(iconColor)
         }
