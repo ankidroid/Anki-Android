@@ -5,7 +5,12 @@ import com.slack.keeper.optInToKeeper
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.internal.jvm.Jvm
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardOpenOption
 import kotlin.math.max
+import kotlin.time.Duration.Companion.milliseconds
+
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
@@ -55,6 +60,14 @@ subprojects {
                     showStackTraces = true
                     exceptionFormat = TestExceptionFormat.FULL
                 }
+
+                // CI: Log the test results
+                it.afterSuite(KotlinClosure2<TestDescriptor, TestResult, Unit>({ desc, result ->
+                    if (desc.parent != null) {
+                        return@KotlinClosure2 // only log for the root suite
+                    }
+                    logTestResultsToGitHubActions(desc, result)
+                }))
 
                 it.maxParallelForks = gradleTestMaxParallelForks
                 it.forkEvery = 40
@@ -153,3 +166,36 @@ val gradleTestMaxParallelForks by extra(
 )
 
 private fun String?.parseIntOrDefault(defaultValue: Int): Int = this?.toIntOrNull() ?: defaultValue
+
+private fun logTestResultsToGitHubActions(desc: TestDescriptor, result: TestResult) {
+    if (!ciBuild) return
+
+    val elapsed = (result.endTime - result.startTime).milliseconds
+
+    val tests = result.testCount
+    val passed = result.successfulTestCount
+    val failed = result.failedTestCount
+    val skipped = result.skippedTestCount
+
+    // Gradle Test Run :AnkiDroid:testPlayDebugUnitTest returned SUCCESS in 5m 30s
+    val markdownSummary = """
+                        |${desc.displayName} returned **${result.resultType}** in $elapsed
+                        || Tests | Passed | Failed | Skipped |
+                        ||-------|--------|--------|---------|
+                        || $tests| $passed| $failed| $skipped|
+                        |----
+                    """.trimMargin()
+
+    appendToGitHubActionsSummary(markdownSummary)
+}
+
+private fun appendToGitHubActionsSummary(message: String) {
+    if (!ciBuild) return
+    val summaryPath = System.getenv("GITHUB_STEP_SUMMARY") ?: return
+    Files.writeString(
+        Paths.get(summaryPath),
+        message,
+        StandardOpenOption.CREATE,
+        StandardOpenOption.APPEND
+    )
+}
