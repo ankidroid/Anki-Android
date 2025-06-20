@@ -84,7 +84,7 @@
     <string name="field_remapping">%1$s (from “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
     <string name="missing_note_type">No note type found</string>
-    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front Consider keeping the unbreakable space after the number.">%1$s (empty)</string>
 
     <!-- Timebox -->
     <string name="timebox_reached_title">Timebox reached</string>
@@ -98,6 +98,9 @@
         <item quantity="one">%1$d minute</item>
         <item quantity="other">%1$d minutes</item>
     </plurals>
+    <string name="scalar_progress" comment="Indicates to the user how much progress is done. If the values are, for example, 72 and 104, it means that there remains 34 things to do. What the thing is is not specified">%1$d/%2$d</string>
+    <!-- note using singular/plural, because if there is at most one note to process, the progress message should not even appear -->
+    <string name="byte_progress" comment="Indicates to the user how many bytes have been processed out of a known amount of bytes Consider keeping the unbreakable space after the number. E.g. 2MB/42MB">%1$s/%2$s</string>
 
     <string name="fact_adder_intent_title" comment="Label of the 'Add Note' window. This title can't be seen in AnkiDroid directly.">AnkiDroid card</string>
     <string name="note_editor_copy_note" maxLength="28">Copy note</string>
