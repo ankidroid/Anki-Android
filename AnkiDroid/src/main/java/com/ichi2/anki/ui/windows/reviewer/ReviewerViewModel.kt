@@ -102,6 +102,7 @@ class ReviewerViewModel(
     override val server: AnkiServer = AnkiServer(this, serverPort).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
     val statesMutationEval = MutableSharedFlow<String>()
+    var typedAnswer = ""
 
     private val autoAdvance = AutoAdvance(this)
     private val shouldSendMarkEval = !studyScreenRepository.isMarkShownInToolbar
@@ -170,14 +171,14 @@ class ReviewerViewModel(
      *
      * @see showAnswer
      */
-    fun onShowAnswer(typedAnswer: String? = null) {
+    fun onShowAnswer() {
         Timber.v("ReviewerViewModel::onShowAnswer")
         launchCatchingIO {
             while (!statesMutated) {
                 delay(50)
             }
             updateNextTimes()
-            showAnswer(typedAnswer)
+            showAnswer()
             loadAndPlayMedia(CardSide.ANSWER)
             if (!autoAdvance.shouldWaitForAudio()) {
                 autoAdvance.onShowAnswer()
@@ -488,15 +489,12 @@ class ReviewerViewModel(
         countsFlow.emit(state.counts to state.countsIndex)
     }
 
-    override suspend fun typeAnsFilter(
-        text: String,
-        typedAnswer: String?,
-    ): String {
+    override suspend fun typeAnsFilter(text: String): String {
         Timber.v("ReviewerViewModel::typeAnsFilter")
         val typeAnswer = TypeAnswer.getInstance(currentCard.await(), text)
         return if (showingAnswer.value) {
             typeAnswerFlow.emit(null)
-            typeAnswer?.answerFilter(typedAnswer ?: "") ?: text
+            typeAnswer?.answerFilter(typedAnswer) ?: text
         } else {
             typeAnswerFlow.emit(typeAnswer)
             TypeAnswer.removeTags(text)

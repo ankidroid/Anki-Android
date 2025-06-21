@@ -51,6 +51,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -257,7 +258,7 @@ class ReviewerFragment :
             view.findViewById<TextInputEditText>(R.id.type_answer_edit_text).apply {
                 setOnEditorActionListener { editTextView, actionId, _ ->
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
-                        viewModel.onShowAnswer(editTextView.text.toString())
+                        viewModel.onShowAnswer()
                         return@setOnEditorActionListener true
                     }
                     false
@@ -269,6 +270,9 @@ class ReviewerFragment :
                     } else {
                         insetsController.hide(WindowInsetsCompat.Type.ime())
                     }
+                }
+                addTextChangedListener { editable ->
+                    viewModel.typedAnswer = editable?.toString() ?: ""
                 }
             }
         val autoFocusTypeAnswer = Prefs.autoFocusTypeAnswer
@@ -406,11 +410,7 @@ class ReviewerFragment :
 
         val showAnswerButton =
             view.findViewById<MaterialButton>(R.id.show_answer).apply {
-                val editText = view.findViewById<TextInputEditText>(R.id.type_answer_edit_text)
-                setOnClickListener {
-                    val typedAnswer = editText?.text?.toString()
-                    viewModel.onShowAnswer(typedAnswer = typedAnswer)
-                }
+                setOnClickListener { viewModel.onShowAnswer() }
             }
         val answerButtonsLayout = view.findViewById<LinearLayout>(R.id.answer_buttons)
 
