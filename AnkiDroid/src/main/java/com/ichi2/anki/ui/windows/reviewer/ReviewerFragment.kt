@@ -52,8 +52,10 @@ import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.shape.ShapeAppearanceModel
@@ -250,7 +252,6 @@ class ReviewerFragment :
     }
 
     private fun setupTypeAnswer(view: View) {
-        // TODO keep text after configuration changes
         val typeAnswerContainer = view.findViewById<MaterialCardView>(R.id.type_answer_container)
         val typeAnswerEditText =
             view.findViewById<TextInputEditText>(R.id.type_answer_edit_text).apply {
@@ -271,20 +272,30 @@ class ReviewerFragment :
                 }
             }
         val autoFocusTypeAnswer = Prefs.autoFocusTypeAnswer
-        viewModel.typeAnswerFlow.collectIn(lifecycleScope) { typeInAnswer ->
-            typeAnswerEditText.text = null
-            if (typeInAnswer == null) {
-                typeAnswerContainer.isVisible = false
-                return@collectIn
-            }
-            typeAnswerContainer.isVisible = true
-            typeAnswerEditText.apply {
-                if (imeHintLocales != typeInAnswer.imeHintLocales) {
-                    imeHintLocales = typeInAnswer.imeHintLocales
-                    context?.getSystemService<InputMethodManager>()?.restartInput(this)
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.typeAnswerFlow.collect { typeInAnswer ->
+                    if (typeInAnswer == null) {
+                        typeAnswerContainer.isVisible = false
+                        return@collect
+                    }
+                    typeAnswerContainer.isVisible = true
+                    typeAnswerEditText.apply {
+                        if (imeHintLocales != typeInAnswer.imeHintLocales) {
+                            imeHintLocales = typeInAnswer.imeHintLocales
+                            context?.getSystemService<InputMethodManager>()?.restartInput(this)
+                        }
+                        if (autoFocusTypeAnswer) {
+                            requestFocus()
+                        }
+                    }
                 }
-                if (autoFocusTypeAnswer) {
-                    requestFocus()
+            }
+        }
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.clearTypeAnswerFlow.collect {
+                    typeAnswerEditText.text = null
                 }
             }
         }
