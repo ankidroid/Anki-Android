@@ -455,6 +455,9 @@ this formatter is used if the bind only applies to the answer">A: %s</string>
         >Bottom</string>
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen"
         >None</string>
+    <string name="toolbar" maxLength="41">Toolbar</string>
+    <string name="toolbar_actions" maxLength="41">Toolbar actions</string>
+    <string name="toolbar_position" maxLength="41">Toolbar position</string>
 
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
