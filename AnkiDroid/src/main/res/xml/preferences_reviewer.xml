@@ -2,8 +2,15 @@
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:title="@string/pref_cat_reviewer"
+    android:title="@string/new_study_screen"
     >
+
+    <SwitchPreferenceCompat
+        android:key="@string/new_reviewer_options_key"
+        android:title="@string/new_study_screen"
+        android:summary="@string/new_study_screen_summary"
+        android:defaultValue="true"
+        />
 
     <ListPreference
         android:defaultValue="@string/reviewer_frame_style_card_value"

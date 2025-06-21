@@ -31,6 +31,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.withProgress
 import com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
 import com.ichi2.utils.show
@@ -166,6 +167,13 @@ class DevOptionsFragment : SettingsFragment() {
          * to make this change show up.
          */
         requirePreference<Preference>(R.string.pref_new_notifications).setOnPreferenceChangeListener { _, _ ->
+            ActivityCompat.recreate(requireActivity())
+            true
+        }
+
+        requirePreference<Preference>(R.string.new_reviewer_pref_key).setOnPreferenceChangeListener { pref, newValue ->
+            val boolValue = newValue as? Boolean ?: return@setOnPreferenceChangeListener false
+            pref.sharedPreferences?.edit { putBoolean("newReviewerOptions", boolValue) }
             ActivityCompat.recreate(requireActivity())
             true
         }

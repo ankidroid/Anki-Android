@@ -96,14 +96,9 @@
         android:summary="Only for testing. Not suited for use. Don't create reports about them">
 
         <SwitchPreferenceCompat
-            android:title="New study screen"
+            android:title="@string/new_study_screen"
             android:key="@string/new_reviewer_pref_key"
             android:defaultValue="false"/>
-        <Preference
-            android:title="New study screen options"
-            android:key="@string/new_reviewer_options_key"
-            android:dependency="@string/new_reviewer_pref_key"
-            android:fragment="com.ichi2.anki.preferences.ReviewerOptionsFragment"/>
         <SwitchPreferenceCompat
             android:title="Find and replace in browser"
             android:summary="Caution, this can be very destructive for your collection!"

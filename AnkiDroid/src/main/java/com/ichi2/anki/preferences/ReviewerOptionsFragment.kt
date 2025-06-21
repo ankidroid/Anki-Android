@@ -37,8 +37,12 @@ import timber.log.Timber
  */
 class ReviewerOptionsFragment :
     PreferenceFragmentCompat(),
-    PreferenceXmlSource {
+    PreferenceXmlSource,
+    TitleProvider {
     override val preferenceResource: Int = R.xml.preferences_reviewer
+
+    override val title
+        get() = preferenceManager?.preferenceScreen?.title ?: ""
 
     override fun onCreatePreferences(
         savedInstanceState: Bundle?,
@@ -64,9 +68,30 @@ class ReviewerOptionsFragment :
             requirePreference<SwitchPreferenceCompat>(R.string.ignore_display_cutout_key).apply {
                 isEnabled = Prefs.hideSystemBars != HideSystemBars.NONE
             }
+        val hideSystemBars =
+            requirePreference<ListPreference>(R.string.hide_system_bars_key).apply {
+                setOnPreferenceChangeListener { value ->
+                    ignoreDisplayCutout.isEnabled = value != HideSystemBars.NONE.entryValue
+                }
+            }
+        val newReviewerPref = requirePreference<SwitchPreferenceCompat>(R.string.new_reviewer_options_key)
 
-        requirePreference<ListPreference>(R.string.hide_system_bars_key).setOnPreferenceChangeListener { value ->
-            ignoreDisplayCutout.isEnabled = value != HideSystemBars.NONE.entryValue
+        fun setPrefsEnableState(newValue: Boolean) {
+            val prefs = preferenceScreen.allPreferences() - newReviewerPref
+            for (pref in prefs) {
+                if (pref.key == ignoreDisplayCutout.key && newValue) {
+                    ignoreDisplayCutout.isEnabled = hideSystemBars.value != HideSystemBars.NONE.entryValue
+                    continue
+                }
+                pref.isEnabled = newValue
+            }
+        }
+
+        setPrefsEnableState(newReviewerPref.isChecked)
+        newReviewerPref.setOnPreferenceChangeListener { _, newValue ->
+            val boolValue = (newValue as? Boolean) ?: return@setOnPreferenceChangeListener false
+            setPrefsEnableState(boolValue)
+            true
         }
 
         // Show play buttons on cards with audio
