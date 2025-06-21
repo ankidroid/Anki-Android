@@ -161,6 +161,9 @@ class PreferencesFragment :
 
         parentFragmentManager.addOnBackStackChangedListener(parentBackStackListener)
         childFragmentManager.addOnBackStackChangedListener(childBackStackListener)
+
+        childFragmentOnBackPressedCallback.isEnabled = !settingsIsSplit && childFragmentManager.backStackEntryCount > 0
+        parentFragmentOnBackPressedCallback.isEnabled = parentFragmentManager.backStackEntryCount > 0
     }
 
     private fun setFragmentTitleOnToolbar(fragment: Fragment) {
