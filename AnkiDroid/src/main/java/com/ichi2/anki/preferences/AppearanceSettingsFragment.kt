@@ -236,16 +236,16 @@ class AppearanceSettingsFragment : SettingsFragment() {
         undoableOp { setPreferences(newPrefs) }
         Timber.i("Set showRemainingDueCounts to %b", value)
     }
+}
 
-    private suspend fun setHideAudioPlayButtons(value: Boolean) {
-        val prefs = withCol { getPreferences() }
-        val newPrefs =
-            prefs.copy {
-                reviewing = reviewing.copy { hideAudioPlayButtons = value }
-            }
-        undoableOp { setPreferences(newPrefs) }
-        Timber.i("Set hideAudioPlayButtons to %b", value)
-    }
+suspend fun setHideAudioPlayButtons(value: Boolean) {
+    val prefs = withCol { getPreferences() }
+    val newPrefs =
+        prefs.copy {
+            reviewing = reviewing.copy { hideAudioPlayButtons = value }
+        }
+    undoableOp { setPreferences(newPrefs) }
+    Timber.i("Set hideAudioPlayButtons to %b", value)
 }
 
 suspend fun getShowIntervalOnButtons(): Boolean = withCol { getPreferences().reviewing.showIntervalsOnButtons }

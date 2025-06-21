@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:title="@string/pref_cat_reviewer"
+    >
+
+    <ListPreference
+        android:defaultValue="@string/reviewer_frame_style_card_value"
+        android:entries="@array/reviewer_frame_style_entries"
+        android:entryValues="@array/reviewer_frame_style_values"
+        android:key="@string/reviewer_frame_style_key"
+        android:title="@string/reviewer_frame_style"
+        app:useSimpleSummaryProvider="true"/>
 
     <ListPreference
         android:defaultValue="@string/hide_system_bars_none_value"
@@ -17,37 +28,56 @@
         />
 
     <SwitchPreferenceCompat
-        android:defaultValue="false"
-        android:key="@string/hide_answer_buttons_key"
-        android:title="@string/hide_answer_buttons"
+        android:key="@string/show_audio_play_buttons_key"
+        android:defaultValue="true"
+        tools:title="Show play buttons on cards with audio"
         />
 
-    <SwitchPreferenceCompat
-        android:defaultValue="false"
-        android:key="@string/hide_hard_and_easy_key"
-        android:title="@string/hide_hard_and_easy"
-        />
+    <PreferenceCategory
+        android:title="@string/toolbar">
+        <Preference
+            android:title="@string/toolbar_actions"
+            android:key="@string/reviewer_menu_settings_key"
+            android:icon="@drawable/ic_widgets"
+            android:fragment="com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment"
+            />
+        <ListPreference
+            android:defaultValue="@string/reviewer_toolbar_value_top"
+            android:entries="@array/reviewer_toolbar_position_entries"
+            android:entryValues="@array/reviewer_toolbar_position_values"
+            android:key="@string/reviewer_toolbar_position_key"
+            android:icon="@drawable/ic_toolbar"
+            android:title="@string/toolbar_position"
+            app:useSimpleSummaryProvider="true"/>
+    </PreferenceCategory>
 
-    <Preference
-        android:title="Menu actions"
-        android:key="@string/reviewer_menu_settings_key"
-        android:icon="@drawable/ic_widgets"
-        />
+    <PreferenceCategory
+        android:title="@string/answer_buttons">
 
-    <ListPreference
-        android:defaultValue="@string/reviewer_frame_style_card_value"
-        android:entries="@array/reviewer_frame_style_entries"
-        android:entryValues="@array/reviewer_frame_style_values"
-        android:key="@string/reviewer_frame_style_key"
-        android:title="@string/reviewer_frame_style"
-        app:useSimpleSummaryProvider="true"/>
+        <SwitchPreferenceCompat
+            android:key="@string/show_estimates_preference"
+            android:summary="@string/show_estimates_summ"
+            android:title="@string/show_estimates" />
 
-    <ListPreference
-        android:defaultValue="@string/reviewer_toolbar_value_top"
-        android:entries="@array/reviewer_toolbar_position_entries"
-        android:entryValues="@array/reviewer_toolbar_position_values"
-        android:key="@string/reviewer_toolbar_position_key"
-        android:icon="@drawable/ic_toolbar"
-        android:title="Toolbar position"
-        app:useSimpleSummaryProvider="true"/>
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="@string/hide_answer_buttons_key"
+            android:title="@string/hide_answer_buttons"
+            />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="@string/hide_hard_and_easy_key"
+            android:title="@string/hide_hard_and_easy"
+            />
+
+        <com.ichi2.preferences.SliderPreference
+            android:title="@string/button_size"
+            android:key="@string/answer_button_size_preference"
+            android:defaultValue="100"
+            android:valueFrom="10"
+            android:valueTo="200"
+            android:stepSize="10"
+            app:displayFormat="@string/percentage"/>
+    </PreferenceCategory>
 </androidx.preference.PreferenceScreen>
