@@ -179,6 +179,11 @@
             android:icon="@drawable/ic_enable_whiteboard"
             />
         <com.ichi2.preferences.ReviewerControlPreference
+            android:key="@string/toggle_eraser_command_key"
+            android:title="@string/gesture_toggle_eraser"
+            android:icon="@drawable/ic_eraser"
+            />
+        <com.ichi2.preferences.ReviewerControlPreference
             android:key="@string/clear_whiteboard_command_key"
             android:title="@string/clear_whiteboard"
             android:icon="@drawable/ic_clear_white"

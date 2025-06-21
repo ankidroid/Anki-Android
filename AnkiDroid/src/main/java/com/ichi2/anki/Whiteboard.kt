@@ -80,6 +80,7 @@ class Whiteboard(
     private var secondFingerPointerId = 0
     private var secondFingerWithinTapTolerance = false
 
+    var reviewerEraserModeIsToggledOn = false
     var toggleStylus = false
     var isCurrentlyDrawing = false
         private set
@@ -120,8 +121,8 @@ class Whiteboard(
     private fun handleDrawEvent(event: MotionEvent): Boolean {
         val x = event.x
         val y = event.y
-        if (event.getToolType(event.actionIndex) == MotionEvent.TOOL_TYPE_ERASER) {
-            stylusErase(event)
+        if (event.getToolType(event.actionIndex) == MotionEvent.TOOL_TYPE_ERASER || reviewerEraserModeIsToggledOn) {
+            eraseTouchedStroke(event)
             return true
         }
         if (event.getToolType(event.actionIndex) != MotionEvent.TOOL_TYPE_STYLUS && toggleStylus) {
@@ -130,7 +131,7 @@ class Whiteboard(
         return when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 if (event.buttonState == MotionEvent.BUTTON_STYLUS_PRIMARY) {
-                    stylusErase(event)
+                    eraseTouchedStroke(event)
                 } else {
                     drawStart(x, y)
                     invalidate()
@@ -139,7 +140,7 @@ class Whiteboard(
             }
             MotionEvent.ACTION_MOVE -> {
                 if (event.buttonState == MotionEvent.BUTTON_STYLUS_PRIMARY) {
-                    stylusErase(event)
+                    eraseTouchedStroke(event)
                     return true
                 }
                 if (isCurrentlyDrawing) {
@@ -168,7 +169,7 @@ class Whiteboard(
             }
             211, 213 -> {
                 if (event.buttonState == MotionEvent.BUTTON_STYLUS_PRIMARY) {
-                    stylusErase(event)
+                    eraseTouchedStroke(event)
                 }
                 true
             }
@@ -193,9 +194,12 @@ class Whiteboard(
         }
 
     /**
-     * Erase with stylus pen.(By using the eraser button on the stylus pen or by using the digital eraser)
+     * Erase touched stroke (= path or point)
+     * (by toggling the eraser action button on
+     *  or by using the eraser button on the stylus pen
+     *  or by using the digital eraser)
      */
-    private fun stylusErase(event: MotionEvent) {
+    private fun eraseTouchedStroke(event: MotionEvent) {
         if (!undoEmpty()) {
             val didErase = undo.erase(event.x.toInt(), event.y.toInt())
             if (didErase) {

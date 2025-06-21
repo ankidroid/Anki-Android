@@ -27,6 +27,7 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.os.Message
 import android.os.Parcelable
 import android.text.SpannableString
@@ -147,6 +148,7 @@ open class Reviewer :
     private var prefFullscreenReview = false
     private lateinit var colorPalette: LinearLayout
     private var toggleStylus = false
+    private var isEraserMode = false
 
     // A flag that determines if the SchedulingStates in CurrentQueueState are
     // safe to persist in the database when answering a card. This is used to
@@ -484,6 +486,10 @@ open class Reviewer :
                 setWhiteboardVisibility(!showWhiteboard)
                 refreshActionBar()
             }
+            R.id.action_toggle_eraser -> { // toggle eraser mode
+                Timber.i("Reviewer:: Eraser button pressed")
+                toggleEraser()
+            }
             R.id.action_toggle_stylus -> { // toggle stylus mode
                 Timber.i("Reviewer:: Stylus set to %b", !toggleStylus)
                 toggleStylus = !toggleStylus
@@ -539,6 +545,67 @@ open class Reviewer :
             colorPalette.visibility = View.GONE
         }
         refreshActionBar()
+    }
+
+    public override fun toggleEraser() {
+        val whiteboardIsShownAndHasStrokes = showWhiteboard && whiteboard?.undoEmpty() == false
+        if (whiteboardIsShownAndHasStrokes) {
+            Timber.i("Reviewer:: Whiteboard eraser mode set to %b", !isEraserMode)
+            isEraserMode = !isEraserMode
+            whiteboard?.reviewerEraserModeIsToggledOn = isEraserMode
+
+            refreshActionBar() // Switch the eraser item's title
+
+            // Keep ripple effect on the eraser button after the eraser mode is activated.
+            toolbar.post {
+                val eraserButtonView = toolbar.findViewById<View>(R.id.action_toggle_eraser)
+                eraserButtonView?.apply {
+                    isPressed = isEraserMode
+                    isActivated = isEraserMode
+                }
+            }
+
+            if (isEraserMode) {
+                startMonitoringEraserButtonRipple()
+                showSnackbar(getString(R.string.white_board_eraser_enabled), 1000)
+            } else {
+                stopMonitoringEraserButtonRipple()
+                showSnackbar(getString(R.string.white_board_eraser_disabled), 1000)
+            }
+        }
+    }
+
+    private val handler = Handler(Looper.getMainLooper())
+
+    /**
+     * The eraser button ripple should be shown while the eraser mode is activated,
+     * but the ripple gets removed after some timings
+     * (e.g., when the three dot menu opens,
+     *        when the side drawer opens & closes,
+     *        when the button is long-pressed)
+     * In such timings, this function re-press the button to re-display the ripple.
+     */
+    private val checkEraserButtonRippleRunnable =
+        object : Runnable {
+            override fun run() {
+                val eraserButtonView = toolbar.findViewById<View>(R.id.action_toggle_eraser)
+                if (isEraserMode && eraserButtonView?.isPressed == false) {
+                    Timber.d("eraser button ripple monitoring: unpressed status detected, and re-pressed")
+                    eraserButtonView.isPressed = true
+                    eraserButtonView.isActivated = true
+                }
+                handler.postDelayed(this, 100) // monitor every 100ms
+            }
+        }
+
+    private fun startMonitoringEraserButtonRipple() {
+        Timber.d("eraser button ripple monitoring: started")
+        handler.post(checkEraserButtonRippleRunnable)
+    }
+
+    private fun stopMonitoringEraserButtonRipple() {
+        Timber.d("eraser button ripple monitoring: stopped")
+        handler.removeCallbacks(checkEraserButtonRippleRunnable)
     }
 
     public override fun clearWhiteboard() {
@@ -756,29 +823,43 @@ open class Reviewer :
         val undoEnabled: Boolean
         val whiteboardIsShownAndHasStrokes = showWhiteboard && whiteboard?.undoEmpty() == false
         if (whiteboardIsShownAndHasStrokes) {
-            undoIconId = R.drawable.eraser
+            undoIconId = R.drawable.ic_arrow_u_left_top
             undoEnabled = true
         } else {
             undoIconId = R.drawable.ic_undo_white
             undoEnabled = colIsOpenUnsafe() && getColUnsafe.undoAvailable()
+            this.isEraserMode = false
         }
         val alphaUndo = Themes.ALPHA_ICON_ENABLED_LIGHT
         val undoIcon = menu.findItem(R.id.action_undo)
         undoIcon.setIcon(undoIconId)
         undoIcon.setEnabled(undoEnabled).iconAlpha = alphaUndo
         undoIcon.actionView!!.isEnabled = undoEnabled
+        val toggleEraserIcon = menu.findItem((R.id.action_toggle_eraser))
         if (colIsOpenUnsafe()) { // Required mostly because there are tests where `col` is null
             if (whiteboardIsShownAndHasStrokes) {
+                // Make Undo action title to whiteboard Undo specific one
                 undoIcon.title = resources.getString(R.string.undo_action_whiteboard_last_stroke)
-            } else if (getColUnsafe.undoAvailable()) {
-                undoIcon.title = getColUnsafe.undoLabel()
-                //  e.g. Undo Bury, Undo Change Deck, Undo Update Note
+
+                // Show whiteboard Eraser action button
+                if (!actionButtons.status.toggleEraserIsDisabled()) {
+                    toggleEraserIcon.isVisible = true
+                }
             } else {
-                // In this case, there is no object word for the verb, "Undo",
-                // so in some languages such as Japanese, which have pre/post-positional particle with the object,
-                // we need to use the string for just "Undo" instead of the string for "Undo %s".
-                undoIcon.title = resources.getString(R.string.undo)
-                undoIcon.iconAlpha = Themes.ALPHA_ICON_DISABLED_LIGHT
+                // Disable whiteboard eraser action button
+                isEraserMode = false
+                whiteboard?.reviewerEraserModeIsToggledOn = isEraserMode
+
+                if (getColUnsafe.undoAvailable()) {
+                    //  e.g. Undo Bury, Undo Change Deck, Undo Update Note
+                    undoIcon.title = getColUnsafe.undoLabel()
+                } else {
+                    // In this case, there is no object word for the verb, "Undo",
+                    // so in some languages such as Japanese, which have pre/post-positional particle with the object,
+                    // we need to use the string for just "Undo" instead of the string for "Undo %s".
+                    undoIcon.title = resources.getString(R.string.undo)
+                    undoIcon.iconAlpha = Themes.ALPHA_ICON_DISABLED_LIGHT
+                }
             }
             menu.findItem(R.id.action_redo)?.apply {
                 if (getColUnsafe.redoAvailable()) {
@@ -820,11 +901,21 @@ open class Reviewer :
             val whiteboardIcon = ContextCompat.getDrawable(applicationContext, R.drawable.ic_gesture_white)!!.mutate()
             val stylusIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_stylus)!!.mutate()
             val whiteboardColorPaletteIcon = ContextCompat.getDrawable(applicationContext, R.drawable.ic_color_lens_white_24dp)!!.mutate()
+            val eraserIcon = ContextCompat.getDrawable(applicationContext, R.drawable.ic_eraser)!!.mutate()
             if (showWhiteboard) {
+                // "hide whiteboard" icon
                 whiteboardIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                 hideWhiteboardIcon.icon = whiteboardIcon
                 hideWhiteboardIcon.setTitle(R.string.hide_whiteboard)
                 whiteboardColorPaletteIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
+                // eraser icon
+                toggleEraserIcon.icon = eraserIcon
+                if (isEraserMode) {
+                    toggleEraserIcon.setTitle(R.string.disable_eraser)
+                } else { // default
+                    toggleEraserIcon.setTitle(R.string.enable_eraser)
+                }
+                // whiteboard editor icon
                 changePenColorIcon.icon = whiteboardColorPaletteIcon
                 if (toggleStylus) {
                     toggleStylusIcon.setTitle(R.string.disable_stylus)

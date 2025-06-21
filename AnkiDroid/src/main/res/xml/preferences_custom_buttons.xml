@@ -157,6 +157,13 @@ TODO: Add a unit test
             android:title="@string/enable_whiteboard"
             app:useSimpleSummaryProvider="true"/>
         <ListPreference
+            android:defaultValue="2"
+            android:entries="@array/custom_button_labels"
+            android:entryValues="@array/custom_button_values"
+            android:key="@string/custom_button_toggle_eraser_key"
+            android:title="@string/enable_eraser"
+            app:useSimpleSummaryProvider="true"/>
+        <ListPreference
             android:defaultValue="1"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
