@@ -79,7 +79,7 @@
     <string name="card_details_tags">Etikedoj</string>
     <string-array name="card_browser_order_labels">
         <item>Sen ordigo (pli rapide)</item>
-        <item>Laŭ ordig-kampon</item>
+        <item>Laŭ ordiga kampo</item>
         <item>Laŭ tempo de kreo</item>
         <item>Laŭ modif‑dato de noto</item>
         <item>Laŭ modif‑dato de karto</item>

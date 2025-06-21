@@ -49,6 +49,7 @@
     <string name="model_browser_template">કાર્ડ સંપાદિત કરો</string>
     <!--Rename-->
     <string name="rename_model">નોંધ પ્રકારનું નામ બદલો</string>
+    <string name="rename_card_type">Rename card type</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">ભાષા સંકેતને %s પર સેટ કરો</string>
     <!--Field Editing-->

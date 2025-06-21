@@ -39,6 +39,15 @@ class SentenceCaseTest : RobolectricTest() {
             assertThat(TR.actionsSetDueDate().toSentenceCase(this, R.string.sentence_set_due_date), equalTo("Set due date"))
             assertThat(TR.actionsCustomStudy().toSentenceCase(this, R.string.sentence_custom_study), equalTo("Custom study"))
             assertThat(TR.emptyCardsWindowTitle().toSentenceCase(this, R.string.sentence_empty_cards), equalTo("Empty cards"))
+            assertThat(TR.mediaCheckEmptyTrash().toSentenceCase(this, R.string.sentence_empty_trash), equalTo("Empty trash"))
+            assertThat(TR.mediaCheckRestoreTrash().toSentenceCase(this, R.string.sentence_restore_deleted), equalTo("Restore deleted"))
+
+            assertThat("syncMediaLogTitle", TR.syncMediaLogTitle(), equalTo("Media Sync Log"))
+            assertThat(
+                "sentence_sync_media_log",
+                TR.syncMediaLogTitle().toSentenceCase(this, R.string.sentence_sync_media_log),
+                equalTo("Media sync log"),
+            )
 
             assertThat("Toggle Suspend".toSentenceCase(this, R.string.sentence_toggle_suspend), equalTo("Toggle suspend"))
             assertThat("Ook? Ook?".toSentenceCase(this, R.string.sentence_toggle_suspend), equalTo("Ook? Ook?"))

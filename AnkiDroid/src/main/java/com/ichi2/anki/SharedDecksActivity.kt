@@ -226,7 +226,7 @@ class SharedDecksActivity : AnkiActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        webView = findViewById(R.id.web_view)
+        webView = findViewById(R.id.media_check_webview)
 
         downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 

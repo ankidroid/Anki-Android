@@ -18,6 +18,7 @@ package com.ichi2.anki.ui.windows.reviewer
 import android.net.Uri
 import android.webkit.WebView
 import com.ichi2.anki.cardviewer.Gesture
+import timber.log.Timber
 import kotlin.math.abs
 
 /**
@@ -73,6 +74,12 @@ object GestureParser {
 
         val row = getGridIndex(tapY, scrollY, measuredHeight, scale)
         val column = getGridIndex(tapX, scrollX, measuredWidth, scale)
+        // FIXME fix the source of values that result in an invalid index
+        if (row !in 0..2 || column !in 0..2) {
+            throw IllegalArgumentException(
+                "Gesture parsing error: row $row - column $column - uri $uri - isScrolling $isScrolling - scale $scale - tapX $tapX - tapY $tapY - scrollX $scrollX - scrollY $scrollY - measuredWidth $measuredWidth - measuredHeight $measuredHeight",
+            )
+        }
         return gestureGrid[row][column]
     }
 
@@ -157,7 +164,11 @@ object GestureParser {
         if (dimensionSize == 0) return 0 // avoids dividing by 0
         val scaledTap = tapPosition * scale
         val adjustedTapPosition = scaledTap - scrolledDistance
-        return (adjustedTapPosition / (dimensionSize / 3)).toInt()
+        val relativePosition = (adjustedTapPosition / (dimensionSize / 3))
+        val index = relativePosition.toInt()
+        // Temporary timber warning to solve #18559
+        Timber.w("adjustedTapPosition $adjustedTapPosition - relativePosition $relativePosition - index $index")
+        return index
     }
 
     private fun Uri.getIntQuery(key: String) = getQueryParameter(key)?.toIntOrNull()

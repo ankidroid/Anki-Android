@@ -88,4 +88,18 @@ object HandlerUtils {
             time,
         )
     }
+
+    /**
+     * Executes a method on the main thread. Either immediately, or via
+     * [HandlerUtils.executeFunctionUsingHandler]
+     *
+     * @param function The function which needs to be executed.
+     */
+    fun executeOnMainThread(function: () -> Unit) {
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            function()
+        } else {
+            executeFunctionUsingHandler { function() }
+        }
+    }
 }

@@ -349,4 +349,6 @@
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Editar a aparência do explorador</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">A acção %s não foi definida para este tipo de nota. Por favor configure-o.</string>
     <string name="directory_inaccessible_info">Descubra mais sobre como restaurar o acesso aqui %s, ou vá às definições para actualizar a pasta das colecções.</string>
+    <!-- Scheduler Upgrade Required Dialog title-->
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
 </resources>

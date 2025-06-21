@@ -158,6 +158,7 @@
     <string name="link_set_due_date_help">https://docs.ankiweb.net/browsing.html#cards</string>
     <string name="link_full_storage_access">https://github.com/ankidroid/Anki-Android/wiki/Full-Storage-Access</string>
     <string name="link_help_forget_cards">https://docs.ankiweb.net/studying.html#editing-and-more</string>
+    <string name="link_scheduler_upgrade_faq">https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating-to-v2-from-v1</string>
 
     <string-array name="cram_deck_conf_order_values">
         <item>0</item>
@@ -300,6 +301,11 @@
         <item>@string/notification_pref_title</item>
         <item>@string/notification_minimum_cards_due_vibrate</item>
         <item>@string/notification_minimum_cards_due_blink</item>
+    </string-array>
+
+    <string-array name="review_reminders_summary_entries">
+        <item>App-wide</item>
+        <item>Deck-specific</item>
     </string-array>
 
     <string-array name="appearance_summary_entries">

@@ -102,6 +102,8 @@
         <!-- Introduction -->
         <item name="introductionLogoTransparent">#55111111</item>
 
+        <!-- Card-->
+        <item name="cardViewStyle">@style/BlackCardBackground</item>
 
         <!-- ProgressDialog-->
         <item name="dialogBackground">@color/theme_black_primary_light</item>
@@ -112,7 +114,11 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="BlackCardBackground" parent="CardView">
+        <item name="cardBackgroundColor">@color/theme_black_primary_light</item>
+    </style>
+
     <style name="ThemeOverlay.AnkiDroid.AlertDialog.Black" parent="ThemeOverlay.AnkiDroid.AlertDialog">
-        <item name="android:background">@color/theme_black_primary_light</item>
+        <item name="android:windowBackground">@drawable/black_round_alert_dialog_background</item>
     </style>
 </resources>

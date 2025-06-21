@@ -704,14 +704,10 @@ class CardTemplateEditorTest : RobolectricTest() {
         val cardTemplateFragment = testEditor.currentFragment
         val tempNoteType = testEditor.tempNoteType
         // set Bottom Navigation View to Style
-        cardTemplateFragment!!.setCurrentEditorView(R.id.styling_edit, tempNoteType!!.css, R.string.card_template_editor_styling)
+        cardTemplateFragment!!.setCurrentEditorView(R.id.styling_edit, tempNoteType!!.css)
 
         // set Bottom Navigation View to Front
-        cardTemplateFragment.setCurrentEditorView(
-            R.id.front_edit,
-            tempNoteType.getTemplate(0).qfmt,
-            R.string.card_template_editor_front,
-        )
+        cardTemplateFragment.setCurrentEditorView(R.id.front_edit, tempNoteType.getTemplate(0).qfmt)
 
         // check if current content is updated or not
         assumeThat(templateEditText.text.toString(), Matchers.equalTo(updatedFrontContent))
@@ -746,7 +742,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         assumeThat(cardTemplateFragment!!.currentEditorViewId, Matchers.equalTo(R.id.front_edit))
 
         // set Bottom Navigation View to Style
-        cardTemplateFragment.setCurrentEditorView(R.id.styling_edit, tempNoteType.css, R.string.card_template_editor_styling)
+        cardTemplateFragment.setCurrentEditorView(R.id.styling_edit, tempNoteType.css)
 
         // check if current view is changed or not
         assumeThat(templateEditText.text.toString(), Matchers.equalTo(tempNoteType.css))

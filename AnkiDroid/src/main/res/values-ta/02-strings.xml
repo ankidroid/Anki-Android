@@ -349,4 +349,6 @@
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">உலாவியின் தோற்றத்தைத் திருத்தவும்</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">இந்த நோட்டிப்பில் பயனர் செயல் %s அமைக்கப்படவில்லை. தயவுசெய்து அதை உள்ளமைக்கவும்</string>
     <string name="directory_inaccessible_info">அணுகலை எவ்வாறு மீட்டெடுப்பது என்பது பற்றி இங்கே %s இல் மேலும் அறிக அல்லது சேகரிப்பு கோப்புறையைப் புதுப்பிக்க அமைப்புகளுக்குச் செல்லவும்.</string>
+    <!-- Scheduler Upgrade Required Dialog title-->
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
 </resources>

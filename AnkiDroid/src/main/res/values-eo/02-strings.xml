@@ -69,7 +69,7 @@
     <string name="show_whiteboard">Montri skribtabulon</string>
     <string name="hide_whiteboard" maxLength="28">Kaŝi skribtabulon</string>
     <string name="clear_whiteboard" maxLength="28">Forviŝi skribtabulon</string>
-    <string name="replay_media" maxLength="28">Replay media</string>
+    <string name="replay_media" maxLength="28">Reludi aŭdvidaĵon</string>
     <string name="leech_suspend_notification">Karto markita kiel forgesema kaj kaŝita</string>
     <string name="leech_notification">Karto markita kiel forgesema</string>
     <string name="webview_crash_unknown">Nekonata eraro</string>
@@ -94,16 +94,16 @@
     <string name="cardeditor_title_edit_card" maxLength="28">Redakti noton</string>
     <string name="discard">Rezigni</string>
     <string name="note_editor_no_cards_created">Neniu karto kreita. Plenigu pliajn kampojn</string>
-    <string name="note_editor_no_cards_created_all_fields">El la nuna nototipo neniu karto kreiĝis.\nElektu alian nototipon aŭ frapetu “Kartoj”-n por aldoni anstataŭan kampon</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Trutekstaj malplenoj nur funkcias kun la nototipo “truteksto”</string>
+    <string name="note_editor_no_cards_created_all_fields">El la nuna not-tipo neniu karto kreiĝis.\nElektu alian not-tipon aŭ frapetu “Kartoj”-n por aldoni anstataŭan kampon</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Trutekstaj malplenoj nur funkcias kun la not-tipo “truteksto”</string>
     <string name="saving_facts">Konservado de noto</string>
-    <string name="saving_model">Konservado de nototipo</string>
+    <string name="saving_model">Konservado de not-tipo</string>
     <string name="save" maxLength="28">Konservi</string>
     <string name="close">Fermi</string>
     <string name="select">Elekti</string>
     <string name="field_remapping">%1$s (de “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Ĉiuj senasignitaj kartoj estos forigitaj. Se noto ne havas restajn kartojn, ĝi ankaŭ perdiĝos. Ĉu vi certe volas pluigi?</string>
-    <string name="missing_note_type">Ne trovis nototipon</string>
+    <string name="missing_note_type">Ne trovis not-tipon</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (malplena)</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Limigo de lernada tempo atingita</string>
@@ -284,7 +284,7 @@
     <string name="expand_tag">Etendi etikedon “%s”</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Malsukcesis aliri la kolekton. Reprovu!</string>
-    <string name="cd_manage_notetypes_add">Aldoni novan nototipon</string>
+    <string name="cd_manage_notetypes_add">Aldoni novan not-tipon</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Lernu malpli</string>
     <string name="intro_ankidroid_tagline_two">Memoru pli</string>
@@ -339,7 +339,7 @@
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Forigi kartaron senkonfirme</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Redaktilo de notoj</string>
     <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Elekti kartaron</string>
-    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Elekti nototipon</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Elekti not-tipon</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Redaktilo de etikedoj</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Redaktilo de kart-ŝablonoj</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Redakti frontan ŝablonon</string>
@@ -347,6 +347,8 @@
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Redakti stilon</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Kopii ŝablonon kiel Markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Redakti aspekton de kart-foliumilo</string>
-    <string name="missing_user_action_dialog_message" comment="%s is the user action number">La ago de uzanto “%s” ne estas agordita por tiu ĉi nototipo. Agordu ĝin.</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">La ago de uzanto “%s” ne estas agordita por tiu ĉi not-tipo. Agordu ĝin.</string>
     <string name="directory_inaccessible_info">Sciiĝu pli pri kiel restarigi aliron ĉe %s aŭ malfermu agordojn kaj ŝanĝu la dosierujon por kolekto.</string>
+    <!-- Scheduler Upgrade Required Dialog title-->
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Necesas promocii planilon</string>
 </resources>

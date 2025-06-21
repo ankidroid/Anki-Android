@@ -66,7 +66,6 @@ import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
-import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.core.util.component1
 import androidx.core.util.component2
@@ -133,6 +132,7 @@ import com.ichi2.anki.dialogs.EmptyCardsDialogFragment
 import com.ichi2.anki.dialogs.ImportDialog.ImportDialogListener
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ApkgImportResultLauncherProvider
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.CsvImportResultLauncherProvider
+import com.ichi2.anki.dialogs.SchedulerUpgradeDialog
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.dialogs.SyncErrorDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.SyncErrorDialog.SyncErrorDialogListener
@@ -190,7 +190,6 @@ import com.ichi2.utils.customView
 import com.ichi2.utils.dp
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
-import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
@@ -479,6 +478,12 @@ open class DeckPicker :
             Timber.i("notification permission: %b", it)
         }
 
+    /**
+     * Tracks the scheduler version for which the upgrade dialog was last shown,
+     * to avoid repeatedly prompting the user for the same collection version.
+     */
+    private var schedulerUpgradeDialogShownForVersion: Long? = null
+
     // ----------------------------------------------------------------------------
     // ANDROID ACTIVITY METHODS
     // ----------------------------------------------------------------------------
@@ -523,7 +528,7 @@ open class DeckPicker :
         if (fragmented && !startupError) {
             loadStudyOptionsFragment(false)
 
-            val resizingDivider = findViewById<View>(R.id.resizing_divider)
+            val resizingDivider = findViewById<View>(R.id.homescreen_resizing_divider)
             val parentLayout = findViewById<LinearLayout>(R.id.deckpicker_xl_view)
 
             // Get references to the panes
@@ -794,6 +799,11 @@ open class DeckPicker :
             DeckPickerContextMenuOption.EDIT_DESCRIPTION -> {
                 Timber.i("Editing deck description for deck '%d'", deckId)
                 showDialogFragment(EditDeckDescriptionDialog.newInstance(deckId))
+            }
+            DeckPickerContextMenuOption.SCHEDULE_REMINDERS -> {
+                Timber.i("Scheduling review reminders for deck '%d'", deckId)
+                viewModel.scheduleReviewReminders(deckId)
+                dismissAllDialogFragments()
             }
         }
     }
@@ -2093,25 +2103,18 @@ open class DeckPicker :
     }
 
     private fun promptUserToUpdateScheduler() {
-        AlertDialog.Builder(this).show {
-            message(text = TR.schedulingUpdateRequired())
-            positiveButton(R.string.dialog_ok) {
-                launchCatchingTask {
-                    if (!userAcceptsSchemaChange(getColUnsafe)) {
-                        return@launchCatchingTask
-                    }
-                    withProgress { withCol { sched.upgradeToV2() } }
+        SchedulerUpgradeDialog(
+            activity = this,
+            onUpgrade = {
+                this@DeckPicker.launchCatchingTask {
+                    this@DeckPicker.withProgress { withCol { sched.upgradeToV2() } }
                     showThemedToast(this@DeckPicker, TR.schedulingUpdateDone(), false)
-                    refreshState()
                 }
-            }
-            negativeButton(R.string.dialog_cancel)
-            if (AdaptionUtil.hasWebBrowser(this@DeckPicker)) {
-                neutralButton(text = TR.schedulingUpdateMoreInfoButton()) {
-                    this@DeckPicker.openUrl("https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating".toUri())
-                }
-            }
-        }
+            },
+            onCancel = {
+                onBackPressedDispatcher.onBackPressed()
+            },
+        ).showDialog()
     }
 
     @NeedsTest("14608: Ensure that the deck options refer to the selected deck")
@@ -2143,10 +2146,6 @@ open class DeckPicker :
             }
         }
 
-        if (withCol { ((config.get("schedVer") ?: 1L) == 1L) }) {
-            promptUserToUpdateScheduler()
-            return
-        }
         withCol { decks.select(did) }
         deckListAdapter.updateSelectedDeck(did)
         // Also forget the last deck used by the Browser
@@ -2225,6 +2224,19 @@ open class DeckPicker :
                             Pair(sched.deckDueTree(), isEmpty)
                         }
                     onDecksLoaded(deckDueTree, collectionHasNoCards)
+
+                    /**
+                     * Checks the current scheduler version and prompts the upgrade dialog if using the legacy version.
+                     * Ensures the dialog is only shown once per collection load, even if [updateDeckList()] is called multiple times.
+                     */
+                    val currentSchedulerVersion = withCol { config.get("schedVer") as? Long ?: 1L }
+
+                    if (currentSchedulerVersion == 1L && schedulerUpgradeDialogShownForVersion != 1L) {
+                        schedulerUpgradeDialogShownForVersion = 1L
+                        promptUserToUpdateScheduler()
+                    } else {
+                        schedulerUpgradeDialogShownForVersion = currentSchedulerVersion
+                    }
 
                     updateUndoMenuState()
                 }

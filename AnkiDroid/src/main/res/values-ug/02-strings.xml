@@ -349,4 +349,6 @@
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">كارتا كۆرگۈچ كۆرۈنۈشىنى تەھرىرلەيدۇ</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">%s  ئىشلەتكۈچى مەشغۇلاتى خاتىرە تۈرىدە تەڭشەلمىگەن. سەپلەڭ</string>
     <string name="directory_inaccessible_info">بۇ جاي %s دىكى زىيارەتنى قانداق ئەسلىگە كەلتۈرۈش ياكى تەڭشەككە يۆتكىلىپ توپلام قىسقۇچىنى يېڭىلاش ھەققىدىكى تەپسىلاتنى كۆرۈڭ.</string>
+    <!-- Scheduler Upgrade Required Dialog title-->
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
 </resources>

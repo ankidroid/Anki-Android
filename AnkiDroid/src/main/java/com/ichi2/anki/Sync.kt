@@ -34,6 +34,7 @@ import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.libanki.ChangeManager.notifySubscribersAllValuesChanged
 import com.ichi2.libanki.createBackup
@@ -42,6 +43,7 @@ import com.ichi2.libanki.syncCollection
 import com.ichi2.libanki.syncLogin
 import com.ichi2.preferences.VersatileTextWithASwitchPreference
 import com.ichi2.utils.NetworkUtils
+import com.ichi2.utils.dismissSafely
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -384,7 +386,7 @@ suspend fun monitorMediaSync(deckPicker: DeckPicker) {
         withContext(Dispatchers.Main) {
             AlertDialog
                 .Builder(deckPicker)
-                .setTitle(TR.syncMediaLogTitle())
+                .setTitle(TR.syncMediaLogTitle().toSentenceCase(deckPicker, R.string.sentence_sync_media_log))
                 .setMessage("")
                 .setPositiveButton(R.string.dialog_continue) { _, _ ->
                     scope.cancel()
@@ -416,7 +418,7 @@ suspend fun monitorMediaSync(deckPicker: DeckPicker) {
         } catch (_: Exception) {
             showMessage(TR.syncMediaFailed())
         } finally {
-            dialog.dismiss()
+            dialog.dismissSafely()
         }
     }
 }

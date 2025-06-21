@@ -291,8 +291,10 @@ class DeckPickerWidgetConfig :
         val selectedDeckIds = deckPickerWidgetPreferences.getSelectedDeckIdsFromPreferences(appWidgetId)
         if (selectedDeckIds.isNotEmpty()) {
             val decks = fetchDecks()
-            val selectedDecks = decks.filter { it.deckId in selectedDeckIds }
-            selectedDecks.forEach { deckAdapter.addDeck(it) }
+            val deckMap = decks.associateBy { it.deckId }
+            selectedDeckIds.forEach { deckId ->
+                deckMap[deckId]?.let { deckAdapter.addDeck(it) }
+            }
             updateViewVisibility()
             updateFabVisibility()
             setupDoneButton()

@@ -87,6 +87,7 @@ import com.ichi2.utils.title
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.runBlocking
 import kotlinx.parcelize.Parcelize
+import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
 
 /**
@@ -153,13 +154,28 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             if (selectedStatePosition == AdapterView.INVALID_POSITION) return@setFragmentResultListener
             val kind = CustomStudyCardState.entries[selectedStatePosition].kind
             val cardsAmount = userInputValue ?: 100 // the default value
-            requireActivity().launchCatchingTask {
-                withProgress {
-                    try {
-                        customStudy(option, cardsAmount, kind, tagsToInclude, tagsToExclude)
-                    } finally {
-                        requireActivity().dismissAllDialogFragments()
-                    }
+            launchCustomStudy(option, cardsAmount, kind, tagsToInclude, tagsToExclude)
+        }
+    }
+
+    /** @see customStudy */
+    private fun launchCustomStudy(
+        option: ContextMenuOption,
+        cardsAmount: Int,
+        kind: CramKind = CramKind.CRAM_KIND_NEW,
+        tagsToInclude: List<String> = emptyList(),
+        tagsToExclude: List<String> = emptyList(),
+    ) {
+        requireActivity().launchCatchingTask(
+            // net.ankiweb.rsdroid.BackendException: No cards matched the criteria you provided.
+            // TODO (Backend#256: make this BackendCustomStudyException)
+            skipCrashReport = { it is BackendException },
+        ) {
+            withProgress {
+                try {
+                    customStudy(option, cardsAmount, kind, tagsToInclude, tagsToExclude)
+                } finally {
+                    requireActivity().dismissAllDialogFragments()
                 }
             }
         }
@@ -391,9 +407,9 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
     private suspend fun customStudy(
         contextMenuOption: ContextMenuOption,
         userEntry: Int,
-        cramKind: CramKind = CramKind.CRAM_KIND_NEW,
-        tagsSelectedForInclude: List<String> = emptyList(),
-        tagsSelectedForExclude: List<String> = emptyList(),
+        cramKind: CramKind,
+        tagsSelectedForInclude: List<String>,
+        tagsSelectedForExclude: List<String>,
     ) {
         Timber.i("Custom study: $contextMenuOption; input = $userEntry")
 

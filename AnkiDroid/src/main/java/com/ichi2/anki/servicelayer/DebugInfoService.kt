@@ -50,6 +50,9 @@ object DebugInfoService {
             FSRS = ${BackendBuildConfig.FSRS_VERSION} (Enabled: $isFSRSEnabled)
             Crash Reports Enabled = ${isSendingCrashReports(info)}
             """.trimIndent()
+            // A Markdown newline is two spaces followed by '\n', this avoids the need for
+            // code fences
+            .replace("\n", "  \n")
     }
 
     private fun isSendingCrashReports(context: Context): Boolean = CrashReportService.isAcraEnabled(context, false)

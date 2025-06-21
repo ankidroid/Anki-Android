@@ -137,6 +137,7 @@ fun <T> ViewModel.asyncIO(block: suspend CoroutineScope.() -> T): Deferred<T> = 
  */
 suspend fun <T> FragmentActivity.runCatching(
     errorMessage: String? = null,
+    skipCrashReport: ((Exception) -> Boolean)? = null,
     block: suspend () -> T?,
 ): T? {
     // appends the pre-coroutine stack to the error message. Example:
@@ -158,6 +159,11 @@ suspend fun <T> FragmentActivity.runCatching(
     try {
         return block()
     } catch (exc: Exception) {
+        if (skipCrashReport?.invoke(exc) == true) {
+            Timber.i("Showing error dialog but not sending a crash report.")
+            showError(this, exc.localizedMessage!!, exc, false, enableEnterKeyHandler = true)
+            return null
+        }
         when (exc) {
             is CancellationException -> {
                 throw exc // CancellationException should be re-thrown to propagate it to the parent coroutine
@@ -225,19 +231,21 @@ fun getCoroutineExceptionHandler(
  */
 fun FragmentActivity.launchCatchingTask(
     errorMessage: String? = null,
+    skipCrashReport: ((Exception) -> Boolean)? = null,
     block: suspend CoroutineScope.() -> Unit,
 ): Job =
     lifecycle.coroutineScope.launch {
-        runCatching(errorMessage) { block() }
+        runCatching(errorMessage, skipCrashReport = skipCrashReport) { block() }
     }
 
 /** See [FragmentActivity.launchCatchingTask] */
 fun Fragment.launchCatchingTask(
     errorMessage: String? = null,
+    skipCrashReport: ((Exception) -> Boolean)? = null,
     block: suspend CoroutineScope.() -> Unit,
 ): Job =
     lifecycle.coroutineScope.launch {
-        requireActivity().runCatching(errorMessage) { block() }
+        requireActivity().runCatching(errorMessage, skipCrashReport = skipCrashReport) { block() }
     }
 
 fun showError(
@@ -273,6 +281,7 @@ fun showError(
             message(text = msg)
             positiveButton(R.string.dialog_ok)
             if (crashReport) {
+                Timber.w("sending crash report on close")
                 setOnDismissListener {
                     CrashReportService.sendExceptionReport(
                         exception,

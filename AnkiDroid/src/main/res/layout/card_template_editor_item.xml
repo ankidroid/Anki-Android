@@ -10,14 +10,8 @@
     android:paddingTop="12dp">
 
     <!-- Editor -->
-    <com.ichi2.ui.FixedTextView
-        android:id="@+id/title_edit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:focusable="true"
-        android:text="@string/card_template_editor_front" />
     <ScrollView
+        android:id="@+id/card_template_editor_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

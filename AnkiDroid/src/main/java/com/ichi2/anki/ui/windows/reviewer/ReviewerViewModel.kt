@@ -47,7 +47,6 @@ import com.ichi2.anki.preferences.getShowIntervalOnButtons
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerViewModel
 import com.ichi2.anki.previewer.TypeAnswer
-import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.reviewer.BindingProcessor
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.ReviewerBinding
@@ -76,8 +75,8 @@ import timber.log.Timber
 
 class ReviewerViewModel(
     cardMediaPlayer: CardMediaPlayer,
-    private val bindingMap: BindingMap<ReviewerBinding, ViewerAction>,
     serverPort: Int = 0,
+    studyScreenRepository: StudyScreenRepository,
 ) : CardViewerViewModel(cardMediaPlayer),
     ChangeManager.Subscriber,
     BindingProcessor<ReviewerBinding, ViewerAction> {
@@ -109,6 +108,9 @@ class ReviewerViewModel(
     val statesMutationEval = MutableSharedFlow<String>()
 
     private val autoAdvance = AutoAdvance(this)
+    private val bindingMap = studyScreenRepository.bindingMap
+    private val shouldSendMarkEval = !studyScreenRepository.isMarkShownInToolbar
+    private val shouldSendFlagEval = !studyScreenRepository.isFlagShownInToolbar
 
     /**
      * A flag that determines if the SchedulingStates in CurrentQueueState are
@@ -393,6 +395,8 @@ class ReviewerViewModel(
         Timber.v("ReviewerViewModel::showQuestion")
         super.showQuestion()
         runStateMutationHook()
+        updateMarkIcon()
+        updateFlagIcon()
         if (!autoAdvance.shouldWaitForAudio()) {
             autoAdvance.onShowQuestion()
         } // else run in onMediaGroupCompleted
@@ -458,12 +462,14 @@ class ReviewerViewModel(
         Timber.v("ReviewerViewModel::updateMarkIcon")
         val card = currentCard.await()
         val isMarkedValue = withCol { card.note(this@withCol).hasTag(this@withCol, MARKED_TAG) }
+        if (shouldSendMarkEval) eval.emit("_drawMark($isMarkedValue);")
         isMarkedFlow.emit(isMarkedValue)
     }
 
     private suspend fun updateFlagIcon() {
         Timber.v("ReviewerViewModel::updateFlagIcon")
         val card = currentCard.await()
+        if (shouldSendFlagEval) eval.emit("_drawFlag(${card.userFlag()});")
         flagFlow.emit(card.flag)
     }
 
@@ -486,8 +492,6 @@ class ReviewerViewModel(
         autoAdvance.onCardChange(card)
         showQuestion()
         loadAndPlayMedia(CardSide.QUESTION)
-        updateMarkIcon()
-        updateFlagIcon()
         canBuryNoteFlow.emit(isBuryNoteAvailable(card))
         canSuspendNoteFlow.emit(isSuspendNoteAvailable(card))
         countsFlow.emit(state.counts to state.countsIndex)
@@ -670,12 +674,12 @@ class ReviewerViewModel(
     companion object {
         fun factory(
             soundPlayer: CardMediaPlayer,
-            bindingMap: BindingMap<ReviewerBinding, ViewerAction>,
             serverPort: Int,
+            studyScreenRepository: StudyScreenRepository,
         ): ViewModelProvider.Factory =
             viewModelFactory {
                 initializer {
-                    ReviewerViewModel(soundPlayer, bindingMap, serverPort)
+                    ReviewerViewModel(soundPlayer, serverPort, studyScreenRepository)
                 }
             }
 

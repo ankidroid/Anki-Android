@@ -38,5 +38,9 @@ If you want to use a string in your code that can't be translated, please use:
 
     <string name="crowding_test_non_breaking_space">This is a string with a non breakable-space using unicode.</string>
     <string name="crowding_test_160_space">This is a string with a non&#160;breakable-space using entity.</string>
+
+    <!-- Review Reminders: In progress for GSoC 2025 -->
+    <!-- TODO: Move this to a proper string resource file and collect all other strings associated with this feature once it is stable. -->
+    <string name="schedule_reminders_do_not_translate" maxLength="28" comment="Do not translate this string, this feature is still in development. Name of the screen that appears when review reminders are being scheduled.">Schedule reminders</string>
 </resources>
 
