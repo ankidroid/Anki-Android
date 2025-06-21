@@ -206,6 +206,9 @@ object Prefs {
         get() = getBoolean(R.string.dev_options_enabled_by_user_key, false) || BuildConfig.DEBUG
         set(value) = putBoolean(R.string.dev_options_enabled_by_user_key, value)
 
+    val isNewStudyScreenEnabled: Boolean
+        get() = getBoolean(R.string.new_reviewer_pref_key, false) && getBoolean(R.string.new_reviewer_options_key, false)
+
     // **************************************** UI Config *************************************** //
 
     private const val UI_CONFIG_PREFERENCES_NAME = "ui-config"

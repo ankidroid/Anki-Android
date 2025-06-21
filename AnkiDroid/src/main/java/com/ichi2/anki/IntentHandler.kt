@@ -32,6 +32,7 @@ import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.MimeTypeUtils
 import com.ichi2.anki.worker.SyncWorker
@@ -155,7 +156,7 @@ class IntentHandler : AbstractIntentHandler() {
         Timber.i("Handling intent to review deck '%d'", deckId)
 
         val reviewIntent =
-            if (sharedPrefs().getBoolean("newReviewer", false)) {
+            if (Prefs.isNewStudyScreenEnabled) {
                 ReviewerFragment.getIntent(this)
             } else {
                 Intent(this, Reviewer::class.java).apply {

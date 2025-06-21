@@ -25,6 +25,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.preferences.HeaderFragment.Companion.getHeaderKeyForFragment
 import com.ichi2.anki.preferences.PreferenceTestUtils.getAttrFromXml
+import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.preferences.HeaderPreference
 import com.ichi2.testutils.getInstanceFromClassName
@@ -96,7 +97,7 @@ class PreferencesTest : RobolectricTest() {
         val fragments =
             PreferenceTestUtils
                 .getAllPreferencesFragments(targetContext)
-                .filter { it !is ReviewerOptionsFragment } // WIP dev options
+                .filter { it !is ReviewerOptionsFragment && it !is ReviewerMenuSettingsFragment } // WIP dev options
 
         fragments.forEach { fragment ->
             assertThat(

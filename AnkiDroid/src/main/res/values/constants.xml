@@ -282,6 +282,12 @@
         <item>@string/pref_cat_system_wide</item>
     </string-array>
 
+    <string-array name="study_screen_summary_entries">
+        <item>@string/pref_cat_appearance</item>
+        <item>@string/toolbar</item>
+        <item>@string/answer_buttons</item>
+    </string-array>
+
     <string-array name="reviewing_summary_entries">
         <item>@string/pref_cat_scheduling</item>
         <item>@string/pref_keep_screen_on</item>
