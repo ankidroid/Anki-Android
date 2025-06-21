@@ -83,7 +83,7 @@ class ReviewerViewModel(
             queueState.await()?.topCard
                 ?: Card(anki.cards.Card.getDefaultInstance())
         }
-    var finishResultFlow = MutableSharedFlow<Int>()
+    val finishResultFlow = MutableSharedFlow<Int>()
     val isMarkedFlow = MutableStateFlow(false)
     val flagFlow = MutableStateFlow(Flag.NONE)
     val actionFeedbackFlow = MutableSharedFlow<String>()
