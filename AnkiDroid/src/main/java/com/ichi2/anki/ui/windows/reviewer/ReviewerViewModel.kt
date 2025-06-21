@@ -90,7 +90,7 @@ class ReviewerViewModel(
         asyncIO {
             queueState.await()!!.topCard
         }
-    var finishResultFlow = MutableSharedFlow<Int>()
+    val finishResultFlow = MutableSharedFlow<Int>()
     val isMarkedFlow = MutableStateFlow(false)
     val flagFlow = MutableStateFlow(Flag.NONE)
     val actionFeedbackFlow = MutableSharedFlow<String>()
