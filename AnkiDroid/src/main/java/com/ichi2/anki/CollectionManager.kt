@@ -108,11 +108,12 @@ object CollectionManager {
     /**
      * Execute the provided block with the collection, opening if necessary.
      *
-     * Calls are serialized, and run in background [Dispatchers.IO] thread.
+     * Calls are serialized, and run in a background [Dispatchers.IO] thread.
      *
-     * Parallel calls to this function are guaranteed to be serialized, so you can be
-     * sure the collection won't be closed or modified by another thread. This guarantee
-     * does not hold if legacy code calls [getColUnsafe].
+     * @throws IllegalStateException if the collection cannot be opened (e.g., null or failed initialization after [ensureOpenInner]).
+     * @throws BackendException if the backend fails to initialize or the database is locked.
+     * @param block The operation to execute with the collection.
+     * @return The result of the block.
      */
     suspend fun <T> withCol(
         @WorkerThread block: Collection.() -> T,
@@ -126,8 +127,12 @@ object CollectionManager {
      * Execute the provided block if the collection is already open. See [withCol] for more.
      * Since the block may return a null value, and a null value will also be returned in the
      * case of the collection being closed, if the calling code needs to distinguish between
-     * these two cases, it should wrap the return value of the block in a class (eg Optional),
+     * these two cases, it should wrap the return value of the block in a class (e.g., Optional),
      * instead of returning a nullable object.
+     *
+     * @throws IllegalStateException if the collection is accessed but unexpectedly null or closed.
+     * @param block The operation to execute with the collection if open.
+     * @return The result of the block, or null if the collection is closed or null.
      */
     suspend fun <T> withOpenColOrNull(
         @WorkerThread block: Collection.() -> T,
@@ -144,8 +149,11 @@ object CollectionManager {
      * Return a handle to the backend, creating if necessary. This should only be used
      * for routines that don't depend on an open or closed collection, such as checking
      * the current progress state when importing a colpkg file. While the backend is
-     * thread safe and can be accessed concurrently, if another thread closes the collection
+     * thread-safe and can be accessed concurrently, if another thread closes the collection
      * and you call a routine that expects an open collection, it will result in an error.
+     *
+     * @throws BackendException if the backend fails to initialize.
+     * @return The backend instance.
      */
     fun getBackend(): Backend {
         if (backend == null) {
@@ -298,6 +306,9 @@ object CollectionManager {
      * safe, as code in other threads could open or close
      * the collection while the reference is held. [withCol]
      * is a better alternative.
+     *
+     * @throws IllegalStateException if the collection is not open or null after [ensureOpenInner].
+     * @return The current collection instance.
      */
     fun getColUnsafe(): Collection =
         logUIHangs {
