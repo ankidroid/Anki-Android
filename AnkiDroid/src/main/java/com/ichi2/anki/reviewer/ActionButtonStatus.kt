@@ -53,6 +53,7 @@ class ActionButtonStatus {
         setupButton(preferences, R.id.action_delete, "customButtonDelete", SHOW_AS_ACTION_NEVER)
         setupButton(preferences, R.id.action_toggle_mic_tool_bar, "customButtonToggleMicToolBar", SHOW_AS_ACTION_NEVER)
         setupButton(preferences, R.id.action_toggle_whiteboard, "customButtonEnableWhiteboard", SHOW_AS_ACTION_NEVER)
+        setupButton(preferences, R.id.action_toggle_eraser, "customButtonToggleEraser", SHOW_AS_ACTION_ALWAYS)
         setupButton(preferences, R.id.action_toggle_stylus, "customButtonToggleStylus", SHOW_AS_ACTION_IF_ROOM)
         setupButton(preferences, R.id.action_save_whiteboard, "customButtonSaveWhiteboard", SHOW_AS_ACTION_NEVER)
         setupButton(preferences, R.id.action_change_whiteboard_pen_color, "customButtonWhiteboardPenColor", SHOW_AS_ACTION_IF_ROOM)
@@ -94,6 +95,8 @@ class ActionButtonStatus {
     }
 
     fun hideWhiteboardIsDisabled(): Boolean = customButtons[R.id.action_hide_whiteboard] == MENU_DISABLED
+
+    fun toggleEraserIsDisabled(): Boolean = customButtons[R.id.action_toggle_eraser] == MENU_DISABLED
 
     fun toggleStylusIsDisabled(): Boolean = customButtons[R.id.action_toggle_stylus] == MENU_DISABLED
 
