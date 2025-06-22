@@ -2113,6 +2113,7 @@ open class DeckPicker :
     }
 
     @NeedsTest("14608: Ensure that the deck options refer to the selected deck")
+    @NeedsTest("18586: handle clicking on an empty filtered deck")
     private suspend fun handleDeckSelection(
         did: DeckId,
         selectionType: DeckSelectionType,
@@ -2152,7 +2153,7 @@ open class DeckPicker :
             return
         }
 
-        if (isDeckAndSubdeckEmpty(did)) {
+        if (!deck.filtered && isDeckAndSubdeckEmpty(did)) {
             showEmptyDeckSnackbar()
             updateUi()
         } else {
