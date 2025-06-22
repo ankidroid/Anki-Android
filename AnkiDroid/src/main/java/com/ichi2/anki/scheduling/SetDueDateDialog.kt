@@ -25,6 +25,7 @@ import android.view.ViewGroup
 import android.view.WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
 import android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
 import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.core.content.ContextCompat
@@ -295,6 +296,7 @@ class SetDueDateDialog : DialogFragment() {
                             false
                         }
                     }
+                    selectAllWhenFocused()
                 }
             }
             view.findViewById<TextView>(R.id.date_single_label).text =
@@ -331,6 +333,7 @@ class SetDueDateDialog : DialogFragment() {
                             resources.getQuantityString(R.plurals.set_due_date_label_suffix, value ?: 0)
                     }
                     suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, 0)
+                    selectAllWhenFocused()
                 }
             }
             view.findViewById<TextInputLayout>(R.id.date_range_end_layout).apply {
@@ -353,6 +356,7 @@ class SetDueDateDialog : DialogFragment() {
                             false
                         }
                     }
+                    selectAllWhenFocused()
                 }
             }
             view.findViewById<TextView>(R.id.date_range_label).text =
@@ -363,8 +367,8 @@ class SetDueDateDialog : DialogFragment() {
             super.onResume()
             this.requireView().requestLayout() // update the height of the ViewPager
 
-            val rangeStartLayout = requireView().findViewById<TextInputLayout>(R.id.date_range_start_layout)
-            AndroidUiUtils.setFocusAndOpenKeyboard(rangeStartLayout.editText!!)
+            val editText = requireView().findViewById<TextInputLayout>(R.id.date_range_start_layout).editText!!
+            AndroidUiUtils.setFocusAndOpenKeyboard(editText)
         }
     }
 }
@@ -393,3 +397,11 @@ private fun AnkiActivity.updateDueDate(
         showSnackbar(TR.schedulingSetDueDateDone(cardsUpdated), Snackbar.LENGTH_SHORT)
         return@asyncCatching cardsUpdated
     }
+
+private fun EditText.selectAllWhenFocused() {
+    setOnFocusChangeListener({ _, hasFocus ->
+        if (hasFocus) {
+            selectAll()
+        }
+    })
+}
