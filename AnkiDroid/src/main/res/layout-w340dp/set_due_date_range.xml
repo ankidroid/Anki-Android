@@ -49,7 +49,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:maxLength="5" />
+            android:maxLength="5"
+            android:imeOptions="actionNext"
+            android:nextFocusForward="@id/date_range_end" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -62,6 +64,7 @@
         app:layout_constraintEnd_toStartOf="@+id/date_range_end_layout"
         app:layout_constraintStart_toEndOf="@+id/date_range_start_layout"
         app:layout_constraintTop_toTopOf="@+id/date_range_start_layout"
+        android:focusable="false"
         />
 
     <com.google.android.material.textfield.TextInputLayout
