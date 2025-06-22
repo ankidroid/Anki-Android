@@ -1390,6 +1390,7 @@ class NoteEditorFragment :
      * Change the note type from oldNoteType to newNoteType, handling the case where a full sync will be required
      */
     @NeedsTest("test changing note type")
+    @Suppress("Deprecation") // Replace with ChangeNoteTypeDialog
     private fun changeNoteType(
         oldNotetype: NotetypeJson,
         newNotetype: NotetypeJson,
