@@ -193,7 +193,7 @@
     <string name="help_dialog_exception_report_sent">Raport został wysłany!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">Automatyczna synchronizacja może zostać uruchomiona za %d sekund</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">Automatyczna synchronizacja może zostać uruchomiona za %d sekundę</item>
         <item quantity="few">Automatyczna synchronizacja może zostać uruchomiona za %d sekundy</item>
         <item quantity="many">Automatyczna synchronizacja może zostać uruchomiona za %d sekund</item>
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
@@ -246,8 +246,8 @@
     </plurals>
     <plurals name="set_due_date_current_interval">
         <item quantity="one">Aktualna przerwa: %d dzień</item>
-        <item quantity="few">Current interval: %d days</item>
-        <item quantity="many">Current interval: %d days</item>
+        <item quantity="few">Aktualna przerwa: %d dni</item>
+        <item quantity="many">Aktualna przerwa: %d dni</item>
         <item quantity="other">Current interval: %d days</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>

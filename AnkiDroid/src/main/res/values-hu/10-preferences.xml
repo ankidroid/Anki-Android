@@ -181,8 +181,8 @@
     <string name="time_limit" maxLength="41">Időkorlát érték</string>
     <string name="day_offset_with_description" maxLength="41">Nap kezdete</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d órával éjfél után</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d órával éjfél után</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Ne kapcsolja ki a képernyőt</string>
     <string name="pref_keep_screen_on_summ">Képernyő időtúllépésének kikapcsolása</string>

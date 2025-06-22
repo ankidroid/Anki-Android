@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">Responder \"Bom\"</string>
     <string name="answer_easy" maxLength="41">Responder \"Fácil\"</string>
     <string name="gesture_play" maxLength="41">Reproduzir multimédia</string>
-    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
+    <string name="gesture_abort_learning" maxLength="41">Fechar Ecrã de Estudo</string>
     <string name="gesture_flag_red" maxLength="41">Activar/Desactivar Bandeira Vermelha</string>
     <string name="gesture_flag_orange" maxLength="41">Activar/Desactivar Bandeira Laranja</string>
     <string name="gesture_flag_green" maxLength="41">Activar/Desactivar Bandeira Verde</string>

@@ -58,7 +58,7 @@
     <!-- Study Options-->
     <string name="studyoptions_start" comment="Title of the Reviewer activity. Also the button to open it.">Gyakorlás</string>
     <!-- DeckPicker.kt -->
-    <string name="expand" comment="In the deck picker: accessibility label of the buttons that display the subdecks of a deck.">Nagyítás</string>
+    <string name="expand" comment="In the deck picker: accessibility label of the buttons that display the subdecks of a deck.">Kinyitás</string>
     <string name="collapse" comment="In the deck picker: accessibility label of the buttons that hide the subdecks of a deck.">Összecsukás</string>
     <string name="menu_import" comment="Title of the import page and the button to open it." maxLength="28">Importálás</string>
     <string name="no_cards_placeholder_title" comment="Text shown the first time AnkiDroid is opened, to explain to the user why they can\'t yet review.">Üres gyűjtemény</string>
@@ -106,7 +106,7 @@
     <string name="menu_suspend" maxLength="28">Felfüggesztés</string>
     <string name="menu_delete_note" maxLength="28">Jegyzet törlése</string>
     <string name="menu_flag" maxLength="41">Jelölő</string>
-    <string name="rename_flag">Rename flags</string>
+    <string name="rename_flag">Jelölő átnevezése</string>
     <string name="menu_flag_card" maxLength="28">Kártya megjelölése</string>
     <string name="menu_edit_tags" maxLength="28">Címkék szerkesztése</string>
     <string name="delete_note_message">Biztosan törölni akarod ezt a jegyzetet és az összes kártyáját?\n%s</string>
@@ -143,7 +143,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Visszavonás&#8230;\nEz eltarthat egy darabig.</string>
     <string name="syncing_media">Média szinkronizálása</string>
     <string name="export_deck" maxLength="28">Pakli exportálása</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_collection">Gyűjtemény exportálása</string>
     <string name="nothing">Semmi</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Kártyatípusok</string>
@@ -199,8 +199,8 @@
     <string name="storage_access_title">Tárolási hozzáférés</string>
     <string name="storage_access_summary">Biztonságos helyre menti a gyűjteményed, amely nem törlődik, ha az alkalmazást eltávolítják.</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">Hozzáférés minden fájlhoz</string>
-    <string name="image_occlusion">Image Occlusion</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="image_occlusion">Kép kitakarás</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Fiók megszüntetése</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Instant card</string>
 </resources>

@@ -295,8 +295,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">تەجرىبە</string>
     <string name="readtext_deprecation_warn">AnkiDroid تېخىمۇ ياخشى تېكىستتىن ئاۋازغا مېخانىزمىنى كىرگۈزدى، ئۇ باشقا Anki خېرىدار پىروگراممىسى بىلەن ماسلىشىدۇ ھەمدە تېخىمۇ كۆپ ئاۋاز ۋە تىلدا قويۇشنى قوللايدۇ!\n\nئامالنىڭ بارىچە تېزراق يۈكسەلتىڭ، چۈنكى بۇ تەڭشەك پات ئارىدا چىقىرىۋېتىلىدۇ</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">يېڭى تېكىستتىن ئاۋازغا پىچىمىغا يۈكسەلتىڭ</string>
-    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
-    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
+    <string name="pref_fixed_port_title" maxLength="41">ئۆگىنىش ئېكرانىدىكى يەرلىك ساقلىغۇچ</string>
+    <string name="pref_fixed_port_summary">ئۆگىنىش ئېكرانىدا مۇقىم مۇلازىمېتىر ئېغىزىنى ئىشلىتىپ JavaScript يەرلىك ساقلىغۇچنى قوزغىتىدۇ</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">ئىجادكارلار تاللانمىسى</string>
     <string name="dev_options_enabled_pref" maxLength="41">ئىجادكارلار تاللانمىسىنى قوزغىتىدۇ</string>
@@ -373,9 +373,9 @@
     <string name="reviewer_frame_style" maxLength="41">كاندۇك ئۇسلۇبى</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">كارتا</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">قۇتا</string>
-    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Top</string>
-    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Bottom</string>
-    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">None</string>
+    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">چوققا</string>
+    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">ئاستى</string>
+    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">يوق</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">تەڭشەكنى ئاچ</string>
 </resources>
