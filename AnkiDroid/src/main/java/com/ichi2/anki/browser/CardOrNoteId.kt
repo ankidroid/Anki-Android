@@ -28,9 +28,11 @@ import com.ichi2.libanki.NoteId
  * It is not included in the class as this class is primarily provided in a [BrowserRowCollection]
  * and storing the same value for every item in the list is a waste
  */
+typealias CardOrNoteIdUnderlyingType = Long
+
 @JvmInline
 value class CardOrNoteId(
-    val cardOrNoteId: Long,
+    val cardOrNoteId: CardOrNoteIdUnderlyingType,
 ) {
     override fun toString(): String = cardOrNoteId.toString()
 
