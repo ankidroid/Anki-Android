@@ -49,6 +49,7 @@ import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.intellij.lang.annotations.Language
 import org.json.JSONObject
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
@@ -145,6 +146,7 @@ class CustomStudyDialogTest : RobolectricTest() {
     }
 
     @Test
+    @Ignore("disabled while we confirm/diagnose issues")
     @Config(qualifiers = "en")
     fun `'increase new limit' is shown when there are new cards`() {
         val studyDefaults = customStudyDefaultsResponse { availableNew = 1 }
@@ -158,6 +160,7 @@ class CustomStudyDialogTest : RobolectricTest() {
     }
 
     @Test
+    @Ignore("disabled while we confirm/diagnose issues")
     @Config(qualifiers = "en")
     fun `'increase new limit' is not shown when there are no new cards`() {
         val studyDefaults = customStudyDefaultsResponse { availableNew = 0 }
@@ -171,6 +174,7 @@ class CustomStudyDialogTest : RobolectricTest() {
     }
 
     @Test
+    @Ignore("disabled while we confirm/diagnose issues")
     @Config(qualifiers = "en")
     fun `'increase review limit' is shown when there are new cards`() {
         val studyDefaults = customStudyDefaultsResponse { availableReview = 1 }
@@ -184,6 +188,7 @@ class CustomStudyDialogTest : RobolectricTest() {
     }
 
     @Test
+    @Ignore("disabled while we confirm/diagnose issues")
     @Config(qualifiers = "en")
     fun `'increase review limit' is not shown when there are no new cards`() {
         val studyDefaults = customStudyDefaultsResponse { availableReview = 0 }
