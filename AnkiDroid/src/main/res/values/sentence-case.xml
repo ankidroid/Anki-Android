@@ -51,5 +51,6 @@ undoActionUndone()
     <string name="sentence_sync_media_log">Media sync log</string>
     <string name="sentence_empty_trash">Empty trash</string>
     <string name="sentence_restore_deleted">Restore deleted</string>
+    <string name="sentence_change_note_type" maxLength="28">Change note type</string>
 
 </resources>
