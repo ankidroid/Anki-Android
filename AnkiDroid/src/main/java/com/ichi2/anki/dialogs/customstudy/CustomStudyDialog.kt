@@ -637,12 +637,14 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             val availableInChildren: Int,
         ) {
             /**
+             * **Temporarily Disabled** - logic may be incorrect
+             *
              * "Extend" only has an effect if there are pending cards in the target deck
              *
              * The number of pending cards in child decks is only informative
              */
             val isUsable
-                get() = available > 0
+                get() = true // TODO: Confirm `available > 0` is correct; user feedback states subdecks are taken into account
 
             /**
              * A string representing the count of cards which have exceeded a deck limit
