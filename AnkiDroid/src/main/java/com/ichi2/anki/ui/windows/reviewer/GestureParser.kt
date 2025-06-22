@@ -59,8 +59,8 @@ object GestureParser {
         if (isScrolling) return null
         if (uri.host == "doubleTap") return Gesture.DOUBLE_TAP
 
-        val tapX = uri.getIntQuery("x") ?: return null
-        val tapY = uri.getIntQuery("y") ?: return null
+        val pageX = uri.getIntQuery("x") ?: return null
+        val pageY = uri.getIntQuery("y") ?: return null
         val deltaX = uri.getIntQuery("deltaX") ?: return null
         val deltaY = uri.getIntQuery("deltaY") ?: return null
         val absDeltaX = abs(deltaX)
@@ -72,12 +72,12 @@ object GestureParser {
             return determineSwipeGesture(deltaX, deltaY, absDeltaX, absDeltaY, scrollDirection)
         }
 
-        val row = getGridIndex(tapY, scrollY, measuredHeight, scale)
-        val column = getGridIndex(tapX, scrollX, measuredWidth, scale)
+        val row = getGridIndex(pageY, scrollY, measuredHeight, scale)
+        val column = getGridIndex(pageX, scrollX, measuredWidth, scale)
         // FIXME fix the source of values that result in an invalid index
         if (row !in 0..2 || column !in 0..2) {
             throw IllegalArgumentException(
-                "Gesture parsing error: row $row - column $column - uri $uri - isScrolling $isScrolling - scale $scale - tapX $tapX - tapY $tapY - scrollX $scrollX - scrollY $scrollY - measuredWidth $measuredWidth - measuredHeight $measuredHeight",
+                "Gesture parsing error: row $row - column $column - uri $uri - isScrolling $isScrolling - scale $scale - pageX $pageX - pageY $pageY - scrollX $scrollX - scrollY $scrollY - measuredWidth $measuredWidth - measuredHeight $measuredHeight",
             )
         }
         return gestureGrid[row][column]
