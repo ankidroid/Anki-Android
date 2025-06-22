@@ -43,7 +43,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
@@ -57,6 +56,7 @@ import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.withProgress
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.sched.Scheduler
+import com.ichi2.utils.AndroidUiUtils
 import com.ichi2.utils.create
 import com.ichi2.utils.dp
 import com.ichi2.utils.negativeButton
@@ -119,7 +119,7 @@ class SetDueDateDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         MaterialAlertDialogBuilder(requireContext())
             .create {
-                title(text = CollectionManager.TR.actionsSetDueDate().toSentenceCase(this@SetDueDateDialog, R.string.sentence_set_due_date))
+                title(text = TR.actionsSetDueDate().toSentenceCase(this@SetDueDateDialog, R.string.sentence_set_due_date))
                 positiveButton(R.string.dialog_ok) { launchUpdateDueDate() }
                 negativeButton(R.string.dialog_cancel)
                 neutralButton(R.string.help)
@@ -277,6 +277,9 @@ class SetDueDateDialog : DialogFragment() {
         override fun onResume() {
             super.onResume()
             this.requireView().requestLayout() // update the height of the ViewPager
+
+            val editText = requireView().findViewById<TextInputLayout>(R.id.set_due_date_single_day_text).editText!!
+            AndroidUiUtils.setFocusAndOpenKeyboard(editText)
         }
     }
 
@@ -322,6 +325,9 @@ class SetDueDateDialog : DialogFragment() {
         override fun onResume() {
             super.onResume()
             this.requireView().requestLayout() // update the height of the ViewPager
+
+            val rangeStartLayout = requireView().findViewById<TextInputLayout>(R.id.date_range_start_layout)
+            AndroidUiUtils.setFocusAndOpenKeyboard(rangeStartLayout.editText!!)
         }
     }
 }
