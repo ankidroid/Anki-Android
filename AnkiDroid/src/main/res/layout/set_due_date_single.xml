@@ -44,8 +44,9 @@
         app:layout_constraintStart_toStartOf="@+id/date_single_label"
         app:layout_constraintTop_toBottomOf="@+id/date_single_label"
         app:expandedHintEnabled="false"
-        tools:helperText="Today is ‘0 days’, tomorrow is ‘1 day’, etc…">
-        tools:suffixText="days">
+        tools:helperText="Today is ‘0 days’, tomorrow is ‘1 day’, etc…"
+        tools:suffixText="days"
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
