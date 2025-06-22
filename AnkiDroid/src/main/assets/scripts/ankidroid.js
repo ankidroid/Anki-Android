@@ -40,8 +40,8 @@ globalThis.ankidroid.showAllHints = function () {
                 return;
             }
             isSingleTouch = true;
-            startX = event.touches[0].clientX;
-            startY = event.touches[0].clientY;
+            startX = event.touches[0].pageX;
+            startY = event.touches[0].pageY;
         },
         { passive: true },
     );
@@ -59,8 +59,8 @@ globalThis.ankidroid.showAllHints = function () {
                 return;
             }
 
-            const endX = event.changedTouches[0].clientX;
-            const endY = event.changedTouches[0].clientY;
+            const endX = event.changedTouches[0].pageX;
+            const endY = event.changedTouches[0].pageY;
             const scrollDirection = getScrollDirection(event.target);
             const params = new URLSearchParams({
                 x: Math.round(endX),
