@@ -68,7 +68,7 @@
     <string name="pref_cat_advanced" maxLength="41">Haladó</string>
     <string name="pref_cat_workarounds" maxLength="41">Lehetséges megoldások</string>
     <string name="pref_cat_plugins" maxLength="41">Bővítmények</string>
-    <string name="pref_cat_editing" maxLength="41">Editing</string>
+    <string name="pref_cat_editing" maxLength="41">Szerkesztés</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Ceruza vastagsága</string>
     <string name="use_input_tag" maxLength="41">Válasz begépelése</string>
@@ -149,7 +149,7 @@
     <string name="notification_pref_title" maxLength="41">Értesítsen, ha</string>
     <string name="never_notify">Ne legyen értesítés</string>
     <string name="notify_when_pending">Ha olvasatlan üzeneteim vannak</string>
-    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">Több mint %d kártya esedékes</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Rezgés</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Villogó fény</string>
     <string name="select_locale_title">Nyelv kiválasztása</string>

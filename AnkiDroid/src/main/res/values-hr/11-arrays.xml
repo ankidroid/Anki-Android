@@ -96,6 +96,7 @@
     <string name="gesture_page_up" maxLength="41">Stranica gore</string>
     <string name="gesture_page_down" maxLength="41">Stranica dolje</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Toggle Whiteboard</string>
+    <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
     <string name="gesture_show_hint" maxLength="41">Pokaži savjet</string>
     <string name="gesture_show_all_hints" maxLength="41">Pokaži sve savjete</string>
     <string name="record_voice" maxLength="41">Snimi glas</string>

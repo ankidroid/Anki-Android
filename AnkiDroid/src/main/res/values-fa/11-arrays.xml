@@ -96,6 +96,7 @@
     <string name="gesture_page_up" maxLength="41">بالا بردن صفحه</string>
     <string name="gesture_page_down" maxLength="41">پایین بردن صفحه</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">تغییر وضعیت تخته سفید</string>
+    <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
     <string name="gesture_show_hint" maxLength="41">نمایش راهنما</string>
     <string name="gesture_show_all_hints" maxLength="41">همه ی راهنما ها را نمایش بده</string>
     <string name="record_voice" maxLength="41">ضبط صدا</string>

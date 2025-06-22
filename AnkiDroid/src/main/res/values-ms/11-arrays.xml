@@ -96,6 +96,7 @@
     <string name="gesture_page_up" maxLength="41">Laman Atas</string>
     <string name="gesture_page_down" maxLength="41">Laman Bawah</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Togel Papan Putih</string>
+    <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
     <string name="gesture_show_hint" maxLength="41">Beri Petunjuk</string>
     <string name="gesture_show_all_hints" maxLength="41">Beri Semua Petunjuk</string>
     <string name="record_voice" maxLength="41">Rakam Suara</string>

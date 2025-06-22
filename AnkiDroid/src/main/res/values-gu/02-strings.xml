@@ -67,6 +67,8 @@
     <string name="enable_whiteboard" maxLength="28">વ્હાઇટબોર્ડને સક્ષમ કરો</string>
     <string name="disable_whiteboard">વ્હાઇટબોર્ડને અક્ષમ કરો</string>
     <string name="show_whiteboard">વ્હાઇટબોર્ડ બતાવો</string>
+    <string name="enable_eraser" maxLength="28">Enable eraser</string>
+    <string name="disable_eraser" maxLength="28">Disable eraser</string>
     <string name="hide_whiteboard" maxLength="28">વ્હાઇટબોર્ડ છુપાવો</string>
     <string name="clear_whiteboard" maxLength="28">વ્હાઇટબોર્ડ સાફ કરો</string>
     <string name="replay_media" maxLength="28">Replay media</string>
@@ -193,6 +195,9 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">મૂળભૂત પુનઃસ્થાપિત</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ખાલી</string>
+    <!-- Whiteboard eraser mode toggle message in Reviewer -->
+    <string name="white_board_eraser_enabled">Eraser mode activated</string>
+    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">વ્હાઇટબોર્ડ છબી સાચવવામાં નિષ્ફળ. %s</string>
     <string name="white_board_image_saved">વ્હાઇટબોર્ડ ઇમેજ %s પર સાચવી</string>

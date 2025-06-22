@@ -67,6 +67,8 @@
     <string name="enable_whiteboard" maxLength="28">വൈറ്റ്ബോർഡ് പ്രവർത്തനക്ഷമമാക്കുക</string>
     <string name="disable_whiteboard">വൈറ്റ്ബോർഡ് അപ്രാപ്തമാക്കുക</string>
     <string name="show_whiteboard">വൈറ്റ്ബോർഡ് കാണിക്കുക</string>
+    <string name="enable_eraser" maxLength="28">Enable eraser</string>
+    <string name="disable_eraser" maxLength="28">Disable eraser</string>
     <string name="hide_whiteboard" maxLength="28">വൈറ്റ്ബോർഡ് മറയ്‌ക്കുക</string>
     <string name="clear_whiteboard" maxLength="28">വൈറ്റ്ബോർഡ് മായ്‌ക്കുക</string>
     <string name="replay_media" maxLength="28">Replay media</string>
@@ -193,6 +195,9 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">നേരത്തെയുള്ളത് പുനസ്ഥാപിക്കുക</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ശൂന്യയം</string>
+    <!-- Whiteboard eraser mode toggle message in Reviewer -->
+    <string name="white_board_eraser_enabled">Eraser mode activated</string>
+    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">വൈറ്റ്ബോർഡ് ചിത്രം സംരക്ഷിക്കുന്നതിൽ പരാജയപ്പെട്ടു. %s</string>
     <string name="white_board_image_saved">വൈറ്റ്ബോർഡ് ചിത്രം %s ലേക്ക് സംരക്ഷിച്ചു</string>

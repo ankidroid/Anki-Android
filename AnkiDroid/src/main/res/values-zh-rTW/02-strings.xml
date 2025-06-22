@@ -67,6 +67,8 @@
     <string name="enable_whiteboard" maxLength="28">開啟白板</string>
     <string name="disable_whiteboard">關閉白板</string>
     <string name="show_whiteboard">顯示白板</string>
+    <string name="enable_eraser" maxLength="28">Enable eraser</string>
+    <string name="disable_eraser" maxLength="28">Disable eraser</string>
     <string name="hide_whiteboard" maxLength="28">隱藏白板</string>
     <string name="clear_whiteboard" maxLength="28">清除白板</string>
     <string name="replay_media" maxLength="28">Replay media</string>
@@ -189,6 +191,9 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">恢復預設值</string>
     <string name="reviewer_tts_cloze_spoken_replacement">空白</string>
+    <!-- Whiteboard eraser mode toggle message in Reviewer -->
+    <string name="white_board_eraser_enabled">Eraser mode activated</string>
+    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">儲存白板圖像失敗。%s</string>
     <string name="white_board_image_saved">白板圖像儲存至%s</string>
