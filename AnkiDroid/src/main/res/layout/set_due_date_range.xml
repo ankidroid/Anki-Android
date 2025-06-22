@@ -70,7 +70,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/set_due_date_range_end"
             android:inputType="number"
-            android:maxLength="5" />
+            android:maxLength="5"
+            android:imeOptions="actionDone" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
