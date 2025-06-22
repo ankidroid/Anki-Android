@@ -238,6 +238,20 @@ fun FragmentActivity.launchCatchingTask(
         runCatching(errorMessage, skipCrashReport = skipCrashReport) { block() }
     }
 
+/**
+ * Launch a job that catches any uncaught errors and reports them to the user.
+ * Errors from the backend contain localized text that is often suitable to show to the user as-is.
+ * Other errors should ideally be handled in the block.
+ */
+fun <T> FragmentActivity.asyncCatching(
+    errorMessage: String? = null,
+    skipCrashReport: ((Exception) -> Boolean)? = null,
+    block: suspend CoroutineScope.() -> T,
+): Deferred<T?> =
+    lifecycle.coroutineScope.async {
+        runCatching(errorMessage, skipCrashReport = skipCrashReport) { block() }
+    }
+
 /** See [FragmentActivity.launchCatchingTask] */
 fun Fragment.launchCatchingTask(
     errorMessage: String? = null,

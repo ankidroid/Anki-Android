@@ -19,10 +19,12 @@ package com.ichi2.anki.scheduling
 import android.app.Dialog
 import android.content.res.Configuration
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
 import android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.core.content.ContextCompat
@@ -45,6 +47,7 @@ import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.asyncCatching
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.scheduling.SetDueDateViewModel.Tab
@@ -64,6 +67,7 @@ import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.requireBoolean
 import com.ichi2.utils.title
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.math.min
@@ -99,6 +103,17 @@ class SetDueDateDialog : DialogFragment() {
         viewModel.init(cardIds, fsrsEnabled)
         Timber.d("Set due date dialog: %d card(s)", cardIds.size)
         this.initialRotation = getScreenRotation()
+
+        childFragmentManager.setFragmentResultListener(RESULT_SUBMIT_DUE_DATE, this) { _, _ ->
+            Timber.i(RESULT_SUBMIT_DUE_DATE)
+            requireActivity().launchCatchingTask {
+                if (launchUpdateDueDate(showError = false).await() == null) {
+                    Timber.w("unsuccessful updating dates; not dismissing dialog")
+                    return@launchCatchingTask
+                }
+                dismiss()
+            }
+        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -211,12 +226,14 @@ class SetDueDateDialog : DialogFragment() {
 
     private fun getScreenRotation() = ContextCompat.getDisplayOrDefault(requireContext()).rotation
 
-    private fun launchUpdateDueDate() = requireAnkiActivity().updateDueDate(viewModel)
+    private fun launchUpdateDueDate(showError: Boolean = true) = requireAnkiActivity().updateDueDate(viewModel, showError)
 
     companion object {
         const val ARG_CARD_IDS = "ARGS_CARD_IDS"
         const val ARG_FSRS = "ARGS_FSRS"
         const val MAX_WIDTH_DP = 450f
+
+        private const val RESULT_SUBMIT_DUE_DATE = "SubmitDueDate"
 
         @CheckResult
         suspend fun newInstance(cardIds: List<CardId>) =
@@ -268,6 +285,16 @@ class SetDueDateDialog : DialogFragment() {
                             // 1 day
                             resources.getQuantityString(R.plurals.set_due_date_label_suffix, 1),
                         )
+                    setOnEditorActionListener { _, actionId, event ->
+                        return@setOnEditorActionListener if (actionId == EditorInfo.IME_ACTION_DONE ||
+                            event?.keyCode == KeyEvent.KEYCODE_ENTER
+                        ) {
+                            parentFragmentManager.setFragmentResult(RESULT_SUBMIT_DUE_DATE, bundleOf())
+                            true
+                        } else {
+                            false
+                        }
+                    }
                 }
             }
             view.findViewById<TextView>(R.id.date_single_label).text =
@@ -316,6 +343,16 @@ class SetDueDateDialog : DialogFragment() {
                     }
                     suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, 0)
                     viewModel.dateRange.end?.let { end -> setText(end.toString()) }
+                    setOnEditorActionListener { _, actionId, event ->
+                        return@setOnEditorActionListener if (actionId == EditorInfo.IME_ACTION_DONE ||
+                            event?.keyCode == KeyEvent.KEYCODE_ENTER
+                        ) {
+                            parentFragmentManager.setFragmentResult(RESULT_SUBMIT_DUE_DATE, bundleOf())
+                            true
+                        } else {
+                            false
+                        }
+                    }
                 }
             }
             view.findViewById<TextView>(R.id.date_range_label).text =
@@ -333,20 +370,26 @@ class SetDueDateDialog : DialogFragment() {
 }
 
 // this can outlive the lifetime of the fragment
-private fun AnkiActivity.updateDueDate(viewModel: SetDueDateViewModel) =
-    this.launchCatchingTask {
+private fun AnkiActivity.updateDueDate(
+    viewModel: SetDueDateViewModel,
+    showError: Boolean,
+): Deferred<Int?> =
+    this.asyncCatching {
         // NICE_TO_HAVE: Display a snackbar if the activity is recreated while this executes
         val cardsUpdated =
             withProgress {
                 // this is async as it should be run on the viewModel
                 viewModel.updateDueDateAsync().await()
             }
-        Timber.d("updated %d cards", cardsUpdated)
 
         if (cardsUpdated == null) {
             Timber.w("unable to update due date")
-            showThemedToast(this@updateDueDate, R.string.something_wrong, true)
-            return@launchCatchingTask
+            if (showError) {
+                showThemedToast(this@updateDueDate, R.string.something_wrong, true)
+            }
+            return@asyncCatching null
         }
+        Timber.d("updated %d cards", cardsUpdated)
         showSnackbar(TR.schedulingSetDueDateDone(cardsUpdated), Snackbar.LENGTH_SHORT)
+        return@asyncCatching cardsUpdated
     }
