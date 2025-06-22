@@ -69,7 +69,7 @@
     <string name="show_whiteboard">Zobrazit tabuli</string>
     <string name="hide_whiteboard" maxLength="28">Skrýt tabuli</string>
     <string name="clear_whiteboard" maxLength="28">Smazat tabuli</string>
-    <string name="replay_media" maxLength="28">Replay media</string>
+    <string name="replay_media" maxLength="28">Znovu přehrát média</string>
     <string name="leech_suspend_notification">Karta označena jako pijavice a vyřazena</string>
     <string name="leech_notification">Karta byla označena jako pijavice</string>
     <string name="webview_crash_unknown">Neznámá chyba</string>
@@ -353,7 +353,7 @@
     <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Vybrat balíček</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Vybrat typ poznámky</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Editor štítků</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Editor šablon karet</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Upravit šablonu přední strany</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Upravit šablonu zadní strany</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Upravit formátování</string>

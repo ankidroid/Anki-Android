@@ -151,7 +151,7 @@
     <string name="card_template_editor_deck_override" maxLength="28">覆盖牌组</string>
     <string name="card_template_editor_insert_field" maxLength="28">插入字段</string>
     <string name="card_template_editor_select_field">选择字段</string>
-    <string name="card_template_editor_cant_delete">至少需要保留一个卡片类型。</string>
+    <string name="card_template_editor_cant_delete">至少需要保留一个卡片类型</string>
     <plurals name="card_template_editor_confirm_add">
         <item quantity="other">这将创建 %1$d 张卡片。是否继续？</item>
     </plurals>

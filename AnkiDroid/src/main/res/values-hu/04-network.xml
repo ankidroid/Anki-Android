@@ -64,22 +64,22 @@
     <string name="log_out">Kijelentkezés</string>
     <string name="reset_password">Jelszó visszaállítása</string>
     <string name="lost_mail_instructions">Elfelejtette az emailt?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="sign_in">Bejelentkezés</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX lehetőségei</string>
     <string name="sync_title">Szinkronizálás</string>
     <string name="sync_log_uploading_message">Teljes szinkronizáció helyből</string>
     <string name="sync_database_acknowledge">Gyűjtemény szinkronizálva</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
+    <string name="col_synced_media_in_background">Gyűjtemény szinkronizálva. A médiatartalom szinkronizálása a háttérben történik.</string>
     <string name="sync_corrupt_database">Az adatbázis sérült. Próbáld meg javítani szinkronizálás előtt!\n\nLásd a %s több információért.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Helyi</string>
     <string name="sync_sanity_remote">Távoli</string>
-    <string name="one_way_sync_title" maxLength="41">One-way sync</string>
+    <string name="one_way_sync_title" maxLength="41">Egyirányú szinkronizálás</string>
     <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">A módosítás után fel kell tölteni a teljes adatbázis gyűjteményt. Ezzel az eszközzel nem szinkronizált más eszközökkel kapcsolatos tanulási eredmények és módosítások elveszhetnek. Folytatod?</string>
     <string name="full_sync_confirmation_upgrade">Az AnkiDroid korábban telepített verziójának hibája miatt ajánlott teljes szinkronizálást elvégezni.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
+    <string name="sync_menu_title_one_way_sync">Szinkronizálás (egyirányú)</string>
     <string name="sync_menu_title_no_account">Szinkronizálás (bejelentkezés)</string>
 </resources>

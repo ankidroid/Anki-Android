@@ -73,6 +73,6 @@
     <string name="save_dialog_content">O tamanho da imagem é %sMB. O limite é de  1MB. Deseja comprimi-la?</string>
     <string name="select_image_failed">"A seleção de imagem falhou, por favor tente novamente"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Conteúdo do Campo</string>
-    <string name="crop_image_size_notice">The image is too big to be handled by the crop editor. Please resize it and try again!</string>
+    <string name="crop_image_size_notice">A imagem é demasiado grande para ser manipulada pelo editor de recortes. Por favor, redimensione-a e volte a tentar!</string>
     <string name="reselect" maxLength="28">Seleccionar novamente</string>
 </resources>
