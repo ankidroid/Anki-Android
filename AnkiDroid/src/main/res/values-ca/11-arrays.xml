@@ -96,6 +96,7 @@
     <string name="gesture_page_up" maxLength="41">Pàgina amunt</string>
     <string name="gesture_page_down" maxLength="41">Pàgina avall</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Activar/desactivar pissarra</string>
+    <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
     <string name="gesture_show_hint" maxLength="41">Mostra un suggeriment</string>
     <string name="gesture_show_all_hints" maxLength="41">Mostra tots els suggeriments</string>
     <string name="record_voice" maxLength="41">Enregistra veu</string>

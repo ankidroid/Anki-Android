@@ -67,6 +67,8 @@
     <string name="enable_whiteboard" maxLength="28">לאפשר ציור</string>
     <string name="disable_whiteboard">בטל הציור</string>
     <string name="show_whiteboard">הצג לוח ציור</string>
+    <string name="enable_eraser" maxLength="28">Enable eraser</string>
+    <string name="disable_eraser" maxLength="28">Disable eraser</string>
     <string name="hide_whiteboard" maxLength="28">הסתר לוח ציור</string>
     <string name="clear_whiteboard" maxLength="28">נקה לוח ציור</string>
     <string name="replay_media" maxLength="28">Replay media</string>
@@ -201,6 +203,9 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">שחזור בררת המחדל</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ריק</string>
+    <!-- Whiteboard eraser mode toggle message in Reviewer -->
+    <string name="white_board_eraser_enabled">Eraser mode activated</string>
+    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">נכשל לשמור תמונת לוח. %s</string>
     <string name="white_board_image_saved">תמונת לוח נשמרה ל %s</string>

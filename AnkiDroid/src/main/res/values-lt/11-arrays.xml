@@ -96,6 +96,7 @@
     <string name="gesture_page_up" maxLength="41">Puslapis aukštyn</string>
     <string name="gesture_page_down" maxLength="41">Puslapis žemyn</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Perjungti į baltąją lentą</string>
+    <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
     <string name="gesture_show_hint" maxLength="41">Rodyti užuominą</string>
     <string name="gesture_show_all_hints" maxLength="41">Rodyti visas užuominas</string>
     <string name="record_voice" maxLength="41">Įrašyti balsą</string>

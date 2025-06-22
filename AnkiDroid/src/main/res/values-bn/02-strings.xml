@@ -67,6 +67,8 @@
     <string name="enable_whiteboard" maxLength="28">হোয়াইটবোর্ড সক্রিয় করুন</string>
     <string name="disable_whiteboard">হোয়াইটবোর্ড নিষ্ক্রিয় করুন</string>
     <string name="show_whiteboard">হোয়াইটবোর্ড প্রদর্শন করুন</string>
+    <string name="enable_eraser" maxLength="28">Enable eraser</string>
+    <string name="disable_eraser" maxLength="28">Disable eraser</string>
     <string name="hide_whiteboard" maxLength="28">হোয়াইটবোর্ড আড়াল করুন</string>
     <string name="clear_whiteboard" maxLength="28">হোয়াইটবোর্ড পরিষ্কার করুন</string>
     <string name="replay_media" maxLength="28">Replay media</string>
@@ -193,6 +195,9 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">ডিফল্ট পুনরুদ্ধার করুন</string>
     <string name="reviewer_tts_cloze_spoken_replacement">খালি</string>
+    <!-- Whiteboard eraser mode toggle message in Reviewer -->
+    <string name="white_board_eraser_enabled">Eraser mode activated</string>
+    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">হোয়াইটবোর্ড ছবি সংরক্ষণ করতে ব্যর্থ হয়েছে. %s</string>
     <string name="white_board_image_saved">হোয়াইটবোর্ড ছবি %s-এ সংরক্ষিত হয়েছে</string>

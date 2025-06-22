@@ -96,6 +96,7 @@
     <string name="gesture_page_up" maxLength="41">Przewiń w górę</string>
     <string name="gesture_page_down" maxLength="41">Przewiń w dół</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Przełącz Tablicę</string>
+    <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
     <string name="gesture_show_hint" maxLength="41">Pokaż podpowiedź</string>
     <string name="gesture_show_all_hints" maxLength="41">Pokaż wszystkie podpowiedzi</string>
     <string name="record_voice" maxLength="41">Nagraj głos</string>

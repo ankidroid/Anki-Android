@@ -96,6 +96,7 @@
     <string name="gesture_page_up" maxLength="41">ଉପର ପୃଷ୍ଠା</string>
     <string name="gesture_page_down" maxLength="41">ତଳ ପୃଷ୍ଠା</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">ଧଳାପଟା ଟୋଗଲ୍ କରିବା</string>
+    <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
     <string name="gesture_show_hint" maxLength="41">ସଙ୍କେତ ଦେଖାଅ</string>
     <string name="gesture_show_all_hints" maxLength="41">ସବୁ ସଙ୍କେତ ଦେଖାଅ</string>
     <string name="record_voice" maxLength="41">ସ୍ୱର ରେକର୍ଡ କରନ୍ତୁ</string>

@@ -96,6 +96,7 @@
     <string name="gesture_page_up" maxLength="41">পৃষ্ঠা আপ</string>
     <string name="gesture_page_down" maxLength="41">Page Down</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">হোয়াইটবোর্ড টগল করুন</string>
+    <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
     <string name="gesture_show_hint" maxLength="41">ইঙ্গিত দেখান</string>
     <string name="gesture_show_all_hints" maxLength="41">সব ইঙ্গিত দেখান</string>
     <string name="record_voice" maxLength="41">ভয়েস রেকর্ড করুন</string>
