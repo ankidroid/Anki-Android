@@ -18,6 +18,8 @@ package com.ichi2.anki.reviewer
 
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.cardviewer.ViewerCommand
@@ -68,7 +70,7 @@ import timber.log.Timber
 class AutomaticAnswer(
     target: AutomaticallyAnswered,
     @VisibleForTesting val settings: AutomaticAnswerSettings,
-) {
+) : DefaultLifecycleObserver {
     /** Whether any tasks should be executed/scheduled.
      *
      * Ensures that auto answer does not occur if the reviewer is minimised
@@ -106,6 +108,16 @@ class AutomaticAnswer(
      */
     @VisibleForTesting
     val timeoutHandler = HandlerUtils.newHandler()
+
+    override fun onPause(owner: LifecycleOwner) {
+        super.onPause(owner)
+        disable()
+    }
+
+    override fun onResume(owner: LifecycleOwner) {
+        super.onResume(owner)
+        enable()
+    }
 
     @VisibleForTesting
     fun delayedShowQuestion(delay: Long) {

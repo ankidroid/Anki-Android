@@ -542,6 +542,7 @@ abstract class AbstractFlashcardViewer :
         restorePreferences()
         tagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
         super.onCreate(savedInstanceState)
+        lifecycle.addObserver(automaticAnswer)
 
         // Issue 14142: The reviewer had a focus highlight after answering using a keyboard.
         // This theme removes the highlight, but there is likely a better way.
@@ -598,7 +599,6 @@ abstract class AbstractFlashcardViewer :
     // Saves deck each time Reviewer activity loses focus
     override fun onPause() {
         super.onPause()
-        automaticAnswer.disable()
         gestureDetectorImpl.stopShakeDetector()
         if (this::cardMediaPlayer.isInitialized) {
             cardMediaPlayer.isEnabled = false
@@ -609,7 +609,6 @@ abstract class AbstractFlashcardViewer :
 
     override fun onResume() {
         super.onResume()
-        automaticAnswer.enable()
         gestureDetectorImpl.startShakeDetector()
         if (this::cardMediaPlayer.isInitialized) {
             cardMediaPlayer.isEnabled = true
@@ -1224,8 +1223,10 @@ abstract class AbstractFlashcardViewer :
     protected open fun restoreCollectionPreferences(col: Collection) {
         // These are preferences we pull out of the collection instead of SharedPreferences
         try {
+            lifecycle.removeObserver(automaticAnswer)
             showNextReviewTime = col.config.get("estTimes") ?: true
             automaticAnswer = AutomaticAnswer.createInstance(this, col)
+            lifecycle.addObserver(automaticAnswer)
         } catch (ex: Exception) {
             Timber.w(ex)
             onCollectionLoadError()
