@@ -1055,7 +1055,7 @@ open class DeckPicker :
                     override fun onQueryTextChange(newText: String): Boolean {
                         val adapter = recyclerView.adapter as DeckAdapter
                         launchCatchingTask {
-                            val selectedDeckId = withCol { decks.current().getLong("id") }
+                            val selectedDeckId = withCol { decks.current().id }
                             dueTree?.let {
                                 adapter.submit(
                                     data = it.filterAndFlattenDisplay(newText),
@@ -2346,7 +2346,7 @@ open class DeckPicker :
         deckListAdapter.submit(
             data = tree.filterAndFlattenDisplay(currentFilter),
             hasSubDecks = tree.children.any { it.children.any() },
-            currentDeckId = withCol { decks.current().getLong("id") },
+            currentDeckId = withCol { decks.current().id },
         )
 
         // Set the "x due" subtitle
@@ -2360,7 +2360,7 @@ open class DeckPicker :
         }.onFailure {
             Timber.w(it, "Failed to set the due count as the subtitle in the toolbar")
         }
-        val current = withCol { decks.current().optLong("id") }
+        val current = withCol { decks.current().id }
         if (viewModel.focusedDeck != current) {
             scrollDecklistToDeck(current)
             viewModel.focusedDeck = current

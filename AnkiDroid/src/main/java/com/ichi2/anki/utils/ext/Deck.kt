@@ -20,12 +20,6 @@ import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 
-var Deck.description: String
-    get() = optString("desc", "")
-    set(value) {
-        put("desc", value)
-    }
-
 fun Decks.update(
     did: DeckId,
     block: Deck.() -> Unit,
