@@ -71,11 +71,14 @@ class AutomaticAnswer(
     target: AutomaticallyAnswered,
     @VisibleForTesting val settings: AutomaticAnswerSettings,
 ) : DefaultLifecycleObserver {
+    private var activityIsPaused = false
+
     /** Whether any tasks should be executed/scheduled.
      *
      * Ensures that auto answer does not occur if the reviewer is minimised
      */
     var isDisabled: Boolean = false
+        get() = field || activityIsPaused
         private set
 
     /**
@@ -111,12 +114,14 @@ class AutomaticAnswer(
 
     override fun onPause(owner: LifecycleOwner) {
         super.onPause(owner)
-        disable()
+        activityIsPaused = true
+        stopShowAnswerTask()
+        stopShowQuestionTask()
     }
 
     override fun onResume(owner: LifecycleOwner) {
         super.onResume(owner)
-        enable()
+        activityIsPaused = false
     }
 
     @VisibleForTesting
