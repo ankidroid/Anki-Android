@@ -1671,6 +1671,7 @@ open class Reviewer :
             Timber.i("Disabling auto advance")
             automaticAnswer.disable()
         }
+        showSnackbar(R.string.toggle_auto_advance)
     }
 
     override val currentCardId: CardId?
