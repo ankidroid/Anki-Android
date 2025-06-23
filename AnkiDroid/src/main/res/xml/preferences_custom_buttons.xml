@@ -124,6 +124,13 @@ TODO: Add a unit test
             android:key="@string/custom_button_toggle_mic_toolbar_key"
             android:title="@string/menu_enable_voice_playback"
             app:useSimpleSummaryProvider="true"/>
+        <ListPreference
+            android:defaultValue="2"
+            android:entries="@array/custom_button_labels"
+            android:entryValues="@array/custom_button_values"
+            android:key="@string/custom_button_toggle_auto_advance"
+            android:title="@string/toggle_auto_advance"
+            app:useSimpleSummaryProvider="true"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/menu_dismiss_note" >
         <ListPreference

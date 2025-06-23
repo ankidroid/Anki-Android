@@ -192,6 +192,10 @@
         android:icon="@drawable/ic_tune_white"
         android:title="@string/menu__deck_options" />
     <item
+        android:id="@+id/action_toggle_auto_advance"
+        android:icon="@drawable/ic_fast_forward"
+        android:title="@string/toggle_auto_advance" />
+    <item
         android:id="@+id/user_action_1"
         android:icon="@drawable/user_action_1"
         android:title="@string/user_action_1"

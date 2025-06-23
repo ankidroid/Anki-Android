@@ -72,6 +72,7 @@
     <string name="custom_button_whiteboard_pen_color_key">customButtonWhiteboardPenColor</string>
     <string name="custom_button_show_hide_whiteboard_key">customButtonShowHideWhiteboard</string>
     <string name="custom_button_clear_whiteboard_key">customButtonClearWhiteboard</string>
+    <string name="custom_button_toggle_auto_advance">customButtonToggleAutoAdvance</string>
     <string name="custom_button_user_action_1_key">customButtonUserAction1</string>
     <string name="custom_button_user_action_2_key">customButtonUserAction2</string>
     <string name="custom_button_user_action_3_key">customButtonUserAction3</string>

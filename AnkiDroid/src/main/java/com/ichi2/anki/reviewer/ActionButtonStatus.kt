@@ -56,6 +56,7 @@ class ActionButtonStatus {
         setupButton(preferences, R.id.action_toggle_stylus, "customButtonToggleStylus", SHOW_AS_ACTION_IF_ROOM)
         setupButton(preferences, R.id.action_save_whiteboard, "customButtonSaveWhiteboard", SHOW_AS_ACTION_NEVER)
         setupButton(preferences, R.id.action_change_whiteboard_pen_color, "customButtonWhiteboardPenColor", SHOW_AS_ACTION_IF_ROOM)
+        setupButton(preferences, R.id.action_toggle_auto_advance, "customButtonToggleAutoAdvance", SHOW_AS_ACTION_NEVER)
         setupButton(preferences, R.id.user_action_1, "customButtonUserAction1", MENU_DISABLED)
         setupButton(preferences, R.id.user_action_2, "customButtonUserAction2", MENU_DISABLED)
         setupButton(preferences, R.id.user_action_3, "customButtonUserAction3", MENU_DISABLED)
