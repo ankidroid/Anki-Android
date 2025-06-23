@@ -77,7 +77,6 @@ class DeckAdapter(
     private val startPadding: Int = context.resources.getDimension(R.dimen.deck_picker_left_padding).toInt()
     private val startPaddingSmall: Int = context.resources.getDimension(R.dimen.deck_picker_left_padding_small).toInt()
     private val nestedIndent = context.resources.getDimension(R.dimen.keyline_1).toInt()
-    private var currentDeckId: DeckId = 0
 
     // Flags
     private var hasSubdecks = false
@@ -102,16 +101,14 @@ class DeckAdapter(
     fun submit(
         data: List<DisplayDeckNode>,
         hasSubDecks: Boolean,
-        currentDeckId: DeckId,
     ) {
         // submitList is smart to not trigger a refresh if the new list is the same, but we do need
         // an adapter refresh if the other two properties have changed even if the new data is the
         // same as they modify some of the adapter's content appearance
         val forceRefresh =
             areDataSetsEqual(currentList, data) &&
-                (this.hasSubdecks != hasSubDecks || this.currentDeckId != currentDeckId)
+                (this.hasSubdecks != hasSubDecks)
         this.hasSubdecks = hasSubDecks
-        this.currentDeckId = currentDeckId
         submitList(data)
         if (forceRefresh) notifyDataSetChanged()
     }
@@ -131,8 +128,11 @@ class DeckAdapter(
      * Calls [notifyDataSetChanged].
      */
     fun updateSelectedDeck(deckId: DeckId) {
-        this.currentDeckId = deckId
-        notifyDataSetChanged()
+        submitList(
+            this.currentList.map {
+                it.copy(isSelected = it.did == deckId)
+            },
+        )
     }
 
     override fun onCreateViewHolder(
@@ -167,7 +167,7 @@ class DeckAdapter(
         }
         holder.deckLayout.setBackgroundResource(rowCurrentDrawable)
         // set a different background color for the current selected deck
-        if (node.did == currentDeckId) {
+        if (node.isSelected) {
             holder.deckLayout.setBackgroundResource(rowCurrentDrawable)
             if (activityHasBackground) {
                 val background = holder.deckLayout.background.mutate()
