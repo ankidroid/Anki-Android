@@ -32,7 +32,6 @@ import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.exception.ConfirmModSchemaException
-import com.ichi2.libanki.utils.set
 import com.ichi2.testutils.ext.addNote
 import com.ichi2.utils.LanguageUtil
 import kotlinx.coroutines.Dispatchers
@@ -123,14 +122,14 @@ interface TestClass {
     ): String {
         val noteType = col.notetypes.new(name)
         for (field in fields) {
-            col.notetypes.addFieldInNewNoteType(noteType, col.notetypes.newField(field))
+            col.notetypes.addFieldLegacy(noteType, col.notetypes.newField(field))
         }
         val t =
             Notetypes.newTemplate("Card 1").also { tmpl ->
                 tmpl.qfmt = qfmt
                 tmpl.afmt = afmt
             }
-        col.notetypes.addTemplateInNewNoteType(noteType, t)
+        col.notetypes.addTemplate(noteType, t)
         col.notetypes.add(noteType)
         return name
     }
