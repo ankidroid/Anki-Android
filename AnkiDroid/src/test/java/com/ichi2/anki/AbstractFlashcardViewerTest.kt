@@ -273,6 +273,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     fun automaticAnswerDisabledProperty() {
         val controller = getViewerController(addCard = true, startedWithShortcut = false)
         val viewer = controller.get()
+        viewer.automaticAnswer.enable()
         assertThat("not disabled initially", viewer.automaticAnswer.isDisabled, equalTo(false))
         controller.pause()
         assertThat("disabled after pause", viewer.automaticAnswer.isDisabled, equalTo(true))
@@ -287,6 +288,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
             val viewer = controller.get()
             viewer.automaticAnswer = AutomaticAnswer(viewer, AutomaticAnswerSettings(AutomaticAnswerAction.BURY_CARD, 5.0, 5.0))
             viewer.lifecycle.addObserver(viewer.automaticAnswer)
+            viewer.automaticAnswer.enable()
             viewer.executeCommand(ViewerCommand.SHOW_ANSWER)
             assertThat("messages after flipping card", viewer.hasAutomaticAnswerQueued(), equalTo(true))
             controller.pause()
