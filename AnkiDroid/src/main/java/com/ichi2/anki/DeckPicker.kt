@@ -2407,9 +2407,10 @@ open class DeckPicker :
     }
 
     /** Disables the shortcut of the deck and the children belonging to it.*/
+    @NeedsTest("ensure collapsed decks are also deleted")
     private fun disableDeckAndChildrenShortcuts(did: DeckId) {
-        val childDids = dueTree?.find(did)?.filterAndFlattenDisplay(null)?.map { it.did.toString() } ?: listOf()
-        val deckTreeDids = listOf(did.toString(), *childDids.toTypedArray())
+        // Get the DeckId and all child DeckIds
+        val deckTreeDids = dueTree?.find(did)?.map { it.did.toString() } ?: listOf()
         val errorMessage: CharSequence = getString(R.string.deck_shortcut_doesnt_exist)
         ShortcutManagerCompat.disableShortcuts(this, deckTreeDids, errorMessage)
     }
