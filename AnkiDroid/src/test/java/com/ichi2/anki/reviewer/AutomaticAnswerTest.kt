@@ -34,6 +34,7 @@ class AutomaticAnswerTest : JvmTest() {
     @Test
     fun disableWorks() {
         val answer = validAnswer(automaticallyAnsweredMock())
+        answer.enable()
 
         answer.delayedShowQuestion(0)
         answer.delayedShowAnswer(0)
@@ -70,12 +71,12 @@ class AutomaticAnswerTest : JvmTest() {
 
     @Test
     fun testEnableDisable() {
-        val answer = validAnswer(automaticallyAnsweredMock())
-        assertThat("answer should be enabled", answer.isDisabled, equalTo(false))
-        answer.disable()
+        val answer = validAnswer(automaticallyAnsweredMock(), enable = false)
         assertThat("answer should be disabled", answer.isDisabled, equalTo(true))
         answer.enable()
         assertThat("answer should be enabled", answer.isDisabled, equalTo(false))
+        answer.disable()
+        assertThat("answer should be disabled", answer.isDisabled, equalTo(true))
     }
 
     /** Ensures [disableStopsImmediateCallAnswer] can fail */
@@ -119,7 +120,10 @@ class AutomaticAnswerTest : JvmTest() {
         runUiThreadTasksIncludingDelayedTasks()
     }
 
-    private fun validAnswer(automaticallyAnswered: AutomaticallyAnswered? = null): AutomaticAnswer {
+    private fun validAnswer(
+        automaticallyAnswered: AutomaticallyAnswered? = null,
+        enable: Boolean = true,
+    ): AutomaticAnswer {
         var automaticAnswerHandle: AutomaticAnswer? = null
 
         val automaticAnswerHandler =
@@ -143,6 +147,9 @@ class AutomaticAnswerTest : JvmTest() {
                 ),
         ).apply {
             automaticAnswerHandle = this
+            if (enable) {
+                this.enable()
+            }
         }
     }
 

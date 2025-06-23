@@ -77,7 +77,7 @@ class AutomaticAnswer(
      *
      * Ensures that auto answer does not occur if the reviewer is minimised
      */
-    var isDisabled: Boolean = false
+    var isDisabled: Boolean = true
         get() = field || activityIsPaused
         private set
 
