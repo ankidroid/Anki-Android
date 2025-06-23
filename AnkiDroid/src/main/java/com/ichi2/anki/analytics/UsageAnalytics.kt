@@ -611,6 +611,7 @@ object UsageAnalytics {
             R.string.custom_button_whiteboard_pen_color_key,
             R.string.custom_button_show_hide_whiteboard_key,
             R.string.custom_button_clear_whiteboard_key,
+            R.string.custom_button_toggle_auto_advance,
             R.string.custom_button_user_action_1_key,
             R.string.custom_button_user_action_2_key,
             R.string.custom_button_user_action_3_key,

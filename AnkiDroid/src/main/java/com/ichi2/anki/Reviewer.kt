@@ -461,6 +461,10 @@ open class Reviewer :
                 Timber.i("Reviewer:: Delete note button pressed")
                 showDeleteNoteDialog()
             }
+            R.id.action_toggle_auto_advance -> {
+                Timber.i("Reviewer:: Toggle Auto Advance button pressed")
+                toggleAutoAdvance()
+            }
             R.id.action_change_whiteboard_pen_color -> {
                 Timber.i("Reviewer:: Pen Color button pressed")
                 changeWhiteboardPenColor()
