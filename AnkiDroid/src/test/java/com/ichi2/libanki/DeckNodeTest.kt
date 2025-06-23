@@ -110,4 +110,4 @@ class DeckNodeTest {
     }
 }
 
-fun DeckNode.filterAndFlatten(filter: CharSequence?) = this.filterAndFlattenDisplay(filter).map { it.deckNode }
+fun DeckNode.filterAndFlatten(filter: CharSequence?) = this.filterAndFlattenDisplay(filter, selectedDeckId = 1337).map { it.deckNode }

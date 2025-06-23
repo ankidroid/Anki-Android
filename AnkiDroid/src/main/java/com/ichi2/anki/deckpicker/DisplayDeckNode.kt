@@ -41,6 +41,7 @@ data class DisplayDeckNode(
     val newCount: Int,
     val lrnCount: Int,
     val revCount: Int,
+    val isSelected: Boolean,
 ) {
     // DeckNode is mutable, so use a lateinit var so '==' doesn't include it in the comparison
     lateinit var deckNode: DeckNode
@@ -49,6 +50,7 @@ data class DisplayDeckNode(
         fun from(
             node: DeckNode,
             matchesSearchOrChild: Boolean,
+            selectedDeckId: DeckId,
         ): DisplayDeckNode =
             DisplayDeckNode(
                 did = node.did,
@@ -61,6 +63,7 @@ data class DisplayDeckNode(
                 newCount = node.newCount,
                 lrnCount = node.lrnCount,
                 revCount = node.revCount,
+                isSelected = node.did == selectedDeckId,
             ).apply {
                 this.deckNode = node
             }
@@ -69,7 +72,10 @@ data class DisplayDeckNode(
 
 /** Convert the tree into a flat list of [DisplayDeckNode]s, where matching decks and the children/parents
  * are included. Decks inside collapsed decks are not considered. */
-fun DeckNode.filterAndFlattenDisplay(filter: CharSequence?): List<DisplayDeckNode> {
+fun DeckNode.filterAndFlattenDisplay(
+    filter: CharSequence?,
+    selectedDeckId: DeckId,
+): List<DisplayDeckNode> {
     val filterPattern =
         if (filter.isNullOrBlank()) {
             null
@@ -77,7 +83,7 @@ fun DeckNode.filterAndFlattenDisplay(filter: CharSequence?): List<DisplayDeckNod
             filter.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
         }
     val list = mutableListOf<DisplayDeckNode>()
-    filterAndFlattenDisplayInner(filterPattern, list, false)
+    filterAndFlattenDisplayInner(filterPattern, list, parentMatched = false, selectedDeckId)
     return list
 }
 
@@ -85,9 +91,10 @@ private fun DeckNode.filterAndFlattenDisplayInner(
     filter: CharSequence?,
     list: MutableList<DisplayDeckNode>,
     parentMatched: Boolean,
+    selectedDeckId: DeckId,
 ) {
     if (!isSyntheticDeck && (nameMatchesFilter((filter)) || parentMatched)) {
-        addVisibleToList(list, true)
+        this.addVisibleToList(list, matchesSearchOrChild = true, selectedDeckId)
         return
     }
 
@@ -98,11 +105,17 @@ private fun DeckNode.filterAndFlattenDisplayInner(
     }
 
     if (!isSyntheticDeck) {
-        list.append(DisplayDeckNode.from(this, false))
+        list.append(
+            DisplayDeckNode.from(
+                this,
+                matchesSearchOrChild = false,
+                selectedDeckId = selectedDeckId,
+            ),
+        )
     }
     val startingLen = list.size
     for (child in children) {
-        child.filterAndFlattenDisplayInner(filter, list, false)
+        child.filterAndFlattenDisplayInner(filter, list, parentMatched = false, selectedDeckId)
     }
     if (!isSyntheticDeck && startingLen == list.size) {
         // we don't include ourselves if no children matched
@@ -113,11 +126,12 @@ private fun DeckNode.filterAndFlattenDisplayInner(
 private fun DeckNode.addVisibleToList(
     list: MutableList<DisplayDeckNode>,
     matchesSearchOrChild: Boolean,
+    selectedDeckId: DeckId,
 ) {
-    list.append(DisplayDeckNode.from(this, matchesSearchOrChild))
+    list.append(DisplayDeckNode.from(this, matchesSearchOrChild, selectedDeckId))
     if (!collapsed) {
         for (child in children) {
-            child.addVisibleToList(list, matchesSearchOrChild)
+            child.addVisibleToList(list, matchesSearchOrChild, selectedDeckId)
         }
     }
 }

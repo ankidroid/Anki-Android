@@ -1058,9 +1058,8 @@ open class DeckPicker :
                             val selectedDeckId = withCol { decks.current().id }
                             dueTree?.let {
                                 adapter.submit(
-                                    data = it.filterAndFlattenDisplay(newText),
+                                    data = it.filterAndFlattenDisplay(newText, selectedDeckId),
                                     hasSubDecks = it.children.any { deckNode -> deckNode.children.any() },
-                                    currentDeckId = selectedDeckId,
                                 )
                             }
                         }
@@ -2336,17 +2335,16 @@ open class DeckPicker :
                 deckListAdapter.submit(
                     data = emptyList(),
                     hasSubDecks = false,
-                    currentDeckId = -1,
                 )
             }
             Timber.d("Not rendering deck list as there are no cards")
             // We're done here
             return
         }
+        val currentDeckId = withCol { decks.current().getLong("id") }
         deckListAdapter.submit(
-            data = tree.filterAndFlattenDisplay(currentFilter),
+            data = tree.filterAndFlattenDisplay(currentFilter, currentDeckId),
             hasSubDecks = tree.children.any { it.children.any() },
-            currentDeckId = withCol { decks.current().id },
         )
 
         // Set the "x due" subtitle
