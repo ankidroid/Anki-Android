@@ -53,6 +53,7 @@ import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
+import net.ankiweb.rsdroid.BackendException
 
 class ManageNotetypes : AnkiActivity() {
     private lateinit var actionBar: ActionBar
@@ -161,7 +162,12 @@ class ManageNotetypes : AnkiActivity() {
                     .show {
                         title(R.string.rename_model)
                         positiveButton(R.string.rename) {
-                            launchCatchingTask {
+                            launchCatchingTask(
+                                // TODO: Change to CardTypeException: https://github.com/ankidroid/Anki-Android-Backend/issues/537
+                                // Card template 1 in note type 'character' has a problem.
+                                // Expected to find a field replacement on the front of the card template.
+                                skipCrashReport = { it is BackendException },
+                            ) {
                                 runAndRefreshAfter {
                                     val initialNotetype = getNotetype(manageNoteTypeUiModel.id)
                                     val renamedNotetype =
