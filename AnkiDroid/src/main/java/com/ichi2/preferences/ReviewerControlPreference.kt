@@ -86,7 +86,7 @@ class ReviewerControlPreference : ControlPreference {
      */
     private fun selectSide(callback: (c: CardSide) -> Unit) {
         if (viewerAction == ViewerAction.SHOW_ANSWER) {
-            callback(CardSide.ANSWER)
+            callback(CardSide.QUESTION)
         } else {
             CardSideSelectionDialog.displayInstance(context, callback)
         }
