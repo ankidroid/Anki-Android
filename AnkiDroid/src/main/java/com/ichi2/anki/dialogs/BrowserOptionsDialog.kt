@@ -31,8 +31,6 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.BrowserColumnSelectionFragment
@@ -69,11 +67,6 @@ class BrowserOptionsDialog : AppCompatDialogFragment() {
         val newIgnoreAccent = dialogView.findViewById<CheckBox>(R.id.ignore_accents_checkbox).isChecked
         if (newIgnoreAccent != viewModel.shouldIgnoreAccents) {
             viewModel.setIgnoreAccents(newIgnoreAccent)
-        }
-
-        val newSearchValue = dialogView.findViewById<TextInputEditText>(R.id.default_search_text).text?.toString() ?: ""
-        if (newSearchValue != viewModel.defaultBrowserSearch) {
-            viewModel.setDefaultSearchText(newSearchValue)
         }
     }
 
@@ -124,14 +117,7 @@ class BrowserOptionsDialog : AppCompatDialogFragment() {
             isChecked = viewModel.shouldIgnoreAccents
         }
 
-        dialogView.findViewById<TextInputLayout>(R.id.default_search_input_layout).hint = TR.preferencesDefaultSearchText()
-
         dialogView.findViewById<TextView>(R.id.browsing_text_view).text = TR.preferencesBrowsing()
-
-        dialogView.findViewById<TextInputEditText>(R.id.default_search_text).apply {
-            hint = TR.preferencesDefaultSearchTextExample()
-            setText(viewModel.defaultBrowserSearch ?: "")
-        }
 
         return MaterialAlertDialogBuilder(requireContext()).run {
             this.setView(dialogView)

@@ -109,7 +109,6 @@ import kotlin.math.min
 @NeedsTest("columIndex1/2 config is not not updated on init")
 @NeedsTest("13442: selected deck is not changed, as this affects the reviewer")
 @NeedsTest("search is called after launch()")
-@NeedsTest("default search text updated on init")
 class CardBrowserViewModel(
     private val lastDeckIdRepository: LastDeckIdRepository,
     private val cacheDir: File,
@@ -203,8 +202,6 @@ class CardBrowserViewModel(
 
     var shouldIgnoreAccents: Boolean = false
 
-    var defaultBrowserSearch: String? = null
-
     private val _selectedRows: MutableSet<CardOrNoteId> = Collections.synchronizedSet(LinkedHashSet())
 
     // immutable accessor for _selectedRows
@@ -248,12 +245,6 @@ class CardBrowserViewModel(
 
     val lastDeckId: DeckId?
         get() = lastDeckIdRepository.lastDeckId
-
-    private suspend fun initDefaultSearch() =
-        withCol {
-            shouldIgnoreAccents = config.getBool(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH)
-            defaultBrowserSearch = config.getString(ConfigKey.String.DEFAULT_SEARCH_TEXT)
-        }
 
     suspend fun setDeckId(deckId: DeckId) {
         Timber.i("setting deck: %d", deckId)
@@ -377,16 +368,7 @@ class CardBrowserViewModel(
             }.launchIn(viewModelScope)
 
         viewModelScope.launch {
-            initDefaultSearch()
-            // Prioritize intent-based search
-            if (searchTerms.isEmpty()) {
-                val defaultSearchText = withCol { config.getString(ConfigKey.String.DEFAULT_SEARCH_TEXT) }
-
-                Timber.d("Default search term text: $defaultSearchText")
-                if (defaultSearchText.isNotEmpty()) {
-                    searchTerms = defaultSearchText
-                }
-            }
+            shouldIgnoreAccents = withCol { config.getBool(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH) }
 
             val initialDeckId = if (selectAllDecks) ALL_DECKS_ID else getInitialDeck()
             // PERF: slightly inefficient if the source was lastDeckId
@@ -540,14 +522,6 @@ class CardBrowserViewModel(
         viewModelScope.launch {
             shouldIgnoreAccents = value
             withCol { config.setBool(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH, value) }
-        }
-    }
-
-    fun setDefaultSearchText(text: String) {
-        Timber.d("Setting default search text to: $text")
-        viewModelScope.launch {
-            defaultBrowserSearch = text
-            withCol { config.setString(ConfigKey.String.DEFAULT_SEARCH_TEXT, text) }
         }
     }
 
