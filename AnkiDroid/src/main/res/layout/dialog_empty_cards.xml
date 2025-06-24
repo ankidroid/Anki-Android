@@ -39,9 +39,15 @@
             app:layout_constraintHorizontal_bias="0.0"
             android:indeterminate="true" />
 
+        <!--
+        ~  "0dp" for layout_width below means 'match constraints',
+        ~  which fills the space between
+        ~  start(*) and end constraints. (*: end of loading_indicator)
+        ~  Using "wrap_content" here may cause message text overflow.
+        -->
         <TextView
             android:id="@+id/text"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             app:layout_constraintTop_toTopOf="parent"
