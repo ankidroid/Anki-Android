@@ -97,7 +97,7 @@ class ManageNotetypes : AnkiActivity() {
         setContentView(R.layout.activity_manage_note_types)
         actionBar = enableToolbar()
         noteTypesList =
-            findViewById<RecyclerView?>(R.id.note_types_list).apply {
+            findViewById<RecyclerView>(R.id.note_types_list).apply {
                 adapter = notetypesAdapter
             }
         findViewById<FloatingActionButton>(R.id.note_type_add).setOnClickListener {

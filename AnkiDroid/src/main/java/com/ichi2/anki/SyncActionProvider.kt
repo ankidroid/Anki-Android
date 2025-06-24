@@ -50,7 +50,7 @@ class SyncActionProvider(
 
         progressIndicator = view.findViewById(R.id.progress_indicator)
         syncButton =
-            view.findViewById<AppCompatImageButton?>(R.id.button).apply {
+            view.findViewById<AppCompatImageButton>(R.id.button).apply {
                 setOnClickListener {
                     if (!forItem.isEnabled) {
                         return@setOnClickListener

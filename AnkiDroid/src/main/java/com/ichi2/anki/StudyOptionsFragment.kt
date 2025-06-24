@@ -246,7 +246,7 @@ class StudyOptionsFragment :
         studyOptionsView.findViewById<TextView>(R.id.studyoptions_review_count_label).text = TR.studyingToReview()
         reviewBuryText = studyOptionsView.findViewById(R.id.studyoptions_review_bury)
         buttonStart =
-            studyOptionsView.findViewById<Button?>(R.id.studyoptions_start).apply {
+            studyOptionsView.findViewById<Button>(R.id.studyoptions_start).apply {
                 setOnClickListener(buttonClickListener)
             }
         totalNewCardsCount = studyOptionsView.findViewById(R.id.studyoptions_total_new_count)

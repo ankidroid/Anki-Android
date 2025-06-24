@@ -75,7 +75,7 @@ class CardBrowserFragment :
         super.onViewCreated(view, savedInstanceState)
 
         cardsListView =
-            view.findViewById<RecyclerView?>(R.id.card_browser_list).apply {
+            view.findViewById<RecyclerView>(R.id.card_browser_list).apply {
                 attachFastScroller(R.id.browser_scroller)
             }
         DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL).apply {
