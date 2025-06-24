@@ -1,4 +1,5 @@
 import com.android.build.gradle.internal.tasks.factory.dependsOn
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.library)
@@ -54,11 +55,13 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        // enable explicit api mode for additional checks related to the public api
-        // see https://kotlinlang.org/docs/whatsnew14.html#explicit-api-mode-for-library-authors
-        freeCompilerArgs += "-Xexplicit-api=strict"
-        jvmTarget = JavaVersion.VERSION_11.toString()
+    kotlin {
+        compilerOptions {
+            // enable explicit api mode for additional checks related to the public api
+            // see https://kotlinlang.org/docs/whatsnew14.html#explicit-api-mode-for-library-authors
+            freeCompilerArgs.add("-Xexplicit-api=strict")
+            jvmTarget = JvmTarget.JVM_11
+        }
     }
 
     publishing {
