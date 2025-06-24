@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.settings
 
+import android.content.SharedPreferences
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
@@ -204,4 +205,14 @@ object Prefs {
     var isDevOptionsEnabled: Boolean
         get() = getBoolean(R.string.dev_options_enabled_by_user_key, false) || BuildConfig.DEBUG
         set(value) = putBoolean(R.string.dev_options_enabled_by_user_key, value)
+
+    // **************************************** UI Config *************************************** //
+
+    private const val UI_CONFIG_PREFERENCES_NAME = "ui-config"
+
+    /**
+     * Get the SharedPreferences used for UI configuration such as Resizable layouts
+     */
+    fun getUiConfig(context: android.content.Context): SharedPreferences =
+        context.getSharedPreferences(UI_CONFIG_PREFERENCES_NAME, android.content.Context.MODE_PRIVATE)
 }

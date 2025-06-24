@@ -544,7 +544,7 @@ open class DeckPicker :
                     divider = resizingDivider,
                     leftPane = deckPickerPane,
                     rightPane = studyOptionsPane,
-                    sharedPrefs = this.sharedPrefs(),
+                    sharedPrefs = Prefs.getUiConfig(this),
                     leftPaneWeightKey = PREF_DECK_PICKER_PANE_WEIGHT,
                     rightPaneWeightKey = PREF_STUDY_OPTIONS_PANE_WEIGHT,
                 )

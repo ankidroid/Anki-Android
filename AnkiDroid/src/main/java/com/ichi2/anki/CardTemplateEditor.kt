@@ -79,10 +79,10 @@ import com.ichi2.anki.dialogs.InsertFieldDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog.Companion.REQUEST_FIELD_INSERT
 import com.ichi2.anki.notetype.RenameCardTemplateDialog
 import com.ichi2.anki.notetype.RepositionCardTemplateDialog
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerFragment
 import com.ichi2.anki.previewer.TemplatePreviewerPage
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
@@ -224,7 +224,7 @@ open class CardTemplateEditor :
                     divider = divider,
                     leftPane = leftPane,
                     rightPane = rightPane,
-                    sharedPrefs = this.sharedPrefs(),
+                    sharedPrefs = Prefs.getUiConfig(this),
                     leftPaneWeightKey = PREF_TEMPLATE_EDITOR_PANE_WEIGHT,
                     rightPaneWeightKey = PREF_TEMPLATE_PREVIEWER_PANE_WEIGHT,
                 )

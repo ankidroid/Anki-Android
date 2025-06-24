@@ -102,6 +102,7 @@ import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.scheduling.registerOnForgetHandler
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.internationalization.toSentenceCase
@@ -396,7 +397,7 @@ open class CardBrowser :
                     divider = divider,
                     leftPane = leftPane,
                     rightPane = rightPane,
-                    sharedPrefs = this.sharedPrefs(),
+                    sharedPrefs = Prefs.getUiConfig(this),
                     leftPaneWeightKey = PREF_CARD_BROWSER_PANE_WEIGHT,
                     rightPaneWeightKey = PREF_NOTE_EDITOR_PANE_WEIGHT,
                 )
