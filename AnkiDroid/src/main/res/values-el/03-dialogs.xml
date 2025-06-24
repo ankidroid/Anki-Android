@@ -67,17 +67,17 @@
     <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
     <string name="repair_deck_dialog">Είστε βέβαιοι ότι θέλετε να επιδιορθώσετε τη βάση δεδομένων;\n\nΠριν να ξεκινήσει η απόπειρα, θα δημιουργηθεί ένα αντίγραφο στον υποφάκελο \'%s\'.</string>
     <string name="intent_aedict_empty">Η κατηγορία «προεπιλεγμένο» είναι κενή</string>
-    <string name="intent_aedict_category">Για να προσθέσετε κάρτες στο Ανκί-Ντρόιντ αφαιρέστε όλες τις κατηγορίες Notepad ή προσθέστε μία με όνομα «προεπιλεγμένο»</string>
+    <string name="intent_aedict_category">Για να προσθέσετε κάρτες στο AnkiDroid, καταργήστε όλες τις κατηγορίες σημειωματάριου (Notepad) ή προσθέστε μία με το όνομα «default»</string>
     <string name="custom_study_new_extend">Αύξηση / μείωση (“-3”) σημερινού ορίου νέων καρτών κατά</string>
     <string name="custom_study_rev_extend">Αύξηση / μείωση (“-3”) σημερινού ορίου επαναλήψεων κατά</string>
     <string name="custom_study_forgotten">Επανάληψη ξεχασμένων καρτών στις τελευταίες x μέρες:</string>
     <string name="custom_study_ahead">Επανάληψη μπροστά κατά x μέρες:</string>
     <string name="custom_study_preview">Προεπισκόπηση νέων καρτών του προστέθηκαν στις τελευταίες x μέρες:</string>
-    <string name="custom_study_tags">Select x cards from the deck:</string>
+    <string name="custom_study_tags">Επιλέξτε x κάρτες από την τράπουλα:</string>
     <string name="storage_full_title">Γεμάτος χώρος αποθήκευσης</string>
     <string name="storage_almost_full_title">Χώρος αποθήκευσης σχεδόν πλήρης</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Χωρίς αποθηκευτικό χώρο</string>
-    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">Το AnkiDroid χρειάζεται %s ελεύθερο αποθηκευτικό χώρο για να συνεχίσει. Παρακαλώ ελευθερώστε χώρο</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">Το AnkiDroid χρειάζεται %s ελεύθερου αποθηκευτικού χώρου για να συνεχίσει. Απελευθερώστε μερικό χώρο</string>
     <string name="restore_backup_title">Επαναφορά αντιγράφου ασφαλείας;</string>
     <string name="restore_backup">Η συλλογή σας θα αντικατασταθεί με παλαιότερο αντίγραφο. Οποιαδήποτε μη αποθηκευμένη πρόοδος θα χαθεί.</string>
     <string name="restore_backup_choose_another">Επιλέξτε ένα άλλο</string>
@@ -99,14 +99,14 @@
     <string name="dialog_positive_replace">Αντικατάσταση</string>
     <string name="dialog_collection_path_not_dir">Η καθορισμένη διαδρομή δεν ήταν ένας έγκυρος κατάλογος</string>
     <string name="dialog_invalid_custom_certificate">Το κείμενο που εισέρθηκε δεν αντιπροσωπεί σε έγκυρο πιστοποιητικό Χ509 του κωδικού PEM.</string>
-    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
+    <string name="dialog_invalid_custom_certificate_title">Σφάλμα ανάλυσης πιστοποιητικού</string>
     <string name="dialog_updated_custom_certificate">Το πιστοποιητικό ενημερώθηκε</string>
     <!-- Media checking -->
     <string name="check_media_title">Έλεγχος πολυμέσων;</string>
     <string name="check_media_warning">Αυτό μπορεί να διαρκέσει πολύ ώρα με μεγάλες συλλογές πολυμέσων</string>
     <string name="check_media_message">Έλεγχος πολυμέσων&#8230;</string>
-    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_adding_missing_tag">Προσθήκη ετικετών&#8230;</string>
+    <string name="check_media_tags_added">Οι ετικέτες προστέθηκαν</string>
     <string name="delete_media_message">Διαγραφή πολυμέσων&#8230;</string>
     <string name="delete_media_result_title">Αποτέλεσμα διαγραφής</string>
     <plurals name="delete_media_result_message">
@@ -126,7 +126,7 @@
     <string name="multimedia_editor_audio_permission_denied">Απόρριψη άδειας ηχογράφησης</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Το AnkiDroid αναβαθμίστηκε</string>
-    <string name="integrity_check_startup_content">Το AnkiDroid έχει αναβαθμιστεί. Αυτή η αναβάθμιση περιλαμβάνει διορθώσεις για πιθανά προβλήματα βάσης δεδομένων και σας συμβουλεύουμε να εκτελέσετε τώρα έλεγχο βάσης δεδομένων.</string>
+    <string name="integrity_check_startup_content">Το AnkiDroid έχει αναβαθμιστεί. Αυτή η αναβάθμιση περιλαμβάνει διορθώσεις για πιθανά προβλήματα της βάσης δεδομένων και σας συμβουλεύουμε να εκτελέσετε τώρα έναν έλεγχο βάσης δεδομένων.</string>
     <string name="integrity_check_continue_anyway">Συνέχεια οπωσδήποτε</string>
     <string name="integrity_check_insufficient_space">O Έλεγχος Βάσης Δεδομένων χρησιμοποιεί ένα μεγάλο μέγεθος προσωρινής αποθήκευσης.\n\nΣυνιστάται να διαθέτετε τουλάχιστον %s ελεύθερο χώρο στη συσκευή σας πριν συνεχίσετε.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nΈχετε ήδη %s ελεύθερα.</string>
@@ -136,7 +136,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">Βάση Δεδομένων Κλειδωμένη</string>
-    <string name="database_locked_summary">Η βάση δεδομένων του AnkiDroid είναι σε χρήση από μια άλλη εφαρμογή. Παρακαλώ κλείστε την άλλη εφαρμογή και στη συνέχεια ανοίξτε ξανά το AnkiDroid.</string>
+    <string name="database_locked_summary">Η βάση δεδομένων του AnkiDroid χρησιμοποιείται από κάποια άλλη εφαρμογή. Κλείστε την άλλη εφαρμογή και στη συνέχεια, ανοίξτε ξανά το AnkiDroid.</string>
     <string name="incompatible_database_version_title">Ασύμβατη έκδοση βάσης δεδομένων.</string>
     <string name="incompatible_database_version_summary">Η βάση δεδομένων είναι μια πιο προηγμένη έκδοση από αυτή με την οποία το AnkiDroid μπορεί να λειτουργήσει. Αναβάθμιση του AnkiDroid ή υποβάθμιση της βάσης δεδομένων για να την ανοίξετε\n\nΥποστηριζόμενη έκδοση: %1$d\nΈκδοση Βάσης Δεδομένων: %2$d\n\nΟι παρακάτω επιλογές επαναφοράς θα αντικαταστήσουν την τρέχουσα συλλογή σας, ενδεχομένως με συμβατή έκδοση βάσης δεδομένων:</string>
     <!-- Deck Picker Background-->
@@ -147,7 +147,7 @@
     <string name="error_deleting_image">Σφάλμα διαγραφής εικόνας</string>
     <string name="failed_to_apply_background_image">Αποτυχία εφαρμογής εικόνας φόντου %s</string>
     <string name="background_image_too_large">Deck Picker background too large</string>
-    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Μέγιστο επιτρεπόμενο μέγεθος εικόνας: %d MB</string>
     <string name="image_dimensions_too_large">Οι διαστάσεις της εικόνας είναι πολύ μεγάλες (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -157,7 +157,7 @@
     <string name="boot_service_too_many_notifications">Έχουν προγραμματιστεί πάρα πολλές υπενθυμίσεις. Μερικές δεν θα εμφανιστούν</string>
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">Ορισμός γλώσσας</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_summary">Ορισμένα πολύγλωσσα πληκτρολόγια, όπως το Gboard, υποστηρίζουν την αλλαγή γλώσσας κατά την επεξεργασία κειμένου\n\nΖητήστε τη δυνατότητα «setImeHintLocales» από τον κατασκευαστή του πληκτρολογίου σας εάν το πληκτρολόγιό σας δεν αλλάζει τη γλώσσα.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Χρήση του AnkiDroid</string>
     <string name="help_item_ankidroid_manual">Εγχειρίδιο AnkiDroid</string>
@@ -181,7 +181,7 @@
     <string name="help_title_privacy">Απόρρητο</string>
     <string name="help_item_ankidroid_privacy_policy">Πολιτική απορρήτου AnkiDroid</string>
     <string name="help_item_ankiweb_privacy_policy">Πολιτική απορρήτου AnkiWeb</string>
-    <string name="help_item_ankiweb_terms_and_conditions">Όροι και Προϋποθέσεις του AnkiWeb</string>
+    <string name="help_item_ankiweb_terms_and_conditions">Όροι και προϋποθέσεις του AnkiWeb</string>
     <string name="help_title_send_exception">Αποστολή αναφοράς αντιμετώπισης προβλημάτων</string>
     <string name="help_dialog_exception_report_debounce">Η αναφορά έχει ήδη υποβληθεί</string>
     <string name="help_dialog_exception_report_sent">Η αναφορά εστάλη!</string>
@@ -202,7 +202,7 @@
     <string name="import_collection_package">Πακέτο συλλογής (.colpkg)</string>
     <string name="import_csv">Αρχείο κειμένου (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">Δεν μπορείτε να δημιουργήσετε μια υποτράπουλα για όλες τις τράπουλες</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">Αντίγραφο ασφαλείας της συλλογής σας</string>
     <string name="backup_collection_message">Δεν έχετε δημιουργήσει αντίγραφα ασφαλείας της συλλογής σας εδώ και καιρό. Θα πρέπει να το κάνετε τώρα για να αποτρέψετε απώλεια δεδομένων</string>
@@ -219,20 +219,20 @@
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Ορισμός διαστήματος στην ίδια τιμή</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in</item>
+        <item quantity="one">Εμφάνιση κάρτας σε</item>
         <item quantity="other">Εμφάνιση καρτών σε</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in range</item>
-        <item quantity="other">Show cards in range</item>
+        <item quantity="one">Εμφάνιση κάρτας στο εύρος</item>
+        <item quantity="other">Εμφάνιση καρτών στο εύρος</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
         <item quantity="one">ημέρα</item>
         <item quantity="other">ημέρες</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">Τρέχον διάστημα: %d ημέρα</item>
+        <item quantity="other">Τρέχον διάστημα: %d ημέρες</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Από</string>

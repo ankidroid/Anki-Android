@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">Απάντηση καλό</string>
     <string name="answer_easy" maxLength="41">Απάντηση εύκολο</string>
     <string name="gesture_play" maxLength="41">Αναπαραγωγή πολυμέσων</string>
-    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
+    <string name="gesture_abort_learning" maxLength="41">Κλείσιμο οθόνης μελέτης</string>
     <string name="gesture_flag_red" maxLength="41">Εναλλαγή Κόκκινης Σημαίας</string>
     <string name="gesture_flag_orange" maxLength="41">Εναλλαγή Πορτοκαλί Σημαίας</string>
     <string name="gesture_flag_green" maxLength="41">Εναλλαγή Πράσινης Σημαίας</string>
@@ -93,10 +93,10 @@
     <string name="gesture_flag_turquoise" maxLength="41">Εναλλαγή Σημαίας Τυρκουάζ</string>
     <string name="gesture_flag_purple" maxLength="41">Εναλλαγή Μωβ Σημαίας</string>
     <string name="gesture_flag_remove" maxLength="41">Αφαίρεση σημαίας</string>
-    <string name="gesture_page_up" maxLength="41">Page Up</string>
-    <string name="gesture_page_down" maxLength="41">Page Down</string>
-    <string name="gesture_toggle_whiteboard" maxLength="41">Toggle Whiteboard</string>
-    <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
+    <string name="gesture_page_up" maxLength="41">Σελίδα προς τα πάνω</string>
+    <string name="gesture_page_down" maxLength="41">Σελίδα προς τα κάτω</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">(Απ)ενεργοποίηση πίνακα σχεδιασμού</string>
+    <string name="gesture_toggle_eraser" maxLength="41">(Απ)ενεργοποίηση γόμας</string>
     <string name="gesture_show_hint" maxLength="41">Εμφάνιση Υπόδειξης</string>
     <string name="gesture_show_all_hints" maxLength="41">Εμφάνιση Όλων Των Υποδείξεων</string>
     <string name="record_voice" maxLength="41">Εγγραφή φωνής</string>

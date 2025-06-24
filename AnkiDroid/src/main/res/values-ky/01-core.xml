@@ -52,11 +52,11 @@
     <string name="help" maxLength="28" comment="Title of the help menu and button to open it.">Жардам</string>
     <!-- The last entry "Support ankidroid" is in 03-dialogs.-->
     <!-- Entries of the "attach" in the "add card" view. -->
-    <string name="drawing" comment="Menu entry to create a drawing to attach to a card. Also a title.">Drawing</string>
+    <string name="drawing" comment="Menu entry to create a drawing to attach to a card. Also a title.">Сүрөт тартуу</string>
     <!-- Entries of the Support ankidroid menu. -->
     <string name="send_feedback" comment="Menu entry in the \'Help&gt;Support ankidroid\' menu, that opens the web page explaining how to send feedback.">Сын-пикир жөнөтүү</string>
     <!-- Study Options-->
-    <string name="studyoptions_start" comment="Title of the Reviewer activity. Also the button to open it.">Study</string>
+    <string name="studyoptions_start" comment="Title of the Reviewer activity. Also the button to open it.">Окуу</string>
     <!-- DeckPicker.kt -->
     <string name="expand" comment="In the deck picker: accessibility label of the buttons that display the subdecks of a deck.">Expand</string>
     <string name="collapse" comment="In the deck picker: accessibility label of the buttons that hide the subdecks of a deck.">Collapse</string>

@@ -73,8 +73,8 @@
         <item quantity="other">Απομένουν %1$d ώρες %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of hours.">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">Απομένει %1$d ημέρα %2$dώ</item>
+        <item quantity="other">Απομένουν %1$d ημέρες %2$dώ</item>
     </plurals>
     <string name="type_answer_hint" comment="In the reviewer. When the user use note type with hint. It\'s the default content of the text field in which the user is invited to type their answer. It disappears as soon as the user start to type.">Πληκτρολογήστε την απάντηση</string>
     <string name="show_answer" maxLength="41" comment="When displaying the question side of a card. This is the label of a button that display the answer side.">Εμφάνιση Απάντησης</string>
@@ -117,12 +117,12 @@
     <string name="menu_disable_voice_playback">Απενεργοποίηση αναπαραγωγής φωνής</string>
     <string name="new_deck">Δημιουργία τράπουλας</string>
     <string name="new_dynamic_deck">Δημιουργία φιλτραρισμένης τράπουλας</string>
-    <string name="directory_inaccessible">Η τοποθεσία τού AnkiDroid είναι μη προσβάσιμη</string>
+    <string name="directory_inaccessible">Δεν είναι δυνατή η πρόσβαση στον κατάλογο του AnkiDroid</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Παρακαλούμε παραχωρήστε στο Anki-Droid την άδεια \'Αποθήκευσης\' για να συνεχίσετε</string>
+    <string name="startup_no_storage_permission">Παραχωρήστε στο AnkiDroid το δικαίωμα «Αποθήκευση» για να συνεχίσετε</string>
     <string name="rebuild_filtered_deck">Αναδόμηση φιλτραρισμένης τράπουλας&#8230;</string>
     <string name="rebuild_cram_label" maxLength="28">Αναδόμηση</string>
     <string name="empty_cram_label" maxLength="28">Άδειασμα</string>
@@ -132,7 +132,7 @@
     <string name="empty_deck">Αυτή η τράπουλα είναι κενή</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Αναζήτηση</string>
     <string name="invalid_deck_name">Μη έγκυρο όνομα</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
+    <string name="studyoptions_congrats_finished">Συγχαρητήρια! Τελειώσατε για σήμερα.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Η τράπουλα τελείωσε για τώρα! %s</string>
     <string name="studyoptions_no_cards_due">Δεν υπάρχουν ακόμη κάρτες για επανάληψη</string>
     <string name="sd_card_not_mounted">O χώρος αποθήκευσης συσκευής δεν έχει προσαρτηθεί</string>
@@ -170,11 +170,11 @@
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Πληροφορίες κάρτας</string>
     <!-- Permissions -->
-    <string name="read_write_permission_label">Ανάγνωση και γραφή στη βάση δεδομένων του AnkiDroid</string>
+    <string name="read_write_permission_label">Ανάγνωση και εγγραφή στη βάση δεδομένων του AnkiDroid</string>
     <string name="read_write_permission_description">πρόσβαση σε υπάρχουσες σημειώσεις, κάρτες, τύπους σημειώσεων και τράπουλες, καθώς και δημιουργία νέων</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Ευρετήριο καρτών</string>
-    <string name="context_menu_anki_card_label">Anki Κάρτα</string>
+    <string name="context_menu_anki_card_label">Κάρτα Anki</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Οι συλλογές δεν μπορούν να συνδυαστούν.\nΠοια συλλογή θέλετε να κρατήσετε;</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -186,16 +186,16 @@
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Αδυναμία γραφής σε ή δημιουργίας αρχείου %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Μη προσβάσιμη συλλογή</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Δεν είναι δυνατή η πρόσβαση στη συλλογή σας μετά την απεγκατάσταση του AnkiDroid λόγω αλλαγής στην Πολιτική Play Store\n\nΤα δεδομένα σας είναι ασφαλή και μπορούν να αποκατασταθούν. Βρίσκονται στο\n%s\n\nΕπιλέξτε μια παρακάτω επιλογή για επαναφορά:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Το Android έχει αφαιρέσει την άδεια %1$s του AnkiDroid λόγω αδράνειας εφαρμογών.\n\nΤα δεδομένα σας είναι ασφαλή και μπορούν να επαναφερθούν. Βρίσκεται στο\n%2$s\n\nΕπιλέξτε μια επιλογή παρακάτω για επαναφορά:</string>
-    <string name="restore_data_from_ankiweb">Επαναφορά από AnkiWeb (συνιστάται)</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Δεν είναι δυνατή η πρόσβαση στη συλλογή σας μετά την απεγκατάσταση του AnkiDroid λόγω μιας αλλαγής στην Πολιτική του Play Store\n\nΤα δεδομένα σας είναι ασφαλή και μπορείτε να τα ανακτήσετε. Βρίσκονται στο\n%s\n\nΕπιλέξτε μία από τις παρακάτω μεθόδους ανάκτησης:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Το Android έχει καταργήσει την άδεια %1$s του AnkiDroid εξαιτίας της αδράνειας της εφαρμογής.\n\nΤα δεδομένα σας είναι ασφαλή και μπορείτε να τα ανακτήσετε. Βρίσκονται στο\n%2$s\n\nΕπιλέξτε μία από τις παρακάτω μεθόδους ανάκτησης:</string>
+    <string name="restore_data_from_ankiweb">Ανάκτηση από το AnkiWeb (συνιστάται)</string>
     <string name="install_non_play_store_ankidroid_recommended">Επαναφορά πρόσβασης φακέλου (συνιστάται)</string>
     <string name="install_non_play_store_ankidroid">Επαναφορά πρόσβασης φακέλου (προχωρημένο)</string>
     <string name="restore_data_from_backup">Επαναφορά από αντίγραφο ασφαλείας .colpkg (προχωρημένο)</string>
     <string name="create_new_collection">Δημιουργία νέας συλλογής</string>
     <string name="new_unsafe_collection">Η νέα συλλογή θα διαγραφεί από το τηλέφωνό σας αν απεγκαταστήσετε το AnkiDroid</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">Το AnkiDroid χρειάζεται κάποια δικαιώματα για να εργαστεί</string>
+    <string name="permissions_screen_headline">Το AnkiDroid απαιτεί ορισμένα δικαιώματα για να λειτουργήσει</string>
     <string name="storage_access_title">Πρόσβαση αποθηκευτικού χώρου</string>
     <string name="storage_access_summary">Αποθηκεύει τη συλλογή σας σε ασφαλές μέρος που δεν θα διαγραφεί αν η εφαρμογή απεγκατασταθεί</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">Πρόσβαση σε όλα τα αρχεία</string>

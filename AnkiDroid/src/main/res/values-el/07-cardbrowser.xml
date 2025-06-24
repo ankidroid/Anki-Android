@@ -88,17 +88,17 @@
         <item>Κατά ευκολία</item>
         <item>Κατά επαναλήψεις</item>
         <item>Κατά αστοχίες</item>
-        <item>By deck name</item>
+        <item>Κατά όνομα τράπουλας</item>
     </string-array>
-    <string name="chane_browser_column">Change column</string>
-    <string name="no_columns_available">No columns available</string>
+    <string name="chane_browser_column">Αλλαγή στήλης</string>
+    <string name="no_columns_available">Δεν υπάρχουν διαθέσιμες στήλες</string>
     <string name="card_browser_select_all" maxLength="28">Επιλογή όλων</string>
     <string name="card_browser_select_none" maxLength="28">Επιλογή κανενός</string>
     <string name="card_browser_no_cards_in_deck">Δεν βρέθηκαν κάρτες στην τράπουλα ‘%s’</string>
     <string name="card_browser_search_all_decks">Αναζήτηση όλων των τραπουλών</string>
     <string name="card_browser_unknown_deck_name">Άγνωστο</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Περιορισμός περιεχομένου</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Σήμερα είναι «0 %1$s», αύριο θα είναι «1 %2$s» κ.ο.κ.&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Εξαγωγή κάρτας</item>
         <item quantity="other">Εξαγωγή καρτών</item>
@@ -115,12 +115,12 @@
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
     <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
     <!-- Manage columns dialog -->
-    <string name="browse_manage_columns_main_heading">Columns</string>
-    <string name="browse_manage_columns">Manage columns</string>
-    <string name="user_active_columns">Active</string>
-    <string name="user_potential_columns">Available</string>
-    <string name="include_column">Include column</string>
-    <string name="exclude_column">Exclude column</string>
-    <string name="save_changes_message">Please save your changes first</string>
-    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
+    <string name="browse_manage_columns_main_heading">Στήλες</string>
+    <string name="browse_manage_columns">Διαχείριση στηλών</string>
+    <string name="user_active_columns">Ενεργές</string>
+    <string name="user_potential_columns">Διαθέσιμες</string>
+    <string name="include_column">Συμπερίληψη στήλης</string>
+    <string name="exclude_column">Εξαίρεση στήλης</string>
+    <string name="save_changes_message">Αποθηκεύστε πρώτα τις αλλαγές σας</string>
+    <string name="browser_find_replace_loading_fields">Ανάκτηση ονομάτων πεδίων&#8230;</string>
 </resources>

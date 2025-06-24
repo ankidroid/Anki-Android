@@ -95,8 +95,8 @@
     <string name="gesture_flag_remove" maxLength="41">フラグを取りはずす</string>
     <string name="gesture_page_up" maxLength="41">１画面分上へスクロール</string>
     <string name="gesture_page_down" maxLength="41">１画面分下へスクロール</string>
-    <string name="gesture_toggle_whiteboard" maxLength="41">ホワイトボード機能をオン/オフ</string>
-    <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">ホワイトボード機能をオン / オフ</string>
+    <string name="gesture_toggle_eraser" maxLength="41">消しゴム機能をオン / オフ</string>
     <string name="gesture_show_hint" maxLength="41">ヒントを表示</string>
     <string name="gesture_show_all_hints" maxLength="41">すべてのヒントを表示</string>
     <string name="record_voice" maxLength="41">音声を録音</string>
