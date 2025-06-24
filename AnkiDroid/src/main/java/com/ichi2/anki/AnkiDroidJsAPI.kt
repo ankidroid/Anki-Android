@@ -380,7 +380,7 @@ open class AnkiDroidJsAPI(
 
             "setNoteTags" -> {
                 val jsonObject = JSONObject(apiParams)
-                val noteId = jsonObject.getLong("noteId")
+                val noteId = currentCard.nid
                 val tags = jsonObject.getJSONArray("tags")
                 withCol {
                     fun Note.setTagsFromList(tagList: List<String>) {
@@ -403,8 +403,7 @@ open class AnkiDroidJsAPI(
             }
 
             "getNoteTags" -> {
-                val jsonObject = JSONObject(apiParams)
-                val noteId = jsonObject.getLong("noteId")
+                val noteId = currentCard.nid
                 val noteTags =
                     withCol {
                         getNote(noteId).tags
