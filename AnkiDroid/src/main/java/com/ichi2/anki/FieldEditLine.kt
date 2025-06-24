@@ -64,7 +64,7 @@ class FieldEditLine : FrameLayout {
         editText = findViewById(R.id.id_note_editText)
         label = findViewById(R.id.id_label)
         toggleSticky =
-            findViewById<ImageButton?>(R.id.id_toggle_sticky_button).apply {
+            findViewById<ImageButton>(R.id.id_toggle_sticky_button).apply {
                 setTooltipTextCompat(CollectionManager.TR.editingToggleSticky())
             }
         mediaButton = findViewById(R.id.id_media_button)

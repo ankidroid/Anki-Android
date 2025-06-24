@@ -252,21 +252,21 @@ class ExportDialogFragment : DialogFragment() {
     private fun View.initializeNotesExportUi() =
         with(CollectionManager.TR) {
             notesIncludeHtml =
-                findViewById<CheckBox?>(R.id.notes_include_html).apply {
+                findViewById<CheckBox>(R.id.notes_include_html).apply {
                     text = exportingIncludeHtmlAndMediaReferences()
                 }
             notesIncludeTags =
-                findViewById<CheckBox?>(R.id.notes_include_tags).apply { text = exportingIncludeTags() }
+                findViewById<CheckBox>(R.id.notes_include_tags).apply { text = exportingIncludeTags() }
             notesIncludeDeckName =
-                findViewById<CheckBox?>(R.id.notes_include_deck_name).apply {
+                findViewById<CheckBox>(R.id.notes_include_deck_name).apply {
                     text = exportingIncludeDeck()
                 }
             notesIncludeNotetypeName =
-                findViewById<CheckBox?>(R.id.notes_include_notetype_name).apply {
+                findViewById<CheckBox>(R.id.notes_include_notetype_name).apply {
                     text = exportingIncludeNotetype()
                 }
             notesIncludeUniqueIdentifier =
-                findViewById<CheckBox?>(R.id.notes_include_unique_identifier).apply {
+                findViewById<CheckBox>(R.id.notes_include_unique_identifier).apply {
                     text = exportingIncludeGuid()
                 }
         }

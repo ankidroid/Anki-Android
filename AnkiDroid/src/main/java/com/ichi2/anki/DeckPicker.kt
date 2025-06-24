@@ -594,7 +594,7 @@ open class DeckPicker :
         recyclerView.adapter = deckListAdapter
 
         pullToSyncWrapper =
-            findViewById<SwipeRefreshLayout?>(R.id.pull_to_sync_wrapper).apply {
+            findViewById<SwipeRefreshLayout>(R.id.pull_to_sync_wrapper).apply {
                 setDistanceToTriggerSync(SWIPE_TO_SYNC_TRIGGER_DISTANCE)
                 setOnRefreshListener {
                     Timber.i("Pull to Sync: Syncing")
