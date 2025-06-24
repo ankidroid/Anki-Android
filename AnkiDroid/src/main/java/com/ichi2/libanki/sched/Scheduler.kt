@@ -226,7 +226,11 @@ open class Scheduler(
         return intervalForState(state)
     }
 
-    /** Update a V1 scheduler collection to V2. Requires full sync. */
+    /**
+     * Update a V1 scheduler collection to V2. Requires full sync.
+     *
+     * @throws com.ichi2.libanki.exception.ConfirmModSchemaException
+     */
     fun upgradeToV2() {
         col.modSchema()
         col.backend.upgradeScheduler()
