@@ -153,7 +153,7 @@
     <PreferenceCategory android:title="@string/media">
         <com.ichi2.preferences.ReviewerControlPreference
             android:key="@string/play_media_command_key"
-            android:title="@string/gesture_play"
+            android:title="@string/replay_media"
             android:icon="@drawable/ic_play_circle_white"
             />
         <com.ichi2.preferences.ReviewerControlPreference
