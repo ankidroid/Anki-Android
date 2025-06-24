@@ -239,10 +239,10 @@ android {
 
     testOptions {
         animationsDisabled = true
-        kotlinOptions {
-            freeCompilerArgs += [
-                    '-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi',
-            ]
+        kotlin {
+            compilerOptions {
+                freeCompilerArgs.add("-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi")
+            }
         }
     }
 
