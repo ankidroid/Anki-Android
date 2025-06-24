@@ -43,19 +43,19 @@
     <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
     Now arrays are defined in constants.xml, and the strings are here -->
     <!-- error_reporting_choice_labels -->
-    <string name="error_reporting_choice_always_report">Always report</string>
-    <string name="error_reporting_choice_never_report">Never report</string>
-    <string name="error_reporting_choice_ask_user">Ask me</string>
+    <string name="error_reporting_choice_always_report">Har doim xabar berilsin</string>
+    <string name="error_reporting_choice_never_report">Hech qachon xabar berilmasin</string>
+    <string name="error_reporting_choice_ask_user">Mendan soʻralsin</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
     <!-- new_order_labels -->
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Oldest seen first</string>
-    <string name="cram_deck_conf_order_random">Random</string>
+    <string name="cram_deck_conf_order_random">Tasodifiy</string>
     <string name="cram_deck_conf_order_increasing_intervals">Increasing intervals</string>
     <string name="cram_deck_conf_order_decreasing_intervals">Decreasing intervals</string>
     <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
-    <string name="cram_deck_conf_order_order_added">Order added</string>
+    <string name="cram_deck_conf_order_order_added">Qoʻshilgan tartib boʻyicha</string>
     <string name="cram_deck_conf_order_order_due">Order due</string>
     <string name="cram_deck_conf_order_latest_added_first">Latest added first</string>
     <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
@@ -92,7 +92,7 @@
     <string name="gesture_flag_pink" maxLength="41">Toggle Pink Flag</string>
     <string name="gesture_flag_turquoise" maxLength="41">Toggle Turquoise Flag</string>
     <string name="gesture_flag_purple" maxLength="41">Toggle Purple Flag</string>
-    <string name="gesture_flag_remove" maxLength="41">Remove Flag</string>
+    <string name="gesture_flag_remove" maxLength="41">Bayroqni olib tashlash</string>
     <string name="gesture_page_up" maxLength="41">Page Up</string>
     <string name="gesture_page_down" maxLength="41">Page Down</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Toggle Whiteboard</string>

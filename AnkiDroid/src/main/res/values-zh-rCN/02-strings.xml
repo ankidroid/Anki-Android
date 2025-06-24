@@ -67,8 +67,8 @@
     <string name="enable_whiteboard" maxLength="28">启用白板</string>
     <string name="disable_whiteboard">禁用白板</string>
     <string name="show_whiteboard">显示白板</string>
-    <string name="enable_eraser" maxLength="28">Enable eraser</string>
-    <string name="disable_eraser" maxLength="28">Disable eraser</string>
+    <string name="enable_eraser" maxLength="28">启用擦除</string>
+    <string name="disable_eraser" maxLength="28">禁用擦除</string>
     <string name="hide_whiteboard" maxLength="28">隐藏白板</string>
     <string name="clear_whiteboard" maxLength="28">清空白板</string>
     <string name="replay_media" maxLength="28">重播媒体</string>
@@ -192,8 +192,8 @@
     <string name="restore_default" maxLength="28">恢复初始设置</string>
     <string name="reviewer_tts_cloze_spoken_replacement">空白</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
-    <string name="white_board_eraser_enabled">Eraser mode activated</string>
-    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string name="white_board_eraser_enabled">擦除模式已激活</string>
+    <string name="white_board_eraser_disabled">擦除模式已停用</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">保存白板图像失败。 %s</string>
     <string name="white_board_image_saved">白板图像已保存到 %s</string>

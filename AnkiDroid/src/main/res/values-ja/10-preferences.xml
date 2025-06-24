@@ -195,8 +195,8 @@
     <string name="reset">リセット</string>
     <string name="thirdparty_apps_title" maxLength="41">サードパーティー製APIアプリ</string>
     <string name="thirdparty_apps_summary">辞書やユーティリティなど、AnkiDroidを活用するアプリのリストを見るにはここをタップしてください</string>
-    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">学習</string>
-    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">プレビュー</string>
+    <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">学習画面</string>
+    <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">ﾌﾟﾚﾋﾞｭｰ画面</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">背面（解答表示後の画面）のみに切り替え</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">学習画面</string>
@@ -277,7 +277,7 @@
     <string name="user_action_7" maxLength="28">ユーザーアクション 7</string>
     <string name="user_action_8" maxLength="28">ユーザーアクション 8</string>
     <string name="user_action_9" maxLength="28">ユーザーアクション 9</string>
-    <string name="toggle_auto_advance" maxLength="41">カードの自動送りをオン／オフ</string>
+    <string name="toggle_auto_advance" maxLength="41">カードの自動送りをオン / オフ</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">カードの表面 (質問側) と裏面 (解答側) 、どちらでの操作ですか？</string>
     <string name="card_side_question">表面</string>

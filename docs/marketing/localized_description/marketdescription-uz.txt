@@ -27,7 +27,7 @@ Add material through the desktop application Anki or directly through AnkiDroid.
 • import existing collection files (via Anki Desktop)
 • add cards by intent from other applications like dictionaries
 • custom font support
-• full backup system
+• toʻliq zaxiralash tizimi
 • navigation by swipe, tap
 • customisable
 • dynamic deck handling
