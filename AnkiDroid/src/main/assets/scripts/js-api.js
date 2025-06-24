@@ -129,7 +129,7 @@ Object.keys(jsApiList).forEach(method => {
         return;
     }
     if (method === "ankiSetNoteTags") {
-        AnkiDroidJS.prototype[method] = async function (noteId, tags) {
+        AnkiDroidJS.prototype[method] = async function (tags) {
             let hasSpaces = false;
             for (let i = 0; i < tags.length; i++) {
                 tags[i] = tags[i].trim();
@@ -142,15 +142,7 @@ Object.keys(jsApiList).forEach(method => {
                 console.warn("Spaces in tags have been converted to underscores");
             }
             const endpoint = jsApiList[method];
-            const data = JSON.stringify({ noteId, tags });
-            return await this.handleRequest(endpoint, data);
-        };
-        return;
-    }
-    if (method === "ankiGetNoteTags") {
-        AnkiDroidJS.prototype[method] = async function (noteId) {
-            const endpoint = jsApiList[method];
-            const data = JSON.stringify({ noteId });
+            const data = JSON.stringify({ tags });
             return await this.handleRequest(endpoint, data);
         };
         return;
