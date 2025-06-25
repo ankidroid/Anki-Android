@@ -209,7 +209,7 @@ object LanguageUtil {
             // Urdu (Pakistan)
             "اردو (پاکستان)" to "ur-PK",
             // Uzbek
-            "O‘zbek" to "uz",
+            "Oʻzbekcha" to "uz",
             // Venda
             "Venda" to "ve",
             // Vietnamese
