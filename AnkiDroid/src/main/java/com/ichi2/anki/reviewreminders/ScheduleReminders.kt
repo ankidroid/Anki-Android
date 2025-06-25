@@ -27,6 +27,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.libanki.DeckId
+import timber.log.Timber
 
 /**
  * Fragment for creating, viewing, editing, and deleting review reminders.
@@ -92,13 +93,16 @@ class ScheduleReminders : Fragment(R.layout.fragment_schedule_reminders) {
             isInGlobalScope: Boolean,
             did: DeckId? = null,
         ): Intent =
-            SingleFragmentActivity.getIntent(
-                context,
-                ScheduleReminders::class,
-                Bundle().apply {
-                    putBoolean(EXTRAS_GLOBAL_SCOPE_KEY, isInGlobalScope)
-                    putLong(EXTRAS_DECK_ID_KEY, did ?: -1L)
-                },
-            )
+            SingleFragmentActivity
+                .getIntent(
+                    context,
+                    ScheduleReminders::class,
+                    Bundle().apply {
+                        putBoolean(EXTRAS_GLOBAL_SCOPE_KEY, isInGlobalScope)
+                        putLong(EXTRAS_DECK_ID_KEY, did ?: -1L)
+                    },
+                ).apply {
+                    Timber.i("launching ScheduleReminders for %s", did?.toString() ?: "all decks")
+                }
     }
 }
