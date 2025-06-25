@@ -30,7 +30,8 @@ import java.util.Locale
  * is a list of [DisplayDeckNode]s. This class only contains the information
  * needed to display it on the screen, hence no data of a node's children and parent.
  */
-data class DisplayDeckNode(
+@ConsistentCopyVisibility
+data class DisplayDeckNode private constructor(
     val did: DeckId,
     val fullDeckName: String,
     val lastDeckNameComponent: String,
@@ -45,6 +46,11 @@ data class DisplayDeckNode(
 ) {
     // DeckNode is mutable, so use a lateinit var so '==' doesn't include it in the comparison
     lateinit var deckNode: DeckNode
+
+    fun withUpdatedDeckId(deckId: DeckId): DisplayDeckNode =
+        this.copy(isSelected = this.did == deckId).also { updated ->
+            updated.deckNode = this.deckNode
+        }
 
     companion object {
         fun from(

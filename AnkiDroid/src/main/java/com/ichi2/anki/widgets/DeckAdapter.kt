@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.R
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.deckpicker.DisplayDeckNode
 import com.ichi2.anki.utils.ext.findViewById
 import com.ichi2.libanki.DeckId
@@ -127,11 +128,10 @@ class DeckAdapter(
      * Update the current selected deck so the adapter shows the proper backgrounds.
      * Calls [notifyDataSetChanged].
      */
+    @NeedsTest("18658: ensure a deck can be selected after this")
     fun updateSelectedDeck(deckId: DeckId) {
         submitList(
-            this.currentList.map {
-                it.copy(isSelected = it.did == deckId)
-            },
+            this.currentList.map { it.withUpdatedDeckId(deckId) },
         )
     }
 
