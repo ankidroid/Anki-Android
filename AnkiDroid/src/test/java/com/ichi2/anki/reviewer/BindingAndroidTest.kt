@@ -20,9 +20,11 @@ import android.view.KeyEvent
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.reviewer.Binding.KeyCode
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.alt
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
+import com.ichi2.anki.reviewer.Binding.UnicodeCharacter.Companion.unsafeUnicodeBindingFactory
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -33,41 +35,62 @@ class BindingAndroidTest : RobolectricTest() {
     @Test
     fun testKeycodeToString() {
         // These use native functions. We may need KeyEvent.keyCodeToString
-        assertEquals(BindingTest.KEY_PREFIX + "87", Binding.keyCode(KeyEvent.KEYCODE_MEDIA_NEXT).toString())
-        assertEquals(BindingTest.KEY_PREFIX + "Ctrl+88", Binding.keyCode(ctrl(), KeyEvent.KEYCODE_MEDIA_PREVIOUS).toString())
-        assertEquals(BindingTest.KEY_PREFIX + "Shift+25", Binding.keyCode(shift(), KeyEvent.KEYCODE_VOLUME_DOWN).toString())
-        assertEquals(BindingTest.KEY_PREFIX + "Alt+24", Binding.keyCode(alt(), KeyEvent.KEYCODE_VOLUME_UP).toString())
+        assertEquals(BindingTest.KEY_PREFIX + "87", KeyCode(KeyEvent.KEYCODE_MEDIA_NEXT).toString())
+        assertEquals(
+            BindingTest.KEY_PREFIX + "Ctrl+88",
+            Binding
+                .KeyCode(
+                    KeyEvent.KEYCODE_MEDIA_PREVIOUS,
+                    ctrl(),
+                ).toString(),
+        )
+        assertEquals(
+            BindingTest.KEY_PREFIX + "Shift+25",
+            Binding
+                .KeyCode(
+                    KeyEvent.KEYCODE_VOLUME_DOWN,
+                    shift(),
+                ).toString(),
+        )
+        assertEquals(
+            BindingTest.KEY_PREFIX + "Alt+24",
+            Binding
+                .KeyCode(
+                    KeyEvent.KEYCODE_VOLUME_UP,
+                    alt(),
+                ).toString(),
+        )
     }
 
     @Test
     fun testFromString() {
-        assertBindingEquals(Binding.unicode('Ä'), Binding.fromString(BindingTest.UNICODE_PREFIX + "Ä"))
-        assertBindingEquals(Binding.unicode(ctrl(), 'Ä'), Binding.fromString(BindingTest.UNICODE_PREFIX + "Ctrl+Ä"))
-        assertBindingEquals(Binding.unicode(shift(), 'Ä'), Binding.fromString(BindingTest.UNICODE_PREFIX + "Shift+Ä"))
-        assertBindingEquals(Binding.unicode(alt(), 'Ä'), Binding.fromString(BindingTest.UNICODE_PREFIX + "Alt+Ä"))
-        assertBindingEquals(
-            Binding.keyCode(KeyEvent.KEYCODE_MEDIA_NEXT),
+        assertEquals(unsafeUnicodeBindingFactory('Ä'), Binding.fromString(BindingTest.UNICODE_PREFIX + "Ä"))
+        assertEquals(unsafeUnicodeBindingFactory('Ä', ctrl()), Binding.fromString(BindingTest.UNICODE_PREFIX + "Ctrl+Ä"))
+        assertEquals(unsafeUnicodeBindingFactory('Ä', shift()), Binding.fromString(BindingTest.UNICODE_PREFIX + "Shift+Ä"))
+        assertEquals(unsafeUnicodeBindingFactory('Ä', alt()), Binding.fromString(BindingTest.UNICODE_PREFIX + "Alt+Ä"))
+        assertEquals(
+            KeyCode(KeyEvent.KEYCODE_MEDIA_NEXT),
             Binding.fromString(BindingTest.KEY_PREFIX + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_MEDIA_NEXT)),
         )
-        assertBindingEquals(
-            Binding.keyCode(ctrl(), KeyEvent.KEYCODE_MEDIA_PREVIOUS),
+        assertEquals(
+            KeyCode(KeyEvent.KEYCODE_MEDIA_PREVIOUS, ctrl()),
             Binding.fromString(BindingTest.KEY_PREFIX + "Ctrl+" + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_MEDIA_PREVIOUS)),
         )
-        assertBindingEquals(
-            Binding.keyCode(shift(), KeyEvent.KEYCODE_VOLUME_DOWN),
+        assertEquals(
+            KeyCode(KeyEvent.KEYCODE_VOLUME_DOWN, shift()),
             Binding.fromString(BindingTest.KEY_PREFIX + "Shift+" + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_VOLUME_DOWN)),
         )
-        assertBindingEquals(
-            Binding.keyCode(alt(), KeyEvent.KEYCODE_VOLUME_UP),
+        assertEquals(
+            KeyCode(KeyEvent.KEYCODE_VOLUME_UP, alt()),
             Binding.fromString(BindingTest.KEY_PREFIX + "Alt+" + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_VOLUME_UP)),
         )
-        assertBindingEquals(Binding.gesture(Gesture.TAP_TOP), Binding.fromString(BindingTest.GESTURE_PREFIX + Gesture.TAP_TOP.name))
+        assertEquals(Binding.gesture(Gesture.TAP_TOP), Binding.fromString(BindingTest.GESTURE_PREFIX + Gesture.TAP_TOP.name))
     }
 
     @Test
     fun `motion event serde`() {
-        assertBindingEquals(axis(Axis.X, 1.0f), axisBindingFromString("0 1.0"))
-        assertBindingEquals(axis(Axis.Y, -1.0f), axisBindingFromString("1 -1.0"))
+        assertEquals(axis(Axis.X, 1.0f), axisBindingFromString("0 1.0"))
+        assertEquals(axis(Axis.Y, -1.0f), axisBindingFromString("1 -1.0"))
     }
 
     @Test
@@ -77,15 +100,6 @@ class BindingAndroidTest : RobolectricTest() {
     }
 
     private fun Binding.toDisplayString(): String = this.toDisplayString(targetContext)
-
-    private fun assertBindingEquals(
-        fst: Binding,
-        snd: Binding,
-    ) {
-        val first = ReviewerBinding(fst, CardSide.BOTH)
-        val second = ReviewerBinding(snd, CardSide.BOTH)
-        assertEquals(first, second)
-    }
 }
 
 private fun axis(

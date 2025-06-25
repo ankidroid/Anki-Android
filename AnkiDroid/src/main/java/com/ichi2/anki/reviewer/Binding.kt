@@ -17,14 +17,20 @@ package com.ichi2.anki.reviewer
 
 import android.content.Context
 import android.view.KeyEvent
-import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.reviewer.Binding.UnicodeCharacter.Companion.unicodeBindingFactory
 import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.utils.StringUtil
 import com.ichi2.utils.lastIndexOfOrNull
 import timber.log.Timber
 import java.util.Objects
 
+/**
+ * Represents an action the user can do while the reviewer is open in order to trigger an action. Currently, the bindings are:
+ * * [GestureInput] a gesture on the touch screen such as slide or double tap
+ * * [AxisButtonBinding] a gesture done on a joystick/motion controller
+ * * [KeyBinding] a shortcut on a keyboard or other key input device
+ */
 sealed interface Binding {
     data class GestureInput(
         val gesture: Gesture,
@@ -72,73 +78,105 @@ sealed interface Binding {
         }
     }
 
-    interface KeyBinding : Binding {
-        val modifierKeys: ModifierKeys
-    }
+    /**
+     * A binding corresponding to a shortcut on a keyboard.
+     */
+    sealed class KeyBinding<T>(
+        protected val key: T,
+        // Open so that the inheriting class can redeclare it as value, and hence being data class.
+        open val modifierKeys: ModifierKeys,
+    ) : Binding {
+        protected abstract val keyPrefix: Char
 
-    @Suppress("EqualsOrHashCode")
-    data class KeyCode(
-        val keycode: Int,
-        override val modifierKeys: ModifierKeys = ModifierKeys.none(),
-    ) : KeyBinding {
-        private fun getKeyCodePrefix(): String =
-            when {
-                KeyEvent.isGamepadButton(keycode) -> GAMEPAD_PREFIX
-                else -> KEY_PREFIX.toString()
+        override fun toString() =
+            buildString {
+                append(keyPrefix)
+                append(modifierKeys.toString())
+                append(key)
             }
+
+        /**
+         * The prefix and suffix of the display string.
+         */
+        protected abstract fun getKeyCodePrefix(): String
+
+        protected abstract fun getKeyCodeSuffix(): String?
 
         override fun toDisplayString(context: Context): String =
             buildString {
                 append(getKeyCodePrefix())
                 append(' ')
                 append(modifierKeys.toString())
-                val keyCodeString = KeyEvent.keyCodeToString(keycode)
-                // replace "Button" as we use the gamepad icon
-                append(StringUtil.toTitleCase(keyCodeString.replace("KEYCODE_", "").replace("BUTTON_", "").replace('_', ' ')))
-            }
-
-        override fun toString() =
-            buildString {
-                append(KEY_PREFIX)
-                append(modifierKeys.toString())
-                append(keycode)
+                append(getKeyCodeSuffix())
             }
 
         // don't include the modifierKeys
-        override fun hashCode(): Int = Objects.hash(keycode)
+        override fun hashCode(): Int = Objects.hash(key)
+
+        override fun equals(other: Any?) =
+            (this === other) || (other is KeyBinding<T> && other.key == key && other.modifierKeys == modifierKeys)
     }
 
-    @Suppress("EqualsOrHashCode")
-    data class UnicodeCharacter(
+    class KeyCode(
+        val keycode: Int,
+        override val modifierKeys: ModifierKeys = ModifierKeys.none(),
+    ) : KeyBinding<Int>(keycode, modifierKeys) {
+        override val keyPrefix = KEY_PREFIX
+
+        override fun getKeyCodePrefix(): String =
+            when {
+                KeyEvent.isGamepadButton(key) -> GAMEPAD_PREFIX
+                else -> KEY_PREFIX.toString()
+            }
+
+        override fun getKeyCodeSuffix() =
+            // replace "Button" as we use the gamepad icon
+            StringUtil.toTitleCase(
+                KeyEvent
+                    .keyCodeToString(key)
+                    .replace("KEYCODE_", "")
+                    .replace("BUTTON_", "")
+                    .replace('_', ' '),
+            )
+    }
+
+    class UnicodeCharacter(
         val unicodeCharacter: Char,
         override val modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
-    ) : KeyBinding {
-        override fun toDisplayString(context: Context): String =
-            buildString {
-                append(KEY_PREFIX)
-                append(' ')
-                append(modifierKeys.toString())
-                append(unicodeCharacter)
+    ) : KeyBinding<Char>(unicodeCharacter, modifierKeys) {
+        override val keyPrefix = UNICODE_PREFIX
+
+        override fun getKeyCodePrefix(): String = KEY_PREFIX.toString()
+
+        override fun getKeyCodeSuffix() = key.toString()
+
+        companion object {
+            /**
+             * Specifies a unicode binding from an unknown input device.
+             * returns null if [unicodeChar] is [FORBIDDEN_UNICODE_CHAR]
+             * See [AppDefinedModifierKeys]
+             */
+            fun unicodeBindingFactory(
+                unicodeChar: Char,
+                modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
+            ): UnicodeCharacter? {
+                if (unicodeChar == FORBIDDEN_UNICODE_CHAR) return null
+                return UnicodeCharacter(unicodeChar, modifierKeys)
             }
 
-        override fun toString(): String =
-            buildString {
-                append(UNICODE_PREFIX)
-                append(modifierKeys.toString())
-                append(unicodeCharacter)
+            /**
+             * Specifies a unicode binding from an unknown input device.
+             * The caller must guarantee that [unicodeChar] is not [FORBIDDEN_UNICODE_CHAR]
+             * See [AppDefinedModifierKeys]
+             */
+            fun unsafeUnicodeBindingFactory(
+                unicodeChar: Char,
+                modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
+            ): UnicodeCharacter {
+                assert(unicodeChar != FORBIDDEN_UNICODE_CHAR)
+                return UnicodeCharacter(unicodeChar, modifierKeys)
             }
-
-        // don't include the modifierKeys
-        override fun hashCode(): Int = Objects.hash(unicodeCharacter)
-    }
-
-    data object UnknownBinding : Binding {
-        override fun toDisplayString(context: Context): String = ""
-
-        override fun toString(): String = ""
-
-        override val isValid: Boolean
-            get() = false
+        }
     }
 
     fun toDisplayString(context: Context): String
@@ -149,10 +187,13 @@ sealed interface Binding {
     val isValid get() = true
 
     open class ModifierKeys internal constructor(
-        val shift: Boolean,
-        val ctrl: Boolean,
-        val alt: Boolean,
+        val shift: Boolean = false,
+        val ctrl: Boolean = false,
+        val alt: Boolean = false,
     ) {
+        /**
+         * Returns whether the event has exactly the same modifier key pressed as the ones in this object.
+         */
         fun matches(event: KeyEvent): Boolean {
             // return false if Ctrl+1 is pressed and 1 is expected
             return shiftMatches(event) && ctrlMatches(event) && altMatches(event)
@@ -164,8 +205,18 @@ sealed interface Binding {
 
         private fun altMatches(event: KeyEvent): Boolean = alt == event.isAltPressed
 
+        /**
+         * Whether this binding can be triggered when shift is pressed (if [shiftPressed]) or not pressed (if ![shiftPressed]).
+         *
+         * This method is identical to [shiftMatches] by default, but can be overridden in context
+         * where we can not be certain whether shift is meant as a modifier key or is being used
+         * because the user need it to type other symbol.
+         */
         open fun shiftMatches(shiftPressed: Boolean): Boolean = shift == shiftPressed
 
+        /**
+         * Returns a string that can be prefixed with a non-modifier key in order to create a unambiguous description of the shortcut.
+         */
         override fun toString() =
             buildString {
                 if (ctrl) append("Ctrl+")
@@ -173,6 +224,9 @@ sealed interface Binding {
                 if (shift) append("Shift+")
             }
 
+        /**
+         * Whether there is a combination of modifier key that is accepted by both matchers.
+         */
         private fun semiStructuralEquals(keys: ModifierKeys): Boolean {
             if (this.alt != keys.alt || this.ctrl != keys.ctrl) {
                 return false
@@ -189,17 +243,18 @@ sealed interface Binding {
         override fun hashCode(): Int = Objects.hash(ctrl, alt, shiftMatches(true))
 
         companion object {
-            fun none(): ModifierKeys = ModifierKeys(shift = false, ctrl = false, alt = false)
+            fun none(): ModifierKeys = ModifierKeys()
 
-            fun ctrl(): ModifierKeys = ModifierKeys(shift = false, ctrl = true, alt = false)
+            fun ctrl(): ModifierKeys = ModifierKeys(ctrl = true)
 
-            fun shift(): ModifierKeys = ModifierKeys(shift = true, ctrl = false, alt = false)
+            fun shift(): ModifierKeys = ModifierKeys(shift = true)
 
-            fun alt(): ModifierKeys = ModifierKeys(shift = false, ctrl = false, alt = true)
+            fun alt(): ModifierKeys = ModifierKeys(alt = true)
 
             /**
              * Parses a [ModifierKeys] from a string.
-             * @param s The string to parse
+             * @param s The string to parse. It is expected that the prefix was generated by [Binding.ModifierKeys.toString].
+             * This function does not check whether the input is well formed.
              * @return The [ModifierKeys], and the remainder of the string
              */
             fun parse(s: String): Pair<ModifierKeys, String> {
@@ -259,80 +314,46 @@ sealed interface Binding {
         /**
          * This returns multiple bindings due to the "default" implementation not knowing what the keycode for a button is
          */
-        fun possibleKeyBindings(event: KeyEvent): List<KeyBinding> {
+        fun possibleKeyBindings(event: KeyEvent): List<KeyBinding<*>> {
             val modifiers = ModifierKeys(event.isShiftPressed, event.isCtrlPressed, event.isAltPressed)
-            val ret: MutableList<KeyBinding> = ArrayList()
-            event.keyCode.ifNotZero { keyCode -> ret.add(keyCode(keyCode, modifiers)) }
+            val ret: MutableList<KeyBinding<*>> = ArrayList()
+            event.keyCode.ifNotZero { keyCode -> ret.add(KeyCode(keyCode, modifiers)) }
 
             // passing in metaState: 0 means that Ctrl+1 returns '1' instead of '\0'
             // NOTE: We do not differentiate on upper/lower case via KeyEvent.META_CAPS_LOCK_ON
             event
                 .getUnicodeChar(event.metaState and (KeyEvent.META_SHIFT_ON or KeyEvent.META_NUM_LOCK_ON))
                 .ifNotZero { unicodeChar ->
-                    try {
-                        ret.add(unicode(unicodeChar.toChar(), modifiers) as KeyBinding)
-                    } catch (e: Exception) {
-                        // very slight chance it returns unknown()
-                        Timber.w(e)
-                    }
+                    // Do nothing if the character is [FORBIDDEN_UNICODE_CHAR]
+                    unicodeBindingFactory(unicodeChar.toChar(), modifiers)?.let { ret.add(it) }
                 }
 
             return ret
         }
 
-        fun fromString(from: String): Binding {
-            if (from.isEmpty()) return UnknownBinding
+        fun fromString(from: String): Binding? {
+            if (from.isEmpty()) return null
             try {
                 return when (from[0]) {
                     JOYSTICK_CHAR_PREFIX -> AxisButtonBinding.from(from.substring(1))
                     GESTURE_PREFIX -> GestureInput(Gesture.valueOf(from.substring(1)))
                     UNICODE_PREFIX -> {
                         val (modifierKeys, char) = ModifierKeys.parse(from.substring(1))
-                        UnicodeCharacter(char[0], modifierKeys)
+                        unicodeBindingFactory(char[0], modifierKeys)
                     }
                     KEY_PREFIX -> {
                         val (modifierKeys, keyCodeAsString) = ModifierKeys.parse(from.substring(1))
                         val keyCode = keyCodeAsString.toInt()
                         KeyCode(keyCode, modifierKeys)
                     }
-                    else -> UnknownBinding
+                    else -> null
                 }
             } catch (ex: Exception) {
                 Timber.w(ex)
             }
-            return UnknownBinding
+            return null
         }
-
-        fun unicode(
-            modifierKeys: ModifierKeys,
-            unicodeChar: Char,
-        ): Binding = unicode(unicodeChar, modifierKeys)
-
-        /**
-         * Specifies a unicode binding from an unknown input device
-         * See [AppDefinedModifierKeys]
-         */
-        fun unicode(
-            unicodeChar: Char,
-            modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
-        ): Binding {
-            if (unicodeChar == FORBIDDEN_UNICODE_CHAR) return unknown()
-            return UnicodeCharacter(unicodeChar, modifierKeys)
-        }
-
-        fun keyCode(
-            keyCode: Int,
-            modifiers: ModifierKeys = ModifierKeys.none(),
-        ) = KeyCode(keyCode, modifiers)
-
-        fun keyCode(
-            modifiers: ModifierKeys,
-            keyCode: Int,
-        ) = KeyCode(keyCode, modifiers)
 
         fun gesture(gesture: Gesture) = GestureInput(gesture)
-
-        @VisibleForTesting
-        fun unknown() = UnknownBinding
     }
 }
