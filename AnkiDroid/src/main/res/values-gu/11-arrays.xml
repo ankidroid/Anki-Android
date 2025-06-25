@@ -83,7 +83,6 @@
     <string name="answer_hard" maxLength="41">સખત જવાબ આપો</string>
     <string name="answer_good" maxLength="41">સરસ જવાબ આપો</string>
     <string name="answer_easy" maxLength="41">Answer easy</string>
-    <string name="gesture_play" maxLength="41">મીડિયા ચલાવો</string>
     <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">લાલ ધ્વજને ટૉગલ કરો</string>
     <string name="gesture_flag_orange" maxLength="41">નારંગી ધ્વજને ટૉગલ કરો</string>

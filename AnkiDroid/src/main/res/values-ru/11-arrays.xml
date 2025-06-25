@@ -83,7 +83,6 @@
     <string name="answer_hard" maxLength="41">Ответить «Трудно»</string>
     <string name="answer_good" maxLength="41">Ответить «Хорошо»</string>
     <string name="answer_easy" maxLength="41">Ответить «Легко»</string>
-    <string name="gesture_play" maxLength="41">Воспроизвести медиафайл</string>
     <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Красный флажок</string>
     <string name="gesture_flag_orange" maxLength="41">Оранжевый флажок</string>

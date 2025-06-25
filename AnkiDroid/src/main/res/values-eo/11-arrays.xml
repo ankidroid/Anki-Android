@@ -83,7 +83,6 @@
     <string name="answer_hard" maxLength="41">Respondi “malfacile”</string>
     <string name="answer_good" maxLength="41">Respondi “facile”</string>
     <string name="answer_easy" maxLength="41">Respondi “facilege”</string>
-    <string name="gesture_play" maxLength="41">Ludi aŭdvidaĵon</string>
     <string name="gesture_abort_learning" maxLength="41">Fermi lernadan ekranon</string>
     <string name="gesture_flag_red" maxLength="41">Baskuligi ruĝan flagon</string>
     <string name="gesture_flag_orange" maxLength="41">Baskuligi oranĝkoloran flagon</string>

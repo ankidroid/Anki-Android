@@ -83,7 +83,6 @@
     <string name="answer_hard" maxLength="41">Atbildēt ar \"Grūti\"</string>
     <string name="answer_good" maxLength="41">Atbildēt ar \"Labi\"</string>
     <string name="answer_easy" maxLength="41">Atbildēt ar \"Viegli\"</string>
-    <string name="gesture_play" maxLength="41">Atskaņot informācijas nesējus</string>
     <string name="gesture_abort_learning" maxLength="41">Aizvērt apgūšanas ekrānu</string>
     <string name="gesture_flag_red" maxLength="41">Pārslēgt sarkano karogu</string>
     <string name="gesture_flag_orange" maxLength="41">Pārslēgt oranžo karogu</string>

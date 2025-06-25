@@ -83,7 +83,6 @@
     <string name="answer_hard" maxLength="41">Atsakyti sunku</string>
     <string name="answer_good" maxLength="41">Atsakymas geras</string>
     <string name="answer_easy" maxLength="41">Atsakyti lengva</string>
-    <string name="gesture_play" maxLength="41">Paleiskite mediją</string>
     <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Perjungti į raudona vėliavėlę</string>
     <string name="gesture_flag_orange" maxLength="41">Perjungti į oranžinę vėliavėlę</string>

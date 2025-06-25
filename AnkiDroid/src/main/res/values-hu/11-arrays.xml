@@ -83,7 +83,6 @@
     <string name="answer_hard" maxLength="41">Válasz: nehéz</string>
     <string name="answer_good" maxLength="41">Válasz: jó</string>
     <string name="answer_easy" maxLength="41">Válasz: könnyű</string>
-    <string name="gesture_play" maxLength="41">Média lejátszása</string>
     <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Piros jelölő bekapcsolása</string>
     <string name="gesture_flag_orange" maxLength="41">Narancs Jelölő Bekapcsolása</string>

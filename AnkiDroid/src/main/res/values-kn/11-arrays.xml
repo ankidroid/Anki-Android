@@ -83,7 +83,6 @@
     <string name="answer_hard" maxLength="41">ಕಟುವಾಗಿ ಉತ್ತರಿಸಿ</string>
     <string name="answer_good" maxLength="41">ಚೆನ್ನಾಗಿ ಉತ್ತರಿಸಿ</string>
     <string name="answer_easy" maxLength="41">ಸುಲಭವಾಗಿ ಉತ್ತರಿಸಿ</string>
-    <string name="gesture_play" maxLength="41">ಪ್ಲೇ ಮೀಡಿಯಾ</string>
     <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">ಕೆಂಪು ಧ್ವಜವನ್ನು ಟಾಗಲ್ ಮಾಡಿ</string>
     <string name="gesture_flag_orange" maxLength="41">ಕಿತ್ತಳೆ ಧ್ವಜವನ್ನು ಟಾಗಲ್ ಮಾಡಿ</string>

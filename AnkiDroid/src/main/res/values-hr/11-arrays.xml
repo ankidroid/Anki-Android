@@ -83,7 +83,6 @@
     <string name="answer_hard" maxLength="41">Teško</string>
     <string name="answer_good" maxLength="41">Dobro</string>
     <string name="answer_easy" maxLength="41">Lagano</string>
-    <string name="gesture_play" maxLength="41">Reproduciraj medij</string>
     <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Toggle Red Flag</string>
     <string name="gesture_flag_orange" maxLength="41">Toggle Orange Flag</string>

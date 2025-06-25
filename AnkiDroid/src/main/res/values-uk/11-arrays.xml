@@ -83,7 +83,6 @@
     <string name="answer_hard" maxLength="41">Відповідь: важко</string>
     <string name="answer_good" maxLength="41">Відповідь: добре</string>
     <string name="answer_easy" maxLength="41">Відповідь: легко</string>
-    <string name="gesture_play" maxLength="41">Відтворити медіа</string>
     <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Переключити червоний прапорець</string>
     <string name="gesture_flag_orange" maxLength="41">Переключити помаранчевий прапорець</string>

@@ -83,7 +83,6 @@
     <string name="answer_hard" maxLength="41">कठोर उत्तर द्या</string>
     <string name="answer_good" maxLength="41">छान उत्तर द्या</string>
     <string name="answer_easy" maxLength="41">सहज उत्तर द्या</string>
-    <string name="gesture_play" maxLength="41">मीडिया प्ले करा</string>
     <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">लाल ध्वज टॉगल करा</string>
     <string name="gesture_flag_orange" maxLength="41">ऑरेंज ध्वज टॉगल करा</string>

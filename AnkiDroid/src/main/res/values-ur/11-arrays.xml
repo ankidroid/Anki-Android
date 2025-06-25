@@ -83,7 +83,6 @@
     <string name="answer_hard" maxLength="41">سخت جواب دیں</string>
     <string name="answer_good" maxLength="41">اچھا جواب دیں</string>
     <string name="answer_easy" maxLength="41">آسان جواب دیں</string>
-    <string name="gesture_play" maxLength="41">میڈیا چلائیں۔</string>
     <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">سرخ پرچم ٹوگل کریں۔</string>
     <string name="gesture_flag_orange" maxLength="41">اورنج فلیگ ٹوگل کریں</string>

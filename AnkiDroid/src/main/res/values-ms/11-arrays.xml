@@ -83,7 +83,6 @@
     <string name="answer_hard" maxLength="41">Jawab susah</string>
     <string name="answer_good" maxLength="41">Jawab baik</string>
     <string name="answer_easy" maxLength="41">Jawab Senang</string>
-    <string name="gesture_play" maxLength="41">Main media</string>
     <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Togel Tanda Merah</string>
     <string name="gesture_flag_orange" maxLength="41">Togel Tanda Jingga</string>
