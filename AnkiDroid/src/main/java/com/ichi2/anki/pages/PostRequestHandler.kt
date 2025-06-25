@@ -121,6 +121,13 @@ val uiMethods =
                 }
             }
         },
+        "i18nResources" to { bytes ->
+            lifecycleScope.async {
+                withContext(Dispatchers.IO) {
+                    CollectionManager.getBackend().i18nResourcesRaw(bytes)
+                }
+            }
+        },
         "importCsv" to { bytes -> lifecycleScope.async { importCsvRaw(bytes) } },
         "importAnkiPackage" to { bytes -> lifecycleScope.async { importAnkiPackageUndoable(bytes) } },
         "addImageOcclusionNote" to { bytes ->
