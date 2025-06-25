@@ -50,7 +50,10 @@ import com.ichi2.libanki.backend.BackendUtils.toJsonBytes
 import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.append
-import com.ichi2.utils.len
+import com.ichi2.libanki.utils.index
+import com.ichi2.libanki.utils.insert
+import com.ichi2.libanki.utils.len
+import com.ichi2.libanki.utils.remove
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import org.intellij.lang.annotations.Language

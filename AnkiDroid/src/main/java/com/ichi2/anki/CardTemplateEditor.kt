@@ -102,6 +102,7 @@ import com.ichi2.libanki.getStockNotetype
 import com.ichi2.libanki.getStockNotetypeKinds
 import com.ichi2.libanki.restoreNotetypeToStock
 import com.ichi2.libanki.undoableOp
+import com.ichi2.libanki.utils.append
 import com.ichi2.themes.Themes
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.copyToClipboard

@@ -16,8 +16,8 @@
 
 package com.ichi2.libanki
 
+import com.ichi2.anki.common.json.JSONObjectHolder
 import com.ichi2.anki.utils.ext.getStringOrNull
-import com.ichi2.utils.JSONObjectHolder
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 

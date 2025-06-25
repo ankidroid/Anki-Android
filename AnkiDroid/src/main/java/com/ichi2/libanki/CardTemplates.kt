@@ -16,8 +16,8 @@
 
 package com.ichi2.libanki
 
+import com.ichi2.anki.common.json.JSONContainer
 import com.ichi2.libanki.utils.NotInLibAnki
-import com.ichi2.utils.JSONContainer
 import org.json.JSONArray
 import org.json.JSONObject
 
