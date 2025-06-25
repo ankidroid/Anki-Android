@@ -83,7 +83,6 @@
     <string name="answer_hard" maxLength="41">Moeilijk antwoord</string>
     <string name="answer_good" maxLength="41">Goed antwoord</string>
     <string name="answer_easy" maxLength="41">Gemakkelijk antwoord</string>
-    <string name="gesture_play" maxLength="41">Media afspelen</string>
     <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Rode vlag in-/uitschakelen</string>
     <string name="gesture_flag_orange" maxLength="41">Oranje vlag in-/uitschakelen</string>

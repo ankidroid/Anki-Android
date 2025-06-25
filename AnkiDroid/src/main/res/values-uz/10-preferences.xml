@@ -119,8 +119,8 @@
     <string name="gestures_shake" maxLength="41">Qurilmani silkitish</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menyusi</string>
     <string name="card_browser_enable_external_context_menu_summary">“%s” kontekst menyusini ilova miqyosda yoqadi</string>
-    <string name="double_scrolling_gap" maxLength="41">Double scrolling</string>
-    <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
+    <string name="double_scrolling_gap" maxLength="41">Tez aylantirish</string>
+    <string name="double_scrolling_gap_summ">Agar siz eReader bilan aylanma masofani ikki baravar oshirishni istasangiz, buni yoqing</string>
     <string name="swipe_sensitivity" maxLength="41">Surish sezgirligi</string>
     <string name="tts" maxLength="41">Nutq sintezatori</string>
     <string name="tts_summ">Agar ovoz fayli kiritilmagan boʻlsa, savol va javobni oʻqib beradi</string>
@@ -131,12 +131,12 @@
     <string name="automatic_sync_choice" maxLength="41">Avtomatik sinxronizatsiya</string>
     <string name="automatic_sync_choice_summ">Agar oxirgi sinxronlash 10 daqiqadan oldinroq amalga oshirilgan boʻlsa, ilovani ishga tushirish/chiqish vaqtida avtomatik sinxronlash.</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">Har doim</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_only_unmetered">Faqat cheklanmagan ulanishlarda</string>
     <string name="sync_media_never">Hech qachon</string>
     <string name="sync_status_badge" maxLength="41">Sinxronizatsiya holatini koʻrsatish</string>
     <string name="sync_status_badge_summ">Oʻzgarishlarni yuklash mumkin boʻlganda sinxronlash belgisini oʻzgartirish</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="metered_sync_title" maxLength="41">Tarifli ulanishlarda sinx. ruxsat berish</string>
+    <string name="metered_sync_summary">Agar oʻchirilgan boʻlsa, tarifli ulanishda sinxronlashga harakat qilsangiz, siz ogohlantirilasiz</string>
     <string name="backup_limits_frequency">Chastota</string>
     <string name="backup_limits_lifetime">Saqlash davri</string>
     <string name="app_theme" maxLength="41">Mavzu</string>
@@ -159,8 +159,8 @@
     <string name="disable_extended_text_ui" maxLength="41">Yagona maydon tahrirlash rejimini oʻchir</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Albom (gorizontal) rejimida \'Boʻshliqni toʻldirish\' kontekst menyusini yoqish</string>
-    <string name="vertical_centering" maxLength="41">Center align</string>
-    <string name="vertical_centering_summ">Center the content of cards vertically</string>
+    <string name="vertical_centering" maxLength="41">Markazga tekislash</string>
+    <string name="vertical_centering_summ">Kartalar tarkibini vertikal ravishda markazga tekislash</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Ikki marta bosish oraligʻi (millisoniya)</string>
     <string name="pref_double_tap_time_interval_summary">Agar bu vaqt oʻtmagan boʻlsa, javob tugmasini ikkinchi marta bosish eʼtiborga olinmaydi. Bu tasodifiy ikki marta bosishni oldini oladi</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Javob koʻrsatish uchun uzoq bosish vaqti</string>
@@ -176,7 +176,7 @@
     <string name="show_eta" maxLength="41">Qolgan vaqtni koʻrsatish</string>
     <string name="show_eta_summ">Qolgan vaqtni koʻrsatish</string>
     <string name="use_current" maxLength="41">Yangi kartalar ucun dasta</string>
-    <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
+    <string name="learn_cutoff" maxLength="41">Oldindan oʻrganish chegarasi</string>
     <string name="time_limit" maxLength="41">Vaqt chegarasi</string>
     <string name="day_offset_with_description" maxLength="41">Keyingi kun boshlanishi</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
@@ -184,7 +184,7 @@
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">Yarim tundan %d soatdan soʻng</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Ekran yoniq qolsin</string>
-    <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
+    <string name="pref_keep_screen_on_summ">Ekran taym-autini oʻchirish</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid APIʼni yoqish</string>
     <string name="enable_api_summary">Boshqa ilovalarga AnkiDroidʼga ulanishib sizning aralashuvingizsiz maʼlumotlarni oʻqish/yozishga ruxsat berish</string>
     <string name="custom_buttons" maxLength="41">Ilova paneli tugmalari</string>
@@ -220,7 +220,7 @@
         <a href="%s">Batafsil maʼlumot</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Sinxronizatsiya URLʼi</string>
-    <string name="custom_sync_certificate_title" maxLength="41">Custom root certificate (PEM)</string>
+    <string name="custom_sync_certificate_title" maxLength="41">Moslashtirilgan root sertifikati (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Klaviatura</string>
     <string name="bluetooth">Bluetooth</string>
@@ -238,19 +238,19 @@
     <string name="deck_conf_cram_filter" maxLength="41">Filtr</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Qidirish</string>
     <string name="deck_conf_cram_limit" maxLength="41">Kartalar soni</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
+    <string name="deck_conf_cram_order" maxLength="41">Karta tanlash usuli</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Qayta rejalashtirish</string>
     <string name="deck_conf_cram_reschedule_summ">Ushbu dastadagi javoblarim asosida kartalarni qayta rejalashtirish</string>
     <string name="deck_conf_cram_filter_2_check">Ikkinchi filtrni yoqish</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Bosqichlarni moslashtirish</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Kechikishni koʻrish</string>
+    <string name="deck_conf_cram_preview_delays_summ">Kechikishlar soniyalarda. 0 kartani asl dastaga qaytaradi.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroidʼni yaxshilashga yordamlashing!</string>
     <string name="analytics_title" maxLength="41">Funksiyalarni ishlatishimni ulashish</string>
     <string name="analytics_summ">Dasturchilarga odamlar qaysi funksiyalardan foydalanayotganligini koʻrishga yordam berish orqali AnkiDroidʼga hissa qoʻshishingiz mumkin</string>
-    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Yangi qatorlarni HTML bilan almashtirish</string>
+    <string name="note_editor_replace_newlines_summ">Qayd muharririda &lt;br&gt; belgilari kartani tahrirlayotganda yangi qatorlarga oʻgiriladi.</string>
     <string name="type_in_answer_focus" maxLength="41">‘Javobni kiritish’ maydoniga oʻtish</string>
     <string name="type_in_answer_focus_summ">Oʻrganish ekranida ‘javobni kiritish’ maydoniga avtomatik tarzda oʻtish</string>
     <!-- About -->

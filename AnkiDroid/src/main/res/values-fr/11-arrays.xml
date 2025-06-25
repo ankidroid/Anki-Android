@@ -83,7 +83,6 @@
     <string name="answer_hard" maxLength="41">Réponse difficile</string>
     <string name="answer_good" maxLength="41">Bonne réponse</string>
     <string name="answer_easy" maxLength="41">Réponse facile</string>
-    <string name="gesture_play" maxLength="41">Lire le média</string>
     <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Activer/désactiver la balise rouge</string>
     <string name="gesture_flag_orange" maxLength="41">Activer/désactiver la balise orange</string>

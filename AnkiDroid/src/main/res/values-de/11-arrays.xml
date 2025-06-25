@@ -83,7 +83,6 @@
     <string name="answer_hard" maxLength="41">Antwort: schwer</string>
     <string name="answer_good" maxLength="41">Antwort: gut</string>
     <string name="answer_easy" maxLength="41">Antwort: einfach</string>
-    <string name="gesture_play" maxLength="41">Medien abspielen</string>
     <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Rote Flagge setzen/entfernen</string>
     <string name="gesture_flag_orange" maxLength="41">Orange Flagge setzen/entfernen</string>

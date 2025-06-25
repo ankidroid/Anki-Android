@@ -83,7 +83,6 @@
     <string name="answer_hard" maxLength="41">Risposta difìtzile</string>
     <string name="answer_good" maxLength="41">Risposta bona</string>
     <string name="answer_easy" maxLength="41">Risposta fàtzile</string>
-    <string name="gesture_play" maxLength="41">Riprodui unu mèdiu</string>
     <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Allughe/istuda sa bandera ruja</string>
     <string name="gesture_flag_orange" maxLength="41">Allughe/istuda sa bandera arantzu</string>

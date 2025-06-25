@@ -83,7 +83,6 @@
     <string name="answer_hard" maxLength="41">Svara svår</string>
     <string name="answer_good" maxLength="41">Svara bra</string>
     <string name="answer_easy" maxLength="41">Svara lätt</string>
-    <string name="gesture_play" maxLength="41">Spela upp media</string>
     <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Växla Röd flagga</string>
     <string name="gesture_flag_orange" maxLength="41">Växla Orange flagga</string>

@@ -64,7 +64,7 @@
     <string name="save_whiteboard" maxLength="28">Oq taxtani saqlash</string>
     <string name="enable_stylus" maxLength="28">Qalam rejimini yoqish</string>
     <string name="disable_stylus">Qalam rejimini oʻchirish</string>
-    <string name="enable_whiteboard" maxLength="28">Doskani yoqish</string>
+    <string name="enable_whiteboard" maxLength="28">Oq taxtani yoqish</string>
     <string name="disable_whiteboard">Oq taxtani oʻchirish</string>
     <string name="show_whiteboard">Oq taxtani koʻrsatish</string>
     <string name="enable_eraser" maxLength="28">Oʻchirgʻichni yoqish</string>
@@ -110,13 +110,13 @@
     <!-- Timebox -->
     <string name="timebox_reached_title">Oʻrganish muddati tugadi</string>
     <plurals name="timebox_reached">
-        <item quantity="one">%2$s dan %1$d ta karta o\'rganildi</item>
-        <item quantity="other">%2$s dan %1$d ta kartalar o\'rganildi</item>
+        <item quantity="one">%2$sda %1$d ta karta oʻrganildi</item>
+        <item quantity="other">%2$sda %1$d ta karta oʻrganildi</item>
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
-        <item quantity="one">%1$d daqiqada</item>
-        <item quantity="other">%1$d daqiqada</item>
+        <item quantity="one">%1$d daqiqa</item>
+        <item quantity="other">%1$d daqiqa</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid kartasi</string>
     <string name="note_editor_copy_note" maxLength="28">Qayddan nusxa olish</string>
@@ -177,7 +177,7 @@
     <string name="reminder_title">Bugun oʻrganishni unutmang!</string>
     <plurals name="reminder_text">
         <item quantity="one">%1$s dan %2$d ta kartani takrorlashingiz kerak</item>
-        <item quantity="other">%1$s dan %2$d ta kartalarni takrorlashingiz kerak</item>
+        <item quantity="other">%1$s dan %2$d ta kartani takrorlashingiz kerak</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkg faylni ulashishda xatolik yuz berdi</string>
@@ -272,8 +272,8 @@
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Karta koʻmildi.</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d karta to\'xtatilgan</item>
-        <item quantity="other">%d kartalar to\'xtatilgan</item>
+        <item quantity="one">%d ta karta toʻxtatildi</item>
+        <item quantity="other">%d ta karta toʻxtatildi</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">%s maydonini yopishqoq qilish</string>

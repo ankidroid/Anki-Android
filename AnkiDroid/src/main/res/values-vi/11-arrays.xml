@@ -83,7 +83,6 @@
     <string name="answer_hard" maxLength="41">Trả lời khó</string>
     <string name="answer_good" maxLength="41">Trả lời tốt</string>
     <string name="answer_easy" maxLength="41">Trả lời dễ</string>
-    <string name="gesture_play" maxLength="41">Phát file đa phương tiện</string>
     <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Chuyển đổi cờ đỏ</string>
     <string name="gesture_flag_orange" maxLength="41">Chuyển đổi cờ màu cam</string>

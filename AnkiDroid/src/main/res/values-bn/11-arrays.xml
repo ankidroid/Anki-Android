@@ -83,7 +83,6 @@
     <string name="answer_hard" maxLength="41">কঠিন উত্তর দাও</string>
     <string name="answer_good" maxLength="41">আনসার ভালো</string>
     <string name="answer_easy" maxLength="41">সহজ উত্তর দিন</string>
-    <string name="gesture_play" maxLength="41">মিডিয়া প্লে করুন</string>
     <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">লাল পতাকা টগল করুন</string>
     <string name="gesture_flag_orange" maxLength="41">কমলা পতাকা টগল করুন</string>

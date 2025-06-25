@@ -83,7 +83,6 @@
     <string name="answer_hard" maxLength="41">Resposta difícil</string>
     <string name="answer_good" maxLength="41">Resposta correcte</string>
     <string name="answer_easy" maxLength="41">Resposta fàcil</string>
-    <string name="gesture_play" maxLength="41">Reprodueix multimèdia</string>
     <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Canviar bandera vermella</string>
     <string name="gesture_flag_orange" maxLength="41">Canviar bandera taronja</string>

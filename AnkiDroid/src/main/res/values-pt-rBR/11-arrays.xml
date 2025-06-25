@@ -83,7 +83,6 @@
     <string name="answer_hard" maxLength="41">Responder difícil</string>
     <string name="answer_good" maxLength="41">Responder bom</string>
     <string name="answer_easy" maxLength="41">Responder fácil</string>
-    <string name="gesture_play" maxLength="41">Reproduzir mídia</string>
     <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
     <string name="gesture_flag_red" maxLength="41">Alternar bandeira vermelha</string>
     <string name="gesture_flag_orange" maxLength="41">Alternar bandeira laranja</string>
