@@ -161,10 +161,6 @@ open class AnkiActivity :
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             window.navigationBarColor = getColor(R.color.transparent)
         }
-        if (savedInstanceState != null) {
-            val restoredValue = savedInstanceState.getString(KEY_EXPORT_FILE_NAME) ?: return
-            fileExportPath = restoredValue
-        }
         supportFragmentManager.setFragmentResultListener(REQUEST_EXPORT_SAVE, this) { _, bundle ->
             saveExportFile(
                 bundle.getString(KEY_EXPORT_PATH) ?: error("Missing required exportPath!"),
@@ -174,6 +170,10 @@ open class AnkiActivity :
             shareFile(
                 bundle.getString(KEY_EXPORT_PATH) ?: error("Missing required exportPath!"),
             )
+        }
+        if (savedInstanceState != null) {
+            val restoredValue = savedInstanceState.getString(KEY_EXPORT_FILE_NAME) ?: return
+            fileExportPath = restoredValue
         }
     }
 
