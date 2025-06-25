@@ -280,7 +280,7 @@
     <string name="user_action_7" maxLength="28">ব্যবহারকারীর ক্রিয়া 7</string>
     <string name="user_action_8" maxLength="28">ব্যবহারকারীর কর্ম 8</string>
     <string name="user_action_9" maxLength="28">ব্যবহারকারীর ক্রিয়া 9</string>
-    <string name="toggle_auto_advance" maxLength="41">স্বয়ংক্রিয় অগ্রিম টগল করুন</string>
+    <string name="toggle_auto_advance" maxLength="28">স্বয়ংক্রিয় অগ্রিম টগল করুন</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">কার্ডের মুখ নির্বাচন করুন</string>
     <string name="card_side_question">প্রশ্ন</string>

@@ -279,7 +279,7 @@
     <string name="user_action_7" maxLength="28">Käyttäjän toimi 7</string>
     <string name="user_action_8" maxLength="28">Käyttäjän toimi 8</string>
     <string name="user_action_9" maxLength="28">Käyttäjän toimi 9</string>
-    <string name="toggle_auto_advance" maxLength="41">Automaattinen eteneminen päälle/pois</string>
+    <string name="toggle_auto_advance" maxLength="28">Automaattinen eteneminen päälle/pois</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Valitse kortin puoli</string>
     <string name="card_side_question">Kysymys</string>

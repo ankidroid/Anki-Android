@@ -65,13 +65,13 @@
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
     <string name="select_decks_title" comment="Title for Deck Selection Dialog">Dastalarni tanlash</string>
     <string name="select_deck_title" comment="Title for Deck Selection Dialog">Dasta tanlash</string>
-    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Select decks to display in the widget. Select decks with the + icon.</string>
+    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Vidjetda koʻrsatish uchun dastalarni tanlang. Dastalarni + tugmasi orqali tanlang.</string>
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Dasta oʻchirildi</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">Bu dasta allaqachon tanlangan</string>
     <plurals name="deck_limit_reached">
         <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d ta dastagacha tanlashingiz mumkin</item>
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d ta dastagacha tanlashingiz mumkin</item>
     </plurals>
-    <string name="empty_widget_state" comment="To denote the widget is empty">Missing deck. Tap to reconfigure.</string>
-    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Collection is empty, use app to add decks then reconfigure</string>
+    <string name="empty_widget_state" comment="To denote the widget is empty">Dasta mavjud emas. Sozlash uchun bosing.</string>
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Toʻplam boʻsh, dastalarni qoʻshish uchun ilovani ishlating va qayta sozlang</string>
 </resources>

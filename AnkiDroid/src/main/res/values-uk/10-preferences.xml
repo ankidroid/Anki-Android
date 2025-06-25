@@ -284,7 +284,7 @@
     <string name="user_action_7" maxLength="28">Дія 7</string>
     <string name="user_action_8" maxLength="28">Дія 8</string>
     <string name="user_action_9" maxLength="28">Дія 9</string>
-    <string name="toggle_auto_advance" maxLength="41">Ввімкнути/вимкнути автоматичний перехід</string>
+    <string name="toggle_auto_advance" maxLength="28">Ввімкнути/вимкнути автоматичний перехід</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Вибрати сторону картки</string>
     <string name="card_side_question">Питання</string>

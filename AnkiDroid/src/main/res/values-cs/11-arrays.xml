@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">Odpovědět dobré</string>
     <string name="answer_easy" maxLength="41">Odpovědět snadné</string>
     <string name="gesture_play" maxLength="41">Přehrát multimédia</string>
-    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
+    <string name="gesture_abort_learning" maxLength="41">Zavřít obrazovku učení</string>
     <string name="gesture_flag_red" maxLength="41">Přepnout červený příznak</string>
     <string name="gesture_flag_orange" maxLength="41">Přepnout oranžový příznak</string>
     <string name="gesture_flag_green" maxLength="41">Přepnout zelený příznak</string>

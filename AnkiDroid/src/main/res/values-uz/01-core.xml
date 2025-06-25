@@ -46,7 +46,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks" maxLength="28" comment="Open the Deck Picker">Dastalar</string>
-    <string name="card_browser" maxLength="28" comment="Title of the Card Browser, and button to open it.">Karta qidiruvchi</string>
+    <string name="card_browser" maxLength="28" comment="Title of the Card Browser, and button to open it.">Karta brauzeri</string>
     <string name="statistics" maxLength="28" comment="Title of the Statistics page and button to open it.">Statistika</string>
     <string name="settings" maxLength="28" comment="Title of the Settings page, and button to open it.">Sozlamalar</string>
     <string name="help" maxLength="28" comment="Title of the help menu and button to open it.">Yordam</string>
@@ -150,8 +150,8 @@
     <string name="card_template_editor_front">Old shablon</string>
     <string name="card_template_editor_back">Orqa shablon</string>
     <string name="card_template_editor_styling" maxLength="28">Ko\'rinish</string>
-    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Karta Qidiruvchisi Ko\'rinishi</string>
-    <string name="card_template_editor_deck_override" maxLength="28">Hilol Nashr</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Karta brauzeri koʻrinishi</string>
+    <string name="card_template_editor_deck_override" maxLength="28">Dastani oʻzgartirish</string>
     <string name="card_template_editor_insert_field" maxLength="28">Kiritish maydoni</string>
     <string name="card_template_editor_select_field">Maydonni tanlash</string>
     <string name="card_template_editor_cant_delete">Kamida bir turdagi karta turi kerak</string>
@@ -173,7 +173,7 @@
     <string name="read_write_permission_label">AnkiDroid maʼlumotlar bazasidan oʼqish va yozish</string>
     <string name="read_write_permission_description">mavjud qaydlarga, kartalarga, qayd turlariga va dastalarga, shuningdek, yangilarini yaratishga ruxsat</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Karat qidiruvchi</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Karat brauzeri</string>
     <string name="context_menu_anki_card_label">Anki Karta</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Toʻplamlarni birlashtirib boʻlmadi.\n Qaysi toʻplamni qoldirmoqchisiz?</string>
@@ -186,11 +186,11 @@
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">%s fayliga yozib yoki yaratib boʻlmadi</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Toʻplamni ochib boʻlmadi</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Play Store siyosatidagi oʻzgarishlar tufayli AnkiDroid oʻchirib tashlanganidan keyin toʻplamingizga kira olmaymiz\n\nMaʼlumotlaringiz bus-butun va qayta tiklash mumkin. \n%s manzilida joylashgan\n\nQayta tiklash uchun quyidagi variantlardan birini tanlang:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Ilova nofaolligi sababli Android AnkiDroidʼni %1$s ruxsatini olib tashladi.\n\nMaʼlumotlaringiz bus-butun va qayta tiklash mumkin. \n%2$s manzilida joylashgan\n\nQayta tiklash uchun quyidagi variantlardan birini tanlang:</string>
     <string name="restore_data_from_ankiweb">AnkiWebʼdan tiklash (tavsiya etiladi)</string>
-    <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
-    <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
+    <string name="install_non_play_store_ankidroid_recommended">Jildga ruxsatni tiklash (tavsiya etiladi)</string>
+    <string name="install_non_play_store_ankidroid">Jildga ruxsatni tiklash (kengaytirilgan)</string>
     <string name="restore_data_from_backup">.colpkg zaxira nusxasidan qayta tiklash (kengaytirilgan)</string>
     <string name="create_new_collection">Yangi toʻplam yaratish</string>
     <string name="new_unsafe_collection">AnkiDroidʼni oʻchirib tashlasangiz, yangi toʻplam telefoningizdan oʻchiriladi</string>
@@ -199,7 +199,7 @@
     <string name="storage_access_title">Saqlash xotirasiga ruxsat</string>
     <string name="storage_access_summary">Toʻplamingizni xavfsiz joyda saqlaydi. Agar ilova oʻchirilib tashlansa, toʻplamingiz oʻchirilmaydi</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">Barcha fayllarga ruxsat</string>
-    <string name="image_occlusion">Image Occlusion</string>
+    <string name="image_occlusion">Rasmni qisman toʻsish</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Hisobni oʻchirish</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Karta yaratish</string>

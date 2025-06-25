@@ -279,7 +279,7 @@
     <string name="user_action_7" maxLength="28">ഉപയോക്തൃ പ്രവർത്തനം 7</string>
     <string name="user_action_8" maxLength="28">ഉപയോക്തൃ പ്രവർത്തനം 8</string>
     <string name="user_action_9" maxLength="28">ഉപയോക്തൃ പ്രവർത്തനം 9</string>
-    <string name="toggle_auto_advance" maxLength="41">ഓട്ടോ അഡ്വാൻസ് ടോഗിൾ ചെയ്യുക</string>
+    <string name="toggle_auto_advance" maxLength="28">ഓട്ടോ അഡ്വാൻസ് ടോഗിൾ ചെയ്യുക</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">കാർഡ് വശം തിരഞ്ഞെടുക്കുക</string>
     <string name="card_side_question">ചോദ്യം</string>

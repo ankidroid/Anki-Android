@@ -282,7 +282,7 @@
     <string name="user_action_7" maxLength="28">7. lietotāja darbība</string>
     <string name="user_action_8" maxLength="28">8. lietotāja darbība</string>
     <string name="user_action_9" maxLength="28">9. lietotāja darbība</string>
-    <string name="toggle_auto_advance" maxLength="41">Pārslēgt automātisko virzīšanos</string>
+    <string name="toggle_auto_advance" maxLength="28">Pārslēgt automātisko virzīšanos</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Atlasīt kartītes pusi</string>
     <string name="card_side_question">Jautājums</string>

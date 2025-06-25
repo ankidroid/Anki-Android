@@ -71,7 +71,7 @@
     <string name="disable_eraser" maxLength="28">消しゴム機能をオフ</string>
     <string name="hide_whiteboard" maxLength="28">ホワイトボードを隠す</string>
     <string name="clear_whiteboard" maxLength="28">ホワイトボードの内容を消去</string>
-    <string name="replay_media" maxLength="28">Replay media</string>
+    <string name="replay_media" maxLength="28">音声・動画を再生</string>
     <string name="leech_suspend_notification">このカードに \"leech\"  (苦戦、忘却多発) というタグを付け、学習を休止しました</string>
     <string name="leech_notification">このカードに \"leech\" (苦戦、忘却多発) というタグを付けました</string>
     <string name="webview_crash_unknown">原因不明のエラー</string>
@@ -349,5 +349,5 @@
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">ユーザーアクション %s はこのノートタイプに設定されていません。設定してください</string>
     <string name="directory_inaccessible_info">アクセスを回復する方法の詳細を %s で確認するか、設定画面に移動してコレクションフォルダを更新してください。</string>
     <!-- Scheduler Upgrade Required Dialog title-->
-    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">スケジューラをアップグレードする必要があります</string>
 </resources>

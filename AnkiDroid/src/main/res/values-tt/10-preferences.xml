@@ -278,7 +278,7 @@
     <string name="user_action_7" maxLength="28">Кулланучының гамәле 7</string>
     <string name="user_action_8" maxLength="28">Кулланучының гамәле 8</string>
     <string name="user_action_9" maxLength="28">Кулланучының гамәле 9</string>
-    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
+    <string name="toggle_auto_advance" maxLength="28">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Select card side</string>
     <string name="card_side_question">Сорау</string>
