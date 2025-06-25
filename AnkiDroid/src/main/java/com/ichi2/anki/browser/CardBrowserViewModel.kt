@@ -1101,6 +1101,12 @@ class CardBrowserViewModel(
         updateActiveColumns(replacements, cardsOrNotes)
     }
 
+    // TODO: Do a selective update, and accept a noteId as parameter
+    fun onCurrentNoteEdited() {
+        Timber.i("Reloading search due to note edit")
+        launchSearchForCards()
+    }
+
     companion object {
         fun createCardSelector(viewModel: CardBrowserViewModel) =
             { cardId: CardId, fragmented: Boolean ->
