@@ -373,6 +373,8 @@ fun AlertDialog.getInputField() = getInputTextLayout().editText!!
 /** @see AlertDialog.getButton */
 val AlertDialog.positiveButton: Button
     get() = getButton(DialogInterface.BUTTON_POSITIVE)
+val AlertDialog.negativeButton: Button
+    get() = getButton(DialogInterface.BUTTON_NEGATIVE)
 
 /**
  * Extension function for AlertDialog.Builder to set a list of items.
