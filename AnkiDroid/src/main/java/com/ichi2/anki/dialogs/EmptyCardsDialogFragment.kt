@@ -60,6 +60,7 @@ import com.ichi2.anki.withProgress
 import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.emptyCids
 import com.ichi2.utils.message
+import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
@@ -152,6 +153,7 @@ class EmptyCardsDialogFragment : DialogFragment() {
                                 keepNotesWithNoValidCards?.isVisible = false
                                 (dialog as? AlertDialog)?.positiveButton?.text =
                                     getString(R.string.dialog_ok)
+                                (dialog as? AlertDialog)?.negativeButton?.visibility = View.GONE
                             } else {
                                 reportScrollView?.updateViewHeight()
                                 reportView?.setText(
