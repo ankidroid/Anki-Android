@@ -200,30 +200,32 @@ open class CardBrowser :
 
     private var onEditCardActivityResult =
         registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
-            Timber.d("onEditCardActivityResult: resultCode=%d", result.resultCode)
+            Timber.i("onEditCardActivityResult: resultCode=%d", result.resultCode)
             if (result.resultCode == DeckPicker.RESULT_DB_ERROR) {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
+                return@registerForActivityResult
             }
-            if (result.resultCode != RESULT_CANCELED) {
-                Timber.i("CardBrowser:: CardBrowser: Saving card...")
-                saveEditedCard()
-            }
-            val data = result.data
-            if (data != null &&
-                (
-                    data.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) ||
-                        data.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false)
-                )
-            ) {
-                Timber.d("Reloading Card Browser due to activity result")
-                // if reloadRequired or noteChanged flag was sent from note editor then reload card list
-                forceRefreshSearch()
-                // in use by reviewer?
-                if (reviewerCardId == currentCardId) {
-                    reloadRequired = true
+
+            // handle template edits
+
+            // in use by reviewer?
+            result.data?.let {
+                if (
+                    it.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) ||
+                    it.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false)
+                ) {
+                    if (reviewerCardId == currentCardId) {
+                        reloadRequired = true
+                    }
                 }
             }
+
             invalidateOptionsMenu() // maybe the availability of undo changed
+
+            // handle card edits
+            if (result.resultCode == RESULT_OK) {
+                viewModel.onCurrentNoteEdited()
+            }
         }
     private var onAddNoteActivityResult =
         registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
@@ -258,6 +260,8 @@ open class CardBrowser :
             invalidateOptionsMenu() // maybe the availability of undo changed
         }
     private lateinit var actionBarTitle: TextView
+
+    // TODO: Remove this and use `opChanges`
     private var reloadRequired = false
 
     @VisibleForTesting
@@ -1722,11 +1726,6 @@ open class CardBrowser :
         @Suppress("UNUSED_PARAMETER") cardIds: List<CardId>,
     ) {
         updateList()
-    }
-
-    private fun saveEditedCard() {
-        Timber.d("CardBrowser - saveEditedCard()")
-        updateCardsInList(listOf(viewModel.currentCardId))
     }
 
     private fun toggleSuspendCards() = launchCatchingTask { withProgress { viewModel.toggleSuspendCards().join() } }
