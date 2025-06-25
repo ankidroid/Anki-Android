@@ -1267,10 +1267,12 @@ open class DeckPicker :
     }
 
     private fun showMediaCheckDialog() {
+        Timber.i("showing media check dialog")
         AlertDialog.Builder(this).show {
             title(text = getString(R.string.check_media_title))
             message(text = getString(R.string.check_media_warning))
             positiveButton(R.string.dialog_ok) {
+                Timber.i("Starting media check")
                 startActivity(MediaCheckFragment.getIntent(this@DeckPicker))
             }
             negativeButton(R.string.dialog_cancel)

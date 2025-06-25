@@ -918,6 +918,7 @@ class NoteEditor :
         }
 
     private fun startCrop(imageUri: Uri) {
+        Timber.i("launching crop")
         val intent = ImageCropperLauncher.ImageUri(imageUri).getIntent(requireContext())
         cropImageLauncher.launch(intent)
     }

@@ -643,6 +643,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
     private fun requestCrop() {
         val imageUri = viewModel.currentMultimediaUri.value ?: return
+        Timber.i("launching crop")
         hasStartedImageSelection = true
         val intent =
             com.ichi2.imagecropper.ImageCropperLauncher

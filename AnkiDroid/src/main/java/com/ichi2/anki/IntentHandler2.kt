@@ -42,6 +42,7 @@ class IntentHandler2 : AbstractIntentHandler() {
             startActivity(NoteEditorLauncher.AddNote().toIntent(this))
             finish()
         } else {
+            Timber.i("Opening Note Editor from intent")
             val noteEditorIntent =
                 NoteEditorLauncher.PassArguments(intent.extras!!).toIntent(this, intent.action)
             noteEditorIntent.setDataAndType(intent.data, intent.type)
