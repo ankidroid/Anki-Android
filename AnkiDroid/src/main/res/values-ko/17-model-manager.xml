@@ -47,7 +47,7 @@
     <string name="model_browser_template">카드 편집하기</string>
     <!--Rename-->
     <string name="rename_model">노트 유형 이름 바꾸기</string>
-    <string name="rename_card_type">Rename card type</string>
+    <string name="rename_card_type">카드 유형 이름 바꾸기</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">키보드 언어 힌트를 %s로 설정하기</string>
     <!--Field Editing-->
@@ -63,11 +63,11 @@
     <string name="model_delete_warning">이 노트 유형을 삭제하시겠습니까?</string>
     <string name="field_delete_warning">이 필드를 삭제하시겠습니까?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Add: %1$s</string>
+    <string name="model_browser_add_add">추가: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">Clone: %1$s</string>
+    <string name="model_browser_add_clone">복제: %1$s</string>
     <!--Browser Appearance-->
-    <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
+    <string name="card_template_browser_appearance_summary">카드 브라우저에서 카드에 표시할 템플릿을 입력하세요.\n\n예를 들어, 앞면 템플릿이 다음과 같다면,\n\"The capital of {{Country}}\"\n카드 브라우저에는 다음과 같이 간략히 표시할 수 있습니다.\n\"Capital: {{Country}}\"</string>
     <string name="card_template_browser_appearance_question_format">문제 형식</string>
     <string name="card_template_browser_appearance_answer_format">답 형식</string>
     <string name="card_template_browser_appearance_restore_default_dialog">기본값을 복원하시겠습니까?</string>

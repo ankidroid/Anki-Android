@@ -10,9 +10,9 @@ Anki를 통해 컴퓨터로도, AnkiDroid를 통해 폰에서도 직접 카드�
 
 ★ 주요 특징:
 • 지원 플래시 카드: 텍스트, 이미지, 사운드, LaTex
-• spaced repetition (AI-optimized FSRS algorithm)
+• 간격 반복 시스템 (AI 기반 FSRS 알고리즘)
 • TTS (읽어주기) 기능
-• more than 10,000 premade decks
+• 10,000개 이상의 이미 만들어진 덱들
 • 학습 진도 위젯
 • 상세한 통계
 • AnkiWeb과 동기화

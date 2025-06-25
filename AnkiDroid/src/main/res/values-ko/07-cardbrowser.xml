@@ -85,7 +85,7 @@
         <item>난이도</item>
         <item>복습</item>
         <item>오답 횟수</item>
-        <item>By deck name</item>
+        <item>덱 이름으로</item>
     </string-array>
     <string name="chane_browser_column">Change column</string>
     <string name="no_columns_available">No columns available</string>

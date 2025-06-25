@@ -279,7 +279,7 @@
     <string name="user_action_7" maxLength="28">વપરાશકર્તા ક્રિયા 7</string>
     <string name="user_action_8" maxLength="28">વપરાશકર્તા ક્રિયા 8</string>
     <string name="user_action_9" maxLength="28">વપરાશકર્તા ક્રિયા 9</string>
-    <string name="toggle_auto_advance" maxLength="41">ઑટો એડવાન્સ ટૉગલ કરો</string>
+    <string name="toggle_auto_advance" maxLength="28">ઑટો એડવાન્સ ટૉગલ કરો</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">કાર્ડ બાજુ પસંદ કરો</string>
     <string name="card_side_question">પ્રશ્ન</string>

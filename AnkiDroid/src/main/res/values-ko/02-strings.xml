@@ -67,11 +67,11 @@
     <string name="enable_whiteboard" maxLength="28">화이트보드 활성화하기</string>
     <string name="disable_whiteboard">화이트보드 비활성화하기</string>
     <string name="show_whiteboard">화이트보드 표시하기</string>
-    <string name="enable_eraser" maxLength="28">Enable eraser</string>
-    <string name="disable_eraser" maxLength="28">Disable eraser</string>
+    <string name="enable_eraser" maxLength="28">지우개 활성화</string>
+    <string name="disable_eraser" maxLength="28">지우개 비활성화</string>
     <string name="hide_whiteboard" maxLength="28">화이트 보드 숨기기</string>
     <string name="clear_whiteboard" maxLength="28">화이트 보드 지우기</string>
-    <string name="replay_media" maxLength="28">Replay media</string>
+    <string name="replay_media" maxLength="28">미디어 다시 재생</string>
     <string name="leech_suspend_notification">카드에 leech 태그를 붙이고 비활성 시키기</string>
     <string name="leech_notification">카드에 leech 태그를 붙이기</string>
     <string name="webview_crash_unknown">알 수 없는 오류</string>
@@ -195,8 +195,8 @@ Context | Request Context    [1]</string>
     <string name="restore_default" maxLength="28">기본값 복원</string>
     <string name="reviewer_tts_cloze_spoken_replacement">공백</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
-    <string name="white_board_eraser_enabled">Eraser mode activated</string>
-    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string name="white_board_eraser_enabled">지우개 활성화 됨</string>
+    <string name="white_board_eraser_disabled">지우개 비활성화 됨</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">화이트보드 이미지 저장에 실패했습니다. %s</string>
     <string name="white_board_image_saved">%s에 화이트보드 이미지가 저장되었습니다.</string>
@@ -326,8 +326,8 @@ Context | Request Context    [1]</string>
         <item quantity="other">지금 보기된 카드 %d장</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">위치 변경</string>
-    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
-    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">다음</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">뒤로가기</string>
     <string name="start_recording">녹음</string>
     <string name="stop_recording">중지</string>
     <string name="play_recording">재생</string>
@@ -352,5 +352,5 @@ Context | Request Context    [1]</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">이 노트 유형에는 사용자 행동 %s이(가) 설정되어 있지 않습니다. 설정을 확인해 주세요.</string>
     <string name="directory_inaccessible_info">여기에서 액세스를 복원하는 방법에 대해 자세히 알아보세요 %s 또는 설정으로 이동하여 컬렉션 폴더를 업데이트하세요.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
-    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">스케줄러 업데이트가 필요합니다</string>
 </resources>

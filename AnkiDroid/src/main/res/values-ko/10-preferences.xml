@@ -67,7 +67,7 @@
     <string name="pref_cat_advanced" maxLength="41">고급 설정</string>
     <string name="pref_cat_workarounds" maxLength="41">차선책</string>
     <string name="pref_cat_plugins" maxLength="41">플러그인</string>
-    <string name="pref_cat_editing" maxLength="41">Editing</string>
+    <string name="pref_cat_editing" maxLength="41">편집</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">획 두께</string>
     <string name="use_input_tag" maxLength="41">카드에 정답 입력</string>
@@ -199,13 +199,13 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previews</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
+    <string name="pref_cat_reviewer" maxLength="41">학습 화면</string>
     <string name="show_deck_title" maxLength="41">덱 이름 표시</string>
     <string name="accessibility" maxLength="41">접근성</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">클립보드 이미지를 PNG로 붙여넣기</string>
     <string name="exit_via_double_tap_back" maxLength="41">뒤로가기 버튼 두번 눌러 돌아가기/나가기</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
+    <string name="exit_via_double_tap_back_summ">학습 화면이나 앱에서 실수로 나가는 것을 방지할 수 있습니다.</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">미디어 파일 허용하기</string>
     <string name="media_import_allow_all_files_summ">만약 안드로이드가 미디어파일을 인식하지 못한다면</string>
@@ -247,17 +247,17 @@
     <string name="analytics_title" maxLength="41">기능 사용 공유하기</string>
     <string name="analytics_summ">개발팀이 사람들이 어떤 기능을 사용하는지 볼 수 있도록 도와주어 AnkiDroid에 기여할 수 있습니다.</string>
     <string name="note_editor_replace_newlines" maxLength="41">HTML로 신규 라인 교체하기</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="note_editor_replace_newlines_summ">노트 편집기에서 카드를 편집할 때,  &lt;br&gt;를 줄바꿈으로 변환합니다.</string>
     <string name="type_in_answer_focus" maxLength="41">\'정답 입력\' 포커스</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
+    <string name="type_in_answer_focus_summ">\'정답 입력\' 필드에 자동으로 포커스합니다.</string>
     <!-- About -->
     <string name="open_changelog">업데이트 기록 열기</string>
     <string name="pref_cat_about_title" maxLength="41">정보</string>
     <string name="contributors_title">기여자들</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="about_contributors_description"><![CDATA[우리의 멋진 <a href=\"%1$s\">기여자</a>들입니다. 프로그래밍, 번역 기부와 <a href=\"%2$s\">그밖의 다양한 방법</a>으로 AnkiDroid를 도와주실 수 있습니다!]]></string>
     <string name="license">라이센스</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
+    <string name="license_description"><![CDATA[AnkiDroid는  <a href=\"%1$s\">GPL-3.0</a>과 <a href=\"%2$s\">AGPL-3.0</a> 라이선스 하에 배포됩니다. 소스코드는 <a href=\"%3$s\">GitHub</a>에서 확인할 수 있습니다.]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid 제3 자 라이브러리와 아이콘을 사용합니다. 각 항목은 오픈 소스 <a href=\"%1$s\">라이선스</a>를 따릅니다.]]></string>
     <string name="donate_description"><![CDATA[<a href=\"%1$s\">기부를</a> 통해 AnkiDroid 개발을 지원해주실 수 있습니다. 얼마가 되든 감사드립니다.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">제스쳐 추가하기</string>
@@ -266,7 +266,7 @@
     <string name="binding_add_axis">조이스틱/모션 컨트롤러 추가하기</string>
     <string name="axis_picker_move_joystick">조이스틱/모션 콘트롤러를 움직이십시오</string>
     <string name="user_actions" maxLength="41">사용자 행동</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
+    <string name="user_actions_summary" maxLength="41">학습 화면에서 자바스크립트 실행하기</string>
     <string name="user_action_1" maxLength="28">사용자 행동 1</string>
     <string name="user_action_2" maxLength="28">사용자 행동 2</string>
     <string name="user_action_3" maxLength="28">사용자 행동 3</string>
@@ -276,7 +276,7 @@
     <string name="user_action_7" maxLength="28">사용자 행동 7</string>
     <string name="user_action_8" maxLength="28">사용자 행동 8</string>
     <string name="user_action_9" maxLength="28">사용자 행동 9</string>
-    <string name="toggle_auto_advance" maxLength="41">자동 넘기기 켜기/끄기</string>
+    <string name="toggle_auto_advance" maxLength="28">자동 넘기기 켜기/끄기</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">카드 면 선택</string>
     <string name="card_side_question">문제</string>
@@ -289,31 +289,30 @@
     <string name="bindings_already_bound">\'%s\'에 이미 할당됨</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">실험적</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
+    <string name="readtext_deprecation_warn">AnkiDroid에 더 향상된 TTS(음성 합성) 기능이 도입되었습니다! 이제 다른 Anki 클라이언트와도 호환되며, 더 다양한 음성과 언어 재생 품질이 개선되었습니다.\n\n이 설정은 곧 제거될 예정이니, 가능한 빨리 앱을 업그레이드해 주세요.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">새로운 TTS 포맷을 위해 업데이트 해주세요.</string>
-    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
-    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
+    <string name="pref_fixed_port_title" maxLength="41">학습 화면 로컬 스토리지</string>
+    <string name="pref_fixed_port_summary">학습 화면에서 고정된 서버 포트를 사용하여 자바스크립트 로컬 스토리지를 활성화합니다.</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">개발자 옵션</string>
     <string name="dev_options_enabled_pref" maxLength="41">개발자 옵션 활성화하기</string>
     <string name="disable_dev_options">개발자 옵션 비활성화하기</string>
-    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
+    <string name="dev_options_warning">개발자 옵션을 켜기 전에 유의할 점이 있습니다. 이 옵션들은 앱을 고장내거나 카드 모음을 이상하게 만들 위험성이 있습니다.\n\n이 옵션들은 대부분의 유저에게는 사용할 필요가 없기 때문에 영어인 채로 번역되지 않았습니다.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
-        After backups are more than two days old,
-        AnkiDroid will start removing some of them to free up disk space.
-        <br><br>
-        Note that media files are not backed up.
-        To be safe, please periodically synchronize your collection, or back up exports of it.
-        <br><br>
-        You can restore from a backup and export your collection in the deck list menu.
-    ]]></string>
+    <string name="pref__backups_help__summary"><![CDATA[AnkiDroid는 주기적으로 컬렉션을 백업합니다.
+2일 이상 지난 백업은
+디스크 공간 확보를 위해 삭제되기 시작합니다.
+<br><br>
+주의: 미디어 파일은 백업되지 않습니다.
+안전하게 데이터를 보관하려면, 정기적으로 동기화 하거나 컬렉션을 내보내서 따로 백업해 주세요.
+<br><br>
+백업에서 복원하거나 컬렉션을 내보내고 싶다면, 덱 목록 화면의 메뉴를 이용하세요.]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">자동 백업 간격(분)</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">일간 백업 유지 기간</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">주간 백업 유지 기간</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">월간 백업 유지 기간</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
@@ -354,7 +353,7 @@
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">컬렉션 없음</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">오류</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">불러오는 중&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">계산 중&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">컬렉션이 없습니다</string>
     <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">시스템 바 숨기기</string>

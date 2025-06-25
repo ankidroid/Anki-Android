@@ -203,7 +203,7 @@
     <string name="thirdparty_apps_summary">Zobrazit seznam aplikací, které používají AnkiDroid API, jako jsou slovníky, nástroje</string>
     <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Opakování</string>
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Náhled</string>
-    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
+    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Přepnout pouze zadní stranu</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
     <string name="show_deck_title" maxLength="41">Zobrazit název balíčku</string>
@@ -273,7 +273,7 @@
     <string name="binding_add_axis">Přidat joystick / ovladač pohybu</string>
     <string name="axis_picker_move_joystick">Pohnout joystickem / ovladačem pohybu</string>
     <string name="user_actions" maxLength="41">Akce uživatele</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
+    <string name="user_actions_summary" maxLength="41">Spustit JavaScript z obrazovky učení</string>
     <string name="user_action_1" maxLength="28">Akce uživatele 1</string>
     <string name="user_action_2" maxLength="28">Akce uživatele 2</string>
     <string name="user_action_3" maxLength="28">Akce uživatele 3</string>
@@ -283,7 +283,7 @@
     <string name="user_action_7" maxLength="28">Akce uživatele 7</string>
     <string name="user_action_8" maxLength="28">Akce uživatele 8</string>
     <string name="user_action_9" maxLength="28">Akce uživatele 9</string>
-    <string name="toggle_auto_advance" maxLength="41">Přepnout automatický posun</string>
+    <string name="toggle_auto_advance" maxLength="28">Přepnout automatický posun</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Vybrat stranu karty</string>
     <string name="card_side_question">Otázka</string>
@@ -298,8 +298,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimentální</string>
     <string name="readtext_deprecation_warn">AnkiDroid zavedl lepší TTS mechanismus, který je kompatibilní s ostatními klienty Anki a obsahuje více hlasů a vylepšení přehrávání!\n\nPřejděte prosím co nejdříve na nové TTS, protože toto nastavení bude brzy odstraněno</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Přejděte prosím na nový formát převodu textu na řeč</string>
-    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
-    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage na obrazovce učení</string>
+    <string name="pref_fixed_port_summary">Povolí JavaScript localStorage pomocí fixního portu serveru na obrazovce učení</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Možnosti pro vývojáře</string>
     <string name="dev_options_enabled_pref" maxLength="41">Povolit možnosti pro vývojáře</string>

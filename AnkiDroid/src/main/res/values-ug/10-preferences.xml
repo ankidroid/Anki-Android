@@ -280,7 +280,7 @@
     <string name="user_action_7" maxLength="28">ئىشلەتكۈچىنىڭ 7-مەشغۇلاتى</string>
     <string name="user_action_8" maxLength="28">ئىشلەتكۈچىنىڭ 8-مەشغۇلاتى</string>
     <string name="user_action_9" maxLength="28">ئىشلەتكۈچىنىڭ 9-مەشغۇلاتى</string>
-    <string name="toggle_auto_advance" maxLength="41">ئۆزلۈكىدىن ئىلگىرىلەشنى ئالماشتۇرىدۇ</string>
+    <string name="toggle_auto_advance" maxLength="28">ئۆزلۈكىدىن ئىلگىرىلەشنى ئالماشتۇرىدۇ</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">كارتا يۈزى تاللىنىدۇ</string>
     <string name="card_side_question">سوئال</string>

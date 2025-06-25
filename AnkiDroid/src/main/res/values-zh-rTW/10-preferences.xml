@@ -277,7 +277,7 @@
     <string name="user_action_7" maxLength="28">用戶動作 7</string>
     <string name="user_action_8" maxLength="28">用戶動作 8</string>
     <string name="user_action_9" maxLength="28">用戶動作 9</string>
-    <string name="toggle_auto_advance" maxLength="41">切換自動提前</string>
+    <string name="toggle_auto_advance" maxLength="28">切換自動提前</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">選取卡面</string>
     <string name="card_side_question">問題</string>

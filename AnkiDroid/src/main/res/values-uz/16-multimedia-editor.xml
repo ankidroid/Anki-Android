@@ -43,11 +43,11 @@
     <string name="multimedia_editor_popup_image">Rasm qoʻshish</string>
     <string name="multimedia_editor_popup_audio_clip">Audio qoʻshish</string>
     <string name="multimedia_editor_popup_video_clip">Video qoʻshish</string>
-    <string name="multimedia_editor_popup_audio">Record audio</string>
-    <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
+    <string name="multimedia_editor_popup_audio">Audio yozib olish</string>
+    <string name="multimedia_editor_popup_cloze">Boʻshliqni toʻldirish</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_audio">Audio recording</string>
+    <string name="multimedia_editor_field_editing_audio">Audio yozuv</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Bajarildi</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
@@ -58,21 +58,21 @@
     <string name="multimedia_editor_image_field_editing_photo">Kamera</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
-    <string name="multimedia_editor_something_wrong">Something went wrong</string>
-    <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
-    <string name="multimedia_editor_attach_tooltip" comment="Appear when holding the finger  on the paperclip icon">Attach multimedia content</string>
-    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Attach multimedia content to the %1$s field</string>
+    <string name="multimedia_editor_something_wrong">Nimadir xato ketdi</string>
+    <string name="multimedia_editor_png_paste_error">Bufer rasmni pngʼga oʻgirishda xatolik yuz berdi: %s</string>
+    <string name="multimedia_editor_attach_tooltip" comment="Appear when holding the finger  on the paperclip icon">Multimedia qistirish</string>
+    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s maydoniga multimedia qistirish</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
-    <string name="multimedia_editor_audio_view_recording_failed">Recording failed</string>
-    <string name="multimedia_editor_audio_view_playing_failed">Playing failed</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
+    <string name="multimedia_editor_audio_view_recording_failed">Ovozni yozib boʻlmadi</string>
+    <string name="multimedia_editor_audio_view_playing_failed">Ijro etib boʻlmadi</string>
+    <string name="multimedia_editor_audio_view_create_failed">Diktofon asbob panelini yaratib boʻlmadi</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
+    <string name="crop_image">Bu rasmni kesmoqchimisiz?</string>
     <string name="crop_button" maxLength="28">Rasmni kesish</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
-    <string name="crop_image_size_notice">The image is too big to be handled by the crop editor. Please resize it and try again!</string>
-    <string name="reselect" maxLength="28">Reselect</string>
+    <string name="save_dialog_content">Joriy rasm hajmi %sMB. Stardart boʻyicha rasm hajmi 1MBʼdan oshmasligi kerak. Rasmni siqmoqchimisiz?</string>
+    <string name="select_image_failed">"Rasmni tanlab boʻlmadi, iltimos qayta urinib koʻring"</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Maydon tarkibi</string>
+    <string name="crop_image_size_notice">Rasm kesish muharriri bilan ishlash uchun juda katta. Iltimos, rasm oʻlchamini oʻzgartiring va qayta urinib koʻring!</string>
+    <string name="reselect" maxLength="28">Qayta tanlash</string>
 </resources>

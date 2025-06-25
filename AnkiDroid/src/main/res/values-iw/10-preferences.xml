@@ -283,7 +283,7 @@
     <string name="user_action_7" maxLength="28">פעולת משתמש 7</string>
     <string name="user_action_8" maxLength="28">פעולת משתמש 8</string>
     <string name="user_action_9" maxLength="28">פעולת משתמש 9</string>
-    <string name="toggle_auto_advance" maxLength="41">החלף מצב התקדמות אוטומטית</string>
+    <string name="toggle_auto_advance" maxLength="28">החלף מצב התקדמות אוטומטית</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">בחר צד כרטיס</string>
     <string name="card_side_question">שאלה</string>
