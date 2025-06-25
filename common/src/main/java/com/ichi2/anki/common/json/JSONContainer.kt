@@ -1,6 +1,5 @@
 /*
- *  Copyright (c) 2024 Arthur Milchior <arthur@milchior.fr>
- *  Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
+ *  Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -14,24 +13,17 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.utils
+package com.ichi2.anki.common.json
 
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.common.utils.ext.jsonObjectIterator
-import com.ichi2.libanki.utils.NotInLibAnki
-import com.ichi2.libanki.utils.append
-import com.ichi2.libanki.utils.index
-import com.ichi2.libanki.utils.insert
-import com.ichi2.libanki.utils.remove
 import org.json.JSONArray
 import org.json.JSONObject
 
-@NotInLibAnki
 interface JSONObjectHolder {
     @VisibleForTesting val jsonObject: JSONObject
 }
 
-@NotInLibAnki
 interface JSONContainer<T : JSONObjectHolder> : Iterable<T> {
     val jsonArray: JSONArray
 
@@ -61,17 +53,4 @@ interface JSONContainer<T : JSONObjectHolder> : Iterable<T> {
     }
 
     fun length() = jsonArray.length()
-
-    fun append(template: T) = jsonArray.append(template.jsonObject)
-
-    fun remove(template: T) = jsonArray.remove(template.jsonObject)
-
-    fun index(template: T) = jsonArray.index(template.jsonObject)
-
-    fun insert(
-        idx: Int,
-        template: T,
-    ) = jsonArray.insert(idx, template.jsonObject)
 }
-
-fun <T : JSONObjectHolder> len(templates: JSONContainer<T>) = templates.jsonArray.length()

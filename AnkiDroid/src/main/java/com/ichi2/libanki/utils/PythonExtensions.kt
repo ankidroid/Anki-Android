@@ -16,6 +16,8 @@
 
 package com.ichi2.libanki.utils
 
+import com.ichi2.anki.common.json.JSONContainer
+import com.ichi2.anki.common.json.JSONObjectHolder
 import com.ichi2.anki.common.utils.ext.jsonObjectIterable
 import org.json.JSONArray
 import org.json.JSONObject
@@ -130,3 +132,16 @@ fun JSONArray.insert(
 
     this.put(idx, jsonObject)
 }
+
+fun <T : JSONObjectHolder> JSONContainer<T>.append(template: T) = jsonArray.append(template.jsonObject)
+
+fun <T : JSONObjectHolder> JSONContainer<T>.remove(template: T) = jsonArray.remove(template.jsonObject)
+
+fun <T : JSONObjectHolder> JSONContainer<T>.index(template: T) = jsonArray.index(template.jsonObject)
+
+fun <T : JSONObjectHolder> JSONContainer<T>.insert(
+    idx: Int,
+    template: T,
+) = jsonArray.insert(idx, template.jsonObject)
+
+fun <T : JSONObjectHolder> len(templates: JSONContainer<T>) = templates.jsonArray.length()

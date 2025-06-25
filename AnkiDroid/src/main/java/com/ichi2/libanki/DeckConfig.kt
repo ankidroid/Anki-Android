@@ -17,8 +17,8 @@
 package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.common.json.JSONObjectHolder
 import com.ichi2.libanki.utils.set
-import com.ichi2.utils.JSONObjectHolder
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
