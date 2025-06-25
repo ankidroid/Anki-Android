@@ -91,7 +91,12 @@ subprojects {
         tasks.withType(KotlinCompile::class.java).configureEach {
             compilerOptions {
                 allWarningsAsErrors = fatalWarnings
-                val compilerArgs = mutableListOf("-Xjvm-default=all")
+                val compilerArgs = mutableListOf(
+                    "-Xjvm-default=all",
+                    // https://youtrack.jetbrains.com/issue/KT-73255
+                    // Apply @StringRes to both constructor params and generated properties
+                    "-Xannotation-default-target=param-property"
+                )
                 if (project.name != "api") {
                     compilerArgs += "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
                 }

@@ -87,7 +87,7 @@ junitJupiter = "5.13.2"
 # https://github.com/junit-team/junit5/releases/ - version numbers differ; changelogs in bundle
 junitPlatformLauncher = "1.13.2"
 # https://github.com/JetBrains/kotlin/releases/
-kotlin = '2.1.21'
+kotlin = '2.2.0'
 kotlinxSerializationJson = "1.8.1"
 ktlintGradlePlugin = "12.3.0"
 leakcanaryAndroid = "2.14"
