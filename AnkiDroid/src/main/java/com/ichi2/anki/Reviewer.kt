@@ -495,6 +495,7 @@ open class Reviewer :
                 toggleWhiteboard()
             }
             R.id.action_open_deck_options -> {
+                Timber.i("Reviewer:: Opening deck options")
                 val i =
                     com.ichi2.anki.pages.DeckOptions
                         .getIntent(this, getColUnsafe.decks.current().id)

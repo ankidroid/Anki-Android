@@ -242,14 +242,21 @@ class ReviewerViewModel(
     }
 
     private suspend fun emitEditNoteDestination() {
-        val destination = NoteEditorLauncher.EditNoteFromPreviewer(currentCard.await().id)
+        val cardId = currentCard.await().id
+        val destination = NoteEditorLauncher.EditNoteFromPreviewer(cardId)
+        Timber.i("Opening 'edit note' for card %d", cardId)
         destinationFlow.emit(destination)
     }
 
-    private suspend fun emitAddNoteDestination() = destinationFlow.emit(NoteEditorLauncher.AddNoteFromReviewer())
+    private suspend fun emitAddNoteDestination() {
+        Timber.i("Launching 'add note'")
+        destinationFlow.emit(NoteEditorLauncher.AddNoteFromReviewer())
+    }
 
     private suspend fun emitCardInfoDestination() {
-        val destination = CardInfoDestination(currentCard.await().id)
+        val cardId = currentCard.await().id
+        val destination = CardInfoDestination(cardId)
+        Timber.i("Launching 'card info' for card %d", cardId)
         destinationFlow.emit(destination)
     }
 
@@ -257,6 +264,7 @@ class ReviewerViewModel(
         val deckId = withCol { decks.getCurrentId() }
         val isFiltered = withCol { decks.isFiltered(deckId) }
         val destination = DeckOptionsDestination(deckId, isFiltered)
+        Timber.i("Launching 'deck options' for deck %d", deckId)
         destinationFlow.emit(destination)
     }
 

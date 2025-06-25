@@ -365,6 +365,7 @@ abstract class NavigationDrawerActivity :
      * Opens the Statistics Screen.
      */
     protected fun openStatistics() {
+        Timber.i("launching statistics")
         val intent =
             com.ichi2.anki.pages.Statistics
                 .getIntent(this)

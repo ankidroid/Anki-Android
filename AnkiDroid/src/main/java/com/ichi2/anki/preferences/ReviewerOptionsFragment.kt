@@ -25,6 +25,7 @@ import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.HideSystemBars
+import timber.log.Timber
 
 /**
  * Developer options to test some of the new reviewer settings and features
@@ -51,6 +52,7 @@ class ReviewerOptionsFragment :
         // An activity partially solves that, because the screen looks alright in phones, but in
         // tablets/big screens, the preferences navigation lateral bar isn't shown.
         requirePreference<Preference>(R.string.reviewer_menu_settings_key).setOnPreferenceClickListener {
+            Timber.i("launching study screen settings menu")
             val intent = SingleFragmentActivity.getIntent(requireContext(), ReviewerMenuSettingsFragment::class)
             startActivity(intent)
             true
