@@ -108,5 +108,16 @@ class ReviewerOptionsFragment :
                 true
             }
         }
+
+        // Show remaining card count
+        requirePreference<SwitchPreferenceCompat>(R.string.show_progress_preference).apply {
+            title = CollectionManager.TR.preferencesShowRemainingCardCount()
+            launchCatchingTask { isChecked = CollectionPreferences.getShowRemainingDueCounts() }
+            setOnPreferenceChangeListener { _, newDueCountsValue ->
+                val newDueCountsValueBool = newDueCountsValue as? Boolean ?: return@setOnPreferenceChangeListener false
+                launchCatchingTask { CollectionPreferences.setShowRemainingDueCounts(newDueCountsValueBool) }
+                true
+            }
+        }
     }
 }
