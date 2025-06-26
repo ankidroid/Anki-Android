@@ -44,214 +44,214 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Check database?</string>
-    <string name="check_db_warning">Bu jarayon biroz vaqt talab qilishi mumkin</string>
-    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Toʻplamni oʻchirish</string>
-    <string name="delete_deck_title">Toʻplam oʻchirilsinmi?</string>
+    <string name="check_db_title">Maʼlumotlar bazasi tekshirilsinmi?</string>
+    <string name="check_db_warning">Bu biroz vaqt olishi mumkin</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Dastani oʻchirish</string>
+    <string name="delete_deck_title">Dasta oʻchirilsinmi?</string>
     <plurals name="delete_deck_message">
-        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="one">%1$sʼdagi barcha kartalar oʻchirilsinmi? Ichida %2$d karta mavjud</item>
+        <item quantity="other">%1$sʼdagi barcha kartalar oʻchirilsinmi? Ichida %2$d karta mavjud</item>
     </plurals>
-    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
-    <string name="no_tts_available_message">No text-to-speech language available</string>
-    <string name="tts_no_tts">Don’t speak</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
-    <string name="reset_card_dialog_title">Reset card progress</string>
+    <string name="delete_cram_deck_message">%s filtrlangan dastani oʻchirib barcha kartalar asl dastalariga qaytarilsinmi?</string>
+    <string name="no_tts_available_message">Nutq sintezatori tili yoʻq</string>
+    <string name="tts_no_tts">Ovoz chiqmasin</string>
+    <string name="reposition_card_not_new_error">Faqat yangi kartalarni joyini oʻzgartirish mumkin</string>
+    <string name="reset_card_dialog_title">Karta progressini oʻchirish</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d karta restart qilindi</item>
-        <item quantity="other">%d kartalar restart qilindi</item>
+        <item quantity="one">%d ta karta qayta tiklandi</item>
+        <item quantity="other">%d ta karta qayta tiklandi</item>
     </plurals>
-    <string name="answering_error_title">Database error</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
-    <string name="answering_error_report">Report error</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
-    <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
-    <string name="intent_aedict_empty">Category “default” is empty</string>
-    <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
-    <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
-    <string name="custom_study_ahead">Review ahead by x days:</string>
-    <string name="custom_study_preview">Preview new cards added in the last x days:</string>
-    <string name="custom_study_tags">Select x cards from the deck:</string>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
-    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
-    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
-    <string name="restore_backup_title">Restore backup?</string>
-    <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
-    <string name="dialog_cancel">Cancel</string>
+    <string name="answering_error_title">Maʼlumotlar bazasida xatolik</string>
+    <string name="answering_error_message">Toʻplamga yozib boʻlmadi. Maʼlumotlar bazasi buzilgan yoki diskda yetarlicha boʻsh joy boʻlmasligi mumkin.\n\nAgar bu tez-tez sodir boʻladigan boʻlsa, maʼlumotlar bazasini tekshirib koʻring, toʻplamni tuzatib koʻring yoki zaxiradan tiklang. Buning uchun “Parametrlar” tugmasini bosing.\n\Yoki bu AnkiDroid bagi ham boʻlishi mumkin; Buni tekshirishimiz uchun xatolik haqida xabar bering.</string>
+    <string name="answering_error_report">Xatolik haqida xabar berish</string>
+    <string name="storage_full_message">AnkiDroidʼni ochish uchun yetarlicha boʻsh joy mavjud emas. Davom etish uchun qurilmangizda biroz joy boʻshating.</string>
+    <string name="repair_deck_dialog">Rostdan ham maʼlumotlar bazasini tuzatmoqchimisiz?\n\nUrinishni boshlashdan oldin uni nusxasi “%s” ostjildiga koʻchiriladi.</string>
+    <string name="intent_aedict_empty">“standart” turkumi boʻsh</string>
+    <string name="intent_aedict_category">AnkiDroidʼga kartalar qoʻshish uchun barcha Bloknot turkumlarini olib tashlang yoki \"standart\" deb nomlangan turkumni qoʻshing</string>
+    <string name="custom_study_new_extend">Bugungi yangi kartalar cheklovini oshirish/kamaytirish (“-3”)</string>
+    <string name="custom_study_rev_extend">Bugungi takrorlanadigan kartalar cheklovini oshirish/kamaytirish (“-3”)</string>
+    <string name="custom_study_forgotten">Oʻtgan x kun ichida unutilgan kartalarni takrorlash:</string>
+    <string name="custom_study_ahead">X kunga oldin takrorlash:</string>
+    <string name="custom_study_preview">Oxirgi x kunda qoʻshilgan yangi kartalarni koʻrib chiqish:</string>
+    <string name="custom_study_tags">Dastadan x ta karta tanlash:</string>
+    <string name="storage_full_title">Saqlash xotirasi toʻla</string>
+    <string name="storage_almost_full_title">Saqlash xotirasi deyarli toʻla</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Boʻsh joy yoʻq</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid davom etishi uchun saqlash xotirasida %s boʻsh joy kerak. Iltimos, biroz joy boʻshating</string>
+    <string name="restore_backup_title">Zaxiradan tiklansinmi?</string>
+    <string name="restore_backup">Toʻplamingiz eski nusxa bilan almashtiriladi. Har qanday saqlanmagan progressingiz yoʻqoladi.</string>
+    <string name="restore_backup_choose_another">Boshqasini tanlash</string>
+    <string name="dialog_cancel">Bekor qilish</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Tasdiqlash</string>
+    <string name="dialog_no">Yoʻq</string>
     <string name="dialog_yes">Ha</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
-    <string name="dialog_continue">Continue</string>
-    <string name="dialog_processing">Processing&#8230;</string>
-    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Create</string>
-    <string name="dialog_positive_delete" maxLength="28">Delete</string>
+    <string name="dialog_keep">Qoldirish</string>
+    <string name="dialog_remove">Olib tashlash</string>
+    <string name="dialog_continue">Davom etish</string>
+    <string name="dialog_processing">Ishlamoqda&#8230;</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Yaratish</string>
+    <string name="dialog_positive_delete" maxLength="28">Oʻchirish</string>
     <!-- Currently unsued, should be useful in the future -->
-    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disable</string>
-    <string name="dialog_positive_overwrite">Overwrite</string>
-    <string name="dialog_positive_repair">Repair</string>
-    <string name="dialog_positive_replace">Replace</string>
-    <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
-    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
-    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
-    <string name="dialog_updated_custom_certificate">Certificate updated</string>
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Toʻxtatish</string>
+    <string name="dialog_positive_overwrite">Ustiga yozish</string>
+    <string name="dialog_positive_repair">Tuzatish</string>
+    <string name="dialog_positive_replace">Almashtirish</string>
+    <string name="dialog_collection_path_not_dir">Koʻrsatilgan yoʻl yaroqli katalog emas</string>
+    <string name="dialog_invalid_custom_certificate">Taʼminlangan matn yaroqli PEM bilan kodlangan X509 sertifikatiga mos kelmaydi</string>
+    <string name="dialog_invalid_custom_certificate_title">Sertifikatni tekshirishda xatolik</string>
+    <string name="dialog_updated_custom_certificate">Sertifikat yangilandi</string>
     <!-- Media checking -->
-    <string name="check_media_title">Check media?</string>
-    <string name="check_media_warning">This may take a long time with large media collections</string>
-    <string name="check_media_message">Checking media&#8230;</string>
-    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="check_media_title">Media fayllar tekshirilsinmi?</string>
+    <string name="check_media_warning">Katta media fayllar toʻplamlari uchun uzoq vaqt olishi mumkin</string>
+    <string name="check_media_message">Media fayllar tekshirilmoqda&#8230;</string>
+    <string name="check_media_adding_missing_tag">Teglar qoʻshilmoqda</string>
+    <string name="check_media_tags_added">Teglar qoʻshildi</string>
+    <string name="delete_media_message">Media fayllar oʻchirilmoqda&#8230;</string>
+    <string name="delete_media_result_title">Oʻchirish natijasi</string>
     <plurals name="delete_media_result_message">
-        <item quantity="one">%d file deleted</item>
-        <item quantity="other">%d files deleted</item>
+        <item quantity="one">%d ta fayl oʻchirildi</item>
+        <item quantity="other">%d ta fayl oʻchirildi</item>
     </plurals>
     <!-- Tags Dialog Options -->
-    <string name="tags_dialog_option_all_cards">All cards</string>
-    <string name="tags_dialog_option_new_cards">New</string>
-    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
+    <string name="tags_dialog_option_all_cards">Barcha kartalar</string>
+    <string name="tags_dialog_option_new_cards">Yangi</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Vaqti kelgan</string>
     <!-- Empty cards -->
-    <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
+    <string name="emtpy_cards_finding">Boʻsh kartalar qidirilmoqda&#8230;</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <string name="multimedia_editor_audio_permission_refused">Mikrofonga ruxsat olib boʻlmadi.</string>
+    <string name="multimedia_editor_failed">Multimedia muharririni ochib boʻlmadi</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <string name="multimedia_editor_audio_permission_denied">Audio yozuvga ruxsat olib boʻlmadi</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
-    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
+    <string name="integrity_check_startup_title">AnkiDroid yangilandi</string>
+    <string name="integrity_check_startup_content">AnkiDroid yangilandi. Ushbu yangilanish maʼlumotlar bazasi muammolari uchun tuzatishlarni oʼz ichiga oladi va hozir maʼlumotlar bazasini tekshirishingizni maslahat beramiz.</string>
+    <string name="integrity_check_continue_anyway">Baribir davom ettirish</string>
+    <string name="integrity_check_insufficient_space">Maʼlumotlar bazasini tekshirish katta hajmdagi vaqtinchalik xotiradan foydalanadi.\n\nDavom etishdan oldin qurilmangizda kamida %s boʻsh joy boʻlishi tavsiya etiladi.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nHozirda sizda %s boʻsh joy mavjud.</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
-    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
+    <string name="card_viewer_url_decode_error">Kartadan maʼlumotlarni dekodlashda xatolik</string>
     <!-- Deck Options -->
     <!-- Database Errors-->
-    <string name="database_locked_title">Database Locked</string>
-    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="database_locked_title">Maʼlumotlar bazasi qulflandi</string>
+    <string name="database_locked_summary">AnkiDroid maʼlumotlar bazasi boshqa dastur tomonidan foydalanilmoqda. Iltimos, oʻsha ilovani yoping va AnkiDroidʼni boshqatdan oching.</string>
+    <string name="incompatible_database_version_title">Mos kelmaydigan maʼlumotlar bazasi versiyasi</string>
+    <string name="incompatible_database_version_summary">Maʼlumotlar bazasi versiyasi AnkiDroid ishlay oladigan versiyadan ancha yuqori. Ochish uchun AnkiDroidʼni yangilang yoki maʼlumotlar baza versiyasini tushiring\n\nQoʻllab-quvvatlanadigan versiya: %1$d\nMaʼlumotlar bazasi versiyasi: %2$d\n\nQuyidagi tiklash variantlar mavjud toʻplamingizni mos keladigan maʼlumotlar bazasi versiyasi bilan qayta yozishi mumkin:</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">Background image applied</string>
-    <string name="background_image_removed">Background image removed</string>
-    <string name="no_image_selected">No image selected</string>
-    <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
-    <string name="error_deleting_image">Error deleting image</string>
-    <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
-    <string name="background_image_too_large">Deck Picker background too large</string>
-    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="background_image_applied">Orqa fon rasmi qoʻllandi</string>
+    <string name="background_image_removed">Orqa fon rasmi olib tashlandi</string>
+    <string name="no_image_selected">Rasm tanlanmadi</string>
+    <string name="error_selecting_image">Rasm tanlashda xatolik yuz berdi. Iltimos qoʻllanmaga murojaat qiling. %s</string>
+    <string name="error_deleting_image">Rasmni oʻchirishda xatolik yuz berdi</string>
+    <string name="failed_to_apply_background_image">%s orqa fon rasmini qoʻllashda xatolik yuz berdi</string>
+    <string name="background_image_too_large">Dasta tanlagich orqa foni juda katta</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Ruxsat etilgan maksimal rasm hajmi %d MB</string>
+    <string name="image_dimensions_too_large">Rasm oʻlchami juda katta (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <string name="intent_handler_failed_no_storage_permission">Xotiraga saqlash ruxsati yoʻq. Iltimos, xotiraga saqlashga ruxsat bering va qayta urinib koʻring.</string>
     <!-- Boot Service -->
-    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
-    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <string name="boot_service_failed_to_schedule_notifications">Eslatmalarni rejalashtirib boʻlmadi</string>
+    <string name="boot_service_too_many_notifications">Juda koʻp eslatmalar rejalashtirilgan. Baʻzilari paydo boʻlmaydi</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_title_new">Tilni sozlash</string>
+    <string name="locale_selection_dialog_summary">GBoard kabi baʻzi koʻp tilli klaviaturalar, matnni tahrirlaganda tilni oʻzgartirishni qoʻllab-quvvatlaydi\n\nAgar klaviaturangiz tilni oʻzgartirolmasa, klaviatura ishlab chiqaruvchisidan “setImeHintLocales” funksiyasini soʻrang.</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
-    <string name="help_item_anki_manual">Anki Manual</string>
-    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Get Help</string>
-    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_title_using_ankidroid">AnkiDroidʼni ishlatish</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid qoʻllanmasi</string>
+    <string name="help_item_anki_manual">Anki qoʻllanmasi</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid koʻp soʻraladigan savollar</string>
+    <string name="help_title_get_help">Yordam olish</string>
+    <string name="help_item_mailing_list">E-pochta roʻyxati</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a Bug</string>
-    <string name="help_title_support_ankidroid" maxLength="28">Support AnkiDroid</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_develop_ankidroid">Develop</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
-    <string name="help_item_support_other_ankidroid">Other</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
-    <string name="help_title_community">Community</string>
+    <string name="help_item_report_bug">Bug haqida xabar berish</string>
+    <string name="help_title_support_ankidroid" maxLength="28">AnkiDroidʼga yordam bering</string>
+    <string name="help_item_support_opencollective_donate">Xayriya qilish</string>
+    <string name="help_item_support_develop_ankidroid">Dasturlash</string>
+    <string name="help_item_support_rate_ankidroid">Baho berish</string>
+    <string name="help_item_support_other_ankidroid">Boshqa</string>
+    <string name="multimedia_editor_trans_translate">Tarjima qilish</string>
+    <string name="help_title_community">Hamjamiyat</string>
     <string name="help_item_anki_forums">Anki Forums</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
-    <string name="help_title_privacy">Privacy</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
-    <string name="help_title_send_exception">Send troubleshooting report</string>
-    <string name="help_dialog_exception_report_debounce">Report already submitted</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_title_privacy">Maxfiylik</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid maxfiylik siyosati</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb maxfiylik siyosati</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb talab va shartlari</string>
+    <string name="help_title_send_exception">Nosozliklarni bartaraf etish haqida hisobotni joʻnatish</string>
+    <string name="help_dialog_exception_report_debounce">Hisobot allaqachon joʻnatildi</string>
+    <string name="help_dialog_exception_report_sent">Hisobot joʻnatildi!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">Avtomatik sinxronizatsiya %d soniyadan soʻng ishga tushishi mumkin</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">Avtomatik sinxronizatsiya %d soniyadan soʻng ishga tushishi mumkin</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
-    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="metered_sync_data_warning">Mobil tarmoqlargaa ulanish uchun qoʻshimcha toʻlov olinishi mumkin</string>
+    <string name="deck_picker_new">Ushbu dastadagi bugungi yangi kartalar soni.</string>
+    <string name="deck_picker_rev">Ushbu dastadagi bugun vaqti kelgan kartalar soni.</string>
+    <string name="deck_picker_lrn">Ushbu dastadagi oʻrganilayotgan kartalar soni.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="deck_picker_counts">Bugungi kartalar sonini koʻrish uchun dasta umumiy maʼlumotlar sahifasini oching.</string>
+    <string name="import_deck_package">Dasta paketi (.apkg)</string>
+    <string name="import_collection_package">Toʻplam paketi (.colpkg)</string>
+    <string name="import_csv">Matn fayl (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">Barcha dastalar uchun ostdastani yarata olmaysiz</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup" maxLength="41">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
-    <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
-    <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
-    <string name="deck_already_exists">Deck already exists</string>
-    <string name="empty_deck_name">Deck name cannot be empty</string>
-    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <string name="backup_your_collection">Toʻplamingizni zaxiralang</string>
+    <string name="backup_collection_message">Toʻplamingizni uzoq vaqt zaxiralamadingiz. Maʼlumotlar yoʻqolishini oldini olish uchun buni hozir qilishingiz kerak.</string>
+    <string name="button_backup" maxLength="41">Zaxiralash</string>
+    <string name="button_disable_reminder">Eslatmani oʻchirish</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Keyinroq</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Boshqa koʻrsatilmasin</string>
+    <string name="dismiss_backup_warning_title">Maʼlumotlar yoʻqolishi haqida ogohlantirish</string>
+    <string name="dismiss_backup_warning_new_user">Android maxfiyligidagi oʻzgarishlar tufayli ilovani oʻchirib tashlasangiz, maʼlumotlaringiz va avtomatik zahira nusxalari ham oʻchiriladi.</string>
+    <string name="dismiss_backup_warning_upgrade">Android maxfiyligidagi oʻzgarishlar tufayli ilovani oʻchirib tashlasangiz, maʼlumotlaringiz va avtomatik zahira nusxalarini ochish imkoni boʻlmaydi.</string>
+    <string name="deck_already_exists">Dasta allaqachon mavjud</string>
+    <string name="empty_deck_name">Dasta nomi boʻsh boʻlishi mumkin emas</string>
+    <string name="create_deck_numeric_hint">Agar dastani tartiblashda muammoga duch kelsangiz (masalan ‘10’ ‘2’dan oldin kelsa), ‘2’ni ‘02’ bilan almashtiring</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Oraligʻni bir xil qiymatga sozlash</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in</item>
-        <item quantity="other">Show cards in</item>
+        <item quantity="one">Kartani shunchadan keyin koʻrsat</item>
+        <item quantity="other">Kartalarni shunchadan keyin koʻrsat</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in range</item>
-        <item quantity="other">Show cards in range</item>
+        <item quantity="one">Kartani shu oraligʻda koʻrsat</item>
+        <item quantity="other">Kartalarni shu oraligʻda koʻrsat</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="one">day</item>
-        <item quantity="other">days</item>
+        <item quantity="one">kun</item>
+        <item quantity="other">kun</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">Joriy vaqt oraligʻi: %d kun</item>
+        <item quantity="other">Joriy vaqt oraligʻi: %d kun</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
-    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Kamida</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Koʻpi bilan</string>
     <!-- Instant Note Editor -->
-    <string name="cloze_note_required">Cloze Type Note Required</string>
-    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
-    <string name="open">Open</string>
-    <string name="change_cloze_number">Change cloze number</string>
-    <string name="cloze_number">Cloze number:</string>
-    <string name="change_editor_mode">Change editor mode</string>
-    <string name="open_note_editor">Open note editor</string>
-    <string name="change_cloze_mode">Change cloze mode</string>
+    <string name="cloze_note_required">Boʻshliqni toʻldirish turidagi qayd kerak</string>
+    <string name="cloze_not_found_message">Boʻshliqni toʻldirish turidagi qayd topilmadi. Qayd muharririni oching yoki boʻshliqni toʻldirish turidagi qaydni qoʻshgandan keyin urinib koʻring.</string>
+    <string name="open">Ochish</string>
+    <string name="change_cloze_number">Boʻshliq raqaminini oʻzgartirish</string>
+    <string name="cloze_number">Boʻshliq raqami:</string>
+    <string name="change_editor_mode">Muharrir rejimini oʻzgartirish</string>
+    <string name="open_note_editor">Qayd muharririni ochish</string>
+    <string name="change_cloze_mode">Boʻshliqni toʻldirish rejimini oʻzgartirish</string>
     <!-- Outdated WebView dialog -->
-    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
-    <string name="compress">Compress</string>
+    <string name="webview_update_message">Tizim WebViewʼi eskirgan. Baʼzi xususiyatlar toʻgʻri ishlamaydi. Iltimos, yangilang.\n\nOʻrnatilgan versiya: %1$d\nMinimal talab qilinadigan versiya: %2$d</string>
+    <string name="compress">Siqish</string>
     <!-- Tts playback error dialog -->
-    <string name="tts_error_dialog_title">Language not supported</string>
-    <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
-    <string name="tts_error_dialog_change_button_text">Change engine</string>
-    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
+    <string name="tts_error_dialog_title">Til qoʻllab-quvvatlanmaydi</string>
+    <string name="tts_error_dialog_reason_text"><b>%1$s</b> nutq sintezatori quyidagi tilni qo‘llab-quvvatlamaydi: <b>%2$s</b></string>
+    <string name="tts_error_dialog_change_button_text">Nutq sintezatorini almashtirish</string>
+    <string name="tts_error_dialog_supported_voices_button_text">Ovoz parametrlari</string>
 </resources>
