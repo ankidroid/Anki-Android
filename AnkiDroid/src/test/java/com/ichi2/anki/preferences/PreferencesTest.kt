@@ -26,6 +26,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.preferences.HeaderFragment.Companion.getHeaderKeyForFragment
 import com.ichi2.anki.preferences.PreferenceTestUtils.getAttrFromXml
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment
+import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.preferences.HeaderPreference
 import com.ichi2.testutils.getInstanceFromClassName
@@ -62,7 +63,7 @@ class PreferencesTest : RobolectricTest() {
         runTest {
             for (i in 0..23) {
                 setDayOffset(preferences, i)
-                assertThat(getDayOffset(), equalTo(i))
+                assertThat(CollectionPreferences.getDayOffset(), equalTo(i))
             }
         }
     }
@@ -73,7 +74,7 @@ class PreferencesTest : RobolectricTest() {
         runTest {
             for (i in 0..23) {
                 setDayOffset(preferences, i)
-                assertThat(getDayOffset(), equalTo(i))
+                assertThat(CollectionPreferences.getDayOffset(), equalTo(i))
             }
         }
     }

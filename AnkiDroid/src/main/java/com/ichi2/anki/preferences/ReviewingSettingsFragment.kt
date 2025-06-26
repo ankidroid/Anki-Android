@@ -25,10 +25,10 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
+import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.preferences.NumberRangePreferenceCompat
 import com.ichi2.preferences.SliderPreference
 import timber.log.Timber
-import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -45,9 +45,9 @@ class ReviewingSettingsFragment : SettingsFragment() {
         // Note that "collapseTime" is in second while LEARN_CUTOFF is in minute.
         @NeedsTest("#16645, changing the learn ahead limit shows expected cards in review queue")
         requirePreference<NumberRangePreferenceCompat>(R.string.learn_cutoff_preference).apply {
-            launchCatchingTask { setValue(getLearnAheadLimit().toInt(DurationUnit.MINUTES)) }
+            launchCatchingTask { setValue(CollectionPreferences.getLearnAheadLimit().toInt(DurationUnit.MINUTES)) }
             setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { setLearnAheadLimit((newValue as Int).toDuration(DurationUnit.MINUTES)) }
+                launchCatchingTask { CollectionPreferences.setLearnAheadLimit((newValue as Int).toDuration(DurationUnit.MINUTES)) }
             }
         }
         // Timebox time limit
@@ -55,47 +55,20 @@ class ReviewingSettingsFragment : SettingsFragment() {
         // the duration of a review timebox in minute. Each TIME_LIMIT minutes, a message appear suggesting to halt and giving the number of card reviewed
         // Note that "timeLim" is in seconds while TIME_LIMIT is in minutes.
         requirePreference<NumberRangePreferenceCompat>(R.string.time_limit_preference).apply {
-            launchCatchingTask { setValue(getTimeboxTimeLimit().toInt(DurationUnit.MINUTES)) }
+            launchCatchingTask { setValue(CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES)) }
             setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { setTimeboxTimeLimit((newValue as Int).toDuration(DurationUnit.MINUTES)) }
+                launchCatchingTask { CollectionPreferences.setTimeboxTimeLimit((newValue as Int).toDuration(DurationUnit.MINUTES)) }
             }
         }
         // Start of next day
         // Represents the collection pref "rollover"
         // in sched v2, and crt in sched v1. I.e. at which time of the day does the scheduler reset
         requirePreference<SliderPreference>(R.string.day_offset_preference).apply {
-            launchCatchingTask { value = getDayOffset() }
+            launchCatchingTask { value = CollectionPreferences.getDayOffset() }
             setOnPreferenceChangeListener { newValue ->
                 launchCatchingTask { setDayOffset(requireContext(), newValue as Int) }
             }
         }
-    }
-
-    private suspend fun getLearnAheadLimit(): Duration =
-        withCol { getPreferences().scheduling.learnAheadSecs }.toDuration(DurationUnit.SECONDS)
-
-    private suspend fun setLearnAheadLimit(limit: Duration) {
-        val prefs = withCol { getPreferences() }
-        val newPrefs =
-            prefs.copy {
-                scheduling = prefs.scheduling.copy { learnAheadSecs = limit.toInt(DurationUnit.SECONDS) }
-            }
-
-        undoableOp { setPreferences(newPrefs) }
-        Timber.i("set learn ahead limit: '%d'", limit.toInt(DurationUnit.SECONDS))
-    }
-
-    private suspend fun getTimeboxTimeLimit(): Duration =
-        withCol { getPreferences().reviewing.timeLimitSecs }.toDuration(DurationUnit.SECONDS)
-
-    private suspend fun setTimeboxTimeLimit(limit: Duration) {
-        val prefs = withCol { getPreferences() }
-        val newPrefs =
-            prefs.copy {
-                reviewing = prefs.reviewing.copy { timeLimitSecs = limit.toInt(DurationUnit.SECONDS) }
-            }
-        undoableOp { setPreferences(newPrefs) }
-        Timber.i("Set timeLimitSecs to %d", limit.toInt(DurationUnit.SECONDS))
     }
 }
 
@@ -115,6 +88,3 @@ suspend fun setDayOffset(
     scheduleNotification(TimeManager.time, context)
     Timber.i("set day offset: '%d'", hours)
 }
-
-@VisibleForTesting
-suspend fun getDayOffset(): Int = withCol { getPreferences().scheduling.rollover }

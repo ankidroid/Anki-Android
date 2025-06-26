@@ -27,6 +27,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.HideSystemBars
+import com.ichi2.anki.utils.CollectionPreferences
 import timber.log.Timber
 
 /**
@@ -98,10 +99,10 @@ class ReviewerOptionsFragment :
         // Note: Stored inverted in the collection as HIDE_AUDIO_PLAY_BUTTONS
         requirePreference<SwitchPreferenceCompat>(R.string.show_audio_play_buttons_key).apply {
             title = CollectionManager.TR.preferencesShowPlayButtonsOnCardsWith()
-            launchCatchingTask { isChecked = !getHidePlayAudioButtons() }
+            launchCatchingTask { isChecked = !CollectionPreferences.getHidePlayAudioButtons() }
             setOnPreferenceChangeListener { _, newValue ->
                 val newValueBool = newValue as? Boolean ?: return@setOnPreferenceChangeListener false
-                launchCatchingTask { setHideAudioPlayButtons(!newValueBool) }
+                launchCatchingTask { CollectionPreferences.setHideAudioPlayButtons(!newValueBool) }
                 true
             }
         }

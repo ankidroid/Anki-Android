@@ -27,7 +27,7 @@ package com.ichi2.libanki
 
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.common.utils.htmlEncode
-import com.ichi2.anki.preferences.getHidePlayAudioButtons
+import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.NotInLibAnki
@@ -184,7 +184,7 @@ object Sound {
         renderOutput: TemplateRenderOutput,
     ): String {
         val mediaDir = CollectionManager.withCol { media.dir }
-        val hidePlayButtons = getHidePlayAudioButtons()
+        val hidePlayButtons = CollectionPreferences.getHidePlayAudioButtons()
         return expandSounds(text, renderOutput, showAudioPlayButtons = !hidePlayButtons, mediaDir)
     }
 
