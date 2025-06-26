@@ -18,6 +18,7 @@ package com.ichi2.anki.ui.windows.reviewer
 import android.net.Uri
 import android.webkit.WebView
 import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.utils.ext.clamp
 import timber.log.Timber
 import kotlin.math.abs
 
@@ -168,7 +169,7 @@ object GestureParser {
         val index = relativePosition.toInt()
         // Temporary timber warning to solve #18559
         Timber.w("adjustedTapPosition $adjustedTapPosition - relativePosition $relativePosition - index $index")
-        return index
+        return index.clamp(minimumValue = 0, maximumValue = 2)
     }
 
     private fun Uri.getIntQuery(key: String) = getQueryParameter(key)?.toIntOrNull()
