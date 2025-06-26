@@ -221,6 +221,11 @@ class AutomaticAnswer(
 
     fun isEnabled(): Boolean = !isDisabled
 
+    /**
+     * Whether auto-advance performs actions if enabled
+     */
+    fun isUsable() = settings.isUsable
+
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     internal fun simulateCardFlip() {
         Timber.d("simulateCardFlip")
@@ -277,6 +282,9 @@ class AutomaticAnswerSettings(
         get() = secondsToShowAnswerFor > 0
     val autoAdvanceIfShowingQuestion
         get() = secondsToShowQuestionFor > 0
+
+    val isUsable
+        get() = autoAdvanceIfShowingQuestion || autoAdvanceIfShowingAnswer
 
     companion object {
         /**
