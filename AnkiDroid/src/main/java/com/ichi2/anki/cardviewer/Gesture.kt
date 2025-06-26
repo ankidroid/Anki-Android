@@ -34,7 +34,7 @@ const val GESTURE_PREFIX = "\u235D"
 // #17090: maracas emoji is unusable on API 30 or below.
 // androidX emoji2 doesn't work by default on an API 30 emulator.
 // either requires a GMS dependency, or bloats the APK size by 9.8MB
-val SHAKE_GESTURE_PREFIX = if (Build.VERSION.SDK_INT > 30) "\uD83E\uDE87" else "  "
+val SHAKE_GESTURE_PREFIX = if (Build.VERSION.SDK_INT > 30) "\uD83E\uDE87" else ""
 
 fun interface GestureListener {
     fun onGesture(gesture: Gesture)
@@ -61,7 +61,16 @@ enum class Gesture(
     TAP_BOTTOM_RIGHT(R.string.gestures_corner_tap_bottom_right),
     ;
 
-    fun toDisplayString(context: Context): String = displayPrefix + ' ' + context.getString(resourceId)
+    fun toDisplayString(context: Context): String =
+        if (displayPrefix.isNotEmpty()) {
+            displayPrefix + ' ' + context.getString(resourceId)
+            // e.g., (maracas emoji) + (space) + "Shake device"
+        } else {
+            context.getString(resourceId)
+            // e.g., "Shake device"
+            // (Not only the empty prefix (""), but also the space in the middle (" ") is not shown.)
+            // Related to #17090
+        }
 }
 
 /**
