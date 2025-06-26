@@ -787,8 +787,8 @@ open class CardTemplateEditor :
         ) {
             currentEditorViewId = id
             editorEditText.setText(editorContent)
-            editorEditText.setSelection(cursorPosition)
             editorEditText.requestFocus()
+            editorEditText.setSelection(cursorPosition)
         }
 
         override fun onViewCreated(
