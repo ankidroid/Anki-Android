@@ -1669,11 +1669,6 @@ open class Reviewer :
         if (automaticAnswer.isDisabled) {
             Timber.i("Enabling auto advance")
             automaticAnswer.enable()
-            if (isDisplayingAnswer) {
-                automaticAnswer.delayedShowQuestion(0)
-            } else {
-                automaticAnswer.delayedShowAnswer(0)
-            }
         } else {
             Timber.i("Disabling auto advance")
             automaticAnswer.disable()
