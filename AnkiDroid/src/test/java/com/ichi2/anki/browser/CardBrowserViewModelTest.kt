@@ -532,7 +532,7 @@ class CardBrowserViewModelTest : JvmTest() {
     @Test
     fun `suspend - cards - some suspended`() =
         runViewModelTest(notes = 2) {
-            suspend(cards.first().toCardId(cardsOrNotes))
+            suspendCards(cards.first().toCardId(cardsOrNotes))
             ensureOpsExecuted(1) {
                 selectAll()
                 toggleSuspendCards()
@@ -576,7 +576,7 @@ class CardBrowserViewModelTest : JvmTest() {
     fun `suspend - notes - some notes suspended`() =
         runViewModelNotesTest(notes = 2) {
             val nid = cards.first().cardOrNoteId
-            suspend(col.getNote(nid))
+            suspendNote(col.getNote(nid))
             ensureOpsExecuted(1) {
                 selectAll()
                 toggleSuspendCards()
@@ -588,7 +588,7 @@ class CardBrowserViewModelTest : JvmTest() {
     fun `suspend - notes - some cards suspended`() =
         runViewModelNotesTest(notes = 2) {
             // this suspends o single cid from a nid
-            suspend(cards.first().toCardId(cardsOrNotes) as CardId)
+            suspendCards(cards.first().toCardId(cardsOrNotes) as CardId)
             ensureOpsExecuted(1) {
                 selectAll()
                 toggleSuspendCards()
@@ -1195,11 +1195,11 @@ private fun TestClass.suspendAll() {
     }
 }
 
-private fun TestClass.suspend(vararg cardIds: CardId) {
+private fun TestClass.suspendCards(vararg cardIds: CardId) {
     col.sched.suspendCards(ids = cardIds.toList())
 }
 
-private fun TestClass.suspend(note: Note) {
+private fun TestClass.suspendNote(note: Note) {
     col.sched.suspendCards(note.cardIds(col))
 }
 
