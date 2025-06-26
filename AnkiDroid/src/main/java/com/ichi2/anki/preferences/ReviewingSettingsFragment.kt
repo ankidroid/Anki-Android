@@ -47,7 +47,7 @@ class ReviewingSettingsFragment : SettingsFragment() {
         requirePreference<NumberRangePreferenceCompat>(R.string.learn_cutoff_preference).apply {
             launchCatchingTask { setValue(CollectionPreferences.getLearnAheadLimit().toInt(DurationUnit.MINUTES)) }
             setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { CollectionPreferences.setLearnAheadLimit((newValue as Int).toDuration(DurationUnit.MINUTES)) }
+                launchCatchingTask { CollectionPreferences.setLearnAheadLimit(newValue.toDuration(DurationUnit.MINUTES)) }
             }
         }
         // Timebox time limit
@@ -57,7 +57,7 @@ class ReviewingSettingsFragment : SettingsFragment() {
         requirePreference<NumberRangePreferenceCompat>(R.string.time_limit_preference).apply {
             launchCatchingTask { setValue(CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES)) }
             setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { CollectionPreferences.setTimeboxTimeLimit((newValue as Int).toDuration(DurationUnit.MINUTES)) }
+                launchCatchingTask { CollectionPreferences.setTimeboxTimeLimit(newValue.toDuration(DurationUnit.MINUTES)) }
             }
         }
         // Start of next day
@@ -66,7 +66,7 @@ class ReviewingSettingsFragment : SettingsFragment() {
         requirePreference<SliderPreference>(R.string.day_offset_preference).apply {
             launchCatchingTask { value = CollectionPreferences.getDayOffset() }
             setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { setDayOffset(requireContext(), newValue as Int) }
+                launchCatchingTask { setDayOffset(requireContext(), newValue) }
             }
         }
     }

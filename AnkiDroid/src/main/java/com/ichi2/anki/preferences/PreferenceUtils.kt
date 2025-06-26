@@ -18,11 +18,13 @@ package com.ichi2.anki.preferences
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.StringRes
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceGroup
 import androidx.preference.PreferenceManager
 import androidx.preference.PreferenceScreen
+import androidx.preference.SwitchPreferenceCompat
 
 fun SharedPreferences.get(key: String): Any? = all[key]
 
@@ -32,8 +34,23 @@ fun SharedPreferences.get(key: String): Any? = all[key]
  * returning true on it by default
  * @param onPreferenceChangeListener The callback to be invoked
  */
-fun Preference.setOnPreferenceChangeListener(onPreferenceChangeListener: (newValue: Any) -> Unit) {
+fun SwitchPreferenceCompat.setOnPreferenceChangeListener(onPreferenceChangeListener: (newValue: Boolean) -> Unit) {
     this.setOnPreferenceChangeListener { _, newValue ->
+        if (newValue !is Boolean) return@setOnPreferenceChangeListener false
+        onPreferenceChangeListener(newValue)
+        true
+    }
+}
+
+/**
+ * Sets the callback to be invoked when this preference is changed by the user
+ * (but before the internal state has been updated) on the internal onPreferenceChangeListener,
+ * returning true on it by default
+ * @param onPreferenceChangeListener The callback to be invoked
+ */
+fun ListPreference.setOnPreferenceChangeListener(onPreferenceChangeListener: (newValue: String) -> Unit) {
+    this.setOnPreferenceChangeListener { _, newValue ->
+        if (newValue !is String) return@setOnPreferenceChangeListener false
         onPreferenceChangeListener(newValue)
         true
     }
