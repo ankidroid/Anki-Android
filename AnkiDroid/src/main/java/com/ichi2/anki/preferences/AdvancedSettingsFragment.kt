@@ -121,7 +121,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
         requirePreference<SwitchPreferenceCompat>(R.string.enable_api_key).setOnPreferenceChangeListener { newValue ->
             val providerName = ComponentName(requireContext(), CardContentProvider::class.java.name)
             val state =
-                if (newValue == true) {
+                if (newValue) {
                     Timber.i("AnkiDroid ContentProvider enabled by user")
                     PackageManager.COMPONENT_ENABLED_STATE_ENABLED
                 } else {

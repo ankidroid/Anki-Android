@@ -153,6 +153,20 @@ class SliderPreference(
         }
     }
 
+    /**
+     * Sets the callback to be invoked when this preference is changed by the user
+     * (but before the internal state has been updated) on the internal onPreferenceChangeListener,
+     * returning true on it by default
+     * @param onPreferenceChangeListener The callback to be invoked
+     */
+    fun setOnPreferenceChangeListener(onPreferenceChangeListener: (newValue: Int) -> Unit) {
+        setOnPreferenceChangeListener { _, newValue ->
+            if (newValue !is Int) return@setOnPreferenceChangeListener false
+            onPreferenceChangeListener(newValue)
+            true
+        }
+    }
+
     companion object {
         /**
          * [Slider] has no easy means of de-duplicating listeners

@@ -126,10 +126,8 @@ class AppearanceSettingsFragment : SettingsFragment() {
         // whether the buttons should indicate the duration of the interval if we click on them.
         requirePreference<SwitchPreferenceCompat>(R.string.show_estimates_preference).apply {
             launchCatchingTask { isChecked = CollectionPreferences.getShowIntervalOnButtons() }
-            setOnPreferenceChangeListener { _, newETA ->
-                val newETABool = newETA as? Boolean ?: return@setOnPreferenceChangeListener false
-                launchCatchingTask { CollectionPreferences.setShowIntervalsOnButtons(newETABool) }
-                true
+            setOnPreferenceChangeListener { newValue ->
+                launchCatchingTask { CollectionPreferences.setShowIntervalsOnButtons(newValue) }
             }
         }
         // Show progress
@@ -137,10 +135,8 @@ class AppearanceSettingsFragment : SettingsFragment() {
         // whether the remaining number of cards should be shown.
         requirePreference<SwitchPreferenceCompat>(R.string.show_progress_preference).apply {
             launchCatchingTask { isChecked = CollectionPreferences.getShowRemainingDueCounts() }
-            setOnPreferenceChangeListener { _, newDueCountsValue ->
-                val newDueCountsValueBool = newDueCountsValue as? Boolean ?: return@setOnPreferenceChangeListener false
-                launchCatchingTask { CollectionPreferences.setShowRemainingDueCounts(newDueCountsValueBool) }
-                true
+            setOnPreferenceChangeListener { newValue ->
+                launchCatchingTask { CollectionPreferences.setShowRemainingDueCounts(newValue) }
             }
         }
 
@@ -149,10 +145,8 @@ class AppearanceSettingsFragment : SettingsFragment() {
         requirePreference<SwitchPreferenceCompat>(R.string.show_audio_play_buttons_key).apply {
             title = CollectionManager.TR.preferencesShowPlayButtonsOnCardsWith()
             launchCatchingTask { isChecked = !CollectionPreferences.getHidePlayAudioButtons() }
-            setOnPreferenceChangeListener { _, newValue ->
-                val newValueBool = newValue as? Boolean ?: return@setOnPreferenceChangeListener false
-                launchCatchingTask { CollectionPreferences.setHideAudioPlayButtons(!newValueBool) }
-                true
+            setOnPreferenceChangeListener { newValue ->
+                launchCatchingTask { CollectionPreferences.setHideAudioPlayButtons(!newValue) }
             }
         }
     }
