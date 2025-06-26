@@ -31,8 +31,8 @@ inline fun Int.ifNotZero(block: (value: Int) -> Unit) {
 /**
  * Ensures the number is within the provided range.
  *
- * If too small, [min] is returned
- * If too large, [max] is returned
+ * If too small, [minimumValue] is returned
+ * If too large, [maximumValue] is returned
  *
  * Similar to [coerceIn], but does NOT validate that min < max for performance reasons
  */
