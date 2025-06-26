@@ -59,6 +59,7 @@ import anki.frontend.SetSchedulingStatesRequest
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Whiteboard.Companion.createInstance
 import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
@@ -1582,11 +1583,12 @@ open class Reviewer :
         if (automaticAnswer.isDisabled) {
             Timber.i("Enabling auto advance")
             automaticAnswer.enable()
+            showSnackbar(TR.actionsAutoAdvanceActivated())
         } else {
             Timber.i("Disabling auto advance")
             automaticAnswer.disable()
+            showSnackbar(TR.actionsAutoAdvanceDeactivated())
         }
-        showSnackbar(R.string.toggle_auto_advance)
     }
 
     override val currentCardId: CardId?
