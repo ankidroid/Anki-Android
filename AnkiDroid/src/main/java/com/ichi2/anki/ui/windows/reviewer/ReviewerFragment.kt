@@ -95,6 +95,7 @@ import com.ichi2.anki.settings.enums.ToolbarPosition
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.collectLatestIn
 import com.ichi2.anki.utils.ext.menu
@@ -449,6 +450,14 @@ class ReviewerFragment :
                 spannableString.setSpan(UnderlineSpan(), 0, currentCount.text.length, 0)
                 currentCount.text = spannableString
             }
+
+        lifecycleScope.launch {
+            if (!CollectionPreferences.getShowRemainingDueCounts()) {
+                newCount.isVisible = false
+                learnCount.isVisible = false
+                reviewCount.isVisible = false
+            }
+        }
     }
 
     private fun setupBury(menu: ReviewerMenuView) {
