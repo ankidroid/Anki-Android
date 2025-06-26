@@ -45,33 +45,33 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Cards due</string>
+    <string name="widget_minimum_cards_due_notification_ticker_title">Vaqti kelgan kartalar</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%d AnkiDroid card due</item>
-        <item quantity="other">%d AnkiDroid cards due</item>
+        <item quantity="one">%d ta AnkiDroid kartasini vaqti keldi</item>
+        <item quantity="other">%d ta AnkiDroid kartasini vaqti keldi</item>
     </plurals>
-    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid small</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid kichkina</string>
     <plurals name="widget_cards_due">
-        <item quantity="one">%d card due</item>
-        <item quantity="other">%d cards due</item>
+        <item quantity="one">%d ta kartani vaqti keldi</item>
+        <item quantity="other">%d ta kartani vaqti keldi</item>
     </plurals>
     <plurals name="widget_eta">
-        <item quantity="one">%d minute remaining</item>
-        <item quantity="other">%d minutes remaining</item>
+        <item quantity="one">%d daqiqa qoldi</item>
+        <item quantity="other">%d daqiqa qoldi</item>
     </plurals>
-    <string name="widget_add_note_button">Add new AnkiDroid note</string>
-    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">Deck Picker</string>
-    <string name="card_analysis_extra_widget_description">Card Analysis</string>
+    <string name="widget_add_note_button">Yangi AnkiDroid qayd qoʻshish</string>
+    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">Dasta tanlagich</string>
+    <string name="card_analysis_extra_widget_description">Karta tahlili</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
-    <string name="select_decks_title" comment="Title for Deck Selection Dialog">Select decks</string>
-    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Select a deck</string>
-    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Select decks to display in the widget. Select decks with the + icon.</string>
-    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Deck removed</string>
-    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">This deck is already selected</string>
+    <string name="select_decks_title" comment="Title for Deck Selection Dialog">Dastalarni tanlash</string>
+    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Dasta tanlash</string>
+    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Vidjetda koʻrsatish uchun dastalarni tanlang. Dastalarni + tugmasi orqali tanlang.</string>
+    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Dasta oʻchirildi</string>
+    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">Bu dasta allaqachon tanlangan</string>
     <plurals name="deck_limit_reached">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">You can select up to %d deck.</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">You can select up to %d decks.</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d ta dastagacha tanlashingiz mumkin</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d ta dastagacha tanlashingiz mumkin</item>
     </plurals>
-    <string name="empty_widget_state" comment="To denote the widget is empty">Missing deck. Tap to reconfigure.</string>
-    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Collection is empty, use app to add decks then reconfigure</string>
+    <string name="empty_widget_state" comment="To denote the widget is empty">Dasta mavjud emas. Sozlash uchun bosing.</string>
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Toʻplam boʻsh, dastalarni qoʻshish uchun ilovani ishlating va qayta sozlang</string>
 </resources>

@@ -45,41 +45,41 @@
 
 -->
 <resources>
-    <string name="youre_offline">You are offline</string>
-    <string name="sync_error">Sync error</string>
-    <string name="vague_error" comment="Network error dialog title">Error</string>
-    <string name="retry">Retry</string>
-    <string name="menu_get_shared_decks">Get shared decks</string>
-    <string name="connection_error_message">A network error has occurred</string>
-    <string name="not_logged_in_title">Log in to AnkiWeb</string>
-    <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
+    <string name="youre_offline">Oflaynsiz</string>
+    <string name="sync_error">Sinxronlash xatoligi</string>
+    <string name="vague_error" comment="Network error dialog title">Xatolik</string>
+    <string name="retry">Qayta urinib koʻrish</string>
+    <string name="menu_get_shared_decks">Ulashilgan dastalarni olish</string>
+    <string name="connection_error_message">Tarmoq xatoligi yuz berdi</string>
+    <string name="not_logged_in_title">AnkiWebʼga kirish</string>
+    <string name="login_create_account_message">Bulut sinxronizatsiya xizmatidan foydalanish uchun uchinchi tomonning hisobiga kirishingiz kerak. Hisobni keyingi bosqichda yaratishingiz mumkin.</string>
     <!-- MyAccount.kt -->
-    <string name="username">Email address</string>
-    <string name="password">Password</string>
-    <string name="log_in">Log in</string>
-    <string name="sign_up_description">Don’t have an AnkiWeb account? It’s free!</string>
-    <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
-    <string name="sign_up">Sign up</string>
-    <string name="logged_as">Logged in as</string>
-    <string name="log_out">Log out</string>
-    <string name="reset_password">Reset password</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="username">E-pochta manzili</string>
+    <string name="password">Parol</string>
+    <string name="log_in">Kirish</string>
+    <string name="sign_up_description">AnkiWeb hisobingiz yoʻqmi? U bepul!</string>
+    <string name="sign_up_not_affiliated">Eslatma: AnkiWeb AnkiDroid bilan bogʻliq emas</string>
+    <string name="sign_up">Roʻyxatdan oʻtish</string>
+    <string name="logged_as">Shu orqali tizimga kirgansiz</string>
+    <string name="log_out">Tizimdan chiqish</string>
+    <string name="reset_password">Parolni tiklash</string>
+    <string name="lost_mail_instructions">E-pochtangizni unutdingizmi?</string>
+    <string name="sign_in">Tizimga kirilmoqda</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Options for XXX</string>
-    <string name="sync_title">Synchronization</string>
-    <string name="sync_log_uploading_message">Full sync from local</string>
-    <string name="sync_database_acknowledge">Collection synchronized</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
-    <string name="sync_corrupt_database">Your database is corrupt. Please fix it before trying again to sync.\n\nSee %s for information about repairing your database.</string>
+    <string name="deckpreferences_title">XXX parametrlari</string>
+    <string name="sync_title">Sinxronizatsiya</string>
+    <string name="sync_log_uploading_message">Qurilmadan toʻliq sinxronizatsiya</string>
+    <string name="sync_database_acknowledge">Toʻplam sinxronlandi</string>
+    <string name="col_synced_media_in_background">Toʻplam sinxronlandi. Media fayllar orqa fonda sinxronlanmoqda.</string>
+    <string name="sync_corrupt_database">Maʼlumotlar bazangiz buzilgan. Iltimos, sinxronlashdan oldin uni tuzating.\n\nMaʼlumotlar bazasini tuzatish haqida maʼlumot olish uchun %s sahifasiga oʻting.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_sanity_local">Local</string>
-    <string name="sync_sanity_remote">Remote</string>
-    <string name="one_way_sync_title" maxLength="41">One-way sync</string>
-    <string name="one_way_sync_confirmation">One way sync requested</string>
-    <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
-    <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
+    <string name="sync_sanity_local">Mahalliy</string>
+    <string name="sync_sanity_remote">Masofaviy</string>
+    <string name="one_way_sync_title" maxLength="41">Bir tomonlama sinxronlash</string>
+    <string name="one_way_sync_confirmation">Bir tomonlama sinxronlash soʻraldi</string>
+    <string name="full_sync_confirmation">Soʻralgan oʻzgartirish toʻplamingizni keyingi sinxronlashda maʼlumotlar bazasini toʻliq yuklashni talab qiladi. Agar boshqa qurilmangizda takrorlashlar yoki boshqa oʻzgarishlar boʻlsa va bu qurilma bilan sinxronlanmagan boʻlsa, ular yoʻqoladi. Davom ettirilsinmi?</string>
+    <string name="full_sync_confirmation_upgrade">AnkiDroidʼni oldingi oʻrnatilgan versiyasidagi xatolik tufayli majburiy toʻliq sinxronlash tavsiya etiladi.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_one_way_sync">Sinxronlash (bir tomonlama)</string>
+    <string name="sync_menu_title_no_account">Sinxronlash (tizimga kirish)</string>
 </resources>
