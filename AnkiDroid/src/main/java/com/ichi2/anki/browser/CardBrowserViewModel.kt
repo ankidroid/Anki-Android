@@ -61,6 +61,7 @@ import com.ichi2.libanki.DeckNameId
 import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.QueueType.ManuallyBuried
 import com.ichi2.libanki.QueueType.SiblingBuried
+import com.ichi2.libanki.notesOfCards
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
@@ -490,7 +491,7 @@ class CardBrowserViewModel(
         // PERF: use `undoableOp(this)` & notify CardBrowser of changes
         // this does a double search
         val cardIds = queryAllSelectedCardIds()
-        return undoableOp { removeNotes(cids = cardIds) }
+        return undoableOp { removeNotes(cardIds = cardIds) }
             .count
             .also {
                 endMultiSelectMode()
@@ -1067,7 +1068,7 @@ class CardBrowserViewModel(
      * Replaces occurrences of search with the new value.
      *
      * @return the number of affected notes
-     * @see com.ichi2.libanki.Collection.findReplace
+     * @see com.ichi2.libanki.Collection.findAndReplace
      * @see com.ichi2.libanki.Tags.findAndReplace
      */
     fun findAndReplace(result: FindReplaceResult) =
@@ -1084,7 +1085,7 @@ class CardBrowserViewModel(
                 val field =
                     if (result.field == ALL_FIELDS_AS_FIELD) null else result.field
                 undoableOp {
-                    findReplace(noteIds, result.search, result.replacement, result.regex, field, result.matchCase)
+                    findAndReplace(noteIds, result.search, result.replacement, result.regex, field, result.matchCase)
                 }.count
             }
         }

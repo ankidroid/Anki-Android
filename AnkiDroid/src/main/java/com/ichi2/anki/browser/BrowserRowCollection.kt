@@ -20,6 +20,7 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.NoteId
+import com.ichi2.libanki.notesOfCards
 
 /**
  * Collection of ids, either [CardId]s or [NoteId]s depending on the value of [cardsOrNotes].

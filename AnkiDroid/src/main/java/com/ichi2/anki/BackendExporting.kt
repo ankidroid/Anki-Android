@@ -18,7 +18,6 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.ExportReadyDialog
 import com.ichi2.libanki.exportAnkiPackage
 import com.ichi2.libanki.exportCardsCsv
-import com.ichi2.libanki.exportCollectionPackage
 import com.ichi2.libanki.exportNotesCsv
 
 fun AnkiActivity.exportApkgPackage(
