@@ -73,8 +73,8 @@
         <item quantity="other">%1$d ora e %2$d rimanenti</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of hours.">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">%1$d giorno %2$d ore rimanenti</item>
+        <item quantity="other">%1$d giorni %2$d ore rimanenti</item>
     </plurals>
     <string name="type_answer_hint" comment="In the reviewer. When the user use note type with hint. It\'s the default content of the text field in which the user is invited to type their answer. It disappears as soon as the user start to type.">Digita la risposta</string>
     <string name="show_answer" maxLength="41" comment="When displaying the question side of a card. This is the label of a button that display the answer side.">Mostra la risposta</string>
@@ -132,7 +132,7 @@
     <string name="empty_deck">Questo mazzo è vuoto</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Ricerca mazzo</string>
     <string name="invalid_deck_name">Nome mazzo non valido</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
+    <string name="studyoptions_congrats_finished">Congratulazioni! Per oggi hai finito.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Mazzo completato per ora! %s</string>
     <string name="studyoptions_no_cards_due">Nessuna carta da ripetere ora.</string>
     <string name="sd_card_not_mounted">Dispositivo archiviazione non montato</string>

@@ -247,11 +247,11 @@
     <string name="open_note_editor">Jegyzetszerkesztő megnyitása</string>
     <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
-    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
+    <string name="webview_update_message">A rendszeren található WebView elavult, ezért néhány funkció nem fog megfelelően működni. Kérem frissítse.\n\nA telepített verzió:%1$d\nA legalacsonyabb szükséges verzió:%2$d</string>
     <string name="compress">Compress</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">Nem támogatott nyelv</string>
     <string name="tts_error_dialog_reason_text">A(z) <b>%1$s</b> szövegfelolvasó nem támogatja a következő nyelvet: <b>%2$s</b></string>
-    <string name="tts_error_dialog_change_button_text">Change engine</string>
-    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
+    <string name="tts_error_dialog_change_button_text">Szövegfelolvasó kiválasztása</string>
+    <string name="tts_error_dialog_supported_voices_button_text">Szövegfelolvasó beállítások</string>
 </resources>

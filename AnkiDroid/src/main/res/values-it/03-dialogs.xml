@@ -49,10 +49,10 @@
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Elimina il mazzo</string>
     <string name="delete_deck_title">Elimina il mazzo</string>
     <plurals name="delete_deck_message">
-        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="one">Cancellare tutte le carte in %1$s? Contiene %2$d carta</item>
+        <item quantity="other">Cancellare tutte le carte in %1$s? Contiene %2$d carte</item>
     </plurals>
-    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
+    <string name="delete_cram_deck_message">Cancellare il mazzo %s? Le carte torneranno nei loro mazzi originali.</string>
     <string name="no_tts_available_message">Nessuna lingua per la sintesi vocale disponibile</string>
     <string name="tts_no_tts">Non parlare</string>
     <string name="reposition_card_not_new_error">Solo le nuove carte possono essere riposizionate</string>
@@ -64,7 +64,7 @@
     <string name="answering_error_title">Errore database</string>
     <string name="answering_error_message">Scrittura della raccolta non riuscita. La banca dati potrebbe essere danneggiata o potrebbe non esserci abbastanza spazio vuoto sul disco.\n\nSe questo accade più spesso, prova a controllare la banca dati, a riparare la collezione o a ripristinarla da un backup. Tocca «opzioni» per quello.\n\O potrebbe essere anche un errore di AnkiDroid, per favore segnala l\'errore in modo da poterlo controllare.</string>
     <string name="answering_error_report">Segnala errori</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
+    <string name="storage_full_message">Non c\'è abbastanza spazio libero per aprire AnkiDroid. Libera spazio per continuare.</string>
     <string name="repair_deck_dialog">Vuoi veramente provare a riparare il database?\n\nPrima di iniziare il tentativo, verrà creata una copia nella sottocartella \'%s\'.</string>
     <string name="intent_aedict_empty">Categoria \'default\' è vuota</string>
     <string name="intent_aedict_category">Per aggiungere le carte ad AnkiDroid rimuovi tutte le categorie Notepad o aggiungine una chiamata \'default\'</string>
@@ -73,7 +73,7 @@
     <string name="custom_study_forgotten">Ripeti carte dimenticate negli ultimi x giorni:</string>
     <string name="custom_study_ahead">Ripeti in anticipo di x giorni:</string>
     <string name="custom_study_preview">Anteprima carte nuove aggiunte negli ultimi x giorni:</string>
-    <string name="custom_study_tags">Select x cards from the deck:</string>
+    <string name="custom_study_tags">Seleziona x carte casualmente dal mazzo:</string>
     <string name="storage_full_title">Spazio di archiviazione pieno</string>
     <string name="storage_almost_full_title">Spazio di archiviazione quasi pieno</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Nessuno spazio</string>
@@ -98,7 +98,7 @@
     <string name="dialog_positive_repair">Ripara</string>
     <string name="dialog_positive_replace">Sostituisci</string>
     <string name="dialog_collection_path_not_dir">Il percorso specificato non era una cartella valida</string>
-    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate">Il testo fornito non si risolve con un certificato X509 codificato in PEM valido</string>
     <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
     <string name="dialog_updated_custom_certificate">Certificate updated</string>
     <!-- Media checking -->
