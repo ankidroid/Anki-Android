@@ -266,7 +266,7 @@ class CardAnalysisWidgetConfig :
     /** Returns the list of standard deck. */
     private suspend fun fetchDecks(): List<SelectableDeck> =
         withContext(Dispatchers.IO) {
-            SelectableDeck.fromCollection(includeFiltered = false)
+            SelectableDeck.fromCollection(includeFiltered = true)
         }
 
     /** Displays the deck selection dialog with the provided list of decks. */

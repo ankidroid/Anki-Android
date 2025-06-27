@@ -31,7 +31,7 @@ import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShorcuts
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.isCollectionEmpty
-import com.ichi2.anki.pages.DeckOptions
+import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.libanki.DeckId
 import com.ichi2.widget.ACTION_UPDATE_WIDGET
 import com.ichi2.widget.AnalyticsWidgetProvider
@@ -50,6 +50,7 @@ typealias AppWidgetId = Int
  * @property reviewCount The number of cards due for review.
  * @property learnCount The number of cards in the learning phase.
  * @property newCount The number of new cards.
+ * @property filtered Whether the deck is filtered.
  */
 data class DeckWidgetData(
     val deckId: DeckId,
@@ -57,6 +58,7 @@ data class DeckWidgetData(
     val reviewCount: Int,
     val learnCount: Int,
     val newCount: Int,
+    val filtered: Boolean,
 )
 
 /**
@@ -142,7 +144,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                     if (!isEmptyDeck) {
                         intentToReviewDeckFromShorcuts(context, deck.deckId)
                     } else {
-                        DeckOptions.getIntent(context, deck.deckId)
+                        DeckOptionsDestination.fromDeckId(deck.deckId).toIntent(context)
                     }
 
                 val pendingIntent =
@@ -380,6 +382,7 @@ suspend fun getDeckNamesAndStats(deckIds: List<DeckId>): List<DeckWidgetData> {
                 reviewCount = node.revCount,
                 learnCount = node.lrnCount,
                 newCount = node.newCount,
+                filtered = node.filtered,
             ),
         )
     }
