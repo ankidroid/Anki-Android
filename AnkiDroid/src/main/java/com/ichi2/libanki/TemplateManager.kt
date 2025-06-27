@@ -56,13 +56,15 @@ class TemplateManager {
     data class PartiallyRenderedCard(
         val qnodes: TemplateReplacementList,
         val anodes: TemplateReplacementList,
+        val css: String,
+        val latexSvg: Boolean,
     ) {
         companion object {
             fun fromProto(out: anki.card_rendering.RenderCardResponse): PartiallyRenderedCard {
                 val qnodes = nodesFromProto(out.questionNodesList)
                 val anodes = nodesFromProto(out.answerNodesList)
 
-                return PartiallyRenderedCard(qnodes, anodes)
+                return PartiallyRenderedCard(qnodes, anodes, out.css, out.latexSvg)
             }
 
             fun nodesFromProto(nodes: List<anki.card_rendering.RenderedTemplateNode>): TemplateReplacementList {
@@ -136,6 +138,7 @@ class TemplateManager {
         private var _template: CardTemplate? = template
 
         private var noteType: NotetypeJson = notetype ?: note.notetype
+        private var latexSvg = false
 
         companion object {
             fun fromExistingCard(
@@ -171,6 +174,8 @@ class TemplateManager {
 
         fun noteType() = noteType
 
+        fun latexSvg(): Boolean = latexSvg
+
         @NeedsTest(
             "TTS tags `fieldText` is correctly extracted when sources are parsed to file scheme",
         )
@@ -189,25 +194,26 @@ class TemplateManager {
 
             val qtext = applyCustomFilters(partial.qnodes, this, frontSide = null)
             val qout = col.backend.extractAvTags(text = qtext, questionSide = true)
-            var qoutText = qout.text
 
             val atext = applyCustomFilters(partial.anodes, this, frontSide = qout.text)
             val aout = col.backend.extractAvTags(text = atext, questionSide = false)
-            var aoutText = aout.text
+
+            val output =
+                TemplateRenderOutput(
+                    questionText = qout.text,
+                    answerText = aout.text,
+                    questionAvTags = avTagsToNative(qout.avTagsList),
+                    answerAvTags = avTagsToNative(aout.avTagsList),
+                    css = noteType().css,
+                )
+
+            latexSvg = partial.latexSvg
 
             if (!_browser) {
-                val svg = noteType.latexsvg
-                qoutText = LaTeX.mungeQA(qout.text, col, svg)
-                aoutText = LaTeX.mungeQA(aout.text, col, svg)
+                onCardDidRender(col, output, this)
             }
 
-            return TemplateRenderOutput(
-                questionText = qoutText,
-                answerText = aoutText,
-                questionAvTags = avTagsToNative(qout.avTagsList),
-                answerAvTags = avTagsToNative(aout.avTagsList),
-                css = noteType().css,
-            )
+            return output
         }
 
         fun partiallyRender(col: Collection): PartiallyRenderedCard {
