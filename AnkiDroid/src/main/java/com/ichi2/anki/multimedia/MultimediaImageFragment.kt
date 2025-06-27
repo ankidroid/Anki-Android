@@ -19,6 +19,7 @@ package com.ichi2.anki.multimedia
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -510,16 +511,14 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
         previewImage(imageUri)
 
-        // Handle internalizing the URI (optional)
-        val internalizedPick = internalizeUri(imageUri)
-        if (internalizedPick == null) {
-            Timber.w("handleSelectImageIntent() unable to internalize image from Uri %s", imageUri)
+        val internalFile = resolveUriToFile(imageUri)
+        if (internalFile == null || !internalFile.exists()) {
             showSomethingWentWrong()
             return
         }
 
         // Update ViewModel with image data
-        val imagePath = internalizedPick.absolutePath
+        val imagePath = internalFile.absolutePath
 
         try {
             // if that worked, the image was not too large / good format, update viewModel
@@ -531,10 +530,26 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             showSomethingWentWrong()
             return
         }
-        viewModel.selectedMediaFileSize = internalizedPick.length()
+        viewModel.selectedMediaFileSize = internalFile.length()
 
         // Optionally update and display the image size
         updateAndDisplayImageSize(imagePath)
+    }
+
+    /**
+     * Resolves a [Uri] to a [File] on internal storage.
+     *
+     * If the URI is a content URI, it is internalized by copying its contents to internal storage.
+     * If the URI is already a file URI, it is directly converted to a [File] object.
+     *
+     * @param uri The URI to resolve.
+     * @return The corresponding [File], or `null` if the URI is invalid or unsupported.
+     */
+    private fun resolveUriToFile(uri: Uri): File? {
+        return when (uri.scheme) {
+            ContentResolver.SCHEME_FILE -> File(uri.path ?: return null)
+            else -> internalizeUri(uri)
+        }
     }
 
     /**
