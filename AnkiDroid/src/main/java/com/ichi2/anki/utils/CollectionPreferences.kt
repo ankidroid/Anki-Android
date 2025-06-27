@@ -30,6 +30,7 @@ import kotlin.time.toDuration
  * @see [anki.config.Preferences]
  */
 object CollectionPreferences {
+    // region Reviewing
     suspend fun getShowRemainingDueCounts(): Boolean = withCol { getPreferences() }.reviewing.showRemainingDueCounts
 
     suspend fun setShowRemainingDueCounts(value: Boolean) {
@@ -41,6 +42,8 @@ object CollectionPreferences {
         undoableOp { setPreferences(newPrefs) }
         Timber.i("Set showRemainingDueCounts to %b", value)
     }
+
+    suspend fun getHidePlayAudioButtons(): Boolean = withCol { getPreferences() }.reviewing.hideAudioPlayButtons
 
     suspend fun setHideAudioPlayButtons(value: Boolean) {
         val prefs = withCol { getPreferences() }
@@ -54,8 +57,6 @@ object CollectionPreferences {
 
     suspend fun getShowIntervalOnButtons(): Boolean = withCol { getPreferences() }.reviewing.showIntervalsOnButtons
 
-    suspend fun getHidePlayAudioButtons(): Boolean = withCol { getPreferences() }.reviewing.hideAudioPlayButtons
-
     suspend fun setShowIntervalsOnButtons(value: Boolean) {
         val prefs = withCol { getPreferences() }
         val newPrefs =
@@ -64,19 +65,6 @@ object CollectionPreferences {
             }
         undoableOp { setPreferences(newPrefs) }
         Timber.i("Set showIntervalsOnButtons to %b", value)
-    }
-
-    suspend fun getLearnAheadLimit(): Duration = withCol { getPreferences() }.scheduling.learnAheadSecs.toDuration(DurationUnit.SECONDS)
-
-    suspend fun setLearnAheadLimit(limit: Duration) {
-        val prefs = withCol { getPreferences() }
-        val newPrefs =
-            prefs.copy {
-                scheduling = prefs.scheduling.copy { learnAheadSecs = limit.toInt(DurationUnit.SECONDS) }
-            }
-
-        undoableOp { setPreferences(newPrefs) }
-        Timber.i("set learn ahead limit: '%d'", limit.toInt(DurationUnit.SECONDS))
     }
 
     suspend fun getTimeboxTimeLimit(): Duration = withCol { getPreferences() }.reviewing.timeLimitSecs.toDuration(DurationUnit.SECONDS)
@@ -90,7 +78,23 @@ object CollectionPreferences {
         undoableOp { setPreferences(newPrefs) }
         Timber.i("Set timeLimitSecs to %d", limit.toInt(DurationUnit.SECONDS))
     }
+    //endregion
+
+    //region Scheduling
+    suspend fun getLearnAheadLimit(): Duration = withCol { getPreferences() }.scheduling.learnAheadSecs.toDuration(DurationUnit.SECONDS)
+
+    suspend fun setLearnAheadLimit(limit: Duration) {
+        val prefs = withCol { getPreferences() }
+        val newPrefs =
+            prefs.copy {
+                scheduling = prefs.scheduling.copy { learnAheadSecs = limit.toInt(DurationUnit.SECONDS) }
+            }
+
+        undoableOp { setPreferences(newPrefs) }
+        Timber.i("set learn ahead limit: '%d'", limit.toInt(DurationUnit.SECONDS))
+    }
 
     @VisibleForTesting
     suspend fun getDayOffset(): Int = withCol { getPreferences() }.scheduling.rollover
+    //endregion
 }
