@@ -34,6 +34,8 @@ package com.ichi2.libanki
 import androidx.annotation.CheckResult
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithId
+import anki.notetypes.ChangeNotetypeInfo
+import anki.notetypes.ChangeNotetypeRequest
 import anki.notetypes.Notetype
 import anki.notetypes.NotetypeId
 import anki.notetypes.NotetypeNameId
@@ -55,6 +57,7 @@ import com.ichi2.libanki.utils.insert
 import com.ichi2.libanki.utils.len
 import com.ichi2.libanki.utils.remove
 import net.ankiweb.rsdroid.RustCleanup
+import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import org.intellij.lang.annotations.Language
 import org.json.JSONArray
@@ -528,6 +531,82 @@ class Notetypes(
     }
 
     /*
+     * Changing notetypes of notes
+     * ***********************************************************
+     */
+
+    /**
+     * @return The ID of the single note type which all supplied notes are using; throws otherwise
+     *
+     * @throws BackendInvalidInputException notes from different note types were supplied
+     * @throws BackendInvalidInputException an empty list was supplied
+     * @throws BackendNotFoundException One of the provided IDs was invalid
+     */
+    @CheckResult
+    @LibAnkiAlias("get_single_notetype_of_notes")
+    fun getSingleNotetypeOfNotes(noteIds: List<NoteId>): NoteTypeId = col.backend.getSingleNotetypeOfNotes(noteIds)
+
+    @CheckResult
+    @LibAnkiAlias("change_notetype_info")
+    fun changeNotetypeInfo(
+        oldNoteTypeId: NoteTypeId,
+        newNoteTypeId: NoteTypeId,
+    ): ChangeNotetypeInfo =
+        this.col.backend.getChangeNotetypeInfo(
+            oldNotetypeId = oldNoteTypeId,
+            newNotetypeId = newNoteTypeId,
+        )
+
+    /**
+     * Assign a new notetype, optionally altering field/template order.
+     *
+     * To get defaults, use
+     *
+     * ```kotlin
+     * val info = col.models.change_notetype_info(...)
+     * val input = info.input
+     * input.note_ids.extend([...])
+     * ```
+     *
+     * The `newFields` and `newTemplates` lists are relative to the new notetype's
+     * field/template count.
+     *
+     * Each value represents the index in the previous notetype.
+     * -1 indicates the original value will be discarded.
+     */
+    @LibAnkiAlias("change_notetype_of_notes")
+    fun changeNotetypeOfNotes(input: ChangeNotetypeRequest): OpChanges {
+        val opBytes = this.col.backend.changeNotetypeRaw(input.toByteArray())
+        return OpChanges.parseFrom(opBytes)
+    }
+
+    /**
+     * Restores a notetype to its original stock kind.
+     *
+     * @param notetypeId id of the changed notetype
+     * @param forceKind optional stock kind to be forced instead of the original kind.
+     * Older notetypes did not store their original stock kind, so we allow the UI
+     * to pass in an override to use when missing, or for tests.
+     */
+    @CheckResult
+    @LibAnkiAlias("restore_notetype_to_stock")
+    fun restoreNotetypeToStock(
+        notetypeId: NotetypeId,
+        forceKind: StockNotetype.Kind? = null,
+    ): OpChanges {
+        val msg =
+            restoreNotetypeToStockRequest {
+                this.notetypeId = notetypeId
+                forceKind?.let { this.forceKind = forceKind }
+            }
+        return col.backend.restoreNotetypeToStock(msg).also {
+            // not in libAnki:
+            // Remove the specific notetype from cache to ensure consistency after restoration
+            removeFromCache(notetypeId.ntid)
+        }
+    }
+
+    /*
     # Model changing
     ##########################################################################
     # - maps are ord->ord, and there should not be duplicate targets
@@ -740,30 +819,6 @@ fun Collection.addNotetypeLegacy(json: ByteString): OpChangesWithId {
 
 fun Collection.getStockNotetype(kind: StockNotetype.Kind): NotetypeJson =
     NotetypeJson(fromJsonBytes(backend.getStockNotetypeLegacy(kind = kind)))
-
-/**
- * Restores a notetype to its original stock kind.
- *
- * @param notetypeId id of the changed notetype
- * @param forceKind optional stock kind to be forced instead of the original kind.
- * Older notetypes did not store their original stock kind, so we allow the UI
- * to pass in an override to use when missing, or for tests.
- */
-@CheckResult
-fun Collection.restoreNotetypeToStock(
-    notetypeId: NotetypeId,
-    forceKind: StockNotetype.Kind? = null,
-): OpChanges {
-    val msg =
-        restoreNotetypeToStockRequest {
-            this.notetypeId = notetypeId
-            forceKind?.let { this.forceKind = forceKind }
-        }
-    val result = backend.restoreNotetypeToStock(msg)
-    // Remove the specific notetype from cache to ensure consistency after restoration
-    notetypes.removeFromCache(notetypeId.ntid)
-    return result
-}
 
 @NotInLibAnki
 fun getStockNotetypeKinds(): List<StockNotetype.Kind> = StockNotetype.Kind.entries.filter { it != StockNotetype.Kind.UNRECOGNIZED }
