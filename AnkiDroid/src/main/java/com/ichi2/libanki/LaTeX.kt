@@ -18,9 +18,28 @@
 package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
+import anki.card_rendering.ExtractLatexResponse
 import com.ichi2.utils.HtmlUtils.escape
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+
+data class ExtractedLatex(
+    val fileName: String,
+    val latexBody: String,
+)
+
+data class ExtractedLatexOutput(
+    val html: String,
+    val latex: List<ExtractedLatex>,
+) {
+    companion object {
+        fun fromProto(proto: ExtractLatexResponse): ExtractedLatexOutput =
+            ExtractedLatexOutput(
+                html = proto.text,
+                latex = proto.latexList.map { l -> ExtractedLatex(fileName = l.filename, latexBody = l.latexBody) },
+            )
+    }
+}
 
 /**
  * This class is used to detect LaTeX tags in HTML and convert them to their corresponding image
