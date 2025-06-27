@@ -162,13 +162,13 @@ open class Media(
 
         val htmlMediaRegexps =
             listOf(
-                // src element quoted case (img/audio)
-                Regex("(?i)(<(?:img|audio)\\b[^>]* src=(['\"])([^>]+?)\\2[^>]*>)"), // Group 3 = fname
+                // src element quoted case
+                Regex("(?i)(<(?:img|audio|source)\\b[^>]* src=(['\"])([^>]+?)\\2[^>]*>)"), // Group 3 = fname
                 // unquoted src (img/audio)
-                Regex("(?i)(<(?:img|audio)\\b[^>]* src=(?!['\"])([^ >]+)[^>]*?>)"), // Group 2 = fname
-                // quoted data attribute (object)
+                Regex("(?i)(<(?:img|audio|source)\\b[^>]* src=(?!['\"])([^ >]+)[^>]*?>)"), // Group 2 = fname
+                // quoted data attribute
                 Regex("(?i)(<object\\b[^>]* data=(['\"])([^>]+?)\\2[^>]*>)"), // Group 3 = fname
-                // unquoted data attribute (object)
+                // unquoted data attribute
                 Regex("(?i)(<object\\b[^>]* data=(?!['\"])([^ >]+)[^>]*?>)"), // Group 2 = fname
             )
     }
