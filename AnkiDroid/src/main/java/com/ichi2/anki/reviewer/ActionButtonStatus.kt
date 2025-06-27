@@ -112,6 +112,8 @@ class ActionButtonStatus {
 
     fun flagsIsOverflown(): Boolean = customButtons[R.id.action_flag] == SHOW_AS_ACTION_NEVER
 
+    fun autoAdvanceMenuIsNeverShown(): Boolean = customButtons[R.id.action_toggle_auto_advance] == MENU_DISABLED
+
     companion object {
         const val SHOW_AS_ACTION_NEVER = MenuItem.SHOW_AS_ACTION_NEVER
         const val SHOW_AS_ACTION_IF_ROOM = MenuItem.SHOW_AS_ACTION_IF_ROOM
