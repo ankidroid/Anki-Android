@@ -125,7 +125,7 @@ TODO: Add a unit test
             android:title="@string/menu_enable_voice_playback"
             app:useSimpleSummaryProvider="true"/>
         <ListPreference
-            android:defaultValue="2"
+            android:defaultValue="0"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_toggle_auto_advance"
