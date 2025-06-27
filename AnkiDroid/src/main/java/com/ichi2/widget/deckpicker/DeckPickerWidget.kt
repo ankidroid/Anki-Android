@@ -50,7 +50,6 @@ typealias AppWidgetId = Int
  * @property reviewCount The number of cards due for review.
  * @property learnCount The number of cards in the learning phase.
  * @property newCount The number of new cards.
- * @property filtered Whether the deck is filtered.
  */
 data class DeckWidgetData(
     val deckId: DeckId,
@@ -58,7 +57,6 @@ data class DeckWidgetData(
     val reviewCount: Int,
     val learnCount: Int,
     val newCount: Int,
-    val filtered: Boolean,
 )
 
 /**
@@ -382,7 +380,6 @@ suspend fun getDeckNamesAndStats(deckIds: List<DeckId>): List<DeckWidgetData> {
                 reviewCount = node.revCount,
                 learnCount = node.lrnCount,
                 newCount = node.newCount,
-                filtered = node.filtered,
             ),
         )
     }
