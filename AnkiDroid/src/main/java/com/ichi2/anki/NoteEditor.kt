@@ -31,15 +31,19 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.ActionMode
 import android.view.KeyEvent
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.View.OnFocusChangeListener
+import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.WindowManager
 import android.widget.AdapterView
@@ -76,12 +80,16 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.draganddrop.DropHelper
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commitNow
 import androidx.lifecycle.lifecycleScope
 import anki.config.ConfigKey
 import anki.notes.NoteFieldsCheckResponse
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -129,16 +137,20 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.ImageOcclusion
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
+import com.ichi2.anki.previewer.TemplatePreviewerFragment
 import com.ichi2.anki.previewer.TemplatePreviewerPage
 import com.ichi2.anki.servicelayer.LanguageHintService.languageHint
 import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
+import com.ichi2.anki.utils.postDelayed
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.compat.setTooltipTextCompat
@@ -192,6 +204,7 @@ import java.util.function.Consumer
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
+import kotlin.time.Duration.Companion.seconds
 
 const val CALLER_KEY = "caller"
 
@@ -208,7 +221,7 @@ const val CALLER_KEY = "caller"
 @KotlinCleanup("Go through the class and select elements to fix")
 @KotlinCleanup("see if we can lateinit")
 class NoteEditor :
-    Fragment(R.layout.note_editor),
+    Fragment(),
     DeckSelectionListener,
     SubtitleListener,
     TagsDialogListener,
@@ -226,7 +239,7 @@ class NoteEditor :
     private val getColUnsafe: Collection
         get() = CollectionManager.getColUnsafe()
 
-    private val mainToolbar: androidx.appcompat.widget.Toolbar
+    private val mainToolbar: androidx.appcompat.widget.Toolbar?
         get() = requireView().findViewById(R.id.toolbar)
 
     /**
@@ -286,6 +299,13 @@ class NoteEditor :
     private var toggleStickyText: HashMap<Int, String?> = HashMap()
 
     var clipboard: ClipboardManager? = null
+
+    /**
+     * The frame containing the NoteEditor. Non null only in layout x-large.
+     */
+    private var previewerFrame: FragmentContainerView? = null
+    private var fragmented: Boolean = false
+    private val refreshPreviewerFragmentHandler = Handler(Looper.getMainLooper())
 
     /**
      * Whether this is displayed in a fragment view.
@@ -522,6 +542,62 @@ class NoteEditor :
         }
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
+        // Use a specific layout for note editor when in CardBrowser
+        var layoutResId: Int?
+        if (inFragmentedActivity) {
+            layoutResId = R.layout.note_editor_for_card_browser
+            fragmented = false
+        } else {
+            layoutResId = R.layout.note_editor
+        }
+        val mainView = inflater.inflate(layoutResId, container, false)
+
+        return mainView
+    }
+
+    val noteEditorWatcher: TextWatcher =
+        object : TextWatcher {
+            /**
+             * Declare a nullable variable refreshPreviewerFragmentRunnable of type Runnable.
+             * This will hold a reference to the Runnable that refreshes the previewer fragment.
+             * It is used to manage delayed fragment updates and can be null if no updates in card.
+             */
+            private var refreshPreviewerFragmentRunnable: Runnable? = null
+
+            override fun afterTextChanged(arg0: Editable) {
+                refreshPreviewerFragmentRunnable?.let { refreshPreviewerFragmentHandler.removeCallbacks(it) }
+                val updateRunnable =
+                    Runnable {
+                        loadNoteEditorPreviewer()
+                    }
+                refreshPreviewerFragmentRunnable = updateRunnable
+                refreshPreviewerFragmentHandler.postDelayed(updateRunnable, REFRESH_NOTE_EDITOR_PREVIEW_DELAY)
+            }
+
+            override fun beforeTextChanged(
+                arg0: CharSequence,
+                arg1: Int,
+                arg2: Int,
+                arg3: Int,
+            ) {
+                // do nothing
+            }
+
+            override fun onTextChanged(
+                arg0: CharSequence,
+                arg1: Int,
+                arg2: Int,
+                arg3: Int,
+            ) {
+                // do nothing
+            }
+        }
+
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
@@ -530,6 +606,11 @@ class NoteEditor :
         @Suppress("deprecation", "API35 properly handle edge-to-edge")
         requireActivity().window.statusBarColor = Themes.getColorFromAttr(requireContext(), R.attr.appBarColor)
         super.onViewCreated(view, savedInstanceState)
+
+        previewerFrame = view.findViewById(R.id.previewer_frame)
+
+        fragmented = previewerFrame != null && previewerFrame?.visibility == View.VISIBLE
+
         // Set up toolbar
         toolbar = view.findViewById(R.id.editor_toolbar)
         toolbar.apply {
@@ -551,7 +632,7 @@ class NoteEditor :
 
         // Hide mainToolbar since CardBrowser handles the toolbar in fragmented activities.
         if (inFragmentedActivity) {
-            mainToolbar.visibility = View.GONE
+            mainToolbar?.visibility = View.GONE
         }
 
         try {
@@ -573,12 +654,120 @@ class NoteEditor :
 
         // R.id.home is handled in setNavigationOnClickListener
         // Set a listener for back button clicks in the toolbar
-        mainToolbar.setNavigationOnClickListener {
+        mainToolbar?.setNavigationOnClickListener {
             Timber.i("NoteEditor:: Back button on the menu was pressed")
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        mainToolbar.addMenuProvider(this)
+        mainToolbar?.addMenuProvider(this)
+
+        // Delay the initial load of the previewer to ensure all fragment transactions are complete
+        if (fragmented) {
+            view.post {
+                loadNoteEditorPreviewer()
+            }
+            val parentLayout = requireView().findViewById<LinearLayout>(R.id.note_editor_xl_frame)
+            val divider = requireView().findViewById<View>(R.id.note_editor_resizing_divider)
+            val leftPane = requireView().findViewById<View>(R.id.note_editor_layout)
+            val rightPane = requireView().findViewById<View>(R.id.previewer_frame_layout)
+            if (parentLayout != null && divider != null && leftPane != null && rightPane != null) {
+                ResizablePaneManager(
+                    parentLayout = parentLayout,
+                    divider = divider,
+                    leftPane = leftPane,
+                    rightPane = rightPane,
+                    sharedPrefs = Prefs.getUiConfig(requireContext()),
+                    leftPaneWeightKey = PREF_NOTE_EDITOR_PANE_WEIGHT,
+                    rightPaneWeightKey = PREF_PREVIEWER_PANE_WEIGHT,
+                )
+            }
+        }
+    }
+
+    /**
+     * Loads or reloads [editorNote] in [previewerFrame] if the view is fragmented. Do nothing otherwise.
+     */
+    private fun loadNoteEditorPreviewer() {
+        if (!fragmented) {
+            return
+        }
+        launchCatchingTask {
+            val convertNewlines = shouldReplaceNewlines()
+
+            fun String?.toFieldText(): String = NoteService.convertToHtmlNewline(this.toString(), convertNewlines)
+            val fields = editFields?.mapTo(mutableListOf()) { it.fieldText.toFieldText() } ?: mutableListOf()
+            val tags = selectedTags ?: mutableListOf()
+
+            val ord =
+                if (editorNote!!.notetype.isCloze) {
+                    val tempNote = withCol { Note.fromNotetypeId(this@withCol, editorNote!!.notetype.id) }
+                    tempNote.fields = fields // makes possible to get the cloze numbers from the fields
+                    val clozeNumbers = withCol { clozeNumbersInNote(tempNote) }
+                    if (clozeNumbers.isNotEmpty()) {
+                        clozeNumbers.first() - 1
+                    } else {
+                        0
+                    }
+                } else {
+                    currentEditedCard?.ord ?: 0
+                }
+
+            val args =
+                TemplatePreviewerArguments(
+                    notetypeFile = NotetypeFile(requireContext(), editorNote!!.notetype),
+                    fields = fields,
+                    tags = tags,
+                    id = editorNote!!.id,
+                    ord = ord,
+                    fillEmpty = true,
+                )
+
+            val backgroundColor = Themes.getColorFromAttr(requireContext(), R.attr.alternativeBackgroundColor)
+            val previewerFragment = TemplatePreviewerFragment.newInstance(args, backgroundColor)
+
+            // Use commitNow to ensure the fragment is immediately attached to avoid the IllegalStateException
+            parentFragmentManager.commitNow {
+                replace(R.id.previewer_frame, previewerFragment)
+            }
+
+            val previewerTabLayout = requireView().findViewById<TabLayout>(R.id.previewer_tab_layout)
+            previewerTabLayout.removeAllTabs()
+            previewerTabLayout.setBackgroundColor(backgroundColor)
+
+            // Now that the fragment is attached, we can safely access its viewModel
+            val previewerViewModel = previewerFragment.viewModel
+
+            lifecycleScope.launch {
+                val cardsWithEmptyFronts = previewerViewModel.cardsWithEmptyFronts?.await()
+                for ((index, templateName) in previewerViewModel.getTemplateNames().withIndex()) {
+                    val tabTitle =
+                        if (cardsWithEmptyFronts?.get(index) == true) {
+                            getString(R.string.card_previewer_empty_front_indicator, templateName)
+                        } else {
+                            templateName
+                        }
+                    val newTab = previewerTabLayout.newTab().setText(tabTitle)
+                    previewerTabLayout.addTab(newTab)
+                }
+                previewerTabLayout.selectTab(previewerTabLayout.getTabAt(previewerViewModel.getCurrentTabIndex()))
+                previewerTabLayout.addOnTabSelectedListener(
+                    object : OnTabSelectedListener {
+                        override fun onTabSelected(tab: TabLayout.Tab) {
+                            Timber.v("Selected tab %d", tab.position)
+                            previewerViewModel.onTabSelected(tab.position)
+                        }
+
+                        override fun onTabUnselected(tab: TabLayout.Tab) {
+                            // do nothing
+                        }
+
+                        override fun onTabReselected(tab: TabLayout.Tab) {
+                            // do nothing
+                        }
+                    },
+                )
+            }
+        }
     }
 
     /**
@@ -848,7 +1037,7 @@ class NoteEditor :
         setNote(editorNote, FieldChangeType.onActivityCreation(shouldReplaceNewlines()))
         if (addNote) {
             noteTypeSpinner!!.onItemSelectedListener = SetNoteTypeListener()
-            mainToolbar.setTitle(R.string.menu_add)
+            mainToolbar?.setTitle(R.string.menu_add)
             // set information transferred by intent
             var contents: String? = null
             val tags = requireArguments().getStringArray(EXTRA_TAGS)
@@ -891,7 +1080,7 @@ class NoteEditor :
             if (caller == NoteEditorCaller.ADD_IMAGE) lifecycleScope.launch { handleImageIntent(intent) }
         } else {
             noteTypeSpinner!!.onItemSelectedListener = EditNoteTypeListener()
-            mainToolbar.setTitle(R.string.cardeditor_title_edit_card)
+            mainToolbar?.setTitle(R.string.cardeditor_title_edit_card)
         }
         requireView().findViewById<View>(R.id.CardEditorTagButton).setOnClickListener {
             Timber.i("NoteEditor:: Tags button pressed... opening tags editor")
@@ -1055,7 +1244,7 @@ class NoteEditor :
             KeyEvent.KEYCODE_NUMPAD_ENTER, KeyEvent.KEYCODE_ENTER ->
                 if (event.isCtrlPressed) {
                     // disable it in case of image occlusion
-                    if (allowSaveAndPreview()) {
+                    if (allowSave()) {
                         launchCatchingTask { saveNote() }
                         return true
                     }
@@ -1093,7 +1282,7 @@ class NoteEditor :
             KeyEvent.KEYCODE_P -> {
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+P: Preview Pressed")
-                    if (allowSaveAndPreview()) {
+                    if (allowPreview()) {
                         launchCatchingTask { performPreview() }
                         return true
                     }
@@ -1276,6 +1465,7 @@ class NoteEditor :
         // update UI based on the result, noOfAddedCards
         onNoteAdded()
         updateFieldsFromStickyText()
+        loadNoteEditorPreviewer()
     }
 
     @VisibleForTesting
@@ -1390,6 +1580,7 @@ class NoteEditor :
             closeNoteEditor()
             return
         }
+        loadNoteEditorPreviewer()
     }
 
     /**
@@ -1431,9 +1622,10 @@ class NoteEditor :
     override fun onPrepareMenu(menu: Menu) {
         if (addNote) {
             menu.findItem(R.id.action_copy_note).isVisible = false
-            val iconVisible = allowSaveAndPreview()
-            menu.findItem(R.id.action_save).isVisible = iconVisible
-            menu.findItem(R.id.action_preview).isVisible = iconVisible
+            val saveIconVisible = allowSave()
+            val previewIconVisible = allowPreview()
+            menu.findItem(R.id.action_save).isVisible = saveIconVisible
+            menu.findItem(R.id.action_preview).isVisible = previewIconVisible
         } else {
             // Hide add note item if fragment is in fragmented activity
             // because this item is already present in CardBrowser
@@ -1463,9 +1655,15 @@ class NoteEditor :
      * option to save/preview the card as it has a built in option and the user is notified
      * when the card is saved successfully
      */
-    private fun allowSaveAndPreview(): Boolean =
+    private fun allowSave(): Boolean =
         when {
             addNote && currentNotetypeIsImageOcclusion() -> false
+            else -> true
+        }
+
+    private fun allowPreview(): Boolean =
+        when {
+            (addNote && currentNotetypeIsImageOcclusion()) || fragmented -> false
             else -> true
         }
 
@@ -1473,14 +1671,14 @@ class NoteEditor :
         when (item.itemId) {
             R.id.action_preview -> {
                 Timber.i("NoteEditor:: Preview button pressed")
-                if (allowSaveAndPreview()) {
+                if (allowPreview()) {
                     launchCatchingTask { performPreview() }
                 }
                 return true
             }
             R.id.action_save -> {
                 Timber.i("NoteEditor:: Save note button pressed")
-                if (allowSaveAndPreview()) {
+                if (allowSave()) {
                     launchCatchingTask { saveNote() }
                 }
                 return true
@@ -2237,6 +2435,10 @@ class NoteEditor :
         enabled: Boolean,
     ) {
         // Listen for changes in the first field so we can re-check duplicate status.
+        // Add preview refresh TextWatcher if in fragmented mode
+        if (fragmented) {
+            editText!!.addTextChangedListener(noteEditorWatcher)
+        }
         editText!!.addTextChangedListener(EditFieldTextWatcher(index))
         if (index == 0) {
             editText.onFocusChangeListener =
@@ -2427,7 +2629,7 @@ class NoteEditor :
     private fun updateToolbar() {
         val editorLayout = requireView().findViewById<View>(R.id.note_editor_layout)
         val bottomMargin =
-            if (shouldHideToolbar()) {
+            if (shouldHideToolbar() || fragmented) {
                 0
             } else {
                 resources
@@ -2789,8 +2991,9 @@ class NoteEditor :
             // If a new column was selected then change the key used to map from mCards to the column TextView
             // Timber.i("NoteEditor:: onItemSelected() fired on mNoteTypeSpinner");
             // In case the type is changed while adding the card, the menu options need to be invalidated
-            mainToolbar.invalidateMenu()
+            mainToolbar?.invalidateMenu()
             changeNoteType(allNoteTypeIds!![pos])
+            loadNoteEditorPreviewer()
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -3036,5 +3239,12 @@ class NoteEditor :
             !AnkiDroidApp.instance
                 .sharedPrefs()
                 .getBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, true)
+
+        // Fragmented mode previewer refresh delay
+        private val REFRESH_NOTE_EDITOR_PREVIEW_DELAY = 1.seconds
+
+        // Keys for saving pane weights in SharedPreferences
+        private const val PREF_NOTE_EDITOR_PANE_WEIGHT = "noteEditorPaneWeight"
+        private const val PREF_PREVIEWER_PANE_WEIGHT = "previewerPaneWeight"
     }
 }
