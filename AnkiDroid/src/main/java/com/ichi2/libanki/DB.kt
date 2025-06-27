@@ -26,8 +26,7 @@ import androidx.annotation.WorkerThread
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 
 /**
- * Database layer for AnkiDroid. Wraps an SupportSQLiteDatabase (provided by either the Rust backend
- * or the Android framework), and provides some helpers on top.
+ * Database accessor for AnkiDroid, providing convenience methods (e.g. [queryStringList])
  */
 // TODO: see if we can turn query methods into extensions
 //  probably hard due to the casting of varargs Any to Array<out Any?>
