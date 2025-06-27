@@ -166,7 +166,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
         }
 
-        private fun showDeck(
+        private suspend fun showDeck(
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: Int,
@@ -189,7 +189,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                 if (!isEmptyDeck) {
                     intentToReviewDeckFromShorcuts(context, deckData.deckId)
                 } else {
-                    DeckOptionsDestination(deckData.deckId, deckData.filtered).toIntent(context)
+                    DeckOptionsDestination.fromDeckId(deckData.deckId).toIntent(context)
                 }
             val pendingIntent =
                 PendingIntent.getActivity(
