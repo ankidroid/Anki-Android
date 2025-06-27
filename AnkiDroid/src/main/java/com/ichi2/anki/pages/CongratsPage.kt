@@ -290,6 +290,14 @@ class DeckOptionsDestination(
         } else {
             DeckOptions.getIntent(context, deckId)
         }
+
+    companion object {
+        suspend fun fromDeckId(deckId: DeckId): DeckOptionsDestination =
+            DeckOptionsDestination(
+                deckId = deckId,
+                isFiltered = withCol { decks.isFiltered(deckId) },
+            )
+    }
 }
 
 sealed class UnburyState {

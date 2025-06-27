@@ -283,7 +283,7 @@ class DeckPickerWidgetConfig :
      */
     private suspend fun getTotalSelectableDecks(): Int =
         withContext(Dispatchers.IO) {
-            SelectableDeck.fromCollection(includeFiltered = false).size
+            SelectableDeck.fromCollection(includeFiltered = true).size
         }
 
     /** Updates the view according to the saved preference for appWidgetId.*/
