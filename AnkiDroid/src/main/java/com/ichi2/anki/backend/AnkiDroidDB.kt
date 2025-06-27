@@ -33,19 +33,15 @@ import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
 import timber.log.Timber
 
 /**
- * Database layer for AnkiDroid. Wraps an SupportSQLiteDatabase (provided by either the Rust backend
- * or the Android framework), and provides some helpers on top.
+ * Database layer for AnkiDroid. Wraps a [SupportSQLiteDatabase], and provides some helpers on top.
  *
- * @param database The collection, which is actually a SQLite database.
+ * @param database the SQLite database containing the collection data.
  */
 class AnkiDroidDB(
     val database: SupportSQLiteDatabase,
 ) : DB {
     var mod = false
 
-    /**
-     * Closes a previously opened database connection.
-     */
     override fun close() {
         try {
             database.close()
@@ -63,12 +59,6 @@ class AnkiDroidDB(
         vararg selectionArgs: Any,
     ): Cursor = database.query(query, selectionArgs)
 
-    /**
-     * Convenience method for querying the database for a single integer result.
-     *
-     * @param query The raw SQL query to use.
-     * @return The integer result of the query.
-     */
     override fun queryScalar(
         query: String,
         vararg selectionArgs: Any,
@@ -83,7 +73,6 @@ class AnkiDroidDB(
         return scalar
     }
 
-    @Throws(SQLException::class)
     override fun queryString(
         query: String,
         vararg bindArgs: Any,
@@ -110,12 +99,6 @@ class AnkiDroidDB(
         return scalar
     }
 
-    /**
-     * Convenience method for querying the database for an entire column of long.
-     *
-     * @param query The SQL query statement.
-     * @return An ArrayList with the contents of the specified column.
-     */
     override fun queryLongList(
         query: String,
         vararg bindArgs: Any,
@@ -129,12 +112,6 @@ class AnkiDroidDB(
         return results
     }
 
-    /**
-     * Convenience method for querying the database for an entire column of String.
-     *
-     * @param query The SQL query statement.
-     * @return An ArrayList with the contents of the specified column.
-     */
     override fun queryStringList(
         query: String,
         vararg bindArgs: Any,
@@ -162,11 +139,6 @@ class AnkiDroidDB(
         database.execSQL(sql, `object`)
     }
 
-    /**
-     * WARNING: This is a convenience method that splits SQL scripts into separate queries with semicolons (;)
-     * as the delimiter. Only use this method on internal functions where we can guarantee that the script does
-     * not contain any non-statement-terminating semicolons.
-     */
     @KotlinCleanup("""Use Kotlin string. Change split so that there is no empty string after last ";".""")
     override fun executeScript(sql: String) {
         val queries = java.lang.String(sql).split(";")
@@ -175,7 +147,6 @@ class AnkiDroidDB(
         }
     }
 
-    /** update must always be called via DB in order to mark the db as changed  */
     override fun update(
         table: String,
         values: ContentValues,
@@ -183,15 +154,11 @@ class AnkiDroidDB(
         whereArgs: Array<String>?,
     ): Int = database.update(table, SQLiteDatabase.CONFLICT_NONE, values, whereClause, whereArgs)
 
-    /** insert must always be called via DB in order to mark the db as changed  */
     override fun insert(
         table: String,
         values: ContentValues,
     ): Long = database.insert(table, SQLiteDatabase.CONFLICT_NONE, values)
 
-    /**
-     * @return The full path to this database file.
-     */
     override val path: String
         get() = database.path ?: ":memory:"
 

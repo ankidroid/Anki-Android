@@ -48,11 +48,11 @@ object BackendDBUtils {
 /**
  * The default AnkiDroid SQLite database callback.
  *
- * IMPORTANT: this disables the default Android behaviour of removing the file if corruption
+ * IMPORTANT: [SupportSQLiteOpenHelperCallback] disables the default Android behaviour of removing the file if corruption
  * is encountered.
  *
  * We do not handle versioning or connection config using the framework APIs, so those methods
- * do nothing in our implementation. However, we on corruption events we want to send messages but
+ * do nothing in our implementation. However, on corruption events we want to send messages but
  * not delete the database.
  *
  * Note: this does not apply when using the Rust backend (ie for Collection)
