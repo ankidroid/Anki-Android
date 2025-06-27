@@ -180,6 +180,7 @@ class ReviewerTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(OS.MACOS, message = "issue #18693 / auto-advance in col prefs")
     fun onlyDisableWhiteboardAppearsInAppBarIfAllAppBarButtonsAreDisabledWithWhiteboard() {
         disableAllReviewerAppBarButtons()
 
