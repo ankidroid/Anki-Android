@@ -882,6 +882,7 @@ open class Reviewer :
             }
         }
         menu.findItem(R.id.action_toggle_auto_advance).apply {
+            if (actionButtons.status.autoAdvanceMenuIsNeverShown()) return@apply
             // always show if enabled (to allow disabling)
             // otherwise show if it will have an effect
             isVisible = automaticAnswer.isEnabled() || automaticAnswer.isUsable()
