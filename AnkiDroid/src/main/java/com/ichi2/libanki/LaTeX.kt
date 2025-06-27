@@ -44,6 +44,38 @@ data class ExtractedLatexOutput(
     }
 }
 
+@LibAnkiAlias("on_card_did_render")
+fun onCardDidRender(
+    col: Collection,
+    output: TemplateManager.TemplateRenderContext.TemplateRenderOutput,
+    ctx: TemplateManager.TemplateRenderContext,
+) {
+    output.questionText =
+        renderLatex(
+            output.questionText,
+            ctx.noteType(),
+            col,
+        )
+    output.answerText = renderLatex(output.answerText, ctx.noteType(), col)
+}
+
+/**
+ * Convert embedded latex tags in text to image links.
+ */
+@LibAnkiAlias("render_latex")
+fun renderLatex(
+    html: String,
+    model: NotetypeJson,
+    col: Collection,
+): String {
+    val (html, err) = renderLatexRetuningErrors(html, model, col)
+    val result = StringBuilder(html)
+    if (err.isNotEmpty()) {
+        result.append(err.joinToString("\n"))
+    }
+    return result.toString()
+}
+
 /**
  * Returns (text, errors).
  * errors will be non-empty if LaTeX failed to render.
