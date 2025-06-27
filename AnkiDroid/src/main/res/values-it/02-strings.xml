@@ -67,11 +67,11 @@
     <string name="enable_whiteboard" maxLength="28">Abilita la lavagna</string>
     <string name="disable_whiteboard">Disabilita la lavagna</string>
     <string name="show_whiteboard">Mostra lavagna</string>
-    <string name="enable_eraser" maxLength="28">Enable eraser</string>
-    <string name="disable_eraser" maxLength="28">Disable eraser</string>
+    <string name="enable_eraser" maxLength="28">Abilita gomma</string>
+    <string name="disable_eraser" maxLength="28">Disabilita gomma</string>
     <string name="hide_whiteboard" maxLength="28">Nascondi lavagna</string>
     <string name="clear_whiteboard" maxLength="28">Pulisci lavagna</string>
-    <string name="replay_media" maxLength="28">Replay media</string>
+    <string name="replay_media" maxLength="28">Riproduci media</string>
     <string name="leech_suspend_notification">Carta contrassegnata come sanguisuga e sospesa</string>
     <string name="leech_notification">Carta contrassegnata come sanguisuga</string>
     <string name="webview_crash_unknown">Errore sconosciuto</string>
@@ -84,14 +84,14 @@
     <string name="webview_crash_loop_dialog_content">La WebView sistema non è riuscita a rendere la carta «%1$s».\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Contrassegni</string>
     <!-- Custom study options -->
-    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <string name="custom_study_loading_tags">Costruendo lista di tag&#8230;</string>
     <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+sepolto</item>
         <item quantity="other">+sepolto</item>
     </plurals>
-    <string name="studyoptions_total_new_label">Total new cards</string>
-    <string name="studyoptions_total_label">Total cards</string>
+    <string name="studyoptions_total_new_label">Totale carte nuove</string>
+    <string name="studyoptions_total_label">Carte totali</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Modifica nota</string>
     <string name="discard">Scarta</string>
@@ -106,7 +106,7 @@
     <string name="field_remapping">%1$s (di \'%2$s\')</string>
     <string name="confirm_map_cards_to_nothing">Verranno eliminate eventuali carte senza connessione. Se una nota non ha nessuna carta rimanente, sarà perduta. Sei sicuro/a di voler continuare?</string>
     <string name="missing_note_type">Nessun tipo di nota trovato</string>
-    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (vuoto)</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Limite di tempo raggiunto</string>
     <plurals name="timebox_reached">
@@ -190,14 +190,14 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Sfondo</string>
     <string name="choose_an_image" maxLength="41">Scegli un\'immagine</string>
-    <string name="remove_wallpaper_image" maxLength="41">Remove background</string>
+    <string name="remove_wallpaper_image" maxLength="41">Rimuovi sfondo</string>
     <string name="remove_background_image">Rimuovere lo sfondo?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Ripristina predefiniti</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Vuoto</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
-    <string name="white_board_eraser_enabled">Eraser mode activated</string>
-    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string name="white_board_eraser_enabled">Modalità gomma attivata</string>
+    <string name="white_board_eraser_disabled">Modalità gomma disattivata</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Salvataggio dell\'immagine della lavagna fallito. %s</string>
     <string name="white_board_image_saved">Immagine lavagna salvata in %s</string>
@@ -239,7 +239,7 @@
     <string name="note_editor_image_too_large">L\'immagine è troppo grande, per favore inserisci l\'immagine manualmente</string>
     <string name="note_editor_video_too_large">Il file video è troppo grande, per favore inserisci il video manualmente.</string>
     <string name="note_editor_audio_too_large">Il file audio è troppo grande,  inserisci manualmente il file audio.</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android backup in progress. Please try again</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Backup di Android in corso. Per favore riprova</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Utilizza iManager per consentire ad AnkiDroid di aggiungere scorciatoie</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">La tua schermata iniziale non consente ad AnkiDroid di aggiungere scorciatoie</string>
     <string name="create_shortcut_error">Errore nell\'aggiunta della scorciatoia: %s</string>
@@ -255,7 +255,7 @@
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Scarica il mazzo</string>
-    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Open in Browser</string>
+    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Apri nel browser</string>
     <string name="try_again">Riprova</string>
     <string name="cancel_download">Annulla lo scaricamento</string>
     <string name="cancel_download_question_title">Annullare lo scaricamento?</string>
@@ -308,18 +308,18 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Carte</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Note</string>
     <string name="toggle_cards_notes">Passa a Carte/Note</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
-    <string name="browser_options_dialog_heading">Browser options</string>
+    <string name="truncate_content_help">Tronca l\'altezza di ogni riga del browser per mostrare solo le prime 3 righe di contenuto</string>
+    <string name="browser_options_dialog_heading">Opzioni browser</string>
     <string name="audio_saved">Registrazione salvata</string>
     <string name="deleting_selected_notes">Eliminazione delle note selezionate</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Tap a voice to listen</string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use</string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Clicca su una voce per ascoltare</string>
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">La voce deve essere installata prima dell\'uso</string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Usa comunque</string>
     <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Errore sintetizzatore vocale (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">Internet</string>
-    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Install</string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Failed to open text to speech settings</string>
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Installa</string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Non è stato possibile aprire le impostazioni della voce</string>
     <string name="shared_decks_login_required">Accedi per scaricare altri mazzi</string>
     <string name="deck_description_field_hint">Descrizione</string>
     <string name="failed_to_copy">Copia non riuscita</string>
@@ -329,8 +329,8 @@
         <item quantity="other">%d carte non sepolte</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Riposiziona</string>
-    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
-    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Avanti</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Indietro</string>
     <string name="start_recording">Registra</string>
     <string name="stop_recording">Stop</string>
     <string name="play_recording">Riproduci</string>
@@ -340,20 +340,20 @@
     <string name="orphan_note_message">L\'eliminazione di questo tipo di carta lascerà alcune note senza alcuna carta.</string>
     <string name="voice_not_supported">Voce non supportata. Scegli un\'altra voce o installa un motore vocale.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
-    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
-    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
-    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Selettore mazzi</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Elimina mazzo senza conferma</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Editor note</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Seleziona mazzo</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Seleziona tipo di nota</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Editor dei tag</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Editor template carte</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
-    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Modifica stile</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
-    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
-    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
-    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Modifica l\'aspetto del browser</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">L\'azione utente %s non è impostata in questo tipo di nota. Si prega di configurarla</string>
+    <string name="directory_inaccessible_info">Scopri di più su come ripristinare l\'accesso qui %s o vai alle impostazioni per aggiornare la cartella di raccolta.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
-    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Richiesto aggiornamento dello scheduler</string>
 </resources>

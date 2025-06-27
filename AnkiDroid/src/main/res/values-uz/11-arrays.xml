@@ -94,7 +94,7 @@
     <string name="gesture_flag_remove" maxLength="41">Bayroqni olib tashlash</string>
     <string name="gesture_page_up" maxLength="41">Bir bet yuqoriga</string>
     <string name="gesture_page_down" maxLength="41">Bir bet pastga</string>
-    <string name="gesture_toggle_whiteboard" maxLength="41">Oq taxtani yoqish/oʻchirish</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Yozuv taxtasini yoqish/oʻchirish</string>
     <string name="gesture_toggle_eraser" maxLength="41">Oʻchirgʻichni yoqish/oʻchirish</string>
     <string name="gesture_show_hint" maxLength="41">Ishorani koʻrsatish</string>
     <string name="gesture_show_all_hints" maxLength="41">Barcha ishoralarni koʻrsatish</string>

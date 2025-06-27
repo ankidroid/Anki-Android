@@ -73,7 +73,7 @@
     <string name="clear_whiteboard" maxLength="28">화이트 보드 지우기</string>
     <string name="replay_media" maxLength="28">미디어 다시 재생</string>
     <string name="leech_suspend_notification">카드에 leech 태그를 붙이고 비활성 시키기</string>
-    <string name="leech_notification">카드에 leech 태그를 붙이기</string>
+    <string name="leech_notification">카드에 leech 태그를 붙임</string>
     <string name="webview_crash_unknown">알 수 없는 오류</string>
     <string name="webview_crash_unknwon_detailed">WebView의 내부적인 오류입니다.</string>
     <string name="webview_crash_oom">메모리 부족</string>

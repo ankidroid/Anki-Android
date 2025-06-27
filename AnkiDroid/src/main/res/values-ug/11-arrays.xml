@@ -95,7 +95,7 @@
     <string name="gesture_page_up" maxLength="41">ئالدى بەت</string>
     <string name="gesture_page_down" maxLength="41">كەينى بەت</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">ئاق دوسكىنى ئالماشتۇر</string>
-    <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
+    <string name="gesture_toggle_eraser" maxLength="41">ئۆچۈرگۈچ ئالماشتۇر</string>
     <string name="gesture_show_hint" maxLength="41">ئەسكەرتىش كۆرسەت</string>
     <string name="gesture_show_all_hints" maxLength="41">ھەممە ئەسكەرتىشنى كۆرسەت</string>
     <string name="record_voice" maxLength="41">ئۈنگە ئال</string>

@@ -66,8 +66,8 @@
     <string name="answering_error_report">Xatolik haqida xabar berish</string>
     <string name="storage_full_message">AnkiDroidʼni ochish uchun yetarlicha boʻsh joy mavjud emas. Davom etish uchun qurilmangizda biroz joy boʻshating.</string>
     <string name="repair_deck_dialog">Rostdan ham maʼlumotlar bazasini tuzatmoqchimisiz?\n\nUrinishni boshlashdan oldin uni nusxasi “%s” ostjildiga koʻchiriladi.</string>
-    <string name="intent_aedict_empty">“standart” turkumi boʻsh</string>
-    <string name="intent_aedict_category">AnkiDroidʼga kartalar qoʻshish uchun barcha Bloknot turkumlarini olib tashlang yoki \"standart\" deb nomlangan turkumni qoʻshing</string>
+    <string name="intent_aedict_empty">“default” turkumi boʻsh</string>
+    <string name="intent_aedict_category">AnkiDroidʼga kartalar qoʻshish uchun barcha Bloknot turkumlarini olib tashlang yoki \"default\" deb nomlangan turkumni qoʻshing</string>
     <string name="custom_study_new_extend">Bugungi yangi kartalar cheklovini oshirish/kamaytirish (“-3”)</string>
     <string name="custom_study_rev_extend">Bugungi takrorlanadigan kartalar cheklovini oshirish/kamaytirish (“-3”)</string>
     <string name="custom_study_forgotten">Oʻtgan x kun ichida unutilgan kartalarni takrorlash:</string>
@@ -168,7 +168,7 @@
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Bug haqida xabar berish</string>
     <string name="help_title_support_ankidroid" maxLength="28">AnkiDroidʼga yordam bering</string>
-    <string name="help_item_support_opencollective_donate">Ehson qilish</string>
+    <string name="help_item_support_opencollective_donate">Xayriya qilish</string>
     <string name="help_item_support_develop_ankidroid">Dasturlash</string>
     <string name="help_item_support_rate_ankidroid">Baho berish</string>
     <string name="help_item_support_other_ankidroid">Boshqa</string>

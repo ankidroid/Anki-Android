@@ -49,7 +49,7 @@
     <string name="error_reporting_choice" maxLength="41">Xatolik haqida xabar berish rejimi</string>
     <string name="feedback_disclaimer">Ogohlantirish: Biz sizni elektron pochta manzilingiz, telefon raqamingiz yoki telefoningiz IMEI kabi shaxsiy maʼlumotlarni toʻplamaymiz. Biz qurilmangiz haqida baʼzi maʼlumotlarni toʻplaymiz, masalan, ishlab chiqaruvchi, Android modeli va versiyasi, shuningdek, xabar qilingan xatolarning oʻzi va ularning paydo boʻlishiga olib kelgan qadamlar.</string>
     <string name="feedback_title">AnkiDroid haqida fikr-mulohaza</string>
-    <string name="feedback_default_text">Fikr-mulohazangiz yoki duch kelayotgan xatoliklaringiz haqida maʼlumot kiriting.</string>
+    <string name="feedback_default_text">Fikr-mulohazalaringiz yoki duch kelayotgan xatoliklaringiz haqida maʼlumot kiriting.</string>
     <string name="feedback_auto_toast_text">AnkiDroid muammoga duch keldi; hisobot dasturchilarga joʻnatilmoqda&#8230;</string>
     <string name="feedback_for_manual_toast_text">Dasturchilar uchun xatolik haqida hisobot tayyorlanmoqda&#8230;</string>
     <string name="feedback_copy_debug">Debag maʼlumotlaridan nusxa olish</string>

@@ -20,7 +20,7 @@ Anki Desktop orqali yoki toʻgʻridan-toʻgʻri AnkiDroid orqali material qoʻsh
 
 ★ Qoʻshimcha funksiyalar
 • javoblarni yozish (ixtiyoriy)
-• chizish uchun oq taxta
+• Yozuv taxtasi
 • karta muharriri/qoʻshuvchisi
 • karta brauzeri
 • planshetga moslashtirilgan

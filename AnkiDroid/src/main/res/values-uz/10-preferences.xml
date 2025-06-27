@@ -60,7 +60,7 @@
     <string name="pref_cat_reviewing" maxLength="41">Takrorlash</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sinxronizatsiya</string>
     <string name="pref_cat_scheduling" maxLength="41">Rejalashtirish</string>
-    <string name="pref_cat_whiteboard" maxLength="41">Oq taxta</string>
+    <string name="pref_cat_whiteboard" maxLength="41">Yozuv taxtasi</string>
     <string name="pref_cat_appearance" maxLength="41">Koʻrinishi</string>
     <string name="pref_cat_themes" maxLength="41">Mavzular</string>
     <string name="pref_cat_gestures" maxLength="41">Qoʻl ishoralari</string>
@@ -192,8 +192,8 @@
     <string name="custom_buttons_setting_always_show">Har doim koʻrsatilsin</string>
     <string name="custom_buttons_setting_if_room">Joy boʻlsa koʻrsatilsin</string>
     <string name="custom_buttons_setting_menu_only">Faqat menyuda</string>
-    <string name="reset_custom_buttons" maxLength="41">Standartga qaytarish</string>
-    <string name="reset_settings_to_default">Sozlamalarni standartga qaytarish</string>
+    <string name="reset_custom_buttons" maxLength="41">Birlamchiga qaytarish</string>
+    <string name="reset_settings_to_default">Sozlamalarni birlamchiga qaytarish</string>
     <string name="reset">Qayta tiklash</string>
     <string name="thirdparty_apps_title" maxLength="41">Uchinchi tomon API ilovalari</string>
     <string name="thirdparty_apps_summary">Lugʻatlar, yordamchi dasturlar kabi AnkiDroid APIʼdan foydalanadigan ilovalar roʻyxatini koʻrish.</string>
@@ -216,7 +216,7 @@
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Ishlatilmaydi</string>
     <string name="custom_sync_server_help2"><![CDATA[        AnkiWeb bilan sinxronlashga muqobil sifatida,
         sinxronlash uchun oʻz serveringizdan foydalanishingiz mumkin.
-        Agar sozlanmagan boʻlsa, oʻrniga standart AnkiWeb serveri ishlatiladi.
+        Agar sozlanmagan boʻlsa, oʻrniga birlamchi AnkiWeb serveri ishlatiladi.
         <a href="%s">Batafsil maʼlumot</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Sinxronizatsiya URLʼi</string>
@@ -261,7 +261,7 @@
     <string name="license">Litsenziya</string>
     <string name="license_description"><![CDATA[AnkiDroid <a href=\"%1$s\">GPL-3.0</a> va <a href=\"%2$s\">AGPL-3.0</a> litsenziyalari ostida chiqarilgan, manba kodi <a href=\"%3$s\">GitHub</a>da mavjud]]></string>
     <string name="other_licenses"><![CDATA[AnkiDroid shuningdek, turli xil ochiq manba <a href=\"%1$s\">litsenziyalar</a> ostida litsenziyalangan uchinchi tomon kutubxonalari va piktogrammalaridan foydalanadi.]]></string>
-    <string name="donate_description"><![CDATA[<a href=\"%1$s\">Ehson qilish</a> orqali AnkiDroidʼni rivojini qoʻllab-quvvatlashingiz mumkin. Miqdori qancha boʻlishidan qatʼiy nazar, chuqur minnatdorchilik bildiramiz.]]></string>
+    <string name="donate_description"><![CDATA[<a href=\"%1$s\">Xayriya qilish</a> orqali AnkiDroidʼni rivojini qoʻllab-quvvatlashingiz mumkin. Miqdori qancha boʻlishidan qatʼiy nazar, chuqur minnatdorchilik bildiramiz.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Qoʻl ishorasini qoʻshish</string>
     <string name="binding_add_key">Tugma qoʻshish</string>
@@ -374,11 +374,11 @@
     <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Yuqorida</string>
     <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Pastda</string>
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Hech qaysi</string>
-    <string name="toolbar" maxLength="41">Toolbar</string>
-    <string name="toolbar_actions" maxLength="41">Toolbar actions</string>
-    <string name="toolbar_position" maxLength="41">Toolbar position</string>
-    <string name="new_study_screen" maxLength="41">New study screen</string>
-    <string name="new_study_screen_summary">Improved study screen that will succeed the current one. Available for testing and feedback</string>
+    <string name="toolbar" maxLength="41">Asboblar paneli</string>
+    <string name="toolbar_actions" maxLength="41">Asboblar paneli amallari</string>
+    <string name="toolbar_position" maxLength="41">Asboblar paneli joylashuvi</string>
+    <string name="new_study_screen" maxLength="41">Yangi oʻrganish ekrani</string>
+    <string name="new_study_screen_summary">Hozirgi oʻrganish ekrani oʻrnini bosadigan takomillashtirilgan oʻrganish ekrani. Sinashingiz yoki fikr-mulohazalaringizni yuborishingiz mumkin</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Sozlamalarni ochish</string>
 </resources>

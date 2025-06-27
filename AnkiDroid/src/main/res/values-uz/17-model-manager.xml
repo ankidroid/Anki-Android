@@ -72,13 +72,13 @@
     <string name="card_template_browser_appearance_summary">Karta brauzeri kartalaringizni koʻrsatish uchun foydalanadigan shablonni kiriting. Qisqaroq javob koʻsatish uchun bundan foydalaning.\n\n“{{Mamlakat}}ning poytaxti:”ning oldi taraf shabloni\nkarta brauzerida\n“Poytaxti: {{Mamlakat}}” qilib qisqartirish mumkin.</string>
     <string name="card_template_browser_appearance_question_format">Savol formati</string>
     <string name="card_template_browser_appearance_answer_format">Javob formati</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Standart qiymatlar qayta tiklansinmi?</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Birlamchi qiymatlar qayta tiklansinmi?</string>
     <string name="card_template_browser_appearance_saving_note">Ushbu oʻzgarishlar karta shabloni oʻzgarganda qoʻllanadi</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Dastani oʻzgartirish (yoniq)</string>
     <string name="card_template_editor_deck_override_off">Dastani oʻzgartirish (oʻchiq)</string>
-    <string name="model_manager_deck_override_added_message">‘%2$s’ dastasi ‘%1$s’ uchun standart dasta sifatida sozlandi</string>
-    <string name="model_manager_deck_override_removed_message">‘%s’ uchun standart dasta olib tashlandi</string>
+    <string name="model_manager_deck_override_added_message">‘%2$s’ dastasi ‘%1$s’ uchun birlamchi dasta sifatida sozlandi</string>
+    <string name="model_manager_deck_override_removed_message">‘%s’ uchun birlamchi dasta olib tashlandi</string>
     <string name="deck_override_explanation">Yangi “%s” kartalarini joylashtirish uchun dastani tanlang</string>
     <string name="deck_picker_dialog_filter_decks" maxLength="28">Dastalarni filtrlash</string>
 </resources>

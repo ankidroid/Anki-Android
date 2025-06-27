@@ -203,7 +203,7 @@
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="show_deck_title" maxLength="41">Pakli nevének megjelenítése</string>
     <string name="accessibility" maxLength="41">Kisegítő lehetőségek</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Vágólap képeket PNG-ként illeszt be</string>

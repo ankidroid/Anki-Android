@@ -167,7 +167,7 @@
     <string name="show_estimates" maxLength="41">버튼에 시간 표시</string>
     <string name="show_estimates_summ">답변 버튼에 다음 복습 시간 표시</string>
     <string name="show_large_answer_buttons" maxLength="41">버튼 크기 크게</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons_summ">답 버튼을 두 줄로 표시합니다.</string>
     <string name="show_top_bar" maxLength="41">상단 바 표시</string>
     <string name="show_top_bar_summary">카드 수, 타이머, 플래그, 강조를 상단 바에 표시합니다.</string>
     <string name="show_progress" maxLength="41">남은 개수 표시</string>

@@ -61,16 +61,16 @@
     <string name="no_tags">Hali hech qanday teg qo\'shmagansiz</string>
     <string name="updated_version">%s versiyasiga yangilandi</string>
     <!-- Reviewer.kt (Study Screen) -->
-    <string name="save_whiteboard" maxLength="28">Oq taxtani saqlash</string>
+    <string name="save_whiteboard" maxLength="28">Yozuv taxtasini saqlash</string>
     <string name="enable_stylus" maxLength="28">Qalam rejimini yoqish</string>
     <string name="disable_stylus">Qalam rejimini oʻchirish</string>
-    <string name="enable_whiteboard" maxLength="28">Oq taxtani yoqish</string>
-    <string name="disable_whiteboard">Oq taxtani oʻchirish</string>
-    <string name="show_whiteboard">Oq taxtani koʻrsatish</string>
+    <string name="enable_whiteboard" maxLength="28">Yozuv taxtasini yoqish</string>
+    <string name="disable_whiteboard">Yozuv taxtasini oʻchirish</string>
+    <string name="show_whiteboard">Yozuv taxtasini koʻrsatish</string>
     <string name="enable_eraser" maxLength="28">Oʻchirgʻichni yoqish</string>
     <string name="disable_eraser" maxLength="28">Oʻchirgʻichni oʻchirish</string>
-    <string name="hide_whiteboard" maxLength="28">Oq taxtani yashirish</string>
-    <string name="clear_whiteboard" maxLength="28">Oq taxtani tozalash</string>
+    <string name="hide_whiteboard" maxLength="28">Yozuv taxtasini yashirish</string>
+    <string name="clear_whiteboard" maxLength="28">Yozuv taxtasini tozalash</string>
     <string name="replay_media" maxLength="28">Mediani qayta ijro etish</string>
     <string name="leech_suspend_notification">Karta yopishqoq deb belgilandi va toʻxtatildi</string>
     <string name="leech_notification">Karta yopishqoq deb belgilandi</string>
@@ -193,15 +193,15 @@
     <string name="remove_wallpaper_image" maxLength="41">Orqa fonni olib tashlash</string>
     <string name="remove_background_image">Orqa fonni olib tashlamoqchimisiz?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Standartga qaytarish</string>
+    <string name="restore_default" maxLength="28">Birlamchiga qaytarish</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Boʻshliq</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Oʻchirgʻich rejimi yoqildi</string>
     <string name="white_board_eraser_disabled">Oʻchirgʻich rejimi oʻchirildi</string>
     <!-- Whiteboard save image message in the Study Screen -->
-    <string name="white_board_image_save_failed">Oq taxta rasmini saqlab boʻlmadi. %s</string>
-    <string name="white_board_image_saved">Oq taxta rasmi %s ga saqlandi</string>
-    <string name="title_whiteboard_editor" maxLength="28">Oq taxta muharriri</string>
+    <string name="white_board_image_save_failed">Yozuv taxtasi rasmini saqlab boʻlmadi. %s</string>
+    <string name="white_board_image_saved">Yozuv taxtasi rasmi %s ga saqlandi</string>
+    <string name="title_whiteboard_editor" maxLength="28">Yozuv taxtasi muharriri</string>
     <string name="user_is_a_robot">Avtomatik test aniqlandi. Agar siz inson boʻlsangiz, AnkiDroid qoʻllab-quvvatlash guruhiga murojaat qiling.</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Bu karta AnkiDroid qoʻllab-quvvatlamagan funksiyalarni ishlatadi. %1$s dasturchi bilan bogʻlaning yoki vikiga murojaat qiling. %2$s</string>

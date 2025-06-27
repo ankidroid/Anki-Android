@@ -70,7 +70,7 @@
     <!-- Crop function-->
     <string name="crop_image">Bu rasmni kesmoqchimisiz?</string>
     <string name="crop_button" maxLength="28">Rasmni kesish</string>
-    <string name="save_dialog_content">Joriy rasm hajmi %sMB. Stardart boʻyicha rasm hajmi 1MBʼdan oshmasligi kerak. Rasmni siqmoqchimisiz?</string>
+    <string name="save_dialog_content">Joriy rasm hajmi %sMB. Birlamchi rasm hajmi 1MBʼdan oshmasligi kerak. Rasmni siqmoqchimisiz?</string>
     <string name="select_image_failed">"Rasmni tanlab boʻlmadi, iltimos qayta urinib koʻring"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Maydon tarkibi</string>
     <string name="crop_image_size_notice">Rasm kesish muharriri bilan ishlash uchun juda katta. Iltimos, rasm oʻlchamini oʻzgartiring va qayta urinib koʻring!</string>
