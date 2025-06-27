@@ -19,6 +19,9 @@ package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
 import anki.card_rendering.ExtractLatexResponse
+import anki.config.ConfigKey
+import com.ichi2.libanki.utils.LibAnkiAlias
+import com.ichi2.libanki.utils.append
 import com.ichi2.utils.HtmlUtils.escape
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -40,6 +43,57 @@ data class ExtractedLatexOutput(
             )
     }
 }
+
+/**
+ * Returns (text, errors).
+ * errors will be non-empty if LaTeX failed to render.
+ */
+@LibAnkiAlias("render_latex_returning_errors")
+fun renderLatexRetuningErrors(
+    html: String,
+    model: NotetypeJson,
+    col: Collection,
+    expandClozes: Boolean = false,
+): Pair<String, List<String>> {
+    val svg = model.latexsvg
+    val header = model.latexPre
+    val footer = model.latexPost
+
+    val proto = col.backend.extractLatex(text = html, svg = svg, expandClozes = expandClozes)
+    val out = ExtractedLatexOutput.fromProto(proto)
+    val errors = mutableListOf<String>()
+    val html = out.html
+    val renderLatex = col.config.getBool(ConfigKey.Bool.RENDER_LATEX)
+
+    for (latex in out.latex) {
+        // don't need to render?
+        if (col.media.have(latex.fileName)) {
+            continue
+        }
+        if (!renderLatex) {
+            errors.append(col.tr.preferencesLatexGenerationDisabled())
+            return html to errors
+        }
+
+        val err = saveLatexImage(col, latex, header, footer, svg)
+        if (err != null) {
+            errors.append(err)
+        }
+    }
+    return html to errors
+}
+
+// deliberately set the method to always return null as
+// AnkiDroid does not support the generation of LaTeX images.
+@Suppress("unused")
+@LibAnkiAlias("_save_latex_image")
+private fun saveLatexImage(
+    col: Collection,
+    extractedLatex: ExtractedLatex,
+    header: String,
+    footer: String,
+    svg: Boolean,
+): String? = null
 
 /**
  * This class is used to detect LaTeX tags in HTML and convert them to their corresponding image
