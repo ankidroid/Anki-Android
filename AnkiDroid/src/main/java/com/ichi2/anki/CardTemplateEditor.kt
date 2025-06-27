@@ -101,7 +101,6 @@ import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.getStockNotetype
 import com.ichi2.libanki.getStockNotetypeKinds
-import com.ichi2.libanki.restoreNotetypeToStock
 import com.ichi2.libanki.utils.append
 import com.ichi2.themes.Themes
 import com.ichi2.ui.FixedEditText
@@ -976,7 +975,7 @@ open class CardTemplateEditor :
         @NeedsTest("Notetype is restored to stock kind")
         private suspend fun restoreNotetypeToStock(kind: StockNotetype.Kind? = null) {
             val nid = notetypeId { ntid = tempModel.noteTypeId }
-            undoableOp { restoreNotetypeToStock(nid, kind) }
+            undoableOp { notetypes.restoreNotetypeToStock(nid, kind) }
             onModelSaved()
             showThemedToast(
                 requireContext(),
