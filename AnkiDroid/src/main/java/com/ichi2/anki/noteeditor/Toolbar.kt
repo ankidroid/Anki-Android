@@ -35,6 +35,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
+import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.annotation.ColorInt
@@ -116,7 +117,19 @@ class Toolbar : FrameLayout {
             @IdRes id: Int,
             prefix: String,
             suffix: String,
-        ) = findViewById<View>(id).setOnClickListener { onFormat(TextWrapper(prefix, suffix)) }
+        ) = findViewById<View>(id).setOnClickListener {
+            // Attempt to open keyboard for the currently focused view in the hosting Activity
+            val activity = context as? Activity
+            if (activity != null) {
+                val currentFocus = activity.currentFocus
+                if (currentFocus != null) { // It's good to check if currentFocus is one of your editor fields
+                    val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.showSoftInput(currentFocus, InputMethodManager.SHOW_IMPLICIT)
+                }
+            }
+
+            onFormat(TextWrapper(prefix, suffix))
+        }
 
         setupButtonWrappingText(R.id.note_editor_toolbar_button_bold, "<b>", "</b>")
         setupButtonWrappingText(R.id.note_editor_toolbar_button_italic, "<i>", "</i>")
