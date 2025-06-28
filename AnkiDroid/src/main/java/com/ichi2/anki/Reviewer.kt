@@ -1677,6 +1677,18 @@ open class Reviewer :
         if (automaticAnswer.isDisabled) {
             Timber.i("Enabling auto advance")
             automaticAnswer.enable()
+
+            // Reset a flag (`hasPlayedSounds`) to false,
+            // for the following procedure scheduling automatic display
+            automaticAnswer.simulateCardFlip()
+
+            // Schedule automatic display
+            if (isDisplayingAnswer) {
+                automaticAnswer.scheduleAutomaticDisplayQuestion()
+            } else {
+                automaticAnswer.scheduleAutomaticDisplayAnswer()
+            }
+
             showSnackbar(TR.actionsAutoAdvanceActivated())
         } else {
             Timber.i("Disabling auto advance")
