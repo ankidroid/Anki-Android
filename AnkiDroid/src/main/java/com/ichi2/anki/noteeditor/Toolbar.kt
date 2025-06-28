@@ -35,7 +35,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
-import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.annotation.ColorInt
@@ -53,6 +52,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.showSoftInput
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.ViewGroupUtils
 import com.ichi2.utils.ViewGroupUtils.getAllChildrenRecursive
@@ -120,13 +120,7 @@ class Toolbar : FrameLayout {
         ) = findViewById<View>(id).setOnClickListener {
             // Attempt to open keyboard for the currently focused view in the hosting Activity
             val activity = context as? Activity
-            if (activity != null) {
-                val currentFocus = activity.currentFocus
-                if (currentFocus != null) { // It's good to check if currentFocus is a text field
-                    val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.showSoftInput(currentFocus, InputMethodManager.SHOW_IMPLICIT)
-                }
-            }
+            activity.showSoftInput()
 
             onFormat(TextWrapper(prefix, suffix))
         }

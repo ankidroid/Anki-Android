@@ -2408,14 +2408,8 @@ class NoteEditor :
                 toolbar.insertItem(0, bmp) {
                     // Attempt to open keyboard for the currently focused view in the hosting Activity
                     val activity = context as? Activity
-                    if (activity != null) {
-                        val currentFocus = activity.currentFocus
-                        if (currentFocus != null) { // It's good to check if currentFocus is a text field
-                            val imm =
-                                activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                            imm.showSoftInput(currentFocus, InputMethodManager.SHOW_IMPLICIT)
-                        }
-                    }
+                    activity.showSoftInput()
+
                     toolbar.onFormat(b.toFormatter())
                 }
             v.contentDescription = text
@@ -2980,5 +2974,22 @@ class NoteEditor :
             !AnkiDroidApp.instance
                 .sharedPrefs()
                 .getBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, true)
+    }
+}
+
+/**
+ * Shows the soft keyboard for the current focused view in the activity.
+ *
+ * It's a good practice to ensure that the `currentFocus` is an
+ * appropriate input field (e.g., EditText) before calling this function
+ */
+fun Activity?.showSoftInput() {
+    if (this != null) {
+        val currentFocus = this.currentFocus
+        if (currentFocus != null) { // It's good to check if currentFocus is a text field
+            val imm =
+                this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(currentFocus, InputMethodManager.SHOW_IMPLICIT)
+        }
     }
 }
