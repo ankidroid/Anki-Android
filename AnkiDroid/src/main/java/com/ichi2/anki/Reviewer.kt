@@ -1675,8 +1675,8 @@ open class Reviewer :
 
     private fun toggleAutoAdvance() {
         if (automaticAnswer.isDisabled) {
-            Timber.i("Enabling auto advance")
-            automaticAnswer.enable()
+            Timber.i("Re-enabling auto advance")
+            automaticAnswer.reEnable(isDisplayingAnswer)
             showSnackbar(TR.actionsAutoAdvanceActivated())
         } else {
             Timber.i("Disabling auto advance")
