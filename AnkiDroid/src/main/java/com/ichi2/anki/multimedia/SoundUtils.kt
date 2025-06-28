@@ -55,9 +55,10 @@ fun expandSounds(
     showAudioPlayButtons: Boolean,
     mediaDir: File,
 ) = replaceAvRefsWith(content, renderOutput) { tag, playTag ->
-    fun asAudio(): String {
+
+    fun AvRef.asHtmlAudio(): String {
         if (!showAudioPlayButtons) return ""
-        val playsound = "playsound:${playTag.side}:${playTag.index}"
+        val playsound = "playsound:${this.side}:${this.index}"
 
         @Language("HTML")
         val result = """<a class="replay-button soundLink" href=$playsound><span>
@@ -69,8 +70,9 @@ fun expandSounds(
         return result
     }
 
-    fun asVideo(tag: SoundOrVideoTag): String {
-        val path = Paths.get(mediaDir.absolutePath, tag.filename).toString()
+    fun SoundOrVideoTag.asHtmlVideo(): String {
+        val filename = this.filename
+        val path = Paths.get(mediaDir.absolutePath, filename).toString()
         val uri = getFileUri(path)
 
         val playsound = "${playTag.side}:${playTag.index}"
@@ -84,7 +86,7 @@ fun expandSounds(
             """<video
                     | src="$uri"
                     | controls
-                    | data-file="${tag.filename.htmlEncode()}"
+                    | data-file="${filename.htmlEncode()}"
                     | onended='$onEnded'
                     | onpause='$onPause'
                     | data-play="$playsound" controlsList="nodownload"></video>
@@ -93,11 +95,11 @@ fun expandSounds(
     }
 
     when (tag) {
-        is TTSTag -> asAudio()
+        is TTSTag -> playTag.asHtmlAudio()
         is SoundOrVideoTag -> {
-            when (tag.getType(mediaDir)) {
-                Type.AUDIO -> asAudio()
-                Type.VIDEO -> asVideo(tag)
+            when (tag.getTagType(mediaDir)) {
+                Type.AUDIO -> playTag.asHtmlAudio()
+                Type.VIDEO -> tag.asHtmlVideo()
             }
         }
     }
@@ -132,8 +134,10 @@ suspend fun getAvTag(
  *
  * @param text A string, maybe containing `[anki:play]` tags to replace
  * @param renderOutput Context: whether a file is audio or video
+ *
+ * @see AvRef
  */
-suspend fun addPlayButtons(
+suspend fun replaceAvRefsWithPlayButtons(
     text: String,
     renderOutput: TemplateRenderOutput,
 ): String {
@@ -142,7 +146,7 @@ suspend fun addPlayButtons(
     return expandSounds(text, renderOutput, showAudioPlayButtons = !hidePlayButtons, mediaDir)
 }
 
-fun SoundOrVideoTag.getType(mediaDir: File): Type {
+fun SoundOrVideoTag.getTagType(mediaDir: File): Type {
     val extension = filename.substringAfterLast(".", "")
     return when (extension) {
         in Sound.VIDEO_ONLY_EXTENSIONS -> Type.VIDEO

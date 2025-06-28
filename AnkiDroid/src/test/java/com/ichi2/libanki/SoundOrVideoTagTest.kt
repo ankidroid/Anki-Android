@@ -17,7 +17,7 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.multimedia.getType
+import com.ichi2.anki.multimedia.getTagType
 import com.ichi2.libanki.SoundOrVideoTag.Type
 import com.ichi2.libanki.SoundOrVideoTag.Type.VIDEO
 import com.ichi2.testutils.JvmTest
@@ -31,7 +31,7 @@ class SoundOrVideoTagTest : JvmTest() {
     @Test
     fun mp3IsAudio() {
         val tag = SoundOrVideoTag("test.mp3")
-        assertThat(tag.getType(col.media.dir), equalTo(Type.AUDIO))
+        assertThat(tag.getTagType(col.media.dir), equalTo(Type.AUDIO))
     }
 
     @Test
@@ -40,13 +40,13 @@ class SoundOrVideoTagTest : JvmTest() {
         // When we want to play a tag, the audio player (Android) can handle a failure
         // better than the video player (HTML)
         val tag = SoundOrVideoTag("test.txt")
-        assertThat(tag.getType(col.media.dir), equalTo(Type.AUDIO))
+        assertThat(tag.getTagType(col.media.dir), equalTo(Type.AUDIO))
     }
 
     @Test
     fun mp4IsVideo() {
         // Note: This will go out to the filesystem. As it doesn't exist, assume it's a video
         val tag = SoundOrVideoTag("test.mp4")
-        assertThat(tag.getType(col.media.dir), equalTo(VIDEO))
+        assertThat(tag.getTagType(col.media.dir), equalTo(VIDEO))
     }
 }

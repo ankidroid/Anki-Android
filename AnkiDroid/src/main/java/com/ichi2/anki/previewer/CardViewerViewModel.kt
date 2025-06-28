@@ -29,8 +29,8 @@ import com.ichi2.anki.cardviewer.MediaErrorBehavior
 import com.ichi2.anki.cardviewer.MediaErrorHandler
 import com.ichi2.anki.cardviewer.MediaErrorListener
 import com.ichi2.anki.launchCatchingIO
-import com.ichi2.anki.multimedia.addPlayButtons
 import com.ichi2.anki.multimedia.getAvTag
+import com.ichi2.anki.multimedia.replaceAvRefsWithPlayButtons
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.PostRequestHandler
 import com.ichi2.libanki.Card
@@ -121,7 +121,7 @@ abstract class CardViewerViewModel(
     ): String = typeAnsFilter(prepareCardTextForDisplay(text), typedAnswer)
 
     private suspend fun prepareCardTextForDisplay(text: String): String =
-        addPlayButtons(
+        replaceAvRefsWithPlayButtons(
             text = withCol { media.escapeMediaFilenames(text) },
             renderOutput = currentCard.await().let { card -> withCol { card.renderOutput(this) } },
         )
