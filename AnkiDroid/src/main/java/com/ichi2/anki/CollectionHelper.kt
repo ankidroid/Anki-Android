@@ -26,7 +26,7 @@ import com.ichi2.anki.AnkiDroidFolder.AppPrivateFolder
 import com.ichi2.anki.CollectionHelper.PREF_COLLECTION_PATH
 import com.ichi2.anki.CollectionHelper.getCurrentAnkiDroidDirectory
 import com.ichi2.anki.CollectionHelper.getDefaultAnkiDroidDirectory
-import com.ichi2.anki.backend.BackendDBUtils
+import com.ichi2.anki.backend.createDatabaseUsingAndroidFramework
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.exception.UnknownDatabaseVersionException
 import com.ichi2.anki.preferences.sharedPrefs
@@ -324,7 +324,7 @@ object CollectionHelper {
         }
         var db: DB? = null
         return try {
-            db = BackendDBUtils.withAndroidFramework(context, colPath)
+            db = createDatabaseUsingAndroidFramework(context, colPath)
             db.queryScalar("SELECT ver FROM col")
         } catch (e: Exception) {
             Timber.w(e, "Couldn't open the database to obtain collection version!")
