@@ -122,7 +122,7 @@ class Toolbar : FrameLayout {
             val activity = context as? Activity
             if (activity != null) {
                 val currentFocus = activity.currentFocus
-                if (currentFocus != null) { // It's good to check if currentFocus is one of your editor fields
+                if (currentFocus != null) { // It's good to check if currentFocus is a text field
                     val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.showSoftInput(currentFocus, InputMethodManager.SHOW_IMPLICIT)
                 }

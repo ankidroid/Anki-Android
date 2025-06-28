@@ -42,6 +42,7 @@ import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Button
@@ -2402,7 +2403,21 @@ class NoteEditor :
                 text = b.buttonText
             }
             val bmp = toolbar.createDrawableForString(text)
-            val v = toolbar.insertItem(0, bmp, b.toFormatter())
+
+            val v =
+                toolbar.insertItem(0, bmp) {
+                    // Attempt to open keyboard for the currently focused view in the hosting Activity
+                    val activity = context as? Activity
+                    if (activity != null) {
+                        val currentFocus = activity.currentFocus
+                        if (currentFocus != null) { // It's good to check if currentFocus is a text field
+                            val imm =
+                                activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                            imm.showSoftInput(currentFocus, InputMethodManager.SHOW_IMPLICIT)
+                        }
+                    }
+                    toolbar.onFormat(b.toFormatter())
+                }
             v.contentDescription = text
 
             // Allow Ctrl + 1...Ctrl + 0 for item 10.
