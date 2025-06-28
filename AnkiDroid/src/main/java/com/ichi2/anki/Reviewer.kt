@@ -702,6 +702,7 @@ open class Reviewer :
 
     private fun openOrToggleMicToolbar() {
         if (!canRecordAudio(this)) {
+            Timber.i("requesting 'RECORD_AUDIO' permission")
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.RECORD_AUDIO),
@@ -713,6 +714,7 @@ open class Reviewer :
     }
 
     private fun toggleMicToolBar() {
+        Timber.i("toggle mic toolbar")
         tempAudioPath = generateTempAudioFile(this)
         if (isMicToolBarVisible) {
             micToolBarLayer.visibility = View.GONE
@@ -764,6 +766,7 @@ open class Reviewer :
 
     private fun showDueDateDialog() =
         launchCatchingTask {
+            Timber.i("showing due date dialog")
             val dialog = SetDueDateDialog.newInstance(listOf(currentCardId!!))
             showDialogFragment(dialog)
         }
@@ -776,6 +779,7 @@ open class Reviewer :
     fun addNote(fromGesture: Gesture? = null) {
         val animation = getAnimationTransitionFromGesture(fromGesture)
         val inverseAnimation = getInverseTransition(animation)
+        Timber.i("launching 'add note'")
         val intent = NoteEditorLauncher.AddNoteFromReviewer(inverseAnimation).toIntent(this)
         addNoteLauncher.launch(intent)
     }
@@ -786,6 +790,7 @@ open class Reviewer :
             showSnackbar(getString(R.string.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
             return
         }
+        Timber.i("opening card info")
         val intent = CardInfoDestination(currentCard!!.id).toIntent(this)
         val animation = getAnimationTransitionFromGesture(fromGesture)
         intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
@@ -1199,6 +1204,7 @@ open class Reviewer :
         val mins = resources.getQuantityString(R.plurals.in_minutes, nMins, nMins)
         val timeboxMessage = resources.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins)
         suspendCancellableCoroutine { coroutines ->
+            Timber.i("Showing timebox reached dialog")
             AlertDialog.Builder(this).show {
                 title(R.string.timebox_reached_title)
                 message(text = timeboxMessage)
