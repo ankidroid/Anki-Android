@@ -782,11 +782,13 @@ abstract class AbstractFlashcardViewer :
             return
         }
         val animation = fromGesture.toAnimationTransition().invert()
+        Timber.i("Launching 'edit card'")
         val editCardIntent = NoteEditorLauncher.EditCard(currentCard!!.id, animation).toIntent(this)
         editCurrentCardLauncher.launch(editCardIntent)
     }
 
     protected fun showDeleteNoteDialog() {
+        Timber.i("Displaying 'delete note' dialog")
         AlertDialog.Builder(this).show {
             title(R.string.delete_card_title)
             setIcon(R.drawable.ic_warning)
@@ -2375,6 +2377,7 @@ abstract class AbstractFlashcardViewer :
             if (url.startsWith("missing-user-action:")) {
                 val actionNumber = url.substringAfter(":")
                 val message = getString(R.string.missing_user_action_dialog_message, actionNumber)
+                Timber.i("showing 'missing user action' dialog")
                 AlertDialog.Builder(this@AbstractFlashcardViewer).show {
                     setTitle(R.string.vague_error)
                     setMessage(message)
@@ -2400,6 +2403,7 @@ abstract class AbstractFlashcardViewer :
                 return true
             }
             if (url.startsWith("tts-voices:")) {
+                Timber.i("showing TTS Voices fragment")
                 showDialogFragment(TtsVoicesDialogFragment())
                 return true
             }
@@ -2472,6 +2476,7 @@ abstract class AbstractFlashcardViewer :
                     intent = Intent.parseUri(url, Intent.URI_ANDROID_APP_SCHEME)
                 }
                 if (intent != null) {
+                    Timber.i("Launching user-defined intent")
                     if (packageManager.resolveActivityCompat(
                             intent,
                             ResolveInfoFlagsCompat.EMPTY,
@@ -2612,6 +2617,7 @@ abstract class AbstractFlashcardViewer :
         get() = displayAnswer
 
     internal fun showTagsDialog() {
+        Timber.i("opening tags dialog")
         val noteId = currentCard!!.note(getColUnsafe).id
         val dialog =
             tagsDialogFactory!!
