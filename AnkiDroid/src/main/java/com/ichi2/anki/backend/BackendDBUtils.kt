@@ -17,33 +17,41 @@
 package com.ichi2.anki.backend
 
 import android.content.Context
+import androidx.annotation.CheckResult
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
+import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
 import timber.log.Timber
 import java.io.File
 
-object BackendDBUtils {
-    /**
-     * Open a connection using the system framework.
-     */
-    fun withAndroidFramework(
-        context: Context,
-        path: File,
-    ): AnkiDroidDB {
-        val db =
-            AnkiSupportSQLiteDatabase.withFramework(
-                context,
-                path.absolutePath,
-                SupportSQLiteOpenHelperCallback(1),
-            )
-        db.disableWriteAheadLogging()
-        db.query("PRAGMA synchronous = 2")
-        return AnkiDroidDB(db)
-    }
+/**
+ * Open a connection using the system framework.
+ */
+@CheckResult
+fun createDatabaseUsingAndroidFramework(
+    context: Context,
+    path: File,
+): AnkiDroidDB {
+    val db =
+        AnkiSupportSQLiteDatabase.withFramework(
+            context,
+            path.absolutePath,
+            SupportSQLiteOpenHelperCallback(1),
+        )
+    db.disableWriteAheadLogging()
+    db.query("PRAGMA synchronous = 2")
+    return AnkiDroidDB(db)
 }
+
+/**
+ * Wrap a Rust backend connection (which provides an SQL interface).
+ * Caller is responsible for opening&closing the database.
+ */
+@CheckResult
+fun createDatabaseUsingRustBackend(backend: Backend): AnkiDroidDB = AnkiDroidDB(AnkiSupportSQLiteDatabase.withRustBackend(backend))
 
 /**
  * The default AnkiDroid SQLite database callback.

@@ -17,7 +17,7 @@ package com.ichi2.testutils
 
 import android.content.Context
 import com.ichi2.anki.CollectionHelper
-import com.ichi2.anki.backend.BackendDBUtils
+import com.ichi2.anki.backend.createDatabaseUsingAndroidFramework
 import com.ichi2.libanki.DB
 import com.ichi2.libanki.Storage
 
@@ -30,7 +30,7 @@ object DbUtils {
         check(!Storage.isInMemory) { "cannot use performQuery in memory" }
         var db: DB? = null
         try {
-            db = BackendDBUtils.withAndroidFramework(context, CollectionHelper.getCollectionPath(context))
+            db = createDatabaseUsingAndroidFramework(context, CollectionHelper.getCollectionPath(context))
             db.executeScript(query)
         } finally {
             db?.close()
