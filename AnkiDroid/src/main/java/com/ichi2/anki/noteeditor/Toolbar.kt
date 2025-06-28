@@ -52,8 +52,8 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.anki.showSoftInput
 import com.ichi2.compat.CompatHelper
+import com.ichi2.utils.AndroidUiUtils.showSoftInput
 import com.ichi2.utils.ViewGroupUtils
 import com.ichi2.utils.ViewGroupUtils.getAllChildrenRecursive
 import com.ichi2.utils.dp

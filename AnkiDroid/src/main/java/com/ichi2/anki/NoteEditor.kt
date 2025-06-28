@@ -42,7 +42,6 @@ import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Button
@@ -160,6 +159,7 @@ import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.libanki.Utils
 import com.ichi2.themes.Themes
+import com.ichi2.utils.AndroidUiUtils.showSoftInput
 import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.ClipboardUtil.MEDIA_MIME_TYPES
 import com.ichi2.utils.ClipboardUtil.hasMedia
@@ -2974,22 +2974,5 @@ class NoteEditor :
             !AnkiDroidApp.instance
                 .sharedPrefs()
                 .getBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, true)
-    }
-}
-
-/**
- * Shows the soft keyboard for the current focused view in the activity.
- *
- * It's a good practice to ensure that the `currentFocus` is an
- * appropriate input field (e.g., EditText) before calling this function
- */
-fun Activity?.showSoftInput() {
-    if (this != null) {
-        val currentFocus = this.currentFocus
-        if (currentFocus != null) { // It's good to check if currentFocus is a text field
-            val imm =
-                this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(currentFocus, InputMethodManager.SHOW_IMPLICIT)
-        }
     }
 }

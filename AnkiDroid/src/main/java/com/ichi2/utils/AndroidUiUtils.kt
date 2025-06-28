@@ -15,6 +15,7 @@
  */
 package com.ichi2.utils
 
+import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.view.Window
@@ -22,6 +23,18 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 
 object AndroidUiUtils {
+    /**
+     * Shows the soft keyboard for the current focused view in the activity.
+     *
+     * It's a good practice to ensure that the `currentFocus` is an
+     * appropriate input field (e.g., EditText) before calling this function
+     */
+    fun Activity?.showSoftInput() {
+        val currentFocus = this?.currentFocus ?: return
+        val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(currentFocus, InputMethodManager.SHOW_IMPLICIT)
+    }
+
     /**
      * This method is used for setting the focus on an EditText which is used in a dialog
      * and for opening the keyboard.
