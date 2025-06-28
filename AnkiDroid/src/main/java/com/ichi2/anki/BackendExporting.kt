@@ -14,6 +14,7 @@
 package com.ichi2.anki
 
 import anki.import_export.ExportLimit
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.ExportReadyDialog
 import com.ichi2.libanki.exportAnkiPackage
@@ -47,7 +48,7 @@ fun AnkiActivity.exportCollectionPackage(
     withMedia: Boolean,
     legacy: Boolean,
 ) {
-    launchCatchingTask {
+    launchCatchingTask(skipCrashReport = { it.message == TR.errorsPleaseCheckMedia() }) {
         val onProgress: ProgressContext.() -> Unit = {
             if (progress.hasExporting()) {
                 text = progress.exporting
