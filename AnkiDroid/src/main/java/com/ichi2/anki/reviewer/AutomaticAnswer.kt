@@ -164,6 +164,19 @@ class AutomaticAnswer(
         stopShowQuestionTask()
     }
 
+    fun reEnable(isDisplayingAnswer: Boolean) {
+        isDisabled = false
+        // required for the schedule methods below to work
+        hasPlayedSounds = false
+
+        // Schedule automatic display
+        if (isDisplayingAnswer) {
+            scheduleAutomaticDisplayQuestion()
+        } else {
+            scheduleAutomaticDisplayAnswer()
+        }
+    }
+
     /** Stop any "Automatic show answer" tasks in order to avoid race conditions */
     fun onDisplayQuestion() {
         if (!settings.autoAdvanceIfShowingQuestion) return
