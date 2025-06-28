@@ -127,6 +127,7 @@ object ReadText {
                             .map { Pair(it.isO3Language, it.displayName) },
                     )
                 }
+            Timber.i("showing 'select language' dialog")
             dialog
                 .title(R.string.select_locale_title)
                 .setItems(localeMappings.map { it.second }.toTypedArray()) { _, index ->
