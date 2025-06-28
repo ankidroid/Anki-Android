@@ -28,8 +28,6 @@ import android.database.sqlite.SQLiteDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.libanki.DB
-import net.ankiweb.rsdroid.Backend
-import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
 import timber.log.Timber
 
 /**
@@ -164,11 +162,5 @@ class AnkiDroidDB(
 
     companion object {
         private val MOD_SQL_STATEMENTS = arrayOf("insert", "update", "delete")
-
-        /**
-         * Wrap a Rust backend connection (which provides an SQL interface).
-         * Caller is responsible for opening&closing the database.
-         */
-        fun withRustBackend(backend: Backend): AnkiDroidDB = AnkiDroidDB(AnkiSupportSQLiteDatabase.withRustBackend(backend))
     }
 }

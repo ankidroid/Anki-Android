@@ -18,7 +18,7 @@ package com.ichi2.anki.tests
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
-import com.ichi2.anki.backend.AnkiDroidDB
+import com.ichi2.anki.backend.createDatabaseUsingRustBackend
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
@@ -49,7 +49,7 @@ object Shared {
         assertTrue(f.delete())
         return Storage.collection(
             collectionFiles = CollectionFiles(folderPath = File(folder), collectionName = name),
-            databaseBuilder = { backend -> AnkiDroidDB.withRustBackend(backend) },
+            databaseBuilder = { backend -> createDatabaseUsingRustBackend(backend) },
         )
     }
 
