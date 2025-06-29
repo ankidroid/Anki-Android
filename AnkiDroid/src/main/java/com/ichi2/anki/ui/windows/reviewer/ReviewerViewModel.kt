@@ -76,12 +76,12 @@ class ReviewerViewModel(
     BindingProcessor<ReviewerBinding, ViewerAction> {
     private var queueState: Deferred<CurrentQueueState?> =
         asyncIO {
-            // this assumes that the Reviewer won't be launched if there isn't a queueState
-            withCol { sched.currentQueueState() }!!
+            withCol { sched.currentQueueState() }
         }
     override var currentCard =
         asyncIO {
-            queueState.await()!!.topCard
+            queueState.await()?.topCard
+                ?: Card(anki.cards.Card.getDefaultInstance())
         }
     var finishResultFlow = MutableSharedFlow<Int>()
     val isMarkedFlow = MutableStateFlow(false)
