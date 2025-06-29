@@ -25,6 +25,14 @@
         <item name="tabActiveIconColor">@color/white</item>
         <!-- Study Screen colors -->
         <item name="topBarColor">@color/theme_plain_primary_light</item>
+        <item name="againTextColor">@color/material_grey_800</item>
+        <item name="hardTextColor">@color/material_grey_800</item>
+        <item name="goodTextColor">@color/material_grey_800</item>
+        <item name="easyTextColor">@color/material_grey_800</item>
+        <item name="againBackgroundColor">@color/material_grey_300</item>
+        <item name="hardBackgroundColor">@color/material_grey_300</item>
+        <item name="goodBackgroundColor">@color/material_grey_300</item>
+        <item name="easyBackgroundColor">@color/material_grey_300</item>
         <!-- Study Screen button drawables -->
         <item name="showAnswerButtonBackground">@color/theme_plain_primary</item>
         <item name="showAnswerColor">@color/theme_plain_primary</item>
