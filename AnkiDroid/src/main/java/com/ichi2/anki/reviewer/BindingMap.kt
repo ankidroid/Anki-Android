@@ -70,10 +70,6 @@ class BindingMap<B : MappableBinding, A : MappableAction<B>>(
         axisDetectors = axisList.toList()
     }
 
-    fun setProcessor(processor: BindingProcessor<B, A>) {
-        this.processor = processor
-    }
-
     fun onKeyDown(event: KeyEvent): Boolean {
         if (event.repeatCount > 0) {
             return false
