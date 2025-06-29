@@ -19,7 +19,6 @@ import android.content.SharedPreferences
 import com.ichi2.anki.preferences.reviewer.MenuDisplayType
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuRepository
 import com.ichi2.anki.preferences.reviewer.ViewerAction
-import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.ToolbarPosition
 
@@ -28,9 +27,6 @@ class StudyScreenRepository(
 ) {
     val isMarkShownInToolbar: Boolean
     val isFlagShownInToolbar: Boolean
-    val bindingMap by lazy {
-        BindingMap(preferences, ViewerAction.entries)
-    }
 
     init {
         val actions =

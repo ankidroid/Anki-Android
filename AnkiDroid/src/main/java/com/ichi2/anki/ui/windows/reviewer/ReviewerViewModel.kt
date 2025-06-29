@@ -16,9 +16,6 @@
 package com.ichi2.anki.ui.windows.reviewer
 
 import android.text.style.RelativeSizeSpan
-import android.view.KeyEvent
-import android.view.MenuItem
-import android.view.MotionEvent
 import androidx.core.text.buildSpannedString
 import androidx.core.text.inSpans
 import androidx.lifecycle.ViewModelProvider
@@ -35,7 +32,6 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.cardviewer.CardMediaPlayer
-import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
@@ -110,7 +106,6 @@ class ReviewerViewModel(
     val statesMutationEval = MutableSharedFlow<String>()
 
     private val autoAdvance = AutoAdvance(this)
-    private val bindingMap = studyScreenRepository.bindingMap
     private val shouldSendMarkEval = !studyScreenRepository.isMarkShownInToolbar
     private val shouldSendFlagEval = !studyScreenRepository.isFlagShownInToolbar
 
@@ -136,7 +131,6 @@ class ReviewerViewModel(
         }
 
     init {
-        bindingMap.setProcessor(this)
         ChangeManager.subscribe(this)
         launchCatchingIO {
             updateUndoAndRedoLabels()
@@ -207,18 +201,6 @@ class ReviewerViewModel(
     fun answerGood() = answerCard(Ease.GOOD)
 
     fun answerEasy() = answerCard(Ease.EASY)
-
-    fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        if (event.action != KeyEvent.ACTION_DOWN) return false
-        return bindingMap.onKeyDown(event)
-    }
-
-    fun onGenericMotionEvent(event: MotionEvent?): Boolean = bindingMap.onGenericMotionEvent(event)
-
-    fun onGesture(gesture: Gesture) {
-        Timber.v("ReviewerViewModel::onGesture %s", gesture)
-        bindingMap.onGesture(gesture)
-    }
 
     private suspend fun toggleMark() {
         Timber.v("ReviewerViewModel::toggleMark")
@@ -591,7 +573,7 @@ class ReviewerViewModel(
         answerTimerStatusFlow.emit(AnswerTimerStatus.Running(limitInMillis))
     }
 
-    private fun executeAction(action: ViewerAction) {
+    fun executeAction(action: ViewerAction) {
         Timber.v("ReviewerViewModel::executeAction %s", action.name)
         launchCatchingIO {
             when (action) {
@@ -655,14 +637,6 @@ class ReviewerViewModel(
     ): Boolean {
         Timber.v("ReviewerViewModel::processAction")
         if (binding.side != CardSide.BOTH && CardSide.fromAnswer(showingAnswer.value) != binding.side) return false
-        executeAction(action)
-        return true
-    }
-
-    fun onMenuItemClick(item: MenuItem): Boolean {
-        Timber.v("ReviewerViewModel::onMenuItemClick")
-        if (item.hasSubMenu()) return false
-        val action = ViewerAction.fromId(item.itemId)
         executeAction(action)
         return true
     }

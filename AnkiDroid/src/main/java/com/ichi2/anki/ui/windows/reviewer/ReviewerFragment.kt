@@ -64,6 +64,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuView
+import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.preferences.reviewer.ViewerAction.BURY_CARD
 import com.ichi2.anki.preferences.reviewer.ViewerAction.BURY_MENU
 import com.ichi2.anki.preferences.reviewer.ViewerAction.BURY_NOTE
@@ -77,6 +78,8 @@ import com.ichi2.anki.preferences.reviewer.ViewerAction.UNDO
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
 import com.ichi2.anki.previewer.stdHtml
+import com.ichi2.anki.reviewer.BindingMap
+import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.FrameStyle
@@ -114,10 +117,9 @@ class ReviewerFragment :
         ReviewerViewModel.factory(CardMediaPlayer(), getServerPort(), repository)
     }
 
-    override val webView: WebView
-        get() = requireView().findViewById(R.id.webview)
-
+    override val webView: WebView get() = requireView().findViewById(R.id.webview)
     private val timer: AnswerTimer? get() = view?.findViewById(R.id.timer)
+    private lateinit var bindingMap: BindingMap<ReviewerBinding, ViewerAction>
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
         val fragmentView = this@ReviewerFragment.view
@@ -172,8 +174,9 @@ class ReviewerFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
 
+        bindingMap = BindingMap(sharedPrefs(), ViewerAction.entries, viewModel)
         view.setOnGenericMotionListener { _, event ->
-            viewModel.onGenericMotionEvent(event)
+            bindingMap.onGenericMotionEvent(event)
         }
 
         view.findViewById<AppCompatImageButton>(R.id.back_button).setOnClickListener {
@@ -282,13 +285,19 @@ class ReviewerFragment :
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        if (view?.findViewById<TextInputEditText>(R.id.type_answer_edit_text)?.isFocused == true) {
+        if (event.action != KeyEvent.ACTION_DOWN || view?.findViewById<TextInputEditText>(R.id.type_answer_edit_text)?.isFocused == true) {
             return false
         }
-        return viewModel.dispatchKeyEvent(event)
+        return bindingMap.onKeyDown(event)
     }
 
-    override fun onMenuItemClick(item: MenuItem): Boolean = viewModel.onMenuItemClick(item)
+    override fun onMenuItemClick(item: MenuItem): Boolean {
+        Timber.v("ReviewerFragment::onMenuItemClick %s", item)
+        if (item.hasSubMenu()) return false
+        val action = ViewerAction.fromId(item.itemId)
+        viewModel.executeAction(action)
+        return true
+    }
 
     private fun setupAnswerButtons(view: View) {
         val prefs = sharedPrefs()
@@ -626,7 +635,8 @@ class ReviewerFragment :
             return when (url.scheme) {
                 "gesture" -> {
                     val gesture = GestureParser.parse(url, isScrolling, scale, webView) ?: return true
-                    viewModel.onGesture(gesture)
+                    Timber.v("ReviewerFragment::onGesture %s", gesture)
+                    bindingMap.onGesture(gesture)
                     true
                 }
                 else -> super.handleUrl(url)
