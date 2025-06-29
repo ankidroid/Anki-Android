@@ -17,6 +17,7 @@ package com.ichi2.anki.ui.windows.reviewer
 
 import android.content.Context
 import android.content.Intent
+import android.hardware.SensorManager
 import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableString
@@ -39,6 +40,7 @@ import androidx.appcompat.widget.AppCompatImageButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -58,6 +60,7 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.CardMediaPlayer
+import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
@@ -99,6 +102,7 @@ import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.themes.Themes
 import com.ichi2.utils.dp
+import com.squareup.seismic.ShakeDetector
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -111,7 +115,8 @@ class ReviewerFragment :
     BaseSnackbarBuilderProvider,
     ActionMenuView.OnMenuItemClickListener,
     DispatchKeyEventListener,
-    TagsDialogListener {
+    TagsDialogListener,
+    ShakeDetector.Listener {
     override val viewModel: ReviewerViewModel by viewModels {
         val repository = StudyScreenRepository(sharedPrefs())
         ReviewerViewModel.factory(CardMediaPlayer(), getServerPort(), repository)
@@ -120,6 +125,8 @@ class ReviewerFragment :
     override val webView: WebView get() = requireView().findViewById(R.id.webview)
     private val timer: AnswerTimer? get() = view?.findViewById(R.id.timer)
     private lateinit var bindingMap: BindingMap<ReviewerBinding, ViewerAction>
+    private var shakeDetector: ShakeDetector? = null
+    private val sensorManager get() = ContextCompat.getSystemService(requireContext(), SensorManager::class.java)
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
         val fragmentView = this@ReviewerFragment.view
@@ -152,6 +159,7 @@ class ReviewerFragment :
             if (viewModel.answerTimerStatusFlow.value is AnswerTimerStatus.Running) {
                 timer?.resume()
             }
+            shakeDetector?.start(sensorManager, SensorManager.SENSOR_DELAY_UI)
         }
     }
 
@@ -160,6 +168,7 @@ class ReviewerFragment :
         if (!requireActivity().isChangingConfigurations) {
             viewModel.stopAutoAdvance()
             timer?.stop()
+            shakeDetector?.stop()
         }
     }
 
@@ -174,15 +183,11 @@ class ReviewerFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        bindingMap = BindingMap(sharedPrefs(), ViewerAction.entries, viewModel)
-        view.setOnGenericMotionListener { _, event ->
-            bindingMap.onGenericMotionEvent(event)
-        }
-
         view.findViewById<AppCompatImageButton>(R.id.back_button).setOnClickListener {
             requireActivity().finish()
         }
 
+        setupBindings(view)
         setupImmersiveMode(view)
         setupFrame(view)
         setupTypeAnswer(view)
@@ -297,6 +302,21 @@ class ReviewerFragment :
         val action = ViewerAction.fromId(item.itemId)
         viewModel.executeAction(action)
         return true
+    }
+
+    override fun hearShake() {
+        bindingMap.onGesture(Gesture.SHAKE)
+    }
+
+    private fun setupBindings(view: View) {
+        bindingMap = BindingMap(sharedPrefs(), ViewerAction.entries, viewModel)
+        view.setOnGenericMotionListener { _, event ->
+            bindingMap.onGenericMotionEvent(event)
+        }
+        if (bindingMap.isBound(Gesture.SHAKE)) {
+            shakeDetector = ShakeDetector(this)
+            shakeDetector?.start(sensorManager, SensorManager.SENSOR_DELAY_UI)
+        }
     }
 
     private fun setupAnswerButtons(view: View) {
