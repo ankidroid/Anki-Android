@@ -93,6 +93,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             R.string.hide_system_bars_key, // hideSystemBars
             R.string.ignore_display_cutout_key, // ignoreDisplayCutout
             R.string.reviewer_toolbar_position_key, // reviewerToolbarPosition
+            R.string.answer_button_size_pref_key, // answerBtnSize
         ).toStringResourceSet()
 
     @Test

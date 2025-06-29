@@ -95,9 +95,9 @@
 
         <com.ichi2.preferences.SliderPreference
             android:title="@string/button_size"
-            android:key="@string/answer_button_size_preference"
+            android:key="@string/answer_button_size_pref_key"
             android:defaultValue="100"
-            android:valueFrom="10"
+            android:valueFrom="100"
             android:valueTo="200"
             android:stepSize="10"
             app:displayFormat="@string/percentage"/>

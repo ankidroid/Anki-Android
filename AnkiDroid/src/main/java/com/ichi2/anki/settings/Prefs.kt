@@ -182,6 +182,8 @@ object Prefs {
     val ignoreDisplayCutout by booleanPref(R.string.ignore_display_cutout_key, false)
     val autoFocusTypeAnswer by booleanPref(R.string.type_in_answer_focus_key, true)
 
+    val newStudyScreenAnswerButtonSize by intPref(R.string.answer_button_size_pref_key, defaultValue = 100)
+
     val frameStyle: FrameStyle
         get() = getEnum(R.string.reviewer_frame_style_key, FrameStyle.CARD)
 
