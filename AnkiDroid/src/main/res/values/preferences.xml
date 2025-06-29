@@ -162,6 +162,7 @@
     <string name="card_zoom_preference">cardZoom</string>
     <string name="image_zoom_preference">imageZoom</string>
     <string name="answer_button_size_preference">answerButtonSize</string>
+    <string name="answer_button_size_pref_key">answerBtnSize</string>
     <string name="show_large_answer_buttons_preference">showLargeAnswerButtons</string>
     <string name="pref_card_minimal_click_time">showCardAnswerButtonTime</string>
     <!-- Custom sync server -->

@@ -372,8 +372,8 @@ class ReviewerFragment :
             easyButton.isVisible = false
         }
 
-        val buttonsHeight = Prefs.answerButtonsSize
-        if (buttonsHeight != 100) {
+        val buttonsHeight = Prefs.newStudyScreenAnswerButtonSize
+        if (buttonsHeight > 100) {
             answerButtonsLayout.post {
                 answerButtonsLayout.updateLayoutParams {
                     height = answerButtonsLayout.measuredHeight * buttonsHeight / 100
