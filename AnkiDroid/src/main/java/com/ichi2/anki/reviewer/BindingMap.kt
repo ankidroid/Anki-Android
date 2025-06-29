@@ -107,4 +107,6 @@ class BindingMap<B : MappableBinding, A : MappableAction<B>>(
         }
         return false
     }
+
+    fun isBound(gesture: Gesture): Boolean = gesture in gestureMap
 }
