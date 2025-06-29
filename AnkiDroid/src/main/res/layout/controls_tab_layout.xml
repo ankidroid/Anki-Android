@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/pref_controls_reviews_tab"
+        android:icon="@drawable/ic_cards_star"
         />
 
     <com.google.android.material.tabs.TabItem
@@ -19,6 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/pref_controls_previews_tab"
+        android:icon="@drawable/ic_remove_red_eye_white"
         />
 
 </com.google.android.material.tabs.TabLayout>
