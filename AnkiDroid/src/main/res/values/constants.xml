@@ -105,6 +105,7 @@
 
     <string name="link_anki_manual">https://docs.ankiweb.net/#/</string>
     <string name="link_anki_forum">https://forums.ankiweb.net/</string>
+    <string name="link_anki_forum_ankidroid">https://forums.ankiweb.net/c/ankidroid/22</string>
     <string name="link_forum">http://groups.google.com/group/anki-android</string>
     <string name="licence_wiki">http://www.gnu.org/licenses/gpl.html</string>
     <string name="dependency_license_wiki">https://github.com/ankidroid/Anki-Android/wiki/Licences</string>
