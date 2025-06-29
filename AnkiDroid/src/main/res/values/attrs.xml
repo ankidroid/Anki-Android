@@ -119,6 +119,15 @@
     <attr name="hardButtonTextColor" format="color"/>
     <attr name="goodButtonTextColor" format="color"/>
     <attr name="easyButtonTextColor" format="color"/>
+
+    <attr name="againTextColor" format="color"/>
+    <attr name="hardTextColor" format="color"/>
+    <attr name="goodTextColor" format="color"/>
+    <attr name="easyTextColor" format="color"/>
+    <attr name="againBackgroundColor" format="color"/>
+    <attr name="hardBackgroundColor" format="color"/>
+    <attr name="goodBackgroundColor" format="color"/>
+    <attr name="easyBackgroundColor" format="color"/>
     <!-- Card Browser Colors -->
     <attr name="cardBrowserDivider" format="color"/>
     <!-- Study Screen other colors -->

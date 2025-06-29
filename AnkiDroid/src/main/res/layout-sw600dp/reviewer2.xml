@@ -189,9 +189,9 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="@dimen/answer_button_margin_horizontal"
-                        android:backgroundTint="@color/again_button_bg"
                         android:text="@string/ease_button_again"
-                        android:textColor="@color/again_button_text"
+                        android:textColor="?againTextColor"
+                        android:backgroundTint="?againBackgroundColor"
                         android:layout_weight="1"
                         />
 
@@ -201,9 +201,9 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="@dimen/answer_button_margin_horizontal"
-                        android:backgroundTint="@color/hard_button_bg"
                         android:text="@string/ease_button_hard"
-                        android:textColor="@color/hard_button_text"
+                        android:textColor="?hardTextColor"
+                        android:backgroundTint="?hardBackgroundColor"
                         android:layout_weight="1"
                         />
 
@@ -213,9 +213,9 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="@dimen/answer_button_margin_horizontal"
-                        android:backgroundTint="@color/good_button_bg"
                         android:text="@string/ease_button_good"
-                        android:textColor="@color/good_button_text"
+                        android:textColor="?goodTextColor"
+                        android:backgroundTint="?goodBackgroundColor"
                         android:layout_weight="1"
                         />
 
@@ -225,9 +225,9 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/answer_button_margin_horizontal"
-                        android:backgroundTint="@color/easy_button_bg"
                         android:text="@string/ease_button_easy"
-                        android:textColor="@color/easy_button_text"
+                        android:textColor="?easyTextColor"
+                        android:backgroundTint="?easyBackgroundColor"
                         android:layout_weight="1"
                         />
                 </LinearLayout>
