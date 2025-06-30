@@ -38,8 +38,9 @@ document.addEventListener("focusout", event => {
     window.location.href = `ankidroid://focusout`;
 });
 
+globalThis.ankidroid.doubleTapTimeout = 200;
+
 (() => {
-    const DOUBLE_TAP_TIMEOUT = 250; // Max ms between taps for a double tap.
     const SCHEME = "gesture";
 
     let startX = 0,
@@ -87,11 +88,10 @@ document.addEventListener("focusout", event => {
                 params.append("scrollDirection", scrollDirection);
             }
             const requestUrl = `${SCHEME}://tapOrSwipe/?${params.toString()}`;
-
             tapTimer = setTimeout(() => {
                 window.location.href = requestUrl;
                 tapTimer = null;
-            }, DOUBLE_TAP_TIMEOUT);
+            }, ankidroid.doubleTapTimeout);
         },
         { passive: true },
     );
