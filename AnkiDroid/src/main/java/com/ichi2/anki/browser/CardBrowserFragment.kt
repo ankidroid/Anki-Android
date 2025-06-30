@@ -34,6 +34,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import anki.collection.OpChanges
 import com.google.android.material.progressindicator.LinearProgressIndicator
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivityProvider
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
@@ -43,6 +44,9 @@ import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Initializing
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Searching
+import com.ichi2.anki.browser.RepositionCardFragment.Companion.REQUEST_REPOSITION_NEW_CARDS
+import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
+import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
@@ -50,12 +54,14 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
+import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.attachFastScroller
 import com.ichi2.anki.utils.ext.getCurrentDialogFragment
+import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withProgress
 import com.ichi2.libanki.ChangeManager
@@ -131,6 +137,8 @@ class CardBrowserFragment :
         progressIndicator = view.findViewById(R.id.browser_progress)
 
         setupFlows()
+
+        setupFragmentResultListeners()
     }
 
     override fun onResume() {
@@ -225,6 +233,17 @@ class CardBrowserFragment :
         viewModel.rowLongPressFocusFlow.launchCollectionInLifecycleScope(::onSelectedRowUpdated)
         viewModel.flowOfColumnHeadings.launchCollectionInLifecycleScope(::onColumnNamesChanged)
         viewModel.flowOfCardStateChanged.launchCollectionInLifecycleScope(::onCardsMarkedEvent)
+    }
+
+    private fun setupFragmentResultListeners() {
+        ankiActivity.setFragmentResultListener(REQUEST_REPOSITION_NEW_CARDS) { _, bundle ->
+            repositionCardsNoValidation(
+                position = bundle.getInt(RepositionCardFragment.ARG_POSITION),
+                step = bundle.getInt(RepositionCardFragment.ARG_STEP),
+                shuffle = bundle.getBoolean(RepositionCardFragment.ARG_RANDOM),
+                shift = bundle.getBoolean(RepositionCardFragment.ARG_SHIFT),
+            )
+        }
     }
 
     override fun opExecuted(
@@ -342,6 +361,44 @@ class CardBrowserFragment :
         }
     }
 
+    /** @see repositionCardsNoValidation */
+    fun repositionSelectedCards(): Boolean {
+        Timber.i("CardBrowser:: Reposition button pressed")
+        if (ankiActivity.warnUserIfInNotesOnlyMode()) return false
+        launchCatchingTask {
+            when (val repositionCardsResult = viewModel.prepareToRepositionCards()) {
+                is ContainsNonNewCardsError -> {
+                    // Only new cards may be repositioned (If any non-new found show error dialog and return false)
+                    showDialogFragment(
+                        SimpleMessageDialog.newInstance(
+                            title = getString(R.string.vague_error),
+                            message = getString(R.string.reposition_card_not_new_error),
+                            reload = false,
+                        ),
+                    )
+                    return@launchCatchingTask
+                }
+                is RepositionData -> {
+                    val top = repositionCardsResult.queueTop
+                    val bottom = repositionCardsResult.queueBottom
+                    if (top == null || bottom == null) {
+                        showSnackbar(R.string.something_wrong)
+                        return@launchCatchingTask
+                    }
+                    val repositionDialog =
+                        RepositionCardFragment.newInstance(
+                            queueTop = top,
+                            queueBottom = bottom,
+                            random = repositionCardsResult.random,
+                            shift = repositionCardsResult.shift,
+                        )
+                    showDialogFragment(repositionDialog)
+                }
+            }
+        }
+        return true
+    }
+
     @KotlinCleanup("DeckSelectionListener is almost certainly a bug - deck!!")
     @VisibleForTesting
     internal fun getChangeDeckDialog(selectableDecks: List<SelectableDeck>?): DeckSelectionDialog {
@@ -369,6 +426,28 @@ class CardBrowserFragment :
             val changed = withProgress { viewModel.moveSelectedCardsToDeck(did).await() }
             (requireActivity() as CardBrowser).showUndoSnackbar(TR.browsingCardsUpdated(changed.count))
         }
+
+    @VisibleForTesting
+    internal fun repositionCardsNoValidation(
+        position: Int,
+        step: Int,
+        shuffle: Boolean,
+        shift: Boolean,
+    ) = launchCatchingTask {
+        val count =
+            withProgress {
+                viewModel.repositionSelectedRows(
+                    position = position,
+                    step = step,
+                    shuffle = shuffle,
+                    shift = shift,
+                )
+            }
+        showSnackbar(
+            TR.browsingChangedNewPosition(count),
+            Snackbar.LENGTH_SHORT,
+        )
+    }
 
     private fun calculateTopOffset(cardPosition: Int): Int {
         val layoutManager = cardsListView.layoutManager as LinearLayoutManager
@@ -456,3 +535,5 @@ fun CardBrowser.toggleSuspendCards() = cardBrowserFragment.toggleSuspendCards()
 fun CardBrowser.toggleBury() = cardBrowserFragment.toggleBury()
 
 fun CardBrowser.rescheduleSelectedCards() = cardBrowserFragment.rescheduleSelectedCards()
+
+fun CardBrowser.repositionSelectedCards() = cardBrowserFragment.repositionSelectedCards()
