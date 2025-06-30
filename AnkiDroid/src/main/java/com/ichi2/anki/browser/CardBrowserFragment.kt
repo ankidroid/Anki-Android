@@ -69,11 +69,16 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.SimpleMessageDialog
+import com.ichi2.anki.dialogs.tags.TagsDialog
+import com.ichi2.anki.dialogs.tags.TagsDialogFactory
+import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.observability.ChangeManager
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
@@ -86,6 +91,7 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.visibleItemPositions
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.HandlerUtils
+import com.ichi2.utils.TagsUtil.getUpdatedTags
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -99,7 +105,8 @@ import timber.log.Timber
 class CardBrowserFragment :
     Fragment(R.layout.cardbrowser),
     AnkiActivityProvider,
-    ChangeManager.Subscriber {
+    ChangeManager.Subscriber,
+    TagsDialogListener {
     val viewModel: CardBrowserViewModel by activityViewModels()
 
     override val ankiActivity: CardBrowser
@@ -121,6 +128,11 @@ class CardBrowserFragment :
     lateinit var toggleRowSelections: ImageButton
 
     private lateinit var progressIndicator: LinearProgressIndicator
+
+    // DEFECT: Doesn't need to be a local
+    private var tagsDialogListenerAction: TagsDialogListenerAction? = null
+    private val tagsDialogFactory: TagsDialogFactory
+        get() = ankiActivity.tagsDialogFactory
 
     override fun onViewCreated(
         view: View,
@@ -522,6 +534,58 @@ class CardBrowserFragment :
             ankiActivity.onCardsUpdated(updatedCardIds)
         }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    fun filterByTag(vararg tags: String) {
+        tagsDialogListenerAction = TagsDialogListenerAction.FILTER
+        onSelectedTags(tags.toList(), emptyList(), CardStateFilter.ALL_CARDS)
+        filterByTags(tags.toList(), CardStateFilter.ALL_CARDS)
+    }
+
+    fun showEditTagsDialog() {
+        if (!viewModel.hasSelectedAnyRows()) {
+            Timber.d("showEditTagsDialog: called with empty selection")
+        }
+        tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
+        lifecycleScope.launch {
+            val noteIds = viewModel.queryAllSelectedNoteIds()
+            val dialog =
+                tagsDialogFactory.newTagsDialog().withArguments(
+                    requireContext(),
+                    type = TagsDialog.DialogType.EDIT_TAGS,
+                    noteIds = noteIds,
+                )
+            showDialogFragment(dialog)
+        }
+    }
+
+    fun showFilterByTagsDialog() {
+        launchCatchingTask {
+            tagsDialogListenerAction = TagsDialogListenerAction.FILTER
+            val dialog =
+                tagsDialogFactory.newTagsDialog().withArguments(
+                    context = requireContext(),
+                    type = TagsDialog.DialogType.FILTER_BY_TAG,
+                    noteIds = emptyList(),
+                )
+            showDialogFragment(dialog)
+        }
+    }
+
+    override fun onSelectedTags(
+        selectedTags: List<String>,
+        indeterminateTags: List<String>,
+        stateFilter: CardStateFilter,
+    ) {
+        when (tagsDialogListenerAction) {
+            TagsDialogListenerAction.FILTER -> filterByTags(selectedTags, stateFilter)
+            TagsDialogListenerAction.EDIT_TAGS ->
+                launchCatchingTask {
+                    editSelectedCardsTags(selectedTags, indeterminateTags)
+                }
+            else -> {}
+        }
+    }
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     fun showFindAndReplaceDialog() {
         FindAndReplaceDialogFragment().show(parentFragmentManager, FindAndReplaceDialogFragment.TAG)
@@ -608,6 +672,37 @@ class CardBrowserFragment :
         }
     }
 
+    /**
+     * Updates the tags of selected/checked notes and saves them to the disk
+     * @param selectedTags list of checked tags
+     * @param indeterminateTags a list of tags which can checked or unchecked, should be ignored if not expected
+     * For more info on [selectedTags] and [indeterminateTags] see [com.ichi2.anki.dialogs.tags.TagsDialogListener.onSelectedTags]
+     */
+    private suspend fun editSelectedCardsTags(
+        selectedTags: List<String>,
+        indeterminateTags: List<String>,
+    ) = withProgress {
+        val selectedNoteIds = viewModel.queryAllSelectedNoteIds().distinct()
+        undoableOp {
+            val selectedNotes =
+                selectedNoteIds
+                    .map { noteId -> getNote(noteId) }
+                    .onEach { note ->
+                        val previousTags: List<String> = note.tags
+                        val updatedTags = getUpdatedTags(previousTags, selectedTags, indeterminateTags)
+                        note.setTagsFromStr(this@undoableOp, tags.join(updatedTags))
+                    }
+            updateNotes(selectedNotes)
+        }
+    }
+
+    private fun filterByTags(
+        selectedTags: List<String>,
+        cardState: CardStateFilter,
+    ) = launchCatchingTask {
+        viewModel.filterByTags(selectedTags, cardState)
+    }
+
     val shortcuts get() =
         ShortcutGroup(
             listOf(
@@ -644,6 +739,11 @@ class CardBrowserFragment :
             ),
             R.string.card_browser_context_menu,
         )
+
+    private enum class TagsDialogListenerAction {
+        FILTER,
+        EDIT_TAGS,
+    }
 
     companion object {
         /**
@@ -686,3 +786,7 @@ fun CardBrowser.searchForSuspendedCards() = cardBrowserFragment.searchForSuspend
 fun CardBrowser.updateFlagForSelectedRows(flag: Flag) = cardBrowserFragment.updateFlagForSelectedRows(flag)
 
 fun CardBrowser.showFindAndReplaceDialog() = cardBrowserFragment.showFindAndReplaceDialog()
+
+fun CardBrowser.showEditTagsDialog() = cardBrowserFragment.showEditTagsDialog()
+
+fun CardBrowser.showFilterByTagsDialog() = cardBrowserFragment.showFilterByTagsDialog()
