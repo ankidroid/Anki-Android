@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.browser
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -53,6 +54,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.BrowserOptionsDialog
+import com.ichi2.anki.dialogs.CardBrowserOrderDialog
 import com.ichi2.anki.dialogs.CreateDeckDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
@@ -61,6 +63,7 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.model.SortType
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
@@ -445,6 +448,16 @@ class CardBrowserFragment :
         }
     }
 
+    fun changeDisplayOrder() {
+        showDialogFragment(
+            // TODO: move this into the ViewModel
+            CardBrowserOrderDialog.newInstance { dialog: DialogInterface, which: Int ->
+                dialog.dismiss()
+                viewModel.changeCardOrder(SortType.fromCardBrowserLabelIndex(which))
+            },
+        )
+    }
+
     @KotlinCleanup("DeckSelectionListener is almost certainly a bug - deck!!")
     @VisibleForTesting
     internal fun getChangeDeckDialog(selectableDecks: List<SelectableDeck>?): DeckSelectionDialog {
@@ -593,3 +606,5 @@ fun CardBrowser.exportSelected() = cardBrowserFragment.exportSelected()
 fun CardBrowser.showOptionsDialog() = cardBrowserFragment.showOptionsDialog()
 
 fun CardBrowser.showCreateFilteredDeckDialog() = cardBrowserFragment.showCreateFilteredDeckDialog()
+
+fun CardBrowser.changeDisplayOrder() = cardBrowserFragment.changeDisplayOrder()
