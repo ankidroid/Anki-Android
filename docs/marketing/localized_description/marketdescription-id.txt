@@ -1,6 +1,6 @@
 Hafalkan semuanya dengan AnkiDroid!
 
-AnkiDroid memungkinkan Anda mempelajari kartu flash secara efisien dengan menampilkannya sesaat sebelum Anda lupa. Aplikasi ini sepenuhnya kompatibel dengan perangkat lunak hafalan berjarak Anki (termasuk sinkronisasi), yang tersedia untuk Windows, Linux dan MacOS.
+AnkiDroid memungkinkan Anda mempelajari kartu flash secara efisien dengan menampilkannya sesaat sebelum Anda lupa. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Belajar banyak hal di mana pun dan kapan pun Anda inginkan. Manfaatkan waktu luang saat naik bus, di antrean supermarket atau saat ada waktu luang lainnya!
 

@@ -380,7 +380,7 @@
     <string name="toolbar_actions" maxLength="41">Accións da barra de ferramentas</string>
     <string name="toolbar_position" maxLength="41">Posición da barra de ferramentas</string>
     <string name="new_study_screen" maxLength="41">Nova pantalla de estudo</string>
-    <string name="new_study_screen_summary">Nova pantalla de estudo que substituirá á actual. Dispoñíbel para testear e mandar suxerencias</string>
+    <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Abrir configuración</string>
 </resources>

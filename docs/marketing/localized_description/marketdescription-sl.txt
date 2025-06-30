@@ -1,6 +1,6 @@
 Zapomnite si karkoli z AnkiDroidom!
 
-AnkiDroid vam omogoča zelo učinkovito učenje pomnilnih kartic z njihovim prikazovanjem, tik preden jih pozabite. Popolnoma je združljiv s programsko opremo za pomnjenje Anki (vključno s sinhronizacijo), ki je na voljo za Windows, Linux in MacOS.
+AnkiDroid vam omogoča zelo učinkovito učenje pomnilnih kartic z njihovim prikazovanjem, tik preden jih pozabite. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Preučite vse vrste stvari, kadarkoli in kjerkoli želite. Dobro izkoristite čas čakanja na avtobusu, supermarketih ali v kateremkoli drugem primeru čakanja.
 

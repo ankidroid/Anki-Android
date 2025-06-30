@@ -36,7 +36,7 @@ Memorează orice cu AnkiDroid!
  - 27 de localizări 
  - toate versiunile anterioare AnkiDroid pot fi descărcate de pe website
 
-AnkiDroid îți permite să înveți foarte eficient cu ajutorul cardurilor, prin afișarea lor chiar înainte de a uita informația conținută pe ele. Este perfect compatibil cu programul de repetiție spațiată Anki (incluzând sincronizarea), fiind disponibil pentru Windows, Linux și MacOS.
+AnkiDroid îți permite să înveți foarte eficient cu ajutorul cardurilor, prin afișarea lor chiar înainte de a uita informația conținută pe ele. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Învață și reține tot felul de lucruri, oriunde și oricând vrei. Fructifică timpul mort din călătoriile cu autobuzul, trenul, statul la coadă în supermarket-uri, bănci sau în orice altă situație asemănătoare!
 
