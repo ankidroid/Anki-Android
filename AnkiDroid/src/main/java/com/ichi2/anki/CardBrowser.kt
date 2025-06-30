@@ -72,6 +72,7 @@ import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.browser.registerFindReplaceHandler
+import com.ichi2.anki.browser.rescheduleSelectedCards
 import com.ichi2.anki.browser.showChangeDeckDialog
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.browser.toggleBury
@@ -109,7 +110,6 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.scheduling.ForgetCardsDialog
-import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.scheduling.registerOnForgetHandler
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
@@ -1166,7 +1166,7 @@ open class CardBrowser :
     /**
      * @return `false` if the user may proceed; `true` if a warning is shown due to being in [NOTES]
      */
-    private fun warnUserIfInNotesOnlyMode(): Boolean {
+    fun warnUserIfInNotesOnlyMode(): Boolean {
         if (viewModel.cardsOrNotes != NOTES) return false
         showSnackbar(R.string.card_browser_unavailable_when_notes_mode) {
             setAction(R.string.error_handling_options) { showOptionsDialog() }
@@ -1502,19 +1502,6 @@ open class CardBrowser :
         index: Int,
         idsFile: IdsFile,
     ): Intent = PreviewerDestination(index, idsFile).toIntent(this)
-
-    private fun rescheduleSelectedCards() {
-        if (!viewModel.hasSelectedAnyRows()) {
-            Timber.i("Attempted reschedule - no cards selected")
-            return
-        }
-        if (warnUserIfInNotesOnlyMode()) return
-
-        launchCatchingTask {
-            val allCardIds = viewModel.queryAllSelectedCardIds()
-            showDialogFragment(SetDueDateDialog.newInstance(allCardIds))
-        }
-    }
 
     private fun addNoteFromCardBrowser() {
         if (fragmented) {
