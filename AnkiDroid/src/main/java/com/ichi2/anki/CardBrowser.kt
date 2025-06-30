@@ -72,6 +72,7 @@ import com.ichi2.anki.browser.registerFindReplaceHandler
 import com.ichi2.anki.browser.repositionSelectedCards
 import com.ichi2.anki.browser.rescheduleSelectedCards
 import com.ichi2.anki.browser.showChangeDeckDialog
+import com.ichi2.anki.browser.showCreateFilteredDeckDialog
 import com.ichi2.anki.browser.showOptionsDialog
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.browser.toggleBury
@@ -83,7 +84,6 @@ import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.MySearchesDialogListener
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog
-import com.ichi2.anki.dialogs.CreateDeckDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DiscardChangesDialog
@@ -1261,20 +1261,6 @@ open class CardBrowser :
             }
         }
         return fragmented && fragment!!.onMenuItemSelected(item)
-    }
-
-    private fun showCreateFilteredDeckDialog() {
-        val dialog = CreateDeckDialog(this, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null)
-        dialog.onNewDeckCreated = {
-            val intent = Intent(this, FilteredDeckOptions::class.java)
-            intent.putExtra("search", viewModel.searchTerms)
-            startActivity(intent)
-        }
-        launchCatchingTask {
-            withProgress {
-                dialog.showFilteredDeckDialog()
-            }
-        }
     }
 
     /**
