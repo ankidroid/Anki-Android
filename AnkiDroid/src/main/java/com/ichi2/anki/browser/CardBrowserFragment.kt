@@ -63,6 +63,7 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.SimpleMessageDialog
+import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.observability.ChangeManager
@@ -456,6 +457,11 @@ class CardBrowserFragment :
         showDialogFragment(ForgetCardsDialog())
     }
 
+    fun exportSelected() {
+        val (type, selectedIds) = viewModel.querySelectionExportData() ?: return
+        ExportDialogFragment.newInstance(type, selectedIds).show(parentFragmentManager, "exportDialog")
+    }
+
     @KotlinCleanup("DeckSelectionListener is almost certainly a bug - deck!!")
     @VisibleForTesting
     internal fun getChangeDeckDialog(selectableDecks: List<SelectableDeck>?): DeckSelectionDialog {
@@ -599,3 +605,5 @@ fun CardBrowser.repositionSelectedCards() = cardBrowserFragment.repositionSelect
 fun CardBrowser.deleteSelectedNotes() = cardBrowserFragment.deleteSelectedNotes()
 
 fun CardBrowser.onResetProgress() = cardBrowserFragment.onResetProgress()
+
+fun CardBrowser.exportSelected() = cardBrowserFragment.exportSelected()
