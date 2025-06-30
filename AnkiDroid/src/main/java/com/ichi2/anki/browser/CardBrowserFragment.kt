@@ -203,11 +203,11 @@ class CardBrowserFragment :
                             return true
                         }
                         R.id.action_show_marked -> {
-                            searchForMarkedNotes()
+                            activityViewModel.searchForMarkedNotes()
                             return true
                         }
                         R.id.action_show_suspended -> {
-                            searchForSuspendedCards()
+                            activityViewModel.searchForSuspendedCards()
                             return true
                         }
                         R.id.action_search_by_tag -> {
@@ -483,7 +483,7 @@ class CardBrowserFragment :
                     // Ctrl+Alt+S / Ctrl+S in the activity take priority
                 } else if (!event.isCtrlPressed && event.isAltPressed) {
                     Timber.i("Alt+S: Show suspended cards")
-                    searchForSuspendedCards()
+                    activityViewModel.searchForSuspendedCards()
                     return true
                 }
             }
@@ -508,7 +508,7 @@ class CardBrowserFragment :
             KeyEvent.KEYCODE_M -> {
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+M: Search marked notes")
-                    searchForMarkedNotes()
+                    activityViewModel.searchForMarkedNotes()
                     return true
                 }
             }
@@ -704,20 +704,6 @@ class CardBrowserFragment :
                 activityViewModel.changeCardOrder(SortType.fromCardBrowserLabelIndex(which))
             },
         )
-    }
-
-    /**
-     * @see CardBrowserViewModel.searchForSuspendedCards
-     */
-    fun searchForSuspendedCards() {
-        launchCatchingTask { activityViewModel.searchForSuspendedCards() }
-    }
-
-    /**
-     * @see CardBrowserViewModel.searchForMarkedNotes
-     */
-    fun searchForMarkedNotes() {
-        launchCatchingTask { activityViewModel.searchForMarkedNotes() }
     }
 
     fun updateFlagForSelectedRows(flag: Flag) =
