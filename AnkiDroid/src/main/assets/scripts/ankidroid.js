@@ -22,8 +22,9 @@ globalThis.ankidroid.showAllHints = function () {
     document.querySelectorAll("a.hint").forEach(el => el.click());
 };
 
+globalThis.ankidroid.doubleTapTimeout = 200;
+
 (() => {
-    const DOUBLE_TAP_TIMEOUT = 250; // Max ms between taps for a double tap.
     const SCHEME = "gesture";
 
     let startX = 0,
@@ -72,11 +73,10 @@ globalThis.ankidroid.showAllHints = function () {
                 params.append("scrollDirection", scrollDirection);
             }
             const requestUrl = `${SCHEME}://tapOrSwipe/?${params.toString()}`;
-
             tapTimer = setTimeout(() => {
                 window.location.href = requestUrl;
                 tapTimer = null;
-            }, DOUBLE_TAP_TIMEOUT);
+            }, ankidroid.doubleTapTimeout);
         },
         { passive: false },
     );
