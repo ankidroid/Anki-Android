@@ -44,19 +44,19 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">هل تريد فحص قاعدة البيانات؟</string>
-    <string name="check_db_warning">قد يستغرق هذا وقتًا طويلًا</string>
-    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">حذف الرزمة</string>
+    <string name="check_db_title">أتريد فحص قاعدة البيانات؟</string>
+    <string name="check_db_warning">قد يستغرق هذا وقتًا طويلاً</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">إحذف الرزمة</string>
     <string name="delete_deck_title">هل تريد حذف الرزمة؟</string>
     <plurals name="delete_deck_message">
-        <item quantity="zero">Delete all cards in %1$s? It contains %2$d cards</item>
-        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
-        <item quantity="two">Delete all cards in %1$s? It contains %2$d cards</item>
-        <item quantity="few">Delete all cards in %1$s? It contains %2$d cards</item>
-        <item quantity="many">Delete all cards in %1$s? It contains %2$d cards</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="zero">إحذف كل البطاقات من %1$s؟ إنها خالية</item>
+        <item quantity="one">إحذف كل البطاقات من %1$s؟ إنها تحتوي على بطاقة واحدة</item>
+        <item quantity="two">إحذف كل البطاقات من %1$s؟ إنها تحتوي على بطاقتين</item>
+        <item quantity="few">إحذف كل البطاقات من %1$s؟ إنها تحتوي على %2$d بطاقات</item>
+        <item quantity="many">إحذف كل البطاقات من %1$s؟ إنها تحتوي على %2$d بطاقة</item>
+        <item quantity="other">إحذف كل البطاقات من %1$s؟ إنها تحتوي على %2$d بطاقة</item>
     </plurals>
-    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
+    <string name="delete_cram_deck_message">إحذف الرزمة المستخلصة %s وأعد جميع البطاقات إلا رزمها الأصلية؟</string>
     <string name="no_tts_available_message">لا يتوفر دعم تحويل النص إلى كلام لأي لغة</string>
     <string name="tts_no_tts">لا تنطق</string>
     <string name="reposition_card_not_new_error">يمكن تغيير موضع البطاقات الجديدة فقط</string>
@@ -70,24 +70,24 @@
         <item quantity="other">تم تصفير %d بطاقة</item>
     </plurals>
     <string name="answering_error_title">خطأ في قاعدة البيانات</string>
-    <string name="answering_error_message">فشلت الكتابة إلى المجموعة. قد تكون قاعدة البيانات تالفة أو قد لا تكون هناك مساحة كافية على القرص.\n\nإذا كان هذا يحدث غالبًا، جرب فحص قاعدة البيانات، أو إصلاح المجموعة، أو استرجاعها من نسخة احتياطية. انقر «خيارات» لفعل ذلك. \nأو قد يكون هذا عطلًا في أنكي درويد ربما؛ الرجاء الإبلاغ عن هذا لنتحقق منه.</string>
+    <string name="answering_error_message">فشلت الكتابة إلى المجموعة. قد تكون قاعدة البيانات تالفة أو قد لا تكون هناك مساحة كافية على القرص.\n\nإذا تكرر حدوث هذا، جرب فحص قاعدة البيانات أو إصلاح المجموعة أو استرجاعها من نسخة احتياطية. انقر «خيارات» لفعل ذلك. \nأو قد يكون هذا عطلًا في آنكي درويد؛ الرجاء الإبلاغ عن هذا لنتحقق منه.</string>
     <string name="answering_error_report">إبلاغ عن الخطأ</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
+    <string name="storage_full_message">لا توجد مساحة تخزين كافية لفتح آنكي درويد. أخلِ بعض المساحة لتستمر.</string>
     <string name="repair_deck_dialog">هل تريد حقًا إصلاح قاعدة البيانات؟\n\nقبل بدء هذه المحاولة، ستُنشَأ نسخة في المجلد الفرعي “%s”.</string>
     <string name="intent_aedict_empty">تصنيف “default” فارغ</string>
-    <string name="intent_aedict_category">لإضافة بطاقات إلى أنكيدرويد، أزل كل تصنيفات المفكرة أو أضف تصنيفًا باسم “default”</string>
+    <string name="intent_aedict_category">لإضافة بطاقات إلى آنكي درويد، أزل كل تصنيفات المذكرة أو أضف تصنيفًا باسم «default»</string>
     <string name="custom_study_new_extend">رفع/إنقاص (“-3”) الحد اليومي للبطاقات الجديدة بـ</string>
     <string name="custom_study_rev_extend">رفع/إنقاص (“-3”) الحد اليومي للمراجعات بـ</string>
     <string name="custom_study_forgotten">راجع البطاقات المنسية في آخر س يوم:</string>
     <string name="custom_study_ahead">راجع مبكرًا بـ س يوم:</string>
     <string name="custom_study_preview">عاين البطاقات الجديدة المضافة في آخر س يوم:</string>
-    <string name="custom_study_tags">Select x cards from the deck:</string>
+    <string name="custom_study_tags">إختر س بطاقة من الرزمة:</string>
     <string name="storage_full_title">ذاكرة التخزين ممتلئة</string>
     <string name="storage_almost_full_title">بطاقة الـSD ممتلئة تقريبًا</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">لا توجد مساحة</string>
-    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">يحتاج أنكيدرويد %s من مساحة التخزين الخالية ليُكمل. فضلًا أخلِ بعض المساحة</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">يحتاج آنكي درويد %s من مساحة التخزين الخالية ليستمر. فضلًا أخلِ بعض المساحة</string>
     <string name="restore_backup_title">هل تريد استرجاع النسخة الاحتياطية؟</string>
-    <string name="restore_backup">ستُستبدل مجموعتك بنسخة أقدم. ستفقد أي تغيير غير محفوظ.</string>
+    <string name="restore_backup">ستُستبدل نسخة أقدم بمجموعتك. ستضيع تعديلاتك إن لم تحفظها.</string>
     <string name="restore_backup_choose_another">اختر نسخة أخرى</string>
     <string name="dialog_cancel">إلغاء</string>
     <string name="dialog_ok">حسنًا</string>
@@ -106,15 +106,15 @@
     <string name="dialog_positive_repair">إصلاح</string>
     <string name="dialog_positive_replace">استبدال</string>
     <string name="dialog_collection_path_not_dir">المسار المحدد ليس مجلدًا صالحًا</string>
-    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
-    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
-    <string name="dialog_updated_custom_certificate">Certificate updated</string>
+    <string name="dialog_invalid_custom_certificate">لا يُحال النص المُدخل إلى شهادة «X509» مشفرة ب«PEM» صالحة.</string>
+    <string name="dialog_invalid_custom_certificate_title">حدث خطأ في تحليل الشهادة</string>
+    <string name="dialog_updated_custom_certificate">تم تحديث الشهادة</string>
     <!-- Media checking -->
     <string name="check_media_title">هل تريد فحص الوسائط؟</string>
     <string name="check_media_warning">قد يأخذ هذا وقتًا طويلًا لمجموعات الوسائط الكبيرة</string>
     <string name="check_media_message">يجري فحص الوسائط&#8230;</string>
-    <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_adding_missing_tag">تجري إضافة الوسوم&#8230;</string>
+    <string name="check_media_tags_added">أضيفت الوسوم</string>
     <string name="delete_media_message">جار حذف الوسائط&#8230;</string>
     <string name="delete_media_result_title">نتيجة الحذف</string>
     <plurals name="delete_media_result_message">
@@ -137,8 +137,8 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">رُفِض إذن تسجيل الصوت</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">تم تحديث أنكيدرويد</string>
-    <string name="integrity_check_startup_content">تم تحديث أنكيدرويد. يتضمن هذا التحديث إصلاحًا لأعطال ممكنة في قاعدة البيانات، لذلك ننصح باستخدام ميزة فحص قاعدة البيانات الآن.</string>
+    <string name="integrity_check_startup_title">تم تحديث آنكي درويد</string>
+    <string name="integrity_check_startup_content">تم تحديث آنكي درويد. يتضمن هذا التحديث إصلاحًا لأعطال ممكنة في قاعدة البيانات، لذلك ننصح باستخدام ميزة فحص قاعدة البيانات الآن.</string>
     <string name="integrity_check_continue_anyway">استمر على أي حال</string>
     <string name="integrity_check_insufficient_space">تستخدم ميزة فحص قاعدة البيانات مساحة كبيرة من التخزين المؤقت.\n\nينصح بشدة أن يكون لديك مساحة %s خالية على الأقل في جهازك قبل الاستمرار.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nلديك حاليًا مساحة %s خالية.</string>
@@ -148,9 +148,9 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">تم قفل قاعدة البيانات</string>
-    <string name="database_locked_summary">قاعدة بيانات أنكيدرويد قيد الاستخدام من قبل تطبيق آخر. الرجاء إغلاق ذلك التطبيق وفتح أنكيدرويد مجددًا.</string>
+    <string name="database_locked_summary">قاعدة بيانات آنكي درويد قَيد الاستخدام من قبل تطبيق آخر. الرجاء إغلاق ذاك التطبيق وفتح آنكي درويد مجددًا.</string>
     <string name="incompatible_database_version_title">إصدار قاعدة بيانات غير متوافق</string>
-    <string name="incompatible_database_version_summary">إن إصدار قاعدة البيانات متقدم بحيث لا يعمل إصدار أنكيدوريد هذا معه. حدّث أنكيدرويد أو خفّض إصدار قاعدة البيانات لفتحها.\n\nالإصدار المدعوم: %1$d\nإصدار قاعدة البيانات: %2$d\n\nخيارات الاسترجاع التالية تستبدل مجموعتك الحالية بإصدار قاعدة بيانات متوافق غالبًا:</string>
+    <string name="incompatible_database_version_summary">إصدار قاعدة البيانات يفوق أعلى إصدار يعمل مع آنكي دوريد. حدِّث آنكي درويد أو خفِّض إصدار قاعدة البيانات لفتحها.\n\nالإصدار المدعوم: %1$d\nإصدار قاعدة البيانات: %2$d\n\nخيارات الاسترجاع التالية يحتمل أن تستبدل بمجموعتك الحالية نسخةً ذات إصدار قاعدة بيانات متوافق:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">تم تطبيق صورة الخلفية</string>
     <string name="background_image_removed">تمت إزالة صورة الخلفية</string>
@@ -159,11 +159,11 @@
     <string name="error_deleting_image">فشل حذف الصورة</string>
     <string name="failed_to_apply_background_image">تعذر تطبيق صورة الخلفية %s</string>
     <string name="background_image_too_large">خلفية محدد الرزم كبيرة جدًا</string>
-    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">الحجم الأقصى المسموح للصور هو %dMB</string>
     <string name="image_dimensions_too_large">أبعاد الصورة كبيرة جدًا (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">يفتقد إذن التخزين المطلوب. يرجى منح إذن التخزين ثم المحاولة مجددًا.</string>
+    <string name="intent_handler_failed_no_storage_permission">لم نجد إذن التخزين المطلوب. يرجى منح إذن التخزين ثم المحاولة مجددًا.</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">تعذرت جدولة التنبيهات</string>
     <string name="boot_service_too_many_notifications">تمت جدولة كثير من التنبيهات. لن يظهر بعضها</string>
@@ -171,40 +171,40 @@
     <string name="locale_selection_dialog_title_new">ضبط اللغة</string>
     <string name="locale_selection_dialog_summary">بعض لوحات المفاتيح متعددة اللغات، مثل GBoard، تدعم تغيير اللغة عند تحرير النص\n\nيرجى طلب ميزة “setImeHintLocales” من مصنّع لوحة المفاتيح الخاصة بك إذا كانت لوحة المفاتيح لا تغيّر اللغة.</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">استخدام أنكيدرويد</string>
-    <string name="help_item_ankidroid_manual">دليل أنكيدرويد</string>
-    <string name="help_item_anki_manual">دليل أنكي</string>
-    <string name="help_item_ankidroid_faq">أسئلة متكررة عن أنكيدرويد</string>
+    <string name="help_title_using_ankidroid">استخدام آنكي درويد</string>
+    <string name="help_item_ankidroid_manual">دليل آنكي درويد</string>
+    <string name="help_item_anki_manual">دليل آنكي</string>
+    <string name="help_item_ankidroid_faq">أسئلة متكررة عن آنكي درويد</string>
     <string name="help_title_get_help">الحصول على مساعدة</string>
     <string name="help_item_mailing_list">القائمة البريدية</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">الإبلاغ عن خلل</string>
-    <string name="help_title_support_ankidroid" maxLength="28">دعم أنكيدرويد</string>
+    <string name="help_title_support_ankidroid" maxLength="28">إدعم آنكي درويد</string>
     <string name="help_item_support_opencollective_donate">تبرع</string>
     <string name="help_item_support_develop_ankidroid">تطوير</string>
     <string name="help_item_support_rate_ankidroid">تقييم</string>
     <string name="help_item_support_other_ankidroid">غير ذلك</string>
     <string name="multimedia_editor_trans_translate">ترجمة</string>
     <string name="help_title_community">المجتمع</string>
-    <string name="help_item_anki_forums">منتديات أنكي</string>
+    <string name="help_item_anki_forums">منتديات آنكي</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">فيسبوك</string>
     <string name="help_item_twitter">تويتر</string>
     <string name="help_title_privacy">الخصوصية</string>
-    <string name="help_item_ankidroid_privacy_policy">سياسة خصوصية أنكيدرويد</string>
-    <string name="help_item_ankiweb_privacy_policy">سياسة خصوصية أنكي ويب</string>
-    <string name="help_item_ankiweb_terms_and_conditions">أخكام وشروط أنكي ويب</string>
+    <string name="help_item_ankidroid_privacy_policy">سياسة خصوصية آنكي درويد</string>
+    <string name="help_item_ankiweb_privacy_policy">سياسة خصوصية آنكي ويب</string>
+    <string name="help_item_ankiweb_terms_and_conditions">أحكام وشروط آنكي ويب</string>
     <string name="help_title_send_exception">إرسال تقرير استكشاف الأخطاء</string>
     <string name="help_dialog_exception_report_debounce">تم إرسال التقرير مسبقًا</string>
     <string name="help_dialog_exception_report_sent">تم إرسال التقرير!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="zero">An automatic sync may be triggered in %d seconds</item>
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d second</item>
-        <item quantity="two">An automatic sync may be triggered in %d seconds</item>
-        <item quantity="few">An automatic sync may be triggered in %d seconds</item>
-        <item quantity="many">An automatic sync may be triggered in %d seconds</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="zero">قد تتم مزامنة تلقائية في صفر ثانية</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">قد تتم مزامنة تلقائية في ثانية واحدة</item>
+        <item quantity="two">قد تتم مزامنة تلقائية في ثانيتين</item>
+        <item quantity="few">قد تتم مزامنة تلقائية في %d ثنوانٍ</item>
+        <item quantity="many">قد تتم مزامنة تلقائية في %d ثانية</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">قد تتم مزامنة تلقائية في %d ثانية</item>
     </plurals>
     <string name="metered_sync_data_warning">مقدم خدمة الإنترنت الخاص بك قد يدفّعك مالًا بدل استخدامك للبيانات</string>
     <string name="deck_picker_new">عدد البطاقات الجديدة لتراها اليوم من هذه الرزمة.</string>
@@ -220,70 +220,71 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">لا يمكنك إنشاء رزمة فرعية لكل الرزم</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">انسخ  المجموعة الخاصة بك احتياطياً</string>
-    <string name="backup_collection_message">لم تقم بنسخ مجموعتك احتياطياً في فترة من الزمن. يجب عليك القيام بذلك الآن لمنع فقدان البيانات</string>
+    <string name="backup_your_collection">انسخ  المجموعة الخاصة بك احتياطيًا</string>
+    <string name="backup_collection_message">لم تقم بنسخ مجموعتك احتياطيًا منذ مدة. من الأفضل أن تقوم بذلك الآن لمنع فقدان البيانات</string>
     <string name="button_backup" maxLength="41">النسخ الاحتياطي</string>
     <string name="button_disable_reminder">تعطيل التذكير</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">لاحقًا</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">لا تُظهر مجدّدًا</string>
     <string name="dismiss_backup_warning_title">تحذير فقدان البيانات</string>
-    <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
-    <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
+    <string name="dismiss_backup_warning_new_user">نتيجة لتغييرات في سياسة أندرويد الخصوصية، سيتم حذف بياناتك والنسخ الإحتياطية التلقائية من هاتفك إذا حُذف التطبيق</string>
+    <string name="dismiss_backup_warning_upgrade">نتيجة لتغييرات في سياسة أندرويد الخصوصية، ستكون غير قابل للوصول إلى بياناتك والنسخ الإحتياطية التلقائية إذا حُذف التطبيق</string>
     <string name="deck_already_exists">هذه الرزمة موجودة بالفعل</string>
-    <string name="empty_deck_name">Deck name cannot be empty</string>
-    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <string name="empty_deck_name">لا يمكن أن يكون إسم الرمزة خاليًا</string>
+    <string name="create_deck_numeric_hint">إذا كنت تواجه مصاعب في ترتيب الرزم (كأن تظهر «١٠» قبل «٢»)، إستبدل «٢» ب «٠٢»</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">إجعل الفاصل نفس القيمة</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="zero">Show cards in</item>
-        <item quantity="one">Show card in</item>
-        <item quantity="two">Show cards in</item>
-        <item quantity="few">Show cards in</item>
-        <item quantity="many">Show cards in</item>
-        <item quantity="other">Show cards in</item>
+        <item quantity="zero">أظهر البطاقات في صفر يوم</item>
+        <item quantity="one">أظهر البطاقات في يوم</item>
+        <item quantity="two">أظهر البطاقات في يومين</item>
+        <item quantity="few">أظهر البطاقات في</item>
+        <item quantity="many">أظهر البطاقات في</item>
+        <item quantity="other">أظهر البطاقات في</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="zero">Show cards in range</item>
-        <item quantity="one">Show card in range</item>
-        <item quantity="two">Show cards in range</item>
-        <item quantity="few">Show cards in range</item>
-        <item quantity="many">Show cards in range</item>
-        <item quantity="other">Show cards in range</item>
+        <item quantity="zero">أظهر البطاقات في فترة</item>
+        <item quantity="one">أظهر البطاقات في فترة</item>
+        <item quantity="two">أظهر البطاقات في فترة</item>
+        <item quantity="few">أظهر البطاقات في فترة</item>
+        <item quantity="many">أظهر البطاقات في فترة</item>
+        <item quantity="other">أظهر البطاقات في فترة</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="zero">days</item>
-        <item quantity="one">day</item>
-        <item quantity="two">days</item>
-        <item quantity="few">days</item>
-        <item quantity="many">days</item>
-        <item quantity="other">days</item>
+        <item quantity="zero">يوم</item>
+        <item quantity="one">يوم</item>
+        <item quantity="two">يومان</item>
+        <item quantity="few">أيام</item>
+        <item quantity="many">يومًا</item>
+        <item quantity="other">أيام</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="zero">Current interval: %d days</item>
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="two">Current interval: %d days</item>
-        <item quantity="few">Current interval: %d days</item>
-        <item quantity="many">Current interval: %d days</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="zero">الفاصل الحالي: صفر يوم</item>
+        <item quantity="one">الفاصل الحالي: يوم واحد</item>
+        <item quantity="two">الفاصل الحالي: يومان</item>
+        <item quantity="few">الفاصل الحالي: %d أيام</item>
+        <item quantity="many">الفاصل الحالي: %d يومًا</item>
+        <item quantity="other">الفاصل الحالي: %d أيام</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
-    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">من</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">إلى</string>
     <!-- Instant Note Editor -->
-    <string name="cloze_note_required">Cloze Type Note Required</string>
-    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
-    <string name="open">Open</string>
-    <string name="change_cloze_number">Change cloze number</string>
-    <string name="cloze_number">Cloze number:</string>
-    <string name="change_editor_mode">Change editor mode</string>
-    <string name="open_note_editor">Open note editor</string>
-    <string name="change_cloze_mode">Change cloze mode</string>
+    <string name="cloze_note_required">مطلوب نوع ملحوظات خاص بملء الفراغات</string>
+    <string name="cloze_not_found_message">لم يعثر على نوع ملحوظات خاص بملء الفراغات، إفتح محرر الملحوظات أو حاول مجددًا بعد إضافة نوع ملحوظات خاص بملء الفراغات.</string>
+    <string name="open">إفتح</string>
+    <string name="change_cloze_number">غير رقم الفراغ</string>
+    <string name="cloze_number">رقم الفراغ</string>
+    <string name="change_editor_mode">غير وضع المحرر</string>
+    <string name="open_note_editor">إفتح محرر الملحوظات</string>
+    <string name="change_cloze_mode">غير وضع الفراغات</string>
     <!-- Outdated WebView dialog -->
-    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
-    <string name="compress">Compress</string>
+    <string name="webview_update_message">إصدار ويب فيو لهذا النظام قديم. لن تعمل بعض الميزات بشكل صحيح. حدثه رجاءًا.\n\nالإصدار المنصب: %1$d\nالإصدار الأدنى المطلوب: %2$d</string>
+    <string name="compress">إضغط</string>
     <!-- Tts playback error dialog -->
-    <string name="tts_error_dialog_title">Language not supported</string>
-    <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
-    <string name="tts_error_dialog_change_button_text">Change engine</string>
-    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
+    <string name="tts_error_dialog_title">اللغة غير مدعومة</string>
+    <string name="tts_error_dialog_reason_text">لا يدعم محرك تحويل النص إلى كلام <b>%1$s</b> اللغة التالية:
+<b>%2$s</b></string>
+    <string name="tts_error_dialog_change_button_text">غير المحرك</string>
+    <string name="tts_error_dialog_supported_voices_button_text">خيارات الصوت</string>
 </resources>

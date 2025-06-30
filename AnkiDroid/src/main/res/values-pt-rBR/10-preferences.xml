@@ -180,8 +180,8 @@
     <string name="time_limit" maxLength="41">Limite de tempo de Timebox</string>
     <string name="day_offset_with_description" maxLength="41">Início do dia seguinte</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hora depois da meia-noite</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d horas depois da meia-noite</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Manter tela ligada</string>
     <string name="pref_keep_screen_on_summ">Desativar tempo limite da tela</string>
@@ -201,13 +201,13 @@
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Pré-visualizações</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Ativar/desativar apenas o verso</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
+    <string name="pref_cat_reviewer" maxLength="41">Tela de Estudo</string>
     <string name="show_deck_title" maxLength="41">Mostrar título do baralho</string>
     <string name="accessibility" maxLength="41">Acessibilidade</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Colar imagens como PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Duplo toque em voltar para voltar/sair</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
+    <string name="exit_via_double_tap_back_summ">Para evitar sair acidentalmente da tela de estudos ou do aplicativo</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Importar todos os arquivos de mídia</string>
     <string name="media_import_allow_all_files_summ">Se o Android não reconhecer um arquivo de mídia</string>
@@ -252,7 +252,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">Substituir novas linhas por HTML</string>
     <string name="note_editor_replace_newlines_summ">No Editor de Notas, converta as ocorrências de &lt;br&gt; para uma quebra de linha ao editar um cartão.</string>
     <string name="type_in_answer_focus" maxLength="41">Focar em “tipo em resposta”</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
+    <string name="type_in_answer_focus_summ">Automaticamente focar no campo \"Escreva sua resposta\" na tela de estudos</string>
     <!-- About -->
     <string name="open_changelog">Abrir Changelog</string>
     <string name="pref_cat_about_title" maxLength="41">Sobre</string>

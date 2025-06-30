@@ -46,19 +46,19 @@
 -->
 <resources>
     <string name="youre_offline">أنت غير متصل بالإنترنت</string>
-    <string name="sync_error">خطأ بالمزامنة</string>
+    <string name="sync_error">خطأ في المزامنة</string>
     <string name="vague_error" comment="Network error dialog title">خطأ</string>
     <string name="retry">إعادة المحاولة</string>
     <string name="menu_get_shared_decks">احصل على رزم مشاركة</string>
     <string name="connection_error_message">حدث خطأ في الشبكة</string>
-    <string name="not_logged_in_title">تسجيل الدخول إلى أنكي ويب</string>
-    <string name="login_create_account_message">يجب تسجيل الدخول إلى حساب طرف ثالث لاستخدام خدمة المزامنة السحابية. تستطيع إنشاء واحد في الخطوة التالية.</string>
+    <string name="not_logged_in_title">سَجِّل الدخول إلى آنكي ويب</string>
+    <string name="login_create_account_message">يجب تسجيل الدخول إلى حساب طرف ثالث لاستخدام خدمة المزامنة السحابية. تستطيع إنشاء حساب في الخطوة التالية.</string>
     <!-- MyAccount.kt -->
     <string name="username">عنوان البريد الإلكتروني</string>
     <string name="password">كلمة السر</string>
     <string name="log_in">تسجيل الدخول</string>
-    <string name="sign_up_description">ألا تملك حساب أنكي ويب؟ إنه مجاني!</string>
-    <string name="sign_up_not_affiliated">ملاحظة: أنكي ويب غير تابع لأنكيدويد.</string>
+    <string name="sign_up_description">ألا تملك حساب آنكي ويب؟ إنه مجاني!</string>
+    <string name="sign_up_not_affiliated">ملاحظة: آنكي ويب غير تابع لآنكي درويد.</string>
     <string name="sign_up">التسجيل</string>
     <string name="logged_as">مسجل كـ</string>
     <string name="log_out">تسجيل الخروج</string>
@@ -66,20 +66,20 @@
     <string name="lost_mail_instructions">هل نسيت بريدك الإلكتروني؟</string>
     <string name="sign_in">جار تسجيل الدخول</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">خيارات XXX</string>
+    <string name="deckpreferences_title">خيارات س س س</string>
     <string name="sync_title">المزامنة</string>
     <string name="sync_log_uploading_message">مزامنة كاملة من القرص المحلي</string>
     <string name="sync_database_acknowledge">تمت مزامنة المجموعة</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
-    <string name="sync_corrupt_database">قاعدة البيانات الخاصة بك معطوبة. يرجى إصلاحها قبل أن تحاول مزامنتها مرة أخرى.\n\nانظر في%s للحصول على معلومات حول إصلاح قاعدة البيانات الخاصة بك.</string>
+    <string name="col_synced_media_in_background">تمت مزامنة المجموعة. ستتم مزامنة الوسائط في الخلفية.</string>
+    <string name="sync_corrupt_database">قاعدة بياناتك معطوبة. يرجى إصلاحها قبل أن تحاول مزامنتها مرة أخرى.\n\nانظر في%s للحصول على معلومات حول إصلاح قاعدة بياناتك.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">محلي</string>
     <string name="sync_sanity_remote">بعيد</string>
-    <string name="one_way_sync_title" maxLength="41">One-way sync</string>
-    <string name="one_way_sync_confirmation">One way sync requested</string>
-    <string name="full_sync_confirmation">يتطلب التغيير المطلوب رفعًا كاملًا لقاعدة البيانات عند مزامنة مجموعتك مجددًا. إذا كانت لديك مراجعات وتغييرات أخرى في جهاز آخر غير مُزامَنة هنا ، ستفقدها. هل تريد الاستمرار؟</string>
-    <string name="full_sync_confirmation_upgrade">بسبب عطل في إصدار أنكيدرويد المنصب سابقًا، يُنصح بفرض مزامنة كاملة.</string>
+    <string name="one_way_sync_title" maxLength="41">مزامنة باتجاه واحد</string>
+    <string name="one_way_sync_confirmation">طُلبت مزامنة باتجاه واحد</string>
+    <string name="full_sync_confirmation">يتطلب هذا التغيير رفعًا كاملًا لقاعدة البيانات عندما تُزامِن في المرة القادمة. إن كانت لديك مراجعات أو غيرها من التغييرات في جهاز آخر لم يُزامَن مع هذا الجهاز بعد، فإنك ستفقدها. هل تريد الاستمرار؟</string>
+    <string name="full_sync_confirmation_upgrade">نتيجة لعطل في إصدار آنكي درويد المثبت سابقًا، يُنصح بفرض مزامنة كاملة.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
-    <string name="sync_menu_title_no_account">مزامنة (تسجيل دخول)</string>
+    <string name="sync_menu_title_one_way_sync">زامِن (باتجاه واحد)</string>
+    <string name="sync_menu_title_no_account">زامِن (سجِّل الدخول)</string>
 </resources>

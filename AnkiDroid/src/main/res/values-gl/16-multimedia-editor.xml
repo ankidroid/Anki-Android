@@ -59,8 +59,8 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Algo foi mal</string>
-    <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
-    <string name="multimedia_editor_attach_tooltip" comment="Appear when holding the finger  on the paperclip icon">Attach multimedia content</string>
+    <string name="multimedia_editor_png_paste_error">Erro ao converter a imaxe do portapapeis a png: %s</string>
+    <string name="multimedia_editor_attach_tooltip" comment="Appear when holding the finger  on the paperclip icon">Anexar contido multimedia</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Anexar contido multimedia ao campo %1$s</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
@@ -72,7 +72,7 @@
     <string name="crop_button" maxLength="28">Recortar imaxe</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"Non se puido seleccionar a imaxe. Téntao de novo"</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Contido do campo</string>
     <string name="crop_image_size_notice">The image is too big to be handled by the crop editor. Please resize it and try again!</string>
     <string name="reselect" maxLength="28">Seleccionar de novo</string>
 </resources>

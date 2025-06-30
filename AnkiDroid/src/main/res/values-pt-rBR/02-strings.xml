@@ -67,11 +67,11 @@
     <string name="enable_whiteboard" maxLength="28">Habilitar quadro</string>
     <string name="disable_whiteboard">Desabilitar quadro</string>
     <string name="show_whiteboard">Mostrar quadro</string>
-    <string name="enable_eraser" maxLength="28">Enable eraser</string>
-    <string name="disable_eraser" maxLength="28">Disable eraser</string>
+    <string name="enable_eraser" maxLength="28">Ativar borracha</string>
+    <string name="disable_eraser" maxLength="28">Desativar borracha</string>
     <string name="hide_whiteboard" maxLength="28">Ocultar quadro</string>
     <string name="clear_whiteboard" maxLength="28">Limpar quadro</string>
-    <string name="replay_media" maxLength="28">Replay media</string>
+    <string name="replay_media" maxLength="28">Repetição de mídia</string>
     <string name="leech_suspend_notification">Cartão marcado como sanguessuga e suspenso</string>
     <string name="leech_notification">Cartão marcado como sanguessuga</string>
     <string name="webview_crash_unknown">Erro desconhecido</string>
@@ -355,5 +355,5 @@
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">A ação do usuário %s não está definida neste tipo de nota. Por favor, configure-a</string>
     <string name="directory_inaccessible_info">Aprenda mais sobre como restaurar o acesso aqui %s ou vá em opções para atualizar a pasta de coleções.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
-    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Melhoria de cronograma necessária</string>
 </resources>

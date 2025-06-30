@@ -95,7 +95,7 @@
     <string name="gesture_page_up" maxLength="41">Subir páxina</string>
     <string name="gesture_page_down" maxLength="41">Baixar páxina</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Alternar encerado</string>
-    <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
+    <string name="gesture_toggle_eraser" maxLength="41">Alternar borrador</string>
     <string name="gesture_show_hint" maxLength="41">Amosar pista</string>
     <string name="gesture_show_all_hints" maxLength="41">Amosar tódalas pistas</string>
     <string name="record_voice" maxLength="41">Gravar voz</string>

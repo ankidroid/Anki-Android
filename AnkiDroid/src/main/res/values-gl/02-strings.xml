@@ -67,11 +67,11 @@
     <string name="enable_whiteboard" maxLength="28">Activar encerado</string>
     <string name="disable_whiteboard">Desactivar encerado</string>
     <string name="show_whiteboard">Amosar encerado</string>
-    <string name="enable_eraser" maxLength="28">Enable eraser</string>
-    <string name="disable_eraser" maxLength="28">Disable eraser</string>
+    <string name="enable_eraser" maxLength="28">Activar borrador</string>
+    <string name="disable_eraser" maxLength="28">Desactivar borrador</string>
     <string name="hide_whiteboard" maxLength="28">Agochar encerado</string>
     <string name="clear_whiteboard" maxLength="28">Limpar encerado</string>
-    <string name="replay_media" maxLength="28">Replay media</string>
+    <string name="replay_media" maxLength="28">Reproducir multimedia</string>
     <string name="leech_suspend_notification">Tarxeta marcada como sambesuga e suspendida</string>
     <string name="leech_notification">Tarxeta marcada como sambesuga</string>
     <string name="webview_crash_unknown">Erro descoñecido</string>
@@ -196,8 +196,8 @@
     <string name="restore_default" maxLength="28">Restablecer predefinidos</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Baleiro</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
-    <string name="white_board_eraser_enabled">Eraser mode activated</string>
-    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string name="white_board_eraser_enabled">Modo borrador activado</string>
+    <string name="white_board_eraser_disabled">Modo borrador desactivado</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Fallo ao gardar a imaxe do encerado. %s</string>
     <string name="white_board_image_saved">Imaxe do encerado gardada en %s</string>
@@ -355,5 +355,5 @@
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">A acción de usuario %s non está establecida neste tipo de nota. Configúraa</string>
     <string name="directory_inaccessible_info">Obtén máis información sobre como restaurar o acceso aquí %s ou ve á configuración para actualizar o cartafol da colección.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
-    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Cómpre actualizar o programador</string>
 </resources>
