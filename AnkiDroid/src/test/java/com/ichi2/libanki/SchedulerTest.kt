@@ -210,7 +210,7 @@ open class SchedulerTest : JvmTest() {
         )
         Assert.assertEquals(2, (c.left % 1000).toLong())
         // check log is accurate
-        val log = col.db.database.query("select * from revlog order by id desc")
+        val log = col.db.query("select * from revlog order by id desc")
         Assert.assertTrue(log.moveToFirst())
         Assert.assertEquals(3, log.getInt(3).toLong())
         Assert.assertEquals(-180, log.getInt(4).toLong())
