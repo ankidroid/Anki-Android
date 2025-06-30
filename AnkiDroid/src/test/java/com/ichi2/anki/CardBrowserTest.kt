@@ -1169,7 +1169,7 @@ class CardBrowserTest : RobolectricTest() {
             val secondDeckId = requireNotNull(col.decks.idForName("Second"))
 
             browserWithNoNewCards.apply {
-                selectDeckAndSave(secondDeckId)
+                viewModel.setDeckId(secondDeckId)
                 assertThat(viewModel.deckId, equalTo(secondDeckId))
                 finish()
             }
