@@ -74,13 +74,13 @@ import com.ichi2.anki.browser.registerFindReplaceHandler
 import com.ichi2.anki.browser.repositionSelectedCards
 import com.ichi2.anki.browser.rescheduleSelectedCards
 import com.ichi2.anki.browser.showChangeDeckDialog
+import com.ichi2.anki.browser.showOptionsDialog
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.browser.toggleBury
 import com.ichi2.anki.browser.toggleMark
 import com.ichi2.anki.browser.toggleSuspendCards
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.anki.dialogs.BrowserOptionsDialog
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.MySearchesDialogListener
@@ -1450,11 +1450,6 @@ open class CardBrowser :
                 )
             showDialogFragment(dialog)
         }
-    }
-
-    private fun showOptionsDialog() {
-        val dialog = BrowserOptionsDialog.newInstance(viewModel.cardsOrNotes, viewModel.isTruncated)
-        dialog.show(supportFragmentManager, "browserOptionsDialog")
     }
 
     public override fun onSaveInstanceState(outState: Bundle) {
