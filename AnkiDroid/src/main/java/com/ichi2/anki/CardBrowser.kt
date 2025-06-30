@@ -66,6 +66,7 @@ import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.browser.deleteSelectedNotes
+import com.ichi2.anki.browser.exportSelected
 import com.ichi2.anki.browser.onResetProgress
 import com.ichi2.anki.browser.registerFindReplaceHandler
 import com.ichi2.anki.browser.repositionSelectedCards
@@ -89,7 +90,6 @@ import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
-import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
@@ -1339,11 +1339,6 @@ open class CardBrowser :
                 startActivity(intent)
             }
         }
-    }
-
-    private fun exportSelected() {
-        val (type, selectedIds) = viewModel.querySelectionExportData() ?: return
-        ExportDialogFragment.newInstance(type, selectedIds).show(supportFragmentManager, "exportDialog")
     }
 
     @VisibleForTesting
