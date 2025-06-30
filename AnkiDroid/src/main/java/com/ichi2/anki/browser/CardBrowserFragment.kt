@@ -34,9 +34,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import anki.collection.OpChanges
 import com.google.android.material.progressindicator.LinearProgressIndicator
-import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiActivityProvider
 import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
@@ -44,14 +44,24 @@ import com.ichi2.anki.browser.CardBrowserViewModel.SearchState
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Initializing
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Searching
 import com.ichi2.anki.common.utils.android.isRobolectric
+import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.dialogs.DeckSelectionDialog
+import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
+import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
+import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.attachFastScroller
+import com.ichi2.anki.utils.ext.getCurrentDialogFragment
+import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.anki.withProgress
 import com.ichi2.libanki.ChangeManager
+import com.ichi2.libanki.DeckId
 import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.dp
 import com.ichi2.utils.updatePaddingRelative
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -64,8 +74,8 @@ class CardBrowserFragment :
     ChangeManager.Subscriber {
     val viewModel: CardBrowserViewModel by activityViewModels()
 
-    override val ankiActivity: AnkiActivity
-        get() = requireAnkiActivity()
+    override val ankiActivity: CardBrowser
+        get() = requireAnkiActivity() as CardBrowser
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     lateinit var cardsAdapter: BrowserMultiColumnAdapter
@@ -83,6 +93,15 @@ class CardBrowserFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Selected cards aren't restored on activity recreation,
+        // so it is necessary to dismiss the change deck dialog
+        getCurrentDialogFragment<DeckSelectionDialog>()?.let { dialogFragment ->
+            if (dialogFragment.requireArguments().getBoolean(CHANGE_DECK_KEY, false)) {
+                Timber.d("onCreate(): Change deck dialog dismissed")
+                dialogFragment.dismiss()
+            }
+        }
 
         cardsListView =
             view.findViewById<RecyclerView>(R.id.card_browser_list).apply {
@@ -269,6 +288,48 @@ class CardBrowserFragment :
             }
         }
 
+    fun showChangeDeckDialog() =
+        launchCatchingTask {
+            if (!viewModel.hasSelectedAnyRows()) {
+                Timber.i("Not showing Change Deck - No Cards")
+                return@launchCatchingTask
+            }
+            val selectableDecks =
+                viewModel
+                    .getAvailableDecks()
+                    .map { d -> SelectableDeck(d) }
+            val dialog = getChangeDeckDialog(selectableDecks)
+            showDialogFragment(dialog)
+        }
+
+    @KotlinCleanup("DeckSelectionListener is almost certainly a bug - deck!!")
+    @VisibleForTesting
+    internal fun getChangeDeckDialog(selectableDecks: List<SelectableDeck>?): DeckSelectionDialog {
+        val dialog =
+            newInstance(
+                getString(R.string.move_all_to_deck),
+                null,
+                false,
+                selectableDecks!!,
+            )
+        // Add change deck argument so the dialog can be dismissed
+        // after activity recreation, since the selected cards will be gone with it
+        dialog.requireArguments().putBoolean(CHANGE_DECK_KEY, true)
+        dialog.deckSelectionListener = DeckSelectionListener { deck: SelectableDeck? -> moveSelectedCardsToDeck(deck!!.deckId) }
+        return dialog
+    }
+
+    /**
+     * Change Deck
+     * @param did Id of the deck
+     */
+    @VisibleForTesting
+    internal fun moveSelectedCardsToDeck(did: DeckId): Job =
+        launchCatchingTask {
+            val changed = withProgress { viewModel.moveSelectedCardsToDeck(did).await() }
+            (requireActivity() as CardBrowser).showUndoSnackbar(TR.browsingCardsUpdated(changed.count))
+        }
+
     private fun calculateTopOffset(cardPosition: Int): Int {
         val layoutManager = cardsListView.layoutManager as LinearLayoutManager
         val firstVisiblePosition = layoutManager.findFirstVisibleItemPosition()
@@ -335,4 +396,15 @@ class CardBrowserFragment :
             ),
             R.string.card_browser_context_menu,
         )
+
+    companion object {
+        /**
+         * Argument key to add on change deck dialog,
+         * so it can be dismissed on activity recreation,
+         * since the cards are unselected when this happens
+         */
+        private const val CHANGE_DECK_KEY = "CHANGE_DECK"
+    }
 }
+
+fun CardBrowser.showChangeDeckDialog() = cardBrowserFragment.showChangeDeckDialog()

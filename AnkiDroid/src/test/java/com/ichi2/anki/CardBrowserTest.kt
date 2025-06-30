@@ -57,7 +57,6 @@ import com.ichi2.anki.browser.CardBrowserColumn.DECK
 import com.ichi2.anki.browser.CardBrowserColumn.QUESTION
 import com.ichi2.anki.browser.CardBrowserColumn.SFLD
 import com.ichi2.anki.browser.CardBrowserColumn.TAGS
-import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModelTest
 import com.ichi2.anki.browser.CardOrNoteId
@@ -363,7 +362,7 @@ class CardBrowserTest : RobolectricTest() {
             }
 
             // act
-            assertDoesNotThrow { b.moveSelectedCardsToDeck(deckIdToChangeTo) }
+            assertDoesNotThrow { b.cardBrowserFragment.moveSelectedCardsToDeck(deckIdToChangeTo) }
 
             // assert
             for (cardId in cardIds) {
@@ -383,7 +382,7 @@ class CardBrowserTest : RobolectricTest() {
 
             val cardIds = b.viewModel.queryAllSelectedCardIds()
 
-            b.moveSelectedCardsToDeck(dynId).join()
+            b.cardBrowserFragment.moveSelectedCardsToDeck(dynId).join()
 
             for (cardId in cardIds) {
                 assertThat("Deck should not be changed", col.getCard(cardId).did, not(dynId))
@@ -767,7 +766,7 @@ class CardBrowserTest : RobolectricTest() {
     fun change_deck_dialog_is_dismissed_on_activity_recreation() {
         val cardBrowser = browserWithNoNewCards
 
-        val dialog = cardBrowser.getChangeDeckDialog(listOf())
+        val dialog = cardBrowser.cardBrowserFragment.getChangeDeckDialog(listOf())
         cardBrowser.showDialogFragment(dialog)
 
         val shownDialog: Fragment? = cardBrowser.getCurrentDialogFragment()
@@ -1743,6 +1742,3 @@ fun CardBrowser.searchCards(search: String? = null) {
     }
     runBlocking { viewModel.searchJob?.join() }
 }
-
-val CardBrowser.cardBrowserFragment: CardBrowserFragment
-    get() = supportFragmentManager.findFragmentById(R.id.card_browser_frame) as CardBrowserFragment
