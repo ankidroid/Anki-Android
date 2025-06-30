@@ -73,6 +73,8 @@ import com.ichi2.anki.browser.onResetProgress
 import com.ichi2.anki.browser.registerFindReplaceHandler
 import com.ichi2.anki.browser.repositionSelectedCards
 import com.ichi2.anki.browser.rescheduleSelectedCards
+import com.ichi2.anki.browser.searchForMarkedNotes
+import com.ichi2.anki.browser.searchForSuspendedCards
 import com.ichi2.anki.browser.showChangeDeckDialog
 import com.ichi2.anki.browser.showCreateFilteredDeckDialog
 import com.ichi2.anki.browser.showOptionsDialog
@@ -1295,20 +1297,6 @@ open class CardBrowser :
             Timber.w("Unexpected onOptionsItemSelected call: %s", item.itemId)
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    /**
-     * @see CardBrowserViewModel.searchForSuspendedCards
-     */
-    private fun searchForSuspendedCards() {
-        launchCatchingTask { viewModel.searchForSuspendedCards() }
-    }
-
-    /**
-     * @see CardBrowserViewModel.searchForMarkedNotes
-     */
-    private fun searchForMarkedNotes() {
-        launchCatchingTask { viewModel.searchForMarkedNotes() }
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
