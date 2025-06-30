@@ -34,6 +34,7 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -113,7 +114,9 @@ class CardBrowserFragment :
     AnkiActivityProvider,
     ChangeManager.Subscriber,
     TagsDialogListener {
-    val viewModel: CardBrowserViewModel by activityViewModels()
+    val activityViewModel: CardBrowserViewModel by activityViewModels()
+
+    val viewModel: CardBrowserFragmentViewModel by viewModels()
 
     override val ankiActivity: CardBrowser
         get() = requireAnkiActivity() as CardBrowser
@@ -166,10 +169,10 @@ class CardBrowserFragment :
         cardsAdapter =
             BrowserMultiColumnAdapter(
                 requireContext(),
-                viewModel,
+                activityViewModel,
                 onTap = ::onTap,
                 onLongPress = { rowId ->
-                    viewModel.handleRowLongPress(rowId.toRowSelection())
+                    activityViewModel.handleRowLongPress(rowId.toRowSelection())
                 },
             )
         cardsListView.adapter = cardsAdapter
@@ -181,7 +184,7 @@ class CardBrowserFragment :
         browserColumnHeadings = view.findViewById(R.id.browser_column_headings)
         toggleRowSelections =
             view.findViewById<ImageButton>(R.id.toggle_row_selections).apply {
-                setOnClickListener { viewModel.toggleSelectAllOrNone() }
+                setOnClickListener { activityViewModel.toggleSelectAllOrNone() }
             }
 
         progressIndicator = view.findViewById(R.id.browser_progress)
@@ -209,7 +212,7 @@ class CardBrowserFragment :
                     Timber.d("CardBrowserFragment::onMenuItemSelected")
                     when (menuItem.itemId) {
                         android.R.id.home -> {
-                            viewModel.endMultiSelectMode(SingleSelectCause.NavigateBack)
+                            activityViewModel.endMultiSelectMode(SingleSelectCause.NavigateBack)
                             return true
                         }
                         R.id.action_sort_by_size -> {
@@ -249,7 +252,7 @@ class CardBrowserFragment :
                             return true
                         }
                         R.id.action_select_all -> {
-                            viewModel.selectAll()
+                            activityViewModel.selectAll()
                             return true
                         }
                         R.id.action_reset_cards_progress -> {
@@ -326,7 +329,7 @@ class CardBrowserFragment :
                 // obtain the offset of the row before we call notifyDataSetChanged
                 val rowPositionAndOffset =
                     try {
-                        val visibleRowIds = layoutManager.visibleItemPositions.map { viewModel.getRowAtPosition(it) }
+                        val visibleRowIds = layoutManager.visibleItemPositions.map { activityViewModel.getRowAtPosition(it) }
                         val firstVisibleRowId = visibleRowIds.firstOrNull { modeChange.previouslySelectedRowIds!!.contains(it) }
                         firstVisibleRowId?.let { firstVisibleRowId.toRowSelection() }
                     } catch (e: Exception) {
@@ -369,7 +372,7 @@ class CardBrowserFragment :
                 // Attach long press listener to open the manage column dialog
                 columnView.setOnLongClickListener {
                     Timber.d("Long-pressed column: ${column.label}")
-                    val dialog = BrowserColumnSelectionFragment.createInstance(viewModel.cardsOrNotes)
+                    val dialog = BrowserColumnSelectionFragment.createInstance(activityViewModel.cardsOrNotes)
                     dialog.show(parentFragmentManager, null)
                     true
                 }
@@ -393,15 +396,15 @@ class CardBrowserFragment :
                 )
         }
 
-        viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
-        viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
-        viewModel.flowOfActiveColumns.launchCollectionInLifecycleScope(::onColumnsChanged)
-        viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
-        viewModel.flowOfMultiSelectModeChanged.launchCollectionInLifecycleScope(::onMultiSelectModeChanged)
-        viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
-        viewModel.flowOfColumnHeadings.launchCollectionInLifecycleScope(::onColumnNamesChanged)
-        viewModel.flowOfCardStateChanged.launchCollectionInLifecycleScope(::onCardsMarkedEvent)
-        viewModel.flowOfToggleSelectionState.launchCollectionInLifecycleScope(::onToggleSelectionStateUpdated)
+        activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
+        activityViewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
+        activityViewModel.flowOfActiveColumns.launchCollectionInLifecycleScope(::onColumnsChanged)
+        activityViewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
+        activityViewModel.flowOfMultiSelectModeChanged.launchCollectionInLifecycleScope(::onMultiSelectModeChanged)
+        activityViewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
+        activityViewModel.flowOfColumnHeadings.launchCollectionInLifecycleScope(::onColumnNamesChanged)
+        activityViewModel.flowOfCardStateChanged.launchCollectionInLifecycleScope(::onCardsMarkedEvent)
+        activityViewModel.flowOfToggleSelectionState.launchCollectionInLifecycleScope(::onToggleSelectionStateUpdated)
     }
 
     private fun setupFragmentResultListeners() {
@@ -419,7 +422,7 @@ class CardBrowserFragment :
         changes: OpChanges,
         handler: Any?,
     ) {
-        if (handler === this || handler === viewModel) {
+        if (handler === this || handler === activityViewModel) {
             return
         }
 
@@ -447,7 +450,7 @@ class CardBrowserFragment :
                     return true
                 } else if (event.isCtrlPressed) {
                     Timber.i("Ctrl+A - Select All")
-                    viewModel.selectAll()
+                    activityViewModel.selectAll()
                     return true
                 }
             }
@@ -543,7 +546,7 @@ class CardBrowserFragment :
             }
             KeyEvent.KEYCODE_ESCAPE -> {
                 Timber.i("ESC: Select none")
-                viewModel.selectNone()
+                activityViewModel.selectNone()
                 return true
             }
         }
@@ -560,7 +563,7 @@ class CardBrowserFragment :
         }
 
         lifecycleScope.launch {
-            val (_, availableColumns) = viewModel.previewColumnHeadings(viewModel.cardsOrNotes)
+            val (_, availableColumns) = activityViewModel.previewColumnHeadings(activityViewModel.cardsOrNotes)
 
             if (availableColumns.isEmpty()) {
                 Timber.w("No available columns to replace ${selectedColumn.label}")
@@ -577,29 +580,29 @@ class CardBrowserFragment :
     @VisibleForTesting
     fun onTap(id: CardOrNoteId) =
         launchCatchingTask {
-            viewModel.focusedRow = id
-            if (viewModel.isInMultiSelectMode) {
-                val wasSelected = viewModel.selectedRows.contains(id)
-                viewModel.toggleRowSelection(id.toRowSelection())
+            activityViewModel.focusedRow = id
+            if (activityViewModel.isInMultiSelectMode) {
+                val wasSelected = activityViewModel.selectedRows.contains(id)
+                activityViewModel.toggleRowSelection(id.toRowSelection())
                 // Load NoteEditor on trailing side if card is selected
                 if (wasSelected) {
-                    viewModel.currentCardId = id.toCardId(viewModel.cardsOrNotes)
+                    activityViewModel.currentCardId = id.toCardId(activityViewModel.cardsOrNotes)
                     requireCardBrowserActivity().loadNoteEditorFragmentIfFragmented()
                 }
             } else {
-                val cardId = viewModel.queryDataForCardEdit(id)
+                val cardId = activityViewModel.queryDataForCardEdit(id)
                 requireCardBrowserActivity().openNoteEditorForCard(cardId)
             }
         }
 
     fun showChangeDeckDialog() =
         launchCatchingTask {
-            if (!viewModel.hasSelectedAnyRows()) {
+            if (!activityViewModel.hasSelectedAnyRows()) {
                 Timber.i("Not showing Change Deck - No Cards")
                 return@launchCatchingTask
             }
             val selectableDecks =
-                viewModel
+                activityViewModel
                     .getAvailableDecks()
                     .map { d -> SelectableDeck(d) }
             val dialog = getChangeDeckDialog(selectableDecks)
@@ -613,15 +616,15 @@ class CardBrowserFragment :
     @VisibleForTesting
     fun toggleMark() =
         launchCatchingTask {
-            withProgress { viewModel.toggleMark() }
+            withProgress { activityViewModel.toggleMark() }
         }
 
-    fun toggleSuspendCards() = launchCatchingTask { withProgress { viewModel.toggleSuspendCards().join() } }
+    fun toggleSuspendCards() = launchCatchingTask { withProgress { activityViewModel.toggleSuspendCards().join() } }
 
     /** @see CardBrowserViewModel.toggleBury */
     fun toggleBury() =
         launchCatchingTask {
-            val result = withProgress { viewModel.toggleBury() } ?: return@launchCatchingTask
+            val result = withProgress { activityViewModel.toggleBury() } ?: return@launchCatchingTask
             // show a snackbar as there's currently no colored background for buried cards
             val message =
                 when (result.wasBuried) {
@@ -632,14 +635,14 @@ class CardBrowserFragment :
         }
 
     fun rescheduleSelectedCards() {
-        if (!viewModel.hasSelectedAnyRows()) {
+        if (!activityViewModel.hasSelectedAnyRows()) {
             Timber.i("Attempted reschedule - no cards selected")
             return
         }
         if (ankiActivity.warnUserIfInNotesOnlyMode()) return
 
         launchCatchingTask {
-            val allCardIds = viewModel.queryAllSelectedCardIds()
+            val allCardIds = activityViewModel.queryAllSelectedCardIds()
             showDialogFragment(SetDueDateDialog.newInstance(allCardIds))
         }
     }
@@ -649,7 +652,7 @@ class CardBrowserFragment :
         Timber.i("CardBrowser:: Reposition button pressed")
         if (ankiActivity.warnUserIfInNotesOnlyMode()) return false
         launchCatchingTask {
-            when (val repositionCardsResult = viewModel.prepareToRepositionCards()) {
+            when (val repositionCardsResult = activityViewModel.prepareToRepositionCards()) {
                 is ContainsNonNewCardsError -> {
                     // Only new cards may be repositioned (If any non-new found show error dialog and return false)
                     showDialogFragment(
@@ -685,7 +688,7 @@ class CardBrowserFragment :
     fun deleteSelectedNotes() =
         launchCatchingTask {
             withProgress(R.string.deleting_selected_notes) {
-                viewModel.deleteSelectedNotes()
+                activityViewModel.deleteSelectedNotes()
             }.ifNotZero { noteCount ->
                 val deletedMessage = resources.getQuantityString(R.plurals.card_browser_cards_deleted, noteCount, noteCount)
                 ankiActivity.showUndoSnackbar(deletedMessage)
@@ -698,12 +701,12 @@ class CardBrowserFragment :
     }
 
     fun exportSelected() {
-        val (type, selectedIds) = viewModel.querySelectionExportData() ?: return
+        val (type, selectedIds) = activityViewModel.querySelectionExportData() ?: return
         ExportDialogFragment.newInstance(type, selectedIds).show(parentFragmentManager, "exportDialog")
     }
 
     fun showOptionsDialog() {
-        val dialog = BrowserOptionsDialog.newInstance(viewModel.cardsOrNotes, viewModel.isTruncated)
+        val dialog = BrowserOptionsDialog.newInstance(activityViewModel.cardsOrNotes, activityViewModel.isTruncated)
         dialog.show(parentFragmentManager, "browserOptionsDialog")
     }
 
@@ -714,7 +717,7 @@ class CardBrowserFragment :
                 FilteredDeckOptions.getIntent(
                     context = requireContext(),
                     deckId = null,
-                    searchTerms = viewModel.searchTerms,
+                    searchTerms = activityViewModel.searchTerms,
                 ),
             )
         }
@@ -730,7 +733,7 @@ class CardBrowserFragment :
             // TODO: move this into the ViewModel
             CardBrowserOrderDialog.newInstance { dialog: DialogInterface, which: Int ->
                 dialog.dismiss()
-                viewModel.changeCardOrder(SortType.fromCardBrowserLabelIndex(which))
+                activityViewModel.changeCardOrder(SortType.fromCardBrowserLabelIndex(which))
             },
         )
     }
@@ -739,20 +742,20 @@ class CardBrowserFragment :
      * @see CardBrowserViewModel.searchForSuspendedCards
      */
     fun searchForSuspendedCards() {
-        launchCatchingTask { viewModel.searchForSuspendedCards() }
+        launchCatchingTask { activityViewModel.searchForSuspendedCards() }
     }
 
     /**
      * @see CardBrowserViewModel.searchForMarkedNotes
      */
     fun searchForMarkedNotes() {
-        launchCatchingTask { viewModel.searchForMarkedNotes() }
+        launchCatchingTask { activityViewModel.searchForMarkedNotes() }
     }
 
     fun updateFlagForSelectedRows(flag: Flag) =
         launchCatchingTask {
             // list of cards with updated flags
-            val updatedCardIds = withProgress { viewModel.updateSelectedCardsFlag(flag) }
+            val updatedCardIds = withProgress { activityViewModel.updateSelectedCardsFlag(flag) }
 
             ankiActivity.onCardsUpdated(updatedCardIds)
         }
@@ -765,12 +768,12 @@ class CardBrowserFragment :
     }
 
     fun showEditTagsDialog() {
-        if (!viewModel.hasSelectedAnyRows()) {
+        if (!activityViewModel.hasSelectedAnyRows()) {
             Timber.d("showEditTagsDialog: called with empty selection")
         }
         tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
         lifecycleScope.launch {
-            val noteIds = viewModel.queryAllSelectedNoteIds()
+            val noteIds = activityViewModel.queryAllSelectedNoteIds()
             val dialog =
                 tagsDialogFactory.newTagsDialog().withArguments(
                     requireContext(),
@@ -838,7 +841,7 @@ class CardBrowserFragment :
     @VisibleForTesting
     internal fun moveSelectedCardsToDeck(did: DeckId): Job =
         launchCatchingTask {
-            val changed = withProgress { viewModel.moveSelectedCardsToDeck(did).await() }
+            val changed = withProgress { activityViewModel.moveSelectedCardsToDeck(did).await() }
             (requireActivity() as CardBrowser).showUndoSnackbar(TR.browsingCardsUpdated(changed.count))
         }
 
@@ -851,7 +854,7 @@ class CardBrowserFragment :
     ) = launchCatchingTask {
         val count =
             withProgress {
-                viewModel.repositionSelectedRows(
+                activityViewModel.repositionSelectedRows(
                     position = position,
                     step = step,
                     shuffle = shuffle,
@@ -871,12 +874,12 @@ class CardBrowserFragment :
     }
 
     private fun autoScrollTo(rowSelection: RowSelection) {
-        val newPosition = viewModel.getPositionOfId(rowSelection.rowId) ?: return
+        val newPosition = activityViewModel.getPositionOfId(rowSelection.rowId) ?: return
         layoutManager.scrollToPositionWithOffset(newPosition, rowSelection.topOffset)
     }
 
     private fun CardOrNoteId.toRowSelection() =
-        RowSelection(rowId = this, topOffset = calculateTopOffset(viewModel.getPositionOfId(this)!!))
+        RowSelection(rowId = this, topOffset = calculateTopOffset(activityViewModel.getPositionOfId(this)!!))
 
     private fun requireCardBrowserActivity(): CardBrowser = requireActivity() as CardBrowser
 
@@ -905,7 +908,7 @@ class CardBrowserFragment :
         selectedTags: List<String>,
         indeterminateTags: List<String>,
     ) = withProgress {
-        val selectedNoteIds = viewModel.queryAllSelectedNoteIds().distinct()
+        val selectedNoteIds = activityViewModel.queryAllSelectedNoteIds().distinct()
         undoableOp {
             val selectedNotes =
                 selectedNoteIds
@@ -923,7 +926,7 @@ class CardBrowserFragment :
         selectedTags: List<String>,
         cardState: CardStateFilter,
     ) = launchCatchingTask {
-        viewModel.filterByTags(selectedTags, cardState)
+        activityViewModel.filterByTags(selectedTags, cardState)
     }
 
     val shortcuts get() =
