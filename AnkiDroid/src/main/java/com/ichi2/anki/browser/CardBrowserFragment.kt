@@ -35,8 +35,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import anki.collection.OpChanges
 import com.google.android.material.progressindicator.LinearProgressIndicator
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.AnkiActivityProvider
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.R
+import com.ichi2.anki.android.input.ShortcutGroup
+import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.MultiSelectCause
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.SingleSelectCause
@@ -50,6 +54,7 @@ import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_N
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.observability.ChangeManager
+import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.attachFastScroller
 import com.ichi2.anki.utils.ext.visibleItemPositions
@@ -57,6 +62,7 @@ import com.ichi2.utils.HandlerUtils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import net.ankiweb.rsdroid.Translations
 import timber.log.Timber
 
 // Minor BUG: 'don't keep activities' and huge selection
@@ -64,8 +70,12 @@ import timber.log.Timber
 // This occurred on a Pixel 9 Pro, Android 15
 class CardBrowserFragment :
     Fragment(R.layout.cardbrowser),
+    AnkiActivityProvider,
     ChangeManager.Subscriber {
     val viewModel: CardBrowserViewModel by activityViewModels()
+
+    override val ankiActivity: AnkiActivity
+        get() = requireAnkiActivity()
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     lateinit var cardsAdapter: BrowserMultiColumnAdapter
@@ -327,4 +337,41 @@ class CardBrowserFragment :
             }
         }
     }
+
+    val shortcuts get() =
+        ShortcutGroup(
+            listOf(
+                shortcut("Ctrl+Shift+A", R.string.edit_tags_dialog),
+                shortcut("Ctrl+A", R.string.card_browser_select_all),
+                shortcut("Ctrl+Shift+E", Translations::exportingExport),
+                shortcut("Ctrl+E", R.string.menu_add_note),
+                shortcut("E", R.string.cardeditor_title_edit_card),
+                shortcut("Ctrl+D", R.string.card_browser_change_deck),
+                shortcut("Ctrl+K", Translations::browsingToggleMark),
+                shortcut("Ctrl+Alt+R", Translations::browsingReschedule),
+                shortcut("DEL", R.string.delete_card_title),
+                shortcut("Ctrl+Alt+N", R.string.reset_card_dialog_title),
+                shortcut("Ctrl+Alt+T", R.string.toggle_cards_notes),
+                shortcut("Ctrl+T", R.string.card_browser_search_by_tag),
+                shortcut("Ctrl+Shift+S", Translations::actionsReposition),
+                shortcut("Ctrl+Alt+S", R.string.card_browser_list_my_searches),
+                shortcut("Ctrl+S", R.string.card_browser_list_my_searches_save),
+                shortcut("Alt+S", R.string.card_browser_show_suspended),
+                shortcut("Ctrl+Shift+G", Translations::actionsGradeNow),
+                shortcut("Ctrl+Shift+J", Translations::browsingToggleBury),
+                shortcut("Ctrl+J", Translations::browsingToggleSuspend),
+                shortcut("Ctrl+Shift+I", Translations::actionsCardInfo),
+                shortcut("Ctrl+O", R.string.show_order_dialog),
+                shortcut("Ctrl+M", R.string.card_browser_show_marked),
+                shortcut("Esc", R.string.card_browser_select_none),
+                shortcut("Ctrl+1", R.string.gesture_flag_red),
+                shortcut("Ctrl+2", R.string.gesture_flag_orange),
+                shortcut("Ctrl+3", R.string.gesture_flag_green),
+                shortcut("Ctrl+4", R.string.gesture_flag_blue),
+                shortcut("Ctrl+5", R.string.gesture_flag_pink),
+                shortcut("Ctrl+6", R.string.gesture_flag_turquoise),
+                shortcut("Ctrl+7", R.string.gesture_flag_purple),
+            ),
+            R.string.card_browser_context_menu,
+        )
 }

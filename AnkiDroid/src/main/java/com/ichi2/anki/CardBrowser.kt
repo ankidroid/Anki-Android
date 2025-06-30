@@ -53,8 +53,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.android.input.ShortcutGroup
-import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.browser.BrowserRowCollection
 import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.browser.CardBrowserLaunchOptions
@@ -128,7 +126,6 @@ import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.RustCleanup
-import net.ankiweb.rsdroid.Translations
 import timber.log.Timber
 
 @Suppress("LeakingThis")
@@ -174,6 +171,8 @@ open class CardBrowser :
     }
 
     lateinit var viewModel: CardBrowserViewModel
+
+    lateinit var cardBrowserFragment: CardBrowserFragment
 
     /**
      * The frame containing the NoteEditor. Non null only in layout x-large.
@@ -415,11 +414,12 @@ open class CardBrowser :
         // must be called once we have an accessible collection
         viewModel = createViewModel(launchOptions, fragmented)
 
-        if (supportFragmentManager.findFragmentById(R.id.card_browser_frame) == null) {
-            supportFragmentManager.commit {
-                replace(R.id.card_browser_frame, CardBrowserFragment())
+        cardBrowserFragment = supportFragmentManager.findFragmentById(R.id.card_browser_frame) as? CardBrowserFragment
+            ?: CardBrowserFragment().also { fragment ->
+                supportFragmentManager.commit {
+                    replace(R.id.card_browser_frame, fragment)
+                }
             }
-        }
 
         // initialize the lateinit variables
         // Load reference to action bar title
@@ -1894,42 +1894,7 @@ open class CardBrowser :
     }
 
     override val shortcuts
-        get() =
-            ShortcutGroup(
-                listOf(
-                    shortcut("Ctrl+Shift+A", R.string.edit_tags_dialog),
-                    shortcut("Ctrl+A", R.string.card_browser_select_all),
-                    shortcut("Ctrl+Shift+E", Translations::exportingExport),
-                    shortcut("Ctrl+E", R.string.menu_add_note),
-                    shortcut("E", R.string.cardeditor_title_edit_card),
-                    shortcut("Ctrl+D", R.string.card_browser_change_deck),
-                    shortcut("Ctrl+K", Translations::browsingToggleMark),
-                    shortcut("Ctrl+Alt+R", Translations::browsingReschedule),
-                    shortcut("DEL", R.string.delete_card_title),
-                    shortcut("Ctrl+Alt+N", R.string.reset_card_dialog_title),
-                    shortcut("Ctrl+Alt+T", R.string.toggle_cards_notes),
-                    shortcut("Ctrl+T", R.string.card_browser_search_by_tag),
-                    shortcut("Ctrl+Shift+S", Translations::actionsReposition),
-                    shortcut("Ctrl+Alt+S", R.string.card_browser_list_my_searches),
-                    shortcut("Ctrl+S", R.string.card_browser_list_my_searches_save),
-                    shortcut("Alt+S", R.string.card_browser_show_suspended),
-                    shortcut("Ctrl+Shift+G", Translations::actionsGradeNow),
-                    shortcut("Ctrl+Shift+J", Translations::browsingToggleBury),
-                    shortcut("Ctrl+J", Translations::browsingToggleSuspend),
-                    shortcut("Ctrl+Shift+I", Translations::actionsCardInfo),
-                    shortcut("Ctrl+O", R.string.show_order_dialog),
-                    shortcut("Ctrl+M", R.string.card_browser_show_marked),
-                    shortcut("Esc", R.string.card_browser_select_none),
-                    shortcut("Ctrl+1", R.string.gesture_flag_red),
-                    shortcut("Ctrl+2", R.string.gesture_flag_orange),
-                    shortcut("Ctrl+3", R.string.gesture_flag_green),
-                    shortcut("Ctrl+4", R.string.gesture_flag_blue),
-                    shortcut("Ctrl+5", R.string.gesture_flag_pink),
-                    shortcut("Ctrl+6", R.string.gesture_flag_turquoise),
-                    shortcut("Ctrl+7", R.string.gesture_flag_purple),
-                ),
-                R.string.card_browser_context_menu,
-            )
+        get() = cardBrowserFragment.shortcuts
 
     companion object {
         /**
