@@ -51,6 +51,7 @@ import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Searching
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_ALL
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_NONE
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.DeckSelectionDialog
@@ -342,6 +343,31 @@ class CardBrowserFragment :
             showDialogFragment(dialog)
         }
 
+    /** All the notes of the selected cards will be marked
+     * If one or more card is unmarked, all will be marked,
+     * otherwise, they will be unmarked  */
+    @NeedsTest("Test that the mark get toggled as expected for a list of selected cards")
+    @VisibleForTesting
+    fun toggleMark() =
+        launchCatchingTask {
+            withProgress { viewModel.toggleMark() }
+        }
+
+    fun toggleSuspendCards() = launchCatchingTask { withProgress { viewModel.toggleSuspendCards().join() } }
+
+    /** @see CardBrowserViewModel.toggleBury */
+    fun toggleBury() =
+        launchCatchingTask {
+            val result = withProgress { viewModel.toggleBury() } ?: return@launchCatchingTask
+            // show a snackbar as there's currently no colored background for buried cards
+            val message =
+                when (result.wasBuried) {
+                    true -> TR.studyingCardsBuried(result.count)
+                    false -> resources.getQuantityString(R.plurals.unbury_cards_feedback, result.count, result.count)
+                }
+            ankiActivity.showUndoSnackbar(message)
+        }
+
     @KotlinCleanup("DeckSelectionListener is almost certainly a bug - deck!!")
     @VisibleForTesting
     internal fun getChangeDeckDialog(selectableDecks: List<SelectableDeck>?): DeckSelectionDialog {
@@ -449,3 +475,9 @@ class CardBrowserFragment :
 }
 
 fun CardBrowser.showChangeDeckDialog() = cardBrowserFragment.showChangeDeckDialog()
+
+fun CardBrowser.toggleMark() = cardBrowserFragment.toggleMark()
+
+fun CardBrowser.toggleSuspendCards() = cardBrowserFragment.toggleSuspendCards()
+
+fun CardBrowser.toggleBury() = cardBrowserFragment.toggleBury()
