@@ -975,20 +975,22 @@ class CardBrowserViewModel(
     /**
      * Searches for all marked notes and replaces the current search results with these marked notes.
      */
-    suspend fun searchForMarkedNotes() {
-        // only intended to be used if the user has no selection
-        if (hasSelectedAnyRows()) return
-        setFilterQuery("tag:marked")
-    }
+    fun searchForMarkedNotes() =
+        viewModelScope.launch {
+            // only intended to be used if the user has no selection
+            if (hasSelectedAnyRows()) return@launch
+            setFilterQuery("tag:marked")
+        }
 
     /**
      * Searches for all suspended cards and replaces the current search results with these suspended cards.
      */
-    suspend fun searchForSuspendedCards() {
-        // only intended to be used if the user has no selection
-        if (hasSelectedAnyRows()) return
-        setFilterQuery("is:suspended")
-    }
+    fun searchForSuspendedCards() =
+        viewModelScope.launch {
+            // only intended to be used if the user has no selection
+            if (hasSelectedAnyRows()) return@launch
+            setFilterQuery("is:suspended")
+        }
 
     suspend fun setFlagFilter(flag: Flag) {
         Timber.i("filtering to flag: %s", flag)
