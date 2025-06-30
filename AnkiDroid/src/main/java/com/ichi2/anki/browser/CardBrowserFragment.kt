@@ -58,6 +58,7 @@ import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.dialogs.BrowserOptionsDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
@@ -462,6 +463,11 @@ class CardBrowserFragment :
         ExportDialogFragment.newInstance(type, selectedIds).show(parentFragmentManager, "exportDialog")
     }
 
+    fun showOptionsDialog() {
+        val dialog = BrowserOptionsDialog.newInstance(viewModel.cardsOrNotes, viewModel.isTruncated)
+        dialog.show(parentFragmentManager, "browserOptionsDialog")
+    }
+
     @KotlinCleanup("DeckSelectionListener is almost certainly a bug - deck!!")
     @VisibleForTesting
     internal fun getChangeDeckDialog(selectableDecks: List<SelectableDeck>?): DeckSelectionDialog {
@@ -607,3 +613,5 @@ fun CardBrowser.deleteSelectedNotes() = cardBrowserFragment.deleteSelectedNotes(
 fun CardBrowser.onResetProgress() = cardBrowserFragment.onResetProgress()
 
 fun CardBrowser.exportSelected() = cardBrowserFragment.exportSelected()
+
+fun CardBrowser.showOptionsDialog() = cardBrowserFragment.showOptionsDialog()
