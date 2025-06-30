@@ -18,13 +18,19 @@ package com.ichi2.anki.browser
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -74,9 +80,9 @@ import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.SortType
-import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.requireAnkiActivity
@@ -183,6 +189,105 @@ class CardBrowserFragment :
         setupFlows()
 
         setupFragmentResultListeners()
+
+        setupMenu()
+    }
+
+    private fun setupMenu() {
+        val menuHost: MenuHost = requireActivity()
+
+        menuHost.addMenuProvider(
+            object : MenuProvider {
+                override fun onCreateMenu(
+                    menu: Menu,
+                    menuInflater: MenuInflater,
+                ) {
+                    // TODO: extract conditionally inflating the menus
+                }
+
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    Timber.d("CardBrowserFragment::onMenuItemSelected")
+                    when (menuItem.itemId) {
+                        android.R.id.home -> {
+                            viewModel.endMultiSelectMode(SingleSelectCause.NavigateBack)
+                            return true
+                        }
+                        R.id.action_sort_by_size -> {
+                            changeDisplayOrder()
+                            return true
+                        }
+                        R.id.action_show_marked -> {
+                            searchForMarkedNotes()
+                            return true
+                        }
+                        R.id.action_show_suspended -> {
+                            searchForSuspendedCards()
+                            return true
+                        }
+                        R.id.action_search_by_tag -> {
+                            showFilterByTagsDialog()
+                            return true
+                        }
+                        R.id.action_delete_card -> {
+                            deleteSelectedNotes()
+                            return true
+                        }
+                        R.id.action_mark_card -> {
+                            toggleMark()
+                            return true
+                        }
+                        R.id.action_suspend_card -> {
+                            toggleSuspendCards()
+                            return true
+                        }
+                        R.id.action_toggle_bury -> {
+                            toggleBury()
+                            return true
+                        }
+                        R.id.action_change_deck -> {
+                            showChangeDeckDialog()
+                            return true
+                        }
+                        R.id.action_select_all -> {
+                            viewModel.selectAll()
+                            return true
+                        }
+                        R.id.action_reset_cards_progress -> {
+                            Timber.i("CardBrowserFragment:: Reset progress button pressed")
+                            onResetProgress()
+                            return true
+                        }
+                        R.id.action_reschedule_cards -> {
+                            Timber.i("CardBrowserFragment:: Reschedule button pressed")
+                            rescheduleSelectedCards()
+                            return true
+                        }
+                        R.id.action_reposition_cards -> {
+                            repositionSelectedCards()
+                            return true
+                        }
+                        R.id.action_edit_tags -> {
+                            showEditTagsDialog()
+                        }
+                        R.id.action_open_options -> {
+                            showOptionsDialog()
+                        }
+                        R.id.action_export_selected -> {
+                            exportSelected()
+                        }
+                        R.id.action_create_filtered_deck -> {
+                            showCreateFilteredDeckDialog()
+                        }
+                        R.id.action_find_replace -> {
+                            showFindAndReplaceDialog()
+                        }
+                    }
+                    return false
+                }
+            },
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED,
+        )
     }
 
     override fun onDestroyView() {
@@ -325,6 +430,124 @@ class CardBrowserFragment :
         ) {
             cardsAdapter.notifyDataSetChanged()
         }
+    }
+
+    fun onKeyUp(
+        keyCode: Int,
+        event: KeyEvent,
+    ): Boolean {
+        // This method is called even when the user is typing in the search text field.
+        // So we must ensure that all shortcuts uses a modifier.
+        // A shortcut without modifier would be triggered while the user types, which is not what we want.
+        when (keyCode) {
+            KeyEvent.KEYCODE_A -> {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    Timber.i("Ctrl+Shift+A - Show edit tags dialog")
+                    showEditTagsDialog()
+                    return true
+                } else if (event.isCtrlPressed) {
+                    Timber.i("Ctrl+A - Select All")
+                    viewModel.selectAll()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_E -> {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    Timber.i("Ctrl+Shift+E: Export selected cards")
+                    exportSelected()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_D -> {
+                if (event.isCtrlPressed) {
+                    Timber.i("Ctrl+D: Change Deck")
+                    showChangeDeckDialog()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_K -> {
+                if (event.isCtrlPressed) {
+                    Timber.i("Ctrl+K: Toggle Mark")
+                    toggleMark()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_R -> {
+                if (event.isCtrlPressed && event.isAltPressed) {
+                    Timber.i("Ctrl+Alt+R - Reschedule")
+                    rescheduleSelectedCards()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_F -> {
+                if (event.isCtrlPressed && event.isAltPressed) {
+                    Timber.i("CTRL+ALT+F - Find and replace")
+                    showFindAndReplaceDialog()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_N -> {
+                if (event.isCtrlPressed && event.isAltPressed) {
+                    Timber.i("Ctrl+Alt+N: Reset card progress")
+                    onResetProgress()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_T -> {
+                if (event.isCtrlPressed && event.isAltPressed) {
+                    Timber.i("Ctrl+Alt+T: Toggle cards/notes")
+                    showOptionsDialog()
+                    return true
+                } else if (event.isCtrlPressed) {
+                    Timber.i("Ctrl+T: Show filter by tags dialog")
+                    showFilterByTagsDialog()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_S -> {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    Timber.i("Ctrl+Shift+S: Reposition selected cards")
+                    repositionSelectedCards()
+                    return true
+                    // Ctrl+Alt+S / Ctrl+S in the activity take priority
+                } else if (!event.isCtrlPressed && event.isAltPressed) {
+                    Timber.i("Alt+S: Show suspended cards")
+                    searchForSuspendedCards()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_J -> {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    Timber.i("Ctrl+Shift+J: Toggle bury cards")
+                    toggleBury()
+                    return true
+                } else if (event.isCtrlPressed) {
+                    Timber.i("Ctrl+J: Toggle suspended cards")
+                    toggleSuspendCards()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_O -> {
+                if (event.isCtrlPressed) {
+                    Timber.i("Ctrl+O: Show order dialog")
+                    changeDisplayOrder()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_M -> {
+                if (event.isCtrlPressed) {
+                    Timber.i("Ctrl+M: Search marked notes")
+                    searchForMarkedNotes()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_ESCAPE -> {
+                Timber.i("ESC: Select none")
+                viewModel.selectNone()
+                return true
+            }
+        }
+        return false
     }
 
     private fun showColumnSelectionDialog(selectedColumn: ColumnHeading) {
@@ -755,38 +978,10 @@ class CardBrowserFragment :
     }
 }
 
-fun CardBrowser.showChangeDeckDialog() = cardBrowserFragment.showChangeDeckDialog()
-
-fun CardBrowser.toggleMark() = cardBrowserFragment.toggleMark()
-
-fun CardBrowser.toggleSuspendCards() = cardBrowserFragment.toggleSuspendCards()
-
-fun CardBrowser.toggleBury() = cardBrowserFragment.toggleBury()
-
-fun CardBrowser.rescheduleSelectedCards() = cardBrowserFragment.rescheduleSelectedCards()
-
-fun CardBrowser.repositionSelectedCards() = cardBrowserFragment.repositionSelectedCards()
-
 fun CardBrowser.deleteSelectedNotes() = cardBrowserFragment.deleteSelectedNotes()
 
-fun CardBrowser.onResetProgress() = cardBrowserFragment.onResetProgress()
-
-fun CardBrowser.exportSelected() = cardBrowserFragment.exportSelected()
-
 fun CardBrowser.showOptionsDialog() = cardBrowserFragment.showOptionsDialog()
-
-fun CardBrowser.showCreateFilteredDeckDialog() = cardBrowserFragment.showCreateFilteredDeckDialog()
-
-fun CardBrowser.changeDisplayOrder() = cardBrowserFragment.changeDisplayOrder()
-
-fun CardBrowser.searchForMarkedNotes() = cardBrowserFragment.searchForMarkedNotes()
-
-fun CardBrowser.searchForSuspendedCards() = cardBrowserFragment.searchForSuspendedCards()
 
 fun CardBrowser.updateFlagForSelectedRows(flag: Flag) = cardBrowserFragment.updateFlagForSelectedRows(flag)
 
 fun CardBrowser.showFindAndReplaceDialog() = cardBrowserFragment.showFindAndReplaceDialog()
-
-fun CardBrowser.showEditTagsDialog() = cardBrowserFragment.showEditTagsDialog()
-
-fun CardBrowser.showFilterByTagsDialog() = cardBrowserFragment.showFilterByTagsDialog()
