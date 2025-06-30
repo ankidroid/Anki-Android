@@ -458,6 +458,20 @@ class CardBrowserFragment :
         )
     }
 
+    /**
+     * @see CardBrowserViewModel.searchForSuspendedCards
+     */
+    fun searchForSuspendedCards() {
+        launchCatchingTask { viewModel.searchForSuspendedCards() }
+    }
+
+    /**
+     * @see CardBrowserViewModel.searchForMarkedNotes
+     */
+    fun searchForMarkedNotes() {
+        launchCatchingTask { viewModel.searchForMarkedNotes() }
+    }
+
     @KotlinCleanup("DeckSelectionListener is almost certainly a bug - deck!!")
     @VisibleForTesting
     internal fun getChangeDeckDialog(selectableDecks: List<SelectableDeck>?): DeckSelectionDialog {
@@ -608,3 +622,7 @@ fun CardBrowser.showOptionsDialog() = cardBrowserFragment.showOptionsDialog()
 fun CardBrowser.showCreateFilteredDeckDialog() = cardBrowserFragment.showCreateFilteredDeckDialog()
 
 fun CardBrowser.changeDisplayOrder() = cardBrowserFragment.changeDisplayOrder()
+
+fun CardBrowser.searchForMarkedNotes() = cardBrowserFragment.searchForMarkedNotes()
+
+fun CardBrowser.searchForSuspendedCards() = cardBrowserFragment.searchForSuspendedCards()
