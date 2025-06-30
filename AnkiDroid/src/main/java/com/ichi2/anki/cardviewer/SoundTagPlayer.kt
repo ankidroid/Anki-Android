@@ -30,6 +30,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.ensureActive
+import com.ichi2.anki.multimedia.getTagType
 import com.ichi2.libanki.SoundOrVideoTag
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -212,4 +213,4 @@ class SoundTagPlayer(
     }
 }
 
-suspend fun SoundOrVideoTag.getType(): SoundOrVideoTag.Type = getType(withCol { media.dir })
+suspend fun SoundOrVideoTag.getType(): SoundOrVideoTag.Type = getTagType(withCol { media.dir })
