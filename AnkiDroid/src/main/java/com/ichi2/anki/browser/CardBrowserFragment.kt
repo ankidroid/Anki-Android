@@ -91,6 +91,7 @@ import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.attachFastScroller
+import com.ichi2.anki.undoAndShowSnackbar
 import com.ichi2.anki.utils.ext.getCurrentDialogFragment
 import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.anki.utils.ext.setFragmentResultListener
@@ -142,6 +143,8 @@ class CardBrowserFragment :
     private var tagsDialogListenerAction: TagsDialogListenerAction? = null
     private val tagsDialogFactory: TagsDialogFactory
         get() = ankiActivity.tagsDialogFactory
+
+    private var undoSnackbar: Snackbar? = null
 
     override fun onViewCreated(
         view: View,
@@ -210,6 +213,7 @@ class CardBrowserFragment :
 
                 override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                     Timber.d("CardBrowserFragment::onMenuItemSelected")
+                    prepareForUndoableOperation()
                     when (menuItem.itemId) {
                         android.R.id.home -> {
                             activityViewModel.endMultiSelectMode(SingleSelectCause.NavigateBack)
@@ -422,6 +426,7 @@ class CardBrowserFragment :
         changes: OpChanges,
         handler: Any?,
     ) {
+        // TODO: dismiss undoSnackbar if it would undo a new action
         if (handler === this || handler === activityViewModel) {
             return
         }
@@ -631,7 +636,7 @@ class CardBrowserFragment :
                     true -> TR.studyingCardsBuried(result.count)
                     false -> resources.getQuantityString(R.plurals.unbury_cards_feedback, result.count, result.count)
                 }
-            ankiActivity.showUndoSnackbar(message)
+            showUndoSnackbar(message)
         }
 
     fun rescheduleSelectedCards() {
@@ -691,7 +696,7 @@ class CardBrowserFragment :
                 activityViewModel.deleteSelectedNotes()
             }.ifNotZero { noteCount ->
                 val deletedMessage = resources.getQuantityString(R.plurals.card_browser_cards_deleted, noteCount, noteCount)
-                ankiActivity.showUndoSnackbar(deletedMessage)
+                showUndoSnackbar(deletedMessage)
             }
         }
 
@@ -842,7 +847,7 @@ class CardBrowserFragment :
     internal fun moveSelectedCardsToDeck(did: DeckId): Job =
         launchCatchingTask {
             val changed = withProgress { activityViewModel.moveSelectedCardsToDeck(did).await() }
-            (requireActivity() as CardBrowser).showUndoSnackbar(TR.browsingCardsUpdated(changed.count))
+            showUndoSnackbar(TR.browsingCardsUpdated(changed.count))
         }
 
     @VisibleForTesting
@@ -865,6 +870,13 @@ class CardBrowserFragment :
             TR.browsingChangedNewPosition(count),
             Snackbar.LENGTH_SHORT,
         )
+    }
+
+    private fun showUndoSnackbar(message: CharSequence) {
+        showSnackbar(message) {
+            setAction(R.string.undo) { launchCatchingTask { undoAndShowSnackbar() } }
+            undoSnackbar = this
+        }
     }
 
     private fun calculateTopOffset(cardPosition: Int): Int {
@@ -927,6 +939,15 @@ class CardBrowserFragment :
         cardState: CardStateFilter,
     ) = launchCatchingTask {
         activityViewModel.filterByTags(selectedTags, cardState)
+    }
+
+    fun prepareForUndoableOperation() {
+        // dismiss undo-snackbar if shown to avoid race condition
+        // (when another operation will be performed on the model, it will undo the latest operation)
+        val snackbar = undoSnackbar ?: return
+        if (snackbar.isShown) {
+            snackbar.dismiss()
+        }
     }
 
     val shortcuts get() =

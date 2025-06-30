@@ -163,7 +163,6 @@ open class CardBrowser :
     private var saveSearchItem: MenuItem? = null
     private var mySearchesItem: MenuItem? = null
     private var previewItem: MenuItem? = null
-    private var undoSnackbar: Snackbar? = null
 
     // card that was clicked (not marked)
     override var currentCardId
@@ -1028,13 +1027,8 @@ open class CardBrowser :
     @NeedsTest("filter-marked query needs testing")
     @NeedsTest("filter-suspended query needs testing")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when {
-            drawerToggle.onOptionsItemSelected(item) -> return true
-
-            // dismiss undo-snackbar if shown to avoid race condition
-            // (when another operation will be performed on the model, it will undo the latest operation)
-            undoSnackbar != null && undoSnackbar!!.isShown -> undoSnackbar!!.dismiss()
-        }
+        if (drawerToggle.onOptionsItemSelected(item)) return true
+        cardBrowserFragment.prepareForUndoableOperation()
 
         Flag.entries.find { it.ordinal == item.itemId }?.let { flag ->
             when (item.groupId) {
@@ -1278,13 +1272,6 @@ open class CardBrowser :
         @Suppress("UNUSED_PARAMETER") cardIds: List<CardId>,
     ) {
         updateList()
-    }
-
-    fun showUndoSnackbar(message: CharSequence) {
-        showSnackbar(message) {
-            setAction(R.string.undo) { launchCatchingTask { undoAndShowSnackbar() } }
-            undoSnackbar = this
-        }
     }
 
     private fun refreshAfterUndo() {
