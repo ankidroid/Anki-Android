@@ -82,6 +82,7 @@ import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.browser.toggleBury
 import com.ichi2.anki.browser.toggleMark
 import com.ichi2.anki.browser.toggleSuspendCards
+import com.ichi2.anki.browser.updateFlagForSelectedRows
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog
@@ -1120,27 +1121,12 @@ open class CardBrowser :
         }
     }
 
-    private fun updateFlagForSelectedRows(flag: Flag) =
-        launchCatchingTask {
-            updateSelectedCardsFlag(flag)
-        }
-
-    /**
-     * Sets the flag for selected cards, default norm of flags are as:
-     *
-     * 0: No Flag, 1: RED, 2: ORANGE, 3: GREEN
-     * 4: BLUE, 5: PINK, 6: Turquoise, 7: PURPLE
-     *
-     */
-    @VisibleForTesting
-    suspend fun updateSelectedCardsFlag(flag: Flag) {
-        // list of cards with updated flags
-        val updatedCardIds = withProgress { viewModel.updateSelectedCardsFlag(flag) }
+    fun onCardsUpdated(cardIds: List<CardId>) {
         // TODO: try to offload the cards processing in updateCardsInList() on a background thread,
         // otherwise it could hang the main thread
-        updateCardsInList(updatedCardIds)
+        updateCardsInList(cardIds)
         invalidateOptionsMenu() // maybe the availability of undo changed
-        if (updatedCardIds.any { it == reviewerCardId }) {
+        if (cardIds.any { it == reviewerCardId }) {
             reloadRequired = true
         }
     }

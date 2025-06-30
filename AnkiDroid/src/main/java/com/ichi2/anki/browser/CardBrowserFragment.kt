@@ -41,6 +41,7 @@ import com.ichi2.anki.AnkiActivityProvider
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.FilteredDeckOptions
+import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
@@ -513,6 +514,14 @@ class CardBrowserFragment :
         launchCatchingTask { viewModel.searchForMarkedNotes() }
     }
 
+    fun updateFlagForSelectedRows(flag: Flag) =
+        launchCatchingTask {
+            // list of cards with updated flags
+            val updatedCardIds = withProgress { viewModel.updateSelectedCardsFlag(flag) }
+
+            ankiActivity.onCardsUpdated(updatedCardIds)
+        }
+
     @KotlinCleanup("DeckSelectionListener is almost certainly a bug - deck!!")
     @VisibleForTesting
     internal fun getChangeDeckDialog(selectableDecks: List<SelectableDeck>?): DeckSelectionDialog {
@@ -668,3 +677,5 @@ fun CardBrowser.changeDisplayOrder() = cardBrowserFragment.changeDisplayOrder()
 fun CardBrowser.searchForMarkedNotes() = cardBrowserFragment.searchForMarkedNotes()
 
 fun CardBrowser.searchForSuspendedCards() = cardBrowserFragment.searchForSuspendedCards()
+
+fun CardBrowser.updateFlagForSelectedRows(flag: Flag) = cardBrowserFragment.updateFlagForSelectedRows(flag)
