@@ -62,6 +62,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.requireAnkiActivity
+import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.attachFastScroller
 import com.ichi2.anki.utils.ext.getCurrentDialogFragment
@@ -368,6 +369,19 @@ class CardBrowserFragment :
             ankiActivity.showUndoSnackbar(message)
         }
 
+    fun rescheduleSelectedCards() {
+        if (!viewModel.hasSelectedAnyRows()) {
+            Timber.i("Attempted reschedule - no cards selected")
+            return
+        }
+        if (ankiActivity.warnUserIfInNotesOnlyMode()) return
+
+        launchCatchingTask {
+            val allCardIds = viewModel.queryAllSelectedCardIds()
+            showDialogFragment(SetDueDateDialog.newInstance(allCardIds))
+        }
+    }
+
     @KotlinCleanup("DeckSelectionListener is almost certainly a bug - deck!!")
     @VisibleForTesting
     internal fun getChangeDeckDialog(selectableDecks: List<SelectableDeck>?): DeckSelectionDialog {
@@ -481,3 +495,5 @@ fun CardBrowser.toggleMark() = cardBrowserFragment.toggleMark()
 fun CardBrowser.toggleSuspendCards() = cardBrowserFragment.toggleSuspendCards()
 
 fun CardBrowser.toggleBury() = cardBrowserFragment.toggleBury()
+
+fun CardBrowser.rescheduleSelectedCards() = cardBrowserFragment.rescheduleSelectedCards()
