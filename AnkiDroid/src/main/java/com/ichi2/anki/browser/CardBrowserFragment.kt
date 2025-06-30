@@ -481,6 +481,11 @@ class CardBrowserFragment :
             ankiActivity.onCardsUpdated(updatedCardIds)
         }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun showFindAndReplaceDialog() {
+        FindAndReplaceDialogFragment().show(parentFragmentManager, FindAndReplaceDialogFragment.TAG)
+    }
+
     @KotlinCleanup("DeckSelectionListener is almost certainly a bug - deck!!")
     @VisibleForTesting
     internal fun getChangeDeckDialog(selectableDecks: List<SelectableDeck>?): DeckSelectionDialog {
@@ -637,3 +642,5 @@ fun CardBrowser.searchForMarkedNotes() = cardBrowserFragment.searchForMarkedNote
 fun CardBrowser.searchForSuspendedCards() = cardBrowserFragment.searchForSuspendedCards()
 
 fun CardBrowser.updateFlagForSelectedRows(flag: Flag) = cardBrowserFragment.updateFlagForSelectedRows(flag)
+
+fun CardBrowser.showFindAndReplaceDialog() = cardBrowserFragment.showFindAndReplaceDialog()

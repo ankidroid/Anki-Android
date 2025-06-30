@@ -60,7 +60,6 @@ import com.ichi2.anki.browser.CardBrowserViewModel.SearchState
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Initializing
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Searching
 import com.ichi2.anki.browser.CardOrNoteId
-import com.ichi2.anki.browser.FindAndReplaceDialogFragment
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
@@ -75,6 +74,7 @@ import com.ichi2.anki.browser.searchForMarkedNotes
 import com.ichi2.anki.browser.searchForSuspendedCards
 import com.ichi2.anki.browser.showChangeDeckDialog
 import com.ichi2.anki.browser.showCreateFilteredDeckDialog
+import com.ichi2.anki.browser.showFindAndReplaceDialog
 import com.ichi2.anki.browser.showOptionsDialog
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.browser.toggleBury
@@ -1247,11 +1247,6 @@ open class CardBrowser :
             }
         }
         return fragmented && fragment!!.onMenuItemSelected(item)
-    }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    fun showFindAndReplaceDialog() {
-        FindAndReplaceDialogFragment().show(supportFragmentManager, FindAndReplaceDialogFragment.TAG)
     }
 
     private fun showSavedSearches() {

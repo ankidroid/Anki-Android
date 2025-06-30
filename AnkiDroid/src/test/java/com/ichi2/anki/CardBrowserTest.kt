@@ -72,6 +72,7 @@ import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.REQUEST_FIN
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.TAGS_AS_FIELD
 import com.ichi2.anki.browser.column1
 import com.ichi2.anki.browser.setColumn
+import com.ichi2.anki.browser.showFindAndReplaceDialog
 import com.ichi2.anki.browser.updateFlagForSelectedRows
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
