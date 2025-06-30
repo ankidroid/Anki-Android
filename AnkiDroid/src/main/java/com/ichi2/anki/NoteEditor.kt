@@ -1469,6 +1469,7 @@ class NoteEditor :
         }
 
     override fun onMenuItemSelected(item: MenuItem): Boolean {
+        Timber.d("NoteEditor::onMenuItemSelected")
         when (item.itemId) {
             R.id.action_preview -> {
                 Timber.i("NoteEditor:: Preview button pressed")
