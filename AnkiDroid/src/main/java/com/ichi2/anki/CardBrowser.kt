@@ -67,6 +67,7 @@ import com.ichi2.anki.browser.FindAndReplaceDialogFragment
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
+import com.ichi2.anki.browser.deleteSelectedNotes
 import com.ichi2.anki.browser.registerFindReplaceHandler
 import com.ichi2.anki.browser.repositionSelectedCards
 import com.ichi2.anki.browser.rescheduleSelectedCards
@@ -111,7 +112,6 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.internationalization.toSentenceCase
-import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.widgets.DeckDropDownAdapter
 import com.ichi2.ui.CardBrowserSearchView
@@ -1396,16 +1396,6 @@ open class CardBrowser :
         val (type, selectedIds) = viewModel.querySelectionExportData() ?: return
         ExportDialogFragment.newInstance(type, selectedIds).show(supportFragmentManager, "exportDialog")
     }
-
-    private fun deleteSelectedNotes() =
-        launchCatchingTask {
-            withProgress(R.string.deleting_selected_notes) {
-                viewModel.deleteSelectedNotes()
-            }.ifNotZero { noteCount ->
-                val deletedMessage = resources.getQuantityString(R.plurals.card_browser_cards_deleted, noteCount, noteCount)
-                showUndoSnackbar(deletedMessage)
-            }
-        }
 
     @VisibleForTesting
     fun onUndo() {
