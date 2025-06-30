@@ -43,7 +43,17 @@ class ColumnSelectionDialogFragment : DialogFragment() {
                 BundleCompat.getParcelable(requireArguments(), SELECTED_COLUMN, ColumnHeading::class.java),
             )
 
+    private var availableColumns: List<ColumnWithSample> = emptyList()
+
+    public override fun onSaveInstanceState(outState: Bundle) {
+        with(outState) {
+            outState.putParcelableArrayList(AVAILABLE_COLUMNS, availableColumns.toCollection(ArrayList()))
+            super.onSaveInstanceState(this)
+        }
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
+        super.onCreate(savedInstanceState)
         val listView =
             ListView(requireContext()).apply {
                 setPaddingRelative(
@@ -81,12 +91,22 @@ class ColumnSelectionDialogFragment : DialogFragment() {
         listView.adapter = adapter
         listView.divider = null
 
-        // Fetch columns
-        lifecycleScope.launch {
-            val (_, availableColumns) = viewModel.previewColumnHeadings(viewModel.cardsOrNotes)
-            adapter.clear()
-            adapter.addAll(availableColumns)
-            adapter.notifyDataSetChanged()
+        // Load the available columns either from the viewModel or savedInstanceState bundle
+        if (savedInstanceState == null) {
+            lifecycleScope.launch {
+                availableColumns = viewModel.previewColumnHeadings(viewModel.cardsOrNotes).second
+                adapter.clear()
+                adapter.addAll(availableColumns)
+                adapter.notifyDataSetChanged()
+            }
+        } else {
+            lifecycleScope.launch {
+                availableColumns =
+                    BundleCompat.getParcelableArrayList(savedInstanceState, AVAILABLE_COLUMNS, ColumnWithSample::class.java)!!.toList()
+                adapter.clear()
+                adapter.addAll(availableColumns)
+                adapter.notifyDataSetChanged()
+            }
         }
 
         listView.setOnItemClickListener { _, _, position, _ ->
@@ -117,6 +137,7 @@ class ColumnSelectionDialogFragment : DialogFragment() {
         const val TAG = "ColumnSelectionDialog"
 
         private const val SELECTED_COLUMN = "selected_column"
+        private const val AVAILABLE_COLUMNS = "availableColumns"
 
         fun newInstance(selectedColumn: ColumnHeading): ColumnSelectionDialogFragment =
             ColumnSelectionDialogFragment().apply {
