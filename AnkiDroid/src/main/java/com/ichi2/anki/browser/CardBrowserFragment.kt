@@ -67,6 +67,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.requireAnkiActivity
+import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.attachFastScroller
@@ -450,6 +451,11 @@ class CardBrowserFragment :
             }
         }
 
+    fun onResetProgress() {
+        if (ankiActivity.warnUserIfInNotesOnlyMode()) return
+        showDialogFragment(ForgetCardsDialog())
+    }
+
     @KotlinCleanup("DeckSelectionListener is almost certainly a bug - deck!!")
     @VisibleForTesting
     internal fun getChangeDeckDialog(selectableDecks: List<SelectableDeck>?): DeckSelectionDialog {
@@ -591,3 +597,5 @@ fun CardBrowser.rescheduleSelectedCards() = cardBrowserFragment.rescheduleSelect
 fun CardBrowser.repositionSelectedCards() = cardBrowserFragment.repositionSelectedCards()
 
 fun CardBrowser.deleteSelectedNotes() = cardBrowserFragment.deleteSelectedNotes()
+
+fun CardBrowser.onResetProgress() = cardBrowserFragment.onResetProgress()
