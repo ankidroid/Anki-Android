@@ -557,6 +557,7 @@ class NoteEditorFragment :
         try {
             setupEditor(getColUnsafe)
         } catch (ex: RuntimeException) {
+            Timber.w(ex, "setupEditor")
             requireAnkiActivity().onCollectionLoadError()
             return
         }
