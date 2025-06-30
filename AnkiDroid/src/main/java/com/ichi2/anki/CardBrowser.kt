@@ -19,7 +19,6 @@
 package com.ichi2.anki
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
@@ -67,6 +66,7 @@ import com.ichi2.anki.browser.FindAndReplaceDialogFragment
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
+import com.ichi2.anki.browser.changeDisplayOrder
 import com.ichi2.anki.browser.deleteSelectedNotes
 import com.ichi2.anki.browser.exportSelected
 import com.ichi2.anki.browser.onResetProgress
@@ -85,7 +85,6 @@ import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.MySearchesDialogListener
-import com.ichi2.anki.dialogs.CardBrowserOrderDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DiscardChangesDialog
@@ -101,7 +100,6 @@ import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
-import com.ichi2.anki.model.SortType
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
@@ -1316,16 +1314,6 @@ open class CardBrowser :
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     fun showFindAndReplaceDialog() {
         FindAndReplaceDialogFragment().show(supportFragmentManager, FindAndReplaceDialogFragment.TAG)
-    }
-
-    private fun changeDisplayOrder() {
-        showDialogFragment(
-            // TODO: move this into the ViewModel
-            CardBrowserOrderDialog.newInstance { dialog: DialogInterface, which: Int ->
-                dialog.dismiss()
-                viewModel.changeCardOrder(SortType.fromCardBrowserLabelIndex(which))
-            },
-        )
     }
 
     private fun showSavedSearches() {
