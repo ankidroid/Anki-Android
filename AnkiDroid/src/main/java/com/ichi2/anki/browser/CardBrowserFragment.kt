@@ -61,6 +61,7 @@ import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.attachFastScroller
 import com.ichi2.anki.utils.ext.getCurrentDialogFragment
+import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withProgress
@@ -399,6 +400,16 @@ class CardBrowserFragment :
         return true
     }
 
+    fun deleteSelectedNotes() =
+        launchCatchingTask {
+            withProgress(R.string.deleting_selected_notes) {
+                viewModel.deleteSelectedNotes()
+            }.ifNotZero { noteCount ->
+                val deletedMessage = resources.getQuantityString(R.plurals.card_browser_cards_deleted, noteCount, noteCount)
+                ankiActivity.showUndoSnackbar(deletedMessage)
+            }
+        }
+
     @KotlinCleanup("DeckSelectionListener is almost certainly a bug - deck!!")
     @VisibleForTesting
     internal fun getChangeDeckDialog(selectableDecks: List<SelectableDeck>?): DeckSelectionDialog {
@@ -537,3 +548,5 @@ fun CardBrowser.toggleBury() = cardBrowserFragment.toggleBury()
 fun CardBrowser.rescheduleSelectedCards() = cardBrowserFragment.rescheduleSelectedCards()
 
 fun CardBrowser.repositionSelectedCards() = cardBrowserFragment.repositionSelectedCards()
+
+fun CardBrowser.deleteSelectedNotes() = cardBrowserFragment.deleteSelectedNotes()
