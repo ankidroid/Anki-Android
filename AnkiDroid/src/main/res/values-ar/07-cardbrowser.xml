@@ -100,17 +100,17 @@
         <item>حسب السهولة</item>
         <item>حسب المراجعات</item>
         <item>حسب السقطات</item>
-        <item>By deck name</item>
+        <item>حسب اسم الرزمة</item>
     </string-array>
-    <string name="chane_browser_column">Change column</string>
-    <string name="no_columns_available">No columns available</string>
+    <string name="chane_browser_column">غير العمود</string>
+    <string name="no_columns_available">لا يوجد عمود متوفر</string>
     <string name="card_browser_select_all" maxLength="28">تحديد الكل</string>
     <string name="card_browser_select_none" maxLength="28">إلغاء التحديد</string>
     <string name="card_browser_no_cards_in_deck">لا توجد بطاقات في الرزمة ‘%s’</string>
     <string name="card_browser_search_all_decks">البحث في كل الرزم</string>
     <string name="card_browser_unknown_deck_name">غير معروف</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">اقتطاع المحتوى</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">اليوم هو «٠ %1$s»، غدًا هو «١ %2$s»، وهكذا&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="zero">تصدير البطاقة</item>
         <item quantity="one">تصدير البطاقة</item>
@@ -145,6 +145,6 @@
     <string name="user_potential_columns">متوفر</string>
     <string name="include_column">إضافة عمود</string>
     <string name="exclude_column">استخراج عمود</string>
-    <string name="save_changes_message">Please save your changes first</string>
+    <string name="save_changes_message">رجاءًا إحفظ تعديلاتك أولًا</string>
     <string name="browser_find_replace_loading_fields">تُسترجع أسماء الحقول&#8230;</string>
 </resources>

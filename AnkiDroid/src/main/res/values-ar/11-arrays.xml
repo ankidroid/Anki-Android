@@ -44,7 +44,7 @@
     Now arrays are defined in constants.xml, and the strings are here -->
     <!-- error_reporting_choice_labels -->
     <string name="error_reporting_choice_always_report">أبلغ دائمًا</string>
-    <string name="error_reporting_choice_never_report">عدم الإبلاغ أبداً</string>
+    <string name="error_reporting_choice_never_report">لا تبلِّغ أبدًا</string>
     <string name="error_reporting_choice_ask_user">اسألني</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
@@ -53,20 +53,20 @@
     <string name="cram_deck_conf_order_oldest_seen_first">مشاهدة الأقدم أولا</string>
     <string name="cram_deck_conf_order_random">بشكل عشوائي</string>
     <string name="cram_deck_conf_order_increasing_intervals">فواصل زمنية متزايدة</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">فترات زمنية ناقصة</string>
-    <string name="cram_deck_conf_order_most_lapsed">المقضية</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">فترات زمنية متناقصة</string>
+    <string name="cram_deck_conf_order_most_lapsed">الأكثر سهوًا</string>
     <string name="cram_deck_conf_order_order_added">بتاريخ الإضافة</string>
     <string name="cram_deck_conf_order_order_due">ترتيب الاستحقاق</string>
     <string name="cram_deck_conf_order_latest_added_first">المضافة مؤخرًا أولًا</string>
     <string name="cram_deck_conf_order_relative_overdueness">التأخير النسبي</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">استخدم المجموعة الحالية</string>
-    <string name="add_to_deck_decide_by_note_type">تقرير حسب نوع الملحوظة</string>
+    <string name="add_to_deck_decide_by_note_type">قرر حسب نوع الملحوظة</string>
     <!-- theme labels -->
     <string name="theme_follow_system">حسب النظام</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">ساطع</string>
-    <string name="day_theme_plain">بسيط</string>
+    <string name="day_theme_plain">سادة</string>
     <!-- night_theme_labels -->
     <string name="night_theme_black">أسود</string>
     <string name="night_theme_dark">داكن</string>
@@ -79,26 +79,26 @@
     <string name="html_size_code_x_large">x-كبير</string>
     <string name="html_size_code_xx_large">xx-كبير</string>
     <!-- gestures_labels -->
-    <string name="answer_again" maxLength="41">إعادة الإجابة</string>
-    <string name="answer_hard" maxLength="41">إجابة صعبة</string>
-    <string name="answer_good" maxLength="41">إجابة جيدة</string>
-    <string name="answer_easy" maxLength="41">إجابة سهلة</string>
-    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
-    <string name="gesture_flag_red" maxLength="41">تفعيل المؤشر الأحمر</string>
-    <string name="gesture_flag_orange" maxLength="41">تفعيل المؤشر البرتقالي</string>
-    <string name="gesture_flag_green" maxLength="41">تفعيل المؤشر الأخضر</string>
-    <string name="gesture_flag_blue" maxLength="41">تفعيل المؤشر الأزرق</string>
-    <string name="gesture_flag_pink" maxLength="41">تفعيل أو إيقاف المؤشر الزهري</string>
-    <string name="gesture_flag_turquoise" maxLength="41">تفعيل أو إيقاف المؤشر الفيرزوي</string>
-    <string name="gesture_flag_purple" maxLength="41">تفعيل أو إيقاف المؤشر البنفسجي</string>
-    <string name="gesture_flag_remove" maxLength="41">إزالة المؤشر</string>
-    <string name="gesture_page_up" maxLength="41">تمرير صفحة إلى الأعلى</string>
-    <string name="gesture_page_down" maxLength="41">تمرير صفحة إلى الأسفل</string>
-    <string name="gesture_toggle_whiteboard" maxLength="41">تمكين اللوحة البيضاء</string>
-    <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
-    <string name="gesture_show_hint" maxLength="41">إظهار التلميح</string>
-    <string name="gesture_show_all_hints" maxLength="41">إظهار كل التلميحات</string>
-    <string name="record_voice" maxLength="41">تسجيل الصوت</string>
-    <string name="replay_voice" maxLength="41">إعادة تشغيل الصوت</string>
-    <string name="save_voice" maxLength="41">حفظ التسجيل</string>
+    <string name="answer_again" maxLength="41">أجب ب«مجددًا»</string>
+    <string name="answer_hard" maxLength="41">أجب ب«صعب»</string>
+    <string name="answer_good" maxLength="41">أجب ب«جيد»</string>
+    <string name="answer_easy" maxLength="41">أجب ب«سهل»</string>
+    <string name="gesture_abort_learning" maxLength="41">أغلق شاشة الدراسة</string>
+    <string name="gesture_flag_red" maxLength="41">بدل العلم الأحمر</string>
+    <string name="gesture_flag_orange" maxLength="41">بدل العلم البرتقالي</string>
+    <string name="gesture_flag_green" maxLength="41">بدل العلم الأخضر</string>
+    <string name="gesture_flag_blue" maxLength="41">بدل العلم الأزرق</string>
+    <string name="gesture_flag_pink" maxLength="41">بدل العلم الوردي</string>
+    <string name="gesture_flag_turquoise" maxLength="41">بدل العلم الفيرزوي</string>
+    <string name="gesture_flag_purple" maxLength="41">بدل العلم البنفسجي</string>
+    <string name="gesture_flag_remove" maxLength="41">أزل العلم</string>
+    <string name="gesture_page_up" maxLength="41">مر صفحة إلى الأعلى</string>
+    <string name="gesture_page_down" maxLength="41">مر صفحة إلى الأسفل</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">بدل السبورة</string>
+    <string name="gesture_toggle_eraser" maxLength="41">بدل الممحاة</string>
+    <string name="gesture_show_hint" maxLength="41">أظهر التلميح</string>
+    <string name="gesture_show_all_hints" maxLength="41">أظهر كل التلميحات</string>
+    <string name="record_voice" maxLength="41">سَجل الصوت</string>
+    <string name="replay_voice" maxLength="41">أعد تشغيل الصوت</string>
+    <string name="save_voice" maxLength="41">إحفظ التسجيل</string>
 </resources>
