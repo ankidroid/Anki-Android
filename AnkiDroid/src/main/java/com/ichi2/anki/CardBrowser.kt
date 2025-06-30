@@ -68,6 +68,7 @@ import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.browser.deleteSelectedNotes
+import com.ichi2.anki.browser.onResetProgress
 import com.ichi2.anki.browser.registerFindReplaceHandler
 import com.ichi2.anki.browser.repositionSelectedCards
 import com.ichi2.anki.browser.rescheduleSelectedCards
@@ -106,7 +107,6 @@ import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.PreviewerFragment
-import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.registerOnForgetHandler
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
@@ -1402,11 +1402,6 @@ open class CardBrowser :
         launchCatchingTask {
             undoAndShowSnackbar()
         }
-    }
-
-    private fun onResetProgress() {
-        if (warnUserIfInNotesOnlyMode()) return
-        showDialogFragment(ForgetCardsDialog())
     }
 
     private fun onPreview() {
