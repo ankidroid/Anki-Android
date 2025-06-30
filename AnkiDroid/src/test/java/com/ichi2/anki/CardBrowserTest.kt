@@ -326,7 +326,7 @@ class CardBrowserTest : RobolectricTest() {
             }
 
             // act
-            assertDoesNotThrow { b.moveSelectedCardsToDeck(deckIdToChangeTo) }
+            assertDoesNotThrow { b.cardBrowserFragment.moveSelectedCardsToDeck(deckIdToChangeTo) }
 
             // assert
             for (cardId in cardIds) {
@@ -346,7 +346,7 @@ class CardBrowserTest : RobolectricTest() {
 
             val cardIds = b.viewModel.queryAllSelectedCardIds()
 
-            b.moveSelectedCardsToDeck(dynId).join()
+            b.cardBrowserFragment.moveSelectedCardsToDeck(dynId).join()
 
             for (cardId in cardIds) {
                 assertThat("Deck should not be changed", col.getCard(cardId).did, not(dynId))
@@ -730,7 +730,7 @@ class CardBrowserTest : RobolectricTest() {
     fun change_deck_dialog_is_dismissed_on_activity_recreation() {
         val cardBrowser = browserWithNoNewCards
 
-        val dialog = cardBrowser.getChangeDeckDialog(listOf())
+        val dialog = cardBrowser.cardBrowserFragment.getChangeDeckDialog(listOf())
         cardBrowser.showDialogFragment(dialog)
 
         val shownDialog: Fragment? = cardBrowser.getCurrentDialogFragment()

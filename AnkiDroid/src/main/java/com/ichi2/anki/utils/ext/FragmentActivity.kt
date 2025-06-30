@@ -17,6 +17,7 @@
 package com.ichi2.anki.utils.ext
 
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.ichi2.anki.AnkiActivity
@@ -59,3 +60,9 @@ fun FragmentActivity.dismissAllDialogFragments() {
  */
 inline fun <reified T : DialogFragment> FragmentActivity.getCurrentDialogFragment(): T? =
     supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) as? T?
+
+/**
+ * @return The last fragment added by [showDialogFragment], only  if it is the provided type.
+ * `null` if the type does not match, or if a dialog has not been shown
+ */
+inline fun <reified T : DialogFragment> Fragment.getCurrentDialogFragment(): T? = requireActivity().getCurrentDialogFragment()

@@ -72,6 +72,7 @@ import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.browser.registerFindReplaceHandler
+import com.ichi2.anki.browser.showChangeDeckDialog
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
@@ -81,8 +82,6 @@ import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.MySearchesDialogListener
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog
 import com.ichi2.anki.dialogs.CreateDeckDialog
-import com.ichi2.anki.dialogs.DeckSelectionDialog
-import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DiscardChangesDialog
@@ -113,7 +112,6 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.internationalization.toSentenceCase
-import com.ichi2.anki.utils.ext.getCurrentDialogFragment
 import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -123,7 +121,6 @@ import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import com.ichi2.widget.WidgetStatus.updateInBackground
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
@@ -346,17 +343,6 @@ open class CardBrowser :
 
     private fun canPerformMultiSelectEditNote(): Boolean = viewModel.selectedRowCount() == 1
 
-    /**
-     * Change Deck
-     * @param did Id of the deck
-     */
-    @VisibleForTesting
-    fun moveSelectedCardsToDeck(did: DeckId): Job =
-        launchCatchingTask {
-            val changed = withProgress { viewModel.moveSelectedCardsToDeck(did).await() }
-            showUndoSnackbar(TR.browsingCardsUpdated(changed.count))
-        }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -436,15 +422,6 @@ open class CardBrowser :
             )
 
         startLoadingCollection()
-
-        // Selected cards aren't restored on activity recreation,
-        // so it is necessary to dismiss the change deck dialog
-        getCurrentDialogFragment<DeckSelectionDialog>()?.let { dialogFragment ->
-            if (dialogFragment.requireArguments().getBoolean(CHANGE_DECK_KEY, false)) {
-                Timber.d("onCreate(): Change deck dialog dismissed")
-                dialogFragment.dismiss()
-            }
-        }
 
         setupFlows()
         registerOnForgetHandler { viewModel.queryAllSelectedCardIds() }
@@ -1546,36 +1523,6 @@ open class CardBrowser :
         }
     }
 
-    @KotlinCleanup("DeckSelectionListener is almost certainly a bug - deck!!")
-    fun getChangeDeckDialog(selectableDecks: List<SelectableDeck>?): DeckSelectionDialog {
-        val dialog =
-            newInstance(
-                getString(R.string.move_all_to_deck),
-                null,
-                false,
-                selectableDecks!!,
-            )
-        // Add change deck argument so the dialog can be dismissed
-        // after activity recreation, since the selected cards will be gone with it
-        dialog.requireArguments().putBoolean(CHANGE_DECK_KEY, true)
-        dialog.deckSelectionListener = DeckSelectionListener { deck: SelectableDeck? -> moveSelectedCardsToDeck(deck!!.deckId) }
-        return dialog
-    }
-
-    private fun showChangeDeckDialog() =
-        launchCatchingTask {
-            if (!viewModel.hasSelectedAnyRows()) {
-                Timber.i("Not showing Change Deck - No Cards")
-                return@launchCatchingTask
-            }
-            val selectableDecks =
-                viewModel
-                    .getAvailableDecks()
-                    .map { d -> SelectableDeck(d) }
-            val dialog = getChangeDeckDialog(selectableDecks)
-            showDialogFragment(dialog)
-        }
-
     private fun addNoteFromCardBrowser() {
         if (fragmented) {
             loadNoteEditorFragmentIfFragmented()
@@ -1797,7 +1744,7 @@ open class CardBrowser :
             showUndoSnackbar(message)
         }
 
-    private fun showUndoSnackbar(message: CharSequence) {
+    fun showUndoSnackbar(message: CharSequence) {
         showSnackbar(message) {
             setAction(R.string.undo) { launchCatchingTask { undoAndShowSnackbar() } }
             undoSnackbar = this
@@ -1897,13 +1844,6 @@ open class CardBrowser :
         get() = cardBrowserFragment.shortcuts
 
     companion object {
-        /**
-         * Argument key to add on change deck dialog,
-         * so it can be dismissed on activity recreation,
-         * since the cards are unselected when this happens
-         */
-        private const val CHANGE_DECK_KEY = "CHANGE_DECK"
-
         // Keys for saving pane weights in SharedPreferences
         private const val PREF_CARD_BROWSER_PANE_WEIGHT = "cardBrowserPaneWeight"
         private const val PREF_NOTE_EDITOR_PANE_WEIGHT = "noteEditorPaneWeight"
