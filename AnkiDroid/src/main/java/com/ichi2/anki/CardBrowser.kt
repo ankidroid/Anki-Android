@@ -65,13 +65,10 @@ import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Searching
 import com.ichi2.anki.browser.CardOrNoteId
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment
 import com.ichi2.anki.browser.IdsFile
-import com.ichi2.anki.browser.RepositionCardFragment
-import com.ichi2.anki.browser.RepositionCardFragment.Companion.REQUEST_REPOSITION_NEW_CARDS
-import com.ichi2.anki.browser.RepositionCardsRequest.ContainsNonNewCardsError
-import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.browser.registerFindReplaceHandler
+import com.ichi2.anki.browser.repositionSelectedCards
 import com.ichi2.anki.browser.rescheduleSelectedCards
 import com.ichi2.anki.browser.showChangeDeckDialog
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
@@ -90,7 +87,6 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.GradeNowDialog
-import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
@@ -116,7 +112,6 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.ifNotZero
-import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.widgets.DeckDropDownAdapter
 import com.ichi2.ui.CardBrowserSearchView
@@ -429,14 +424,6 @@ open class CardBrowser :
 
         setupFlows()
         registerOnForgetHandler { viewModel.queryAllSelectedCardIds() }
-        setFragmentResultListener(REQUEST_REPOSITION_NEW_CARDS) { _, bundle ->
-            repositionCardsNoValidation(
-                position = bundle.getInt(RepositionCardFragment.ARG_POSITION),
-                step = bundle.getInt(RepositionCardFragment.ARG_STEP),
-                shuffle = bundle.getBoolean(RepositionCardFragment.ARG_RANDOM),
-                shift = bundle.getBoolean(RepositionCardFragment.ARG_SHIFT),
-            )
-        }
 
         registerFindReplaceHandler { result ->
             launchCatchingTask {
@@ -1391,43 +1378,6 @@ open class CardBrowser :
             GradeNowDialog.showDialog(this@CardBrowser, cardIds)
         }
 
-    private fun repositionSelectedCards(): Boolean {
-        Timber.i("CardBrowser:: Reposition button pressed")
-        if (warnUserIfInNotesOnlyMode()) return false
-        launchCatchingTask {
-            when (val repositionCardsResult = viewModel.prepareToRepositionCards()) {
-                is ContainsNonNewCardsError -> {
-                    // Only new cards may be repositioned (If any non-new found show error dialog and return false)
-                    showDialogFragment(
-                        SimpleMessageDialog.newInstance(
-                            title = getString(R.string.vague_error),
-                            message = getString(R.string.reposition_card_not_new_error),
-                            reload = false,
-                        ),
-                    )
-                    return@launchCatchingTask
-                }
-                is RepositionData -> {
-                    val top = repositionCardsResult.queueTop
-                    val bottom = repositionCardsResult.queueBottom
-                    if (top == null || bottom == null) {
-                        showSnackbar(R.string.something_wrong)
-                        return@launchCatchingTask
-                    }
-                    val repositionDialog =
-                        RepositionCardFragment.newInstance(
-                            queueTop = top,
-                            queueBottom = bottom,
-                            random = repositionCardsResult.random,
-                            shift = repositionCardsResult.shift,
-                        )
-                    showDialogFragment(repositionDialog)
-                }
-            }
-        }
-        return true
-    }
-
     private fun displayCardInfo() {
         launchCatchingTask {
             viewModel.queryCardInfoDestination()?.let { destination ->
@@ -1462,28 +1412,6 @@ open class CardBrowser :
     private fun onResetProgress() {
         if (warnUserIfInNotesOnlyMode()) return
         showDialogFragment(ForgetCardsDialog())
-    }
-
-    @VisibleForTesting
-    fun repositionCardsNoValidation(
-        position: Int,
-        step: Int,
-        shuffle: Boolean,
-        shift: Boolean,
-    ) = launchCatchingTask {
-        val count =
-            withProgress {
-                viewModel.repositionSelectedRows(
-                    position = position,
-                    step = step,
-                    shuffle = shuffle,
-                    shift = shift,
-                )
-            }
-        showSnackbar(
-            TR.browsingChangedNewPosition(count),
-            Snackbar.LENGTH_SHORT,
-        )
     }
 
     private fun onPreview() {
