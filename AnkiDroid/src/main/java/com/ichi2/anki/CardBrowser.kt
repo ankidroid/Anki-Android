@@ -65,25 +65,10 @@ import com.ichi2.anki.browser.CardOrNoteId
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
-import com.ichi2.anki.browser.changeDisplayOrder
 import com.ichi2.anki.browser.deleteSelectedNotes
-import com.ichi2.anki.browser.exportSelected
-import com.ichi2.anki.browser.onResetProgress
 import com.ichi2.anki.browser.registerFindReplaceHandler
-import com.ichi2.anki.browser.repositionSelectedCards
-import com.ichi2.anki.browser.rescheduleSelectedCards
-import com.ichi2.anki.browser.searchForMarkedNotes
-import com.ichi2.anki.browser.searchForSuspendedCards
-import com.ichi2.anki.browser.showChangeDeckDialog
-import com.ichi2.anki.browser.showCreateFilteredDeckDialog
-import com.ichi2.anki.browser.showEditTagsDialog
-import com.ichi2.anki.browser.showFilterByTagsDialog
-import com.ichi2.anki.browser.showFindAndReplaceDialog
 import com.ichi2.anki.browser.showOptionsDialog
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
-import com.ichi2.anki.browser.toggleBury
-import com.ichi2.anki.browser.toggleMark
-import com.ichi2.anki.browser.toggleSuspendCards
 import com.ichi2.anki.browser.updateFlagForSelectedRows
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
@@ -625,27 +610,16 @@ open class CardBrowser :
         keyCode: Int,
         event: KeyEvent,
     ): Boolean {
+        if (cardBrowserFragment.onKeyUp(keyCode, event)) {
+            return true
+        }
+
         // This method is called even when the user is typing in the search text field.
         // So we must ensure that all shortcuts uses a modifier.
         // A shortcut without modifier would be triggered while the user types, which is not what we want.
         when (keyCode) {
-            KeyEvent.KEYCODE_A -> {
-                if (event.isCtrlPressed && event.isShiftPressed) {
-                    Timber.i("Ctrl+Shift+A - Show edit tags dialog")
-                    showEditTagsDialog()
-                    return true
-                } else if (event.isCtrlPressed) {
-                    Timber.i("Ctrl+A - Select All")
-                    viewModel.selectAll()
-                    return true
-                }
-            }
             KeyEvent.KEYCODE_E -> {
-                if (event.isCtrlPressed && event.isShiftPressed) {
-                    Timber.i("Ctrl+Shift+E: Export selected cards")
-                    exportSelected()
-                    return true
-                } else if (event.isCtrlPressed) {
+                if (event.isCtrlPressed) {
                     Timber.i("Ctrl+E: Add Note")
                     launchCatchingTask { addNoteFromCardBrowser() }
                     return true
@@ -664,27 +638,6 @@ open class CardBrowser :
                     Timber.i("E: Character added")
                     // search box might be available and receiving input so treat this as usual text
                     return false
-                }
-            }
-            KeyEvent.KEYCODE_D -> {
-                if (event.isCtrlPressed) {
-                    Timber.i("Ctrl+D: Change Deck")
-                    showChangeDeckDialog()
-                    return true
-                }
-            }
-            KeyEvent.KEYCODE_K -> {
-                if (event.isCtrlPressed) {
-                    Timber.i("Ctrl+K: Toggle Mark")
-                    toggleMark()
-                    return true
-                }
-            }
-            KeyEvent.KEYCODE_R -> {
-                if (event.isCtrlPressed && event.isAltPressed) {
-                    Timber.i("Ctrl+Alt+R - Reschedule")
-                    rescheduleSelectedCards()
-                    return true
                 }
             }
             KeyEvent.KEYCODE_G -> {
@@ -707,11 +660,6 @@ open class CardBrowser :
                 }
             }
             KeyEvent.KEYCODE_F -> {
-                if (event.isCtrlPressed && event.isAltPressed) {
-                    Timber.i("CTRL+ALT+F - Find and replace")
-                    showFindAndReplaceDialog()
-                    return true
-                }
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+F - Find notes")
                     searchItem?.expandActionView()
@@ -725,51 +673,14 @@ open class CardBrowser :
                     return true
                 }
             }
-            KeyEvent.KEYCODE_N -> {
-                if (event.isCtrlPressed && event.isAltPressed) {
-                    Timber.i("Ctrl+Alt+N: Reset card progress")
-                    onResetProgress()
-                    return true
-                }
-            }
-            KeyEvent.KEYCODE_T -> {
-                if (event.isCtrlPressed && event.isAltPressed) {
-                    Timber.i("Ctrl+Alt+T: Toggle cards/notes")
-                    showOptionsDialog()
-                    return true
-                } else if (event.isCtrlPressed) {
-                    Timber.i("Ctrl+T: Show filter by tags dialog")
-                    showFilterByTagsDialog()
-                    return true
-                }
-            }
             KeyEvent.KEYCODE_S -> {
-                if (event.isCtrlPressed && event.isShiftPressed) {
-                    Timber.i("Ctrl+Shift+S: Reposition selected cards")
-                    repositionSelectedCards()
-                    return true
-                } else if (event.isCtrlPressed && event.isAltPressed) {
+                if (event.isCtrlPressed && event.isAltPressed) {
                     Timber.i("Ctrl+Alt+S: Show saved searches")
                     showSavedSearches()
                     return true
                 } else if (event.isCtrlPressed) {
                     Timber.i("Ctrl+S: Save search")
                     openSaveSearchView()
-                    return true
-                } else if (event.isAltPressed) {
-                    Timber.i("Alt+S: Show suspended cards")
-                    searchForSuspendedCards()
-                    return true
-                }
-            }
-            KeyEvent.KEYCODE_J -> {
-                if (event.isCtrlPressed && event.isShiftPressed) {
-                    Timber.i("Ctrl+Shift+J: Toggle bury cards")
-                    toggleBury()
-                    return true
-                } else if (event.isCtrlPressed) {
-                    Timber.i("Ctrl+J: Toggle suspended cards")
-                    toggleSuspendCards()
                     return true
                 }
             }
@@ -780,31 +691,12 @@ open class CardBrowser :
                     return true
                 }
             }
-            KeyEvent.KEYCODE_O -> {
-                if (event.isCtrlPressed) {
-                    Timber.i("Ctrl+O: Show order dialog")
-                    changeDisplayOrder()
-                    return true
-                }
-            }
-            KeyEvent.KEYCODE_M -> {
-                if (event.isCtrlPressed) {
-                    Timber.i("Ctrl+M: Search marked notes")
-                    searchForMarkedNotes()
-                    return true
-                }
-            }
             KeyEvent.KEYCODE_Z -> {
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+Z: Undo")
                     onUndo()
                     return true
                 }
-            }
-            KeyEvent.KEYCODE_ESCAPE -> {
-                Timber.i("ESC: Select none")
-                viewModel.selectNone()
-                return true
             }
             in KeyEvent.KEYCODE_1..KeyEvent.KEYCODE_7 -> {
                 if (event.isCtrlPressed) {
@@ -1159,10 +1051,6 @@ open class CardBrowser :
         }
 
         when (item.itemId) {
-            android.R.id.home -> {
-                viewModel.endMultiSelectMode(SingleSelectCause.NavigateBack)
-                return true
-            }
             R.id.action_add_note_from_card_browser -> {
                 addNoteFromCardBrowser()
                 return true
@@ -1175,72 +1063,13 @@ open class CardBrowser :
                 showSavedSearches()
                 return true
             }
-            R.id.action_sort_by_size -> {
-                changeDisplayOrder()
-                return true
-            }
-            R.id.action_show_marked -> {
-                searchForMarkedNotes()
-                return true
-            }
-            R.id.action_show_suspended -> {
-                searchForSuspendedCards()
-                return true
-            }
-            R.id.action_search_by_tag -> {
-                showFilterByTagsDialog()
-                return true
-            }
-            R.id.action_delete_card -> {
-                deleteSelectedNotes()
-                return true
-            }
-            R.id.action_mark_card -> {
-                toggleMark()
-                return true
-            }
-            R.id.action_suspend_card -> {
-                toggleSuspendCards()
-                return true
-            }
-            R.id.action_toggle_bury -> {
-                toggleBury()
-                return true
-            }
-            R.id.action_change_deck -> {
-                showChangeDeckDialog()
-                return true
-            }
             R.id.action_undo -> {
                 Timber.w("CardBrowser:: Undo pressed")
                 onUndo()
                 return true
             }
-            R.id.action_select_all -> {
-                viewModel.selectAll()
-                return true
-            }
             R.id.action_preview -> {
                 onPreview()
-                return true
-            }
-            R.id.action_reset_cards_progress -> {
-                Timber.i("NoteEditor:: Reset progress button pressed")
-                onResetProgress()
-                return true
-            }
-            R.id.action_grade_now -> {
-                Timber.i("CardBrowser:: Grade now button pressed")
-                openGradeNow()
-                return true
-            }
-            R.id.action_reschedule_cards -> {
-                Timber.i("CardBrowser:: Reschedule button pressed")
-                rescheduleSelectedCards()
-                return true
-            }
-            R.id.action_reposition_cards -> {
-                repositionSelectedCards()
                 return true
             }
             R.id.action_edit_note -> {
@@ -1251,27 +1080,9 @@ open class CardBrowser :
                 displayCardInfo()
                 return true
             }
-            R.id.action_edit_tags -> {
-                showEditTagsDialog()
-                return true
-            }
-            R.id.action_open_options -> {
-                showOptionsDialog()
-                return true
-            }
-            R.id.action_export_selected -> {
-                exportSelected()
-                return true
-            }
-            R.id.action_create_filtered_deck -> {
-                showCreateFilteredDeckDialog()
-                return true
-            }
-            R.id.action_find_replace -> {
-                showFindAndReplaceDialog()
-                return true
-            }
         }
+
+        // TODO: make better use of MenuProvider
         if (fragment?.onMenuItemSelected(item) == true) {
             return true
         }
