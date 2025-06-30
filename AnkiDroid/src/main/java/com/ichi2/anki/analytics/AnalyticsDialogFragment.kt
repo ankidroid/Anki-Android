@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.analytics
 
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 
 abstract class AnalyticsDialogFragment : DialogFragment() {
@@ -23,4 +24,6 @@ abstract class AnalyticsDialogFragment : DialogFragment() {
         super.onResume()
         UsageAnalytics.sendAnalyticsScreenView(this)
     }
+
+    protected fun requireAlertDialog() = requireDialog() as AlertDialog
 }
