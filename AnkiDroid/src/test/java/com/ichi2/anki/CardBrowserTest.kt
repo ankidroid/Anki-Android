@@ -1633,7 +1633,7 @@ suspend fun CardBrowser.searchCardsSync(query: String) {
 }
 
 suspend fun CardBrowser.filterByTagSync(vararg tags: String) {
-    filterByTag(*tags)
+    cardBrowserFragment.filterByTag(*tags)
     viewModel.searchJob?.join()
 }
 

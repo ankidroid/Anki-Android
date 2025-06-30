@@ -76,6 +76,8 @@ import com.ichi2.anki.browser.searchForMarkedNotes
 import com.ichi2.anki.browser.searchForSuspendedCards
 import com.ichi2.anki.browser.showChangeDeckDialog
 import com.ichi2.anki.browser.showCreateFilteredDeckDialog
+import com.ichi2.anki.browser.showEditTagsDialog
+import com.ichi2.anki.browser.showFilterByTagsDialog
 import com.ichi2.anki.browser.showFindAndReplaceDialog
 import com.ichi2.anki.browser.showOptionsDialog
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
@@ -92,7 +94,6 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.GradeNowDialog
-import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.libanki.CardId
@@ -105,7 +106,6 @@ import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.ChangeManager
-import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.scheduling.registerOnForgetHandler
@@ -117,7 +117,6 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.widgets.DeckDropDownAdapter
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.LanguageUtil
-import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.launch
@@ -161,11 +160,6 @@ open class CardBrowser :
             throw UnsupportedOperationException()
         }
 
-    private enum class TagsDialogListenerAction {
-        FILTER,
-        EDIT_TAGS,
-    }
-
     lateinit var viewModel: CardBrowserViewModel
 
     lateinit var cardBrowserFragment: CardBrowserFragment
@@ -179,7 +173,7 @@ open class CardBrowser :
 
     private var searchView: CardBrowserSearchView? = null
 
-    private lateinit var tagsDialogFactory: TagsDialogFactory
+    lateinit var tagsDialogFactory: TagsDialogFactory
     private var searchItem: MenuItem? = null
     private var saveSearchItem: MenuItem? = null
     private var mySearchesItem: MenuItem? = null
@@ -192,9 +186,6 @@ open class CardBrowser :
         set(value) {
             viewModel.currentCardId = value
         }
-
-    // DEFECT: Doesn't need to be a local
-    private var tagsDialogListenerAction: TagsDialogListenerAction? = null
 
     private var onEditCardActivityResult =
         registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
@@ -1361,36 +1352,6 @@ open class CardBrowser :
     private val reviewerCardId: CardId
         get() = intent.getLongExtra("currentCard", -1)
 
-    private fun showEditTagsDialog() {
-        if (!viewModel.hasSelectedAnyRows()) {
-            Timber.d("showEditTagsDialog: called with empty selection")
-        }
-        tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
-        lifecycleScope.launch {
-            val noteIds = viewModel.queryAllSelectedNoteIds()
-            val dialog =
-                tagsDialogFactory.newTagsDialog().withArguments(
-                    this@CardBrowser,
-                    type = TagsDialog.DialogType.EDIT_TAGS,
-                    noteIds = noteIds,
-                )
-            showDialogFragment(dialog)
-        }
-    }
-
-    private fun showFilterByTagsDialog() {
-        launchCatchingTask {
-            tagsDialogListenerAction = TagsDialogListenerAction.FILTER
-            val dialog =
-                tagsDialogFactory.newTagsDialog().withArguments(
-                    context = this@CardBrowser,
-                    type = TagsDialog.DialogType.FILTER_BY_TAG,
-                    noteIds = emptyList(),
-                )
-            showDialogFragment(dialog)
-        }
-    }
-
     public override fun onSaveInstanceState(outState: Bundle) {
         // Save current search terms
         outState.putString("mSearchTerms", viewModel.searchTerms)
@@ -1496,45 +1457,7 @@ open class CardBrowser :
         indeterminateTags: List<String>,
         stateFilter: CardStateFilter,
     ) {
-        when (tagsDialogListenerAction) {
-            TagsDialogListenerAction.FILTER -> filterByTags(selectedTags, stateFilter)
-            TagsDialogListenerAction.EDIT_TAGS ->
-                launchCatchingTask {
-                    editSelectedCardsTags(selectedTags, indeterminateTags)
-                }
-            else -> {}
-        }
-    }
-
-    /**
-     * Updates the tags of selected/checked notes and saves them to the disk
-     * @param selectedTags list of checked tags
-     * @param indeterminateTags a list of tags which can checked or unchecked, should be ignored if not expected
-     * For more info on [selectedTags] and [indeterminateTags] see [com.ichi2.anki.dialogs.tags.TagsDialogListener.onSelectedTags]
-     */
-    private suspend fun editSelectedCardsTags(
-        selectedTags: List<String>,
-        indeterminateTags: List<String>,
-    ) = withProgress {
-        val selectedNoteIds = viewModel.queryAllSelectedNoteIds().distinct()
-        undoableOp {
-            val selectedNotes =
-                selectedNoteIds
-                    .map { noteId -> getNote(noteId) }
-                    .onEach { note ->
-                        val previousTags: List<String> = note.tags
-                        val updatedTags = getUpdatedTags(previousTags, selectedTags, indeterminateTags)
-                        note.setTagsFromStr(this@undoableOp, tags.join(updatedTags))
-                    }
-            updateNotes(selectedNotes)
-        }
-    }
-
-    private fun filterByTags(
-        selectedTags: List<String>,
-        cardState: CardStateFilter,
-    ) = launchCatchingTask {
-        viewModel.filterByTags(selectedTags, cardState)
+        cardBrowserFragment.onSelectedTags(selectedTags, indeterminateTags, stateFilter)
     }
 
     /** Updates search terms to only show cards with selected flag.  */
@@ -1622,13 +1545,6 @@ open class CardBrowser :
         ),
         defaultViewModelCreationExtras,
     )[CardBrowserViewModel::class.java]
-
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun filterByTag(vararg tags: String) {
-        tagsDialogListenerAction = TagsDialogListenerAction.FILTER
-        onSelectedTags(tags.toList(), emptyList(), CardStateFilter.ALL_CARDS)
-        filterByTags(tags.toList(), CardStateFilter.ALL_CARDS)
-    }
 
     override fun opExecuted(
         changes: OpChanges,
