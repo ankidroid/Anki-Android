@@ -709,7 +709,12 @@ class CardBrowserTest : RobolectricTest() {
                 equalTo("1"),
             )
 
-            b.repositionCardsNoValidation(2, 1, shuffle = false, shift = false)
+            b.cardBrowserFragment.repositionCardsNoValidation(
+                2,
+                1,
+                shuffle = false,
+                shift = false,
+            )
 
             assertThat(
                 "Position of checked card after reposition",
