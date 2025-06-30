@@ -1,6 +1,6 @@
 AnkiDroid के साथ कुछ भी याद रखें!
 
-AnkiDroid आपको बहुत कुशलता से फ़्लैशकार्ड सीखने में सहायता करता है, उन्हें आपके भूलने से ठीक पहले दिखाकर। यह पुनरावृत्ति सॉफ्टवेयर Anki (समकालन सहित) के साथ सांगत है जो Windows, Linux और MacOS के लिए उपलब्ध है।
+AnkiDroid आपको बहुत कुशलता से फ़्लैशकार्ड सीखने में सहायता करता है, उन्हें आपके भूलने से ठीक पहले दिखाकर। It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 हर तरह की चीज़ें सीखें कहीं भी और कभी भी। बस यात्रा, दुकानों के कतार या किसी भी अन्य प्रतीक्षा के स्थिति में ख़ाली समय का सही उपयोग करें!
 

@@ -1,6 +1,6 @@
 用 AnkiDroid 记忆任何东西！
 
-AnkiDroid 让您高效学习抽认卡，并不断复习以避免遗忘。 它与桌面客户端完全兼容（包括同步），Anki 有 Windows、Linux 和 Mac 版本。
+AnkiDroid 让您高效学习抽认卡，并不断复习以避免遗忘。 It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 随时随地学习任何信息。 充分利用碎片时间，如公交车上，超市排队或其他等待时间！
 

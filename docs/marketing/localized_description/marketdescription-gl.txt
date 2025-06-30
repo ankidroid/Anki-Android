@@ -1,6 +1,6 @@
 Memoriza calquera cousa con AkinDroid!
 
-AnkiDroid permíteche aprender tarxetas eficientemente amosándochas xusto antes de que as esquezas. É completamente compatible co software de repetición espazada Anki (incluíndo a sincronización), dispoñible para Windows, Linux e MacOS.
+AnkiDroid permíteche aprender tarxetas eficientemente amosándochas xusto antes de que as esquezas. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Aprende todo tipo de cousas onde e cando queiras. Aproveita os tempos mortos nas viaxes no bus, na quenda do supermercado ou en calquera outra situación!
 

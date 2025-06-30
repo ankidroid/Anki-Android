@@ -1,6 +1,6 @@
 ¡Memoriza cualquier cosa con AnkiDroid!
 
-AnkiDroid te permite aprender tarjetas de manera eficiente, mostrándotelas justo antes de que se te olviden. Es totalmente compatible con el software de repetición espaciada Anki (incluyendo sincronización), disponible para Windows, Linux y MacOS.
+AnkiDroid te permite aprender tarjetas de manera eficiente, mostrándotelas justo antes de que se te olviden. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Estudia todo tipo de cosas donde y cuando quieras. ¡Aprovecha los tiempos muertos en los viajes en autobús, en las colas de los supermercados o en cualquier otra situación de espera!
 

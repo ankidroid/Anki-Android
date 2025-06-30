@@ -1,6 +1,6 @@
 Zapamätajte si čokoľvek s AnkiDroid!
 
-S AnkiDroid sa učíte kartičky (flashcards) veľmi efektívne, pretože vám ich zobrazí vždy tesne predtým, než ich zabudnete. Je plne kompatibilný s počítačovým programom Anki (vrátane synchronizácie), ktorý je dostupný pre Windows, Linux a MacOS.
+S AnkiDroid sa učíte kartičky (flashcards) veľmi efektívne, pretože vám ich zobrazí vždy tesne predtým, než ich zabudnete. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Študujte všetko možné kdekoľvek a kedykoľvek chcete. Užitočne a efektívne využite nevyužitý čas cestou v autobuse, v rade v supermarkete alebo v akejkoľvek inej situácii, počas ktorej musíte niekde čakať!
 
