@@ -159,6 +159,7 @@ import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.libanki.Utils
 import com.ichi2.themes.Themes
+import com.ichi2.utils.AndroidUiUtils.showSoftInput
 import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.ClipboardUtil.MEDIA_MIME_TYPES
 import com.ichi2.utils.ClipboardUtil.hasMedia
@@ -2464,7 +2465,15 @@ class NoteEditor :
                 text = b.buttonText
             }
             val bmp = toolbar.createDrawableForString(text)
-            val v = toolbar.insertItem(0, bmp, b.toFormatter())
+
+            val v =
+                toolbar.insertItem(0, bmp) {
+                    // Attempt to open keyboard for the currently focused view in the hosting Activity
+                    val activity = context as? Activity
+                    activity.showSoftInput()
+
+                    toolbar.onFormat(b.toFormatter())
+                }
             v.contentDescription = text
 
             // Allow Ctrl + 1...Ctrl + 0 for item 10.

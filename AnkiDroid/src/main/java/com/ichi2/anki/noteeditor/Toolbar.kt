@@ -53,6 +53,7 @@ import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.CompatHelper
+import com.ichi2.utils.AndroidUiUtils.showSoftInput
 import com.ichi2.utils.ViewGroupUtils
 import com.ichi2.utils.ViewGroupUtils.getAllChildrenRecursive
 import com.ichi2.utils.dp
@@ -116,7 +117,13 @@ class Toolbar : FrameLayout {
             @IdRes id: Int,
             prefix: String,
             suffix: String,
-        ) = findViewById<View>(id).setOnClickListener { onFormat(TextWrapper(prefix, suffix)) }
+        ) = findViewById<View>(id).setOnClickListener {
+            // Attempt to open keyboard for the currently focused view in the hosting Activity
+            val activity = context as? Activity
+            activity.showSoftInput()
+
+            onFormat(TextWrapper(prefix, suffix))
+        }
 
         setupButtonWrappingText(R.id.note_editor_toolbar_button_bold, "<b>", "</b>")
         setupButtonWrappingText(R.id.note_editor_toolbar_button_italic, "<i>", "</i>")
