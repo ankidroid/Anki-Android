@@ -135,7 +135,7 @@ open class CardBrowser :
 
     override fun onDeckSelected(deck: SelectableDeck?) {
         deck?.let {
-            launchCatchingTask { selectDeckAndSave(deck.deckId) }
+            launchCatchingTask { viewModel.setDeckId(deck.deckId) }
         }
     }
 
@@ -599,10 +599,6 @@ open class CardBrowser :
                 )
             }
         }
-    }
-
-    suspend fun selectDeckAndSave(deckId: DeckId) {
-        viewModel.setDeckId(deckId)
     }
 
     override fun onKeyUp(
