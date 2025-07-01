@@ -44,6 +44,12 @@
         />
 
     <SwitchPreferenceCompat
+        android:key="@string/show_answer_feedback_key"
+        android:title="@string/show_answer_feedback"
+        android:defaultValue="true"
+        />
+
+    <SwitchPreferenceCompat
         android:key="@string/show_progress_preference"
         tools:title="Show remaining card count"
         android:defaultValue="true"
