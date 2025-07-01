@@ -31,6 +31,15 @@
         android:fitsSystemWindows="true"
         >
 
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:navigationContentDescription="@string/abc_action_bar_up_description"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:title="@string/pref_cat_about_title"
+            />
+
         <ScrollView
             android:fadeScrollbars="false"
             android:layout_width="match_parent"
