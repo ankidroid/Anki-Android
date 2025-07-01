@@ -39,6 +39,7 @@ import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerViewModel
 import com.ichi2.anki.previewer.TypeAnswer
+import com.ichi2.anki.previewer.typeAnsRe
 import com.ichi2.anki.reviewer.BindingProcessor
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.ReviewerBinding
@@ -46,6 +47,7 @@ import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.isBuryNoteAvailable
 import com.ichi2.anki.servicelayer.isSuspendNoteAvailable
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.windows.reviewer.autoadvance.AutoAdvance
 import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.anki.utils.Destination
@@ -65,6 +67,7 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
 class ReviewerViewModel(
@@ -104,6 +107,7 @@ class ReviewerViewModel(
     var typedAnswer = ""
 
     private val autoAdvance = AutoAdvance(this)
+    private val isHtmlTypeAnswerEnabled = Prefs.isHtmlTypeAnswerEnabled
 
     /**
      * A flag that determines if the SchedulingStates in CurrentQueueState are
@@ -519,8 +523,28 @@ class ReviewerViewModel(
             typeAnswer?.answerFilter(typedAnswer) ?: text
         } else {
             typeAnswerFlow.emit(typeAnswer)
-            TypeAnswer.removeTags(text)
+            if (isHtmlTypeAnswerEnabled) {
+                typeAnswer?.let { typeAnsQuestionFilter(text, it) } ?: text
+            } else {
+                TypeAnswer.removeTags(text)
+            }
         }
+    }
+
+    // https://github.com/ankitects/anki/blob/da907053460e2b78c31199f97bbea3cf3600f0c2/qt/aqt/reviewer.py#L704
+    private fun typeAnsQuestionFilter(
+        text: String,
+        typeAnswer: TypeAnswer,
+    ): String {
+        @Language("HTML")
+        val repl =
+            """
+            <center>
+            <input type="text" id="typeans" oninput="ankidroid.onTypeAnswerInput(event);" 
+               style="font-family: '${typeAnswer.font}'; font-size: ${typeAnswer.fontSize}px;">
+            </center>
+            """.trimIndent()
+        return typeAnsRe.replace(text, repl)
     }
 
     private suspend fun updateUndoAndRedoLabels() {

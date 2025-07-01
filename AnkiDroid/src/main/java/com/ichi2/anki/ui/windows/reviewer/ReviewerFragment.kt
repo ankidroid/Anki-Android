@@ -302,8 +302,10 @@ class ReviewerFragment :
                     viewModel.typedAnswer = editable?.toString() ?: ""
                 }
             }
-        val autoFocusTypeAnswer = Prefs.autoFocusTypeAnswer
+
         lifecycleScope.launch {
+            if (Prefs.isHtmlTypeAnswerEnabled) return@launch
+            val autoFocusTypeAnswer = Prefs.autoFocusTypeAnswer
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.typeAnswerFlow.collect { typeInAnswer ->
                     if (typeInAnswer == null) {
@@ -738,6 +740,7 @@ class ReviewerFragment :
                     when (url.host) {
                         "focusin" -> webviewHasFocus = true
                         "focusout" -> webviewHasFocus = false
+                        "typeinput" -> url.path?.substring(1)?.let { viewModel.typedAnswer = it }
                     }
                     true
                 }
