@@ -15,9 +15,6 @@
  */
 package com.ichi2.anki.ui.windows.reviewer
 
-import android.text.style.RelativeSizeSpan
-import androidx.core.text.buildSpannedString
-import androidx.core.text.inSpans
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
@@ -683,22 +680,6 @@ class ReviewerViewModel(
                 initializer {
                     ReviewerViewModel(soundPlayer, serverPort, studyScreenRepository)
                 }
-            }
-
-        fun buildAnswerButtonText(
-            title: String,
-            nextTime: String?,
-        ): CharSequence =
-            if (nextTime != null) {
-                buildSpannedString {
-                    inSpans(RelativeSizeSpan(0.8F)) {
-                        append(nextTime)
-                    }
-                    append("\n")
-                    append(title)
-                }
-            } else {
-                title
             }
     }
 }

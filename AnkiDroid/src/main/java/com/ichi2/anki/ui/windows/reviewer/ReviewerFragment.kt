@@ -21,6 +21,7 @@ import android.hardware.SensorManager
 import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableString
+import android.text.style.RelativeSizeSpan
 import android.text.style.UnderlineSpan
 import android.view.KeyEvent
 import android.view.Menu
@@ -42,6 +43,8 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
+import androidx.core.text.buildSpannedString
+import androidx.core.text.inSpans
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -347,7 +350,18 @@ class ReviewerFragment :
             nextTime: String?,
         ) {
             val titleString = context.getString(title)
-            text = ReviewerViewModel.buildAnswerButtonText(titleString, nextTime)
+            text =
+                if (nextTime != null) {
+                    buildSpannedString {
+                        inSpans(RelativeSizeSpan(0.8F)) {
+                            append(nextTime)
+                        }
+                        append("\n")
+                        append(titleString)
+                    }
+                } else {
+                    titleString
+                }
         }
 
         val againButton =
