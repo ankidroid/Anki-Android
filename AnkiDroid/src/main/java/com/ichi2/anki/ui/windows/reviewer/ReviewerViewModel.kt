@@ -97,6 +97,7 @@ class ReviewerViewModel(
     val editNoteTagsFlow = MutableSharedFlow<NoteId>()
     val setDueDateFlow = MutableSharedFlow<CardId>()
     val answerTimerStatusFlow = MutableStateFlow<AnswerTimerStatus?>(null)
+    val answerFeedbackFlow = MutableSharedFlow<Ease>()
 
     override val server: AnkiServer = AnkiServer(this, serverPort).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
@@ -444,6 +445,7 @@ class ReviewerViewModel(
                 }
 
             undoableOp { sched.answerCard(answer) }
+            answerFeedbackFlow.emit(ease)
 
             val wasLeech = withCol { sched.stateIsLeech(answer.newState) }
             if (wasLeech) {

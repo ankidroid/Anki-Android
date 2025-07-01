@@ -47,6 +47,28 @@
                 android:layout_margin="8dp"
                 tools:srcCompat="@drawable/ic_flag_red"
                 />
+
+            <com.ichi2.anki.ui.windows.reviewer.AnswerFeedbackView
+                android:id="@+id/wrong_answer_feedback"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_margin="6dp"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_ease_again"
+                tools:visibility="visible"
+                />
+
+            <com.ichi2.anki.ui.windows.reviewer.AnswerFeedbackView
+                android:id="@+id/correct_answer_feedback"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="6dp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                tools:srcCompat="@drawable/ic_ease_good"
+                />
         </com.google.android.material.card.MaterialCardView>
 
         <!-- Use the same card style of the WebView -->
