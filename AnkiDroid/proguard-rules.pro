@@ -25,6 +25,9 @@
 
 # Used through Reflection
 -keep class com.ichi2.anki.**.*Fragment { *; }
+# 18712: MultimediaActivity: android.os.BadParcelableException
+# TODO: this is brittle; IMultimediaEditableNote should implement Parcelable
+-keep class com.ichi2.anki.**.multimediacard.** { *; }
 -keep class * extends com.google.protobuf.GeneratedMessageLite { *; }
 -keep class androidx.core.app.ActivityCompat$* { *; }
 -keep class androidx.concurrent.futures.** { *; }
