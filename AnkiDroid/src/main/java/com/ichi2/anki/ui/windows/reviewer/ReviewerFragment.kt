@@ -103,6 +103,7 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
 import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.libanki.sched.Counts
+import com.ichi2.libanki.sched.Ease
 import com.ichi2.themes.Themes
 import com.ichi2.utils.dp
 import com.squareup.seismic.ShakeDetector
@@ -366,19 +367,19 @@ class ReviewerFragment :
 
         val againButton =
             view.findViewById<MaterialButton>(R.id.again_button).apply {
-                setOnClickListener { viewModel.answerAgain() }
+                setOnClickListener { viewModel.answerCard(Ease.AGAIN) }
             }
         val hardButton =
             view.findViewById<MaterialButton>(R.id.hard_button).apply {
-                setOnClickListener { viewModel.answerHard() }
+                setOnClickListener { viewModel.answerCard(Ease.HARD) }
             }
         val goodButton =
             view.findViewById<MaterialButton>(R.id.good_button).apply {
-                setOnClickListener { viewModel.answerGood() }
+                setOnClickListener { viewModel.answerCard(Ease.GOOD) }
             }
         val easyButton =
             view.findViewById<MaterialButton>(R.id.easy_button).apply {
-                setOnClickListener { viewModel.answerEasy() }
+                setOnClickListener { viewModel.answerCard(Ease.EASY) }
             }
 
         viewModel.answerButtonsNextTimeFlow
