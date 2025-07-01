@@ -179,6 +179,7 @@ object Prefs {
 
     // **************************************** Reviewer **************************************** //
 
+    val doubleTapInterval by intPref(R.string.double_tap_time_interval_preference, defaultValue = 200)
     val ignoreDisplayCutout by booleanPref(R.string.ignore_display_cutout_key, false)
     val autoFocusTypeAnswer by booleanPref(R.string.type_in_answer_focus_key, true)
     val showAnswerFeedback by booleanPref(R.string.show_answer_feedback_key, defaultValue = true)
