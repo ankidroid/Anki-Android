@@ -15,21 +15,15 @@
  */
 package com.ichi2.anki.preferences
 
-import android.os.Bundle
 import androidx.preference.ListPreference
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
-import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.HideSystemBars
 import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.preferences.HtmlHelpPreference
-import timber.log.Timber
 
 /**
  * Developer options to test some of the new reviewer settings and features
@@ -38,34 +32,12 @@ import timber.log.Timber
  * since this is just a temporary screen while the new reviewer is being developed.
  */
 class ReviewerOptionsFragment :
-    PreferenceFragmentCompat(),
-    PreferenceXmlSource,
-    TitleProvider {
+    SettingsFragment(),
+    PreferenceXmlSource {
     override val preferenceResource: Int = R.xml.preferences_reviewer
+    override val analyticsScreenNameConstant: String = "prefs.studyScreen"
 
-    override val title
-        get() = preferenceManager?.preferenceScreen?.title ?: ""
-
-    override fun onCreatePreferences(
-        savedInstanceState: Bundle?,
-        rootKey: String?,
-    ) {
-        addPreferencesFromResource(preferenceResource)
-
-        // TODO launch the fragment inside PreferencesFragment instead of using a new activity.
-        // An activity is being currently used because the preferences screens are shown below the
-        // collapsible toolbar, and the menu screen has a non collapsible one. Putting it in
-        // `settings_container` would lead to two toolbars, which isn't desirable. Putting its menu
-        // into the collapsible toolbar would ruin the preview, which also isn't desirable.
-        // An activity partially solves that, because the screen looks alright in phones, but in
-        // tablets/big screens, the preferences navigation lateral bar isn't shown.
-        requirePreference<Preference>(R.string.reviewer_menu_settings_key).setOnPreferenceClickListener {
-            Timber.i("launching study screen settings menu")
-            val intent = SingleFragmentActivity.getIntent(requireContext(), ReviewerMenuSettingsFragment::class)
-            startActivity(intent)
-            true
-        }
-
+    override fun initSubscreen() {
         val ignoreDisplayCutout =
             requirePreference<SwitchPreferenceCompat>(R.string.ignore_display_cutout_key).apply {
                 isEnabled = Prefs.hideSystemBars != HideSystemBars.NONE

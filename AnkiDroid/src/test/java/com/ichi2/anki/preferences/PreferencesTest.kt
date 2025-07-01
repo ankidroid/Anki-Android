@@ -25,7 +25,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.preferences.HeaderFragment.Companion.getHeaderKeyForFragment
 import com.ichi2.anki.preferences.PreferenceTestUtils.getAttrFromXml
-import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment
 import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.preferences.HeaderPreference
@@ -37,7 +36,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
-import kotlin.reflect.jvm.jvmName
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -94,22 +92,6 @@ class PreferencesTest : RobolectricTest() {
     }
 
     @Test
-    fun `All preferences fragments are TitleProvider`() {
-        val fragments =
-            PreferenceTestUtils
-                .getAllPreferencesFragments(targetContext)
-                .filter { it !is ReviewerOptionsFragment && it !is ReviewerMenuSettingsFragment } // WIP dev options
-
-        fragments.forEach { fragment ->
-            assertThat(
-                "${fragment::class.jvmName} should implement TitleProvider",
-                fragment is TitleProvider,
-                equalTo(true),
-            )
-        }
-    }
-
-    @Test
     fun `All preferences fragments highlight the correct header`() {
         val headers =
             PreferenceTestUtils
@@ -129,7 +111,7 @@ class PreferencesTest : RobolectricTest() {
             val headerFragmentClass = parentFragmentClass ?: fragmentClass
             val expectedKey = headers.first { it["fragment"] == headerFragmentClass }["key"]!!.removePrefix("@").toInt()
             val key = getHeaderKeyForFragment(fragment)
-            assertEquals(expectedKey, key)
+            assertEquals(expectedKey, key, "$fragment (parent $parentFragmentClass) handle error")
 
             if (fragment is SettingsFragment) {
                 val subFragments = getAttrFromXml(targetContext, fragment.preferenceResource, "fragment")

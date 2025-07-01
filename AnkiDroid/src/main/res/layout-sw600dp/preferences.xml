@@ -18,32 +18,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:elevation="0dp"
-            android:fitsSystemWindows="true"
-            app:elevation="0dp"
-            app:layout_constraintEnd_toStartOf="@id/settings_container"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:liftOnScroll="false">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:title="@string/settings"
-                app:navigationContentDescription="@string/abc_action_bar_up_description"
-                app:navigationIcon="?attr/homeAsUpIndicator"/>
-        </com.google.android.material.appbar.AppBarLayout>
-
+        android:layout_height="match_parent"
+        >
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/lateral_nav_container"
             android:layout_width="0dp"
@@ -51,10 +31,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/settings_container"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appbar"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_max="400dp"
             app:layout_constraintWidth_min="320dp"
-            app:layout_constraintWidth_percent="0.33"/>
+            app:layout_constraintWidth_percent="0.33"
+            android:name="com.ichi2.anki.preferences.HeaderFragment"
+            />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/settings_container"
@@ -63,7 +45,8 @@
             app:layout_constraintStart_toEndOf="@id/lateral_nav_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
