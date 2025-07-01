@@ -255,21 +255,23 @@ class ReviewerFragment :
             showDialogFragment(dialogFragment)
         }
 
-        viewModel.answerFeedbackFlow.collectIn(lifecycleScope) { ease ->
-            if (ease == Ease.AGAIN) {
-                view.findViewById<AnswerFeedbackView>(R.id.wrong_answer_feedback).toggle()
-                return@collectIn
-            }
-            val drawableId =
-                when (ease) {
-                    Ease.HARD -> R.drawable.ic_ease_hard
-                    Ease.GOOD -> R.drawable.ic_ease_good
-                    Ease.EASY -> R.drawable.ic_ease_easy
-                    Ease.AGAIN -> throw IllegalArgumentException("Shouldn't try to get the 'Again' drawable ID")
+        if (Prefs.showAnswerFeedback) {
+            viewModel.answerFeedbackFlow.collectIn(lifecycleScope) { ease ->
+                if (ease == Ease.AGAIN) {
+                    view.findViewById<AnswerFeedbackView>(R.id.wrong_answer_feedback).toggle()
+                    return@collectIn
                 }
-            view.findViewById<AnswerFeedbackView>(R.id.correct_answer_feedback).apply {
-                setImageResource(drawableId)
-                toggle()
+                val drawableId =
+                    when (ease) {
+                        Ease.HARD -> R.drawable.ic_ease_hard
+                        Ease.GOOD -> R.drawable.ic_ease_good
+                        Ease.EASY -> R.drawable.ic_ease_easy
+                        Ease.AGAIN -> throw IllegalArgumentException("Shouldn't try to get the 'Again' drawable ID")
+                    }
+                view.findViewById<AnswerFeedbackView>(R.id.correct_answer_feedback).apply {
+                    setImageResource(drawableId)
+                    toggle()
+                }
             }
         }
 

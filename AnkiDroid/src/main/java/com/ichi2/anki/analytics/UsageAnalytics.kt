@@ -623,6 +623,7 @@ object UsageAnalytics {
             R.string.custom_button_user_action_9_key,
             // *********************************** Study Screen ************************************
             R.string.new_reviewer_options_key,
+            R.string.show_answer_feedback_key,
         )
 
     lateinit var preferencesWhoseChangesShouldBeReported: Set<String>
