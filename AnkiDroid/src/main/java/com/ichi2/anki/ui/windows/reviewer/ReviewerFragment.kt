@@ -708,6 +708,19 @@ class ReviewerFragment :
             super.onScaleChanged(view, oldScale, newScale)
             scale = newScale
         }
+
+        override fun onPageFinished(
+            view: WebView?,
+            url: String?,
+        ) {
+            super.onPageFinished(view, url)
+            Prefs.cardZoom.let {
+                if (it == 100) return@let
+                val scale = it / 100.0
+                val script = """document.getElementById("qa").style.transform = `scale($scale)`;"""
+                view?.evaluateJavascript(script, null)
+            }
+        }
     }
 
     companion object {
