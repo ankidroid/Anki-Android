@@ -199,8 +199,8 @@ object Prefs {
 
     // ************************************** Accessibility ************************************* //
 
-    val answerButtonsSize: Int
-        get() = getInt(R.string.answer_button_size_preference, 100)
+    val answerButtonsSize: Int by intPref(R.string.answer_button_size_preference, 100)
+    val cardZoom: Int by intPref(R.string.card_zoom_preference, 100)
 
     // **************************************** Advanced **************************************** //
 
