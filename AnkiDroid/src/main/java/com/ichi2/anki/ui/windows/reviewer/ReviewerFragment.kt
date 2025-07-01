@@ -139,6 +139,7 @@ class ReviewerFragment :
     private lateinit var bindingMap: BindingMap<ReviewerBinding, ViewerAction>
     private var shakeDetector: ShakeDetector? = null
     private val sensorManager get() = ContextCompat.getSystemService(requireContext(), SensorManager::class.java)
+    private var webviewHasFocus = false
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
         val fragmentView = this@ReviewerFragment.view
@@ -358,7 +359,10 @@ class ReviewerFragment :
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        if (event.action != KeyEvent.ACTION_DOWN || view?.findViewById<TextInputEditText>(R.id.type_answer_edit_text)?.isFocused == true) {
+        if (webviewHasFocus ||
+            event.action != KeyEvent.ACTION_DOWN ||
+            view?.findViewById<TextInputEditText>(R.id.type_answer_edit_text)?.isFocused == true
+        ) {
             return false
         }
         return bindingMap.onKeyDown(event)
@@ -750,6 +754,13 @@ class ReviewerFragment :
                     val gesture = GestureParser.parse(url, isScrolling, scale, webView, swipeSensitivity, gestureMode) ?: return true
                     Timber.v("ReviewerFragment::onGesture %s", gesture)
                     bindingMap.onGesture(gesture)
+                    true
+                }
+                "ankidroid" -> {
+                    when (url.host) {
+                        "focusin" -> webviewHasFocus = true
+                        "focusout" -> webviewHasFocus = false
+                    }
                     true
                 }
                 else -> super.handleUrl(url)
