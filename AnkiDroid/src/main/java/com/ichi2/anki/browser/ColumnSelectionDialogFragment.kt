@@ -45,7 +45,7 @@ class ColumnSelectionDialogFragment : DialogFragment() {
 
     private var availableColumns: List<ColumnWithSample> = emptyList()
 
-    public override fun onSaveInstanceState(outState: Bundle) {
+    override fun onSaveInstanceState(outState: Bundle) {
         with(outState) {
             outState.putParcelableArrayList(AVAILABLE_COLUMNS, availableColumns.toCollection(ArrayList()))
             super.onSaveInstanceState(this)
@@ -53,7 +53,6 @@ class ColumnSelectionDialogFragment : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
-        super.onCreate(savedInstanceState)
         val listView =
             ListView(requireContext()).apply {
                 setPaddingRelative(
@@ -91,22 +90,17 @@ class ColumnSelectionDialogFragment : DialogFragment() {
         listView.adapter = adapter
         listView.divider = null
 
-        // Load the available columns either from the viewModel or savedInstanceState bundle
-        if (savedInstanceState == null) {
-            lifecycleScope.launch {
+        lifecycleScope.launch {
+            // Load the available columns either from the viewModel or savedInstanceState bundle
+            if (savedInstanceState == null) {
                 availableColumns = viewModel.previewColumnHeadings(viewModel.cardsOrNotes).second
-                adapter.clear()
-                adapter.addAll(availableColumns)
-                adapter.notifyDataSetChanged()
-            }
-        } else {
-            lifecycleScope.launch {
+            } else {
                 availableColumns =
                     BundleCompat.getParcelableArrayList(savedInstanceState, AVAILABLE_COLUMNS, ColumnWithSample::class.java)!!.toList()
-                adapter.clear()
-                adapter.addAll(availableColumns)
-                adapter.notifyDataSetChanged()
             }
+            adapter.clear()
+            adapter.addAll(availableColumns)
+            adapter.notifyDataSetChanged()
         }
 
         listView.setOnItemClickListener { _, _, position, _ ->
