@@ -204,6 +204,7 @@ object Prefs {
 
     // **************************************** Advanced **************************************** //
 
+    val isHtmlTypeAnswerEnabled by booleanPref(R.string.use_input_tag_key, defaultValue = false)
     var useFixedPortInReviewer by booleanPref(R.string.use_fixed_port_pref_key, false)
 
     var reviewerPort by intPref(R.string.reviewer_port_pref_key, defaultValue = 0)
