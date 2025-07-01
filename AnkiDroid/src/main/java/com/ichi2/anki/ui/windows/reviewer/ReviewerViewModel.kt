@@ -191,14 +191,6 @@ class ReviewerViewModel(
         }
     }
 
-    fun answerAgain() = answerCard(Ease.AGAIN)
-
-    fun answerHard() = answerCard(Ease.HARD)
-
-    fun answerGood() = answerCard(Ease.GOOD)
-
-    fun answerEasy() = answerCard(Ease.EASY)
-
     private suspend fun toggleMark() {
         Timber.v("ReviewerViewModel::toggleMark")
         val card = currentCard.await()
@@ -438,7 +430,7 @@ class ReviewerViewModel(
         return ByteArray(0)
     }
 
-    private fun answerCard(ease: Ease) {
+    fun answerCard(ease: Ease) {
         Timber.v("ReviewerViewModel::answerCard")
         launchCatchingIO {
             queueState.await()?.let {
