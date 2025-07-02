@@ -772,14 +772,17 @@ class NoteEditor :
         if (addNote) {
             editOcclusionsButton?.visibility = View.GONE
             selectImageForOcclusionButton?.setOnClickListener {
+                Timber.i("selecting image for occlusion")
                 val imageOcclusionBottomSheet = ImageOcclusionBottomSheetFragment()
                 imageOcclusionBottomSheet.listener =
                     object : ImageOcclusionBottomSheetFragment.ImagePickerListener {
                         override fun onCameraClicked() {
+                            Timber.i("onCameraClicked")
                             dispatchCameraEvent()
                         }
 
                         override fun onGalleryClicked() {
+                            Timber.i("onGalleryClicked")
                             try {
                                 ioEditorLauncher.launch("image/*")
                             } catch (ex: ActivityNotFoundException) {
