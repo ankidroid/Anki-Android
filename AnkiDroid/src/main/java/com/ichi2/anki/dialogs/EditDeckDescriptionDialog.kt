@@ -23,6 +23,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageButton
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
@@ -31,6 +32,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.launchCatchingTask
@@ -84,9 +86,25 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
                 formatAsMarkdown = this.formatAsMarkdown,
             )
 
+    private val onUnsavedChangesBackCallback =
+        object : OnBackPressedCallback(enabled = false) {
+            override fun handleOnBackPressed() {
+                showDiscardChangesDialog()
+            }
+        }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         super.onCreateDialog(savedInstanceState).also {
             it.setCanceledOnTouchOutside(false)
+            it.setCancelable(false)
+            try {
+                (it as androidx.activity.ComponentDialog)
+                    .onBackPressedDispatcher
+                    .addCallback(this, onUnsavedChangesBackCallback)
+            } catch (e: Exception) {
+                Timber.w(e, "EditDeckDescription::backPressed")
+                CrashReportService.sendExceptionReport(e, "EditDeckDescription", "backPressed", onlyIfSilent = true)
+            }
         }
 
     override fun onViewCreated(
@@ -164,30 +182,36 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
 
     private fun onBack() =
         launchCatchingTask {
-            fun closeWithoutSaving() {
-                Timber.i("Closing dialog without saving")
-                dismiss()
-            }
-
             if (!hasChanges()) {
                 closeWithoutSaving()
                 return@launchCatchingTask
             }
 
-            Timber.i("asking if user should discard changes")
-            DiscardChangesDialog.showDialog(requireContext()) {
-                closeWithoutSaving()
-            }
+            showDiscardChangesDialog()
         }
 
     private fun checkForChanges() {
-        saveMenuItem.isEnabled = hasChanges()
+        val hasChanges = hasChanges()
+        onUnsavedChangesBackCallback.isEnabled = hasChanges
+        saveMenuItem.isEnabled = hasChanges
     }
 
     private fun hasChanges(): Boolean {
         // this can be triggered via the back dispatcher
         if (!::initialDialogState.isInitialized) return false
         return initialDialogState != currentDialogState
+    }
+
+    fun closeWithoutSaving() {
+        Timber.i("Closing dialog without saving")
+        dismiss()
+    }
+
+    fun showDiscardChangesDialog() {
+        Timber.i("asking if user should discard changes")
+        DiscardChangesDialog.showDialog(requireContext()) {
+            closeWithoutSaving()
+        }
     }
 
     private suspend fun queryDescriptionState() =
