@@ -47,14 +47,14 @@
     <!-- Widget -->
     <string name="widget_minimum_cards_due_notification_ticker_title">بطاقات مستحقة</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="zero">%d بطاقة أنكيدرويد مستحقة</item>
-        <item quantity="one">%d بطاقة أنكيدرويد مستحقة</item>
-        <item quantity="two">%d بطاقة أنكيدرويد مستحقة</item>
-        <item quantity="few">%d بطاقات أنكيدرويد مستحقة</item>
-        <item quantity="many">%d بطاقة أنكيدرويد مستحقة</item>
-        <item quantity="other">%d بطاقة أنكيدرويد مستحقة</item>
+        <item quantity="zero">%d بطاقة آنكي درويد مستحقة</item>
+        <item quantity="one">%d بطاقة آنكي درويد مستحقة</item>
+        <item quantity="two">%d بطاقة آنكي درويد مستحقة</item>
+        <item quantity="few">%d بطاقات آنكي درويد مستحقة</item>
+        <item quantity="many">%d بطاقة آنكي درويد مستحقة</item>
+        <item quantity="other">%d بطاقة آنكي درويد مستحقة</item>
     </plurals>
-    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">أنكيدرويد صغير</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">آنكي درويد صغير</string>
     <plurals name="widget_cards_due">
         <item quantity="zero">%d بطاقة مستحقة</item>
         <item quantity="one">%d بطاقة مستحقة</item>
@@ -71,22 +71,22 @@
         <item quantity="many">تبقى %d دقيقة</item>
         <item quantity="other">تبقى %d دقيقة</item>
     </plurals>
-    <string name="widget_add_note_button">إضافة ملحوظة أنكيدرويد جديدة</string>
+    <string name="widget_add_note_button">أضف ملحوظة آنكي درويد جديدة</string>
     <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">مختار البطاقات</string>
     <string name="card_analysis_extra_widget_description">تحليل البطاقة</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
     <string name="select_decks_title" comment="Title for Deck Selection Dialog">اختيار الزرم</string>
     <string name="select_deck_title" comment="Title for Deck Selection Dialog">اختر بطاقة</string>
-    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">اختر بالرمز (+) بطاقاتٍ لتُعرض في قطعة.</string>
+    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">اختر بالرمز «+» بطاقاتٍ لتُعرض في قطعة.</string>
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">البطاقات المُزالة</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">هذه البطاقة مختارة سابقًا</string>
     <plurals name="deck_limit_reached">
-        <item quantity="zero">You can select up to %d decks.</item>
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">You can select up to %d deck.</item>
-        <item quantity="two">You can select up to %d decks.</item>
-        <item quantity="few">You can select up to %d decks.</item>
-        <item quantity="many">You can select up to %d decks.</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">You can select up to %d decks.</item>
+        <item quantity="zero">يمكنك إختيار %d رزمة</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">يمكنك إختيار رزمة واحدة</item>
+        <item quantity="two">يمكنك إختيار رزمتين</item>
+        <item quantity="few">يمكنك إختيار %d رزم</item>
+        <item quantity="many">يمكنك إختيار %d رزم</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">يمكنك إختيار %d رزم</item>
     </plurals>
     <string name="empty_widget_state" comment="To denote the widget is empty">الرِزمة مفقودة. اضغط لإعادة تشكيلها</string>
     <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">المجموعة فارغة. استعملِ التطبيق لإضافة ثُم أعِدْ تشكيلها</string>

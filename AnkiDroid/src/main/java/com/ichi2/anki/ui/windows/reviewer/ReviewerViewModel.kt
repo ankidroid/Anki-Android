@@ -15,12 +15,6 @@
  */
 package com.ichi2.anki.ui.windows.reviewer
 
-import android.text.style.RelativeSizeSpan
-import android.view.KeyEvent
-import android.view.MenuItem
-import android.view.MotionEvent
-import androidx.core.text.buildSpannedString
-import androidx.core.text.inSpans
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
@@ -35,7 +29,6 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.cardviewer.CardMediaPlayer
-import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
@@ -83,14 +76,14 @@ class ReviewerViewModel(
     BindingProcessor<ReviewerBinding, ViewerAction> {
     private var queueState: Deferred<CurrentQueueState?> =
         asyncIO {
-            // this assumes that the Reviewer won't be launched if there isn't a queueState
-            withCol { sched.currentQueueState() }!!
+            withCol { sched.currentQueueState() }
         }
     override var currentCard =
         asyncIO {
-            queueState.await()!!.topCard
+            queueState.await()?.topCard
+                ?: Card(anki.cards.Card.getDefaultInstance())
         }
-    var finishResultFlow = MutableSharedFlow<Int>()
+    val finishResultFlow = MutableSharedFlow<Int>()
     val isMarkedFlow = MutableStateFlow(false)
     val flagFlow = MutableStateFlow(Flag.NONE)
     val actionFeedbackFlow = MutableSharedFlow<String>()
@@ -100,6 +93,7 @@ class ReviewerViewModel(
     val redoLabelFlow = MutableStateFlow<String?>(null)
     val countsFlow = MutableStateFlow(Counts() to Counts.Queue.NEW)
     val typeAnswerFlow = MutableStateFlow<TypeAnswer?>(null)
+    val clearTypeAnswerFlow = MutableSharedFlow<Unit>()
     val destinationFlow = MutableSharedFlow<Destination>()
     val editNoteTagsFlow = MutableSharedFlow<NoteId>()
     val setDueDateFlow = MutableSharedFlow<CardId>()
@@ -108,9 +102,9 @@ class ReviewerViewModel(
     override val server: AnkiServer = AnkiServer(this, serverPort).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
     val statesMutationEval = MutableSharedFlow<String>()
+    var typedAnswer = ""
 
     private val autoAdvance = AutoAdvance(this)
-    private val bindingMap = studyScreenRepository.bindingMap
     private val shouldSendMarkEval = !studyScreenRepository.isMarkShownInToolbar
     private val shouldSendFlagEval = !studyScreenRepository.isFlagShownInToolbar
 
@@ -136,7 +130,6 @@ class ReviewerViewModel(
         }
 
     init {
-        bindingMap.setProcessor(this)
         ChangeManager.subscribe(this)
         launchCatchingIO {
             updateUndoAndRedoLabels()
@@ -178,14 +171,14 @@ class ReviewerViewModel(
      *
      * @see showAnswer
      */
-    fun onShowAnswer(typedAnswer: String? = null) {
+    fun onShowAnswer() {
         Timber.v("ReviewerViewModel::onShowAnswer")
         launchCatchingIO {
             while (!statesMutated) {
                 delay(50)
             }
             updateNextTimes()
-            showAnswer(typedAnswer)
+            showAnswer()
             loadAndPlayMedia(CardSide.ANSWER)
             if (!autoAdvance.shouldWaitForAudio()) {
                 autoAdvance.onShowAnswer()
@@ -198,26 +191,6 @@ class ReviewerViewModel(
                 answerTimerStatusFlow.emit(AnswerTimerStatus.Stopped)
             }
         }
-    }
-
-    fun answerAgain() = answerCard(Ease.AGAIN)
-
-    fun answerHard() = answerCard(Ease.HARD)
-
-    fun answerGood() = answerCard(Ease.GOOD)
-
-    fun answerEasy() = answerCard(Ease.EASY)
-
-    fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        if (event.action != KeyEvent.ACTION_DOWN) return false
-        return bindingMap.onKeyDown(event)
-    }
-
-    fun onGenericMotionEvent(event: MotionEvent?): Boolean = bindingMap.onGenericMotionEvent(event)
-
-    fun onGesture(gesture: Gesture) {
-        Timber.v("ReviewerViewModel::onGesture %s", gesture)
-        bindingMap.onGesture(gesture)
     }
 
     private suspend fun toggleMark() {
@@ -459,7 +432,7 @@ class ReviewerViewModel(
         return ByteArray(0)
     }
 
-    private fun answerCard(ease: Ease) {
+    fun answerCard(ease: Ease) {
         Timber.v("ReviewerViewModel::answerCard")
         launchCatchingIO {
             queueState.await()?.let {
@@ -508,6 +481,7 @@ class ReviewerViewModel(
         currentCard = CompletableDeferred(card)
         setupAnswerTimer(card)
         autoAdvance.onCardChange(card)
+        clearTypeAnswerFlow.emit(Unit) // must be before showQuestion()
         showQuestion()
         loadAndPlayMedia(CardSide.QUESTION)
         canBuryNoteFlow.emit(isBuryNoteAvailable(card))
@@ -515,15 +489,12 @@ class ReviewerViewModel(
         countsFlow.emit(state.counts to state.countsIndex)
     }
 
-    override suspend fun typeAnsFilter(
-        text: String,
-        typedAnswer: String?,
-    ): String {
+    override suspend fun typeAnsFilter(text: String): String {
         Timber.v("ReviewerViewModel::typeAnsFilter")
         val typeAnswer = TypeAnswer.getInstance(currentCard.await(), text)
         return if (showingAnswer.value) {
             typeAnswerFlow.emit(null)
-            typeAnswer?.answerFilter(typedAnswer ?: "") ?: text
+            typeAnswer?.answerFilter(typedAnswer) ?: text
         } else {
             typeAnswerFlow.emit(typeAnswer)
             TypeAnswer.removeTags(text)
@@ -591,7 +562,7 @@ class ReviewerViewModel(
         answerTimerStatusFlow.emit(AnswerTimerStatus.Running(limitInMillis))
     }
 
-    private fun executeAction(action: ViewerAction) {
+    fun executeAction(action: ViewerAction) {
         Timber.v("ReviewerViewModel::executeAction %s", action.name)
         launchCatchingIO {
             when (action) {
@@ -659,14 +630,6 @@ class ReviewerViewModel(
         return true
     }
 
-    fun onMenuItemClick(item: MenuItem): Boolean {
-        Timber.v("ReviewerViewModel::onMenuItemClick")
-        if (item.hasSubMenu()) return false
-        val action = ViewerAction.fromId(item.itemId)
-        executeAction(action)
-        return true
-    }
-
     // Based in https://github.com/ankitects/anki/blob/1f95d030bbc7ebcc004ffe1e2be2a320c9fe1e94/qt/aqt/reviewer.py#L201
     // and https://github.com/ankitects/anki/blob/1f95d030bbc7ebcc004ffe1e2be2a320c9fe1e94/qt/aqt/reviewer.py#L219
     override fun opExecuted(
@@ -709,22 +672,6 @@ class ReviewerViewModel(
                 initializer {
                     ReviewerViewModel(soundPlayer, serverPort, studyScreenRepository)
                 }
-            }
-
-        fun buildAnswerButtonText(
-            title: String,
-            nextTime: String?,
-        ): CharSequence =
-            if (nextTime != null) {
-                buildSpannedString {
-                    inSpans(RelativeSizeSpan(0.8F)) {
-                        append(nextTime)
-                    }
-                    append("\n")
-                    append(title)
-                }
-            } else {
-                title
             }
     }
 }

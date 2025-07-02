@@ -159,10 +159,12 @@ import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.libanki.Utils
 import com.ichi2.themes.Themes
+import com.ichi2.utils.AndroidUiUtils.showSoftInput
 import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.ClipboardUtil.MEDIA_MIME_TYPES
 import com.ichi2.utils.ClipboardUtil.hasMedia
 import com.ichi2.utils.ClipboardUtil.items
+import com.ichi2.utils.ContentResolverUtil
 import com.ichi2.utils.HashUtil
 import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.IntentUtil.resolveMimeType
@@ -598,9 +600,28 @@ class NoteEditor :
             } else {
                 data.data
             }
-        Timber.d("Image Uri : $imageUri")
-        // ImageIntentManager.saveImageUri(imageUri)
-        // the field won't exist so it will always be a new card
+
+        if (imageUri == null) {
+            Timber.d("NoteEditor:: Image Uri is null")
+            showSnackbar(R.string.something_wrong)
+            return
+        }
+
+        try {
+            requireContext().contentResolver.takePersistableUriPermission(imageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            Timber.d("Persisted URI permission for $imageUri")
+        } catch (e: SecurityException) {
+            Timber.w(e, "Unable to persist URI permission")
+        }
+
+        val cachedImagePath = copyUriToInternalCache(imageUri)
+        if (cachedImagePath == null) {
+            Timber.w("Failed to cache image")
+            showSnackbar(R.string.something_wrong)
+            return
+        }
+        val cachedUri = Uri.fromFile(File(requireContext().cacheDir, cachedImagePath))
+
         val note = getCurrentMultimediaEditableNote()
         if (note.isEmpty) {
             Timber.w("Note is null, returning")
@@ -610,8 +631,50 @@ class NoteEditor :
             fieldIndex = 0,
             field = ImageField(),
             multimediaNote = note,
-            imageUri = imageUri,
+            imageUri = cachedUri,
         )
+    }
+
+    /**
+     * Copies a given [Uri] to the app's internal cache directory.
+     *
+     * This is necessary because URIs provided by other apps (e.g., WhatsApp, gallery apps) via
+     * `Intent` are usually content URIs with temporary permissions that are only valid
+     * in the originating context (like an Activity). Once passed to other components (like Fragments),
+     * these permissions may be lost, resulting in a SecurityException.
+     *
+     * By caching the file in internal storage and referencing it via a file URI,
+     * we ensure persistent access to the image without relying on external content providers.
+     *
+     * @param uri The [Uri] pointing to the external image content.
+     * @return The name of the cached file, or `null` if the operation failed.
+     */
+    private fun copyUriToInternalCache(uri: Uri): String? {
+        return try {
+            val inputStream = requireContext().contentResolver.openInputStream(uri) ?: return null
+
+            val fileName = ContentResolverUtil.getFileName(requireContext().contentResolver, uri) ?: return null
+            val cacheDir = requireContext().cacheDir
+            val destFile = File(cacheDir, fileName)
+
+            val canonicalCacheDir = cacheDir.canonicalFile
+            val canonicalDestFile = destFile.canonicalFile
+
+            if (!canonicalDestFile.path.startsWith(canonicalCacheDir.path)) {
+                Timber.w("Rejected path due to directory traversal risk: $fileName")
+                return null
+            }
+
+            destFile.outputStream().use { output ->
+                inputStream.copyTo(output)
+            }
+
+            Timber.d("copyUriToInternalCache() copied to ${destFile.absolutePath}")
+            destFile.name
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to copy URI to internal cache")
+            null
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -2402,7 +2465,15 @@ class NoteEditor :
                 text = b.buttonText
             }
             val bmp = toolbar.createDrawableForString(text)
-            val v = toolbar.insertItem(0, bmp, b.toFormatter())
+
+            val v =
+                toolbar.insertItem(0, bmp) {
+                    // Attempt to open keyboard for the currently focused view in the hosting Activity
+                    val activity = context as? Activity
+                    activity.showSoftInput()
+
+                    toolbar.onFormat(b.toFormatter())
+                }
             v.contentDescription = text
 
             // Allow Ctrl + 1...Ctrl + 0 for item 10.

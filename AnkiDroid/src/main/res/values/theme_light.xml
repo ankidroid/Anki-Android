@@ -68,7 +68,16 @@
         <item name="hardButtonTextColor">@color/white</item>
         <item name="goodButtonTextColor">@color/white</item>
         <item name="easyButtonTextColor">@color/white</item>
+
         <item name="alternativeBackgroundColor">#f4f5f9</item>
+        <item name="againTextColor">@color/material_red_900</item>
+        <item name="hardTextColor">#B33800</item>
+        <item name="goodTextColor">@color/material_green_900</item>
+        <item name="easyTextColor">@color/material_light_blue_900</item>
+        <item name="againBackgroundColor">#ffFFCDD2</item>
+        <item name="hardBackgroundColor">#FFE0B2</item>
+        <item name="goodBackgroundColor">#C8E6C9</item>
+        <item name="easyBackgroundColor">@color/material_light_blue_100</item>
         <!-- Study Screen button drawables -->
         <item name="showAnswerButtonBackground">@color/material_blue_700</item>
         <item name="showAnswerColor">@color/material_blue_grey_700</item>

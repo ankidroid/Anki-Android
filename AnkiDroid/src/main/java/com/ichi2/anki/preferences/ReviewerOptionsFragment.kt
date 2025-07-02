@@ -28,6 +28,7 @@ import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.HideSystemBars
 import com.ichi2.anki.utils.CollectionPreferences
+import com.ichi2.preferences.HtmlHelpPreference
 import timber.log.Timber
 
 /**
@@ -80,6 +81,7 @@ class ReviewerOptionsFragment :
         fun setPrefsEnableState(newValue: Boolean) {
             val prefs = preferenceScreen.allPreferences() - newReviewerPref
             for (pref in prefs) {
+                if (pref is HtmlHelpPreference) continue
                 if (pref.key == ignoreDisplayCutout.key && newValue) {
                     ignoreDisplayCutout.isEnabled = hideSystemBars.value != HideSystemBars.NONE.entryValue
                     continue
@@ -103,6 +105,17 @@ class ReviewerOptionsFragment :
             setOnPreferenceChangeListener { _, newValue ->
                 val newValueBool = newValue as? Boolean ?: return@setOnPreferenceChangeListener false
                 launchCatchingTask { CollectionPreferences.setHideAudioPlayButtons(!newValueBool) }
+                true
+            }
+        }
+
+        // Show remaining card count
+        requirePreference<SwitchPreferenceCompat>(R.string.show_progress_preference).apply {
+            title = CollectionManager.TR.preferencesShowRemainingCardCount()
+            launchCatchingTask { isChecked = CollectionPreferences.getShowRemainingDueCounts() }
+            setOnPreferenceChangeListener { _, newDueCountsValue ->
+                val newDueCountsValueBool = newDueCountsValue as? Boolean ?: return@setOnPreferenceChangeListener false
+                launchCatchingTask { CollectionPreferences.setShowRemainingDueCounts(newDueCountsValueBool) }
                 true
             }
         }

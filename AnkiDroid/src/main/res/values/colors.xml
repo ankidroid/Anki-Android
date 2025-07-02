@@ -38,6 +38,7 @@
     <color name="material_brown_500">#ff795548</color>
     <color name="material_brown_700">#ff5d4037</color>
 
+    <color name="material_grey_300">#E0E0E0</color>
     <color name="material_grey_500">#ff9e9e9e</color>
     <color name="material_grey_600">#ff757575</color>
     <color name="material_grey_700">#ff616161</color>
@@ -138,15 +139,6 @@
     <color name="audio_recorder_red">#FF4747</color>
     <color name="audio_recorder_green">#6FF06F</color>
     <color name="audio_recorder_grey">#444444</color>
-
-    <color name="again_button_bg">#ffFFCDD2</color>
-    <color name="again_button_text">@color/material_red_900</color>
-    <color name="hard_button_bg">#FFE0B2</color>
-    <color name="hard_button_text">#B33800</color>
-    <color name="good_button_bg">#C8E6C9</color>
-    <color name="good_button_text">@color/material_green_900</color>
-    <color name="easy_button_bg">@color/material_light_blue_100</color>
-    <color name="easy_button_text">@color/material_light_blue_900</color>
 
     <!-- color used for bury count in study options(same as anki for light and dark) -->
     <color name="disabled_gray_light">#858585</color>

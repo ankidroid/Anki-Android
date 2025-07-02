@@ -133,10 +133,17 @@
                 android:id="@+id/counts_flow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="new_count,lrn_count,rev_count"
+                app:constraint_referenced_ids="new_count,lrn_count,rev_count,timer"
+                app:flow_wrapMode="chain"
+                app:flow_verticalStyle="packed"
+                app:flow_horizontalStyle="packed"
+                app:flow_horizontalAlign="start"
+                app:flow_verticalGap="4dp"
+                app:flow_maxElementsWrap="3"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/back_button"
-                app:layout_constraintBottom_toTopOf="@id/timer"
+                android:layout_marginEnd="12dp"
                 />
 
             <!-- Timer below counts means UI elements may jump if timer is selectively enabled.
@@ -146,10 +153,6 @@
                 android:id="@+id/timer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/counts_flow"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/counts_flow"
-                app:layout_constraintStart_toStartOf="@id/counts_flow"
                 android:visibility="gone"
                 tools:visibility="visible"
                 />
@@ -189,9 +192,9 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="@dimen/answer_button_margin_horizontal"
-                        android:backgroundTint="@color/again_button_bg"
                         android:text="@string/ease_button_again"
-                        android:textColor="@color/again_button_text"
+                        android:textColor="?againTextColor"
+                        android:backgroundTint="?againBackgroundColor"
                         android:layout_weight="1"
                         />
 
@@ -201,9 +204,9 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="@dimen/answer_button_margin_horizontal"
-                        android:backgroundTint="@color/hard_button_bg"
                         android:text="@string/ease_button_hard"
-                        android:textColor="@color/hard_button_text"
+                        android:textColor="?hardTextColor"
+                        android:backgroundTint="?hardBackgroundColor"
                         android:layout_weight="1"
                         />
 
@@ -213,9 +216,9 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="@dimen/answer_button_margin_horizontal"
-                        android:backgroundTint="@color/good_button_bg"
                         android:text="@string/ease_button_good"
-                        android:textColor="@color/good_button_text"
+                        android:textColor="?goodTextColor"
+                        android:backgroundTint="?goodBackgroundColor"
                         android:layout_weight="1"
                         />
 
@@ -225,9 +228,9 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/answer_button_margin_horizontal"
-                        android:backgroundTint="@color/easy_button_bg"
                         android:text="@string/ease_button_easy"
-                        android:textColor="@color/easy_button_text"
+                        android:textColor="?easyTextColor"
+                        android:backgroundTint="?easyBackgroundColor"
                         android:layout_weight="1"
                         />
                 </LinearLayout>

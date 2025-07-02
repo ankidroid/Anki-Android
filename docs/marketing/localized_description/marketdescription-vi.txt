@@ -35,7 +35,7 @@ Thêm tài liệu thông qua các ứng dụng máy tính để bàn Anki hoặc
 • Hỗ trợ 27 bản nội địa hoá theo quốc gia
 • Tất cả các phiên bản AnkiDroid trước có thể được tải về từ các trang web
 
-AnkiDroid cho phép bạn học flashcard rất hiệu quả bằng cách hiển thị chúng ngay trước khi bạn quên. Nó hoàn toàn tương thích với phần mềm lặp lại khoảng cách Anki (bao gồm cả đồng bộ hóa), có sẵn cho Windows, Linux và MacOS.
+AnkiDroid cho phép bạn học flashcard rất hiệu quả bằng cách hiển thị chúng ngay trước khi bạn quên. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Học mọi thứ bất cứ nơi nào và bất cứ khi nào bạn muốn. Hãy tận dụng tốt thời gian nhàn rỗi trên các chuyến xe buýt, khi xếp hàng trong siêu thị hoặc bất kỳ tình huống chờ đợi nào khác!
 

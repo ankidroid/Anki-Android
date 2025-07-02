@@ -21,7 +21,6 @@ import androidx.annotation.WorkerThread
 import anki.media.CheckMediaResponse
 import com.google.protobuf.kotlin.toByteString
 import com.ichi2.libanki.Media.Companion.htmlMediaRegexps
-import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
@@ -70,14 +69,18 @@ open class Media(
      * @param currentCard The card to scan for media filenames ([sound:...] or <img...>).
      * @return A distinct, unordered list containing all the sound and image filenames found in the card.
      */
+    // FIXME This doesn't match the parameters of the pylib's method
     @LibAnkiAlias("files_in_str")
     fun filesInStr(
-        renderOutput: TemplateRenderOutput,
+        currentCard: Card,
         includeRemote: Boolean = false,
     ): List<String> {
         val files = mutableListOf<String>()
-        val processedText = LaTeX.mungeQA(renderOutput.questionText + renderOutput.answerText, col, true)
-
+        val model = currentCard.note(col).notetype
+        // handle latex
+        val renderOutput = currentCard.renderOutput(col)
+        val processedText = renderLatex(renderOutput.questionText + renderOutput.answerText, model, col)
+        // extract filenames
         for (pattern in htmlMediaRegexps) {
             val matches = pattern.findAll(processedText)
             for (match in matches) {
@@ -162,13 +165,13 @@ open class Media(
 
         val htmlMediaRegexps =
             listOf(
-                // src element quoted case (img/audio)
-                Regex("(?i)(<(?:img|audio)\\b[^>]* src=(['\"])([^>]+?)\\2[^>]*>)"), // Group 3 = fname
+                // src element quoted case
+                Regex("(?i)(<(?:img|audio|source)\\b[^>]* src=(['\"])([^>]+?)\\2[^>]*>)"), // Group 3 = fname
                 // unquoted src (img/audio)
-                Regex("(?i)(<(?:img|audio)\\b[^>]* src=(?!['\"])([^ >]+)[^>]*?>)"), // Group 2 = fname
-                // quoted data attribute (object)
+                Regex("(?i)(<(?:img|audio|source)\\b[^>]* src=(?!['\"])([^ >]+)[^>]*?>)"), // Group 2 = fname
+                // quoted data attribute
                 Regex("(?i)(<object\\b[^>]* data=(['\"])([^>]+?)\\2[^>]*>)"), // Group 3 = fname
-                // unquoted data attribute (object)
+                // unquoted data attribute
                 Regex("(?i)(<object\\b[^>]* data=(?!['\"])([^ >]+)[^>]*?>)"), // Group 2 = fname
             )
     }

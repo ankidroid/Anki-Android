@@ -256,7 +256,7 @@
     <string name="about_contributors_description"><![CDATA[Jen listo de niaj karaj <a href=\"%1$s\">kontribuantoj</a>. Vi ankaŭ povas helpi al AnkiDroid per programi, traduki, donaci <a href=\"%2$s\">kaj pli</a>!]]></string>
     <string name="license">Permesilo</string>
     <string name="license_description"><![CDATA[AnkiDroid estas eldonita laŭ la permesiloj <a href=\"%1$s\">GPL-3.0</a> kaj <a href=\"%2$s\">AGPL-3.0</a>, ĝia fontkodo estas disponebla en <a href=\"%3$s\">GitHub</a>.]]></string>
-    <string name="other_licenses"><![CDATA[AnkiDroid uzas bibliotekojn kaj bildsimbolojn de eksteraj liverantoj, kiuj estas eldonitaj laŭ diversaj malfermkodaj <a href=\"%1$s\">permesiloj</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid uzas bibliotekojn kaj bildsimbolojn de eksteraj liverantoj, kiuj estas eldonitaj laŭ diversaj malfermkodaj <a href=\"%1$s\">permesiloj</a>.]]></string>
     <string name="donate_description"><![CDATA[Vi povas subteni evoluigon de AnkiDroid per <a href=\"%1$s\">donaci monon</a>. Ĉiu monsumo estas dankinda.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Aldoni geston</string>
@@ -360,18 +360,18 @@ Vi povas restarigi el sekurkopio aŭ elporti vian kolekton per la menuo de listo
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Ĉiuj</string>
     <string name="ignore_display_cutout" maxLength="41">Ignori eltondaĵojn en la ekrano</string>
     <string name="hide_answer_buttons" maxLength="41">Kaŝi respondajn butonojn</string>
-    <string name="hide_hard_and_easy" maxLength="41">Kaŝi butonojn “malfacile” kaj “facile”</string>
+    <string name="hide_hard_and_easy" maxLength="41">Kaŝi butonojn “malfacila” kaj “facila”</string>
     <string name="reviewer_frame_style" maxLength="41">Stilo de kadro</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">karta</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">plena</string>
     <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Supre</string>
     <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Malsupre</string>
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Neniu</string>
-    <string name="toolbar" maxLength="41">Toolbar</string>
-    <string name="toolbar_actions" maxLength="41">Toolbar actions</string>
-    <string name="toolbar_position" maxLength="41">Toolbar position</string>
-    <string name="new_study_screen" maxLength="41">New study screen</string>
-    <string name="new_study_screen_summary">Improved study screen that will succeed the current one. Available for testing and feedback</string>
+    <string name="toolbar" maxLength="41">Ilarstrio</string>
+    <string name="toolbar_actions" maxLength="41">Agoj de ilarstrio</string>
+    <string name="toolbar_position" maxLength="41">Pozicio de ilarstrio</string>
+    <string name="new_study_screen" maxLength="41">Nova lernada ekrano</string>
+    <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Malfermi agordojn</string>
 </resources>

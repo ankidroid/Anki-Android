@@ -32,6 +32,7 @@ import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.utils.increaseHorizontalPaddingOfMenuIcons
 import kotlinx.coroutines.launch
 
 /**
@@ -127,6 +128,9 @@ class ReviewerMenuView
         private fun setupMenus() {
             val menuItems = repository.getActionsByMenuDisplayTypes(MenuDisplayType.ALWAYS, MenuDisplayType.MENU_ONLY)
             addActions(menuItems.getValue(MenuDisplayType.ALWAYS), menuItems.getValue(MenuDisplayType.MENU_ONLY))
+
+            context.increaseHorizontalPaddingOfMenuIcons(overflowMenu)
+
             // wait until attached to a fragment or activity to launch the coroutine to setup flags
             viewTreeObserver.addOnGlobalLayoutListener(
                 object : OnGlobalLayoutListener {

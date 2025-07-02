@@ -1,6 +1,6 @@
 Kabisaduhin ang anumang bagay sa AnkiDroid!
 
-Hinahayaan ka ng AnkiDroid na matutunan mo ang mga flashcards nang mabisa sa pamamagitan ng pagpapakita sa mga ito bago mo malilimutan. Ito ay ganap na katugma sa spaced repetition na software na Anki (kabilang ang pag-synchronize), na magagamit para sa Windows, Linux at MacOS.
+Hinahayaan ka ng AnkiDroid na matutunan mo ang mga flashcards nang mabisa sa pamamagitan ng pagpapakita sa mga ito bago mo malilimutan. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
 
 Pag-aralan ang lahat ng uri ng mga bagay saan man at kailan mo gusto. Sulitin ang mga oras na walang ginagawa sa mga biyahe sa bus, sa queue ng supermarket o anumang iba pang sitwasyon sa paghihintay!
 

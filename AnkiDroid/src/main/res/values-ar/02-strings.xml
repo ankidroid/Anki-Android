@@ -45,78 +45,78 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">فتح القائمة</string>
+    <string name="drawer_open">إفتح القائمة</string>
     <string name="drawer_close">إغلاق القائمة</string>
     <string name="CardEditorCardDeck">رزمة البطاقة:</string>
     <string name="CardEditorNoteDeck">الرزمة:</string>
     <string name="CardEditorModel">النوع:</string>
     <string name="CardEditorTags">الوسوم: %1$s</string>
     <string name="CardEditorCards">البطاقات: %1$s</string>
-    <string name="edit_occlusions">تحرير الصور المعماة</string>
+    <string name="edit_occlusions">تحرير الصور المُعَمَّاة</string>
     <string name="tag_name">اسم الوسم</string>
-    <string name="add_new_filter_tags">إضافة/فلترة الوسوم</string>
-    <string name="add_tag" maxLength="28">إضافة وسم</string>
-    <string name="check_all_tags" maxLength="28">تحديد/إلغاء تحديد كل الوسوم</string>
-    <string name="filter_tags" maxLength="28">فلترة الوسوم</string>
+    <string name="add_new_filter_tags">أضف أو صَفِّ الوسوم</string>
+    <string name="add_tag" maxLength="28">أضف وسمًا</string>
+    <string name="check_all_tags" maxLength="28">حدد أو ألغ تحديد كل الوسوم</string>
+    <string name="filter_tags" maxLength="28">صَفِّ الوسوم</string>
     <string name="no_tags">لم تضف أي وسوم بعد</string>
     <string name="updated_version">تم التحديث إلى الإصدار: %s</string>
     <!-- Reviewer.kt (Study Screen) -->
-    <string name="save_whiteboard" maxLength="28">حفظ السبورة</string>
-    <string name="enable_stylus" maxLength="28">تمكين وضع Stylus</string>
-    <string name="disable_stylus">تعطيل وضع Stylus</string>
-    <string name="enable_whiteboard" maxLength="28">تفعيل السبورة</string>
-    <string name="disable_whiteboard">تعطيل السبورة</string>
-    <string name="show_whiteboard">إظهار السبورة</string>
-    <string name="enable_eraser" maxLength="28">Enable eraser</string>
-    <string name="disable_eraser" maxLength="28">Disable eraser</string>
-    <string name="hide_whiteboard" maxLength="28">إخفاء السبورة</string>
-    <string name="clear_whiteboard" maxLength="28">مسح السبورة</string>
-    <string name="replay_media" maxLength="28">Replay media</string>
+    <string name="save_whiteboard" maxLength="28">إحفظ السبورة</string>
+    <string name="enable_stylus" maxLength="28">فَعِّل وضع القلم</string>
+    <string name="disable_stylus">عَطِّل وضع القلم</string>
+    <string name="enable_whiteboard" maxLength="28">فَعِّل السبورة</string>
+    <string name="disable_whiteboard">عَطِّل السبورة</string>
+    <string name="show_whiteboard">أظهر السبورة</string>
+    <string name="enable_eraser" maxLength="28">فَعِّل الممحاة</string>
+    <string name="disable_eraser" maxLength="28">عَطِّل الممحاة</string>
+    <string name="hide_whiteboard" maxLength="28">أخفِ السبورة</string>
+    <string name="clear_whiteboard" maxLength="28">امحُ السبورة</string>
+    <string name="replay_media" maxLength="28">أعد تشغيل الوسائط</string>
     <string name="leech_suspend_notification">عُلِّمت البطاقة كمستعصية وعُلِّقت</string>
     <string name="leech_notification">عُلِّمت البطاقة كمستعصية</string>
-    <string name="webview_crash_unknown">‏‏خطأ غير معروف</string>
-    <string name="webview_crash_unknwon_detailed">حدث هذا بسبب خطأ داخلي في عارض الويب</string>
+    <string name="webview_crash_unknown">‏‏خلل مجهول</string>
+    <string name="webview_crash_unknwon_detailed">حدث هذا بسبب خلل داخلي في الويب فيو</string>
     <string name="webview_crash_oom">الذاكرة ممتلئة</string>
-    <string name="webview_crash_oom_details">تم إنهاء عارض الويب من قبل النظام. يحدث هذا عادة عندما ينفذ التطبيق من الذاكرة، غالبًا بسبب خطوط أو وسائط كبيرة.</string>
-    <string name="webview_crash_nonfatal">توقف معالج عارض الويب عن العمل. السبب: %s</string>
-    <string name="webview_crash_fatal">خطأ قاتل: توقف معالج عارض الويب عن العمل. السبب: %s</string>
-    <string name="webview_crash_loop_dialog_title">فشل في معالجة عارض الويب الخاص بالنظام</string>
-    <string name="webview_crash_loop_dialog_content">فشل عارض ويب النظام في عرض البطاقة %1$s.\n %2$s</string>
-    <string name="filter_by_flags" maxLength="41">أعلام</string>
+    <string name="webview_crash_oom_details">تم إنهاء الويب فيو من قبل النظام. يحدث هذا عادةً عند نفاد ذاكرة التطبيق والذي غالبًا ما يكون نتيجة خطوطٍ أو وسائطٍ كبيرة.</string>
+    <string name="webview_crash_nonfatal">تَعطَّل معالج الويب فيو. السبب: %s</string>
+    <string name="webview_crash_fatal">خلل فادح: تَعطَّل معالج الويب فيو. المسبب: %s</string>
+    <string name="webview_crash_loop_dialog_title">فَشَلٌ في معالجة الويب فيو الخاص بالنظام</string>
+    <string name="webview_crash_loop_dialog_content">فَشِلَ ويب فيو الخاص بالنظام في عرض البطاقة %1$s.\n %2$s</string>
+    <string name="filter_by_flags" maxLength="41">الأعلام</string>
     <!-- Custom study options -->
-    <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
+    <string name="custom_study_loading_tags">يتم بناء مجموعة الوسوم&#8230;</string>
     <!-- Study options -->
     <plurals name="studyoptions_buried_count">
-        <item quantity="zero">+%d buried</item>
+        <item quantity="zero">+%d مدفونة</item>
         <item quantity="one">+ %d مدفونة</item>
-        <item quantity="two">+%d buried</item>
-        <item quantity="few">+%d buried</item>
-        <item quantity="many">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="two">+%d مدفونتان</item>
+        <item quantity="few">+%d مدفونة</item>
+        <item quantity="many">+%d مدفونة</item>
+        <item quantity="other">+%d مدفونة</item>
     </plurals>
     <string name="studyoptions_total_new_label">مجموع البطاقات الجديدة</string>
     <string name="studyoptions_total_label">مجموع البطاقات</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card" maxLength="28">تعديل الملحوظة</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">حرر الملحوظة</string>
     <string name="discard">تجاهل</string>
     <string name="note_editor_no_cards_created">لم تُنشَأ أي بطاقات. الرجاء تعبئة مزيد من الحقول</string>
-    <string name="note_editor_no_cards_created_all_fields">لا يولّد نوع الملحوظة الحالي أي بطاقات.\nالرجاء اختيار نوع آخر، أو الضغط على «بطاقات» وإضافة حقل بديل</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">تعمل عبارات ملء الفراغات في نوع ملحوظة ملء فراغات فقط.</string>
-    <string name="saving_facts">حفظ الملحوظة</string>
-    <string name="saving_model">حفظ نوع الملحوظة</string>
-    <string name="save" maxLength="28">حفظ</string>
-    <string name="close">إغلاق</string>
+    <string name="note_editor_no_cards_created_all_fields">لا يولِّد نوع الملحوظة الحالية أي بطاقات.\nالرجاء اختيار نوع آخر، أو الضغط على «بطاقات» وإضافة بديل حقل</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">لا تعمل الفراغات إلا إذا كانت الملحوظة من نوع ملءَ الفراغات</string>
+    <string name="saving_facts">يتم حِفظ الملحوظة</string>
+    <string name="saving_model">يتم حِفظ نوع الملحوظات</string>
+    <string name="save" maxLength="28">إحفظ</string>
+    <string name="close">أغلق</string>
     <string name="select">حدد</string>
-    <string name="field_remapping">%1$s (من “%2$s”)</string>
-    <string name="confirm_map_cards_to_nothing">البطاقات غير المُوزعة ستُحذف. إذا لم يتبقَّ لملحوظة أي بطاقة، ستُحذف. هل أنت متأكد من الاستمرار؟</string>
-    <string name="missing_note_type">لا يوجد أي نوع ملحوظة</string>
-    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
+    <string name="field_remapping">%1$s (من «%2$s»)</string>
+    <string name="confirm_map_cards_to_nothing">ستُحذف البطاقات غير المُوزعة. ستُحذف أي ملحوظة ليس لها بطاقات.  أواثق أنك ترغب بذلك؟</string>
+    <string name="missing_note_type">لا يوجد نوع ملحوظات</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (فارغ)</string>
     <!-- Timebox -->
-    <string name="timebox_reached_title">انتهت مهلة تقسيم المهام</string>
+    <string name="timebox_reached_title">انتهت مهلة التأطير الزمني</string>
     <plurals name="timebox_reached">
         <item quantity="zero">درست %1$d بطاقة خلال %2$s</item>
-        <item quantity="one">درست %1$d بطاقة خلال %2$s</item>
-        <item quantity="two">درست %1$d بطاقة خلال %2$s</item>
+        <item quantity="one">درست بطاقة واحدة خلال %2$s</item>
+        <item quantity="two">درست بطاقتين خلال %2$s</item>
         <item quantity="few">درست %1$d بطاقات خلال %2$s</item>
         <item quantity="many">درست %1$d بطاقة خلال %2$s</item>
         <item quantity="other">درست %1$d بطاقة خلال %2$s</item>
@@ -124,79 +124,79 @@
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
         <item quantity="zero">%1$d دقيقة</item>
-        <item quantity="one">%1$d دقيقة</item>
-        <item quantity="two">%1$d دقيقة</item>
+        <item quantity="one">دقيقة واحدة</item>
+        <item quantity="two">دقيقتين</item>
         <item quantity="few">%1$d دقائق</item>
         <item quantity="many">%1$d دقيقة</item>
         <item quantity="other">%1$d دقيقة</item>
     </plurals>
-    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">بطاقة أنكيدرويد</string>
-    <string name="note_editor_copy_note" maxLength="28">نسخ الملحوظة</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">تغيير الموضع</string>
-    <string name="card_editor_reset_card" maxLength="28">إعادة تعيين التقدم</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">إعادة الجدولة</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">معاينة</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">نسخ كـ ماركداون</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">بطاقة آنكي درويد</string>
+    <string name="note_editor_copy_note" maxLength="28">استنسخِ الملحوظة</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">غيِّر الموضع</string>
+    <string name="card_editor_reset_card" maxLength="28">أعد ضبط التقدم</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">أعد الجدولة</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">عايِن</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">إنسخ كماركداون</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d من %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">إعادة التسمية</string>
     <string name="checks_action" maxLength="28">تحقق</string>
-    <string name="check_db" maxLength="28">فحص قاعدة البيانات</string>
-    <string name="check_media" maxLength="28">فحص الوسائط</string>
+    <string name="check_db" maxLength="28">إفحص قاعدة البيانات</string>
+    <string name="check_media" maxLength="28">إفحص الوسائط</string>
     <string name="empty_cards" maxLength="28">بطاقات فارغة</string>
-    <string name="unknown_type_field_warning">إدخال الجواب: حقل غير معروف %s</string>
-    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">يجري حذف الرزمة&#8230;</string>
-    <string name="info_rate">قيم أنكيدرويد</string>
+    <string name="unknown_type_field_warning">إدخال الجواب: حقل مجهول %s</string>
+    <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">جارٍ حذف الرزمة&#8230;</string>
+    <string name="info_rate">قيِّم آنكي درويد</string>
     <string name="import_title">استيراد</string>
     <string name="import_preparing_file">تجهيز الملف للاستيراد&#8230;</string>
-    <string name="import_message_add" comment="Adding a new deck to the collection (import)">إضافة</string>
-    <string name="import_message_replace_confirm">سيحذف هذا مجموعتك الحالية ويستبدلها ببيانات الملف %s</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">أضف</string>
+    <string name="import_message_replace_confirm">سيحذف هذا مجموعتك الحالية ويستبدل بها بيانات الملف %s</string>
     <string name="import_dialog_message_add">هل تريد إضافة \"%s\" إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا</string>
-    <string name="import_log_no_apkg">ملف حزمة أنكي غير صالح</string>
+    <string name="import_log_no_apkg">ملف حزمة آنكي غير صالح</string>
     <string name="import_title_error" comment="Title of error dialog">خطأ</string>
-    <string name="import_error_handle_exception">فشل استيراد الملف\n\n%s</string>
-    <string name="import_error_not_apkg_extension">لا يحتوي اسم الملف “%s” على لاحقة .apkg أو .colpkg</string>
-    <string name="import_error_load_imported_database">استبدالات قاعدة بيانات أنكي (.anki2) غير مدعومة. الرجاء الاطلاع على الدليل لتعليمات الاستبدال.</string>
-    <string name="import_error_content_provider">لا يمكن استيراد الملف المحدد تلقائيًا بواسطة أنكيدرويد. الرجاء الاطلاع على دليل المستخدم لكيفية استيراد ملفات أنكي يدويًا: \n%s</string>
-    <string name="import_error_copy_to_cache">فشل تخزين الملف مؤقتًا (ربما بسبب نفاذ مساحة التخزين)</string>
-    <string name="import_interrupted">تمت مقاطعة الاستيراد</string>
-    <string name="export_ready_title">جهز التصدير</string>
+    <string name="import_error_handle_exception">فشِل استيراد الملف\n\n%s</string>
+    <string name="import_error_not_apkg_extension">لا يحتوي اسم الملف «%s» على ملحق «.apkg» أو «.colpkg»</string>
+    <string name="import_error_load_imported_database">استبدالات قاعدة بيانات آنكي «.anki2» ليست مدعومة بعد. الرجاء الاطلاع على الدليل حول تعليمات الاستبدال.</string>
+    <string name="import_error_content_provider">لا يمكن استيراد الملف المحدد تلقائيًا بواسطة آنكي درويد. الرجاء الإطلاع على دليل المستخدم لكيفية استيراد ملفات آنكي يدويًا: \n%s</string>
+    <string name="import_error_copy_to_cache">فشل تخزين الملف مؤقتًا (ربما بسبب نفاد مساحة التخزين)</string>
+    <string name="import_interrupted">تمت مقاطعة الاستيراد: لقد أُغلق آنكي درويد</string>
+    <string name="export_ready_title">المصَدَّر جاهز</string>
     <string name="export_send_no_handlers">لا توجد تطبيقات متاحة للتعامل مع apkg. يجري الحفظ&#8230;</string>
-    <string name="export_save_apkg_successful">تم حفظ حزمة أنكي بنجاح</string>
-    <string name="export_save_apkg_unsuccessful">فشل حفظ حزمة أنكي</string>
-    <string name="export_share_title">إرسال حزمة أنكي باستخدام</string>
-    <string name="export_email_subject">بطاقات مصدّرة من قبل أنكيدرويد: %s</string>
-    <string name="export_email_text"><![CDATA[        مرحبًا
+    <string name="export_save_apkg_successful">تم حفظ حزمة آنكي بنجاح</string>
+    <string name="export_save_apkg_unsuccessful">فشل حفظ حزمة آنكي</string>
+    <string name="export_share_title">أرسل حزمة آنكي باستخدام</string>
+    <string name="export_email_subject">بطاقات مُصَدَّرة من قبل آنكي درويد: %s</string>
+    <string name="export_email_text"><![CDATA[        مرحبًا!
         <br/><br/>
-        هذه رزمة بطاقات استذكار Anki مرسلة من AnkiDroid[1].
-        جرب فتحها باستخدام برنامج من برامج أنكي المتوفرة[2] واستمتع بتعلم سهل وفعال!<br/><br/>
-        [1] %1$s<br/>
-        [2] %2$s
+        هذه رزمة بطاقات استذكار آنكي مرسلة من آنكي درويد[١].
+        جرب فتحها باستخدام برنامج من برامج آنكي المتوفرة[٢] واستمتع بتعلم سهل وفعال!<br/><br/>
+        [١] %1$s<br/>
+        [٢] %2$s
         ]]></string>
-    <string name="export_choice_share">مشاركة</string>
-    <string name="export_choice_save_to">حفظ في</string>
-    <string name="export_saving_exported_collection">حفظ الملف المصدّر&#8230;</string>
+    <string name="export_choice_share">شارِك</string>
+    <string name="export_choice_save_to">إحفظ في</string>
+    <string name="export_saving_exported_collection">يتم حفظ الملف المُصَدَّر&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">الخيارات</string>
     <string name="menu__deck_options" maxLength="28">خيارات الرزمة</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">خيارات الدراسة</string>
     <string name="select_tts" maxLength="28">تعيين لغة تحويل النص إلى كلام</string>
     <string name="custom_study" maxLength="28">دراسة مخصصة</string>
     <string name="dyn_deck_desc">هذه رزمة خاصة للدراسة خارج الجدول المعتاد. ستعود البطاقات إلى رزمها الأصلية تلقائيًا بعد مراجعتها. يؤدي حذف هذه الرزمة من قائمة الرزم إلى إعادة كل البطاقات المتبقية إلى رزمها الأصلية.</string>
-    <string name="steps_error">يجب أن تكون الخطوات أعداد أكبر من 0</string>
-    <string name="steps_min_error">يلزم خطوة واحدة على الأقل</string>
-    <string name="tag_editor_add_feedback">انقر “%2$s” لتأكيد إضافة “%1$s”</string>
-    <string name="tag_editor_add_feedback_existing">تم تحديد الوسم الموجود “%1$s”</string>
+    <string name="steps_error">يجب أن تكون الخطوات أعداد أكبر من ٠</string>
+    <string name="steps_min_error">تلزمك خطوة واحدة على الأقل</string>
+    <string name="tag_editor_add_feedback">انقر «%2$s» لتُأكِّد إضافة «%1$s»</string>
+    <string name="tag_editor_add_feedback_existing">تم تحديد الوسم الموجود «%1$s»</string>
     <!-- Time spans -->
     <string name="reminder_title">لا تنسَ أن تدرس اليوم!</string>
     <plurals name="reminder_text">
         <item quantity="zero">%2$d بطاقة بانتظار المراجعة في %1$s</item>
-        <item quantity="one">%2$d بطاقة بانتظار المراجعة في %1$s</item>
-        <item quantity="two">%2$d بطاقة بانتظار المراجعة في %1$s</item>
+        <item quantity="one">بطاقة واحدة بانتظار المراجعة في %1$s</item>
+        <item quantity="two">بطاقتان بانتظار المراجعة في %1$s</item>
         <item quantity="few">%2$d بطاقات بانتظار المراجعة في %1$s</item>
         <item quantity="many">%2$d بطاقة بانتظار المراجعة في %1$s</item>
         <item quantity="other">%2$d بطاقة بانتظار المراجعة في %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
-    <string name="apk_share_error">حدث خطأ أثناء مشاركة ملف apkg</string>
+    <string name="apk_share_error">حدث خطأ أثناء مشاركة ملف «apkg»</string>
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">ليس للنظام تطبيق منصب يمكنه إجراء هذا.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[قد تكون صور الكاميرا كبيرة. قد ترغب في ضغط الصور وتغيير حجمها في مجلد الوسائط]]></string>
@@ -204,74 +204,74 @@
     <string name="web_page_error">خطأ في تحميل الصفحة: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title" maxLength="41">خلفية</string>
-    <string name="choose_an_image" maxLength="41">اختيار صورة</string>
-    <string name="remove_wallpaper_image" maxLength="41">Remove background</string>
+    <string name="background_image_title" maxLength="41">الخلفية</string>
+    <string name="choose_an_image" maxLength="41">اختر صورة</string>
+    <string name="remove_wallpaper_image" maxLength="41">أزل الخلفية</string>
     <string name="remove_background_image">هل تريد إزالة الخلفية؟</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">استعادة الافتراضي</string>
     <string name="reviewer_tts_cloze_spoken_replacement">فارغ</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
-    <string name="white_board_eraser_enabled">Eraser mode activated</string>
-    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string name="white_board_eraser_enabled">تم تفعيل وضع الممحاة</string>
+    <string name="white_board_eraser_disabled">تم تعطيل وضع الممحاة</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">فشل حفظ صورة السبورة. %s</string>
-    <string name="white_board_image_saved">تم حفظ صورة السبورة إلى %s</string>
-    <string name="title_whiteboard_editor" maxLength="28">لون قلم السبورة</string>
-    <string name="user_is_a_robot">تم الكشف عن اختبار تلقائي. إذا كنت بشراً، اتصل بدعم أنكيدرويد</string>
+    <string name="white_board_image_saved">تم حفظ صورة السبورة في %s</string>
+    <string name="title_whiteboard_editor" maxLength="28">محرر السبورة</string>
+    <string name="user_is_a_robot">تم الكشف عن اختبار تلقائي. إن كنت بشرًا، اتصل بدعم آنكي درويد</string>
     <!-- JS api -->
-    <string name="api_version_developer_contact">تستخدم هذه البطاقة ميزات أنكيدرويد غير مدعومة. اتصل بالمطور %1$s، أو اطلع على الويكي. %2$s</string>
+    <string name="api_version_developer_contact">تستخدم هذه البطاقة ميزات آنكي درويد غير مدعومة. اتصل بالمطور %1$s أو اطلع على الويكي. %2$s</string>
     <string name="invalid_json_data">وفرت البطاقة بيانات غير صالحة. %s</string>
-    <string name="valid_js_api_version">إصدار واجهة برمجة جافا سكريبت لأنكيدرويد غير صالح. اتصل بالمطور %s، أو اطلع على الويكي</string>
-    <string name="update_js_api_version">يتوفر تحديث لواجهة برمجة جافا سكريبت لأنكيدرويد. اتصل بالمطور %s، أو اطلع على الويكي</string>
+    <string name="valid_js_api_version">إصدار واجهة برمجة جافا سكريبت لآنكي درويد غير صالح. اتصل بالمطور %s أو اطلع على الويكي</string>
+    <string name="update_js_api_version">يتوفر تحديث لواجهة برمجة جافا سكريبت لآنكي درويد. اتصل بالمطور %s أو اطلع على الويكي</string>
     <string name="reviewer_invalid_api_version_visit_documentation">إطلاع</string>
     <string name="anki_js_error_code">(رمز الخطأ: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug_info">تم النسخ إلى الحافظة</string>
     <string name="about_ankidroid_error_copy_debug_info">حدث خطأ عند نسخ معلومات التصحيح إلى الحافظة</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">فشل تحميل ‘%s’</string>
+    <string name="card_viewer_could_not_find_image">خلل في محتوى البطاقة: فشِل تحميل «%s»</string>
     <!-- Deck Picker -->
-    <string name="search_decks" maxLength="28">بحث في الرزم</string>
-    <string name="ankidroid_init_failed_webview_title">خطأٌ فادح</string>
-    <string name="ankidroid_init_failed_webview">يعتمد أنكيدرويد على عارض الويب الخاص بالنظام وهو غير متوفر. يمكن أن يحدث هذا إذا كان النظام ينصب تحديثات. الرجاء المحاولة مجددًا بعد بضع دقائق.\n\n%s</string>
+    <string name="search_decks" maxLength="28">إبحث في الرزم</string>
+    <string name="ankidroid_init_failed_webview_title">خلل فادح</string>
+    <string name="ankidroid_init_failed_webview">يعتمد آنكي درويد على الويب فيو الخاص بالنظام وهو غير متوفر. يمكن أن يَحدث هذا إذا كان النظام قيد التحديث. الرجاء المحاولة مرةً أخرى بعد بضع دقائق.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">حجم الخط</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">إظهار شريط الأدوات</string>
-    <string name="format_insert_bold">تنسيق كعريض</string>
-    <string name="format_insert_italic">تنسيق كمائل</string>
-    <string name="format_insert_underline">تنسيق كخط سفلي</string>
-    <string name="insert_horizontal_line">إضافة خط أفقي</string>
-    <string name="insert_heading">إضافة عنوان</string>
-    <string name="format_font_size">تغيير لون الخط</string>
-    <string name="insert_mathjax">إضافة معادلة MathJax</string>
+    <string name="format_insert_bold">عَرِّض</string>
+    <string name="format_insert_italic">أَمِل</string>
+    <string name="format_insert_underline">أضف خطًا تحت</string>
+    <string name="insert_horizontal_line">أدرِج خطًا أفقيًا</string>
+    <string name="insert_heading">أدرِج عنوانًا</string>
+    <string name="format_font_size">غيِّر حجم الخط</string>
+    <string name="insert_mathjax">أدرِج معادلة ماث جاكس</string>
     <string name="note_editor_toolbar_icon">نص الزر</string>
     <string name="before_text">HTML قبل التحديد</string>
     <string name="after_text">HTML بعد التحديد</string>
-    <string name="add_toolbar_item">إنشاء عنصر شريط أدوات</string>
-    <string name="edit_toolbar_item">تعديل عنصر شريط الأدوات</string>
-    <string name="toolbar_item_explain_edit_or_remove">أدخل أكواد HTML التي يجب إضافتها قبل النص المحدد وبعده.\n\nاضغط ضغطة مطولة على عنصر بشريط الأدوات لتعديله أو حذفه.</string>
-    <string name="remove_toolbar_item">هل تريد حذف عنصر شريط الأدوات؟</string>
-    <string name="note_editor_image_too_large">الصورة كبيرة جدًا للصق، أضف الصورة يدويًا</string>
+    <string name="add_toolbar_item">أضف أداةً إلى الشريط</string>
+    <string name="edit_toolbar_item">عدِّل الأداة</string>
+    <string name="toolbar_item_explain_edit_or_remove">أدخل الHTML الذي سيُدرج قبل النص المحدد وبعده\n\nإضغط ضغطة مطولة على هذه الأداة في شريط الأدوات لتعديلها أو حذفها</string>
+    <string name="remove_toolbar_item">أتود حذف هذه الأداة؟</string>
+    <string name="note_editor_image_too_large">الصورة كبيرة جدًا للصق، يرجى إدخال الصورة يدويًا</string>
     <string name="note_editor_video_too_large">مِلَفّ الفيديو كبير جدًا، يرجى إدخال الفيديو يدويًا</string>
-    <string name="note_editor_audio_too_large">الملف الصوتي كبير جداً، يرجى إدخال الصوت يدوياً</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">قد تحتاج إلى استخدام iManager للسماح لأنكيدرويد بإضافة اختصارات</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">لا تسمح شاشتك الرئيسية لأنكيدرويد بإضافة اختصارات</string>
-    <string name="create_shortcut_error">حدث خطأ عند إضافة الاختصار: %s</string>
+    <string name="note_editor_audio_too_large">المِلَفّ الصوتي كبير جدًا، يرجى إدخال الصوت يدويًا</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">يجري نسخ أندرويد الإحتياطي. من فضلك حاول مجددًا</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">قد تحتاج إلى استخدام iManager للسماح لآنكي درويد بإضافة اختصارات</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">لا تسمح شاشتك الرئيسية لآنكي درويد بإضافة اختصارات</string>
+    <string name="create_shortcut_error">خلل في إضافة الاختصار: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">ضع الجمل في حروف كبيرة</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">شريط تمرير</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">مرِّر شريط الأدوات</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">أدخل بريدًا إلكترونيًا صالحًا</string>
-    <string name="password_empty">تلزم كلمة مرور</string>
-    <string name="back_pressed_once">اضغط رجوع مجدداً للخروج</string>
+    <string name="password_empty">تلزمك كلمة مرور</string>
+    <string name="back_pressed_once">اضغط رجوع مجددًا للخروج</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">تنزيل الرزمة</string>
-    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Open in Browser</string>
+    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">إفتح في المتصفح</string>
     <string name="try_again">إعادة المحاولة</string>
     <string name="cancel_download">إلغاء التنزيل</string>
     <string name="cancel_download_question_title">هل تريد إلغاء التنزيل؟</string>
@@ -313,48 +313,48 @@
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">ادرس أقل</string>
     <string name="intro_ankidroid_tagline_two">تذكر أكثر</string>
-    <string name="intro_short_ankidroid_explanation">يوفر مجدول بطاقات أنكي الوقت عن طريق تقوية أضعف الذكريات والحفاظ على الأقوى</string>
+    <string name="intro_short_ankidroid_explanation">يوفر مجدول بطاقات آنكي وقتك عن طريق تقويم أضعف ذكرياتك والمحفاظة على أقواها</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">ابدأ</string>
-    <string name="intro_sync_from_ankiweb">مزامنة من أنكي ويب</string>
+    <string name="intro_sync_from_ankiweb">زامِن مع آنكي ويب</string>
     <!-- IntentHandler -->
-    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
+    <string name="app_not_initialized_new">لم يتم تمهيد آنكي درويد بعد. من فضلك إفتح آنكي درويد وحاول مجددًا</string>
     <string name="already_logged_in">تم تسجيل الدخول مسبقًا</string>
     <!-- Deck Creation -->
     <string name="deck_created">كيفية</string>
-    <string name="deck_renamed">Deck renamed</string>
+    <string name="deck_renamed">أُعيد تسمية الرِزمة</string>
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">تم حذف الرزمة. يرجى حذف الاختصار</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">بطاقات</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ملحوظات</string>
-    <string name="toggle_cards_notes">تبديل عرض البطاقات/الملحوظات</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="toggle_cards_notes">بدل عرض البطاقات/الملحوظات</string>
+    <string name="truncate_content_help">إقتطع كل صف في المتصفح لتظهر أول 3 سطور من المحتوى فقط</string>
     <string name="browser_options_dialog_heading">خيارات المتصفح</string>
     <string name="audio_saved">تم حفظ التسجيل</string>
     <string name="deleting_selected_notes">حذف الملحوظات المحددة</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Tap a voice to listen</string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use</string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">أنقر على صوت لتسمعه</string>
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">يجب تنصيب الصوت قبل إستخدامه</string>
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">إستخدم رغمًا عن ذلك</string>
     <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">خطأ في تحويل النص إلى الكلام (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
-    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">Internet</string>
-    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Install</string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Failed to open text to speech settings</string>
+    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">الإنترنت</string>
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">تنصيب</string>
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">فشل فتح إعدادات تحويل النص إلى كلام</string>
     <string name="shared_decks_login_required">الرجاء تسجيل الدخول لتنزيل المزيد من المجموعات</string>
     <string name="deck_description_field_hint">الوصف</string>
     <string name="failed_to_copy">فشل النسخ</string>
     <string name="card_browser_unavailable_when_notes_mode">غير متوفر في وضع الملحوظات</string>
     <plurals name="unbury_cards_feedback">
-        <item quantity="zero">%d cards unburied</item>
-        <item quantity="one">%d card unburied</item>
-        <item quantity="two">%d cards unburied</item>
-        <item quantity="few">%d cards unburied</item>
-        <item quantity="many">%d cards unburied</item>
-        <item quantity="other">%d cards unburied</item>
+        <item quantity="zero">تم إلغاء دفن %d بطاقات</item>
+        <item quantity="one">تم إلغاء دفن بطاقة واحدة</item>
+        <item quantity="two">تم إلغاء دفن بطاقتين</item>
+        <item quantity="few">تم إلغاء دفن %d بطاقات</item>
+        <item quantity="many">تم إلغاء دفن %d بطاقة</item>
+        <item quantity="other">تم إلغاء دفن %d بطاقة</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">تغيير الموضع</string>
-    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">Next</string>
-    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">Back</string>
+    <string name="previewer_next" comment="Name of the next button in the previewer" maxLength="28">التالي</string>
+    <string name="previewer_back" comment="Name of the back button in the previewer" maxLength="28">السابق</string>
     <string name="start_recording">تسجيل</string>
     <string name="stop_recording">إيقاف</string>
     <string name="play_recording">تشغيل</string>
@@ -362,22 +362,22 @@
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">لا يمكنك حذف البطاقات من هذا النوع</string>
     <string name="orphan_note_message">حذف هذا النوع من البطاقات سيترك بعض الملحوظات بدون أي بطاقة.</string>
-    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
+    <string name="voice_not_supported">الصوت غير مدعوم. جرب صوتًا آخر أو نصب محركًا صوتيًا.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
-    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">مُخيِّر الرِزم</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">إحذف الرزم بلا تأكيد</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">محرر الملحوظات</string>
     <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">اختر رزمة</string>
-    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
-    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
-    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
-    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
-    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
-    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
-    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
-    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">إختر نوع الملحوظة</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">محرر الوسوم</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">محرر قوالب البطاقات</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">حرر القالب الأمامي</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">حرر القالب الخلفي</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">حرر التنسيق</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">إنسخ القالب بصيغة ماركداون</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">عدل مظهر المتصفح</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">لم يتم تعيين إجراء رقم %s في نوع الملحوظات هذا. عَيِّنه رجاءًا</string>
+    <string name="directory_inaccessible_info">تعلم أكثر عن كيفية إستعادة الإتاحة هنا %s أو إذهب إلى الإعدادات لتحديث ملف المجموعة.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
-    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">مطلوب تطوير المجدول</string>
 </resources>

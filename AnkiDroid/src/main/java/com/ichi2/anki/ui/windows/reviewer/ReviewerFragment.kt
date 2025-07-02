@@ -17,9 +17,11 @@ package com.ichi2.anki.ui.windows.reviewer
 
 import android.content.Context
 import android.content.Intent
+import android.hardware.SensorManager
 import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableString
+import android.text.style.RelativeSizeSpan
 import android.text.style.UnderlineSpan
 import android.view.KeyEvent
 import android.view.Menu
@@ -39,16 +41,22 @@ import androidx.appcompat.widget.AppCompatImageButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
+import androidx.core.text.buildSpannedString
+import androidx.core.text.inSpans
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.shape.ShapeAppearanceModel
@@ -58,12 +66,15 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.CardMediaPlayer
+import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.cardviewer.TapGestureMode
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuView
+import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.preferences.reviewer.ViewerAction.BURY_CARD
 import com.ichi2.anki.preferences.reviewer.ViewerAction.BURY_MENU
 import com.ichi2.anki.preferences.reviewer.ViewerAction.BURY_NOTE
@@ -77,6 +88,8 @@ import com.ichi2.anki.preferences.reviewer.ViewerAction.UNDO
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
 import com.ichi2.anki.previewer.stdHtml
+import com.ichi2.anki.reviewer.BindingMap
+import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.FrameStyle
@@ -85,6 +98,7 @@ import com.ichi2.anki.settings.enums.ToolbarPosition
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.collectLatestIn
 import com.ichi2.anki.utils.ext.menu
@@ -94,8 +108,11 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
 import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.libanki.sched.Counts
+import com.ichi2.libanki.sched.Ease
 import com.ichi2.themes.Themes
 import com.ichi2.utils.dp
+import com.ichi2.utils.setPaddedIcon
+import com.squareup.seismic.ShakeDetector
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -108,16 +125,18 @@ class ReviewerFragment :
     BaseSnackbarBuilderProvider,
     ActionMenuView.OnMenuItemClickListener,
     DispatchKeyEventListener,
-    TagsDialogListener {
+    TagsDialogListener,
+    ShakeDetector.Listener {
     override val viewModel: ReviewerViewModel by viewModels {
         val repository = StudyScreenRepository(sharedPrefs())
         ReviewerViewModel.factory(CardMediaPlayer(), getServerPort(), repository)
     }
 
-    override val webView: WebView
-        get() = requireView().findViewById(R.id.webview)
-
+    override val webView: WebView get() = requireView().findViewById(R.id.webview)
     private val timer: AnswerTimer? get() = view?.findViewById(R.id.timer)
+    private lateinit var bindingMap: BindingMap<ReviewerBinding, ViewerAction>
+    private var shakeDetector: ShakeDetector? = null
+    private val sensorManager get() = ContextCompat.getSystemService(requireContext(), SensorManager::class.java)
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
         val fragmentView = this@ReviewerFragment.view
@@ -150,6 +169,7 @@ class ReviewerFragment :
             if (viewModel.answerTimerStatusFlow.value is AnswerTimerStatus.Running) {
                 timer?.resume()
             }
+            shakeDetector?.start(sensorManager, SensorManager.SENSOR_DELAY_UI)
         }
     }
 
@@ -158,6 +178,7 @@ class ReviewerFragment :
         if (!requireActivity().isChangingConfigurations) {
             viewModel.stopAutoAdvance()
             timer?.stop()
+            shakeDetector?.stop()
         }
     }
 
@@ -172,14 +193,11 @@ class ReviewerFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.setOnGenericMotionListener { _, event ->
-            viewModel.onGenericMotionEvent(event)
-        }
-
         view.findViewById<AppCompatImageButton>(R.id.back_button).setOnClickListener {
             requireActivity().finish()
         }
 
+        setupBindings(view)
         setupImmersiveMode(view)
         setupFrame(view)
         setupTypeAnswer(view)
@@ -236,13 +254,12 @@ class ReviewerFragment :
     }
 
     private fun setupTypeAnswer(view: View) {
-        // TODO keep text after configuration changes
         val typeAnswerContainer = view.findViewById<MaterialCardView>(R.id.type_answer_container)
         val typeAnswerEditText =
             view.findViewById<TextInputEditText>(R.id.type_answer_edit_text).apply {
                 setOnEditorActionListener { editTextView, actionId, _ ->
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
-                        viewModel.onShowAnswer(editTextView.text.toString())
+                        viewModel.onShowAnswer()
                         return@setOnEditorActionListener true
                     }
                     false
@@ -255,22 +272,35 @@ class ReviewerFragment :
                         insetsController.hide(WindowInsetsCompat.Type.ime())
                     }
                 }
+                addTextChangedListener { editable ->
+                    viewModel.typedAnswer = editable?.toString() ?: ""
+                }
             }
         val autoFocusTypeAnswer = Prefs.autoFocusTypeAnswer
-        viewModel.typeAnswerFlow.collectIn(lifecycleScope) { typeInAnswer ->
-            typeAnswerEditText.text = null
-            if (typeInAnswer == null) {
-                typeAnswerContainer.isVisible = false
-                return@collectIn
-            }
-            typeAnswerContainer.isVisible = true
-            typeAnswerEditText.apply {
-                if (imeHintLocales != typeInAnswer.imeHintLocales) {
-                    imeHintLocales = typeInAnswer.imeHintLocales
-                    context?.getSystemService<InputMethodManager>()?.restartInput(this)
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.typeAnswerFlow.collect { typeInAnswer ->
+                    if (typeInAnswer == null) {
+                        typeAnswerContainer.isVisible = false
+                        return@collect
+                    }
+                    typeAnswerContainer.isVisible = true
+                    typeAnswerEditText.apply {
+                        if (imeHintLocales != typeInAnswer.imeHintLocales) {
+                            imeHintLocales = typeInAnswer.imeHintLocales
+                            context?.getSystemService<InputMethodManager>()?.restartInput(this)
+                        }
+                        if (autoFocusTypeAnswer) {
+                            requestFocus()
+                        }
+                    }
                 }
-                if (autoFocusTypeAnswer) {
-                    requestFocus()
+            }
+        }
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.clearTypeAnswerFlow.collect {
+                    typeAnswerEditText.text = null
                 }
             }
         }
@@ -282,13 +312,34 @@ class ReviewerFragment :
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        if (view?.findViewById<TextInputEditText>(R.id.type_answer_edit_text)?.isFocused == true) {
+        if (event.action != KeyEvent.ACTION_DOWN || view?.findViewById<TextInputEditText>(R.id.type_answer_edit_text)?.isFocused == true) {
             return false
         }
-        return viewModel.dispatchKeyEvent(event)
+        return bindingMap.onKeyDown(event)
     }
 
-    override fun onMenuItemClick(item: MenuItem): Boolean = viewModel.onMenuItemClick(item)
+    override fun onMenuItemClick(item: MenuItem): Boolean {
+        Timber.v("ReviewerFragment::onMenuItemClick %s", item)
+        if (item.hasSubMenu()) return false
+        val action = ViewerAction.fromId(item.itemId)
+        viewModel.executeAction(action)
+        return true
+    }
+
+    override fun hearShake() {
+        bindingMap.onGesture(Gesture.SHAKE)
+    }
+
+    private fun setupBindings(view: View) {
+        bindingMap = BindingMap(sharedPrefs(), ViewerAction.entries, viewModel)
+        view.setOnGenericMotionListener { _, event ->
+            bindingMap.onGenericMotionEvent(event)
+        }
+        if (bindingMap.isBound(Gesture.SHAKE)) {
+            shakeDetector = ShakeDetector(this)
+            shakeDetector?.start(sensorManager, SensorManager.SENSOR_DELAY_UI)
+        }
+    }
 
     private fun setupAnswerButtons(view: View) {
         val prefs = sharedPrefs()
@@ -318,24 +369,35 @@ class ReviewerFragment :
             nextTime: String?,
         ) {
             val titleString = context.getString(title)
-            text = ReviewerViewModel.buildAnswerButtonText(titleString, nextTime)
+            text =
+                if (nextTime != null) {
+                    buildSpannedString {
+                        inSpans(RelativeSizeSpan(0.8F)) {
+                            append(nextTime)
+                        }
+                        append("\n")
+                        append(titleString)
+                    }
+                } else {
+                    titleString
+                }
         }
 
         val againButton =
             view.findViewById<MaterialButton>(R.id.again_button).apply {
-                setOnClickListener { viewModel.answerAgain() }
+                setOnClickListener { viewModel.answerCard(Ease.AGAIN) }
             }
         val hardButton =
             view.findViewById<MaterialButton>(R.id.hard_button).apply {
-                setOnClickListener { viewModel.answerHard() }
+                setOnClickListener { viewModel.answerCard(Ease.HARD) }
             }
         val goodButton =
             view.findViewById<MaterialButton>(R.id.good_button).apply {
-                setOnClickListener { viewModel.answerGood() }
+                setOnClickListener { viewModel.answerCard(Ease.GOOD) }
             }
         val easyButton =
             view.findViewById<MaterialButton>(R.id.easy_button).apply {
-                setOnClickListener { viewModel.answerEasy() }
+                setOnClickListener { viewModel.answerCard(Ease.EASY) }
             }
 
         viewModel.answerButtonsNextTimeFlow
@@ -349,11 +411,7 @@ class ReviewerFragment :
 
         val showAnswerButton =
             view.findViewById<MaterialButton>(R.id.show_answer).apply {
-                val editText = view.findViewById<TextInputEditText>(R.id.type_answer_edit_text)
-                setOnClickListener {
-                    val typedAnswer = editText?.text?.toString()
-                    viewModel.onShowAnswer(typedAnswer = typedAnswer)
-                }
+                setOnClickListener { viewModel.onShowAnswer() }
             }
         val answerButtonsLayout = view.findViewById<LinearLayout>(R.id.answer_buttons)
 
@@ -404,6 +462,14 @@ class ReviewerFragment :
                 spannableString.setSpan(UnderlineSpan(), 0, currentCount.text.length, 0)
                 currentCount.text = spannableString
             }
+
+        lifecycleScope.launch {
+            if (!CollectionPreferences.getShowRemainingDueCounts()) {
+                newCount.isVisible = false
+                learnCount.isVisible = false
+                reviewCount.isVisible = false
+            }
+        }
     }
 
     private fun setupBury(menu: ReviewerMenuView) {
@@ -454,24 +520,24 @@ class ReviewerFragment :
         }
         menu.setOnMenuItemClickListener(this)
 
+        setupBury(menu)
+        setupSuspend(menu)
+
         viewModel.flagFlow
             .flowWithLifecycle(lifecycle)
             .collectLatestIn(lifecycleScope) { flagCode ->
-                menu.findItem(FLAG_MENU.menuId)?.setIcon(flagCode.drawableRes)
+                menu.findItem(FLAG_MENU.menuId)?.setPaddedIcon(requireContext(), flagCode.drawableRes)
             }
-
-        setupBury(menu)
-        setupSuspend(menu)
 
         val markItem = menu.findItem(MARK.menuId)
         viewModel.isMarkedFlow
             .flowWithLifecycle(lifecycle)
             .collectLatestIn(lifecycleScope) { isMarked ->
                 if (isMarked) {
-                    markItem?.setIcon(R.drawable.ic_star)
+                    markItem?.setPaddedIcon(requireContext(), R.drawable.ic_star)
                     markItem?.setTitle(R.string.menu_unmark_note)
                 } else {
-                    markItem?.setIcon(R.drawable.ic_star_border_white)
+                    markItem?.setPaddedIcon(requireContext(), R.drawable.ic_star_border_white)
                     markItem?.setTitle(R.string.menu_mark_note)
                 }
             }
@@ -609,6 +675,7 @@ class ReviewerFragment :
         private var scale: Float = if (!isRobolectric) webView.scale else 1F
         private var isScrolling: Boolean = false
         private var isScrollingJob: Job? = null
+        private val gestureMode = TapGestureMode.fromPreference(sharedPrefs())
 
         init {
             webView.setOnScrollChangeListener { _, _, _, _, _ ->
@@ -625,8 +692,9 @@ class ReviewerFragment :
         override fun handleUrl(url: Uri): Boolean {
             return when (url.scheme) {
                 "gesture" -> {
-                    val gesture = GestureParser.parse(url, isScrolling, scale, webView) ?: return true
-                    viewModel.onGesture(gesture)
+                    val gesture = GestureParser.parse(url, isScrolling, scale, webView, gestureMode) ?: return true
+                    Timber.v("ReviewerFragment::onGesture %s", gesture)
+                    bindingMap.onGesture(gesture)
                     true
                 }
                 else -> super.handleUrl(url)

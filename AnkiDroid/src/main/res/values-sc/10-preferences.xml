@@ -379,7 +379,7 @@
     <string name="toolbar_actions" maxLength="41">Toolbar actions</string>
     <string name="toolbar_position" maxLength="41">Toolbar position</string>
     <string name="new_study_screen" maxLength="41">New study screen</string>
-    <string name="new_study_screen_summary">Improved study screen that will succeed the current one. Available for testing and feedback</string>
+    <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Aberi sas impostatziones</string>
 </resources>
