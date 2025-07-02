@@ -23,8 +23,10 @@ import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.ext.update
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combineTransform
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -40,6 +42,8 @@ class EditDeckDescriptionDialogViewModel(
         set(value) {
             stateHandle[STATE_USER_MADE_CHANGES] = value
         }
+
+    private lateinit var initialDialogState: DeckDescriptionState
 
     lateinit var windowTitle: String
 
@@ -77,13 +81,18 @@ class EditDeckDescriptionDialogViewModel(
 
     val flowOfInitCompleted = MutableStateFlow(false)
 
+    val flowOfHasChanges: Flow<Boolean> =
+        combineTransform<Any, Boolean>(flowOfDescription, flowOfFormatAsMarkdown, flowOfInitCompleted) {
+            emit(hasChanges())
+        }
+
     init {
         viewModelScope.launch {
             windowTitle = withCol { decks.getLegacy(deckId)!!.name }
+            initialDialogState = queryDescriptionState()
             if (!userHasMadeChanges) {
-                val state = queryDescriptionState()
-                description = state.description
-                formatAsMarkdown = state.formatAsMarkdown
+                description = initialDialogState.description
+                formatAsMarkdown = initialDialogState.formatAsMarkdown
                 userHasMadeChanges = false
             }
             flowOfInitCompleted.emit(true)
@@ -92,7 +101,7 @@ class EditDeckDescriptionDialogViewModel(
 
     fun onBackRequested() =
         viewModelScope.launch {
-            if (queryDescriptionState() == dialogState) {
+            if (!hasChanges()) {
                 closeWithoutSaving()
                 return@launch
             }
@@ -132,6 +141,12 @@ class EditDeckDescriptionDialogViewModel(
                 this.descriptionAsMarkdown = dialogState.formatAsMarkdown
             }
         }
+    }
+
+    private fun hasChanges(): Boolean {
+        // this can be triggered via the back dispatcher
+        if (!::initialDialogState.isInitialized) return false
+        return initialDialogState != dialogState
     }
 
     /**

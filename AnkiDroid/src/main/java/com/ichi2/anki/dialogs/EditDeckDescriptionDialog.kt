@@ -18,6 +18,7 @@ package com.ichi2.anki.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
@@ -51,6 +52,9 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
     private lateinit var formatAsMarkdownInput: CheckBox
 
     private lateinit var toolbar: MaterialToolbar
+
+    private val saveMenuItem: MenuItem
+        get() = toolbar.menu.findItem(R.id.action_save)
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         super.onCreateDialog(savedInstanceState).also {
@@ -146,6 +150,12 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
                 DiscardChangesDialog.showDialog(requireContext()) {
                     viewModel.closeWithoutSaving()
                 }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.flowOfHasChanges.collect {
+                saveMenuItem.isEnabled = it
             }
         }
     }
