@@ -29,14 +29,13 @@ import com.ichi2.anki.R
 import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.utils.ext.description
 import com.ichi2.anki.utils.ext.update
 import com.ichi2.themes.Themes
 import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
 import timber.log.Timber
 
 /**
- * Allows a user to edit the [deck description][description]
+ * Allows a user to edit the [deck description][com.ichi2.anki.libanki.Deck.description]
  *
  * This is visible on [StudyOptionsFragment]
  */
