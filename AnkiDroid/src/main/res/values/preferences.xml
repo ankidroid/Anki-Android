@@ -207,6 +207,7 @@
     <string name="pref_cat_wip_key">workInProgressDevOptions</string>
     <string name="reviewer_port_pref_key">reviewerPort</string>
     <string name="use_fixed_port_pref_key">useFixedPort</string>
+    <string name="dev_card_browser_fragmented">cardBrowserFragmented</string>
     <!-- Developer options > Create fake notes -->
     <string name="pref_fill_default_deck_number_key">FillDefaultNumberDeck</string>
     <string name="pref_fill_default_deck_key">FillDefaultDeck</string>

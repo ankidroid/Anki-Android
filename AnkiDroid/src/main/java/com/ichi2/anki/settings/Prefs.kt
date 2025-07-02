@@ -204,4 +204,7 @@ object Prefs {
     var isDevOptionsEnabled: Boolean
         get() = getBoolean(R.string.dev_options_enabled_by_user_key, false) || BuildConfig.DEBUG
         set(value) = putBoolean(R.string.dev_options_enabled_by_user_key, value)
+
+    val devIsCardBrowserFragmented: Boolean
+        get() = getBoolean(R.string.dev_card_browser_fragmented, false)
 }

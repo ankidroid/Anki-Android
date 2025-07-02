@@ -100,6 +100,7 @@ import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.scheduling.registerOnForgetHandler
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.getCurrentDialogFragment
@@ -384,7 +385,9 @@ open class CardBrowser :
          * [fragmented] will be true if the view size is large otherwise false
          */
         // TODO: Consider refactoring by storing noteEditorFrame and similar views in a sealed class (e.g., FragmentAccessor).
-        val fragmented = noteEditorFrame?.visibility == View.VISIBLE
+        val fragmented =
+            Prefs.devIsCardBrowserFragmented &&
+                noteEditorFrame?.visibility == View.VISIBLE
         Timber.i("Using split Browser: %b", fragmented)
 
         // must be called once we have an accessible collection
