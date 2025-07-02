@@ -1288,7 +1288,13 @@ open class CardBrowser :
                 return true
             }
         }
-        return fragmented && fragment!!.onMenuItemSelected(item)
+        if (fragment?.onMenuItemSelected(item) == true) {
+            return true
+        }
+        if (fragment == null) {
+            Timber.w("Unexpected onOptionsItemSelected call: %s", item.itemId)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun showCreateFilteredDeckDialog() {
