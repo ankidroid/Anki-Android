@@ -23,6 +23,8 @@ import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.Companion.ARG_D
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.Companion.STATE_DESCRIPTION
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.Companion.STATE_FORMAT_AS_MARKDOWN
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.Companion.STATE_USER_MADE_CHANGES
+import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.DismissType.ClosedWithoutSaving
+import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.DismissType.Saved
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.testutils.JvmTest
@@ -75,7 +77,7 @@ class EditDeckDescriptionDialogViewModelTest : JvmTest() {
         runViewModelTest {
             flowOfDismissDialog.test {
                 onBackRequested()
-                assertThat("dialog should be dismissed", expectMostRecentItem(), equalTo(true))
+                assertThat("dialog should be dismissed", expectMostRecentItem(), equalTo(ClosedWithoutSaving))
             }
         }
 
@@ -85,7 +87,7 @@ class EditDeckDescriptionDialogViewModelTest : JvmTest() {
             flowOfDismissDialog.test {
                 description = "foo"
                 onBackRequested()
-                assertThat("dialog should not be dismissed", expectMostRecentItem(), equalTo(false))
+                assertThat("dialog should not be dismissed", expectMostRecentItem(), equalTo(null))
             }
         }
 
@@ -105,7 +107,17 @@ class EditDeckDescriptionDialogViewModelTest : JvmTest() {
             flowOfDismissDialog.test {
                 description = "foo"
                 closeWithoutSaving()
-                assertThat("dialog should be dismissed", expectMostRecentItem(), equalTo(true))
+                assertThat("dialog should be dismissed", expectMostRecentItem(), equalTo(ClosedWithoutSaving))
+            }
+        }
+
+    @Test
+    fun `dialog is dismissed as saved`() =
+        runViewModelTest {
+            flowOfDismissDialog.test {
+                description = "foo"
+                saveAndExit()
+                assertThat("dialog should be dismissed", expectMostRecentItem(), equalTo(Saved))
             }
         }
 
