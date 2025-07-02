@@ -50,7 +50,6 @@ import com.ichi2.anki.reviewreminders.ScheduleReminders
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
-import com.ichi2.anki.utils.ext.description
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
 import kotlinx.coroutines.Job
