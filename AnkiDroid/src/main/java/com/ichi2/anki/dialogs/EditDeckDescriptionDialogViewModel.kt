@@ -74,8 +74,7 @@ class EditDeckDescriptionDialogViewModel(
                 formatAsMarkdown = this.formatAsMarkdown,
             )
 
-    // TODO: make this a unit
-    val flowOfDismissDialog = MutableStateFlow(false)
+    val flowOfDismissDialog = MutableStateFlow<DismissType?>(null)
 
     val flowOfShowDiscardChanges = MutableSharedFlow<Unit>()
 
@@ -113,14 +112,14 @@ class EditDeckDescriptionDialogViewModel(
     fun closeWithoutSaving() =
         viewModelScope.launch {
             Timber.i("Closing dialog without saving")
-            flowOfDismissDialog.emit(true)
+            flowOfDismissDialog.emit(DismissType.ClosedWithoutSaving)
         }
 
     fun saveAndExit() =
         viewModelScope.launch {
             save()
             Timber.i("closing deck description dialog")
-            flowOfDismissDialog.emit(true)
+            flowOfDismissDialog.emit(DismissType.Saved)
         }
 
     private suspend fun queryDescriptionState() =
@@ -161,6 +160,13 @@ class EditDeckDescriptionDialogViewModel(
         val description: String,
         val formatAsMarkdown: Boolean,
     )
+
+    /** How the Dialog was dismissed */
+    sealed class DismissType {
+        data object Saved : DismissType()
+
+        data object ClosedWithoutSaving : DismissType()
+    }
 
     companion object {
         const val ARG_DECK_ID = "deckId"
