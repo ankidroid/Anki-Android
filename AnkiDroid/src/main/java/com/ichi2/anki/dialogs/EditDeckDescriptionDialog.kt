@@ -36,6 +36,7 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.isCheckedState
 import com.ichi2.anki.ui.textOf
 import com.ichi2.anki.utils.ext.update
@@ -233,6 +234,7 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
                 this.markdownDescription = toSave.formatAsMarkdown
             }
         }
+        showSnackbar(R.string.deck_description_saved)
     }
 
     /**
