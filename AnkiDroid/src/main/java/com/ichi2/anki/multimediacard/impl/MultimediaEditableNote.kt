@@ -19,18 +19,42 @@
 
 package com.ichi2.anki.multimediacard.impl
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.IField
+import com.ichi2.anki.utils.ext.readSerializableList
+import com.ichi2.anki.utils.ext.writeSerializableList
+import com.ichi2.compat.readBooleanCompat
+import com.ichi2.compat.writeBooleanCompat
 import com.ichi2.libanki.NoteTypeId
+import kotlinx.parcelize.Parceler
+import kotlinx.parcelize.Parcelize
 import org.acra.util.IOUtils
-import java.util.ArrayList
 
 /**
  * Implementation of the editable note.
- * <p>
+ *
  * Has to be translate to and from anki db format.
+ *
+ * All variables must be handled manually by Parcelable
  */
-class MultimediaEditableNote : IMultimediaEditableNote {
+@Parcelize
+class MultimediaEditableNote() :
+    IMultimediaEditableNote,
+    Parcelable {
+    internal constructor(
+        isModified: Boolean,
+        noteTypeId: Long,
+        initialFields: List<IField?>?,
+        fields: List<IField?>?,
+    ) : this() {
+        this.isModified = isModified
+        this.noteTypeId = noteTypeId
+        this.initialFields = initialFields?.let { ArrayList(it) }
+        this.fields = fields?.let { ArrayList(it) }
+    }
+
     override var isModified = false
         private set
     private var fields: ArrayList<IField?>? = null
@@ -106,4 +130,24 @@ class MultimediaEditableNote : IMultimediaEditableNote {
 
     val isEmpty: Boolean
         get() = fields.isNullOrEmpty()
+
+    companion object : Parceler<MultimediaEditableNote> {
+        override fun create(parcel: Parcel): MultimediaEditableNote =
+            MultimediaEditableNote(
+                isModified = parcel.readBooleanCompat(),
+                noteTypeId = parcel.readLong(),
+                initialFields = parcel.readSerializableList<IField>(),
+                fields = parcel.readSerializableList<IField>(),
+            )
+
+        override fun MultimediaEditableNote.write(
+            parcel: Parcel,
+            flags: Int,
+        ) {
+            parcel.writeBooleanCompat(isModified)
+            parcel.writeLong(noteTypeId)
+            parcel.writeSerializableList<IField>(initialFields)
+            parcel.writeSerializableList<IField>(fields)
+        }
+    }
 }
