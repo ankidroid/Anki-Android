@@ -435,11 +435,38 @@ class ReviewerViewModel(
     fun answerCard(ease: Ease) {
         Timber.v("ReviewerViewModel::answerCard")
         launchCatchingIO {
-            queueState.await()?.let {
-                undoableOp(this) { sched.answerCard(it, ease) }
-                updateCurrentCard()
+            val state = queueState.await() ?: return@launchCatchingIO
+            val card = currentCard.await()
+            val answer =
+                withCol {
+                    sched.buildAnswer(
+                        card = card,
+                        states = state.states,
+                        ease,
+                    )
+                }
+
+            undoableOp { sched.answerCard(answer) }
+
+            val wasLeech = withCol { sched.stateIsLeech(answer.newState) }
+            if (wasLeech) {
+                withCol { card.load(this) }
+                val isSuspended = card.queue.code < 0
+                onLeech(isSuspended)
             }
+            updateCurrentCard()
         }
+    }
+
+    // https://github.com/ankitects/anki/blob/da907053460e2b78c31199f97bbea3cf3600f0c2/qt/aqt/reviewer.py#L954
+    private suspend fun onLeech(isSuspended: Boolean) {
+        Timber.i("ReviewerViewModel::onLeech (isSuspended = %b)", isSuspended)
+        val message = StringBuilder(CollectionManager.TR.studyingCardWasALeech())
+        if (isSuspended) {
+            message.append(" ")
+            message.append(CollectionManager.TR.studyingItHasBeenSuspended())
+        }
+        actionFeedbackFlow.emit(message.toString())
     }
 
     private suspend fun loadAndPlayMedia(side: CardSide) {
