@@ -144,7 +144,7 @@ open class CardTemplateEditor :
      * The inner HashMap's key is the editor window ID (e.g., R.id.front_edit).
      * The value is the cursor position within that editor window.
      */
-    private var tabToCursorPosition: HashMap<Int, HashMap<Int, Int>> = HashMap()
+    private var tabToCursorPositions: HashMap<Int, HashMap<Int, Int>> = HashMap()
 
     // the current editor view among front/style/back
     private var tabToViewId: HashMap<Int, Int?> = HashMap()
@@ -192,13 +192,13 @@ open class CardTemplateEditor :
             noteId = intent.getLongExtra(EDITOR_NOTE_ID, -1L)
             // get id for currently edited template (optional)
             startingOrdId = intent.getIntExtra("ordId", -1)
-            tabToCursorPosition[0] = hashMapOf()
+            tabToCursorPositions[0] = hashMapOf()
             tabToViewId[0] = R.id.front_edit
         } else {
             noteTypeId = savedInstanceState.getLong(EDITOR_NOTE_TYPE_ID)
             noteId = savedInstanceState.getLong(EDITOR_NOTE_ID)
             startingOrdId = savedInstanceState.getInt(EDITOR_START_ORD_ID)
-            tabToCursorPosition = savedInstanceState.getSerializableCompat<HashMap<Int, HashMap<Int, Int>>>(TAB_TO_CURSOR_POSITION_KEY)!!
+            tabToCursorPositions = savedInstanceState.getSerializableCompat<HashMap<Int, HashMap<Int, Int>>>(TAB_TO_CURSOR_POSITION_KEY)!!
             tabToViewId = savedInstanceState.getSerializableCompat<HashMap<Int, Int?>>(TAB_TO_VIEW_ID)!!
             tempNoteType = CardTemplateNotetype.fromBundle(savedInstanceState)
         }
@@ -297,7 +297,7 @@ open class CardTemplateEditor :
             putLong(EDITOR_NOTE_ID, noteId)
             putInt(EDITOR_START_ORD_ID, startingOrdId)
             putSerializable(TAB_TO_VIEW_ID, tabToViewId)
-            putSerializable(TAB_TO_CURSOR_POSITION_KEY, tabToCursorPosition)
+            putSerializable(TAB_TO_CURSOR_POSITION_KEY, tabToCursorPositions)
             super.onSaveInstanceState(this)
         }
     }
@@ -552,8 +552,8 @@ open class CardTemplateEditor :
                     return mainView
                 }
             // initializing the hash map which stores the cursor position for each editor window
-            if (templateEditor.tabToCursorPosition[cardIndex] == null) {
-                templateEditor.tabToCursorPosition[cardIndex] = hashMapOf()
+            if (templateEditor.tabToCursorPositions[cardIndex] == null) {
+                templateEditor.tabToCursorPositions[cardIndex] = hashMapOf()
             }
 
             editorEditText = mainView.findViewById(R.id.editor_editText)
@@ -632,7 +632,7 @@ open class CardTemplateEditor :
                          * This condition is necessary to ensure that the cursor position is updated correctly.
                          */
                         if (editorEditText.selectionStart != 0) {
-                            templateEditor.tabToCursorPosition[cardIndex]?.set(
+                            templateEditor.tabToCursorPositions[cardIndex]?.set(
                                 currentEditorViewId,
                                 editorEditText.selectionStart,
                             )
@@ -805,7 +805,7 @@ open class CardTemplateEditor :
             currentEditorViewId = viewId
             editorEditText.setText(editorContent)
             editorEditText.requestFocus()
-            editorEditText.setSelection(templateEditor.tabToCursorPosition[cardId]?.get(currentEditorViewId) ?: 0)
+            editorEditText.setSelection(templateEditor.tabToCursorPositions[cardId]?.get(currentEditorViewId) ?: 0)
         }
 
         override fun onViewCreated(
