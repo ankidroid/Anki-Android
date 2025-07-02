@@ -20,10 +20,14 @@ import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import android.widget.ImageButton
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.StudyOptionsFragment
@@ -31,6 +35,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.ext.update
 import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
+import com.ichi2.utils.show
 import timber.log.Timber
 
 /**
@@ -42,13 +47,34 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
     private val deckId: DeckId
         get() = requireArguments().getLong(ARG_DECK_ID)
 
-    private lateinit var deckDescriptionInput: TextInputEditText
+    private val deckDescriptionInput: TextInputEditText
+        get() = requireView().findViewById(R.id.deck_description_input)
 
-    private var currentDescription
+    private val formatAsMarkdownInput: CheckBox
+        get() = requireView().findViewById(R.id.format_as_markdown)
+
+    // state / user inputs
+
+    /** @see [com.ichi2.libanki.Deck.description] */
+    private var description: String
         get() = deckDescriptionInput.text.toString()
+        set(value) = deckDescriptionInput.setText(value)
+
+    /** @see [com.ichi2.libanki.Deck.markdownDescription] */
+    private var formatAsMarkdown: Boolean
+        get() = formatAsMarkdownInput.isChecked
         set(value) {
-            deckDescriptionInput.setText(value)
+            formatAsMarkdownInput.isChecked = value
         }
+
+    // derived state
+
+    private val currentDialogState: DeckDescriptionState
+        get() =
+            DeckDescriptionState(
+                description = this.description,
+                formatAsMarkdown = this.formatAsMarkdown,
+            )
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         super.onCreateDialog(savedInstanceState).also {
@@ -60,11 +86,28 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        deckDescriptionInput = view.findViewById(R.id.deck_description_input)
 
         // load initial state
         launchCatchingTask {
-            currentDescription = getDescription()
+            val dialog = this@EditDeckDescriptionDialog
+            queryDescriptionState().let { data ->
+                dialog.description = data.description
+                dialog.formatAsMarkdown = data.formatAsMarkdown
+            }
+        }
+
+        // setup 'Format as Markdown' help
+        view.findViewById<ImageButton>(R.id.markdown_formatting_help).apply {
+            contentDescription =
+                getString(R.string.help_button_content_description, getString(R.string.format_deck_description_as_markdown))
+            setOnClickListener {
+                MaterialAlertDialogBuilder(requireContext()).show {
+                    setTitle(formatAsMarkdownInput.text)
+                    setIcon(R.drawable.ic_help_black_24dp)
+                    // FIXME: the upstream string unexpectedly contains newlines
+                    setMessage(TR.deckConfigDescriptionNewHandlingHint().replace("\n", " ").replace("  ", " "))
+                }
+            }
         }
 
         // setup App Bar
@@ -102,7 +145,7 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
 
     private fun saveAndExit() =
         launchCatchingTask {
-            setDescription(currentDescription)
+            save()
             Timber.i("closing deck description dialog")
             dismiss()
         }
@@ -114,7 +157,7 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
                 dismiss()
             }
 
-            if (getDescription() == currentDescription) {
+            if (queryDescriptionState() == currentDialogState) {
                 closeWithoutSaving()
                 return@launchCatchingTask
             }
@@ -125,12 +168,39 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
             }
         }
 
-    private suspend fun getDescription() = withCol { decks.get(deckId)!!.description }
+    private suspend fun queryDescriptionState() =
+        withCol {
+            decks.get(deckId)!!.let {
+                DeckDescriptionState(
+                    description = it.description,
+                    formatAsMarkdown = it.markdownDescription,
+                )
+            }
+        }
 
-    private suspend fun setDescription(value: String) {
+    private suspend fun save() {
         Timber.i("updating deck description")
-        withCol { decks.update(deckId) { description = value } }
+        val toSave = currentDialogState
+        withCol {
+            decks.update(deckId) {
+                this.description = toSave.description
+                this.markdownDescription = toSave.formatAsMarkdown
+            }
+        }
     }
+
+    /**
+     * State for [EditDeckDescriptionDialog].
+     *
+     * Simplifies detecting user changes
+     *
+     * @param description see [com.ichi2.libanki.Deck.description]
+     * @param formatAsMarkdown see [com.ichi2.libanki.Deck.markdownDescription]
+     */
+    private data class DeckDescriptionState(
+        val description: String,
+        val formatAsMarkdown: Boolean,
+    )
 
     companion object {
         private const val ARG_DECK_ID = "deckId"
