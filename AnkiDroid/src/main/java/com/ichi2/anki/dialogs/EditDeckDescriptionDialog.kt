@@ -17,7 +17,6 @@
 package com.ichi2.anki.dialogs
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
@@ -30,7 +29,6 @@ import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.ext.update
-import com.ichi2.themes.Themes
 import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
 import timber.log.Timber
 
@@ -39,7 +37,7 @@ import timber.log.Timber
  *
  * This is visible on [StudyOptionsFragment]
  */
-class EditDeckDescriptionDialog : DialogFragment() {
+class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_description) {
     private val deckId: DeckId
         get() = requireArguments().getLong(ARG_DECK_ID)
 
@@ -51,36 +49,40 @@ class EditDeckDescriptionDialog : DialogFragment() {
             deckDescriptionInput.setText(value)
         }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+    override fun onViewCreated(
+        view: View,
         savedInstanceState: Bundle?,
-    ): View {
-        Themes.setTheme(requireContext())
-        return inflater.inflate(R.layout.dialog_deck_description, null).apply {
-            deckDescriptionInput = this.findViewById(R.id.deck_description_input)
-            launchCatchingTask {
-                currentDescription = getDescription()
-            }
-            findViewById<MaterialToolbar>(R.id.topAppBar)
-                .apply {
-                    setNavigationOnClickListener {
-                        onBack()
-                    }
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+        deckDescriptionInput = view.findViewById(R.id.deck_description_input)
 
-                    setOnMenuItemClickListener { menuItem ->
-                        if (menuItem.itemId == R.id.action_save) {
-                            saveAndExit()
-                            true
-                        } else {
-                            false
-                        }
-                    }
-                }.also { toolbar ->
-                    launchCatchingTask { toolbar.title = withCol { decks.getLegacy(deckId)!!.name } }
-                }
-            setFocusAndOpenKeyboard(deckDescriptionInput) { deckDescriptionInput.setSelection(deckDescriptionInput.text!!.length) }
+        // load initial state
+        launchCatchingTask {
+            currentDescription = getDescription()
         }
+
+        // setup App Bar
+        view
+            .findViewById<MaterialToolbar>(R.id.topAppBar)
+            .apply {
+                setNavigationOnClickListener {
+                    onBack()
+                }
+
+                setOnMenuItemClickListener { menuItem ->
+                    if (menuItem.itemId == R.id.action_save) {
+                        saveAndExit()
+                        true
+                    } else {
+                        false
+                    }
+                }
+            }.also { toolbar ->
+                launchCatchingTask { toolbar.title = withCol { decks.getLegacy(deckId)!!.name } }
+            }
+
+        // setup input controls
+        setFocusAndOpenKeyboard(deckDescriptionInput) { deckDescriptionInput.setSelection(deckDescriptionInput.text!!.length) }
     }
 
     override fun onStart() {
