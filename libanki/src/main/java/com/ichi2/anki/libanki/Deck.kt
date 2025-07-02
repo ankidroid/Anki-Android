@@ -17,7 +17,6 @@
 package com.ichi2.anki.libanki
 
 import com.ichi2.anki.common.utils.ext.deepClonedInto
-import com.ichi2.anki.utils.ext.description
 import org.json.JSONObject
 
 class Deck : JSONObject {
@@ -69,6 +68,17 @@ class Deck : JSONObject {
         }
         set(value) {
             put("conf", value)
+        }
+
+    /**
+     * The description, shown on the deck overview and optionally the congratulations screen
+     *
+     * May be HTML or markdown, depending on [markdownDescription]
+     */
+    var description: String
+        get() = optString("desc", "")
+        set(value) {
+            put("desc", value)
         }
 
     /**
