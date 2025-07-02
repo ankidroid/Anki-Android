@@ -21,6 +21,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.Companion.ARG_DECK_ID
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.Companion.STATE_DESCRIPTION
+import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.Companion.STATE_FORMAT_AS_MARKDOWN
+import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.Companion.STATE_USER_MADE_CHANGES
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.testutils.JvmTest
@@ -55,6 +57,17 @@ class EditDeckDescriptionDialogViewModelTest : JvmTest() {
             saveAndExit()
 
             assertThat("description updated after save", defaultDeck.description, equalTo("foo"))
+        }
+
+    @Test
+    fun `format as markdown is updated in database`() =
+        runViewModelTest {
+            formatAsMarkdown = true
+            assertThat("format as markdown not updated before save", defaultDeck.descriptionAsMarkdown, equalTo(false))
+
+            saveAndExit()
+
+            assertThat("format as markdown updated after save", defaultDeck.descriptionAsMarkdown, equalTo(true))
         }
 
     @Test
@@ -97,10 +110,42 @@ class EditDeckDescriptionDialogViewModelTest : JvmTest() {
         }
 
     @Test
+    fun `'format as markdown' also triggers changes`() =
+        runViewModelTest {
+            flowOfShowDiscardChanges.test {
+                formatAsMarkdown = true
+                onBackRequested()
+
+                expectMostRecentItem()
+            }
+        }
+
+    @Test
     fun `test state restoration`() =
-        runViewModelTest(updatedDescription = "foo") {
+        runViewModelTest(updatedDescription = "foo", updatedFormatAsMarkdown = true) {
             assertThat("database is unchanged", defaultDeck.description, equalTo(""))
             assertThat("dialog state is maintained", description, equalTo("foo"))
+            assertThat("dialog state is maintained", formatAsMarkdown, equalTo(true))
+        }
+
+    @Test
+    fun `no changes initially`() =
+        runViewModelTest {
+            assertThat(userHasMadeChanges, equalTo(false))
+        }
+
+    @Test
+    fun `description is a change`() =
+        runViewModelTest {
+            description = "foo"
+            assertThat(userHasMadeChanges, equalTo(true))
+        }
+
+    @Test
+    fun `format as markdown is a change`() =
+        runViewModelTest {
+            formatAsMarkdown = false
+            assertThat(userHasMadeChanges, equalTo(true))
         }
 
     val AnkiTest.defaultDeck
@@ -108,6 +153,7 @@ class EditDeckDescriptionDialogViewModelTest : JvmTest() {
 
     private fun runViewModelTest(
         updatedDescription: String? = null,
+        updatedFormatAsMarkdown: Boolean? = null,
         testBody: suspend EditDeckDescriptionDialogViewModel.() -> Unit,
     ) = runTest {
         val viewModel =
@@ -115,6 +161,8 @@ class EditDeckDescriptionDialogViewModelTest : JvmTest() {
                 savedStateHandleOf(
                     ARG_DECK_ID to DEFAULT_DECK_ID,
                     STATE_DESCRIPTION to updatedDescription,
+                    STATE_FORMAT_AS_MARKDOWN to updatedFormatAsMarkdown,
+                    STATE_USER_MADE_CHANGES to (updatedDescription != null || updatedFormatAsMarkdown != null),
                 ),
             )
         testBody(viewModel)
