@@ -148,6 +148,18 @@ class EditDeckDescriptionDialogViewModelTest : JvmTest() {
             assertThat(userHasMadeChanges, equalTo(true))
         }
 
+    @Test
+    fun `saved changes update`() =
+        runViewModelTest {
+            flowOfHasChanges.test {
+                assertThat("initial state", expectMostRecentItem(), equalTo(false))
+                description = "foo"
+                assertThat("has changes after change", expectMostRecentItem(), equalTo(true))
+                description = ""
+                assertThat("no changes if all reverted", expectMostRecentItem(), equalTo(false))
+            }
+        }
+
     val AnkiTest.defaultDeck
         get() = col.decks.getLegacy(DEFAULT_DECK_ID)!!
 
