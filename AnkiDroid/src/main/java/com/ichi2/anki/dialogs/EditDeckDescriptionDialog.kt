@@ -32,6 +32,8 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.ui.isCheckedState
+import com.ichi2.anki.ui.textOf
 import com.ichi2.anki.utils.ext.update
 import com.ichi2.libanki.DeckId
 import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
@@ -56,16 +58,10 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
     // state / user inputs
 
     /** @see [com.ichi2.libanki.Deck.description] */
-    private var description: String
-        get() = deckDescriptionInput.text.toString()
-        set(value) = deckDescriptionInput.setText(value)
+    private var description by textOf { deckDescriptionInput }
 
     /** @see [com.ichi2.libanki.Deck.markdownDescription] */
-    private var formatAsMarkdown: Boolean
-        get() = formatAsMarkdownInput.isChecked
-        set(value) {
-            formatAsMarkdownInput.isChecked = value
-        }
+    private var formatAsMarkdown by isCheckedState { formatAsMarkdownInput }
 
     // derived state
 
