@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.dialogs
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -47,6 +48,11 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
         get() = deckDescriptionInput.text.toString()
         set(value) {
             deckDescriptionInput.setText(value)
+        }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+        super.onCreateDialog(savedInstanceState).also {
+            it.setCanceledOnTouchOutside(false)
         }
 
     override fun onViewCreated(
