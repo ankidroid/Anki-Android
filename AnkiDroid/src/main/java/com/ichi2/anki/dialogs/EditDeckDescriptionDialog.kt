@@ -36,9 +36,12 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.StudyOptionsFragment
+import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.DismissType
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
 import com.ichi2.utils.show
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -136,11 +139,17 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
 
     private fun setupFlows() {
         lifecycleScope.launch {
-            viewModel.flowOfDismissDialog.collect { dismiss ->
-                if (dismiss) {
-                    dismiss()
+            viewModel.flowOfDismissDialog
+                .filterNotNull()
+                .collect { dismissType ->
+                    when (dismissType) {
+                        DismissType.ClosedWithoutSaving -> dismiss()
+                        DismissType.Saved -> {
+                            dismiss()
+                            showSnackbar(R.string.deck_description_saved)
+                        }
+                    }
                 }
-            }
         }
 
         lifecycleScope.launch {

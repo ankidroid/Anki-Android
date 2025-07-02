@@ -377,6 +377,7 @@ opening the system text to speech settings fails">Failed to open text to speech 
     <string name="shared_decks_login_required">Please log in to download more decks</string>
 
     <string name="deck_description_field_hint">Description</string>
+    <string name="deck_description_saved">Description updated</string>
     <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">Open help for ‘%s’</string>
 
