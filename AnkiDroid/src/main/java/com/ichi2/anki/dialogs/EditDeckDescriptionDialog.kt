@@ -18,11 +18,13 @@ package com.ichi2.anki.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageButton
 import androidx.core.os.bundleOf
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -55,6 +57,16 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
     private val formatAsMarkdownInput: CheckBox
         get() = requireView().findViewById(R.id.format_as_markdown)
 
+    private val topAppBar: MaterialToolbar
+        get() = requireView().findViewById(R.id.topAppBar)
+
+    private val saveMenuItem: MenuItem
+        get() = topAppBar.menu.findItem(R.id.action_save)
+
+    // immutable state
+
+    private lateinit var initialDialogState: DeckDescriptionState
+
     // state / user inputs
 
     /** @see [com.ichi2.libanki.Deck.description] */
@@ -86,10 +98,15 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
         // load initial state
         launchCatchingTask {
             val dialog = this@EditDeckDescriptionDialog
-            queryDescriptionState().let { data ->
-                dialog.description = data.description
-                dialog.formatAsMarkdown = data.formatAsMarkdown
+            queryDescriptionState().let { state ->
+                initialDialogState = state
+                dialog.description = state.description
+                dialog.formatAsMarkdown = state.formatAsMarkdown
             }
+
+            deckDescriptionInput.doAfterTextChanged { checkForChanges() }
+            formatAsMarkdownInput.setOnCheckedChangeListener { _, _ -> checkForChanges() }
+            checkForChanges()
         }
 
         // setup 'Format as Markdown' help
@@ -107,8 +124,7 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
         }
 
         // setup App Bar
-        view
-            .findViewById<MaterialToolbar>(R.id.topAppBar)
+        topAppBar
             .apply {
                 setNavigationOnClickListener {
                     onBack()
@@ -153,7 +169,7 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
                 dismiss()
             }
 
-            if (queryDescriptionState() == currentDialogState) {
+            if (!hasChanges()) {
                 closeWithoutSaving()
                 return@launchCatchingTask
             }
@@ -163,6 +179,16 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
                 closeWithoutSaving()
             }
         }
+
+    private fun checkForChanges() {
+        saveMenuItem.isEnabled = hasChanges()
+    }
+
+    private fun hasChanges(): Boolean {
+        // this can be triggered via the back dispatcher
+        if (!::initialDialogState.isInitialized) return false
+        return initialDialogState != currentDialogState
+    }
 
     private suspend fun queryDescriptionState() =
         withCol {
