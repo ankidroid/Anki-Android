@@ -209,6 +209,9 @@ object Prefs {
     val isNewStudyScreenEnabled: Boolean
         get() = getBoolean(R.string.new_reviewer_pref_key, false) && getBoolean(R.string.new_reviewer_options_key, false)
 
+    val devIsCardBrowserFragmented: Boolean
+        get() = getBoolean(R.string.dev_card_browser_fragmented, false)
+
     // **************************************** UI Config *************************************** //
 
     private const val UI_CONFIG_PREFERENCES_NAME = "ui-config"
