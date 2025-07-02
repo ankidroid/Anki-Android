@@ -23,6 +23,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageButton
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
@@ -32,12 +33,14 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
 import com.ichi2.utils.show
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * Allows a user to edit the [deck description][com.ichi2.anki.libanki.Deck.description]
@@ -56,9 +59,25 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
     private val saveMenuItem: MenuItem
         get() = toolbar.menu.findItem(R.id.action_save)
 
+    private val onUnsavedChangesBackCallback =
+        object : OnBackPressedCallback(enabled = false) {
+            override fun handleOnBackPressed() {
+                showDiscardChangesDialog()
+            }
+        }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         super.onCreateDialog(savedInstanceState).also {
             it.setCanceledOnTouchOutside(false)
+            it.setCancelable(false)
+            try {
+                (it as androidx.activity.ComponentDialog)
+                    .onBackPressedDispatcher
+                    .addCallback(this, onUnsavedChangesBackCallback)
+            } catch (e: Exception) {
+                Timber.w(e, "EditDeckDescription::backPressed")
+                CrashReportService.sendExceptionReport(e, "EditDeckDescription", "backPressed", onlyIfSilent = true)
+            }
         }
 
     override fun onViewCreated(
@@ -147,16 +166,22 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
 
         lifecycleScope.launch {
             viewModel.flowOfShowDiscardChanges.collect {
-                DiscardChangesDialog.showDialog(requireContext()) {
-                    viewModel.closeWithoutSaving()
-                }
+                showDiscardChangesDialog()
             }
         }
 
         lifecycleScope.launch {
             viewModel.flowOfHasChanges.collect {
                 saveMenuItem.isEnabled = it
+                onUnsavedChangesBackCallback.isEnabled = it
             }
+        }
+    }
+
+    fun showDiscardChangesDialog() {
+        Timber.i("asking if user should discard changes")
+        DiscardChangesDialog.showDialog(requireContext()) {
+            viewModel.closeWithoutSaving()
         }
     }
 
