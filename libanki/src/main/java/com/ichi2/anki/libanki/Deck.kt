@@ -71,14 +71,25 @@ class Deck : JSONObject {
         }
 
     /**
-     * Treats [description] as markdown, cleaning HTML input and stripping images.
+     * The description, shown on the deck overview and optionally the congratulations screen.
+     *
+     * May be HTML or Markdown, depending on [descriptionAsMarkdown].
+     */
+    var description: String
+        get() = optString("desc", "")
+        set(value) {
+            put("desc", value)
+        }
+
+    /**
+     * Treats [description] as Markdown, cleaning HTML input and stripping images.
      *
      * If disabled, the description is only shown on the deck overview.
      * If enabled, it is also shown on the congratulations screen.
      *
      * Markdown will appear as text on Anki 2.1.40 and below.
      *
-     * Anki names this feature 'md': markdown description
+     * Anki names this feature 'md': Markdown description
      *
      * @see anki.backend.GeneratedBackend.renderMarkdown
      * @see anki.i18n.GeneratedTranslations.deckConfigDescriptionNewHandling

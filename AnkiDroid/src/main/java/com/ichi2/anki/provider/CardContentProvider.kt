@@ -57,7 +57,6 @@ import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.exception.EmptyMediaException
 import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.libanki.sched.Ease
-import com.ichi2.anki.utils.ext.description
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.FileUtil.internalizeUri
 import com.ichi2.utils.Permissions.arePermissionsDefinedInManifest
