@@ -19,7 +19,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="8dp"
+    >
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topAppBar"
@@ -28,28 +30,31 @@
         android:minHeight="?attr/actionBarSize"
         app:layout_scrollFlags="enterAlways"
         app:menu="@menu/menu_deck_description"
+        android:layout_marginEnd="2dp"
         app:navigationIcon="@drawable/close_icon"
+        app:navigationContentDescription="@string/close"
         tools:title="Deck name" />
 
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="12dp"
-        android:paddingHorizontal="12dp"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="24dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
             android:hint="@string/deck_description_field_hint">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/deck_description_input"
                 android:inputType="textMultiLine"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
