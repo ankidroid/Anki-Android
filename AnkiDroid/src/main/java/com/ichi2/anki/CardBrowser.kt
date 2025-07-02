@@ -387,7 +387,9 @@ open class CardBrowser :
          * [fragmented] will be true if the view size is large otherwise false
          */
         // TODO: Consider refactoring by storing noteEditorFrame and similar views in a sealed class (e.g., FragmentAccessor).
-        val fragmented = noteEditorFrame?.visibility == View.VISIBLE
+        val fragmented =
+            Prefs.devIsCardBrowserFragmented &&
+                noteEditorFrame?.visibility == View.VISIBLE
         Timber.i("Using split Browser: %b", fragmented)
 
         if (fragmented) {
