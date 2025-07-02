@@ -176,6 +176,10 @@ open class Scheduler(
             millisecondsTaken = card.timeTaken(col)
         }
 
+    /** Update card to provided state, and remove it from queue. */
+    @LibAnkiAlias("answer_card")
+    fun answerCard(input: CardAnswer): OpChanges = col.backend.answerCard(input)
+
     private fun ratingFromEase(ease: Ease): CardAnswer.Rating =
         when (ease) {
             Ease.AGAIN -> CardAnswer.Rating.AGAIN
