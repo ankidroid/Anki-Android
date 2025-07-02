@@ -1269,18 +1269,23 @@ open class CardBrowser :
             }
             R.id.action_edit_tags -> {
                 showEditTagsDialog()
+                return true
             }
             R.id.action_open_options -> {
                 showOptionsDialog()
+                return true
             }
             R.id.action_export_selected -> {
                 exportSelected()
+                return true
             }
             R.id.action_create_filtered_deck -> {
                 showCreateFilteredDeckDialog()
+                return true
             }
             R.id.action_find_replace -> {
                 showFindAndReplaceDialog()
+                return true
             }
         }
         return fragmented && fragment!!.onMenuItemSelected(item)
