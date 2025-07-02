@@ -115,6 +115,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
 import java.util.regex.Pattern
+import kotlin.collections.set
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.time.Duration.Companion.seconds
@@ -550,6 +551,10 @@ open class CardTemplateEditor :
                     Timber.d(e, "Exception loading template in CardTemplateFragment. Probably stale fragment.")
                     return mainView
                 }
+            // initializing the hash map which stores the cursor position for each editor window
+            if (templateEditor.tabToCursorPosition[cardIndex] == null) {
+                templateEditor.tabToCursorPosition[cardIndex] = hashMapOf()
+            }
 
             editorEditText = mainView.findViewById(R.id.editor_editText)
 
