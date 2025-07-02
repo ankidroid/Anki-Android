@@ -20,17 +20,22 @@ import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import android.widget.ImageButton
 import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
+import com.ichi2.utils.show
 import kotlinx.coroutines.launch
 
 /**
@@ -42,6 +47,8 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
     private val viewModel: EditDeckDescriptionDialogViewModel by viewModels()
 
     private lateinit var deckDescriptionInput: TextInputEditText
+
+    private lateinit var formatAsMarkdownInput: CheckBox
 
     private lateinit var toolbar: MaterialToolbar
 
@@ -61,6 +68,25 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
                     viewModel.description = text?.toString() ?: ""
                 }
             }
+
+        formatAsMarkdownInput =
+            view.findViewById<CheckBox>(R.id.format_as_markdown).apply {
+                setOnCheckedChangeListener { _, value -> viewModel.formatAsMarkdown = value }
+            }
+
+        // setup 'Format as Markdown' help
+        view.findViewById<ImageButton>(R.id.markdown_formatting_help).apply {
+            contentDescription =
+                getString(R.string.help_button_content_description, getString(R.string.format_deck_description_as_markdown))
+            setOnClickListener {
+                MaterialAlertDialogBuilder(requireContext()).show {
+                    setTitle(formatAsMarkdownInput.text)
+                    setIcon(R.drawable.ic_help_black_24dp)
+                    // FIXME: the upstream string unexpectedly contains newlines
+                    setMessage(TR.deckConfigDescriptionNewHandlingHint().replace("\n", " ").replace("  ", " "))
+                }
+            }
+        }
 
         // setup App Bar
         toolbar =
@@ -98,6 +124,12 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
             viewModel.flowOfDescription.collect { desc ->
                 if (desc == deckDescriptionInput.text.toString()) return@collect
                 deckDescriptionInput.setText(desc)
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.flowOfFormatAsMarkdown.collect {
+                formatAsMarkdownInput.isChecked = it
             }
         }
 

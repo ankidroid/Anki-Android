@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.dialogs
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -33,16 +34,41 @@ class EditDeckDescriptionDialogViewModel(
     val deckId: DeckId
         get() = requireNotNull(stateHandle.get<DeckId>(ARG_DECK_ID))
 
+    @VisibleForTesting
+    var userHasMadeChanges: Boolean
+        get() = stateHandle.get<Boolean>(STATE_USER_MADE_CHANGES) ?: false
+        set(value) {
+            stateHandle[STATE_USER_MADE_CHANGES] = value
+        }
+
     lateinit var windowTitle: String
 
     val flowOfDescription = MutableStateFlow(stateHandle.get<String>(STATE_DESCRIPTION) ?: "")
 
+    val flowOfFormatAsMarkdown = MutableStateFlow(stateHandle.get<Boolean>(STATE_FORMAT_AS_MARKDOWN) ?: false)
+
     var description
         get() = flowOfDescription.value
         set(value) {
+            userHasMadeChanges = true
             stateHandle[STATE_DESCRIPTION] = value
             flowOfDescription.value = value
         }
+
+    var formatAsMarkdown: Boolean
+        get() = flowOfFormatAsMarkdown.value
+        set(value) {
+            userHasMadeChanges = true
+            stateHandle[STATE_FORMAT_AS_MARKDOWN] = value
+            flowOfFormatAsMarkdown.value = value
+        }
+
+    private val dialogState: DeckDescriptionState
+        get() =
+            DeckDescriptionState(
+                description = this.description,
+                formatAsMarkdown = this.formatAsMarkdown,
+            )
 
     // TODO: make this a unit
     val flowOfDismissDialog = MutableStateFlow(false)
@@ -54,8 +80,11 @@ class EditDeckDescriptionDialogViewModel(
     init {
         viewModelScope.launch {
             windowTitle = withCol { decks.getLegacy(deckId)!!.name }
-            if (description.isEmpty()) {
-                description = getDescription()
+            if (!userHasMadeChanges) {
+                val state = queryDescriptionState()
+                description = state.description
+                formatAsMarkdown = state.formatAsMarkdown
+                userHasMadeChanges = false
             }
             flowOfInitCompleted.emit(true)
         }
@@ -63,7 +92,7 @@ class EditDeckDescriptionDialogViewModel(
 
     fun onBackRequested() =
         viewModelScope.launch {
-            if (getDescription() == description) {
+            if (queryDescriptionState() == dialogState) {
                 closeWithoutSaving()
                 return@launch
             }
@@ -80,20 +109,48 @@ class EditDeckDescriptionDialogViewModel(
 
     fun saveAndExit() =
         viewModelScope.launch {
-            setDescription(description)
+            save()
             Timber.i("closing deck description dialog")
             flowOfDismissDialog.emit(true)
         }
 
-    private suspend fun getDescription() = withCol { decks.getLegacy(deckId)!!.description }
+    private suspend fun queryDescriptionState() =
+        withCol {
+            decks.getLegacy(deckId)!!.let {
+                DeckDescriptionState(
+                    description = it.description,
+                    formatAsMarkdown = it.descriptionAsMarkdown,
+                )
+            }
+        }
 
-    private suspend fun setDescription(value: String) {
+    private suspend fun save() {
         Timber.i("updating deck description")
-        withCol { decks.update(deckId) { description = value } }
+        withCol {
+            decks.update(deckId) {
+                this.description = dialogState.description
+                this.descriptionAsMarkdown = dialogState.formatAsMarkdown
+            }
+        }
     }
+
+    /**
+     * State for [EditDeckDescriptionDialog].
+     *
+     * Simplifies detecting user changes
+     *
+     * @param description see [com.ichi2.anki.libanki.Deck.description]
+     * @param formatAsMarkdown see [com.ichi2.anki.libanki.Deck.markdownDescription]
+     */
+    private data class DeckDescriptionState(
+        val description: String,
+        val formatAsMarkdown: Boolean,
+    )
 
     companion object {
         const val ARG_DECK_ID = "deckId"
         const val STATE_DESCRIPTION = "description"
+        const val STATE_FORMAT_AS_MARKDOWN = "format_as_markdown"
+        const val STATE_USER_MADE_CHANGES = "user_made_changes"
     }
 }
