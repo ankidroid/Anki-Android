@@ -608,11 +608,17 @@ class StudyOptionsFragment :
             }
 
             // Set deck description
+            @Language("HTML")
             val desc: String =
                 if (isDynamic) {
                     resources.getString(R.string.dyn_deck_desc)
                 } else {
-                    col.decks.current().description
+                    val deck = col.decks.current()
+                    if (deck.markdownDescription) {
+                        col.renderMarkdown(deck.description, sanitize = true)
+                    } else {
+                        deck.description
+                    }
                 }
             if (desc.isNotEmpty()) {
                 textDeckDescription.text = formatDescription(desc)

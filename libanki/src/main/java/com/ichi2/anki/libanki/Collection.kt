@@ -53,6 +53,7 @@ import com.ichi2.anki.libanki.utils.LibAnkiAlias
 import com.ichi2.anki.libanki.utils.NotInLibAnki
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
+import org.intellij.lang.annotations.Language
 import timber.log.Timber
 import java.io.File
 
@@ -661,6 +662,20 @@ class Collection(
     fun getRetentionWorkloadRaw(input: ByteArray): ByteArray = backend.getRetentionWorkloadRaw(input = input)
 
     fun evaluateParamsLegacyRaw(input: ByteArray): ByteArray = backend.evaluateParamsLegacyRaw(input = input)
+
+    /**
+     * Converts Markdown ([text]) to HTML
+     *
+     * @param text Markdown to format as HTML
+     * @param sanitize whether to sanitize the HTML using
+     * [ammonia](https://docs.rs/ammonia/latest/ammonia/). `img` tags are also stripped
+     */
+    @Language("HTML")
+    @LibAnkiAlias("render_markdown")
+    fun renderMarkdown(
+        text: String,
+        sanitize: Boolean,
+    ): String = backend.renderMarkdown(markdown = text, sanitize = sanitize)
 
     fun compareAnswer(
         expected: String,
