@@ -480,7 +480,7 @@ open class CardTemplateEditor :
         override fun createFragment(position: Int): Fragment {
             val editorPosition = tabToCursorPosition[position] ?: 0
             val editorViewId = tabToViewId[position] ?: R.id.front_edit
-            return CardTemplateFragment.newInstance(position, noteId, editorPosition, editorViewId)
+            return CardTemplateFragment.newInstance(position, noteId, editorViewId)
         }
 
         override fun getItemCount(): Int = tempNoteType?.templateCount ?: 0
@@ -523,7 +523,6 @@ open class CardTemplateEditor :
         private lateinit var editorEditText: FixedEditText
 
         var currentEditorViewId = 0
-        private var cursorPosition = 0
 
         private lateinit var templateEditor: CardTemplateEditor
         lateinit var tempModel: CardTemplateNotetype
@@ -549,7 +548,6 @@ open class CardTemplateEditor :
                 }
 
             editorEditText = mainView.findViewById(R.id.editor_editText)
-            cursorPosition = requireArguments().getInt(CURSOR_POSITION_KEY)
 
             editorEditText.customInsertionActionModeCallback = ActionModeCallback()
 
@@ -596,9 +594,9 @@ open class CardTemplateEditor :
                 val currentSelectedId = item.itemId
                 templateEditor.tabToViewId[cardIndex] = currentSelectedId
                 when (currentSelectedId) {
-                    R.id.styling_edit -> setCurrentEditorView(currentSelectedId, tempModel.css)
-                    R.id.back_edit -> setCurrentEditorView(currentSelectedId, template.afmt)
-                    else -> setCurrentEditorView(currentSelectedId, template.qfmt)
+                    R.id.styling_edit -> setCurrentEditorView(currentSelectedId, cardIndex, tempModel.css)
+                    R.id.back_edit -> setCurrentEditorView(currentSelectedId, cardIndex, template.afmt)
+                    else -> setCurrentEditorView(currentSelectedId, cardIndex, template.qfmt)
                 }
                 // contents of menu have changed and menu should be redrawn
                 templateEditor.invalidateOptionsMenu()
@@ -620,7 +618,14 @@ open class CardTemplateEditor :
 
                     override fun afterTextChanged(arg0: Editable) {
                         refreshFragmentRunnable?.let { refreshFragmentHandler.removeCallbacks(it) }
-                        templateEditor.tabToCursorPosition[cardIndex] = editorEditText.selectionStart
+
+                        /**
+                         * This condition is necessary to ensure that the cursor position is updated correctly.
+                         */
+                        if (editorEditText.selectionStart != 0) {
+                            templateEditor.tabToCursorPosition[cardIndex] = editorEditText.selectionStart
+                        }
+
                         when (currentEditorViewId) {
                             R.id.styling_edit -> tempModel.css = editorEditText.text.toString()
                             R.id.back_edit -> template.afmt = editorEditText.text.toString()
@@ -781,13 +786,14 @@ open class CardTemplateEditor :
         }
 
         fun setCurrentEditorView(
-            id: Int,
+            viewId: Int,
+            cardId: Int,
             editorContent: String,
         ) {
-            currentEditorViewId = id
+            currentEditorViewId = viewId
             editorEditText.setText(editorContent)
             editorEditText.requestFocus()
-            editorEditText.setSelection(cursorPosition)
+            editorEditText.setSelection(templateEditor.tabToCursorPosition[cardId] ?: 0)
         }
 
         override fun onViewCreated(
@@ -1458,14 +1464,12 @@ open class CardTemplateEditor :
             fun newInstance(
                 cardIndex: Int,
                 noteId: NoteId,
-                cursorPosition: Int,
                 viewId: Int,
             ): CardTemplateFragment {
                 val f = CardTemplateFragment()
                 val args = Bundle()
                 args.putInt(CARD_INDEX, cardIndex)
                 args.putLong(EDITOR_NOTE_ID, noteId)
-                args.putInt(CURSOR_POSITION_KEY, cursorPosition)
                 args.putInt(EDITOR_VIEW_ID_KEY, viewId)
                 f.arguments = args
                 return f
@@ -1474,7 +1478,6 @@ open class CardTemplateEditor :
     }
 
     companion object {
-        private const val CURSOR_POSITION_KEY = "cursorPosition"
         private const val TAB_TO_CURSOR_POSITION_KEY = "tabToCursorPosition"
         private const val EDITOR_VIEW_ID_KEY = "editorViewId"
         private const val TAB_TO_VIEW_ID = "tabToViewId"
