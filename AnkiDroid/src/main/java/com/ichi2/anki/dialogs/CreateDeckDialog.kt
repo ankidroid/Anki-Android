@@ -195,12 +195,26 @@ class CreateDeckDialog(
     }
 
     fun createFilteredDeck(deckName: String): Boolean {
+        fun validFilteredDeckName(initialName: String): String {
+            for (i in 0..10) {
+                val name = initialName + "+".repeat(i)
+                if (getColUnsafe.decks.byName(name) == null) return name
+            }
+            throw IllegalStateException("Could not generate valid name")
+        }
+
         try {
             // create filtered deck
             Timber.i("CreateDeckDialog::createFilteredDeck...")
-            val newDeckId = getColUnsafe.decks.newFiltered(deckName)
+            val newDeckId = getColUnsafe.decks.newFiltered(validFilteredDeckName(deckName))
             Timber.d("Created filtered deck '%s'; id: %d", deckName, newDeckId)
             onNewDeckCreated(newDeckId)
+        } catch (ex: IllegalStateException) {
+            if (ex.message != "Could not generate valid name") {
+                throw ex
+            }
+            displayFeedback(ex.localizedMessage ?: ex.message ?: "", Snackbar.LENGTH_LONG)
+            return false
         } catch (ex: BackendDeckIsFilteredException) {
             displayFeedback(ex.localizedMessage ?: ex.message ?: "", Snackbar.LENGTH_LONG)
             return false
