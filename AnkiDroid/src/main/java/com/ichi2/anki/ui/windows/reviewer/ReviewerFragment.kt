@@ -38,6 +38,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.view.menu.SubMenuBuilder
 import androidx.appcompat.widget.ActionMenuView
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -64,6 +65,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DispatchKeyEventListener
+import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.cardviewer.Gesture
@@ -127,8 +129,7 @@ class ReviewerFragment :
     TagsDialogListener,
     ShakeDetector.Listener {
     override val viewModel: ReviewerViewModel by viewModels {
-        val repository = StudyScreenRepository(sharedPrefs())
-        ReviewerViewModel.factory(CardMediaPlayer(), getServerPort(), repository)
+        ReviewerViewModel.factory(CardMediaPlayer(), getServerPort())
     }
 
     override val webView: WebView get() = requireView().findViewById(R.id.webview)
@@ -250,6 +251,29 @@ class ReviewerFragment :
             val dialogFragment = SetDueDateDialog.newInstance(listOf(cardId))
             showDialogFragment(dialogFragment)
         }
+
+        val repository = StudyScreenRepository(sharedPrefs())
+        val markView = view.findViewById<AppCompatImageView>(R.id.mark_icon)
+        viewModel.isMarkedFlow
+            .flowWithLifecycle(lifecycle)
+            .collectIn(lifecycleScope) { isMarked ->
+                if (!repository.isMarkShownInToolbar) {
+                    markView.isVisible = isMarked
+                }
+            }
+        val flagView = view.findViewById<AppCompatImageView>(R.id.flag_icon)
+        viewModel.flagFlow
+            .flowWithLifecycle(lifecycle)
+            .collectIn(lifecycleScope) { flag ->
+                if (!repository.isFlagShownInToolbar) {
+                    if (flag == Flag.NONE) {
+                        flagView.isVisible = false
+                    } else {
+                        flagView.setImageDrawable(ContextCompat.getDrawable(requireContext(), flag.drawableRes))
+                        flagView.isVisible = true
+                    }
+                }
+            }
     }
 
     private fun setupTypeAnswer(view: View) {

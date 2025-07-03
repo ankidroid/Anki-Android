@@ -70,7 +70,6 @@ import timber.log.Timber
 class ReviewerViewModel(
     cardMediaPlayer: CardMediaPlayer,
     serverPort: Int = 0,
-    studyScreenRepository: StudyScreenRepository,
 ) : CardViewerViewModel(cardMediaPlayer),
     ChangeManager.Subscriber,
     BindingProcessor<ReviewerBinding, ViewerAction> {
@@ -105,8 +104,6 @@ class ReviewerViewModel(
     var typedAnswer = ""
 
     private val autoAdvance = AutoAdvance(this)
-    private val shouldSendMarkEval = !studyScreenRepository.isMarkShownInToolbar
-    private val shouldSendFlagEval = !studyScreenRepository.isFlagShownInToolbar
 
     /**
      * A flag that determines if the SchedulingStates in CurrentQueueState are
@@ -452,14 +449,12 @@ class ReviewerViewModel(
         Timber.v("ReviewerViewModel::updateMarkIcon")
         val card = currentCard.await()
         val isMarkedValue = withCol { card.note(this@withCol).hasTag(this@withCol, MARKED_TAG) }
-        if (shouldSendMarkEval) eval.emit("_drawMark($isMarkedValue);")
         isMarkedFlow.emit(isMarkedValue)
     }
 
     private suspend fun updateFlagIcon() {
         Timber.v("ReviewerViewModel::updateFlagIcon")
         val card = currentCard.await()
-        if (shouldSendFlagEval) eval.emit("_drawFlag(${card.userFlag()});")
         flagFlow.emit(card.flag)
     }
 
@@ -666,11 +661,10 @@ class ReviewerViewModel(
         fun factory(
             soundPlayer: CardMediaPlayer,
             serverPort: Int,
-            studyScreenRepository: StudyScreenRepository,
         ): ViewModelProvider.Factory =
             viewModelFactory {
                 initializer {
-                    ReviewerViewModel(soundPlayer, serverPort, studyScreenRepository)
+                    ReviewerViewModel(soundPlayer, serverPort)
                 }
             }
     }

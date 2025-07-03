@@ -18,7 +18,6 @@ package com.ichi2.anki.previewer
 import android.content.Context
 import androidx.appcompat.widget.ThemeUtils
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.Flag
 import com.ichi2.anki.LanguageUtils
 import com.ichi2.themes.Themes
 import com.ichi2.utils.toRGBHex
@@ -48,8 +47,7 @@ fun stdHtml(
 
     val canvasColor = ThemeUtils.getThemeAttrColor(context, android.R.attr.colorBackground).toRGBHex()
     val fgColor = ThemeUtils.getThemeAttrColor(context, android.R.attr.textColor).toRGBHex()
-    val flagColors = getFlagColors(context)
-    val colors = ":root$rootNightMode { --canvas: $canvasColor; --fg: $fgColor; $flagColors }"
+    val colors = ":root$rootNightMode { --canvas: $canvasColor; --fg: $fgColor; }"
 
     val jsAssets: List<String> =
         listOf(
@@ -77,8 +75,6 @@ fun stdHtml(
             </style>
         </head>
         <body class="${bodyClass()}">
-            <div id="_mark" hidden><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FFF" stroke="#000" stroke-width="36" viewBox="0 -960 960 960"><path d="m233-120 65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z"/></svg></div>
-            <div id="_flag" hidden><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path fill="currentColor" d="M14.4 6 14 4H5v17h2v-7h5.6l.4 2h7V6z"/></svg></div>
             <div id="qa"></div>
             $jsTxt
             <script>bridgeCommand = function(){};</script>
@@ -94,13 +90,3 @@ fun bodyClassForCardOrd(
 ): String = "card card${cardOrd + 1} ${bodyClass(nightMode)}"
 
 private fun bodyClass(nightMode: Boolean = Themes.currentTheme.isNightMode): String = if (nightMode) "nightMode night_mode" else ""
-
-@Language("CSS")
-private fun getFlagColors(context: Context): String {
-    val flags = Flag.entries.filter { it.studyScreenColorRes != null }
-    return flags.joinToString(separator = " ") { flag ->
-        val color = context.getColor(flag.studyScreenColorRes!!)
-        val hex = color.toRGBHex()
-        "--flag-${flag.code}: $hex;"
-    }
-}
