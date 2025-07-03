@@ -33,7 +33,6 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.DismissType
@@ -50,14 +49,19 @@ import timber.log.Timber
  *
  * This is visible on [StudyOptionsFragment]
  */
-class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_description) {
+class EditDeckDescriptionDialog : DialogFragment() {
     private val viewModel: EditDeckDescriptionDialogViewModel by viewModels()
 
-    private lateinit var deckDescriptionInput: TextInputEditText
+    private lateinit var dialogView: View
 
-    private lateinit var formatAsMarkdownInput: CheckBox
+    private val deckDescriptionInput: TextInputEditText
+        get() = dialogView.findViewById(R.id.deck_description_input)
 
-    private lateinit var toolbar: MaterialToolbar
+    private val formatAsMarkdownInput: CheckBox
+        get() = dialogView.findViewById(R.id.format_as_markdown)
+
+    private val toolbar: MaterialToolbar
+        get() = dialogView.findViewById(R.id.topAppBar)
 
     private val saveMenuItem: MenuItem
         get() = toolbar.menu.findItem(R.id.action_save)
@@ -69,36 +73,29 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
             }
         }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        super.onCreateDialog(savedInstanceState).also {
-            it.setCanceledOnTouchOutside(false)
-            it.setCancelable(false)
-            try {
-                (it as androidx.activity.ComponentDialog)
-                    .onBackPressedDispatcher
-                    .addCallback(this, onUnsavedChangesBackCallback)
-            } catch (e: Exception) {
-                Timber.w(e, "EditDeckDescription::backPressed")
-                CrashReportService.sendExceptionReport(e, "EditDeckDescription", "backPressed", onlyIfSilent = true)
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        this.dialogView = layoutInflater.inflate(R.layout.dialog_deck_description, null)
+        return MaterialAlertDialogBuilder(requireContext())
+            .show {
+                setView(dialogView)
+            }.apply {
+                setupDialogView(dialogView)
+                setCanceledOnTouchOutside(false)
+                setCancelable(false)
+                onBackPressedDispatcher.addCallback(this, onUnsavedChangesBackCallback)
+            }
+    }
+
+    private fun setupDialogView(view: View) {
+        deckDescriptionInput.apply {
+            doOnTextChanged { text, _, _, _ ->
+                viewModel.description = text?.toString() ?: ""
             }
         }
 
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?,
-    ) {
-        super.onViewCreated(view, savedInstanceState)
-        deckDescriptionInput =
-            view.findViewById<TextInputEditText>(R.id.deck_description_input).apply {
-                doOnTextChanged { text, _, _, _ ->
-                    viewModel.description = text?.toString() ?: ""
-                }
-            }
-
-        formatAsMarkdownInput =
-            view.findViewById<CheckBox>(R.id.format_as_markdown).apply {
-                setOnCheckedChangeListener { _, value -> viewModel.formatAsMarkdown = value }
-            }
+        formatAsMarkdownInput.apply {
+            setOnCheckedChangeListener { _, value -> viewModel.formatAsMarkdown = value }
+        }
 
         // setup 'Format as Markdown' help
         view.findViewById<ImageButton>(R.id.markdown_formatting_help).apply {
@@ -115,24 +112,21 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
         }
 
         // setup App Bar
-        toolbar =
-            view
-                .findViewById<MaterialToolbar>(R.id.topAppBar)
-                .apply {
-                    setNavigationOnClickListener {
-                        viewModel.onBackRequested()
-                    }
+        toolbar.apply {
+            setNavigationOnClickListener {
+                viewModel.onBackRequested()
+            }
 
-                    setOnMenuItemClickListener { menuItem ->
-                        when (menuItem.itemId) {
-                            R.id.action_save -> {
-                                viewModel.saveAndExit()
-                                true
-                            }
-                            else -> false
-                        }
+            setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.action_save -> {
+                        viewModel.saveAndExit()
+                        true
                     }
+                    else -> false
                 }
+            }
+        }
 
         setupFlows()
     }
