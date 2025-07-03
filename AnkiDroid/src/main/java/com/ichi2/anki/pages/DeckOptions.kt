@@ -76,6 +76,12 @@ class DeckOptions : PageFragment() {
                         //  * A 'discard changes' dialog may be shown, using confirm()
                         //  * if no changes, or changes discarded, `deckOptionsRequireClose` is called
                         //    which PostRequestHandler handles and calls on this fragment
+
+                        // Used to handle an edge-case when the page could not be fully loaded and therefore the anki-call is unavailable
+                        value ->
+                        if (value == "null") {
+                            actuallyClose()
+                        }
                     }
                 } else {
                     // The webview is not yet loaded, no change could have occurred, we can safely close it.
