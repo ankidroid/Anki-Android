@@ -117,6 +117,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:backgroundTint="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/mark_icon"
+                android:layout_width="@dimen/reviewer_mark_flag"
+                android:layout_height="@dimen/reviewer_mark_flag"
+                app:srcCompat="@drawable/ic_mark"
+                android:layout_margin="6dp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/flag_icon"
+                android:layout_width="@dimen/reviewer_mark_flag"
+                android:layout_height="@dimen/reviewer_mark_flag"
+                android:layout_gravity="end"
+                android:layout_margin="6dp"
+                tools:srcCompat="@drawable/ic_flag_red"
+                android:visibility="gone"
+                tools:visibility="visible"
+                />
         </com.google.android.material.card.MaterialCardView>
 
         <!-- Use the same card style of the WebView -->
