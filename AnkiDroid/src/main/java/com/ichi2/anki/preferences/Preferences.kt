@@ -28,6 +28,7 @@ import androidx.annotation.XmlRes
 import androidx.core.os.bundleOf
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
@@ -44,6 +45,7 @@ import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.preferences.HeaderFragment.Companion.getHeaderKeyForFragment
 import com.ichi2.anki.reviewreminders.ScheduleReminders
 import com.ichi2.anki.utils.ext.sharedPrefs
+import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.themes.Themes
 import com.ichi2.utils.FragmentFactoryUtils
 import timber.log.Timber
@@ -54,6 +56,13 @@ class PreferencesFragment :
     Fragment(R.layout.preferences),
     PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
     SearchPreferenceResultListener {
+    /**
+     * Whether the Settings view is split in two.
+     * If so, the left side contains the list of all preference categories, and the right side contains the category currently opened.
+     * Otherwise, the same view is used to show the list of categories first, and then one specific category.
+     */
+    private val settingsIsSplit get() = !resources.isWindowCompact()
+
     private val childFragmentOnBackPressedCallback =
         object : OnBackPressedCallback(enabled = false) {
             override fun handleOnBackPressed() {
@@ -62,32 +71,15 @@ class PreferencesFragment :
             }
         }
 
-    private val parentFragmentOnBackPressedCallback =
-        object : OnBackPressedCallback(enabled = false) {
-            override fun handleOnBackPressed() {
-                Timber.i("back pressed - popping parent backstack")
-                parentFragmentManager.popBackStack()
-            }
-        }
-
     private val childBackStackListener =
         FragmentManager.OnBackStackChangedListener {
-            childFragmentOnBackPressedCallback.isEnabled = !settingsIsSplit && childFragmentManager.backStackEntryCount > 0
-        }
-
-    private val parentBackStackListener =
-        FragmentManager.OnBackStackChangedListener {
-            parentFragmentOnBackPressedCallback.isEnabled = parentFragmentManager.backStackEntryCount > 0
+            childFragmentOnBackPressedCallback.isEnabled = childFragmentManager.backStackEntryCount > 0
         }
 
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        view
-            .findViewById<MaterialToolbar>(R.id.toolbar)
-            ?.setNavigationOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
-
         setupBackCallbacks()
 
         // Load initial subscreen if activity is being first created
@@ -100,7 +92,6 @@ class PreferencesFragment :
 
     override fun onDestroyView() {
         super.onDestroyView()
-        parentFragmentManager.removeOnBackStackChangedListener(parentBackStackListener)
         childFragmentManager.removeOnBackStackChangedListener(childBackStackListener)
     }
 
@@ -108,23 +99,15 @@ class PreferencesFragment :
         caller: PreferenceFragmentCompat,
         pref: Preference,
     ): Boolean {
-        // avoid reopening the same fragment if already active
-        val currentFragment =
-            childFragmentManager.findFragmentById(R.id.settings_container)
-                ?: return true
-        if (pref.fragment == currentFragment::class.jvmName) return true
-
-        val fragment =
-            childFragmentManager.fragmentFactory.instantiate(
-                requireActivity().classLoader,
-                pref.fragment ?: return true,
-            )
-        fragment.arguments = pref.extras
+        val className = pref.fragment ?: return false
+        val fragmentClass = FragmentFactory.loadFragmentClass(requireActivity().classLoader, className)
         childFragmentManager.commit {
-            hide(currentFragment)
-            add(R.id.settings_container, fragment, fragment::class.jvmName)
+            setReorderingAllowed(true)
+            replace(R.id.settings_container, fragmentClass, null)
             setFadeTransition(this)
-            addToBackStack(null)
+            if (!settingsIsSplit || caller !is HeaderFragment) {
+                addToBackStack(null)
+            }
         }
         return true
     }
@@ -152,13 +135,8 @@ class PreferencesFragment :
 
     private fun setupBackCallbacks() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, childFragmentOnBackPressedCallback)
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, parentFragmentOnBackPressedCallback)
-
-        parentFragmentManager.addOnBackStackChangedListener(parentBackStackListener)
         childFragmentManager.addOnBackStackChangedListener(childBackStackListener)
-
-        childFragmentOnBackPressedCallback.isEnabled = !settingsIsSplit && childFragmentManager.backStackEntryCount > 0
-        parentFragmentOnBackPressedCallback.isEnabled = parentFragmentManager.backStackEntryCount > 0
+        childFragmentOnBackPressedCallback.isEnabled = childFragmentManager.backStackEntryCount > 0
     }
 
     private fun setupBigScreenLayout() {
@@ -193,22 +171,29 @@ class PreferencesFragment :
             false,
         )
 
+        childFragmentManager.registerFragmentLifecycleCallbacks(
+            object : FragmentManager.FragmentLifecycleCallbacks() {
+                override fun onFragmentCreated(
+                    fm: FragmentManager,
+                    fragment: Fragment,
+                    savedInstanceState: Bundle?,
+                ) {
+                    if (fragment is HeaderFragment) return
+                    val headerFragment = childFragmentManager.findFragmentById(R.id.lateral_nav_container)
+                    val key = getHeaderKeyForFragment(fragment) ?: return
+                    (headerFragment as? HeaderFragment)?.highlightPreference(key)
+                }
+            },
+            false,
+        )
+
         // Configure headers highlight
-        childFragmentManager.executePendingTransactions() // wait the headers page creation
+        childFragmentManager.executePendingTransactions() // wait for the headers page creation
         childFragmentManager.findFragmentById(R.id.settings_container)?.let { fragment ->
             val headerFragment = childFragmentManager.findFragmentById(R.id.lateral_nav_container)
+            if (headerFragment !is HeaderFragment) return@let
             val key = getHeaderKeyForFragment(fragment) ?: return@let
-            (headerFragment as? HeaderFragment)?.highlightPreference(key)
-        }
-
-        childFragmentManager.addOnBackStackChangedListener {
-            if (!isAdded) return@addOnBackStackChangedListener
-            val fragment =
-                childFragmentManager.findFragmentById(R.id.settings_container)
-                    ?: return@addOnBackStackChangedListener
-            val headerFragment = childFragmentManager.findFragmentById(R.id.lateral_nav_container)
-            val key = getHeaderKeyForFragment(fragment) ?: return@addOnBackStackChangedListener
-            (headerFragment as? HeaderFragment)?.highlightPreference(key)
+            headerFragment.highlightPreference(key)
         }
     }
 
