@@ -1072,7 +1072,7 @@ open class Reviewer :
             }
         }
 
-        // Check if should hide hard and easy buttons
+        // Check if hard and easy buttons should be removed
         if (sharedPrefs().getBoolean(getString(R.string.hide_hard_and_easy_key), false)) {
             easeButton2!!.setVisibility(View.GONE)
             easeButton4!!.setVisibility(View.GONE)
