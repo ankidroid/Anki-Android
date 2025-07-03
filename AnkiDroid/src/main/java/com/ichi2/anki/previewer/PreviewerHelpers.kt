@@ -27,7 +27,6 @@ import org.intellij.lang.annotations.Language
  * Not exactly equal to anki's stdHtml. Some differences:
  * * `ankidroid.css` is added
  * * `bridgeCommand()` is ignored
- * * flag colors are overridden
  *
  * Aimed to be used only for reviewing/previewing cards
  *
