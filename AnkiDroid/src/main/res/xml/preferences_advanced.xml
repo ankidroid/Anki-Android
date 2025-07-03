@@ -36,6 +36,11 @@
             android:key="@string/pref_reset_languages_key" />
         <SwitchPreferenceCompat
             android:defaultValue="false"
+            android:key="@string/hide_hard_and_easy_key"
+            android:title="@string/hide_hard_and_easy"
+            />
+    <SwitchPreferenceCompat
+            android:defaultValue="false"
             android:key="@string/double_scrolling_gap_key"
             android:summary="@string/double_scrolling_gap_summ"
             android:title="@string/double_scrolling_gap" />
@@ -114,4 +119,5 @@
         android:key="@string/tts_key"
         android:summary="@string/tts_summ"
         android:title="@string/tts" />
+
 </PreferenceScreen>

@@ -55,6 +55,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import anki.frontend.SetSchedulingStatesRequest
 import com.google.android.material.color.MaterialColors
@@ -107,6 +108,7 @@ import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.ext.flag
 import com.ichi2.anki.utils.ext.setUserFlagForCards
+import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.navBarNeedsScrim
 import com.ichi2.anki.utils.remainingTime
@@ -1068,6 +1070,12 @@ open class Reviewer :
                 easeButton3!!.nextTime = labels[2]
                 easeButton4!!.nextTime = labels[3]
             }
+        }
+
+        // Check if should hide hard and easy buttons
+        if (sharedPrefs().getBoolean(getString(R.string.hide_hard_and_easy_key), false)) {
+            easeButton2!!.setVisibility(View.INVISIBLE)
+            easeButton4!!.setVisibility(View.INVISIBLE)
         }
     }
 
