@@ -26,6 +26,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceActivity
 import android.view.KeyEvent
@@ -33,6 +34,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.window.OnBackInvokedDispatcher.PRIORITY_OVERLAY
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
@@ -228,6 +230,13 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
         delegate.onCreate(savedInstanceState)
         super.onCreate(savedInstanceState)
         this.col = CollectionManager.getColUnsafe()
+        // HACK: PreferenceActivity does not have a back dispatcher
+        // on API <= 32, onKeyDown is called; on API 33+, this is needed
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            getOnBackInvokedDispatcher().registerOnBackInvokedCallback(PRIORITY_OVERLAY) {
+                tryCloseWithResult()
+            }
+        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
