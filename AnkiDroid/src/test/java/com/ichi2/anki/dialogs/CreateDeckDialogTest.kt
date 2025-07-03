@@ -29,6 +29,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.CreateDeckDialog.DeckDialogType
 import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.getOrCreateFilteredDeck
 import com.ichi2.utils.getInputTextLayout
 import com.ichi2.utils.positiveButton
 import okhttp3.internal.closeQuietly
@@ -36,6 +37,7 @@ import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.hasItem
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -273,6 +275,37 @@ class CreateDeckDialogTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun `filtered decks - duplicate creation`() {
+        fun allDeckNames() = col.decks.allNamesAndIds().map { it.name }
+
+        fun createDeck(
+            deckName: String,
+            expectedReturnValue: Boolean = true,
+        ) {
+            withCreateDeckDialog(DeckDialogType.FILTERED_DECK) {
+                onNewDeckCreated = { }
+                assertThat("createFilteredDeck", createFilteredDeck(deckName), equalTo(expectedReturnValue))
+            }
+        }
+
+        val duplicatedName = col.getOrCreateFilteredDeck(did = 0).name
+
+        createDeck(duplicatedName)
+        assertThat("initial filtered deck created", allDeckNames(), hasItem(duplicatedName))
+
+        createDeck(duplicatedName)
+        assertThat("initial filtered deck", allDeckNames(), hasItem(duplicatedName))
+        assertThat("duplicate deck is created", allDeckNames(), hasItem("$duplicatedName+"))
+
+        repeat(9) {
+            createDeck(duplicatedName)
+        }
+
+        assertThat("final duplicate deck is created", allDeckNames(), hasItem("$duplicatedName${"+".repeat(10)}"))
+        createDeck(duplicatedName, expectedReturnValue = false)
+    }
+
     /**
      * Executes [callback] on the [AlertDialog] created from [CreateDeckDialog]
      */
@@ -281,9 +314,22 @@ class CreateDeckDialogTest : RobolectricTest() {
         parentId: DeckId? = null,
         callback: (AlertDialog.() -> Unit),
     ) {
+        withCreateDeckDialog(deckDialogType, parentId) {
+            callback(this.showDialog())
+        }
+    }
+
+    /**
+     * Creates a test instance of [CreateDeckDialog]
+     */
+    private fun withCreateDeckDialog(
+        deckDialogType: DeckDialogType,
+        parentId: DeckId? = null,
+        callback: (CreateDeckDialog.() -> Unit),
+    ) {
         activityScenario.onActivity { activity: DeckPicker ->
-            val dialog = CreateDeckDialog(activity, R.string.new_deck, deckDialogType, parentId).showDialog()
-            callback(dialog)
+            val createDeckDialog = CreateDeckDialog(activity, R.string.new_deck, deckDialogType, parentId)
+            callback(createDeckDialog)
         }
     }
 
