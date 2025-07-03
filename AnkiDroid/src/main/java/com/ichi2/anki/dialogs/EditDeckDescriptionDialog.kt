@@ -32,7 +32,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.launchCatchingTask
@@ -50,18 +49,20 @@ import timber.log.Timber
  *
  * This is visible on [StudyOptionsFragment]
  */
-class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_description) {
+class EditDeckDescriptionDialog : DialogFragment() {
     private val deckId: DeckId
         get() = requireArguments().getLong(ARG_DECK_ID)
 
+    private lateinit var dialogView: View
+
     private val deckDescriptionInput: TextInputEditText
-        get() = requireView().findViewById(R.id.deck_description_input)
+        get() = dialogView.findViewById(R.id.deck_description_input)
 
     private val formatAsMarkdownInput: CheckBox
-        get() = requireView().findViewById(R.id.format_as_markdown)
+        get() = dialogView.findViewById(R.id.format_as_markdown)
 
     private val topAppBar: MaterialToolbar
-        get() = requireView().findViewById(R.id.topAppBar)
+        get() = dialogView.findViewById(R.id.topAppBar)
 
     private val saveMenuItem: MenuItem
         get() = topAppBar.menu.findItem(R.id.action_save)
@@ -94,26 +95,20 @@ class EditDeckDescriptionDialog : DialogFragment(R.layout.dialog_deck_descriptio
             }
         }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        super.onCreateDialog(savedInstanceState).also {
-            it.setCanceledOnTouchOutside(false)
-            it.setCancelable(false)
-            try {
-                (it as androidx.activity.ComponentDialog)
-                    .onBackPressedDispatcher
-                    .addCallback(this, onUnsavedChangesBackCallback)
-            } catch (e: Exception) {
-                Timber.w(e, "EditDeckDescription::backPressed")
-                CrashReportService.sendExceptionReport(e, "EditDeckDescription", "backPressed", onlyIfSilent = true)
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        this.dialogView = layoutInflater.inflate(R.layout.dialog_deck_description, null)
+        return MaterialAlertDialogBuilder(requireContext())
+            .show {
+                setView(dialogView)
+            }.apply {
+                setupDialogView(dialogView)
+                setCanceledOnTouchOutside(false)
+                setCancelable(false)
+                onBackPressedDispatcher.addCallback(this, onUnsavedChangesBackCallback)
             }
-        }
+    }
 
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?,
-    ) {
-        super.onViewCreated(view, savedInstanceState)
-
+    fun setupDialogView(view: View) {
         // load initial state
         launchCatchingTask {
             val dialog = this@EditDeckDescriptionDialog
