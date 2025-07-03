@@ -50,7 +50,6 @@ globalThis.ankidroid.showAllHints = function () {
         "touchend",
         event => {
             if (!isSingleTouch || isTextSelected() || isInteractable(event)) return;
-            event.preventDefault();
 
             if (tapTimer != null) {
                 clearTimeout(tapTimer);
@@ -78,7 +77,7 @@ globalThis.ankidroid.showAllHints = function () {
                 tapTimer = null;
             }, DOUBLE_TAP_TIMEOUT);
         },
-        { passive: false },
+        { passive: true },
     );
 
     /**
