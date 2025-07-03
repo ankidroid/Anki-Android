@@ -170,6 +170,13 @@ object Prefs {
     var username by stringPref(R.string.username_key)
     var hkey by stringPref(R.string.hkey_key)
 
+    // ************************************** Review Reminders ********************************** //
+
+    /**
+     * Review reminder IDs are unique, starting at 0 and climbing upwards by one each time a new one is created.
+     */
+    var reviewReminderNextFreeId by intPref(R.string.review_reminders_next_free_id, defaultValue = 0)
+
     // **************************************** Reviewer **************************************** //
 
     val ignoreDisplayCutout by booleanPref(R.string.ignore_display_cutout_key, false)
