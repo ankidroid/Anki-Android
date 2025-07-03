@@ -15,12 +15,15 @@
  */
 package com.ichi2.anki.preferences
 
+import android.os.Bundle
+import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.preference.Preference
 import com.bytehamster.lib.preferencesearch.SearchConfiguration
 import com.bytehamster.lib.preferencesearch.SearchPreference
+import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
@@ -29,7 +32,6 @@ import com.ichi2.anki.reviewreminders.ScheduleReminders
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.sharedPrefs
-import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.compat.CompatHelper
 import com.ichi2.preferences.HeaderPreference
 import com.ichi2.utils.AdaptionUtil
@@ -77,6 +79,16 @@ class HeaderFragment : SettingsFragment() {
             requireActivity() as AppCompatActivity,
             requirePreference<SearchPreference>(R.string.search_preference_key).searchConfiguration,
         )
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+        view.findViewById<MaterialToolbar>(R.id.toolbar).setNavigationOnClickListener {
+            requireActivity().finish()
+        }
     }
 
     fun highlightPreference(
@@ -236,11 +248,3 @@ class HeaderFragment : SettingsFragment() {
             }
     }
 }
-
-/**
- * Whether the Settings view is split in two.
- * If so, the left side contains the list of all preference categories, and the right side contains the category currently opened.
- * Otherwise, the same view is used to show the list of categories first, and then one specific category.
- */
-val Fragment.settingsIsSplit
-    get() = !resources.isWindowCompact()
