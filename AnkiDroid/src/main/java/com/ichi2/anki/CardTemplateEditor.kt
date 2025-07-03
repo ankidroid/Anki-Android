@@ -628,16 +628,6 @@ open class CardTemplateEditor :
                     override fun afterTextChanged(arg0: Editable) {
                         refreshFragmentRunnable?.let { refreshFragmentHandler.removeCallbacks(it) }
 
-                        /**
-                         * This condition is necessary to ensure that the cursor position is updated correctly.
-                         */
-                        if (editorEditText.selectionStart != 0) {
-                            templateEditor.tabToCursorPositions[cardIndex]?.set(
-                                currentEditorViewId,
-                                editorEditText.selectionStart,
-                            )
-                        }
-
                         when (currentEditorViewId) {
                             R.id.styling_edit -> tempModel.css = editorEditText.text.toString()
                             R.id.back_edit -> template.afmt = editorEditText.text.toString()
@@ -802,6 +792,11 @@ open class CardTemplateEditor :
             cardId: Int,
             editorContent: String,
         ) {
+            // saving the cursor position before changing the editor view
+            templateEditor.tabToCursorPositions[cardId]?.set(
+                currentEditorViewId,
+                editorEditText.selectionStart,
+            )
             currentEditorViewId = viewId
             editorEditText.setText(editorContent)
             editorEditText.requestFocus()
