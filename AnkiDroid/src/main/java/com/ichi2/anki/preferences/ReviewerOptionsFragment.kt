@@ -25,12 +25,6 @@ import com.ichi2.anki.settings.enums.HideSystemBars
 import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.preferences.HtmlHelpPreference
 
-/**
- * Developer options to test some of the new reviewer settings and features
- *
- * Not a `SettingsFragment` to avoid boilerplate and sending analytics reports,
- * since this is just a temporary screen while the new reviewer is being developed.
- */
 class ReviewerOptionsFragment :
     SettingsFragment(),
     PreferenceXmlSource {
