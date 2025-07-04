@@ -174,6 +174,23 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
         assertThat(prefs.getString("syncFetchMedia", null), equalTo("never"))
     }
 
+    @Test
+    fun `Double tap timeout is converted correctly`() {
+        fun testValue(
+            oldValue: Int,
+            expectedValue: Int,
+        ) {
+            prefs.edit { putInt("doubleTapTimeInterval", oldValue) }
+            PreferenceUpgrade.UpgradeDoubleTapTimeout().performUpgrade(prefs)
+            assertThat(prefs.getInt("doubleTapTimeout", -1), equalTo(expectedValue))
+        }
+        testValue(oldValue = 395, expectedValue = 400)
+        testValue(oldValue = 25, expectedValue = 20)
+        testValue(oldValue = 200, expectedValue = 200)
+        testValue(oldValue = 0, expectedValue = 0)
+        testValue(oldValue = 1350, expectedValue = 1000)
+    }
+
     // ############################
     // ##### UpgradeAppLocale #####
     // ############################
