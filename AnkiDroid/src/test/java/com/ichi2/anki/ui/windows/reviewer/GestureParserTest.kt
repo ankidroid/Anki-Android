@@ -52,17 +52,19 @@ class GestureParserTest {
         scrollY: Int = 0,
         measuredWidth: Int = 900,
         measuredHeight: Int = 1500,
+        swipeSensitivity: Float = 1F,
         gestureMode: TapGestureMode = TapGestureMode.NINE_POINT,
     ): Gesture? =
         GestureParser.parse(
-            uri,
-            isScrolling,
-            scale,
-            scrollX,
-            scrollY,
-            measuredWidth,
-            measuredHeight,
-            gestureMode,
+            uri = uri,
+            isScrolling = isScrolling,
+            scale = scale,
+            scrollX = scrollX,
+            scrollY = scrollY,
+            measuredWidth = measuredWidth,
+            measuredHeight = measuredHeight,
+            swipeSensitivity = swipeSensitivity,
+            gestureMode = gestureMode,
         )
 
     @Test
@@ -270,4 +272,26 @@ class GestureParserTest {
         val gesture = parseGesture(uri = uri, scale = 2.0f)
         assertEquals(Gesture.TAP_CENTER, gesture)
     }
+
+    // region Swipe sensitivity
+    @Test
+    fun `reduced swipe sensitivity`() {
+        val uri = createMockUri(x = 450, y = 0, deltaY = -150)
+        val gesture1 = parseGesture(uri = uri)
+        assertEquals(Gesture.SWIPE_UP, gesture1)
+
+        val gesture2 = parseGesture(uri = uri, swipeSensitivity = 0.2F)
+        assertEquals(Gesture.TAP_TOP, gesture2)
+    }
+
+    @Test
+    fun `increased swipe sensitivity`() {
+        val uri = createMockUri(x = 450, y = 0, deltaY = -90)
+        val gesture1 = parseGesture(uri = uri)
+        assertEquals(Gesture.TAP_TOP, gesture1)
+
+        val gesture2 = parseGesture(uri = uri, swipeSensitivity = 1.8F)
+        assertEquals(Gesture.SWIPE_UP, gesture2)
+    }
+    //endregion
 }
