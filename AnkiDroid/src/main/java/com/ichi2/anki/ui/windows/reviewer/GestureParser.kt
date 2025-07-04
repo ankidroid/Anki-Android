@@ -56,6 +56,7 @@ object GestureParser {
         scrollY: Int,
         measuredWidth: Int,
         measuredHeight: Int,
+        swipeSensitivity: Float,
         gestureMode: TapGestureMode,
     ): Gesture? {
         if (isScrolling) return null
@@ -68,7 +69,7 @@ object GestureParser {
         val absDeltaX = abs(deltaX)
         val absDeltaY = abs(deltaY)
 
-        val swipeThreshold = SWIPE_THRESHOLD_BASE / scale
+        val swipeThreshold = (SWIPE_THRESHOLD_BASE / swipeSensitivity) / scale
         if (absDeltaX > swipeThreshold || absDeltaY > swipeThreshold) {
             val scrollDirection = uri.getQueryParameter("scrollDirection")
             return determineSwipeGesture(deltaX, deltaY, absDeltaX, absDeltaY, scrollDirection)
@@ -95,6 +96,7 @@ object GestureParser {
         isScrolling: Boolean,
         scale: Float,
         webView: WebView,
+        swipeSensitivity: Float,
         gestureMode: TapGestureMode,
     ): Gesture? =
         parse(
@@ -105,6 +107,7 @@ object GestureParser {
             scrollY = webView.scrollY,
             measuredWidth = webView.measuredWidth,
             measuredHeight = webView.measuredHeight,
+            swipeSensitivity = swipeSensitivity,
             gestureMode = gestureMode,
         )
 

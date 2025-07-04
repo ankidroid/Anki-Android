@@ -185,6 +185,9 @@ object Prefs {
 
     val newStudyScreenAnswerButtonSize by intPref(R.string.answer_button_size_pref_key, defaultValue = 100)
 
+    val swipeSensitivity: Float
+        get() = getInt(R.string.pref_swipe_sensitivity_key, 100) / 100F
+
     val frameStyle: FrameStyle
         get() = getEnum(R.string.reviewer_frame_style_key, FrameStyle.CARD)
 
