@@ -55,12 +55,15 @@
             android:key="@string/keep_screen_on_preference"
             android:summary="@string/pref_keep_screen_on_summ"
             android:title="@string/pref_keep_screen_on" />
-        <com.ichi2.preferences.NumberRangePreferenceCompat
-            android:defaultValue="200"
-            android:key="@string/double_tap_time_interval_preference"
-            android:summary="@string/pref_double_tap_time_interval_summary"
+        <com.ichi2.preferences.SliderPreference
+            android:key="@string/double_tap_timeout_pref_key"
             android:title="@string/pref_double_tap_time_interval"
-            app:min="0"
-            app:max="2000" />
+            android:summary="@string/pref_double_tap_time_interval_summary"
+            android:valueFrom="0"
+            android:valueTo="1000"
+            android:defaultValue="200"
+            android:stepSize="10"
+            app1:displayFormat="@string/pref_milliseconds"
+            />
     </PreferenceCategory>
 </PreferenceScreen>
