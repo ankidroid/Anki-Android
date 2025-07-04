@@ -51,7 +51,8 @@
             android:defaultValue="100"
             android:valueFrom="20"
             android:valueTo="180"
-            app:displayValue="true"/>
+            app:displayFormat="@string/percentage"
+            />
 
     <Preference
         android:key="@string/pref_keyboard_shortcuts_key"
