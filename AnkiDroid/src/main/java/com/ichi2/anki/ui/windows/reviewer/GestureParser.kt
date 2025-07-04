@@ -28,7 +28,7 @@ import kotlin.math.abs
  * @see parse
  */
 object GestureParser {
-    private const val SWIPE_THRESHOLD_BASE = 18
+    private const val SWIPE_THRESHOLD_BASE = 100
     private val gestureGrid =
         listOf(
             listOf(Gesture.TAP_TOP_LEFT, Gesture.TAP_TOP, Gesture.TAP_TOP_RIGHT),

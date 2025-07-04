@@ -90,49 +90,49 @@ class GestureParserTest {
 
     @Test
     fun `parse detects SWIPE_RIGHT`() {
-        val uri = createMockUri(deltaX = 20, deltaY = 5)
+        val uri = createMockUri(deltaX = 150, deltaY = 5)
         val gesture = parseGesture(uri = uri)
         assertEquals(Gesture.SWIPE_RIGHT, gesture)
     }
 
     @Test
     fun `parse detects SWIPE_LEFT`() {
-        val uri = createMockUri(deltaX = -25, deltaY = 10)
+        val uri = createMockUri(deltaX = -150, deltaY = 10)
         val gesture = parseGesture(uri = uri)
         assertEquals(Gesture.SWIPE_LEFT, gesture)
     }
 
     @Test
     fun `parse detects SWIPE_DOWN`() {
-        val uri = createMockUri(deltaX = 5, deltaY = 20)
+        val uri = createMockUri(deltaX = 5, deltaY = 125)
         val gesture = parseGesture(uri = uri)
         assertEquals(Gesture.SWIPE_DOWN, gesture)
     }
 
     @Test
     fun `parse detects SWIPE_UP`() {
-        val uri = createMockUri(deltaX = 10, deltaY = -25)
+        val uri = createMockUri(deltaX = 10, deltaY = -150)
         val gesture = parseGesture(uri = uri)
         assertEquals(Gesture.SWIPE_UP, gesture)
     }
 
     @Test
     fun `parse ignores horizontal swipe if content can scroll horizontally`() {
-        val uri = createMockUri(deltaX = 25, scrollDirection = "h")
+        val uri = createMockUri(deltaX = 150, scrollDirection = "h")
         val gesture = parseGesture(uri = uri)
         assertNull(gesture, "Horizontal swipe should be ignored")
     }
 
     @Test
     fun `parse ignores vertical swipe if content can scroll vertically`() {
-        val uri = createMockUri(deltaY = 25, scrollDirection = "v")
+        val uri = createMockUri(deltaY = 150, scrollDirection = "v")
         val gesture = parseGesture(uri = uri)
         assertNull(gesture, "Vertical swipe should be ignored")
     }
 
     @Test
     fun `parse swipe threshold is adjusted by scale`() {
-        val uri = createMockUri(x = 50, y = 50, deltaX = 10)
+        val uri = createMockUri(x = 50, y = 50, deltaX = 100)
         val gesture = parseGesture(uri = uri, scale = 2.0f)
         assertEquals(Gesture.SWIPE_RIGHT, gesture)
     }
