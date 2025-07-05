@@ -393,6 +393,7 @@
     <string name="toolbar_position" maxLength="41">مكان شريط الأدوات</string>
     <string name="new_study_screen" maxLength="41">شاشة الدراسة الجديدة</string>
     <string name="new_study_screen_summ"><![CDATA[شاشة الدراسة المحسنة التي ستُستبدل بالشاشة الحالية. تم تغيير أو حذف بعض ميزات الشاشة القديمة. نرجو أن تُبَلِّغنا <a href="%1$s">برأيك</a> أو عن أي <a href="%2$s">خلل</a> تجده.]]></string>
+    <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">إفتح الإعدادات</string>
 </resources>

@@ -380,6 +380,7 @@
     <string name="toolbar_position" maxLength="41">Posição da Barra de tarefas</string>
     <string name="new_study_screen" maxLength="41">Nova tela de estudo</string>
     <string name="new_study_screen_summ"><![CDATA[Nova tela de estudo aprimorada que substituirá a atual. Alguns recursos da tela antiga foram alterados ou removidos. Por favor, envie qualquer <a href="%1$s">sugestão</a> ou <a href="%2$s">relato de erro</a>.]]></string>
+    <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Abrir configurações</string>
 </resources>

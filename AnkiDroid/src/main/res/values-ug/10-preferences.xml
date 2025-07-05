@@ -381,6 +381,7 @@
     <string name="toolbar_position" maxLength="41">قورال بالداق ئورنى</string>
     <string name="new_study_screen" maxLength="41">يېڭى ئۆگىنىش ئېكرانى</string>
     <string name="new_study_screen_summ"><![CDATA[ياخشىلانغان ئۆگىنىش ئېكرانى ھازىرقىنىڭ ئورنىنى ئالىدۇ. كونا ئېكراندىكى بەزى ئىقتىدارلار ئۆزگەردى ياكى چىقىرىۋېتىلدى. <a href="%1$s">قايتۇرما ئىنكاس</a> ياكى <a href="%2$s">كەمتۈك</a> دوكلاتى يوللاڭ.]]></string>
+    <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">تەڭشەكنى ئاچ</string>
 </resources>
