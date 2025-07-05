@@ -108,6 +108,9 @@ class SyncWorker(
             Timber.w(throwable)
             notify {
                 setContentTitle(applicationContext.getString(R.string.sync_error))
+                throwable.localizedMessage?.let { message ->
+                    setContentText(message)
+                }
             }
             return Result.failure()
         }
