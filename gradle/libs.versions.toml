@@ -8,7 +8,7 @@ compileSdk = "35"
 # minSdk. It is critical to update those version codes when you change this.
 minSdk = "24"  # also in testlib/build.gradle.kts
 
-targetSdk = "34"  # also in  ../robolectricDownloader.gradle
+targetSdk = "35"  # also in  ../robolectricDownloader.gradle
 acra = '5.12.0'
 ktlint = '1.5.0'
 # AGP is included in Android Studio and changelogs are not well maintained/at a stable URL
