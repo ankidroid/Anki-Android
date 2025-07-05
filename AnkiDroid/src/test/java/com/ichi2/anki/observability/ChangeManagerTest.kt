@@ -13,7 +13,7 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.libanki
+package com.ichi2.anki.observability
 
 import anki.collection.OpChanges
 import com.ichi2.testutils.JvmTest
@@ -23,7 +23,6 @@ import org.hamcrest.Matchers.greaterThan
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-import kotlin.collections.Collection
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.javaType

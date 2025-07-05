@@ -35,10 +35,10 @@ import androidx.work.testing.WorkManagerTestInitHelper
 import com.ichi2.anki.CollectionManager.CollectionOpenFailure
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.DialogHandler
+import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.libanki.Card
-import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Storage

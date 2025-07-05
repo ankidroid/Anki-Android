@@ -32,6 +32,7 @@ import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
+import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.CardInfoDestination
@@ -53,7 +54,6 @@ import com.ichi2.anki.utils.ext.flag
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
-import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.redo
 import com.ichi2.libanki.sched.Counts

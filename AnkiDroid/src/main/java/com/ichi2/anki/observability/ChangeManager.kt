@@ -25,7 +25,7 @@
  * displayed flag, without redrawing the entire study screen).
  */
 
-package com.ichi2.libanki
+package com.ichi2.anki.observability
 
 import androidx.annotation.VisibleForTesting
 import anki.collection.OpChanges
