@@ -16,78 +16,13 @@
 
 package com.ichi2.libanki
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
 class UtilsTest {
     @Test
     fun testSplit() {
         assertEquals(listOf("foo", "bar"), Utils.splitFields("foobar"))
         assertEquals(listOf("", "foo", "", "", ""), Utils.splitFields("foo"))
-    }
-
-    @Test
-    fun test_stripHTML_will_remove_tags() {
-        val strings =
-            listOf(
-                "<>",
-                "<1>",
-                "<foo>",
-                "<\n>",
-                "<\\qwq>",
-                "<aa\nsd\nas\n?\n>",
-            )
-        for (s in strings) {
-            assertEquals(
-                s.replace("\n", "\\n") + " should be removed.",
-                "",
-                Utils.stripHTML(s),
-            )
-        }
-    }
-
-    @Test
-    fun test_stripHTML_will_remove_comments() {
-        val strings =
-            listOf(
-                "<!---->",
-                "<!--dd-->",
-                "<!--asd asd asd-->",
-                "<!--\n-->",
-                "<!--\nsd-->",
-                "<!--lkl\nklk\n-->",
-            )
-        for (s in strings) {
-            assertEquals(
-                s.replace("\n", "\\n") + " should be removed.",
-                "",
-                Utils.stripHTML(s),
-            )
-        }
-    }
-
-    @Test
-    fun test_stripSpecialFields_will_remove_type() {
-        val input = "test\n\n[[type:Back]]"
-        val output = Utils.stripSpecialFields(input)
-        assertEquals(
-            "type field should be removed",
-            "test\n\n",
-            output,
-        )
-    }
-
-    @Test
-    fun test_stripSpecialFields_will_remove_avRef() {
-        val input = "test\n\n[anki:play:q:0]"
-        val output = Utils.stripSpecialFields(input)
-        assertEquals(
-            "avRef field should be removed",
-            "test\n\n",
-            output,
-        )
     }
 }

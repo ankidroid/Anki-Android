@@ -40,6 +40,7 @@ import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.backend.stripHTMLScriptAndStyleTags
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewreminders.ScheduleReminders
@@ -50,7 +51,6 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks
-import com.ichi2.libanki.Utils
 import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -726,7 +726,7 @@ class StudyOptionsFragment :
         ): Spanned {
             // #5715: In deck description, ignore what is in style and script tag
             // Since we don't currently execute the JS/CSS, it's not worth displaying.
-            val withStrippedTags = Utils.stripHTMLScriptAndStyleTags(desc)
+            val withStrippedTags = stripHTMLScriptAndStyleTags(desc)
             // #5188 - fromHtml displays newlines as " "
             val withFixedNewlines = convertNewlinesToHtml(withStrippedTags)
             return HtmlCompat.fromHtml(withFixedNewlines!!, HtmlCompat.FROM_HTML_MODE_LEGACY)

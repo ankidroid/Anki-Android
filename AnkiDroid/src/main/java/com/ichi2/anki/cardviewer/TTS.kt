@@ -22,12 +22,12 @@ import android.content.Context
 import com.ichi2.anki.CardUtils
 import com.ichi2.anki.R
 import com.ichi2.anki.ReadText
+import com.ichi2.anki.backend.stripHTML
 import com.ichi2.anki.provider.pureAnswer
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.TTSTag
-import com.ichi2.libanki.Utils
 import com.ichi2.libanki.template.TemplateFilters
 
 class TTS {
@@ -97,7 +97,7 @@ class TTS {
     ): String {
         val clozeReplacement = context.getString(R.string.reviewer_tts_cloze_spoken_replacement)
         val clozeReplaced = text.replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, clozeReplacement)
-        return Utils.stripHTML(clozeReplaced)
+        return stripHTML(clozeReplaced)
     }
 
     fun initialize(
