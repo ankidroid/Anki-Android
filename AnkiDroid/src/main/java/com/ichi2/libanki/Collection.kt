@@ -40,6 +40,7 @@ import anki.search.BrowserRow
 import anki.search.SearchNode
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
+import com.ichi2.anki.CollectionManager.getBackend
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.libanki.Utils.ids2str
@@ -53,6 +54,7 @@ import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
+import org.intellij.lang.annotations.Language
 import timber.log.Timber
 import java.io.File
 
@@ -659,6 +661,20 @@ class Collection(
     fun getIgnoredBeforeCountRaw(input: ByteArray): ByteArray = backend.getIgnoredBeforeCountRaw(input = input)
 
     fun getRetentionWorkloadRaw(input: ByteArray): ByteArray = backend.getRetentionWorkloadRaw(input = input)
+
+    /**
+     * Converts Markdown ([text]) to HTML
+     *
+     * @param text Markdown to format as HTML
+     * @param sanitize whether to sanitize the HTML using
+     * [ammonia](https://docs.rs/ammonia/latest/ammonia/). `img` tags are also stripped
+     */
+    @Language("HTML")
+    @LibAnkiAlias("render_markdown")
+    fun renderMarkdown(
+        text: String,
+        sanitize: Boolean,
+    ): String = getBackend().renderMarkdown(markdown = text, sanitize = sanitize)
 
     fun compareAnswer(
         expected: String,

@@ -37,7 +37,6 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.anki.utils.ext.description
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.CardTemplate

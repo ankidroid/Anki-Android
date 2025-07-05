@@ -69,4 +69,33 @@ class Deck : JSONObject {
         set(value) {
             put("conf", value)
         }
+
+    /**
+     * The description, shown on the deck overview and optionally the congratulations screen
+     *
+     * May be HTML or markdown, depending on [markdownDescription]
+     */
+    var description: String
+        get() = optString("desc", "")
+        set(value) {
+            put("desc", value)
+        }
+
+    /**
+     * Treats [description] as markdown, cleaning HTML input and stripping images.
+     *
+     * If disabled, the description is only shown on the deck overview.
+     * If enabled, it is also shown on the congratulations screen.
+     *
+     * Markdown will appear as text on Anki 2.1.40 and below.
+     *
+     * @see anki.backend.GeneratedBackend.renderMarkdown
+     * @see anki.i18n.GeneratedTranslations.deckConfigDescriptionNewHandling
+     * @see anki.i18n.GeneratedTranslations.deckConfigDescriptionNewHandlingHint
+     */
+    var markdownDescription: Boolean
+        get() = optBoolean("md", false)
+        set(value) {
+            put("md", value)
+        }
 }
