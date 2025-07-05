@@ -17,8 +17,8 @@ package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.notetypes.copy
+import com.ichi2.anki.backend.stripHTML
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.libanki.Utils.stripHTML
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.ext.addNote
