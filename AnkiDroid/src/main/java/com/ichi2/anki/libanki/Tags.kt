@@ -15,15 +15,15 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import androidx.annotation.CheckResult
 import androidx.annotation.WorkerThread
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import anki.tags.TagTreeNode
-import com.ichi2.libanki.utils.LibAnkiAlias
-import com.ichi2.libanki.utils.join
+import com.ichi2.anki.libanki.utils.LibAnkiAlias
+import com.ichi2.anki.libanki.utils.join
 import java.util.AbstractSet
 
 /**

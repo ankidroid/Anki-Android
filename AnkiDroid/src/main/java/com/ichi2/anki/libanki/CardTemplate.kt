@@ -14,7 +14,7 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import com.ichi2.anki.common.json.JSONObjectHolder
 import com.ichi2.anki.common.utils.ext.deepClone

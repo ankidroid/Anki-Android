@@ -14,7 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki.sched
+package com.ichi2.anki.libanki.sched
 
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
@@ -43,18 +43,18 @@ import anki.scheduler.cardAnswer
 import anki.scheduler.scheduleCardsAsNewRequest
 import com.ichi2.anki.common.time.SECONDS_PER_DAY
 import com.ichi2.anki.common.time.TimeManager.time
-import com.ichi2.libanki.Card
-import com.ichi2.libanki.CardId
-import com.ichi2.libanki.CardType
-import com.ichi2.libanki.Collection
-import com.ichi2.libanki.DeckConfig
-import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.EpochSeconds
-import com.ichi2.libanki.NoteId
-import com.ichi2.libanki.QueueType
-import com.ichi2.libanki.Utils
-import com.ichi2.libanki.utils.LibAnkiAlias
-import com.ichi2.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.CardId
+import com.ichi2.anki.libanki.CardType
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.DeckConfig
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.EpochSeconds
+import com.ichi2.anki.libanki.NoteId
+import com.ichi2.anki.libanki.QueueType
+import com.ichi2.anki.libanki.Utils
+import com.ichi2.anki.libanki.utils.LibAnkiAlias
+import com.ichi2.anki.libanki.utils.NotInLibAnki
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import kotlin.math.ceil
@@ -232,7 +232,7 @@ open class Scheduler(
     /**
      * Update a V1 scheduler collection to V2. Requires full sync.
      *
-     * @throws com.ichi2.libanki.exception.ConfirmModSchemaException
+     * @throws com.ichi2.anki.libanki.exception.ConfirmModSchemaException
      */
     fun upgradeToV2() {
         col.modSchema()

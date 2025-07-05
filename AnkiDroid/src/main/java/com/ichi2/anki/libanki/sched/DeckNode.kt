@@ -13,17 +13,17 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.libanki.sched
+package com.ichi2.anki.libanki.sched
 
 import anki.decks.DeckTreeNode
-import com.ichi2.libanki.DeckId
+import com.ichi2.anki.libanki.DeckId
 import java.lang.ref.WeakReference
 import java.util.Locale
 
 /**
- * An object of this class represent a [com.ichi2.libanki.Deck], with all information that may be useful for its usage, such as its subdecks and the number of cards to review today.
+ * An object of this class represent a [com.ichi2.anki.libanki.Deck], with all information that may be useful for its usage, such as its subdecks and the number of cards to review today.
  * This object can also represent the root of the tree, of depth -1, that is the parent of all top-level decks. All non-root decks are called read decks.
- * No change to this object are retained in the collection. Any change must be made through collections methods such as the ones of [com.ichi2.libanki.Decks].
+ * No change to this object are retained in the collection. Any change must be made through collections methods such as the ones of [com.ichi2.anki.libanki.Decks].
  *
  * Objects of this type should not be retained, as this could cause them to outlive their parent. The only exception being the above-mentioned root deck that has no parent.
  *
@@ -40,7 +40,7 @@ data class DeckNode(
     // TODO: make this immutable and simplify 'DisplayDeckNode' to contain a 'DeckNode'
     /**
      * Whether or not the deck should appear as collapsed in the deck picker.
-     * Change to this variable is not retained in the collection. The caller must change the [com.ichi2.libanki.Deck] object with the same id and save it.
+     * Change to this variable is not retained in the collection. The caller must change the [com.ichi2.anki.libanki.Deck] object with the same id and save it.
      */
     var collapsed = node.collapsed
 

@@ -16,11 +16,11 @@
 
 @file:Suppress("FunctionName")
 
-package com.ichi2.libanki.backend
+package com.ichi2.anki.libanki.backend
 
 import com.google.protobuf.ByteString
 import com.ichi2.anki.common.json.JSONObjectHolder
-import com.ichi2.libanki.utils.LibAnkiAlias
+import com.ichi2.anki.libanki.utils.LibAnkiAlias
 import org.json.JSONArray
 import org.json.JSONObject
 

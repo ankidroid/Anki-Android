@@ -16,7 +16,7 @@
 
 package com.ichi2.anki.utils.ext
 
-import com.ichi2.libanki.NotetypeJson
+import com.ichi2.anki.libanki.NotetypeJson
 
 /**
  * Regular expression pattern for extracting cloze text fields.

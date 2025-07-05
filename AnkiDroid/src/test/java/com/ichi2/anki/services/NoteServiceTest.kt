@@ -17,12 +17,12 @@ package com.ichi2.anki.services
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.libanki.Note
+import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.ImageField
 import com.ichi2.anki.multimediacard.fields.MediaClipField
 import com.ichi2.anki.servicelayer.NoteService
-import com.ichi2.libanki.Note
-import com.ichi2.libanki.NotetypeJson
 import com.ichi2.testutils.createTransientFile
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.not

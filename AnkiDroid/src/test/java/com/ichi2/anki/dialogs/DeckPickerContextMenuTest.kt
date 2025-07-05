@@ -27,8 +27,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.IntroductionActivity
 import com.ichi2.anki.R
+import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.libanki.DeckId
 import com.ichi2.testutils.BackupManagerTestUtilities.setupSpaceForBackup
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert

@@ -15,15 +15,15 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import androidx.annotation.WorkerThread
 import anki.media.CheckMediaResponse
 import com.google.protobuf.kotlin.toByteString
-import com.ichi2.libanki.Media.Companion.htmlMediaRegexps
-import com.ichi2.libanki.exception.EmptyMediaException
-import com.ichi2.libanki.utils.LibAnkiAlias
-import com.ichi2.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.Media.Companion.htmlMediaRegexps
+import com.ichi2.anki.libanki.exception.EmptyMediaException
+import com.ichi2.anki.libanki.utils.LibAnkiAlias
+import com.ichi2.anki.libanki.utils.NotInLibAnki
 import timber.log.Timber
 import java.io.File
 
@@ -79,7 +79,8 @@ open class Media(
         val model = currentCard.note(col).notetype
         // handle latex
         val renderOutput = currentCard.renderOutput(col)
-        val processedText = renderLatex(renderOutput.questionText + renderOutput.answerText, model, col)
+        val processedText =
+            renderLatex(renderOutput.questionText + renderOutput.answerText, model, col)
         // extract filenames
         for (pattern in htmlMediaRegexps) {
             val matches = pattern.findAll(processedText)

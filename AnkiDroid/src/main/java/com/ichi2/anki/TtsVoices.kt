@@ -28,8 +28,8 @@ import android.speech.tts.Voice
 import androidx.annotation.CheckResult
 import com.ichi2.anki.AndroidTtsVoice.Companion.normalize
 import com.ichi2.anki.common.utils.android.isRobolectric
-import com.ichi2.libanki.TemplateManager
-import com.ichi2.libanki.TtsVoice
+import com.ichi2.anki.libanki.TemplateManager
+import com.ichi2.anki.libanki.TtsVoice
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch

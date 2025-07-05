@@ -23,9 +23,9 @@ import com.ichi2.anki.AndroidTtsVoice
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.TtsVoices
 import com.ichi2.anki.dialogs.tryDisplayLocalizedName
-import com.ichi2.libanki.TTSTag
-import com.ichi2.libanki.TtsPlayer
-import com.ichi2.libanki.TtsVoice
+import com.ichi2.anki.libanki.TTSTag
+import com.ichi2.anki.libanki.TtsPlayer
+import com.ichi2.anki.libanki.TtsVoice
 import com.ichi2.utils.copyToClipboard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

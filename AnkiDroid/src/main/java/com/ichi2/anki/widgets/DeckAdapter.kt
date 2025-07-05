@@ -34,8 +34,8 @@ import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLon
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.deckpicker.DisplayDeckNode
+import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.ext.findViewById
-import com.ichi2.libanki.DeckId
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber

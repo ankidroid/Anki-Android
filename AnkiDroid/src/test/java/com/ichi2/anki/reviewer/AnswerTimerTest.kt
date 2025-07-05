@@ -21,8 +21,8 @@ import android.view.View
 import android.widget.Chronometer
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.libanki.Card
-import com.ichi2.libanki.Collection
+import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.Collection
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.rules.MockitoCollectionRule

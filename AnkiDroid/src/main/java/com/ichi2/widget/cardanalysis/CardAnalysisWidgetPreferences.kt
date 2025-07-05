@@ -18,8 +18,8 @@ package com.ichi2.widget.cardanalysis
 
 import android.content.Context
 import androidx.core.content.edit
-import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.Decks.Companion.NOT_FOUND_DECK_ID
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.Decks.Companion.NOT_FOUND_DECK_ID
 
 class CardAnalysisWidgetPreferences(
     context: Context,

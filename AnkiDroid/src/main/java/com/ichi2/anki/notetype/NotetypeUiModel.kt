@@ -17,7 +17,7 @@ package com.ichi2.anki.notetype
 
 import anki.notetypes.NotetypeNameId
 import anki.notetypes.NotetypeNameIdUseCount
-import com.ichi2.libanki.NoteTypeId
+import com.ichi2.anki.libanki.NoteTypeId
 
 /**
  * Data holder class which contains the data to display a single note type in [ManageNotetypes]'s

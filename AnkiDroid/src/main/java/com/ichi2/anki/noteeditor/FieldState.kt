@@ -23,9 +23,9 @@ import com.ichi2.anki.FieldEditLine
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.libanki.Field
-import com.ichi2.libanki.NotetypeJson
-import com.ichi2.libanki.Notetypes
+import com.ichi2.anki.libanki.Field
+import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.anki.libanki.Notetypes
 import com.ichi2.utils.MapUtil.getKeyByValue
 import java.util.ArrayList
 import kotlin.math.min

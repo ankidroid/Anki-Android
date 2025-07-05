@@ -16,9 +16,9 @@
 
 package com.ichi2.anki.utils.ext
 
-import com.ichi2.libanki.Deck
-import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.Decks
+import com.ichi2.anki.libanki.Deck
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.Decks
 
 var Deck.description: String
     get() = optString("desc", "")

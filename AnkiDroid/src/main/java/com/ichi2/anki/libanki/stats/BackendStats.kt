@@ -14,9 +14,9 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki.stats
+package com.ichi2.anki.libanki.stats
 
-import com.ichi2.libanki.Collection
+import com.ichi2.anki.libanki.Collection
 
 // These take and return bytes that the frontend TypeScript code will encode/decode.
 fun Collection.cardStatsRaw(input: ByteArray): ByteArray = backend.cardStatsRaw(input)

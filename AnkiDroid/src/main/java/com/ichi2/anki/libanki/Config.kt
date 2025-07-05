@@ -14,11 +14,11 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import anki.config.ConfigKey
 import com.google.protobuf.kotlin.toByteStringUtf8
-import com.ichi2.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.utils.NotInLibAnki
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import net.ankiweb.rsdroid.Backend

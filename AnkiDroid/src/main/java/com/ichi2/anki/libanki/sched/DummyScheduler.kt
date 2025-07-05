@@ -16,10 +16,10 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki.sched
+package com.ichi2.anki.libanki.sched
 
-import com.ichi2.libanki.Card
-import com.ichi2.libanki.Collection
+import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.Collection
 
 class DummyScheduler(
     col: Collection,

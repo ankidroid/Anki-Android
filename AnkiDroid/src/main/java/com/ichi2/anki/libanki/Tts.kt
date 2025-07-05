@@ -20,7 +20,7 @@
  *    License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
  */
 
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import java.io.Closeable
 

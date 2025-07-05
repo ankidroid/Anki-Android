@@ -17,9 +17,9 @@
 package com.ichi2.anki
 
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Consts
-import com.ichi2.libanki.DeckId
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.Consts
+import com.ichi2.anki.libanki.DeckId
 
 /**
  * Checks if a given deck, including its subdecks if specified, is empty.

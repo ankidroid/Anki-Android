@@ -36,10 +36,10 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.Companion.toDomainModel
 import com.ichi2.anki.dialogs.utils.performPositiveClick
-import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Consts
-import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.sched.Scheduler
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.Consts
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.testutils.AnkiFragmentScenario
 import com.ichi2.testutils.isJsonEqual
 import io.mockk.every

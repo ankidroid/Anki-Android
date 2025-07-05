@@ -34,9 +34,9 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.requireAnkiActivity
-import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.DeckNameId
 import com.ichi2.utils.BundleUtils.getNullableLong
 
 class Statistics :

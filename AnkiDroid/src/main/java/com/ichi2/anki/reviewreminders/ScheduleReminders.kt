@@ -26,7 +26,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.launchCatchingTask
-import com.ichi2.libanki.DeckId
+import com.ichi2.anki.libanki.DeckId
 import timber.log.Timber
 
 /**

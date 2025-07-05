@@ -14,7 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import anki.collection.OpChangesAfterUndo
 import anki.collection.UndoStatus as UndoStatusProto

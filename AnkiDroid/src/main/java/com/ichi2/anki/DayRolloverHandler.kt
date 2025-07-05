@@ -35,9 +35,9 @@ import androidx.core.content.ContextCompat.RECEIVER_EXPORTED
 import anki.collection.OpChanges
 import anki.collection.opChanges
 import com.ichi2.anki.CollectionManager.withOpenColOrNull
+import com.ichi2.anki.libanki.EpochSeconds
+import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.observability.ChangeManager
-import com.ichi2.libanki.EpochSeconds
-import com.ichi2.libanki.sched.Scheduler
 import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
 

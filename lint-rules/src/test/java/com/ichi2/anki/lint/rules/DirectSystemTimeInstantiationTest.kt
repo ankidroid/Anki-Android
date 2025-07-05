@@ -24,7 +24,7 @@ import org.junit.Test
 class DirectSystemTimeInstantiationTest {
     @Language("JAVA")
     private val stubTime = """                         
-package com.ichi2.libanki.utils;                 
+package com.ichi2.anki.libanki.utils;                 
                                                  
 public abstract class Time {                     
                                                  
@@ -33,7 +33,7 @@ public abstract class Time {
 
     @Language("JAVA")
     private val stubSystemTime = """                   
-package com.ichi2.libanki.utils;                 
+package com.ichi2.anki.libanki.utils;                 
                                                  
 public class SystemTime extends Time {           
                                                  
@@ -47,7 +47,7 @@ public class SystemTime extends Time {
     private val javaFileToBeTested = """               
 package com.ichi2.anki.lint.rules;               
                                                  
-import com.ichi2.libanki.utils.SystemTime;       
+import com.ichi2.anki.libanki.utils.SystemTime;       
                                                  
 public class TestJavaClass {                     
                                                  
@@ -61,7 +61,7 @@ public class TestJavaClass {
     private val javaFileWithStorage = """              
 package com.ichi2.anki.lint.rules;               
                                                  
-import com.ichi2.libanki.utils.SystemTime;       
+import com.ichi2.anki.libanki.utils.SystemTime;       
                                                  
 public class Storage {                           
                                                  
@@ -75,7 +75,7 @@ public class Storage {
     private val javaFileWithCollectionHelper = """     
 package com.ichi2.anki.lint.rules;               
                                                  
-import com.ichi2.libanki.utils.SystemTime;       
+import com.ichi2.anki.libanki.utils.SystemTime;       
                                                  
 public class CollectionHelper {                  
                                                  

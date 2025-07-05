@@ -19,7 +19,7 @@
 
 package com.ichi2.anki.multimediacard.fields
 
-import com.ichi2.libanki.Collection
+import com.ichi2.anki.libanki.Collection
 import java.io.File
 import java.util.regex.Pattern
 

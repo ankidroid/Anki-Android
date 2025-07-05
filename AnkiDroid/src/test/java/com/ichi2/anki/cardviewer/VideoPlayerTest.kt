@@ -18,7 +18,7 @@ package com.ichi2.anki.cardviewer
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.libanki.SoundOrVideoTag
+import com.ichi2.anki.libanki.SoundOrVideoTag
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.CompletionHandler
 import kotlinx.coroutines.CoroutineDispatcher

@@ -19,7 +19,7 @@ package com.ichi2.anki.reviewreminders
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.libanki.DeckId
+import com.ichi2.anki.libanki.DeckId
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.builtins.MapSerializer

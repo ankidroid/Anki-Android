@@ -20,9 +20,9 @@
  *    License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
  */
 
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
-import com.ichi2.libanki.utils.LibAnkiAlias
+import com.ichi2.anki.libanki.utils.LibAnkiAlias
 
 object BrowserConfig {
     const val ACTIVE_CARD_COLUMNS_KEY = "activeCols"
