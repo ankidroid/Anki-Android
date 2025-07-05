@@ -50,7 +50,6 @@ globalThis.ankidroid.showAllHints = function () {
         "touchend",
         event => {
             if (!isSingleTouch || isTextSelected() || isInteractable(event)) return;
-            event.preventDefault();
 
             if (tapTimer != null) {
                 clearTimeout(tapTimer);
@@ -78,29 +77,27 @@ globalThis.ankidroid.showAllHints = function () {
                 tapTimer = null;
             }, DOUBLE_TAP_TIMEOUT);
         },
-        { passive: false },
+        { passive: true },
     );
 
     /**
      * Checks if the target element or its parents are interactive.
-     * @param {HTMLElement} target
+     * @param {TouchEvent} event
      * @returns {boolean}
      */
-    function isInteractable(e) {
-        let node = e.target;
+    function isInteractable(event) {
+        let node = event.target;
         while (node && node !== document) {
-            const res =
+            if (
                 node.nodeName === "A" ||
                 node.onclick ||
                 node.nodeName === "BUTTON" ||
                 node.nodeName === "VIDEO" ||
                 node.nodeName === "SUMMARY" ||
                 node.nodeName === "INPUT" ||
-                node.getAttribute("contentEditable");
-            if (res) {
-                return true;
-            }
-            if (node.classList && node.classList.contains("tappable")) {
+                node.getAttribute("contentEditable") ||
+                (node.classList && node.classList.contains("tappable"))
+            ) {
                 return true;
             }
             node = node.parentNode;
