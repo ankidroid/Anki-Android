@@ -90,6 +90,9 @@ class SyncMediaWorker(
             Timber.w(throwable)
             notify {
                 setContentTitle(CollectionManager.TR.syncMediaFailed())
+                throwable.localizedMessage?.let { message ->
+                    setContentText(message)
+                }
             }
             return Result.failure()
         }
