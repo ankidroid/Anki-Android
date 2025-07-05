@@ -57,6 +57,7 @@ import com.ichi2.utils.HashUtil.hashSetInit
 import timber.log.Timber
 import java.util.Locale
 import kotlin.collections.ArrayList
+import kotlin.math.round
 
 private typealias VersionIdentifier = Int
 private typealias LegacyVersionIdentifier = Long
@@ -128,6 +129,7 @@ object PreferenceUpgradeService {
                     yield(UpgradeBrowserColumns())
                     yield(RemoveLastExportedAtTime())
                     yield(RemoveLongTouchGesture())
+                    yield(UpgradeDoubleTapTimeout())
                 }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -692,6 +694,26 @@ object PreferenceUpgradeService {
                     preferences.edit {
                         putString(command.preferenceKey, newBindings.toPreferenceString())
                     }
+                }
+            }
+        }
+
+        internal class UpgradeDoubleTapTimeout : PreferenceUpgrade(22) {
+            override fun upgrade(preferences: SharedPreferences) {
+                val oldPrefKey = "doubleTapTimeInterval"
+                val value = preferences.getInt(oldPrefKey, -1)
+                if (value == -1) return
+                val newValue =
+                    if (value > 1000) {
+                        1000
+                    } else {
+                        val result = value / 10.0
+                        val roundedResult = round(result)
+                        (roundedResult * 10).toInt()
+                    }
+                preferences.edit {
+                    remove(oldPrefKey)
+                    putInt("doubleTapTimeout", newValue)
                 }
             }
         }

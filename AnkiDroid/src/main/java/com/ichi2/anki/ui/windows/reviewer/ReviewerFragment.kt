@@ -763,6 +763,14 @@ class ReviewerFragment :
             super.onScaleChanged(view, oldScale, newScale)
             scale = newScale
         }
+
+        override fun onPageFinished(
+            view: WebView?,
+            url: String?,
+        ) {
+            super.onPageFinished(view, url)
+            webView.evaluateJavascript("ankidroid.doubleTapTimeout = ${Prefs.doubleTapInterval};", null)
+        }
     }
 
     companion object {
