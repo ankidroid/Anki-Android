@@ -83,6 +83,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import anki.collection.OpChanges
+import anki.decks.SetDeckCollapsedRequest
 import anki.sync.SyncStatusResponse
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.progressindicator.LinearProgressIndicator
@@ -1638,11 +1639,17 @@ open class DeckPicker :
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     suspend fun toggleDeckExpand(did: DeckId) {
-        // update DB
-        getColUnsafe.decks.collapse(did)
         // update stored state
         dueTree?.find(did)?.run {
             collapsed = !collapsed
+            // Anki uses scope as Reviewer in deck browser
+            withCol {
+                decks.setCollapsed(
+                    did,
+                    collapsed = collapsed,
+                    SetDeckCollapsedRequest.Scope.REVIEWER,
+                )
+            }
         }
         renderPage(getColUnsafe.isEmpty)
         dismissAllDialogFragments()
@@ -2629,8 +2636,12 @@ open class DeckPicker :
         changes: OpChanges,
         handler: Any?,
     ) {
+        lifecycleScope.launch {
+            updateMenuState()
+        }
+        // undo state may have changed
+        invalidateOptionsMenu()
         if (changes.studyQueues && handler !== this && handler !== viewModel) {
-            invalidateOptionsMenu()
             if (!activityPaused) {
                 // No need to update while the activity is paused, because `onResume` calls `refreshState` that calls `updateDeckList`.
                 updateDeckList()
