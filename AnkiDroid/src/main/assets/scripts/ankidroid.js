@@ -45,20 +45,20 @@ globalThis.ankidroid.doubleTapTimeout = 200;
 
     let startX = 0,
         startY = 0,
-        tapTimer = null,
-        isSingleTouch = false;
+        touchCount = 0,
+        touchStartTime = 0,
+        tapTimer = null;
 
     document.addEventListener(
         "touchstart",
         event => {
-            // Ignore multi-touch gestures (like two-finger taps)
-            if (event.touches.length > 1) {
-                isSingleTouch = false;
-                return;
-            }
-            isSingleTouch = true;
+            touchCount = event.touches.length;
             startX = event.touches[0].pageX;
             startY = event.touches[0].pageY;
+            // start counting from the first finger touch
+            if (touchCount == 1) {
+                touchStartTime = new Date().getTime();
+            }
         },
         { passive: true },
     );
@@ -66,8 +66,26 @@ globalThis.ankidroid.doubleTapTimeout = 200;
     document.addEventListener(
         "touchend",
         event => {
-            if (!isSingleTouch || isTextSelected() || isInteractable(event)) return;
+            // Only process after the final finger is lifted
+            if (
+                event.touches.length > 0 ||
+                touchCount > 4 ||
+                isTextSelected() ||
+                isInteractable(event)
+            )
+                return;
 
+            // Multi-finger detection. Takes priority over double taps
+            if (touchCount > 1) {
+                const params = new URLSearchParams({
+                    touchCount: touchCount,
+                    deltaTime: new Date().getTime() - touchStartTime,
+                });
+                window.location.href = `${SCHEME}://multiFingerTap/?${params.toString()}`;
+                return;
+            }
+
+            // Double tap detection
             if (tapTimer != null) {
                 clearTimeout(tapTimer);
                 tapTimer = null;
@@ -75,6 +93,7 @@ globalThis.ankidroid.doubleTapTimeout = 200;
                 return;
             }
 
+            // Swipes and single tap detection
             const endX = event.changedTouches[0].pageX;
             const endY = event.changedTouches[0].pageY;
             const scrollDirection = getScrollDirection(event.target);

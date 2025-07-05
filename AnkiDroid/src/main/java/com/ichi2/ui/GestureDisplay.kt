@@ -40,9 +40,9 @@ import com.ichi2.anki.cardviewer.Gesture.TAP_RIGHT
 import com.ichi2.anki.cardviewer.Gesture.TAP_TOP
 import com.ichi2.anki.cardviewer.Gesture.TAP_TOP_LEFT
 import com.ichi2.anki.cardviewer.Gesture.TAP_TOP_RIGHT
-import com.ichi2.anki.cardviewer.Gesture.entries
 import com.ichi2.anki.cardviewer.GestureListener
 import com.ichi2.anki.cardviewer.TapGestureMode
+import com.ichi2.anki.settings.Prefs
 import timber.log.Timber
 
 /** Allows selection, and display of a single gesture on a square grid
@@ -88,9 +88,11 @@ class GestureDisplay
 
         /** Lists all selectable gestures from this view (excludes null) */
         fun availableValues(): List<Gesture> =
-            entries.filter {
-                (tapGestureMode == TapGestureMode.NINE_POINT || !NINE_POINT_TAP_GESTURES.contains(it))
-            }
+            Gesture.entries
+                .filter {
+                    (tapGestureMode == TapGestureMode.NINE_POINT || !NINE_POINT_TAP_GESTURES.contains(it)) &&
+                        (Prefs.isNewStudyScreenEnabled || !MULTI_FINGER_GESTURES.contains(it))
+                }
 
         /** Sets a callback which is called when the gesture is changed, and non-null */
         fun setGestureChangedListener(listener: GestureListener) {
@@ -194,6 +196,8 @@ class GestureDisplay
         }
 
         companion object {
+            private val MULTI_FINGER_GESTURES = setOf(Gesture.TWO_FINGER_TAP, Gesture.THREE_FINGER_TAP, Gesture.FOUR_FINGER_TAP)
+
             val NINE_POINT_TAP_GESTURES = listOf(TAP_TOP_LEFT, TAP_TOP_RIGHT, TAP_CENTER, TAP_BOTTOM_LEFT, TAP_BOTTOM_RIGHT)
         }
     }
