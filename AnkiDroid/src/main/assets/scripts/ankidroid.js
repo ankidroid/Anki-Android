@@ -45,6 +45,7 @@ globalThis.ankidroid.doubleTapTimeout = 200;
 
     let startX = 0,
         startY = 0,
+        touchStartTime = 0,
         tapTimer = null,
         isSingleTouch = false;
 
@@ -57,6 +58,7 @@ globalThis.ankidroid.doubleTapTimeout = 200;
                 return;
             }
             isSingleTouch = true;
+            touchStartTime = new Date().getTime();
             startX = event.touches[0].pageX;
             startY = event.touches[0].pageY;
         },
@@ -83,6 +85,7 @@ globalThis.ankidroid.doubleTapTimeout = 200;
                 y: Math.round(endY),
                 deltaX: Math.round(endX - startX),
                 deltaY: Math.round(endY - startY),
+                deltaTime: new Date().getTime() - touchStartTime,
             });
             if (scrollDirection !== null) {
                 params.append("scrollDirection", scrollDirection);

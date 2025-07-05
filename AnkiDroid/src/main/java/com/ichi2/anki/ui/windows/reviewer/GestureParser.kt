@@ -16,6 +16,7 @@
 package com.ichi2.anki.ui.windows.reviewer
 
 import android.net.Uri
+import android.view.ViewConfiguration
 import android.webkit.WebView
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.TapGestureMode
@@ -66,6 +67,7 @@ object GestureParser {
         val pageY = uri.getIntQuery("y") ?: return null
         val deltaX = uri.getIntQuery("deltaX") ?: return null
         val deltaY = uri.getIntQuery("deltaY") ?: return null
+        val deltaTime = uri.getIntQuery("deltaTime") ?: return null
         val absDeltaX = abs(deltaX)
         val absDeltaY = abs(deltaY)
 
@@ -75,6 +77,7 @@ object GestureParser {
             return determineSwipeGesture(deltaX, deltaY, absDeltaX, absDeltaY, scrollDirection)
         }
 
+        if (deltaTime > ViewConfiguration.getLongPressTimeout()) return null // ignore long taps, not swipes
         return if (gestureMode == TapGestureMode.FOUR_POINT) {
             getFourPointsTap(pageX, pageY, scrollX, scrollY, measuredWidth, measuredHeight, scale)
         } else {

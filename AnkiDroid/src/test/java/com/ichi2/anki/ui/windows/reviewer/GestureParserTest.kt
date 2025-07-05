@@ -16,15 +16,31 @@
 package com.ichi2.anki.ui.windows.reviewer
 
 import android.net.Uri
+import android.view.ViewConfiguration
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.TapGestureMode
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
+import org.junit.After
+import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 class GestureParserTest {
+    @Before
+    fun setUp() {
+        mockkStatic(ViewConfiguration::class)
+        every { ViewConfiguration.getLongPressTimeout() } returns 400
+    }
+
+    @After
+    fun tearDown() {
+        unmockkStatic(ViewConfiguration::class)
+    }
+
     // Avoids `java.lang.RuntimeException: Method scheme in android.net.Uri$Builder not mocked.`
     // The other option is using Robolectric, but that runs much slower
     private fun createMockUri(
@@ -33,6 +49,7 @@ class GestureParserTest {
         y: Int? = 100,
         deltaX: Int? = 0,
         deltaY: Int? = 0,
+        deltaTime: Int? = 50,
         scrollDirection: String? = null,
     ): Uri =
         mockk {
@@ -41,6 +58,7 @@ class GestureParserTest {
             every { getQueryParameter("y") } returns y?.toString()
             every { getQueryParameter("deltaX") } returns deltaX?.toString()
             every { getQueryParameter("deltaY") } returns deltaY?.toString()
+            every { getQueryParameter("deltaTime") } returns deltaTime?.toString()
             every { getQueryParameter("scrollDirection") } returns scrollDirection
         }
 
@@ -292,6 +310,22 @@ class GestureParserTest {
 
         val gesture2 = parseGesture(uri = uri, swipeSensitivity = 1.8F)
         assertEquals(Gesture.SWIPE_UP, gesture2)
+    }
+    //endregion
+
+    // region Long touch
+    @Test
+    fun `long taps are ignored`() {
+        val uri = createMockUri(deltaTime = 500)
+        val gesture = parseGesture(uri = uri)
+        assertEquals(expected = null, actual = gesture)
+    }
+
+    @Test
+    fun `long swipes are not ignored`() {
+        val uri = createMockUri(x = 450, y = 0, deltaY = -150, deltaTime = 500)
+        val gesture = parseGesture(uri = uri)
+        assertEquals(expected = Gesture.SWIPE_UP, actual = gesture)
     }
     //endregion
 }
