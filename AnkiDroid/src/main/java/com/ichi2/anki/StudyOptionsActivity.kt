@@ -27,8 +27,8 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction.Companion.REQUEST_KEY
+import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.utils.ext.setFragmentResultListener
-import com.ichi2.libanki.ChangeManager
 import com.ichi2.ui.RtlCompliantActionProvider
 import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.launch

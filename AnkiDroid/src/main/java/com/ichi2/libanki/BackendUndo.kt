@@ -42,7 +42,7 @@ data class UndoStatus(
  * Undo the last backend operation.
  *
  * Should be called via collection.op(), which will notify
- * [ChangeManager.Subscriber] of the changes.
+ * [com.ichi2.anki.observability.ChangeManager.Subscriber] of the changes.
  *
  * Will throw if no undo operation is possible (due to legacy code
  * directly mutating the database).

@@ -1,31 +1,20 @@
 /*
- * Copyright (c) 2022 Ankitects Pty Ltd <http://apps.ankiweb.net>
+ *  Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
  *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 3 of the License, or (at your option) any later
+ *  version.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * With the Rust backend, operations that modify the collection return a description of changes (OpChanges).
- * The UI can subscribe to these changes, so it can update itself when actions have been performed
- * (eg, the deck list can check if studyQueues has been updated, and if so, it will redraw the list).
- *
- * The optional handler argument can be used so that the initiator of an action can tell when a
- * OpChanges action was caused by itself. This can be useful when the default change behaviour
- * should be ignored, in favour of specific handling (eg the UI wishes to directly update the
- * displayed flag, without redrawing the entire study screen).
- */
-
-package com.ichi2.libanki
+package com.ichi2.anki.observability
 
 import androidx.annotation.VisibleForTesting
 import anki.collection.OpChanges
@@ -40,6 +29,17 @@ import com.ichi2.anki.utils.ext.ifNotZero
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
+
+/**
+ * With the Rust backend, operations that modify the collection return a description of changes (OpChanges).
+ * The UI can subscribe to these changes, so it can update itself when actions have been performed
+ * (eg, the deck list can check if studyQueues has been updated, and if so, it will redraw the list).
+ *
+ * The optional handler argument can be used so that the initiator of an action can tell when a
+ * OpChanges action was caused by itself. This can be useful when the default change behaviour
+ * should be ignored, in favour of specific handling (eg the UI wishes to directly update the
+ * displayed flag, without redrawing the entire study screen).
+ */
 
 object ChangeManager {
     // do not make this a 'fun interface' - lambdas may immediately be GCed
@@ -84,15 +84,15 @@ object ChangeManager {
                 ref.opExecuted(changes, handler)
             }
         }
-        expired.size.ifNotZero { size -> Timber.v("removing %d expired subscribers", size) }
+        expired.size.ifNotZero { size -> Timber.Forest.v("removing %d expired subscribers", size) }
         for (item in expired) {
             subscribers.remove(item)
         }
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    @VisibleForTesting(otherwise = VisibleForTesting.Companion.NONE)
     fun clearSubscribers() {
-        subscribers.size.ifNotZero { size -> Timber.d("clearing %d subscribers", size) }
+        subscribers.size.ifNotZero { size -> Timber.Forest.d("clearing %d subscribers", size) }
         subscribers.clear()
     }
 
@@ -120,7 +120,7 @@ object ChangeManager {
     /**
      * An OpChanges that ensures that all data should be considered as potentially changed.
      */
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @VisibleForTesting(otherwise = VisibleForTesting.Companion.PRIVATE)
     internal val ALL =
         opChanges {
             card = true
