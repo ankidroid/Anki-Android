@@ -58,6 +58,9 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             R.string.pref_advanced_screen_key, // pref_screen_advanced
             R.string.pref_backups_screen_key, // backupsScreen
             R.string.pref_backups_help_key, // backups_help
+            R.string.pref_review_reminders_screen_key, // reviewRemindersScreen
+            R.string.pref_backup_limits_screen_key, // backupLimitsScreen
+            R.string.about_screen_key, // aboutScreen
             // Categories: don't have a value
             R.string.pref_appearance_screen_key, // appearance_preference_group
             R.string.pref_cat_plugins_key, // category_plugins
@@ -68,6 +71,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             R.string.tts_key, // tts
             R.string.pref_reset_languages_key, // resetLanguages
             R.string.pref_keyboard_shortcuts_key, // showKeyboardShortcuts
+            R.string.search_preference_key, // searchPreference
             // Opens App Bar buttons fragment
             R.string.custom_buttons_link_preference, // custom_buttons_link
             // Opens Custom sync server fragment

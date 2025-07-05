@@ -17,6 +17,10 @@ package com.ichi2.anki.preferences
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.XmlRes
 import androidx.core.os.bundleOf
@@ -24,6 +28,8 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import androidx.preference.PreferenceManager.OnPreferenceTreeClickListener
+import com.google.android.material.appbar.MaterialToolbar
+import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.preferences.DialogFragmentProvider
 import timber.log.Timber
@@ -33,15 +39,11 @@ abstract class SettingsFragment :
     PreferenceFragmentCompat(),
     OnPreferenceTreeClickListener,
     SharedPreferences.OnSharedPreferenceChangeListener,
-    TitleProvider,
     PreferenceXmlSource {
     /** @return The XML file which defines the preferences displayed by this PreferenceFragment
      */
     @get:XmlRes
     abstract override val preferenceResource: Int
-
-    override val title: CharSequence
-        get() = preferenceManager?.preferenceScreen?.title ?: ""
 
     abstract fun initSubscreen()
 
@@ -69,6 +71,30 @@ abstract class SettingsFragment :
                 value = valueToReport,
                 label = key,
             )
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        val view = inflater.inflate(R.layout.settings_fragment, container, false)
+        val preferenceView = super.onCreateView(inflater, container, savedInstanceState)
+        val listContainer = view.findViewById<FrameLayout>(android.R.id.list_container)
+        listContainer.addView(preferenceView)
+        return view
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+        val title = preferenceManager?.preferenceScreen?.title ?: ""
+        view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
+            setTitle(title)
+            setNavigationOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
         }
     }
 

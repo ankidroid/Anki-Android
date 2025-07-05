@@ -27,6 +27,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
+import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
@@ -47,16 +48,15 @@ import java.util.Date
 import java.util.Locale
 import net.ankiweb.rsdroid.BuildConfig as BackendBuildConfig
 
-class AboutFragment :
-    Fragment(R.layout.about_layout),
-    TitleProvider {
-    override val title: CharSequence
-        get() = getString(R.string.pref_cat_about_title)
-
+class AboutFragment : Fragment(R.layout.about_layout) {
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
+        view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
+            setNavigationOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
+        }
+
         // Version date
         val apkBuildDate =
             SimpleDateFormat(DateFormat.getBestDateTimePattern(Locale.getDefault(), "d MMM yyyy"))

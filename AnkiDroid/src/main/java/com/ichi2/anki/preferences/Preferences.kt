@@ -26,7 +26,9 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.XmlRes
 import androidx.core.os.bundleOf
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
@@ -40,8 +42,11 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.preferences.HeaderFragment.Companion.getHeaderKeyForFragment
 import com.ichi2.anki.reviewreminders.ScheduleReminders
 import com.ichi2.anki.utils.ext.sharedPrefs
+import com.ichi2.anki.utils.isWindowCompact
+import com.ichi2.themes.Themes
 import com.ichi2.utils.FragmentFactoryUtils
 import timber.log.Timber
 import kotlin.reflect.KClass
@@ -51,6 +56,13 @@ class PreferencesFragment :
     Fragment(R.layout.preferences),
     PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
     SearchPreferenceResultListener {
+    /**
+     * Whether the Settings view is split in two.
+     * If so, the left side contains the list of all preference categories, and the right side contains the category currently opened.
+     * Otherwise, the same view is used to show the list of categories first, and then one specific category.
+     */
+    private val settingsIsSplit get() = !resources.isWindowCompact()
+
     private val childFragmentOnBackPressedCallback =
         object : OnBackPressedCallback(enabled = false) {
             override fun handleOnBackPressed() {
@@ -59,62 +71,27 @@ class PreferencesFragment :
             }
         }
 
-    private val parentFragmentOnBackPressedCallback =
-        object : OnBackPressedCallback(enabled = false) {
-            override fun handleOnBackPressed() {
-                Timber.i("back pressed - popping parent backstack")
-                parentFragmentManager.popBackStack()
-            }
-        }
-
     private val childBackStackListener =
         FragmentManager.OnBackStackChangedListener {
-            childFragmentOnBackPressedCallback.isEnabled = !settingsIsSplit && childFragmentManager.backStackEntryCount > 0
-        }
-
-    private val parentBackStackListener =
-        FragmentManager.OnBackStackChangedListener {
-            parentFragmentOnBackPressedCallback.isEnabled = parentFragmentManager.backStackEntryCount > 0
+            childFragmentOnBackPressedCallback.isEnabled = childFragmentManager.backStackEntryCount > 0
         }
 
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        view
-            .findViewById<MaterialToolbar>(R.id.toolbar)
-            .setNavigationOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
-
         setupBackCallbacks()
 
         // Load initial subscreen if activity is being first created
         if (savedInstanceState == null) {
             loadInitialSubscreen()
-        } else {
-            childFragmentManager.findFragmentById(R.id.settings_container)?.let {
-                setFragmentTitleOnToolbar(it)
-            }
         }
 
-        childFragmentManager.addOnBackStackChangedListener {
-            val fragment =
-                childFragmentManager.findFragmentById(R.id.settings_container)
-                    ?: return@addOnBackStackChangedListener
-
-            setFragmentTitleOnToolbar(fragment)
-
-            // Expand bar in new fragments if scrolled to top
-            (fragment as? PreferenceFragmentCompat)?.listView?.post {
-                val viewHolder = fragment.listView?.findViewHolderForAdapterPosition(0)
-                val isAtTop = viewHolder != null && viewHolder.itemView.top >= 0
-                view.findViewById<AppBarLayout>(R.id.appbar).setExpanded(isAtTop, false)
-            }
-        }
+        setupBigScreenLayout()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        parentFragmentManager.removeOnBackStackChangedListener(parentBackStackListener)
         childFragmentManager.removeOnBackStackChangedListener(childBackStackListener)
     }
 
@@ -122,22 +99,15 @@ class PreferencesFragment :
         caller: PreferenceFragmentCompat,
         pref: Preference,
     ): Boolean {
-        // avoid reopening the same fragment if already active
-        val currentFragment =
-            childFragmentManager.findFragmentById(R.id.settings_container)
-                ?: return true
-        if (pref.fragment == currentFragment::class.jvmName) return true
-
-        val fragment =
-            childFragmentManager.fragmentFactory.instantiate(
-                requireActivity().classLoader,
-                pref.fragment ?: return true,
-            )
-        fragment.arguments = pref.extras
+        val className = pref.fragment ?: return false
+        val fragmentClass = FragmentFactory.loadFragmentClass(requireActivity().classLoader, className)
         childFragmentManager.commit {
-            replace(R.id.settings_container, fragment, fragment::class.jvmName)
+            setReorderingAllowed(true)
+            replace(R.id.settings_container, fragmentClass, null)
             setFadeTransition(this)
-            addToBackStack(null)
+            if (!settingsIsSplit || caller !is HeaderFragment) {
+                addToBackStack(null)
+            }
         }
         return true
     }
@@ -165,20 +135,66 @@ class PreferencesFragment :
 
     private fun setupBackCallbacks() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, childFragmentOnBackPressedCallback)
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, parentFragmentOnBackPressedCallback)
-
-        parentFragmentManager.addOnBackStackChangedListener(parentBackStackListener)
         childFragmentManager.addOnBackStackChangedListener(childBackStackListener)
-
-        childFragmentOnBackPressedCallback.isEnabled = !settingsIsSplit && childFragmentManager.backStackEntryCount > 0
-        parentFragmentOnBackPressedCallback.isEnabled = parentFragmentManager.backStackEntryCount > 0
+        childFragmentOnBackPressedCallback.isEnabled = childFragmentManager.backStackEntryCount > 0
     }
 
-    private fun setFragmentTitleOnToolbar(fragment: Fragment) {
-        val title = if (fragment is TitleProvider) fragment.title else getString(R.string.settings)
+    private fun setupBigScreenLayout() {
+        if (!settingsIsSplit) return
 
-        view?.findViewById<CollapsingToolbarLayout>(R.id.collapsingToolbarLayout)?.title = title
-        view?.findViewById<MaterialToolbar>(R.id.toolbar)?.title = title
+        // Configure the toolbars
+        childFragmentManager.registerFragmentLifecycleCallbacks(
+            object : FragmentManager.FragmentLifecycleCallbacks() {
+                override fun onFragmentViewCreated(
+                    fm: FragmentManager,
+                    fragment: Fragment,
+                    view: View,
+                    savedInstanceState: Bundle?,
+                ) {
+                    // Make the collapsing toolbar look like a normal toolbar
+                    view.findViewById<CollapsingToolbarLayout>(R.id.collapsingToolbarLayout)?.apply {
+                        updateLayoutParams<AppBarLayout.LayoutParams> {
+                            scrollFlags = 0
+                            val resId = Themes.getResFromAttr(requireContext(), android.R.attr.actionBarSize)
+                            height = resources.getDimensionPixelSize(resId)
+                        }
+                        isTitleEnabled = false
+                        setContentScrimResource(android.R.color.transparent) // removes the collapsed scrim
+                    }
+
+                    // remove `Back` button from the toolbar of other fragments
+                    if (fragment !is HeaderFragment) {
+                        view.findViewById<MaterialToolbar>(R.id.toolbar)?.navigationIcon = null
+                    }
+                }
+            },
+            false,
+        )
+
+        childFragmentManager.registerFragmentLifecycleCallbacks(
+            object : FragmentManager.FragmentLifecycleCallbacks() {
+                override fun onFragmentCreated(
+                    fm: FragmentManager,
+                    fragment: Fragment,
+                    savedInstanceState: Bundle?,
+                ) {
+                    if (fragment is HeaderFragment) return
+                    val headerFragment = childFragmentManager.findFragmentById(R.id.lateral_nav_container)
+                    val key = getHeaderKeyForFragment(fragment) ?: return
+                    (headerFragment as? HeaderFragment)?.highlightPreference(key)
+                }
+            },
+            false,
+        )
+
+        // Configure headers highlight
+        childFragmentManager.executePendingTransactions() // wait for the headers page creation
+        childFragmentManager.findFragmentById(R.id.settings_container)?.let { fragment ->
+            val headerFragment = childFragmentManager.findFragmentById(R.id.lateral_nav_container)
+            if (headerFragment !is HeaderFragment) return@let
+            val key = getHeaderKeyForFragment(fragment) ?: return@let
+            headerFragment.highlightPreference(key)
+        }
     }
 
     private fun setFadeTransition(fragmentTransaction: FragmentTransaction) {
@@ -201,10 +217,6 @@ class PreferencesFragment :
                 FragmentFactoryUtils.instantiate<Fragment>(requireActivity(), fragmentClassName)
             }
         childFragmentManager.commit {
-            // In big screens, show the headers fragment at the lateral navigation container
-            if (settingsIsSplit) {
-                replace(R.id.lateral_nav_container, HeaderFragment())
-            }
             replace(R.id.settings_container, initialFragment, initialFragment::class.java.name)
         }
     }
@@ -238,10 +250,6 @@ class PreferencesActivity :
             }
         }
     }
-}
-
-interface TitleProvider {
-    val title: CharSequence
 }
 
 // Only enable AnkiDroid notifications unrelated to due reminders

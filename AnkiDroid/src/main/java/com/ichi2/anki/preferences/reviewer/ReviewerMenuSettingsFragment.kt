@@ -44,9 +44,8 @@ class ReviewerMenuSettingsFragment :
         super.onViewCreated(view, savedInstanceState)
         repository = ReviewerMenuRepository(sharedPrefs())
         setupRecyclerView(view)
-
         view.findViewById<MaterialToolbar>(R.id.toolbar).setNavigationOnClickListener {
-            requireActivity().finish()
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
         view.findViewById<ReviewerMenuView>(R.id.reviewer_menu_view).apply {
             setOnMenuItemClickListener(this@ReviewerMenuSettingsFragment)
