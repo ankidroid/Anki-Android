@@ -134,6 +134,10 @@ class GestureProcessor(
             Gesture.TAP_BOTTOM_RIGHT -> gestureTapBottomRight
             Gesture.DOUBLE_TAP -> gestureDoubleTap
             Gesture.SHAKE -> gestureShake
+            // Restricted to the new study screen
+            Gesture.TWO_FINGER_TAP -> null
+            Gesture.THREE_FINGER_TAP -> null
+            Gesture.FOUR_FINGER_TAP -> null
         }
 
     /**
