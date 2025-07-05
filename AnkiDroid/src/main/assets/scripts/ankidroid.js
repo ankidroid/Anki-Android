@@ -22,6 +22,22 @@ globalThis.ankidroid.showAllHints = function () {
     document.querySelectorAll("a.hint").forEach(el => el.click());
 };
 
+/**
+ * @param {InputEvent} event - the oninput event of the type answer <input>
+ */
+globalThis.ankidroid.onTypeAnswerInput = function (event) {
+    const encodedValue = encodeURIComponent(event.target.value);
+    window.location.href = `ankidroid://typeinput/${encodedValue}`;
+};
+
+document.addEventListener("focusin", event => {
+    window.location.href = `ankidroid://focusin`;
+});
+
+document.addEventListener("focusout", event => {
+    window.location.href = `ankidroid://focusout`;
+});
+
 (() => {
     const DOUBLE_TAP_TIMEOUT = 250; // Max ms between taps for a double tap.
     const SCHEME = "gesture";
