@@ -41,9 +41,9 @@ import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Initializing
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Searching
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.attachFastScroller
-import com.ichi2.libanki.ChangeManager
 import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.dp
 import com.ichi2.utils.updatePaddingRelative

@@ -42,13 +42,13 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.backend.stripHTMLScriptAndStyleTags
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
+import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewreminders.ScheduleReminders
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.description
 import com.ichi2.anki.utils.ext.showDialogFragment
-import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks
 import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
