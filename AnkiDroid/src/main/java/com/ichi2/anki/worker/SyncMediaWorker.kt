@@ -154,7 +154,6 @@ class SyncMediaWorker(
                 setSmallIcon(R.drawable.ic_star_notify)
                 setCategory(NotificationCompat.CATEGORY_PROGRESS)
                 setSilent(true)
-                contentView
                 block()
             }.build()
 
