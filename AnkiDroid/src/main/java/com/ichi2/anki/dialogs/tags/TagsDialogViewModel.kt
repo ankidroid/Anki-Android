@@ -18,7 +18,7 @@ package com.ichi2.anki.dialogs.tags
 import androidx.lifecycle.ViewModel
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.asyncIO
-import com.ichi2.libanki.NoteId
+import com.ichi2.anki.libanki.NoteId
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

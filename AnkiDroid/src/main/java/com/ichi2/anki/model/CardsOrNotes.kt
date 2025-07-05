@@ -18,7 +18,7 @@ package com.ichi2.anki.model
 
 import android.os.Parcelable
 import anki.config.ConfigKey
-import com.ichi2.libanki.Collection
+import com.ichi2.anki.libanki.Collection
 import kotlinx.parcelize.Parcelize
 
 /**

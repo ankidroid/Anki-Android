@@ -17,7 +17,7 @@
 package com.ichi2.testutils.rules
 
 import com.ichi2.anki.CollectionManager
-import com.ichi2.libanki.Collection
+import com.ichi2.anki.libanki.Collection
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement

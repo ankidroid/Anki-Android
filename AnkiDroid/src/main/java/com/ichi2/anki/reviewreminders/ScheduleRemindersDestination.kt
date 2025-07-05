@@ -18,8 +18,8 @@ package com.ichi2.anki.reviewreminders
 
 import android.content.Context
 import android.content.Intent
+import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.Destination
-import com.ichi2.libanki.DeckId
 
 class ScheduleRemindersDestination(
     private val isInGlobalScope: Boolean,

@@ -21,13 +21,13 @@ package com.ichi2.anki.multimediacard.impl
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.IField
 import com.ichi2.anki.utils.ext.readSerializableList
 import com.ichi2.anki.utils.ext.writeSerializableList
 import com.ichi2.compat.readBooleanCompat
 import com.ichi2.compat.writeBooleanCompat
-import com.ichi2.libanki.NoteTypeId
 import kotlinx.parcelize.Parceler
 import kotlinx.parcelize.Parcelize
 import org.acra.util.IOUtils

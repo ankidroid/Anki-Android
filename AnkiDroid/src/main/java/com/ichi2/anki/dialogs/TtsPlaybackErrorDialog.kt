@@ -24,8 +24,8 @@ import androidx.fragment.app.FragmentManager
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.TtsVoices
+import com.ichi2.anki.libanki.TTSTag
 import com.ichi2.anki.utils.openUrl
-import com.ichi2.libanki.TTSTag
 import com.ichi2.utils.show
 import timber.log.Timber
 

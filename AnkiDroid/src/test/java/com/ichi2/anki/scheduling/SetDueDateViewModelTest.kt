@@ -17,10 +17,10 @@
 package com.ichi2.anki.scheduling
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.libanki.CardId
+import com.ichi2.anki.libanki.sched.SetDueDateDays
 import com.ichi2.anki.scheduling.SetDueDateViewModel.DateRange
 import com.ichi2.anki.scheduling.SetDueDateViewModel.Tab
-import com.ichi2.libanki.CardId
-import com.ichi2.libanki.sched.SetDueDateDays
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.common.assertThrows
 import org.hamcrest.MatcherAssert.assertThat

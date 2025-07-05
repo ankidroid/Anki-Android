@@ -44,10 +44,10 @@ import androidx.core.content.ContextCompat
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.Deck
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
-import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Deck
 import com.ichi2.utils.HashUtil
 import com.ichi2.utils.message
 import com.ichi2.utils.positiveButton

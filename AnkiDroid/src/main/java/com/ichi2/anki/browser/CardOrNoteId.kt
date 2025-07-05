@@ -17,9 +17,9 @@
 package com.ichi2.anki.browser
 
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.libanki.CardId
+import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.model.CardsOrNotes
-import com.ichi2.libanki.CardId
-import com.ichi2.libanki.NoteId
 
 /**
  * Either a [CardId] or a [NoteId]. The ID of a row inside the 'Browser' can be either.

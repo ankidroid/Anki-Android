@@ -66,7 +66,7 @@ class DirectSystemTimeInstantiation :
             )
     }
 
-    override fun getApplicableConstructorTypes() = listOf("com.ichi2.libanki.utils.SystemTime")
+    override fun getApplicableConstructorTypes() = listOf("com.ichi2.anki.libanki.utils.SystemTime")
 
     override fun visitConstructor(
         context: JavaContext,

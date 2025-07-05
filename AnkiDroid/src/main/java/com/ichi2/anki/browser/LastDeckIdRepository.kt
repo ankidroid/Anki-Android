@@ -19,8 +19,8 @@ package com.ichi2.anki.browser
 import android.content.Context
 import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.Decks
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.Decks
 
 interface LastDeckIdRepository {
     var lastDeckId: DeckId?

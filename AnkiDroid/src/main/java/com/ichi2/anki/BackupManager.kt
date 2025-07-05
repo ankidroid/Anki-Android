@@ -20,8 +20,8 @@ import android.text.format.DateFormat
 import com.ichi2.anki.common.time.Time
 import com.ichi2.anki.common.time.Time.Companion.utcOffset
 import com.ichi2.anki.common.time.TimeManager
-import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Utils
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.Utils
 import com.ichi2.utils.FileUtil.getFreeDiskSpace
 import timber.log.Timber
 import java.io.File

@@ -18,7 +18,7 @@ package com.ichi2.anki.utils.ext
 import androidx.annotation.CheckResult
 import anki.collection.OpChangesWithCount
 import com.ichi2.anki.Flag
-import com.ichi2.libanki.Collection
+import com.ichi2.anki.libanki.Collection
 
 /** Change the flag color of the specified cards. */
 @CheckResult

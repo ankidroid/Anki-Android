@@ -33,8 +33,8 @@ import anki.collection.Progress
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.libanki.Collection
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton

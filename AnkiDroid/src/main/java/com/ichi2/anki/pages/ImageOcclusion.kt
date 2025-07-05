@@ -30,7 +30,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.dialogs.DiscardChangesDialog
-import com.ichi2.libanki.DeckId
+import com.ichi2.anki.libanki.DeckId
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import timber.log.Timber

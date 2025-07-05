@@ -19,7 +19,7 @@ package com.ichi2.anki.cardviewer
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Reviewer.Companion.EXTRA_DECK_ID
-import com.ichi2.libanki.Card
+import com.ichi2.anki.libanki.Card
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
