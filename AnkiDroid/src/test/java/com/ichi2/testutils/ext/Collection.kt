@@ -16,8 +16,8 @@
 
 package com.ichi2.testutils.ext
 
-import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Note
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.Note
 
 fun Collection.addNote(note: Note): Int {
     addNote(note, note.notetype.did)

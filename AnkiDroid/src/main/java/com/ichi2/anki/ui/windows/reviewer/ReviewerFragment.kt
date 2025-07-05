@@ -74,6 +74,8 @@ import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.libanki.sched.Counts
+import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuView
 import com.ichi2.anki.preferences.reviewer.ViewerAction
@@ -109,8 +111,6 @@ import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
 import com.ichi2.anki.utils.isWindowCompact
-import com.ichi2.libanki.sched.Counts
-import com.ichi2.libanki.sched.Ease
 import com.ichi2.themes.Themes
 import com.ichi2.utils.dp
 import com.ichi2.utils.setPaddedIcon

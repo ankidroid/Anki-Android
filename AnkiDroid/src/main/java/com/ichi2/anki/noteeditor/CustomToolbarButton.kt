@@ -15,8 +15,8 @@
  */
 package com.ichi2.anki.noteeditor
 
+import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
-import com.ichi2.libanki.Consts
 import com.ichi2.utils.HashUtil.hashSetInit
 import timber.log.Timber
 import java.util.ArrayList

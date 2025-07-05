@@ -17,8 +17,8 @@ package com.ichi2.anki.cardviewer
 
 import android.webkit.URLUtil
 import android.webkit.WebResourceRequest
+import com.ichi2.anki.libanki.TtsPlayer
 import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
-import com.ichi2.libanki.TtsPlayer
 import timber.log.Timber
 import java.io.File
 

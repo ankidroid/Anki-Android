@@ -16,7 +16,7 @@
 package com.ichi2.anki.ui.windows.reviewer
 
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.libanki.sched.CurrentQueueState
+import com.ichi2.anki.libanki.sched.CurrentQueueState
 
 data class AnswerButtonsNextTime(
     val again: String,

@@ -38,12 +38,12 @@ import com.ichi2.anki.NoteEditorTest.FromScreen.REVIEWER
 import com.ichi2.anki.api.AddContentApi.Companion.DEFAULT_DECK_ID
 import com.ichi2.anki.common.annotations.DuplicatedCode
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
+import com.ichi2.anki.libanki.Consts
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.Decks.Companion.CURRENT_DECK
+import com.ichi2.anki.libanki.Note
+import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
-import com.ichi2.libanki.Consts
-import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
-import com.ichi2.libanki.Note
-import com.ichi2.libanki.NotetypeJson
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.getString
 import kotlinx.coroutines.runBlocking

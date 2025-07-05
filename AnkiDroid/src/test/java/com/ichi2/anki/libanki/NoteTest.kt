@@ -13,9 +13,9 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
-import com.ichi2.libanki.Note.ClozeUtils
+import com.ichi2.anki.libanki.Note.ClozeUtils
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test

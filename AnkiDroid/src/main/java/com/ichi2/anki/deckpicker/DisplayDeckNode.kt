@@ -19,9 +19,9 @@ package com.ichi2.anki.deckpicker
 
 import android.annotation.SuppressLint
 import androidx.annotation.VisibleForTesting
-import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.sched.DeckNode
-import com.ichi2.libanki.utils.append
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.sched.DeckNode
+import com.ichi2.anki.libanki.utils.append
 import java.util.Locale
 
 /**

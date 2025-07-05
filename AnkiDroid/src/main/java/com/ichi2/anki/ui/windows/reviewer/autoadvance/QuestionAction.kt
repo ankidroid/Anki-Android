@@ -15,8 +15,8 @@
  */
 package com.ichi2.anki.ui.windows.reviewer.autoadvance
 
-import com.ichi2.libanki.DeckConfig
-import com.ichi2.libanki.DeckConfig.Companion.QUESTION_ACTION
+import com.ichi2.anki.libanki.DeckConfig
+import com.ichi2.anki.libanki.DeckConfig.Companion.QUESTION_ACTION
 
 enum class QuestionAction(
     val code: Int,

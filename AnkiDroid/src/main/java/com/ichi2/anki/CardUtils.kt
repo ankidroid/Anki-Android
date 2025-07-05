@@ -1,9 +1,9 @@
 //noinspection MissingCopyrightHeader #8659
 package com.ichi2.anki
 
-import com.ichi2.libanki.Card
-import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Note
+import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.Note
 import com.ichi2.utils.HashUtil.hashSetInit
 
 /**

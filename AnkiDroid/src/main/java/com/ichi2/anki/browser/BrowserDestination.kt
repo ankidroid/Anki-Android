@@ -20,8 +20,8 @@ import android.content.Context
 import android.content.Intent
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.Destination
-import com.ichi2.libanki.DeckId
 
 /**
  * Opens the [CardBrowser]

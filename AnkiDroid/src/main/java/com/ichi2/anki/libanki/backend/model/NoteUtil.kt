@@ -14,10 +14,10 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.libanki.backend.model
+package com.ichi2.anki.libanki.backend.model
 
 import anki.notes.note
-import com.ichi2.libanki.Note
+import com.ichi2.anki.libanki.Note
 
 fun Note.toBackendNote(): anki.notes.Note {
     val note = this

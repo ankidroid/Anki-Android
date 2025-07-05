@@ -15,7 +15,7 @@
  */
 package com.ichi2.testutils
 
-import com.ichi2.libanki.Card
+import com.ichi2.anki.libanki.Card
 import com.ichi2.utils.ListUtil.Companion.assertListEquals
 import kotlin.test.junit5.JUnit5Asserter
 

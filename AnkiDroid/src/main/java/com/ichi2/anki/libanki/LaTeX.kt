@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import anki.card_rendering.ExtractLatexResponse
 import anki.config.ConfigKey
-import com.ichi2.libanki.utils.LibAnkiAlias
-import com.ichi2.libanki.utils.append
+import com.ichi2.anki.libanki.utils.LibAnkiAlias
+import com.ichi2.anki.libanki.utils.append
 
 data class ExtractedLatex(
     val fileName: String,

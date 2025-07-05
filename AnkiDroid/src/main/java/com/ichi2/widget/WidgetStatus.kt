@@ -19,8 +19,8 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.MetaDB
 import com.ichi2.anki.R
+import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.libanki.sched.Counts
 import com.ichi2.widget.AnkiDroidWidgetSmall.UpdateService
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope

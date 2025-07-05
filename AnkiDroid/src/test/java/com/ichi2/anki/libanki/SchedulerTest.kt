@@ -13,7 +13,7 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.scheduler.UnburyDeckRequest
@@ -21,12 +21,12 @@ import com.ichi2.anki.common.time.SECONDS_PER_DAY
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.TimeManager.time
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.libanki.CardType.Relearning
-import com.ichi2.libanki.Consts.LEECH_SUSPEND
-import com.ichi2.libanki.Consts.STARTING_FACTOR
-import com.ichi2.libanki.exception.ConfirmModSchemaException
-import com.ichi2.libanki.sched.Counts
-import com.ichi2.libanki.sched.Ease
+import com.ichi2.anki.libanki.CardType.Relearning
+import com.ichi2.anki.libanki.Consts.LEECH_SUSPEND
+import com.ichi2.anki.libanki.Consts.STARTING_FACTOR
+import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
+import com.ichi2.anki.libanki.sched.Counts
+import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.testutils.AnkiAssert
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.ext.addNote

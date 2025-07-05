@@ -46,7 +46,7 @@ class CopyrightHeaderExistsTest {
         
         package com.ichi2.upgrade;
         
-        import com.ichi2.libanki.Collection;
+        import com.ichi2.anki.libanki.Collection;
         
         import org.json.JSONException;
         import org.json.JSONObject;

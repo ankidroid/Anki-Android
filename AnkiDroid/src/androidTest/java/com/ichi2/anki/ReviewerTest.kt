@@ -29,6 +29,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withResourceName
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.tests.checkWithTimeout
@@ -39,7 +40,6 @@ import com.ichi2.anki.testutil.closeBackupCollectionDialogIfExists
 import com.ichi2.anki.testutil.closeGetStartedScreenIfExists
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
-import com.ichi2.libanki.Collection
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import org.hamcrest.MatcherAssert.assertThat

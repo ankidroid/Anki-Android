@@ -29,12 +29,12 @@ import com.ichi2.anki.cardviewer.MediaErrorBehavior
 import com.ichi2.anki.cardviewer.MediaErrorHandler
 import com.ichi2.anki.cardviewer.MediaErrorListener
 import com.ichi2.anki.launchCatchingIO
+import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.TtsPlayer
 import com.ichi2.anki.multimedia.getAvTag
 import com.ichi2.anki.multimedia.replaceAvRefsWithPlayButtons
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.PostRequestHandler
-import com.ichi2.libanki.Card
-import com.ichi2.libanki.TtsPlayer
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

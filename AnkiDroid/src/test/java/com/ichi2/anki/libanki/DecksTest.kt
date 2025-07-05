@@ -13,11 +13,11 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
+import com.ichi2.anki.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.ext.addNote

@@ -18,8 +18,8 @@ package com.ichi2.anki.reviewreminders
 
 import android.os.Parcelable
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.libanki.DeckId
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable

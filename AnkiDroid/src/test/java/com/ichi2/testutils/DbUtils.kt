@@ -18,8 +18,8 @@ package com.ichi2.testutils
 import android.content.Context
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.backend.createDatabaseUsingAndroidFramework
-import com.ichi2.libanki.DB
-import com.ichi2.libanki.Storage
+import com.ichi2.anki.libanki.DB
+import com.ichi2.anki.libanki.Storage
 
 object DbUtils {
     /** performs a query on an unopened collection  */

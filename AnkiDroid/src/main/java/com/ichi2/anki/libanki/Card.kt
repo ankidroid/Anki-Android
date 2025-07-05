@@ -15,15 +15,15 @@
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.ext.ifZero
-import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
-import com.ichi2.libanki.utils.LibAnkiAlias
-import com.ichi2.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
+import com.ichi2.anki.libanki.utils.LibAnkiAlias
+import com.ichi2.anki.libanki.utils.NotInLibAnki
 import net.ankiweb.rsdroid.RustCleanup
 
 private typealias BackendCard = anki.cards.Card

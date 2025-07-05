@@ -23,11 +23,11 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.preferences.HeaderFragment.Companion.getHeaderKeyForFragment
 import com.ichi2.anki.preferences.PreferenceTestUtils.getAttrFromXml
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment
 import com.ichi2.anki.utils.CollectionPreferences
-import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.preferences.HeaderPreference
 import com.ichi2.testutils.getInstanceFromClassName
 import com.ichi2.testutils.getJavaMethodAsAccessible

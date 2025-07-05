@@ -28,9 +28,9 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.ext.description
 import com.ichi2.anki.utils.ext.update
-import com.ichi2.libanki.DeckId
 import com.ichi2.themes.Themes
 import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
 import timber.log.Timber

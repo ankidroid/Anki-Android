@@ -13,23 +13,23 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
+import com.ichi2.anki.libanki.DeckConfig.Companion.ANSWER_ACTION
+import com.ichi2.anki.libanki.DeckConfig.Companion.LAPSE
+import com.ichi2.anki.libanki.DeckConfig.Companion.MAX_TAKEN
+import com.ichi2.anki.libanki.DeckConfig.Companion.NEW
+import com.ichi2.anki.libanki.DeckConfig.Companion.QUESTION_ACTION
+import com.ichi2.anki.libanki.DeckConfig.Companion.REV
+import com.ichi2.anki.libanki.DeckConfig.Companion.STOP_TIME_ON_ANSWER
+import com.ichi2.anki.libanki.DeckConfig.Companion.TIMER
+import com.ichi2.anki.libanki.DeckConfig.Companion.WAIT_FOR_AUDIO
+import com.ichi2.anki.libanki.DeckConfig.New
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.AutomaticAnswerAction.Companion.answerAction
 import com.ichi2.anki.ui.windows.reviewer.autoadvance.QuestionAction
 import com.ichi2.anki.ui.windows.reviewer.autoadvance.QuestionAction.Companion.questionAction
-import com.ichi2.libanki.DeckConfig.Companion.ANSWER_ACTION
-import com.ichi2.libanki.DeckConfig.Companion.LAPSE
-import com.ichi2.libanki.DeckConfig.Companion.MAX_TAKEN
-import com.ichi2.libanki.DeckConfig.Companion.NEW
-import com.ichi2.libanki.DeckConfig.Companion.QUESTION_ACTION
-import com.ichi2.libanki.DeckConfig.Companion.REV
-import com.ichi2.libanki.DeckConfig.Companion.STOP_TIME_ON_ANSWER
-import com.ichi2.libanki.DeckConfig.Companion.TIMER
-import com.ichi2.libanki.DeckConfig.Companion.WAIT_FOR_AUDIO
-import com.ichi2.libanki.DeckConfig.New
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.assertFalse
 import com.ichi2.testutils.isJsonHolderEqual

@@ -23,7 +23,7 @@
  *
  */
 
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import androidx.annotation.CheckResult
 import anki.collection.OpChanges
@@ -39,12 +39,12 @@ import anki.decks.copy
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.ext.jsonObjectIterable
-import com.ichi2.libanki.backend.BackendUtils
-import com.ichi2.libanki.backend.BackendUtils.toJsonBytes
-import com.ichi2.libanki.utils.LibAnkiAlias
-import com.ichi2.libanki.utils.NotInLibAnki
-import com.ichi2.libanki.utils.append
-import com.ichi2.libanki.utils.len
+import com.ichi2.anki.libanki.backend.BackendUtils
+import com.ichi2.anki.libanki.backend.BackendUtils.toJsonBytes
+import com.ichi2.anki.libanki.utils.LibAnkiAlias
+import com.ichi2.anki.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.utils.append
+import com.ichi2.anki.libanki.utils.len
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException

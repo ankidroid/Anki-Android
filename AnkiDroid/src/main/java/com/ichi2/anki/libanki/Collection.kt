@@ -24,7 +24,7 @@
 // "FunctionName": many libAnki functions used to have leading _s
 @file:Suppress("FunctionName")
 
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
@@ -42,15 +42,15 @@ import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.libanki.Utils.ids2str
-import com.ichi2.libanki.backend.model.toBackendNote
-import com.ichi2.libanki.backend.model.toProtoBuf
-import com.ichi2.libanki.exception.ConfirmModSchemaException
-import com.ichi2.libanki.exception.InvalidSearchException
-import com.ichi2.libanki.sched.DummyScheduler
-import com.ichi2.libanki.sched.Scheduler
-import com.ichi2.libanki.utils.LibAnkiAlias
-import com.ichi2.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.Utils.ids2str
+import com.ichi2.anki.libanki.backend.model.toBackendNote
+import com.ichi2.anki.libanki.backend.model.toProtoBuf
+import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
+import com.ichi2.anki.libanki.exception.InvalidSearchException
+import com.ichi2.anki.libanki.sched.DummyScheduler
+import com.ichi2.anki.libanki.sched.Scheduler
+import com.ichi2.anki.libanki.utils.LibAnkiAlias
+import com.ichi2.anki.libanki.utils.NotInLibAnki
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import timber.log.Timber

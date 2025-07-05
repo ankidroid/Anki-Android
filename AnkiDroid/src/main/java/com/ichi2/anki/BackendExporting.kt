@@ -17,10 +17,10 @@ import anki.import_export.ExportLimit
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.ExportReadyDialog
-import com.ichi2.libanki.Collection
-import com.ichi2.libanki.exportAnkiPackage
-import com.ichi2.libanki.exportCardsCsv
-import com.ichi2.libanki.exportNotesCsv
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.exportAnkiPackage
+import com.ichi2.anki.libanki.exportCardsCsv
+import com.ichi2.anki.libanki.exportNotesCsv
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 
 fun AnkiActivity.exportApkgPackage(

@@ -20,14 +20,14 @@
  *     License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
  */
 
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import com.ichi2.anki.common.annotations.NeedsTest
-import com.ichi2.libanki.TemplateManager.PartiallyRenderedCard.Companion.avTagsToNative
-import com.ichi2.libanki.backend.BackendUtils
-import com.ichi2.libanki.backend.model.toBackendNote
-import com.ichi2.libanki.utils.append
-import com.ichi2.libanki.utils.len
+import com.ichi2.anki.libanki.TemplateManager.PartiallyRenderedCard.Companion.avTagsToNative
+import com.ichi2.anki.libanki.backend.BackendUtils
+import com.ichi2.anki.libanki.backend.model.toBackendNote
+import com.ichi2.anki.libanki.utils.append
+import com.ichi2.anki.libanki.utils.len
 import net.ankiweb.rsdroid.exceptions.BackendTemplateException
 
 private typealias Union<A, B> = Pair<A, B>

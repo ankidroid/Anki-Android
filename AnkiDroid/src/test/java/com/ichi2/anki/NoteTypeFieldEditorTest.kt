@@ -21,7 +21,7 @@ import android.content.Intent
 import android.view.ContextThemeWrapper
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
-import com.ichi2.libanki.exception.ConfirmModSchemaException
+import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import org.hamcrest.MatcherAssert
