@@ -65,7 +65,6 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             R.string.pref_appearance_screen_key, // appearance_preference_group
             R.string.pref_cat_plugins_key, // category_plugins
             R.string.pref_cat_workarounds_key, // category_workarounds
-            R.string.pref_cat_controls_general_key, // controlsGeneral
             R.string.pref_controls_tab_layout_key, // controlsTabLayout
             // Preferences that only click: don't have a value
             R.string.tts_key, // tts

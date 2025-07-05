@@ -92,7 +92,6 @@
     <string name="pref_keyboard_shortcuts_key">showKeyboardShortcuts</string>
     <string name="pref_swipe_sensitivity_key">swipeSensitivity</string>
     <string name="pref_controls_tab_layout_key">controlsTabLayout</string>
-    <string name="pref_cat_controls_general_key">controlsGeneral</string>
     <string name="show_answer_command_key">binding_SHOW_ANSWER</string>
     <string name="answer_again_command_key">binding_FLIP_OR_ANSWER_EASE1</string>
     <string name="answer_hard_command_key">binding_FLIP_OR_ANSWER_EASE2</string>
