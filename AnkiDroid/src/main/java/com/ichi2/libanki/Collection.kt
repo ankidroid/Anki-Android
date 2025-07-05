@@ -651,6 +651,8 @@ class Collection(
 
     fun getRetentionWorkloadRaw(input: ByteArray): ByteArray = backend.getRetentionWorkloadRaw(input = input)
 
+    fun evaluateParamsLegacyRaw(input: ByteArray): ByteArray = backend.evaluateParamsLegacyRaw(input = input)
+
     fun compareAnswer(
         expected: String,
         provided: String,
