@@ -380,6 +380,7 @@
     <string name="toolbar_position" maxLength="41">Araç çubuğu konumu</string>
     <string name="new_study_screen" maxLength="41">Yeni çalışma ekranı</string>
     <string name="new_study_screen_summ"><![CDATA[Şu anda varolan çalışma ekranının yerine geçecek olan ekran. Eski ekranın belirli özellikleri değiştirilmiş veya silinmiş bulunuyor. Lütfen herhangi bir <a href="%1$s">geri bildiriminizi</a> veya <a href="%2$s">bulduğunuz hataları</a> bildirin.]]></string>
+    <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Ayarları aç</string>
 </resources>
