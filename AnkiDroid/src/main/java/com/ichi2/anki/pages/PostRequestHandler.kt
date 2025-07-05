@@ -40,7 +40,6 @@ import com.ichi2.libanki.getImportAnkiPackagePresetsRaw
 import com.ichi2.libanki.getNotetypeNamesRaw
 import com.ichi2.libanki.sched.computeFsrsParamsRaw
 import com.ichi2.libanki.sched.computeOptimalRetentionRaw
-import com.ichi2.libanki.sched.evaluateParamsRaw
 import com.ichi2.libanki.sched.simulateFsrsReviewRaw
 import com.ichi2.libanki.stats.cardStatsRaw
 import com.ichi2.libanki.stats.getGraphPreferencesRaw
@@ -82,7 +81,7 @@ val collectionMethods =
         "getDeckConfigsForUpdate" to { bytes -> getDeckConfigsForUpdateRaw(bytes) },
         "computeOptimalRetention" to { bytes -> computeOptimalRetentionRaw(bytes) },
         "computeFsrsParams" to { bytes -> computeFsrsParamsRaw(bytes) },
-        "evaluateParams" to { bytes -> evaluateParamsRaw(bytes) },
+        "evaluateParamsLegacy" to { bytes -> evaluateParamsLegacyRaw(bytes) },
         "simulateFsrsReview" to { bytes -> simulateFsrsReviewRaw(bytes) },
         "getImageForOcclusion" to { bytes -> getImageForOcclusionRaw(bytes) },
         "getImageOcclusionNote" to { bytes -> getImageOcclusionNoteRaw(bytes) },
@@ -91,6 +90,7 @@ val collectionMethods =
         "setSchedulingStates" to { bytes -> setSchedulingStatesRaw(bytes) },
         "getChangeNotetypeInfo" to { bytes -> getChangeNotetypeInfoRaw(bytes) },
         "changeNotetype" to { bytes -> changeNotetypeRaw(bytes) },
+        "importJsonString" to { bytes -> importJsonStringRaw(bytes) },
         "importJsonFile" to { bytes -> importJsonFileRaw(bytes) },
         "congratsInfo" to { bytes -> congratsInfoRaw(bytes) },
         "getImageOcclusionFields" to { bytes -> getImageOcclusionFieldsRaw(bytes) },
