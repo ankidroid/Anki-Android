@@ -730,6 +730,7 @@ class ReviewerFragment :
         private var isScrolling: Boolean = false
         private var isScrollingJob: Job? = null
         private val gestureMode = TapGestureMode.fromPreference(sharedPrefs())
+        private val swipeSensitivity = Prefs.swipeSensitivity
 
         init {
             webView.setOnScrollChangeListener { _, _, _, _, _ ->
@@ -746,7 +747,7 @@ class ReviewerFragment :
         override fun handleUrl(url: Uri): Boolean {
             return when (url.scheme) {
                 "gesture" -> {
-                    val gesture = GestureParser.parse(url, isScrolling, scale, webView, gestureMode) ?: return true
+                    val gesture = GestureParser.parse(url, isScrolling, scale, webView, swipeSensitivity, gestureMode) ?: return true
                     Timber.v("ReviewerFragment::onGesture %s", gesture)
                     bindingMap.onGesture(gesture)
                     true
