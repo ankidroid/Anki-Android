@@ -1,6 +1,6 @@
 AnkiDroid bilan istalgan narsani eslab qoling!
 
-AnkiDroid sizga flesh-kartalarni endi unutay deganingizda koʻrsatib, juda samarali oʻrganishga yordam beradi. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
+AnkiDroid sizga flesh-kartalarni endi unutay deganingizda koʻrsatib, juda samarali oʻrganishga yordam beradi. U Windows, Linux va macOSʼda mavjud Anki oraliqli takrorlash dasturiga (shu jumladan sinxronizatsiyaga ham) toʻliq mos keladi.
 
 Turli xil narsalarni istalgan joy va istalgan vaqtingizda oʻrganing. Avtobus safarlarida, supermarket navbatlarida yoki boshqa har qanday kutish holatidagi boʻsh vaqtingizdan unumli foydalaning!
 

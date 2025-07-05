@@ -73,17 +73,17 @@
         <item quantity="other">%d دقيقة متبقية</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of minutes.">
-        <item quantity="zero">بقيت %2$d دقيقة</item>
-        <item quantity="one">بقيت ساعة و%2$d دقيقة</item>
-        <item quantity="two">بقيت ساعتان و%2$d دقيقة</item>
+        <item quantity="zero">بقِيَت (%1$d) ساعة و(%2$d) دقيقة</item>
+        <item quantity="one">تبقى %1$d ساعة و%2$d دقيقة</item>
+        <item quantity="two">تبقى %1$d ساعة و%2$d دقيقة</item>
         <item quantity="few">بقيت %1$d ساعات و%2$d دقيقة</item>
         <item quantity="many">بقيت %1$d ساعة و%2$d دقيقة</item>
         <item quantity="other">بقيت %1$d ساعة و%2$d دقيقة</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of hours.">
-        <item quantity="zero">بقيت %2$d ساعة</item>
-        <item quantity="one">بقي يومٌ و%2$d ساعة</item>
-        <item quantity="two">بقي يومان و%2$d ساعة</item>
+        <item quantity="zero">بقي (%1$d) يومًا و(%2$d) ساعة</item>
+        <item quantity="one">بقي (%1$d) يومًا و(%2$d) ساعة</item>
+        <item quantity="two">تبقى يومين %1$d و %2$d ساعة</item>
         <item quantity="few">بقيت %1$d أيام و%2$d ساعة</item>
         <item quantity="many">بقي %1$d يومًا و%2$d ساعة</item>
         <item quantity="other">بقي %1$d يومًا و%2$d ساعة</item>
@@ -153,7 +153,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">واصِل المزامنة</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">أُلغِيت المزامنة</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">جار الإلغاء&#8230;\nقد يستغرق الأمر بعض الوقت.</string>
-    <string name="syncing_media">تجري مزامنة الوسائط</string>
+    <string name="syncing_media">تتم مزامنة الوسائط</string>
     <string name="export_deck" maxLength="28">صدِّر الرزمة</string>
     <string name="export_collection">صدِّر المجموعة</string>
     <string name="nothing">فارغ</string>
@@ -170,15 +170,15 @@
     <plurals name="card_template_editor_confirm_add">
         <item quantity="zero">سيؤدي هذا إلى إنشاء %1$d بطاقة. هل تريد المتابعة؟</item>
         <item quantity="one">سيؤدي هذا إلى إنشاء %1$d بطاقة. هل تريد المتابعة؟</item>
-        <item quantity="two">سيؤدي هذا إلى إنشاء بطاقتين. هل تريد المتابعة؟</item>
+        <item quantity="two">سيؤدي هذا إلى إنشاء %1$d بطاقة. هل تريد المتابعة؟</item>
         <item quantity="few">سيؤدي هذا إلى إنشاء %1$d بطاقات. هل تريد المتابعة؟</item>
         <item quantity="many">سيؤدي هذا إلى إنشاء %1$d بطاقة. هل تريد المتابعة؟</item>
         <item quantity="other">سيؤدي هذا إلى إنشاء %1$d بطاقة. هل تريد المتابعة؟</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="zero">أَواثق من حذف نوع البطاقة «%2$s» وبطاقاته البالغ عددها %1$d بطاقة؟</item>
-        <item quantity="one">أَواثق من حذف نوع البطاقة «%2$s» وبطاقته الوحيدة؟</item>
-        <item quantity="two">أَواثق من حذف نوع البطاقة «%2$s» وبطاقتيه الإثنتين؟</item>
+        <item quantity="one">هل تريد حذف نوع البطاقة ”%2$s“، و %1$d بطاقة متعلقة بها؟</item>
+        <item quantity="two">هل تريد حذف نوع البطاقة ”%2$s“، و %1$d بطاقات متعلقة بها؟</item>
         <item quantity="few">أَواثق من حذف نوع البطاقة «%2$s» وبطاقاته البالغ عددها %1$d بطاقات؟</item>
         <item quantity="many">أَواثق من حذف نوع البطاقة «%2$s» وبطاقاته البالغ عددها %1$d بطاقة؟</item>
         <item quantity="other">أَواثق من حذف نوع البطاقة «%2$s» وبطاقاته البالغ عددها %1$d بطاقة؟</item>

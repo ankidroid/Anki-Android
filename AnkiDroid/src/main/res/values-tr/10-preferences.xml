@@ -375,11 +375,11 @@
     <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Üst</string>
     <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Alt</string>
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Hiçbiri</string>
-    <string name="toolbar" maxLength="41">Toolbar</string>
-    <string name="toolbar_actions" maxLength="41">Toolbar actions</string>
-    <string name="toolbar_position" maxLength="41">Toolbar position</string>
-    <string name="new_study_screen" maxLength="41">New study screen</string>
-    <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
+    <string name="toolbar" maxLength="41">Araç çubuğu</string>
+    <string name="toolbar_actions" maxLength="41">Araç çubuğu eylemleri</string>
+    <string name="toolbar_position" maxLength="41">Araç çubuğu konumu</string>
+    <string name="new_study_screen" maxLength="41">Yeni çalışma ekranı</string>
+    <string name="new_study_screen_summ"><![CDATA[Şu anda varolan çalışma ekranının yerine geçecek olan ekran. Eski ekranın belirli özellikleri değiştirilmiş veya silinmiş bulunuyor. Lütfen herhangi bir <a href="%1$s">geri bildiriminizi</a> veya <a href="%2$s">bulduğunuz hataları</a> bildirin.]]></string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Ayarları aç</string>
 </resources>

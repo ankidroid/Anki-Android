@@ -196,7 +196,7 @@
     <string name="restore_default" maxLength="28">Restablecer Predefinidos</string>
     <string name="reviewer_tts_cloze_spoken_replacement">En blanco</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
-    <string name="white_board_eraser_enabled">Eraser mode activated</string>
+    <string name="white_board_eraser_enabled">Modo borrador activado</string>
     <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">No se pudo guardar la imagen de pizarra. %s</string>

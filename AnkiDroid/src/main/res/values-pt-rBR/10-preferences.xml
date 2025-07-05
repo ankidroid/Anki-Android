@@ -148,7 +148,7 @@
     <string name="notification_pref_title" maxLength="41">Notificar quando</string>
     <string name="never_notify">Nunca notificar</string>
     <string name="notify_when_pending">Houver mensagens pendentes</string>
-    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">Mais de %d cartas pendentes</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrar</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Luz de piscamento</string>
     <string name="select_locale_title">Selecionar Idioma</string>
@@ -168,7 +168,7 @@
     <string name="show_estimates" maxLength="41">Mostrar o tempo no botão</string>
     <string name="show_estimates_summ">Mostrar a próxima revisão acima dos botões de resposta</string>
     <string name="show_large_answer_buttons" maxLength="41">Mostrar botões de resposta grandes</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons_summ">Mostra o botão de respostas em 2 linhas.</string>
     <string name="show_top_bar" maxLength="41">Mostrar barra superior</string>
     <string name="show_top_bar_summary">Mostrar contagem de cartas, bandeira e marcações na barra superior</string>
     <string name="show_progress" maxLength="41">Mostar restantes</string>
@@ -260,7 +260,7 @@
     <string name="about_contributors_description"><![CDATA[Estes são os nossos incríveis <a href=\"%1$s\">colaboradores</a>. Você também pode ajudar o AnkiDroid programando, traduzindo, doando e <a href=\"%2$s\">mais</a>!]]></string>
     <string name="license">Licença</string>
     <string name="license_description"><![CDATA[O AnkiDroid é publicado sob as licenças <a href=\"%1$s\">GPL-3.0</a> e <a href=\"%2$s\">AGPL-3.0</a> , com o código-fonte disponível <a href=\"%3$s\">no GitHub</a>]]></string>
-    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
+    <string name="other_licenses"><![CDATA[O AnkiDroid também utiliza bibliotecas e ícones de terceiros, que estão licenciados sob diversas <a href=\"%1$s\">licenças</a> de código aberto.]]></string>
     <string name="donate_description"><![CDATA[Você pode apoiar o desenvolvimento de AnkiDroid <a href=\"%1$s\">doando</a>. Qualquer quantia é profundamente apreciada.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Adicionar gesto</string>
@@ -269,7 +269,7 @@
     <string name="binding_add_axis">Adicionar controle</string>
     <string name="axis_picker_move_joystick">Movimente o controle</string>
     <string name="user_actions" maxLength="41">Ações do usuário</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
+    <string name="user_actions_summary" maxLength="41">Executar JavaScript a partir da tela de estudo</string>
     <string name="user_action_1" maxLength="28">Ação do usuário 1</string>
     <string name="user_action_2" maxLength="28">Ação do usuário 2</string>
     <string name="user_action_3" maxLength="28">Ação do usuário 3</string>
@@ -294,8 +294,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <string name="readtext_deprecation_warn">O AnkiDroid introduziu um mecanismo TTS melhor, que é compatível com outros clientes Anki e inclui mais vozes e melhorias na reprodução de idiomas! Por favor, atualize o mais rapidamente possível, pois esta definição será removida em breve</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Por favor, atualize para o novo texto para o formato da fala</string>
-    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
-    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
+    <string name="pref_fixed_port_title" maxLength="41">localStorage na tela de estudo</string>
+    <string name="pref_fixed_port_summary">Ativa o localStorage do JavaScript utilizando uma porta de servidor fixa na Tela de Estudo.</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Opções do desenvolvedor</string>
     <string name="dev_options_enabled_pref" maxLength="41">Ativar opções do desenvolvedor</string>
@@ -372,14 +372,14 @@
     <string name="reviewer_frame_style" maxLength="41">Estilo de enquadramento</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Cartão</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Caixa</string>
-    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Top</string>
-    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Bottom</string>
-    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">None</string>
-    <string name="toolbar" maxLength="41">Toolbar</string>
-    <string name="toolbar_actions" maxLength="41">Toolbar actions</string>
-    <string name="toolbar_position" maxLength="41">Toolbar position</string>
-    <string name="new_study_screen" maxLength="41">New study screen</string>
-    <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
+    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Acima</string>
+    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Inferior</string>
+    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Nenhum</string>
+    <string name="toolbar" maxLength="41">Barra de ferramentas</string>
+    <string name="toolbar_actions" maxLength="41">Ações da Barra de tarefas</string>
+    <string name="toolbar_position" maxLength="41">Posição da Barra de tarefas</string>
+    <string name="new_study_screen" maxLength="41">Nova tela de estudo</string>
+    <string name="new_study_screen_summ"><![CDATA[Nova tela de estudo aprimorada que substituirá a atual. Alguns recursos da tela antiga foram alterados ou removidos. Por favor, envie qualquer <a href="%1$s">sugestão</a> ou <a href="%2$s">relato de erro</a>.]]></string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Abrir configurações</string>
 </resources>

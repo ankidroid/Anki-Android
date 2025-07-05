@@ -46,7 +46,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
     <string name="drawer_open">إفتح القائمة</string>
-    <string name="drawer_close">إغلاق القائمة</string>
+    <string name="drawer_close">أغلق القائمة</string>
     <string name="CardEditorCardDeck">رزمة البطاقة:</string>
     <string name="CardEditorNoteDeck">الرزمة:</string>
     <string name="CardEditorModel">النوع:</string>
@@ -115,8 +115,8 @@
     <string name="timebox_reached_title">انتهت مهلة التأطير الزمني</string>
     <plurals name="timebox_reached">
         <item quantity="zero">درست %1$d بطاقة خلال %2$s</item>
-        <item quantity="one">درست بطاقة واحدة خلال %2$s</item>
-        <item quantity="two">درست بطاقتين خلال %2$s</item>
+        <item quantity="one">درست %1$d بطاقة خلال %2$s</item>
+        <item quantity="two">درست %1$d بطاقة خلال %2$s</item>
         <item quantity="few">درست %1$d بطاقات خلال %2$s</item>
         <item quantity="many">درست %1$d بطاقة خلال %2$s</item>
         <item quantity="other">درست %1$d بطاقة خلال %2$s</item>
@@ -124,8 +124,8 @@
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
         <item quantity="zero">%1$d دقيقة</item>
-        <item quantity="one">دقيقة واحدة</item>
-        <item quantity="two">دقيقتين</item>
+        <item quantity="one">%1$d دقيقة</item>
+        <item quantity="two">%1$d دقيقة</item>
         <item quantity="few">%1$d دقائق</item>
         <item quantity="many">%1$d دقيقة</item>
         <item quantity="other">%1$d دقيقة</item>
@@ -138,7 +138,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">عايِن</string>
     <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">إنسخ كماركداون</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d من %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">إعادة التسمية</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">إعادة تسمية</string>
     <string name="checks_action" maxLength="28">تحقق</string>
     <string name="check_db" maxLength="28">إفحص قاعدة البيانات</string>
     <string name="check_media" maxLength="28">إفحص الوسائط</string>
@@ -146,11 +146,11 @@
     <string name="unknown_type_field_warning">إدخال الجواب: حقل مجهول %s</string>
     <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">جارٍ حذف الرزمة&#8230;</string>
     <string name="info_rate">قيِّم آنكي درويد</string>
-    <string name="import_title">استيراد</string>
-    <string name="import_preparing_file">تجهيز الملف للاستيراد&#8230;</string>
+    <string name="import_title">الاستيراد</string>
+    <string name="import_preparing_file">يتم تجهيز المِلف للاستيراد&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">أضف</string>
     <string name="import_message_replace_confirm">سيحذف هذا مجموعتك الحالية ويستبدل بها بيانات الملف %s</string>
-    <string name="import_dialog_message_add">هل تريد إضافة \"%s\" إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا</string>
+    <string name="import_dialog_message_add">أتريد إضافة «%s» إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا</string>
     <string name="import_log_no_apkg">ملف حزمة آنكي غير صالح</string>
     <string name="import_title_error" comment="Title of error dialog">خطأ</string>
     <string name="import_error_handle_exception">فشِل استيراد الملف\n\n%s</string>
@@ -160,7 +160,7 @@
     <string name="import_error_copy_to_cache">فشل تخزين الملف مؤقتًا (ربما بسبب نفاد مساحة التخزين)</string>
     <string name="import_interrupted">تمت مقاطعة الاستيراد: لقد أُغلق آنكي درويد</string>
     <string name="export_ready_title">المصَدَّر جاهز</string>
-    <string name="export_send_no_handlers">لا توجد تطبيقات متاحة للتعامل مع apkg. يجري الحفظ&#8230;</string>
+    <string name="export_send_no_handlers">لا توجد تطبيقات متاحة للتعامل مع «apkg». يتم الحفظ&#8230;</string>
     <string name="export_save_apkg_successful">تم حفظ حزمة آنكي بنجاح</string>
     <string name="export_save_apkg_unsuccessful">فشل حفظ حزمة آنكي</string>
     <string name="export_share_title">أرسل حزمة آنكي باستخدام</string>
@@ -189,8 +189,8 @@
     <string name="reminder_title">لا تنسَ أن تدرس اليوم!</string>
     <plurals name="reminder_text">
         <item quantity="zero">%2$d بطاقة بانتظار المراجعة في %1$s</item>
-        <item quantity="one">بطاقة واحدة بانتظار المراجعة في %1$s</item>
-        <item quantity="two">بطاقتان بانتظار المراجعة في %1$s</item>
+        <item quantity="one">%2$d بطاقة بانتظار المراجعة في %1$s</item>
+        <item quantity="two">%2$d بطاقة بانتظار المراجعة في %1$s</item>
         <item quantity="few">%2$d بطاقات بانتظار المراجعة في %1$s</item>
         <item quantity="many">%2$d بطاقة بانتظار المراجعة في %1$s</item>
         <item quantity="other">%2$d بطاقة بانتظار المراجعة في %1$s</item>
@@ -289,8 +289,8 @@
     <string name="card_buried">تم دفن البطاقة</string>
     <plurals name="note_suspended">
         <item quantity="zero">تم تعليق بطاقة %d.</item>
-        <item quantity="one">تم تعليق بطاقة واحدة.</item>
-        <item quantity="two">تم تعليق بطاقتين.</item>
+        <item quantity="one">تم تعليق بطاقة %d.</item>
+        <item quantity="two">تم تعليق بطاقة %d.</item>
         <item quantity="few">تم تعليق %d بطاقات.</item>
         <item quantity="many">تم تعليق %d بطاقات.</item>
         <item quantity="other">تم تعليق %d بطاقة.</item>
@@ -346,8 +346,8 @@
     <string name="card_browser_unavailable_when_notes_mode">غير متوفر في وضع الملحوظات</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="zero">تم إلغاء دفن %d بطاقات</item>
-        <item quantity="one">تم إلغاء دفن بطاقة واحدة</item>
-        <item quantity="two">تم إلغاء دفن بطاقتين</item>
+        <item quantity="one">تم إلغاء دفن %d بطاقات</item>
+        <item quantity="two">تم إلغاء دفن %d بطاقات</item>
         <item quantity="few">تم إلغاء دفن %d بطاقات</item>
         <item quantity="many">تم إلغاء دفن %d بطاقة</item>
         <item quantity="other">تم إلغاء دفن %d بطاقة</item>

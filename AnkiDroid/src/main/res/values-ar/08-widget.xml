@@ -45,7 +45,7 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">بطاقات مستحقة</string>
+    <string name="widget_minimum_cards_due_notification_ticker_title">البطاقات مستحقة</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="zero">%d بطاقة آنكي درويد مستحقة</item>
         <item quantity="one">%d بطاقة آنكي درويد مستحقة</item>
@@ -76,18 +76,18 @@
     <string name="card_analysis_extra_widget_description">تحليل البطاقة</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
     <string name="select_decks_title" comment="Title for Deck Selection Dialog">اختيار الزرم</string>
-    <string name="select_deck_title" comment="Title for Deck Selection Dialog">اختر بطاقة</string>
+    <string name="select_deck_title" comment="Title for Deck Selection Dialog">اختيار رِزمة</string>
     <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">اختر بالرمز «+» بطاقاتٍ لتُعرض في قطعة.</string>
-    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">البطاقات المُزالة</string>
-    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">هذه البطاقة مختارة سابقًا</string>
+    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">تمت إزالة الرِزمة</string>
+    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">لقد سبق أن اخترت هذه الرِزمة</string>
     <plurals name="deck_limit_reached">
         <item quantity="zero">يمكنك إختيار %d رزمة</item>
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">يمكنك إختيار رزمة واحدة</item>
-        <item quantity="two">يمكنك إختيار رزمتين</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">يمكنك إختيار %d رزم</item>
+        <item quantity="two">يمكنك إختيار %d رزم</item>
         <item quantity="few">يمكنك إختيار %d رزم</item>
         <item quantity="many">يمكنك إختيار %d رزم</item>
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">يمكنك إختيار %d رزم</item>
     </plurals>
     <string name="empty_widget_state" comment="To denote the widget is empty">الرِزمة مفقودة. اضغط لإعادة تشكيلها</string>
-    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">المجموعة فارغة. استعملِ التطبيق لإضافة ثُم أعِدْ تشكيلها</string>
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">المجموعة فارغة. استعملِ التطبيق لإضافة رِزَمٍ ثُم أعِدْ تشكيلها</string>
 </resources>

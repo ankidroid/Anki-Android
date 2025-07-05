@@ -45,7 +45,7 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
-    <string name="disabled">معطل</string>
+    <string name="disabled">مُعَطَّل</string>
     <plurals name="pref_summ_minutes">
         <item quantity="zero">%d دقيقة</item>
         <item quantity="one">%d دقيقة</item>
@@ -56,12 +56,12 @@
     </plurals>
     <string name="pref_milliseconds">%s م ث</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
-    <string name="pref_search_no_results">لا نتائج</string>
+    <string name="pref_search_no_results">لا نتيجة</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">عام</string>
     <string name="pref_cat_studying" maxLength="41">الدراسة</string>
     <string name="pref_cat_system_wide" maxLength="41">على مستوى النظام</string>
-    <string name="pref_cat_reviewing" maxLength="41">مراجعة</string>
+    <string name="pref_cat_reviewing" maxLength="41">المراجعة</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">المزامنة</string>
     <string name="pref_cat_scheduling" maxLength="41">جدولة</string>
     <string name="pref_cat_whiteboard" maxLength="41">السبورة</string>
@@ -96,33 +96,33 @@
     <string-array name="answer_buttons_position_labels">
         <item>في الأعلى</item>
         <item>في الأسفل</item>
-        <item>لا شيء</item>
+        <item>مخفية</item>
     </string-array>
     <string name="gestures" maxLength="41">تفعيل الإيماءات</string>
     <string name="gestures_summ">تعيين إيماءات إلى إجراءات مثل إجابة البطاقات وتحريرها.</string>
-    <string name="gestures_corner_touch" maxLength="41">لمس بحجم 9 نقاط</string>
-    <string name="gestures_corner_touch_summary">السماح بإيماءات اللمس في حواف الشاشة</string>
+    <string name="gestures_corner_touch" maxLength="41">٩ مواضع للنقر</string>
+    <string name="gestures_corner_touch_summary">السماح بإيماءات النقر في زوايا الشاشة</string>
     <string name="show_keyboard_shortcuts" maxLength="41">أظهر إختصارات لوحة المفاتيح</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">قائمة تجول ملء الشاشة</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">فتح قائمة التجول عند السحب لليمين من أي مكان في الشاشة</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">قائمة التجول في كامل الشاشة</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">فتح قائمة التجول عند السحب لليسار من أي مكان في الشاشة</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">لا شَيْء</string>
-    <string name="gestures_swipe_up" maxLength="41">سحب للأعلى</string>
-    <string name="gestures_swipe_down" maxLength="41">سحب للأسفل</string>
-    <string name="gestures_swipe_left" maxLength="41">سحب لليسار</string>
-    <string name="gestures_swipe_right" maxLength="41">سحب لليمين</string>
-    <string name="gestures_double_tap" maxLength="41">نقر مزدوج</string>
-    <string name="gestures_tap_top" maxLength="41">نقر في الأعلى</string>
-    <string name="gestures_tap_left" maxLength="41">نقر في اليسار</string>
-    <string name="gestures_tap_right" maxLength="41">نقر في اليمين</string>
-    <string name="gestures_tap_bottom" maxLength="41">نقر في الأسفل</string>
+    <string name="gestures_swipe_up" maxLength="41">السحب للأعلى</string>
+    <string name="gestures_swipe_down" maxLength="41">السحب للإسفل</string>
+    <string name="gestures_swipe_left" maxLength="41">السحب لليسار</string>
+    <string name="gestures_swipe_right" maxLength="41">السحب لليمين</string>
+    <string name="gestures_double_tap" maxLength="41">النقر المزدوج</string>
+    <string name="gestures_tap_top" maxLength="41">النقر في الأعلى</string>
+    <string name="gestures_tap_left" maxLength="41">النقر في اليسار</string>
+    <string name="gestures_tap_right" maxLength="41">النقر في اليمين</string>
+    <string name="gestures_tap_bottom" maxLength="41">النقر في الأسفل</string>
     <string name="gestures_corner_tap_top_left" maxLength="41">النقر في أعلى اليسار</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">النقر في أعلى اليمين</string>
     <string name="gestures_corner_tap_middle_center" maxLength="41">النقر في الوسط</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">النقر في أسفل اليسار</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">النقر في أسفل اليمين</string>
     <string name="gestures_shake" maxLength="41">رج الجهاز</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">قائمة \'%s\'</string>
-    <string name="card_browser_enable_external_context_menu_summary">يفعل قائمة سياق \'%s\' عمومًا</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">قائمة «%s»</string>
+    <string name="card_browser_enable_external_context_menu_summary">يفعل قائمة سياق «%s» في عموم الجهاز</string>
     <string name="double_scrolling_gap" maxLength="41">مضاعفة فجوة التمرير</string>
     <string name="double_scrolling_gap_summ">مضاعفة فجوة التمرير مع القارئ الإلكتروني</string>
     <string name="swipe_sensitivity" maxLength="41">حساسية السحب</string>
@@ -137,7 +137,7 @@
         أكثر من ١٠ دقائق.</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">دائمًا</string>
     <string name="sync_media_only_unmetered">فقط على الاتصالات غير المحدودة</string>
-    <string name="sync_media_never">أبدًا</string>
+    <string name="sync_media_never">لا تجلب أبدًا</string>
     <string name="sync_status_badge" maxLength="41">أُعرُض حالة المزامنة</string>
     <string name="sync_status_badge_summ">غيِّر رمز المزامنة حين يكون رفع التغييرات ممكنًا</string>
     <string name="metered_sync_title" maxLength="41">السماح بالمزامنة على الاتصالات المحدودة</string>
@@ -150,7 +150,7 @@
     <string name="language" maxLength="41">اللغة</string>
     <string name="language_system">لغة النظام</string>
     <string name="notification_pref" maxLength="41">التنبيهات</string>
-    <string name="notification_pref_title" maxLength="41">نبّهني عند</string>
+    <string name="notification_pref_title" maxLength="41">التنبيه عند</string>
     <string name="never_notify">لا تنبه مطلقًا</string>
     <string name="notify_when_pending">توفُّر الرسائل المعلقة</string>
     <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">أكثر من %d بطاقة مستحقة</string>
@@ -185,9 +185,9 @@
     <string name="time_limit" maxLength="41">مهلة مربع الوقت</string>
     <string name="day_offset_with_description" maxLength="41">بداية اليوم التالي (0 يعني منتصف الليل، 23 يعني الساعة 11 مساءً)</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="zero">صفر ساعة بعد منتصف الليل</item>
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">ساعة واحدة بعد منتصف الليل</item>
-        <item quantity="two">ساعتان بعد منتصف الليل</item>
+        <item quantity="zero">%d ساعت بعد منتصف الليل</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d ساعت بعد منتصف الليل</item>
+        <item quantity="two">%d ساعت بعد منتصف الليل</item>
         <item quantity="few">%d ساعات بعد منتصف الليل</item>
         <item quantity="many">%d ساعة بعد منتصف الليل</item>
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d ساعة بعد منتصف الليل</item>
@@ -392,7 +392,7 @@
     <string name="toolbar_actions" maxLength="41">إجراءات شريط الأدوات</string>
     <string name="toolbar_position" maxLength="41">مكان شريط الأدوات</string>
     <string name="new_study_screen" maxLength="41">شاشة الدراسة الجديدة</string>
-    <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
+    <string name="new_study_screen_summ"><![CDATA[شاشة الدراسة المحسنة التي ستُستبدل بالشاشة الحالية. تم تغيير أو حذف بعض ميزات الشاشة القديمة. نرجو أن تُبَلِّغنا <a href="%1$s">برأيك</a> أو عن أي <a href="%2$s">خلل</a> تجده.]]></string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">إفتح الإعدادات</string>
 </resources>
