@@ -88,7 +88,7 @@
         <item>Por retenção</item>
         <item>Por revisões</item>
         <item>Por falhas</item>
-        <item>Pelo nome do conjunto de cartas</item>
+        <item>Pelo nome do baralho</item>
     </string-array>
     <string name="chane_browser_column">Mudar coluna</string>
     <string name="no_columns_available">Sem colunas disponíveis</string>

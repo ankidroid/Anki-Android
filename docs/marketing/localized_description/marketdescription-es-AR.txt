@@ -1,6 +1,6 @@
 ¡Memorice cualquier cosa con AnkiDroid!
 
-AnkiDroid le permite aprender mediante tarjetas flash de modo muy eficiente mostrandoselas justo antes de que las olvide. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
+AnkiDroid le permite aprender mediante tarjetas flash de modo muy eficiente mostrandoselas justo antes de que las olvide. Es completamente compatible con el software de repetición espaciada de Anki (incluida la sincronización), el cual está disponible para Windows, Linux y macOS. 
 
 Estudiá todo tipo de cosas donde y cuando quieras. ¡Aproveche los tiempos muertos de viajes en ómnibus, colas de supermercado y en cualquier otra situación de espera!
 

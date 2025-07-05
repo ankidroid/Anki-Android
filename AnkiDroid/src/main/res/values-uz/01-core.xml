@@ -58,7 +58,7 @@
     <!-- Study Options-->
     <string name="studyoptions_start" comment="Title of the Reviewer activity. Also the button to open it.">O\'rganish</string>
     <!-- DeckPicker.kt -->
-    <string name="expand" comment="In the deck picker: accessibility label of the buttons that display the subdecks of a deck.">Kengaytirish</string>
+    <string name="expand" comment="In the deck picker: accessibility label of the buttons that display the subdecks of a deck.">Yoyish</string>
     <string name="collapse" comment="In the deck picker: accessibility label of the buttons that hide the subdecks of a deck.">Yigʻish</string>
     <string name="menu_import" comment="Title of the import page and the button to open it." maxLength="28">Import qilish</string>
     <string name="no_cards_placeholder_title" comment="Text shown the first time AnkiDroid is opened, to explain to the user why they can\'t yet review.">Toʻplam boʻsh</string>
@@ -85,7 +85,7 @@
     <string name="ease_button_easy" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state that finding the answer to the question was easy.">Oson</string>
     <!-- General -->
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Bekor qilish</string>
-    <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">Takrorlash</string>
+    <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">Qaytarish</string>
     <!-- flashcard_portrait.xml -->
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in the Study Screen. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Shtrixni bekor qilish</string>
     <string name="move_all_to_deck">Barchasini dastaga koʻchirish</string>

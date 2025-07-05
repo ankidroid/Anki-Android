@@ -49,16 +49,16 @@
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">إحذف الرزمة</string>
     <string name="delete_deck_title">هل تريد حذف الرزمة؟</string>
     <plurals name="delete_deck_message">
-        <item quantity="zero">إحذف كل البطاقات من %1$s؟ إنها خالية</item>
-        <item quantity="one">إحذف كل البطاقات من %1$s؟ إنها تحتوي على بطاقة واحدة</item>
-        <item quantity="two">إحذف كل البطاقات من %1$s؟ إنها تحتوي على بطاقتين</item>
+        <item quantity="zero">هل تريد حذف كل البطاقات في %1$s؟ إنها تحتوي على %2$d بطاقات</item>
+        <item quantity="one">هل تريد حذف كل البطاقات في %1$s؟ إنها تحتوي على %2$d بطاقة</item>
+        <item quantity="two">هل تريد حذف كل البطاقات في %1$s؟ إنها تحتوي على %2$d بطاقات</item>
         <item quantity="few">إحذف كل البطاقات من %1$s؟ إنها تحتوي على %2$d بطاقات</item>
         <item quantity="many">إحذف كل البطاقات من %1$s؟ إنها تحتوي على %2$d بطاقة</item>
         <item quantity="other">إحذف كل البطاقات من %1$s؟ إنها تحتوي على %2$d بطاقة</item>
     </plurals>
     <string name="delete_cram_deck_message">إحذف الرزمة المستخلصة %s وأعد جميع البطاقات إلا رزمها الأصلية؟</string>
     <string name="no_tts_available_message">لا يتوفر دعم تحويل النص إلى كلام لأي لغة</string>
-    <string name="tts_no_tts">لا تنطق</string>
+    <string name="tts_no_tts">لا تتكلم</string>
     <string name="reposition_card_not_new_error">يمكن تغيير موضع البطاقات الجديدة فقط</string>
     <string name="reset_card_dialog_title">تصفير تقدم البطاقة</string>
     <plurals name="reset_cards_dialog_acknowledge">
@@ -74,28 +74,28 @@
     <string name="answering_error_report">إبلاغ عن الخطأ</string>
     <string name="storage_full_message">لا توجد مساحة تخزين كافية لفتح آنكي درويد. أخلِ بعض المساحة لتستمر.</string>
     <string name="repair_deck_dialog">هل تريد حقًا إصلاح قاعدة البيانات؟\n\nقبل بدء هذه المحاولة، ستُنشَأ نسخة في المجلد الفرعي “%s”.</string>
-    <string name="intent_aedict_empty">تصنيف “default” فارغ</string>
+    <string name="intent_aedict_empty">الصنف «default» فارغ</string>
     <string name="intent_aedict_category">لإضافة بطاقات إلى آنكي درويد، أزل كل تصنيفات المذكرة أو أضف تصنيفًا باسم «default»</string>
-    <string name="custom_study_new_extend">رفع/إنقاص (“-3”) الحد اليومي للبطاقات الجديدة بـ</string>
-    <string name="custom_study_rev_extend">رفع/إنقاص (“-3”) الحد اليومي للمراجعات بـ</string>
+    <string name="custom_study_new_extend">إضافة/طرح (مثلًا «-٣») إلى حد البطاقات الجديدة لهذا اليوم</string>
+    <string name="custom_study_rev_extend">إضافة/طرح (مثلًا «-٣») إلى حد المراجعات لهذا اليوم</string>
     <string name="custom_study_forgotten">راجع البطاقات المنسية في آخر س يوم:</string>
     <string name="custom_study_ahead">راجع مبكرًا بـ س يوم:</string>
     <string name="custom_study_preview">عاين البطاقات الجديدة المضافة في آخر س يوم:</string>
     <string name="custom_study_tags">إختر س بطاقة من الرزمة:</string>
     <string name="storage_full_title">ذاكرة التخزين ممتلئة</string>
-    <string name="storage_almost_full_title">بطاقة الـSD ممتلئة تقريبًا</string>
+    <string name="storage_almost_full_title">ذاكرة التخزين ممتلئة تقريبًا</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">لا توجد مساحة</string>
     <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">يحتاج آنكي درويد %s من مساحة التخزين الخالية ليستمر. فضلًا أخلِ بعض المساحة</string>
     <string name="restore_backup_title">هل تريد استرجاع النسخة الاحتياطية؟</string>
     <string name="restore_backup">ستُستبدل نسخة أقدم بمجموعتك. ستضيع تعديلاتك إن لم تحفظها.</string>
-    <string name="restore_backup_choose_another">اختر نسخة أخرى</string>
+    <string name="restore_backup_choose_another">اختيار نسخة أخرى</string>
     <string name="dialog_cancel">إلغاء</string>
     <string name="dialog_ok">حسنًا</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">تأكيد</string>
     <string name="dialog_no">لا</string>
     <string name="dialog_yes">نعم</string>
     <string name="dialog_keep">إبقاء</string>
-    <string name="dialog_remove">حذف</string>
+    <string name="dialog_remove">إزالة</string>
     <string name="dialog_continue">استمرار</string>
     <string name="dialog_processing">تجري المعالجة&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">إنشاء</string>
@@ -110,9 +110,9 @@
     <string name="dialog_invalid_custom_certificate_title">حدث خطأ في تحليل الشهادة</string>
     <string name="dialog_updated_custom_certificate">تم تحديث الشهادة</string>
     <!-- Media checking -->
-    <string name="check_media_title">هل تريد فحص الوسائط؟</string>
+    <string name="check_media_title">أتريد فحص الوسائط؟</string>
     <string name="check_media_warning">قد يأخذ هذا وقتًا طويلًا لمجموعات الوسائط الكبيرة</string>
-    <string name="check_media_message">يجري فحص الوسائط&#8230;</string>
+    <string name="check_media_message">يتم فحص الوسائط&#8230;</string>
     <string name="check_media_adding_missing_tag">تجري إضافة الوسوم&#8230;</string>
     <string name="check_media_tags_added">أضيفت الوسوم</string>
     <string name="delete_media_message">جار حذف الوسائط&#8230;</string>
@@ -127,10 +127,10 @@
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">كل البطاقات</string>
-    <string name="tags_dialog_option_new_cards">جديد</string>
-    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">مستحق</string>
+    <string name="tags_dialog_option_new_cards">الجديدة</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">المستحقة</string>
     <!-- Empty cards -->
-    <string name="emtpy_cards_finding">يجري البحث عن بطاقات فارغة&#8230;</string>
+    <string name="emtpy_cards_finding">يتم البحث عن البطاقات الفارغة&#8230;</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">تعذر الحصول على إذن الميكروفون.</string>
     <string name="multimedia_editor_failed">تعذر فتح محرر الوسائط المتعددة</string>
@@ -139,7 +139,7 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">تم تحديث آنكي درويد</string>
     <string name="integrity_check_startup_content">تم تحديث آنكي درويد. يتضمن هذا التحديث إصلاحًا لأعطال ممكنة في قاعدة البيانات، لذلك ننصح باستخدام ميزة فحص قاعدة البيانات الآن.</string>
-    <string name="integrity_check_continue_anyway">استمر على أي حال</string>
+    <string name="integrity_check_continue_anyway">استمرار على أي حال</string>
     <string name="integrity_check_insufficient_space">تستخدم ميزة فحص قاعدة البيانات مساحة كبيرة من التخزين المؤقت.\n\nينصح بشدة أن يكون لديك مساحة %s خالية على الأقل في جهازك قبل الاستمرار.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nلديك حاليًا مساحة %s خالية.</string>
     <!-- Card Browser -->
@@ -155,7 +155,7 @@
     <string name="background_image_applied">تم تطبيق صورة الخلفية</string>
     <string name="background_image_removed">تمت إزالة صورة الخلفية</string>
     <string name="no_image_selected">لم تختر أي صورة</string>
-    <string name="error_selecting_image">فشل تحديد الصورة. الرجاء الاطلاع على دليل الاستخدام. %s</string>
+    <string name="error_selecting_image">فشل اختيار الصورة. الرجاء الاطلاع على الدليل. %s</string>
     <string name="error_deleting_image">فشل حذف الصورة</string>
     <string name="failed_to_apply_background_image">تعذر تطبيق صورة الخلفية %s</string>
     <string name="background_image_too_large">خلفية محدد الرزم كبيرة جدًا</string>
@@ -169,7 +169,7 @@
     <string name="boot_service_too_many_notifications">تمت جدولة كثير من التنبيهات. لن يظهر بعضها</string>
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">ضبط اللغة</string>
-    <string name="locale_selection_dialog_summary">بعض لوحات المفاتيح متعددة اللغات، مثل GBoard، تدعم تغيير اللغة عند تحرير النص\n\nيرجى طلب ميزة “setImeHintLocales” من مصنّع لوحة المفاتيح الخاصة بك إذا كانت لوحة المفاتيح لا تغيّر اللغة.</string>
+    <string name="locale_selection_dialog_summary">بعض لوحات المفاتيح متعددة اللغات مثل «GBoard» تدعم تغيير اللغة عند تحرير النص\n\nيرجى طلب ميزة «setImeHintLocales» من مُصنّع لوحة المفاتيح الخاصة بك إذا كانت لوحة المفاتيح لا تغيّر اللغة.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">استخدام آنكي درويد</string>
     <string name="help_item_ankidroid_manual">دليل آنكي درويد</string>
@@ -199,9 +199,9 @@
     <string name="help_dialog_exception_report_sent">تم إرسال التقرير!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="zero">قد تتم مزامنة تلقائية في صفر ثانية</item>
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">قد تتم مزامنة تلقائية في ثانية واحدة</item>
-        <item quantity="two">قد تتم مزامنة تلقائية في ثانيتين</item>
+        <item quantity="zero">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>
+        <item quantity="two">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>
         <item quantity="few">قد تتم مزامنة تلقائية في %d ثنوانٍ</item>
         <item quantity="many">قد تتم مزامنة تلقائية في %d ثانية</item>
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">قد تتم مزامنة تلقائية في %d ثانية</item>
@@ -235,9 +235,9 @@
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">إجعل الفاصل نفس القيمة</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="zero">أظهر البطاقات في صفر يوم</item>
-        <item quantity="one">أظهر البطاقات في يوم</item>
-        <item quantity="two">أظهر البطاقات في يومين</item>
+        <item quantity="zero">أظهر البطاقات في</item>
+        <item quantity="one">أظهر البطاقة في</item>
+        <item quantity="two">أظهر البطاقتين في</item>
         <item quantity="few">أظهر البطاقات في</item>
         <item quantity="many">أظهر البطاقات في</item>
         <item quantity="other">أظهر البطاقات في</item>
@@ -259,9 +259,9 @@
         <item quantity="other">أيام</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
-        <item quantity="zero">الفاصل الحالي: صفر يوم</item>
-        <item quantity="one">الفاصل الحالي: يوم واحد</item>
-        <item quantity="two">الفاصل الحالي: يومان</item>
+        <item quantity="zero">الفاصل الزمني الحالي: %d يومًا</item>
+        <item quantity="one">الفاصل الزمني الحالي: %d يوم</item>
+        <item quantity="two">الفاصل الزمني الحالي: %d يومًا</item>
         <item quantity="few">الفاصل الحالي: %d أيام</item>
         <item quantity="many">الفاصل الحالي: %d يومًا</item>
         <item quantity="other">الفاصل الحالي: %d أيام</item>

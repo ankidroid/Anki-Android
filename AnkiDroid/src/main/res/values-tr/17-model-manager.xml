@@ -49,7 +49,7 @@
     <string name="model_browser_template">Kartları düzenle</string>
     <!--Rename-->
     <string name="rename_model">Not türünün adını değiştir</string>
-    <string name="rename_card_type">Rename card type</string>
+    <string name="rename_card_type">Kart türünün ismini değiştir</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Dil ipucunu %s olarak ayarla</string>
     <!--Field Editing-->

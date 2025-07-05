@@ -120,7 +120,7 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid kartasi</string>
     <string name="note_editor_copy_note" maxLength="28">Qayddan nusxa olish</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Qayta joylashtirish</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Joyini oʻzgartirish</string>
     <string name="card_editor_reset_card" maxLength="28">Progressni oʻchirish</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Vaqtini almashtirish</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Oldindan koʻrish</string>

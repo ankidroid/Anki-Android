@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name" maxLength="28">الأمامي</string>
-    <string name="back_field_name" maxLength="28" comment="Name of the back field of a card">خلف</string>
+    <string name="front_field_name" maxLength="28">الوجه</string>
+    <string name="back_field_name" maxLength="28" comment="Name of the back field of a card">الظَّهر</string>
 </resources>

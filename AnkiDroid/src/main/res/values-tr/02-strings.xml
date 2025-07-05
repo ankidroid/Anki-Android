@@ -67,8 +67,8 @@
     <string name="enable_whiteboard" maxLength="28">Yazı tahtasını etkinleştir</string>
     <string name="disable_whiteboard">Yazı tahtasını devre dışı bırak</string>
     <string name="show_whiteboard">Yazı tahtasını göster</string>
-    <string name="enable_eraser" maxLength="28">Enable eraser</string>
-    <string name="disable_eraser" maxLength="28">Disable eraser</string>
+    <string name="enable_eraser" maxLength="28">Silgiyi etkinleştir</string>
+    <string name="disable_eraser" maxLength="28">Silgiyi devre dışı bırak</string>
     <string name="hide_whiteboard" maxLength="28">Yazı tahtasını gizle</string>
     <string name="clear_whiteboard" maxLength="28">Yazı tahtasını temizle</string>
     <string name="replay_media" maxLength="28">Medyayı yeniden oynat</string>
@@ -196,8 +196,8 @@
     <string name="restore_default" maxLength="28">Varsayılana Dön</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Boş</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
-    <string name="white_board_eraser_enabled">Eraser mode activated</string>
-    <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string name="white_board_eraser_enabled">Silgi modu etkinleştirildi</string>
+    <string name="white_board_eraser_disabled">Silgi modu devre dışı bırakıldı</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Yazı tahtası resmi kaydedilemedi. %s</string>
     <string name="white_board_image_saved">Yazı tahtası resmi bu adrese kaydedildi: %s</string>
@@ -355,5 +355,5 @@
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">%s kullanıcı eylemi bu not türünde belirlenmemiş. Lütfen eylemi ayarlayın</string>
     <string name="directory_inaccessible_info">Erişimin nasıl yeniden sağlanıldığına dair daha fazlasını burda %s öğrenin ya da koleksiyon klasörünü değiştirmek için ayarlara gidin.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
-    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
+    <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Zamanlayıcı güncellemesi gerekiyor</string>
 </resources>

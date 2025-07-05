@@ -57,7 +57,7 @@
     <string name="cram_deck_conf_order_most_lapsed">الأكثر سهوًا</string>
     <string name="cram_deck_conf_order_order_added">بتاريخ الإضافة</string>
     <string name="cram_deck_conf_order_order_due">ترتيب الاستحقاق</string>
-    <string name="cram_deck_conf_order_latest_added_first">المضافة مؤخرًا أولًا</string>
+    <string name="cram_deck_conf_order_latest_added_first">الأحدث إضافة أولًا</string>
     <string name="cram_deck_conf_order_relative_overdueness">التأخير النسبي</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">استخدم المجموعة الحالية</string>

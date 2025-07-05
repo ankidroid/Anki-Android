@@ -41,10 +41,10 @@
 <resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">أضف صورة</string>
-    <string name="multimedia_editor_popup_audio_clip">إضافة مقطع صوتي</string>
+    <string name="multimedia_editor_popup_audio_clip">أضف مقطعًا صوتيًا</string>
     <string name="multimedia_editor_popup_video_clip">أضف تسجيلًا صوتيًا</string>
-    <string name="multimedia_editor_popup_audio">تسجيل مقطع صوتي</string>
-    <string name="multimedia_editor_popup_cloze">عبارة ملء فراغات</string>
+    <string name="multimedia_editor_popup_audio">سَجِّل الصوت</string>
+    <string name="multimedia_editor_popup_cloze">أدرِج فراغًا</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_audio">تسجيل الصوت</string>
@@ -54,7 +54,7 @@
     <!-- delete confirmation -->
     <!-- Image editing -->
     <!-- for buttons -->
-    <string name="multimedia_editor_image_field_editing_galery">معرض الصور</string>
+    <string name="multimedia_editor_image_field_editing_galery">المَعْرَض</string>
     <string name="multimedia_editor_image_field_editing_photo">الكاميرا</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
