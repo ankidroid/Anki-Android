@@ -15,9 +15,9 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
-import com.ichi2.libanki.utils.NotInLibAnki
+import com.ichi2.anki.libanki.utils.NotInLibAnki
 import java.io.File
 
 @NotInLibAnki

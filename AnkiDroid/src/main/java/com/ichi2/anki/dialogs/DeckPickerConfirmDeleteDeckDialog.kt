@@ -23,8 +23,8 @@ import androidx.core.text.HtmlCompat
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
-import com.ichi2.libanki.DeckId
 import com.ichi2.utils.BundleUtils.requireLong
 
 class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {

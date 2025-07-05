@@ -14,12 +14,12 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.libanki.SoundOrVideoTag.Type
+import com.ichi2.anki.libanki.SoundOrVideoTag.Type.VIDEO
 import com.ichi2.anki.multimedia.getTagType
-import com.ichi2.libanki.SoundOrVideoTag.Type
-import com.ichi2.libanki.SoundOrVideoTag.Type.VIDEO
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat

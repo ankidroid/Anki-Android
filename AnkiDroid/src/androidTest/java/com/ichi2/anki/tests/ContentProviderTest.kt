@@ -29,26 +29,27 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.common.utils.emptyStringArray
+import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.Decks
+import com.ichi2.anki.libanki.Note
+import com.ichi2.anki.libanki.NoteTypeId
+import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.anki.libanki.Notetypes
+import com.ichi2.anki.libanki.QueueType
+import com.ichi2.anki.libanki.Utils
+import com.ichi2.anki.libanki.addNotetypeLegacy
+import com.ichi2.anki.libanki.backend.BackendUtils
+import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
+import com.ichi2.anki.libanki.getStockNotetype
+import com.ichi2.anki.libanki.sched.Ease
+import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.provider.pureAnswer
 import com.ichi2.anki.testutil.DatabaseUtils.cursorFillWindow
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.addNote
 import com.ichi2.anki.testutil.grantPermissions
-import com.ichi2.libanki.Card
-import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.Decks
-import com.ichi2.libanki.Note
-import com.ichi2.libanki.NoteTypeId
-import com.ichi2.libanki.NotetypeJson
-import com.ichi2.libanki.Notetypes
-import com.ichi2.libanki.QueueType
-import com.ichi2.libanki.Utils
-import com.ichi2.libanki.addNotetypeLegacy
-import com.ichi2.libanki.backend.BackendUtils
-import com.ichi2.libanki.exception.ConfirmModSchemaException
-import com.ichi2.libanki.getStockNotetype
-import com.ichi2.libanki.sched.Ease
-import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.testutils.common.assertThrows
 import kotlinx.serialization.json.Json
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
@@ -180,7 +181,7 @@ class ContentProviderTest : InstrumentedTest() {
 
     @Throws(Exception::class)
     private fun removeAllNoteTypesByName(
-        col: com.ichi2.libanki.Collection,
+        col: com.ichi2.anki.libanki.Collection,
         name: String,
     ) {
         var testNoteType = col.notetypes.byName(name)
@@ -1091,7 +1092,7 @@ class ContentProviderTest : InstrumentedTest() {
         )
     }
 
-    private fun getFirstCardFromScheduler(col: com.ichi2.libanki.Collection): Card? {
+    private fun getFirstCardFromScheduler(col: com.ichi2.anki.libanki.Collection): Card? {
         val deckId = testDeckIds[0]
         col.decks.select(deckId)
         return col.sched.card
@@ -1483,7 +1484,7 @@ class ContentProviderTest : InstrumentedTest() {
             tags.add(TEST_TAG)
         }
 
-    private fun reopenCol(): com.ichi2.libanki.Collection {
+    private fun reopenCol(): com.ichi2.anki.libanki.Collection {
         Timber.i("closeCollection: %s", "ContentProviderTest: reopenCol")
         CollectionManager.closeCollectionBlocking()
         return col
@@ -1518,7 +1519,7 @@ class ContentProviderTest : InstrumentedTest() {
 
         @Suppress("SameParameterValue")
         private fun setupNewNote(
-            col: com.ichi2.libanki.Collection,
+            col: com.ichi2.anki.libanki.Collection,
             noteTypeId: NoteTypeId,
             did: DeckId,
             fields: Array<String>,

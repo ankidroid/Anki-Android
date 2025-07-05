@@ -24,11 +24,11 @@ import anki.card_rendering.emptyCardsReport
 import app.cash.turbine.test
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.libanki.Consts
-import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.Note
-import com.ichi2.libanki.emptyCids
-import com.ichi2.libanki.undoStatus
+import com.ichi2.anki.libanki.Consts
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.Note
+import com.ichi2.anki.libanki.emptyCids
+import com.ichi2.anki.libanki.undoStatus
 import com.ichi2.testutils.ensureOpsExecuted
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat

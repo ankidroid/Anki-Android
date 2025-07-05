@@ -23,7 +23,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.ichi2.anki.R
-import com.ichi2.libanki.DeckNameId
+import com.ichi2.anki.libanki.DeckNameId
 
 class DeckDropDownAdapter(
     private val context: Context,

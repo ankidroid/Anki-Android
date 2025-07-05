@@ -34,9 +34,9 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.customstudy.IncludedExcludedTagsAdapter.TagsSelectionMode.Exclude
 import com.ichi2.anki.dialogs.customstudy.IncludedExcludedTagsAdapter.TagsSelectionMode.Include
+import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
-import com.ichi2.libanki.DeckId
 import com.ichi2.utils.customView
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton

@@ -26,11 +26,11 @@ import com.ichi2.anki.Channel
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
-import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Deck
-import com.ichi2.libanki.DeckConfigId
-import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.sched.DeckNode
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.Deck
+import com.ichi2.anki.libanki.DeckConfigId
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.sched.DeckNode
 import timber.log.Timber
 
 class ReminderService : BroadcastReceiver() {

@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
-import com.ichi2.libanki.Consts.FIELD_SEPARATOR
+import com.ichi2.anki.libanki.Consts.FIELD_SEPARATOR
 import timber.log.Timber
 import java.io.UnsupportedEncodingException
 import java.math.BigInteger

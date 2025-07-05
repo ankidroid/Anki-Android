@@ -23,8 +23,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.libanki.DeckId
 import com.ichi2.utils.title
 
 class DeckPickerContextMenu : AnalyticsDialogFragment() {

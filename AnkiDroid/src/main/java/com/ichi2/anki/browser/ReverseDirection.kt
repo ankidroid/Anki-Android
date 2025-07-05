@@ -16,7 +16,7 @@
 
 package com.ichi2.anki.browser
 
-import com.ichi2.libanki.Config
+import com.ichi2.anki.libanki.Config
 import timber.log.Timber
 
 /**

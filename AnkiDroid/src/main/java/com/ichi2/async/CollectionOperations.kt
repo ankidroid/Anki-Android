@@ -18,8 +18,8 @@ package com.ichi2.async
 
 import com.ichi2.anki.CardTemplateNotetype
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.libanki.Collection
-import com.ichi2.libanki.NotetypeJson
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.NotetypeJson
 import timber.log.Timber
 
 /**

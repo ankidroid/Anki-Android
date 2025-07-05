@@ -36,15 +36,15 @@ import com.ichi2.anki.NoteTypeFieldEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.libanki.getNotetype
+import com.ichi2.anki.libanki.getNotetypeNameIdUseCount
+import com.ichi2.anki.libanki.getNotetypeNames
+import com.ichi2.anki.libanki.removeNotetype
+import com.ichi2.anki.libanki.updateNotetype
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.userAcceptsSchemaChange
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.withProgress
-import com.ichi2.libanki.getNotetype
-import com.ichi2.libanki.getNotetypeNameIdUseCount
-import com.ichi2.libanki.getNotetypeNames
-import com.ichi2.libanki.removeNotetype
-import com.ichi2.libanki.updateNotetype
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.utils.getInputField
 import com.ichi2.utils.input
@@ -235,7 +235,7 @@ class ManageNotetypes : AnkiActivity() {
      *
      * @param action the action to run before the notetypes refresh, if not provided simply refresh
      */
-    suspend fun runAndRefreshAfter(action: com.ichi2.libanki.Collection.() -> Unit = {}) {
+    suspend fun runAndRefreshAfter(action: com.ichi2.anki.libanki.Collection.() -> Unit = {}) {
         val updatedNotetypes =
             withProgress {
                 withCol {

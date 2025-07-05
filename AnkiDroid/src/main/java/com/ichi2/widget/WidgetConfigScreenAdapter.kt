@@ -25,8 +25,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
+import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.ext.findViewById
-import com.ichi2.libanki.DeckId
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -23,12 +23,12 @@ import com.ichi2.anki.CardUtils
 import com.ichi2.anki.R
 import com.ichi2.anki.ReadText
 import com.ichi2.anki.backend.stripHTML
+import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.TTSTag
+import com.ichi2.anki.libanki.template.TemplateFilters
 import com.ichi2.anki.provider.pureAnswer
 import com.ichi2.anki.reviewer.CardSide
-import com.ichi2.libanki.Card
-import com.ichi2.libanki.Collection
-import com.ichi2.libanki.TTSTag
-import com.ichi2.libanki.template.TemplateFilters
 
 class TTS {
     @get:JvmName("isEnabled")

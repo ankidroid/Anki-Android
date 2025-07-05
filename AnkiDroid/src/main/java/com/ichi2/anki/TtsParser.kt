@@ -1,8 +1,8 @@
 //noinspection MissingCopyrightHeader #8659
 package com.ichi2.anki
 
-import com.ichi2.libanki.TTSTag
-import com.ichi2.libanki.template.TemplateFilters
+import com.ichi2.anki.libanki.TTSTag
+import com.ichi2.anki.libanki.template.TemplateFilters
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import java.util.ArrayList

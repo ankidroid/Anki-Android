@@ -14,7 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
@@ -24,7 +24,7 @@ import com.ichi2.anki.common.json.JSONObjectHolder
 import com.ichi2.anki.common.json.NamedObject
 import com.ichi2.anki.common.utils.ext.deepClone
 import com.ichi2.anki.common.utils.ext.toStringList
-import com.ichi2.libanki.Consts.DEFAULT_DECK_ID
+import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject

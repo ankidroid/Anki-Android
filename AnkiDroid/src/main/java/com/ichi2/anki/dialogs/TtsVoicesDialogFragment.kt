@@ -44,10 +44,10 @@ import com.ichi2.anki.AndroidTtsVoice
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.viewmodel.TtsVoicesViewModel
+import com.ichi2.anki.libanki.TtsVoice
 import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.libanki.TtsVoice
 import com.ichi2.themes.Themes
 import com.ichi2.utils.UiUtil.makeFullscreen
 import kotlinx.coroutines.flow.Flow

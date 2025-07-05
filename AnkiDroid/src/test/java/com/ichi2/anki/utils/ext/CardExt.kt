@@ -15,7 +15,7 @@
  */
 package com.ichi2.anki.utils.ext
 
-import com.ichi2.libanki.Card
+import com.ichi2.anki.libanki.Card
 
 /**
  * Set flags to [flag].

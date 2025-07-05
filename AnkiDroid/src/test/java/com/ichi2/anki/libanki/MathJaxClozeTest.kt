@@ -1,9 +1,9 @@
 //noinspection MissingCopyrightHeader #8659
 
-package com.ichi2.libanki
+package com.ichi2.anki.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.libanki.template.MathJax
+import com.ichi2.anki.libanki.template.MathJax
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString

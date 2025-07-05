@@ -43,6 +43,14 @@ import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.export.ExportDialogFragment.ExportType
 import com.ichi2.anki.launchCatchingIO
+import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.CardId
+import com.ichi2.anki.libanki.CardType
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.DeckNameId
+import com.ichi2.anki.libanki.QueueType
+import com.ichi2.anki.libanki.QueueType.ManuallyBuried
+import com.ichi2.anki.libanki.QueueType.SiblingBuried
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
@@ -54,14 +62,6 @@ import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.utils.ext.normalizeForSearch
 import com.ichi2.anki.utils.ext.setUserFlagForCards
-import com.ichi2.libanki.Card
-import com.ichi2.libanki.CardId
-import com.ichi2.libanki.CardType
-import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.DeckNameId
-import com.ichi2.libanki.QueueType
-import com.ichi2.libanki.QueueType.ManuallyBuried
-import com.ichi2.libanki.QueueType.SiblingBuried
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
@@ -794,7 +794,7 @@ class CardBrowserViewModel(
     }
 
     /**
-     * @see [com.ichi2.libanki.sched.Scheduler.sortCards]
+     * @see [com.ichi2.anki.libanki.sched.Scheduler.sortCards]
      * @return the number of cards which were repositioned
      */
     suspend fun repositionSelectedRows(
@@ -825,7 +825,7 @@ class CardBrowserViewModel(
 
     suspend fun savedSearches(): Map<String, String> = withCol { config.get("savedFilters") } ?: hashMapOf()
 
-    fun savedSearchesUnsafe(col: com.ichi2.libanki.Collection): Map<String, String> = col.config.get("savedFilters") ?: hashMapOf()
+    fun savedSearchesUnsafe(col: com.ichi2.anki.libanki.Collection): Map<String, String> = col.config.get("savedFilters") ?: hashMapOf()
 
     suspend fun removeSavedSearch(searchName: String): Map<String, String> {
         Timber.d("removing user search")
@@ -1067,8 +1067,8 @@ class CardBrowserViewModel(
      * Replaces occurrences of search with the new value.
      *
      * @return the number of affected notes
-     * @see com.ichi2.libanki.Collection.findReplace
-     * @see com.ichi2.libanki.Tags.findAndReplace
+     * @see com.ichi2.anki.libanki.Collection.findReplace
+     * @see com.ichi2.anki.libanki.Tags.findAndReplace
      */
     fun findAndReplace(result: FindReplaceResult) =
         viewModelScope.async {

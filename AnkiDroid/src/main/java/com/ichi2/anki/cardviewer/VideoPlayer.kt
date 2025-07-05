@@ -17,8 +17,8 @@
 package com.ichi2.anki.cardviewer
 
 import com.ichi2.anki.common.utils.htmlEncode
-import com.ichi2.libanki.AvRef
-import com.ichi2.libanki.SoundOrVideoTag
+import com.ichi2.anki.libanki.AvRef
+import com.ichi2.anki.libanki.SoundOrVideoTag
 import kotlinx.coroutines.CancellableContinuation
 import timber.log.Timber
 import kotlin.coroutines.resume
@@ -33,7 +33,7 @@ import kotlin.coroutines.resumeWithException
  *
  * `data-file` was selected to select the file to play, as we do not have the [AvRef] to play here
  *
- * @see com.ichi2.libanki.Sound.expandSounds
+ * @see com.ichi2.anki.libanki.Sound.expandSounds
  */
 class VideoPlayer(
     private val jsEval: () -> JavascriptEvaluator?,

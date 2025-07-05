@@ -22,8 +22,8 @@ import android.webkit.WebView
 import androidx.lifecycle.Lifecycle
 import androidx.test.filters.SdkSuppress
 import com.ichi2.anki.AbstractFlashcardViewer
-import com.ichi2.libanki.Card
-import com.ichi2.libanki.CardId
+import com.ichi2.anki.libanki.Card
+import com.ichi2.anki.libanki.CardId
 import com.ichi2.utils.StrictMock.Companion.strictMock
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo

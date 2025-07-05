@@ -20,8 +20,8 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.R
-import com.ichi2.libanki.Config
-import com.ichi2.libanki.SortOrder
+import com.ichi2.anki.libanki.Config
+import com.ichi2.anki.libanki.SortOrder
 import timber.log.Timber
 
 /**

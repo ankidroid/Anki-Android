@@ -22,7 +22,7 @@ package com.ichi2.anki.multimediacard.fields
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.libanki.Collection
+import com.ichi2.anki.libanki.Collection
 import org.jsoup.Jsoup
 import timber.log.Timber
 import java.io.File
