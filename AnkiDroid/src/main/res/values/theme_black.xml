@@ -6,7 +6,7 @@
     <color name="theme_black_primary_text">#fff</color> <!-- Alternative: #808080 -->
     <color name="theme_black_row_current">#1a1a1a</color>
 
-    <style name="Theme_Dark.Black" parent="Theme_Dark">
+    <style name="Base.Theme.Dark.Black" parent="Theme_Dark">
         <!-- Android colors -->
         <item name="colorPrimary">@color/material_blue_400</item>
         <item name="colorPrimaryDark">@color/black</item>
@@ -130,4 +130,6 @@
     <style name="ThemeOverlay.AnkiDroid.AlertDialog.Black" parent="ThemeOverlay.AnkiDroid.AlertDialog">
         <item name="android:background">@color/theme_black_primary_light</item>
     </style>
+
+    <style name="Theme_Dark.Black" parent="Base.Theme.Dark.Black"/>
 </resources>
