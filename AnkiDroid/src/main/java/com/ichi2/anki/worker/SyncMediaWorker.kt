@@ -92,10 +92,9 @@ class SyncMediaWorker(
                 setContentTitle(CollectionManager.TR.syncMediaFailed())
             }
             return Result.failure()
-        } finally {
-            Timber.d("SyncMediaWorker: cancelling notification")
-            notificationManager?.cancel(NotificationId.SYNC_MEDIA)
         }
+        Timber.d("SyncMediaWorker: cancelling notification")
+        notificationManager?.cancel(NotificationId.SYNC_MEDIA)
 
         Timber.d("SyncMediaWorker: success")
         return Result.success()
