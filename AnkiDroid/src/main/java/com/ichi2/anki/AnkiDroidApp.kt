@@ -86,9 +86,6 @@ open class AnkiDroidApp :
     lateinit var activityAgnosticDialogs: ActivityAgnosticDialogs
     val sharedPrefsLastDeckIdRepository = SharedPreferencesLastDeckIdRepository()
 
-    /** Used to avoid showing extra progress dialogs when one already shown. */
-    var progressDialogShown = false
-
     override val workManagerConfiguration: Configuration
         get() = Configuration.Builder().build()
 
