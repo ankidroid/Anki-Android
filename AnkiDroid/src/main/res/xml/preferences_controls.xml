@@ -33,13 +33,6 @@
         android:key="@string/gestures_corner_touch_preference"
         android:summary="@string/gestures_corner_touch_summary"
         android:title="@string/gestures_corner_touch" />
-    <SwitchPreferenceCompat
-        android:defaultValue="false"
-        android:dependency="@string/gestures_preference"
-        android:disableDependentsState="false"
-        android:key="@string/nav_drawer_gesture_key"
-        android:summary="@string/gestures_fullscreen_nav_drawer_summary"
-        android:title="@string/gestures_full_screen_nav_drawer" />
     <com.ichi2.preferences.SliderPreference
         android:key="@string/pref_swipe_sensitivity_key"
         android:dependency="@string/gestures_preference"
