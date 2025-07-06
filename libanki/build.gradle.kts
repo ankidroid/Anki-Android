@@ -34,6 +34,8 @@ android {
     }
 }
 
+apply(from = "../lint.gradle")
+
 dependencies {
     // Project dependencies
     implementation(project(":common"))
@@ -70,4 +72,8 @@ dependencies {
     testImplementation(libs.junit.vintage.engine)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.json)
+
+    // project lint checks
+    // PERF: some rules do not need to be applied... but the full run was 3s
+    lintChecks(project(":lint-rules"))
 }
