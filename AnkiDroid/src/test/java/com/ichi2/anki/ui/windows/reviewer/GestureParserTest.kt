@@ -39,13 +39,13 @@ class GestureParserTest {
     ): Uri =
         mockk {
             every { this@mockk.host } returns host
-            every { getQueryParameter("x") } returns x?.toString()
-            every { getQueryParameter("y") } returns y?.toString()
-            every { getQueryParameter("deltaX") } returns deltaX?.toString()
-            every { getQueryParameter("deltaY") } returns deltaY?.toString()
-            every { getQueryParameter("deltaTime") } returns deltaTime?.toString()
-            every { getQueryParameter("touchCount") } returns touchCount?.toString()
-            every { getQueryParameter("scrollDirection") } returns scrollDirection
+            every { getQueryParameter(GestureParser.PARAM_X) } returns x?.toString()
+            every { getQueryParameter(GestureParser.PARAM_Y) } returns y?.toString()
+            every { getQueryParameter(GestureParser.PARAM_DELTA_X) } returns deltaX?.toString()
+            every { getQueryParameter(GestureParser.PARAM_DELTA_Y) } returns deltaY?.toString()
+            every { getQueryParameter(GestureParser.PARAM_DELTA_TIME) } returns deltaTime?.toString()
+            every { getQueryParameter(GestureParser.PARAM_TOUCH_COUNT) } returns touchCount?.toString()
+            every { getQueryParameter(GestureParser.PARAM_SCROLL_DIRECTION) } returns scrollDirection
         }
 
     private fun parseGesture(
@@ -80,7 +80,7 @@ class GestureParserTest {
 
     @Test
     fun `parse returns DOUBLE_TAP for doubleTap host`() {
-        val uri = createMockUri(host = "doubleTap")
+        val uri = createMockUri(host = GestureParser.DOUBLE_TAP_HOST)
         val gesture = parseGesture(uri = uri)
         assertEquals(Gesture.DOUBLE_TAP, gesture)
     }
