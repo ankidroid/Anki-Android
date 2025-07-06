@@ -4,6 +4,7 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -57,6 +58,16 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.json)
 
-    // Android dependencies
+    // Android interface dependencies
     implementation(libs.androidx.annotation)
+    testImplementation(libs.androidx.sqlite.framework)
+
+    // test dependencies
+    testImplementation(libs.hamcrest)
+    testImplementation(libs.kotlin.test)
+    testImplementation(libs.kotlin.test.junit5)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.junit.vintage.engine)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.json)
 }
