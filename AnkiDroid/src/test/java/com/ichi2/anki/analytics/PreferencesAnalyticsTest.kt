@@ -66,6 +66,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             R.string.pref_cat_plugins_key, // category_plugins
             R.string.pref_cat_workarounds_key, // category_workarounds
             R.string.pref_controls_tab_layout_key, // controlsTabLayout
+            R.string.addons_category_key, // addonsCat
             // Preferences that only click: don't have a value
             R.string.tts_key, // tts
             R.string.pref_reset_languages_key, // resetLanguages
