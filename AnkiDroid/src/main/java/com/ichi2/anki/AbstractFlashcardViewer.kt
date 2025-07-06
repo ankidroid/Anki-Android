@@ -145,6 +145,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.windows.reviewer.StudyScreenRepository
 import com.ichi2.anki.utils.OnlyOnce.Method.ANSWER_CARD
 import com.ichi2.anki.utils.OnlyOnce.preventSimultaneousExecutions
+import com.ichi2.anki.utils.ext.isTouchWithinBounds
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.compat.ResolveInfoFlagsCompat
@@ -924,6 +925,13 @@ abstract class AbstractFlashcardViewer :
                             }, minimalClickSpeed.toLong())
 
                             showMinimalClickHint()
+                            false
+                        }
+
+                        MotionEvent.ACTION_MOVE -> {
+                            if (!view.isTouchWithinBounds(event)) {
+                                handler.removeCallbacksAndMessages(null)
+                            }
                             false
                         }
 
