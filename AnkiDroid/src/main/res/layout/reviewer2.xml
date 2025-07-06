@@ -202,11 +202,13 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/show_answer"
+                style="@style/AnswerButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/show_answer"
                 android:textSize="@dimen/reviewer_answer_button_textSize"
                 app:cornerRadius="12dp"
+                android:textColor="@color/white"
                 android:backgroundTint="?showAnswerButtonBackground"
                 tools:visibility="invisible"
                 />
