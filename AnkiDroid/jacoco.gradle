@@ -92,11 +92,15 @@ def fileFilter = [
         '**/*$Result$*.*'
 ]
 
-def classDir = 'tmp/kotlin-classes/play'
-if (rootProject.testReleaseBuild)
-    classDir += "Release"
-else
-    classDir += "Debug"
+def flavorClassDir = 'tmp/kotlin-classes/play'
+def moduleClassDir = 'tmp/kotlin-classes/'
+if (rootProject.testReleaseBuild) {
+    flavorClassDir += "Release"
+    moduleClassDir += "release"
+} else {
+    flavorClassDir += "Debug"
+    moduleClassDir += "debug"
+}
 
 // Our merge report task
 tasks.register('jacocoTestReport', JacocoReport) {
@@ -111,7 +115,7 @@ tasks.register('jacocoTestReport', JacocoReport) {
         html.outputLocation = htmlOutDir
     }
 
-    def kotlinClasses = fileTree(dir: project.layout.buildDirectory.dir(classDir), excludes: fileFilter)
+    def kotlinClasses = fileTree(dir: project.layout.buildDirectory.dir(flavorClassDir), excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/java"
 
     sourceDirectories.from = files([mainSrc])
@@ -124,8 +128,11 @@ tasks.register('jacocoTestReport', JacocoReport) {
     dependsOn("connectedPlay${rootProject.androidTestVariantName}AndroidTest")
 }
 
+// modules do not yet support flavors (play/full)
+def modulesToUnitTest = [":common", ":libanki"]
+
 // A unit-test only report task
-tasks.register('jacocoUnitTestReport', JacocoReport) {
+tasks.register('jacocoUnitTestReport', JacocoReport) {report ->
     def htmlOutDir = layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
 
     doLast {
@@ -137,16 +144,25 @@ tasks.register('jacocoUnitTestReport', JacocoReport) {
         html.outputLocation = htmlOutDir
     }
 
-    def kotlinClasses = fileTree(dir: project.layout.buildDirectory.dir(classDir), excludes: fileFilter)
-    def mainSrc = "$project.projectDir/src/main/java"
-
-    sourceDirectories.from = files([mainSrc])
-    classDirectories.from = files([kotlinClasses])
-    executionData.from = fileTree(dir: project.layout.buildDirectory, includes: [
-            '**/*.exec'
-
-    ])
+    includeUnitTestCoverage(report, getProject(), flavorClassDir)
     dependsOn('testPlayDebugUnitTest')
+
+    for (module in modulesToUnitTest) {
+        includeUnitTestCoverage(report, project(module), moduleClassDir)
+        dependsOn("${module}:test")
+    }
+}
+
+ext.includeUnitTestCoverage = { JacocoReport report, Project project, String classDir ->
+    report.sourceDirectories.from.add(files("${project.projectDir}/src/main/java"))
+    report.classDirectories.from.add(files(
+            fileTree(dir: project.layout.buildDirectory.dir(classDir), excludes: fileFilter))
+    )
+    report.executionData.from.add(files(
+            fileTree(dir: project.layout.buildDirectory, includes: [
+                    '**/*.exec',
+            ])
+    ))
 }
 
 // A connected android tests only report task
@@ -162,7 +178,7 @@ tasks.register('jacocoAndroidTestReport', JacocoReport) {
         html.outputLocation = htmlOutDir
     }
 
-    def kotlinClasses = fileTree(dir: project.layout.buildDirectory.dir(classDir), excludes: fileFilter)
+    def kotlinClasses = fileTree(dir: project.layout.buildDirectory.dir(flavorClassDir), excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/java"
 
     sourceDirectories.from = files([mainSrc])
