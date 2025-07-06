@@ -394,9 +394,8 @@ class ReviewerFragment :
     }
 
     private fun setupAnswerButtons(view: View) {
-        val prefs = sharedPrefs()
         val answerArea = view.findViewById<FrameLayout>(R.id.answer_area)
-        if (prefs.getBoolean(getString(R.string.hide_answer_buttons_key), false)) {
+        if (Prefs.hideAnswerButtons) {
             answerArea.isVisible = false
             return
         }
@@ -462,7 +461,7 @@ class ReviewerFragment :
             }
         }
 
-        if (prefs.getBoolean(getString(R.string.hide_hard_and_easy_key), false)) {
+        if (sharedPrefs().getBoolean(getString(R.string.hide_hard_and_easy_key), false)) {
             hardButton.isVisible = false
             easyButton.isVisible = false
         }
@@ -663,7 +662,7 @@ class ReviewerFragment :
      * of [Prefs.toolbarPosition] and `Hide answer buttons`
      */
     private fun setupMargins(view: View) {
-        val hideAnswerButtons = sharedPrefs().getBoolean(getString(R.string.hide_answer_buttons_key), false)
+        val hideAnswerButtons = Prefs.hideAnswerButtons
         // In big screens, let the menu expand if there are no answer buttons
         if (hideAnswerButtons && !resources.isWindowCompact()) {
             val constraintLayout = view.findViewById<ConstraintLayout>(R.id.tools_layout)
