@@ -76,11 +76,11 @@ class ControlsSettingsFragment :
         setDynamicTitle()
     }
 
-    @NeedsTest("General category is kept and the other elements are removed")
+    @NeedsTest("Only the tab elements are removed")
     override fun onTabUnselected(tab: TabLayout.Tab?) {
         val preferences = preferenceScreen.children.toList()
-        // 0 is the `General` category, which should be kept
-        for (pref in preferences.subList(1, preferences.size)) {
+        val tabsPrefIndex = preferences.indexOfFirst { it is ControlsTabPreference }
+        for (pref in preferences.subList(tabsPrefIndex + 1, preferences.size)) {
             preferenceScreen.removePreference(pref)
         }
     }
