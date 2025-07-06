@@ -36,7 +36,6 @@ import anki.decks.DeckTreeNode
 import anki.decks.FilteredDeckForUpdate
 import anki.decks.SetDeckCollapsedRequest
 import anki.decks.copy
-import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.ext.jsonObjectIterable
 import com.ichi2.anki.libanki.backend.BackendUtils
@@ -447,7 +446,7 @@ class Decks(
      *************************************************************
      */
 
-    fun name(did: DeckId): String = get(did)?.name ?: TR.decksNoDeck()
+    fun name(did: DeckId): String = get(did)?.name ?: col.backend.tr.decksNoDeck()
 
     @RustCleanup("implement and make public")
     @LibAnkiAlias("name_if_exists")
