@@ -1,0 +1,11 @@
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = libs.versions.jacoco.get()
+}
+
+android {
+    testCoverage {
+        jacocoVersion = libs.versions.jacoco.get()
+    }
+}
