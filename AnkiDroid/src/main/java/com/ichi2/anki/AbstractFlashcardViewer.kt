@@ -124,6 +124,8 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.pages.PostRequestHandler
+import com.ichi2.anki.preferences.AccessibilitySettingsFragment
+import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.AutomaticAnswer
 import com.ichi2.anki.reviewer.AutomaticAnswer.AutomaticallyAnswered
@@ -914,12 +916,14 @@ abstract class AbstractFlashcardViewer :
                 layout.setOnClickListener(flipCardListener)
             } else {
                 val handler = Handler(Looper.getMainLooper())
-                layout.setOnTouchListener { _, event ->
+                layout.setOnTouchListener { view, event ->
                     when (event.action) {
                         MotionEvent.ACTION_DOWN -> {
                             handler.postDelayed({
                                 flipCardListener.onClick(layout)
                             }, minimalClickSpeed.toLong())
+
+                            showMinimalClickHint()
                             false
                         }
 
@@ -1829,6 +1833,31 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
+    private fun showMinimalClickHint() {
+        if (minimalClickPrefHintShown) {
+            return
+        }
+
+        minimalClickPrefHintShown = true
+
+        showSnackbar(
+            getString(
+                R.string.show_answer_hint_long_press,
+                getString(R.string.pref_show_answer_long_press_time),
+            ),
+            minimalClickSpeed + Reviewer.ACTION_SNACKBAR_TIME,
+        ) {
+            setAction(R.string.settings) {
+                val settingsIntent =
+                    PreferencesActivity.getIntent(
+                        this@AbstractFlashcardViewer,
+                        AccessibilitySettingsFragment::class,
+                    )
+                startActivity(settingsIntent)
+            }
+        }
+    }
+
     // ----------------------------------------------------------------------------
     // INNER CLASSES
     // ----------------------------------------------------------------------------
@@ -2702,6 +2731,8 @@ abstract class AbstractFlashcardViewer :
 
         // maximum screen distance from initial touch where we will consider a click related to the touch
         private const val CLICK_ACTION_THRESHOLD = 200
+
+        private var minimalClickPrefHintShown = false
 
         /**
          * @return if [gesture] is a swipe, a transition to the same direction of the swipe
