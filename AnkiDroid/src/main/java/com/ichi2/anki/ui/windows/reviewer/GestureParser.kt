@@ -32,9 +32,6 @@ import kotlin.math.abs
  * @see parse
  */
 object GestureParser {
-    @VisibleForTesting
-    const val MULTI_FINGER_HOST = "multiFingerTap"
-
     private const val SWIPE_THRESHOLD_BASE = 100
     private val multiPressTimeout =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -75,11 +72,11 @@ object GestureParser {
     ): Gesture? {
         if (isScrolling) return null
         when (uri.host) {
-            "doubleTap" -> return Gesture.DOUBLE_TAP
+            DOUBLE_TAP_HOST -> return Gesture.DOUBLE_TAP
             MULTI_FINGER_HOST -> {
-                val deltaTime = uri.getIntQuery("deltaTime") ?: return null
+                val deltaTime = uri.getIntQuery(PARAM_DELTA_TIME) ?: return null
                 if (deltaTime > multiPressTimeout) return null
-                val touchCount = uri.getIntQuery("touchCount") ?: return null
+                val touchCount = uri.getIntQuery(PARAM_TOUCH_COUNT) ?: return null
                 return when (touchCount) {
                     2 -> Gesture.TWO_FINGER_TAP
                     3 -> Gesture.THREE_FINGER_TAP
@@ -92,10 +89,10 @@ object GestureParser {
             }
         }
 
-        val pageX = uri.getIntQuery("x") ?: return null
-        val pageY = uri.getIntQuery("y") ?: return null
-        val deltaX = uri.getIntQuery("deltaX") ?: return null
-        val deltaY = uri.getIntQuery("deltaY") ?: return null
+        val pageX = uri.getIntQuery(PARAM_X) ?: return null
+        val pageY = uri.getIntQuery(PARAM_Y) ?: return null
+        val deltaX = uri.getIntQuery(PARAM_DELTA_X) ?: return null
+        val deltaY = uri.getIntQuery(PARAM_DELTA_Y) ?: return null
         val absDeltaX = abs(deltaX)
         val absDeltaY = abs(deltaY)
 
@@ -280,4 +277,31 @@ object GestureParser {
     }
 
     private fun Uri.getIntQuery(key: String) = getQueryParameter(key)?.toIntOrNull()
+
+    @VisibleForTesting
+    const val PARAM_X = "x"
+
+    @VisibleForTesting
+    const val PARAM_Y = "y"
+
+    @VisibleForTesting
+    const val PARAM_DELTA_X = "deltaX"
+
+    @VisibleForTesting
+    const val PARAM_DELTA_Y = "deltaY"
+
+    @VisibleForTesting
+    const val PARAM_DELTA_TIME = "deltaTime"
+
+    @VisibleForTesting
+    const val PARAM_SCROLL_DIRECTION = "scrollDirection"
+
+    @VisibleForTesting
+    const val PARAM_TOUCH_COUNT = "touchCount"
+
+    @VisibleForTesting
+    const val DOUBLE_TAP_HOST = "doubleTap"
+
+    @VisibleForTesting
+    const val MULTI_FINGER_HOST = "multiFingerTap"
 }
