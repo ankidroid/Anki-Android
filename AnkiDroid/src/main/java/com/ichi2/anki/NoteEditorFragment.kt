@@ -1260,6 +1260,9 @@ class NoteEditorFragment :
         }
 
         if (closeEditorAfterSave) {
+            if (caller == NoteEditorCaller.NOTEEDITOR_INTENT_ADD || aedictIntent) {
+                showThemedToast(requireContext(), R.string.note_message, shortLength = true)
+            }
             closeNoteEditor(closeIntent ?: Intent())
         } else {
             // Reset check for changes to fields
