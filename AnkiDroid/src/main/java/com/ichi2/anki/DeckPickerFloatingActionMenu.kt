@@ -21,8 +21,10 @@ import android.content.res.ColorStateList
 import android.provider.Settings
 import android.view.MotionEvent
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ichi2.anki.ui.DoubleTapListener
@@ -42,6 +44,14 @@ class DeckPickerFloatingActionMenu(
         view.findViewById(R.id.deckpicker_view) // Layout deck_picker.xml is attached here
     private val studyOptionsFrame: View? = view.findViewById(R.id.studyoptions_fragment)
     private val addNoteLabel: TextView = view.findViewById(R.id.add_note_label)
+
+    // Additional views to blur - toolbar, background, and root layout for comprehensive coverage
+    private val toolbar: Toolbar? = deckPicker.findViewById(R.id.toolbar)
+    private val backgroundImage: ImageView? = deckPicker.findViewById(R.id.background)
+    private val rootLayout: View? = deckPicker.findViewById(R.id.root_layout)
+    private val drawerLayout: View? = deckPicker.findViewById(R.id.drawer_layout)
+    private val noDecksPlaceholder: LinearLayout? =
+        deckPicker.findViewById(R.id.no_decks_placeholder)
 
     // Colors values obtained from attributes
     private val fabNormalColor = MaterialColors.getColor(fabMain, R.attr.fab_normal)
@@ -64,8 +74,18 @@ class DeckPickerFloatingActionMenu(
     private fun showFloatingActionMenu() {
         toggleListener?.onBeginToggle(isOpening = true)
         deckPicker.activeSnackBar?.dismiss()
+
+        // Apply enhanced blur/dim to all background elements for better visual emphasis
+        // Moderate alpha values for subtle blur effect
         linearLayout.alpha = 0.5f
-        studyOptionsFrame?.let { it.alpha = 0.5f }
+        studyOptionsFrame?.alpha = 0.5f
+        toolbar?.alpha = 0.5f
+        backgroundImage?.alpha = 0.5f
+        noDecksPlaceholder?.alpha = 0.5f
+
+        // Also dim the root layout container if available for more comprehensive coverage
+        rootLayout?.alpha = 0.95f
+
         isFABOpen = true
         if (deckPicker.animationEnabled()) {
             // Show with animation
@@ -146,8 +166,14 @@ class DeckPickerFloatingActionMenu(
     fun closeFloatingActionMenu(applyRiseAndShrinkAnimation: Boolean) {
         toggleListener?.onBeginToggle(isOpening = false)
         if (applyRiseAndShrinkAnimation) {
+            // Restore all background elements to full opacity
             linearLayout.alpha = 1f
             studyOptionsFrame?.let { it.alpha = 1f }
+            toolbar?.alpha = 1f
+            backgroundImage?.alpha = 1f
+            noDecksPlaceholder?.alpha = 1f
+            rootLayout?.alpha = 1f
+
             isFABOpen = false
             fabBGLayout.visibility = View.GONE
             addNoteLabel.visibility = View.GONE
@@ -233,8 +259,15 @@ class DeckPickerFloatingActionMenu(
                 fabMain.setImageResource(addWhiteIcon)
             }
         } else {
+            // Restore all background elements to full opacity
             linearLayout.alpha = 1f
             studyOptionsFrame?.let { it.alpha = 1f }
+            toolbar?.alpha = 1f
+            backgroundImage?.alpha = 1f
+            noDecksPlaceholder?.alpha = 1f
+
+            rootLayout?.alpha = 1f
+
             isFABOpen = false
             fabBGLayout.visibility = View.GONE
             addNoteLabel.visibility = View.GONE
