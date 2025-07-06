@@ -120,8 +120,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.lang.IllegalArgumentException
-import java.net.BindException
-import java.net.ServerSocket
 
 class ReviewerFragment :
     CardViewerFragment(R.layout.reviewer2),
@@ -131,7 +129,7 @@ class ReviewerFragment :
     TagsDialogListener,
     ShakeDetector.Listener {
     override val viewModel: ReviewerViewModel by viewModels {
-        ReviewerViewModel.factory(CardMediaPlayer(), getServerPort())
+        ReviewerViewModel.factory(CardMediaPlayer())
     }
 
     override val webView: WebView get() = requireView().findViewById(R.id.webview)
@@ -798,23 +796,5 @@ class ReviewerFragment :
 
     companion object {
         fun getIntent(context: Context): Intent = CardViewerActivity.getIntent(context, ReviewerFragment::class)
-
-        fun getServerPort(): Int {
-            if (!Prefs.useFixedPortInReviewer) return 0
-            return try {
-                ServerSocket(Prefs.reviewerPort)
-                    .use {
-                        it.reuseAddress = true
-                        it.localPort
-                    }.also {
-                        if (Prefs.reviewerPort == 0) {
-                            Prefs.reviewerPort = it
-                        }
-                    }
-            } catch (_: BindException) {
-                Timber.w("Fixed port %d under use. Using dynamic port", Prefs.reviewerPort)
-                0
-            }
-        }
     }
 }
