@@ -486,10 +486,15 @@ class CardBrowserViewModel(
      * Deletes the selected notes,
      * @return the number of deleted notes
      */
+    @NeedsTest("Deleting the focused row is properly handled;#18639")
     suspend fun deleteSelectedNotes(): Int {
         // PERF: use `undoableOp(this)` & notify CardBrowser of changes
         // this does a double search
         val cardIds = queryAllSelectedCardIds()
+        // reset focused row if that row is about to be deleted
+        if (focusedRow?.cardOrNoteId in cardIds) {
+            focusedRow = null
+        }
         return undoableOp { removeNotes(cids = cardIds) }
             .count
             .also {
