@@ -83,21 +83,15 @@
         android:title="@string/answer_buttons">
 
         <SwitchPreferenceCompat
-            android:key="@string/show_estimates_preference"
-            android:summary="@string/show_estimates_summ"
-            android:title="@string/show_estimates" />
-
-        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="@string/hide_answer_buttons_key"
             android:title="@string/hide_answer_buttons"
             />
 
         <SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:key="@string/hide_hard_and_easy_key"
-            android:title="@string/hide_hard_and_easy"
-            />
+            android:key="@string/show_estimates_preference"
+            android:summary="@string/show_estimates_summ"
+            android:title="@string/show_estimates" />
 
         <com.ichi2.preferences.SliderPreference
             android:title="@string/button_size"
@@ -107,5 +101,17 @@
             android:valueTo="200"
             android:stepSize="10"
             app:displayFormat="@string/percentage"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="@string/addons_category_key"
+        tools:title="Add-ons">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="@string/hide_hard_and_easy_key"
+            android:title="@string/hide_hard_and_easy"
+            />
+
     </PreferenceCategory>
 </androidx.preference.PreferenceScreen>

@@ -16,6 +16,7 @@
 package com.ichi2.anki.preferences
 
 import androidx.preference.ListPreference
+import androidx.preference.PreferenceCategory
 import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
@@ -89,5 +90,8 @@ class ReviewerOptionsFragment :
                 launchCatchingTask { CollectionPreferences.setShowIntervalsOnButtons(newValue) }
             }
         }
+
+        requirePreference<PreferenceCategory>(R.string.addons_category_key).title =
+            CollectionManager.TR.qtMiscAddons()
     }
 }
