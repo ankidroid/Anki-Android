@@ -52,7 +52,7 @@ jobs:
         # "lintPlayRelease" doesn't test androidTest
         # "lintPlayDebug" doesn't test the API
         # "lintVitalFullRelease": if `main` resources are only used in `androidTest` (#15741)
-        run: ./gradlew lintPlayDebug :api:lintDebug ktLintCheck lintVitalFullRelease lint-rules:test --daemon
+        run: ./gradlew lintPlayDebug :api:lintDebug :libanki:lintDebug ktLintCheck lintVitalFullRelease lint-rules:test --daemon
 
   lintJavascript:
     name: Lint Javascript
