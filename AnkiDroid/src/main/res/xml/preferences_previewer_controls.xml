@@ -27,7 +27,7 @@
     <com.ichi2.preferences.ControlPreference
         android:key="@string/previewer_replay_media_key"
         android:title="@string/replay_media"
-        android:icon="@drawable/ic_replay"
+        android:icon="@drawable/ic_play_circle_white"
         />
     <com.ichi2.preferences.ControlPreference
         android:key="@string/previewer_backside_only_action_key"
