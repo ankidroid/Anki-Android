@@ -20,8 +20,8 @@ import anki.collection.OpChanges
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.anki.libanki.testutils.TestClass
 import com.ichi2.anki.observability.undoableOp
-import com.ichi2.testutils.TestClass
 
 suspend fun TestClass.addBasicNoteWithOp(
     fields: List<String> = listOf("foo", "bar"),
