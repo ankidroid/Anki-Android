@@ -16,23 +16,20 @@
 package com.ichi2.anki.libanki
 
 import android.annotation.SuppressLint
-import androidx.test.espresso.matcher.ViewMatchers.assertThat
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.sched.Ease
+import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import com.ichi2.anki.libanki.testutils.ext.addNote
-import com.ichi2.testutils.JvmTest
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasItemInArray
 import org.hamcrest.Matchers.not
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.test.assertNotNull
 
-@RunWith(AndroidJUnit4::class)
-class CardTest : JvmTest() {
+class CardTest : InMemoryAnkiTest() {
     @Test
     fun test_toString() {
         val output = addBasicNote().firstCard().toString()

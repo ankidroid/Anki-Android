@@ -28,6 +28,7 @@ class ReviewerBigScreenTest : RobolectricTest() {
     @Test
     @Config(qualifiers = "w1000dp-h1000dp-480dpi")
     fun `sw600dp layout is initialized`() {
+        ensureCollectionLoadIsSynchronous()
         val intent = ReviewerFragment.getIntent(targetContext)
         ActivityScenario.launch<CardViewerActivity>(intent)
     }

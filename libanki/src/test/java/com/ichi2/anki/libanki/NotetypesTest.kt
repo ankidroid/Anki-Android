@@ -16,18 +16,15 @@
 
 package com.ichi2.anki.libanki
 
-import androidx.test.espresso.matcher.ViewMatchers.assertThat
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.testutils.JvmTest
-import com.ichi2.testutils.common.assertThrows
+import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
-import org.junit.runner.RunWith
+import kotlin.test.assertFailsWith
 
-@RunWith(AndroidJUnit4::class)
-class NotetypesTest : JvmTest() {
+class NotetypesTest : InMemoryAnkiTest() {
     @Test
     fun `getSingleNotetypeOfNotes - multiple`() {
         val notes = addNotes(2)
@@ -44,14 +41,14 @@ class NotetypesTest : JvmTest() {
 
     @Test
     fun `getSingleNotetypeOfNotes - no input`() {
-        val result = assertThrows<BackendInvalidInputException> { col.notetypes.getSingleNotetypeOfNotes(emptyList()) }
+        val result = assertFailsWith<BackendInvalidInputException> { col.notetypes.getSingleNotetypeOfNotes(emptyList()) }
         assertThat(result.message, equalTo("no note id provided"))
     }
 
     @Test
     fun `getSingleNotetypeOfNotes - invalid input`() {
         val noteIds = listOf<Long>(1)
-        val result = assertThrows<BackendNotFoundException> { col.notetypes.getSingleNotetypeOfNotes(noteIds) }
+        val result = assertFailsWith<BackendNotFoundException> { col.notetypes.getSingleNotetypeOfNotes(noteIds) }
         assertThat(
             result.message,
             equalTo("Your database appears to be in an inconsistent state. Please use the Check Database action. No such note: '1'"),
@@ -61,7 +58,7 @@ class NotetypesTest : JvmTest() {
     @Test
     fun `getSingleNotetypeOfNotes - one invalid`() {
         val noteIds = listOf(1, addNotes(1).single().id)
-        val result = assertThrows<BackendNotFoundException> { col.notetypes.getSingleNotetypeOfNotes(noteIds) }
+        val result = assertFailsWith<BackendNotFoundException> { col.notetypes.getSingleNotetypeOfNotes(noteIds) }
         assertThat(
             result.message,
             equalTo("Your database appears to be in an inconsistent state. Please use the Check Database action. No such note: '1'"),
@@ -73,7 +70,7 @@ class NotetypesTest : JvmTest() {
         val basicNote = addNotes(1).single()
         val clozeNote = addClozeNote("{{c1::aa}}")
         val result =
-            assertThrows<BackendInvalidInputException> { col.notetypes.getSingleNotetypeOfNotes(listOf(basicNote.id, clozeNote.id)) }
+            assertFailsWith<BackendInvalidInputException> { col.notetypes.getSingleNotetypeOfNotes(listOf(basicNote.id, clozeNote.id)) }
         assertThat(result.message, equalTo("Please select notes from only one note type."))
     }
 }

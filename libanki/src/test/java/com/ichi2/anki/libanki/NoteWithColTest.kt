@@ -16,18 +16,13 @@
 
 package com.ichi2.anki.libanki
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.testutils.JvmTest
+import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
 
-@RunWith(AndroidJUnit4::class)
-class NoteWithColTest : JvmTest() {
+class NoteWithColTest : InMemoryAnkiTest() {
     @Test
-    @Config(qualifiers = "en")
     fun newNoteTest() {
         val note = col.newNote()
         assertThat(note.notetype.name, equalTo("Basic"))

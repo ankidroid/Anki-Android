@@ -33,6 +33,7 @@ import org.robolectric.annotation.Config
 class SentenceCaseTest : RobolectricTest() {
     @Test
     fun `English is converted to sentence case`() {
+        ensureCollectionLoadIsSynchronous()
         with(super.startRegularActivity<IntroductionActivity>()) {
             assertThat(TR.browsingToggleSuspend().toSentenceCase(this, R.string.sentence_toggle_suspend), equalTo("Toggle suspend"))
             assertThat(TR.browsingToggleBury().toSentenceCase(this, R.string.sentence_toggle_bury), equalTo("Toggle bury"))
