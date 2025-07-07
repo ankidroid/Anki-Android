@@ -17,13 +17,9 @@
 package com.ichi2.testutils
 
 import android.annotation.SuppressLint
-import android.view.Menu
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.Toolbar
 import anki.collection.OpChanges
-import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.R
 import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.anki.libanki.Card
@@ -49,7 +45,6 @@ import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
-import kotlin.test.assertNotNull
 import kotlin.time.Duration.Companion.milliseconds
 
 /**
@@ -335,8 +330,6 @@ interface TestClass {
     fun Note.flush() {
         col.updateNote(this)
     }
-
-    fun AnkiActivity.menu(): Menu = assertNotNull(findViewById<Toolbar>(R.id.toolbar)?.menu)
 
     /** * A wrapper around the standard [kotlinx.coroutines.test.runTest] that
      * takes care of updating the dispatcher used by CollectionManager as well.
