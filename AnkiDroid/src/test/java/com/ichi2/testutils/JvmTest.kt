@@ -26,6 +26,8 @@ import com.ichi2.anki.libanki.Storage
 import com.ichi2.anki.observability.ChangeManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.testing.RustBackendLoader
@@ -49,6 +51,9 @@ open class JvmTest : TestClass {
     private fun maybeSetupBackend() {
         RustBackendLoader.ensureSetup()
     }
+
+    override val collectionManager: CollectionManagerTestAdapter
+        get() = CollectionManagerTestAdapter
 
     override val col: Collection
         get() {
@@ -120,5 +125,10 @@ open class JvmTest : TestClass {
         matcher: Matcher<T>?,
     ) {
         Assume.assumeThat(actual, matcher)
+    }
+
+    override suspend fun TestScope.runTestInner(testBody: suspend TestScope.() -> Unit) {
+        collectionManager.setTestDispatcher(UnconfinedTestDispatcher(testScheduler))
+        testBody()
     }
 }

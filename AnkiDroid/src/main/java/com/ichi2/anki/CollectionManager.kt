@@ -176,8 +176,7 @@ object CollectionManager {
     }
 
     /**
-     * Close the currently cached backend and discard it. Useful when enabling the V16 scheduler in the
-     * dev preferences, or if the active language changes. Saves and closes the collection if open.
+     * Close the currently cached backend and discard it. Saves and closes the collection if open.
      */
     suspend fun discardBackend() {
         withQueue {

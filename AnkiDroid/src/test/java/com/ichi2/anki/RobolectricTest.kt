@@ -51,6 +51,7 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.testutils.AndroidTest
+import com.ichi2.testutils.CollectionManagerTestAdapter
 import com.ichi2.testutils.TaskSchedulerRule
 import com.ichi2.testutils.TestClass
 import com.ichi2.testutils.common.FailOnUnhandledExceptionRule
@@ -59,6 +60,8 @@ import com.ichi2.testutils.filter
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.testing.RustBackendLoader
@@ -112,6 +115,9 @@ open class RobolectricTest :
 
     @get:Rule
     val timeoutRule: TimeoutRule = TimeoutRule.seconds(60)
+
+    override val collectionManager: CollectionManagerTestAdapter
+        get() = CollectionManagerTestAdapter
 
     @Before
     @CallSuper
@@ -520,6 +526,11 @@ open class RobolectricTest :
             }
             throw e
         }
+    }
+
+    override suspend fun TestScope.runTestInner(testBody: suspend TestScope.() -> Unit) {
+        collectionManager.setTestDispatcher(UnconfinedTestDispatcher(testScheduler))
+        testBody()
     }
 }
 
