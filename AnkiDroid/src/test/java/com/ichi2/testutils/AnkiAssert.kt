@@ -15,18 +15,10 @@
  */
 package com.ichi2.testutils
 
-import com.ichi2.utils.ListUtil.Companion.assertListEquals
 import kotlin.test.junit5.JUnit5Asserter
 
 /** Assertion methods that aren't currently supported by our dependencies  */
 object AnkiAssert {
-    fun <T> assertEqualsArrayList(
-        expected: Array<T>,
-        actual: List<T>?,
-    ) {
-        assertListEquals(expected.toList(), actual)
-    }
-
     fun without_unicode_isolation(s: String): String = s.replace("\u2068", "").replace("\u2069", "")
 }
 
