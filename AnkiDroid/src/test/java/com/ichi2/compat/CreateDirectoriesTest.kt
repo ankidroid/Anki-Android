@@ -16,12 +16,12 @@
 
 package com.ichi2.compat
 
-import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.createTransientDirectory
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.io.FileMatchers.anExistingDirectory
 import org.junit.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import java.io.File
 import java.io.IOException
 import kotlin.test.assertFailsWith

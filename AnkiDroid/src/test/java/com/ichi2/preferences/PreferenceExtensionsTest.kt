@@ -18,11 +18,11 @@ package com.ichi2.preferences
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
-import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import java.lang.RuntimeException
 import java.util.function.Supplier
 

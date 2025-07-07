@@ -18,13 +18,13 @@ package com.ichi2.anki
 import android.annotation.SuppressLint
 import android.util.Log
 import com.ichi2.anki.logging.ProductionCrashReportingTree
-import com.ichi2.testutils.AnkiAssert
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.mockito.MockedStatic
 import org.mockito.Mockito.any
 import org.mockito.Mockito.anyString
@@ -64,8 +64,8 @@ class ProductionCrashReportingTreeTest {
             ).thenThrow(RuntimeException("Info logging should throw!"))
 
             // now call our wrapper - if it hits the platform logger it will throw
-            AnkiAssert.assertDoesNotThrow { Timber.v("verbose") }
-            AnkiAssert.assertDoesNotThrow { Timber.d("debug") }
+            assertDoesNotThrow { Timber.v("verbose") }
+            assertDoesNotThrow { Timber.d("debug") }
             try {
                 Timber.i("info")
                 Assert.fail("we should have gone to Log.i and thrown but did not? Testing mechanism failure.")
