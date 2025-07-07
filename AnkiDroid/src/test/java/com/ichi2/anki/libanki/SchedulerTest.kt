@@ -27,8 +27,8 @@ import com.ichi2.anki.libanki.Consts.STARTING_FACTOR
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.libanki.sched.Ease
+import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.testutils.JvmTest
-import com.ichi2.testutils.ext.addNote
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
