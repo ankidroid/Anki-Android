@@ -15,7 +15,6 @@
  */
 package com.ichi2.testutils
 
-import com.ichi2.anki.libanki.Card
 import com.ichi2.utils.ListUtil.Companion.assertListEquals
 import kotlin.test.junit5.JUnit5Asserter
 
@@ -29,11 +28,6 @@ object AnkiAssert {
     }
 
     fun without_unicode_isolation(s: String): String = s.replace("\u2068", "").replace("\u2069", "")
-
-    fun checkRevIvl(
-        c: Card,
-        targetIvl: Int,
-    ): Boolean = c.ivl == targetIvl
 }
 
 /** Asserts that the expression is `false` with an optional [message]. */
