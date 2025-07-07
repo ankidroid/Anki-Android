@@ -84,7 +84,7 @@ import com.ichi2.anki.libanki.CardType
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.QueueType
-import com.ichi2.anki.libanki.testutils.TestClass
+import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SortType
@@ -1633,7 +1633,7 @@ suspend fun CardBrowserViewModel.setFlagFilterSync(flag: Flag) {
     searchJob?.join()
 }
 
-fun TestClass.flagCardForNote(
+fun AnkiTest.flagCardForNote(
     n: Note,
     flag: Flag,
 ) {
