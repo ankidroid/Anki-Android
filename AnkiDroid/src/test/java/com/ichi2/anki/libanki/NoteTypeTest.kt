@@ -20,8 +20,8 @@ import anki.notetypes.copy
 import com.ichi2.anki.backend.stripHTML
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
+import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.testutils.JvmTest
-import com.ichi2.testutils.ext.addNote
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.endsWith

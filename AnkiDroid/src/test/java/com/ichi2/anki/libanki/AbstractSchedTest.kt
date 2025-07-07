@@ -18,8 +18,8 @@ package com.ichi2.anki.libanki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.libanki.sched.Ease
+import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.testutils.JvmTest
-import com.ichi2.testutils.ext.addNote
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.notNullValue

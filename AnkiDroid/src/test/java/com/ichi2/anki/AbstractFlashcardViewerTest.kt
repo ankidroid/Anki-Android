@@ -22,6 +22,7 @@ import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.libanki.sched.Ease
+import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.AutomaticAnswer
@@ -30,7 +31,6 @@ import com.ichi2.anki.reviewer.AutomaticAnswerSettings
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
-import com.ichi2.testutils.ext.addNote
 import com.ichi2.utils.createBasicTypingNoteType
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString

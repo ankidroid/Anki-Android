@@ -31,7 +31,7 @@ import com.ichi2.anki.libanki.Notetypes
 import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.testutils.TestCollectionManager
-import com.ichi2.testutils.ext.addNote
+import com.ichi2.anki.libanki.testutils.ext.addNote
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
