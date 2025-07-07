@@ -382,6 +382,8 @@ dependencies {
     implementation libs.androidx.viewpager2
     implementation libs.androidx.constraintlayout
     implementation libs.androidx.webkit
+    implementation libs.androidx.transition
+    implementation libs.androidx.interpolator
     implementation libs.google.material
     implementation libs.android.image.cropper
     implementation libs.nanohttpd

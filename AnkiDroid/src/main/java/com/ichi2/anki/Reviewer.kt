@@ -110,6 +110,7 @@ import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.NoteService.toggleMark
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.AnimationUtils
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.ext.flag
@@ -1057,6 +1058,24 @@ open class Reviewer :
         easeButton3!!.setup(background[2], textColor[2], R.string.ease_button_good)
         easeButton4!!.setVisibility(View.VISIBLE)
         easeButton3!!.requestFocus()
+
+        // Add smooth animations for answer buttons appearance
+        if (!AnimationUtils.shouldDisableAnimations(this)) {
+            val buttons = listOfNotNull(easeButton1, easeButton2, easeButton3, easeButton4)
+            buttons.forEachIndexed { index, button ->
+                if (button.visibility == View.VISIBLE) {
+                    // Stagger the animations for a smoother effect
+                    val delay = index * 50L
+                    button.postDelayed({
+                        AnimationUtils.createFadeScaleTransition(
+                            view = button,
+                            fadeIn = true,
+                            duration = 200L,
+                        )
+                    }, delay)
+                }
+            }
+        }
 
         // Show next review time
         if (shouldShowNextReviewTime()) {

@@ -161,6 +161,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.AnimationUtils
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
@@ -2141,6 +2142,17 @@ open class DeckPicker :
                 // Tablets must always show the study options that corresponds to the current deck,
                 // regardless of whether the deck is currently reviewable or not.
                 openStudyOptions(withDeckOptions = false)
+
+                // Add smooth transition animation for the study options fragment
+                if (!AnimationUtils.shouldDisableAnimations(this@DeckPicker)) {
+                    studyoptionsFrame?.let { frame ->
+                        AnimationUtils.createFadeScaleTransition(
+                            view = frame,
+                            fadeIn = true,
+                            duration = 250L,
+                        )
+                    }
+                }
             } else {
                 // On phones, we update the deck list to ensure the currently selected deck is
                 // highlighted correctly.
@@ -2154,6 +2166,30 @@ open class DeckPicker :
         CardBrowser.clearLastDeckId()
         viewModel.focusedDeck = did
         val deck = getNodeByDid(did)
+
+        // Add subtle animation feedback for deck selection
+        if (!AnimationUtils.shouldDisableAnimations(this)) {
+            // Find the deck view in the RecyclerView and animate it
+            val deckViewHolder = recyclerView.findViewHolderForItemId(did)
+            deckViewHolder?.itemView?.let { deckView ->
+                AnimationUtils.animateCardElevation(
+                    view = deckView,
+                    fromElevation = 2f,
+                    toElevation = 8f,
+                    duration = 150L,
+                )
+                // Return to normal elevation after a short delay
+                deckView.postDelayed({
+                    AnimationUtils.animateCardElevation(
+                        view = deckView,
+                        fromElevation = 8f,
+                        toElevation = 2f,
+                        duration = 200L,
+                    )
+                }, 100)
+            }
+        }
+
         if (deck.hasCardsReadyToStudy()) {
             openReviewerOrStudyOptions(selectionType)
             return
@@ -2491,7 +2527,16 @@ open class DeckPicker :
 
     private fun openReviewer() {
         val intent = Reviewer.getIntent(this)
-        reviewLauncher.launch(intent)
+
+        // Add smoother transition animation
+        if (!AnimationUtils.shouldDisableAnimations(this)) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            reviewLauncher.launch(intent)
+            // Apply custom Material Design slide transition
+            overridePendingTransition(R.anim.slide_in_right_material, R.anim.slide_out_left_material)
+        } else {
+            reviewLauncher.launch(intent)
+        }
     }
 
     private fun createSubDeckDialog(did: DeckId) {

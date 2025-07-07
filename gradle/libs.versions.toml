@@ -59,6 +59,10 @@ androidxViewpager2 = "1.1.0"
 androidxWebkit = "1.14.0"
 # https://developer.android.com/jetpack/androidx/releases/work
 androidxWork = "2.10.2"
+# https://developer.android.com/jetpack/androidx/releases/transition
+androidxTransition = "1.5.2"
+# https://developer.android.com/jetpack/androidx/releases/interpolator
+androidxInterpolator = "1.0.0"
 ankiBackend = '0.1.57-anki25.07.1'
 autoService = "1.1.1"
 autoServiceAnnotations = "1.1.1"
@@ -174,7 +178,8 @@ seismic = { module = "com.squareup:seismic", version.ref = "seismic" }
 slf4j-timber = { module = "com.arcao:slf4j-timber", version.ref = "slf4jTimber" }
 jakewharton-timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 androidx-work-runtime = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "androidxWork" }
-
+androidx-transition = { module = "androidx.transition:transition", version.ref = "androidxTransition" }
+androidx-interpolator = { module = "androidx.interpolator:interpolator", version.ref = "androidxInterpolator" }
 
 #testing libs
 androidx-espresso-contrib = { module = "androidx.test.espresso:espresso-contrib", version.ref = "espresso" }
