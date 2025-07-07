@@ -17,7 +17,6 @@
 package com.ichi2.testutils
 
 import android.annotation.SuppressLint
-import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.anki.libanki.Card
@@ -31,6 +30,7 @@ import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.Notetypes
 import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
+import com.ichi2.anki.libanki.testutils.TestCollectionManager
 import com.ichi2.testutils.ext.addNote
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -49,6 +49,8 @@ import kotlin.time.Duration.Companion.milliseconds
  */
 interface TestClass {
     val col: Collection
+
+    val collectionManager: TestCollectionManager
 
     fun addBasicNote(
         front: String = "Front",
@@ -322,7 +324,7 @@ interface TestClass {
         repeat(times) {
             if (times != 1) Timber.d("------ Executing test $it/$times ------")
             kotlinx.coroutines.test.runTest(context, dispatchTimeoutMs.milliseconds) {
-                CollectionManager.setTestDispatcher(UnconfinedTestDispatcher(testScheduler))
+                collectionManager.setTestDispatcher(UnconfinedTestDispatcher(testScheduler))
                 testBody()
             }
         }
