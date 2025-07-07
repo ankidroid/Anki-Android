@@ -55,6 +55,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import anki.frontend.SetSchedulingStatesRequest
 import com.google.android.material.color.MaterialColors
@@ -1063,12 +1064,12 @@ open class Reviewer :
         if (!AnimationUtils.shouldDisableAnimations(this)) {
             val buttons = listOfNotNull(easeButton1, easeButton2, easeButton3, easeButton4)
             buttons.forEachIndexed { index, button ->
-                if (button.visibility == View.VISIBLE) {
-                    // Stagger the animations for a smoother effect
+                val v = button.view
+                if (v.isVisible) {
                     val delay = index * 50L
-                    button.postDelayed({
+                    v.postDelayed({
                         AnimationUtils.createFadeScaleTransition(
-                            view = button,
+                            view = v,
                             fadeIn = true,
                             duration = 200L,
                         )

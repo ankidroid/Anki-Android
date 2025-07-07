@@ -61,7 +61,7 @@
         <item name="hardButtonBackground">@color/material_blue_grey_700</item>
         <item name="goodButtonBackground">@color/material_green_500</item>
         <item name="easyButtonBackground">@color/material_light_blue_500</item>
-        <item name="topBarColor">@color/material_light_blue_100</item>
+        <item name="topBarColor">#4DB3E5FC</item> <!-- material_light_blue_100 with 30% alpha for subtle blur effect -->
         <item name="maxTimerColor">@color/material_red_500</item>
         <item name="answerButtonTextColor">@color/white</item>
         <item name="againButtonTextColor">@color/white</item>
@@ -156,3 +156,4 @@
 
     <style name="Theme_Light" parent="Base.Theme.Light"/>
 </resources>
+

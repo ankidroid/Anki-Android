@@ -124,6 +124,8 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.pages.PostRequestHandler
+import com.ichi2.anki.preferences.AccessibilitySettingsFragment
+import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.AutomaticAnswer
 import com.ichi2.anki.reviewer.AutomaticAnswer.AutomaticallyAnswered
@@ -171,6 +173,11 @@ import java.util.concurrent.locks.ReentrantReadWriteLock
 import java.util.function.Consumer
 import java.util.function.Function
 import kotlin.math.abs
+
+// Singleton to show long-press warning only once per launch
+object LongPressWarningManager {
+    var shown = false
+}
 
 abstract class AbstractFlashcardViewer :
     NavigationDrawerActivity(),
@@ -922,12 +929,23 @@ abstract class AbstractFlashcardViewer :
                             }, minimalClickSpeed.toLong())
                             false
                         }
-
                         MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_HOVER_ENTER -> {
                             handler.removeCallbacksAndMessages(null)
+                            // Show snackbar the first time a blocked answer would happen
+                            if (!LongPressWarningManager.shown) {
+                                LongPressWarningManager.shown = true
+                                // Show snackbar anchored appropriately
+                                showSnackbar(
+                                    "Show Answer Long-Press Time is enabled. If you can't reveal the answer, tap here to change Accessibility settings.",
+                                ) {
+                                    setAction("Settings") {
+                                        val intent = PreferencesActivity.getIntent(context, AccessibilitySettingsFragment::class)
+                                        context.startActivity(intent)
+                                    }
+                                }
+                            }
                             false
                         }
-
                         else -> false
                     }
                 }

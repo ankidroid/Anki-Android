@@ -60,7 +60,7 @@ androidxWebkit = "1.14.0"
 # https://developer.android.com/jetpack/androidx/releases/work
 androidxWork = "2.10.2"
 # https://developer.android.com/jetpack/androidx/releases/transition
-androidxTransition = "1.5.2"
+androidxTransition = "1.6.0"
 # https://developer.android.com/jetpack/androidx/releases/interpolator
 androidxInterpolator = "1.0.0"
 ankiBackend = '0.1.57-anki25.07.1'

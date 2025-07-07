@@ -28,6 +28,7 @@ import androidx.appcompat.widget.Toolbar
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ichi2.anki.ui.DoubleTapListener
+import com.ichi2.themes.Themes
 import timber.log.Timber
 
 class DeckPickerFloatingActionMenu(
@@ -77,9 +78,13 @@ class DeckPickerFloatingActionMenu(
 
         // Apply enhanced blur/dim to all background elements for better visual emphasis
         // Moderate alpha values for subtle blur effect
+
+        val isLightMode = !Themes.currentTheme.isNightMode
+
         linearLayout.alpha = 0.5f
         studyOptionsFrame?.alpha = 0.5f
-        toolbar?.alpha = 0.5f
+        // Use less dim for the toolbar in light mode to avoid white overlay
+        toolbar?.alpha = if (isLightMode) 0.85f else 0.5f
         backgroundImage?.alpha = 0.5f
         noDecksPlaceholder?.alpha = 0.5f
 
@@ -265,7 +270,6 @@ class DeckPickerFloatingActionMenu(
             toolbar?.alpha = 1f
             backgroundImage?.alpha = 1f
             noDecksPlaceholder?.alpha = 1f
-
             rootLayout?.alpha = 1f
 
             isFABOpen = false

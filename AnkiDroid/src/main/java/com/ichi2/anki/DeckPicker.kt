@@ -2533,6 +2533,7 @@ open class DeckPicker :
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             reviewLauncher.launch(intent)
             // Apply custom Material Design slide transition
+            @Suppress("DEPRECATION")
             overridePendingTransition(R.anim.slide_in_right_material, R.anim.slide_out_left_material)
         } else {
             reviewLauncher.launch(intent)

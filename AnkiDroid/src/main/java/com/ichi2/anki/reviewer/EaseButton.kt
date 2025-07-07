@@ -56,6 +56,9 @@ class EaseButton(
             easeTimeView.text = value
         }
 
+    val view: LinearLayout
+        get() = layout
+
     fun hideNextReviewTime() {
         easeTimeView.visibility = View.GONE
     }
