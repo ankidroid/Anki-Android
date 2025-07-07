@@ -677,6 +677,9 @@ class ReviewerFragment :
                 )
                 applyTo(constraintLayout)
             }
+            // applying a ConstraintSet resets the visibility of counts_flow, which includes
+            // the timer, so check again if it should be visible.
+            timer?.isVisible = viewModel.answerTimerStatusFlow.value != null
             return
         }
 
