@@ -86,7 +86,7 @@ fun DeckNode.filterAndFlattenDisplay(
         if (filter.isNullOrBlank()) {
             null
         } else {
-            filter.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
+            filter.toString().lowercase(Locale.getDefault()).trim()
         }
     val list = mutableListOf<DisplayDeckNode>()
     filterAndFlattenDisplayInner(filterPattern, list, parentMatched = false, selectedDeckId)

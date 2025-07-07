@@ -20,7 +20,6 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Context
-import android.os.Build
 import android.transition.AutoTransition
 import android.transition.ChangeBounds
 import android.transition.ChangeImageTransform
@@ -80,37 +79,32 @@ object AnimationUtils {
             return
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            val transitionSet =
-                TransitionSet().apply {
-                    addTransition(ChangeBounds())
-                    addTransition(ChangeTransform())
-                    addTransition(ChangeImageTransform())
-                    duration = DURATION_MEDIUM
-                    interpolator = FAST_OUT_SLOW_IN
+        val transitionSet =
+            TransitionSet().apply {
+                addTransition(ChangeBounds())
+                addTransition(ChangeTransform())
+                addTransition(ChangeImageTransform())
+                duration = DURATION_MEDIUM
+                interpolator = FAST_OUT_SLOW_IN
+            }
+
+        transitionSet.addListener(
+            object : Transition.TransitionListener {
+                override fun onTransitionStart(transition: Transition) {}
+
+                override fun onTransitionEnd(transition: Transition) {
+                    onComplete?.invoke()
                 }
 
-            transitionSet.addListener(
-                object : Transition.TransitionListener {
-                    override fun onTransitionStart(transition: Transition) {}
+                override fun onTransitionCancel(transition: Transition) {}
 
-                    override fun onTransitionEnd(transition: Transition) {
-                        onComplete?.invoke()
-                    }
+                override fun onTransitionPause(transition: Transition) {}
 
-                    override fun onTransitionCancel(transition: Transition) {}
+                override fun onTransitionResume(transition: Transition) {}
+            },
+        )
 
-                    override fun onTransitionPause(transition: Transition) {}
-
-                    override fun onTransitionResume(transition: Transition) {}
-                },
-            )
-
-            TransitionManager.beginDelayedTransition(container, transitionSet)
-        } else {
-            // Fallback for older Android versions
-            createViewTransition(fromView, toView, onComplete)
-        }
+        TransitionManager.beginDelayedTransition(container, transitionSet)
     }
 
     /**
@@ -332,45 +326,13 @@ object AnimationUtils {
             return
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val autoTransition =
-                AutoTransition().apply {
-                    this.duration = duration
-                    interpolator = FAST_OUT_SLOW_IN
-                }
-
-            TransitionManager.beginDelayedTransition(endContainer, autoTransition)
-        }
-    }
-
-    /**
-     * Fallback animation for older Android versions
-     */
-    private fun createViewTransition(
-        fromView: View,
-        toView: View,
-        onComplete: (() -> Unit)? = null,
-    ) {
-        val fadeOut =
-            ObjectAnimator.ofFloat(fromView, "alpha", 1f, 0f).apply {
-                duration = DURATION_SHORT
-                interpolator = FAST_OUT_LINEAR_IN
+        val autoTransition =
+            AutoTransition().apply {
+                this.duration = duration
+                interpolator = FAST_OUT_SLOW_IN
             }
 
-        val fadeIn =
-            ObjectAnimator.ofFloat(toView, "alpha", 0f, 1f).apply {
-                duration = DURATION_SHORT
-                interpolator = LINEAR_OUT_SLOW_IN
-                startDelay = DURATION_SHORT / 2
-            }
-
-        val animatorSet =
-            AnimatorSet().apply {
-                playTogether(fadeOut, fadeIn)
-            }
-
-        animatorSet.doOnEnd { onComplete?.invoke() }
-        animatorSet.start()
+        TransitionManager.beginDelayedTransition(endContainer, autoTransition)
     }
 
     enum class SlideDirection {
