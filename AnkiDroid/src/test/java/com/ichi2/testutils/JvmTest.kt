@@ -21,12 +21,14 @@ import androidx.annotation.CallSuper
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Storage
 import com.ichi2.anki.libanki.testutils.TestCollectionManager
 import com.ichi2.anki.observability.ChangeManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.resetMain
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.testing.RustBackendLoader
@@ -117,6 +119,11 @@ open class JvmTest : TestClass {
         runBlocking { CollectionManager.discardBackend() }
         Timber.uprootAll()
         println("""-- completed test "${testName.methodName}"""")
+    }
+
+    override fun setupTestDispatcher(dispatcher: TestDispatcher) {
+        super.setupTestDispatcher(dispatcher)
+        ioDispatcher = dispatcher
     }
 
     fun <T> assumeThat(
