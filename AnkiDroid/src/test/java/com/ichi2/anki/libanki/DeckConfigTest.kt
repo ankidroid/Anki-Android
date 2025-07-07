@@ -31,10 +31,10 @@ import com.ichi2.anki.reviewer.AutomaticAnswerAction.Companion.answerAction
 import com.ichi2.anki.ui.windows.reviewer.autoadvance.QuestionAction
 import com.ichi2.anki.ui.windows.reviewer.autoadvance.QuestionAction.Companion.questionAction
 import com.ichi2.testutils.JvmTest
-import com.ichi2.testutils.assertFalse
 import com.ichi2.testutils.isJsonHolderEqual
 import org.json.JSONArray
 import org.json.JSONObject
+import org.junit.Assert.assertFalse
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -58,7 +58,7 @@ class DeckConfigTest : JvmTest() {
     fun testWaitForAudio() {
         assertTrue(dc.waitForAudio)
         val dc = DeckConfig("""{"$WAIT_FOR_AUDIO": false}""")
-        assertFalse("", dc.waitForAudio)
+        assertFalse(dc.waitForAudio)
     }
 
     @Test
@@ -108,7 +108,7 @@ class DeckConfigTest : JvmTest() {
     fun testAutoPlay() {
         assertTrue(dc.autoplay)
         dc.autoplay = false
-        assertFalse("", dc.autoplay)
+        assertFalse(dc.autoplay)
         dc.autoplay = true
         assertTrue(dc.autoplay)
     }
@@ -116,7 +116,7 @@ class DeckConfigTest : JvmTest() {
     @Test
     fun testReplayQ() {
         dc.replayq = false
-        assertFalse("", dc.replayq)
+        assertFalse(dc.replayq)
         dc.replayq = true
         assertTrue(dc.replayq)
     }
