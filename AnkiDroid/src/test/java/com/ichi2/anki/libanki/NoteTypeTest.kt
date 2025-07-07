@@ -20,6 +20,7 @@ import anki.notetypes.copy
 import com.ichi2.anki.backend.stripHTML
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
+import com.ichi2.anki.libanki.testutils.clozeClass
 import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
@@ -31,13 +32,9 @@ import org.junit.Assert.assertNotEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 
-fun clozeClass(): String = "class=\"cloze\""
-
-fun clozeData(data: String): String = " data-cloze=\"${data}\""
-
 @RunWith(AndroidJUnit4::class)
 @KotlinCleanup("improve kotlin code where possible")
-class NotetypeTest : JvmTest() {
+class NoteTypeTest : JvmTest() {
     @Test
     fun test_frontSide_field() {
         // #8951 - Anki Special-cases {{FrontSide}} on the front to return empty string
