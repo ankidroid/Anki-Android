@@ -13,16 +13,18 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.testutils
+
+package com.ichi2.anki.common.time
 
 import android.annotation.SuppressLint
-import com.ichi2.anki.common.time.Time
+import androidx.annotation.VisibleForTesting
 import java.util.Calendar
 import java.util.GregorianCalendar
 import java.util.TimeZone
 
 /** @param [step] Number of milliseconds between each call.
  * @param [initTime]: Time since epoch in MS. */
+@VisibleForTesting(otherwise = VisibleForTesting.NONE)
 open class MockTime(
     initTime: Long,
     private val step: Int = 0,

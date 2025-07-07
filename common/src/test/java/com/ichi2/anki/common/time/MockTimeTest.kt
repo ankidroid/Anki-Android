@@ -13,7 +13,8 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.testutils
+
+package com.ichi2.anki.common.time
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
