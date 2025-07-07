@@ -23,7 +23,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.instantnoteeditor.InstantEditorViewModel
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity
 import com.ichi2.anki.instantnoteeditor.SaveNoteResult
-import com.ichi2.anki.libanki.testutils.TestClass
+import com.ichi2.anki.libanki.testutils.AnkiTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -231,7 +231,7 @@ class InstantEditorViewModelTest : RobolectricTest() {
         }
 
     companion object {
-        fun TestClass.runInstantEditorViewModelTest(
+        fun AnkiTest.runInstantEditorViewModelTest(
             initViewModel: () -> InstantEditorViewModel = { InstantEditorViewModel() },
             testBody: suspend InstantEditorViewModel.() -> Unit,
         ) = runTest {

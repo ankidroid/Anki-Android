@@ -58,7 +58,7 @@ import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.QueueType.ManuallyBuried
 import com.ichi2.anki.libanki.QueueType.New
-import com.ichi2.anki.libanki.testutils.TestClass
+import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.model.SortType.NO_SORTING
@@ -1163,7 +1163,7 @@ internal suspend fun CardBrowserViewModel.invokeInitialSearch() {
     Timber.v("initial search completed")
 }
 
-private fun TestClass.assertAllSuspended(context: String) {
+private fun AnkiTest.assertAllSuspended(context: String) {
     val cards = col.findCards("").map { col.getCard(it) }
     assertThat("performance", cards.size, lessThan(10))
 
@@ -1176,7 +1176,7 @@ private fun TestClass.assertAllSuspended(context: String) {
     }
 }
 
-private fun TestClass.assertAllUnsuspended(context: String) {
+private fun AnkiTest.assertAllUnsuspended(context: String) {
     val cards = col.findCards("").map { col.getCard(it) }
     assertThat("performance", cards.size, lessThan(10))
 
@@ -1189,18 +1189,18 @@ private fun TestClass.assertAllUnsuspended(context: String) {
     }
 }
 
-private fun TestClass.suspendAll() {
+private fun AnkiTest.suspendAll() {
     col.findCards("").also { cards ->
         col.sched.suspendCards(col.findCards(""))
         Timber.d("suspended %d cards", cards.size)
     }
 }
 
-private fun TestClass.suspendCards(vararg cardIds: CardId) {
+private fun AnkiTest.suspendCards(vararg cardIds: CardId) {
     col.sched.suspendCards(ids = cardIds.toList())
 }
 
-private fun TestClass.suspendNote(note: Note) {
+private fun AnkiTest.suspendNote(note: Note) {
     col.sched.suspendCards(note.cardIds(col))
 }
 

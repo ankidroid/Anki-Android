@@ -20,10 +20,10 @@ import anki.collection.OpChanges
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
-import com.ichi2.anki.libanki.testutils.TestClass
+import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.anki.observability.undoableOp
 
-suspend fun TestClass.addBasicNoteWithOp(
+suspend fun AnkiTest.addBasicNoteWithOp(
     fields: List<String> = listOf("foo", "bar"),
     noteType: NotetypeJson = col.notetypes.byName("Basic")!!,
 ): Note =
