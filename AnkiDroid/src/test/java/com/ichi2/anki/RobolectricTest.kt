@@ -17,6 +17,7 @@
 package com.ichi2.anki
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.Intent
@@ -32,15 +33,21 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.work.Configuration
 import androidx.work.testing.SynchronousExecutor
 import androidx.work.testing.WorkManagerTestInitHelper
+import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.CollectionOpenFailure
+import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
+import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooperWithSleep
+import com.ichi2.anki.common.annotations.UseContextParameter
 import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.Storage
 import com.ichi2.anki.observability.ChangeManager
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.testutils.AndroidTest
@@ -475,6 +482,15 @@ open class RobolectricTest :
             throw e
         }
     }
+
+    /** Helper method to update a note */
+    @SuppressLint("CheckResult")
+    @UseContextParameter("TestClass")
+    suspend fun Note.updateOp(block: Note.() -> Unit): Note =
+        this.also { note ->
+            block(note)
+            undoableOp<OpChanges> { col.updateNote(note) }
+        }
 
     private fun maybeSetupBackend() {
         try {
