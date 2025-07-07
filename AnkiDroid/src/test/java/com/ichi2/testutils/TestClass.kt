@@ -17,7 +17,6 @@
 package com.ichi2.testutils
 
 import android.annotation.SuppressLint
-import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.isCollectionEmpty
@@ -32,7 +31,6 @@ import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.Notetypes
 import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
-import com.ichi2.anki.observability.undoableOp
 import com.ichi2.testutils.ext.addNote
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -105,17 +103,6 @@ interface TestClass {
         check(col.addNote(n) != 0) { "Could not add note: {${fields.joinToString(separator = ", ")}}" }
         return n
     }
-
-    suspend fun addBasicNoteWithOp(
-        fields: List<String> = listOf("foo", "bar"),
-        noteType: NotetypeJson = col.notetypes.byName("Basic")!!,
-    ): Note =
-        col.newNote(noteType).also { note ->
-            for ((i, field) in fields.withIndex()) {
-                note.setField(i, field)
-            }
-            undoableOp<OpChanges> { col.addNote(note, Consts.DEFAULT_DECK_ID) }
-        }
 
     /**
      * Create a new note type in the collection.
@@ -244,14 +231,6 @@ interface TestClass {
         col.updateNote(this)
         return this
     }
-
-    /** Helper method to update a note */
-    @SuppressLint("CheckResult")
-    suspend fun Note.updateOp(block: Note.() -> Unit): Note =
-        this.also { note ->
-            block(note)
-            undoableOp<OpChanges> { col.updateNote(note) }
-        }
 
     /** Helper method to all cards of a note */
     fun Note.updateCards(update: Card.() -> Unit): Note {
