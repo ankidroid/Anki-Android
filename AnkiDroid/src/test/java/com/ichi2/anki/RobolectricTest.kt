@@ -46,7 +46,7 @@ import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.Storage
-import com.ichi2.anki.libanki.testutils.TestClass
+import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.sharedPrefs
@@ -88,7 +88,7 @@ import timber.log.Timber
 import kotlin.test.assertNotNull
 
 open class RobolectricTest :
-    TestClass,
+    AnkiTest,
     AndroidTest {
     @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
     private fun Any.wait(timeMs: Long) = (this as Object).wait(timeMs)

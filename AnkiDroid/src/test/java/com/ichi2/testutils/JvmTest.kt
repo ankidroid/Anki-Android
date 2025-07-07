@@ -24,7 +24,7 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Storage
-import com.ichi2.anki.libanki.testutils.TestClass
+import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.anki.observability.ChangeManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -44,7 +44,7 @@ import org.robolectric.junit.rules.TimeoutRule
 import timber.log.Timber
 import timber.log.Timber.Forest.plant
 
-open class JvmTest : TestClass {
+open class JvmTest : AnkiTest {
     @get:Rule
     val timeoutRule: TimeoutRule = TimeoutRule.seconds(60)
 

@@ -28,7 +28,6 @@ import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.Notetypes
 import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
-import com.ichi2.anki.libanki.testutils.TestCollectionManager
 import com.ichi2.anki.libanki.testutils.ext.addNote
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -47,7 +46,7 @@ import kotlin.time.Duration.Companion.milliseconds
  *
  * Android (AnkiDroid/Robolectric) is not required for these tests to run
  */
-interface TestClass {
+interface AnkiTest {
     val col: Collection
 
     val collectionManager: TestCollectionManager
@@ -243,7 +242,7 @@ interface TestClass {
     /** Helper method to update a card */
     fun Card.update(update: Card.() -> Unit): Card {
         update(this)
-        this@TestClass.col.updateCard(this, skipUndoEntry = true)
+        this@AnkiTest.col.updateCard(this, skipUndoEntry = true)
         return this
     }
 
