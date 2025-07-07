@@ -243,7 +243,7 @@ open class SchedulerTest : JvmTest() {
         col.sched.answerCard(c, Ease.EASY)
         Assert.assertEquals(CardType.Rev, c.type)
         Assert.assertEquals(QueueType.Rev, c.queue)
-        Assert.assertTrue(AnkiAssert.checkRevIvl(c, 4))
+        Assert.assertTrue(checkRevIvl(c, 4))
         // revlog should have been updated each time
         Assert.assertEquals(
             5,
@@ -421,7 +421,7 @@ open class SchedulerTest : JvmTest() {
         col.sched.answerCard(c, Ease.HARD)
         Assert.assertEquals(QueueType.Rev, c.queue)
         // the new interval should be (100) * 1.2 = 120
-        Assert.assertTrue(AnkiAssert.checkRevIvl(c, 120))
+        Assert.assertTrue(checkRevIvl(c, 120))
         Assert.assertEquals((col.sched.today + c.ivl), c.due)
         // factor should have been decremented
         Assert.assertEquals(2350, c.factor)
@@ -434,7 +434,7 @@ open class SchedulerTest : JvmTest() {
         col.updateCard(c, skipUndoEntry = true)
         col.sched.answerCard(c, Ease.GOOD)
         // the new interval should be (100 + 8/2) * 2.5 = 260
-        Assert.assertTrue(AnkiAssert.checkRevIvl(c, 260))
+        Assert.assertTrue(checkRevIvl(c, 260))
         Assert.assertEquals((col.sched.today + c.ivl), c.due)
         // factor should have been left alone
         Assert.assertEquals(STARTING_FACTOR, c.factor)
@@ -444,7 +444,7 @@ open class SchedulerTest : JvmTest() {
         col.updateCard(c, skipUndoEntry = true)
         col.sched.answerCard(c, Ease.EASY)
         // the new interval should be (100 + 8) * 2.5 * 1.3 = 351
-        Assert.assertTrue(AnkiAssert.checkRevIvl(c, 351))
+        Assert.assertTrue(checkRevIvl(c, 351))
         Assert.assertEquals((col.sched.today + c.ivl), c.due)
         // factor should have been increased
         Assert.assertEquals(2650, c.factor)
@@ -767,7 +767,7 @@ open class SchedulerTest : JvmTest() {
 
         // answer 'good'
         col.sched.answerCard(c, Ease.GOOD)
-        AnkiAssert.checkRevIvl(c, 90)
+        checkRevIvl(c, 90)
         Assert.assertEquals((col.sched.today + c.ivl), c.due)
         Assert.assertEquals(0, c.oDue)
         // should not be in learning
@@ -1347,4 +1347,9 @@ open class SchedulerTest : JvmTest() {
         sched.answerCard(card!!, Ease.AGAIN)
         assertDoesNotThrow { col.undo() }
     }
+
+    private fun checkRevIvl(
+        c: Card,
+        targetIvl: Int,
+    ): Boolean = c.ivl == targetIvl
 }
