@@ -78,6 +78,7 @@ import kotlin.math.ceil
  */
 class Toolbar : FrameLayout {
     var formatListener: TextFormatListener? = null
+    var actionsListener: NoteEditorActionsListener? = null
     private val toolbar: LinearLayout
     private val toolbarLayout: LinearLayout
 
@@ -130,6 +131,7 @@ class Toolbar : FrameLayout {
         setupButtonWrappingText(R.id.note_editor_toolbar_button_underline, "<u>", "</u>")
         setupButtonWrappingText(R.id.note_editor_toolbar_button_insert_mathjax, "\\(", "\\)")
         setupButtonWrappingText(R.id.note_editor_toolbar_button_horizontal_rule, "<hr>", "")
+        findViewById<View>(R.id.note_editor_toolbar_button_undo).setOnClickListener { undoText() }
         findViewById<View>(R.id.note_editor_toolbar_button_font_size).setOnClickListener { displayFontSizeDialog() }
         findViewById<View>(R.id.note_editor_toolbar_button_title).setOnClickListener { displayInsertHeadingDialog() }
         findViewById<View>(R.id.note_editor_toolbar_button_insert_mathjax).setOnLongClickListener {
@@ -341,6 +343,13 @@ class Toolbar : FrameLayout {
             }
             title(R.string.insert_mathjax)
         }
+    }
+
+    /**
+     * Initiates the undo action by notifying the TextFormatListener
+     */
+    private fun undoText() {
+        actionsListener?.performUndo()
     }
 
     /** Given a string [text], generates a [Drawable] which can be used as a button icon */

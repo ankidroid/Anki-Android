@@ -134,6 +134,7 @@ import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.anki.noteeditor.CustomToolbarButton
 import com.ichi2.anki.noteeditor.FieldState
 import com.ichi2.anki.noteeditor.FieldState.FieldChangeType
+import com.ichi2.anki.noteeditor.NoteEditorActionsListener
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.noteeditor.Toolbar
 import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
@@ -188,6 +189,7 @@ import timber.log.Timber
 import java.io.File
 import java.util.LinkedList
 import java.util.Locale
+import java.util.Stack
 import java.util.function.Consumer
 import kotlin.math.max
 import kotlin.math.min
@@ -215,7 +217,8 @@ class NoteEditor :
     BaseSnackbarBuilderProvider,
     DispatchKeyEventListener,
     MenuProvider,
-    ShortcutGroupProvider {
+    ShortcutGroupProvider,
+    NoteEditorActionsListener {
     /** Whether any change are saved. E.g. multimedia, new card added, field changed and saved. */
     private var changed = false
     private var isTagsEdited = false
@@ -278,6 +281,12 @@ class NoteEditor :
     private var sourceText: Array<String?>? = null
     private val fieldState = FieldState.fromEditor(this)
     private lateinit var toolbar: Toolbar
+
+    // indicates changes to noteEditorActionListener
+    private val undoStacks: MutableMap<Int, Stack<String>> = mutableMapOf()
+    private val redoStacks: MutableMap<Int, Stack<String>> = mutableMapOf()
+    private var currentActiveFieldIn: Int? = null
+    private var isPerformingUndoRedo = false
 
     // Use the same HTML if the same image is pasted multiple times.
     private var pastedImageCache: HashMap<String, String> = HashMap()
@@ -536,8 +545,11 @@ class NoteEditor :
             formatListener =
                 TextFormatListener { formatter: Toolbar.TextFormatter ->
                     val currentFocus = requireActivity().currentFocus as? FieldEditText ?: return@TextFormatListener
+                    saveCurrentTextState(currentFocus.id, currentFocus.text.toString())
                     modifyCurrentSelection(formatter, currentFocus)
+                    redoStacks[currentFocus.id]?.clear()
                 }
+            actionsListener = this@NoteEditor
             // Sets the background and icon color of toolbar respectively.
             setBackgroundColor(
                 MaterialColors.getColor(
@@ -1015,6 +1027,12 @@ class NoteEditor :
         formatter: Toolbar.TextFormatter,
         textBox: FieldEditText,
     ) {
+        val fieldId = textBox.id
+        val currentTextBeforeModification = textBox.text.toString()
+        isPerformingUndoRedo = true
+        saveCurrentTextState(fieldId, currentTextBeforeModification)
+        redoStacks[fieldId]?.clear()
+
         // get the current text and selection locations
         val selectionStart = textBox.selectionStart
         val selectionEnd = textBox.selectionEnd
@@ -1033,9 +1051,14 @@ class NoteEditor :
         // Update text field with updated text and selection
         val length = beforeText.length + newText.length + afterText.length
         val newFieldContent =
-            StringBuilder(length).append(beforeText).append(newText).append(afterText)
-        textBox.setText(newFieldContent)
-        textBox.setSelection(start + newStart, start + newEnd)
+            StringBuilder(length)
+                .append(beforeText)
+                .append(newText) // O resultado FORMATADO da seleção
+                .append(afterText)
+
+        textBox.setText(newFieldContent) // DEFINE O TEXTO MODIFICADO UMA ÚNICA VEZ
+        textBox.setSelection(start + newStart, start + newEnd) // DEFINE A SELEÇÃO CORRETA UMA ÚNICA VEZ
+        isPerformingUndoRedo = false
     }
 
     override fun onStop() {
@@ -1707,6 +1730,15 @@ class NoteEditor :
         showDialogFragment(dialog)
     }
 
+    private fun getEditTextForFieldId(fieldId: Int): FieldEditText {
+        for (editText in editFields!!) {
+            if (editText.id == fieldId) {
+                return editText
+            }
+        }
+        throw IllegalArgumentException("FieldEditText with ID $fieldId not found.")
+    }
+
     override fun onSelectedTags(
         selectedTags: List<String>,
         indeterminateTags: List<String>,
@@ -1717,6 +1749,39 @@ class NoteEditor :
         }
         this.selectedTags = selectedTags as ArrayList<String>?
         updateTags()
+    }
+
+    override fun performUndo() {
+        currentActiveFieldIn?.let { fieldId ->
+            val editText = getEditTextForFieldId(fieldId)
+            val undoStack = undoStacks.getOrPut(fieldId) { Stack() }
+            val redoStack = redoStacks.getOrPut(fieldId) { Stack() }
+
+            if (undoStack.isNotEmpty()) {
+                val currentText = editText.text.toString()
+                redoStack.push(currentText)
+
+                isPerformingUndoRedo = true
+                val previousText = undoStack.pop()
+                editText.setText(previousText)
+                editText.setSelection(previousText.length)
+                isPerformingUndoRedo = false
+            }
+        }
+    }
+
+    override fun saveCurrentTextState(
+        fieldId: Int,
+        text: String,
+    ) {
+        val undoStack = undoStacks.getOrPut(fieldId) { Stack() }
+
+        if (undoStack.isNotEmpty() && undoStack.peek() == text) {
+            return
+        }
+
+        undoStack.push(text)
+        redoStacks[fieldId]?.clear()
     }
 
     private fun showCardTemplateEditor() {
@@ -1863,6 +1928,18 @@ class NoteEditor :
                 newEditText.textSize = prefs.getInt(PREF_NOTE_EDITOR_FONT_SIZE, -1).toFloat()
             }
             newEditText.setCapitalize(prefs.getBoolean(PREF_NOTE_EDITOR_CAPITALIZE, true))
+
+            // *** AQUI VOCÊ VAI PASSAR OS ARGUMENTOS CORRETOS PARA O CONSTRUTOR ***
+            val fieldId = newEditText.id // Este ID é adequado para usar como chave no Map
+            newEditText.addTextChangedListener(EditFieldTextWatcher(fieldId, this)) // 'this' é o NoteEditor, que é o listener
+            // *** FIM DA ALTERAÇÃO ***
+
+            newEditText.onFocusChangeListener =
+                View.OnFocusChangeListener { v, hasFocus ->
+                    if (hasFocus) {
+                        currentActiveFieldIn = v.id
+                    }
+                }
             val mediaButton = editLineView.mediaButton
             val toggleStickyButton = editLineView.toggleSticky
             // Make the icon change between media icon and switch field icon depending on whether editing note type
@@ -1875,7 +1952,6 @@ class NoteEditor :
                 mediaButton.setBackgroundResource(0)
                 toggleStickyButton.setBackgroundResource(0)
             } else {
-                // Use media editor button if not changing note type
                 mediaButton.setBackgroundResource(R.drawable.ic_attachment)
 
                 mediaButton.setOnClickListener {
@@ -1884,7 +1960,6 @@ class NoteEditor :
                 }
 
                 if (addNote) {
-                    // toggle sticky button
                     toggleStickyButton.setBackgroundResource(R.drawable.ic_baseline_push_pin_24)
                     setToggleStickyButtonListener(toggleStickyButton, i)
                 } else {
@@ -2240,7 +2315,7 @@ class NoteEditor :
         enabled: Boolean,
     ) {
         // Listen for changes in the first field so we can re-check duplicate status.
-        editText!!.addTextChangedListener(EditFieldTextWatcher(index))
+        editText!!.addTextChangedListener(EditFieldTextWatcher(index, this))
         if (index == 0) {
             editText.onFocusChangeListener =
                 OnFocusChangeListener { _: View?, hasFocus: Boolean ->
@@ -2401,6 +2476,10 @@ class NoteEditor :
         if (selectedTags == null) {
             selectedTags = editorNote!!.tags
         }
+
+        undoStacks.clear()
+        redoStacks.clear()
+
         // nb: setOnItemSelectedListener and populateEditFields need to occur after this
         setNoteTypePosition()
         setDid(note)
@@ -2907,7 +2986,6 @@ class NoteEditor :
     ) {
         val editText = editFields!![i]
         editText.setText(newText)
-        EditFieldTextWatcher(i).afterTextChanged(editText.text!!)
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -2926,33 +3004,56 @@ class NoteEditor :
     private var loadingStickyFields = false
 
     private inner class EditFieldTextWatcher(
-        private val index: Int,
+        private val fieldId: Int,
+        private val listener: NoteEditorActionsListener,
     ) : TextWatcher {
-        override fun afterTextChanged(arg0: Editable) {
-            if (!loadingStickyFields) {
-                isFieldEdited = true
-            }
-            if (index == 0) {
-                setDuplicateFieldStyles()
-            }
-        }
+        private var currentText: String = ""
+        private val handler = android.os.Handler(android.os.Looper.getMainLooper())
+        private var runnable: Runnable? = null
 
         override fun beforeTextChanged(
-            arg0: CharSequence,
-            arg1: Int,
-            arg2: Int,
-            arg3: Int,
+            s: CharSequence,
+            start: Int,
+            count: Int,
+            after: Int,
         ) {
-            // do nothing
+            // Capture text before change
+            if (isPerformingUndoRedo) return
+            currentText = s.toString()
         }
 
         override fun onTextChanged(
-            arg0: CharSequence,
-            arg1: Int,
-            arg2: Int,
-            arg3: Int,
+            s: CharSequence,
+            start: Int,
+            before: Int,
+            count: Int,
         ) {
-            // do nothing
+            if (isPerformingUndoRedo) return
+            runnable?.let { handler.removeCallbacks(it) }
+        }
+
+        override fun afterTextChanged(s: Editable) {
+            if (!loadingStickyFields) {
+                isFieldEdited = true
+            }
+            if (fieldId == editFields!![0].id) {
+                setDuplicateFieldStyles()
+            }
+
+            if (isPerformingUndoRedo) return
+            val textAfterEdit = s.toString()
+
+            if (currentText != textAfterEdit) {
+                runnable =
+                    Runnable {
+                        val undoStack = undoStacks.getOrPut(fieldId) { Stack() }
+
+                        if (undoStack.isEmpty() || undoStack.peek() != currentText) {
+                            listener.saveCurrentTextState(fieldId, currentText)
+                        }
+                    }
+                handler.postDelayed(runnable!!, 700)
+            }
         }
     }
 
