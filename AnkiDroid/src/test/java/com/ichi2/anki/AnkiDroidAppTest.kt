@@ -17,15 +17,15 @@ package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CrashReportService.sendExceptionReport
-import com.ichi2.testutils.AnkiAssert
 import org.junit.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class AnkiDroidAppTest {
     @Test
     fun reportingDoesNotThrowException() {
-        AnkiAssert.assertDoesNotThrow { sendExceptionReport("Test", "AnkiDroidAppTest") }
+        assertDoesNotThrow { sendExceptionReport("Test", "AnkiDroidAppTest") }
     }
 
     @Test
@@ -33,6 +33,6 @@ class AnkiDroidAppTest {
         val message: String? = null
         // It's meant to be non-null, but it's developer-defined, and we don't want a crash in the reporting dialog
         //noinspection ConstantConditions
-        AnkiAssert.assertDoesNotThrow { sendExceptionReport(message, "AnkiDroidAppTest") }
+        assertDoesNotThrow { sendExceptionReport(message, "AnkiDroidAppTest") }
     }
 }

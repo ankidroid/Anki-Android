@@ -21,38 +21,6 @@ import kotlin.test.junit5.JUnit5Asserter
 
 /** Assertion methods that aren't currently supported by our dependencies  */
 object AnkiAssert {
-    /** Helper to sort out "JUnit tests should include assert() or fail()" quality check  */
-    fun assertDoesNotThrow(
-        message: String,
-        runnable: Runnable,
-    ) {
-        try {
-            runnable.run()
-        } catch (e: Exception) {
-            throw AssertionError("$message\nmethod should not throw", e)
-        }
-    }
-
-    /** Helper to sort out "JUnit tests should include assert() or fail()" quality check  */
-    fun assertDoesNotThrow(runnable: Runnable) {
-        try {
-            runnable.run()
-        } catch (e: Exception) {
-            throw AssertionError("method should not throw", e)
-        }
-    }
-
-    // suspend variant of [assertDoesNotThrow]
-
-    /** Helper to sort out "JUnit tests should include assert() or fail()" quality check  */
-    suspend fun assertDoesNotThrowSuspend(block: suspend () -> Unit) {
-        try {
-            block()
-        } catch (e: Exception) {
-            throw AssertionError("method should not throw", e)
-        }
-    }
-
     fun <T> assertEqualsArrayList(
         expected: Array<T>,
         actual: List<T>?,

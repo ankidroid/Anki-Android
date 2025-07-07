@@ -37,6 +37,7 @@ import org.json.JSONArray
 import org.junit.Assert
 import org.junit.Ignore
 import org.junit.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
 import java.time.Instant
 import java.time.ZoneId
@@ -1344,6 +1345,6 @@ open class SchedulerTest : JvmTest() {
         card = sched.card
         Assert.assertEquals(1, sched.counts().lrn.toLong())
         sched.answerCard(card!!, Ease.AGAIN)
-        AnkiAssert.assertDoesNotThrow { col.undo() }
+        assertDoesNotThrow { col.undo() }
     }
 }
