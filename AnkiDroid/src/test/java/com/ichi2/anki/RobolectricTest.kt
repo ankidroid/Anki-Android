@@ -60,6 +60,7 @@ import com.ichi2.testutils.filter
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -526,6 +527,11 @@ open class RobolectricTest :
             }
             throw e
         }
+    }
+
+    override fun setupTestDispatcher(dispatcher: TestDispatcher) {
+        super.setupTestDispatcher(dispatcher)
+        ioDispatcher = dispatcher
     }
 
     override suspend fun TestScope.runTestInner(testBody: suspend TestScope.() -> Unit) {
