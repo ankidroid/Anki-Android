@@ -15,22 +15,19 @@
  */
 package com.ichi2.anki.libanki
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.libanki.sched.Ease
+import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import com.ichi2.anki.libanki.testutils.ext.addNote
-import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.notNullValue
 import org.json.JSONArray
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
-@RunWith(AndroidJUnit4::class)
-class AbstractSchedTest : JvmTest() {
+class AbstractSchedTest : InMemoryAnkiTest() {
     @Test
     fun ensureUndoCorrectCounts() {
         val sched = col.sched

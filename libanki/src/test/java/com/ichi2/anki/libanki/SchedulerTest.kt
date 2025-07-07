@@ -15,7 +15,8 @@
  */
 package com.ichi2.anki.libanki
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import android.annotation.SuppressLint
+import androidx.test.filters.SdkSuppress
 import anki.scheduler.UnburyDeckRequest
 import com.ichi2.anki.common.time.SECONDS_PER_DAY
 import com.ichi2.anki.common.time.TimeManager
@@ -27,8 +28,8 @@ import com.ichi2.anki.libanki.Consts.STARTING_FACTOR
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.libanki.sched.Ease
+import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import com.ichi2.anki.libanki.testutils.ext.addNote
-import com.ichi2.testutils.JvmTest
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
@@ -37,7 +38,6 @@ import org.junit.Assert
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.jupiter.api.assertDoesNotThrow
-import org.junit.runner.RunWith
 import java.time.Instant
 import java.time.ZoneId
 import kotlin.math.roundToInt
@@ -45,9 +45,9 @@ import kotlin.math.roundToLong
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-@RunWith(AndroidJUnit4::class)
-// please wait for #11808 to be merged before starting cleanup
-open class SchedulerTest : JvmTest() {
+@SdkSuppress
+@SuppressLint("NewApi") // java.time.Instant needs API 26+/desugaring. Test-only
+open class SchedulerTest : InMemoryAnkiTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun handlesSmallSteps() {

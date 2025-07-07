@@ -15,17 +15,14 @@
  */
 package com.ichi2.anki.libanki
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.testutils.JvmTest
+import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
-class TagsTest : JvmTest() {
+class TagsTest : InMemoryAnkiTest() {
     @Test
     fun test_split() {
         val tags = Tags(col)

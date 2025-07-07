@@ -16,8 +16,7 @@
 
 package com.ichi2.anki.libanki
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.testutils.JvmTest
+import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import org.hamcrest.CoreMatchers.equalTo
@@ -25,10 +24,8 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.json.JSONObject
 import org.junit.Test
 import org.junit.jupiter.api.assertThrows
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
-class ConfigTest : JvmTest() {
+class ConfigTest : InMemoryAnkiTest() {
     @Test
     fun string_serialization() {
         assertThat(col.config.get<String>("sortType"), equalTo("noteFld"))

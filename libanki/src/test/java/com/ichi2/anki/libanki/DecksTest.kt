@@ -16,23 +16,20 @@
 package com.ichi2.anki.libanki
 
 import android.annotation.SuppressLint
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.libanki.Decks.Companion.CURRENT_DECK
+import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import com.ichi2.anki.libanki.testutils.ext.addNote
-import com.ichi2.testutils.JvmTest
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.junit.jupiter.api.assertDoesNotThrow
-import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-@RunWith(AndroidJUnit4::class)
-class DecksTest : JvmTest() {
+class DecksTest : InMemoryAnkiTest() {
     @Test
     fun test_remove() {
         // create a new col, and add a note/card to it

@@ -15,14 +15,12 @@
  */
 package com.ichi2.anki.libanki
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.QueueType.Suspended
-import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.libanki.sched.Scheduler
+import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import com.ichi2.anki.libanki.testutils.ext.addNote
-import com.ichi2.testutils.JvmTest
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.contains
@@ -33,18 +31,11 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
 import timber.log.Timber
 import java.util.Calendar
 
-@RunWith(AndroidJUnit4::class)
-class FinderTest : JvmTest() {
+class FinderTest : InMemoryAnkiTest() {
     @Test
-    @Config(qualifiers = "en")
-    @Throws(
-        ConfirmModSchemaException::class,
-    )
     fun searchForBuriedReturnsManuallyAndSiblingBuried() {
         val searchQuery = "is:buried"
         enableBurySiblings()

@@ -16,18 +16,13 @@
 
 package com.ichi2.anki.libanki
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.testutils.JvmTest
+import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
 
-@RunWith(AndroidJUnit4::class)
-class StorageRustTest : JvmTest() {
+class StorageRustTest : InMemoryAnkiTest() {
     @Test
-    @Config(qualifiers = "en")
     fun testModelCount() {
         val noteTypeNames = col.notetypes.all().map { x -> x.name }
         MatcherAssert.assertThat(

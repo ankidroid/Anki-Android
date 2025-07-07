@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.libanki
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.common.utils.ext.jsonObjectIterable
 import com.ichi2.anki.libanki.utils.insert
 import org.hamcrest.CoreMatchers.equalTo
@@ -25,9 +24,7 @@ import org.hamcrest.collection.IsIterableContainingInOrder.contains
 import org.json.JSONArray
 import org.json.JSONObject
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
 class PythonExtensionsTest {
     @Test
     fun test_insert_end() {
