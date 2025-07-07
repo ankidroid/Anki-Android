@@ -36,6 +36,7 @@ import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.testutils.DbUtils
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
+import com.ichi2.testutils.ext.menu
 import com.ichi2.testutils.grantWritePermissions
 import com.ichi2.testutils.revokeWritePermissions
 import com.ichi2.utils.ResourceLoader
