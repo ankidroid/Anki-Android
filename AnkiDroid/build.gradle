@@ -434,6 +434,7 @@ dependencies {
     implementation libs.leakcanary.android
 
     testImplementation project(':testlib')
+    testImplementation project(":libanki:testutils")
 
     // A path for a testing library which provide Parameterized Test
     testImplementation libs.junit.jupiter

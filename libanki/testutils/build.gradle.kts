@@ -1,14 +1,29 @@
+/*
+ *  Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 3 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
-    namespace = "com.ichi2.anki.libanki"
+    namespace = "com.ichi2.anki.libanki.testutils"
     compileSdk =
         libs.versions.compileSdk
             .get()
@@ -19,8 +34,6 @@ android {
             libs.versions.minSdk
                 .get()
                 .toInt()
-
-        consumerProguardFiles("consumer-rules.pro")
     }
 
     compileOptions {
@@ -34,15 +47,9 @@ android {
     }
 }
 
-apply(from = "../lint.gradle")
-apply(from = "../jacocoSupport.gradle")
-
 dependencies {
-    // Project dependencies
     implementation(project(":common"))
-
-    // Backend libraries
-    implementation(libs.protobuf.kotlin.lite) // This is required when loading from a file
+    implementation(project(":libanki"))
 
     val localProperties = Properties()
     if (project.rootProject.file("local.properties").exists()) {
@@ -56,27 +63,7 @@ dependencies {
         testImplementation(libs.ankiBackend.testing)
     }
 
-    // JVM dependencies
     implementation(libs.jakewharton.timber)
     implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.serialization.json)
-
-    // Android interface dependencies
-    implementation(libs.androidx.annotation)
-    testImplementation(libs.androidx.sqlite.framework)
-
-    // test dependencies
-    testImplementation(libs.hamcrest)
-    testImplementation(libs.kotlin.test)
-    testImplementation(libs.kotlin.test.junit5)
-    testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.junit.vintage.engine)
-    testImplementation(libs.junit.jupiter)
-    testImplementation(libs.json)
-
-    testImplementation(project(":libanki:testutils"))
-
-    // project lint checks
-    // PERF: some rules do not need to be applied... but the full run was 3s
-    lintChecks(project(":lint-rules"))
+    implementation(libs.kotlinx.coroutines.test)
 }
