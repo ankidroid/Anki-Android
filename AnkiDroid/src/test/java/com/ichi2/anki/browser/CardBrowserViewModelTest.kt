@@ -71,6 +71,7 @@ import com.ichi2.testutils.TestClass
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.ensureNoOpsExecuted
 import com.ichi2.testutils.ensureOpsExecuted
+import com.ichi2.testutils.ext.reopenWithLanguage
 import com.ichi2.testutils.mockIt
 import kotlinx.coroutines.flow.first
 import org.hamcrest.MatcherAssert.assertThat
