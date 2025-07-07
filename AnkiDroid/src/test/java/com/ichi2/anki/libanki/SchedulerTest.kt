@@ -27,7 +27,6 @@ import com.ichi2.anki.libanki.Consts.STARTING_FACTOR
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.libanki.sched.Ease
-import com.ichi2.testutils.AnkiAssert
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.ext.addNote
 import org.hamcrest.CoreMatchers.equalTo
@@ -489,11 +488,11 @@ open class SchedulerTest : JvmTest() {
         // Upstream, there is no space in 2d
         Assert.assertEquals(
             "2d",
-            AnkiAssert.without_unicode_isolation(col.sched.nextIvlStr(c, Ease.HARD)),
+            withoutUnicodeIsolation(col.sched.nextIvlStr(c, Ease.HARD)),
         )
         Assert.assertEquals(
             "3d",
-            AnkiAssert.without_unicode_isolation(
+            withoutUnicodeIsolation(
                 col.sched.nextIvlStr(
                     c,
                     Ease.GOOD,
@@ -502,7 +501,7 @@ open class SchedulerTest : JvmTest() {
         )
         Assert.assertEquals(
             "4d",
-            AnkiAssert.without_unicode_isolation(
+            withoutUnicodeIsolation(
                 col.sched.nextIvlStr(
                     c,
                     Ease.EASY,
@@ -516,7 +515,7 @@ open class SchedulerTest : JvmTest() {
         col.decks.save(conf)
         Assert.assertEquals(
             "1d",
-            AnkiAssert.without_unicode_isolation(col.sched.nextIvlStr(c, Ease.HARD)),
+            withoutUnicodeIsolation(col.sched.nextIvlStr(c, Ease.HARD)),
         )
     }
 
@@ -624,7 +623,7 @@ open class SchedulerTest : JvmTest() {
         // (* 100 2.5 1.3 SECONDS_PER_DAY)28080000.0
         Assert.assertEquals(28080000, col.sched.nextIvl(c, Ease.EASY))
         MatcherAssert.assertThat(
-            AnkiAssert.without_unicode_isolation(
+            withoutUnicodeIsolation(
                 col.sched.nextIvlStr(
                     c,
                     Ease.EASY,
