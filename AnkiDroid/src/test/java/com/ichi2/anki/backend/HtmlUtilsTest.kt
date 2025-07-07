@@ -16,15 +16,9 @@
 
 package com.ichi2.anki.backend
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.testutils.EmptyApplication
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
 
-@RunWith(AndroidJUnit4::class)
-@Config(application = EmptyApplication::class)
 class HtmlUtilsTest {
     @Test
     fun test_stripHTML_will_remove_tags() {

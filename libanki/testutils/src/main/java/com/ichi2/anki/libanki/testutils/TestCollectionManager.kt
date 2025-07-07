@@ -22,36 +22,48 @@ import com.ichi2.anki.libanki.CollectionFiles
 import com.ichi2.anki.libanki.DB
 import com.ichi2.anki.libanki.LibAnki
 import com.ichi2.anki.libanki.Storage.collection
-import com.ichi2.anki.libanki.testutils.InMemoryCollectionManager.discardBackend
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
 import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
+import java.io.File
 
 /**
  * Trimmed down version of `com.ichi2.anki.CollectionManager` which can be used without a reference
  * to Android & AnkiDroid app logic
  */
 interface TestCollectionManager {
+    fun getColUnsafe(): Collection
+
     /**
      * Close the currently cached backend and discard it. Saves and closes the collection if open.
      */
     suspend fun discardBackend()
+}
 
-    /**
-     * Returns a reference to the open collection. This is not
-     * safe, as code in other threads could open or close
-     * the collection while the reference is held.
-     */
-    fun getColUnsafe(): Collection
+/**
+ * Lightweight CollectionManager: on-disk media folder, in-memory DB, and no media DB
+ */
+@VisibleForTesting
+class InMemoryCollectionManagerWithMediaFolder(
+    val mediaFolder: File,
+) : InMemoryCollectionManager() {
+    init {
+        Timber.d("using temp in-memory folder for testing: %s", mediaFolder)
+    }
+
+    override val collectionFiles: CollectionFiles
+        get() = CollectionFiles.InMemoryWithMedia(mediaFolder)
 }
 
 /**
  * Lightweight CollectionManager: in memory-DB and no media folders/DB
  */
 @VisibleForTesting
-object InMemoryCollectionManager : TestCollectionManager {
+open class InMemoryCollectionManager : TestCollectionManager {
+    open val collectionFiles: CollectionFiles = CollectionFiles.InMemory
+
     @Suppress("DEPRECATION") // deprecation is used to limit access
     private var backend: Backend?
         get() = LibAnki.backend
@@ -71,7 +83,7 @@ object InMemoryCollectionManager : TestCollectionManager {
         if (collection?.dbClosed == false) return
         collection =
             collection(
-                collectionFiles = CollectionFiles.InMemory,
+                collectionFiles = collectionFiles,
                 databaseBuilder = { backend -> createDatabaseUsingRustBackend(backend) },
                 backend = backend,
             )
@@ -84,6 +96,7 @@ object InMemoryCollectionManager : TestCollectionManager {
     }
 
     override fun getColUnsafe(): Collection {
+        if (collection != null) return collection!!
         ensureOpenInner()
         return collection!!
     }

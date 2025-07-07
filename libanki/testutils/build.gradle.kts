@@ -57,13 +57,14 @@ dependencies {
     }
     if (localProperties["local_backend"] == "true") {
         implementation(files("../../Anki-Android-Backend/rsdroid/build/outputs/aar/rsdroid-release.aar"))
-        testImplementation(files("../../Anki-Android-Backend/rsdroid-testing/build/libs/rsdroid-testing.jar"))
+        implementation(files("../../Anki-Android-Backend/rsdroid-testing/build/libs/rsdroid-testing.jar"))
     } else {
         implementation(libs.ankiBackend.backend)
-        testImplementation(libs.ankiBackend.testing)
+        implementation(libs.ankiBackend.testing)
     }
 
     implementation(libs.jakewharton.timber)
+    implementation(libs.junit.vintage.engine)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.test)
 

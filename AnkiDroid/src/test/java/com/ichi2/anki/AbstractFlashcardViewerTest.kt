@@ -57,6 +57,8 @@ import java.util.stream.Stream
 @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O) // getImeHintLocales, toLanguageTags, onRenderProcessGone, RenderProcessGoneDetail
 @RunWith(AndroidJUnit4::class)
 class AbstractFlashcardViewerTest : RobolectricTest() {
+    override fun getCollectionStorageMode() = CollectionStorageMode.IN_MEMORY_WITH_MEDIA
+
     class NonAbstractFlashcardViewer : AbstractFlashcardViewer() {
         var answered: Ease? = null
         private var lastTime = 0

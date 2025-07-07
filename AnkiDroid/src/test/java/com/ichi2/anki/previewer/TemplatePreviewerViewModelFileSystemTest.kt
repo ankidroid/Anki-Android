@@ -25,6 +25,9 @@ import kotlin.test.assertNotEquals
 
 @RunWith(AndroidJUnit4::class)
 class TemplatePreviewerViewModelFileSystemTest : RobolectricTest() {
+    // TODO(PERF): Needs investigation why this is necessary
+    override fun getCollectionStorageMode() = CollectionStorageMode.ON_DISK
+
     @get:Rule
     val tempDirectory = TemporaryFolder()
 

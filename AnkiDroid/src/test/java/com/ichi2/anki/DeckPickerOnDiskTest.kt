@@ -41,7 +41,7 @@ import java.io.File
 @KotlinCleanup("SPMockBuilder")
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class DeckPickerOnDiskTest : RobolectricTest() {
-    override fun useInMemoryDatabase() = false
+    override fun getCollectionStorageMode() = CollectionStorageMode.ON_DISK
 
     @ParameterizedRobolectricTestRunner.Parameter
     @JvmField // required for Parameter

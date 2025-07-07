@@ -291,7 +291,7 @@ class Collection(
     ): Boolean {
         val reopenArgs =
             when (collectionFiles) {
-                is InMemory -> OpenDbArgs.InMemory
+                is InMemory, is CollectionFiles.InMemoryWithMedia -> OpenDbArgs.InMemory
                 is FolderBasedCollection -> {
                     OpenDbArgs.Path(collectionFiles.colDb)
                 }

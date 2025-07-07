@@ -17,19 +17,18 @@
 package com.ichi2.anki.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.libanki.SoundOrVideoTag.Type
 import com.ichi2.anki.libanki.SoundOrVideoTag.Type.VIDEO
 import com.ichi2.anki.multimedia.getTagType
-import com.ichi2.testutils.CollectionManagerTestAdapter
-import com.ichi2.testutils.JvmTest
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class SoundOrVideoTagTest : JvmTest() {
-    override val collectionManager = CollectionManagerTestAdapter
+class SoundOrVideoTagTest : RobolectricTest() {
+    override fun getCollectionStorageMode() = CollectionStorageMode.IN_MEMORY_WITH_MEDIA
 
     @Test
     fun mp3IsAudio() {
