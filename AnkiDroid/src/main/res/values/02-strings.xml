@@ -226,6 +226,7 @@
     <string name="format_insert_bold">Format as Bold</string>
     <string name="format_insert_italic">Format as Italic</string>
     <string name="format_insert_underline">Format as Underline</string>
+    <string name="undo_text_change">Undo Last Change In Text</string>
     <string name="insert_horizontal_line">Insert Horizontal Line</string>
     <string name="insert_heading">Insert Heading</string>
     <string name="format_font_size">Change Font Size</string>

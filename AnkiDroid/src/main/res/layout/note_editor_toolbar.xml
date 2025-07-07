@@ -75,6 +75,14 @@
             style="@style/note_editor_toolbar_button" />
 
         <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/note_editor_toolbar_button_undo"
+            app:srcCompat="@drawable/ic_undo_black_24dp"
+            android:contentDescription="@string/undo_text_change"
+            android:tooltipText="@string/undo_text_change"
+            android:tag="g"
+            style="@style/note_editor_toolbar_button" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/note_editor_toolbar_button_horizontal_rule"
             app:srcCompat="@drawable/ic_horizontal_rule_black_24dp"
             android:contentDescription="@string/insert_horizontal_line"
