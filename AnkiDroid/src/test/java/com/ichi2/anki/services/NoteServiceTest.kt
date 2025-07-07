@@ -41,7 +41,8 @@ import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class NoteServiceTest : RobolectricTest() {
-    override fun useInMemoryDatabase(): Boolean = false
+    // TODO: Storage.kt needs a different openCollection override, and accepting media files
+    override fun getCollectionStorageMode() = CollectionStorageMode.ON_DISK
 
     // temporary directory to test importMediaToDirectory function
     @get:Rule

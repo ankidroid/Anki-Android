@@ -52,6 +52,8 @@ import org.robolectric.Robolectric
 /** A non-parameterized ReviewerTest - we should probably rename ReviewerTest in future  */
 @RunWith(AndroidJUnit4::class)
 class ReviewerNoParamTest : RobolectricTest() {
+    override fun getCollectionStorageMode() = CollectionStorageMode.IN_MEMORY_WITH_MEDIA
+
     @Before
     override fun setUp() {
         super.setUp()

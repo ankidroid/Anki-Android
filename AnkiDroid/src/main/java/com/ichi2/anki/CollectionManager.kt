@@ -259,7 +259,7 @@ object CollectionManager {
      * Automatically called by [withCol]. Can be called directly to ensure collection
      * is loaded at a certain point in time, or to ensure no errors occur.
      */
-    private suspend fun ensureOpen() {
+    suspend fun ensureOpen() {
         withQueue {
             ensureOpenInner()
         }

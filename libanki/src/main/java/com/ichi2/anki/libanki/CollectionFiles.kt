@@ -44,6 +44,12 @@ sealed class CollectionFiles {
         override val mediaFolder = null
     }
 
+    /** An in-memory collection supporting media files */
+    @VisibleForTesting
+    class InMemoryWithMedia(
+        override val mediaFolder: File,
+    ) : CollectionFiles()
+
     /**
      * Returns the paths for a disk-based collection
      *
@@ -51,7 +57,7 @@ sealed class CollectionFiles {
      */
     fun requireDiskBasedCollection(): FolderBasedCollection =
         when (this) {
-            is InMemory -> throw UnsupportedOperationException("collection is in-memory")
+            is InMemory, is InMemoryWithMedia -> throw UnsupportedOperationException("collection is in-memory")
             is FolderBasedCollection -> this
         }
 
@@ -64,6 +70,7 @@ sealed class CollectionFiles {
         when (this) {
             is InMemory -> throw UnsupportedOperationException("collection is in-memory")
             is FolderBasedCollection -> this.mediaFolder
+            is InMemoryWithMedia -> this.mediaFolder
         }
 
     abstract val mediaFolder: File?

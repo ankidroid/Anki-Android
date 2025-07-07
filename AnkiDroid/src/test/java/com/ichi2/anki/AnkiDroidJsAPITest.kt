@@ -37,6 +37,8 @@ import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class AnkiDroidJsAPITest : RobolectricTest() {
+    override fun getCollectionStorageMode() = CollectionStorageMode.IN_MEMORY_WITH_MEDIA
+
     @Test
     fun ankiGetNextTimeTest() =
         runTest {

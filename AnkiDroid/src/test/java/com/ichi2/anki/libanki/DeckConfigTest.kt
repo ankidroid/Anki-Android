@@ -21,7 +21,6 @@ import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.AutomaticAnswerAction.Companion.answerAction
 import com.ichi2.anki.ui.windows.reviewer.autoadvance.QuestionAction
 import com.ichi2.anki.ui.windows.reviewer.autoadvance.QuestionAction.Companion.questionAction
-import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.isJsonHolderEqual
 import org.json.JSONArray
 import org.json.JSONObject
@@ -30,7 +29,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class DeckConfigTest : JvmTest() {
+class DeckConfigTest {
     val dc = DeckConfig("{}")
 
     @Test

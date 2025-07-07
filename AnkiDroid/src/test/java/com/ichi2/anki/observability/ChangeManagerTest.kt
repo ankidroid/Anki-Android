@@ -16,7 +16,6 @@
 package com.ichi2.anki.observability
 
 import anki.collection.OpChanges
-import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.greaterThan
@@ -29,7 +28,7 @@ import kotlin.reflect.javaType
 import kotlin.reflect.jvm.isAccessible
 
 @RunWith(Parameterized::class)
-class ChangeManagerTest : JvmTest() {
+class ChangeManagerTest {
     @JvmField // required for Parameter
     @Parameterized.Parameter
     var property: KProperty1<OpChanges, *>? = null
