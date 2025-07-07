@@ -41,9 +41,8 @@ subprojects {
     }
 
     afterEvaluate {
-        if (hasProperty("android")) {
-            val androidExtension =
-                extensions.findByName("android") as CommonExtension<*, *, *, *, *, *>
+        plugins.withType<com.android.build.gradle.BasePlugin> {
+            val androidExtension = extensions.getByName("android") as CommonExtension<*, *, *, *, *, *>
             androidExtension.testOptions.unitTests {
                 isIncludeAndroidResources = true
             }
