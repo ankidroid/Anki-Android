@@ -62,6 +62,7 @@ import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.QueueType.ManuallyBuried
 import com.ichi2.anki.libanki.QueueType.New
+import com.ichi2.anki.libanki.testutils.TestClass
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.model.SortType.NO_SORTING
@@ -71,7 +72,6 @@ import com.ichi2.anki.setFlagFilterSync
 import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.JvmTest
-import com.ichi2.testutils.TestClass
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.ensureNoOpsExecuted
 import com.ichi2.testutils.ensureOpsExecuted
