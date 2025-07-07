@@ -24,6 +24,7 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Storage
+import com.ichi2.anki.libanki.testutils.TestClass
 import com.ichi2.anki.observability.ChangeManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking

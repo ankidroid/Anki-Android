@@ -46,6 +46,7 @@ import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.Storage
+import com.ichi2.anki.libanki.testutils.TestClass
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.sharedPrefs
@@ -53,7 +54,6 @@ import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.testutils.AndroidTest
 import com.ichi2.testutils.CollectionManagerTestAdapter
 import com.ichi2.testutils.TaskSchedulerRule
-import com.ichi2.testutils.TestClass
 import com.ichi2.testutils.common.FailOnUnhandledExceptionRule
 import com.ichi2.testutils.common.IgnoreFlakyTestsInCIRule
 import com.ichi2.testutils.filter
