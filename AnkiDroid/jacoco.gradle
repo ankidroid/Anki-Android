@@ -30,7 +30,7 @@ Properties getLocalProperties() {
 def openReport(htmlOutDir) {
     final reportPath = "$htmlOutDir/index.html"
 
-    println "HTML Report: $reportPath"
+    println "HTML Report: file://$reportPath"
 
     if (!project.hasProperty("open-report")) {
         println "to open the report automatically in your default browser add '-Popen-report' cli argument"
