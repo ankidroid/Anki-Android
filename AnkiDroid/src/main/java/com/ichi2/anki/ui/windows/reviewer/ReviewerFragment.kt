@@ -672,13 +672,13 @@ class ReviewerFragment :
                 connect(
                     R.id.reviewer_menu_view,
                     ConstraintSet.START,
-                    R.id.guideline_counts,
+                    R.id.counts_flow,
                     ConstraintSet.END,
                 )
                 applyTo(constraintLayout)
             }
-            // applying a ConstraintSet resets the visibility of counts_flow, which includes
-            // the timer, so check again if it should be visible.
+            // applying a ConstraintSet resets the visibility of counts_flow,
+            // which includes the timer, so set again its visibility.
             timer?.isVisible = viewModel.answerTimerStatusFlow.value != null
             return
         }

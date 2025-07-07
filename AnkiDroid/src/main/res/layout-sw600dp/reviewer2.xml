@@ -106,14 +106,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:layout_marginHorizontal="@dimen/reviewer_side_margin"
             >
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_counts"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.16"/>
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_menu"
@@ -129,7 +123,6 @@
                 android:layout_width="?minTouchTargetSize"
                 android:layout_height="?minTouchTargetSize"
                 android:src="?attr/homeAsUpIndicator"
-                android:layout_marginStart="@dimen/reviewer_side_margin"
                 app:layout_constraintStart_toStartOf="parent"
                 android:contentDescription="@string/abc_action_bar_up_description"
                 android:tooltipText="@string/abc_action_bar_up_description"
@@ -201,8 +194,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintWidth_percent="0.52"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/guideline_counts"
-                app:layout_constraintEnd_toStartOf="@id/reviewer_menu_view">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/show_answer"
@@ -282,7 +275,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginEnd="@dimen/reviewer_side_margin"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
