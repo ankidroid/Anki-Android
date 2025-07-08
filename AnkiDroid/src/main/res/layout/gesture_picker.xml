@@ -25,6 +25,7 @@
         android:id="@+id/gestureDisplay"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layoutDirection="ltr"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/spinner_gesture"
         app:layout_constraintStart_toStartOf="parent"
