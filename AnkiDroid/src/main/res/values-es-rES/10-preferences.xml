@@ -161,7 +161,7 @@
     <string name="disable_extended_text_ui_summ">Permite el menú contextual \'preguntas anidadas\' cuando está en modo horizontal.</string>
     <string name="vertical_centering" maxLength="41">Alinear al centro</string>
     <string name="vertical_centering_summ">Centra verticalmente el contenido de las tarjetas</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Intervalo de tiempo de doble toque (ms)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">Un segundo toque de los botones de respuesta será ignorado si este tiempo no ha transcurrido. Esto previene doble toque accidental.</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Tiempo de pulsación larga para mostrar respuesta</string>
     <string name="pref_show_answer_long_press_time_summary">Tiempo mínimo de pulsación antes de que el botón Mostrar Respuesta registre un toque.</string>

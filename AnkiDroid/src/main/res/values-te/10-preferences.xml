@@ -161,7 +161,7 @@
     <string name="disable_extended_text_ui_summ">ల్యాండ్‌స్కేప్ మోడ్‌లో ఉన్నప్పుడు \'క్లోజ్ డిలీట్\' కాంటెక్స్ట్ మెనుని ప్రారంభిస్తుంది.</string>
     <string name="vertical_centering" maxLength="41">సెంటర్ సమలేఖనం</string>
     <string name="vertical_centering_summ">నిలువుగా కార్డుల విషయాన్ని కేంద్రీకరించండి</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">డబుల్ ట్యాప్ సమయ విరామం (మిల్లీసెకన్లు)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">ఈ సమయం ముగియకపోతే జవాబు బటన్‌లను రెండవసారి నొక్కడం విస్మరించబడుతుంది. ఇది ప్రమాదవశాత్తు డబుల్ ట్యాప్‌లను నివారిస్తుంది</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">సమాధానం కోసం ఎక్కువసేపు నొక్కిన సమయాన్ని చూపండి</string>
     <string name="pref_show_answer_long_press_time_summary">స్పర్శను నమోదు చేయడానికి ముందు సమాధాన బటన్‌ను చూపించు కనిష్ట ప్రెస్ సమయం.</string>

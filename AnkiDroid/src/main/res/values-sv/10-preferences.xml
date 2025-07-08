@@ -161,7 +161,7 @@
     <string name="disable_extended_text_ui_summ">Tillåter snabbmenyn ”Textlucka” i liggande läge.</string>
     <string name="vertical_centering" maxLength="41">Centrera</string>
     <string name="vertical_centering_summ">Vertikal centrering av kortinnehåll</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Dubbeltryck tidsintervall (millisekunder)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">En andra knapptryckning av svarsknappar kommer att ignoreras om den här tiden inte har förflutit. Detta förhindrar oavsiktliga dubbeltryck</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Visa svar lång trycktid</string>
     <string name="pref_show_answer_long_press_time_summary">Minimum trycktid före svarsknappen registrerar en knapptryckning</string>

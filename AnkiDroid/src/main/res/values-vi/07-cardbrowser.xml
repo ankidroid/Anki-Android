@@ -85,10 +85,10 @@
         <item>Bởi dễ dàng</item>
         <item>Bởi ôn tập</item>
         <item>Bởi nhầm lẫn/sai sót</item>
-        <item>By deck name</item>
+        <item>Tên bộ thẻ</item>
     </string-array>
-    <string name="chane_browser_column">Change column</string>
-    <string name="no_columns_available">No columns available</string>
+    <string name="chane_browser_column">Thay đổi mục</string>
+    <string name="no_columns_available">Không có mục sẵn có</string>
     <string name="card_browser_select_all" maxLength="28">Chọn tất cả</string>
     <string name="card_browser_select_none" maxLength="28">Không chọn</string>
     <string name="card_browser_no_cards_in_deck">Không tìm thấy thẻ nào trong bộ thẻ ‘%s’</string>
@@ -106,15 +106,15 @@
         <item quantity="other">%d thẻ đã bị xóa</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Chỉnh sửa thẻ hộp thoại</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Hiện thứ tự hộp thoại</string>
     <!-- Manage columns dialog -->
-    <string name="browse_manage_columns_main_heading">Columns</string>
-    <string name="browse_manage_columns">Manage columns</string>
+    <string name="browse_manage_columns_main_heading">Các mục</string>
+    <string name="browse_manage_columns">Quản lí các mục</string>
     <string name="user_active_columns">Active</string>
-    <string name="user_potential_columns">Available</string>
-    <string name="include_column">Include column</string>
-    <string name="exclude_column">Exclude column</string>
-    <string name="save_changes_message">Please save your changes first</string>
-    <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
+    <string name="user_potential_columns">Có sẵn</string>
+    <string name="include_column">Chèn thêm mục</string>
+    <string name="exclude_column">Loại bỏ mục</string>
+    <string name="save_changes_message">Vui lòng lưu lại thay đổi của bạn trước tiên</string>
+    <string name="browser_find_replace_loading_fields">Truy cập vào trường tên&#8230;</string>
 </resources>

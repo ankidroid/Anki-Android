@@ -162,7 +162,7 @@
     <string name="disable_extended_text_ui_summ">Activa a opção \"Omitir\" no menu de contexto, no modo horizontal</string>
     <string name="vertical_centering" maxLength="41">Alinhar ao centro</string>
     <string name="vertical_centering_summ">Centrar o conteúdo das fichas verticalmente</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Intervalo de tempo para o duplo toque (milissegundos)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">Um segundo toque nos botões de resposta será ignorado se este tempo não tiver passado. Assim, são evitados toques acidentais.</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Tempo de pressão botão \"Mostrar resposta\"</string>
     <string name="pref_show_answer_long_press_time_summary">Tempo mínimo que tem que ser pressionado para que o botão \"Mostrar resposta\" registe o toque.</string>

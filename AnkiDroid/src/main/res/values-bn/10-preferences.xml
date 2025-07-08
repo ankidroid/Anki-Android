@@ -162,7 +162,7 @@
     <string name="disable_extended_text_ui_summ">ল্যান্ডস্কেপ মোডে থাকাকালীন \'মোছা বন্ধ করুন\' প্রসঙ্গ মেনুকে অনুমতি দেয়</string>
     <string name="vertical_centering" maxLength="41">কেন্দ্র সারিবদ্ধ</string>
     <string name="vertical_centering_summ">কার্ডের বিষয়বস্তু উল্লম্বভাবে কেন্দ্রে রাখুন</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">ডবল ট্যাপ সময়ের ব্যবধান (মিলিসেকেন্ড)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">এই সময় অতিবাহিত না হলে উত্তর বোতামগুলির একটি দ্বিতীয় ট্যাপ উপেক্ষা করা হবে। এটি দুর্ঘটনাজনিত ডবল ট্যাপ প্রতিরোধ করে</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">দীর্ঘ প্রেস করার সময় উত্তর দেখান</string>
     <string name="pref_show_answer_long_press_time_summary">একটি স্পর্শ নিবন্ধন করার আগে উত্তর বোতাম ন্যূনতম প্রেস সময় দেখান.</string>

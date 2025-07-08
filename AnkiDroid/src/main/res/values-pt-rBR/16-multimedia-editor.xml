@@ -60,7 +60,7 @@
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Algo deu errado</string>
     <string name="multimedia_editor_png_paste_error">Erro ao converter imagem da área de transferência para png: %s</string>
-    <string name="multimedia_editor_attach_tooltip" comment="Appear when holding the finger  on the paperclip icon">Attach multimedia content</string>
+    <string name="multimedia_editor_attach_tooltip" comment="Appear when holding the finger  on the paperclip icon">Anexar conteúdo multimídia</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Anexar conteúdo multimídia ao campo %1$s</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
@@ -73,6 +73,6 @@
     <string name="save_dialog_content">O tamanho atual da imagem é de %sMB. O tamanho padrão da imagem é de 1MB. Você deseja comprimi-la?</string>
     <string name="select_image_failed">"A seleção de imagem falhou. Por favor, tente novamente."</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Conteúdos do campo</string>
-    <string name="crop_image_size_notice">The image is too big to be handled by the crop editor. Please resize it and try again!</string>
+    <string name="crop_image_size_notice">A imagem é grande demais para ser processada pelo editor de corte. Redimensione a imagem e tente novamente!</string>
     <string name="reselect" maxLength="28">Alterar seleção</string>
 </resources>

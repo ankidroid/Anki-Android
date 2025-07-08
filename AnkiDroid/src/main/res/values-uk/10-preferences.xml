@@ -164,7 +164,7 @@
     <string name="disable_extended_text_ui_summ">Включає контекстне меню «Завдання з пропусками» в альбомному (горизонтальному) режимі</string>
     <string name="vertical_centering" maxLength="41">Вирівнювання по центру</string>
     <string name="vertical_centering_summ">Центрувати вміст карт вертикально</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Інтервал подвійного дотику в мілісекундах</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">Другий дотик відповіді буде проігнорований, якщо час ще не минув. Це запобігає подвійному натисканню</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Тривалість довгого натискання для показу відповіді</string>
     <string name="pref_show_answer_long_press_time_summary">Мінімальний час натискання для того, щоби кнопка відповіді зареєструвала дотик.</string>

@@ -162,7 +162,7 @@
     <string name="disable_extended_text_ui_summ">Engedélyezi a \'Részleges Törlés\' lehetőséget tájkép módban.</string>
     <string name="vertical_centering" maxLength="41">Középre igazítás</string>
     <string name="vertical_centering_summ">A kártyák tartalmának középre igazítása függőlegesen</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Két érintés időzítése (millisec)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">A második érintést nem fogja figyelembe venni, ha ezen időn belül történik. Ez megakadályozza a véletlen kettős érintéseket</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Válasz megjelenítése nyomvatartásra</string>
     <string name="pref_show_answer_long_press_time_summary">Minimális nyomvatartási idő, mielőtt a válasz megjelenítése gomb érintést érzékel.</string>

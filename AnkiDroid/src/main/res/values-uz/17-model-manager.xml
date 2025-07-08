@@ -58,7 +58,7 @@
     <string name="model_field_editor_delete">Maydonni oʻchirib tashlash</string>
     <string name="model_field_editor_rename">Maydon nomini oʻzgartirish</string>
     <string name="model_field_editor_language_hint">Klaviatura tili tavsiyasini sozlash</string>
-    <string name="model_field_editor_reposition_menu">Maydon joyini oʻzgartirish</string>
+    <string name="model_field_editor_reposition_menu">Maydon oʻrnini oʻzgartirish</string>
     <string name="model_field_editor_changing">Maydonlar yangilanmoqda</string>
     <string name="model_field_editor_sort_field">Bu maydon boʻyicha saralash</string>
     <!--Warnings-->

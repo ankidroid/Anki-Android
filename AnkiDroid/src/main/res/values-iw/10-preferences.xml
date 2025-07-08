@@ -164,7 +164,7 @@
     <string name="disable_extended_text_ui_summ">מאפשר תפריט ההקשר \'מחיקת Cloze\' במצב לרוחב.</string>
     <string name="vertical_centering" maxLength="41">מירכוז</string>
     <string name="vertical_centering_summ">מרכז את תוכן הכרטיסים בצורה אנכית</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">מרווח זמן של לחיצה כפולה (מילישניות)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">לחיצה שנייה על כפתורי התשובה תתעלם אם הזמן הזה לא חלף. זה מונע הקשה כפולה בשוגג</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">הצג תשובה בלחיצה ארוכה</string>
     <string name="pref_show_answer_long_press_time_summary">משך לחיצה מינימלי לפני שכפתור הצג תשובה מגיב למגע</string>

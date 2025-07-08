@@ -161,7 +161,7 @@
     <string name="disable_extended_text_ui_summ">Sallii \"Aukkotehtävä\" -valikon käytön, kun näyttö on vaakatilassa.</string>
     <string name="vertical_centering" maxLength="41">Tasaa keskelle</string>
     <string name="vertical_centering_summ">Keskitä korttien sisältö pystysuunnassa</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Kaksoisnapautuksen aikaväli (millisekuntia)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">Toista vastauspainikkeiden napauttamista ei oteta huomioon, jos näin kauan ei ole kulunut. Tämä estää vahingossa tapahtuvat kaksoisnapautukset</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Näytä vastaus: pitkän painalluksen aika</string>
     <string name="pref_show_answer_long_press_time_summary">Vähimmäispainallusaika, jonka jälkeen \"Näytä vastaus\" -painike rekisteröi kosketuksen.</string>

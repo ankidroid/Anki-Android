@@ -55,7 +55,7 @@
     <string name="delete_cram_deck_message">%s filtrlangan dastani oʻchirib barcha kartalar asl dastalariga qaytarilsinmi?</string>
     <string name="no_tts_available_message">Nutq sintezatori tili yoʻq</string>
     <string name="tts_no_tts">Ovoz chiqmasin</string>
-    <string name="reposition_card_not_new_error">Faqat yangi kartalarni joyini oʻzgartirish mumkin</string>
+    <string name="reposition_card_not_new_error">Faqat yangi kartalar oʻrnini oʻzgartirish mumkin</string>
     <string name="reset_card_dialog_title">Karta progressini oʻchirish</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d ta karta qayta tiklandi</item>
@@ -116,7 +116,7 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Barcha kartalar</string>
     <string name="tags_dialog_option_new_cards">Yangi</string>
-    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Vaqti kelgan</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Muddati kelgan</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Boʻsh kartalar qidirilmoqda&#8230;</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -192,7 +192,7 @@
     </plurals>
     <string name="metered_sync_data_warning">Mobil tarmoqlargaa ulanish uchun qoʻshimcha toʻlov olinishi mumkin</string>
     <string name="deck_picker_new">Ushbu dastadagi bugungi yangi kartalar soni.</string>
-    <string name="deck_picker_rev">Ushbu dastadagi bugun vaqti kelgan kartalar soni.</string>
+    <string name="deck_picker_rev">Ushbu dastadagi bugun muddati kelgan kartalar soni.</string>
     <string name="deck_picker_lrn">Ushbu dastadagi oʻrganilayotgan kartalar soni.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable

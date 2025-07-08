@@ -162,7 +162,7 @@
     <string name="disable_extended_text_ui_summ">ਲੈਂਡਸਕੇਪ ਮੋਡ ਵਿੱਚ ਹੋਣ \'ਤੇ \'ਕਲੋਜ਼ ਡਿਲੀਸ਼ਨ\' ਸੰਦਰਭ ਮੀਨੂ ਦੀ ਆਗਿਆ ਦਿੰਦਾ ਹੈ।</string>
     <string name="vertical_centering" maxLength="41">ਕੇਂਦਰ ਇਕਸਾਰ</string>
     <string name="vertical_centering_summ">ਕਾਰਡਾਂ ਦੀ ਸਮੱਗਰੀ ਨੂੰ ਖੜ੍ਹਵੇਂ ਤੌਰ \'ਤੇ ਕੇਂਦਰਿਤ ਕਰੋ</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">ਡਬਲ ਟੈਪ ਟਾਈਮ ਅੰਤਰਾਲ (ਮਿਲੀਸਕਿੰਟ)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">ਜਵਾਬ ਬਟਨਾਂ ਦੀ ਇੱਕ ਦੂਜੀ ਟੈਪ ਨੂੰ ਅਣਡਿੱਠ ਕਰ ਦਿੱਤਾ ਜਾਵੇਗਾ ਜੇਕਰ ਇਹ ਸਮਾਂ ਬੀਤਿਆ ਨਹੀਂ ਹੈ। ਇਹ ਦੁਰਘਟਨਾ ਵਿੱਚ ਡਬਲ ਟੂਟੀਆਂ ਨੂੰ ਰੋਕਦਾ ਹੈ</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">ਲੰਬੇ ਸਮੇਂ ਲਈ ਦਬਾਓ ਜਵਾਬ ਦਿਖਾਓ</string>
     <string name="pref_show_answer_long_press_time_summary">ਸ਼ੋਅ ਜਵਾਬ ਬਟਨ ਇੱਕ ਟੱਚ ਨੂੰ ਰਜਿਸਟਰ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਦਬਾਉਣ ਦਾ ਘੱਟੋ-ਘੱਟ ਸਮਾਂ।</string>

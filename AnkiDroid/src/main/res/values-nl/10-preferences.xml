@@ -161,7 +161,7 @@
     <string name="disable_extended_text_ui_summ">Laat het contextmenu \'Invuloefening\' toe in de landschapsmodus.</string>
     <string name="vertical_centering" maxLength="41">Uitlijnen in het midden</string>
     <string name="vertical_centering_summ">De inhoud van kaarten verticaal centreren</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Dubbele aanraking tijdsinterval (ms)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">Een tweede aanraking op de antwoordknoppen wordt genegeerd als deze tijd nog niet voorbij is gegaan. Dit voorkomt dubbele aanrakingen.</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Toon antwoord lange indruktijd</string>
     <string name="pref_show_answer_long_press_time_summary">Minimale druktijd voordat de knop voor het tonen van een antwoord een aanraking registreert.</string>

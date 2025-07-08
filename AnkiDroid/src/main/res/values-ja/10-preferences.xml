@@ -160,7 +160,7 @@
     <string name="disable_extended_text_ui_summ">ランドスケープモード時に「穴埋め問題箇所」のコンテキストメニューを許可します</string>
     <string name="vertical_centering" maxLength="41">上下方向の中央寄せ</string>
     <string name="vertical_centering_summ">コンテンツを上下方向の中央に配置します</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">ダブルタップの間隔（ミリ秒）</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">「解答を表示」ボタンをタップした後にこの時間が経過していない場合、回答ボタンのタップを無視します。これにより、意図せずに回答してしまう操作ミスを防ぎます</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">「解答を表示」ボタンが必要とする長押し時間</string>
     <string name="pref_show_answer_long_press_time_summary">〈「解答を表示」ボタンが押された〉と判定するために必要とする長押し時間。デフォルトでは0ミリ秒（長押し必要なし）です。</string>
@@ -369,15 +369,15 @@
     <string name="reviewer_frame_style" maxLength="41">カードの輪郭のスタイル</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">カード（角丸四角形）</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">ボックス（画面全幅四角形）</string>
-    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">カードの上側</string>
-    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">カードの下側</string>
+    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">学習画面の上側</string>
+    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">学習画面の下側（底部）</string>
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">表示しない</string>
-    <string name="toolbar" maxLength="41">Toolbar</string>
-    <string name="toolbar_actions" maxLength="41">Toolbar actions</string>
-    <string name="toolbar_position" maxLength="41">Toolbar position</string>
-    <string name="new_study_screen" maxLength="41">New study screen</string>
-    <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
-    <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
+    <string name="toolbar" maxLength="41">ツールバー</string>
+    <string name="toolbar_actions" maxLength="41">ツールバーのアクション</string>
+    <string name="toolbar_position" maxLength="41">ツールバーの位置</string>
+    <string name="new_study_screen" maxLength="41">新しい学習画面</string>
+    <string name="new_study_screen_summ"><![CDATA[現行の学習画面の後継となる、改良された学習画面。現行画面のいくつかの機能は変更または削除されました。ぜひ<a href="%1$s">ご意見・ご感想</a>をお寄せください。<a href="%2$s">不具合</a>がある場合もお知らせいただければ幸いです。]]></string>
+    <string name="show_answer_feedback" maxLength="41">回答選択時にフィードバック（目印）を表示</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">設定画面を開く</string>
 </resources>

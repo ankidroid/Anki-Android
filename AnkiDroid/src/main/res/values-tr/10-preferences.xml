@@ -161,7 +161,7 @@
     <string name="disable_extended_text_ui_summ">Yatay moddayken \"boşluk doldurma\" durum menüsüne izin ver</string>
     <string name="vertical_centering" maxLength="41">Ortaya hizala</string>
     <string name="vertical_centering_summ">Kartların içeriğini dikey olarak ortala</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Çift dokunma zaman aralığı (milisaniye)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">Cevaplama düğmelerine ikinci bir tıklama, bu süre geçmediyse, göz ardı edilecektir. Bu, yanlışlıkla çift tıklamayı önler</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Cevabı göster basılı tutma süresi</string>
     <string name="pref_show_answer_long_press_time_summary">Cevabı göster düğmesi dokunmayı algılayana kadar minimum basma süresi</string>
