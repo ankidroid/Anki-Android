@@ -90,7 +90,7 @@ junitPlatformLauncher = "1.13.2"
 kotlin = '2.2.0'
 # https://github.com/Kotlin/kotlinx.serialization/releases
 kotlinxSerializationJson = "1.9.0"
-ktlintGradlePlugin = "12.3.0"
+ktlintGradlePlugin = "13.0.0"
 leakcanaryAndroid = "2.14"
 lint = '31.11.0'
 material = "1.12.0"
