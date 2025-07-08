@@ -161,7 +161,7 @@
     <string name="disable_extended_text_ui_summ">Permitet su menù de cuntestu \'Omissione (iscantzellamentu cloze)\' in sa modalidade orizontale</string>
     <string name="vertical_centering" maxLength="41">Allìnia a tzentru</string>
     <string name="vertical_centering_summ">Tzentra in verticale su cuntenutu de sas cartas</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Intervallu de tempus tocu dòpiu (ms)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">Su de duos tocos in sos butones de risposta s\'at a ignorare si custu tempus no at a èssere coladu. Custu prevenit tocos dòpios atzidentales</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Tempus de incarcada longa pro mustrare sa risposta</string>
     <string name="pref_show_answer_long_press_time_summary">Tempus mìnimu de incarcada in antis chi su butone pro mustrare sa risposta registret unu tocu.</string>

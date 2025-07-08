@@ -148,7 +148,7 @@
     <string name="notification_pref_title" maxLength="41">Meni xabardor qil qachonki</string>
     <string name="never_notify">Hech qachon xabardor qilma</string>
     <string name="notify_when_pending">Kultayotgan xabarlar mavjud boʻlsa</string>
-    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">%d tadan ortiq kartani vaqti kelsa</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">%d tadan ortiq kartani muddati kelsa</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Tebranish</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Chiroqni miltillatish</string>
     <string name="select_locale_title">Tilni tanlash</string>
@@ -159,9 +159,9 @@
     <string name="disable_extended_text_ui" maxLength="41">Yagona maydon tahrirlash rejimini oʻchir</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Albom (gorizontal) rejimida \'Boʻshliqni toʻldirish\' kontekst menyusini yoqish</string>
-    <string name="vertical_centering" maxLength="41">Markazga tekislash</string>
+    <string name="vertical_centering" maxLength="41">Markazga tenglashtirish</string>
     <string name="vertical_centering_summ">Kartalar tarkibini vertikal ravishda markazga tekislash</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Ikki marta bosish oraligʻi (millisoniya)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">Agar bu vaqt oʻtmagan boʻlsa, javob tugmasini ikkinchi marta bosish eʼtiborga olinmaydi. Bu tasodifiy ikki marta bosishni oldini oladi</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Javob koʻrsatish uchun uzoq bosish vaqti</string>
     <string name="pref_show_answer_long_press_time_summary">Javobni koʻrsatish tugmasi bosishni aniqlaguncha bosishning minimal vaqti</string>

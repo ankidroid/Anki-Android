@@ -160,7 +160,7 @@
     <string name="disable_extended_text_ui_summ">旋转至横屏时允许上下文菜单中选择「创建填空题」。</string>
     <string name="vertical_centering" maxLength="41">居中对齐</string>
     <string name="vertical_centering_summ">垂直居中卡片内容</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">双击时间间隔（毫秒）</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">两次轻按时间间隔</string>
     <string name="pref_double_tap_time_interval_summary">若未达到设定的时间间隔，系统将忽略对答案按钮的第二次点击，以避免误触或连点操作。</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">“显示回答”长按时间</string>
     <string name="pref_show_answer_long_press_time_summary">显示回答按钮生效前的最短按压时间。</string>
@@ -377,7 +377,7 @@
     <string name="toolbar_position" maxLength="41">工具栏位置:</string>
     <string name="new_study_screen" maxLength="41">新学习屏</string>
     <string name="new_study_screen_summ"><![CDATA[完善了新学习屏，它会取代当前的学习屏。旧屏幕的一些功能已经更改或删除。请报告任何<a href="%1$s">反馈</a>或<a href="%2$s">故障</a>。]]></string>
-    <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
+    <string name="show_answer_feedback" maxLength="41">显示回答反馈</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">打开设置</string>
 </resources>

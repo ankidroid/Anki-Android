@@ -161,7 +161,7 @@
     <string name="disable_extended_text_ui_summ">लँडस्केप मोडमध्ये असताना \'क्लोझ हटविणे\' संदर्भ मेनूला अनुमती देते.</string>
     <string name="vertical_centering" maxLength="41">मध्यभागी संरेखित करा</string>
     <string name="vertical_centering_summ">कार्डेची सामग्री अनुलंब मध्यभागी ठेवा</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">दोनदा टॅप वेळ अंतराल (मिलिसेकंद)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">उत्तर दर्शविण्यासाठी दीर्घकाळ दाबा</string>
     <string name="pref_show_answer_long_press_time_summary">बटण स्पर्श नोंदणी करण्यापूर्वी किमान दाबा वेळ उत्तर दर्शवा.</string>

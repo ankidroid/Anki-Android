@@ -163,7 +163,7 @@
     <string name="disable_extended_text_ui_summ">Povolit kontextové menu „doplňovačky“ v režimu na šířku</string>
     <string name="vertical_centering" maxLength="41">Zarovnání na střed</string>
     <string name="vertical_centering_summ">Obsah karet vycentrovat svisle na střed</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Čas dvojklepnutí (milisekundy)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">Druhé klepnutí na tlačítka odpovědí bude ignorováno, pokud tento čas neuplynul. Zabraňuje to náhodným dvojím klepnutím</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Čas dlouhého stisknutí pro zobrazení odpovědi</string>
     <string name="pref_show_answer_long_press_time_summary">Minimální doba stisku předtím, než tlačítko zobrazit odpověď zaregistruje dotyk.</string>
@@ -377,13 +377,13 @@
     <string name="reviewer_frame_style" maxLength="41">Styl rámečku</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Karta</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Box</string>
-    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Top</string>
-    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Bottom</string>
-    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">None</string>
-    <string name="toolbar" maxLength="41">Toolbar</string>
-    <string name="toolbar_actions" maxLength="41">Toolbar actions</string>
-    <string name="toolbar_position" maxLength="41">Toolbar position</string>
-    <string name="new_study_screen" maxLength="41">New study screen</string>
+    <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Nahoře</string>
+    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Dole</string>
+    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Žádná</string>
+    <string name="toolbar" maxLength="41">Nástrojová lišta</string>
+    <string name="toolbar_actions" maxLength="41">Akce nástrojové lišty</string>
+    <string name="toolbar_position" maxLength="41">Pozice nástrojové lišty</string>
+    <string name="new_study_screen" maxLength="41">Nová obrazovka učení</string>
     <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
     <!--Keyboard shortcuts dialog-->

@@ -164,7 +164,7 @@
     <string name="disable_extended_text_ui_summ">Povoliť kontextové menu doplňovačky pri horizontálnom zobrazení.</string>
     <string name="vertical_centering" maxLength="41">Zarovnanie na stred</string>
     <string name="vertical_centering_summ">Vycentrovať obsah kartičiek vertikálne</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Čas pre dvojklepnutie (milisekundy)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">Druhé klepnutie na tlačidlo odpovede bude ignorované, ak tento čas neuplynul. Zabraňuje to nechceným dvojklepnutiam</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Ukázať odpoveď po dlhom stlačení</string>
     <string name="pref_show_answer_long_press_time_summary">Minimálna dĺžka stlačenia na ukázanie odpovede</string>

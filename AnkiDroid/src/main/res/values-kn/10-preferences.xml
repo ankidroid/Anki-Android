@@ -161,7 +161,7 @@
     <string name="disable_extended_text_ui_summ">ಲ್ಯಾಂಡ್‌ಸ್ಕೇಪ್ ಮೋಡ್‌ನಲ್ಲಿರುವಾಗ \'ಮುಚ್ಚು ಅಳಿಸು\' ಸಂದರ್ಭ ಮೆನುವನ್ನು ಅನುಮತಿಸುತ್ತದೆ.</string>
     <string name="vertical_centering" maxLength="41">ಕೇಂದ್ರಕ್ಕೆ ಲಗತ್ತಿಸಿ</string>
     <string name="vertical_centering_summ">ಕಾರ್ಡ್‌ಗಳ ವಿಷಯವನ್ನು ಲಂಬವಾಗಿ ಕೇಂದ್ರೀಕರಿಸಿ</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">ಡಬಲ್ ಟ್ಯಾಪ್ ಸಮಯದ ಮಧ್ಯಂತರ (ಮಿಲಿಸೆಕೆಂಡುಗಳು)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">ಈ ಸಮಯ ಮೀರದಿದ್ದರೆ ಉತ್ತರ ಬಟನ್‌ಗಳ ಎರಡನೇ ಟ್ಯಾಪ್ ಅನ್ನು ನಿರ್ಲಕ್ಷಿಸಲಾಗುತ್ತದೆ. ಇದು ಆಕಸ್ಮಿಕ ಡಬಲ್ ಟ್ಯಾಪ್‌ಗಳನ್ನು ತಡೆಯುತ್ತದೆ</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">ಉತ್ತರವನ್ನು ದೀರ್ಘ-ಒತ್ತುವ ಸಮಯವನ್ನು ತೋರಿಸಿ</string>
     <string name="pref_show_answer_long_press_time_summary">ಪ್ರದರ್ಶನ ಉತ್ತರ ಬಟನ್ ಸ್ಪರ್ಶವನ್ನು ನೋಂದಾಯಿಸುವ ಮೊದಲು ಕನಿಷ್ಠ ಪತ್ರಿಕಾ ಸಮಯ.</string>
