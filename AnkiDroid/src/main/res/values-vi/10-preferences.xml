@@ -115,6 +115,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Chạm vào chính giữa</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Chạm vào dưới cùng bên trái</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Chạm vào dưới cùng bên phải</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">Lắc thiết bị</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">Menu ‘%s’</string>
     <string name="card_browser_enable_external_context_menu_summary">Bật menu ngữ cảnh ‘%s’ trên toàn cầu</string>

@@ -116,6 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Oʻrta markazni bosish</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Pastki chap tomonni bosish</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Pastki oʻng tomonni bosish</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">Qurilmani silkitish</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menyusi</string>
     <string name="card_browser_enable_external_context_menu_summary">“%s” kontekst menyusini ilova miqyosda yoqadi</string>
@@ -161,7 +164,7 @@
     <string name="disable_extended_text_ui_summ">Albom (gorizontal) rejimida \'Boʻshliqni toʻldirish\' kontekst menyusini yoqish</string>
     <string name="vertical_centering" maxLength="41">Markazga tenglashtirish</string>
     <string name="vertical_centering_summ">Kartalar tarkibini vertikal ravishda markazga tekislash</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Ikki marta bosish oraligʻi</string>
     <string name="pref_double_tap_time_interval_summary">Agar bu vaqt oʻtmagan boʻlsa, javob tugmasini ikkinchi marta bosish eʼtiborga olinmaydi. Bu tasodifiy ikki marta bosishni oldini oladi</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Javob koʻrsatish uchun uzoq bosish vaqti</string>
     <string name="pref_show_answer_long_press_time_summary">Javobni koʻrsatish tugmasi bosishni aniqlaguncha bosishning minimal vaqti</string>

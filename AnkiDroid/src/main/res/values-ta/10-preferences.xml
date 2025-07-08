@@ -116,6 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">நடுத்தர மையத்தைத் தொடவும்</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">கீழே இடதுபுறத்தைத் தொடவும்</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">கீழ் வலதுபுறத்தைத் தொடவும்</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">சாதனத்தை அசைக்கவும்</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ மெனு</string>
     <string name="card_browser_enable_external_context_menu_summary">உலகளவில் சூழல் மெனு \'%s\' ஐ இயக்குகிறது</string>
@@ -161,7 +164,7 @@
     <string name="disable_extended_text_ui_summ">லேண்ட்ஸ்கேப் பயன்முறையில் இருக்கும்போது \'அழித்தலை மூடவும்\' சூழல் மெனுவை அனுமதிக்கிறது.</string>
     <string name="vertical_centering" maxLength="41">மத்திய சீரமைப்பு</string>
     <string name="vertical_centering_summ">அட்டைகளின் உள்ளடக்கத்தை செங்குத்தாக மையப்படுத்தவும்</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">இருமுறை தட்டுதல் நேர இடைவெளி</string>
     <string name="pref_double_tap_time_interval_summary">இந்த நேரம் முடிவடையவில்லை என்றால், பதில் பொத்தான்களில் இரண்டாவது தட்டினால் புறக்கணிக்கப்படும். இது தற்செயலான இரட்டை குழாய்களைத் தடுக்கிறது</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">பதிலைக் காட்டு நீண்ட நேரம் அழுத்தவும்</string>
     <string name="pref_show_answer_long_press_time_summary">பதிலளிப்பு பொத்தானைக் காண்பி, தொடுவதற்கு முன் குறைந்தபட்ச அழுத்த நேரம்.</string>

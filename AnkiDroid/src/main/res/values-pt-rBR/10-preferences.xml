@@ -116,6 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Toque Meio Centro</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Toque Baixo Esquerda</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Toque Baixo Direita</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">Agitar o dispositivo</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ Menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Habilita o menu de contexto globalmente ‘%s\'</string>
@@ -161,7 +164,7 @@
     <string name="disable_extended_text_ui_summ">Permitir \'Ocultar\' no menu de contexto quando em modo paisagem.</string>
     <string name="vertical_centering" maxLength="41">Alinhar no centro</string>
     <string name="vertical_centering_summ">Centralizar o conteúdo dos cards verticalmente</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Intervalo de toque duplo</string>
     <string name="pref_double_tap_time_interval_summary">Um segundo toque nos botões de resposta será ignorado se esse intervalo não tiver decorrido. Isso evita toques duplos acidentais</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Duração do toque longo para mostrar a resposta</string>
     <string name="pref_show_answer_long_press_time_summary">Tempo mínimo de pressionamento para ativar o botão Mostrar resposta</string>

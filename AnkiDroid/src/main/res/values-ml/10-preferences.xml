@@ -116,6 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">മധ്യഭാഗത്ത് സ്പർശിക്കുക</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">ചുവടെ ഇടത് സ്പർശിക്കുക</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">ചുവടെ വലതുവശത്ത് സ്‌പർശിക്കുക</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">ഉപകരണം കുലുക്കുക</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ മെനു</string>
     <string name="card_browser_enable_external_context_menu_summary">ആഗോളതലത്തിൽ ‘%s’ സന്ദർഭ മെനു പ്രവർത്തനക്ഷമമാക്കുന്നു</string>
@@ -161,7 +164,7 @@
     <string name="disable_extended_text_ui_summ">ലാൻഡ്‌സ്‌കേപ്പ് മോഡിലായിരിക്കുമ്പോൾ \'ക്ലോസ് ഡിലീറ്റ്\' സന്ദർഭ മെനു അനുവദിക്കുന്നു.</string>
     <string name="vertical_centering" maxLength="41">സെന്റർ വിന്യാസം</string>
     <string name="vertical_centering_summ">കാർഡുകളുടെ ഉള്ളടക്കം ലംബമായി കേന്ദ്രീകരിക്കുക</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">ഇരട്ട ടാപ്പ് സമയ ഇടവേള</string>
     <string name="pref_double_tap_time_interval_summary">ഈ സമയം കഴിഞ്ഞില്ലെങ്കിൽ ഉത്തര ബട്ടണുകളുടെ രണ്ടാമത്തെ ടാപ്പ് അവഗണിക്കപ്പെടും. ഇത് ആകസ്മികമായ ഇരട്ട ടാപ്പുകൾ തടയുന്നു</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">ഉത്തരം ദീർഘനേരം അമർത്തി കാണിക്കുക</string>
     <string name="pref_show_answer_long_press_time_summary">ഷോ ഉത്തരം ബട്ടൺ ഒരു ടച്ച് രജിസ്റ്റർ ചെയ്യുന്നതിന് മുമ്പുള്ള ഏറ്റവും കുറഞ്ഞ അമർത്തൽ സമയം.</string>

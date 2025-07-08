@@ -116,6 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Tocar el centro</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Tocar abajo a la izquierda</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Tocar abajo a la derecha</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">Sacudir dispositivo</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ Menú</string>
     <string name="card_browser_enable_external_context_menu_summary">Habilitar globalmente el menú contextual ‘%s</string>
@@ -161,7 +164,7 @@
     <string name="disable_extended_text_ui_summ">Permite el menú contextual \'huecos\' cuando está en modo horizontal.</string>
     <string name="vertical_centering" maxLength="41">Alinear al centro</string>
     <string name="vertical_centering_summ">Centra verticalmente el contenido de las tarjetas</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Intervalo de tiempo de doble toque</string>
     <string name="pref_double_tap_time_interval_summary">Un segundo toque de los botones de respuesta será ignorado si este tiempo no ha transcurrido. Esto previene doble toque accidental.</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Tiempo de pulsación larga para mostrar respuesta</string>
     <string name="pref_show_answer_long_press_time_summary">Tiempo mínimo de presión antes de que el botón mostrar respuesta registre un toque.</string>

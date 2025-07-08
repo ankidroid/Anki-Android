@@ -116,6 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">मध्य में केंद्र को स्पर्श करें</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">नीचे से बाएं से छुएं</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">नीचे से दाएं को छुएं</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">डिवाइस हिलाओ</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ मेन्यू</string>
     <string name="card_browser_enable_external_context_menu_summary">विश्व स्तर पर \'%s\' संदर्भ मेनू को सक्षम करता है</string>
@@ -161,7 +164,7 @@
     <string name="disable_extended_text_ui_summ">लैंडस्केप मोड में होने पर \'क्लोज़ डिलीशन\' संदर्भ मेनू की अनुमति देता है।</string>
     <string name="vertical_centering" maxLength="41">मध्य संरेखित करें</string>
     <string name="vertical_centering_summ">कार्ड की सामग्री को अनुलंब रूप से केंद्रित करना</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">डबल टैप समय अंतराल</string>
     <string name="pref_double_tap_time_interval_summary">यदि यह समय बीत नहीं गया है तो उत्तर बटनों पर दूसरी बार टैप करने पर ध्यान नहीं दिया जाएगा। यह आकस्मिक डबल टैप को रोकता है</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">उत्तर को देर तक दबाकर रखने का समय दिखाएं</string>
     <string name="pref_show_answer_long_press_time_summary">उत्तर दिखाएँ बटन को स्पर्श करने से पहले न्यूनतम दबाने का समय।</string>

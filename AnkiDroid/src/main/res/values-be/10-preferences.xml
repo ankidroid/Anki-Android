@@ -118,6 +118,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Дотык пасярэдзіне</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Дотык ніжняга левага вугла</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Дотык ніжняга правага вугла</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">Патрасіце прыладу</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">Меню «%s»</string>
     <string name="card_browser_enable_external_context_menu_summary">Уключыць кантэкстнае меню «%s» у сістэме</string>
@@ -164,7 +167,7 @@
     <string name="disable_extended_text_ui_summ">Уключае кантэкстнае меню \"Заданне з пропускамі\" ў альбомным рэжыме.</string>
     <string name="vertical_centering" maxLength="41">Выраўноўваць па цэнтры</string>
     <string name="vertical_centering_summ">Цэнтраваць змесціва картак вертыкальна</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Інтэрвал у падвойным дотыку</string>
     <string name="pref_double_tap_time_interval_summary">Другі націск на кнопку адказу будзе праігнараваны, калі час яшчэ не мінуў. Гэта прадухіляе выпадковы двайны націск</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Працягласць націску для адказу</string>
     <string name="pref_show_answer_long_press_time_summary">Мінімальны час націску да таго, як кнопка дотыку пакажа адказ.</string>
