@@ -115,6 +115,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">中央をタップ</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">左下をタップ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">右下をタップ</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">デバイスを振る</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">「%s」メニュー</string>
     <string name="card_browser_enable_external_context_menu_summary">AnkiDroidおよび他のアプリ（ウェブブラウザなど）で、文字列を選択した際に表示されるコンテキストメニューに「%s」という項目を追加します</string>
@@ -160,7 +163,7 @@
     <string name="disable_extended_text_ui_summ">ランドスケープモード時に「穴埋め問題箇所」のコンテキストメニューを許可します</string>
     <string name="vertical_centering" maxLength="41">上下方向の中央寄せ</string>
     <string name="vertical_centering_summ">コンテンツを上下方向の中央に配置します</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">ダブルタップの間隔</string>
     <string name="pref_double_tap_time_interval_summary">「解答を表示」ボタンをタップした後にこの時間が経過していない場合、回答ボタンのタップを無視します。これにより、意図せずに回答してしまう操作ミスを防ぎます</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">「解答を表示」ボタンが必要とする長押し時間</string>
     <string name="pref_show_answer_long_press_time_summary">〈「解答を表示」ボタンが押された〉と判定するために必要とする長押し時間。デフォルトでは0ミリ秒（長押し必要なし）です。</string>

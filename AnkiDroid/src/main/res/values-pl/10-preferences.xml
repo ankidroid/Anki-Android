@@ -118,6 +118,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Dotknij środka ekranu</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Dotknij lewej dolnej części ekranu</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Dotknij prawej dolnej części ekranu</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">Potrząśnij urządzeniem</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">Menu „%s”</string>
     <string name="card_browser_enable_external_context_menu_summary">Włącza menu kontekstowe „%s”globalne</string>
@@ -163,7 +166,7 @@
     <string name="disable_extended_text_ui_summ">Zezwala na menu kontekstowe luk do wypełnienia w trybie poziomym.</string>
     <string name="vertical_centering" maxLength="41">Wycentruj</string>
     <string name="vertical_centering_summ">Wycentruj w pionie zawartość kart</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Interwał czasu podwójnego dotknięcia</string>
     <string name="pref_double_tap_time_interval_summary">Drugie dotknięcie przycisków odpowiedzi zostanie zignorowane jeśli od poprzedniego nie upłynął ustawiony czas. Zapobiega to przypadkowym podwójnym dotknięciom</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Pokaż czas długiego przytrzymania odpowiedzi</string>
     <string name="pref_show_answer_long_press_time_summary">Minimalny czas naciśnięcia, zanim przycisk odpowiedzi odpowie na dotknięcie.</string>

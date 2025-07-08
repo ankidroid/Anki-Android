@@ -118,6 +118,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Klepnutí uprostřed ve středu</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Klepnutí vlevo dole</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Klepnutí vpravo dole</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">Zatřesení zařízením</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">Menu „%s“</string>
     <string name="card_browser_enable_external_context_menu_summary">Povolí globální kontextovou nabídku „%s“</string>
@@ -163,7 +166,7 @@
     <string name="disable_extended_text_ui_summ">Povolit kontextové menu „doplňovačky“ v režimu na šířku</string>
     <string name="vertical_centering" maxLength="41">Zarovnání na střed</string>
     <string name="vertical_centering_summ">Obsah karet vycentrovat svisle na střed</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Čas dvojklepnutí</string>
     <string name="pref_double_tap_time_interval_summary">Druhé klepnutí na tlačítka odpovědí bude ignorováno, pokud tento čas neuplynul. Zabraňuje to náhodným dvojím klepnutím</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Čas dlouhého stisknutí pro zobrazení odpovědi</string>
     <string name="pref_show_answer_long_press_time_summary">Minimální doba stisku předtím, než tlačítko zobrazit odpověď zaregistruje dotyk.</string>

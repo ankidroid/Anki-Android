@@ -116,6 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">دەل ئوتتۇرىنى چەك</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">سول ئاستىنى چەك</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">ئوڭ ئاستىنى چەك</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">ئۈسكۈنىنى سىلكى</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">«%s» تىزىملىكى</string>
     <string name="card_browser_enable_external_context_menu_summary">«%s» مەزمۇن تىزىملىكىنى پۈتكۈل دائىرىدە قوزغىتىدۇ</string>
@@ -162,7 +165,7 @@
     <string name="disable_extended_text_ui_summ">توغرىسىغا ھالەتتە مەزمۇن تىزىملىكىدە «بوش ئورۇن تولدۇرۇش» قا يول قويىدۇ.</string>
     <string name="vertical_centering" maxLength="41">ئۇتتۇرىغا توغرىلا</string>
     <string name="vertical_centering_summ">كارتا مەزمۇنىنى بويىغا ئوتتۇرىغا توغرىلايدۇ</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">ۋاقىت ئارىلىقى قوش چېكىلىدۇ</string>
     <string name="pref_double_tap_time_interval_summary">ئەگەر بۇ ۋاقىت ئۆتۈپ كەتمىگەن بولسا، جاۋاب توپچىنىڭ ئىككىنچى قېتىم چېكىلىشى نەزەردىن ساقىت قىلىنىدۇ. بۇ تاسادىپىي قوش چېكىشنىڭ ئالدىنى ئالىدۇ</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">«جاۋابنى كۆرسەت» نىڭ ئۇزۇن بېسىش ۋاقتى</string>
     <string name="pref_show_answer_long_press_time_summary">جاۋاب توپچىنى كۆرسىتىشتىن ئىلگىرى ئەڭ قىسقا بېسىپ تۇرۇش ۋاقتى.</string>

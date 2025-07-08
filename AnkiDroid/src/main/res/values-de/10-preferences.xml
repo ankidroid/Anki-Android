@@ -116,6 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Mitte mittig antippen</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Unten links antippen</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Unten rechts antippen</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">Gerät schütteln</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">»%s«-Menü</string>
     <string name="card_browser_enable_external_context_menu_summary">Aktiviert global das Kontextmenü »%s«</string>
@@ -161,7 +164,7 @@
     <string name="disable_extended_text_ui_summ">Erlaubt im Querformat das Kontextmenü »Auslassung erzeugen«</string>
     <string name="vertical_centering" maxLength="41">Zentriert</string>
     <string name="vertical_centering_summ">Den Inhalt der Karten vertikal zentrieren</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Zeitintervall für Doppeltippen</string>
     <string name="pref_double_tap_time_interval_summary">Ein zweites Antippen der Antworttasten wird ignoriert, wenn diese Zeit nicht verstrichen ist. Dies verhindert versehentliches doppeltes Antippen</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Dauer des Gedrückthaltens zum Antwort zeigen</string>
     <string name="pref_show_answer_long_press_time_summary">Die minimale Druckzeit, bevor die Schaltfläche \"Antwort anzeigen\" eine Berührung registriert.</string>

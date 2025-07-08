@@ -116,6 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Սեղմել մեջտեղում</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Սեղմել ներքևի ձախ մասում</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Սեղմել ներքևի աջ մասում</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">Թափահարել սարքը</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">«%s» մենյու</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>

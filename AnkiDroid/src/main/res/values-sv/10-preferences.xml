@@ -116,6 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Tryck vid mitten</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Tryck längst ner till vänster</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Tryck längst ner till höger</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">Skaka enhet</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ Meny</string>
     <string name="card_browser_enable_external_context_menu_summary">Aktiverar sammanhangsmenyn ‘%s’ globalt</string>
@@ -161,7 +164,7 @@
     <string name="disable_extended_text_ui_summ">Tillåter snabbmenyn ”Textlucka” i liggande läge.</string>
     <string name="vertical_centering" maxLength="41">Centrera</string>
     <string name="vertical_centering_summ">Vertikal centrering av kortinnehåll</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Dubbeltryck tidsintervall</string>
     <string name="pref_double_tap_time_interval_summary">En andra knapptryckning av svarsknappar kommer att ignoreras om den här tiden inte har förflutit. Detta förhindrar oavsiktliga dubbeltryck</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Visa svar lång trycktid</string>
     <string name="pref_show_answer_long_press_time_summary">Minimum trycktid före svarsknappen registrerar en knapptryckning</string>

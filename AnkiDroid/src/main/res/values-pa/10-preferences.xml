@@ -116,6 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">ਵਿਚਕਾਰਲੇ ਕੇਂਦਰ ਨੂੰ ਛੋਹਵੋ</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">ਹੇਠਾਂ ਖੱਬੇ ਪਾਸੇ ਛੋਹਵੋ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">ਹੇਠਾਂ ਸੱਜੇ ਪਾਸੇ ਛੋਹਵੋ</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">ਸ਼ੇਕ ਜੰਤਰ</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">\'%s\' ਮੀਨੂ</string>
     <string name="card_browser_enable_external_context_menu_summary">ਵਿਸ਼ਵ ਪੱਧਰ \'ਤੇ \'%s\' ਸੰਦਰਭ ਮੀਨੂ ਨੂੰ ਸਮਰੱਥ ਬਣਾਉਂਦਾ ਹੈ</string>
@@ -162,7 +165,7 @@
     <string name="disable_extended_text_ui_summ">ਲੈਂਡਸਕੇਪ ਮੋਡ ਵਿੱਚ ਹੋਣ \'ਤੇ \'ਕਲੋਜ਼ ਡਿਲੀਸ਼ਨ\' ਸੰਦਰਭ ਮੀਨੂ ਦੀ ਆਗਿਆ ਦਿੰਦਾ ਹੈ।</string>
     <string name="vertical_centering" maxLength="41">ਕੇਂਦਰ ਇਕਸਾਰ</string>
     <string name="vertical_centering_summ">ਕਾਰਡਾਂ ਦੀ ਸਮੱਗਰੀ ਨੂੰ ਖੜ੍ਹਵੇਂ ਤੌਰ \'ਤੇ ਕੇਂਦਰਿਤ ਕਰੋ</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">ਡਬਲ ਟੈਪ ਟਾਈਮ ਅੰਤਰਾਲ</string>
     <string name="pref_double_tap_time_interval_summary">ਜਵਾਬ ਬਟਨਾਂ ਦੀ ਇੱਕ ਦੂਜੀ ਟੈਪ ਨੂੰ ਅਣਡਿੱਠ ਕਰ ਦਿੱਤਾ ਜਾਵੇਗਾ ਜੇਕਰ ਇਹ ਸਮਾਂ ਬੀਤਿਆ ਨਹੀਂ ਹੈ। ਇਹ ਦੁਰਘਟਨਾ ਵਿੱਚ ਡਬਲ ਟੂਟੀਆਂ ਨੂੰ ਰੋਕਦਾ ਹੈ</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">ਲੰਬੇ ਸਮੇਂ ਲਈ ਦਬਾਓ ਜਵਾਬ ਦਿਖਾਓ</string>
     <string name="pref_show_answer_long_press_time_summary">ਸ਼ੋਅ ਜਵਾਬ ਬਟਨ ਇੱਕ ਟੱਚ ਨੂੰ ਰਜਿਸਟਰ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਦਬਾਉਣ ਦਾ ਘੱਟੋ-ਘੱਟ ਸਮਾਂ।</string>
