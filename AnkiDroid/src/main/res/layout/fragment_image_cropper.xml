@@ -31,8 +31,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            android:background="?attr/appBarColor"
-            android:theme="@style/ActionBarStyle"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <com.canhub.cropper.CropImageView
