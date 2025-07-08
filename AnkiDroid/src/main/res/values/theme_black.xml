@@ -42,7 +42,7 @@
         <item name="buryCountColor">@color/disabled_gray_dark</item>
         <item name="zeroCountColor">#202020</item>
         <!-- Study Screen colors -->
-        <item name="showAnswerButtonBackground">#0801579B</item> <!-- Material light blue 900 with 3% alpha -->
+        <item name="showAnswerButtonBackground">#0c1215</item>
         <item name="showAnswerColor">@color/theme_black_primary</item>
         <item name="topBarColor">@color/theme_black_primary</item>
         <item name="maxTimerColor">@color/material_red_300</item>
@@ -57,10 +57,10 @@
         <item name="hardTextColor">@color/material_orange_200</item>
         <item name="goodTextColor">@color/material_light_green_200</item>
         <item name="easyTextColor">@color/material_light_blue_A100</item>
-        <item name="againBackgroundColor">#08B71C1C</item> <!-- Material red 900 with 3% alpha -->
-        <item name="hardBackgroundColor">#08E65100</item> <!-- Material orange 900 with 3% alpha -->
-        <item name="goodBackgroundColor">#082E7D32</item> <!-- Material green 800 with 3% alpha -->
-        <item name="easyBackgroundColor">#080277BD</item> <!-- Material light blue 800 with 3% alpha -->
+        <item name="againBackgroundColor">#170e0e</item>
+        <item name="hardBackgroundColor">#19120c</item>
+        <item name="goodBackgroundColor">#0e1310</item>
+        <item name="easyBackgroundColor">#0c1317</item>
         <!-- Study Screen button drawables -->
         <item name="againButtonRef">@drawable/footer_button_all_black</item>
         <item name="hardButtonRef">@drawable/footer_button_all_black</item>
