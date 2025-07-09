@@ -34,6 +34,7 @@ import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.Info
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.scheduling.Fsrs
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showThemedToast
@@ -72,7 +73,9 @@ class AboutFragment : Fragment(R.layout.about_layout) {
             "(anki " + BackendBuildConfig.ANKI_DESKTOP_VERSION + " / " + BackendBuildConfig.ANKI_COMMIT_HASH.subSequence(0, 8) + ")"
 
         // FSRS version text
-        view.findViewById<TextView>(R.id.about_fsrs).text = "(FSRS ${BackendBuildConfig.FSRS_VERSION})"
+        view.findViewById<TextView>(R.id.about_fsrs).text = Fsrs.displayVersion ?.let { version ->
+            "($version)"
+        } ?: ""
 
         // Logo secret
         view
