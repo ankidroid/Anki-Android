@@ -85,7 +85,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.NoteEditor.Companion.NoteEditorCaller.Companion.fromValue
+import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller.Companion.fromValue
 import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
@@ -207,7 +207,7 @@ const val CALLER_KEY = "caller"
  */
 @KotlinCleanup("Go through the class and select elements to fix")
 @KotlinCleanup("see if we can lateinit")
-class NoteEditor :
+class NoteEditorFragment :
     Fragment(R.layout.note_editor),
     DeckSelectionListener,
     SubtitleListener,
@@ -3017,8 +3017,8 @@ class NoteEditor :
         private const val PREF_NOTE_EDITOR_FONT_SIZE = "note_editor_font_size"
         private const val PREF_NOTE_EDITOR_CUSTOM_BUTTONS = "note_editor_custom_buttons"
 
-        fun newInstance(launcher: NoteEditorLauncher): NoteEditor =
-            NoteEditor().apply {
+        fun newInstance(launcher: NoteEditorLauncher): NoteEditorFragment =
+            NoteEditorFragment().apply {
                 this.arguments = launcher.toBundle()
             }
 

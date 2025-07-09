@@ -64,7 +64,7 @@ class NoteEditorTabOrderTest : NoteEditorTest() {
     }
 
     private fun sendKeyDownUp(
-        editor: NoteEditor,
+        editor: NoteEditorFragment,
         keyCode: Int,
     ) {
         val focusedView = editor.requireActivity().currentFocus ?: return

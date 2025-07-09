@@ -18,7 +18,7 @@ import com.ichi2.anki.AbstractFlashcardViewer.Companion.toAnimationTransition
 import com.ichi2.anki.AbstractFlashcardViewer.Signal
 import com.ichi2.anki.AbstractFlashcardViewer.Signal.Companion.toSignal
 import com.ichi2.anki.AnkiActivity.Companion.FINISH_ANIMATION_EXTRA
-import com.ichi2.anki.NoteEditor.Companion.NoteEditorCaller
+import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.libanki.sched.Ease
@@ -211,8 +211,8 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
             val animation = gesture.toAnimationTransition().invert()
             val bundle =
                 bundleOf(
-                    NoteEditor.EXTRA_CALLER to NoteEditorCaller.EDIT.value,
-                    NoteEditor.EXTRA_CARD_ID to viewer.currentCard!!.id,
+                    NoteEditorFragment.EXTRA_CALLER to NoteEditorCaller.EDIT.value,
+                    NoteEditorFragment.EXTRA_CARD_ID to viewer.currentCard!!.id,
                     FINISH_ANIMATION_EXTRA to animation as Parcelable,
                 )
             val noteEditor = NoteEditorTest().openNoteEditorWithArgs(bundle)

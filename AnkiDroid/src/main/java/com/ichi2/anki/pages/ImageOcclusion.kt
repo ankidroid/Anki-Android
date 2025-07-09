@@ -117,7 +117,7 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
         private const val ARG_KEY_EDITOR_DECK_ID = "arg_key_editor_deck_id"
 
         /**
-         * @param editorWorkingDeckId the current deck id that [com.ichi2.anki.NoteEditor] is using
+         * @param editorWorkingDeckId the current deck id that [com.ichi2.anki.NoteEditorFragment] is using
          */
         fun getIntent(
             context: Context,
