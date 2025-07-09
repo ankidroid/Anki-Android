@@ -2,11 +2,13 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/root_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -18,13 +20,38 @@
             app:navigationContentDescription="@string/abc_action_bar_up_description"
             app:navigationIcon="?attr/homeAsUpIndicator" />
 
+        <!-- The heading's horizontal padding is set programmatically in ScheduleReminders -->
+
         <LinearLayout
             android:id="@+id/schedule_reminders_column_headings"
             android:background="@drawable/browser_heading_bottom_divider"
             android:orientation="horizontal"
             android:paddingVertical="2dp"
+            android:paddingStart="96dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <com.ichi2.ui.FixedTextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:minHeight="?minTouchTargetSize"
+                android:layout_weight="1"
+                android:textFontWeight="700"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.TextView.SpinnerItem"
+                android:gravity="center_vertical"
+                android:text="Deck"
+                tools:ignore="HardcodedText" />
+
+            <com.ichi2.ui.FixedTextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:minHeight="?minTouchTargetSize"
+                android:layout_weight="1"
+                android:textFontWeight="700"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.TextView.SpinnerItem"
+                android:gravity="center_vertical"
+                android:text="Time"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
 
@@ -37,7 +64,9 @@
             android:clipToPadding="false"
             android:drawSelectorOnTop="true"
             android:scrollbars="vertical"
-            />
+            android:contentDescription="List of scheduled review reminders"
+            tools:listitem="@layout/schedule_reminders_list_item"
+            tools:ignore="HardcodedText" />
 
     </LinearLayout>
 

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/reminders_list_item_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal">
+
+    <CheckBox
+        android:id="@+id/reminders_list_checkbox"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        tools:visibility="gone" />
+
+    <!-- The switch's width is set programmatically in ScheduleRemindersAdapter -->
+
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/reminders_list_switch"
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:paddingEnd="24dp" />
+
+    <TextView
+        android:id="@+id/reminders_list_deck_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:text="Example Deck Name"
+        android:layout_marginEnd="12dp"
+        android:paddingVertical="8dp"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/reminders_list_time_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:text="00:00"
+        android:visibility="visible" />
+
+</LinearLayout>
