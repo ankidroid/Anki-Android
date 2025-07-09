@@ -1730,14 +1730,7 @@ class NoteEditor :
         showDialogFragment(dialog)
     }
 
-    private fun getEditTextForFieldId(fieldId: Int): FieldEditText {
-        for (editText in editFields!!) {
-            if (editText.id == fieldId) {
-                return editText
-            }
-        }
-        throw IllegalArgumentException("FieldEditText with ID $fieldId not found.")
-    }
+    private fun getEditTextForFieldId(fieldIndex: Int): FieldEditText = editFields!![fieldIndex]
 
     override fun onSelectedTags(
         selectedTags: List<String>,
@@ -1929,15 +1922,19 @@ class NoteEditor :
             }
             newEditText.setCapitalize(prefs.getBoolean(PREF_NOTE_EDITOR_CAPITALIZE, true))
 
-            // *** AQUI VOCÊ VAI PASSAR OS ARGUMENTOS CORRETOS PARA O CONSTRUTOR ***
-            val fieldId = newEditText.id // Este ID é adequado para usar como chave no Map
-            newEditText.addTextChangedListener(EditFieldTextWatcher(fieldId, this)) // 'this' é o NoteEditor, que é o listener
-            // *** FIM DA ALTERAÇÃO ***
-
             newEditText.onFocusChangeListener =
                 View.OnFocusChangeListener { v, hasFocus ->
                     if (hasFocus) {
-                        currentActiveFieldIn = v.id
+                        val focusedEditText = v as FieldEditText
+                        val indexInEditFields = editFields?.indexOf(focusedEditText)
+                        if (indexInEditFields != null && indexInEditFields != -1) {
+                            currentActiveFieldIn = indexInEditFields
+                            Timber.d(
+                                "DEBUG_UNDO: Campo com ID ${v.id} (index $indexInEditFields) ganhou foco. currentActiveFieldIn definido para $currentActiveFieldIn",
+                            )
+                        } else {
+                            Timber.e("DEBUG_UNDO: FieldEditText com ID ${v.id} não encontrado em editFields!")
+                        }
                     }
                 }
             val mediaButton = editLineView.mediaButton
@@ -3007,7 +3004,7 @@ class NoteEditor :
         private val fieldId: Int,
         private val listener: NoteEditorActionsListener,
     ) : TextWatcher {
-        private var currentText: String = ""
+        private var lastRecordedText: String = ""
         private val handler = android.os.Handler(android.os.Looper.getMainLooper())
         private var runnable: Runnable? = null
 
@@ -3019,7 +3016,7 @@ class NoteEditor :
         ) {
             // Capture text before change
             if (isPerformingUndoRedo) return
-            currentText = s.toString()
+            lastRecordedText = s.toString()
         }
 
         override fun onTextChanged(
@@ -3036,20 +3033,27 @@ class NoteEditor :
             if (!loadingStickyFields) {
                 isFieldEdited = true
             }
-            if (fieldId == editFields!![0].id) {
+            if (fieldId == 0) {
                 setDuplicateFieldStyles()
             }
 
             if (isPerformingUndoRedo) return
             val textAfterEdit = s.toString()
 
-            if (currentText != textAfterEdit) {
+            if (lastRecordedText != textAfterEdit) {
+                val textToSaveOnUndo = lastRecordedText
+
                 runnable =
                     Runnable {
                         val undoStack = undoStacks.getOrPut(fieldId) { Stack() }
 
-                        if (undoStack.isEmpty() || undoStack.peek() != currentText) {
-                            listener.saveCurrentTextState(fieldId, currentText)
+                        if (undoStack.isEmpty() || undoStack.peek() != textToSaveOnUndo) {
+                            listener.saveCurrentTextState(fieldId, textToSaveOnUndo)
+                            Timber.d("DEBUG_UNDO: CONSOLIDATED SAVE for fieldId: $fieldId, text: '$textToSaveOnUndo'")
+                        } else {
+                            Timber.d(
+                                "DEBUG_UNDO: SKIPPING CONSOLIDATED SAVE for fieldId: $fieldId, text: '$textToSaveOnUndo' (duplicate or already at top)",
+                            )
                         }
                     }
                 handler.postDelayed(runnable!!, 700)
