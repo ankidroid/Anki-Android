@@ -21,10 +21,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- 18781: Don't mirror the gesture display for rtl languages -->
     <com.ichi2.ui.GestureDisplay
         android:id="@+id/gestureDisplay"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layoutDirection="ltr"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/spinner_gesture"
         app:layout_constraintStart_toStartOf="parent"
