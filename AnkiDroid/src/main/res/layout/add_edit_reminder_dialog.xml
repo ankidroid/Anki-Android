@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/root_linear_layout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/add_edit_reminder_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ActionBarStyle"
+            android:background="?attr/appBarColor"
+            app:title="Add / edit review reminder" />
+
+        <ScrollView
+            android:id="@+id/add_edit_reminder_scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/add_edit_reminder_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <LinearLayout
+                    android:id="@+id/add_edit_reminder_time_section"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/add_edit_reminder_time_label"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Time:"
+                        android:textSize="18sp"
+                        tools:ignore="HardcodedText" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/add_edit_reminder_time_button"
+                        android:layout_width="0dp"
+                        android:layout_weight="3"
+                        android:layout_height="match_parent"
+                        app:cornerRadius="8dp"
+                        android:layout_marginStart="12dp"
+                        android:textSize="24sp"
+                        android:text="12:00"
+                        tools:ignore="HardcodedText" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/add_edit_reminder_deck_section"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:id="@+id/add_edit_reminder_deck_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:text="Deck:"
+                        tools:ignore="HardcodedText"
+                        android:layout_marginBottom="8dp"/>
+
+                    <RadioGroup
+                        android:id="@+id/add_edit_reminder_deck_radio_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:id="@+id/add_edit_reminder_deck_radio_button_all_decks"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="All decks"
+                            tools:ignore="HardcodedText" />
+                        <RadioButton
+                            android:id="@+id/add_edit_reminder_deck_radio_button_specific_deck"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Specific deck"
+                            tools:ignore="HardcodedText" />
+
+                    </RadioGroup>
+
+                    <LinearLayout
+                        android:id="@+id/add_edit_reminder_deck_spinner_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Spinner
+                            android:id="@+id/add_edit_reminder_deck_spinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:popupTheme="@style/ActionBar.Popup"
+                            android:minHeight="?minTouchTargetSize"
+                            android:layout_marginStart="24dp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/add_edit_reminder_snooze_section"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="16dp">
+
+                    <TextView
+                        android:id="@+id/add_edit_reminder_snooze_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:text="Snooze:"
+                        tools:ignore="HardcodedText"
+                        android:layout_marginBottom="8dp"/>
+
+                    <RadioGroup
+                        android:id="@+id/add_edit_reminder_snooze_radio_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:id="@+id/add_edit_reminder_snooze_radio_button_disabled"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Disabled"
+                            tools:ignore="HardcodedText" />
+                        <RadioButton
+                            android:id="@+id/add_edit_reminder_snooze_radio_button_forever"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Forever"
+                            tools:ignore="HardcodedText" />
+                        <RadioButton
+                            android:id="@+id/add_edit_reminder_snooze_radio_button_set_amount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="A set amount of times"
+                            tools:ignore="HardcodedText" />
+
+                    </RadioGroup>
+
+                    <EditText
+                        android:id="@+id/add_edit_reminder_snooze_amount_input"
+                        android:layout_width="96dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:inputType="number" />
+
+                    <LinearLayout
+                        android:id="@+id/add_edit_reminder_snooze_interval_section"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/add_edit_reminder_snooze_interval_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="Snooze interval (minutes):"
+                            tools:ignore="HardcodedText" />
+
+                        <EditText
+                            android:id="@+id/add_edit_reminder_snooze_interval_input"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:inputType="time" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/add_edit_reminder_advanced_section"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="16dp">
+
+                    <LinearLayout
+                        android:id="@+id/add_edit_reminder_advanced_dropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="?attr/actionBarSize"
+                        android:orientation="horizontal">
+
+                        <!-- The following image's icon switches between ic_baseline_chevron_right_24 and ic_expand_more_black_24dp_xml -->
+
+                        <ImageView
+                            android:id="@+id/add_edit_reminder_advanced_dropdown_icon"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="8dp" />
+
+                        <TextView
+                            android:id="@+id/add_edit_reminder_advanced_label"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:textSize="18sp"
+                            android:text="Advanced settings"
+                            tools:ignore="HardcodedText" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/add_edit_reminder_advanced_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/add_edit_reminder_card_threshold_section"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            tools:ignore="UselessParent">
+
+                            <LinearLayout
+                                android:id="@+id/add_edit_reminder_card_threshold_label_container"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:paddingVertical="4dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/add_edit_reminder_card_threshold_label"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:textSize="16sp"
+                                    android:text="Card threshold:"
+                                    tools:ignore="HardcodedText" />
+
+                                <TextView
+                                    android:id="@+id/add_edit_reminder_card_threshold_label"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:text="Only notify me when at least this many cards from this deck are due"
+                                    tools:ignore="HardcodedText" />
+
+                            </LinearLayout>
+
+                            <EditText
+                                android:id="@+id/add_edit_reminder_card_threshold_input"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:layout_marginStart="24dp"
+                                android:inputType="number" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
