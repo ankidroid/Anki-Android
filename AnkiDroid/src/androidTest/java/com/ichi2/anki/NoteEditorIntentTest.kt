@@ -20,7 +20,7 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.NoteEditor.Companion.intentLaunchedWithImage
+import com.ichi2.anki.NoteEditorFragment.Companion.intentLaunchedWithImage
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission

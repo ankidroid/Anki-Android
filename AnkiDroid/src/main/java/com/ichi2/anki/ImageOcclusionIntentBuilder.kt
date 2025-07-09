@@ -22,7 +22,7 @@ import android.net.Uri
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 
 /**
- * Builder class for creating intents related to image occlusion in the [NoteEditor].
+ * Builder class for creating intents related to image occlusion in the [NoteEditorFragment].
  */
 class ImageOcclusionIntentBuilder(
     private val context: Context,

@@ -247,7 +247,7 @@ class NoteEditorTest : RobolectricTest() {
         assertThat("Selected deck ID should be the current deck id", editor.deckId, equalTo(currentDid))
         assertThat(
             "Deck ID in the intent should be the selected deck id",
-            copyNoteBundle.getLong(NoteEditor.EXTRA_DID, -404L),
+            copyNoteBundle.getLong(NoteEditorFragment.EXTRA_DID, -404L),
             equalTo(currentDid),
         )
         assertThat("Deck ID in the new note should be the ID provided in the intent", newNoteEditor.deckId, equalTo(currentDid))
@@ -499,7 +499,7 @@ class NoteEditorTest : RobolectricTest() {
         }
     }
 
-    private fun getCopyNoteIntent(editor: NoteEditor): Bundle {
+    private fun getCopyNoteIntent(editor: NoteEditorFragment): Bundle {
         val editorShadow = shadowOf(editor.requireActivity())
         editor.copyNote()
         val intent = editorShadow.peekNextStartedActivityForResult().intent
@@ -537,7 +537,7 @@ class NoteEditorTest : RobolectricTest() {
             NoteType.IMAGE_OCCLUSION -> col.notetypes.byName("Image Occlusion")
         }
 
-    private fun getNoteEditorAddingNote(from: FromScreen): NoteEditor {
+    private fun getNoteEditorAddingNote(from: FromScreen): NoteEditorFragment {
         ensureCollectionLoadIsSynchronous()
         val bundle =
             when (from) {
@@ -551,7 +551,7 @@ class NoteEditorTest : RobolectricTest() {
         front: String,
         back: String,
         from: FromScreen,
-    ): NoteEditor {
+    ): NoteEditorFragment {
         val n = super.addBasicNote(front, back)
         return getNoteEditorEditingExistingBasicNote(n, from)
     }
@@ -559,7 +559,7 @@ class NoteEditorTest : RobolectricTest() {
     private fun getNoteEditorEditingExistingBasicNote(
         n: Note,
         from: FromScreen,
-    ): NoteEditor {
+    ): NoteEditorFragment {
         val bundle =
             when (from) {
                 REVIEWER -> NoteEditorLauncher.EditCard(n.firstCard().id, DEFAULT).toBundle()
@@ -571,7 +571,7 @@ class NoteEditorTest : RobolectricTest() {
     fun openNoteEditorWithArgs(
         arguments: Bundle,
         action: String? = null,
-    ): NoteEditor {
+    ): NoteEditorFragment {
         val activity =
             startActivityNormallyOpenCollectionWithIntent(
                 SingleFragmentActivity::class.java,
@@ -582,7 +582,7 @@ class NoteEditorTest : RobolectricTest() {
 
     @DuplicatedCode("NoteEditor in androidTest")
     @Throws(Throwable::class)
-    fun ActivityScenario<SingleFragmentActivity>.onNoteEditor(block: (NoteEditor) -> Unit) {
+    fun ActivityScenario<SingleFragmentActivity>.onNoteEditor(block: (NoteEditorFragment) -> Unit) {
         val wrapped = AtomicReference<Throwable?>(null)
         this.onActivity { activity: SingleFragmentActivity ->
             try {
@@ -596,7 +596,8 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @DuplicatedCode("NoteEditor in androidTest")
-    fun SingleFragmentActivity.getEditor(): NoteEditor = supportFragmentManager.findFragmentById(R.id.fragment_container) as NoteEditor
+    fun SingleFragmentActivity.getEditor(): NoteEditorFragment =
+        supportFragmentManager.findFragmentById(R.id.fragment_container) as NoteEditorFragment
 
     private enum class FromScreen {
         DECK_LIST,
@@ -621,7 +622,7 @@ class NoteEditorTest : RobolectricTest() {
         private var firstField: String? = null
         private var secondField: String? = null
 
-        fun build(): NoteEditor {
+        fun build(): NoteEditorFragment {
             val editor = buildInternal()
             advanceRobolectricLooper()
             advanceRobolectricLooper()
@@ -633,7 +634,7 @@ class NoteEditorTest : RobolectricTest() {
             return editor
         }
 
-        fun buildInternal(): NoteEditor {
+        fun buildInternal(): NoteEditorFragment {
             col.notetypes.setCurrent(notetype)
             val noteEditor = getNoteEditorAddingNote(REVIEWER)
             advanceRobolectricLooper()

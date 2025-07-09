@@ -49,7 +49,7 @@ import androidx.core.view.isVisible
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.NoteEditor
+import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.CompatHelper
@@ -64,7 +64,7 @@ import java.util.Objects
 import kotlin.math.ceil
 
 /**
- * Handles the toolbar inside [com.ichi2.anki.NoteEditor]
+ * Handles the toolbar inside [com.ichi2.anki.NoteEditorFragment]
  *
  * * Handles a number of buttons which arbitrarily format selected text, or insert an item at the cursor
  *    * Text is formatted as HTML
@@ -227,7 +227,7 @@ class Toolbar : FrameLayout {
         val shouldScroll =
             AnkiDroidApp.instance
                 .sharedPrefs()
-                .getBoolean(NoteEditor.PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
+                .getBoolean(NoteEditorFragment.PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
         if (shouldScroll) {
             toolbar.addView(button, toolbar.childCount)
         } else {

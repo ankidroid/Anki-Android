@@ -563,7 +563,7 @@ class CardBrowserTest : RobolectricTest() {
 
             val addIntent = b.addNoteLauncher.toIntent(targetContext)
             val bundle = addIntent.getBundleExtra(SingleFragmentActivity.FRAGMENT_ARGS_EXTRA)
-            IntentAssert.hasExtra(bundle, NoteEditor.EXTRA_DID, targetDid)
+            IntentAssert.hasExtra(bundle, NoteEditorFragment.EXTRA_DID, targetDid)
         }
 
     /** 7420  */
@@ -577,7 +577,7 @@ class CardBrowserTest : RobolectricTest() {
 
         val addIntent = b.addNoteLauncher.toIntent(targetContext)
         val bundle = addIntent.getBundleExtra(SingleFragmentActivity.FRAGMENT_ARGS_EXTRA)
-        IntentAssert.hasExtra(bundle, NoteEditor.EXTRA_DID, initialDid)
+        IntentAssert.hasExtra(bundle, NoteEditorFragment.EXTRA_DID, initialDid)
     }
 
     @Test
