@@ -21,6 +21,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- 18781: Don't mirror the gesture display for rtl languages -->
     <com.ichi2.ui.GestureDisplay
         android:id="@+id/gestureDisplay"
         android:layout_width="0dp"
