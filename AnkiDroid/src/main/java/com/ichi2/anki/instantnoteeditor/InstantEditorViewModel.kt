@@ -173,13 +173,14 @@ class InstantEditorViewModel :
     private fun shouldResetClozeNumber(number: Int) {
         intClozeList.remove(number)
 
-        // Reset cloze number if the list is empty
-        if (intClozeList.isEmpty()) {
-            _currentClozeNumber.value = 1
-        } else {
-            // not null for sure
-            _currentClozeNumber.value = intClozeList.maxOrNull()!! + 1
-        }
+        _currentClozeNumber.value =
+            when {
+                // Reset cloze number if the list is empty
+                intClozeList.isEmpty() -> 1
+                currentClozeMode.value == InstantNoteEditorActivity.ClozeMode.INCREMENT ->
+                    (intClozeList.maxOrNull() ?: 0) + 1
+                else -> _currentClozeNumber.value
+            }
     }
 
     /**
