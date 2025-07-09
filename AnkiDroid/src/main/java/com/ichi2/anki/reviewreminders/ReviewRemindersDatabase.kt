@@ -56,8 +56,8 @@ class ReviewRemindersDatabase {
     /**
      * Decode an encoded HashMap<[ReviewReminderId], [ReviewReminder]> JSON string.
      * @see Json.decodeFromString
-     * @throws SerializationException If the string is not a valid JSON string.
-     * @throws IllegalArgumentException If the decoded object is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
+     * @throws SerializationException If the stored string is not a valid JSON string.
+     * @throws IllegalArgumentException If the decoded reminders map is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
      */
     private fun decodeJson(jsonString: String): HashMap<ReviewReminderId, ReviewReminder> =
         Json.decodeFromString<HashMap<ReviewReminderId, ReviewReminder>>(jsonString)
@@ -65,14 +65,14 @@ class ReviewRemindersDatabase {
     /**
      * Encode a Map<[ReviewReminderId], [ReviewReminder]> as a JSON string.
      * @see Json.encodeToString
-     * @throws SerializationException If the string is not a valid JSON string.
+     * @throws SerializationException If the stored string is somehow not a valid JSON string, even though the input parameter is type-checked.
      */
     private fun encodeJson(reminders: Map<ReviewReminderId, ReviewReminder>): String = Json.encodeToString(reminders)
 
     /**
      * Get the [ReviewReminder]s for a specific key.
-     * @throws SerializationException If the string is not a valid JSON string.
-     * @throws IllegalArgumentException If the decoded object is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
+     * @throws SerializationException If the value associated with this key is not valid JSON string.
+     * @throws IllegalArgumentException If the decoded reminders map is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
      */
     private fun getRemindersForKey(key: String): HashMap<ReviewReminderId, ReviewReminder> {
         val jsonString = AnkiDroidApp.sharedPrefs().getString(key, null) ?: return hashMapOf()
@@ -81,22 +81,22 @@ class ReviewRemindersDatabase {
 
     /**
      * Get the [ReviewReminder]s for a specific deck.
-     * @throws SerializationException If the string is not a valid JSON string.
-     * @throws IllegalArgumentException If the decoded object is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
+     * @throws SerializationException If the reminders map has not been stored in SharedPreferences as a valid JSON string.
+     * @throws IllegalArgumentException If the decoded reminders map is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
      */
     fun getRemindersForDeck(did: DeckId): HashMap<ReviewReminderId, ReviewReminder> = getRemindersForKey(DECK_SPECIFIC_KEY + did)
 
     /**
      * Get the app-wide [ReviewReminder]s.
-     * @throws SerializationException If the string is not a valid JSON string.
-     * @throws IllegalArgumentException If the decoded object is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
+     * @throws SerializationException If the reminders map has not been stored in SharedPreferences as a valid JSON string.
+     * @throws IllegalArgumentException If the decoded reminders map is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
      */
     fun getAllAppWideReminders(): HashMap<ReviewReminderId, ReviewReminder> = getRemindersForKey(APP_WIDE_KEY)
 
     /**
      * Get all [ReviewReminder]s that are associated with a specific deck, grouped by deck ID.
-     * @throws SerializationException If the string is not a valid JSON string.
-     * @throws IllegalArgumentException If the decoded object is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
+     * @throws SerializationException If the reminders maps have not been stored in SharedPreferences as valid JSON strings.
+     * @throws IllegalArgumentException If the decoded reminders maps are not instances of HashMap<[ReviewReminderId], [ReviewReminder]>.
      */
     private fun getAllDeckSpecificRemindersGrouped(): Map<DeckId, HashMap<ReviewReminderId, ReviewReminder>> {
         return AnkiDroidApp
@@ -112,8 +112,8 @@ class ReviewRemindersDatabase {
 
     /**
      * Get all [ReviewReminder]s that are associated with a specific deck, all in a single flattened map.
-     * @throws SerializationException If the string is not a valid JSON string.
-     * @throws IllegalArgumentException If the decoded object is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
+     * @throws SerializationException If the reminders maps have not been stored in SharedPreferences as valid JSON strings.
+     * @throws IllegalArgumentException If the decoded reminders maps are not instances of HashMap<[ReviewReminderId], [ReviewReminder]>.
      */
     fun getAllDeckSpecificReminders(): HashMap<ReviewReminderId, ReviewReminder> = getAllDeckSpecificRemindersGrouped().flatten()
 
@@ -121,8 +121,8 @@ class ReviewRemindersDatabase {
      * Edit the [ReviewReminder]s for a specific key.
      * @param key
      * @param reminderEditor A lambda that takes the current map and returns the updated map.
-     * @throws SerializationException If the string is not a valid JSON string.
-     * @throws IllegalArgumentException If the decoded object is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
+     * @throws SerializationException If the current reminders map has not been stored in SharedPreferences as a valid JSON string.
+     * @throws IllegalArgumentException If the decoded current reminders map is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
      */
     private fun editRemindersForKey(
         key: String,
@@ -140,8 +140,8 @@ class ReviewRemindersDatabase {
      * This assumes the resulting map contains only reminders of scope [ReviewReminderScope.DeckSpecific].
      * @param did
      * @param reminderEditor A lambda that takes the current map and returns the updated map.
-     * @throws SerializationException If the string is not a valid JSON string.
-     * @throws IllegalArgumentException If the decoded object is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
+     * @throws SerializationException If the current reminders map has not been stored in SharedPreferences as a valid JSON string.
+     * @throws IllegalArgumentException If the decoded current reminders map is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
      */
     fun editRemindersForDeck(
         did: DeckId,
@@ -152,8 +152,8 @@ class ReviewRemindersDatabase {
      * Edit the app-wide [ReviewReminder]s.
      * This assumes the resulting map contains only reminders of scope [ReviewReminderScope.Global].
      * @param reminderEditor A lambda that takes the current map and returns the updated map.
-     * @throws SerializationException If the string is not a valid JSON string.
-     * @throws IllegalArgumentException If the decoded object is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
+     * @throws SerializationException If the current reminders map has not been stored in SharedPreferences as a valid JSON string.
+     * @throws IllegalArgumentException If the decoded current reminders map is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
      */
     fun editAllAppWideReminders(reminderEditor: (HashMap<ReviewReminderId, ReviewReminder>) -> Map<ReviewReminderId, ReviewReminder>) =
         editRemindersForKey(APP_WIDE_KEY, reminderEditor)
@@ -162,8 +162,8 @@ class ReviewRemindersDatabase {
      * Edit all [ReviewReminder]s that are associated with a specific deck by operating on a single mutable map.
      * This assumes the resulting map contains only reminders of scope [ReviewReminderScope.DeckSpecific].
      * @param reminderEditor A lambda that takes the current map and returns the updated map.
-     * @throws SerializationException If the string is not a valid JSON string.
-     * @throws IllegalArgumentException If the decoded object is not a HashMap<[ReviewReminderId], [ReviewReminder]>.
+     * @throws SerializationException If the current reminders maps have not been stored in SharedPreferences as valid JSON strings.
+     * @throws IllegalArgumentException If the decoded current reminders maps are not instances of HashMap<[ReviewReminderId], [ReviewReminder]>.
      */
     fun editAllDeckSpecificReminders(reminderEditor: (HashMap<ReviewReminderId, ReviewReminder>) -> Map<ReviewReminderId, ReviewReminder>) {
         val existingRemindersGrouped = getAllDeckSpecificRemindersGrouped()
@@ -211,7 +211,7 @@ class ReviewRemindersDatabase {
     /**
      * Helper method for getting all SharedPreferences that represent app-wide or deck-specific reminder HashMaps.
      * For example, may be used for constructing a backup of all review reminders pending a potentially-destructive migration operation.
-     * Does not return the next-free-ID preference for review reminders used by [ReviewReminder.getAndIncrementNextFreeReminderId].
+     * Does not return the next-free-ID preference for review reminders used by [ReviewReminderId.getAndIncrementNextFreeReminderId].
      */
     fun getAllReviewReminderSharedPrefsAsMap(): Map<String, Any?> =
         AnkiDroidApp.sharedPrefs().all.filter {
@@ -221,7 +221,7 @@ class ReviewRemindersDatabase {
 
     /**
      * Helper method for deleting all SharedPreferences that represent app-wide or deck-specific reminder HashMaps.
-     * Does not delete the next-free-ID preference for review reminders used by [ReviewReminder.getAndIncrementNextFreeReminderId].
+     * Does not delete the next-free-ID preference for review reminders used by [ReviewReminderId.getAndIncrementNextFreeReminderId].
      *
      * For example, may be used when a potentially-destructive operation, like a failed migration, has been applied to all review reminders.
      * This method can be used to delete all potentially-corrupted review reminder shared preferences so that backed-up
@@ -247,8 +247,8 @@ class ReviewRemindersDatabase {
      * need to have their data ported to the new schema.
      * @param serializer The serializer for the old schema of type [T] implementing [OldReviewReminderSchema]
      * @see [OldReviewReminderSchema]
-     * @throws SerializationException If the string is not a valid JSON string.
-     * @throws IllegalArgumentException If the decoded object is not a HashMap<[ReviewReminderId], [T]>.
+     * @throws SerializationException If the current reminders maps have not been stored in SharedPreferences as valid JSON strings.
+     * @throws IllegalArgumentException If the decoded current reminders maps are not instances of HashMap<[ReviewReminderId], [T]>.
      */
     fun <T : OldReviewReminderSchema> attemptSchemaMigration(serializer: KSerializer<T>) {
         val mapSerializer = MapSerializer(ReviewReminderId.serializer(), serializer)
