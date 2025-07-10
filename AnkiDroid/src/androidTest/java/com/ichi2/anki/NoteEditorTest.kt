@@ -45,8 +45,8 @@ abstract class NoteEditorTest protected constructor() {
             .takeUnless { isInvalid }
 
     @get:Rule
-    var activityRule: ActivityScenarioRule<SingleFragmentActivity>? =
-        ActivityScenarioRule<SingleFragmentActivity>(
+    var activityRule: ActivityScenarioRule<NoteEditor>? =
+        ActivityScenarioRule<NoteEditor>(
             noteEditorIntent,
         ).takeUnless { isInvalid }
 
