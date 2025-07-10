@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ankidroid="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/action_add_review_reminder"
+        android:title="Add review reminder"
+        android:icon="@drawable/ic_add"
+        ankidroid:showAsAction="always"
+        tools:ignore="HardcodedText" />
+
+    <item
+        android:id="@+id/action_bulk_delete_review_reminder"
+        android:title="Delete review reminder"
+        android:icon="@drawable/ic_delete_white"
+        ankidroid:showAsAction="always"
+        tools:ignore="HardcodedText" />
+
+    <item
+        android:id="@+id/action_select_all"
+        android:title="Select all"
+        ankidroid:showAsAction="never"
+        tools:ignore="HardcodedText" />
+
+    <item
+        android:id="@+id/action_select_none"
+        android:title="Select none"
+        ankidroid:showAsAction="never"
+        tools:ignore="HardcodedText" />
+</menu>

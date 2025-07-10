@@ -34,9 +34,10 @@ import kotlin.time.Duration.Companion.minutes
 
 @JvmInline
 @Serializable
+@Parcelize
 value class ReviewReminderId(
     val id: Int,
-) {
+) : Parcelable {
     companion object {
         /**
          * Get and return the next free reminder ID which can be associated with a new review reminder.
@@ -56,10 +57,11 @@ value class ReviewReminderId(
  * The time of day at which reminders will send a notification.
  */
 @Serializable
+@Parcelize
 data class ReviewReminderTime(
     val hour: Int,
     val minute: Int,
-) {
+) : Parcelable {
     init {
         require(hour in 0..23) { "Hour must be between 0 and 23" }
         require(minute in 0..59) { "Minute must be between 0 and 59" }
@@ -83,7 +85,8 @@ data class ReviewReminderTime(
  * the snoozing instance of the reminder from the previous day will be cancelled.
  */
 @Serializable
-sealed class ReviewReminderSnoozeAmount {
+@Parcelize
+sealed class ReviewReminderSnoozeAmount : Parcelable {
     /**
      * The snooze button will never appear on notifications set by this review reminder.
      */
@@ -125,9 +128,10 @@ sealed class ReviewReminderSnoozeAmount {
  */
 @JvmInline
 @Serializable
+@Parcelize
 value class ReviewReminderCardTriggerThreshold(
     val threshold: Int,
-) {
+) : Parcelable {
     init {
         require(threshold >= 0) { "Card trigger threshold must be >= 0" }
     }
@@ -166,7 +170,11 @@ sealed class ReviewReminderScope : Parcelable {
          * Caches the resultant deck name to minimize calls to the collection.
          * Should not be called if [did] is no longer a valid deck ID. If [did] is invalid, this method will return "[no deck]".
          */
-        suspend fun getDeckName(): String = cachedDeckName ?: withCol { decks.name(did) }.also { cachedDeckName = it }
+        suspend fun getDeckName(): String =
+            cachedDeckName
+                ?: withCol { decks.name(did) }
+                    .also { cachedDeckName = it }
+                    .also { Timber.d("Retrieved deck name for review reminder: $it") }
     }
 }
 
@@ -205,6 +213,7 @@ sealed class ReviewReminderScope : Parcelable {
  * @param enabled Whether the review reminder's notifications are active or disabled.
  */
 @Serializable
+@Parcelize
 @ConsistentCopyVisibility
 data class ReviewReminder private constructor(
     val id: ReviewReminderId,
@@ -213,7 +222,7 @@ data class ReviewReminder private constructor(
     val cardTriggerThreshold: ReviewReminderCardTriggerThreshold,
     val scope: ReviewReminderScope,
     var enabled: Boolean,
-) {
+) : Parcelable {
     companion object {
         /**
          * Create a new review reminder. This will allocate a new ID for the reminder.

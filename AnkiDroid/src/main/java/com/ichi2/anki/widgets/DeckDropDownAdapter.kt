@@ -87,7 +87,7 @@ class DeckDropDownAdapter(
             val deckName = deck.name
             deckNameView!!.text = deckName
         }
-        deckCountsView!!.text = (context as SubtitleListener).subtitleText
+        deckCountsView!!.text = (context as? SubtitleListener)?.subtitleText ?: ""
         return convertView
     }
 

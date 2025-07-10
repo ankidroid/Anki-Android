@@ -43,6 +43,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.preferences.HeaderFragment.Companion.getHeaderKeyForFragment
+import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ScheduleReminders
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.isWindowCompact
@@ -115,7 +116,7 @@ class PreferencesFragment :
     override fun onSearchResultClicked(result: SearchPreferenceResult) {
         if (result.key == getString(R.string.pref_review_reminders_screen_key)) {
             Timber.i("Preferences:: edit review reminders button pressed")
-            val intent = ScheduleReminders.getIntent(requireContext(), true)
+            val intent = ScheduleReminders.getIntent(requireContext(), ReviewReminderScope.Global)
             startActivity(intent)
             return
         }
