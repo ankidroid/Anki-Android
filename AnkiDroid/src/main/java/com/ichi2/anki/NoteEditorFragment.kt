@@ -208,7 +208,7 @@ const val CALLER_KEY = "caller"
 @KotlinCleanup("Go through the class and select elements to fix")
 @KotlinCleanup("see if we can lateinit")
 class NoteEditorFragment :
-    Fragment(R.layout.note_editor),
+    Fragment(R.layout.note_editor_fragment),
     DeckSelectionListener,
     SubtitleListener,
     TagsDialogListener,
