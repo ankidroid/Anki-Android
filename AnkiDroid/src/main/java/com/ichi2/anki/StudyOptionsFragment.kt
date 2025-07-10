@@ -46,6 +46,7 @@ import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ScheduleReminders
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
@@ -286,8 +287,7 @@ class StudyOptionsFragment :
                 val intent =
                     ScheduleReminders.getIntent(
                         requireContext(),
-                        false,
-                        col!!.decks.current().id,
+                        ReviewReminderScope.DeckSpecific(col!!.decks.current().id),
                     )
                 startActivity(intent)
                 return true

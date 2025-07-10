@@ -20,13 +20,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.BundleCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.libanki.DeckId
 import timber.log.Timber
 
 /**
@@ -34,16 +34,18 @@ import timber.log.Timber
  */
 class ScheduleReminders : Fragment(R.layout.fragment_schedule_reminders) {
     /**
-     * If this flag is true, the user is viewing and editing all reminders in the entire app from a unified dashboard.
-     * If this flag is false, the user is viewing and editing reminders for a single deck.
+     * Whether this fragment has been opened to edit all review reminders or just a specific deck's reminders.
+     * @see ReviewReminderScope
      */
-    private var isInGlobalScope = false
+    private val scheduleRemindersScope: ReviewReminderScope by lazy {
+        BundleCompat.getParcelable(
+            requireArguments(),
+            EXTRAS_SCOPE_KEY,
+            ReviewReminderScope::class.java,
+        ) ?: ReviewReminderScope.Global
+    }
 
-    /**
-     * This private variable is only used for the deck-specific editing scope.
-     * In global scope, it is set to -1.
-     */
-    private var did: DeckId = -1L
+    private lateinit var toolbar: MaterialToolbar
 
     override fun onViewCreated(
         view: View,
@@ -51,58 +53,49 @@ class ScheduleReminders : Fragment(R.layout.fragment_schedule_reminders) {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val toolbar =
-            view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
-                setTitle(R.string.schedule_reminders_do_not_translate)
-                setNavigationOnClickListener {
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
-                }
-            }
+        // Set up toolbar
+        toolbar = view.findViewById(R.id.toolbar)
+        reloadToolbarText()
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+    }
 
-        // Retrieve arguments, update toolbar accordingly
-        isInGlobalScope = requireArguments().getBoolean(EXTRAS_GLOBAL_SCOPE_KEY, true)
-        if (!isInGlobalScope) {
-            // Get the deck ID from arguments
-            did = requireArguments().getLong(EXTRAS_DECK_ID_KEY)
-            if (did == -1L) {
-                throw IllegalArgumentException("A deck ID must be provided when using the deck-specific editing scope of ScheduleReminders")
-            }
-            // Retrieve the deck name and set it as the toolbar subtitle
-            launchCatchingTask {
-                toolbar.subtitle =
-                    withCol {
-                        decks.name(did)
-                    }
-            }
+    private fun reloadToolbarText() {
+        Timber.d("Reloading toolbar text")
+        toolbar.title = getString(R.string.schedule_reminders_do_not_translate)
+        when (val scope = scheduleRemindersScope) {
+            is ReviewReminderScope.Global -> {}
+            is ReviewReminderScope.DeckSpecific ->
+                launchCatchingTask {
+                    toolbar.subtitle = scope.getDeckName()
+                }
         }
     }
 
     companion object {
-        private const val EXTRAS_GLOBAL_SCOPE_KEY = "global_scope"
-        private const val EXTRAS_DECK_ID_KEY = "did"
+        /**
+         * Arguments key for passing the [ReviewReminderScope] to open this fragment with.
+         */
+        private const val EXTRAS_SCOPE_KEY = "scope"
 
         /**
          * Creates an intent to start the ScheduleReminders fragment.
          * @param context
-         * @param isInGlobalScope Whether the fragment should be opened in global or deck-specific scope.
-         * @param did The ID of the deck being edited if [isInGlobalScope] is false. Defaults to null otherwise.
+         * @param scope The editing scope of the ScheduleReminders fragment.
          * @return The new intent.
          */
         fun getIntent(
             context: Context,
-            isInGlobalScope: Boolean,
-            did: DeckId? = null,
+            scope: ReviewReminderScope,
         ): Intent =
             SingleFragmentActivity
                 .getIntent(
                     context,
                     ScheduleReminders::class,
                     Bundle().apply {
-                        putBoolean(EXTRAS_GLOBAL_SCOPE_KEY, isInGlobalScope)
-                        putLong(EXTRAS_DECK_ID_KEY, did ?: -1L)
+                        putParcelable(EXTRAS_SCOPE_KEY, scope)
                     },
                 ).apply {
-                    Timber.i("launching ScheduleReminders for %s", did?.toString() ?: "all decks")
+                    Timber.i("launching ScheduleReminders for $scope scope")
                 }
     }
 }

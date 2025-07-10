@@ -181,7 +181,7 @@ class DeckPickerViewModel :
 
     fun scheduleReviewReminders(deckId: DeckId) =
         viewModelScope.launch {
-            flowOfDestination.emit(ScheduleRemindersDestination(false, deckId))
+            flowOfDestination.emit(ScheduleRemindersDestination(deckId))
         }
 }
 

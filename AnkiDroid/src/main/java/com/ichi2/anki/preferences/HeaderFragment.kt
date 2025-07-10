@@ -28,6 +28,7 @@ import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment
+import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ScheduleReminders
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.toSentenceCase
@@ -64,7 +65,7 @@ class HeaderFragment : SettingsFragment() {
         requirePreference<HeaderPreference>(R.string.pref_review_reminders_screen_key)
             .setOnPreferenceClickListener {
                 Timber.i("HeaderFragment:: edit review reminders button pressed")
-                val intent = ScheduleReminders.getIntent(requireContext(), true)
+                val intent = ScheduleReminders.getIntent(requireContext(), ReviewReminderScope.Global)
                 startActivity(intent)
                 true
             }
