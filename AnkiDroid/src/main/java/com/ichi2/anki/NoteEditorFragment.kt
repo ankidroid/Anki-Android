@@ -549,7 +549,7 @@ class NoteEditorFragment :
                     modifyCurrentSelection(formatter, currentFocus)
                     redoStacks[currentFocus.id]?.clear()
                 }
-            actionsListener = this@NoteEditor
+            actionsListener = this@NoteEditorFragment
             // Sets the background and icon color of toolbar respectively.
             setBackgroundColor(
                 MaterialColors.getColor(
