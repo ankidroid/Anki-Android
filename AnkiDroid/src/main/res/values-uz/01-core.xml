@@ -83,13 +83,14 @@
     <string name="ease_button_hard" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state finding the correct answer was hard.">Qiyin</string>
     <string name="ease_button_good" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state their answer was good.">Yaxshi</string>
     <string name="ease_button_easy" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state that finding the answer to the question was easy.">Oson</string>
+    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' is enabled</string>
     <!-- General -->
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Bekor qilish</string>
     <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">Qaytarish</string>
     <!-- flashcard_portrait.xml -->
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in the Study Screen. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Shtrixni bekor qilish</string>
     <string name="move_all_to_deck">Barchasini dastaga koʻchirish</string>
-    <string name="unbury" maxLength="28">Tiklash</string>
+    <string name="unbury" maxLength="28">Koʻmishdan chiqarish</string>
     <string name="rename_deck" maxLength="28">Dasta nomini oʻzgartirish</string>
     <string name="create_shortcut">Yorliq yaratish</string>
     <string name="browse_cards">Kartalarni koʻrib chiqish</string>
@@ -134,7 +135,7 @@
     <string name="invalid_deck_name">Dastaning nomi yaroqsiz</string>
     <string name="studyoptions_congrats_finished">Tabriklaymiz! Bugungini bitirdingiz.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Dasta hozircha tugadi! %s</string>
-    <string name="studyoptions_no_cards_due">Vaqti kelgan kartalar hozircha yoʻq</string>
+    <string name="studyoptions_no_cards_due">Muddati kelgan kartalar hozircha yoʻq</string>
     <string name="sd_card_not_mounted">Qurilma saqlash xotirasi oʻrnatilmagan</string>
     <string name="button_sync" comment="Text of the sync button" maxLength="28">Sinxronlash</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Sinxronlashni bekor qilmoqchimisiz?</string>
@@ -166,14 +167,14 @@
     <string name="card_template_editor_save_error">Karta shablon oʻzgarishlarini saqlab boʻlmadi: %s</string>
     <string name="template_for_current_card_deleted">Joriy kartaning karta turi oʻchirilgan.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Brauzer koʻrinishi</string>
+    <string name="card_template_browser_appearance_title">Karta brauzeri koʻrinishi</string>
     <!-- card Info -->
     <string name="card_info_title" maxLength="28">Karta maʼlumotlari</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid maʼlumotlar bazasidan oʼqish va yozish</string>
     <string name="read_write_permission_description">mavjud qaydlarga, kartalarga, qayd turlariga va dastalarga, shuningdek, yangilarini yaratishga ruxsat</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Karat brauzeri</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Karta brauzeri</string>
     <string name="context_menu_anki_card_label">Anki Karta</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Toʻplamlarni birlashtirib boʻlmadi.\n Qaysi toʻplamni qoldirmoqchisiz?</string>

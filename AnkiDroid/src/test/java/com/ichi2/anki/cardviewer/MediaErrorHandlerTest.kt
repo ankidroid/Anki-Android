@@ -20,13 +20,13 @@ import android.net.Uri
 import android.webkit.WebResourceRequest
 import androidx.core.net.toUri
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.contains
 import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.io.File

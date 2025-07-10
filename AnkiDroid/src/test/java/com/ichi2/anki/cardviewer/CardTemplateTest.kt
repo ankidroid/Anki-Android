@@ -16,11 +16,11 @@
 package com.ichi2.anki.cardviewer
 
 import android.annotation.SuppressLint
-import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.intellij.lang.annotations.Language
 import org.junit.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 
 class CardTemplateTest {
     @Test

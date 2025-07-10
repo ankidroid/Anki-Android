@@ -116,6 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">ମଝି କେନ୍ଦ୍ରକୁ ସ୍ପର୍ଶ କଲେ</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">ତଳ ବାମକୁ ସ୍ପର୍ଶ କଲେ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">ତଳ ଡାହାଣକୁ ସ୍ପର୍ଶ କଲେ</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">ଡିଵାଇସ୍ ଝାଙ୍କିଲେ</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ ମେନୁ</string>
     <string name="card_browser_enable_external_context_menu_summary">ସବୁ ଜାଗାରେ ‘%s’ ପ୍ରସଙ୍ଗ ମେନୁକୁ ସକ୍ଷମ କରିଥାଏ</string>
@@ -161,7 +164,7 @@
     <string name="disable_extended_text_ui_summ">ଲ୍ୟାଣ୍ଡସ୍କେପ୍ ମୋଡ୍ ରେ \'କ୍ଲୋଜ ବିଲୋପ\' ପ୍ରସଙ୍ଗ ମେନୁକୁ ଅନୁମତି ଦିଏ</string>
     <string name="vertical_centering" maxLength="41">କେନ୍ଦ୍ର ଶ୍ରେଣୀବଦ୍ଧତା</string>
     <string name="vertical_centering_summ">ପତ୍ରଗୁଡ଼ିକର ଵିଷୟବସ୍ତୁକୁ ଭୂଲମ୍ବ ଭାଵରେ କେନ୍ଦ୍ରିତ କରିରଖିବା</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">ଡବଲ୍ ଟ୍ୟାପ୍ ସମୟ ଅନ୍ତରାଳ (ମିଲିସେକେଣ୍ଡ)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">ଡବଲ୍ ଟ୍ୟାପ୍ ସମୟ ଅନ୍ତରାଳ</string>
     <string name="pref_double_tap_time_interval_summary">ଯଦି ଏହି ସମୟ ଅତିବାହିତ ହୋଇନାହିଁ ତେବେ ଉତ୍ତର ବଟନର ଦ୍ୱିତୀୟ ଟ୍ୟାପ୍ ଅଣଦେଖା କରାଯିବ। ଏହା ଆକସ୍ମିକ ଡବଲ୍ ଟ୍ୟାପ୍ ପ୍ରତିରୋଧ କରେ</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
     <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>

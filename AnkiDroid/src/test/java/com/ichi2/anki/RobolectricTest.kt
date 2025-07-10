@@ -470,7 +470,7 @@ open class RobolectricTest :
         } catch (e: IllegalStateException) {
             if (e.message != null && e.message!!.startsWith("No instrumentation registered!")) {
                 // Explicitly ignore the inner exception - generates line noise
-                throw IllegalStateException("Annotate class: '${javaClass.simpleName}' with '@RunWith(AndroidJUnit4.class)'")
+                throw IllegalStateException("Annotate class: '${javaClass.simpleName}' with '@RunWith(AndroidJUnit4::class)'")
             }
             throw e
         }

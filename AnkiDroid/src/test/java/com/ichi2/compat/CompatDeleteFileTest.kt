@@ -17,13 +17,13 @@
 package com.ichi2.compat
 
 import android.annotation.SuppressLint
-import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.createTransientFile
 import com.ichi2.testutils.withTempFile
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import java.io.File

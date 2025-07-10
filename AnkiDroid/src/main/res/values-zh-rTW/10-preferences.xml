@@ -115,6 +115,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">輕觸正中間</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">輕觸左下方</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">輕觸右下方</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">搖晃裝置</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ 選單</string>
     <string name="card_browser_enable_external_context_menu_summary">啟用全域性‘%s’內容選單</string>
@@ -160,7 +163,7 @@
     <string name="disable_extended_text_ui_summ">在橫向模式中允許‘克漏字測驗’選單。</string>
     <string name="vertical_centering" maxLength="41">置中</string>
     <string name="vertical_centering_summ">垂直置中卡片內容</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">雙擊的時間間隔 (毫秒)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">雙擊的時間間隔</string>
     <string name="pref_double_tap_time_interval_summary">如果時間不到，按二次答案按鍵是無效的，這樣可以避免不小心雙擊按鍵。</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">顯示答案長按時間</string>
     <string name="pref_show_answer_long_press_time_summary">顯示答案按鈕生效前的最短按壓時間</string>

@@ -45,7 +45,7 @@
 -->
 <resources>
     <string name="backup_deck_no_storage_left">Sao lưu chưa được lưu. Không còn đủ dung lượng trên bộ nhớ của bạn. Hãy giảm dung lượng sao lưu hoặc xóa một số tệp khác.</string>
-    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
+    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Chỉ còn ít hơn %d MB còn lại trong kho lưu trữ của bạn. \nHãy dọn dẹp bớt để tránh mất dữ liệu nhé!</string>
     <string name="backup_restore" maxLength="28">Khôi phục từ bản sao lưu</string>
     <string name="backup_new_collection">Bộ sưu tập mới</string>
     <string name="backup_del_collection">Xóa bộ sưu tập và tạo bộ sưu tập mới</string>

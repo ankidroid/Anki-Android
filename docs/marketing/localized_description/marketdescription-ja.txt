@@ -1,6 +1,6 @@
 AnkiDroidでいろんなことを学習しましょう！
 
-AnkiDroidは、あなたが学習内容を忘れてしまいそうなタイミングで繰り返しカードを表示するので、非常に効率的に学習を進めることができます。 It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
+AnkiDroidは、あなたが学習内容を忘れてしまいそうなタイミングで繰り返しカードを表示するので、非常に効率的に学習を進めることができます。 Windows、MacOS、Linux で使用可能な SRS (間隔反復学習) ソフトウェア Anki との高い互換性があり、同期も可能です。
 
 AnkiDroidを使えば、いつでも、どこでも、どんなことでも、手軽かつ効率的に学習を行うことができます。 バスや電車での移動の際の空き時間、レジの行列の待ち時間など、スキマ時間も有効に活用できます。
 

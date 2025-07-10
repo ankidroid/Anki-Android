@@ -116,6 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">મધ્ય કેન્દ્રને સ્પર્શ કરો</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">નીચે ડાબી બાજુએ ટચ કરો</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">નીચે જમણે ટચ કરો</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">શેક ઉપકરણ</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">\'%s\' મેનૂ</string>
     <string name="card_browser_enable_external_context_menu_summary">વૈશ્વિક સ્તરે \'%s\' સંદર્ભ મેનૂને સક્ષમ કરે છે</string>
@@ -161,7 +164,7 @@
     <string name="disable_extended_text_ui_summ">જ્યારે લેન્ડસ્કેપ મોડમાં હોય ત્યારે સંદર્ભ મેનૂને \'કાઢી નાખવાનું બંધ\' કરવાની મંજૂરી આપે છે.</string>
     <string name="vertical_centering" maxLength="41">કેન્દ્રમાં સંરેખિત કરો</string>
     <string name="vertical_centering_summ">કાર્ડ્સની સામગ્રીને ઊભી રીતે કેન્દ્રમાં રાખો</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">ડબલ ટેપ સમય અંતરાલ (મિલિસેકન્ડ)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">ડબલ ટેપ સમય અંતરાલ</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">જવાબ લાંબો સમય દબાવવાનો સમય બતાવો</string>
     <string name="pref_show_answer_long_press_time_summary">શો જવાબ બટન રજીસ્ટર થાય તે પહેલા ન્યૂનતમ દબાવવાનો સમય વધારે છે.</string>

@@ -421,7 +421,7 @@ class DeckPickerFloatingActionMenu(
     }
 
     /**
-     * Closes the FAB menu and opens the [NoteEditor]
+     * Closes the FAB menu and opens the [NoteEditorFragment]
      * @see DeckPicker.addNote
      */
     private fun addNote() {

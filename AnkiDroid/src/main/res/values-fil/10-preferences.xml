@@ -116,6 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Pagpindot sa gitna</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Pagpindot sa kaliwa sa ibaba</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Pagpindot sa kanan sa ibaba</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">Alugin ang device</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">Menu ng \'%s\'</string>
     <string name="card_browser_enable_external_context_menu_summary">Ine-enable ang context manu na \'%s\' kahit saan</string>
@@ -162,7 +165,7 @@
     <string name="disable_extended_text_ui_summ">Papayagan ang context menu na \'Pagbura ng Cloze\' tuwing gagamit ng landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Center align</string>
     <string name="vertical_centering_summ">Patayo ang nilalaman ng mga baraha</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Pagitan ng dalawang pindot (milliseconds)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Pagitan ng dalawang pindot</string>
     <string name="pref_double_tap_time_interval_summary">Ang ikalawang pindot sa pindutanan ng answer ay babalewalain kung hindi lilipas ang oras na tinakda dito. Iniiwasan nito ang hindi sinasadyang dalawang pindot.</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Oras ng mahabang-pindot sa \'Ipakita ang Sagot\'</string>
     <string name="pref_show_answer_long_press_time_summary">Pinakamaikling oras sa pagpindot bago irehistro ang pagpindot sa \'Ipakita ang Sagot\'</string>

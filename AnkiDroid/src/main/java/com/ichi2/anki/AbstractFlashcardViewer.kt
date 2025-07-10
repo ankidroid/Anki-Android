@@ -124,6 +124,8 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.pages.PostRequestHandler
+import com.ichi2.anki.preferences.AccessibilitySettingsFragment
+import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.AutomaticAnswer
 import com.ichi2.anki.reviewer.AutomaticAnswer.AutomaticallyAnswered
@@ -140,9 +142,10 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
+import com.ichi2.anki.ui.windows.reviewer.StudyScreenRepository
 import com.ichi2.anki.utils.OnlyOnce.Method.ANSWER_CARD
 import com.ichi2.anki.utils.OnlyOnce.preventSimultaneousExecutions
+import com.ichi2.anki.utils.ext.isTouchWithinBounds
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.compat.ResolveInfoFlagsCompat
@@ -352,7 +355,7 @@ abstract class AbstractFlashcardViewer :
                The card could have been rescheduled, the deck could have changed, or a change of
                note type could have lead to the card being deleted */
             val reloadRequired =
-                result.data?.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) == true
+                result.data?.getBooleanExtra(NoteEditorFragment.RELOAD_REQUIRED_EXTRA_KEY, false) == true
             if (reloadRequired) {
                 performReload()
             }
@@ -551,7 +554,7 @@ abstract class AbstractFlashcardViewer :
 
         setContentView(getContentViewAttr(fullscreenMode))
 
-        val port = ReviewerFragment.getServerPort()
+        val port = StudyScreenRepository.getServerPort()
         server = AnkiServer(this, port).also { it.start() }
         // Make ACTION_PROCESS_TEXT for in-app searching possible on > Android 4.0
         delegate.isHandleNativeActionModesEnabled = true
@@ -914,12 +917,21 @@ abstract class AbstractFlashcardViewer :
                 layout.setOnClickListener(flipCardListener)
             } else {
                 val handler = Handler(Looper.getMainLooper())
-                layout.setOnTouchListener { _, event ->
+                layout.setOnTouchListener { view, event ->
                     when (event.action) {
                         MotionEvent.ACTION_DOWN -> {
                             handler.postDelayed({
                                 flipCardListener.onClick(layout)
                             }, minimalClickSpeed.toLong())
+
+                            showMinimalClickHint()
+                            false
+                        }
+
+                        MotionEvent.ACTION_MOVE -> {
+                            if (!view.isTouchWithinBounds(event)) {
+                                handler.removeCallbacksAndMessages(null)
+                            }
                             false
                         }
 
@@ -1829,6 +1841,31 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
+    private fun showMinimalClickHint() {
+        if (minimalClickPrefHintShown) {
+            return
+        }
+
+        minimalClickPrefHintShown = true
+
+        showSnackbar(
+            getString(
+                R.string.show_answer_hint_long_press,
+                getString(R.string.pref_show_answer_long_press_time),
+            ),
+            minimalClickSpeed + Reviewer.ACTION_SNACKBAR_TIME,
+        ) {
+            setAction(R.string.settings) {
+                val settingsIntent =
+                    PreferencesActivity.getIntent(
+                        this@AbstractFlashcardViewer,
+                        AccessibilitySettingsFragment::class,
+                    )
+                startActivity(settingsIntent)
+            }
+        }
+    }
+
     // ----------------------------------------------------------------------------
     // INNER CLASSES
     // ----------------------------------------------------------------------------
@@ -2702,6 +2739,8 @@ abstract class AbstractFlashcardViewer :
 
         // maximum screen distance from initial touch where we will consider a click related to the touch
         private const val CLICK_ACTION_THRESHOLD = 200
+
+        private var minimalClickPrefHintShown = false
 
         /**
          * @return if [gesture] is a swipe, a transition to the same direction of the swipe

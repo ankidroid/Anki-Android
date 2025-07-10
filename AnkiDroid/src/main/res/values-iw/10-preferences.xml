@@ -118,6 +118,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">גע במרכז האמצע</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">נגיעה בצד שמאל למטה</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">נגיעה בצד ימין למטה</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">נער את המכשיר</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">תפריט %s</string>
     <string name="card_browser_enable_external_context_menu_summary">מאפשר את תפריט ההקשר \'%s\' גלובלית במערכת</string>
@@ -164,7 +167,7 @@
     <string name="disable_extended_text_ui_summ">מאפשר תפריט ההקשר \'מחיקת Cloze\' במצב לרוחב.</string>
     <string name="vertical_centering" maxLength="41">מירכוז</string>
     <string name="vertical_centering_summ">מרכז את תוכן הכרטיסים בצורה אנכית</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">מרווח זמן של לחיצה כפולה (מילישניות)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">מרווח זמן של לחיצה כפולה</string>
     <string name="pref_double_tap_time_interval_summary">לחיצה שנייה על כפתורי התשובה תתעלם אם הזמן הזה לא חלף. זה מונע הקשה כפולה בשוגג</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">הצג תשובה בלחיצה ארוכה</string>
     <string name="pref_show_answer_long_press_time_summary">משך לחיצה מינימלי לפני שכפתור הצג תשובה מגיב למגע</string>

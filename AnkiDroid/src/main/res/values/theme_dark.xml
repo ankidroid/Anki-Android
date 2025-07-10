@@ -65,7 +65,7 @@
         <item name="buryCountColor">@color/disabled_gray_dark</item>
         <item name="zeroCountColor">#404040</item>
         <!-- Study Screen colors -->
-        <item name="showAnswerButtonBackground">#1901579B</item>
+        <item name="showAnswerButtonBackground">#22333f</item>
         <item name="againButtonBackground">@color/material_red_800</item>
         <item name="hardButtonBackground">@color/material_blue_grey_800</item>
         <item name="goodButtonBackground">@color/material_green_800</item>
@@ -83,10 +83,10 @@
         <item name="hardTextColor">@color/material_orange_200</item>
         <item name="goodTextColor">@color/material_light_green_200</item>
         <item name="easyTextColor">@color/material_light_blue_A100</item>
-        <item name="againBackgroundColor">#1AB71C1C</item> <!-- Material red 900 with 10% alpha -->
-        <item name="hardBackgroundColor">#1AE65100</item> <!-- Material orange 900 with 10% alpha -->
-        <item name="goodBackgroundColor">#1A2E7D32</item> <!-- Material green 800 with 10% alpha -->
-        <item name="easyBackgroundColor">#1A0277BD</item> <!-- Material light blue 800 with 10% alpha -->
+        <item name="againBackgroundColor">#462828</item>
+        <item name="hardBackgroundColor">#4e3122</item>
+        <item name="goodBackgroundColor">#2c3b2c</item>
+        <item name="easyBackgroundColor">#223946</item>
         <!-- Study Screen button drawables -->
         <item name="showAnswerColor">@color/material_blue_grey_800</item>
         <item name="againButtonRef">@drawable/footer_button_again_dark</item>

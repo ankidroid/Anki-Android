@@ -33,15 +33,19 @@ class GestureParserTest {
         y: Int? = 100,
         deltaX: Int? = 0,
         deltaY: Int? = 0,
+        deltaTime: Int? = 10,
+        touchCount: Int? = 1,
         scrollDirection: String? = null,
     ): Uri =
         mockk {
             every { this@mockk.host } returns host
-            every { getQueryParameter("x") } returns x?.toString()
-            every { getQueryParameter("y") } returns y?.toString()
-            every { getQueryParameter("deltaX") } returns deltaX?.toString()
-            every { getQueryParameter("deltaY") } returns deltaY?.toString()
-            every { getQueryParameter("scrollDirection") } returns scrollDirection
+            every { getQueryParameter(GestureParser.PARAM_X) } returns x?.toString()
+            every { getQueryParameter(GestureParser.PARAM_Y) } returns y?.toString()
+            every { getQueryParameter(GestureParser.PARAM_DELTA_X) } returns deltaX?.toString()
+            every { getQueryParameter(GestureParser.PARAM_DELTA_Y) } returns deltaY?.toString()
+            every { getQueryParameter(GestureParser.PARAM_DELTA_TIME) } returns deltaTime?.toString()
+            every { getQueryParameter(GestureParser.PARAM_TOUCH_COUNT) } returns touchCount?.toString()
+            every { getQueryParameter(GestureParser.PARAM_SCROLL_DIRECTION) } returns scrollDirection
         }
 
     private fun parseGesture(
@@ -76,9 +80,37 @@ class GestureParserTest {
 
     @Test
     fun `parse returns DOUBLE_TAP for doubleTap host`() {
-        val uri = createMockUri(host = "doubleTap")
+        val uri = createMockUri(host = GestureParser.DOUBLE_TAP_HOST)
         val gesture = parseGesture(uri = uri)
         assertEquals(Gesture.DOUBLE_TAP, gesture)
+    }
+
+    @Test
+    fun `Two-finger tap`() {
+        val uri = createMockUri(host = GestureParser.MULTI_FINGER_HOST, touchCount = 2)
+        val gesture = parseGesture(uri = uri)
+        assertEquals(Gesture.TWO_FINGER_TAP, gesture)
+    }
+
+    @Test
+    fun `Three-finger tap`() {
+        val uri = createMockUri(host = GestureParser.MULTI_FINGER_HOST, touchCount = 3)
+        val gesture = parseGesture(uri = uri)
+        assertEquals(Gesture.THREE_FINGER_TAP, gesture)
+    }
+
+    @Test
+    fun `Four-finger tap`() {
+        val uri = createMockUri(host = GestureParser.MULTI_FINGER_HOST, touchCount = 4)
+        val gesture = parseGesture(uri = uri)
+        assertEquals(Gesture.FOUR_FINGER_TAP, gesture)
+    }
+
+    @Test
+    fun `Five+ finger taps are ignored`() {
+        val uri = createMockUri(host = GestureParser.MULTI_FINGER_HOST, touchCount = 5)
+        val gesture = parseGesture(uri = uri)
+        assertEquals(expected = null, actual = gesture)
     }
 
     @Test

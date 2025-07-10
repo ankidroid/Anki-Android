@@ -120,6 +120,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">النقر في الوسط</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">النقر في أسفل اليسار</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">النقر في أسفل اليمين</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">رج الجهاز</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">قائمة «%s»</string>
     <string name="card_browser_enable_external_context_menu_summary">يفعل قائمة سياق «%s» في عموم الجهاز</string>
@@ -166,7 +169,7 @@
     <string name="disable_extended_text_ui_summ">السماح بقائمة سياق «عبارات ملء الفراغات» في الوضع الأفقي.</string>
     <string name="vertical_centering" maxLength="41">محاذاة للوسط</string>
     <string name="vertical_centering_summ">محاذاة محتوى البطاقات إلى الوسط عموديًا</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">الفاصل الزمني للنقر المزدوج (مللي ثانية)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">الفاصل الزمني للنقر المزدوج</string>
     <string name="pref_double_tap_time_interval_summary">سيتم تجاهل نقرة ثانية على أزرار الإجابة إذا لم يمر الوقت. يمنع هذا النقر المزدوج غير المقصود</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">مدة الضغط المطول لإظهار الجواب</string>
     <string name="pref_show_answer_long_press_time_summary">أدنى مدة تكفي ليسجل زر «أظهر الإجابة» النقر.</string>
@@ -393,7 +396,7 @@
     <string name="toolbar_position" maxLength="41">مكان شريط الأدوات</string>
     <string name="new_study_screen" maxLength="41">شاشة الدراسة الجديدة</string>
     <string name="new_study_screen_summ"><![CDATA[شاشة الدراسة المحسنة التي ستُستبدل بالشاشة الحالية. تم تغيير أو حذف بعض ميزات الشاشة القديمة. نرجو أن تُبَلِّغنا <a href="%1$s">برأيك</a> أو عن أي <a href="%2$s">خلل</a> تجده.]]></string>
-    <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
+    <string name="show_answer_feedback" maxLength="41">إظهار توكيد الإجابة</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">إفتح الإعدادات</string>
 </resources>

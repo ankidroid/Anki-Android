@@ -115,6 +115,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Sentuh tengah-tengah</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Sentuh bawah kiri</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Sentuh bawah kanan</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">Shake device</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">Menu ‘%s’</string>
     <string name="card_browser_enable_external_context_menu_summary">Dayakan menu konteks ‘%s’ secara global</string>
@@ -161,7 +164,7 @@
     <string name="disable_extended_text_ui_summ">Benarkan menu konteks \'Penghapusan Kloz\' ketika mod landskap.</string>
     <string name="vertical_centering" maxLength="41">Jajar ke tengah</string>
     <string name="vertical_centering_summ">Tengahkan kandungan kad secara menegak</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Selang sentuh dua kali (milisaat)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">Sentuhan kedua butang jawapan akan diabaikan jika masa ini belum berlalu. Elakkan sentuh dua kali tanpa sengaja</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
     <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>

@@ -20,7 +20,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import com.ichi2.anki.FieldEditLine
-import com.ichi2.anki.NoteEditor
+import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.libanki.Field
@@ -34,7 +34,7 @@ import kotlin.math.min
  * This primarily exists so we can use saved instance state to repopulate the dynamically created FieldEditLine
  */
 class FieldState private constructor(
-    private val editor: NoteEditor,
+    private val editor: NoteEditorFragment,
 ) {
     private var customViewIds: List<Int>? = null
 
@@ -147,7 +147,7 @@ class FieldState private constructor(
     companion object {
         private fun allowFieldRemapping(oldFields: Array<Array<String>>): Boolean = oldFields.size > 2
 
-        fun fromEditor(editor: NoteEditor): FieldState = FieldState(editor)
+        fun fromEditor(editor: NoteEditorFragment): FieldState = FieldState(editor)
 
         @KotlinCleanup("speed - no need for arrayOfNulls")
         private fun fromFieldMap(

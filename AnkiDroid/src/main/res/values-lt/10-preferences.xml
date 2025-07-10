@@ -118,6 +118,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Palieskite vidurio centrą</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Palieskite apatinį kairįjį kampą</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Palieskite apatinį dešinįjį kampą</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">Pakratykite prietaisą</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ Meniu</string>
     <string name="card_browser_enable_external_context_menu_summary">Visuotinai įjungiamas kontekstinis meniu \'%s\'</string>
@@ -164,7 +167,7 @@
     <string name="disable_extended_text_ui_summ">Leidžia naudoti kontekstinį meniu \"Cloze Deletion\", kai naudojamas kraštovaizdžio režimas.</string>
     <string name="vertical_centering" maxLength="41">Centrinis lygiavimas</string>
     <string name="vertical_centering_summ">Kortelių turinį vertikaliai išdėstyti centre</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Dvigubo bakstelėjimo laiko intervalas (milisekundės)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Dvigubo bakstelėjimo laiko intervalas</string>
     <string name="pref_double_tap_time_interval_summary">Antrasis atsakymų mygtukų bakstelėjimas bus ignoruojamas, jei šis laikas dar nepraėjo. Taip išvengiama atsitiktinių dvigubų bakstelėjimų</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Rodyti atsakymo ilgą paspaudimo laiką</string>
     <string name="pref_show_answer_long_press_time_summary">Minimalus paspaudimo laikas, per kurį rodomas atsakymo mygtukas fiksuoja prisilietimą.</string>

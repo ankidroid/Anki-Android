@@ -116,6 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Druk midden rechts</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Druk linksonder</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Druk rechtsonder</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">Schud apparaat</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Schakelt het contextmenu \' \'%s\' overal in</string>
@@ -161,7 +164,7 @@
     <string name="disable_extended_text_ui_summ">Laat het contextmenu \'Invuloefening\' toe in de landschapsmodus.</string>
     <string name="vertical_centering" maxLength="41">Uitlijnen in het midden</string>
     <string name="vertical_centering_summ">De inhoud van kaarten verticaal centreren</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Dubbele aanraking tijdsinterval (ms)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Dubbele aanraking tijdsinterval</string>
     <string name="pref_double_tap_time_interval_summary">Een tweede aanraking op de antwoordknoppen wordt genegeerd als deze tijd nog niet voorbij is gegaan. Dit voorkomt dubbele aanrakingen.</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Toon antwoord lange indruktijd</string>
     <string name="pref_show_answer_long_press_time_summary">Minimale druktijd voordat de knop voor het tonen van een antwoord een aanraking registreert.</string>

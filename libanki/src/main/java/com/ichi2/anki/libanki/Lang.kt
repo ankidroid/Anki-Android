@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+ *  Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -13,17 +13,13 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.testutils
 
-import kotlin.test.junit5.JUnit5Asserter
+package com.ichi2.anki.libanki
 
-/** Asserts that the expression is `false` with an optional [message]. */
-fun assertFalse(
-    message: String? = null,
-    actual: Boolean,
-) {
-    // This exists in JUnit, but we want to avoid JUnit as their `assertNotNull` does not use contracts
-    // So, we want a method in a different namespace for `assertFalse`
-    // JUnitAsserter doesn't contain it, so we add it in
-    JUnit5Asserter.assertTrue(message, !actual)
-}
+import com.ichi2.anki.libanki.utils.LibAnkiAlias
+
+/**
+ * strip off unicode isolation markers from a translated string for testing purposes
+ */
+@LibAnkiAlias("without_unicode_isolation")
+fun withoutUnicodeIsolation(s: String): String = s.replace("\u2068", "").replace("\u2069", "")

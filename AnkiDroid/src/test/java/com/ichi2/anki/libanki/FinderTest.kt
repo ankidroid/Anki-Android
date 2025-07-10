@@ -21,11 +21,11 @@ import com.ichi2.anki.libanki.QueueType.Suspended
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.libanki.sched.Scheduler
-import com.ichi2.testutils.AnkiAssert
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.ext.addNote
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.contains
 import org.hamcrest.Matchers.greaterThan
 import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.hasSize
@@ -188,18 +188,18 @@ class FinderTest : JvmTest() {
             }
         assertEquals(0, col.findCards("is:review").size)
         col.updateCard(c, skipUndoEntry = true)
-        AnkiAssert.assertEqualsArrayList(arrayOf(c.id), col.findCards("is:review"))
+        assertThat(col.findCards("is:review"), contains(c.id))
         assertEquals(0, col.findCards("is:due").size)
         c.update {
             due = 0
             queue = QueueType.Rev
         }
-        AnkiAssert.assertEqualsArrayList(arrayOf(c.id), col.findCards("is:due"))
+        assertThat(col.findCards("is:due"), contains(c.id))
         assertEquals(4, col.findCards("-is:due").size)
         // ensure this card gets a later mod time
         c.update { queue = Suspended }
         col.db.execute("update cards set mod = mod + 1 where id = ?", c.id)
-        AnkiAssert.assertEqualsArrayList(arrayOf(c.id), col.findCards("is:suspended"))
+        assertThat(col.findCards("is:suspended"), contains(c.id))
         // nids
         assertEquals(0, col.findCards("nid:54321").size)
         assertEquals(2, col.findCards("nid:" + note.id).size)
