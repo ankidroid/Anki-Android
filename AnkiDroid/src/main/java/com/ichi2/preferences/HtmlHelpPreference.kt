@@ -22,6 +22,7 @@ import androidx.core.text.parseAsHtml
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 import com.ichi2.anki.R
+import com.ichi2.anki.utils.ext.usingStyledAttributes
 
 /**
  * Non-clickable preference that shows help text.

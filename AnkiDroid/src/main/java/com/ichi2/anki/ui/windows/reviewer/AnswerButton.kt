@@ -22,7 +22,7 @@ import androidx.core.text.buildSpannedString
 import androidx.core.text.inSpans
 import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.R
-import com.ichi2.preferences.usingStyledAttributes
+import com.ichi2.anki.utils.ext.usingStyledAttributes
 
 class AnswerButton
     @JvmOverloads

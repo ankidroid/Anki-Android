@@ -25,7 +25,7 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.withStyledAttributes
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.R
-import com.ichi2.preferences.usingStyledAttributes
+import com.ichi2.anki.utils.ext.usingStyledAttributes
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.Permissions
 import timber.log.Timber
