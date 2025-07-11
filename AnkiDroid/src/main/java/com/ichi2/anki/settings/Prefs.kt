@@ -173,6 +173,11 @@ object Prefs {
     // ************************************** Review Reminders ********************************** //
 
     /**
+     * Whether to enable the new review reminders notification system.
+     */
+    var newReviewRemindersEnabled by booleanPref(R.string.pref_new_review_reminders, false)
+
+    /**
      * Review reminder IDs are unique, starting at 0 and climbing upwards by one each time a new one is created.
      */
     var reviewReminderNextFreeId by intPref(R.string.review_reminders_next_free_id, defaultValue = 0)

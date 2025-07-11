@@ -28,6 +28,7 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Storage
 import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.testutils.BackendEmulatingOpenConflict
@@ -483,12 +484,7 @@ class DeckPickerTest : RobolectricTest() {
                 assertEquals("com.ichi2.anki.FilteredDeckOptions", deckOptionsDynamic.component!!.className)
                 onBackPressedDispatcher.onBackPressed()
 
-                targetContext.sharedPrefs().edit(commit = true) {
-                    putBoolean(
-                        targetContext.getString(R.string.pref_new_notifications),
-                        true,
-                    )
-                }
+                Prefs.newReviewRemindersEnabled = true
                 val scheduleReminders = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.SCHEDULE_REMINDERS, didA)
                 assertEquals("com.ichi2.anki.SingleFragmentActivity", scheduleReminders.component!!.className)
                 onBackPressedDispatcher.onBackPressed()

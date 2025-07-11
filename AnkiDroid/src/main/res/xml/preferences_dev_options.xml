@@ -110,7 +110,7 @@
             android:defaultValue="false"/>
         <SwitchPreferenceCompat
             android:title="Enable new notifications"
-            android:key="@string/pref_new_notifications"
+            android:key="@string/pref_new_review_reminders"
             android:defaultValue="false"/>
     </com.ichi2.anki.preferences.ExtendedPreferenceCategory>
 </PreferenceScreen>
