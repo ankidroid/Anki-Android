@@ -24,7 +24,7 @@ import androidx.core.os.bundleOf
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.utils.title
 
 class DeckPickerContextMenu : AnalyticsDialogFragment() {
@@ -76,7 +76,7 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
             if (!dyn) {
                 add(DeckPickerContextMenuOption.EDIT_DESCRIPTION)
             }
-            if (requireContext().sharedPrefs().getBoolean(getString(R.string.pref_new_notifications), false)) {
+            if (Prefs.newReviewRemindersEnabled) {
                 add(DeckPickerContextMenuOption.SCHEDULE_REMINDERS)
             }
             add(DeckPickerContextMenuOption.DELETE_DECK)

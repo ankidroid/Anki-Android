@@ -70,11 +70,8 @@ class HeaderFragment : SettingsFragment() {
                 true
             }
 
-        val reviewRemindersEnabled = requireContext().sharedPrefs().getBoolean(getString(R.string.pref_new_notifications), false)
-        requirePreference<HeaderPreference>(R.string.pref_review_reminders_screen_key)
-            .isVisible = reviewRemindersEnabled
-        requirePreference<HeaderPreference>(R.string.pref_notifications_screen_key)
-            .isVisible = !reviewRemindersEnabled
+        requirePreference<HeaderPreference>(R.string.pref_review_reminders_screen_key).isVisible = Prefs.newReviewRemindersEnabled
+        requirePreference<HeaderPreference>(R.string.pref_notifications_screen_key).isVisible = !Prefs.newReviewRemindersEnabled
 
         configureSearchBar(
             requireActivity() as AppCompatActivity,
@@ -120,7 +117,7 @@ class HeaderFragment : SettingsFragment() {
                 index(R.xml.preferences_custom_sync_server)
                     .addBreadcrumb(R.string.pref_cat_sync)
 
-                if (activity.sharedPrefs().getBoolean(activity.getString(R.string.pref_new_notifications), false)) {
+                if (Prefs.newReviewRemindersEnabled) {
                     searchConfiguration
                         .indexItem()
                         .withKey(activity.getString(R.string.pref_review_reminders_screen_key))

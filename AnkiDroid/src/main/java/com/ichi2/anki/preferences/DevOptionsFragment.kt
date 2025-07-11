@@ -166,7 +166,7 @@ class DevOptionsFragment : SettingsFragment() {
          * with a "Review reminders" button, so we need to immediately reload the settings activity
          * to make this change show up.
          */
-        requirePreference<Preference>(R.string.pref_new_notifications).setOnPreferenceChangeListener { _, _ ->
+        requirePreference<Preference>(R.string.pref_new_review_reminders).setOnPreferenceChangeListener { _, _ ->
             ActivityCompat.recreate(requireActivity())
             true
         }
