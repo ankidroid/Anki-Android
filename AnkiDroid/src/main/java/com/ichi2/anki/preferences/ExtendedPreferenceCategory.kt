@@ -22,8 +22,8 @@ import androidx.core.view.isVisible
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceViewHolder
 import com.ichi2.anki.R
+import com.ichi2.anki.utils.ext.usingStyledAttributes
 import com.ichi2.anki.utils.openUrl
-import com.ichi2.preferences.usingStyledAttributes
 
 /**
  * Extended version of [androidx.preference.PreferenceCategory] with the extra attributes:
