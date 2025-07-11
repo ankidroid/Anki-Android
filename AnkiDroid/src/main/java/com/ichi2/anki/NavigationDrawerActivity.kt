@@ -453,17 +453,23 @@ abstract class NavigationDrawerActivity :
                 return
             }
             // Review Cards Shortcut
-            val intentReviewCards = Reviewer.getIntent(context)
-            intentReviewCards.action = Intent.ACTION_VIEW
-            intentReviewCards.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-            intentReviewCards.putExtra(EXTRA_STARTED_WITH_SHORTCUT, true)
+            val intentReviewCards =
+                Reviewer.getIntent(context).apply {
+                    action = Intent.ACTION_VIEW
+                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    putExtra(EXTRA_STARTED_WITH_SHORTCUT, true)
+                }
+            val deckPickerIntent =
+                Intent(context, IntentHandler::class.java).apply {
+                    action = Intent.ACTION_VIEW
+                }
             val reviewCardsShortcut =
                 ShortcutInfoCompat
                     .Builder(context, "reviewCardsShortcutId")
                     .setShortLabel(context.getString(R.string.studyoptions_start))
                     .setLongLabel(context.getString(R.string.studyoptions_start))
                     .setIcon(IconCompat.createWithResource(context, R.drawable.review_shortcut))
-                    .setIntent(intentReviewCards)
+                    .setIntents(arrayOf(deckPickerIntent, intentReviewCards))
                     .build()
 
             // Add Shortcut
