@@ -73,9 +73,13 @@ class ReviewerControlPreference : ControlPreference {
         binding: Binding,
         side: CardSide,
     ) {
+        val bindings = ReviewerBinding.fromPreferenceString(value).toMutableList()
+        // remove duplicate bindings
+        bindings.firstOrNull { it.binding == binding }?.let {
+            bindings.remove(it)
+        }
         val newBinding = ReviewerBinding(binding, side)
         getPreferenceAssignedTo(binding)?.removeMappableBinding(newBinding)
-        val bindings = ReviewerBinding.fromPreferenceString(value).toMutableList()
         bindings.add(newBinding)
         value = bindings.toPreferenceString()
     }
