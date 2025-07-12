@@ -42,7 +42,7 @@ class NoteEditorIntentTest : InstrumentedTest() {
     var runtimePermissionRule: TestRule? = GrantStoragePermission.instance
 
     @get:Rule
-    var activityRuleIntent: ActivityScenarioRule<SingleFragmentActivity>? =
+    var activityRuleIntent: ActivityScenarioRule<NoteEditor>? =
         ActivityScenarioRule(
             noteEditorTextIntent,
         )

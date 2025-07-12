@@ -70,6 +70,7 @@ import androidx.core.os.BundleCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.util.component1
 import androidx.core.util.component2
+import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.OnReceiveContentListener
 import androidx.core.view.WindowInsetsControllerCompat
@@ -77,6 +78,7 @@ import androidx.core.view.isVisible
 import androidx.draganddrop.DropHelper
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import anki.config.ConfigKey
 import anki.notes.NoteFieldsCheckResponse
@@ -208,7 +210,7 @@ const val CALLER_KEY = "caller"
 @KotlinCleanup("Go through the class and select elements to fix")
 @KotlinCleanup("see if we can lateinit")
 class NoteEditorFragment :
-    Fragment(R.layout.note_editor),
+    Fragment(R.layout.note_editor_fragment),
     DeckSelectionListener,
     SubtitleListener,
     TagsDialogListener,
@@ -227,7 +229,7 @@ class NoteEditorFragment :
         get() = CollectionManager.getColUnsafe()
 
     private val mainToolbar: androidx.appcompat.widget.Toolbar
-        get() = requireView().findViewById(R.id.toolbar)
+        get() = requireAnkiActivity().findViewById(R.id.toolbar)
 
     /**
      * Flag which forces the calling activity to rebuild it's definition of current card from scratch
@@ -578,7 +580,13 @@ class NoteEditorFragment :
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
+        // Register this fragment as a menu provider with the activity
         mainToolbar.addMenuProvider(this)
+        (requireActivity() as MenuHost).addMenuProvider(
+            this,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED,
+        )
     }
 
     /**
