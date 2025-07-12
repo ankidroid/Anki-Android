@@ -98,38 +98,38 @@
     <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">«%s» مفعل</string>
     <!-- General -->
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">تراجع</string>
-    <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">أَعد الإجراء</string>
+    <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">إعادة إجراء</string>
     <!-- flashcard_portrait.xml -->
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in the Study Screen. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">تراجع خطًا</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in the Study Screen. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">تراجع خط</string>
     <string name="move_all_to_deck">انقُلها كلَّها إلى رِزمة</string>
-    <string name="unbury" maxLength="28">انكُش</string>
-    <string name="rename_deck" maxLength="28">أعد تسمية الرِزمة</string>
-    <string name="create_shortcut">أنشِأ اختصارًا</string>
+    <string name="unbury" maxLength="28">نكش</string>
+    <string name="rename_deck" maxLength="28">تغيير اسم الرِزمة</string>
+    <string name="create_shortcut">إنشاء اختصار</string>
     <string name="browse_cards">تصفح البطاقات</string>
-    <string name="edit_deck_description" comment="edit the deck description">حرر الوصف</string>
+    <string name="edit_deck_description" comment="edit the deck description">تعديل الوصف</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">إضافة</string>
     <string name="menu_add_note" maxLength="28">إضافة ملحوظة</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">مزامنة الحساب</string>
     <string name="menu_dismiss_note" maxLength="41">إخفاء / حذف</string>
     <string name="menu_bury_card" maxLength="28">ادفن البطاقة</string>
-    <string name="menu_bury_note" maxLength="28">ادفن الملحوظة</string>
-    <string name="menu_suspend_card" maxLength="28">عَطِّل البطاقة</string>
-    <string name="menu_suspend_note" maxLength="28">عطِّل الملحوظة</string>
+    <string name="menu_bury_note" maxLength="28">دفن الملحوظة</string>
+    <string name="menu_suspend_card" maxLength="28">تعليق البطاقة</string>
+    <string name="menu_suspend_note" maxLength="28">تعليق الملحوظة</string>
     <string name="menu_bury" maxLength="28">ادفن</string>
     <string name="menu_suspend" maxLength="28">تعليق</string>
-    <string name="menu_delete_note" maxLength="28">إحذف الملحوظة</string>
+    <string name="menu_delete_note" maxLength="28">حذف الملحوظة</string>
     <string name="menu_flag" maxLength="41">العَلَم</string>
-    <string name="rename_flag">أعِد تسمية العلم</string>
+    <string name="rename_flag">تغيير أسماء الأعلام</string>
     <string name="menu_flag_card" maxLength="28">أضف عَلَمًا للبطاقة</string>
     <string name="menu_edit_tags" maxLength="28">تعديل الوسوم</string>
     <string name="delete_note_message">هل تريد حقًا حذف هذه الملحوظة وكل بطاقاتها؟\n%s</string>
     <string name="menu_search" maxLength="28">البحث في %1$s</string>
     <string name="menu_mark_note" maxLength="28">علِّم الملحوظة</string>
-    <string name="menu_unmark_note">ألغ تعليم الملحوظة</string>
-    <string name="menu_enable_voice_playback" maxLength="28">فعِّل تشغيل الصوت</string>
-    <string name="menu_disable_voice_playback">عطِّل تشغيل الصوت</string>
-    <string name="new_deck">أنشِأ رِزمة</string>
-    <string name="new_dynamic_deck">أنشِأ رِزمة مصفاة</string>
+    <string name="menu_unmark_note">إلغاء تعليم الملحوظة</string>
+    <string name="menu_enable_voice_playback" maxLength="28">تفعيل مسجل الصوت</string>
+    <string name="menu_disable_voice_playback">تعطيل مسجل الصوت</string>
+    <string name="new_deck">إنشاء رِزمة</string>
+    <string name="new_dynamic_deck">إنشاء رِزمة مفلترة</string>
     <string name="directory_inaccessible">تعذر الوصول إلى مجلد آنكي درويد</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -139,7 +139,7 @@
     <string name="rebuild_filtered_deck">تُجرى إعادة بناء الرِزمة المصفاة&#8230;</string>
     <string name="rebuild_cram_label" maxLength="28">إعادة إنشاء</string>
     <string name="empty_cram_label" maxLength="28">إفراغ</string>
-    <string name="create_subdeck">أنشِأ رِزمة فرعية</string>
+    <string name="create_subdeck">إنشاء رِزمة فرعية</string>
     <string name="empty_filtered_deck">جار إفراغ الرزمة المصفاة&#8230;</string>
     <string name="search_deck" comment="Deck search for selecting it">البحث عن رزمة</string>
     <string name="empty_deck">هذه الرزمة فارغة</string>
@@ -155,7 +155,7 @@
     <string name="sync_cancelled" tools:ignore="UnusedResources">أُلغِيت المزامنة</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">جار الإلغاء&#8230;\nقد يستغرق الأمر بعض الوقت.</string>
     <string name="syncing_media">تتم مزامنة الوسائط</string>
-    <string name="export_deck" maxLength="28">صدِّر الرزمة</string>
+    <string name="export_deck" maxLength="28">تصدير الرِزمة</string>
     <string name="export_collection">صدِّر المجموعة</string>
     <string name="nothing">فارغ</string>
     <!-- Card template editor -->
@@ -203,7 +203,7 @@
     <string name="sync_conflict_remote_confirm_new">أتستبدل مجموعتك في آنكي ويب بمجموعتك في آنكي درويد؟</string>
     <string name="sync_conflict_local_confirm_new">أتستبدل مجموعتك في آنكي درويد بمجموعتك في آنكي ويب؟</string>
     <string name="sync_conflict_title_new">حدد مجموعة لإبقائها</string>
-    <string name="sync_conflict_replace_title">استبدل المجموعة</string>
+    <string name="sync_conflict_replace_title">استبدال المجموعة</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">تعذر تعديل المِلَفّ %s أو إنشاؤه</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">فَشِلَ الوصول إلى المجموعة</string>
