@@ -33,9 +33,10 @@ import kotlin.time.Duration.Companion.minutes
 
 @JvmInline
 @Serializable
+@Parcelize
 value class ReviewReminderId(
     val id: Int,
-) {
+) : Parcelable {
     companion object {
         /**
          * Get and return the next free reminder ID which can be associated with a new review reminder.
@@ -55,10 +56,11 @@ value class ReviewReminderId(
  * The time of day at which reminders will send a notification.
  */
 @Serializable
+@Parcelize
 data class ReviewReminderTime(
     val hour: Int,
     val minute: Int,
-) {
+) : Parcelable {
     init {
         require(hour in 0..23) { "Hour must be between 0 and 23" }
         require(minute in 0..59) { "Minute must be between 0 and 59" }
@@ -81,9 +83,10 @@ data class ReviewReminderTime(
  */
 @JvmInline
 @Serializable
+@Parcelize
 value class ReviewReminderCardTriggerThreshold(
     val threshold: Int,
-) {
+) : Parcelable {
     init {
         require(threshold >= 0) { "Card trigger threshold must be >= 0" }
     }
@@ -160,6 +163,7 @@ sealed class ReviewReminderScope : Parcelable {
  * @param enabled Whether the review reminder's notifications are active or disabled.
  */
 @Serializable
+@Parcelize
 @ConsistentCopyVisibility
 data class ReviewReminder private constructor(
     val id: ReviewReminderId,
@@ -167,7 +171,7 @@ data class ReviewReminder private constructor(
     val cardTriggerThreshold: ReviewReminderCardTriggerThreshold,
     val scope: ReviewReminderScope,
     var enabled: Boolean,
-) {
+) : Parcelable {
     companion object {
         /**
          * Create a new review reminder. This will allocate a new ID for the reminder.
