@@ -107,6 +107,11 @@
     <string name="confirm_map_cards_to_nothing">எதுவும் இல்லை என்று வரைபடமாக்கப்படும் எந்த அட்டைகளும் நீக்கப்படும். ஒரு குறிப்பில் மீதமுள்ள அட்டைகள் இல்லை என்றால், அது இழக்கப்படும். நீங்கள் நிச்சயமாகத் தொடர விரும்புகிறீர்களா?</string>
     <string name="missing_note_type">குறிப்பு வகை இல்லை</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
+    <!-- Image cropper -->
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">டைம்பாக்ஸை அடைந்தது</string>
     <plurals name="timebox_reached">

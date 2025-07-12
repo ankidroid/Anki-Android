@@ -48,7 +48,7 @@
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_audio">ഓഡിയോ റെക്കോർഡിംഗ്</string>
-    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">ചെയ്തു</string>
+    <string name="multimedia_editor_field_editing_done" maxLength="28" comment="Label of a button to tell the app that the current action is \'Done\'.">ചെയ്തു</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
