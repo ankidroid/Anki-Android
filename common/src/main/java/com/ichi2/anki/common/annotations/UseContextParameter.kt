@@ -14,24 +14,27 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.testutils.ext
-
-import androidx.appcompat.app.AppCompatDelegate
-import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.libanki.Collection
-import com.ichi2.utils.LanguageUtil
+package com.ichi2.anki.common.annotations
 
 /**
- * Closes and reopens the backend using the provided [language], typically for
- * [CollectionManager.TR] calls
+ * Use when code should be converted to use context parameters (Kotlin 2.2.0)
  *
- * This does not set the [application locales][AppCompatDelegate.setApplicationLocales]
+ * Context parameters are not yet supported by AnkiDroid
+ * https://github.com/JLLeitschuh/ktlint-gradle/issues/912
  *
- * @param language tag in the form: `de` or `zh-CN`
+ * @param toExtend the name of the class to extend
  */
-@Suppress("UnusedReceiverParameter")
-suspend fun Collection.reopenWithLanguage(language: String) {
-    LanguageUtil.setDefaultBackendLanguages(language)
-    CollectionManager.discardBackend()
-    CollectionManager.getColUnsafe()
-}
+@Target(
+    AnnotationTarget.CLASS,
+    AnnotationTarget.FUNCTION,
+    AnnotationTarget.VALUE_PARAMETER,
+    AnnotationTarget.EXPRESSION,
+    AnnotationTarget.FIELD,
+    AnnotationTarget.PROPERTY,
+)
+@Repeatable
+@Retention(AnnotationRetention.SOURCE)
+@MustBeDocumented
+annotation class UseContextParameter(
+    val toExtend: String,
+)

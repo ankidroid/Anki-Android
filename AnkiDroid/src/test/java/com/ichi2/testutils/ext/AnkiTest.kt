@@ -16,22 +16,20 @@
 
 package com.ichi2.testutils.ext
 
-import androidx.appcompat.app.AppCompatDelegate
-import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.libanki.Collection
-import com.ichi2.utils.LanguageUtil
+import anki.collection.OpChanges
+import com.ichi2.anki.libanki.Consts
+import com.ichi2.anki.libanki.Note
+import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.anki.libanki.testutils.AnkiTest
+import com.ichi2.anki.observability.undoableOp
 
-/**
- * Closes and reopens the backend using the provided [language], typically for
- * [CollectionManager.TR] calls
- *
- * This does not set the [application locales][AppCompatDelegate.setApplicationLocales]
- *
- * @param language tag in the form: `de` or `zh-CN`
- */
-@Suppress("UnusedReceiverParameter")
-suspend fun Collection.reopenWithLanguage(language: String) {
-    LanguageUtil.setDefaultBackendLanguages(language)
-    CollectionManager.discardBackend()
-    CollectionManager.getColUnsafe()
-}
+suspend fun AnkiTest.addBasicNoteWithOp(
+    fields: List<String> = listOf("foo", "bar"),
+    noteType: NotetypeJson = col.notetypes.byName("Basic")!!,
+): Note =
+    col.newNote(noteType).also { note ->
+        for ((i, field) in fields.withIndex()) {
+            note.setField(i, field)
+        }
+        undoableOp<OpChanges> { col.addNote(note, Consts.DEFAULT_DECK_ID) }
+    }

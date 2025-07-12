@@ -17,6 +17,7 @@
 package com.ichi2.anki
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.Intent
@@ -32,26 +33,35 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.work.Configuration
 import androidx.work.testing.SynchronousExecutor
 import androidx.work.testing.WorkManagerTestInitHelper
+import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.CollectionOpenFailure
+import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
+import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooperWithSleep
+import com.ichi2.anki.common.annotations.UseContextParameter
 import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.Storage
+import com.ichi2.anki.libanki.testutils.AnkiTest
+import com.ichi2.anki.libanki.testutils.TestCollectionManager
 import com.ichi2.anki.observability.ChangeManager
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.testutils.AndroidTest
+import com.ichi2.testutils.CollectionManagerTestAdapter
 import com.ichi2.testutils.TaskSchedulerRule
-import com.ichi2.testutils.TestClass
 import com.ichi2.testutils.common.FailOnUnhandledExceptionRule
 import com.ichi2.testutils.common.IgnoreFlakyTestsInCIRule
 import com.ichi2.testutils.filter
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.resetMain
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.testing.RustBackendLoader
@@ -77,7 +87,7 @@ import timber.log.Timber
 import kotlin.test.assertNotNull
 
 open class RobolectricTest :
-    TestClass,
+    AnkiTest,
     AndroidTest {
     @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
     private fun Any.wait(timeMs: Long) = (this as Object).wait(timeMs)
@@ -105,6 +115,9 @@ open class RobolectricTest :
 
     @get:Rule
     val timeoutRule: TimeoutRule = TimeoutRule.seconds(60)
+
+    override val collectionManager: TestCollectionManager
+        get() = CollectionManagerTestAdapter
 
     @Before
     @CallSuper
@@ -203,6 +216,11 @@ open class RobolectricTest :
         Dispatchers.resetMain()
         runBlocking { CollectionManager.discardBackend() }
         println("""-- completed test "${testName.methodName}"""")
+    }
+
+    override fun setupTestDispatcher(dispatcher: TestDispatcher) {
+        super.setupTestDispatcher(dispatcher)
+        ioDispatcher = dispatcher
     }
 
     /**
@@ -475,6 +493,15 @@ open class RobolectricTest :
             throw e
         }
     }
+
+    /** Helper method to update a note */
+    @SuppressLint("CheckResult")
+    @UseContextParameter("TestClass")
+    suspend fun Note.updateOp(block: Note.() -> Unit): Note =
+        this.also { note ->
+            block(note)
+            undoableOp<OpChanges> { col.updateNote(note) }
+        }
 
     private fun maybeSetupBackend() {
         try {

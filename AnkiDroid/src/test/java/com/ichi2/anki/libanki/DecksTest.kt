@@ -18,8 +18,8 @@ package com.ichi2.anki.libanki
 import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.libanki.Decks.Companion.CURRENT_DECK
+import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.testutils.JvmTest
-import com.ichi2.testutils.ext.addNote
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
