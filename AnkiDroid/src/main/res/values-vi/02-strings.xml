@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Mở ngăn kéo</string>
     <string name="drawer_close">Đóng ngăn kéo</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Bộ thẻ:</string>
     <string name="CardEditorNoteDeck">Bộ:</string>
     <string name="CardEditorModel">Loại:</string>

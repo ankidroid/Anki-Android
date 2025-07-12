@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">ნავიგაციის პანელის გახსნა</string>
     <string name="drawer_close">ნავიგაციის პანელის დახურვა</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">ბარათის დასტა:</string>
     <string name="CardEditorNoteDeck">დასტა:</string>
     <string name="CardEditorModel">ტიპი:</string>

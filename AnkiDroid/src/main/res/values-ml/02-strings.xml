@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">തുറക്കുക ഡ്രോയർ</string>
     <string name="drawer_close">ഡ്രോയർ അടയ്‌ക്കുക</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">കാർഡ് ഡെക്ക്:</string>
     <string name="CardEditorNoteDeck">ഡെക്ക്:</string>
     <string name="CardEditorModel">തരം:</string>

@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Siyirməni aç</string>
     <string name="drawer_close">Siyirməni bağla</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Kart dəsti:</string>
     <string name="CardEditorNoteDeck">Dəst:</string>
     <string name="CardEditorModel">Növ:</string>

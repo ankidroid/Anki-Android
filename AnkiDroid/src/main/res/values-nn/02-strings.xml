@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Åpne navigasjonspanelet</string>
     <string name="drawer_close">Lukk navigasjonspanelet</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Kortleik:</string>
     <string name="CardEditorNoteDeck">Kortleik:</string>
     <string name="CardEditorModel">Slag:</string>

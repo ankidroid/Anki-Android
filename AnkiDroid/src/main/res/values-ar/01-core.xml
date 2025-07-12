@@ -209,11 +209,11 @@
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">فَشِلَ الوصول إلى المجموعة</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">عَجَزنا عن الوصول إلى مجموعتك بعد إلغاء تثبيت آنكي درويد نتيجة لتغييرٍ في سياسة سوق بلي\n\nبياناتك آمنة ويمكن استعادتها. ستجدها في\n%s\n\nحدد خِيارًا مما يلي لاستعادتها:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">أزال أندرويد إذن %1$s لعدم استخدام التطبيق. \n\n بياناتك آمنة ويمكنك استعادتها. ستجدها في \n%2$s\n\nحدد خيارًا مما يلي لاستعادتها:</string>
-    <string name="restore_data_from_ankiweb">استرجع من آنكي ويب (يُنصح به)</string>
-    <string name="install_non_play_store_ankidroid_recommended">استرجع الوصول إلى المِلَفات (يُنصح به)</string>
-    <string name="install_non_play_store_ankidroid">استرجع الوصول إلى الملفات (متقدم)</string>
-    <string name="restore_data_from_backup">استرجع من النسخ الاحتياطي «.colpkg» (متقدم)</string>
-    <string name="create_new_collection">أنشِأ مجموعة جديدة</string>
+    <string name="restore_data_from_ankiweb">استرداد من آنكي ويب (مستحسن)</string>
+    <string name="install_non_play_store_ankidroid_recommended">استرداد الوصول إلى المِلَفات (مستحسن)</string>
+    <string name="install_non_play_store_ankidroid">استرداد الوصول إلى الملفات (متقدم)</string>
+    <string name="restore_data_from_backup">استرداد من النسخ الاحتياطي «.colpkg» (متقدم)</string>
+    <string name="create_new_collection">إنشاء مجموعة جديدة</string>
     <string name="new_unsafe_collection">سيتم حذف المجموعة الجديدة من هاتفك إذا قمت بإلغاء تثبيت آنكي درويد</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">يحتاج آنكي درويد إلى أذوناتٍ ليعمل</string>
@@ -221,7 +221,7 @@
     <string name="storage_access_summary">احفَظ مجموعتك في مأمنٍ لئلَّا يُحذف بعد إلغاء تثبيت التطبيق</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">الوصول إلى جميع الملفات</string>
     <string name="image_occlusion">صورة مُعَمَّاة</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">إحذف الحساب</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">حذف الحساب</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">بطاقة فورية</string>
 </resources>

@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Abrir a gabeta</string>
     <string name="drawer_close">Pechar a gabeta</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Baralla de tarxetas:</string>
     <string name="CardEditorNoteDeck">Baralla:</string>
     <string name="CardEditorModel">Tipo:</string>

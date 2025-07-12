@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Navigationsleiste öffnen</string>
     <string name="drawer_close">Navigationsleiste schließen</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Kartenstapel:</string>
     <string name="CardEditorNoteDeck">Stapel:</string>
     <string name="CardEditorModel">Typ:</string>

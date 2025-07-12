@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">បើកថត</string>
     <string name="drawer_close">បិទថត</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">ជាន់របស់កាត</string>
     <string name="CardEditorNoteDeck">ជាន់</string>
     <string name="CardEditorModel">ប្រភេទ</string>

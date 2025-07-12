@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">פתיחת תפריט</string>
     <string name="drawer_close">סגירת תפריט</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">חפיסת כרטיסים:‏</string>
     <string name="CardEditorNoteDeck">חפיסה:‏</string>
     <string name="CardEditorModel">סוג:</string>

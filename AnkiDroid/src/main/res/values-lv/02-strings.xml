@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Atvērt izvēlni</string>
     <string name="drawer_close">Aizvērt izvēlni</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Kartītes kava:</string>
     <string name="CardEditorNoteDeck">Kava:</string>
     <string name="CardEditorModel">Veids:</string>

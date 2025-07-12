@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Fiók megnyitása</string>
     <string name="drawer_close">Fiók bezárása</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Kártyapakli:</string>
     <string name="CardEditorNoteDeck">Pakli:</string>
     <string name="CardEditorModel">Típus:</string>

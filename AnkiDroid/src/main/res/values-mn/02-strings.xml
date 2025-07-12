@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Шургуулгыг нээх</string>
     <string name="drawer_close">Шургуулгыг хаах</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Картны Багц</string>
     <string name="CardEditorNoteDeck">Багц:</string>
     <string name="CardEditorModel">Төрөл:</string>
