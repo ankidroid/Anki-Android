@@ -107,6 +107,11 @@
     <string name="confirm_map_cards_to_nothing">ഒന്നുമില്ലാതെ മാപ്പുചെയ്ത ഏത് കാർഡുകളും ഇല്ലാതാക്കപ്പെടും. ഒരു കുറിപ്പിന് ശേഷിക്കുന്ന കാർഡുകളില്ലെങ്കിൽ, അത് നഷ്‌ടപ്പെടും. തുടരണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ?</string>
     <string name="missing_note_type">നോട്ട് തരങ്ങളൊന്നും കണ്ടെത്തിയില്ല</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
+    <!-- Image cropper -->
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">ടൈംബോക്സ് എത്തി</string>
     <plurals name="timebox_reached">

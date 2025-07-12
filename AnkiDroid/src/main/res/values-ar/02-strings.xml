@@ -111,6 +111,11 @@
     <string name="confirm_map_cards_to_nothing">ستُحذف البطاقات غير المُوزعة. ستُحذف أي ملحوظة ليس لها بطاقات.  أواثق أنك ترغب بذلك؟</string>
     <string name="missing_note_type">لا يوجد نوع ملحوظات</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (فارغ)</string>
+    <!-- Image cropper -->
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">انتهت مهلة التأطير الزمني</string>
     <plurals name="timebox_reached">
