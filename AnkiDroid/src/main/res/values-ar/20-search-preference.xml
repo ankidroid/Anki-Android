@@ -61,5 +61,5 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string tools:ignore="UnusedResources" name="searchpreference_search" comment="By submitting this string, you license it under the MIT License">بَحْث&#8230;</string>
-    <string tools:ignore="UnusedResources" name="searchpreference_clear_history" comment="By submitting this string, you license it under the MIT License">أُمحُ السجل</string>
+    <string tools:ignore="UnusedResources" name="searchpreference_clear_history" comment="By submitting this string, you license it under the MIT License">محو السجل</string>
 </resources>

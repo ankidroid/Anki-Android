@@ -45,7 +45,7 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">إفتح القائمة</string>
+    <string name="drawer_open">فتح القائمة</string>
     <string name="drawer_close">أغلق القائمة</string>
     <string name="CardEditorCardDeck">رزمة البطاقة:</string>
     <string name="CardEditorNoteDeck">الرزمة:</string>

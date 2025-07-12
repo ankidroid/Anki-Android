@@ -1,6 +1,6 @@
 Parkerigu ion ajn per AnkiDroid!
 
-AnkiDroid ebligas al vi efike memorigi fulmokartojn per montri ilin tuj antaŭ forgeso. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
+AnkiDroid ebligas al vi efike memorigi fulmokartojn per montri ilin tuj antaŭ forgeso. Ĝi estas plene kongrua kun la komputila programo Anki (inkluzive samtempigon), kiu estas disponebla por operaciumoj Windows, Linukso kaj macOS.
 
 Memorigu kion ajn kaj kie ajn vi volas. Efike uzu liberan tempetojn dum vojaĝi aŭtobuse, en superbazara vico kaj ĉiam, kiam vi perdas tempon atendante!
 
@@ -8,7 +8,7 @@ Kreu viajn proprajn fulmokartojn aŭ senpage alŝutu kartarojn pri multaj lingvo
 
 Aldonu lern-enhavon per komputila programo Anki aŭ senpere per AnkiDroid. La aplikaĵo eĉ subtenas aŭtomate aldoni materialon el vortaro!
 
-★ Ĉefaj eblaĵoj:
+★ Ĉefaj ebloj:
 • subtenata enhavo por kartoj: teksto; bildoj, sonoj, LateX
 • periodaj ripetoj (AI-plibonigita algoritmo FSRS)
 • tekst-al-voĉo
@@ -18,7 +18,7 @@ Aldonu lern-enhavon per komputila programo Anki aŭ senpere per AnkiDroid. La ap
 • samtempigo kun AnkiWeb
 • malfermkoda programaro
 
-★ Pliaj eblaĵoj:
+★ Pliaj ebloj:
 • enigi respondojn (malnepre)
 • skribtabulo
 • kart-redaktilo

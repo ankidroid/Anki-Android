@@ -116,9 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Orta merkeze dokun</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Sol alta dokun</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Sağ alta dokun</string>
-    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
-    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
-    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
+    <string name="gestures_two_finger_tap" maxLength="41">İki parmakla dokunma</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Üç parmakla dokunma</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Dört parmakla dokunma</string>
     <string name="gestures_shake" maxLength="41">Cihazı salla</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">\"%s\" Menüsü</string>
     <string name="card_browser_enable_external_context_menu_summary">\"%s\" durum menüsünü uygulama çapında etkinleştirir</string>
@@ -383,7 +383,7 @@
     <string name="toolbar_position" maxLength="41">Araç çubuğu konumu</string>
     <string name="new_study_screen" maxLength="41">Yeni çalışma ekranı</string>
     <string name="new_study_screen_summ"><![CDATA[Şu anda varolan çalışma ekranının yerine geçecek olan ekran. Eski ekranın belirli özellikleri değiştirilmiş veya silinmiş bulunuyor. Lütfen herhangi bir <a href="%1$s">geri bildiriminizi</a> veya <a href="%2$s">bulduğunuz hataları</a> bildirin.]]></string>
-    <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
+    <string name="show_answer_feedback" maxLength="41">Cevap geribildirimini göster</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Ayarları aç</string>
 </resources>

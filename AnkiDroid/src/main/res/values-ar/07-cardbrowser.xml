@@ -70,7 +70,7 @@
         <item quantity="many">إحذف الملحوظات</item>
         <item quantity="other">إحذف الملحوظات</item>
     </plurals>
-    <string name="card_browser_change_deck" maxLength="28">غيِر الرزمة</string>
+    <string name="card_browser_change_deck" maxLength="28">تغيير الرزمة</string>
     <string name="delete_card_title">أتُريدُ حذف الملحوظة؟</string>
     <string name="card_browser_show_marked" maxLength="28">فَرْز البطاقات المُعَلَّمة</string>
     <string name="card_browser_show_suspended" maxLength="28">فَرْز البطاقات المُعَلَّقة</string>

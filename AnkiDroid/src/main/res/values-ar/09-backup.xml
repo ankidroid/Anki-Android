@@ -46,9 +46,9 @@
 <resources>
     <string name="backup_deck_no_storage_left">تعذر حفظ النسخة الإحتياطية. لا توجد مساحة كافية. قَلِّل عدد النسخ الإحتياطية أو إحذف بعض الملفات.</string>
     <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">تبقى أقل من %dMB في مساحة تخزين هاتفك.\nفرغ بعض المساحة لتجنب فقدان البيانات.</string>
-    <string name="backup_restore" maxLength="28">استرجِع نسخة احتياطية</string>
+    <string name="backup_restore" maxLength="28">استرجاع نسخة احتياطية</string>
     <string name="backup_new_collection">مجموعة جديدة</string>
-    <string name="backup_del_collection">إحذف المجموعة وأنشأ واحدة جديدة</string>
+    <string name="backup_del_collection">حذف المجموعة وإنشاء واحدة جديدة</string>
     <string name="backup_del_collection_question">هل أنت متأكد من حذف المجموعة وإنشاء واحدة جديدة؟ سيحذف هذا تقدمك كله وجميع البطاقات.</string>
     <string name="backup_one_way_sync_from_server">مزامنة من الخادم باتجاه واحد</string>
     <string name="backup_full_sync_from_server_question">أتستبدل مجموعتك في آنكي ويب بجموعتك في آنكي درويد؟ سيحذف هذا كل تقدمك والمعلومات المضافة منذ آخر مزامنة.</string>

@@ -115,9 +115,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">触摸正中处</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">触摸左下方</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">触摸右下方</string>
-    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
-    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
-    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
+    <string name="gestures_two_finger_tap" maxLength="41">双指轻触</string>
+    <string name="gestures_three_finger_tap" maxLength="41">三指轻触</string>
+    <string name="gestures_four_finger_tap" maxLength="41">四指轻触</string>
     <string name="gestures_shake" maxLength="41">摇动设备</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">“%s” 菜单</string>
     <string name="card_browser_enable_external_context_menu_summary">全局启用 “%s” 上下文菜单</string>
