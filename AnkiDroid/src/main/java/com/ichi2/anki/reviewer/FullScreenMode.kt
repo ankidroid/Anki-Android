@@ -23,23 +23,23 @@ import timber.log.Timber
 enum class FullScreenMode(
     private val prefValue: String,
 ) {
-    /** Display both navigation and buttons (default) */
-    BUTTONS_AND_MENU("0"),
+    /** Display both navigation and buttons with status bar (default) */
+    BUTTONS_AND_MENU_WITH_STATUS_BAR("0"),
 
-    /** Remove the menu bar, keeps answer button. */
-    BUTTONS_ONLY("1"),
+    /** Remove the status bar, keeps answer button and menu bar. */
+    BUTTONS_AND_MENU_ONLY("1"),
 
-    /** Remove both menu bar and buttons. Can only be set if gesture is on. */
+    /** Remove menu bar, buttons and status bar. Can only be set if gesture is on. */
     FULLSCREEN_ALL_GONE("2"),
     ;
 
     fun getPreferenceValue() = prefValue
 
-    fun isFullScreenReview() = this != BUTTONS_AND_MENU
+    fun isFullScreenReview() = this != BUTTONS_AND_MENU_WITH_STATUS_BAR
 
     companion object {
         const val PREF_KEY = "fullscreenMode"
-        val DEFAULT = BUTTONS_AND_MENU
+        val DEFAULT = BUTTONS_AND_MENU_WITH_STATUS_BAR
 
         fun fromPreference(prefs: SharedPreferences): FullScreenMode {
             val value = prefs.getString(PREF_KEY, DEFAULT.prefValue)
@@ -55,7 +55,7 @@ enum class FullScreenMode(
             // clear fullscreen flag as we use a integer
             val fullScreenModeKey = PREF_KEY
             val old = preferences.getBoolean("fullscreenReview", false)
-            val newValue = if (old) BUTTONS_ONLY else BUTTONS_AND_MENU
+            val newValue = if (old) BUTTONS_AND_MENU_ONLY else BUTTONS_AND_MENU_WITH_STATUS_BAR
             preferences.edit {
                 putString(fullScreenModeKey, newValue.getPreferenceValue())
                 remove("fullscreenReview")
