@@ -23,6 +23,7 @@ import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Storage
+import com.ichi2.anki.libanki.testutils.TestCollectionManager
 import com.ichi2.anki.observability.ChangeManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -49,6 +50,9 @@ open class JvmTest : TestClass {
     private fun maybeSetupBackend() {
         RustBackendLoader.ensureSetup()
     }
+
+    override val collectionManager: TestCollectionManager
+        get() = CollectionManagerTestAdapter
 
     override val col: Collection
         get() {
