@@ -122,7 +122,14 @@ sealed class ReviewReminderScope : Parcelable {
          * Caches the resultant deck name to minimize calls to the collection.
          * Should not be called if [did] is no longer a valid deck ID. If [did] is invalid, this method will return "[no deck]".
          */
-        suspend fun getDeckName(): String = cachedDeckName ?: withCol { decks.name(did) }.also { cachedDeckName = it }
+        suspend fun getDeckName(): String {
+            val currentCachedDeckName = cachedDeckName
+            if (currentCachedDeckName != null) return currentCachedDeckName
+            val retrievedDeckName = withCol { decks.name(did) }
+            Timber.d("Retrieved deck name for review reminder: %s", retrievedDeckName)
+            cachedDeckName = retrievedDeckName
+            return retrievedDeckName
+        }
     }
 }
 
