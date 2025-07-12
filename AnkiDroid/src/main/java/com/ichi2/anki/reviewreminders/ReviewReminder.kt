@@ -28,7 +28,6 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.Locale
-import kotlin.time.Duration
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
 
@@ -75,49 +74,6 @@ data class ReviewReminderTime(
             )
 
     fun toSecondsFromMidnight(): Long = (hour.hours + minute.minutes).inWholeSeconds
-}
-
-/**
- * Types of snooze behaviour that can be present on notifications sent by review reminders.
- * If a reminder is snoozed repeatedly until it overlaps with another notification from the reminder firing the next day,
- * the snoozing instance of the reminder from the previous day will be cancelled.
- */
-@Serializable
-sealed class ReviewReminderSnoozeAmount {
-    /**
-     * The snooze button will never appear on notifications set by this review reminder.
-     */
-    @Serializable
-    data object Disabled : ReviewReminderSnoozeAmount()
-
-    /**
-     * The snooze button will always be available on notifications sent by this review reminder.
-     */
-    @Serializable
-    data class Infinite(
-        val interval: Duration,
-    ) : ReviewReminderSnoozeAmount() {
-        init {
-            require(interval >= 1.minutes) { "Snooze time interval must be >= 1 minute" }
-            require(interval < 24.hours) { "Snooze time interval must be < 24 hours" }
-        }
-    }
-
-    /**
-     * The snooze button can be pressed a maximum amount of times on notifications sent by this review reminder.
-     * After it has been pressed that many times, the button will no longer appear.
-     */
-    @Serializable
-    data class SetAmount(
-        val interval: Duration,
-        val maxSnoozes: Int,
-    ) : ReviewReminderSnoozeAmount() {
-        init {
-            require(interval >= 1.minutes) { "Snooze time interval must be >= 1 minute" }
-            require(interval < 24.hours) { "Snooze time interval must be < 24 hours" }
-            require(maxSnoozes >= 1) { "Max snoozes must be >= 1" }
-        }
-    }
 }
 
 /**
@@ -199,7 +155,6 @@ sealed class ReviewReminderScope : Parcelable {
  *
  * @param id Unique, auto-incremented ID of the review reminder.
  * @param time See [ReviewReminderTime].
- * @param snoozeAmount See [ReviewReminderSnoozeAmount].
  * @param cardTriggerThreshold See [ReviewReminderCardTriggerThreshold].
  * @param scope See [ReviewReminderScope].
  * @param enabled Whether the review reminder's notifications are active or disabled.
@@ -209,7 +164,6 @@ sealed class ReviewReminderScope : Parcelable {
 data class ReviewReminder private constructor(
     val id: ReviewReminderId,
     val time: ReviewReminderTime,
-    val snoozeAmount: ReviewReminderSnoozeAmount,
     val cardTriggerThreshold: ReviewReminderCardTriggerThreshold,
     val scope: ReviewReminderScope,
     var enabled: Boolean,
@@ -222,14 +176,12 @@ data class ReviewReminder private constructor(
          */
         fun createReviewReminder(
             time: ReviewReminderTime,
-            snoozeAmount: ReviewReminderSnoozeAmount,
             cardTriggerThreshold: ReviewReminderCardTriggerThreshold,
             scope: ReviewReminderScope = ReviewReminderScope.Global,
             enabled: Boolean = true,
         ) = ReviewReminder(
             id = ReviewReminderId.getAndIncrementNextFreeReminderId(),
             time,
-            snoozeAmount,
             cardTriggerThreshold,
             scope,
             enabled,

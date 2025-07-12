@@ -30,7 +30,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import kotlin.time.Duration.Companion.minutes
 
 @RunWith(AndroidJUnit4::class)
 class ReviewRemindersDatabaseTest : RobolectricTest() {
@@ -45,7 +44,6 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
             ReviewReminderId(0) to
                 ReviewReminder.createReviewReminder(
                     ReviewReminderTime(9, 0),
-                    ReviewReminderSnoozeAmount.SetAmount(15.minutes, 2),
                     ReviewReminderCardTriggerThreshold(5),
                     ReviewReminderScope.DeckSpecific(did1),
                     false,
@@ -53,7 +51,6 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
             ReviewReminderId(1) to
                 ReviewReminder.createReviewReminder(
                     ReviewReminderTime(10, 30),
-                    ReviewReminderSnoozeAmount.Infinite(15.minutes),
                     ReviewReminderCardTriggerThreshold(10),
                     ReviewReminderScope.DeckSpecific(did1),
                 ),
@@ -63,7 +60,6 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
             ReviewReminderId(2) to
                 ReviewReminder.createReviewReminder(
                     ReviewReminderTime(10, 30),
-                    ReviewReminderSnoozeAmount.SetAmount(15.minutes, 2),
                     ReviewReminderCardTriggerThreshold(10),
                     ReviewReminderScope.DeckSpecific(did2),
                     true,
@@ -71,7 +67,6 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
             ReviewReminderId(3) to
                 ReviewReminder.createReviewReminder(
                     ReviewReminderTime(12, 30),
-                    ReviewReminderSnoozeAmount.Disabled,
                     ReviewReminderCardTriggerThreshold(20),
                     ReviewReminderScope.DeckSpecific(did2),
                 ),
@@ -81,13 +76,11 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
             ReviewReminderId(4) to
                 ReviewReminder.createReviewReminder(
                     ReviewReminderTime(9, 0),
-                    ReviewReminderSnoozeAmount.SetAmount(30.minutes, 1),
                     ReviewReminderCardTriggerThreshold(5),
                 ),
             ReviewReminderId(5) to
                 ReviewReminder.createReviewReminder(
                     ReviewReminderTime(10, 30),
-                    ReviewReminderSnoozeAmount.Infinite(60.minutes),
                     ReviewReminderCardTriggerThreshold(10),
                 ),
         )
@@ -155,7 +148,6 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                 ReviewReminderId(0) to
                     ReviewReminder.createReviewReminder(
                         ReviewReminderTime(9, 0),
-                        ReviewReminderSnoozeAmount.SetAmount(15.minutes, 1),
                         ReviewReminderCardTriggerThreshold(5),
                         ReviewReminderScope.DeckSpecific(did1),
                     ),
@@ -165,7 +157,6 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                 ReviewReminderId(1) to
                     ReviewReminder.createReviewReminder(
                         ReviewReminderTime(10, 30),
-                        ReviewReminderSnoozeAmount.SetAmount(15.minutes, 1),
                         ReviewReminderCardTriggerThreshold(10),
                         ReviewReminderScope.DeckSpecific(did2),
                     ),
@@ -175,7 +166,6 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                 ReviewReminderId(2) to
                     ReviewReminder.createReviewReminder(
                         ReviewReminderTime(10, 45),
-                        ReviewReminderSnoozeAmount.SetAmount(15.minutes, 1),
                         ReviewReminderCardTriggerThreshold(10),
                         ReviewReminderScope.DeckSpecific(did2),
                     ),
@@ -185,7 +175,6 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                 ReviewReminderId(3) to
                     ReviewReminder.createReviewReminder(
                         ReviewReminderTime(11, 0),
-                        ReviewReminderSnoozeAmount.SetAmount(15.minutes, 1),
                         ReviewReminderCardTriggerThreshold(25),
                         ReviewReminderScope.DeckSpecific(did3),
                     ),
